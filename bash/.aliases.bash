@@ -2,4 +2,11 @@
 # The externsion name is bash so that editer identify it as bash shell script and display colored output
 
 # Short name for commands
+alias .='pwd'
 alias g='gvim'
+alias cp='cp -rf'
+alias rm='rm -rf'
+alias ll='ls -AlF'
+
+# Small Tasks
+alias editable='chmod u+w'
