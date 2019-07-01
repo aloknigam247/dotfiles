@@ -6,7 +6,7 @@ alias .='pwd'
 alias g='gvim'
 alias cp='cp -rf'
 alias rm='rm -rf'
-alias ll='ls -AlF'
+alias ll='ls -lF'
 
 # Small Tasks
 alias editable='chmod u+w'
