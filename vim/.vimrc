@@ -16,8 +16,9 @@ set cursorline      " Highlight the line currently under cursor
 set visualbell      " Flash the screen instead of beeping on errors
 set mouse=a         " Enable mouse for scrolling and resizing
 set title           " Set the window's title, reflecting the file currently being edited
-
+colorscheme desert  " Set color scheme for gvim
 "Miscellaneous Options
+
 set nu              " Enable line number
 set noswapfile      " Disable swap file
 
