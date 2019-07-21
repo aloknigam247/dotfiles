@@ -4,7 +4,7 @@ include recipe/config.mk
 include recipe/procs.mk
 include ext/common.mk
 
-INC_LIBS = -lcurl -lssl -lcrypto
+INC_LIBS = ## libs needed for .o --> executable
 
 DIRS := src
 
