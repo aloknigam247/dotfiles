@@ -6,6 +6,8 @@
   line_down = <Shift>Down
   line_up = <Shift>Up
   new_window = <Primary><Shift>i
+  split_horiz = <Primary><Shift>h
+  split_vert = <Primary><Shift>v
   toggle_zoom = <Primary><Shift>z
 [layouts]
   [[default]]
@@ -20,7 +22,7 @@
 [profiles]
   [[default]]
     background_color = "#babdb6"
-    background_darkness = 0.84
+    background_darkness = 0.91
     background_type = transparent
     copy_on_selection = True
     cursor_color = "#aaaaaa"

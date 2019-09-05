@@ -2,8 +2,8 @@
 set autoindent      " New line inherit the indentation of previous lines
 set cindent         " C-style indentation"
 set expandtab       " Convert tabs to spaces
-set shiftwidth=2    " When shifting, indent using spaces
-set tabstop=2       " Indent using spaces
+set shiftwidth=4    " When shifting, indent using spaces
+set tabstop=4       " Indent using spaces
 
 "Search Options
 set hlsearch        " Enable search highlighting
@@ -16,11 +16,12 @@ set cursorline      " Highlight the line currently under cursor
 set visualbell      " Flash the screen instead of beeping on errors
 set mouse=a         " Enable mouse for scrolling and resizing
 set title           " Set the window's title, reflecting the file currently being edited
-colorscheme desert  " Set color scheme for gvim
-"Miscellaneous Options
 
+"Miscellaneous Options
 set nu              " Enable line number
 set noswapfile      " Disable swap file
+set autoread        " Auto reload changed file
 
 "Filetype Specific Options
-autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin 
+autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
+filetype plugin indent on   " File based indentation
