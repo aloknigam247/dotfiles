@@ -17,6 +17,14 @@ set visualbell      " Flash the screen instead of beeping on errors
 set mouse=a         " Enable mouse for scrolling and resizing
 set title           " Set the window's title, reflecting the file currently being edited
 
+"UI Options
+colo murphy         " Set UI color theme
+
+"IndentLine Plugin Options
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_leadingSpaceEnabled = 1
+
 "Miscellaneous Options
 set nu              " Enable line number
 set noswapfile      " Disable swap file

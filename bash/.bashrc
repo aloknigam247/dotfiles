@@ -2,8 +2,9 @@
 export PS4='Line ${LINENO}: '
 
 # ENV Configs
-export EDITOR="gvim"
-export CSCOPE_EDITOR="gvim -f"
+export EDITOR='gvim'
+export CSCOPE_EDITOR='gvim'
+export GIT_EDITOR='gvim -f'
 
 # Source your alias
 source ~/.aliases.bash
