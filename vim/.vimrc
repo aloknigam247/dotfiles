@@ -5,11 +5,15 @@ set expandtab       " Convert tabs to spaces
 set shiftwidth=4    " When shifting, indent using spaces
 set tabstop=4       " Indent using spaces
 
+" Highlight text boundary for character length greater than 100
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%101v', 200)
+
 "Search Options
 set hlsearch        " Enable search highlighting
 set ignorecase      " Ignore case when searching
 set incsearch       " Incremental search that shows partial matches
-set smartcase       " Automatically switch search to case-sensitive when search quesry contains an uppercase letter
+set smartcase       " Switch search to case-sensitive when query contains an uppercase letter
 
 "Interface Options
 set cursorline      " Highlight the line currently under cursor
@@ -18,7 +22,9 @@ set mouse=a         " Enable mouse for scrolling and resizing
 set title           " Set the window's title, reflecting the file currently being edited
 
 "UI Options
-colo murphy         " Set UI color theme
+colo PaperColor     " Set UI color theme
+set lines=30        " Set default height in terms of lines
+set columns=104     " Set default width in terms of columns
 
 "IndentLine Plugin Options
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
