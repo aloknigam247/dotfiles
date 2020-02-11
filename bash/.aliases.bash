@@ -3,10 +3,7 @@
 
 # Short name for commands
 alias .='pwd'
-alias g='gvim'
+alias g='gvim 2>/dev/null'
 alias cp='cp -rf'
 alias rm='rm -rf'
 alias ll='ls -lF'
-
-# Small Tasks
-alias editable='chmod u+w'
