@@ -30,7 +30,7 @@
     background_darkness = 0.91
     copy_on_selection = True
     cursor_color = "#aaaaaa"
-    font = Courier 10 Pitch 10
+    font = Fira Code weight=450 10
     foreground_color = "#ffffff"
     palette = "#fbf1c7:#cc241d:#98971a:#d79921:#458588:#b16286:#689d6a:#7c6f64:#928374:#9d0006:#79740e:#b57614:#076678:#8f3f71:#427b58:#3c3836"
     scrollback_lines = 5000
@@ -46,7 +46,7 @@
     cursor_color = "#20bbfc"
     cursor_color_fg = False
     cursor_shape = ibeam
-    font = Courier 10 Pitch 11
+    font = Fira Code weight=450 10.5
     foreground_color = "#424242"
     palette = "#212121:#c30771:#10a778:#a89c14:#008ec4:#523c79:#20a5ba:#d9d9d9:#424242:#fb007a:#5fd7af:#f3e430:#20bbfc:#6855de:#4fb8cc:#f1f1f1"
     scrollback_lines = 5000

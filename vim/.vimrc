@@ -18,9 +18,14 @@ set mouse=a         " Enable mouse for scrolling and resizing
 set title           " Set the window's title, reflecting the file currently being edited
 
 "UI Options
-colo PaperColor     " Set UI color theme
-"set lines=30        " Set default height in terms of lines
-"set columns=104     " Set default width in terms of columns
+set guifont=Fira\ Code\ Bold\ 10
+set termguicolors       " enable true colors support
+let ayucolor="light"    " for light version of theme
+" let ayucolor="mirage" " for mirage version of theme
+" let ayucolor="dark"   " for dark version of theme
+colorscheme ayu         " Set colorsceme
+"set lines=30           " Set default height in terms of lines
+"set columns=104        " Set default width in terms of columns
 
 " Highlight text boundary for character length greater than 100
 highlight ColorColumn ctermbg=black
