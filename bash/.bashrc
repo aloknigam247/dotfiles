@@ -1,5 +1,5 @@
 # Modified to show git branch also
-export PS1=${PS1%.}'\[\033[01;31m\]$(__git_ps1)\[\033[00m\]\$ '
+export PS1=${PS1%.}'\[\033[01;33m\]$(__git_ps1)\[\033[00m\]\$ ' # YELLOW
 
 # Display line number when debugging bash script
 export PS4='Line ${LINENO}: '

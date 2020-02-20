@@ -4,6 +4,9 @@
 # Short name for commands
 alias .='pwd'
 alias g='gvim 2>/dev/null'
+
+# Commands redefined
 alias cp='cp -rf'
-alias rm='rm -rf'
+alias gdb='gdb -q'
 alias ll='ls -lF'
+alias rm='rm -rf'
