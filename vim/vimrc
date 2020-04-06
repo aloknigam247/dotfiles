@@ -1,3 +1,5 @@
+set nocompatible    " Set no compatible, this is should be first
+
 "Indentation Options
 set autoindent      " New line inherit the indentation of previous lines
 set cindent         " C-style indentation"
@@ -24,8 +26,6 @@ set termguicolors       " enable true colors support
 " let ayucolor="mirage" " for mirage version of theme
 let ayucolor="dark"   " for dark version of theme
 colorscheme ayu         " Set colorsceme
-"set lines=30           " Set default height in terms of lines
-"set columns=104        " Set default width in terms of columns
 
 " Highlight text boundary for character length greater than 100
 highlight ColorColumn ctermbg=black
@@ -36,10 +36,12 @@ let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_leadingSpaceChar = '·'
 let g:indentLine_leadingSpaceEnabled = 1
 
-"Miscellaneous Options
-set nu              " Enable line number
-set noswapfile      " Disable swap file
-set autoread        " Auto reload changed file
+"Config Options
+set nu          " Enable line number
+set noswapfile  " Disable swap file
+set autoread    " Auto reload changed file
+set path+=**    " Look for all files in sub dirs
+set wildmenu    " Show matching files on tab
 
 "Filetype Specific Options
 autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
