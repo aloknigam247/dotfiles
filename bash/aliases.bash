@@ -8,5 +8,6 @@ alias g='gvim 2>/dev/null'
 # Commands redefined
 alias cp='cp -rf'
 alias gdb='gdb -q'
-alias ll='ls -lF'
+alias ls='ls -F --color'
+alias ll='ls -lF --color'
 alias rm='rm -rf'

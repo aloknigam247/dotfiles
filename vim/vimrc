@@ -1,3 +1,4 @@
+let g:airline#extensions#tabline#enabled = 1
 set nocompatible    " Set no compatible, this is should be first
 
 "Indentation Options
@@ -20,21 +21,18 @@ set mouse=a         " Enable mouse for scrolling and resizing
 set title           " Set the window's title, reflecting the file currently being edited
 
 "UI Options
+set colorcolumn=101 " Highlight text boundary for character length greater than 100
 set guifont=Fira\ Code\ weight=450\ 11
-set termguicolors       " enable true colors support
-" let ayucolor="light"    " for light version of theme
-" let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu         " Set colorsceme
+set termguicolors           " enable true colors support
+" let ayucolor="light"      " for light version of theme
+" let ayucolor="mirage"     " for mirage version of theme
+let ayucolor="dark"         " for dark version of theme
+colorscheme ayu             " Set colorsceme
 
-" Highlight text boundary for character length greater than 100
-highlight ColorColumn ctermbg=black
-call matchadd('ColorColumn', '\%101v', 200)
-
-"IndentLine Plugin Options
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-let g:indentLine_leadingSpaceChar = '·'
-let g:indentLine_leadingSpaceEnabled = 1
+"IndentLine Plugin Options https://github.com/Yggdroot/indentLine
+let g:indentLine_char_list = ['┊']
+"let g:indentLine_leadingSpaceChar = '·'
+"let g:indentLine_leadingSpaceEnabled = 1
 
 "Config Options
 set nu          " Enable line number

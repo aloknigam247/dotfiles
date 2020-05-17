@@ -1,0 +1,37 @@
+#!/bin/bash
+
+declare -a app_list=($(find * -maxdepth 0 -type d))
+
+echo "Applications List:"
+for i in ${!app_list[@]};do
+    echo "    $i: ${app_list[$i]}"
+done
+
+read -p "Space seperated index list of apps to install: " -a opt
+
+for o in ${opt[@]}; do
+    app=${app_list[$o]}
+    echo -e "\nInstalling: $app"
+    (
+        declare -A files
+        cd $app
+        if [[ -f setup ]]; then
+            source setup
+            for src in ${!files[@]}; do
+                dest=${files[$src]} 
+
+                if [[ ! $src -ef $dest ]]; then
+                    if [[ -a $dest ]]; then
+                        echo "backup $dest --> $dest.orig"
+                        mv $dest $dest.orig
+                    fi
+                
+                    echo "linking $src --> $dest"
+                    echo ln -frs $src $dest
+                    ln -frs $src $dest
+                fi
+
+            done
+        fi
+    )
+done
