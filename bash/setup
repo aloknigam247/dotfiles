@@ -1,0 +1,4 @@
+files=(
+        [aliases.bash]=~/.bash_aliases
+        [bashrc]=~/.bashrc
+      )
