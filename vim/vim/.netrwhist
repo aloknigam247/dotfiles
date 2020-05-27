@@ -1,11 +1,7 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/home/alok/GIT/configs'
-let g:netrw_dirhist_2='/home/alok'
-let g:netrw_dirhist_3='/home'
-let g:netrw_dirhist_4='/'
-let g:netrw_dirhist_5='/bin'
-let g:netrw_dirhist_6='/'
-let g:netrw_dirhist_7='/bin'
-let g:netrw_dirhist_8='/'
-let g:netrw_dirhist_9='/bin'
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/alok/cygnus/test_run'
+let g:netrw_dirhist_2='/home/alok/cygnus/test_run/sanitize'
+let g:netrw_dirhist_3='/home/alok/cygnus/test_run/sanitize/unit'
+let g:netrw_dirhist_4='/home/alok/cygnus/test_run/sanitize/unit/scanner'
+let g:netrw_dirhist_5='/home/alok/cygnus/test_run/sanitize/unit/scanner/dfa'
