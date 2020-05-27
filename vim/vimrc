@@ -27,7 +27,7 @@ set termguicolors           " enable true colors support
 " let ayucolor="light"      " for light version of theme
 " let ayucolor="mirage"     " for mirage version of theme
 let ayucolor="dark"         " for dark version of theme
-colorscheme ayu             " Set colorsceme
+" colorscheme ayu             " Set colorsceme
 
 "IndentLine Plugin Options https://github.com/Yggdroot/indentLine
 let g:indentLine_char_list = ['┊']
@@ -45,3 +45,7 @@ set wildmenu    " Show matching files on tab
 autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
 autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 filetype plugin indent on   " File based indentation
+
+" Vim-plug
+call plug#begin()
+call plug#end()

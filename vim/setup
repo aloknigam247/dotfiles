@@ -1,6 +1,7 @@
 files=(
-        [after]=~/.vim/after
-        [colors]=~/.vim/colors
-        [pack]=~/.vim/pack
+#        [after]=~/.vim/after
+#        [colors]=~/.vim/colors
+#        [pack]=~/.vim/pack
+        [vim]=~/.vim
         [vimrc]=~/.vimrc
       )

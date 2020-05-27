@@ -11,8 +11,9 @@ read -p "Space seperated index list of apps to install: " -a opt
 
 for o in ${opt[@]}; do
     app=${app_list[$o]}
-    echo -e "\nInstalling: $app"
+    echo -e "\n\e[31mInstalling: $app\e[39m"
     (
+        declare -a cmd
         declare -A files
         cd $app
         if [[ -f setup ]]; then
@@ -31,6 +32,11 @@ for o in ${opt[@]}; do
                     ln -frs $src $dest
                 fi
 
+            done
+
+            for i in ${!cmds[@]}; do
+                echo -e "\e[34m${cmds[$i]}\e[39m"
+                eval ${cmds[$i]}
             done
         fi
     )

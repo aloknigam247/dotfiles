@@ -1,0 +1,3 @@
+cmds=(
+        "dconf load / < settings.dconf"
+     )

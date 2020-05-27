@@ -1,0 +1,272 @@
+[org/gnome/settings-daemon/plugins/power]
+sleep-inactive-ac-timeout=3600
+sleep-inactive-ac-type='nothing'
+
+[org/gnome/settings-daemon/plugins/color]
+night-light-schedule-automatic=false
+night-light-enabled=true
+
+[org/gnome/settings-daemon/plugins/xsettings]
+overrides={'Gtk/ShellShowsAppMenu': <1>}
+antialiasing='rgba'
+hinting='slight'
+
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='off'
+
+[org/gnome/settings-daemon/peripherals/mouse]
+locate-pointer=false
+
+[org/gnome/shell]
+app-picker-view=uint32 1
+enabled-extensions=['alternate-tab@gnome-shell-extensions.gcampax.github.com', 'auto-move-windows@gnome-shell-extensions.gcampax.github.com', 'native-window-placement@gnome-shell-extensions.gcampax.github.com', 'screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com', 'ubuntu-dock@ubuntu.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']
+favorite-apps=['yelp.desktop', 'firefox.desktop', 'org.gnome.Nautilus.desktop']
+enable-hot-corners=true
+
+[org/gnome/shell/extensions/user-theme]
+name='Flat-Remix-Darkest-fullPanel'
+
+[org/gnome/shell/extensions/dash-to-dock]
+dock-position='BOTTOM'
+dash-max-icon-size=20
+
+[org/gnome/shell/extensions/window-list]
+grouping-mode='never'
+
+[org/gnome/gedit/preferences/editor]
+use-default-font=false
+wrap-last-split-mode='word'
+editor-font='Fira Code 12'
+
+[org/gnome/gedit/preferences/ui]
+show-tabs-mode='auto'
+
+[org/gnome/gedit/plugins/filebrowser]
+virtual-root='file:///home/alok/bash-completion_1%253a2.8-1ubuntu1_all/data/usr/share/bash-completion'
+tree-view=true
+root='file:///'
+
+[org/gnome/gedit/plugins]
+active-plugins=['time', 'filebrowser', 'modelines', 'spell', 'docinfo']
+
+[org/gnome/gedit/state/window]
+size=(793, 638)
+state=43908
+bottom-panel-size=140
+side-panel-size=200
+side-panel-active-page='GeditWindowDocumentsPanel'
+
+[org/gnome/calculator]
+target-currency=''
+show-zeroes=false
+source-currency=''
+show-thousands=false
+button-mode='basic'
+target-units='radian'
+word-size=64
+window-position=(39, 61)
+number-format='automatic'
+angle-units='degrees'
+base=10
+source-units='degree'
+accuracy=9
+
+[org/gnome/nautilus/preferences]
+search-view='list-view'
+default-folder-viewer='icon-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/nautilus/window-state]
+sidebar-width=235
+geometry='890x550+443+226'
+maximized=false
+
+[org/gnome/nautilus/compression]
+default-compression-format='zip'
+
+[org/gnome/nautilus/desktop]
+home-icon-visible=true
+network-icon-visible=false
+volumes-visible=true
+trash-icon-visible=true
+
+[org/gnome/file-roller/listing]
+sort-method='name'
+name-column-width=250
+sort-type='ascending'
+list-mode='as-folder'
+show-path=false
+
+[org/gnome/file-roller/dialogs/extract]
+skip-newer=false
+recreate-folders=true
+
+[org/gnome/file-roller/ui]
+sidebar-width=200
+window-height=480
+window-width=600
+
+[org/gnome/evince/default]
+window-ratio=(3.1372549019607843, 1.1123737373737375)
+
+[org/gnome/evolution-data-server]
+network-monitor-gio-name=''
+migrated=true
+
+[org/gnome/desktop/interface]
+text-scaling-factor=0.90000000000000002
+font-name='Abyssinica SIL 12'
+gtk-im-module='gtk-im-context-simple'
+show-battery-percentage=true
+cursor-theme='Paper'
+clock-show-seconds=false
+icon-theme='Paper'
+toolbar-style='icons'
+enable-animations=true
+gtk-theme='Dark-openSUSE'
+clock-show-date=true
+
+[org/gnome/desktop/notifications]
+application-children=['update-manager', 'gnome-network-panel', 'org-gnome-terminal', 'org-gnome-nautilus', 'org-gnome-software', 'org-gnome-gedit', 'nautilus-autorun-software', 'firefox', 'apport-gtk', 'org-gnome-tweaks', 'org-kde-drkonqi']
+
+[org/gnome/desktop/notifications/application/org-gnome-tweaks]
+application-id='org.gnome.tweaks.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-nautilus]
+application-id='org.gnome.Nautilus.desktop'
+
+[org/gnome/desktop/notifications/application/firefox]
+application-id='firefox.desktop'
+
+[org/gnome/desktop/notifications/application/org-kde-drkonqi]
+application-id='org.kde.drkonqi.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-terminal]
+application-id='org.gnome.Terminal.desktop'
+
+[org/gnome/desktop/notifications/application/gnome-network-panel]
+application-id='gnome-network-panel.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-gedit]
+application-id='org.gnome.gedit.desktop'
+
+[org/gnome/desktop/notifications/application/nautilus-autorun-software]
+application-id='nautilus-autorun-software.desktop'
+
+[org/gnome/desktop/notifications/application/org-gnome-software]
+application-id='org.gnome.Software.desktop'
+
+[org/gnome/desktop/notifications/application/update-manager]
+application-id='update-manager.desktop'
+
+[org/gnome/desktop/notifications/application/apport-gtk]
+application-id='apport-gtk.desktop'
+
+[org/gnome/desktop/app-folders]
+folder-children=['Utilities', 'Sundry', 'YaST']
+
+[org/gnome/desktop/app-folders/folders/Utilities]
+translate=true
+categories=['X-GNOME-Utilities']
+apps=['org.gnome.baobab.desktop', 'deja-dup-preferences.desktop', 'eog.desktop', 'evince.desktop', 'org.gnome.FileRoller.desktop', 'gnome-calculator.desktop', 'gnome-dictionary.desktop', 'org.gnome.Characters.desktop', 'org.gnome.DiskUtility.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Screenshot.desktop', 'gnome-system-log.desktop', 'gnome-system-monitor.desktop', 'gnome-tweak-tool.desktop', 'gucharmap.desktop', 'seahorse.desktop', 'vinagre.desktop', 'yelp.desktop']
+name='X-GNOME-Utilities.directory'
+
+[org/gnome/desktop/app-folders/folders/Sundry]
+translate=true
+categories=['X-GNOME-Sundry']
+apps=['alacarte.desktop', 'authconfig.desktop', 'ca.desrt.dconf-editor.desktop', 'fedora-release-notes.desktop', 'firewall-config.desktop', 'flash-player-properties.desktop', 'gconf-editor.desktop', 'gnome-abrt.desktop', 'gnome-power-statistics.desktop', 'ibus-setup-anthy.desktop', 'ibus-setup.desktop', 'ibus-setup-hangul.desktop', 'ibus-setup-libbopomofo.desktop', 'ibus-setup-libpinyin.desktop', 'ibus-setup-m17n.desktop', 'ibus-setup-typing-booster.desktop', 'im-chooser.desktop', 'itweb-settings.desktop', 'jhbuild.desktop', 'javaws.desktop', 'java-1.7.0-openjdk-jconsole.desktop', 'java-1.7.0-openjdk-policytool.desktop', 'log4j-chainsaw.desktop', 'log4j-logfactor5.desktop', 'nm-connection-editor.desktop', 'orca.desktop', 'setroubleshoot.desktop', 'system-config-date.desktop', 'system-config-firewall.desktop', 'system-config-keyboard.desktop', 'system-config-language.desktop', 'system-config-printer.desktop', 'system-config-users.desktop', 'vino-preferences.desktop']
+name='X-GNOME-Sundry.directory'
+
+[org/gnome/desktop/app-folders/folders/YaST]
+translate=true
+categories=['X-SuSE-YaST']
+name='suse-yast.directory'
+
+[org/gnome/desktop/screensaver]
+picture-uri='file:///home/alok/Downloads/Light_Blub_in_Black_Painting_4K_Wallpaper.jpg'
+primary-color='#000000000000'
+picture-options='scaled'
+lock-enabled=false
+secondary-color='#000000000000'
+
+[org/gnome/desktop/peripherals/mouse]
+natural-scroll=false
+
+[org/gnome/desktop/calendar]
+show-weekdate=false
+
+[org/gnome/desktop/search-providers]
+sort-order=['org.gnome.Contacts.desktop', 'org.gnome.Documents.desktop', 'org.gnome.Nautilus.desktop']
+
+[org/gnome/desktop/wm/preferences]
+button-layout=':appmenu,minimize,maximize,close'
+resize-with-right-button=false
+action-double-click-titlebar='toggle-maximize'
+titlebar-font='Fira Code weight=450 12'
+
+[org/gnome/desktop/background]
+picture-uri='file:///home/alok/Wallpapers/openSUSE.png'
+show-desktop-icons=true
+color-shading-type='solid'
+primary-color='#000000'
+picture-options='zoom'
+secondary-color='#000000'
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us')]
+xkb-options=@as []
+
+[org/gnome/control-center]
+last-panel='background'
+
+[org/gnome/eog/view]
+background-color='rgb(0,0,0)'
+use-background-color=true
+
+[org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+use-theme-colors=true
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+use-theme-transparency=true
+
+[org/gnome/terminal/legacy]
+schema-version=uint32 3
+
+[org/gnome/software]
+first-run=false
+check-timestamp=int64 1590554599
+
+[org/gnome/mutter]
+dynamic-workspaces=true
+workspaces-only-on-primary=true
+
+[org/gtk/settings/file-chooser]
+sort-column='name'
+sidebar-width=211
+window-position=(359, 173)
+show-size-column=true
+show-hidden=false
+window-size=(1203, 588)
+sort-directories-first=true
+date-format='regular'
+sort-order='ascending'
+location-mode='path-bar'
+
+[org/gtk/settings/color-chooser]
+selected-color=(true, 1.0, 1.0, 1.0, 1.0)
+custom-colors=[(0.25098039215686274, 0.25098039215686274, 0.25098039215686274, 1.0), (0.23529411764705882, 0.2196078431372549, 0.21176470588235294, 1.0), (0.98431372549019602, 0.94509803921568625, 0.7803921568627451, 1.0)]
+
+[apps/update-manager]
+first-run=false
+launch-time=int64 1589875545
+window-height=483
+show-details=true
+launch-count=52
+window-width=645
+
+[com/ubuntu/update-notifier]
+release-check-time=uint32 1589977163
+no-show-notifications=false
+
+[desktop/ibus/general]
+preload-engines=['xkb:us::eng']
+version='1.5.17'

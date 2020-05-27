@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/alok/GIT/configs'
+let g:netrw_dirhist_2='/home/alok'
+let g:netrw_dirhist_3='/home'
+let g:netrw_dirhist_4='/'
+let g:netrw_dirhist_5='/bin'
+let g:netrw_dirhist_6='/'
+let g:netrw_dirhist_7='/bin'
+let g:netrw_dirhist_8='/'
+let g:netrw_dirhist_9='/bin'
