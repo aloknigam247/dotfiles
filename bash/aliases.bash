@@ -4,6 +4,10 @@
 # Short name for commands
 alias .='pwd'
 alias g='gvim 2>/dev/null'
+alias ga='git add .'
+alias gb='git branch'
+alias gcl='git clean -dfx'
+alias gs='git status'
 
 # Commands redefined
 alias cp='cp -rf'

@@ -22,7 +22,7 @@ set title           " Set the window's title, reflecting the file currently bein
 
 "UI Options
 set colorcolumn=101 " Highlight text boundary for character length greater than 100
-set guifont=Fira\ Code\ weight=450\ 11
+set guifont=Fira\ Code\ weight=450\ 12
 set termguicolors           " enable true colors support
 " let ayucolor="light"      " for light version of theme
 " let ayucolor="mirage"     " for mirage version of theme
