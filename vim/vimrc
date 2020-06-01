@@ -1,5 +1,7 @@
-let g:airline#extensions#tabline#enabled = 1
-set nocompatible    " Set no compatible, this is should be first
+" set nocompatible    " Set no compatible, this is should be first
+
+" Variables
+let g:diff_translations = 0 " disables localisations and speeds up syntax highlighting in diff mode
 
 "Indentation Options
 set autoindent      " New line inherit the indentation of previous lines
@@ -15,31 +17,22 @@ set incsearch       " Incremental search that shows partial matches
 set smartcase       " Switch search to case-sensitive when query contains an uppercase letter
 
 "Interface Options
-set cursorline      " Highlight the line currently under cursor
-set visualbell      " Flash the screen instead of beeping on errors
+" set cursorline      " Highlight the line currently under cursor
+" set visualbell      " Flash the screen instead of beeping on errors
 set mouse=a         " Enable mouse for scrolling and resizing
-set title           " Set the window's title, reflecting the file currently being edited
+" set title           " Set the window's title, reflecting the file currently being edited
 
 "UI Options
-set colorcolumn=101 " Highlight text boundary for character length greater than 100
-set guifont=Fira\ Code\ weight=450\ 12
-set termguicolors           " enable true colors support
-" let ayucolor="light"      " for light version of theme
-" let ayucolor="mirage"     " for mirage version of theme
-let ayucolor="dark"         " for dark version of theme
-" colorscheme ayu             " Set colorsceme
-
-"IndentLine Plugin Options https://github.com/Yggdroot/indentLine
-let g:indentLine_char_list = ['┊']
-"let g:indentLine_leadingSpaceChar = '·'
-"let g:indentLine_leadingSpaceEnabled = 1
+" set colorcolumn=101 " Highlight text boundary for character length greater than 100
+" set guifont=Fira\ Code\ weight=450\ 11
+" set termguicolors           " enable true colors support
 
 "Config Options
 set nu          " Enable line number
-set noswapfile  " Disable swap file
-set autoread    " Auto reload changed file
+" set noswapfile  " Disable swap file
+" set autoread    " Auto reload changed file
 set path+=**    " Look for all files in sub dirs
-set wildmenu    " Show matching files on tab
+" set wildmenu    " Show matching files on tab
 
 "Filetype Specific Options
 autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
@@ -47,5 +40,7 @@ autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 filetype plugin indent on   " File based indentation
 
 " Vim-plug
-call plug#begin()
-call plug#end()
+" call plug#begin()
+    " Plug 'vim-airline/vim-airline'
+    " Plug 'prabirshrestha/asyncomplete.vim'
+" call plug#end()
