@@ -52,7 +52,25 @@ autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 filetype plugin indent on   " File based indentation
 
 "Plugins - Vim-plug
-" call plug#begin()
-    " Plug 'vim-airline/vim-airline'
-    " Plug 'prabirshrestha/asyncomplete.vim'
-" call plug#end()
+call plug#begin()
+    "Colorscheme
+    " Plug 'NLKNguyen/papercolor-theme'
+    " Plug 'nanotech/jellybeans.vim'
+    Plug 'mkarmona/materialbox'
+    " Plug 'rakr/vim-one'
+    " Plug 'owickstrom/vim-colors-paramount'
+    Plug 'jacoborus/tender.vim'
+    " Plug 'rakr/vim-two-firewatch'
+    " Plug 'nightsense/carbonized'
+    " Plug 'challenger-deep-theme/vim'
+    " Plug 'wadackel/vim-dogrun'
+call plug#end()
+
+"Colorscheme
+if strftime('%H') >= 7 && strftime('%H') < 19
+    "Light
+    colorscheme materialbox
+else
+    "Dark
+    colorscheme tender
+endif
