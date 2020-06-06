@@ -1,0 +1,4 @@
+"Gui specific options
+set guioptions+=c,d                    " Use console for dialogs, use dark variant if possible
+set columns=100                        " Set default column width
+set guifont=Fira\ Code\ weight=450\ 12 " Font

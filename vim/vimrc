@@ -1,45 +1,57 @@
-" set nocompatible    " Set no compatible, this is should be first
+set nocompatible "Set no compatible, this is should be first
 
-" Variables
-let g:diff_translations = 0 " disables localisations and speeds up syntax highlighting in diff mode
+"Variables
+let g:diff_translations=0 "Disables localisations and speeds up syntax highlighting in diff mode
 
-"Indentation Options
-set autoindent      " New line inherit the indentation of previous lines
-set cindent         " C-style indentation"
-set expandtab       " Convert tabs to spaces
-set shiftwidth=4    " When shifting, indent using spaces
-set tabstop=4       " Indent using spaces
-
-"Search Options
-set hlsearch        " Enable search highlighting
-set ignorecase      " Ignore case when searching
-set incsearch       " Incremental search that shows partial matches
-set smartcase       " Switch search to case-sensitive when query contains an uppercase letter
-
-"Interface Options
-" set cursorline      " Highlight the line currently under cursor
-" set visualbell      " Flash the screen instead of beeping on errors
-set mouse=a         " Enable mouse for scrolling and resizing
-" set title           " Set the window's title, reflecting the file currently being edited
+"Editor Settings
+set autoindent   " New line inherit the indentation of previous lines
+set breakindent  " Every wrapped line will continue visually indented
+set cindent      " C-style indentation"
+set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
+set expandtab    " Convert tabs to spaces
+set shiftwidth=4 " When shifting, indent using spaces
+set smartindent  " Do smart autoindenting when starting a new line
+set tabstop=4    " Indent using spaces
+set wrap         " Wrap text
 
 "UI Options
-" set colorcolumn=101 " Highlight text boundary for character length greater than 100
-" set guifont=Fira\ Code\ weight=450\ 11
-" set termguicolors           " enable true colors support
+set confirm                         " Raise dialog on quit if file has unsaved changes
+set colorcolumn=101                 " Highlight text boundary for character length greater than 100
+set cursorline                      " Highlight the line currently under cursor
+set cursorlineopt=number,screenline " Highlight current line and line number of current window
+set lazyredraw                      " Don't redraw screen on macros, registers and other commands.
+set diffopt+=vertical               " Open diff in vertical split
+set splitbelow                      " Place new window below on :split
+set splitright                      " Place new window right on :vsplit
+set termguicolors                   " Enable true colors support
+set visualbell                      " Flash the screen instead of beeping on errors
+set mouse=a                         " Enable mouse support
+set wildmenu                        " Show matching text on status line when <TAB>
+set nu                              " Enable line number
+
+"Auto Completion Settings
+set complete+=d,t " scan for defined name/macro, include tag completion
+set cscopetag     " Use cscope for tag commands.
+set cscopeverbose " Give messages when adding a cscope database.
+set tagcase=smart " If search has uppercase then case sensitive search
+
+"Search Options
+set hlsearch   " Enable search highlighting
+set ignorecase " Ignore case when searching
+set incsearch  " Incremental search that shows partial matches
+set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 
 "Config Options
-set nu          " Enable line number
-" set noswapfile  " Disable swap file
-" set autoread    " Auto reload changed file
-set path+=**    " Look for all files in sub dirs
-" set wildmenu    " Show matching files on tab
+set noswapfile " Disable swap file
+set autoread   " Auto reload changed file
+set path+=**   " Look for all files in sub dirs
 
 "Filetype Specific Options
 autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
 autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 filetype plugin indent on   " File based indentation
 
-" Vim-plug
+"Plugins - Vim-plug
 " call plug#begin()
     " Plug 'vim-airline/vim-airline'
     " Plug 'prabirshrestha/asyncomplete.vim'
