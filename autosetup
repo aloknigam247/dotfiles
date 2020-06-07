@@ -28,7 +28,6 @@ for o in ${opt[@]}; do
                     fi
                 
                     echo "linking $src --> $dest"
-                    echo ln -frs $src $dest
                     ln -frs $src $dest
                 fi
 
