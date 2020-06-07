@@ -75,16 +75,13 @@ filetype plugin indent on   " File based indentation
 "````````````````````
 call plug#begin()
 "*Colorschemes*
-  Plug 'mkarmona/materialbox'
-  Plug 'jacoborus/tender.vim'
-  "Plug 'challenger-deep-theme/vim'
-  "Plug 'NLKNguyen/papercolor-theme'
-  "Plug 'nightsense/carbonized'
-  "Plug 'nanotech/jellybeans.vim'
-  "Plug 'owickstrom/vim-colors-paramount'
-  "Plug 'rakr/vim-one'
-  "Plug 'rakr/vim-two-firewatch'
-  "Plug 'wadackel/vim-dogrun'
+  Plug 'mkarmona/materialbox' " Light, Diff
+  Plug 'jacoborus/tender.vim' " Diff
+  Plug 'ayu-theme/ayu-vim'    " Dark
+  "Plug 'nanotech/jellybeans.vim' " Light
+  "Plug 'rakr/vim-two-firewatch' " Light
+  "Plug 'NLKNguyen/papercolor-theme' " Light
+
 
 if v:version > 800
 "*Wilder*
@@ -95,12 +92,15 @@ call plug#end()
 
 " Colorscheme
 "`````````````
-if strftime('%H') < 14
+if strftime('%H') > 14
     "Light
     colorscheme materialbox
 else
     "Dark
-    colorscheme tender
+    colorscheme ayu
+    if &diff
+        colorscheme tender
+    endif
 endif
 
 
