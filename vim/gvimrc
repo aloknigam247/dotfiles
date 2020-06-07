@@ -1,7 +1,10 @@
-set guioptions+=c                    " Use console for dialogs, use dark variant if possible first
-"Gui specific options
-"set guioptions+=c,d                    " Use console for dialogs, use dark variant if possible
-set columns=104                        " Set default column width
+" Gui specific options
+"``````````````````````
+set guioptions+=c,d                    " Use console for dialogs, use dark variant if possible
 set guifont=Fira\ Code\ weight=450\ 12 " Font
-"Variables
-"Only this
+
+if &diff
+    set columns=208 " Set default column width
+else
+    set columns=104 " Set default column width
+endif

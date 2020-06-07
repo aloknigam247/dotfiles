@@ -4,8 +4,11 @@ set nocompatible "Set no compatible, this is should be first
 "```````````
 let g:diff_translations=0 "Disables localisations and speeds up syntax highlighting in diff mode
 
+" 			Hey
+
 " Editor Settings
 "`````````````````
+set conceallevel=0
 set autoindent   " New line inherit the indentation of previous lines
 set breakindent  " Every wrapped line will continue visually indented
 set cindent      " C-style indentation"
@@ -16,24 +19,28 @@ set smartindent  " Do smart autoindenting when starting a new line
 set tabstop=4    " Indent using spaces
 set wrap         " Wrap text
 
+
 " UI Options
 "````````````
-set confirm           " Raise dialog on quit if file has unsaved changes
-set colorcolumn=101   " Highlight text boundary for character length greater than 100
-set cursorline        " Highlight the line currently under cursor
-set lazyredraw        " Don't redraw screen on macros, registers and other commands.
-set diffopt+=vertical " Open diff in vertical split
-set splitbelow        " Place new window below on :split
-set splitright        " Place new window right on :vsplit
-set termguicolors     " Enable true colors support
-set visualbell        " Flash the screen instead of beeping on errors
-set mouse=a           " Enable mouse support
-set wildmenu          " Show matching text on status line when <TAB>
-set nu                " Enable line number
+set confirm             " Raise dialog on quit if file has unsaved changes
+set colorcolumn=101     " Highlight text boundary for character length greater than 100
+set cursorline          " Highlight the line currently under cursor
+set lazyredraw          " Don't redraw screen on macros, registers and other commands.
+set diffopt+=vertical   " Open diff in vertical split
+set list                " Show special characters
+set lcs=space:·,tab:--> " Show space as ·, tab as -->
+set splitbelow          " Place new window below on :split
+set splitright          " Place new window right on :vsplit
+set termguicolors       " Enable true colors support
+set visualbell          " Flash the screen instead of beeping on errors
+set mouse=a             " Enable mouse support
+set wildmenu            " Show matching text on status line when <TAB>
+set nu                  " Enable line number
 
 if v:version > 800
-set cursorlineopt=number,screenline " Highlight current line and line number of current window
+set culopt=number,screenline " Highlight current line and line number of current window
 endif
+
 
 " Auto Completion Settings
 "``````````````````````````
@@ -42,6 +49,7 @@ set cscopetag     " Use cscope for tag commands.
 set cscopeverbose " Give messages when adding a cscope database.
 set tagcase=smart " If search has uppercase then case sensitive search
 
+
 " Search Options
 "````````````````
 set hlsearch   " Enable search highlighting
@@ -49,11 +57,13 @@ set ignorecase " Ignore case when searching
 set incsearch  " Incremental search that shows partial matches
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 
+
 " Config Options
 "````````````````
 set noswapfile " Disable swap file
 set autoread   " Auto reload changed file
 set path+=**   " Look for all files in sub dirs
+
 
 " Filetype Specific Options
 "```````````````````````````
@@ -61,21 +71,28 @@ autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
 autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 filetype plugin indent on   " File based indentation
 
+
 " Plugins - Vim-plug
 "````````````````````
 call plug#begin()
-"*Colorscheme*
-Plug 'mkarmona/materialbox'
-Plug 'jacoborus/tender.vim'
-"Plug 'challenger-deep-theme/vim'
-"Plug 'NLKNguyen/papercolor-theme'
-"Plug 'nightsense/carbonized'
-"Plug 'nanotech/jellybeans.vim'
-"Plug 'owickstrom/vim-colors-paramount'
-"Plug 'rakr/vim-one'
-"Plug 'rakr/vim-two-firewatch'
-"Plug 'wadackel/vim-dogrun'
+"*Colorschemes*
+    Plug 'mkarmona/materialbox'
+    Plug 'jacoborus/tender.vim'
+    "Plug 'challenger-deep-theme/vim'
+    "Plug 'NLKNguyen/papercolor-theme'
+    "Plug 'nightsense/carbonized'
+    "Plug 'nanotech/jellybeans.vim'
+    "Plug 'owickstrom/vim-colors-paramount'
+    "Plug 'rakr/vim-one'
+    "Plug 'rakr/vim-two-firewatch'
+    "Plug 'wadackel/vim-dogrun'
+
+if v:version > 800
+"*Wilder*
+    Plug 'gelguy/wilder.nvim'
+endif
 call plug#end()
+
 
 " Colorscheme
 "`````````````
@@ -86,3 +103,12 @@ else
     "Dark
     colorscheme tender
 endif
+
+
+" Wilder
+"````````
+call wilder#enable_cmdline_enter()
+set wildcharm=<Tab>
+cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+call wilder#set_option('modes', ['/', '?', ':'])
