@@ -1,9 +1,11 @@
 " This should be first
 set nocompatible "Set no compatible
 
+
 " Variables
 "```````````
 let g:diff_translations=0 "Disables localisations and speeds up syntax highlighting in diff mode
+
 
 " Editor Settings
 "`````````````````
@@ -28,13 +30,14 @@ set lazyredraw           " Don't redraw screen on macros, registers and other co
 set diffopt+=vertical    " Open diff in vertical split
 set list                 " Show special characters
 set lcs=space:·,tab:\ \  " Show space as ·, tab as clear spaces
+set mouse=a              " Enable mouse support
+set number               " Enable line number
 set splitbelow           " Place new window below on :split
 set splitright           " Place new window right on :vsplit
 set termguicolors        " Enable true colors support
+set t_Co=256             " Set color size
 set visualbell           " Flash the screen instead of beeping on errors
-set mouse=a              " Enable mouse support
 set wildmenu             " Show matching text on status line when <TAB>
-set nu                   " Enable line number
 
 if v:version > 800
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -81,7 +84,6 @@ call plug#begin()
   "Plug 'nanotech/jellybeans.vim' " Light
   "Plug 'rakr/vim-two-firewatch' " Light
   "Plug 'NLKNguyen/papercolor-theme' " Light
-
 
 if v:version > 800
 "*Wilder*
