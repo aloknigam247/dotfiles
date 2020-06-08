@@ -3,11 +3,18 @@
 
 # Short name for commands
 alias .='pwd'
-alias g='gvim 2>/dev/null'
+
+# git shortcuts
 alias ga='git add .'
 alias gb='git branch'
 alias gcl='git clean -dfx'
 alias gs='git status'
+alias g='gvim'
+alias v='vim'
+
+# vim shortcuts
+alias vpi='vim -c PlugInstall -c qa'
+alias vpcl='vim -c PlugClean! -c qa'
 
 # Commands redefined
 alias cp='cp -rf'
