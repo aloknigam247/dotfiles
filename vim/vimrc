@@ -78,16 +78,16 @@ filetype plugin indent on   " File based indentation
 " ``````````````````
 call plug#begin()
 "*Colorschemes*
-"  Plug 'mkarmona/materialbox' " Light, Diff
-"  Plug 'jacoborus/tender.vim' " Diff
-"  Plug 'ayu-theme/ayu-vim'    " Dark
+  Plug 'mkarmona/materialbox' " Light, Diff
+  Plug 'jacoborus/tender.vim' " Diff
+  Plug 'ayu-theme/ayu-vim'    " Dark
   "Plug 'nanotech/jellybeans.vim' " Light
   "Plug 'rakr/vim-two-firewatch' " Light
   "Plug 'NLKNguyen/papercolor-theme' " Light
 
 if v:version > 800
 "*Wilder*
-"  Plug 'gelguy/wilder.nvim'
+  Plug 'gelguy/wilder.nvim'
 endif
 call plug#end()
 
