@@ -4,6 +4,8 @@
 # Short name for commands
 alias .='pwd'
 
+alias all='egrep alias ~/.bash_aliases'
+
 # git shortcuts
 alias ga='git add .'
 alias gb='git branch'

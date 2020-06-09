@@ -3,12 +3,12 @@ set nocompatible "Set no compatible
 
 
 " Variables
-"```````````
+" `````````
 let g:diff_translations=0 "Disables localisations and speeds up syntax highlighting in diff mode
 
 
 " Editor Settings
-"`````````````````
+" ```````````````
 set conceallevel=0
 set autoindent   " New line inherit the indentation of previous lines
 set breakindent  " Every wrapped line will continue visually indented
@@ -22,7 +22,7 @@ set wrap         " Wrap text
 
 
 " UI Options
-"````````````
+" ``````````
 set confirm              " Raise dialog on quit if file has unsaved changes
 set colorcolumn=101      " Highlight text boundary for character length greater than 100
 set cursorline           " Highlight the line currently under cursor
@@ -45,15 +45,15 @@ endif
 
 
 " Auto Completion Settings
-"``````````````````````````
+" ````````````````````````
 set complete+=d,t " scan for defined name/macro, include tag completion
 set cscopetag     " Use cscope for tag commands.
 set cscopeverbose " Give messages when adding a cscope database.
-set tagcase=smart " If search has uppercase then case sensitive search
+"set tagcase=smart " If search has uppercase then case sensitive search
 
 
 " Search Options
-"````````````````
+" ``````````````
 set hlsearch   " Enable search highlighting
 set ignorecase " Ignore case when searching
 set incsearch  " Incremental search that shows partial matches
@@ -61,39 +61,39 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 
 
 " Config Options
-"````````````````
+" ``````````````
 set noswapfile " Disable swap file
 set autoread   " Auto reload changed file
 set path+=**   " Look for all files in sub dirs
 
 
 " Filetype Specific Options
-"```````````````````````````
+" `````````````````````````
 autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
 autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 filetype plugin indent on   " File based indentation
 
 
 " Plugins - Vim-plug
-"````````````````````
+" ``````````````````
 call plug#begin()
 "*Colorschemes*
-  Plug 'mkarmona/materialbox' " Light, Diff
-  Plug 'jacoborus/tender.vim' " Diff
-  Plug 'ayu-theme/ayu-vim'    " Dark
+"  Plug 'mkarmona/materialbox' " Light, Diff
+"  Plug 'jacoborus/tender.vim' " Diff
+"  Plug 'ayu-theme/ayu-vim'    " Dark
   "Plug 'nanotech/jellybeans.vim' " Light
   "Plug 'rakr/vim-two-firewatch' " Light
   "Plug 'NLKNguyen/papercolor-theme' " Light
 
 if v:version > 800
 "*Wilder*
-  Plug 'gelguy/wilder.nvim'
+"  Plug 'gelguy/wilder.nvim'
 endif
 call plug#end()
 
 
 " Colorscheme
-"`````````````
+" ```````````
 if strftime('%H') < 14
     "Light
     colorscheme materialbox
@@ -106,6 +106,8 @@ else
 endif
 
 
+" Wilder Config
+" `````````````
 if v:version > 800
 "*Wilder*
   call wilder#enable_cmdline_enter()

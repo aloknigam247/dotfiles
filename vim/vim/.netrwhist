@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =3
-let g:netrw_dirhist_3='/mnt/c/Users/nigama/configs/vim/vim/plugged/wilder.nvim/lua'
-let g:netrw_dirhist_2='/mnt/c/Users/nigama/configs/vim/vim/plugged/wilder.nvim'
-let g:netrw_dirhist_1='/home/alok/configs/vim/vim/plugged/materialbox'
