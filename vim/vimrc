@@ -94,7 +94,7 @@ call plug#end()
 
 " Colorscheme
 " ```````````
-if strftime('%H') < 14
+if strftime('%H') < 16
     "Light
     colorscheme materialbox
 else
