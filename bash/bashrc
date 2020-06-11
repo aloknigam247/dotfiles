@@ -118,6 +118,9 @@ export PS1=${PS1%.}'\[\033[01;33m\]$(__git_ps1)$(ret=$?; [[ $ret -ne 0 ]] && ech
 # Display line number when debugging bash script
 export PS4='Line ${LINENO}: '
 
+# modify bash defaults
+shopt -s autocd
+
 # ENV Configs
 export EDITOR='gvim'
 export CSCOPE_EDITOR='gvim'
