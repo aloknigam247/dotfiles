@@ -78,8 +78,8 @@ filetype plugin indent on   " File based indentation
 " ``````````````````
 call plug#begin()
 "*Colorschemes*
-  Plug 'mkarmona/materialbox' " Light, Diff
-  Plug 'jacoborus/tender.vim' " Diff
+  Plug 'mkarmona/materialbox' " Light, Light Diff
+  Plug 'jacoborus/tender.vim' " Dark Diff
   Plug 'ayu-theme/ayu-vim'    " Dark
   "Plug 'nanotech/jellybeans.vim'    " Light
   "Plug 'rakr/vim-two-firewatch'     " Light
@@ -94,6 +94,9 @@ call plug#begin()
   ""let g:cpp_experimental_template_highlight = 1
   ""let g:cpp_concepts_highlight = 1
   "let g:cpp_no_function_highlight = 1
+
+"*Underlines the word under the cursor*
+  "Plug 'itchyny/vim-cursorword'
 
 "if v:version > 800
 ""*Wilder*
