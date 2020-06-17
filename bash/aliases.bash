@@ -7,10 +7,10 @@ alias .='pwd'
 alias all='egrep alias ~/.bash_aliases'
 
 # git shortcuts
-alias ga='git add .'
+alias ga='git add . && git status -b -s'
 alias gb='git branch'
 alias gcl='git clean -dfx'
-alias gs='git status'
+alias gs='git status -b -s'
 alias g='gvim'
 alias v='vim'
 

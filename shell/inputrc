@@ -9,6 +9,3 @@ set colored-stats on
 
 # Treat '-' and '_' as same for tab completion
 set completion-map-case on
-
-# Expand '~' when tab is pressed
-set expand-tilde on
