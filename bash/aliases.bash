@@ -1,5 +1,4 @@
 # This file include my aliases and is sourced in ~/.bashrc
-# The externsion name is bash so that editer identify it as bash shell script and display colored output
 
 # Short name for commands
 alias .='pwd'
@@ -9,6 +8,7 @@ alias all='egrep alias ~/.bash_aliases'
 # git shortcuts
 alias ga='git add . && git status -b -s'
 alias gb='git branch'
+alias gc='git commit'
 alias gcl='git clean -dfx'
 alias gs='git status -b -s'
 alias g='gvim'
