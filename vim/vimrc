@@ -130,7 +130,7 @@ Plug 'dense-analysis/ale'
   "let g:cpp_no_function_highlight = 1
 
 " |-- Underlines the word under the cursor --|
-  "Plug 'itchyny/vim-cursorword'
+  Plug 'itchyny/vim-cursorword'
 
 " |-- Vim Signify --|
   Plug 'mhinz/vim-signify'
