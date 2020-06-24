@@ -9,7 +9,6 @@ let g:diff_translations=0 "Disables localisations and speeds up syntax highlight
 
 " Editor Settings
 " ```````````````
-set conceallevel=0
 set autoindent   " New line inherit the indentation of previous lines
 set breakindent  " Every wrapped line will continue visually indented
 set cindent      " C-style indentation"
@@ -77,8 +76,9 @@ filetype plugin indent on   " File based indentation
 " Plugins - Vim-plug
 " ``````````````````
 call plug#begin()
+" |-- Auto Pairs --|
+  Plug 'jiangmiao/auto-pairs'
 
-Plug 'dense-analysis/ale'
 " |-- Colorschemes --|
   Plug 'mkarmona/materialbox' " Light, Light Diff
   Plug 'jacoborus/tender.vim' " Dark Diff
@@ -93,25 +93,6 @@ Plug 'dense-analysis/ale'
 
 " |-- Rainbow Parentheses --|
   Plug 'kien/rainbow_parentheses.vim'
-  let g:rbpt_colorpairs = [
-      \ ['brown',       'RoyalBlue3'],
-      \ ['Darkblue',    'SeaGreen3'],
-      \ ['darkgray',    'DarkOrchid3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'RoyalBlue3'],
-      \ ['darkred',     'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['brown',       'firebrick3'],
-      \ ['gray',        'RoyalBlue3'],
-      \ ['black',       'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['Darkblue',    'firebrick3'],
-      \ ['darkgreen',   'RoyalBlue3'],
-      \ ['darkcyan',    'SeaGreen3'],
-      \ ['darkred',     'DarkOrchid3'],
-      \ ['red',         'firebrick3'],
-      \ ]
-  let g:rbpt_max = 16
   let g:rbpt_loadcmd_toggle = 0
   au VimEnter * RainbowParenthesesToggle
   au Syntax * RainbowParenthesesLoadBraces
@@ -120,21 +101,21 @@ Plug 'dense-analysis/ale'
   au Syntax * RainbowParenthesesLoadSquare
 
 " |-- Syntax Highlight --|
-  "Plug 'octol/vim-cpp-enhanced-highlight'
-  ""let g:cpp_class_scope_highlight = 1
+  Plug 'octol/vim-cpp-enhanced-highlight'
+  "let g:cpp_class_scope_highlight = 1
   ""let g:cpp_member_variable_highlight = 1
   ""let g:cpp_class_decl_highlight = 1
   ""let g:cpp_posix_standard = 1
   ""let g:cpp_experimental_template_highlight = 1
   ""let g:cpp_concepts_highlight = 1
-  "let g:cpp_no_function_highlight = 1
+  let g:cpp_no_function_highlight = 1
 
 " |-- Underlines the word under the cursor --|
   Plug 'itchyny/vim-cursorword'
 
 " |-- Vim Signify --|
   Plug 'mhinz/vim-signify'
-  let g:signify_line_highlight = 1
+  "let g:signify_line_highlight = 1
   "let g:signify_fold_context = [1, 3] " [foldlevel0, foldlevel1]
   " Commands:
   "   SignifyDiff: Opens a diff in new tab
@@ -149,7 +130,7 @@ call plug#end()
 
 " Colorscheme
 " ```````````
-if strftime('%H') < 16
+if strftime('%H') > 7 && strftime('%H') < 19
     "Light
     colorscheme materialbox
 else
