@@ -27,12 +27,13 @@ shopt -s checkwinsize
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
+    debian_chroot=$(cat /etc/debian_chroot)i
 fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
@@ -120,6 +121,9 @@ export PS4='Line ${LINENO}: '
 
 # modify bash defaults
 shopt -s autocd
+shopt -s checkhash  # Check hash first before path
+shopt -s checkjobs  # Check jobs before exiting
+shopt -s globstar   # Enable ** glob
 
 # ENV Configs
 export EDITOR='gvim'
