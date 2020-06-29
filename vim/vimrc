@@ -128,7 +128,8 @@ call plug#begin()
   let g:airline_powerline_fonts = 1
   let g:airline_highlighting_cache = 1
   let g:airline_detect_spell=0
-  let g:airline_extentions = []
+  let g:airline#extensions#disable_rtp_load = 1
+  let g:airline_extensions = []
 
 " |-- Vim Airline Themes --|
   Plug 'vim-airline/vim-airline-themes'
