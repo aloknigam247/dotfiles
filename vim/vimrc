@@ -1,81 +1,93 @@
-"" This should be first
-"set nocompatible "Set no compatible
-"
-"
-"" Variables
-"" `````````
-"let g:diff_translations=0 "Disables localisations and speeds up syntax highlighting in diff mode
-"
-"
-"" Editor Settings
-"" ```````````````
-"set autoindent   " New line inherit the indentation of previous lines
-"set breakindent  " Every wrapped line will continue visually indented
-"set cindent      " C-style indentation"
-"set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
-"set expandtab    " Convert tabs to spaces
-"set shiftwidth=4 " When shifting, indent using spaces
-"set smartindent  " Do smart autoindenting when starting a new line
-"set tabstop=4    " Indent using spaces
-"set wrap         " Wrap text
-"
-"
-"" UI Options
-"" ``````````
-"set confirm              " Raise dialog on quit if file has unsaved changes
+set nocompatible " Set no compatible
+
+" Variables
+" `````````
+let g:diff_translations=0 " Disables localisations and speeds up syntax highlighting in diff mode
+let &titleold=getcwd()    " Set console title to path on vim exit
+
+
+" Config Options
+" ``````````````
+set autoread              " Auto reload changed file
+set clipboard=unnamedplus " Use + clipboard buffer
+set nobackup              " Do not create backup file
+set noswapfile            " Disable swap file
+set path+=**              " Look for all files in sub dirs
+
+
+" Editor Settings
+" ```````````````
+set autoindent   " New line inherit the indentation of previous lines
+set backspace=2  " Set backspace to indent,eol,start
+set breakindent  " Every wrapped line will continue visually indented
+set cindent      " C-style indentation"
+set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
+set expandtab    " Convert tabs to spaces
+set history=1000 " Increase undo limit
+set shiftwidth=4 " When shifting, indent using spaces
+set smartindent  " Do smart autoindenting when starting a new line
+set tabstop=4    " Indent using spaces
+set wrap         " Wrap text
+
+
+" UI Options
+" ``````````
+set confirm              " Raise dialog on quit if file has unsaved changes
 "set colorcolumn=101      " Highlight text boundary for character length greater than 100
+colorscheme darkblue     " Set colorscheme
 "set cursorline           " Highlight the line currently under cursor
-"set lazyredraw           " Don't redraw screen on macros, registers and other commands.
-"set diffopt+=vertical    " Open diff in vertical split
+set lazyredraw           " Don't redraw screen on macros, registers and other commands.
+set diffopt+=vertical    " Open diff in vertical split
 "set list                 " Show special characters
 "set lcs=space:·,tab:\ \  " Show space as ·, tab as clear spaces
-"set mouse=a              " Enable mouse support
-"set number               " Enable line number
-"set splitbelow           " Place new window below on :split
-"set splitright           " Place new window right on :vsplit
-"set termguicolors        " Enable true colors support
-"set t_Co=256             " Set color size
-"set visualbell           " Flash the screen instead of beeping on errors
-"set wildmenu             " Show matching text on status line when <TAB>
-"
-"if v:version > 800
-"set culopt=number,screenline " Highlight current line and line number of current window
-"endif
-"
-"
-"" Auto Completion Settings
-"" ````````````````````````
+set laststatus=1         " Show status line on the bottom on multiple files
+set mouse=a              " Enable mouse support
+set number               " Enable line number
+set ruler                " Show cursor position all time
+set showcmd              " Display incomplete command
+set splitbelow           " Place new window below on :split
+set splitright           " Place new window right on :vsplit
+set termguicolors        " Enable true colors support
+set t_Co=256             " Set color size
+set title                " Set console title
+set ttyfast              " Smooth rendering
+set ttymouse=sgr         " Fix mouse support in half screen
+set visualbell           " Flash the screen instead of beeping on errors
+set wildmenu             " Show matching text on status line when <TAB>
+
+if v:version > 800
+set culopt=number,screenline " Highlight current line and line number of current window
+endif
+
+
+" Auto Completion Settings
+" ````````````````````````
 "set complete+=d,t " scan for defined name/macro, include tag completion
 "set cscopetag     " Use cscope for tag commands.
 "set cscopeverbose " Give messages when adding a cscope database.
 ""set tagcase=smart " If search has uppercase then case sensitive search
-"
-"
-"" Search Options
-"" ``````````````
-"set hlsearch   " Enable search highlighting
-"set ignorecase " Ignore case when searching
-"set incsearch  " Incremental search that shows partial matches
-"set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
-"
-"
-"" Config Options
-"" ``````````````
-"set noswapfile " Disable swap file
-"set autoread   " Auto reload changed file
-"set path+=**   " Look for all files in sub dirs
-"
-"
-"" Filetype Specific Options
-"" `````````````````````````
+
+
+" Search Options
+" ``````````````
+set hlsearch   " Enable search highlighting
+set ignorecase " Ignore case when searching
+set incsearch  " Incremental search that shows partial matches
+set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
+set tags=~/tags
+
+
+" Filetype Specific Options
+" `````````````````````````
 "autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
 "autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
 "filetype plugin indent on   " File based indentation
-"
-"
-"" Plugins - Vim-plug
-"" ``````````````````
-"call plug#begin()
+
+
+" Plugins - Vim-plug
+" ``````````````````
+call plug#begin()
+call plug#end()
 "" |-- Auto Pairs --|
 "  Plug 'jiangmiao/auto-pairs'
 "
@@ -93,11 +105,11 @@
 "  "nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 "
 "" |-- Indentline --|
-"  Plug 'Yggdroot/indentLine'
-"  let g:indentLine_char = '│'
+"  "Plug 'Yggdroot/indentLine'
+"  "let g:indentLine_char = '│'
 "
 "" |-- Profile Vim Startup --|
-"  Plug 'hyiltiz/vim-plugins-profile'
+"  "Plug 'hyiltiz/vim-plugins-profile'
 "
 "" |-- Rainbow Parentheses --|
 "  Plug 'kien/rainbow_parentheses.vim'
@@ -121,22 +133,6 @@
 "" |-- Underlines the word under the cursor --|
 "  Plug 'itchyny/vim-cursorword'
 "
-"" |-- Vim Airline --|
-"  Plug 'vim-airline/vim-airline'
-"  set noshowmode
-"  let g:airline#extensions#tabline#enabled = 1
-"  let g:airline_powerline_fonts = 1
-"  let g:airline_highlighting_cache = 1
-"  let g:airline_detect_spell=0
-"  let g:airline#extensions#disable_rtp_load = 1
-"  let g:airline_extensions = []
-"
-"" |-- Vim Airline Themes --|
-"  Plug 'vim-airline/vim-airline-themes'
-"  " Both: jellybeans jet soda tomorrow zenburn
-"  " Dark: atomic ayu base16 distinguished powerlineish ravenpower seagull
-"  " Light: cool desertink durant hybridline silver sol wombat
-"
 "" |-- Vim Signify --|
 "  Plug 'mhinz/vim-signify'
 "  "let g:signify_line_highlight = 1
@@ -152,9 +148,8 @@
 "  if v:version > 800
 "    Plug 'gelguy/wilder.nvim'
 "  endif
-"call plug#end()
-"
-"
+
+
 "" Colorscheme
 "" ```````````
 "if strftime('%H') > 7 && strftime('%H') < 19
@@ -168,7 +163,6 @@
 "        colorscheme ayu
 "    endif
 "endif
-"
 "
 "" Wilder Config
 "" `````````````

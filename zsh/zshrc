@@ -1,0 +1,42 @@
+test -f ~/.localrc && source ~/.localrc
+
+export PROMPT='%F{green}%~%F{white}%B›%b %f'
+# Shortnames
+
+alias cp='cp -rf'
+alias rm='rm -rf'
+alias settings='vim /mnt/c/Users/alokn/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json'
+alias ls='ls -F --color=auto'
+alias la='ls -AF --color=auto'
+alias ll='ls -lF --color=auto --time-style=+"%a %d/%b/%Y%_I:%M%P"'
+alias lla='ls -AlF --color=auto --time-style=+"%a %d/%b/%Y%_I:%M%P"'
+alias grep='egrep --color=auto'
+alias tree='tree -CF'
+alias treea='tree -aCF'
+alias sr='source ~/.zshrc'
+alias vpi='vim -c PlugInstall -c qa'
+alias vpcl='vim -c PlugClean! -c qa'
+alias gdb='gdb -q'
+
+# git shortcuts
+alias ga='git add . && git status -b -s'
+alias gb='git branch'
+alias gc='git commit'
+alias gcl='git clean -dfx'
+alias gdt='git difftool -y'
+alias gs='git status -b -s'
+
+setopt AUTO_CD
+setopt LIST_PACKED
+setopt HIST_IGNORE_DUPS
+setopt PRINT_EXIT_VALUE
+
+HISTSIZE=5000
+HISTFILE=~/.cache/zsh_history
+SAVEHIST=5000
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt INC_APPEND_HISTORY
+setopt NO_EXTENDED_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE

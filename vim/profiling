@@ -2,9 +2,9 @@
 
 rm -rf before && mkdir before
 echo "Enter to edit ~/.vimrc for before changes" && read -u0 -k1
-vim ~/.vimrc
+${2}vim ~/.vimrc
 echo "Profiling vim before changes, close file by :QQ. ENTER" && read -u0 -k1
-vim --cmd "profile start before/raw_profile" --cmd "profile file *" --cmd "command QQ profile pause | qa" $1
+${2}vim --startuptime before/startup --cmd "profile start before/raw_profile" --cmd "profile file *" --cmd "command QQ profile pause | qa" $1
 cd before
 sed -n '/^SCRIPT/,+3 p' raw_profile | split -l 4
 paste -d, -s x* > filter.csv
@@ -12,12 +12,13 @@ cd ..
 
 rm -rf after && mkdir after
 echo "Enter to edit ~/.vimrc for after changes" && read -u0 -k1
-vim ~/.vimrc
+${2}vim ~/.vimrc
 echo "Profiling vim after changes, close file by :QQ. ENTER" && read -u0 -k1
-vim --cmd "profile start after/raw_profile" --cmd "profile file *" --cmd "command QQ profile pause | qa" $1
+${2}vim --startuptime after/startup --cmd "profile start after/raw_profile" --cmd "profile file *" --cmd "command QQ profile pause | qa" $1
 cd after
 sed -n '/^SCRIPT/,+3 p' raw_profile | split -l 4
 paste -d, -s x* > filter.csv
 cd ..
 
-vim -d before/filter.csv after/filter.csv
+${2}vim -d before/filter.csv after/filter.csv
+${2}vim -d before/startup after/startup

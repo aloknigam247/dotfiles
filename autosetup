@@ -7,7 +7,7 @@ for i in ${!app_list[@]};do
     echo "    $i: ${app_list[$i]}"
 done
 
-read -p "Space seperated index list of apps to install: " -a opt
+read -p "Space seperated index list of dotfiles to install: " -a opt
 
 for o in ${opt[@]}; do
     app=${app_list[$o]}
@@ -28,7 +28,7 @@ for o in ${opt[@]}; do
                     fi
                 
                     echo "linking $src --> $dest"
-                    ln -frs $src $dest
+		    ln -fs $(pwd)/$src $dest
                 fi
 
             done

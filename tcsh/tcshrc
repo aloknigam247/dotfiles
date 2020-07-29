@@ -1,0 +1,53 @@
+#------+
+# Init |
+#------+
+test -f ~/.cshrc && source ~/.cshrc
+setenv TZ 'Asia/Kolkata'
+
+#--------+
+# Prompt |
+#--------+
+set RED       = '%{\e[1;31m%}'
+set GREEN     = '%{\e[0;32m%}'
+set YELLOW    = '%{\e[1;33m%}'
+set COLOR_DEF = '%{\e[0m%}'
+#set prompt   = "%B$YELLOW%M$RED \· $GREEN%~$COLOR_DEF $ %b"
+set prompt    = "%B$YELLOW%M$RED $GREEN%~$COLOR_DEF $ %b"
+unset RED GREEN YELLOW COLOR_DEF
+
+#------------+
+# Shortnames |
+#------------+
+alias cp    'cp -rf'
+alias grep  'egrep --color=auto'
+alias jobs  'jobs -l'
+alias ls    'ls-F --color=auto'
+alias la    'ls-F --color=auto -A'
+alias ll    'ls-F --color=auto -l --time-style=+"%a %d/%b/%Y%_I:%M%P"'
+alias lla   'ls-F --color=auto -Al --time-style=+"%a %d/%b/%Y%_I:%M%P"'
+alias rm    'rm -rf'
+alias sr    'source ~/.tcshrc'
+alias tree  'tree -CF'
+alias treea 'tree -aCF'
+alias -     'cd -'
+
+#---------+
+# Options |
+#---------+
+set autolist
+set complete='enhance'
+set history=1000
+set histdup='prev'
+set histfile = '~/.cache/csh_history'
+set implicitcd
+#set printexitvalue
+set rmstar
+
+#-------------+
+# Keybindings |
+#-------------+
+bindkey "^N" complete-word-fwd
+bindkey "^B" complete-word-back
+bindkey "^X*" expand-glob
+bindkey '^X$' expand-variables
+bindkey "^[?" which-command
