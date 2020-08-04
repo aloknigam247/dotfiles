@@ -332,10 +332,10 @@ function! plug#end()
   endfor
 
   call s:reorg_rtp()
-  "filetype plugin indent on " alok
+  filetype plugin indent on
   if has('vim_starting')
     if has('syntax') && !exists('g:syntax_on')
-      "syntax enable " alok
+      syntax enable
     end
   else
     call s:reload_plugins()
