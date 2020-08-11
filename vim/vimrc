@@ -16,6 +16,13 @@ call plug#begin()
 "  Plug 'NLKNguyen/papercolor-theme' " Light
   Plug 'notpratheek/vim-sol'         " Light
 
+" |-- Context --|
+  Plug 'wellle/context.vim', {'on': 'ContextToggle'}
+  let g:context_border_char = '='
+  let g:context_highlight_border = 'Special'
+  let g:context_highlight_normal = 'PMenu'
+  let g:context_presenter = 'vim-popup'
+
 " |-- CSS Colors --|
   "Plug 'ap/vim-css-color'
 
@@ -45,32 +52,13 @@ call plug#begin()
   endfunction
 
 " |-- Rainbow Parentheses --|
-  Plug 'kien/rainbow_parentheses.vim'
-  let g:rbpt_loadcmd_toggle = 0
-  let g:rbpt_max = 8
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadBraces
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  let g:rbpt_colorpairs = [
-    \ ['Yellow',      '#F75C03'],
-    \ ['Green',       '#B4E33D'],
-    \ ['Magenta',     '#8338ec'],
-    \ ['DarkYellow',  '#fca311'],
-    \ ['DarkBlue',    '#3a86ff'],
-    \ ['Cyan',        '#f15bb5'],
-    \ ['DarkMagenta', '#0d3b66'],
-    \ ['Brown',       '#bc4749'],
-    \ ]
+  "Plug 'frazrepo/vim-rainbow'
+  "let g:rainbow_active = 1
+  "let g:rainbow_guifgs = ['#3a86ff', '#fca311', '#d90429', '#0ead69']
 
 " |-- Syntax Highlight --|
-  Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
-  let g:cpp_class_decl_highlight            = 1
-  let g:cpp_class_scope_highlight           = 1
-  let g:cpp_concepts_highlight              = 1
-  let g:cpp_member_variable_highlight       = 1
-  let g:cpp_no_function_highlight           = 0
-  let g:cpp_posix_standard                  = 1
+  Plug 'bfrg/vim-cpp-modern', {'for': ['c', 'cpp']}
+  let g:cpp_named_requirements_highlight = 1
 
 call plug#end()
 
@@ -139,6 +127,7 @@ let g:netrw_liststyle     = 3        " Set netrw style as tree
 " ``````````````
 set autoread                     " Auto reload changed file
 set clipboard=unnamedplus        " Use + clipboard buffer
+set foldnestmax=2                " Max fold level
 set nobackup                     " Do not create backup file
 set noswapfile                   " Disable swap file
 set path+=**                     " Look for all files in sub dirs
@@ -184,7 +173,7 @@ set showcmd                  " Display incomplete command
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support
-set t_Co=256                 " Set color size
+set t_Co=256                 " Set color depth
 set title                    " Set console title
 set ttyfast                  " Smooth rendering
 set ttymouse=sgr             " Fix mouse support in half screen

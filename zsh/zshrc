@@ -29,7 +29,6 @@ alias gs='git status -b -s'
 setopt AUTO_CD
 setopt LIST_PACKED
 setopt HIST_IGNORE_DUPS
-setopt PRINT_EXIT_VALUE
 
 HISTSIZE=5000
 HISTFILE=~/.cache/zsh_history
@@ -40,3 +39,5 @@ setopt INC_APPEND_HISTORY
 setopt NO_EXTENDED_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
+
+export DISPLAY=127.0.0.1:0.0
