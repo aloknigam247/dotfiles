@@ -1,6 +1,8 @@
 test -f ~/.localrc && source ~/.localrc
 
-export PROMPT='%F{green}%~%F{white}%B›%b %f'
+export BG_COL='#0a6acb'
+export FG_COL='#ebebeb'
+export PROMPT="%F{$FG_COL}%K{$BG_COL}%~ %k"
 # Shortnames
 
 alias cp='cp -rf'
