@@ -6,7 +6,7 @@ set guioptions+=c " Use console for dialogs
 set guioptions+=d " Use dark variant if possible
 set guioptions-=m " Hide menu bar
 set guioptions-=T " Hide tool bar
-set guifont=Fira\ Code\ weight=450\ 11 " Font
+set guifont=FiraCode\ Nerd\ Font\ 10 " Font
 
 if &diff
     set columns=208 " Set default column width

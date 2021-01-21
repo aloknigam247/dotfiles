@@ -12,18 +12,38 @@ alias precmd 'source ~/.precmd'
 #------------+
 # Shortnames |
 #------------+
+alias -     'cd -'
 alias cp    'cp -rf'
+alias eld   'echo $LD_LIBRARY_PATH | sed "s/:/\n/g"'
+alias epath 'echo $PATH | sed "s/:/\n/g"'
+alias g     'gvim `echo \!* | sed "s/:/ +/g"`'
+alias gdb   'gdb -q'
 alias grep  'egrep --color=auto'
 alias jobs  'jobs -l'
-alias ls    'ls-F --color=auto'
 alias la    'ls-F --color=auto -A'
-alias ll    'ls-F --color=auto -l --time-style=+"%a %d/%b/%Y%_I:%M%P"'
-alias lla   'ls-F --color=auto -Al --time-style=+"%a %d/%b/%Y%_I:%M%P"'
+alias ll    'ls-F --color=auto -l --time-style=+"%a %d/%b/%y %_I:%M%P"'
+alias lla   'ls-F --color=auto -Al --time-style=+"%a %d/%b/%y %_I:%M%P"'
+alias ls    'ls-F --color=auto'
 alias rm    'rm -rf'
 alias sr    'source ~/.tcshrc'
 alias tree  'tree -CF'
 alias treea 'tree -aCF'
-alias -     'cd -'
+alias vim   'vim `echo \!* | sed "s/:/ +/g"`'
+
+setenv EDITOR   'vim'
+setenv MANPAGER 'vim -M +"set nonu" +MANPAGER +"set nolist" +"highlight clear CursorLine" -'
+
+#---------------+
+# gtags aliases |
+#---------------+
+alias cs  'gtags-cscope -d'
+alias csi 'gtags-cscope -C -d'
+alias gd  'global -d --color=auto --result=grep'
+alias gf  'global -f --color=auto --result=grep'
+alias gp  'global -P'
+alias gr  'global -r --color=auto --result=grep'
+alias gu  'global -vu'
+setenv GTAGSFORCECPP
 
 #---------+
 # Options |
@@ -44,3 +64,12 @@ bindkey "^B" complete-word-back
 bindkey "^X*" expand-glob
 bindkey '^X$' expand-variables
 bindkey "^[?" which-command
+
+#-------------+
+# Completions |
+#-------------+
+#complete rsh	p/1/\$hosts/ c/-/"(l n)"/   n/-l/u/ N/-l/c/ n/-/c/ p/2/c/ p/*/f/
+complete alias 'p/1/a/'
+complete cd    'p/1/d/'
+complete man   'n/*/c/'
+complete which 'p/*/c/'

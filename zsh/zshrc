@@ -1,24 +1,59 @@
-test -f ~/.localrc && source ~/.localrc
 
-export BG_COL='#0a6acb'
-export FG_COL='#ebebeb'
-export PROMPT="%F{$FG_COL}%K{$BG_COL}%~ %k"
+#  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
+# ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
+# ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
+# ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
+# ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
+# ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝                                  
+autoload -Uz compinit
+compinit
+
+test -f ~/.local/zshrc && source ~/.local/zshrc
+export TZ='Asia/Kolkata'
+
+case $THEME in
+    "RED")
+        export PROMPT="%K{1}%M %K{250}%F{1}%f %F{1}%~%f %k%F{250}%f "
+        ;;
+    "BLUE")
+        export PROMPT="%K{4}%M %K{250}%F{4}%f %F{4}%~%f %k%F{250}%f "
+        ;;
+    "BLACK")
+        export PROMPT="%K{0}%M %K{250}%F{0}%f %F{0}%~%f %k%F{250}%f "
+        ;;
+    "GREEN")
+        export PROMPT="%K{27}%M %K{2}%F{27}%f %F{0}%~%f %k%F{2}%f "
+        ;;
+    "YELLOW")
+        export PROMPT="%K{172}%M %K{250}%F{172}%f %F{172}%~%f %k%F{250}%f "
+        ;;
+    *)
+        export PROMPT="%K{24}%M %K{31}%F{24}%f %~ %k%F{31}%f "
+        ;;
+esac
+
 # Shortnames
-
 alias cp='cp -rf'
+alias eld='echo $LD_LIBRARY_PATH | sed "s/:/\n/g"'
+alias epath='echo $PATH | sed "s/:/\n/g"'
+alias g='gvim'
+alias gdb='gdb -q'
+alias grep='egrep --color=auto'
+alias jobs='jobs -l'
+alias la='ls -AF --color=auto'
+alias ll='ls -lF --color=auto --time-style=+"%a %d/%b/%Y %_I:%M%P"'
+alias lla='ls -AlF --color=auto --time-style=+"%a %d/%b/%Y %_I:%M%P"'
+alias ls='ls -F --color=auto'
 alias rm='rm -rf'
 alias settings='vim /mnt/c/Users/alokn/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json'
-alias ls='ls -F --color=auto'
-alias la='ls -AF --color=auto'
-alias ll='ls -lF --color=auto --time-style=+"%a %d/%b/%Y%_I:%M%P"'
-alias lla='ls -AlF --color=auto --time-style=+"%a %d/%b/%Y%_I:%M%P"'
-alias grep='egrep --color=auto'
+alias sr='source ~/.zshrc'
 alias tree='tree -CF'
 alias treea='tree -aCF'
-alias sr='source ~/.zshrc'
-alias vpi='vim -c PlugInstall -c qa'
+alias vim='vim'
 alias vpcl='vim -c PlugClean! -c qa'
-alias gdb='gdb -q'
+alias vpi='vim -c PlugInstall -c qa'
+
+export EDITOR='vim'
 
 # git shortcuts
 alias ga='git add . && git status -b -s'
@@ -28,18 +63,84 @@ alias gcl='git clean -dfx'
 alias gdt='git difftool -y'
 alias gs='git status -b -s'
 
+#---------------+
+# gtags aliases |
+#---------------+
+alias cs='gtags-cscope -d'
+alias csi='gtags-cscope -C -d'
+alias gd='global -d --color=auto --result=grep'
+alias gf='global -f --color=auto --result=grep'
+alias gp='global -P'
+alias gr='global -r --color=auto --result=grep'
+alias gu='global -vu'
+export GTAGSFORCECPP
+
+#---------------+
+# suffix aliases |
+#---------------+
+alias -s {c,C,cc,h,H}=vim
+
+setopt APPEND_HISTORY
+setopt EMACS
 setopt AUTO_CD
+setopt ALWAYS_TO_END
+setopt NO_CLOBBER
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+#setopt INC_APPEND_HISTORY
 setopt LIST_PACKED
-setopt HIST_IGNORE_DUPS
+setopt MENU_COMPLETE
+#setopt NO_EXTENDED_HISTORY
+setopt PUSHD_IGNORE_DUPS
+#setopt SHARE_HISTORY
 
 HISTSIZE=5000
 HISTFILE=~/.cache/zsh_history
 SAVEHIST=5000
-setopt APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
-setopt NO_EXTENDED_HISTORY
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
 
-export DISPLAY=127.0.0.1:0.0
+eval $(dircolors ~/.dircolors)
+
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[Z" reverse-menu-complete
+bindkey "^[w" kill-region
+
+
+# complettion
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle ':completion:*' completer _match _complete _approximate
+zstyle ':completion:*' file-sort name
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' ignore-parents parent
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list 'm:{-_}={_-}' 'r:|[._-/]=** r:|=**' 'm:{[:lower:]}={[:upper:]}'
+zstyle ':completion:*' menu select=1
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' verbose true
+
+#zstyle :compinstall filename '/home/alokn/.zshrc'
+uln() {
+    for i in $*; do
+        lnk=$(realpath $i)
+        rm $i
+        cp $lnk $i
+        shift
+    done 
+}
+
+wh() {
+    case "$(type $1)" in
+        *function*)
+            whence -f $1
+            ;;
+        *)
+            which $1
+            ;;
+    esac
+}
+
+bk() {
+    cp $1 $1.bk
+}

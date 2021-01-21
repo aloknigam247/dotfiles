@@ -1,117 +1,216 @@
+
+"  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
+" ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
+" ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
+" ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
+" ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
+" ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝                                  
+
 set nocompatible " Set no compatible
 
 " Plugins - Vim-plug
 " ``````````````````
-call plug#begin()
-  Plug 'lfv89/vim-interestingwords'
-  let g:interestingWordsRandomiseColors = 1
+" Plug 'rhysd/vim-clang-format'
 
+call plug#begin()
 " |-- Colorschemes --|
-"  Plug 'NLKNguyen/papercolor-theme' " Light, Dark, Diff
-"    let g:PaperColor_Theme_Options = {'language': {'cpp': {'highlight_standard_library': 1},'c': {'highlight_builtins' : 1}}}
-"  Plug 'Rigellute/rigel' " Dark 
-"    let g:rigel_lightline = 1
-"  Plug 'aonemd/kuroi.vim'
-"  Plug 'ayu-theme/ayu-vim'
-  Plug 'fxn/vim-monochrome'
-  Plug 'google/vim-colorscheme-primary' 
-"  Plug 'hardcoreplayers/oceanic-material'
-"  Plug 'hardselius/warlock'
-"  Plug 'https://gitlab.com/rj-white/vim-colors-paramountblue'
-"  Plug 'jacoborus/tender.vim'
-"  Plug 'kevinsawicki/monokai'
-"  Plug 'kristijanhusak/vim-hybrid-material'
-"  Plug 'mkarmona/materialbox'
-"  Plug 'nanotech/jellybeans.vim'
-"  Plug 'nightsense/seabird'
-"  Plug 'nightsense/snow'
-"  Plug 'nikolvs/vim-sunbather'
-"  Plug 'notpratheek/vim-luna'
-"  Plug 'notpratheek/vim-sol'
-"  Plug 'ntk148v/vim-horizon'
-"  Plug 'owickstrom/vim-colors-paramount'
-"  Plug 'patstockwell/vim-monokai-tasty'
-"  Plug 'rakr/vim-one'
-"  Plug 'rakr/vim-two-firewatch'
-"  Plug 'reedes/vim-colors-pencil'
-"  Plug 'rhysd/vim-color-spring-night'
-"  Plug 'srcery-colors/srcery-vim'
-"  Plug 'wadackel/vim-dogrun'
+Plug 'NLKNguyen/papercolor-theme'
+" Variant | Normal | Diff | Signify |  Lighline  | Comments
+"  Light  |   ✓    |  ✓   |    ✓    | PaperColor |
+"  Dark   |   ✓    |  ✓   |    ✓    | PaperColor | dark diff is very good, Lightline is not as good, Insert mode color is not good
+
+Plug 'aonemd/kuroi.vim'
+" Variant | Normal | Diff | Signify | Lighline | Comments
+"  Light  |   ✓    |  x   |    ✓    |    one   | light theme is not so good
+"  Dark   |   ✓    |  x   |    ✓    |    one   | dark theme is good
+
+Plug 'ayu-theme/ayu-vim' " Dark Signify Lightline=ayu -- clear at night
+let ayucolor="dark"
+" Variant | Normal | Diff | Signify | Lighline | Comments
+"  Light  |   ✓    |  x   |    ✓    |    ayu   | light theme is very good, visiual separation is missing
+"  Mirage |   ✓    |  x   |    ✓    |    ayu   | Not as good as dark, visiual separation is missing
+"   Dark  |   ✓    |  x   |    ✓    |    ayu   | clear colors more than kuroi, visiual separation is missing
+
+Plug 'hardcoreplayers/oceanic-material' " Lighline=srcery_drk
+let g:oceanic_material_background = 'ocean' " darker
+let g:oceanic_material_allow_bold = 1
+let g:oceanic_material_allow_italic = 1
+let g:oceanic_material_allow_underline = 1
+let g:oceanic_material_allow_undercurl = 1
+let g:oceanic_material_allow_reverse = 1
+" Variant | Normal | Diff | Signify |  Lighline  | Comments
+"  Dark   |   ✓    |   ✓  |    ✓    | srcery_drk | not so good at work
+
+Plug 'nanotech/jellybeans.vim'
+" Variant | Normal | Diff | Signify |  Lighline   | Comments
+"  Dark   |   ✓    |   ✓  |    x    | powerlineish | diff is good
+
+Plug 'notpratheek/vim-luna'
+" Variant | Normal | Diff | Signify |  Lighline   | Comments
+"  Dark   |   ✓    |   ✓  |    ✓    | powerlineish | diff is good, wild menu colo hl is bad
+
+Plug 'notpratheek/vim-sol'
+" Variant | Normal | Diff | Signify |  Lighline   | Comments
+"  Light  |   ✓    |   ✓  |    x    | powerlineish | make comments less visisble, but that's good
+
+Plug 'patstockwell/vim-monokai-tasty'
+" Variant | Normal | Diff | Signify |    Lighline   | Comments
+"  Dark   |   ✓    |   ✓  |    x    | monokai_tasty | Signify needs improvement
+
+Plug 'reedes/vim-colors-pencil'
+let g:pencil_gutter_color = 1 
+" Variant | Normal | Diff | Signify | Lighline | Comments
+"  Light  |   x    |   x  |    ✓    |  default |
+"  Dark   |   ✓    |   x  |    ✓    |  default |
+
+Plug 'srcery-colors/srcery-vim'
+let g:srcery_inverse_matches = 1
+" Variant | Normal | Diff | Signify | Lighline | Comments
+"  Dark   |   ✓    |   x  |    ✓    |  srcery  | Dark theme is okay, no color for trailing spaces
+
 
 " |-- Context --|
-  Plug 'wellle/context.vim', {'on': 'ContextToggle'}
-  let g:context_border_char = '-'
-  let g:Context_border_indent = { -> 0  } " Full width seperator
-  let g:context_highlight_border = 'Special'
+Plug 'wellle/context.vim', {'on': 'ContextToggle'}
+let g:context_border_char = '-'
+let g:Context_border_indent = { -> 0 } " Full width seperator
+let g:context_highlight_border = 'Special'
 
 " |-- CSS Colors --|
-  Plug 'ap/vim-css-color'
+Plug 'ap/vim-css-color'
 
 " |-- Cursorword --|
-  Plug 'itchyny/vim-cursorword'
+Plug 'itchyny/vim-cursorword'
+"Plug 'RRethy/vim-illuminate'
+
+" |-- Git Branch --|
+Plug 'itchyny/vim-gitbranch'
 
 " |-- Indentline --|
-"  Plug 'Yggdroot/indentLine'
-"  let g:indentLine_char = '│'
+"  Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'thaerkh/vim-indentguides'
+"let g:indentguides_spacechar = '▕'
+
+" |-- Interesting Words --|
+Plug 'lfv89/vim-interestingwords'
+let g:interestingWordsGUIColors = ['#AEEE00', '#48ACF0', '#1446A0', '#5BC0BE', '#679436', '#F6AE2D', '#EDE745', '#5448C8', '#E2AFDE', '#CC5A71', '#C81D25', '#C9DDFF', '#EB6534', '#63372C', '#f15bb5']
+let g:interestingWordsRandomiseColors = 1
+
+" |-- LeaderF --|
+"Plug 'Yggdroot/LeaderF'
+"let g:Lf_WindowPosition = 'popup'
+"let g:Lf_PreviewInPopup = 1
+"let g:Lf_StlSeparator = { 'left': '', 'right': '' }
 
 " |-- Lightline --|
-  Plug 'itchyny/lightline.vim'
-  let g:lightline = {
-    \ 'colorscheme': 'falcon',
-  	\ 'component': {
-  	\   'lineinfo': ' %3l:%-2v',
-  	\ },
-  	\ 'component_function': {
-  	\   'readonly': 'LightlineReadonly',
-  	\   'fugitive': 'LightlineFugitive'
-  	\ },
-  	\ 'separator': { 'left': '', 'right': '' },
-  	\ 'subseparator': { 'left': '', 'right': '' }
-  	\ }
-  function! LightlineReadonly()
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+            \ 'active': {
+            \     'left': [['mode', 'paste'], ['readonly', 'filename', 'modified', 'gitbranch']],
+            \     'right': [['lineinfo'], ['percent'], ['fileformat', 'filetype']]
+            \   },
+            \ 'inactive': {
+            \     'left': [['mode', 'paste'], ['readonly', 'filename', 'modified']],
+            \     'right': [['lineinfo'], ['percent'], ['fileformat', 'filetype']]
+            \   },
+            \ 'colorscheme': 'default',
+            \ 'component': {
+            \   'lineinfo': ' %l:%v',
+            \ },
+            \ 'component_function': {
+            \   'filetype': 'MyFiletype',
+            \   'fileformat': 'MyFileformat',
+            \   'gitbranch': 'gitbranch#name',
+            \   'readonly': 'LightlineReadonly',
+            \ },
+            \ 'separator': { 'left': '', 'right': '' },
+            \ 'subseparator': { 'left': '', 'right': '' }
+            \ }
+function! LightlineReadonly()
     return &readonly ? '' : ''
-  endfunction
+endfunction
 
-" |-- Rainbow Parentheses --|
-  "Plug 'frazrepo/vim-rainbow'
-  "let g:rainbow_active = 1
-  "let g:rainbow_guifgs = ['#3a86ff', '#fca311', '#d90429', '#0ead69']
+" |-- Devicons --|
+Plug 'ryanoasis/vim-devicons'
+function! MyFileformat()
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+"Plug 'cj/vim-webdevicons'
+"function! MyFiletype()
+"  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+"endfunction
+"
+"function! MyFileformat()
+"  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+"endfunction
+
+" |- Nerd Tree -|
+Plug 'preservim/nerdtree'
+
+Plug 'sheerun/vim-polyglot'
 
 " |-- Syntax Highlight --|
-  Plug 'bfrg/vim-cpp-modern', {'for': ['c', 'cpp']}
-  let g:cpp_named_requirements_highlight = 1
+Plug 'bfrg/vim-cpp-modern', {'for': ['c', 'cpp']}
+let g:cpp_named_requirements_highlight = 1
+
+" |-- Tagbar --|
+Plug 'preservim/tagbar', {'on': 'TagBar'}
+
+" |-- Undo Tree --|
+"  Plug 'mbbill/undotree'
+
+" Plug 'ajh17/VimCompletesMe'
+
+" |-- Vim Signature --|
+"  Plug 'kshenoy/vim-signature'
+
+" |-- Vim Signify --|
+Plug 'mhinz/vim-signify'
+let g:signify_line_highlight = 0
+let g:signify_fold_context = [1, 3] " [foldlevel0, foldlevel1]
+" Commands:
+"   SignifyDiff: Opens a diff in new tab
+"   SignifyFold: Opens folded unchanged lines
+
+" |-- Vim Vp4 --|
+"  Plug 'ngemily/vim-vp4'
+
+" |-- Wilder --|
+Plug 'gelguy/wilder.nvim'
+
+Plug 'nfvs/vim-perforce'
+let g:perforce_auto_source_dirs = [$CLIENT_HOME]
+
+Plug 'MattesGroeger/vim-bookmarks'
+
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'}
+let g:over#command_line#substitute#replace_pattern_visually = 1
 
 call plug#end()
-
 
 "" |-- Git Blamer --|
 "  "Plug 'zivyangll/git-blame.vim'
 "  "nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
-"
-"" |-- Vim Signify --|
-"  Plug 'mhinz/vim-signify'
-"  "let g:signify_line_highlight = 1
-"  let g:signify_fold_context = [1, 3] " [foldlevel0, foldlevel1]
-"  " Commands:
-"  "   SignifyDiff: Opens a diff in new tab
-"  "   SignifyFold: Opens folded unchanged lines
-"
-"" |-- Wilder --|
-"  if v:version > 800
-"    Plug 'gelguy/wilder.nvim'
-"  endif
 
-"
-"" Wilder Config
-"" `````````````
-"if v:version > 800
-"" |-- Wilder --|
-"  call wilder#enable_cmdline_enter()
-"  set wildcharm=<Tab>
-"  cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-"  cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-"  call wilder#set_option('modes', ['/', '?', ':'])
-"endif
+
+" Wilder Config
+" `````````````
+call wilder#enable_cmdline_enter()
+set wildcharm=<Tab>
+cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+call wilder#set_option('modes', ['/', '?', ':'])
+
+" Signify
+" ```````
+let g:signify_vcs_cmds = {
+            \ 'git':      'git diff --no-color --no-ext-diff -U0 -- %f',
+            \ 'perforce': 'p4 info '. sy#util#shell_redirect('%n') . (has('win32') ? ' &&' : ' && env P4DIFF= P4COLORS=') .' p4 diff -du0 -f %f'
+            \ }
 
 
 " Variables
@@ -123,39 +222,37 @@ let g:diff_translations   = 0        " Disables localisations and speeds up synt
 let g:load_doxygen_syntax = 1        " Recognize doxygen comment style
 let g:netrw_liststyle     = 3        " Set netrw style as tree
 
+
 " Config Options
 " ``````````````
-set autoread                      " Auto reload changed file
-set clipboard=unnamedplus         " Use + clipboard buffer
-set foldnestmax=2                 " Max fold level
-set nobackup                      " Do not create backup file
-set noswapfile                    " Disable swap file
-set path+=**                      " Look for all files in sub dirs
-set path+=/usr/include/c++/10.2.0 " include c++ header files
+set autoread              " Auto reload changed file
+set autowrite             " Auto write changes
+set clipboard=unnamedplus " Use + clipboard buffer
+set foldnestmax=2         " Max fold level
+set nobackup              " Do not create backup file
+set noswapfile            " Disable swap file
+set path+=**              " Look for all files in sub dirs
+set termwinkey=<ESC>      " Set termwinkey as ESC
 
 
 " Editor Settings
 " ```````````````
-set autoindent   " New line inherit the indentation of previous lines
 set backspace=2  " Set backspace to indent,eol,start
 set breakindent  " Every wrapped line will continue visually indented
-"set cindent      " C-style indentation
 set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
 set expandtab    " Convert tabs to spaces
 set history=1000 " Increase undo limit
 set shiftwidth=4 " When shifting, indent using spaces
-"set smartindent  " Do smart autoindenting when starting a new line
 set tabstop=4    " Indent using spaces
 set wrap         " Wrap text
-syn enable                   " Syntax highlighting on, w/o overriding
+syn enable       " Syntax highlighting on, w/o overriding
 
 
 " UI Options
 " ``````````
-colorscheme primary       " Set colorscheme 
-"highlight clear CursorLine   " No underline on text when cursorline is on
-"highlight clear CursorLineNR " No underline on line numbers when cursorline is on
-set background=dark          " Select appropriate colors for dark or light
+let g:netrw_banner = 0        " Turn off banner in netrw
+set background=dark           " Select appropriate colors for dark or light
+set cinoptions+=l1,N-s,E-s,(0,w1
 "set colorcolumn=101          " Highlight text boundary for character length greater than 100
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -164,6 +261,7 @@ set diffopt+=vertical        " Open diff in vertical split
 set encoding=utf-8           " Handles multibyte characters correctly
 set laststatus=2             " Show status line on the bottom on multiple files
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
+set lcs=tab:>-      " Show space as ·, tab as clear spaces
 "set lcs=space:·,tab:\ \      " Show space as ·, tab as clear spaces
 "set list                     " Show special characters
 set mouse=a                  " Enable mouse support
@@ -181,7 +279,10 @@ set ttyfast                  " Smooth rendering
 set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set wildmenu                 " Show matching text on status line when <TAB>
-"color PaperColor             " Needed for Papercolor 
+set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
+colorscheme sol " Set colorscheme 
+highlight clear CursorLine   " No underline on text when cursorline is on
+highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
 
 " Auto Completion Settings
@@ -197,11 +298,39 @@ set hlsearch   " Enable search highlighting
 set ignorecase " Ignore case when searching
 set incsearch  " Incremental search that shows partial matches
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
-set tags=~/tags
+
+function GtagsCursorRef()
+    let cwrd = expand("<cword>")
+    return ':Gtags -r ' . cwrd
+endfunction
+
+"if exists("$GTAGS_VIM")
+"    let g:Gtags_Auto_Map = 0
+"    source $GTAGS_VIM
+"    nnoremap <leader>d :GtagsCursor<CR>
+"    nnoremap <expr> <leader>r GtagsCursorRef() . "<CR>"
+"endif
 
 
 " Filetype Specific Options
 " `````````````````````````
-"autocmd BufNewFile,BufRead *.cyt set syntax=sh " Set cyt filetype as bash
-"autocmd Filetype make set noexpandtab shiftwidth=4 softtabstop=0 nocin
-"filetype plugin indent on   " File based indentation
+autocmd BufNewFile,BufRead *.qel set filetype=tcl " Set qel filetype as tcl
+autocmd BufNewFile,BufRead *.cyt set filetype=sh  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.make set filetype=make  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.v set filetype=verilog  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.vg set filetype=verilog  " Set cyt filetype as bash
+"autocmd Filetype make set noexpandtab shiftwidth=7 softtabstop=0 nocin
+filetype indent on " File based indentation
+
+
+" Mappings
+" ````````
+" Map ^L to nohl, \K and ^L
+map <C-a> ^
+map <C-e> $
+map <C-LEFT> ge
+
+
+let g:termdebug_wide = 163
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+let ycm_confirm_extra_conf = 0

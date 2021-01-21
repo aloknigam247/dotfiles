@@ -1,1 +1,4 @@
+source ~/.local/.gdbinit
+
 set print pretty on
+set print thread-events off

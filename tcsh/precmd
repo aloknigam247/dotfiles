@@ -3,16 +3,16 @@ setenv LC_ALL en_US.UTF-8
 set BG_CODE = '\e[48;5;'
 set FG_CODE = '\e[38;5;'
 
-set BG1 = '124m'
-set BG2 = '250m'
-set BG3 = '232m'
+set BG1 = '27m'
+set BG2 = '2m'
+set BG3 = '3m'
 set FG1 = '256m'
 set FG2 = '0m'
-set FG3 = '256m'
+set FG3 = '0m'
 set RST = '%{\e[0m%}'
 
-set SEP_FILL = `printf '\ue0b0'`
-set BRN_SYM  = `printf '\ue0a0'`
+set SEP_FILL = `printf '\ue0c8'`
+set BRN_SYM  = `printf '\ue725'`
 
 set HOST_SEC  = "%{$BG_CODE$BG1%}%{$FG_CODE$FG1%}%M"
 set SEP1      = "%{$BG_CODE$BG2%}%{$FG_CODE$BG1%}$SEP_FILL"
@@ -22,12 +22,12 @@ set P4_BRN   = `p4 info | sed -nr "s#Client stream.*/(cxx_)?#$BRN_SYM #p"`
 
 if ( $#P4_BRN == 0 ) then
     set SEP2   = "$RST%{$FG_CODE$BG2%}$SEP_FILL$RST"
-    set prompt = "$HOST_SEC $SEP1 $PATH_SEC $SEP2 "
+    set prompt = "$HOST_SEC $SEP1 $PATH_SEC $SEP2  "
 else
     set SEP2    = "%{$BG_CODE$BG3%}%{$FG_CODE$BG2%}$SEP_FILL"
     set BRN_SEC = "%{$BG_CODE$BG3%}%{$FG_CODE$FG3%}\$P4_BRN"
-    set SEP3    = "$RST%{$FG_CODE$BG3%}$SEP_FILL$RST "
-    set prompt  = "$HOST_SEC $SEP1 $PATH_SEC $SEP2 $BRN_SEC $SEP3"
+    set SEP3    = "$RST%{$FG_CODE$BG3%}$SEP_FILL$RST"
+    set prompt  = "$HOST_SEC $SEP1 $PATH_SEC $SEP2 $BRN_SEC $SEP3  "
 endif
 
 unset BG_CODE FG_CODE BG1 BG2 BG3 FG1 FG2 FG3 RST SEP_FILL BRN_SYM HOST_SEC SEP1 PATH_SEC P4_BRN SEP2 BRN_SEC SEP3
