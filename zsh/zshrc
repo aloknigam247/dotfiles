@@ -8,29 +8,64 @@
 autoload -Uz compinit
 compinit
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8d99ae"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+source ~/.zsh-suggest
+
 test -f ~/.local/zshrc && source ~/.local/zshrc
 export TZ='Asia/Kolkata'
 
 case $THEME in
     "RED")
-        export PROMPT="%K{1}%M %K{250}%F{1}%f %F{1}%~%f %k%F{250}%f "
+        DIV1_FG=250
+        DIV1_BG=1
+        DIV2_FG=$DIV1_BG
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=$DIV2_BG
         ;;
     "BLUE")
-        export PROMPT="%K{4}%M %K{250}%F{4}%f %F{4}%~%f %k%F{250}%f "
+        DIV1_FG=250
+        DIV1_BG=4
+        DIV2_FG=$DIV1_BG
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=$DIV2_BG
         ;;
     "BLACK")
-        export PROMPT="%K{0}%M %K{250}%F{0}%f %F{0}%~%f %k%F{250}%f "
+        DIV1_FG=250
+        DIV1_BG=0
+        DIV2_FG=$DIV1_BG
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=$DIV2_BG
         ;;
     "GREEN")
-        export PROMPT="%K{27}%M %K{2}%F{27}%f %F{0}%~%f %k%F{2}%f "
+        DIV1_FG=2
+        DIV1_BG=27
+        DIV2_FG=0
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=11
         ;;
     "YELLOW")
-        export PROMPT="%K{172}%M %K{250}%F{172}%f %F{172}%~%f %k%F{250}%f "
+        DIV1_FG=250
+        DIV1_BG=202
+        DIV2_FG=$DIV1_BG
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=$DIV2_BG
         ;;
     *)
-        export PROMPT="%K{24}%M %K{31}%F{24}%f %~ %k%F{31}%f "
+        DIV1_FG=250
+        DIV1_BG=0
+        DIV2_FG=$DIV1_BG
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=$DIV2_BG
         ;;
 esac
+export PROMPT="%K{$DIV1_BG}%M %K{$DIV1_FG}%F{$DIV1_BG}%f %F{$DIV2_FG}%~%f %k%F{$DIV2_BG}%f "
 
 # Shortnames
 alias cp='cp -rf'
@@ -91,8 +126,10 @@ setopt HIST_IGNORE_SPACE
 setopt LIST_PACKED
 setopt MENU_COMPLETE
 #setopt NO_EXTENDED_HISTORY
+setopt PROMPT_SUBST
 setopt PUSHD_IGNORE_DUPS
 #setopt SHARE_HISTORY
+setopt SH_WORD_SPLIT # splits variable value on space
 
 HISTSIZE=5000
 HISTFILE=~/.cache/zsh_history
@@ -104,7 +141,16 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[[Z" reverse-menu-complete
 bindkey "^[w" kill-region
-
+bindkey "^[[3~" delete-char
+# bindkey "^I" expand-or-complete-with-dots
+# bindkey "^X^E" edit-command-line
+# bindkey "^[OF" end-of-line
+# bindkey "^[OH" beginning-of-line
+# bindkey "^[[3;5~" kill-word
+# bindkey -s "^[l" "ls^J"
+# bindkey "^[m" copy-prev-shell-word
+# bindkey " " magic-space
+# bindkey -R "!"-"~" self-insert
 
 # complettion
 zstyle ':completion:*' use-cache on
@@ -140,6 +186,7 @@ wh() {
             ;;
     esac
 }
+compdef wh=which
 
 bk() {
     cp $1 $1.bk

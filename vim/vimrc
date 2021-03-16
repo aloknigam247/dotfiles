@@ -1,10 +1,10 @@
-
+"
 "  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
 " ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
 " ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
 " ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
-" ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝                                  
+" ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
 set nocompatible " Set no compatible
 
@@ -15,111 +15,60 @@ set nocompatible " Set no compatible
 call plug#begin()
 " |-- Colorschemes --|
 Plug 'NLKNguyen/papercolor-theme'
-" Variant | Normal | Diff | Signify |  Lighline  | Comments
-"  Light  |   ✓    |  ✓   |    ✓    | PaperColor |
-"  Dark   |   ✓    |  ✓   |    ✓    | PaperColor | dark diff is very good, Lightline is not as good, Insert mode color is not good
-
-Plug 'aonemd/kuroi.vim'
-" Variant | Normal | Diff | Signify | Lighline | Comments
-"  Light  |   ✓    |  x   |    ✓    |    one   | light theme is not so good
-"  Dark   |   ✓    |  x   |    ✓    |    one   | dark theme is good
-
-Plug 'ayu-theme/ayu-vim' " Dark Signify Lightline=ayu -- clear at night
+Plug 'aloknigam247/ayu-vim'
 let ayucolor="dark"
-" Variant | Normal | Diff | Signify | Lighline | Comments
-"  Light  |   ✓    |  x   |    ✓    |    ayu   | light theme is very good, visiual separation is missing
-"  Mirage |   ✓    |  x   |    ✓    |    ayu   | Not as good as dark, visiual separation is missing
-"   Dark  |   ✓    |  x   |    ✓    |    ayu   | clear colors more than kuroi, visiual separation is missing
+Plug 'jsit/toast.vim'
 
-Plug 'hardcoreplayers/oceanic-material' " Lighline=srcery_drk
-let g:oceanic_material_background = 'ocean' " darker
-let g:oceanic_material_allow_bold = 1
-let g:oceanic_material_allow_italic = 1
-let g:oceanic_material_allow_underline = 1
-let g:oceanic_material_allow_undercurl = 1
-let g:oceanic_material_allow_reverse = 1
-" Variant | Normal | Diff | Signify |  Lighline  | Comments
-"  Dark   |   ✓    |   ✓  |    ✓    | srcery_drk | not so good at work
-
-Plug 'nanotech/jellybeans.vim'
-" Variant | Normal | Diff | Signify |  Lighline   | Comments
-"  Dark   |   ✓    |   ✓  |    x    | powerlineish | diff is good
-
-Plug 'notpratheek/vim-luna'
-" Variant | Normal | Diff | Signify |  Lighline   | Comments
-"  Dark   |   ✓    |   ✓  |    ✓    | powerlineish | diff is good, wild menu colo hl is bad
-
-Plug 'notpratheek/vim-sol'
-" Variant | Normal | Diff | Signify |  Lighline   | Comments
-"  Light  |   ✓    |   ✓  |    x    | powerlineish | make comments less visisble, but that's good
-
-Plug 'patstockwell/vim-monokai-tasty'
-" Variant | Normal | Diff | Signify |    Lighline   | Comments
-"  Dark   |   ✓    |   ✓  |    x    | monokai_tasty | Signify needs improvement
-
-Plug 'reedes/vim-colors-pencil'
-let g:pencil_gutter_color = 1 
-" Variant | Normal | Diff | Signify | Lighline | Comments
-"  Light  |   x    |   x  |    ✓    |  default |
-"  Dark   |   ✓    |   x  |    ✓    |  default |
-
-Plug 'srcery-colors/srcery-vim'
-let g:srcery_inverse_matches = 1
-" Variant | Normal | Diff | Signify | Lighline | Comments
-"  Dark   |   ✓    |   x  |    ✓    |  srcery  | Dark theme is okay, no color for trailing spaces
-
-
-" |-- Context --|
+"" |-- Context --|
 Plug 'wellle/context.vim', {'on': 'ContextToggle'}
 let g:context_border_char = '-'
 let g:Context_border_indent = { -> 0 } " Full width seperator
 let g:context_highlight_border = 'Special'
 
-" |-- CSS Colors --|
+"" |-- CSS Colors --|
 Plug 'ap/vim-css-color'
 
-" |-- Cursorword --|
+"" |-- Cursorword --|
 Plug 'itchyny/vim-cursorword'
-"Plug 'RRethy/vim-illuminate'
 
-" |-- Git Branch --|
-Plug 'itchyny/vim-gitbranch'
+"" |-- Git Branch --|
+" Plug 'itchyny/vim-gitbranch'
 
-" |-- Indentline --|
-"  Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'thaerkh/vim-indentguides'
-"let g:indentguides_spacechar = '▕'
+"" |-- Indentline --|
+""  Plug 'nathanaelkane/vim-indent-guides'
+""Plug 'thaerkh/vim-indentguides'
+""let g:indentguides_spacechar = '▕'
 
-" |-- Interesting Words --|
+"" |-- Interesting Words --|
 Plug 'lfv89/vim-interestingwords'
 let g:interestingWordsGUIColors = ['#AEEE00', '#48ACF0', '#1446A0', '#5BC0BE', '#679436', '#F6AE2D', '#EDE745', '#5448C8', '#E2AFDE', '#CC5A71', '#C81D25', '#C9DDFF', '#EB6534', '#63372C', '#f15bb5']
 let g:interestingWordsRandomiseColors = 1
 
-" |-- LeaderF --|
-"Plug 'Yggdroot/LeaderF'
-"let g:Lf_WindowPosition = 'popup'
-"let g:Lf_PreviewInPopup = 1
-"let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+"" |-- LeaderF --|
+""Plug 'Yggdroot/LeaderF'
+""let g:Lf_WindowPosition = 'popup'
+""let g:Lf_PreviewInPopup = 1
+""let g:Lf_StlSeparator = { 'left': '', 'right': '' }
 
-" |-- Lightline --|
+"" |-- Lightline --|
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
             \ 'active': {
-            \     'left': [['mode', 'paste'], ['readonly', 'filename', 'modified', 'gitbranch']],
-            \     'right': [['lineinfo'], ['percent'], ['fileformat', 'filetype']]
-            \   },
+            \     'left': [['mode', 'paste'], ['readonly', 'filename_logo', 'modified', 'p4Info']],
+            \     'right': [['lineinfo'], ['fileformat', 'percent']]
+            \ },
             \ 'inactive': {
-            \     'left': [['mode', 'paste'], ['readonly', 'filename', 'modified']],
-            \     'right': [['lineinfo'], ['percent'], ['fileformat', 'filetype']]
-            \   },
-            \ 'colorscheme': 'default',
+            \     'left': [['mode', 'paste'], ['readonly', 'filename_logo', 'modified']],
+            \     'right': [['lineinfo'], ['percent']]
+            \ },
+            \ 'colorscheme': 'ayu',
             \ 'component': {
             \   'lineinfo': ' %l:%v',
             \ },
             \ 'component_function': {
-            \   'filetype': 'MyFiletype',
+            \   'filename_logo': 'MyFilename',
             \   'fileformat': 'MyFileformat',
-            \   'gitbranch': 'gitbranch#name',
+            \   'p4Info': 'P4Info',
             \   'readonly': 'LightlineReadonly',
             \ },
             \ 'separator': { 'left': '', 'right': '' },
@@ -129,44 +78,183 @@ function! LightlineReadonly()
     return &readonly ? '' : ''
 endfunction
 
+let g:fStat = {}
+function! P4Info()
+    if( g:fStat->has_key(expand('%:t')))
+        return g:fStat[expand('%:t')]
+    endif
+
+    let stat = systemlist('p4 fstat -T headRev,haveRev ' . expand('%:t'))
+    if len(stat) < 2
+        let g:fStat[expand('%:t')] = ''
+        return ''
+    endif
+    let head = split(stat[0], ' ')[-1]
+    let have = split(stat[1], ' ')[-1]
+    let st = '#' . have . '/' .  head
+    echo st
+    let g:fStat[expand('%:t')] = st
+    return st
+endfunction
+
 " |-- Devicons --|
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 function! MyFileformat()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+" {{{
+    let fmtLogo = { 
+                \ 'dos'  : '',
+                \ 'max'  : '',
+                \ 'unix' : ''
+                \ }
+    return fmtLogo[&fileformat]
 endfunction
-function! MyFiletype()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+" }}}
+
+function! MyFilename()
+" {{{
+    let fileLogo = {
+                \ 'ai'              : '',
+                \ 'awk'             : '',
+                \ 'bash'            : '',
+                \ 'c'               : '',
+                \ 'cpp'             : '',
+                \ 'clojure'         : '',
+                \ 'coffee'          : '',
+                \ 'csh'             : '',
+                \ 'css'             : '',
+                \ 'd'               : '',
+                \ 'dart'            : '',
+                \ 'dosbatch'        : '',
+                \ 'dosini'          : '',
+                \ 'fish'            : '',
+                \ 'forth'           : '',
+                \ 'go'              : '',
+                \ 'haml'            : '',
+                \ 'hbs'             : '',
+                \ 'erlang'          : '',
+                \ 'haskell'         : '',
+                \ 'html'            : '',
+                \ 'ico'             : '',
+                \ 'java'            : '',
+                \ 'javascript'      : '',
+                \ 'javascriptreact' : '',
+                \ 'json'            : '',
+                \ 'ksh'             : '',
+                \ 'less'            : '',
+                \ 'lhaskell'        : '',
+                \ 'lua'             : '',
+                \ 'markdown'        : '',
+                \ 'ocaml'           : 'λ',
+                \ 'php'             : '',
+                \ 'perl'            : '',
+                \ 'python'          : '',
+                \ 'r'               : '',
+                \ 'rmd'             : '',
+                \ 'rs'              : '',
+                \ 'ruby'            : '',
+                \ 'sass'            : '',
+                \ 'scala'           : '',
+                \ 'scss'            : '',
+                \ 'sh'              : '',
+                \ 'slim'            : '',
+                \ 'sln'             : '',
+                \ 'sql'             : '',
+                \ 'styl'            : '',
+                \ 'suo'             : '',
+                \ 'svg'             : '',
+                \ 'swift'           : '',
+                \ 'tads'            : '',
+                \ 'plaintex'        : 'ﭨ',
+                \ 'toml'            : '',
+                \ 'typescript'      : '',
+                \ 'tsx'             : '',
+                \ 'twig'            : '',
+                \ 'vim'             : '',
+                \ 'vue'             : '',
+                \ 'xml'             : '',
+                \ 'yaml'            : '',
+                \ 'zsh'             : '',
+                \ }
+
+  " let s:file_node_exact_matches = {
+  "       \ 'gruntfile.coffee'                 : '',
+  "       \ 'gruntfile.js'                     : '',
+  "       \ 'gruntfile.ls'                     : '',
+  "       \ 'gulpfile.coffee'                  : '',
+  "       \ 'gulpfile.js'                      : '',
+  "       \ 'gulpfile.ls'                      : '',
+  "       \ 'mix.lock'                         : '',
+  "       \ 'dropbox'                          : '',
+  "       \ '.ds_store'                        : '',
+  "       \ 'favicon.ico'                      : '',
+  "       \ 'license'                          : '',
+  "       \ 'node_modules'                     : '',
+  "       \ 'react.jsx'                        : '',
+  "       \ 'procfile'                         : '',
+  "       \ 'dockerfile'                       : '',
+  "       \ 'docker-compose.yml'               : '',
+  "       \ 'rakefile'                         : '',
+  "       \ 'config.ru'                        : '',
+  "       \ 'gemfile'                          : '',
+  "       \ 'makefile'                         : '',
+  "       \ 'cmakelists.txt'                   : ''
+  "       \}
+
+  "       \ '.*jquery.*\.js$'       : '',
+  "       \ '.*angular.*\.js$'      : '',
+  "       \ '.*backbone.*\.js$'     : '',
+  "       \ '.*require.*\.js$'      : '',
+  "       \ '.*materialize.*\.js$'  : '',
+  "       \ '.*materialize.*\.css$' : '',
+  "       \ '.*mootools.*\.js$'     : '',
+  "       \ '.*vimrc.*'             : '',
+  "       \ 'Vagrantfile$'          : ''
+  "       \}
+    if( fileLogo->has_key(&filetype))
+        return fileLogo[&filetype] . ' ' . expand('%:t') 
+    else
+        return expand('%:t')
+    endif
 endfunction
-"Plug 'cj/vim-webdevicons'
-"function! MyFiletype()
-"  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-"endfunction
-"
-"function! MyFileformat()
-"  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-"endfunction
+" }}}
 
-" |- Nerd Tree -|
-Plug 'preservim/nerdtree'
+""Plug 'cj/vim-webdevicons'
+""function! MyFiletype()
+""  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+""endfunction
+""
+" function! MyFileformat()
+"   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+" endfunction
 
-Plug 'sheerun/vim-polyglot'
+"" |- Nerd Tree -|
+"" Plug 'preservim/nerdtree'
 
-" |-- Syntax Highlight --|
-Plug 'bfrg/vim-cpp-modern', {'for': ['c', 'cpp']}
-let g:cpp_named_requirements_highlight = 1
+"" Plug 'sheerun/vim-polyglot'
 
-" |-- Tagbar --|
-Plug 'preservim/tagbar', {'on': 'TagBar'}
+"" |-- Syntax Highlight --|
+Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'cpp']}
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_concepts_highlight = 1
+let g:cpp_no_function_highlight = 1
 
-" |-- Undo Tree --|
-"  Plug 'mbbill/undotree'
+Plug 'srcery-colors/srcery-vim'
 
-" Plug 'ajh17/VimCompletesMe'
+"" |-- Tagbar --|
+"" Plug 'preservim/tagbar', {'on': 'TagBar'}
 
-" |-- Vim Signature --|
-"  Plug 'kshenoy/vim-signature'
+"" |-- Undo Tree --|
+""  Plug 'mbbill/undotree'
 
-" |-- Vim Signify --|
+Plug 'ajh17/VimCompletesMe'
+
+"" |-- Vim Signature --|
+""  Plug 'kshenoy/vim-signature'
+
+"" |-- Vim Signify --|
 Plug 'mhinz/vim-signify'
 let g:signify_line_highlight = 0
 let g:signify_fold_context = [1, 3] " [foldlevel0, foldlevel1]
@@ -174,36 +262,59 @@ let g:signify_fold_context = [1, 3] " [foldlevel0, foldlevel1]
 "   SignifyDiff: Opens a diff in new tab
 "   SignifyFold: Opens folded unchanged lines
 
-" |-- Vim Vp4 --|
-"  Plug 'ngemily/vim-vp4'
+"" |-- Vim Vp4 --|
+Plug 'ngemily/vim-vp4'
 
 " |-- Wilder --|
 Plug 'gelguy/wilder.nvim'
 
-Plug 'nfvs/vim-perforce'
-let g:perforce_auto_source_dirs = [$CLIENT_HOME]
+" Plug 'nfvs/vim-perforce'
+" let g:perforce_auto_source_dirs = [$CLIENT_HOME]
 
-Plug 'MattesGroeger/vim-bookmarks'
+"Plug 'MattesGroeger/vim-bookmarks'
 
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'}
-let g:over#command_line#substitute#replace_pattern_visually = 1
+"" Plug 'osyo-manga/vim-over', {'on': 'OverCommandLine'}
+"" let g:over#command_line#substitute#replace_pattern_visually = 1
+
+Plug 'tpope/vim-commentary'
+
+"" Plug 'mg979/vim-visual-multi'
+
+"" Plug 'xolox/vim-easytags'
+"" Plug 'xolox/vim-misc'
+
+" |-- CSV --|
+Plug 'chrisbra/csv.vim', {'for': 'csv'}
+:let g:csv_delim=','
+
+" Plug 'mengelbrecht/lightline-bufferline'
+" let g:lightline#bufferline#enable_devicons=1
+            " \ 'tabline': {
+            " \   'left': [ ['buffers'] ],
+            " \   'right': [ ['close'] ]
+            " \ },
+            " \ 'component_expand': {
+            " \   'buffers': 'lightline#bufferline#buffers'
+            " \ },
+            " \ 'component_type': {
+            " \   'buffers': 'tabsel'
+            " \ },
+
+" |-- Git Blamer --|
+"Plug 'zivyangll/git-blame.vim'
+"nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 call plug#end()
 
-"" |-- Git Blamer --|
-"  "Plug 'zivyangll/git-blame.vim'
-"  "nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
-
-
 " Wilder Config
 " `````````````
-call wilder#enable_cmdline_enter()
-set wildcharm=<Tab>
-cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-call wilder#set_option('modes', ['/', '?', ':'])
+ call wilder#enable_cmdline_enter()
+ set wildcharm=<Tab>
+ cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+ cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+ call wilder#set_option('modes', ['/', '?', ':'])
 
 " Signify
 " ```````
@@ -215,16 +326,19 @@ let g:signify_vcs_cmds = {
 
 " Variables
 " `````````
+" {1
 let &titleold             = getcwd() " Set console title to path on vim exit
 let c_curly_error         = 1        " Show curly braces error
 let c_space_errors        = 1        " Highlight trailing spaces
 let g:diff_translations   = 0        " Disables localisations and speeds up syntax highlighting in diff mode
 let g:load_doxygen_syntax = 1        " Recognize doxygen comment style
 let g:netrw_liststyle     = 3        " Set netrw style as tree
+" }1
 
 
 " Config Options
 " ``````````````
+" {{{
 set autoread              " Auto reload changed file
 set autowrite             " Auto write changes
 set clipboard=unnamedplus " Use + clipboard buffer
@@ -233,10 +347,12 @@ set nobackup              " Do not create backup file
 set noswapfile            " Disable swap file
 set path+=**              " Look for all files in sub dirs
 set termwinkey=<ESC>      " Set termwinkey as ESC
+" }}}
 
 
 " Editor Settings
 " ```````````````
+" {{{
 set backspace=2  " Set backspace to indent,eol,start
 set breakindent  " Every wrapped line will continue visually indented
 set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
@@ -245,15 +361,15 @@ set history=1000 " Increase undo limit
 set shiftwidth=4 " When shifting, indent using spaces
 set tabstop=4    " Indent using spaces
 set wrap         " Wrap text
-syn enable       " Syntax highlighting on, w/o overriding
+" }}}
 
 
 " UI Options
 " ``````````
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=dark           " Select appropriate colors for dark or light
+set background=light           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
-"set colorcolumn=101          " Highlight text boundary for character length greater than 100
+" set colorcolumn=101          " Highlight text boundary for character length greater than 100
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
 set cursorline               " Highlight the line currently under cursor
@@ -261,9 +377,8 @@ set diffopt+=vertical        " Open diff in vertical split
 set encoding=utf-8           " Handles multibyte characters correctly
 set laststatus=2             " Show status line on the bottom on multiple files
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=tab:>-      " Show space as ·, tab as clear spaces
-"set lcs=space:·,tab:\ \      " Show space as ·, tab as clear spaces
-"set list                     " Show special characters
+set lcs=space:·,tab:>-      " Show space as ·, tab as clear spaces
+" set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
@@ -280,10 +395,10 @@ set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set wildmenu                 " Show matching text on status line when <TAB>
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme sol " Set colorscheme 
+syn enable       " Syntax highlighting on, w/o overriding
+colorscheme ayu " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
-
 
 " Auto Completion Settings
 " ````````````````````````
@@ -294,15 +409,17 @@ highlight clear CursorLineNR " No underline on line numbers when cursorline is o
 
 " Search Options
 " ``````````````
+" {{{
 set hlsearch   " Enable search highlighting
 set ignorecase " Ignore case when searching
 set incsearch  " Incremental search that shows partial matches
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
+" }}}
 
-function GtagsCursorRef()
-    let cwrd = expand("<cword>")
-    return ':Gtags -r ' . cwrd
-endfunction
+" function GtagsCursorRef()
+"     let cwrd = expand("<cword>")
+"     return ':Gtags -r ' . cwrd
+" endfunction
 
 "if exists("$GTAGS_VIM")
 "    let g:Gtags_Auto_Map = 0
@@ -325,12 +442,12 @@ filetype indent on " File based indentation
 
 " Mappings
 " ````````
-" Map ^L to nohl, \K and ^L
 map <C-a> ^
 map <C-e> $
-map <C-LEFT> ge
 
 
 let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 let ycm_confirm_extra_conf = 0
+" vim: fdm=marker
