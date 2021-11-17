@@ -195,15 +195,16 @@ EXEC 00;32
 .spx 00;36
 .xspf 00;36
 # Source code formats
-.c 00;34
 .C 00;34
+.c 00;34
 .cc 00;34
 .cpp 00;34
 .h 00;34
-.vim 00;34
+.py 00;34
+.sv 00;34
 .tcl 00;34
 .v 00;34
-.sv 00;34
+.vim 00;34
 # Logs
 .log 00;33
 .err 00;31

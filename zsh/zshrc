@@ -41,16 +41,24 @@ case $THEME in
         DIV3_BG=$DIV2_BG
         ;;
     "GREEN")
-        DIV1_FG=2
+        DIV1_FG=255
         DIV1_BG=27
         DIV2_FG=0
-        DIV2_BG=$DIV1_FG
+        DIV2_BG=2
         DIV3_FG=$DIV2_FG
         DIV3_BG=11
         ;;
     "YELLOW")
         DIV1_FG=250
         DIV1_BG=202
+        DIV2_FG=$DIV1_BG
+        DIV2_BG=$DIV1_FG
+        DIV3_FG=$DIV2_FG
+        DIV3_BG=$DIV2_BG
+        ;;
+    "PURPLE")
+        DIV1_FG=250
+        DIV1_BG=54
         DIV2_FG=$DIV1_BG
         DIV2_BG=$DIV1_FG
         DIV3_FG=$DIV2_FG
@@ -65,16 +73,19 @@ case $THEME in
         DIV3_BG=$DIV2_BG
         ;;
 esac
-export PROMPT="%K{$DIV1_BG}%M %K{$DIV1_FG}%F{$DIV1_BG}%f %F{$DIV2_FG}%~%f %k%F{$DIV2_BG}%f "
+export PROMPT="%K{$DIV1_BG}%F{$DIV1_FG}%M %K{$DIV2_BG}%F{$DIV1_BG}%f %F{$DIV2_FG}%~%f %k%F{$DIV2_BG}%f "
 
 # Shortnames
 alias cp='cp -rf'
 alias eld='echo $LD_LIBRARY_PATH | sed "s/:/\n/g"'
 alias epath='echo $PATH | sed "s/:/\n/g"'
 alias g='gvim'
+if [[ $(alias gdb) == "" ]]; then
 alias gdb='gdb -q'
+fi
 alias grep='egrep --color=auto'
 alias jobs='jobs -l'
+alias killlast='kill -9 %%'
 alias la='ls -AF --color=auto'
 alias ll='ls -lF --color=auto --time-style=+"%a %d/%b/%Y %_I:%M%P"'
 alias lla='ls -AlF --color=auto --time-style=+"%a %d/%b/%Y %_I:%M%P"'
@@ -84,11 +95,10 @@ alias settings='vim /mnt/c/Users/alokn/AppData/Local/Packages/Microsoft.WindowsT
 alias sr='source ~/.zshrc'
 alias tree='tree -CF'
 alias treea='tree -aCF'
-alias vim='vim'
 alias vpcl='vim -c PlugClean! -c qa'
 alias vpi='vim -c PlugInstall -c qa'
 
-export EDITOR='vim'
+export EDITOR=$(which vim)
 
 # git shortcuts
 alias ga='git add . && git status -b -s'
@@ -119,7 +129,7 @@ setopt APPEND_HISTORY
 setopt EMACS
 setopt AUTO_CD
 setopt ALWAYS_TO_END
-setopt NO_CLOBBER
+# setopt NO_CLOBBER
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 #setopt INC_APPEND_HISTORY
@@ -169,9 +179,13 @@ zstyle ':completion:*' verbose true
 #zstyle :compinstall filename '/home/alokn/.zshrc'
 uln() {
     for i in $*; do
-        lnk=$(realpath $i)
-        rm $i
-        cp $lnk $i
+        if [[ -L $i ]]; then
+            lnk=$(realpath $i)
+            rm $i
+            cp $lnk $i
+        else
+            echo "Not a link $i"
+        fi
         shift
     done 
 }
@@ -191,3 +205,5 @@ compdef wh=which
 bk() {
     cp $1 $1.bk
 }
+
+alias bell='tput bel'
