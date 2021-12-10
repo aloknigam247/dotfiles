@@ -123,7 +123,7 @@ export GTAGSFORCECPP
 #---------------+
 # suffix aliases |
 #---------------+
-alias -s {c,C,cc,h,H}=vim
+alias -s {c,C,cc,h,H}=gvim
 
 setopt APPEND_HISTORY
 setopt EMACS
