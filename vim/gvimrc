@@ -6,7 +6,8 @@ set guioptions+=c " Use console for dialogs
 set guioptions+=d " Use dark variant if possible
 set guioptions-=m " Hide menu bar
 set guioptions-=T " Hide tool bar
-set guifont=FiraCode\ Nerd\ Font\ 11 " Font
+set guifont=FiraCode\ Nerd\ Font\ weight=450\ 11 " Font
+set guiligatures=!\"#$%&()*+-./:<=>?@[]^_{\|~
 
 if &diff
     set columns=208 " Set default column width

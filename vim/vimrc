@@ -101,7 +101,6 @@ endfunction
 " |-- Devicons --|
 " Plug 'ryanoasis/vim-devicons'
 function! MyFileformat()
-" {{{
     let fmtLogo = { 
                 \ 'dos'  : '',
                 \ 'max'  : '',
@@ -109,10 +108,8 @@ function! MyFileformat()
                 \ }
     return fmtLogo[&fileformat]
 endfunction
-" }}}
 
 function! MyFilename()
-" {{{
     let fileLogo = {
                 \ 'ai'              : '',
                 \ 'awk'             : '',
@@ -220,7 +217,6 @@ function! MyFilename()
         return expand('%:t')
     endif
 endfunction
-" }}}
 
 ""Plug 'cj/vim-webdevicons'
 ""function! MyFiletype()
