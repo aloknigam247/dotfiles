@@ -1,6 +1,6 @@
 # Auto Update
 cd ~/dotfiles
-git fetch
+git pull
 $git_status = git status
 
 if ($git_status) {
