@@ -147,6 +147,16 @@ set ignorecase " Ignore case when searching
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 " }}}
 
+" Filetype Specific Options
+" `````````````````````````
+" {{{
+autocmd BufNewFile,BufRead *.qel set filetype=tcl " Set qel filetype as tcl
+autocmd BufNewFile,BufRead *.cyt set filetype=sh  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.make set filetype=make  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.v set filetype=verilog  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.vg set filetype=verilog  " Set cyt filetype as bash
+" }}}
+
 
 " Mappings
 " ````````
@@ -156,11 +166,8 @@ map <C-e> $
 " }}}
 
 let g:termdebug_wide = 163
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
-let &t_SI.="\e[5 q" "SI = INSERT mode
-let &t_SR.="\e[4 q" "SR = REPLACE mode
-let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
 autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 
 " vim: fdm=marker
