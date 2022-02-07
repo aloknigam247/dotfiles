@@ -452,3 +452,16 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 let ycm_confirm_extra_conf = 0
 " vim: fdm=marker
+
+let &t_SI.="\e[5 q" "SI = INSERT mode
+let &t_SR.="\e[4 q" "SR = REPLACE mode
+let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
+"Cursor settings:
+
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar

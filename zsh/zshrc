@@ -5,6 +5,18 @@
 # ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
 # ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 # ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝                                  
+
+# Updating local dofiles
+cd ~/dotfiles
+git fetch
+
+if [[ $(git status -s) ]]; then
+    git add .
+    git commit -m "$(date +'%d-%m-%Y updates')"
+    git push
+fi
+cd -
+
 autoload -Uz compinit
 compinit
 
@@ -12,68 +24,8 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8d99ae"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh-suggest
 
-test -f ~/.local/zshrc && source ~/.local/zshrc
+#test -f ~/.local/zshrc && source ~/.local/zshrc
 export TZ='Asia/Kolkata'
-
-case $THEME in
-    "RED")
-        DIV1_FG=250
-        DIV1_BG=1
-        DIV2_FG=$DIV1_BG
-        DIV2_BG=$DIV1_FG
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=$DIV2_BG
-        ;;
-    "BLUE")
-        DIV1_FG=250
-        DIV1_BG=4
-        DIV2_FG=$DIV1_BG
-        DIV2_BG=$DIV1_FG
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=$DIV2_BG
-        ;;
-    "BLACK")
-        DIV1_FG=250
-        DIV1_BG=0
-        DIV2_FG=$DIV1_BG
-        DIV2_BG=$DIV1_FG
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=$DIV2_BG
-        ;;
-    "GREEN")
-        DIV1_FG=255
-        DIV1_BG=27
-        DIV2_FG=0
-        DIV2_BG=2
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=11
-        ;;
-    "YELLOW")
-        DIV1_FG=250
-        DIV1_BG=202
-        DIV2_FG=$DIV1_BG
-        DIV2_BG=$DIV1_FG
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=$DIV2_BG
-        ;;
-    "PURPLE")
-        DIV1_FG=250
-        DIV1_BG=54
-        DIV2_FG=$DIV1_BG
-        DIV2_BG=$DIV1_FG
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=$DIV2_BG
-        ;;
-    *)
-        DIV1_FG=250
-        DIV1_BG=0
-        DIV2_FG=$DIV1_BG
-        DIV2_BG=$DIV1_FG
-        DIV3_FG=$DIV2_FG
-        DIV3_BG=$DIV2_BG
-        ;;
-esac
-export PROMPT="%K{$DIV1_BG}%F{$DIV1_FG}%M %K{$DIV2_BG}%F{$DIV1_BG}%f %F{$DIV2_FG}%~%f %k%F{$DIV2_BG}%f "
 
 # Shortnames
 alias cp='cp -rf'
@@ -83,7 +35,7 @@ alias g='gvim'
 if [[ $(alias gdb) == "" ]]; then
 alias gdb='gdb -q'
 fi
-alias grep='egrep --color=auto'
+alias grep='egrep --color=auto -n'
 alias jobs='jobs -l'
 alias killlast='kill -9 %%'
 alias la='ls -AF --color=auto'
@@ -207,3 +159,70 @@ bk() {
 }
 
 alias bell='tput bel'
+cd
+
+# export LESS_TERMCAP_mb=$'\E[01;31m'
+# export LESS_TERMCAP_md=$'\E[01;31m'
+# export LESS_TERMCAP_me=$'\E[0m'
+# export LESS_TERMCAP_se=$'\E[0m'
+# export LESS_TERMCAP_so=$'\E[01;44;37m'
+# export LESS_TERMCAP_ue=$'\E[0m'
+# export LESS_TERMCAP_us=$'\E[01;33m'
+
+function prompt_gen() {
+    zmodload zsh/nearcolor
+
+    local BG="15"
+    local FG="0"
+    local SEG=""
+    local SEP="$1"
+    local p_SEP=""
+    local p_BG=""
+    local prompt_str=""
+    
+    shift
+    
+    while [[ $# -ne 0 ]]; do
+        for k v in $1; do
+            case $k in
+                "BG")
+                    BG=$v
+                    ;;
+                "FG")
+                    FG=$v
+                    ;;
+                "SEG")
+                    SEG=$v
+                    ;;
+            esac
+        done
+    
+        if [[ $p_SEP ]]; then
+            p_SEP="%K{$BG}%F{$p_BG}$SEP "
+        fi
+    
+        pr="$p_SEP%K{$BG}%F{$FG}$SEG "
+        p_SEP="%k%F{$BG}$SEP "
+        p_BG=$BG
+    
+        prompt_str="$prompt_str$pr"
+    
+        shift
+    done
+    
+    export PROMPT="$prompt_str$p_SEP%k%f"
+}
+
+prompt_gen "" "BG #4392F1 FG #ECE8EF SEG %M" "BG #ECE8EF FG #4392F1 SEG %~"
+
+function rprompt() {
+    branch=$(git rev-parse --abbrev-ref HEAD 2>& /dev/null)
+
+    if [[ $branch ]]; then
+        echo "%F{#4392F1}%F{#ECE8EF}%K{#4392F1} $branch%k%F{#4392F1}%f"
+    fi
+}
+
+export RPROMPT='$(rprompt)'
+
+PATH=.:$PATH

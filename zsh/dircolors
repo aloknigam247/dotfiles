@@ -63,7 +63,7 @@ STICKY_OTHER_WRITABLE 30;42 # dir that is sticky and other-writable (+t,o+w)
 OTHER_WRITABLE 34;47 # dir that is other-writable (o+w) and not sticky
 STICKY 37;44 # dir with the sticky bit set (+t) and not other-writable
 # This is for files with execute permission:
-EXEC 00;32
+EXEC 04;32
 # List any file extensions like '.gz' or '.tar' that you would like ls
 # to colorize below. Put the extension, a space, and the color init string.
 # (and any comments you want to add after a '#')
@@ -195,16 +195,16 @@ EXEC 00;32
 .spx 00;36
 .xspf 00;36
 # Source code formats
-.C 00;34
-.c 00;34
-.cc 00;34
-.cpp 00;34
-.h 00;34
-.py 00;34
-.sv 00;34
-.tcl 00;34
-.v 00;34
-.vim 00;34
+.C 00;32
+.c 00;32
+.cc 00;32
+.cpp 00;32
+.h 00;32
+.py 00;32
+.sv 00;32
+.tcl 00;32
+.v 00;32
+.vim 00;32
 # Logs
 .log 00;33
 .err 00;31
@@ -212,4 +212,3 @@ EXEC 00;32
 # Makefile
 *Makefile 00;36
 .make 00;36
-.bit 00;32
