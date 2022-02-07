@@ -20,6 +20,11 @@ for o in ${opt[@]}; do
             source setup
             for src in ${!files[@]}; do
                 dest=${files[$src]} 
+                dir=$(dirname $dest)
+
+                if [[ ! -f $dir ]]; then
+                    mkdir -p $dir
+                fi
 
                 if [[ ! $src -ef $dest ]]; then
                     if [[ -a $dest ]]; then
@@ -37,7 +42,7 @@ for o in ${opt[@]}; do
                 echo -e "\e[34m${cmds[$i]}\e[39m"
                 eval ${cmds[$i]}
             done
-        elif; then
+        else
             echo "No setup file found for $app"
         fi
     )
