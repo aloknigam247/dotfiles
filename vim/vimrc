@@ -442,8 +442,10 @@ filetype indent on " File based indentation
 
 " Mappings
 " ````````
+" {{{
 map <C-a> ^
 map <C-e> $
+" }}}
 
 
 let g:termdebug_wide = 163

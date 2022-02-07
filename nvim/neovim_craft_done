@@ -1,3 +1,11 @@
 ________  comm -23 neovim_craft neovim_craft_done
 _____ egrep "<a href=\"https://github.com/[^>]+" f -o | cut -d '"' -f 2 | sort > dotfiles/nvim/neovim_craft
+https://github.com/0styx0/abbreinder.nvim
+https://github.com/abecodes/tabout.nvim
+https://github.com/AckslD/nvim-neoclip.lua
+https://github.com/AckslD/nvim-revJ.lua
+https://github.com/AckslD/nvim-whichkey-setup.lua
+https://github.com/adelarsq/neoline.vim
+https://github.com/adisen99/apprentice.nvim
+https://github.com/adisen99/codeschool.nvim
 https://github.com/neurosnap/neovimcraft

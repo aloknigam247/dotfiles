@@ -1,4 +1,5 @@
 files=(
+        [site]=~/.local/share/nvim/site
         [init.vim]=~/.config/nvim/init.vim
       )
 

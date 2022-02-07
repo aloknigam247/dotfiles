@@ -1,3 +1,80 @@
+"
+"  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
+" ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
+" ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
+" ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
+" ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
+" ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
+
+" Plugins - Vim-plug
+" ``````````````````
+" {{{
+call plug#begin()
+
+Plug 'https://github.com/adelarsq/neoline.vim'
+
+" Colorshemes
+    Plug 'rktjmp/lush.nvim'
+Plug 'adisen99/codeschool.nvim'
+
+call plug#end()
+" }}}
+
+" codeschool
+lua << EOF
+require('lush')(require('codeschool').setup({
+  plugins = {
+    "buftabline",
+    "coc",
+    "cmp", -- nvim-cmp
+    "fzf",
+    "gitgutter",
+    "gitsigns",
+    "lsp",
+    "lspsaga",
+    "nerdtree",
+    "netrw",
+    "nvimtree",
+    "neogit",
+    "packer",
+    "signify",
+    "startify",
+    "syntastic",
+    "telescope",
+    "treesitter"
+  },
+  langs = {
+    "c",
+    "clojure",
+    "coffeescript",
+    "csharp",
+    "css",
+    "elixir",
+    "golang",
+    "haskell",
+    "html",
+    "java",
+    "js",
+    "json",
+    "jsx",
+    "lua",
+    "markdown",
+    "moonscript",
+    "objc",
+    "ocaml",
+    "purescript",
+    "python",
+    "ruby",
+    "rust",
+    "scala",
+    "typescript",
+    "viml",
+    "xml"
+  }
+}))
+EOF
+
+
 " Variables
 " `````````
 " {{{
@@ -35,6 +112,7 @@ set tabstop=4    " Indent using spaces
 
 " UI Options
 " ``````````
+" {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
 set background=dark           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
@@ -46,21 +124,33 @@ set lazyredraw               " Don't redraw screen on macros, registers and othe
 "set lcs=space:·,tab:>-       " Show space as ·, tab as clear spaces
 "set list                     " Show special characters
 set mouse=a                  " Enable mouse support
-"set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
+set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
-"set shortmess=aoOtT          " Short messages
-"set showcmd                  " Display incomplete command
-"set splitbelow               " Place new window below on :split
-"set splitright               " Place new window right on :vsplit
-"set t_Co=256                 " Set color depth
-"set termguicolors            " Enable true colors support
-"set title                    " Set console title
-"set ttyfast                  " Smooth rendering
+set shortmess=aoOtT          " Short messages
+set splitbelow               " Place new window below on :split
+set splitright               " Place new window right on :vsplit
+set termguicolors            " Enable true colors support
+set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
-"set visualbell               " Flash the screen instead of beeping on errors
-"set wildmenu                 " Show matching text on status line when <TAB>
-"set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-"syn enable       " Syntax highlighting on, w/o overriding
-"" colorscheme monokai " Set colorscheme 
-"highlight clear CursorLine   " No underline on text when cursorline is on
-"highlight clear CursorLineNR " No underline on line numbers when cursorline is on
+set visualbell               " Flash the screen instead of beeping on errors
+set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
+colorscheme codeschool       " Set colorscheme 
+highlight clear CursorLine   " No underline on text when cursorline is on
+highlight clear CursorLineNR " No underline on line numbers when cursorline is on
+" }}}
+
+
+" Search Options
+" ``````````````
+" {{{
+set ignorecase " Ignore case when searching
+set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
+" }}}
+
+
+" Mappings
+" ````````
+" {{{
+map <C-a> ^
+map <C-e> $
+" }}}
