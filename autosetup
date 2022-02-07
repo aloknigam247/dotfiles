@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a app_list=($(find * -maxdepth 0 -type d))
+declare -a app_list=(bash fonts gdb shell tcsh tmux vim zsh)
 
 echo "Applications List:"
 for i in ${!app_list[@]};do
@@ -28,7 +28,7 @@ for o in ${opt[@]}; do
                     fi
                 
                     echo "linking $src --> $dest"
-		    ln -fs $(pwd)/$src $dest
+            	    ln -fs $(pwd)/$src $dest
                 fi
 
             done
@@ -37,6 +37,8 @@ for o in ${opt[@]}; do
                 echo -e "\e[34m${cmds[$i]}\e[39m"
                 eval ${cmds[$i]}
             done
+        elif; then
+            echo "No setup file found for $app"
         fi
     )
 done
