@@ -452,7 +452,6 @@ let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 let ycm_confirm_extra_conf = 0
-" vim: fdm=marker
 
 let &t_SI.="\e[5 q" "SI = INSERT mode
 let &t_SR.="\e[4 q" "SR = REPLACE mode
@@ -466,3 +465,5 @@ autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 "  4 -> solid underscore
 "  5 -> blinking vertical bar
 "  6 -> solid vertical bar
+
+" vim: fdm=marker

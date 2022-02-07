@@ -154,3 +154,13 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 map <C-a> ^
 map <C-e> $
 " }}}
+
+let g:termdebug_wide = 163
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd FilterWritePre * if &diff | setlocal wrap< | endif
+let &t_SI.="\e[5 q" "SI = INSERT mode
+let &t_SR.="\e[4 q" "SR = REPLACE mode
+let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
+
+" vim: fdm=marker
