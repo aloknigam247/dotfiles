@@ -23,7 +23,9 @@ call plug#end()
 " }}}
 
 lua << EOF
-require("toggleterm").setup{}
+require("toggleterm").setup{
+    direction = 'float'
+}
 EOF
 
 " codeschool
