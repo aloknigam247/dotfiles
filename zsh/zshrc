@@ -47,7 +47,7 @@ alias settings='vim /mnt/c/Users/alokn/AppData/Local/Packages/Microsoft.WindowsT
 alias sr='source ~/.zshrc'
 alias tree='tree -CF'
 alias treea='tree -aCF'
-alias v="vim"
+alias v="nvim"
 alias vpcl='vim -c PlugClean! -c qa'
 alias vpi='vim -c PlugInstall -c qa'
 
