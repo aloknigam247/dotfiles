@@ -13,7 +13,7 @@ call plug#begin()
 
 Plug 'https://github.com/adelarsq/neoline.vim'
 
-Plug 'akinsho/toggleterm.nvim'
+" Plug 'anuvyklack/pretty-fold.nvim'
 
 " Colorshemes
     Plug 'rktjmp/lush.nvim'
@@ -21,12 +21,6 @@ Plug 'adisen99/codeschool.nvim'
 
 call plug#end()
 " }}}
-
-lua << EOF
-require("toggleterm").setup{
-    direction = 'float'
-}
-EOF
 
 " codeschool
 lua << EOF
