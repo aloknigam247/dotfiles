@@ -152,11 +152,11 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 " Filetype Specific Options
 " `````````````````````````
 " {{{
-autocmd BufNewFile,BufRead *.qel set filetype=tcl " Set qel filetype as tcl
-autocmd BufNewFile,BufRead *.cyt set filetype=sh  " Set cyt filetype as bash
-autocmd BufNewFile,BufRead *.make set filetype=make  " Set cyt filetype as bash
-autocmd BufNewFile,BufRead *.v set filetype=verilog  " Set cyt filetype as bash
-autocmd BufNewFile,BufRead *.vg set filetype=verilog  " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.qel set filetype=tcl       " Set qel filetype as tcl
+autocmd BufNewFile,BufRead *.cyt set filetype=sh        " Set cyt filetype as bash
+autocmd BufNewFile,BufRead *.make set filetype=make     " Set make filetype as Makefile
+autocmd BufNewFile,BufRead *.v set filetype=verilog     " Set .v filetype as bash
+autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as bash
 " }}}
 
 
@@ -165,6 +165,12 @@ autocmd BufNewFile,BufRead *.vg set filetype=verilog  " Set cyt filetype as bash
 " {{{
 map <C-a> ^
 map <C-e> $
+map <C-Right> E
+map <C-Left> B
+imap <C-a> <C-\><C-O>^
+imap <C-e> <C-\><C-O>$
+imap <C-Right> <C-\><C-O>E
+imap <C-Left> <C-\><C-O>B
 " }}}
 
 let g:termdebug_wide = 163
