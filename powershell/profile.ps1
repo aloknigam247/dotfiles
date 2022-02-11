@@ -21,5 +21,4 @@ if ($git_status) {
 Set-Location -
 
 # Aliases
-Set-Alias -Name q -Value exit
 Set-Alias -Name v -Value nvim
