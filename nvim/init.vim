@@ -10,6 +10,7 @@
 " ``````````````````
 " {{{
 call plug#begin()
+Plug 'wbthomason/packer.nvim'
 Plug 'RRethy/vim-illuminate'
 
 " wilder
@@ -26,7 +27,7 @@ Plug 'beauwilliams/focus.nvim'
 " alternative to vim-commentary
 Plug 'b3nj5m1n/kommentary'
 
-Plug 'beauwilliams/statusline.lua'
+" Plug 'beauwilliams/statusline.lua'
 
 " Plug 'anuvyklack/pretty-fold.nvim'
 
@@ -50,12 +51,13 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " init.lua content in init.vim
 lua << EOF
-  require'lspconfig'.gopls.setup {
-    on_attach = function(client)
-      -- [[ other on_attach code ]]
-      require 'illuminate'.on_attach(client)
-    end,
-  }
+-- Illuminate
+--  require'lspconfig'.gopls.setup {
+--    on_attach = function(client)
+--      -- [[ other on_attach code ]]
+--      require 'illuminate'.on_attach(client)
+--    end,
+--  }
 -- aplha-nvim
 require("alpha").setup(require'alpha.themes.startify'.config)
 
@@ -63,13 +65,13 @@ require("alpha").setup(require'alpha.themes.startify'.config)
 require("focus").setup()
 
 -- Nvim LSP
-local use = require('packer').use
-require('packer').startup(function()
-  use 'wbthomason/packer.nvim' -- Package manager
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-end)
-
-require'lspconfig'.pyright.setup{}
+--local use = require('packer').use
+--require('packer').startup(function()
+--  use 'wbthomason/packer.nvim' -- Package manager
+--  use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+--end)
+--
+--require'lspconfig'.pyright.setup{}
 
 -- codeschool
 require('lush')(require('codeschool').setup({
