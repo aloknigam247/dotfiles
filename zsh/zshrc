@@ -14,6 +14,7 @@ if [[ $(git status -s) ]]; then
     git add .
     git commit -m "$(date +'%d-%m-%Y updates')"
     git push
+    clear
 fi
 cd -
 

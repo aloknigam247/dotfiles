@@ -10,8 +10,23 @@
 " ``````````````````
 " {{{
 call plug#begin()
+Plug 'RRethy/vim-illuminate'
 
-Plug 'https://github.com/adelarsq/neoline.vim'
+" wilder
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+
+Plug 'beauwilliams/focus.nvim'
+
+" alternative to vim-commentary
+Plug 'b3nj5m1n/kommentary'
+
+Plug 'beauwilliams/statusline.lua'
 
 " Plug 'anuvyklack/pretty-fold.nvim'
 
@@ -19,11 +34,44 @@ Plug 'https://github.com/adelarsq/neoline.vim'
     Plug 'rktjmp/lush.nvim'
 Plug 'adisen99/codeschool.nvim'
 
+" Plug 'EdenEast/nightfox.nvim'
+
+    Plug 'kyazdani42/nvim-web-devicons'
+Plug 'goolord/alpha-nvim'
+
 call plug#end()
 " }}}
 
-" codeschool
+"wilder config
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ }))
+
+" init.lua content in init.vim
 lua << EOF
+  require'lspconfig'.gopls.setup {
+    on_attach = function(client)
+      -- [[ other on_attach code ]]
+      require 'illuminate'.on_attach(client)
+    end,
+  }
+-- aplha-nvim
+require("alpha").setup(require'alpha.themes.startify'.config)
+
+-- focus.nvim
+require("focus").setup()
+
+-- Nvim LSP
+local use = require('packer').use
+require('packer').startup(function()
+  use 'wbthomason/packer.nvim' -- Package manager
+  use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+end)
+
+require'lspconfig'.pyright.setup{}
+
+-- codeschool
 require('lush')(require('codeschool').setup({
   plugins = {
     "buftabline",
@@ -137,8 +185,8 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 colorscheme codeschool       " Set colorscheme 
-highlight clear CursorLine   " No underline on text when cursorline is on
-highlight clear CursorLineNR " No underline on line numbers when cursorline is on
+" highlight clear CursorLine   " No underline on text when cursorline is on
+" highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
 
 
