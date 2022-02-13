@@ -58,7 +58,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "FiraCode Nerd Font",
+                "face": "FiraCode Nerd Font Retina",
                 "size": 11
             },
             "intenseTextStyle": "all",
@@ -88,30 +88,6 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-                "hidden": true,
-                "name": "Git Bash",
-                "source": "Git"
-            },
-            {
-                "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
-                "hidden": false,
-                "name": "Ubuntu-20.04",
-                "source": "Windows.Terminal.Wsl"
-            },
-            {
-                "guid": "{a0751bd4-b7f5-51a2-8634-a1515cb8104a}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2019",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{27edf80e-c66d-55f1-a7f3-7bdcf2987530}",
-                "hidden": true,
-                "name": "Developer PowerShell for VS 2019",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
                 "backgroundImage": null,
                 "commandline": "C:\\Windows\\system32\\wsl.exe -d Arch",
                 "guid": "{c23c56a9-030f-41bc-95fa-5adf7d4bf444}",
@@ -135,18 +111,6 @@
                 "padding": "8, 8, 8, 8",
                 "snapOnInput": true,
                 "startingDirectory": "%USERPROFILE%"
-            },
-            {
-                "guid": "{b7276e7c-9ec3-531d-904d-92d4fdfcfff9}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{50b6fcb3-ce42-550d-8ee7-0c02868c002e}",
-                "hidden": true,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
             },
             {
                 "elevate": false,

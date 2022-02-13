@@ -19,7 +19,7 @@ foreach ($o in $opt.Split(" ")) {
             $dest = $files[$key]
             if (Test-Path $dest) {
                 Write-Output "backup $dest --> ${dest}.orig"
-                Move-Item -Path $dest -Destination "${dest}.orig"
+                Move-Item -Force -Path $dest -Destination "${dest}.orig"
             }
             $dir = Split-Path -Parent $dest
             if (-not (Test-Path $dir)) {
