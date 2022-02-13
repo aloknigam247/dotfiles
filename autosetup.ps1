@@ -1,4 +1,4 @@
-$app_list = @("nvim", "powershell")
+$app_list = @("nvim", "powershell", "windows_terminal")
 
 Write-Output "Application List:"
 for ($i=0; $i -lt $app_list.Count; $i++) {
@@ -20,14 +20,13 @@ foreach ($o in $opt.Split(" ")) {
             if (Test-Path $dest) {
                 Write-Output "backup $dest --> ${dest}.orig"
                 Move-Item -Path $dest -Destination "${dest}.orig"
-            } else {
-                $dir = Split-Path -Parent $dest
-                if (-not (Test-Path $dir)) {
-                    mkdir $dir
-                }
-                Write-Output "Linking $src --> $dest"
-                New-Item -ItemType SymbolicLink -Path $dest -Target $src
             }
+            $dir = Split-Path -Parent $dest
+            if (-not (Test-Path $dir)) {
+                mkdir $dir
+            }
+            Write-Output "Linking $src --> $dest"
+            New-Item -ItemType SymbolicLink -Path $dest -Target $src
         }
     } else {
         Write-Output "No setup.ps1 found for $app"
