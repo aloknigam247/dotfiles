@@ -13,6 +13,15 @@ call plug#begin()
 Plug 'wbthomason/packer.nvim'
 Plug 'RRethy/vim-illuminate'
 
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+
+" Plug 'terrortylor/nvim-comment'
+" Plug 'winston0410/commented.nvim'
+" Plug 'yamatsum/nvim-cursorline'
+" Plug 'xiyaowong/nvim-cursorword'
+
 " wilder
   function! UpdateRemotePlugins(...)
     " Needed to refresh runtime files
@@ -20,7 +29,7 @@ Plug 'RRethy/vim-illuminate'
     UpdateRemotePlugins
   endfunction
 
-  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
 Plug 'beauwilliams/focus.nvim'
 
@@ -34,11 +43,12 @@ Plug 'b3nj5m1n/kommentary'
 " Colorshemes
     Plug 'rktjmp/lush.nvim'
 Plug 'adisen99/codeschool.nvim'
-
+Plug 'yonlu/omni.vim'
 " Plug 'EdenEast/nightfox.nvim'
 
     Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
+" Plug 'startup-nvim/startup.nvim'
 
 call plug#end()
 " }}}
@@ -51,6 +61,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " init.lua content in init.vim
 lua << EOF
+-- Shade
 -- Illuminate
 --  require'lspconfig'.gopls.setup {
 --    on_attach = function(client)
@@ -63,15 +74,6 @@ require("alpha").setup(require'alpha.themes.startify'.config)
 
 -- focus.nvim
 require("focus").setup()
-
--- Nvim LSP
---local use = require('packer').use
---require('packer').startup(function()
---  use 'wbthomason/packer.nvim' -- Package manager
---  use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
---end)
---
---require'lspconfig'.pyright.setup{}
 
 -- codeschool
 require('lush')(require('codeschool').setup({
@@ -186,7 +188,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme codeschool       " Set colorscheme 
+colorscheme omni               " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
