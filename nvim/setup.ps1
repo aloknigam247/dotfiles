@@ -1,1 +1,3 @@
-$files = @{"init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";}
+$files = @{
+    "init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";
+    }
