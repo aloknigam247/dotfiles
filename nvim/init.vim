@@ -37,19 +37,25 @@ Plug 'beauwilliams/focus.nvim'
 Plug 'b3nj5m1n/kommentary'
 
 " Plug 'beauwilliams/statusline.lua'
+Plug 'windwp/windline.nvim'
 
 " Plug 'anuvyklack/pretty-fold.nvim'
 
 " Colorshemes
-    Plug 'rktjmp/lush.nvim'
-Plug 'adisen99/codeschool.nvim'
-Plug 'yonlu/omni.vim'
 " Plug 'EdenEast/nightfox.nvim'
+"    Plug 'rktjmp/lush.nvim'
+" Plug 'adisen99/codeschool.nvim'
+Plug 'yashguptaz/calvera-dark.nvim'
+let g:calvera_italic_comments = 1
+let g:calvera_italic_keywords = 1
+let g:calvera_italic_functions = 1
+let g:calvera_contrast = 1
 
     Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
 " Plug 'startup-nvim/startup.nvim'
-
+Plug 'nvim-lua/plenary.nvim'
+Plug 'lewis6991/gitsigns.nvim'
 call plug#end()
 " }}}
 
@@ -59,14 +65,8 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \ 'highlighter': wilder#basic_highlighter(),
       \ }))
 
-<<<<<<< HEAD
-" init.lua content in init.vim
-lua << EOF
-require('plugins')
-=======
 " plugins.lua content in init.vim
 lua << EOLUA
->>>>>>> a7a55c2305094f3a5c27777aaece08ec193998ce
 -- ensure that packer is installed
 local vim = vim
 local execute = vim.api.nvim_command
@@ -102,57 +102,8 @@ require("alpha").setup(require'alpha.themes.startify'.config)
 -- focus.nvim
 require("focus").setup()
 
--- codeschool
-require('lush')(require('codeschool').setup({
-  plugins = {
-    "buftabline",
-    "coc",
-    "cmp", -- nvim-cmp
-    "fzf",
-    "gitgutter",
-    "gitsigns",
-    "lsp",
-    "lspsaga",
-    "nerdtree",
-    "netrw",
-    "nvimtree",
-    "neogit",
-    "packer",
-    "signify",
-    "startify",
-    "syntastic",
-    "telescope",
-    "treesitter"
-  },
-  langs = {
-    "c",
-    "clojure",
-    "coffeescript",
-    "csharp",
-    "css",
-    "elixir",
-    "golang",
-    "haskell",
-    "html",
-    "java",
-    "js",
-    "json",
-    "jsx",
-    "lua",
-    "markdown",
-    "moonscript",
-    "objc",
-    "ocaml",
-    "purescript",
-    "python",
-    "ruby",
-    "rust",
-    "scala",
-    "typescript",
-    "viml",
-    "xml"
-  }
-}))
+require('wlsample.airline_anim')
+require('gitsigns').setup()
 EOLUA
 
 
@@ -215,7 +166,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme omni               " Set colorscheme 
+colorscheme calvera          " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
