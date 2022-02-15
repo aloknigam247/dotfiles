@@ -59,9 +59,14 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \ 'highlighter': wilder#basic_highlighter(),
       \ }))
 
+<<<<<<< HEAD
 " init.lua content in init.vim
 lua << EOF
 require('plugins')
+=======
+" plugins.lua content in init.vim
+lua << EOLUA
+>>>>>>> a7a55c2305094f3a5c27777aaece08ec193998ce
 -- ensure that packer is installed
 local vim = vim
 local execute = vim.api.nvim_command
@@ -148,7 +153,7 @@ require('lush')(require('codeschool').setup({
     "xml"
   }
 }))
-EOF
+EOLUA
 
 
 " Variables
