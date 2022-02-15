@@ -61,6 +61,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " init.lua content in init.vim
 lua << EOF
+require('plugins')
 -- ensure that packer is installed
 local vim = vim
 local execute = vim.api.nvim_command
