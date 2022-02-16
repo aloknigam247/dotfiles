@@ -13,7 +13,12 @@ call plug#begin()
 Plug 'wbthomason/packer.nvim'
 Plug 'RRethy/vim-illuminate'
 
-Plug 'Iron-E/nvim-highlite'
+" Glow markdown preview
+" Plug 'ellisonleao/glow.nvim'
+
+Plug 'karb94/neoscroll.nvim'
+
+Plug 'glepnir/indent-guides.nvim'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -52,9 +57,11 @@ Plug 'windwp/windline.nvim'
 " let g:calvera_italic_keywords = 1
 " let g:calvera_italic_functions = 1
 " let g:calvera_contrast = 1
-  Plug 'tjdevries/colorbuddy.vim'
-Plug 'bkegley/gloombuddy'
-
+"  Plug 'tjdevries/colorbuddy.vim'
+"Plug 'bkegley/gloombuddy'
+"Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'glepnir/zephyr-nvim'
+Plug 'Iron-E/nvim-highlite'
 
     Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
@@ -72,6 +79,12 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " plugins.lua content in init.vim
 lua << EOLUA
+require('neoscroll').setup()
+
+require('indent_guides').setup({
+  even_colors = { fg ='#DCED31',bg='#0CCE6B' };
+  odd_colors = {fg='#0CCE6B',bg='#DCED31'};
+})
 -- ensure that packer is installed
 local vim = vim
 local execute = vim.api.nvim_command
@@ -172,7 +185,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme gloombuddy       " Set colorscheme 
+colorscheme highlite         " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
