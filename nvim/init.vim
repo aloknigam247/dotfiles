@@ -45,11 +45,14 @@ Plug 'windwp/windline.nvim'
 " Plug 'EdenEast/nightfox.nvim'
 "    Plug 'rktjmp/lush.nvim'
 " Plug 'adisen99/codeschool.nvim'
-Plug 'yashguptaz/calvera-dark.nvim'
-let g:calvera_italic_comments = 1
-let g:calvera_italic_keywords = 1
-let g:calvera_italic_functions = 1
-let g:calvera_contrast = 1
+" Plug 'yashguptaz/calvera-dark.nvim'
+" let g:calvera_italic_comments = 1
+" let g:calvera_italic_keywords = 1
+" let g:calvera_italic_functions = 1
+" let g:calvera_contrast = 1
+  Plug 'tjdevries/colorbuddy.vim'
+Plug 'bkegley/gloombuddy'
+
 
     Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
@@ -166,7 +169,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme calvera          " Set colorscheme 
+colorscheme gloombuddy       " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
