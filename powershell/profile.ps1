@@ -22,3 +22,5 @@ Set-Location -
 
 # Aliases
 Set-Alias -Name v -Value nvim
+
+Import-Module oh-my-posh
