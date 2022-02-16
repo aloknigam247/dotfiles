@@ -13,7 +13,7 @@ call plug#begin()
 Plug 'wbthomason/packer.nvim'
 Plug 'RRethy/vim-illuminate'
 
-Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'Iron-E/nvim-highlite'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
