@@ -24,3 +24,4 @@ Set-Location -
 Set-Alias -Name v -Value nvim
 
 Import-Module oh-my-posh
+oh-my-posh --init --shell pwsh --config C:\Users\aloknigam\.oh-my-posh\themes\rudolfs-light.omp.json | Invoke-Expression
