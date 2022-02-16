@@ -13,6 +13,8 @@ call plug#begin()
 Plug 'wbthomason/packer.nvim'
 Plug 'RRethy/vim-illuminate'
 
+Plug 'nvim-neo-tree/neo-tree.nvim'
+
 " LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
@@ -105,6 +107,7 @@ require("alpha").setup(require'alpha.themes.startify'.config)
 -- focus.nvim
 require("focus").setup()
 
+-- windline
 require('wlsample.airline_anim')
 require('gitsigns').setup()
 EOLUA
