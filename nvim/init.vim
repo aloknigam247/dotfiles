@@ -185,7 +185,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme highlite         " Set colorscheme 
+colorscheme nord         " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
