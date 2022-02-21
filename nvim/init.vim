@@ -61,7 +61,7 @@ Plug 'windwp/windline.nvim'
 "Plug 'bkegley/gloombuddy'
 "Plug 'nvim-treesitter/nvim-treesitter'
 "Plug 'glepnir/zephyr-nvim'
-Plug 'Iron-E/nvim-highlite'
+Plug 'shaunsingh/nord.nvim'
 
     Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
