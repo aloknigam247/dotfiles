@@ -228,3 +228,9 @@ autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 
 " vim: fdm=marker
+
+" Temporary solution to neovim cursor not reset 
+augroup RestoreCursorShapeOnExit
+    autocmd!
+    autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
+augroup END
