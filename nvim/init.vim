@@ -66,6 +66,9 @@ Plug 'goolord/alpha-nvim'
 " Plug 'startup-nvim/startup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
+
+" Tree-sitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 " }}}
 
