@@ -66,9 +66,6 @@ Plug 'goolord/alpha-nvim'
 " Plug 'startup-nvim/startup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-
-" Tree-sitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 " }}}
 
@@ -120,14 +117,6 @@ require("focus").setup()
 -- windline
 require('wlsample.airline_anim')
 require('gitsigns').setup()
-
-require'nvim-treesitter.configs'.setup({
-    ensure_installed = "all",
-
-    highlight = {
-        enable = true
-    }
-})
 EOLUA
 
 
