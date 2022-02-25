@@ -18,8 +18,6 @@ Plug 'RRethy/vim-illuminate'
 
 Plug 'karb94/neoscroll.nvim'
 
-Plug 'glepnir/indent-guides.nvim'
-
 " LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
@@ -81,10 +79,6 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 lua << EOLUA
 require('neoscroll').setup()
 
-require('indent_guides').setup({
-  even_colors = { fg ='#DCED31',bg='#0CCE6B' };
-  odd_colors = {fg='#0CCE6B',bg='#DCED31'};
-})
 -- ensure that packer is installed
 local vim = vim
 local execute = vim.api.nvim_command
