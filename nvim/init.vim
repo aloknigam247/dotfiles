@@ -120,6 +120,14 @@ require("focus").setup()
 -- windline
 require('wlsample.airline_anim')
 require('gitsigns').setup()
+
+require'nvim-treesitter.configs'.setup({
+    ensure_installed = "all",
+
+    highlight = {
+        enable = true
+    }
+})
 EOLUA
 
 
