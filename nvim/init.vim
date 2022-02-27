@@ -10,6 +10,10 @@
 " ``````````````````
 " {{{
 call plug#begin()
+
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+
 Plug 'wbthomason/packer.nvim'
 Plug 'RRethy/vim-illuminate'
 
@@ -56,10 +60,10 @@ Plug 'windwp/windline.nvim'
 " let g:calvera_italic_functions = 1
 " let g:calvera_contrast = 1
 "  Plug 'tjdevries/colorbuddy.vim'
-"Plug 'bkegley/gloombuddy'
-"Plug 'nvim-treesitter/nvim-treesitter'
-"Plug 'glepnir/zephyr-nvim'
-Plug 'shaunsingh/nord.nvim'
+" Plug 'bkegley/gloombuddy'
+" Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'glepnir/zephyr-nvim'
+Plug 'projekt0n/github-nvim-theme'
 
     Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
@@ -77,6 +81,18 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " plugins.lua content in init.vim
 lua << EOLUA
+local cmp = require('cmp')
+cmp.setup({
+  sources = {
+    {
+      name = 'buffer',
+      option = {
+        -- Options go into this table
+      },
+    },
+  },
+})
+
 require('neoscroll').setup()
 
 -- ensure that packer is installed
@@ -179,7 +195,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme nord         " Set colorscheme 
+colorscheme github_dark         " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
