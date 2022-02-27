@@ -10,7 +10,7 @@
 " ``````````````````
 " {{{
 call plug#begin()
-
+" nvim-cmp
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 
@@ -81,6 +81,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " plugins.lua content in init.vim
 lua << EOLUA
+-- nvim-cmp
 local cmp = require('cmp')
 cmp.setup({
   sources = {
