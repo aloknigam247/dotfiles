@@ -10,13 +10,14 @@
 " ``````````````````
 " {{{
 call plug#begin()
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Firenvim
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " nvim-cmp
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 
-" TODO comments
+"  todo comments
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 
