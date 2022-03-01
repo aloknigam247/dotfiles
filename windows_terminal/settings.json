@@ -30,6 +30,10 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": "toggleFocusMode",
+            "keys": "alt+f"
         }
     ],
     "alwaysShowNotificationIcon": false,
