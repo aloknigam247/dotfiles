@@ -98,6 +98,9 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
 
 " plugins.lua content in init.vim
 lua << EOLUA
+-- trouble
+require("trouble").setup {}
+
 -- Todo-comments
 require("todo-comments").setup {
   signs = true, -- show icons in the signs column
