@@ -10,6 +10,8 @@
 " ``````````````````
 " {{{
 call plug#begin()
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
 " nvim-cmp
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
