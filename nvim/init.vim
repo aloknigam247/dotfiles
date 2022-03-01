@@ -10,8 +10,18 @@
 " ``````````````````
 " {{{
 call plug#begin()
+Plug 'kyazdani42/nvim-web-devicons'
+
+Plug 'kevinhwang91/nvim-hlslens'
+
 " Firenvim
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
+"   Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+
+Plug 'jceb/blinds.nvim'
+let g:blinds_guibg = "#121616"
 
 " nvim-cmp
 Plug 'hrsh7th/nvim-cmp'
@@ -72,7 +82,7 @@ Plug 'windwp/windline.nvim'
 " Plug 'glepnir/zephyr-nvim'
 Plug 'projekt0n/github-nvim-theme'
 
-    Plug 'kyazdani42/nvim-web-devicons'
+    " Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
 " Plug 'startup-nvim/startup.nvim'
 Plug 'nvim-lua/plenary.nvim'
