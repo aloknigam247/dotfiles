@@ -99,7 +99,7 @@
                 "commandline": "C:\\Windows\\system32\\wsl.exe -d Arch",
                 "guid": "{c23c56a9-030f-41bc-95fa-5adf7d4bf444}",
                 "hidden": false,
-                "icon": "D:\\Arch\\arch_icon.png",
+                "icon": "C:\\Users\\aloknigam\\dotfiles\\arch\\arch-icon.png",
                 "name": "Arch",
                 "opacity": 74,
                 "startingDirectory": "%USERPROFILE%"
