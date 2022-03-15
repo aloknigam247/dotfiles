@@ -123,7 +123,7 @@
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
-                "icon": "C:\\Program Files\\PowerShell\\7\\assets\\Powershell_av_colors.ico",
+                "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "source": "Windows.Terminal.PowershellCore"
             }
