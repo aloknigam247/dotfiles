@@ -4,15 +4,12 @@
     "actions": 
     [
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": "unbound",
             "keys": "ctrl+v"
         },
         {
-            "command": "paste"
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": 
@@ -21,6 +18,9 @@
                 "singleLine": false
             },
             "keys": "ctrl+c"
+        },
+        {
+            "command": "paste"
         },
         {
             "command": 
@@ -128,10 +128,10 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "guid": "{2595cd9c-8f05-55ff-a1d4-93f3041ca67f}",
+                "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
                 "hidden": false,
-                "name": "PowerShell Preview (msix)",
-                "source": "Windows.Terminal.PowershellCore"
+                "name": "Arch",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
