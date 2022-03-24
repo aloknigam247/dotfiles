@@ -17,6 +17,7 @@ Start-Job {
         git add .
         git commit -m "$dt updates"
         git push
+
     }
 }
 
