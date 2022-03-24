@@ -17,9 +17,10 @@ Start-Job {
         git add .
         git commit -m "$dt updates"
         git push
-        $balmsg.ShowBalloonTip(0, "dotfiles updated", "", [System.Windows.Forms.ToolTipIcon]::Info)
+        $balmsg.ShowBalloonTip(0, "dotfiles synced", "", [System.Windows.Forms.ToolTipIcon]::Info)
     }
 }
+        $balmsg.ShowBalloonTip(0, "dotfiles synced", "", [System.Windows.Forms.ToolTipIcon]::Info)
 
 # Aliases
 Set-Alias -Name v -Value nvim
