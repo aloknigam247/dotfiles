@@ -30,7 +30,7 @@ Start-Job {
         $balmsg.ShowBalloonTip(20000)
     }
 
-}
+} | Out-Null
 
 # Aliases
 Set-Alias -Name v -Value nvim
