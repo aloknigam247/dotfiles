@@ -20,7 +20,10 @@ if ($git_status) {
 
 Set-Location -
 
-Start-Job {}
+Start-Job {
+    Set-Location ~/dotfiles
+    git pull
+}
 
 # Aliases
 Set-Alias -Name v -Value nvim
