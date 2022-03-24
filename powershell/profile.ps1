@@ -17,7 +17,7 @@ Start-Job {
         git add .
         git commit -m "$dt updates"
         git push
-
+        $balmsg.ShowBalloonTip(0, "dotfiles updated", "", [System.Windows.Forms.ToolTipIcon]::Info)
     }
 }
 
