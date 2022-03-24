@@ -20,6 +20,8 @@ if ($git_status) {
 
 Set-Location -
 
+Start-Job {}
+
 # Aliases
 Set-Alias -Name v -Value nvim
 Set-Alias -Name choco -Value 'C:\ProgramData\chocolatey\bin\choco.exe'
