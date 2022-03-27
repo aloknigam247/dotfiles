@@ -65,7 +65,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "Felix Titling",
+                "face": "FiraCode Nerd Font Retina",
                 "size": 11
             },
             "intenseTextStyle": "all",
@@ -126,12 +126,6 @@
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "source": "Windows.Terminal.PowershellCore"
-            },
-            {
-                "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
-                "hidden": false,
-                "name": "Arch",
-                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
