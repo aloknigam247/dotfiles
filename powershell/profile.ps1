@@ -10,7 +10,7 @@
 Start-Job {
     Set-Location ~/dotfiles
     git pull
-    $git_status = git status
+    $git_status = git status --short
 
     if ($git_status) {
         $dt = Get-Date -Format "dd-MM-yyyy"
