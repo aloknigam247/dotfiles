@@ -57,7 +57,8 @@ Plug 'williamboman/nvim-lsp-installer'
 
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
-Plug 'beauwilliams/focus.nvim'
+" Maximize current window in foxus
+" Plug 'beauwilliams/focus.nvim'
 
 " alternative to vim-commentary
 Plug 'b3nj5m1n/kommentary'
@@ -221,7 +222,7 @@ packer.startup(function()
 require("alpha").setup(require'alpha.themes.startify'.config)
 
 -- focus.nvim
-require("focus").setup()
+-- require("focus").setup()
 
 -- windline
 require('wlsample.airline_anim')
