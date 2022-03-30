@@ -79,7 +79,7 @@ Plug 'windwp/windline.nvim'
 " let g:calvera_contrast = 1
 "  Plug 'tjdevries/colorbuddy.vim'
 " Plug 'bkegley/gloombuddy'
-" Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Plug 'glepnir/zephyr-nvim'
 Plug 'projekt0n/github-nvim-theme'
 
