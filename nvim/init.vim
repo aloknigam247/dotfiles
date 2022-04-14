@@ -84,7 +84,8 @@ if has('unix')
 endif
 
 " Plug 'glepnir/zephyr-nvim'
-Plug 'projekt0n/github-nvim-theme'
+" Plug 'projekt0n/github-nvim-theme'
+Plug 'Th3Whit3Wolf/space-nvim'
 
     " Plug 'kyazdani42/nvim-web-devicons'
 Plug 'goolord/alpha-nvim'
