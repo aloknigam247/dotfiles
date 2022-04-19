@@ -308,6 +308,7 @@ set breakindent  " Every wrapped line will continue visually indented
 set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
 set expandtab    " Convert tabs to spaces
 set history=1000 " Increase undo limit
+set noswapfile   " Disable swap files
 set shiftwidth=4 " When shifting, indent using spaces
 set tabstop=4    " Indent using spaces
 " }}}
