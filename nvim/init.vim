@@ -10,272 +10,272 @@
 " ``````````````````
 " {{{
 call plug#begin()
-Plug 'kyazdani42/nvim-web-devicons'
+"Plug 'kyazdani42/nvim-web-devicons'
+"
+"Plug 'kevinhwang91/nvim-hlslens'
+"
+"" Firenvim
+"" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+"
+""   Plug 'kyazdani42/nvim-web-devicons'
+"Plug 'folke/trouble.nvim'
+"
+"Plug 'jceb/blinds.nvim'
+"let g:blinds_guibg = "#121616"
+"
+"" nvim-cmp
+"Plug 'hrsh7th/nvim-cmp'
+"Plug 'hrsh7th/cmp-buffer'
+"
+""  todo comments
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'folke/todo-comments.nvim'
+"
+"Plug 'wbthomason/packer.nvim'
+"Plug 'RRethy/vim-illuminate'
+"
+"" Glow markdown preview
+"" Plug 'ellisonleao/glow.nvim'
+"
+"Plug 'karb94/neoscroll.nvim'
+"
+"" LSP
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'williamboman/nvim-lsp-installer'
+"
+"" Plug 'terrortylor/nvim-comment'
+"" Plug 'winston0410/commented.nvim'
+"" Plug 'yamatsum/nvim-cursorline'
+"" Plug 'xiyaowong/nvim-cursorword'
+"
+"" wilder
+"  function! UpdateRemotePlugins(...)
+"    " Needed to refresh runtime files
+"    let &rtp=&rtp
+"    UpdateRemotePlugins
+"  endfunction
+"
+"Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+"
+"" Maximize current window in foxus
+"" Plug 'beauwilliams/focus.nvim'
+"
+"" alternative to vim-commentary
+"Plug 'b3nj5m1n/kommentary'
+"
+"" Plug 'beauwilliams/statusline.lua'
+"Plug 'windwp/windline.nvim'
+"
+"" Plug 'anuvyklack/pretty-fold.nvim'
+"
+"" Colorshemes
+"" Plug 'EdenEast/nightfox.nvim'
+""    Plug 'rktjmp/lush.nvim'
+"" Plug 'adisen99/codeschool.nvim'
+"" Plug 'yashguptaz/calvera-dark.nvim'
+"" let g:calvera_italic_comments = 1
+"" let g:calvera_italic_keywords = 1
+"" let g:calvera_italic_functions = 1
+"" let g:calvera_contrast = 1
+""  Plug 'tjdevries/colorbuddy.vim'
+"" Plug 'bkegley/gloombuddy'
+"if has('unix')
+    Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
+"endif
+"
+"" Plug 'glepnir/zephyr-nvim'
+"" Plug 'projekt0n/github-nvim-theme'
+Plug 'ellisonleao/gruvbox.nvim'
 
-Plug 'kevinhwang91/nvim-hlslens'
-
-" Firenvim
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-
-"   Plug 'kyazdani42/nvim-web-devicons'
-Plug 'folke/trouble.nvim'
-
-Plug 'jceb/blinds.nvim'
-let g:blinds_guibg = "#121616"
-
-" nvim-cmp
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-
-"  todo comments
-Plug 'nvim-lua/plenary.nvim'
-Plug 'folke/todo-comments.nvim'
-
-Plug 'wbthomason/packer.nvim'
-Plug 'RRethy/vim-illuminate'
-
-" Glow markdown preview
-" Plug 'ellisonleao/glow.nvim'
-
-Plug 'karb94/neoscroll.nvim'
-
-" LSP
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
-
-" Plug 'terrortylor/nvim-comment'
-" Plug 'winston0410/commented.nvim'
-" Plug 'yamatsum/nvim-cursorline'
-" Plug 'xiyaowong/nvim-cursorword'
-
-" wilder
-  function! UpdateRemotePlugins(...)
-    " Needed to refresh runtime files
-    let &rtp=&rtp
-    UpdateRemotePlugins
-  endfunction
-
-Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
-
-" Maximize current window in foxus
-" Plug 'beauwilliams/focus.nvim'
-
-" alternative to vim-commentary
-Plug 'b3nj5m1n/kommentary'
-
-" Plug 'beauwilliams/statusline.lua'
-Plug 'windwp/windline.nvim'
-
-" Plug 'anuvyklack/pretty-fold.nvim'
-
-" Colorshemes
-" Plug 'EdenEast/nightfox.nvim'
-"    Plug 'rktjmp/lush.nvim'
-" Plug 'adisen99/codeschool.nvim'
-" Plug 'yashguptaz/calvera-dark.nvim'
-" let g:calvera_italic_comments = 1
-" let g:calvera_italic_keywords = 1
-" let g:calvera_italic_functions = 1
-" let g:calvera_contrast = 1
-"  Plug 'tjdevries/colorbuddy.vim'
-" Plug 'bkegley/gloombuddy'
-if has('unix')
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-endif
-
-" Plug 'glepnir/zephyr-nvim'
-" Plug 'projekt0n/github-nvim-theme'
-Plug 'Th3Whit3Wolf/space-nvim'
-
-    " Plug 'kyazdani42/nvim-web-devicons'
-Plug 'goolord/alpha-nvim'
-" Plug 'startup-nvim/startup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'lewis6991/gitsigns.nvim'
-
-Plug 'jbyuki/venn.nvim'
+"    " Plug 'kyazdani42/nvim-web-devicons'
+"Plug 'goolord/alpha-nvim'
+"" Plug 'startup-nvim/startup.nvim'
+"Plug 'nvim-lua/plenary.nvim'
+"Plug 'lewis6991/gitsigns.nvim'
+"
+"Plug 'jbyuki/venn.nvim'
 call plug#end()
-" }}}
-
-"wilder config
-call wilder#setup({'modes': [':', '/', '?']})
-call wilder#set_option('renderer', wilder#popupmenu_renderer({
-      \ 'highlighter': wilder#basic_highlighter(),
-      \ }))
-
-" plugins.lua content in init.vim
-lua << EOLUA
--- trouble
-require("trouble").setup {}
-
--- Todo-comments
-require("todo-comments").setup {
-  signs = true, -- show icons in the signs column
-  sign_priority = 8, -- sign priority
-  -- keywords recognized as todo comments
-  keywords = {
-    FIX = {
-      icon = " ", -- icon used for the sign, and in search results
-      color = "error", -- can be a hex color, or a named color (see below)
-      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-      -- signs = false, -- configure signs for some keywords individually
-    },
-    TODO = { icon = " ", color = "info" },
-    HACK = { icon = " ", color = "warning" },
-    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-  },
-  merge_keywords = true, -- when true, custom keywords will be merged with the defaults
-  -- highlighting of the line containing the todo comment
-  -- * before: highlights before the keyword (typically comment characters)
-  -- * keyword: highlights of the keyword
-  -- * after: highlights after the keyword (todo text)
-  highlight = {
-    before = "", -- "fg" or "bg" or empty
-    keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-    after = "fg", -- "fg" or "bg" or empty
-    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-    comments_only = true, -- uses treesitter to match keywords in comments only
-    max_line_len = 400, -- ignore lines longer than this
-    exclude = {}, -- list of file types to exclude highlighting
-  },
-  -- list of named colors where we try to extract the guifg from the
-  -- list of hilight groups or use the hex color if hl not found as a fallback
-  colors = {
-    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-    warning = { "DiagnosticWarning", "WarningMsg", "#FBBF24" },
-    info = { "DiagnosticInfo", "#2563EB" },
-    hint = { "DiagnosticHint", "#10B981" },
-    default = { "Identifier", "#7C3AED" },
-  },
-  search = {
-    command = "rg",
-    args = {
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-    },
-    -- regex that will be used to match keywords.
-    -- don't replace the (KEYWORDS) placeholder
-    pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-    -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
-  },
-}
-
--- nvim-cmp
-local cmp = require('cmp')
-cmp.setup({
-  sources = {
-    {
-      name = 'buffer',
-      option = {
-        -- Options go into this table
-      },
-    },
-  },
-  mapping = {
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
-      if cmp.visible() then
-        local entry = cmp.get_selected_entry()
-	if not entry then
-	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-	else
-	  cmp.confirm()
-	end
-      else
-        fallback()
-      end
-    end, {"i","s","c",}),
-  }
-})
-
-require('neoscroll').setup()
-
--- ensure that packer is installed
-local vim = vim
-local execute = vim.api.nvim_command
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-    execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-    execute 'packadd packer.nvim'
-end
-vim.cmd('packadd packer.nvim')
-local packer = require'packer'
-local util = require'packer.util'
-packer.init({
-  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
-})
---- startup and add configure plugins
-packer.startup(function()
-  local use = use
-  -- add you plugins here like:
-  end
-)
--- Shade
--- Illuminate
---  require'lspconfig'.gopls.setup {
---    on_attach = function(client)
---      -- [[ other on_attach code ]]
---      require 'illuminate'.on_attach(client)
---    end,
---  }
--- aplha-nvim
-require("alpha").setup(require'alpha.themes.startify'.config)
-
--- focus.nvim
--- require("focus").setup()
-
--- windline
-require('wlsample.airline_anim')
-require('gitsigns').setup()
-
-if vim.fn.has('unix') == 1 then
-    require'nvim-treesitter.configs'.setup {
-      -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-      ensure_installed = "maintained",
-    
-      -- Install languages synchronously (only applied to `ensure_installed`)
-      sync_install = false,
-    
-      highlight = {
-        -- `false` will disable the whole extension
-        enable = false,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-      },
-    }
-end
-
--- venn.nvim: enable or disable keymappings
-function _G.Toggle_venn()
-    local venn_enabled = vim.inspect(vim.b.venn_enabled)
-    if venn_enabled == "nil" then
-        vim.b.venn_enabled = true
-        vim.cmd[[setlocal ve=all]]
-        -- draw a line on HJKL keystokes
-        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
-        -- draw a box by pressing "f" with visual selection
-        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
-    else
-        vim.cmd[[setlocal ve=]]
-        vim.cmd[[mapclear <buffer>]]
-        vim.b.venn_enabled = nil
-    end
-end
--- toggle keymappings for venn using <leader>v
-vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
-EOLUA
+"" }}}
+"
+""wilder config
+"call wilder#setup({'modes': [':', '/', '?']})
+"call wilder#set_option('renderer', wilder#popupmenu_renderer({
+"      \ 'highlighter': wilder#basic_highlighter(),
+"      \ }))
+"
+"" plugins.lua content in init.vim
+"lua << EOLUA
+"-- trouble
+"require("trouble").setup {}
+"
+"-- Todo-comments
+"require("todo-comments").setup {
+"  signs = true, -- show icons in the signs column
+"  sign_priority = 8, -- sign priority
+"  -- keywords recognized as todo comments
+"  keywords = {
+"    FIX = {
+"      icon = " ", -- icon used for the sign, and in search results
+"      color = "error", -- can be a hex color, or a named color (see below)
+"      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+"      -- signs = false, -- configure signs for some keywords individually
+"    },
+"    TODO = { icon = " ", color = "info" },
+"    HACK = { icon = " ", color = "warning" },
+"    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+"    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+"    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+"  },
+"  merge_keywords = true, -- when true, custom keywords will be merged with the defaults
+"  -- highlighting of the line containing the todo comment
+"  -- * before: highlights before the keyword (typically comment characters)
+"  -- * keyword: highlights of the keyword
+"  -- * after: highlights after the keyword (todo text)
+"  highlight = {
+"    before = "", -- "fg" or "bg" or empty
+"    keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+"    after = "fg", -- "fg" or "bg" or empty
+"    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+"    comments_only = true, -- uses treesitter to match keywords in comments only
+"    max_line_len = 400, -- ignore lines longer than this
+"    exclude = {}, -- list of file types to exclude highlighting
+"  },
+"  -- list of named colors where we try to extract the guifg from the
+"  -- list of hilight groups or use the hex color if hl not found as a fallback
+"  colors = {
+"    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+"    warning = { "DiagnosticWarning", "WarningMsg", "#FBBF24" },
+"    info = { "DiagnosticInfo", "#2563EB" },
+"    hint = { "DiagnosticHint", "#10B981" },
+"    default = { "Identifier", "#7C3AED" },
+"  },
+"  search = {
+"    command = "rg",
+"    args = {
+"      "--color=never",
+"      "--no-heading",
+"      "--with-filename",
+"      "--line-number",
+"      "--column",
+"    },
+"    -- regex that will be used to match keywords.
+"    -- don't replace the (KEYWORDS) placeholder
+"    pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+"    -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+"  },
+"}
+"
+"-- nvim-cmp
+"local cmp = require('cmp')
+"cmp.setup({
+"  sources = {
+"    {
+"      name = 'buffer',
+"      option = {
+"        -- Options go into this table
+"      },
+"    },
+"  },
+"  mapping = {
+"    ["<Tab>"] = cmp.mapping(function(fallback)
+"      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+"      if cmp.visible() then
+"        local entry = cmp.get_selected_entry()
+"	if not entry then
+"	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+"	else
+"	  cmp.confirm()
+"	end
+"      else
+"        fallback()
+"      end
+"    end, {"i","s","c",}),
+"  }
+"})
+"
+"require('neoscroll').setup()
+"
+"-- ensure that packer is installed
+"local vim = vim
+"local execute = vim.api.nvim_command
+"local fn = vim.fn
+"local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+"if fn.empty(fn.glob(install_path)) > 0 then
+"    execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+"    execute 'packadd packer.nvim'
+"end
+"vim.cmd('packadd packer.nvim')
+"local packer = require'packer'
+"local util = require'packer.util'
+"packer.init({
+"  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
+"})
+"--- startup and add configure plugins
+"packer.startup(function()
+"  local use = use
+"  -- add you plugins here like:
+"  end
+")
+"-- Shade
+"-- Illuminate
+"--  require'lspconfig'.gopls.setup {
+"--    on_attach = function(client)
+"--      -- [[ other on_attach code ]]
+"--      require 'illuminate'.on_attach(client)
+"--    end,
+"--  }
+"-- aplha-nvim
+"require("alpha").setup(require'alpha.themes.startify'.config)
+"
+"-- focus.nvim
+"-- require("focus").setup()
+"
+"-- windline
+"require('wlsample.airline_anim')
+"require('gitsigns').setup()
+"
+"if vim.fn.has('unix') == 1 then
+"    require'nvim-treesitter.configs'.setup {
+"      -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+"      ensure_installed = "maintained",
+"    
+"      -- Install languages synchronously (only applied to `ensure_installed`)
+"      sync_install = false,
+"    
+"      highlight = {
+"        -- `false` will disable the whole extension
+"        enable = false,
+"        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+"        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+"        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+"        -- Instead of true it can also be a list of languages
+"        additional_vim_regex_highlighting = false,
+"      },
+"    }
+"end
+"
+"-- venn.nvim: enable or disable keymappings
+"function _G.Toggle_venn()
+"    local venn_enabled = vim.inspect(vim.b.venn_enabled)
+"    if venn_enabled == "nil" then
+"        vim.b.venn_enabled = true
+"        vim.cmd[[setlocal ve=all]]
+"        -- draw a line on HJKL keystokes
+"        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
+"        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
+"        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
+"        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
+"        -- draw a box by pressing "f" with visual selection
+"        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
+"    else
+"        vim.cmd[[setlocal ve=]]
+"        vim.cmd[[mapclear <buffer>]]
+"        vim.b.venn_enabled = nil
+"    end
+"end
+"-- toggle keymappings for venn using <leader>v
+"vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
+"EOLUA
 
 
 " Variables
@@ -338,9 +338,9 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme space-nvim         " Set colorscheme 
-" highlight clear CursorLine   " No underline on text when cursorline is on
-" highlight clear CursorLineNR " No underline on line numbers when cursorline is on
+colorscheme gruvbox          " Set colorscheme 
+highlight clear CursorLine   " No underline on text when cursorline is on
+highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
 
 
@@ -389,3 +389,5 @@ augroup RestoreCursorShapeOnExit
     autocmd!
     autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
 augroup END
+
+" au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
