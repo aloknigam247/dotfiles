@@ -107,6 +107,7 @@ call plug#end()
 "" plugins.lua content in init.vim
 lua << EOLUA
 require"gitlinker".setup()
+require 'nvim-treesitter.install'.compilers = { "cl.exe" }
 ---- trouble
 --require("trouble").setup {}
 --
