@@ -10,6 +10,9 @@
 " ``````````````````
 " {{{
 call plug#begin()
+Plug 'jbyuki/one-small-step-for-vimkind'
+Plug 'mfussenegger/nvim-dap'
+
 "Plug 'kyazdani42/nvim-web-devicons'
 "
 "Plug 'kevinhwang91/nvim-hlslens'
@@ -106,6 +109,32 @@ call plug#end()
 "
 "" plugins.lua content in init.vim
 lua << EOLUA
+local dap = require"dap"
+dap.configurations.lua = { 
+  { 
+    type = 'nlua', 
+    request = 'attach',
+    name = "Attach to running Neovim instance",
+    host = function()
+      local value = vim.fn.input('Host [127.0.0.1]: ')
+      if value ~= "" then
+        return value
+      end
+      return '127.0.0.1'
+    end,
+    port = function()
+      local val = tonumber(vim.fn.input('Port: '))
+      assert(val, "Please provide a port number")
+      return val
+    end,
+  }
+}
+
+dap.adapters.nlua = function(callback, config)
+  callback({ type = 'server', host = config.host, port = config.port })
+end
+
+
 require"gitlinker".setup()
 require 'nvim-treesitter.install'.compilers = { "cl.exe" }
 require 'nvim-treesitter.configs'.setup {
