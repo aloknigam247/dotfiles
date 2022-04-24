@@ -61,7 +61,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "UltraViolent",
+            "colorScheme": "Tango Dark",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
