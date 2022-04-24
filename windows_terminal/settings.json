@@ -61,7 +61,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Solarized Dark",
+            "colorScheme": "Smyck",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
