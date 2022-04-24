@@ -88,7 +88,7 @@ call plug#begin()
 "
 "" Plug 'glepnir/zephyr-nvim'
 "" Plug 'projekt0n/github-nvim-theme'
-Plug 'frenzyexists/aquarium-vim', { 'branch': 'develop' }
+Plug 'mhartington/oceanic-next'
 
 "    " Plug 'kyazdani42/nvim-web-devicons'
 "Plug 'goolord/alpha-nvim'
@@ -108,6 +108,8 @@ call plug#end()
 "      \ }))
 "
 "" plugins.lua content in init.vim
+
+
 lua << EOLUA
 --local dap = require"dap"
 --dap.configurations.lua = { 
@@ -136,16 +138,12 @@ lua << EOLUA
 --
 --
 --require"gitlinker".setup()
---require 'nvim-treesitter.configs'.setup {
---  highlight = {
---    enable = true,
---    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
---    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
---    -- Using this option may slow down your editor, and you may see some duplicate highlights.
---    -- Instead of true it can also be a list of languages
---    additional_vim_regex_highlighting = false,
---  },
---}
+require 'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}
 ---- trouble
 --require("trouble").setup {}
 --
@@ -354,6 +352,7 @@ set shiftwidth=4 " When shifting, indent using spaces
 set tabstop=4    " Indent using spaces
 " }}}
 
+let g:aquarium_style="light"
 
 " UI Options
 " ``````````
@@ -379,7 +378,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme gruvbox          " Set colorscheme 
+colorscheme OceanicNext          " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
