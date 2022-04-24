@@ -61,7 +61,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Vintage",
+            "colorScheme": "Smyck",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
@@ -77,6 +77,7 @@
         [
             {
                 "backgroundImage": "C:\\Users\\aloknigam\\OneDrive - Microsoft\\Desktop\\wallpaper-master\\wallpaper-master\\windows.png",
+                "colorScheme": "Ocean",
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": true,
@@ -95,7 +96,8 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "backgroundImage": null,
+                "backgroundImage": "C:\\Users\\aloknigam\\dotfiles\\wallpaper-master\\arch.png",
+                "colorScheme": "Campbell Powershell",
                 "commandline": "C:\\Windows\\system32\\wsl.exe -d Arch",
                 "guid": "{c23c56a9-030f-41bc-95fa-5adf7d4bf444}",
                 "hidden": false,
@@ -107,6 +109,7 @@
             {
                 "altGrAliasing": true,
                 "antialiasingMode": "grayscale",
+                "colorScheme": "Solarized Dark",
                 "commandline": "%SystemRoot%\\System32\\cmd.exe /k \"D:\\spo\\src\\otools\\bin\\OpenEnlistment.bat\"",
                 "cursorShape": "bar",
                 "elevate": true,
@@ -120,6 +123,8 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
+                "backgroundImage": "C:\\Users\\aloknigam\\dotfiles\\wallpaper-master\\windows.png",
+                "colorScheme": "Ocean",
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
