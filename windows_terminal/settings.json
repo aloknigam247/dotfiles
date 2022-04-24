@@ -61,7 +61,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "One Half Dark",
+            "colorScheme": "OceanicMaterial",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
