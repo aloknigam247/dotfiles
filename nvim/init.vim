@@ -10,8 +10,8 @@
 " ``````````````````
 " {{{
 call plug#begin()
-Plug 'jbyuki/one-small-step-for-vimkind'
-Plug 'mfussenegger/nvim-dap'
+"Plug 'jbyuki/one-small-step-for-vimkind'
+"Plug 'mfussenegger/nvim-dap'
 
 "Plug 'kyazdani42/nvim-web-devicons'
 "
@@ -88,13 +88,13 @@ Plug 'mfussenegger/nvim-dap'
 "
 "" Plug 'glepnir/zephyr-nvim'
 "" Plug 'projekt0n/github-nvim-theme'
-Plug 'ellisonleao/gruvbox.nvim'
+Plug 'frenzyexists/aquarium-vim', { 'branch': 'develop' }
 
 "    " Plug 'kyazdani42/nvim-web-devicons'
 "Plug 'goolord/alpha-nvim'
 "" Plug 'startup-nvim/startup.nvim'
-Plug 'ruifm/gitlinker.nvim'
-Plug 'nvim-lua/plenary.nvim'
+"Plug 'ruifm/gitlinker.nvim'
+"Plug 'nvim-lua/plenary.nvim'
 "Plug 'lewis6991/gitsigns.nvim'
 "
 "Plug 'jbyuki/venn.nvim'
@@ -109,44 +109,43 @@ call plug#end()
 "
 "" plugins.lua content in init.vim
 lua << EOLUA
-local dap = require"dap"
-dap.configurations.lua = { 
-  { 
-    type = 'nlua', 
-    request = 'attach',
-    name = "Attach to running Neovim instance",
-    host = function()
-      local value = vim.fn.input('Host [127.0.0.1]: ')
-      if value ~= "" then
-        return value
-      end
-      return '127.0.0.1'
-    end,
-    port = function()
-      local val = tonumber(vim.fn.input('Port: '))
-      assert(val, "Please provide a port number")
-      return val
-    end,
-  }
-}
-
-dap.adapters.nlua = function(callback, config)
-  callback({ type = 'server', host = config.host, port = config.port })
-end
-
-
-require"gitlinker".setup()
-require 'nvim-treesitter.install'.compilers = { "cl.exe" }
-require 'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+--local dap = require"dap"
+--dap.configurations.lua = { 
+--  { 
+--    type = 'nlua', 
+--    request = 'attach',
+--    name = "Attach to running Neovim instance",
+--    host = function()
+--      local value = vim.fn.input('Host [127.0.0.1]: ')
+--      if value ~= "" then
+--        return value
+--      end
+--      return '127.0.0.1'
+--    end,
+--    port = function()
+--      local val = tonumber(vim.fn.input('Port: '))
+--      assert(val, "Please provide a port number")
+--      return val
+--    end,
+--  }
+--}
+--
+--dap.adapters.nlua = function(callback, config)
+--  callback({ type = 'server', host = config.host, port = config.port })
+--end
+--
+--
+--require"gitlinker".setup()
+--require 'nvim-treesitter.configs'.setup {
+--  highlight = {
+--    enable = true,
+--    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+--    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+--    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+--    -- Instead of true it can also be a list of languages
+--    additional_vim_regex_highlighting = false,
+--  },
+--}
 ---- trouble
 --require("trouble").setup {}
 --

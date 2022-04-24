@@ -33,8 +33,10 @@ Start-Job {
 } | Out-Null
 
 # Aliases
-Set-Alias -Name v -Value nvim
 Set-Alias -Name choco -Value 'C:\ProgramData\chocolatey\bin\choco.exe'
+Set-Alias -Name v -Value nvim
+Set-Alias -Name vpi -Value 'nvim -c PlugInstall -c qa'
+Set-Alias -Name vpcl -Value 'nvim -c PlugClean! -c qa'
 
 Import-Module oh-my-posh
 oh-my-posh --init --shell pwsh --config C:\Users\aloknigam\.oh-my-posh\themes\rudolfs-light.omp.json | Invoke-Expression
