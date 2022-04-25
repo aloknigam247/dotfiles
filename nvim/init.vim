@@ -88,7 +88,10 @@ Plug 'williamboman/nvim-lsp-installer'
 "
 "" Plug 'glepnir/zephyr-nvim'
 "" Plug 'projekt0n/github-nvim-theme'
-Plug 'mhartington/oceanic-next'
+Plug 'olimorris/onedarkpro.nvim' " good one
+
+" Light themes
+Plug 'mhartington/oceanic-next' " kept for light theme testing
 
 "    " Plug 'kyazdani42/nvim-web-devicons'
 "Plug 'goolord/alpha-nvim'
@@ -396,7 +399,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme OceanicNext          " Set colorscheme 
+colorscheme onedarkpro          " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
