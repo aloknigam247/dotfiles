@@ -10,6 +10,8 @@
 " ``````````````````
 " {{{
 call plug#begin()
+Plug 'f-person/git-blame.nvim'
+"Plug 'booperlv/nvim-gomove'
 "Plug 'jbyuki/one-small-step-for-vimkind'
 "Plug 'mfussenegger/nvim-dap'
 
