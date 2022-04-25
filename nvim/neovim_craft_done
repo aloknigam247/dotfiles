@@ -52,14 +52,19 @@ https://github.com/ekickx/clipboard-image.nvim
 https://github.com/ellisonleao/glow.nvim
 https://github.com/ellisonleao/gruvbox.nvim
 https://github.com/ethanholz/nvim-lastplace
+https://github.com/filipdutescu/renamer.nvim
+https://github.com/folke/lsp-colors.nvim
 https://github.com/folke/todo-comments.nvim
 https://github.com/folke/trouble.nvim
+https://github.com/folke/which-key.nvim
 https://github.com/folke/zen-mode.nvim
 https://github.com/f-person/git-blame.nvim
 https://github.com/FrenzyExists/aquarium-vim
 https://github.com/gbprod/cutlass.nvim
 https://github.com/gelguy/wilder.nvim
 https://github.com/gennaro-tedesco/boilit
+https://github.com/gennaro-tedesco/nvim-commaround
+https://github.com/gennaro-tedesco/nvim-peekup
 https://github.com/ggandor/lightspeed.nvim
 https://github.com/glacambre/firenvim
 https://github.com/glepnir/indent-guides.nvim
@@ -67,6 +72,8 @@ https://github.com/glepnir/prodoc.nvim
 https://github.com/glepnir/zephyr-nvim
 https://github.com/goolord/alpha-nvim
 https://github.com/gwatcha/reaper-keys
+https://github.com/haringsrob/nvim_context_vt
+https://github.com/henriquehbr/ataraxis.lua
 https://github.com/h-hg/fcitx.nvim
 https://github.com/hrsh7th/nvim-cmp
 https://github.com/Iron-E/nvim-cartographer
@@ -84,6 +91,7 @@ https://github.com/jghauser/mkdir.nvim
 https://github.com/jlesquembre/nterm.nvim
 https://github.com/johann2357/nvim-smartbufs
 https://github.com/Julian/lean.nvim
+https://github.com/jvgrootveld/telescope-zoxide
 https://github.com/karb94/neoscroll.nvim
 https://github.com/kazhala/close-buffers.nvim
 https://github.com/kdheepak/monochrome.nvim
@@ -94,6 +102,7 @@ https://github.com/klen/nvim-config-local
 https://github.com/kvrohit/substrata.nvim
 https://github.com/kyazdani42/blue-moon
 https://github.com/kyazdani42/nvim-web-devicons
+https://github.com/lewis6991/gitsigns.nvim
 https://github.com/lunixbochs/ActualVim
 https://github.com/luukvbaal/nnn.nvim
 https://github.com/luukvbaal/stabilize.nvim

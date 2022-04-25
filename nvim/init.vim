@@ -10,7 +10,12 @@
 " ``````````````````
 " {{{
 call plug#begin()
-Plug 'f-person/git-blame.nvim'
+" Plug 'gennaro-tedesco/nvim-commaround' " for comment toggle
+" Plug 'gennaro-tedesco/nvim-peekup'
+" Plug 'haringsrob/nvim_context_vt'
+" Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+" Plug 'folke/which-key.nvim'
+" Plug 'f-person/git-blame.nvim' " not working, needs review
 "Plug 'booperlv/nvim-gomove'
 "Plug 'jbyuki/one-small-step-for-vimkind'
 "Plug 'mfussenegger/nvim-dap'
@@ -84,16 +89,14 @@ Plug 'williamboman/nvim-lsp-installer'
 "" let g:calvera_contrast = 1
 ""  Plug 'tjdevries/colorbuddy.vim'
 "" Plug 'bkegley/gloombuddy'
-"if has('unix')
-    Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
-"endif
+   Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
 "
 "" Plug 'glepnir/zephyr-nvim'
 "" Plug 'projekt0n/github-nvim-theme'
 Plug 'olimorris/onedarkpro.nvim' " good one
 
 " Light themes
-Plug 'mhartington/oceanic-next' " kept for light theme testing
+"Plug 'mhartington/oceanic-next' " kept for light theme testing
 
 "    " Plug 'kyazdani42/nvim-web-devicons'
 "Plug 'goolord/alpha-nvim'
@@ -143,13 +146,13 @@ lua << EOLUA
 --
 --
 --require"gitlinker".setup()
-require 'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
-
+--require 'nvim-treesitter.configs'.setup {
+--  highlight = {
+--    enable = true,
+--    additional_vim_regex_highlighting = false,
+--  },
+--}
+--
 local lsp_installer = require("nvim-lsp-installer")
 -- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
 -- or if the server is already installed).
@@ -166,7 +169,7 @@ lsp_installer.on_server_ready(function(server)
     -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     server:setup(opts)
 end)
-
+--
 ---- trouble
 --require("trouble").setup {}
 --
@@ -338,6 +341,7 @@ end)
 --end
 ---- toggle keymappings for venn using <leader>v
 --vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
+--require("which-key").setup {}
 EOLUA
 
 
