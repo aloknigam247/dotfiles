@@ -26,10 +26,10 @@ call plug#begin()
 "Plug 'jceb/blinds.nvim'
 "let g:blinds_guibg = "#121616"
 "
-"" nvim-cmp
-"Plug 'hrsh7th/nvim-cmp'
-"Plug 'hrsh7th/cmp-buffer'
-"
+" nvim-cmp
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+
 ""  todo comments
 "Plug 'nvim-lua/plenary.nvim'
 "Plug 'folke/todo-comments.nvim'
@@ -222,34 +222,35 @@ end)
 --  },
 --}
 --
----- nvim-cmp
---local cmp = require('cmp')
---cmp.setup({
---  sources = {
---    {
---      name = 'buffer',
---      option = {
---        -- Options go into this table
---      },
---    },
---  },
---  mapping = {
---    ["<Tab>"] = cmp.mapping(function(fallback)
---      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
---      if cmp.visible() then
---        local entry = cmp.get_selected_entry()
---	if not entry then
---	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
---	else
---	  cmp.confirm()
---	end
---      else
---        fallback()
---      end
---    end, {"i","s","c",}),
---  }
---})
---
+-- nvim-cmp
+local cmp = require('cmp')
+cmp.setup({
+  sources = {
+    {
+      name = 'buffer',
+      option = {
+        -- Options go into this table
+      },
+    },
+    { name = 'nvim_lsp' },
+  },
+  mapping = {
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+      if cmp.visible() then
+        local entry = cmp.get_selected_entry()
+	if not entry then
+	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+	else
+	  cmp.confirm()
+	end
+      else
+        fallback()
+      end
+    end, {"i","s","c",}),
+  }
+})
+
 --require('neoscroll').setup()
 --
 ---- ensure that packer is installed
