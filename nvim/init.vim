@@ -10,7 +10,8 @@
 " ``````````````````
 " {{{
 call plug#begin()
-Plug 'tveskag/nvim-blame-line'
+" Plug 'simrat39/symbols-outline.nvim'
+" Plug 'stevearc/aerial.nvim'
 " Plug 'windwp/nvim-autopairs'
 " Plug 'gennaro-tedesco/nvim-commaround' " for comment toggle
 " Plug 'gennaro-tedesco/nvim-peekup'
@@ -121,6 +122,7 @@ call plug#end()
 
 
 lua << EOLUA
+--require('aerial').setup({})
 --require('nvim-autopairs').setup{}
 --local dap = require"dap"
 --dap.configurations.lua = { 
@@ -462,4 +464,3 @@ augroup RestoreCursorShapeOnExit
 augroup END
 
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
-autocmd BufEnter * EnableBlameLine
