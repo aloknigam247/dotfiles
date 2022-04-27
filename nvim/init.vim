@@ -6,16 +6,105 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+" TODO: Fix keymappings for <C-right arrow> <C-left arror>
+" TODO: Highlight only overlength chars
+" augroup vimrc_autocmds
+"   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+"   autocmd BufEnter * match OverLength /\%74v.*/
+" augroup END
+" TODO: blink on yank
+" au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
+" TODO: set linebreak
+" TODO: key mapping gq
+" TODO: key mapping vip
+" TODO: http://blog.ezyang.com/2010/03/vim-textwidth/
+" TODO: set fo formatting options
+" t	Auto-wrap text using textwidth
+" c	Auto-wrap comments using textwidth, inserting the current comment leader automatically.
+" r	Automatically insert the current comment leader after hitting <Enter> in Insert mode.
+" o	Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.  In case comment is unwanted in a specific place use CTRL-U to quickly delete it.
+" q	Allow formatting of comments with "gq". Note that formatting will not change blank lines or lines containing only the comment leader.  A new paragraph starts after such a line, or when the comment leader changes.
+" w	Trailing white space indicates a paragraph continues in the next line. A line that ends in a non-white character ends a paragraph.
+" a	Automatic formatting of paragraphs.  Every time text is inserted or deleted the paragraph will be reformatted.  See |auto-format|. When the 'c' flag is present this only happens for recognized comments.
+" n	When formatting text, recognize numbered lists.  This actually uses the 'formatlistpat' option, thus any kind of list can be used. The indent of the text after the number is used for the next line.  The default is to find a number, optionally followed by '.', ':', ')', ']' or '}'.  Note that 'autoindent' must be set too.  Doesn't work well together with "2".
+"	Example: >
+"		1. the first item
+"		   wraps
+"		2. the second item
+" 2	When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead of the indent of the first line. This supports paragraphs in which the first line has a different indent than the rest.  Note that 'autoindent' must be set too.
+" Example: >
+"			first line of a paragraph
+"		second line of the same paragraph
+"		third line.
+"<	This also works inside comments, ignoring the comment leader.
+" v	Vi-compatible auto-wrapping in insert mode: Only break a line at a blank that you have entered during the current insert command.  (Note: this is not 100% Vi compatible.  Vi has some "unexpected features" or bugs in this area.  It uses the screen column instead of the line column.)
+" b	Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.  If the line was longer than 'textwidth' when you started the insert, or you do not enter a blank in the insert before reaching 'textwidth', Vim does not perform auto-wrapping.
+" l	Long lines are not broken in insert mode: When a line was longer than 'textwidth' when the insert command started, Vim does not automatically format it.
+" 1	Don't break a line after a one-letter word.  It's broken before it instead (if possible).
+" j	Where it makes sense, remove a comment leader when joining lines.  For
+"	example, joining:
+"		int i;   // the index ~
+"		         // in the list ~
+"	Becomes:
+"		int i;   // the index in the list
+" p	Don't break lines at single spaces that follow periods.  This is intended to complement 'joinspaces' and |cpo-J|, for prose with sentences separated by two spaces.  For example, with 'textwidth' set to 28:
+"		Surely you're joking, Mr. Feynman!
+"	Becomes:
+"		Surely you're joking,
+"		Mr. Feynman!
+"	Instead of:
+"		Surely you're joking, Mr.
+"		Feynman!
+" With 't' and 'c' you can specify when Vim performs auto-wrapping:
+" value	action	~
+  ""	no automatic formatting (you can use "gq" for manual formatting)
+  "t"	automatic formatting of text, but not comments
+  "c"	automatic formatting for comments, but not text (good for C code)
+  "tc"	automatic formatting for text and comments
+" 
+
 " Plugins - Vim-plug
 " ``````````````````
 " {{{
 call plug#begin()
-" Auto Pair
-" `````````
+" Auto Pair:
+" ``````````
 Plug 'windwp/nvim-autopairs'
+" TODO:
+" Create rule to not pair " for vim files
+" Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
+" vim automatically cursor goes to next line but how we don't know yet, how to
+" do it
 
+" Colorscheme:
+" ````````````
+" Current:
+" << Light >>
+" << Dark >>
+Plug 'olimorris/onedarkpro.nvim'
+
+" Accepted:
+" << Light >>
+" << Dark >>
+
+" NOTE: TODO
+" Plug 'EdenEast/nightfox.nvim'
+" Plug 'adisen99/codeschool.nvim'
+" Plug 'bkegley/gloombuddy'
+" Plug 'glepnir/zephyr-nvim'
+" Plug 'mhartington/oceanic-next' " NOTE: kept for light theme testing
+" Plug 'projekt0n/github-nvim-theme'
+" Plug 'rktjmp/lush.nvim'
+" Plug 'tjdevries/colorbuddy.vim'
+" Plug 'yashguptaz/calvera-dark.nvim'
+
+
+" On Hold:
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
 " Plug 'stevearc/aerial.nvim'  ->> LSP
+
+
+" TODO:
 " Plug 'gennaro-tedesco/nvim-commaround' " for comment toggle
 " Plug 'gennaro-tedesco/nvim-peekup'
 " Plug 'haringsrob/nvim_context_vt'
@@ -84,25 +173,8 @@ Plug 'windwp/nvim-autopairs'
 "
 "" Plug 'anuvyklack/pretty-fold.nvim'
 "
-"" Colorshemes
-"" Plug 'EdenEast/nightfox.nvim'
-""    Plug 'rktjmp/lush.nvim'
-"" Plug 'adisen99/codeschool.nvim'
-"" Plug 'yashguptaz/calvera-dark.nvim'
-"" let g:calvera_italic_comments = 1
-"" let g:calvera_italic_keywords = 1
-"" let g:calvera_italic_functions = 1
-"" let g:calvera_contrast = 1
-""  Plug 'tjdevries/colorbuddy.vim'
-"" Plug 'bkegley/gloombuddy'
 "   Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
 "
-"" Plug 'glepnir/zephyr-nvim'
-"" Plug 'projekt0n/github-nvim-theme'
-" Plug 'olimorris/onedarkpro.nvim' " good one
-
-" Light themes
-"Plug 'mhartington/oceanic-next' " kept for light theme testing
 
 "    " Plug 'kyazdani42/nvim-web-devicons'
 "Plug 'goolord/alpha-nvim'
@@ -402,7 +474,7 @@ set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
 set cursorline               " Highlight the line currently under cursor
-set diffopt+=vertical        " Open diff in vertical split
+set diffopt+=vertical        " Open diff in vertical sp:set lit
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 "set lcs=space:·,tab:>-       " Show space as ·, tab as clear spaces
 "set list                     " Show special characters
@@ -417,7 +489,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-"colorscheme onedarkpro          " Set colorscheme 
+colorscheme onedarkpro          " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
