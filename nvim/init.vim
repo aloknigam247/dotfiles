@@ -53,8 +53,8 @@ call plug#begin()
 "Plug 'karb94/neoscroll.nvim'
 "
 "" LSP
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'williamboman/nvim-lsp-installer'
 "
 "" Plug 'terrortylor/nvim-comment'
 "" Plug 'winston0410/commented.nvim'
@@ -92,11 +92,11 @@ Plug 'williamboman/nvim-lsp-installer'
 "" let g:calvera_contrast = 1
 ""  Plug 'tjdevries/colorbuddy.vim'
 "" Plug 'bkegley/gloombuddy'
-   Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
+"   Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
 "
 "" Plug 'glepnir/zephyr-nvim'
 "" Plug 'projekt0n/github-nvim-theme'
-Plug 'olimorris/onedarkpro.nvim' " good one
+" Plug 'olimorris/onedarkpro.nvim' " good one
 
 " Light themes
 "Plug 'mhartington/oceanic-next' " kept for light theme testing
@@ -158,11 +158,11 @@ lua << EOLUA
 --  },
 --}
 --
-local lsp_installer = require("nvim-lsp-installer")
+--local lsp_installer = require("nvim-lsp-installer")
 -- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
 -- or if the server is already installed).
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
+--lsp_installer.on_server_ready(function(server)
+--    local opts = {}
 
     -- (optional) Customize the options passed to the server
     -- if server.name == "tsserver" then
@@ -173,7 +173,7 @@ lsp_installer.on_server_ready(function(server)
     -- before passing it onwards to lspconfig.
     -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     server:setup(opts)
-end)
+--end)
 --
 ---- trouble
 --require("trouble").setup {}
@@ -411,7 +411,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme onedarkpro          " Set colorscheme 
+"colorscheme onedarkpro          " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
