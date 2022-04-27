@@ -87,7 +87,7 @@ Plug 'olimorris/onedarkpro.nvim'
 " << Light >>
 " << Dark >>
 
-" NOTE: TODO
+" TODO:
 " Plug 'EdenEast/nightfox.nvim'
 " Plug 'adisen99/codeschool.nvim'
 " Plug 'bkegley/gloombuddy'
@@ -103,9 +103,13 @@ Plug 'olimorris/onedarkpro.nvim'
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
 " Plug 'stevearc/aerial.nvim'  ->> LSP
 
+" Commenting:
+" ```````````
+Plug 'gennaro-tedesco/nvim-commaround'
+" TODO:
+" Fix toggle mapping to VSCode one
 
 " TODO:
-" Plug 'gennaro-tedesco/nvim-commaround' " for comment toggle
 " Plug 'gennaro-tedesco/nvim-peekup'
 " Plug 'haringsrob/nvim_context_vt'
 " Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
@@ -196,6 +200,8 @@ call plug#end()
 "" plugins.lua content in init.vim
 
 
+" LUA Section:
+" ````````````
 lua << EOLUA
 -- Auto Pair
 -- `````````
@@ -428,8 +434,8 @@ require('nvim-autopairs').setup{}
 EOLUA
 
 
-" Variables
-" `````````
+" Variables:
+" ``````````
 " {{{
 let &titleold             = getcwd() " Set console title to path on vim exit
 let c_curly_error         = 1        " Show curly braces error
@@ -440,8 +446,8 @@ let g:netrw_liststyle     = 3        " Set netrw style as tree
 " }}}
 
 
-" Config Options
-" ``````````````
+" Config Options:
+" ```````````````
 " {{{
 set autowrite             " Auto write changes
 set clipboard=unnamedplus " Use + clipboard buffer
@@ -451,8 +457,8 @@ set path+=**              " Look for all files in sub dirs
 " }}}
 
 
-" Editor Settings
-" ```````````````
+" Editor Settings:
+" ````````````````
 " {{{
 set breakindent  " Every wrapped line will continue visually indented
 set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
@@ -465,8 +471,8 @@ set tabstop=4    " Indent using spaces
 
 let g:aquarium_style="light"
 
-" UI Options
-" ``````````
+" UI Options:
+" ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
 set background=dark           " Select appropriate colors for dark or light
@@ -495,15 +501,15 @@ highlight clear CursorLineNR " No underline on line numbers when cursorline is o
 " }}}
 
 
-" Search Options
-" ``````````````
+" Search Options:
+" ```````````````
 " {{{
 set ignorecase " Ignore case when searching
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 " }}}
 
-" Filetype Specific Options
-" `````````````````````````
+" Filetype Specific Options:
+" ``````````````````````````
 " {{{
 autocmd BufNewFile,BufRead *.qel set filetype=tcl       " Set qel filetype as tcl
 autocmd BufNewFile,BufRead *.cyt set filetype=sh        " Set cyt filetype as bash
@@ -513,8 +519,8 @@ autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as ba
 " }}}
 
 
-" Mappings
-" ````````
+" Mappings:
+" `````````
 " {{{
 map <C-a> ^
 map <C-e> $
