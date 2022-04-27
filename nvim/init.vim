@@ -10,9 +10,12 @@
 " ``````````````````
 " {{{
 call plug#begin()
-" Plug 'simrat39/symbols-outline.nvim'
-" Plug 'stevearc/aerial.nvim'
-" Plug 'windwp/nvim-autopairs'
+" Auto Pair
+" `````````
+Plug 'windwp/nvim-autopairs'
+
+" Plug 'simrat39/symbols-outline.nvim' ->> LSP
+" Plug 'stevearc/aerial.nvim'  ->> LSP
 " Plug 'gennaro-tedesco/nvim-commaround' " for comment toggle
 " Plug 'gennaro-tedesco/nvim-peekup'
 " Plug 'haringsrob/nvim_context_vt'
@@ -122,8 +125,11 @@ call plug#end()
 
 
 lua << EOLUA
+-- Auto Pair
+-- `````````
+require('nvim-autopairs').setup{}
+
 --require('aerial').setup({})
---require('nvim-autopairs').setup{}
 --local dap = require"dap"
 --dap.configurations.lua = { 
 --  { 
