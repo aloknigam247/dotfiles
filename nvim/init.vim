@@ -88,16 +88,40 @@ Plug 'olimorris/onedarkpro.nvim'
 " << Dark >>
 
 " TODO:
+" Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
 " Plug 'EdenEast/nightfox.nvim'
+" Plug 'NTBBloodbath/doom-one.nvim'
+" Plug 'Th3Whit3Wolf/one-nvim'
+" Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'adisen99/codeschool.nvim'
 " Plug 'bkegley/gloombuddy'
+" Plug 'bluz71/vim-nightfly-guicolors'
+" Plug 'folke/tokyonight.nvim'
+" Plug 'folke/twilight.nvim'
 " Plug 'glepnir/zephyr-nvim'
-" Plug 'mhartington/oceanic-next' " NOTE: kept for light theme testing
+" Plug 'lourenci/github-colors'
+" Plug 'luisiacc/gruvbox-baby'
+" Plug 'marko-cerovac/material.nvim'
+" Plug 'mhartington/oceanic-next'
+" Plug 'nekonako/xresources-nvim'
 " Plug 'projekt0n/github-nvim-theme'
+" Plug 'ray-x/aurora'
+" Plug 'rebelot/kanagawa.nvim'
 " Plug 'rktjmp/lush.nvim'
+" Plug 'rmehri01/onenord.nvim'
+" Plug 'sainnhe/edge'
+" Plug 'sainnhe/everforest'
+" Plug 'sainnhe/gruvbox-material'
+" Plug 'sainnhe/sonokai'
+" Plug 'savq/melange'
+" Plug 'shaunsingh/moonlight.nvim'
+" Plug 'tanvirtin/monokai.nvim'
+" Plug 'tiagovla/tokyodark.nvim'
+" Plug 'titanzero/zephyrium'
 " Plug 'tjdevries/colorbuddy.vim'
+" Plug 'tjdevries/gruvbuddy.nvim'
+" Plug 'tomasiser/vim-code-dark'
 " Plug 'yashguptaz/calvera-dark.nvim'
-
 
 " On Hold:
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
@@ -106,9 +130,11 @@ Plug 'olimorris/onedarkpro.nvim'
 " Commenting:
 " ```````````
 Plug 'gennaro-tedesco/nvim-commaround'
+    " TODO:
+    " Fix toggle mapping to VSCode one
+    " Add filetype for powershell
 " TODO:
-" Fix toggle mapping to VSCode one
-" Add filetype for powershell
+" Plug 'numToStr/Comment.nvim'
 
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'
