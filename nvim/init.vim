@@ -108,6 +108,7 @@ Plug 'olimorris/onedarkpro.nvim'
 Plug 'gennaro-tedesco/nvim-commaround'
 " TODO:
 " Fix toggle mapping to VSCode one
+" Add filetype for powershell
 
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'

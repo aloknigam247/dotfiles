@@ -71,6 +71,7 @@
             "intenseTextStyle": "all",
             "opacity": 74,
             "padding": "8",
+            "scrollbarState": "hidden",
             "useAcrylic": true
         },
         "list": 
