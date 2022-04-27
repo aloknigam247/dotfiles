@@ -40,7 +40,7 @@ Set-Alias -Name v -Value nvim
 # Functions
 # `````````
 function evrc {
-    nvim $PROFILE.CurrecntUserAllHosts\profile.ps1
+    nvim $env:LOCALAPPDATA\nvim\init.vim
 }
 
 function vpcl {
