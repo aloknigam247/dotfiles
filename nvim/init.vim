@@ -63,6 +63,12 @@
   "tc"	automatic formatting for text and comments
 " 
 
+" UI Client:
+" ``````````
+" TODO:
+" https://github.com/yatli/fvim
+" https://github.com/vhakulinen/gnvim
+
 " Plugins - Vim-plug
 " ``````````````````
 " {{{
@@ -135,6 +141,11 @@ Plug 'gennaro-tedesco/nvim-commaround'
     " Add filetype for powershell
 " TODO:
 " Plug 'numToStr/Comment.nvim'
+
+" Icons:
+" ``````
+" TODO:
+" https://github.com/yamatsum/nvim-nonicons
 
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'
