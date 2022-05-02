@@ -147,6 +147,17 @@ Plug 'gennaro-tedesco/nvim-commaround'
 " TODO:
 " https://github.com/yamatsum/nvim-nonicons
 
+" LSP:
+" ````
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+" TODO:
+" Autocompletion
+" Code Actions
+" Linitng
+" Snippets
+" UI Customization
+
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'
 " Plug 'haringsrob/nvim_context_vt'
@@ -185,10 +196,6 @@ Plug 'gennaro-tedesco/nvim-commaround'
 "" Plug 'ellisonleao/glow.nvim'
 "
 "Plug 'karb94/neoscroll.nvim'
-"
-"" LSP
-" Plug 'neovim/nvim-lspconfig'
-" Plug 'williamboman/nvim-lsp-installer'
 "
 "" Plug 'terrortylor/nvim-comment'
 "" Plug 'winston0410/commented.nvim'
@@ -245,6 +252,59 @@ lua << EOLUA
 -- `````````
 require('nvim-autopairs').setup{}
 
+-- LSP
+-- ```
+-- local lspconfig = require 'lspconfig'
+-- require("nvim-lsp-installer").setup {}
+
+-- local on_attach = function(_, bufnr)
+--   local opts = { buffer = bufnr }
+--   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+--   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+--   vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+--   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+--   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+--   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+--   vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+--   vim.keymap.set('n', '<leader>wl', function()
+--     vim.inspect(vim.lsp.buf.list_workspace_folders())
+--   end, opts)
+--   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+--   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+--   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+--   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+--   vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+-- end
+-- 
+-- local servers = { "clangd" }
+-- for _, lsp in ipairs(servers) do
+--   lspconfig[lsp].setup {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--   }
+-- end
+
+-- local lsp_installer = require("nvim-lsp-installer")
+-- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer", "sumneko_lua" }
+-- lsp_installer.setup({
+--     ensure_installed = { }
+-- })
+-- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
+-- or if the server is already installed).
+--lsp_installer.on_server_ready(function(server)
+--    local opts = {}
+
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+
+    -- This setup() function will take the provided server configuration and decorate it with the necessary properties
+    -- before passing it onwards to lspconfig.
+    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+--    server:setup(opts)
+--end)
+--
 --require('aerial').setup({})
 --local dap = require"dap"
 --dap.configurations.lua = { 
@@ -279,23 +339,6 @@ require('nvim-autopairs').setup{}
 --    additional_vim_regex_highlighting = false,
 --  },
 --}
---
---local lsp_installer = require("nvim-lsp-installer")
--- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
--- or if the server is already installed).
---lsp_installer.on_server_ready(function(server)
---    local opts = {}
-
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
-    -- end
-
-    -- This setup() function will take the provided server configuration and decorate it with the necessary properties
-    -- before passing it onwards to lspconfig.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
---    server:setup(opts)
---end)
 --
 ---- trouble
 --require("trouble").setup {}
