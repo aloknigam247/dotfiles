@@ -157,6 +157,10 @@ Plug 'williamboman/nvim-lsp-installer'
 " Linitng
 " Snippets
 " UI Customization
+" nvim-cmp " working state
+"Plug 'hrsh7th/nvim-cmp'
+"Plug 'hrsh7th/cmp-buffer'
+"Plug 'hrsh7th/cmp-nvim-lsp'
 
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'
@@ -181,10 +185,6 @@ Plug 'williamboman/nvim-lsp-installer'
 "Plug 'jceb/blinds.nvim'
 "let g:blinds_guibg = "#121616"
 "
-" nvim-cmp " working state
-"Plug 'hrsh7th/nvim-cmp'
-"Plug 'hrsh7th/cmp-buffer'
-"Plug 'hrsh7th/cmp-nvim-lsp'
 ""  todo comments
 "Plug 'nvim-lua/plenary.nvim'
 "Plug 'folke/todo-comments.nvim'
