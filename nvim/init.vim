@@ -87,16 +87,14 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'olimorris/onedarkpro.nvim'
+Plug 'NTBBloodbath/doom-one.nvim'
 
 " Accepted:
 " << Light >>
 " << Dark >>
+" Plug 'olimorris/onedarkpro.nvim'
 
 " TODO:
-" Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
-" Plug 'EdenEast/nightfox.nvim'
-" Plug 'NTBBloodbath/doom-one.nvim'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'adisen99/codeschool.nvim'
@@ -128,6 +126,9 @@ Plug 'olimorris/onedarkpro.nvim'
 " Plug 'tjdevries/gruvbuddy.nvim'
 " Plug 'tomasiser/vim-code-dark'
 " Plug 'yashguptaz/calvera-dark.nvim'
+" Plug 'olimorris/onedarkpro.nvim' " check light
+" Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
+" Plug 'EdenEast/nightfox.nvim' ->> treesitter
 
 " On Hold:
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
@@ -145,6 +146,17 @@ Plug 'gennaro-tedesco/nvim-commaround'
 " Completion:
 " ```````````
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+" TODO:
+" LSP
+" Snippets
+" Commandline
+" Path
+" https://github.com/PasiBergman/cmp-nuget " For Nuget
+" https://github.com/tzachar/cmp-fuzzy-buffer
+" https://github.com/octaltree/cmp-look
+" https://github.com/uga-rosa/cmp-dictionary
+" Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
 
 " Icons:
 " ``````
@@ -161,6 +173,15 @@ Plug 'williamboman/nvim-lsp-installer'
 " Linitng
 " Snippets
 " UI Customization
+
+" Treesitter:
+" ```````````
+Plug 'nvim-treesitter/nvim-treesitter'
+" TODO:
+" Incremental selection
+" Indentation
+" Folding
+" Wiki
 
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'
@@ -222,7 +243,6 @@ Plug 'williamboman/nvim-lsp-installer'
 "
 "" Plug 'anuvyklack/pretty-fold.nvim'
 "
-"   Plug 'nvim-treesitter/nvim-treesitter' ", {'do': ':TSUpdate'}
 "
 
 "    " Plug 'kyazdani42/nvim-web-devicons'
@@ -250,7 +270,23 @@ call plug#end()
 lua << EOLUA
 -- Auto Pair
 -- `````````
-require('nvim-autopairs').setup{}
+require('nvim-autopairs').setup({})
+
+-- Commenting:
+-- ```````````
+local cmp = require('cmp')
+cmp.setup({
+    mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = ({
+        { name = 'buffer' }
+    })
+})
 
 -- LSP
 -- ```
@@ -304,7 +340,18 @@ require('nvim-autopairs').setup{}
     -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 --    server:setup(opts)
 --end)
---
+
+-- Treesitter
+-- ``````````
+require('nvim-treesitter.configs').setup {
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false
+    }
+}
+
+
+
 --require('aerial').setup({})
 --local dap = require"dap"
 --dap.configurations.lua = { 
@@ -333,12 +380,6 @@ require('nvim-autopairs').setup{}
 --
 --
 --require"gitlinker".setup()
---require 'nvim-treesitter.configs'.setup {
---  highlight = {
---    enable = true,
---    additional_vim_regex_highlighting = false,
---  },
---}
 --
 ---- trouble
 --require("trouble").setup {}
@@ -400,35 +441,6 @@ require('nvim-autopairs').setup{}
 --  },
 --}
 --
--- nvim-cmp
---local cmp = require('cmp')
---cmp.setup({
---  sources = {
---    {
---      name = 'buffer',
---      option = {
---        -- Options go into this table
---      },
---    },
---    { name = 'nvim_lsp' },
---  },
-----  mapping = {
-----    ["<Tab>"] = cmp.mapping(function(fallback)
-----      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
-----      if cmp.visible() then
-----        local entry = cmp.get_selected_entry()
-----	if not entry then
-----	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-----	else
-----	  cmp.confirm()
-----	end
-----      else
-----        fallback()
-----      end
-----    end, {"i","s","c",}),
-----  }
---})
-
 --require('neoscroll').setup()
 --
 ---- ensure that packer is installed
@@ -469,26 +481,6 @@ require('nvim-autopairs').setup{}
 ---- windline
 --require('wlsample.airline_anim')
 --require('gitsigns').setup()
---
---if vim.fn.has('unix') == 1 then
---    require'nvim-treesitter.configs'.setup {
---      -- One of "all", "maintained" (parsers with maintainers), or a list of languages
---      ensure_installed = "maintained",
---    
---      -- Install languages synchronously (only applied to `ensure_installed`)
---      sync_install = false,
---    
---      highlight = {
---        -- `false` will disable the whole extension
---        enable = false,
---        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
---        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
---        -- Using this option may slow down your editor, and you may see some duplicate highlights.
---        -- Instead of true it can also be a list of languages
---        additional_vim_regex_highlighting = false,
---      },
---    }
---end
 --
 ---- venn.nvim: enable or disable keymappings
 --function _G.Toggle_venn()
@@ -551,7 +543,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 " }}}
 
-let g:aquarium_style="light"
+let g:aquarium_style="light" " TODO: remove
 
 " UI Options:
 " ```````````
@@ -564,8 +556,8 @@ set culopt=number,screenline " Highlight current line and line number of current
 set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-"set lcs=space:·,tab:>-       " Show space as ·, tab as clear spaces
-"set list                     " Show special characters
+set lcs=tab:>-               " Show space as ·, tab as clear spaces
+set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
@@ -577,7 +569,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme onedarkpro          " Set colorscheme 
+colorscheme doom-one         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
