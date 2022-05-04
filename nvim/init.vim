@@ -142,6 +142,10 @@ Plug 'gennaro-tedesco/nvim-commaround'
 " TODO:
 " Plug 'numToStr/Comment.nvim'
 
+" Completion:
+" ```````````
+Plug 'hrsh7th/nvim-cmp'
+
 " Icons:
 " ``````
 " TODO:
@@ -157,10 +161,6 @@ Plug 'williamboman/nvim-lsp-installer'
 " Linitng
 " Snippets
 " UI Customization
-" nvim-cmp " working state
-"Plug 'hrsh7th/nvim-cmp'
-"Plug 'hrsh7th/cmp-buffer'
-"Plug 'hrsh7th/cmp-nvim-lsp'
 
 " TODO:
 " Plug 'gennaro-tedesco/nvim-peekup'
@@ -541,13 +541,14 @@ set path+=**              " Look for all files in sub dirs
 " Editor Settings:
 " ````````````````
 " {{{
-set breakindent  " Every wrapped line will continue visually indented
-set cpoptions+=Z " When using w! while the 'readonly' option is set,don't reset 'readonly'
-set expandtab    " Convert tabs to spaces
-set history=1000 " Increase undo limit
-set noswapfile   " Disable swap files
-set shiftwidth=4 " When shifting, indent using spaces
-set tabstop=4    " Indent using spaces
+set breakindent                       " Every wrapped line will continue visually indented
+set completeopt=menu,menuone,noselect " for nvim-cmp
+set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
+set expandtab                         " Convert tabs to spaces
+set history=1000                      " Increase undo limit
+set noswapfile                        " Disable swap files
+set shiftwidth=4                      " When shifting, indent using spaces
+set tabstop=4                         " Indent using spaces
 " }}}
 
 let g:aquarium_style="light"
