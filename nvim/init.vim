@@ -129,6 +129,7 @@ Plug 'NTBBloodbath/doom-one.nvim'
 " Plug 'olimorris/onedarkpro.nvim' " check light
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
+" Plug 'catppuccin/nvim'
 
 " On Hold:
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
@@ -544,6 +545,7 @@ set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
+set pumblend=0               " pseudo-transparency for popup-menu
 set shortmess=aoOtT          " Short messages
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
