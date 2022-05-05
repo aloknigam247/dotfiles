@@ -97,7 +97,6 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "backgroundImage": "C:\\Users\\aloknigam\\dotfiles\\wallpaper-master\\arch.png",
                 "colorScheme": "Campbell Powershell",
                 "commandline": "C:\\Windows\\system32\\wsl.exe -d Arch",
                 "guid": "{c23c56a9-030f-41bc-95fa-5adf7d4bf444}",
@@ -124,7 +123,6 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "backgroundImage": "C:\\Users\\aloknigam\\dotfiles\\wallpaper-master\\windows.png",
                 "colorScheme": "Ocean",
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
