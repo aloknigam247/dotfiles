@@ -130,8 +130,6 @@ Plug 'bkegley/gloombuddy'
 " Plug 'olimorris/onedarkpro.nvim' " check light
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
-
-" On Hold:
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
 " Plug 'stevearc/aerial.nvim'  ->> LSP
 
@@ -273,10 +271,10 @@ call plug#end()
 lua << EOLUA
 -- Auto Pair
 -- `````````
-require('nvim-autopairs').setup({})
+--require('nvim-autopairs').setup({})
 
--- Commenting
--- ```````````
+-- Completion
+-- ``````````
 local cmp = require('cmp')
 cmp.setup({
     mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
