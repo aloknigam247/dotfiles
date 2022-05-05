@@ -68,6 +68,14 @@
 " TODO:
 " https://github.com/yatli/fvim
 " https://github.com/vhakulinen/gnvim
+" https://github.com/rohit-px2/nvui
+" https://github.com/equalsraf/neovim-qt
+" https://github.com/vhakulinen/gnvim
+" https://github.com/akiyosi/goneovim
+" https://github.com/smolck/uivonim
+" https://github.com/jeanguyomarch/eovim/
+" https://github.com/RMichelsen/Nvy
+
 
 " Plugins - Vim-plug
 " ``````````````````
@@ -130,12 +138,7 @@ Plug 'bkegley/gloombuddy'
 " Plug 'olimorris/onedarkpro.nvim' " check light
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
-<<<<<<< HEAD
 " Plug 'catppuccin/nvim'
-
-" On Hold:
-=======
->>>>>>> 3577f80020802c56a742acdac3a339f8f0f19222
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
 " Plug 'stevearc/aerial.nvim'  ->> LSP
 
@@ -558,6 +561,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
+" set winblend " TODO:
 colorscheme gloombuddy         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
