@@ -87,18 +87,19 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'NTBBloodbath/doom-one.nvim'
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'bkegley/gloombuddy'
 
 " Accepted:
 " << Light >>
-" << Dark >>
-" Plug 'olimorris/onedarkpro.nvim'
-
-" TODO:
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'adisen99/codeschool.nvim'
-" Plug 'bkegley/gloombuddy'
+" << Dark >>
+" Plug 'olimorris/onedarkpro.nvim'
+" Plug 'Th3Whit3Wolf/one-nvim'
+" Plug 'Th3Whit3Wolf/onebuddy'
+
+" TODO:
 " Plug 'bluz71/vim-nightfly-guicolors'
 " Plug 'folke/tokyonight.nvim'
 " Plug 'folke/twilight.nvim'
@@ -552,7 +553,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme doom-one         " Set colorscheme 
+colorscheme gloombuddy         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
