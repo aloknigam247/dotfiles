@@ -97,7 +97,6 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "backgroundImage": "C:\\Users\\aloknigam\\dotfiles\\wallpaper-master\\arch.png",
                 "colorScheme": "Campbell Powershell",
                 "commandline": "C:\\Windows\\system32\\wsl.exe -d Arch",
                 "guid": "{c23c56a9-030f-41bc-95fa-5adf7d4bf444}",
@@ -124,7 +123,6 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "backgroundImage": "C:\\Users\\aloknigam\\dotfiles\\wallpaper-master\\windows.png",
                 "colorScheme": "Ocean",
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -132,18 +130,6 @@
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "source": "Windows.Terminal.PowershellCore"
-            },
-            {
-                "guid": "{cb0097c1-623b-53c0-8119-e58d2dc18943}",
-                "hidden": false,
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{9802fcad-95d4-5b0d-b2a7-604c6c5bf72f}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },

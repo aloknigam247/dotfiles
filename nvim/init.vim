@@ -87,18 +87,19 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'NTBBloodbath/doom-one.nvim'
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'bkegley/gloombuddy'
 
 " Accepted:
 " << Light >>
-" << Dark >>
-" Plug 'olimorris/onedarkpro.nvim'
-
-" TODO:
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'adisen99/codeschool.nvim'
-" Plug 'bkegley/gloombuddy'
+" << Dark >>
+" Plug 'olimorris/onedarkpro.nvim'
+" Plug 'Th3Whit3Wolf/one-nvim'
+" Plug 'Th3Whit3Wolf/onebuddy'
+
+" TODO:
 " Plug 'bluz71/vim-nightfly-guicolors'
 " Plug 'folke/tokyonight.nvim'
 " Plug 'folke/twilight.nvim'
@@ -129,9 +130,12 @@ Plug 'NTBBloodbath/doom-one.nvim'
 " Plug 'olimorris/onedarkpro.nvim' " check light
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
+<<<<<<< HEAD
 " Plug 'catppuccin/nvim'
 
 " On Hold:
+=======
+>>>>>>> 3577f80020802c56a742acdac3a339f8f0f19222
 " Plug 'simrat39/symbols-outline.nvim' ->> LSP
 " Plug 'stevearc/aerial.nvim'  ->> LSP
 
@@ -273,10 +277,10 @@ call plug#end()
 lua << EOLUA
 -- Auto Pair
 -- `````````
-require('nvim-autopairs').setup({})
+--require('nvim-autopairs').setup({})
 
--- Commenting
--- ```````````
+-- Completion
+-- ``````````
 local cmp = require('cmp')
 cmp.setup({
     mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
@@ -554,7 +558,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-colorscheme doom-one         " Set colorscheme 
+colorscheme gloombuddy         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
