@@ -95,8 +95,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'tjdevries/colorbuddy.vim'
-Plug 'bkegley/gloombuddy'
+Plug 'NLKNguyen/papercolor-theme'
 
 " Accepted:
 " << Light >>
@@ -108,8 +107,10 @@ Plug 'bkegley/gloombuddy'
 " Plug 'Th3Whit3Wolf/onebuddy'
 
 " TODO:
-" Plug 'bluz71/vim-nightfly-guicolors'
-" Plug 'folke/tokyonight.nvim'
+" Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
+" Plug 'EdenEast/nightfox.nvim' ->> treesitter
+" Plug 'ayu-theme/ayu-vim'
+" Plug 'catppuccin/nvim'
 " Plug 'folke/twilight.nvim'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'lourenci/github-colors'
@@ -117,6 +118,7 @@ Plug 'bkegley/gloombuddy'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'nekonako/xresources-nvim'
+" Plug 'olimorris/onedarkpro.nvim' " check light
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
@@ -128,6 +130,8 @@ Plug 'bkegley/gloombuddy'
 " Plug 'sainnhe/sonokai'
 " Plug 'savq/melange'
 " Plug 'shaunsingh/moonlight.nvim'
+" Plug 'simrat39/symbols-outline.nvim' ->> LSP
+" Plug 'stevearc/aerial.nvim'  ->> LSP
 " Plug 'tanvirtin/monokai.nvim'
 " Plug 'tiagovla/tokyodark.nvim'
 " Plug 'titanzero/zephyrium'
@@ -135,12 +139,6 @@ Plug 'bkegley/gloombuddy'
 " Plug 'tjdevries/gruvbuddy.nvim'
 " Plug 'tomasiser/vim-code-dark'
 " Plug 'yashguptaz/calvera-dark.nvim'
-" Plug 'olimorris/onedarkpro.nvim' " check light
-" Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
-" Plug 'EdenEast/nightfox.nvim' ->> treesitter
-" Plug 'catppuccin/nvim'
-" Plug 'simrat39/symbols-outline.nvim' ->> LSP
-" Plug 'stevearc/aerial.nvim'  ->> LSP
 
 " Commenting:
 " ```````````
@@ -200,8 +198,11 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Folding
 " Wiki
 
+" Word Highlight:
+" ```````````````
+Plug 'RRethy/vim-illuminate'
+
 " TODO: Plugins to review
-" Plug 'RRethy/vim-illuminate'
 " Plug 'anuvyklack/pretty-fold.nvim'
 " Plug 'b3nj5m1n/kommentary'
 " Plug 'beauwilliams/focus.nvim'
@@ -502,6 +503,7 @@ local lspconfig = require 'lspconfig'
 require("nvim-lsp-installer").setup {}
 
 local on_attach = function(_, bufnr)
+  require 'illuminate'.on_attach(_)
   local opts = { buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -528,6 +530,9 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+  vim.api.nvim_command [[ hi def link LspReferenceText WildMenu ]]
+  vim.api.nvim_command [[ hi def link LspReferenceWrite WildMenu ]]
+  vim.api.nvim_command [[ hi def link LspReferenceRead WildMenu ]]
 
 -- Treesitter
 -- ``````````
@@ -759,7 +764,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme gloombuddy         " Set colorscheme 
+colorscheme PaperColor         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
@@ -812,3 +817,9 @@ augroup RestoreCursorShapeOnExit
 augroup END
 
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
+
+" Workaround for vim-illuminate
+augroup illuminate_augroup
+    autocmd!
+    autocmd VimEnter * hi link illuminatedWord MatchParen
+augroup END
