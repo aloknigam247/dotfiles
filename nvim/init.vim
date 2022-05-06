@@ -6,7 +6,7 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
-" TODO: Fix keymappings for <C-right arrow> <C-left arror>
+" TODO: Fix keymappings for <C-right arrow> <C-left arror> word movements
 " TODO: Highlight only overlength chars
 " augroup vimrc_autocmds
 "   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
@@ -200,94 +200,284 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Folding
 " Wiki
 
-" TODO:
-" Plug 'gennaro-tedesco/nvim-peekup'
-" Plug 'haringsrob/nvim_context_vt'
-" Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
-" Plug 'folke/which-key.nvim'
+" TODO: Plugins to review
+" Plug 'RRethy/vim-illuminate'
+" Plug 'anuvyklack/pretty-fold.nvim'
+" Plug 'b3nj5m1n/kommentary'
+" Plug 'beauwilliams/focus.nvim'
+" Plug 'beauwilliams/statusline.lua'
+" Plug 'booperlv/nvim-gomove'
+" Plug 'ellisonleao/glow.nvim'
 " Plug 'f-person/git-blame.nvim' " not working, needs review
-"Plug 'booperlv/nvim-gomove'
-"Plug 'jbyuki/one-small-step-for-vimkind'
-"Plug 'mfussenegger/nvim-dap'
-
-"Plug 'kyazdani42/nvim-web-devicons'
-"
-"Plug 'kevinhwang91/nvim-hlslens'
-"
-"" Firenvim
-"" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-"
-""   Plug 'kyazdani42/nvim-web-devicons'
-"Plug 'folke/trouble.nvim'
-"
-"Plug 'jceb/blinds.nvim'
-"let g:blinds_guibg = "#121616"
-"
-""  todo comments
-"Plug 'nvim-lua/plenary.nvim'
-"Plug 'folke/todo-comments.nvim'
-"
-"Plug 'wbthomason/packer.nvim'
-"Plug 'RRethy/vim-illuminate'
-"
-"" Glow markdown preview
-"" Plug 'ellisonleao/glow.nvim'
-"
-"Plug 'karb94/neoscroll.nvim'
-"
-"" Plug 'terrortylor/nvim-comment'
-"" Plug 'winston0410/commented.nvim'
-"" Plug 'yamatsum/nvim-cursorline'
-"" Plug 'xiyaowong/nvim-cursorword'
-"
-"" wilder
-"  function! UpdateRemotePlugins(...)
-"    " Needed to refresh runtime files
-"    let &rtp=&rtp
-"    UpdateRemotePlugins
-"  endfunction
-"
-"Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
-"
-"" Maximize current window in foxus
-"" Plug 'beauwilliams/focus.nvim'
-"
-"" alternative to vim-commentary
-"Plug 'b3nj5m1n/kommentary'
-"
-"" Plug 'beauwilliams/statusline.lua'
-"Plug 'windwp/windline.nvim'
-"
-"" Plug 'anuvyklack/pretty-fold.nvim'
-"
-"
-
-"    " Plug 'kyazdani42/nvim-web-devicons'
-"Plug 'goolord/alpha-nvim'
-"" Plug 'startup-nvim/startup.nvim'
-"Plug 'ruifm/gitlinker.nvim'
-"Plug 'nvim-lua/plenary.nvim'
-"Plug 'lewis6991/gitsigns.nvim'
-"
-"Plug 'jbyuki/venn.nvim'
+" Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+" Plug 'folke/todo-comments.nvim'
+" Plug 'folke/trouble.nvim'
+" Plug 'folke/which-key.nvim'
+" Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+" Plug 'gennaro-tedesco/nvim-peekup'
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Plug 'goolord/alpha-nvim'
+" Plug 'haringsrob/nvim_context_vt'
+" Plug 'jbyuki/one-small-step-for-vimkind'
+" Plug 'jbyuki/venn.nvim'
+" Plug 'jceb/blinds.nvim'
+" Plug 'karb94/neoscroll.nvim'
+" Plug 'kevinhwang91/nvim-hlslens'
+" Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'lewis6991/gitsigns.nvim'
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'ruifm/gitlinker.nvim'
+" Plug 'startup-nvim/startup.nvim'
+" Plug 'terrortylor/nvim-comment'
+" Plug 'wbthomason/packer.nvim'
+" Plug 'windwp/windline.nvim'
+" Plug 'winston0410/commented.nvim'
+" Plug 'xiyaowong/nvim-cursorword'
+" Plug 'yamatsum/nvim-cursorline'
+" https://github.com/AckslD/nvim-gfold.lua
+" https://github.com/AstroNvim/AstroNvim
+" https://github.com/CanKolay3499/CNvim
+" https://github.com/CosmicNvim/CosmicNvim
+" https://github.com/CosmicNvim/cosmic-ui
+" https://github.com/Everblush/everblush.vim
+" https://github.com/FeiyouG/command_center.nvim
+" https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+" https://github.com/JryChn/ModuleVim
+" https://github.com/L3MON4D3/LuaSnip
+" https://github.com/LinArcX/telescope-command-palette.nvim
+" https://github.com/LionC/nest.nvim
+" https://github.com/LoricAndre/OneTerm.nvim
+" https://github.com/LunarVim/LunarVim
+" https://github.com/Lyude/neovim-gtk
+" https://github.com/Mangeshrex/uwu.vim
+" https://github.com/MordechaiHadad/nvim-papadark
+" https://github.com/MunifTanjim/nui.nvim
+" https://github.com/NTBBloodbath/cheovim
+" https://github.com/NTBBloodbath/doom-nvim
+" https://github.com/NTBBloodbath/galaxyline.nvim
+" https://github.com/NvChad/NvChad
+" https://github.com/Olical/aniseed
+" https://github.com/PHSix/nvim-hybrid
+" https://github.com/Pocco81/AbbrevMan.nvim
+" https://github.com/Pocco81/AutoSave.nvim
+" https://github.com/Pocco81/DAPInstall.nvim
+" https://github.com/Pocco81/HighStr.nvim
+" https://github.com/Pocco81/dap-buddy.nvim
+" https://github.com/RRethy/nvim-treesitter-textsubjects
+" https://github.com/RishabhRD/nvim-lsputils
+" https://github.com/Shatur/neovim-session-manager
+" https://github.com/SmiteshP/nvim-gps
+" https://github.com/ThePrimeagen/harpoon
+" https://github.com/ThemerCorp/themer.lua
+" https://github.com/Theory-of-Everything/nii-nvim
+" https://github.com/TimUntersberger/neogit
+" https://github.com/VapourNvim/VapourNvim
+" https://github.com/ZhiyuanLck/smart-pairs
+" https://github.com/aserowy/tmux.nvim
+" https://github.com/askfiy/nvim
+" https://github.com/askfiy/nvim-picgo
+" https://github.com/axieax/urlview.nvim
+" https://github.com/b0o/incline.nvim
+" https://github.com/b0o/mapx.nvim
+" https://github.com/bennypowers/nvim-regexplainer
+" https://github.com/blackCauldron7/surround.nvim
+" https://github.com/camspiers/snap
+" https://github.com/chentau/marks.nvim
+" https://github.com/cpea2506/one_monokai.nvim
+" https://github.com/crispgm/nvim-tabline
+" https://github.com/crusj/structrue-go.nvim
+" https://github.com/danielpieper/telescope-tmuxinator.nvim
+" https://github.com/datwaft/bubbly.nvim
+" https://github.com/davidgranstrom/nvim-markdown-preview
+" https://github.com/dcampos/nvim-snippy
+" https://github.com/declancm/cinnamon.nvim
+" https://github.com/declancm/windex.nvim
+" https://github.com/dracula/vim
+" https://github.com/echasnovski/mini.nvim
+" https://github.com/elihunter173/dirbuf.nvim
+" https://github.com/ellisonleao/carbon-now.nvim
+" https://github.com/ellisonleao/nvim-plugin-template
+" https://github.com/equalsraf/neovim-qt
+" https://github.com/famiu/bufdelete.nvim
+" https://github.com/feline-nvim/feline.nvim
+" https://github.com/fenetikm/falcon
+" https://github.com/folke/lua-dev.nvim
+" https://github.com/folke/twilight.nvim
+" https://github.com/frabjous/knap
+" https://github.com/gaborvecsei/cryptoprice.nvim
+" https://github.com/gaborvecsei/memento.nvim
+" https://github.com/gbprod/substitute.nvim
+" https://github.com/gbprod/yanky.nvim
+" https://github.com/gennaro-tedesco/nvim-jqx
+" https://github.com/gfanto/fzf-lsp.nvim
+" https://github.com/ggandor/leap.nvim
+" https://github.com/glepnir/dashboard-nvim
+" https://github.com/gpanders/editorconfig.nvim
+" https://github.com/henriquehbr/nvim-startup.lua
+" https://github.com/hkupty/nvimux
+" https://github.com/hrsh7th/vim-vsnip
+" https://github.com/ibhagwan/fzf-lua
+" https://github.com/is0n/fm-nvim
+" https://github.com/is0n/jaq-nvim
+" https://github.com/ishan9299/modus-theme-vim
+" https://github.com/j-hui/fidget.nvim
+" https://github.com/jakewvincent/mkdnflow.nvim
+" https://github.com/jameshiew/nvim-magic
+" https://github.com/jamestthompson3/nvim-remote-containers
+" https://github.com/jbyuki/instant.nvim
+" https://github.com/jghauser/fold-cycle.nvim
+" https://github.com/jose-elias-alvarez/null-ls.nvim
+" https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+" https://github.com/jubnzv/mdeval.nvim
+" https://github.com/jubnzv/virtual-types.nvim
+" https://github.com/junnplus/nvim-lsp-setup
+" https://github.com/kdheepak/lazygit.nvim
+" https://github.com/kdheepak/tabline.nvim
+" https://github.com/kevinhwang91/nvim-bqf
+" https://github.com/klen/nvim-test
+" https://github.com/konapun/vacuumline.nvim
+" https://github.com/kosayoda/nvim-lightbulb
+" https://github.com/kvrohit/rasmus.nvim
+" https://github.com/kyazdani42/nvim-tree.lua
+" https://github.com/lalitmee/cobalt2.nvim
+" https://github.com/ldelossa/litee.nvim
+" https://github.com/ldelossa/vimdark
+" https://github.com/lewis6991/spellsitter.nvim
+" https://github.com/liuchengxu/vista.vim
+" https://github.com/lukas-reineke/format.nvim
+" https://github.com/lukas-reineke/indent-blankline.nvim
+" https://github.com/lukas-reineke/lsp-format.nvim
+" https://github.com/m-demare/hlargs.nvim
+" https://github.com/m00qek/baleia.nvim
+" https://github.com/matbme/JABS.nvim
+" https://github.com/max-0406/autoclose.nvim
+" https://github.com/max397574/better-escape.nvim
+" https://github.com/mcauley-penney/tidy.nvim
+" https://github.com/mcchrish/zenbones.nvim
+" https://github.com/mfussenegger/nvim-dap
+" https://github.com/mfussenegger/nvim-lint
+" https://github.com/mfussenegger/nvim-treehopper
+" https://github.com/mhartington/formatter.nvim
+" https://github.com/michaelb/sniprun
+" https://github.com/milisims/nvim-luaref
+" https://github.com/monaqa/dial.nvim
+" https://github.com/mrjones2014/legendary.nvim
+" https://github.com/mrjones2014/smart-splits.nvim
+" https://github.com/ms-jpq/chadtree
+" https://github.com/ms-jpq/coq_nvim
+" https://github.com/nacro90/numb.nvim
+" https://github.com/nanotee/luv-vimdocs
+" https://github.com/nanotee/nvim-lsp-basics
+" https://github.com/nanotee/nvim-lua-guide
+" https://github.com/nanotee/sqls.nvim
+" https://github.com/neovide/neovide
+" https://github.com/neovim/nvim-lspconfig
+" https://github.com/neurosnap/neovimcraft
+" https://github.com/nikvdp/neomux
+" https://github.com/nkakouros-original/numbers.nvim
+" https://github.com/noib3/nvim-cokeline
+" https://github.com/noib3/nvim-compleet
+" https://github.com/norcalli/nvim-colorizer.lua
+" https://github.com/norcalli/nvim-terminal.lua
+" https://github.com/norcalli/snippets.nvim
+" https://github.com/notomo/cmdbuf.nvim
+" https://github.com/notomo/gesture.nvim
+" https://github.com/numToStr/FTerm.nvim
+" https://github.com/numToStr/Navigator.nvim
+" https://github.com/nvim-lua/kickstart.nvim
+" https://github.com/nvim-lua/lsp-status.nvim
+" https://github.com/nvim-lua/lsp_extensions.nvim
+" https://github.com/nvim-lua/plenary.nvim
+" https://github.com/nvim-lua/popup.nvim
+" https://github.com/nvim-lualine/lualine.nvim
+" https://github.com/nvim-neo-tree/neo-tree.nvim
+" https://github.com/nvim-neorg/neorg
+" https://github.com/nvim-orgmode/orgmode
+" https://github.com/nvim-pack/nvim-spectre
+" https://github.com/nvim-telescope/telescope.nvim
+" https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+" https://github.com/nvoid-lua/nvoid
+" https://github.com/nyngwang/NeoNoName.lua
+" https://github.com/nyngwang/NeoRoot.lua
+" https://github.com/oberblastmeister/neuron.nvim
+" https://github.com/oberblastmeister/termwrapper.nvim
+" https://github.com/ojroques/nvim-hardline
+" https://github.com/ojroques/nvim-lspfuzzy
+" https://github.com/olimorris/persisted.nvim
+" https://github.com/onsails/diaglist.nvim
+" https://github.com/onsails/lspkind-nvim
+" https://github.com/onsails/lspkind.nvim
+" https://github.com/p00f/cphelper.nvim
+" https://github.com/p00f/nvim-ts-rainbow
+" https://github.com/petertriho/nvim-scrollbar
+" https://github.com/phaazon/hop.nvim
+" https://github.com/phha/zenburn.nvim
+" https://github.com/pianocomposer321/consolation.nvim
+" https://github.com/pianocomposer321/yabs.nvim
+" https://github.com/pwntester/octo.nvim
+" https://github.com/rafaelsq/nvim-goc.lua
+" https://github.com/rafamadriz/friendly-snippets
+" https://github.com/rafamadriz/neon
+" https://github.com/rafcamlet/nvim-luapad
+" https://github.com/rafcamlet/tabline-framework.nvim
+" https://github.com/ray-x/go.nvim
+" https://github.com/ray-x/lsp_signature.nvim
+" https://github.com/ray-x/navigator.lua
+" https://github.com/rcarriga/nvim-dap-ui
+" https://github.com/rcarriga/vim-ultest
+" https://github.com/renerocksai/telekasten.nvim
+" https://github.com/rgroli/other.nvim
+" https://github.com/rktjmp/highlight-current-n.nvim
+" https://github.com/rktjmp/lush.nvim
+" https://github.com/rlane/pounce.nvim
+" https://github.com/rmagatti/auto-session
+" https://github.com/rmagatti/goto-preview
+" https://github.com/rohit-px2/nvui
+" https://github.com/romgrk/barbar.nvim
+" https://github.com/romgrk/nvim-treesitter-context
+" https://github.com/s1n7ax/nvim-terminal
+" https://github.com/sakhnik/nvim-gdb
+" https://github.com/sbdchd/neoformat
+" https://github.com/scalameta/nvim-metals
+" https://github.com/seandewar/killersheep.nvim
+" https://github.com/shaeinst/penvim
+" https://github.com/shaeinst/roshnivim
+" https://github.com/shaeinst/roshnivim-cs
+" https://github.com/shaunsingh/nyoom.nvim
+" https://github.com/sindrets/diffview.nvim
+" https://github.com/slugbyte/unruly-worker
+" https://github.com/smolck/uivonim
+" https://github.com/steelsojka/pears.nvim
+" https://github.com/stevearc/dressing.nvim
+" https://github.com/stevearc/gkeep.nvim
+" https://github.com/stevearc/qf_helper.nvim
+" https://github.com/sudormrfbin/cheatsheet.nvim
+" https://github.com/svermeulen/vimpeccable
+" https://github.com/tamago324/lir.nvim
+" https://github.com/tami5/sqlite.lua
+" https://github.com/tanvirtin/vgit.nvim
+" https://github.com/tjdevries/colorbuddy.nvim
+" https://github.com/tjdevries/nlua.nvim
+" https://github.com/toppair/reach.nvim
+" https://github.com/tversteeg/registers.nvim
+" https://github.com/udayvir-singh/hibiscus.nvim
+" https://github.com/udayvir-singh/tangerine.nvim
+" https://github.com/vijaymarupudi/nvim-fzf
+" https://github.com/weilbith/nvim-code-action-menu
+" https://github.com/windwp/nvim-projectconfig
+" https://github.com/ziontee113/syntax-tree-surfer
 call plug#end()
-"" }}}
-"
-""wilder config
-"call wilder#setup({'modes': [':', '/', '?']})
-"call wilder#set_option('renderer', wilder#popupmenu_renderer({
-"      \ 'highlighter': wilder#basic_highlighter(),
-"      \ }))
-"
-"" plugins.lua content in init.vim
-
 
 " LUA Section:
 " ````````````
 lua << EOLUA
 -- Auto Pair
 -- `````````
---require('nvim-autopairs').setup({})
+require('nvim-autopairs').setup({})
 
 -- Completion
 -- ``````````
