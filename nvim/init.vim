@@ -214,10 +214,11 @@ hi def link LspReferenceText WildMenu
 hi def link LspReferenceWrite WildMenu
 hi def link LspReferenceRead WildMenu
 
-" TODO: Plugins to review
-" Plug 'beauwilliams/focus.nvim'
+Plug 'ellisonleao/glow.nvim'
+
+" Archived:
 " Plug 'booperlv/nvim-gomove'
-" Plug 'ellisonleao/glow.nvim'
+" TODO: Plugins to review
 " Plug 'f-person/git-blame.nvim' " not working, needs review
 " Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
 " Plug 'folke/todo-comments.nvim'
