@@ -198,6 +198,19 @@ Plug 'williamboman/nvim-lsp-installer'
 " ````````````
 Plug 'beauwilliams/statusline.lua' " Slowness observed
 
+" Telescope:
+" ``````````
+" Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+
+" Todo:
+" `````
+Plug 'folke/todo-comments.nvim'
+" TODO:
+" Search
+" Quickfix
+" Telescope
+
 " Treesitter:
 " ```````````
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -214,14 +227,12 @@ hi def link LspReferenceText WildMenu
 hi def link LspReferenceWrite WildMenu
 hi def link LspReferenceRead WildMenu
 
-Plug 'ellisonleao/glow.nvim'
 
 " Archived:
 " Plug 'booperlv/nvim-gomove'
-" TODO: Plugins to review
 " Plug 'f-person/git-blame.nvim' " not working, needs review
 " Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
-" Plug 'folke/todo-comments.nvim'
+" TODO: Plugins to review
 " Plug 'folke/trouble.nvim'
 " Plug 'folke/which-key.nvim'
 " Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
@@ -237,7 +248,6 @@ Plug 'ellisonleao/glow.nvim'
 " Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'lewis6991/gitsigns.nvim'
 " Plug 'mfussenegger/nvim-dap'
-" Plug 'nvim-lua/plenary.nvim'
 " Plug 'ruifm/gitlinker.nvim'
 " Plug 'startup-nvim/startup.nvim'
 " Plug 'terrortylor/nvim-comment'
@@ -406,7 +416,6 @@ Plug 'ellisonleao/glow.nvim'
 " https://github.com/nvim-neorg/neorg
 " https://github.com/nvim-orgmode/orgmode
 " https://github.com/nvim-pack/nvim-spectre
-" https://github.com/nvim-telescope/telescope.nvim
 " https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 " https://github.com/nvoid-lua/nvoid
 " https://github.com/nyngwang/NeoNoName.lua
@@ -538,6 +547,23 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+-- Todo-comments
+require("todo-comments").setup {
+  keywords = {
+    FIX = {
+      icon = " ", -- icon used for the sign, and in search results
+      color = "error", -- can be a hex color, or a named color (see below)
+      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+      -- signs = false, -- configure signs for some keywords individually
+    },
+    TODO = { icon = " ", color = "info" },
+    HACK = { icon = " ", color = "warning" },
+    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+  }
+}
+
 -- Treesitter
 -- ``````````
 require('nvim-treesitter.configs').setup {
@@ -577,66 +603,10 @@ require('nvim-treesitter.configs').setup {
 --
 --require"gitlinker".setup()
 --
----- trouble
---require("trouble").setup {}
---
----- Todo-comments
---require("todo-comments").setup {
---  signs = true, -- show icons in the signs column
---  sign_priority = 8, -- sign priority
---  -- keywords recognized as todo comments
---  keywords = {
---    FIX = {
---      icon = " ", -- icon used for the sign, and in search results
---      color = "error", -- can be a hex color, or a named color (see below)
---      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
---      -- signs = false, -- configure signs for some keywords individually
---    },
---    TODO = { icon = " ", color = "info" },
---    HACK = { icon = " ", color = "warning" },
---    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
---    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
---    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
---  },
---  merge_keywords = true, -- when true, custom keywords will be merged with the defaults
---  -- highlighting of the line containing the todo comment
---  -- * before: highlights before the keyword (typically comment characters)
---  -- * keyword: highlights of the keyword
---  -- * after: highlights after the keyword (todo text)
---  highlight = {
---    before = "", -- "fg" or "bg" or empty
---    keyword = "wide", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
---    after = "fg", -- "fg" or "bg" or empty
---    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
---    comments_only = true, -- uses treesitter to match keywords in comments only
---    max_line_len = 400, -- ignore lines longer than this
---    exclude = {}, -- list of file types to exclude highlighting
---  },
---  -- list of named colors where we try to extract the guifg from the
---  -- list of hilight groups or use the hex color if hl not found as a fallback
---  colors = {
---    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
---    warning = { "DiagnosticWarning", "WarningMsg", "#FBBF24" },
---    info = { "DiagnosticInfo", "#2563EB" },
---    hint = { "DiagnosticHint", "#10B981" },
---    default = { "Identifier", "#7C3AED" },
---  },
---  search = {
---    command = "rg",
---    args = {
---      "--color=never",
---      "--no-heading",
---      "--with-filename",
---      "--line-number",
---      "--column",
---    },
---    -- regex that will be used to match keywords.
---    -- don't replace the (KEYWORDS) placeholder
---    pattern = [[\b(KEYWORDS):]], -- ripgrep regex
---    -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
---  },
---}
---
+-- trouble
+-- require("trouble").setup {}
+
+
 --require('neoscroll').setup()
 --
 ---- ensure that packer is installed
