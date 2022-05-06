@@ -168,6 +168,11 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/uga-rosa/cmp-dictionary
 " Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
 
+" File Explorer:
+" ``````````````
+" TODO:
+" https://github.com/tamago324/lir.nvim
+
 " Icons:
 " ``````
 " TODO:
@@ -183,6 +188,8 @@ Plug 'williamboman/nvim-lsp-installer'
 " Linitng
 " Snippets
 " UI Customization
+" https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
+"
 
 " Treesitter:
 " ```````````
