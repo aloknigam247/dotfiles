@@ -79,7 +79,6 @@
 
 " Plugins - Vim-plug
 " ``````````````````
-" {{{
 call plug#begin()
 " Auto Pair:
 " ``````````
@@ -148,6 +147,7 @@ Plug 'gennaro-tedesco/nvim-commaround'
     " Add filetype for powershell
 " TODO:
 " Plug 'numToStr/Comment.nvim'
+" Plug 'b3nj5m1n/kommentary'
 
 " Completion:
 " ```````````
@@ -171,6 +171,11 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO:
 " https://github.com/tamago324/lir.nvim
 
+" Folding:
+" ````````
+" Plug 'anuvyklack/pretty-fold.nvim'
+" Plug 'anuvyklack/nvim-keymap-amend'
+
 " Icons:
 " ``````
 " TODO:
@@ -189,6 +194,10 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
 "
 
+" Status Line:
+" ````````````
+Plug 'beauwilliams/statusline.lua' " Slowness observed
+
 " Treesitter:
 " ```````````
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -201,12 +210,12 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Word Highlight:
 " ```````````````
 Plug 'RRethy/vim-illuminate'
+hi def link LspReferenceText WildMenu
+hi def link LspReferenceWrite WildMenu
+hi def link LspReferenceRead WildMenu
 
 " TODO: Plugins to review
-" Plug 'anuvyklack/pretty-fold.nvim'
-" Plug 'b3nj5m1n/kommentary'
 " Plug 'beauwilliams/focus.nvim'
-" Plug 'beauwilliams/statusline.lua'
 " Plug 'booperlv/nvim-gomove'
 " Plug 'ellisonleao/glow.nvim'
 " Plug 'f-person/git-blame.nvim' " not working, needs review
@@ -225,11 +234,8 @@ Plug 'RRethy/vim-illuminate'
 " Plug 'karb94/neoscroll.nvim'
 " Plug 'kevinhwang91/nvim-hlslens'
 " Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'lewis6991/gitsigns.nvim'
 " Plug 'mfussenegger/nvim-dap'
-" Plug 'nvim-lua/plenary.nvim'
 " Plug 'nvim-lua/plenary.nvim'
 " Plug 'ruifm/gitlinker.nvim'
 " Plug 'startup-nvim/startup.nvim'
@@ -530,9 +536,6 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
-  vim.api.nvim_command [[ hi def link LspReferenceText WildMenu ]]
-  vim.api.nvim_command [[ hi def link LspReferenceWrite WildMenu ]]
-  vim.api.nvim_command [[ hi def link LspReferenceRead WildMenu ]]
 
 -- Treesitter
 -- ``````````
@@ -542,7 +545,6 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false
     }
 }
-
 
 
 --require('aerial').setup({})
@@ -697,6 +699,8 @@ require('nvim-treesitter.configs').setup {
 ---- toggle keymappings for venn using <leader>v
 --vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
 --require("which-key").setup {}
+local statusline = require('statusline')
+statusline.tabline = false
 EOLUA
 
 
@@ -806,7 +810,6 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 
-" vim: fdm=marker
 
 " Make cursor _ for visual modes
 set guicursor=n-c-sm:block,i-ci-ve:ver25,r-cr-o-v:hor20
@@ -823,3 +826,4 @@ augroup illuminate_augroup
     autocmd!
     autocmd VimEnter * hi link illuminatedWord MatchParen
 augroup END
+" vim: fdm=marker
