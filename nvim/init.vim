@@ -108,6 +108,7 @@ Plug 'NLKNguyen/papercolor-theme'
 " TODO:
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
+" Plug 'Everblush/everblush.vim'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'catppuccin/nvim'
 " Plug 'folke/twilight.nvim'
@@ -166,9 +167,16 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/uga-rosa/cmp-dictionary
 " Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
 
+" Configuration:
+" ``````````````
+" TODO: Explore
+" https://github.com/AstroNvim/AstroNvim
+" https://github.com/CanKolay3499/CNvim
+" https://github.com/CosmicNvim/CosmicNvim
+
 " File Explorer:
 " ``````````````
-" TODO:
+" TODO: Explore
 " https://github.com/tamago324/lir.nvim
 
 " Folding:
@@ -197,9 +205,12 @@ Plug 'williamboman/nvim-lsp-installer'
 " Status Line:
 " ````````````
 Plug 'beauwilliams/statusline.lua' " Slowness observed
+" TODO: Explore Statusline
+" https://github.com/nvim-lualine/lualine.nvim
 
 " Telescope:
 " ``````````
+" TODO: Explore Telescope
 " Plug 'nvim-telescope/telescope.nvim'
 " Plug 'nvim-lua/plenary.nvim'
 
@@ -256,12 +267,6 @@ hi def link LspReferenceRead WildMenu
 " Plug 'winston0410/commented.nvim'
 " Plug 'xiyaowong/nvim-cursorword'
 " Plug 'yamatsum/nvim-cursorline'
-" https://github.com/AckslD/nvim-gfold.lua
-" https://github.com/AstroNvim/AstroNvim
-" https://github.com/CanKolay3499/CNvim
-" https://github.com/CosmicNvim/CosmicNvim
-" https://github.com/CosmicNvim/cosmic-ui
-" https://github.com/Everblush/everblush.vim
 " https://github.com/FeiyouG/command_center.nvim
 " https://github.com/JoosepAlviste/nvim-ts-context-commentstring
 " https://github.com/JryChn/ModuleVim
@@ -411,7 +416,6 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/nvim-lua/lsp_extensions.nvim
 " https://github.com/nvim-lua/plenary.nvim
 " https://github.com/nvim-lua/popup.nvim
-" https://github.com/nvim-lualine/lualine.nvim
 " https://github.com/nvim-neo-tree/neo-tree.nvim
 " https://github.com/nvim-neorg/neorg
 " https://github.com/nvim-orgmode/orgmode
