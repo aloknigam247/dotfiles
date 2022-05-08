@@ -94,23 +94,24 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'catppuccin/nvim'
 
 " Accepted:
 " << Light >>
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'ayu-theme/ayu-vim'
 " << Dark >>
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'ayu-theme/ayu-vim'
 
 " TODO:
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
-" Plug 'Everblush/everblush.vim'
-" Plug 'ayu-theme/ayu-vim'
-" Plug 'catppuccin/nvim'
 " Plug 'folke/twilight.nvim'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'lourenci/github-colors'
@@ -147,8 +148,11 @@ Plug 'gennaro-tedesco/nvim-commaround'
     " Fix toggle mapping to VSCode one
     " Add filetype for powershell
 " TODO:
-" Plug 'numToStr/Comment.nvim'
 " Plug 'b3nj5m1n/kommentary'
+" Plug 'numToStr/Comment.nvim'
+" Plug 'terrortylor/nvim-comment'
+" Plug 'winston0410/commented.nvim'
+" https://github.com/JoosepAlviste/nvim-ts-context-commentstring
 
 " Completion:
 " ```````````
@@ -205,8 +209,10 @@ Plug 'williamboman/nvim-lsp-installer'
 " Status Line:
 " ````````````
 Plug 'beauwilliams/statusline.lua' " Slowness observed
-" TODO: Explore Statusline
+    " TODO: Explore Statusline
+" TODO:
 " https://github.com/nvim-lualine/lualine.nvim
+" Plug 'windwp/windline.nvim'
 
 " Telescope:
 " ``````````
@@ -234,41 +240,36 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Word Highlight:
 " ```````````````
 Plug 'RRethy/vim-illuminate'
+" BUG: highlight colors are not good
 hi def link LspReferenceText WildMenu
 hi def link LspReferenceWrite WildMenu
 hi def link LspReferenceRead WildMenu
+" TODO:
+" Plug 'xiyaowong/nvim-cursorword'
+" Plug 'yamatsum/nvim-cursorline'
 
 
 " Archived:
 " Plug 'booperlv/nvim-gomove'
 " Plug 'f-person/git-blame.nvim' " not working, needs review
 " Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
-" TODO: Plugins to review
 " Plug 'folke/trouble.nvim'
+" Plug 'jbyuki/venn.nvim'
+" Plug 'kevinhwang91/nvim-hlslens'
 " Plug 'folke/which-key.nvim'
 " Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 " Plug 'gennaro-tedesco/nvim-peekup'
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" Plug 'goolord/alpha-nvim'
-" Plug 'haringsrob/nvim_context_vt'
-" Plug 'jbyuki/one-small-step-for-vimkind'
-" Plug 'jbyuki/venn.nvim'
-" Plug 'jceb/blinds.nvim'
-" Plug 'karb94/neoscroll.nvim'
-" Plug 'kevinhwang91/nvim-hlslens'
-" Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'lewis6991/gitsigns.nvim'
-" Plug 'mfussenegger/nvim-dap'
-" Plug 'ruifm/gitlinker.nvim'
-" Plug 'startup-nvim/startup.nvim'
-" Plug 'terrortylor/nvim-comment'
+" Plug 'haringsrob/nvim_context_vt' " NOTE: Good but should be off by default
 " Plug 'wbthomason/packer.nvim'
-" Plug 'windwp/windline.nvim'
-" Plug 'winston0410/commented.nvim'
-" Plug 'xiyaowong/nvim-cursorword'
-" Plug 'yamatsum/nvim-cursorline'
+" Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
+" Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'jbyuki/one-small-step-for-vimkind'
+" Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
+
+" TODO: Plugins to review
 " https://github.com/FeiyouG/command_center.nvim
-" https://github.com/JoosepAlviste/nvim-ts-context-commentstring
 " https://github.com/JryChn/ModuleVim
 " https://github.com/L3MON4D3/LuaSnip
 " https://github.com/LinArcX/telescope-command-palette.nvim
@@ -347,6 +348,7 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/is0n/fm-nvim
 " https://github.com/is0n/jaq-nvim
 " https://github.com/ishan9299/modus-theme-vim
+" https://github.com/itchyny/lightline.vim
 " https://github.com/j-hui/fidget.nvim
 " https://github.com/jakewvincent/mkdnflow.nvim
 " https://github.com/jameshiew/nvim-magic
@@ -743,7 +745,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme PaperColor         " Set colorscheme 
+colorscheme catppuccin         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
