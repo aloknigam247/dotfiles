@@ -75,6 +75,7 @@
 " https://github.com/smolck/uivonim
 " https://github.com/jeanguyomarch/eovim/
 " https://github.com/RMichelsen/Nvy
+" https://github.com/Lyude/neovim-gtk
 
 
 " Plugins - Vim-plug
@@ -88,13 +89,14 @@ Plug 'windwp/nvim-autopairs'
 " Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
 " vim automatically cursor goes to next line but how we don't know yet, how to
 " do it
+" https://github.com/ZhiyuanLck/smart-pairs
 
 " Colorscheme:
 " ````````````
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'catppuccin/nvim'
+Plug 'glepnir/zephyr-nvim'
 
 " Accepted:
 " << Light >>
@@ -109,11 +111,9 @@ Plug 'catppuccin/nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'ayu-theme/ayu-vim'
 
-" TODO:
+" TODO: To review
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
-" Plug 'folke/twilight.nvim'
-" Plug 'glepnir/zephyr-nvim'
 " Plug 'lourenci/github-colors'
 " Plug 'luisiacc/gruvbox-baby'
 " Plug 'marko-cerovac/material.nvim'
@@ -140,6 +140,11 @@ Plug 'catppuccin/nvim'
 " Plug 'tjdevries/gruvbuddy.nvim'
 " Plug 'tomasiser/vim-code-dark'
 " Plug 'yashguptaz/calvera-dark.nvim'
+" https://github.com/Mangeshrex/uwu.vim
+" https://github.com/PHSix/nvim-hybrid
+" https://github.com/cpea2506/one_monokai.nvim
+" https://github.com/dracula/vim
+" https://github.com/fenetikm/falcon
 
 " Commenting:
 " ```````````
@@ -177,6 +182,14 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/AstroNvim/AstroNvim
 " https://github.com/CanKolay3499/CNvim
 " https://github.com/CosmicNvim/CosmicNvim
+" https://github.com/JryChn/ModuleVim
+" https://github.com/LunarVim/LunarVim
+" https://github.com/NTBBloodbath/doom-nvim
+" https://github.com/NvChad/NvChad
+" https://github.com/Theory-of-Everything/nii-nvim
+" https://github.com/VapourNvim/VapourNvim
+" https://github.com/askfiy/nvim
+" https://github.com/echasnovski/mini.nvim
 
 " File Explorer:
 " ``````````````
@@ -204,7 +217,14 @@ Plug 'williamboman/nvim-lsp-installer'
 " Snippets
 " UI Customization
 " https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
-"
+" https://github.com/RishabhRD/nvim-lsputils
+
+" Snippets:
+" `````````
+" TODO:
+" https://github.com/L3MON4D3/LuaSnip
+" https://github.com/dcampos/nvim-snippy
+" https://github.com/ellisonleao/carbon-now.nvim
 
 " Status Line:
 " ````````````
@@ -213,12 +233,22 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " TODO:
 " https://github.com/nvim-lualine/lualine.nvim
 " Plug 'windwp/windline.nvim'
+" https://github.com/NTBBloodbath/galaxyline.nvim
+" https://github.com/b0o/incline.nvim
+" https://github.com/datwaft/bubbly.nvim
+" https://github.com/feline-nvim/feline.nvim
+
+" Tab Line:
+" `````````
+" TODO:
+" https://github.com/crispgm/nvim-tabline
 
 " Telescope:
 " ``````````
 " TODO: Explore Telescope
 " Plug 'nvim-telescope/telescope.nvim'
 " Plug 'nvim-lua/plenary.nvim'
+" https://github.com/LinArcX/telescope-command-palette.nvim
 
 " Todo:
 " `````
@@ -236,6 +266,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Indentation
 " Folding
 " Wiki
+" https://github.com/RRethy/nvim-treesitter-textsubjects
 
 " Word Highlight:
 " ```````````````
@@ -267,72 +298,31 @@ hi def link LspReferenceRead WildMenu
 " Plug 'mfussenegger/nvim-dap'
 " Plug 'jbyuki/one-small-step-for-vimkind'
 " Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
-
-" TODO: Plugins to review
 " https://github.com/FeiyouG/command_center.nvim
-" https://github.com/JryChn/ModuleVim
-" https://github.com/L3MON4D3/LuaSnip
-" https://github.com/LinArcX/telescope-command-palette.nvim
 " https://github.com/LionC/nest.nvim
-" https://github.com/LoricAndre/OneTerm.nvim
-" https://github.com/LunarVim/LunarVim
-" https://github.com/Lyude/neovim-gtk
-" https://github.com/Mangeshrex/uwu.vim
 " https://github.com/MordechaiHadad/nvim-papadark
 " https://github.com/MunifTanjim/nui.nvim
-" https://github.com/NTBBloodbath/cheovim
-" https://github.com/NTBBloodbath/doom-nvim
-" https://github.com/NTBBloodbath/galaxyline.nvim
-" https://github.com/NvChad/NvChad
-" https://github.com/Olical/aniseed
-" https://github.com/PHSix/nvim-hybrid
 " https://github.com/Pocco81/AbbrevMan.nvim
 " https://github.com/Pocco81/AutoSave.nvim
 " https://github.com/Pocco81/DAPInstall.nvim
 " https://github.com/Pocco81/HighStr.nvim
 " https://github.com/Pocco81/dap-buddy.nvim
-" https://github.com/RRethy/nvim-treesitter-textsubjects
-" https://github.com/RishabhRD/nvim-lsputils
 " https://github.com/Shatur/neovim-session-manager
 " https://github.com/SmiteshP/nvim-gps
 " https://github.com/ThePrimeagen/harpoon
 " https://github.com/ThemerCorp/themer.lua
-" https://github.com/Theory-of-Everything/nii-nvim
 " https://github.com/TimUntersberger/neogit
-" https://github.com/VapourNvim/VapourNvim
-" https://github.com/ZhiyuanLck/smart-pairs
 " https://github.com/aserowy/tmux.nvim
-" https://github.com/askfiy/nvim
-" https://github.com/askfiy/nvim-picgo
-" https://github.com/axieax/urlview.nvim
-" https://github.com/b0o/incline.nvim
 " https://github.com/b0o/mapx.nvim
 " https://github.com/bennypowers/nvim-regexplainer
-" https://github.com/blackCauldron7/surround.nvim
 " https://github.com/camspiers/snap
 " https://github.com/chentau/marks.nvim
-" https://github.com/cpea2506/one_monokai.nvim
-" https://github.com/crispgm/nvim-tabline
-" https://github.com/crusj/structrue-go.nvim
-" https://github.com/danielpieper/telescope-tmuxinator.nvim
-" https://github.com/datwaft/bubbly.nvim
-" https://github.com/davidgranstrom/nvim-markdown-preview
-" https://github.com/dcampos/nvim-snippy
-" https://github.com/declancm/cinnamon.nvim
-" https://github.com/declancm/windex.nvim
-" https://github.com/dracula/vim
-" https://github.com/echasnovski/mini.nvim
 " https://github.com/elihunter173/dirbuf.nvim
-" https://github.com/ellisonleao/carbon-now.nvim
-" https://github.com/ellisonleao/nvim-plugin-template
-" https://github.com/equalsraf/neovim-qt
-" https://github.com/famiu/bufdelete.nvim
-" https://github.com/feline-nvim/feline.nvim
-" https://github.com/fenetikm/falcon
 " https://github.com/folke/lua-dev.nvim
-" https://github.com/folke/twilight.nvim
 " https://github.com/frabjous/knap
 " https://github.com/gaborvecsei/cryptoprice.nvim
+
+" TODO: Plugins to review
 " https://github.com/gaborvecsei/memento.nvim
 " https://github.com/gbprod/substitute.nvim
 " https://github.com/gbprod/yanky.nvim
@@ -552,8 +542,13 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+-- Status Line
+-- ```````````
+local statusline = require('statusline')
+statusline.tabline = false
 
 -- Todo-comments
+-- `````````````
 require("todo-comments").setup {
   keywords = {
     FIX = {
@@ -609,11 +604,7 @@ require('nvim-treesitter.configs').setup {
 --
 --require"gitlinker".setup()
 --
--- trouble
--- require("trouble").setup {}
 
-
---require('neoscroll').setup()
 --
 ---- ensure that packer is installed
 --local vim = vim
@@ -654,30 +645,6 @@ require('nvim-treesitter.configs').setup {
 --require('wlsample.airline_anim')
 --require('gitsigns').setup()
 --
----- venn.nvim: enable or disable keymappings
---function _G.Toggle_venn()
---    local venn_enabled = vim.inspect(vim.b.venn_enabled)
---    if venn_enabled == "nil" then
---        vim.b.venn_enabled = true
---        vim.cmd[[setlocal ve=all]]
---        -- draw a line on HJKL keystokes
---        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
---        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
---        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
---        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
---        -- draw a box by pressing "f" with visual selection
---        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
---    else
---        vim.cmd[[setlocal ve=]]
---        vim.cmd[[mapclear <buffer>]]
---        vim.b.venn_enabled = nil
---    end
---end
----- toggle keymappings for venn using <leader>v
---vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
---require("which-key").setup {}
-local statusline = require('statusline')
-statusline.tabline = false
 EOLUA
 
 
@@ -745,7 +712,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme catppuccin         " Set colorscheme 
+colorscheme zephyr         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
