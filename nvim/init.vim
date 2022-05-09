@@ -218,6 +218,11 @@ Plug 'williamboman/nvim-lsp-installer'
 " UI Customization
 " https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
 " https://github.com/RishabhRD/nvim-lsputils
+" https://github.com/j-hui/fidget.nvim
+" https://github.com/jose-elias-alvarez/null-ls.nvim
+" https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+" https://github.com/junnplus/nvim-lsp-setup
+" https://github.com/kdheepak/lazygit.nvim
 
 " Snippets:
 " `````````
@@ -225,6 +230,7 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/L3MON4D3/LuaSnip
 " https://github.com/dcampos/nvim-snippy
 " https://github.com/ellisonleao/carbon-now.nvim
+" https://github.com/hrsh7th/vim-vsnip
 
 " Status Line:
 " ````````````
@@ -237,11 +243,13 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " https://github.com/b0o/incline.nvim
 " https://github.com/datwaft/bubbly.nvim
 " https://github.com/feline-nvim/feline.nvim
+" https://github.com/itchyny/lightline.vim
 
 " Tab Line:
 " `````````
 " TODO:
 " https://github.com/crispgm/nvim-tabline
+" https://github.com/kdheepak/tabline.nvim
 
 " Telescope:
 " ``````````
@@ -321,37 +329,23 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/folke/lua-dev.nvim
 " https://github.com/frabjous/knap
 " https://github.com/gaborvecsei/cryptoprice.nvim
-
-" TODO: Plugins to review
 " https://github.com/gaborvecsei/memento.nvim
 " https://github.com/gbprod/substitute.nvim
 " https://github.com/gbprod/yanky.nvim
 " https://github.com/gennaro-tedesco/nvim-jqx
 " https://github.com/gfanto/fzf-lsp.nvim
 " https://github.com/ggandor/leap.nvim
-" https://github.com/glepnir/dashboard-nvim
-" https://github.com/gpanders/editorconfig.nvim
-" https://github.com/henriquehbr/nvim-startup.lua
-" https://github.com/hkupty/nvimux
-" https://github.com/hrsh7th/vim-vsnip
+" https://github.com/henriquehbr/nvim-startup.lua " NOTE: startup time analyser
 " https://github.com/ibhagwan/fzf-lua
-" https://github.com/is0n/fm-nvim
 " https://github.com/is0n/jaq-nvim
-" https://github.com/ishan9299/modus-theme-vim
-" https://github.com/itchyny/lightline.vim
-" https://github.com/j-hui/fidget.nvim
 " https://github.com/jakewvincent/mkdnflow.nvim
 " https://github.com/jameshiew/nvim-magic
 " https://github.com/jamestthompson3/nvim-remote-containers
 " https://github.com/jbyuki/instant.nvim
-" https://github.com/jghauser/fold-cycle.nvim
-" https://github.com/jose-elias-alvarez/null-ls.nvim
-" https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
 " https://github.com/jubnzv/mdeval.nvim
 " https://github.com/jubnzv/virtual-types.nvim
-" https://github.com/junnplus/nvim-lsp-setup
-" https://github.com/kdheepak/lazygit.nvim
-" https://github.com/kdheepak/tabline.nvim
+
+" TODO: Plugins to review
 " https://github.com/kevinhwang91/nvim-bqf
 " https://github.com/klen/nvim-test
 " https://github.com/konapun/vacuumline.nvim
