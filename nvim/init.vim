@@ -90,6 +90,7 @@ Plug 'windwp/nvim-autopairs'
 " vim automatically cursor goes to next line but how we don't know yet, how to
 " do it
 " https://github.com/ZhiyuanLck/smart-pairs
+" https://github.com/max-0406/autoclose.nvim
 
 " Colorscheme:
 " ````````````
@@ -145,6 +146,9 @@ Plug 'glepnir/zephyr-nvim'
 " https://github.com/cpea2506/one_monokai.nvim
 " https://github.com/dracula/vim
 " https://github.com/fenetikm/falcon
+" https://github.com/kvrohit/rasmus.nvim
+" https://github.com/ldelossa/vimdark
+" https://github.com/mcchrish/zenbones.nvim
 
 " Commenting:
 " ```````````
@@ -190,6 +194,8 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/VapourNvim/VapourNvim
 " https://github.com/askfiy/nvim
 " https://github.com/echasnovski/mini.nvim
+" https://github.com/lalitmee/cobalt2.nvim
+" https://github.com/ldelossa/litee.nvim
 
 " File Explorer:
 " ``````````````
@@ -223,6 +229,9 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
 " https://github.com/junnplus/nvim-lsp-setup
 " https://github.com/kdheepak/lazygit.nvim
+" https://github.com/liuchengxu/vista.vim
+" https://github.com/lukas-reineke/format.nvim
+" https://github.com/lukas-reineke/lsp-format.nvim
 
 " Snippets:
 " `````````
@@ -244,6 +253,7 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " https://github.com/datwaft/bubbly.nvim
 " https://github.com/feline-nvim/feline.nvim
 " https://github.com/itchyny/lightline.vim
+" https://github.com/konapun/vacuumline.nvim
 
 " Tab Line:
 " `````````
@@ -275,6 +285,8 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Folding
 " Wiki
 " https://github.com/RRethy/nvim-treesitter-textsubjects
+" https://github.com/lewis6991/spellsitter.nvim
+" https://github.com/m-demare/hlargs.nvim
 
 " Word Highlight:
 " ```````````````
@@ -344,42 +356,25 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/jbyuki/instant.nvim
 " https://github.com/jubnzv/mdeval.nvim
 " https://github.com/jubnzv/virtual-types.nvim
-
-" TODO: Plugins to review
 " https://github.com/kevinhwang91/nvim-bqf
-" https://github.com/klen/nvim-test
-" https://github.com/konapun/vacuumline.nvim
 " https://github.com/kosayoda/nvim-lightbulb
-" https://github.com/kvrohit/rasmus.nvim
 " https://github.com/kyazdani42/nvim-tree.lua
-" https://github.com/lalitmee/cobalt2.nvim
-" https://github.com/ldelossa/litee.nvim
-" https://github.com/ldelossa/vimdark
-" https://github.com/lewis6991/spellsitter.nvim
-" https://github.com/liuchengxu/vista.vim
-" https://github.com/lukas-reineke/format.nvim
+" https://github.com/rcarriga/nvim-notify
 " https://github.com/lukas-reineke/indent-blankline.nvim
-" https://github.com/lukas-reineke/lsp-format.nvim
-" https://github.com/m-demare/hlargs.nvim
-" https://github.com/m00qek/baleia.nvim
 " https://github.com/matbme/JABS.nvim
-" https://github.com/max-0406/autoclose.nvim
 " https://github.com/max397574/better-escape.nvim
 " https://github.com/mcauley-penney/tidy.nvim
-" https://github.com/mcchrish/zenbones.nvim
-" https://github.com/mfussenegger/nvim-dap
 " https://github.com/mfussenegger/nvim-lint
 " https://github.com/mfussenegger/nvim-treehopper
-" https://github.com/mhartington/formatter.nvim
 " https://github.com/michaelb/sniprun
 " https://github.com/milisims/nvim-luaref
-" https://github.com/monaqa/dial.nvim
 " https://github.com/mrjones2014/legendary.nvim
 " https://github.com/mrjones2014/smart-splits.nvim
 " https://github.com/ms-jpq/chadtree
 " https://github.com/ms-jpq/coq_nvim
 " https://github.com/nacro90/numb.nvim
-" https://github.com/nanotee/luv-vimdocs
+
+" TODO: Plugins to review
 " https://github.com/nanotee/nvim-lsp-basics
 " https://github.com/nanotee/nvim-lua-guide
 " https://github.com/nanotee/sqls.nvim
