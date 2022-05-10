@@ -53,7 +53,23 @@ function vpi {
 
 # Msys2 functions
 function grep {
-    C:\msys64\usr\bin\grep.exe --color=auto -n
+    C:\msys64\usr\bin\grep.exe --color=auto -n $args
+}
+
+function la {
+    C:\msys64\usr\bin\ls.exe -AF --color=auto $args
+}
+
+function ll {
+    C:\msys64\usr\bin\ls.exe -lF --color=auto $args
+}
+
+function lla {
+    C:\msys64\usr\bin\ls.exe -AlF --color=auto $args
+}
+
+function ls {
+    C:\msys64\usr\bin\ls.exe -F --color=auto $args
 }
 
 # oh-my-posh
