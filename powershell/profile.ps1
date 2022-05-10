@@ -81,6 +81,14 @@ function pacman {
     C:\msys64\usr\bin\pacman.exe $args
 }
 
+function tree {
+    C:\msys64\usr\bin\tree.exe -CF $args
+}
+
+function treea {
+    C:\msys64\usr\bin\tree.exe -aCF $args
+}
+
 # oh-my-posh
 # ``````````
 Import-Module oh-my-posh
