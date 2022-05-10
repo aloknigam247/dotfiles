@@ -76,6 +76,8 @@
 " https://github.com/jeanguyomarch/eovim/
 " https://github.com/RMichelsen/Nvy
 " https://github.com/Lyude/neovim-gtk
+" https://github.com/neovide/neovide
+" https://github.com/smolck/uivonim
 
 
 " Plugins - Vim-plug
@@ -91,13 +93,21 @@ Plug 'windwp/nvim-autopairs'
 " do it
 " https://github.com/ZhiyuanLck/smart-pairs
 " https://github.com/max-0406/autoclose.nvim
+" https://github.com/steelsojka/pears.nvim
+
+" Coloring:
+" ````````````
+" TODO:
+" 
+" https://github.com/norcalli/nvim-colorizer.lua
+" https://github.com/norcalli/nvim-terminal.lua
 
 " Colorscheme:
 " ````````````
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'glepnir/zephyr-nvim'
+Plug 'luisiacc/gruvbox-baby'
 
 " Accepted:
 " << Light >>
@@ -111,12 +121,11 @@ Plug 'glepnir/zephyr-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'ayu-theme/ayu-vim'
+" Plug 'glepnir/zephyr-nvim'
 
 " TODO: To review
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
-" Plug 'lourenci/github-colors'
-" Plug 'luisiacc/gruvbox-baby'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'nekonako/xresources-nvim'
@@ -149,6 +158,7 @@ Plug 'glepnir/zephyr-nvim'
 " https://github.com/kvrohit/rasmus.nvim
 " https://github.com/ldelossa/vimdark
 " https://github.com/mcchrish/zenbones.nvim
+" https://github.com/rafamadriz/neon
 
 " Commenting:
 " ```````````
@@ -179,6 +189,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/octaltree/cmp-look
 " https://github.com/uga-rosa/cmp-dictionary
 " Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
+" https://github.com/noib3/nvim-compleet
 
 " Configuration:
 " ``````````````
@@ -196,14 +207,26 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/echasnovski/mini.nvim
 " https://github.com/lalitmee/cobalt2.nvim
 " https://github.com/ldelossa/litee.nvim
+" https://github.com/nvim-lua/kickstart.nvim
+" https://github.com/nvim-neorg/neorg
+" https://github.com/nvim-orgmode/orgmode
+" https://github.com/ray-x/go.nvim
+" https://github.com/shaeinst/roshnivim
+
+" DAP:
+" ````
+" TODO:
+" https://github.com/rcarriga/nvim-dap-ui
 
 " File Explorer:
 " ``````````````
 " TODO: Explore
 " https://github.com/tamago324/lir.nvim
+" https://github.com/nvim-neo-tree/neo-tree.nvim
 
 " Folding:
 " ````````
+" TODO: Explore
 " Plug 'anuvyklack/pretty-fold.nvim'
 " Plug 'anuvyklack/nvim-keymap-amend'
 
@@ -232,6 +255,20 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/liuchengxu/vista.vim
 " https://github.com/lukas-reineke/format.nvim
 " https://github.com/lukas-reineke/lsp-format.nvim
+" https://github.com/nanotee/nvim-lsp-basics
+" https://github.com/nvim-lua/lsp-status.nvim
+" https://github.com/ojroques/nvim-lspfuzzy
+" https://github.com/onsails/diaglist.nvim
+" https://github.com/onsails/lspkind.nvim
+" https://github.com/ray-x/lsp_signature.nvim
+" https://github.com/ray-x/navigator.lua
+" https://github.com/weilbith/nvim-code-action-menu
+
+" Session Manager:
+" ````````````````
+" TODO:
+" https://github.com/olimorris/persisted.nvim
+" https://github.com/rmagatti/auto-session
 
 " Snippets:
 " `````````
@@ -240,6 +277,8 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/dcampos/nvim-snippy
 " https://github.com/ellisonleao/carbon-now.nvim
 " https://github.com/hrsh7th/vim-vsnip
+" https://github.com/norcalli/snippets.nvim
+" https://github.com/rafamadriz/friendly-snippets
 
 " Status Line:
 " ````````````
@@ -254,12 +293,16 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " https://github.com/feline-nvim/feline.nvim
 " https://github.com/itchyny/lightline.vim
 " https://github.com/konapun/vacuumline.nvim
+" https://github.com/noib3/nvim-cokeline
+" https://github.com/ojroques/nvim-hardline
 
 " Tab Line:
 " `````````
 " TODO:
 " https://github.com/crispgm/nvim-tabline
 " https://github.com/kdheepak/tabline.nvim
+" https://github.com/rafcamlet/tabline-framework.nvim
+" https://github.com/romgrk/barbar.nvim
 
 " Telescope:
 " ``````````
@@ -267,6 +310,15 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " Plug 'nvim-telescope/telescope.nvim'
 " Plug 'nvim-lua/plenary.nvim'
 " https://github.com/LinArcX/telescope-command-palette.nvim
+
+" Terminal:
+" `````````
+" TODO:
+"
+" https://github.com/nikvdp/neomux
+" https://github.com/numToStr/FTerm.nvim
+" https://github.com/oberblastmeister/termwrapper.nvim
+" https://github.com/pianocomposer321/consolation.nvim
 
 " Todo:
 " `````
@@ -287,6 +339,17 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " https://github.com/RRethy/nvim-treesitter-textsubjects
 " https://github.com/lewis6991/spellsitter.nvim
 " https://github.com/m-demare/hlargs.nvim
+" https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+
+" Utilities:
+" ``````````
+" TODO:
+" https://github.com/p00f/nvim-ts-rainbow
+" https://github.com/phaazon/hop.nvim
+" https://github.com/pianocomposer321/yabs.nvim
+" https://github.com/rktjmp/lush.nvim
+" https://github.com/stevearc/dressing.nvim
+
 
 " Word Highlight:
 " ```````````````
@@ -373,104 +436,27 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/ms-jpq/chadtree
 " https://github.com/ms-jpq/coq_nvim
 " https://github.com/nacro90/numb.nvim
-
-" TODO: Plugins to review
-" https://github.com/nanotee/nvim-lsp-basics
 " https://github.com/nanotee/nvim-lua-guide
-" https://github.com/nanotee/sqls.nvim
-" https://github.com/neovide/neovide
-" https://github.com/neovim/nvim-lspconfig
-" https://github.com/neurosnap/neovimcraft
-" https://github.com/nikvdp/neomux
-" https://github.com/nkakouros-original/numbers.nvim
-" https://github.com/noib3/nvim-cokeline
-" https://github.com/noib3/nvim-compleet
-" https://github.com/norcalli/nvim-colorizer.lua
-" https://github.com/norcalli/nvim-terminal.lua
-" https://github.com/norcalli/snippets.nvim
-" https://github.com/notomo/cmdbuf.nvim
-" https://github.com/notomo/gesture.nvim
-" https://github.com/numToStr/FTerm.nvim
-" https://github.com/numToStr/Navigator.nvim
-" https://github.com/nvim-lua/kickstart.nvim
-" https://github.com/nvim-lua/lsp-status.nvim
-" https://github.com/nvim-lua/lsp_extensions.nvim
 " https://github.com/nvim-lua/plenary.nvim
-" https://github.com/nvim-lua/popup.nvim
-" https://github.com/nvim-neo-tree/neo-tree.nvim
-" https://github.com/nvim-neorg/neorg
-" https://github.com/nvim-orgmode/orgmode
 " https://github.com/nvim-pack/nvim-spectre
-" https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-" https://github.com/nvoid-lua/nvoid
-" https://github.com/nyngwang/NeoNoName.lua
 " https://github.com/nyngwang/NeoRoot.lua
-" https://github.com/oberblastmeister/neuron.nvim
-" https://github.com/oberblastmeister/termwrapper.nvim
-" https://github.com/ojroques/nvim-hardline
-" https://github.com/ojroques/nvim-lspfuzzy
-" https://github.com/olimorris/persisted.nvim
-" https://github.com/onsails/diaglist.nvim
-" https://github.com/onsails/lspkind-nvim
-" https://github.com/onsails/lspkind.nvim
-" https://github.com/p00f/cphelper.nvim
-" https://github.com/p00f/nvim-ts-rainbow
-" https://github.com/petertriho/nvim-scrollbar
-" https://github.com/phaazon/hop.nvim
-" https://github.com/phha/zenburn.nvim
-" https://github.com/pianocomposer321/consolation.nvim
-" https://github.com/pianocomposer321/yabs.nvim
-" https://github.com/pwntester/octo.nvim
-" https://github.com/rafaelsq/nvim-goc.lua
-" https://github.com/rafamadriz/friendly-snippets
-" https://github.com/rafamadriz/neon
 " https://github.com/rafcamlet/nvim-luapad
-" https://github.com/rafcamlet/tabline-framework.nvim
-" https://github.com/ray-x/go.nvim
-" https://github.com/ray-x/lsp_signature.nvim
-" https://github.com/ray-x/navigator.lua
-" https://github.com/rcarriga/nvim-dap-ui
-" https://github.com/rcarriga/vim-ultest
 " https://github.com/renerocksai/telekasten.nvim
-" https://github.com/rgroli/other.nvim
 " https://github.com/rktjmp/highlight-current-n.nvim
-" https://github.com/rktjmp/lush.nvim
-" https://github.com/rlane/pounce.nvim
-" https://github.com/rmagatti/auto-session
 " https://github.com/rmagatti/goto-preview
-" https://github.com/rohit-px2/nvui
-" https://github.com/romgrk/barbar.nvim
 " https://github.com/romgrk/nvim-treesitter-context
-" https://github.com/s1n7ax/nvim-terminal
 " https://github.com/sakhnik/nvim-gdb
 " https://github.com/sbdchd/neoformat
-" https://github.com/scalameta/nvim-metals
-" https://github.com/seandewar/killersheep.nvim
 " https://github.com/shaeinst/penvim
-" https://github.com/shaeinst/roshnivim
-" https://github.com/shaeinst/roshnivim-cs
-" https://github.com/shaunsingh/nyoom.nvim
 " https://github.com/sindrets/diffview.nvim
-" https://github.com/slugbyte/unruly-worker
-" https://github.com/smolck/uivonim
-" https://github.com/steelsojka/pears.nvim
-" https://github.com/stevearc/dressing.nvim
-" https://github.com/stevearc/gkeep.nvim
 " https://github.com/stevearc/qf_helper.nvim
 " https://github.com/sudormrfbin/cheatsheet.nvim
 " https://github.com/svermeulen/vimpeccable
-" https://github.com/tamago324/lir.nvim
-" https://github.com/tami5/sqlite.lua
 " https://github.com/tanvirtin/vgit.nvim
 " https://github.com/tjdevries/colorbuddy.nvim
 " https://github.com/tjdevries/nlua.nvim
-" https://github.com/toppair/reach.nvim
 " https://github.com/tversteeg/registers.nvim
-" https://github.com/udayvir-singh/hibiscus.nvim
-" https://github.com/udayvir-singh/tangerine.nvim
 " https://github.com/vijaymarupudi/nvim-fzf
-" https://github.com/weilbith/nvim-code-action-menu
-" https://github.com/windwp/nvim-projectconfig
 " https://github.com/ziontee113/syntax-tree-surfer
 call plug#end()
 
@@ -490,7 +476,7 @@ cmp.setup({
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = ({
         { name = 'buffer' },
@@ -701,7 +687,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme zephyr         " Set colorscheme 
+colorscheme gruvbox-baby         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
