@@ -51,6 +51,11 @@ function vpi {
     nvim -c PlugInstall -c qa
 }
 
+# Msys2 functions
+function grep {
+
+}
+
 # oh-my-posh
 # ``````````
 Import-Module oh-my-posh
