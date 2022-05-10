@@ -53,7 +53,7 @@ function vpi {
 
 # Msys2 functions
 function grep {
-
+    C:\msys64\usr\bin\grep.exe --color=auto -n
 }
 
 # oh-my-posh
