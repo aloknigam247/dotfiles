@@ -107,7 +107,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'luisiacc/gruvbox-baby'
+Plug 'marko-cerovac/material.nvim'
 
 " Accepted:
 " << Light >>
@@ -126,7 +126,6 @@ Plug 'luisiacc/gruvbox-baby'
 " TODO: To review
 " Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
 " Plug 'EdenEast/nightfox.nvim' ->> treesitter
-" Plug 'marko-cerovac/material.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'nekonako/xresources-nvim'
 " Plug 'olimorris/onedarkpro.nvim' " check light
@@ -687,7 +686,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme gruvbox-baby         " Set colorscheme 
+colorscheme material         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
