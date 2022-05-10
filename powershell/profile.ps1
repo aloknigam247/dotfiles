@@ -54,7 +54,7 @@ function vpi {
 # Msys2 functions
 Remove-Alias ls # remove default alias for ls
 function grep {
-    C:\msys64\usr\bin\grep.exe --color=auto -n $args
+    C:\msys64\usr\bin\egrep --color=auto -n $args
 }
 
 function fnd {
@@ -75,6 +75,10 @@ function lla {
 
 function ls {
     C:\msys64\usr\bin\ls.exe -F --color=auto $args
+}
+
+function pacman {
+    C:\msys64\usr\bin\pacman.exe $args
 }
 
 # oh-my-posh
