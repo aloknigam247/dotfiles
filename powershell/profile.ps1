@@ -89,6 +89,13 @@ function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
 
+
+# Autocompletion
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
+Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
+Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView # Zsh like prediction but advanced
+
 # oh-my-posh
 # ``````````
 Import-Module oh-my-posh
