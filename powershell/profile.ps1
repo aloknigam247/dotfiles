@@ -58,7 +58,7 @@ function grep {
 }
 
 function fnd {
-    C:\msys64\usr\bin\find.exe $args
+    C:\msys64\usr\bin\find.exe $args  | C:\msys64\usr\bin\sed 's|/|\\|g'
 }
 
 function la {

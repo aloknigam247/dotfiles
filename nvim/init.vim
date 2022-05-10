@@ -307,8 +307,8 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " Telescope:
 " ``````````
 " TODO: Explore Telescope
-" Plug 'nvim-telescope/telescope.nvim'
-" Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
 " https://github.com/LinArcX/telescope-command-palette.nvim
 
 " Terminal:
