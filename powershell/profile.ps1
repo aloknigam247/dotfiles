@@ -54,7 +54,7 @@ function vpi {
 # Msys2 functions
 Remove-Alias ls # remove default alias for ls
 function grep {
-    C:\msys64\usr\bin\egrep --color=auto -n $args
+    C:\msys64\usr\bin\grep --color=auto -En $args
 }
 
 function fnd {
