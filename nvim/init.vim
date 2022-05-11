@@ -665,7 +665,6 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 " }}}
 
-let g:aquarium_style="light" " TODO: remove
 
 " UI Options:
 " ```````````
