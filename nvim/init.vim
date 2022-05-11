@@ -65,8 +65,10 @@
 
 " UI Client:
 " ``````````
-" TODO:
+" Active:
 " https://github.com/yatli/fvim
+
+" TODO:
 " https://github.com/vhakulinen/gnvim
 " https://github.com/rohit-px2/nvui
 " https://github.com/equalsraf/neovim-qt
