@@ -39,6 +39,10 @@ Set-Alias -Name v -Value nvim
 
 # Functions
 # `````````
+function eprc {
+    nvim $PROFILE.CurrentUserAllHosts
+}
+
 function evrc {
     nvim $env:LOCALAPPDATA\nvim\init.vim
 }
@@ -94,7 +98,7 @@ function treea {
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
-Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd = $true # Zsh like prediction but advanced
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd $true # Zsh like prediction but advanced
 
 # oh-my-posh
 # ``````````
