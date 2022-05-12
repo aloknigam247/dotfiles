@@ -65,8 +65,10 @@
 
 " UI Client:
 " ``````````
-" TODO:
+" Active:
 " https://github.com/yatli/fvim
+
+" TODO:
 " https://github.com/vhakulinen/gnvim
 " https://github.com/rohit-px2/nvui
 " https://github.com/equalsraf/neovim-qt
@@ -101,6 +103,7 @@ Plug 'windwp/nvim-autopairs'
 " 
 " https://github.com/norcalli/nvim-colorizer.lua
 " https://github.com/norcalli/nvim-terminal.lua
+" https://github.com/Pocco81/HighStr.nvim
 
 " Colorscheme:
 " ````````````
@@ -215,19 +218,33 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " DAP:
 " ````
 " TODO:
+" Plug 'mfussenegger/nvim-dap'
 " https://github.com/rcarriga/nvim-dap-ui
+" https://github.com/Pocco81/DAPInstall.nvim
+" https://github.com/Pocco81/dap-buddy.nvim
 
 " File Explorer:
 " ``````````````
 " TODO: Explore
 " https://github.com/tamago324/lir.nvim
 " https://github.com/nvim-neo-tree/neo-tree.nvim
+" https://github.com/kyazdani42/nvim-tree.lua
+" https://github.com/ms-jpq/chadtree
+" https://github.com/elihunter173/dirbuf.nvim
 
 " Folding:
 " ````````
 " TODO: Explore
 " Plug 'anuvyklack/pretty-fold.nvim'
 " Plug 'anuvyklack/nvim-keymap-amend'
+
+" Git:
+" ````
+" Plug 'f-person/git-blame.nvim' " not working, needs review
+" Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
+" Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
+" https://github.com/TimUntersberger/neogit
+" https://github.com/tanvirtin/vgit.nvim
 
 " Icons:
 " ``````
@@ -262,12 +279,23 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/ray-x/lsp_signature.nvim
 " https://github.com/ray-x/navigator.lua
 " https://github.com/weilbith/nvim-code-action-menu
+" Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+
+" Mapping:
+" ````````
+" https://github.com/LionC/nest.nvim
+" https://github.com/b0o/mapx.nvim
+
+" Marks:
+" ``````
+" https://github.com/chentau/marks.nvim
 
 " Session Manager:
 " ````````````````
 " TODO:
 " https://github.com/olimorris/persisted.nvim
 " https://github.com/rmagatti/auto-session
+" https://github.com/Shatur/neovim-session-manager
 
 " Snippets:
 " `````````
@@ -309,6 +337,7 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/plenary.nvim'
 " https://github.com/LinArcX/telescope-command-palette.nvim
+" https://github.com/camspiers/snap
 
 " Terminal:
 " `````````
@@ -340,6 +369,10 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " https://github.com/m-demare/hlargs.nvim
 " https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 
+" TUI:
+" ````
+" https://github.com/MunifTanjim/nui.nvim
+
 " Utilities:
 " ``````````
 " TODO:
@@ -348,7 +381,24 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " https://github.com/pianocomposer321/yabs.nvim
 " https://github.com/rktjmp/lush.nvim
 " https://github.com/stevearc/dressing.nvim
-
+" Plug 'booperlv/nvim-gomove'
+" Plug 'folke/trouble.nvim'
+" Plug 'jbyuki/venn.nvim'
+" Plug 'kevinhwang91/nvim-hlslens'
+" Plug 'folke/which-key.nvim'
+" Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" Plug 'wbthomason/packer.nvim'
+" Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'gennaro-tedesco/nvim-peekup'
+" Plug 'haringsrob/nvim_context_vt' " NOTE: Good but should be off by default
+" Plug 'jbyuki/one-small-step-for-vimkind'
+" https://github.com/FeiyouG/command_center.nvim
+" https://github.com/Pocco81/AbbrevMan.nvim
+" https://github.com/SmiteshP/nvim-gps
+" https://github.com/ThePrimeagen/harpoon
+" https://github.com/ThemerCorp/themer.lua
+" https://github.com/bennypowers/nvim-regexplainer
 
 " Word Highlight:
 " ```````````````
@@ -361,45 +411,7 @@ hi def link LspReferenceRead WildMenu
 " Plug 'xiyaowong/nvim-cursorword'
 " Plug 'yamatsum/nvim-cursorline'
 
-
 " Archived:
-" Plug 'booperlv/nvim-gomove'
-" Plug 'f-person/git-blame.nvim' " not working, needs review
-" Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
-" Plug 'folke/trouble.nvim'
-" Plug 'jbyuki/venn.nvim'
-" Plug 'kevinhwang91/nvim-hlslens'
-" Plug 'folke/which-key.nvim'
-" Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
-" Plug 'gennaro-tedesco/nvim-peekup'
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" Plug 'haringsrob/nvim_context_vt' " NOTE: Good but should be off by default
-" Plug 'wbthomason/packer.nvim'
-" Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
-" Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'mfussenegger/nvim-dap'
-" Plug 'jbyuki/one-small-step-for-vimkind'
-" Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
-" https://github.com/FeiyouG/command_center.nvim
-" https://github.com/LionC/nest.nvim
-" https://github.com/MordechaiHadad/nvim-papadark
-" https://github.com/MunifTanjim/nui.nvim
-" https://github.com/Pocco81/AbbrevMan.nvim
-" https://github.com/Pocco81/AutoSave.nvim
-" https://github.com/Pocco81/DAPInstall.nvim
-" https://github.com/Pocco81/HighStr.nvim
-" https://github.com/Pocco81/dap-buddy.nvim
-" https://github.com/Shatur/neovim-session-manager
-" https://github.com/SmiteshP/nvim-gps
-" https://github.com/ThePrimeagen/harpoon
-" https://github.com/ThemerCorp/themer.lua
-" https://github.com/TimUntersberger/neogit
-" https://github.com/aserowy/tmux.nvim
-" https://github.com/b0o/mapx.nvim
-" https://github.com/bennypowers/nvim-regexplainer
-" https://github.com/camspiers/snap
-" https://github.com/chentau/marks.nvim
-" https://github.com/elihunter173/dirbuf.nvim
 " https://github.com/folke/lua-dev.nvim
 " https://github.com/frabjous/knap
 " https://github.com/gaborvecsei/cryptoprice.nvim
@@ -420,8 +432,6 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/jubnzv/virtual-types.nvim
 " https://github.com/kevinhwang91/nvim-bqf
 " https://github.com/kosayoda/nvim-lightbulb
-" https://github.com/kyazdani42/nvim-tree.lua
-" https://github.com/rcarriga/nvim-notify
 " https://github.com/lukas-reineke/indent-blankline.nvim
 " https://github.com/matbme/JABS.nvim
 " https://github.com/max397574/better-escape.nvim
@@ -432,7 +442,6 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/milisims/nvim-luaref
 " https://github.com/mrjones2014/legendary.nvim
 " https://github.com/mrjones2014/smart-splits.nvim
-" https://github.com/ms-jpq/chadtree
 " https://github.com/ms-jpq/coq_nvim
 " https://github.com/nacro90/numb.nvim
 " https://github.com/nanotee/nvim-lua-guide
@@ -440,6 +449,7 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/nvim-pack/nvim-spectre
 " https://github.com/nyngwang/NeoRoot.lua
 " https://github.com/rafcamlet/nvim-luapad
+" https://github.com/rcarriga/nvim-notify
 " https://github.com/renerocksai/telekasten.nvim
 " https://github.com/rktjmp/highlight-current-n.nvim
 " https://github.com/rmagatti/goto-preview
@@ -451,7 +461,6 @@ hi def link LspReferenceRead WildMenu
 " https://github.com/stevearc/qf_helper.nvim
 " https://github.com/sudormrfbin/cheatsheet.nvim
 " https://github.com/svermeulen/vimpeccable
-" https://github.com/tanvirtin/vgit.nvim
 " https://github.com/tjdevries/colorbuddy.nvim
 " https://github.com/tjdevries/nlua.nvim
 " https://github.com/tversteeg/registers.nvim
@@ -658,7 +667,6 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 " }}}
 
-let g:aquarium_style="light" " TODO: remove
 
 " UI Options:
 " ```````````
