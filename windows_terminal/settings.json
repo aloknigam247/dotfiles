@@ -107,7 +107,7 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "commandline": "%SystemRoot%\\System32\\cmd.exe /k  \"C:\\Users\\aloknigam\\OneDrive - Microsoft\\Desktop\\myEnlist\\powershellCLR4.bat\"",
+                "commandline": "%SystemRoot%\\System32\\cmd.exe /k  \"D:\\spo\\src\\otools\\bin\\psEnv\\powershellCLR4.bat\"",
                 "elevate": true,
                 "guid": "{e8108736-25ad-4830-9477-5aa7377915de}",
                 "hidden": false,
