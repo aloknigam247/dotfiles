@@ -96,6 +96,7 @@ Plug 'windwp/nvim-autopairs'
 " https://github.com/ZhiyuanLck/smart-pairs
 " https://github.com/max-0406/autoclose.nvim
 " https://github.com/steelsojka/pears.nvim
+" https://github.com/rstacruz/vim-closer
 
 " Coloring:
 " ````````````
@@ -152,6 +153,7 @@ Plug 'marko-cerovac/material.nvim'
 " Plug 'tjdevries/gruvbuddy.nvim'
 " Plug 'tomasiser/vim-code-dark'
 " Plug 'yashguptaz/calvera-dark.nvim'
+" https://github.com/rebelot/kanagawa.nvim
 " https://github.com/Mangeshrex/uwu.vim
 " https://github.com/PHSix/nvim-hybrid
 " https://github.com/cpea2506/one_monokai.nvim
@@ -161,6 +163,8 @@ Plug 'marko-cerovac/material.nvim'
 " https://github.com/ldelossa/vimdark
 " https://github.com/mcchrish/zenbones.nvim
 " https://github.com/rafamadriz/neon
+" https://github.com/jsit/toast.vim
+" https://github.com/sickill/vim-monokai
 
 " Commenting:
 " ```````````
@@ -214,6 +218,9 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/nvim-orgmode/orgmode
 " https://github.com/ray-x/go.nvim
 " https://github.com/shaeinst/roshnivim
+" https://github.com/ray-x/dotfiles
+" https://github.com/artart222/CodeArt
+" https://github.com/jdhao/nvim-config
 
 " DAP:
 " ````
@@ -381,6 +388,9 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " https://github.com/pianocomposer321/yabs.nvim
 " https://github.com/rktjmp/lush.nvim
 " https://github.com/stevearc/dressing.nvim
+" https://github.com/VonHeikemen/fine-cmdline.nvim
+" https://github.com/rickhowe/spotdiff.vim
+" https://github.com/sbdchd/neoformat
 " Plug 'booperlv/nvim-gomove'
 " Plug 'folke/trouble.nvim'
 " Plug 'jbyuki/venn.nvim'
@@ -394,11 +404,16 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " Plug 'haringsrob/nvim_context_vt' " NOTE: Good but should be off by default
 " Plug 'jbyuki/one-small-step-for-vimkind'
 " https://github.com/FeiyouG/command_center.nvim
+" https://github.com/stevearc/aerial.nvim
 " https://github.com/Pocco81/AbbrevMan.nvim
 " https://github.com/SmiteshP/nvim-gps
 " https://github.com/ThePrimeagen/harpoon
 " https://github.com/ThemerCorp/themer.lua
 " https://github.com/bennypowers/nvim-regexplainer
+" https://github.com/sidebar-nvim/sidebar.nvim
+" https://github.com/junegunn/vim-peekaboo
+" https://github.com/junegunn/goyo.vim
+" https://github.com/Pocco81/TrueZen.nvim
 
 " Word Highlight:
 " ```````````````
