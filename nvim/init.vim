@@ -744,4 +744,12 @@ augroup illuminate_augroup
     autocmd!
     autocmd VimEnter * hi link illuminatedWord MatchParen
 augroup END
+
+" NOTE: Some tricks
+" ctrl-R and then register, puts the register value in the insert mode
+
+" TODO:Highlight text if it goes out of scope
+" highlight ColorColumn ctermbg=magenta
+" call matchadd('ColorColumn', '\%81v', 100)
+
 " vim: fdm=marker
