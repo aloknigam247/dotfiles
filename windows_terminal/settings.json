@@ -107,19 +107,23 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "altGrAliasing": true,
-                "antialiasingMode": "grayscale",
                 "colorScheme": "Solarized Dark",
-                "commandline": "%SystemRoot%\\System32\\cmd.exe /k \"D:\\spo\\src\\otools\\bin\\OpenEnlistment.bat\"",
-                "cursorShape": "bar",
+                "commandline": "%SystemRoot%\\System32\\cmd.exe /k \"D:\\spo\\src\\otools\\bin\\psEnv\\powershellCLR4.bat\"",
                 "elevate": true,
                 "guid": "{bc45fbbd-e6ab-4b75-ad50-ecec8e3d502e}",
                 "hidden": false,
-                "historySize": 9001,
+                "icon": "D:\\spo\\src\\otools\\bin\\SPOEnlistmentCMD.ico",
+                "name": "SPO PS",
+                "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "colorScheme": "Solarized Dark",
+                "commandline": "%SystemRoot%\\System32\\cmd.exe /k \"D:\\spo\\src\\otools\\bin\\OpenEnlistment.bat\"",
+                "elevate": true,
+                "guid": "{bc45fbbd-e6ab-4b75-ad50-ecec8e3d502e}",
+                "hidden": false,
                 "icon": "D:\\spo\\src\\otools\\bin\\SPOEnlistmentCMD.ico",
                 "name": "SPO",
-                "padding": "8, 8, 8, 8",
-                "snapOnInput": true,
                 "startingDirectory": "%USERPROFILE%"
             },
             {
