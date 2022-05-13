@@ -171,6 +171,7 @@ Plug 'marko-cerovac/material.nvim'
 " https://github.com/rafamadriz/neon
 " https://github.com/jsit/toast.vim
 " https://github.com/sickill/vim-monokai
+" https://github.com/mrjones2014/lighthaus.nvim
 
 " Commenting:
 " ```````````
@@ -202,6 +203,22 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/uga-rosa/cmp-dictionary
 " Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
 " https://github.com/noib3/nvim-compleet
+" https://github.com/f3fora/cmp-nuspell
+" https://github.com/vappolinario/cmp-clippy
+" https://github.com/dmitmel/cmp-cmdline-history
+" https://github.com/tzachar/cmp-fuzzy-buffer
+" https://github.com/octaltree/cmp-look
+" https://github.com/f3fora/cmp-spell
+" https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+" https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
+" https://github.com/uga-rosa/cmp-dictionary
+" https://github.com/kristijanhusak/vim-dadbod-completion
+" https://github.com/ray-x/cmp-treesitter
+" https://github.com/zbirenbaum/copilot-cmp
+" https://github.com/lukas-reineke/cmp-under-comparator
+" https://github.com/hrsh7th/cmp-nvim-lua
+" https://github.com/tzachar/cmp-tabnine
+"
 
 " Configuration:
 " ``````````````
@@ -216,6 +233,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/Theory-of-Everything/nii-nvim
 " https://github.com/VapourNvim/VapourNvim
 " https://github.com/askfiy/nvim
+" https://github.com/Avimitin/nvim
 " https://github.com/echasnovski/mini.nvim
 " https://github.com/lalitmee/cobalt2.nvim
 " https://github.com/ldelossa/litee.nvim
@@ -227,6 +245,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/ray-x/dotfiles
 " https://github.com/artart222/CodeArt
 " https://github.com/jdhao/nvim-config
+" https://github.com/Shadorain/shadovim
 
 " DAP:
 " ````
@@ -243,6 +262,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/nvim-neo-tree/neo-tree.nvim
 " https://github.com/kyazdani42/nvim-tree.lua
 " https://github.com/ms-jpq/chadtree
+" https://github.com/zgpio/tree.nvim
 " https://github.com/elihunter173/dirbuf.nvim
 
 " Folding:
@@ -279,6 +299,7 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/j-hui/fidget.nvim
 " https://github.com/jose-elias-alvarez/null-ls.nvim
 " https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+" https://github.com/nvim-lua/lsp-status.nvim
 " https://github.com/junnplus/nvim-lsp-setup
 " https://github.com/kdheepak/lazygit.nvim
 " https://github.com/liuchengxu/vista.vim
@@ -394,7 +415,14 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " https://github.com/pianocomposer321/yabs.nvim
 " https://github.com/rktjmp/lush.nvim
 " https://github.com/stevearc/dressing.nvim
+" https://github.com/hoschi/yode-nvim
+" https://github.com/kosayoda/nvim-lightbulb
+" https://github.com/glacambre/firenvim
+" https://github.com/skywind3000/vim-quickui
+" https://github.com/vscode-neovim/vscode-neovim
+" https://github.com/nvim-orgmode/orgmode
 " https://github.com/VonHeikemen/fine-cmdline.nvim
+" https://github.com/zbirenbaum/copilot.lua
 " https://github.com/rickhowe/spotdiff.vim
 " https://github.com/sbdchd/neoformat
 " Plug 'booperlv/nvim-gomove'
