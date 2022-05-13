@@ -67,6 +67,12 @@
 " ``````````
 " Active:
 " https://github.com/yatli/fvim
+" NOTE:
+" + Cursor animations are good
+" + Rounded corners
+" - Ligatures not working
+" - Nerd Font support is not good
+" - Slow loading of UI
 
 " TODO:
 " https://github.com/vhakulinen/gnvim
