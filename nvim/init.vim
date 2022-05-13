@@ -79,6 +79,7 @@
 " https://github.com/rohit-px2/nvui
 " https://github.com/equalsraf/neovim-qt
 " https://github.com/vhakulinen/gnvim
+" https://github.com/LunarVim/LunarVim
 " https://github.com/akiyosi/goneovim
 " https://github.com/smolck/uivonim
 " https://github.com/jeanguyomarch/eovim/
@@ -111,6 +112,8 @@ Plug 'windwp/nvim-autopairs'
 " https://github.com/norcalli/nvim-colorizer.lua
 " https://github.com/norcalli/nvim-terminal.lua
 " https://github.com/Pocco81/HighStr.nvim
+" https://github.com/norcalli/nvim-colorizer.lua
+" https://github.com/RRethy/vim-hexokinase
 
 " Colorscheme:
 " ````````````
@@ -160,11 +163,14 @@ Plug 'marko-cerovac/material.nvim'
 " Plug 'tomasiser/vim-code-dark'
 " Plug 'yashguptaz/calvera-dark.nvim'
 " https://github.com/rebelot/kanagawa.nvim
+" https://github.com/dylanaraps/wal.vim
 " https://github.com/Mangeshrex/uwu.vim
 " https://github.com/PHSix/nvim-hybrid
 " https://github.com/cpea2506/one_monokai.nvim
 " https://github.com/dracula/vim
+" https://github.com/marko-cerovac/material.nvim
 " https://github.com/fenetikm/falcon
+" https://github.com/EdenEast/nightfox.nvim
 " https://github.com/kvrohit/rasmus.nvim
 " https://github.com/ldelossa/vimdark
 " https://github.com/mcchrish/zenbones.nvim
@@ -213,12 +219,15 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
 " https://github.com/uga-rosa/cmp-dictionary
 " https://github.com/kristijanhusak/vim-dadbod-completion
+" https://github.com/davidsierradz/cmp-conventionalcommits
 " https://github.com/ray-x/cmp-treesitter
 " https://github.com/zbirenbaum/copilot-cmp
 " https://github.com/lukas-reineke/cmp-under-comparator
 " https://github.com/hrsh7th/cmp-nvim-lua
+" https://github.com/meetcw/cmp-browser-source
+" https://github.com/PasiBergman/cmp-nuget
 " https://github.com/tzachar/cmp-tabnine
-"
+" https://github.com/rambhosale/cmp-bootstrap.nvim
 
 " Configuration:
 " ``````````````
@@ -277,7 +286,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
 " Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " https://github.com/TimUntersberger/neogit
+" https://github.com/tommcdo/vim-fugitive-blame-ext
 " https://github.com/tanvirtin/vgit.nvim
+" https://github.com/adelarsq/neovcs.vim
+" https://github.com/APZelos/blamer.nvim
 
 " Icons:
 " ``````
@@ -302,8 +314,11 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/nvim-lua/lsp-status.nvim
 " https://github.com/junnplus/nvim-lsp-setup
 " https://github.com/kdheepak/lazygit.nvim
+" https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
 " https://github.com/liuchengxu/vista.vim
+" https://github.com/alexaandru/nvim-lspupdate
 " https://github.com/lukas-reineke/format.nvim
+" https://github.com/liuchengxu/vista.vim
 " https://github.com/lukas-reineke/lsp-format.nvim
 " https://github.com/nanotee/nvim-lsp-basics
 " https://github.com/nvim-lua/lsp-status.nvim
@@ -340,6 +355,7 @@ Plug 'williamboman/nvim-lsp-installer'
 " https://github.com/hrsh7th/vim-vsnip
 " https://github.com/norcalli/snippets.nvim
 " https://github.com/rafamadriz/friendly-snippets
+" https://github.com/neoclide/coc-snippets
 
 " Status Line:
 " ````````````
@@ -349,6 +365,7 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " https://github.com/nvim-lualine/lualine.nvim
 " Plug 'windwp/windline.nvim'
 " https://github.com/NTBBloodbath/galaxyline.nvim
+" https://github.com/glepnir/galaxyline.nvim
 " https://github.com/b0o/incline.nvim
 " https://github.com/datwaft/bubbly.nvim
 " https://github.com/feline-nvim/feline.nvim
@@ -356,6 +373,10 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed
 " https://github.com/konapun/vacuumline.nvim
 " https://github.com/noib3/nvim-cokeline
 " https://github.com/ojroques/nvim-hardline
+" https://github.com/windwp/windline.nvim
+" https://github.com/akinsho/bufferline.nvim
+" https://github.com/ojroques/nvim-hardline
+" https://github.com/tamton-aquib/staline.nvim
 
 " Tab Line:
 " `````````
@@ -412,19 +433,40 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO:
 " https://github.com/p00f/nvim-ts-rainbow
 " https://github.com/phaazon/hop.nvim
+" https://github.com/skywind3000/gutentags_plus
+" https://github.com/sheerun/vim-polyglot
 " https://github.com/pianocomposer321/yabs.nvim
+" https://github.com/lifepillar/vim-mucomplete
+" https://github.com/adelarsq/vim-emoji-icon-theme
+" https://github.com/markonm/traces.vim
 " https://github.com/rktjmp/lush.nvim
+" https://github.com/prabirshrestha/vim-lsp
+" https://github.com/ahmedkhalf/project.nvim
 " https://github.com/stevearc/dressing.nvim
+" https://github.com/bignimbus/you-are-here.vim
+" https://github.com/liuchengxu/vim-clap
+" https://github.com/neoclide/coc.nvim
+" https://github.com/mhinz/vim-galore
 " https://github.com/hoschi/yode-nvim
 " https://github.com/kosayoda/nvim-lightbulb
+" https://github.com/rktjmp/lush.nvim
+" https://github.com/kshenoy/vim-signature
+" https://github.com/mhinz/vim-signify
 " https://github.com/glacambre/firenvim
+" https://github.com/mhartington/formatter.nvim
+" https://github.com/machakann/vim-highlightedyank
+" https://github.com/sunjon/stylish.nvim
 " https://github.com/skywind3000/vim-quickui
 " https://github.com/vscode-neovim/vscode-neovim
+" https://github.com/coc-extensions/coc-powershell
+" https://github.com/junegunn/fzf
+" https://github.com/NTBBloodbath/rest.nvim
 " https://github.com/nvim-orgmode/orgmode
 " https://github.com/VonHeikemen/fine-cmdline.nvim
 " https://github.com/zbirenbaum/copilot.lua
 " https://github.com/rickhowe/spotdiff.vim
 " https://github.com/sbdchd/neoformat
+" https://github.com/RRethy/nvim-treesitter-endwise
 " Plug 'booperlv/nvim-gomove'
 " Plug 'folke/trouble.nvim'
 " Plug 'jbyuki/venn.nvim'
@@ -448,6 +490,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " https://github.com/junegunn/vim-peekaboo
 " https://github.com/junegunn/goyo.vim
 " https://github.com/Pocco81/TrueZen.nvim
+" https://github.com/narajaon/onestatus
 
 " Word Highlight:
 " ```````````````
