@@ -66,11 +66,7 @@
 " UI Client:
 " ``````````
 " Active:
-" https://github.com/Lyude/neovim-gtk
-" + Simple nothing special
-" - Not good in different DPI
-
-set guifont=FiraCode\ Nerd\ Font:h12
+" https://github.com/akiyosi/goneovim
 
 " Tested:
 " https://github.com/yatli/fvim
@@ -89,9 +85,12 @@ set guifont=FiraCode\ Nerd\ Font:h12
 " - Ligatures not working
 " - Nerd Font support is not good
 " - Slow loading of UI
+"
+" https://github.com/Lyude/neovim-gtk
+" NOTE:
+" + Simple nothing special
+" - Not good in different DPI
 
-" TODO: https://github.com/RMichelsen/Nvy
-" TODO: https://github.com/akiyosi/goneovim
 " TODO: https://github.com/equalsraf/neovim-qt
 " TODO: https://github.com/hismailbulut/Neoray
 " TODO: https://github.com/jeanguyomarch/eovim
