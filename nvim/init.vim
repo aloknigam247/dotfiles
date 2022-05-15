@@ -74,19 +74,20 @@
 " - Nerd Font support is not good
 " - Slow loading of UI
 
-" TODO:
-" https://github.com/vhakulinen/gnvim
-" https://github.com/rohit-px2/nvui
-" https://github.com/equalsraf/neovim-qt
-" https://github.com/vhakulinen/gnvim
-" https://github.com/LunarVim/LunarVim
-" https://github.com/akiyosi/goneovim
-" https://github.com/smolck/uivonim
-" https://github.com/jeanguyomarch/eovim/
-" https://github.com/RMichelsen/Nvy
-" https://github.com/Lyude/neovim-gtk
-" https://github.com/neovide/neovide
-" https://github.com/smolck/uivonim
+" TODO: https://github.com/LunarVim/LunarVim
+" TODO: https://github.com/Lyude/neovim-gtk
+" TODO: https://github.com/RMichelsen/Nvy
+" TODO: https://github.com/akiyosi/goneovim
+" TODO: https://github.com/equalsraf/neovim-qt
+" TODO: https://github.com/hismailbulut/Neoray
+" TODO: https://github.com/jeanguyomarch/eovim
+" TODO: https://github.com/neovide/neovide
+" TODO: https://github.com/rohit-px2/nvui
+" TODO: https://github.com/sakhnik/nvim-ui
+" TODO: https://github.com/smolck/uivonim
+" TODO: https://github.com/smolck/uivonim
+" TODO: https://github.com/vhakulinen/gnvim
+" TODO: https://github.com/vhakulinen/gnvim
 
 
 " Plugins - Vim-plug
@@ -95,92 +96,100 @@ call plug#begin()
 " Auto Pair:
 " ``````````
 Plug 'windwp/nvim-autopairs'
-" TODO:
-" Create rule to not pair " for vim files
-" Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
-" vim automatically cursor goes to next line but how we don't know yet, how to
-" do it
-" https://github.com/ZhiyuanLck/smart-pairs
-" https://github.com/max-0406/autoclose.nvim
-" https://github.com/steelsojka/pears.nvim
-" https://github.com/rstacruz/vim-closer
+" TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
+" TODO: Create rule to not pair " for vim files
+" TODO: https://github.com/ZhiyuanLck/smart-pairs
+" TODO: https://github.com/max-0406/autoclose.nvim
+" TODO: https://github.com/neoclide/coc-pairs
+" TODO: https://github.com/rstacruz/vim-closer
+" TODO: https://github.com/steelsojka/pears.nvim
+" TODO: https://github.com/theHamsta/nvim-treesitter-pairs
+" TODO: vim automatically cursor goes to next line but how we don't know yet, how to do it
 
 " Coloring:
 " `````````
-" TODO:
-" 
-" https://github.com/norcalli/nvim-colorizer.lua
-" https://github.com/norcalli/nvim-terminal.lua
-" https://github.com/Pocco81/HighStr.nvim
-" https://github.com/norcalli/nvim-colorizer.lua
-" https://github.com/neoclide/coc-highlight
-" https://github.com/RRethy/vim-hexokinase
-" https://github.com/t9md/vim-quickhl
-" https://github.com/lilydjwg/colorizer
+" TODO: https://github.com/Pocco81/HighStr.nvim
+" TODO: https://github.com/RRethy/vim-hexokinase
+" TODO: https://github.com/azabiong/vim-highlighter
+" TODO: https://github.com/lilydjwg/colorizer
+" TODO: https://github.com/neoclide/coc-highlight
+" TODO: https://github.com/norcalli/nvim-colorizer.lua
+" TODO: https://github.com/norcalli/nvim-colorizer.lua
+" TODO: https://github.com/norcalli/nvim-terminal.lua
+" TODO: https://github.com/t9md/vim-quickhl
 
 " Colorscheme:
 " ````````````
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'marko-cerovac/material.nvim'
+Plug 'mhartington/oceanic-next'
 
 " Accepted:
 " << Light >>
+" Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'NLKNguyen/papercolor-theme'
 " Plug 'ayu-theme/ayu-vim'
+" Plug 'marko-cerovac/material.nvim'
+
 " << Dark >>
-" Plug 'olimorris/onedarkpro.nvim'
+" Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'NLKNguyen/papercolor-theme'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'glepnir/zephyr-nvim'
+" Plug 'marko-cerovac/material.nvim'
+" Plug 'olimorris/onedarkpro.nvim'
 
-" TODO: To review
-" Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
-" Plug 'EdenEast/nightfox.nvim' ->> treesitter
-" Plug 'mhartington/oceanic-next'
-" Plug 'nekonako/xresources-nvim'
-" Plug 'olimorris/onedarkpro.nvim' " check light
-" Plug 'projekt0n/github-nvim-theme'
-" Plug 'ray-x/aurora'
-" Plug 'rebelot/kanagawa.nvim'
-" Plug 'rktjmp/lush.nvim'
-" Plug 'rmehri01/onenord.nvim'
-" Plug 'sainnhe/edge'
-" Plug 'sainnhe/everforest'
-" Plug 'sainnhe/gruvbox-material'
-" Plug 'sainnhe/sonokai'
-" Plug 'savq/melange'
-" Plug 'shaunsingh/moonlight.nvim'
-" Plug 'simrat39/symbols-outline.nvim' ->> LSP
-" Plug 'stevearc/aerial.nvim'  ->> LSP
-" Plug 'tanvirtin/monokai.nvim'
-" Plug 'tiagovla/tokyodark.nvim'
-" Plug 'titanzero/zephyrium'
-" Plug 'tjdevries/colorbuddy.vim'
-" Plug 'tjdevries/gruvbuddy.nvim'
-" Plug 'tomasiser/vim-code-dark'
-" Plug 'yashguptaz/calvera-dark.nvim'
-" https://github.com/rebelot/kanagawa.nvim
-" https://github.com/dylanaraps/wal.vim
-" https://github.com/Mangeshrex/uwu.vim
-" https://github.com/PHSix/nvim-hybrid
-" https://github.com/cpea2506/one_monokai.nvim
-" https://github.com/dracula/vim
-" https://github.com/marko-cerovac/material.nvim
-" https://github.com/fenetikm/falcon
-" https://github.com/EdenEast/nightfox.nvim
-" https://github.com/kvrohit/rasmus.nvim
-" https://github.com/ldelossa/vimdark
-" https://github.com/mcchrish/zenbones.nvim
-" https://github.com/rafamadriz/neon
-" https://github.com/jsit/toast.vim
-" https://github.com/sickill/vim-monokai
-" https://github.com/mrjones2014/lighthaus.nvim
+" TODO: Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
+" TODO: Plug 'EdenEast/nightfox.nvim' ->> treesitter
+" TODO: Plug 'nekonako/xresources-nvim'
+" TODO: Plug 'olimorris/onedarkpro.nvim' " check light
+" TODO: Plug 'projekt0n/github-nvim-theme'
+" TODO: Plug 'ray-x/aurora'
+" TODO: Plug 'rebelot/kanagawa.nvim'
+" TODO: Plug 'rktjmp/lush.nvim'
+" TODO: Plug 'rmehri01/onenord.nvim'
+" TODO: Plug 'sainnhe/edge'
+" TODO: Plug 'sainnhe/everforest'
+" TODO: Plug 'sainnhe/gruvbox-material'
+" TODO: Plug 'sainnhe/sonokai'
+" TODO: Plug 'savq/melange'
+" TODO: Plug 'shaunsingh/moonlight.nvim'
+" TODO: Plug 'simrat39/symbols-outline.nvim' ->> LSP
+" TODO: Plug 'stevearc/aerial.nvim'  ->> LSP
+" TODO: Plug 'tanvirtin/monokai.nvim'
+" TODO: Plug 'tiagovla/tokyodark.nvim'
+" TODO: Plug 'titanzero/zephyrium'
+" TODO: Plug 'tjdevries/colorbuddy.vim'
+" TODO: Plug 'tjdevries/gruvbuddy.nvim'
+" TODO: Plug 'tomasiser/vim-code-dark'
+" TODO: Plug 'yashguptaz/calvera-dark.nvim'
+" TODO: https://github.com/AlphaTechnolog/pywal.nvim
+" TODO: https://github.com/EdenEast/nightfox.nvim
+" TODO: https://github.com/Mangeshrex/uwu.vim
+" TODO: https://github.com/PHSix/nvim-hybrid
+" TODO: https://github.com/Yagua/nebulous.nvim
+" TODO: https://github.com/cpea2506/one_monokai.nvim
+" TODO: https://github.com/dracula/vim
+" TODO: https://github.com/dylanaraps/wal.vim
+" TODO: https://github.com/fenetikm/falcon
+" TODO: https://github.com/jsit/toast.vim
+" TODO: https://github.com/katawful/kat.nvim
+" TODO: https://github.com/kvrohit/rasmus.nvim
+" TODO: https://github.com/ldelossa/vimdark
+" TODO: https://github.com/marko-cerovac/material.nvim
+" TODO: https://github.com/mcchrish/zenbones.nvim
+" TODO: https://github.com/mrjones2014/lighthaus.nvim
+" TODO: https://github.com/ntk148v/vim-horizon
+" TODO: https://github.com/rafalbromirski/vim-aurora
+" TODO: https://github.com/rafamadriz/neon
+" TODO: https://github.com/rebelot/kanagawa.nvim
+" TODO: https://github.com/sainnhe/everforest
+" TODO: https://github.com/sickill/vim-monokai
+" TODO: https://github.com/wuelnerdotexe/vim-enfocado
+" TODO: https://github.com/yashguptaz/calvera-dark.nvim
 
 " Commenting:
 " ```````````
@@ -188,13 +197,13 @@ Plug 'gennaro-tedesco/nvim-commaround'
     " TODO:
     " Fix toggle mapping to VSCode one
     " Add filetype for powershell
-" TODO:
-" Plug 'b3nj5m1n/kommentary'
-" Plug 'numToStr/Comment.nvim'
-" Plug 'terrortylor/nvim-comment'
-" Plug 'winston0410/commented.nvim'
-" https://github.com/tpope/vim-commentary
-" https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+" TODO: Plug 'b3nj5m1n/kommentary'
+" TODO: Plug 'numToStr/Comment.nvim'
+" TODO: Plug 'terrortylor/nvim-comment'
+" TODO: Plug 'winston0410/commented.nvim'
+" TODO: https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+" TODO: https://github.com/tpope/vim-commentary
+" TODO: https://github.com/winston0410/commented.nvim
 
 " Completion:
 " ```````````
@@ -202,309 +211,375 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 
-" TODO:
-" LSP - explore
-" Snippets
-" Commandline
-" Path
-" https://github.com/PasiBergman/cmp-nuget " For Nuget
-" https://github.com/tzachar/cmp-fuzzy-buffer
-" https://github.com/octaltree/cmp-look
-" https://github.com/uga-rosa/cmp-dictionary
-" Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
-" https://github.com/noib3/nvim-compleet
-" https://github.com/f3fora/cmp-nuspell
-" https://github.com/vappolinario/cmp-clippy
-" https://github.com/dmitmel/cmp-cmdline-history
-" https://github.com/tzachar/cmp-fuzzy-buffer
-" https://github.com/octaltree/cmp-look
-" https://github.com/f3fora/cmp-spell
-" https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-" https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
-" https://github.com/uga-rosa/cmp-dictionary
-" https://github.com/kristijanhusak/vim-dadbod-completion
-" https://github.com/davidsierradz/cmp-conventionalcommits
-" https://github.com/ray-x/cmp-treesitter
-" https://github.com/zbirenbaum/copilot-cmp
-" https://github.com/lukas-reineke/cmp-under-comparator
-" https://github.com/hrsh7th/cmp-nvim-lua
-" https://github.com/meetcw/cmp-browser-source
-" https://github.com/PasiBergman/cmp-nuget
-" https://github.com/tzachar/cmp-tabnine
-" https://github.com/rambhosale/cmp-bootstrap.nvim
+" TODO: Commandline
+" TODO: LSP - explore
+" TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
+" TODO: Path
+" TODO: Snippets
+" TODO: https://github.com/OmniSharp/omnisharp-vim
+" TODO: https://github.com/PasiBergman/cmp-nuget
+" TODO: https://github.com/PasiBergman/cmp-nuget " For Nuget
+" TODO: https://github.com/Shougo/deoplete.nvim
+" TODO: https://github.com/davidsierradz/cmp-conventionalcommits
+" TODO: https://github.com/dmitmel/cmp-cmdline-history
+" TODO: https://github.com/f3fora/cmp-nuspell
+" TODO: https://github.com/f3fora/cmp-spell
+" TODO: https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
+" TODO: https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+" TODO: https://github.com/hrsh7th/cmp-nvim-lua
+" TODO: https://github.com/iamcco/coc-vimlsp
+" TODO: https://github.com/kristijanhusak/vim-dadbod-completion
+" TODO: https://github.com/lukas-reineke/cmp-under-comparator
+" TODO: https://github.com/meetcw/cmp-browser-source
+" TODO: https://github.com/neoclide/coc-neco
+" TODO: https://github.com/noib3/nvim-compleet
+" TODO: https://github.com/nxvu699134/vn-night.nvim
+" TODO: https://github.com/octaltree/cmp-look
+" TODO: https://github.com/octaltree/cmp-look
+" TODO: https://github.com/rambhosale/cmp-bootstrap.nvim
+" TODO: https://github.com/ray-x/cmp-treesitter
+" TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+" TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+" TODO: https://github.com/tzachar/cmp-tabnine
+" TODO: https://github.com/uga-rosa/cmp-dictionary
+" TODO: https://github.com/uga-rosa/cmp-dictionary
+" TODO: https://github.com/vappolinario/cmp-clippy
+" TODO: https://github.com/voldikss/coc-browser
+" TODO: https://github.com/zbirenbaum/copilot-cmp
 
 " Configuration:
 " ``````````````
-" TODO: Explore
-" https://github.com/AstroNvim/AstroNvim
-" https://github.com/CanKolay3499/CNvim
-" https://github.com/CosmicNvim/CosmicNvim
-" https://github.com/JryChn/ModuleVim
-" https://github.com/LunarVim/LunarVim
-" https://github.com/NTBBloodbath/doom-nvim
-" https://github.com/NvChad/NvChad
-" https://github.com/Theory-of-Everything/nii-nvim
-" https://github.com/VapourNvim/VapourNvim
-" https://github.com/askfiy/nvim
-" https://github.com/Avimitin/nvim
-" https://github.com/echasnovski/mini.nvim
-" https://github.com/lalitmee/cobalt2.nvim
-" https://github.com/ldelossa/litee.nvim
-" https://github.com/nvim-lua/kickstart.nvim
-" https://github.com/nvim-neorg/neorg
-" https://github.com/nvim-orgmode/orgmode
-" https://github.com/ray-x/go.nvim
-" https://github.com/shaeinst/roshnivim
-" https://github.com/ray-x/dotfiles
-" https://github.com/artart222/CodeArt
-" https://github.com/jdhao/nvim-config
-" https://github.com/Shadorain/shadovim
+" TODO: https://github.com/AstroNvim/AstroNvim
+" TODO: https://github.com/Avimitin/nvim
+" TODO: https://github.com/CanKolay3499/CNvim
+" TODO: https://github.com/CosmicNvim/CosmicNvim
+" TODO: https://github.com/JryChn/ModuleVim
+" TODO: https://github.com/LunarVim/LunarVim
+" TODO: https://github.com/NTBBloodbath/doom-nvim
+" TODO: https://github.com/NvChad/NvChad
+" TODO: https://github.com/Shadorain/shadovim
+" TODO: https://github.com/TeoDev1611/astro.nvim
+" TODO: https://github.com/Theory-of-Everything/nii-nvim
+" TODO: https://github.com/VapourNvim/VapourNvim
+" TODO: https://github.com/artart222/CodeArt
+" TODO: https://github.com/askfiy/nvim
+" TODO: https://github.com/b0o/nvim-conf
+" TODO: https://github.com/crivotz/nv-ide
+" TODO: https://github.com/cstsunfu/.sea.nvim
+" TODO: https://github.com/echasnovski/mini.nvim
+" TODO: https://github.com/jdhao/nvim-config
+" TODO: https://github.com/lalitmee/cobalt2.nvim
+" TODO: https://github.com/ldelossa/litee-calltree.nvim
+" TODO: https://github.com/ldelossa/litee.nvim
+" TODO: https://github.com/mnabila/nvimrc
+" TODO: https://github.com/nvim-lua/kickstart.nvim
+" TODO: https://github.com/nvim-neorg/neorg
+" TODO: https://github.com/nvim-orgmode/orgmode
+" TODO: https://github.com/optimizacija/neovim-config
+" TODO: https://github.com/ray-x/dotfiles
+" TODO: https://github.com/ray-x/go.nvim
+" TODO: https://github.com/shaeinst/roshnivim
 
 " DAP:
 " ````
-" TODO:
-" Plug 'mfussenegger/nvim-dap'
-" https://github.com/rcarriga/nvim-dap-ui
-" https://github.com/Pocco81/DAPInstall.nvim
-" https://github.com/Pocco81/dap-buddy.nvim
+" TODO: Plug 'mfussenegger/nvim-dap'
+" TODO: https://github.com/Pocco81/DAPInstall.nvim
+" TODO: https://github.com/Pocco81/dap-buddy.nvim
+" TODO: https://github.com/mfussenegger/nvim-dap-python
+" TODO: https://github.com/rcarriga/nvim-dap-ui
+" TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 
 " File Explorer:
 " ``````````````
-" TODO: Explore
-" https://github.com/tamago324/lir.nvim
-" https://github.com/nvim-neo-tree/neo-tree.nvim
-" https://github.com/kyazdani42/nvim-tree.lua
-" https://github.com/ms-jpq/chadtree
-" https://github.com/zgpio/tree.nvim
-" https://github.com/elihunter173/dirbuf.nvim
+" TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
+" TODO: https://github.com/Shougo/defx.nvim
+" TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
+" TODO: https://github.com/elihunter173/dirbuf.nvim
+" TODO: https://github.com/kyazdani42/nvim-tree.lua
+" TODO: https://github.com/ms-jpq/chadtree
+" TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
+" TODO: https://github.com/tamago324/lir.nvim
+" TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+" TODO: https://github.com/zgpio/tree.nvim
 
 " Folding:
 " ````````
-" TODO: Explore
-" Plug 'anuvyklack/pretty-fold.nvim'
-" Plug 'anuvyklack/nvim-keymap-amend'
+" TODO: Plug 'anuvyklack/nvim-keymap-amend'
+" TODO: Plug 'anuvyklack/pretty-fold.nvim'
 
 " Git:
 " ````
-" Plug 'f-person/git-blame.nvim' " not working, needs review
-" Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
-" Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
-" https://github.com/TimUntersberger/neogit
-" https://github.com/tommcdo/vim-fugitive-blame-ext
-" https://github.com/tpope/vim-fugitive
-" https://github.com/tanvirtin/vgit.nvim
-" https://github.com/adelarsq/neovcs.vim
-" https://github.com/APZelos/blamer.nvim
+" TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
+" TODO: Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
+" TODO: Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
+" TODO: https://github.com/APZelos/blamer.nvim
+" TODO: https://github.com/TimUntersberger/neogit
+" TODO: https://github.com/adelarsq/neovcs.vim
+" TODO: https://github.com/hotwatermorning/auto-git-diff
+" TODO: https://github.com/rhysd/git-messenger.vim
+" TODO: https://github.com/sjl/splice.vim
+" TODO: https://github.com/tanvirtin/vgit.nvim
+" TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
+" TODO: https://github.com/tpope/vim-fugitive
 
 " Icons:
 " ``````
-" TODO:
-" https://github.com/yamatsum/nvim-nonicons
+" TODO: https://github.com/kristijanhusak/defx-icons
+" TODO: https://github.com/yamatsum/nvim-nonicons
 
 " LSP:
 " ````
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
-" TODO:
-" Autocompletion
-" Code Actions
-" Linitng
-" Snippets
-" UI Customization
-" https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
-" https://github.com/RishabhRD/nvim-lsputils
-" https://github.com/j-hui/fidget.nvim
-" https://github.com/jose-elias-alvarez/null-ls.nvim
-" https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
-" https://github.com/nvim-lua/lsp-status.nvim
-" https://github.com/junnplus/nvim-lsp-setup
-" https://github.com/kdheepak/lazygit.nvim
-" https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
-" https://github.com/liuchengxu/vista.vim
-" https://github.com/alexaandru/nvim-lspupdate
-" https://github.com/lukas-reineke/format.nvim
-" https://github.com/liuchengxu/vista.vim
-" https://github.com/lukas-reineke/lsp-format.nvim
-" https://github.com/nanotee/nvim-lsp-basics
-" https://github.com/nvim-lua/lsp-status.nvim
-" https://github.com/ojroques/nvim-lspfuzzy
-" https://github.com/onsails/diaglist.nvim
-" https://github.com/onsails/lspkind.nvim
-" https://github.com/ray-x/lsp_signature.nvim
-" https://github.com/ray-x/navigator.lua
-" https://github.com/weilbith/nvim-code-action-menu
-" Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+" TODO: Autocompletion
+" TODO: Code Actions
+" TODO: Linitng
+" TODO: Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+" TODO: Snippets
+" TODO: UI Customization
+" TODO: https://github.com/RishabhRD/nvim-lsputils
+" TODO: https://github.com/alexaandru/nvim-lspupdate
+" TODO: https://github.com/iamcco/vim-language-server
+" TODO: https://github.com/j-hui/fidget.nvim
+" TODO: https://github.com/jesseduffield/lazygit
+" TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
+" TODO: https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+" TODO: https://github.com/junnplus/nvim-lsp-setup
+" TODO: https://github.com/kdheepak/lazygit.nvim
+" TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
+" TODO: https://github.com/liuchengxu/vista.vim
+" TODO: https://github.com/liuchengxu/vista.vim
+" TODO: https://github.com/lukas-reineke/format.nvim
+" TODO: https://github.com/lukas-reineke/lsp-format.nvim
+" TODO: https://github.com/matsui54/denops-signature_help
+" TODO: https://github.com/nanotee/nvim-lsp-basics
+" TODO: https://github.com/nvim-lua/lsp-status.nvim
+" TODO: https://github.com/nvim-lua/lsp-status.nvim
+" TODO: https://github.com/ojroques/nvim-lspfuzzy
+" TODO: https://github.com/onsails/diaglist.nvim
+" TODO: https://github.com/onsails/lspkind.nvim
+" TODO: https://github.com/ray-x/lsp_signature.nvim
+" TODO: https://github.com/ray-x/lsp_signature.nvim
+" TODO: https://github.com/ray-x/navigator.lua
+" TODO: https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
+" TODO: https://github.com/weilbith/nvim-code-action-menu
 
 " Mapping:
 " ````````
-" https://github.com/LionC/nest.nvim
-" https://github.com/b0o/mapx.nvim
+" TODO: https://github.com/LionC/nest.nvim
+" TODO: https://github.com/b0o/mapx.nvim
 
 " Marks:
 " ``````
-" https://github.com/chentau/marks.nvim
+" TODO: https://github.com/chentau/marks.nvim
 
 " Session Manager:
 " ````````````````
-" TODO:
-" https://github.com/olimorris/persisted.nvim
-" https://github.com/rmagatti/auto-session
-" https://github.com/Shatur/neovim-session-manager
+" TODO: https://github.com/Shatur/neovim-session-manager
+" TODO: https://github.com/olimorris/persisted.nvim
+" TODO: https://github.com/rmagatti/auto-session
 
 " Snippets:
 " `````````
-" TODO:
-" https://github.com/L3MON4D3/LuaSnip
-" https://github.com/dcampos/nvim-snippy
-" https://github.com/ellisonleao/carbon-now.nvim
-" https://github.com/hrsh7th/vim-vsnip
-" https://github.com/norcalli/snippets.nvim
-" https://github.com/rafamadriz/friendly-snippets
-" https://github.com/neoclide/coc-snippets
+" TODO: https://github.com/L3MON4D3/LuaSnip
+" TODO: https://github.com/dcampos/nvim-snippy
+" TODO: https://github.com/ellisonleao/carbon-now.nvim
+" TODO: https://github.com/hrsh7th/vim-vsnip
+" TODO: https://github.com/neoclide/coc-snippets
+" TODO: https://github.com/norcalli/snippets.nvim
+" TODO: https://github.com/rafamadriz/friendly-snippets
 
 " Status Line:
 " ````````````
-Plug 'beauwilliams/statusline.lua' " Slowness observed
-    " TODO: Explore Statusline
-" TODO:
-" https://github.com/nvim-lualine/lualine.nvim
-" Plug 'windwp/windline.nvim'
-" https://github.com/NTBBloodbath/galaxyline.nvim
-" https://github.com/glepnir/galaxyline.nvim
-" https://github.com/b0o/incline.nvim
-" https://github.com/datwaft/bubbly.nvim
-" https://github.com/feline-nvim/feline.nvim
-" https://github.com/itchyny/lightline.vim
-" https://github.com/konapun/vacuumline.nvim
-" https://github.com/noib3/nvim-cokeline
-" https://github.com/ojroques/nvim-hardline
-" https://github.com/windwp/windline.nvim
-" https://github.com/akinsho/bufferline.nvim
-" https://github.com/ojroques/nvim-hardline
-" https://github.com/tamton-aquib/staline.nvim
+Plug 'beauwilliams/statusline.lua' " Slowness observed TODO: Explore more
+" TODO: https://github.com/NTBBloodbath/galaxyline.nvim
+" TODO: https://github.com/akinsho/bufferline.nvim
+" TODO: https://github.com/b0o/incline.nvim
+" TODO: https://github.com/datwaft/bubbly.nvim
+" TODO: https://github.com/feline-nvim/feline.nvim
+" TODO: https://github.com/glepnir/galaxyline.nvim
+" TODO: https://github.com/itchyny/lightline.vim
+" TODO: https://github.com/konapun/vacuumline.nvim
+" TODO: https://github.com/noib3/nvim-cokeline
+" TODO: https://github.com/nvim-lualine/lualine.nvim
+" TODO: https://github.com/ojroques/nvim-hardline
+" TODO: https://github.com/ojroques/nvim-hardline
+" TODO: https://github.com/tamton-aquib/staline.nvim
+" TODO: https://github.com/windwp/windline.nvim
 
 " Tab Line:
 " `````````
-" TODO:
-" https://github.com/crispgm/nvim-tabline
-" https://github.com/kdheepak/tabline.nvim
-" https://github.com/rafcamlet/tabline-framework.nvim
-" https://github.com/romgrk/barbar.nvim
+" TODO: https://github.com/alvarosevilla95/luatab.nvim
+" TODO: https://github.com/bagrat/vim-buffet
+" TODO: https://github.com/crispgm/nvim-tabline
+" TODO: https://github.com/kdheepak/tabline.nvim
+" TODO: https://github.com/rafcamlet/tabline-framework.nvim
+" TODO: https://github.com/romgrk/barbar.nvim
 
 " Telescope:
 " ``````````
-" TODO: Explore Telescope
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/plenary.nvim'
-" https://github.com/LinArcX/telescope-command-palette.nvim
-" https://github.com/camspiers/snap
+Plug 'nvim-lua/plenary.nvim' " NOTE: This should be in Utilities
+" TODO: https://github.com/LinArcX/telescope-command-palette.nvim
+" TODO: https://github.com/camspiers/snap
+" TODO: https://github.com/nvim-telescope/telescope-hop.nvim
+" TODO: https://github.com/nvim-telescope/telescope-packer.nvim
+" TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
 
 " Terminal:
 " `````````
-" TODO:
-"
-" https://github.com/nikvdp/neomux
-" https://github.com/numToStr/FTerm.nvim
-" https://github.com/oberblastmeister/termwrapper.nvim
-" https://github.com/pianocomposer321/consolation.nvim
+" TODO: https://github.com/nikvdp/neomux
+" TODO: https://github.com/numToStr/FTerm.nvim
+" TODO: https://github.com/oberblastmeister/termwrapper.nvim
+" TODO: https://github.com/pianocomposer321/consolation.nvim
 
 " Todo:
 " `````
-Plug 'folke/todo-comments.nvim'
-" TODO:
-" Search
-" Quickfix
-" Telescope
+Plug 'folke/todo-comments.nvim' " BUG: Can not handle multiple todos in same line
+" TODO: Quickfix
+" TODO: Search
+" TODO: Telescope
 
 " Treesitter:
 " ```````````
 Plug 'nvim-treesitter/nvim-treesitter'
-" TODO:
-" Incremental selection
-" Indentation
-" Folding
-" Wiki
-" https://github.com/RRethy/nvim-treesitter-textsubjects
-" https://github.com/lewis6991/spellsitter.nvim
-" https://github.com/m-demare/hlargs.nvim
-" https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+" TODO: Folding
+" TODO: Incremental selection
+" TODO: Indentation
+" TODO: Wiki
+" TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
+" TODO: https://github.com/lewis6991/spellsitter.nvim
+" TODO: https://github.com/lewis6991/spellsitter.nvim
+" TODO: https://github.com/m-demare/hlargs.nvim
+" TODO: https://github.com/mfussenegger/nvim-treehopper
+" TODO: https://github.com/nvim-treesitter/nvim-treesitter-context
+" TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
+" TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+" TODO: https://github.com/p00f/nvim-ts-rainbow
 
 " TUI:
 " ````
-" https://github.com/MunifTanjim/nui.nvim
+" TODO: https://github.com/MunifTanjim/nui.nvim
 
 " Utilities:
 " ``````````
-" TODO:
-" https://github.com/p00f/nvim-ts-rainbow
-" https://github.com/phaazon/hop.nvim
-" https://github.com/chrisbra/NrrwRgn
-" https://github.com/TaDaa/vimade
-" https://github.com/skywind3000/gutentags_plus
-" https://github.com/sheerun/vim-polyglot
-" https://github.com/pianocomposer321/yabs.nvim
-" https://github.com/vim-scripts/Conque-GDB
-" https://github.com/lifepillar/vim-mucomplete
-" https://github.com/terryma/vim-multiple-cursors
-" https://github.com/adelarsq/vim-emoji-icon-theme
-" https://github.com/lambdalisue/glyph-palette.vim
-" https://github.com/rhysd/conflict-marker.vim
-" https://github.com/markonm/traces.vim
-" https://github.com/rktjmp/lush.nvim
-" https://github.com/junegunn/vim-easy-align
-" https://github.com/prabirshrestha/vim-lsp
-" https://github.com/ahmedkhalf/project.nvim
-" https://github.com/stevearc/dressing.nvim
-" https://github.com/jsfaint/gen_tags.vim
-" https://github.com/bignimbus/you-are-here.vim
-" https://github.com/craigemery/vim-autotag
-" https://github.com/liuchengxu/vim-clap
-" https://github.com/neoclide/coc.nvim
-" https://github.com/mhinz/vim-galore
-" https://github.com/hoschi/yode-nvim
-" https://github.com/kosayoda/nvim-lightbulb
-" https://github.com/rktjmp/lush.nvim
-" https://github.com/kshenoy/vim-signature
-" https://github.com/mhinz/vim-signify
-" https://github.com/glacambre/firenvim
-" https://github.com/mhartington/formatter.nvim
-" https://github.com/machakann/vim-highlightedyank
-" https://github.com/sunjon/stylish.nvim
-" https://github.com/skywind3000/vim-quickui
-" https://github.com/vscode-neovim/vscode-neovim
-" https://github.com/coc-extensions/coc-powershell
-" https://github.com/junegunn/fzf
-" https://github.com/NTBBloodbath/rest.nvim
-" https://github.com/nvim-orgmode/orgmode
-" https://github.com/VonHeikemen/fine-cmdline.nvim
-" https://github.com/zbirenbaum/copilot.lua
-" https://github.com/rickhowe/spotdiff.vim
-" https://github.com/sbdchd/neoformat
-" https://github.com/RRethy/nvim-treesitter-endwise
-" Plug 'booperlv/nvim-gomove'
-" Plug 'folke/trouble.nvim'
-" Plug 'jbyuki/venn.nvim'
-" Plug 'kevinhwang91/nvim-hlslens'
-" Plug 'folke/which-key.nvim'
-" Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
-" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
-" Plug 'wbthomason/packer.nvim'
-" Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'gennaro-tedesco/nvim-peekup'
-" Plug 'haringsrob/nvim_context_vt' " NOTE: Good but should be off by default
-" Plug 'jbyuki/one-small-step-for-vimkind'
-" https://github.com/FeiyouG/command_center.nvim
-" https://github.com/stevearc/aerial.nvim
-" https://github.com/Pocco81/AbbrevMan.nvim
-" https://github.com/SmiteshP/nvim-gps
-" https://github.com/ThePrimeagen/harpoon
-" https://github.com/ThemerCorp/themer.lua
-" https://github.com/bennypowers/nvim-regexplainer
-" https://github.com/sidebar-nvim/sidebar.nvim
-" https://github.com/junegunn/vim-peekaboo
-" https://github.com/junegunn/goyo.vim
-" https://github.com/Pocco81/TrueZen.nvim
-" https://github.com/narajaon/onestatus
+" TODO: Plug 'booperlv/nvim-gomove'
+" TODO: Plug 'folke/trouble.nvim'
+" TODO: Plug 'folke/which-key.nvim'
+" TODO: Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+" TODO: Plug 'gennaro-tedesco/nvim-peekup'
+" TODO: Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+" TODO: Plug 'haringsrob/nvim_context_vt' " NOTE: Good but should be off by default
+" TODO: Plug 'jbyuki/one-small-step-for-vimkind'
+" TODO: Plug 'jbyuki/venn.nvim'
+" TODO: Plug 'kevinhwang91/nvim-hlslens'
+" TODO: Plug 'kyazdani42/nvim-web-devicons'
+" TODO: Plug 'wbthomason/packer.nvim'
+" TODO: https://github.com/AndrewRadev/switch.vim
+" TODO: https://github.com/AndrewRadev/tagalong.vim
+" TODO: https://github.com/D0n9X1n/quickrun.vim
+" TODO: https://github.com/FeiyouG/command_center.nvim
+" TODO: https://github.com/Iron-E/nvim-bufmode
+" TODO: https://github.com/Iron-E/nvim-libmodal
+" TODO: https://github.com/Iron-E/nvim-marktext
+" TODO: https://github.com/Iron-E/nvim-tabmode
+" TODO: https://github.com/Iron-E/vim-libmodal
+" TODO: https://github.com/MattesGroeger/vim-bookmarks
+" TODO: https://github.com/NTBBloodbath/rest.nvim
+" TODO: https://github.com/Pocco81/AbbrevMan.nvim
+" TODO: https://github.com/Pocco81/TrueZen.nvim
+" TODO: https://github.com/RRethy/nvim-treesitter-endwise
+" TODO: https://github.com/SmiteshP/nvim-gps
+" TODO: https://github.com/TaDaa/vimade
+" TODO: https://github.com/ThePrimeagen/harpoon
+" TODO: https://github.com/ThemerCorp/themer.lua
+" TODO: https://github.com/VonHeikemen/fine-cmdline.nvim
+" TODO: https://github.com/VonHeikemen/searchbox.nvim
+" TODO: https://github.com/WolfgangMehner/vim-plugins
+" TODO: https://github.com/Yilin-Yang/vim-markbar
+" TODO: https://github.com/adelarsq/vim-emoji-icon-theme
+" TODO: https://github.com/ahmedkhalf/project.nvim
+" TODO: https://github.com/bennypowers/nvim-regexplainer
+" TODO: https://github.com/bfredl/nvim-luadev
+" TODO: https://github.com/bignimbus/you-are-here.vim
+" TODO: https://github.com/chrisbra/NrrwRgn
+" TODO: https://github.com/coc-extensions/coc-powershell
+" TODO: https://github.com/craigemery/vim-autotag
+" TODO: https://github.com/danymat/neogen
+" TODO: https://github.com/folke/twilight.nvim
+" TODO: https://github.com/glacambre/firenvim
+" TODO: https://github.com/haya14busa/is.vim
+" TODO: https://github.com/haya14busa/vim-asterisk
+" TODO: https://github.com/hoschi/yode-nvim
+" TODO: https://github.com/jpalardy/vim-slime
+" TODO: https://github.com/jsfaint/gen_tags.vim
+" TODO: https://github.com/junegunn/fzf
+" TODO: https://github.com/junegunn/goyo.vim
+" TODO: https://github.com/junegunn/vim-easy-align
+" TODO: https://github.com/junegunn/vim-peekaboo
+" TODO: https://github.com/junegunn/vim-slash
+" TODO: https://github.com/kassio/neoterm
+" TODO: https://github.com/kosayoda/nvim-lightbulb
+" TODO: https://github.com/kshenoy/vim-signature
+" TODO: https://github.com/lambdalisue/glyph-palette.vim
+" TODO: https://github.com/lambdalisue/nerdfont.vim
+" TODO: https://github.com/lifepillar/vim-colortemplate
+" TODO: https://github.com/lifepillar/vim-mucomplete
+" TODO: https://github.com/liuchengxu/vim-clap
+" TODO: https://github.com/machakann/vim-highlightedyank
+" TODO: https://github.com/markonm/traces.vim
+" TODO: https://github.com/matveyt/neoclip
+" TODO: https://github.com/mengelbrecht/lightline-bufferline
+" TODO: https://github.com/mhartington/formatter.nvim
+" TODO: https://github.com/mhinz/vim-galore
+" TODO: https://github.com/mhinz/vim-signify
+" TODO: https://github.com/michaelb/sniprun
+" TODO: https://github.com/milisims/nvim-luaref
+" TODO: https://github.com/monkoose/matchparen.nvim
+" TODO: https://github.com/mrjones2014/legendary.nvim
+" TODO: https://github.com/narajaon/onestatus
+" TODO: https://github.com/neoclide/coc-json
+" TODO: https://github.com/neoclide/coc-sources
+" TODO: https://github.com/neoclide/coc-yank
+" TODO: https://github.com/neoclide/coc.nvim
+" TODO: https://github.com/nvim-orgmode/orgmode
+" TODO: https://github.com/nyngwang/NeoRoot.lua
+" TODO: https://github.com/p00f/nvim-ts-rainbow
+" TODO: https://github.com/pacha/vem-tabline
+" TODO: https://github.com/pechorin/any-jump.vim
+" TODO: https://github.com/phaazon/hop.nvim
+" TODO: https://github.com/pianocomposer321/yabs.nvim
+" TODO: https://github.com/prabirshrestha/vim-lsp
+" TODO: https://github.com/puremourning/vimspector
+" TODO: https://github.com/rafcamlet/nvim-luapad
+" TODO: https://github.com/rhysd/conflict-marker.vim
+" TODO: https://github.com/rickhowe/spotdiff.vim
+" TODO: https://github.com/rktjmp/lush.nvim
+" TODO: https://github.com/rktjmp/lush.nvim
+" TODO: https://github.com/romainl/vim-cool
+" TODO: https://github.com/sbdchd/neoformat
+" TODO: https://github.com/sheerun/vim-polyglot
+" TODO: https://github.com/sidebar-nvim/sidebar.nvim
+" TODO: https://github.com/sillybun/vim-repl
+" TODO: https://github.com/simnalamburt/vim-mundo
+" TODO: https://github.com/skywind3000/gutentags_plus
+" TODO: https://github.com/skywind3000/vim-quickui
+" TODO: https://github.com/srstevenson/vim-picker
+" TODO: https://github.com/stevearc/aerial.nvim
+" TODO: https://github.com/stevearc/dressing.nvim
+" TODO: https://github.com/stsewd/sphinx.nvim
+" TODO: https://github.com/sunjon/stylish.nvim
+" TODO: https://github.com/terryma/vim-multiple-cursors
+" TODO: https://github.com/thaerkh/vim-workspace
+" TODO: https://github.com/tyru/caw.vim
+" TODO: https://github.com/urbainvaes/vim-ripple
+" TODO: https://github.com/vim-scripts/Conque-GDB
+" TODO: https://github.com/vim-scripts/ShowMarks
+" TODO: https://github.com/vscode-neovim/vscode-neovim
+" TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
+" TODO: https://github.com/whiteinge/diffconflicts
+" TODO: https://github.com/winston0410/range-highlight.nvim
+" TODO: https://github.com/zbirenbaum/copilot.lua
 
 " Word Highlight:
 " ```````````````
@@ -513,65 +588,80 @@ Plug 'RRethy/vim-illuminate'
 hi def link LspReferenceText WildMenu
 hi def link LspReferenceWrite WildMenu
 hi def link LspReferenceRead WildMenu
-" TODO:
-" Plug 'xiyaowong/nvim-cursorword'
-" Plug 'yamatsum/nvim-cursorline'
+" TODO: Plug 'xiyaowong/nvim-cursorword'
+" TODO: Plug 'yamatsum/nvim-cursorline'
+" TODO: https://github.com/dominikduda/vim_current_word
 
 " Archived:
-" https://github.com/folke/lua-dev.nvim
-" https://github.com/frabjous/knap
-" https://github.com/gaborvecsei/cryptoprice.nvim
-" https://github.com/gaborvecsei/memento.nvim
-" https://github.com/gbprod/substitute.nvim
-" https://github.com/gbprod/yanky.nvim
-" https://github.com/gennaro-tedesco/nvim-jqx
-" https://github.com/gfanto/fzf-lsp.nvim
-" https://github.com/ggandor/leap.nvim
-" https://github.com/henriquehbr/nvim-startup.lua " NOTE: startup time analyser
-" https://github.com/ibhagwan/fzf-lua
-" https://github.com/is0n/jaq-nvim
-" https://github.com/jakewvincent/mkdnflow.nvim
-" https://github.com/jameshiew/nvim-magic
-" https://github.com/jamestthompson3/nvim-remote-containers
-" https://github.com/jbyuki/instant.nvim
-" https://github.com/jubnzv/mdeval.nvim
-" https://github.com/jubnzv/virtual-types.nvim
-" https://github.com/kevinhwang91/nvim-bqf
-" https://github.com/kosayoda/nvim-lightbulb
-" https://github.com/lukas-reineke/indent-blankline.nvim
-" https://github.com/matbme/JABS.nvim
-" https://github.com/max397574/better-escape.nvim
-" https://github.com/mcauley-penney/tidy.nvim
-" https://github.com/mfussenegger/nvim-lint
-" https://github.com/mfussenegger/nvim-treehopper
-" https://github.com/michaelb/sniprun
-" https://github.com/milisims/nvim-luaref
-" https://github.com/mrjones2014/legendary.nvim
-" https://github.com/mrjones2014/smart-splits.nvim
-" https://github.com/ms-jpq/coq_nvim
-" https://github.com/nacro90/numb.nvim
-" https://github.com/nanotee/nvim-lua-guide
-" https://github.com/nvim-lua/plenary.nvim
-" https://github.com/nvim-pack/nvim-spectre
-" https://github.com/nyngwang/NeoRoot.lua
-" https://github.com/rafcamlet/nvim-luapad
-" https://github.com/rcarriga/nvim-notify
-" https://github.com/renerocksai/telekasten.nvim
-" https://github.com/rktjmp/highlight-current-n.nvim
-" https://github.com/rmagatti/goto-preview
-" https://github.com/romgrk/nvim-treesitter-context
-" https://github.com/sakhnik/nvim-gdb
-" https://github.com/sbdchd/neoformat
-" https://github.com/shaeinst/penvim
-" https://github.com/sindrets/diffview.nvim
-" https://github.com/stevearc/qf_helper.nvim
-" https://github.com/sudormrfbin/cheatsheet.nvim
-" https://github.com/svermeulen/vimpeccable
-" https://github.com/tjdevries/colorbuddy.nvim
-" https://github.com/tjdevries/nlua.nvim
-" https://github.com/tversteeg/registers.nvim
-" https://github.com/vijaymarupudi/nvim-fzf
-" https://github.com/ziontee113/syntax-tree-surfer
+" TODO: https://github.com/AllenDang/nvim-expand-expr
+" TODO: https://github.com/LoricAndre/fzterm.nvim
+" TODO: https://github.com/RishabhRD/nvim-cheat.sh
+" TODO: https://github.com/amirrezaask/fuzzy.nvim
+" TODO: https://github.com/andymass/vim-matchup
+" TODO: https://github.com/anuvyklack/pretty-fold.nvim
+" TODO: https://github.com/bennypowers/nvim-regexplainer
+" TODO: https://github.com/dbeniamine/cheat.sh-vim
+" TODO: https://github.com/folke/lua-dev.nvim
+" TODO: https://github.com/frabjous/knap
+" TODO: https://github.com/gaborvecsei/cryptoprice.nvim
+" TODO: https://github.com/gaborvecsei/memento.nvim
+" TODO: https://github.com/gbprod/substitute.nvim
+" TODO: https://github.com/gbprod/yanky.nvim
+" TODO: https://github.com/gennaro-tedesco/nvim-jqx
+" TODO: https://github.com/gfanto/fzf-lsp.nvim
+" TODO: https://github.com/ggandor/leap.nvim
+" TODO: https://github.com/henriquehbr/nvim-startup.lua " NOTE: startup time analyser
+" TODO: https://github.com/ibhagwan/fzf-lua
+" TODO: https://github.com/is0n/jaq-nvim
+" TODO: https://github.com/jakewvincent/mkdnflow.nvim
+" TODO: https://github.com/jameshiew/nvim-magic
+" TODO: https://github.com/jamestthompson3/nvim-remote-containers
+" TODO: https://github.com/jbyuki/instant.nvim
+" TODO: https://github.com/jubnzv/mdeval.nvim
+" TODO: https://github.com/jubnzv/virtual-types.nvim
+" TODO: https://github.com/kevinhwang91/nvim-bqf
+" TODO: https://github.com/kosayoda/nvim-lightbulb
+" TODO: https://github.com/lukas-reineke/indent-blankline.nvim
+" TODO: https://github.com/matbme/JABS.nvim
+" TODO: https://github.com/max397574/better-escape.nvim
+" TODO: https://github.com/mcauley-penney/tidy.nvim
+" TODO: https://github.com/mfussenegger/nvim-lint
+" TODO: https://github.com/mfussenegger/nvim-treehopper
+" TODO: https://github.com/michaelb/sniprun
+" TODO: https://github.com/milisims/nvim-luaref
+" TODO: https://github.com/mrjones2014/legendary.nvim
+" TODO: https://github.com/mrjones2014/smart-splits.nvim
+" TODO: https://github.com/ms-jpq/coq_nvim
+" TODO: https://github.com/nacro90/numb.nvim
+" TODO: https://github.com/nacro90/numb.nvim
+" TODO: https://github.com/nanotee/nvim-lua-guide
+" TODO: https://github.com/neovim/nvim.net
+" TODO: https://github.com/neovim/nvimdev.nvim
+" TODO: https://github.com/nvim-lua/plenary.nvim
+" TODO: https://github.com/nvim-pack/nvim-spectre
+" TODO: https://github.com/nyngwang/NeoRoot.lua
+" TODO: https://github.com/paretje/nvim-man
+" TODO: https://github.com/rafcamlet/nvim-luapad
+" TODO: https://github.com/rcarriga/nvim-notify
+" TODO: https://github.com/renerocksai/telekasten.nvim
+" TODO: https://github.com/rktjmp/highlight-current-n.nvim
+" TODO: https://github.com/rmagatti/goto-preview
+" TODO: https://github.com/romgrk/nvim-treesitter-context
+" TODO: https://github.com/sakhnik/nvim-gdb
+" TODO: https://github.com/sbdchd/neoformat
+" TODO: https://github.com/shaeinst/penvim
+" TODO: https://github.com/sindrets/diffview.nvim
+" TODO: https://github.com/stevearc/qf_helper.nvim
+" TODO: https://github.com/sudormrfbin/cheatsheet.nvim
+" TODO: https://github.com/svermeulen/vimpeccable
+" TODO: https://github.com/tbastos/vim-lua
+" TODO: https://github.com/tjdevries/colorbuddy.nvim
+" TODO: https://github.com/tjdevries/nlua.nvim
+" TODO: https://github.com/tribela/vim-transparent
+" TODO: https://github.com/tversteeg/registers.nvim
+" TODO: https://github.com/vijaymarupudi/nvim-fzf
+" TODO: https://github.com/xiyaowong/coc-lightbulb-
+" TODO: https://github.com/ziontee113/syntax-tree-surfer
 call plug#end()
 
 " LUA Section:
@@ -800,7 +890,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme material         " Set colorscheme 
+colorscheme OceanicNext         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
