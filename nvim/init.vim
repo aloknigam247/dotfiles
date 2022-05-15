@@ -66,16 +66,30 @@
 " UI Client:
 " ``````````
 " Active:
+" https://github.com/Lyude/neovim-gtk
+" + Simple nothing special
+" - Not good in different DPI
+
+set guifont=FiraCode\ Nerd\ Font:h12
+
+" Tested:
 " https://github.com/yatli/fvim
+" if exists('g:fvim_loaded')
+"     FVimCursorSmoothMove v:true
+"     FVimCursorSmoothBlink v:true
+"     FVimCustomTitleBar v:true
+"     FVimFontLigature v:true
+"     FVimUIPopupMenu v:false
+"     FVimUIWildMenu v:false
+" endif
 " NOTE:
 " + Cursor animations are good
 " + Rounded corners
+" + Titile Bar is good
 " - Ligatures not working
 " - Nerd Font support is not good
 " - Slow loading of UI
 
-" TODO: https://github.com/LunarVim/LunarVim
-" TODO: https://github.com/Lyude/neovim-gtk
 " TODO: https://github.com/RMichelsen/Nvy
 " TODO: https://github.com/akiyosi/goneovim
 " TODO: https://github.com/equalsraf/neovim-qt
@@ -254,6 +268,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/CanKolay3499/CNvim
 " TODO: https://github.com/CosmicNvim/CosmicNvim
 " TODO: https://github.com/JryChn/ModuleVim
+" TODO: https://github.com/LunarVim/LunarVim
 " TODO: https://github.com/LunarVim/LunarVim
 " TODO: https://github.com/NTBBloodbath/doom-nvim
 " TODO: https://github.com/NvChad/NvChad
