@@ -106,14 +106,17 @@ Plug 'windwp/nvim-autopairs'
 " https://github.com/rstacruz/vim-closer
 
 " Coloring:
-" ````````````
+" `````````
 " TODO:
 " 
 " https://github.com/norcalli/nvim-colorizer.lua
 " https://github.com/norcalli/nvim-terminal.lua
 " https://github.com/Pocco81/HighStr.nvim
 " https://github.com/norcalli/nvim-colorizer.lua
+" https://github.com/neoclide/coc-highlight
 " https://github.com/RRethy/vim-hexokinase
+" https://github.com/t9md/vim-quickhl
+" https://github.com/lilydjwg/colorizer
 
 " Colorscheme:
 " ````````````
@@ -190,6 +193,7 @@ Plug 'gennaro-tedesco/nvim-commaround'
 " Plug 'numToStr/Comment.nvim'
 " Plug 'terrortylor/nvim-comment'
 " Plug 'winston0410/commented.nvim'
+" https://github.com/tpope/vim-commentary
 " https://github.com/JoosepAlviste/nvim-ts-context-commentstring
 
 " Completion:
@@ -287,6 +291,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " https://github.com/TimUntersberger/neogit
 " https://github.com/tommcdo/vim-fugitive-blame-ext
+" https://github.com/tpope/vim-fugitive
 " https://github.com/tanvirtin/vgit.nvim
 " https://github.com/adelarsq/neovcs.vim
 " https://github.com/APZelos/blamer.nvim
@@ -433,17 +438,26 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO:
 " https://github.com/p00f/nvim-ts-rainbow
 " https://github.com/phaazon/hop.nvim
+" https://github.com/chrisbra/NrrwRgn
+" https://github.com/TaDaa/vimade
 " https://github.com/skywind3000/gutentags_plus
 " https://github.com/sheerun/vim-polyglot
 " https://github.com/pianocomposer321/yabs.nvim
+" https://github.com/vim-scripts/Conque-GDB
 " https://github.com/lifepillar/vim-mucomplete
+" https://github.com/terryma/vim-multiple-cursors
 " https://github.com/adelarsq/vim-emoji-icon-theme
+" https://github.com/lambdalisue/glyph-palette.vim
+" https://github.com/rhysd/conflict-marker.vim
 " https://github.com/markonm/traces.vim
 " https://github.com/rktjmp/lush.nvim
+" https://github.com/junegunn/vim-easy-align
 " https://github.com/prabirshrestha/vim-lsp
 " https://github.com/ahmedkhalf/project.nvim
 " https://github.com/stevearc/dressing.nvim
+" https://github.com/jsfaint/gen_tags.vim
 " https://github.com/bignimbus/you-are-here.vim
+" https://github.com/craigemery/vim-autotag
 " https://github.com/liuchengxu/vim-clap
 " https://github.com/neoclide/coc.nvim
 " https://github.com/mhinz/vim-galore
