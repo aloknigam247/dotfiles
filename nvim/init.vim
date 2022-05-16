@@ -67,6 +67,9 @@
 " ``````````
 " Active:
 " https://github.com/akiyosi/goneovim
+" NOTE:
+" TODO: config
+" - Struggling with nerdfonts
 
 " Tested:
 " https://github.com/yatli/fvim
@@ -98,8 +101,6 @@
 " TODO: https://github.com/rohit-px2/nvui
 " TODO: https://github.com/sakhnik/nvim-ui
 " TODO: https://github.com/smolck/uivonim
-" TODO: https://github.com/smolck/uivonim
-" TODO: https://github.com/vhakulinen/gnvim
 " TODO: https://github.com/vhakulinen/gnvim
 
 
@@ -119,6 +120,9 @@ Plug 'windwp/nvim-autopairs'
 " TODO: https://github.com/theHamsta/nvim-treesitter-pairs
 " TODO: vim automatically cursor goes to next line but how we don't know yet, how to do it
 
+" COC:
+" TODO: https://github.com/xiyaowong/coc-lightbulb-
+
 " Coloring:
 " `````````
 " TODO: https://github.com/Pocco81/HighStr.nvim
@@ -126,7 +130,6 @@ Plug 'windwp/nvim-autopairs'
 " TODO: https://github.com/azabiong/vim-highlighter
 " TODO: https://github.com/lilydjwg/colorizer
 " TODO: https://github.com/neoclide/coc-highlight
-" TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-terminal.lua
 " TODO: https://github.com/t9md/vim-quickhl
@@ -155,8 +158,8 @@ Plug 'mhartington/oceanic-next'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
 
-" TODO: Plug 'ChristianChiarulli/nvcode-color-schemes.vim' ->> treesitter
-" TODO: Plug 'EdenEast/nightfox.nvim' ->> treesitter
+" TODO: Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
+" TODO: Plug 'EdenEast/nightfox.nvim'
 " TODO: Plug 'nekonako/xresources-nvim'
 " TODO: Plug 'olimorris/onedarkpro.nvim' " check light
 " TODO: Plug 'projekt0n/github-nvim-theme'
@@ -170,8 +173,8 @@ Plug 'mhartington/oceanic-next'
 " TODO: Plug 'sainnhe/sonokai'
 " TODO: Plug 'savq/melange'
 " TODO: Plug 'shaunsingh/moonlight.nvim'
-" TODO: Plug 'simrat39/symbols-outline.nvim' ->> LSP
-" TODO: Plug 'stevearc/aerial.nvim'  ->> LSP
+" TODO: Plug 'simrat39/symbols-outline.nvim'
+" TODO: Plug 'stevearc/aerial.nvim'
 " TODO: Plug 'tanvirtin/monokai.nvim'
 " TODO: Plug 'tiagovla/tokyodark.nvim'
 " TODO: Plug 'titanzero/zephyrium'
@@ -470,6 +473,8 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 " TODO: https://github.com/p00f/nvim-ts-rainbow
+" Archived:
+" https://github.com/ziontee113/syntax-tree-surfer
 
 " TUI:
 " ````
@@ -674,8 +679,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/tribela/vim-transparent
 " TODO: https://github.com/tversteeg/registers.nvim
 " TODO: https://github.com/vijaymarupudi/nvim-fzf
-" TODO: https://github.com/xiyaowong/coc-lightbulb-
-" TODO: https://github.com/ziontee113/syntax-tree-surfer
 call plug#end()
 
 " LUA Section:
