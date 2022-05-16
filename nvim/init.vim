@@ -70,6 +70,7 @@
 " NOTE:
 " TODO: config
 " - Struggling with nerdfonts
+" - Slow and Hangy
 
 " Tested:
 " https://github.com/yatli/fvim
@@ -133,6 +134,7 @@ Plug 'windwp/nvim-autopairs'
 " TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-terminal.lua
 " TODO: https://github.com/t9md/vim-quickhl
+" Plug 'tribela/vim-transparent' " Make theme transparent
 
 " Colorscheme:
 " ````````````
@@ -456,6 +458,7 @@ Plug 'folke/todo-comments.nvim' " BUG: Can not handle multiple todos in same lin
 " TODO: Quickfix
 " TODO: Search
 " TODO: Telescope
+" TODO: Trouble
 
 " Treesitter:
 " ```````````
@@ -473,7 +476,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 " TODO: https://github.com/p00f/nvim-ts-rainbow
-" Archived:
 " https://github.com/ziontee113/syntax-tree-surfer
 
 " TUI:
@@ -482,6 +484,9 @@ Plug 'nvim-treesitter/nvim-treesitter'
 
 " Utilities:
 " ``````````
+Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \"
+let g:registers_window_border = "rounded"
+
 " TODO: Plug 'booperlv/nvim-gomove'
 " TODO: Plug 'folke/trouble.nvim'
 " TODO: Plug 'folke/which-key.nvim'
@@ -574,7 +579,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO: https://github.com/rhysd/conflict-marker.vim
 " TODO: https://github.com/rickhowe/spotdiff.vim
 " TODO: https://github.com/rktjmp/lush.nvim
-" TODO: https://github.com/rktjmp/lush.nvim
 " TODO: https://github.com/romainl/vim-cool
 " TODO: https://github.com/sbdchd/neoformat
 " TODO: https://github.com/sheerun/vim-polyglot
@@ -590,6 +594,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO: https://github.com/sunjon/stylish.nvim
 " TODO: https://github.com/terryma/vim-multiple-cursors
 " TODO: https://github.com/thaerkh/vim-workspace
+" TODO: https://github.com/tjdevries/nlua.nvim
 " TODO: https://github.com/tyru/caw.vim
 " TODO: https://github.com/urbainvaes/vim-ripple
 " TODO: https://github.com/vim-scripts/Conque-GDB
@@ -675,10 +680,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/svermeulen/vimpeccable
 " TODO: https://github.com/tbastos/vim-lua
 " TODO: https://github.com/tjdevries/colorbuddy.nvim
-" TODO: https://github.com/tjdevries/nlua.nvim
-" TODO: https://github.com/tribela/vim-transparent
-" TODO: https://github.com/tversteeg/registers.nvim
-" TODO: https://github.com/vijaymarupudi/nvim-fzf
 call plug#end()
 
 " LUA Section:

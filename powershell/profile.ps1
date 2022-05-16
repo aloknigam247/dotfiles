@@ -101,7 +101,7 @@ Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocomp
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 
-# oh-my-posh
-# ``````````
-Import-Module oh-my-posh
-oh-my-posh --init --shell pwsh --config C:\Users\aloknigam\.oh-my-posh\themes\rudolfs-light.omp.json | Invoke-Expression
+# Prompt
+function prompt {
+    ' ' + $(get-location) + ' > '
+}
