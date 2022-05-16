@@ -373,7 +373,6 @@ Plug 'williamboman/nvim-lsp-installer'
 " TODO: https://github.com/matsui54/denops-signature_help
 " TODO: https://github.com/nanotee/nvim-lsp-basics
 " TODO: https://github.com/nvim-lua/lsp-status.nvim
-" TODO: https://github.com/nvim-lua/lsp-status.nvim
 " TODO: https://github.com/ojroques/nvim-lspfuzzy
 " TODO: https://github.com/onsails/diaglist.nvim
 " TODO: https://github.com/onsails/lspkind.nvim
@@ -486,6 +485,7 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " ``````````
 Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \"
 let g:registers_window_border = "rounded"
+" TODO: Check if height can be reduced
 
 " TODO: Plug 'booperlv/nvim-gomove'
 " TODO: Plug 'folke/trouble.nvim'
@@ -602,8 +602,6 @@ let g:registers_window_border = "rounded"
 " TODO: https://github.com/vscode-neovim/vscode-neovim
 " TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
 " TODO: https://github.com/whiteinge/diffconflicts
-" TODO: https://github.com/winston0410/range-highlight.nvim
-" TODO: https://github.com/zbirenbaum/copilot.lua
 
 " Word Highlight:
 " ```````````````
