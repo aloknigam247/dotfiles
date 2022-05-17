@@ -677,7 +677,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/sudormrfbin/cheatsheet.nvim
 " TODO: https://github.com/svermeulen/vimpeccable
 " TODO: https://github.com/tbastos/vim-lua
-" TODO: https://github.com/tjdevries/colorbuddy.nvim
 call plug#end()
 
 " LUA Section:
