@@ -407,6 +407,7 @@ Plug 'williamboman/nvim-lsp-installer'
 " Rooter:
 " ```````
 " TODO: https://github.com/shaeinst/penvim
+" TODO: https://github.com/nyngwang/NeoRoot.lua
 
 " Session Manager:
 " ````````````````
@@ -553,10 +554,12 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/craigemery/vim-autotag
 " TODO: https://github.com/danymat/neogen
 " TODO: https://github.com/folke/twilight.nvim
+" TODO: https://github.com/rafcamlet/nvim-luapad
 " TODO: https://github.com/glacambre/firenvim
 " TODO: https://github.com/haya14busa/is.vim
 " TODO: https://github.com/haya14busa/vim-asterisk
 " TODO: https://github.com/hoschi/yode-nvim
+" TODO: https://github.com/paretje/nvim-man
 " TODO: https://github.com/jpalardy/vim-slime
 " TODO: https://github.com/jsfaint/gen_tags.vim
 " TODO: https://github.com/junegunn/fzf
@@ -681,14 +684,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/mrjones2014/smart-splits.nvim
 " TODO: https://github.com/ms-jpq/coq_nvim
 " TODO: https://github.com/nacro90/numb.nvim
-" TODO: https://github.com/nanotee/nvim-lua-guide
-" TODO: https://github.com/neovim/nvim.net
-" TODO: https://github.com/neovim/nvimdev.nvim
-" TODO: https://github.com/nvim-lua/plenary.nvim
-" TODO: https://github.com/nvim-pack/nvim-spectre
-" TODO: https://github.com/nyngwang/NeoRoot.lua
-" TODO: https://github.com/paretje/nvim-man
-" TODO: https://github.com/rafcamlet/nvim-luapad
 call plug#end()
 
 " LUA Section:
