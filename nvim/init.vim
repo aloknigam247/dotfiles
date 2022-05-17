@@ -299,13 +299,14 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/ray-x/go.nvim
 " TODO: https://github.com/shaeinst/roshnivim
 
-" DAP:
-" ````
+" Debugger:
+" `````````
 " TODO: Plug 'mfussenegger/nvim-dap'
 " TODO: https://github.com/Pocco81/DAPInstall.nvim
 " TODO: https://github.com/Pocco81/dap-buddy.nvim
 " TODO: https://github.com/mfussenegger/nvim-dap-python
 " TODO: https://github.com/rcarriga/nvim-dap-ui
+" TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 
 " File Explorer:
@@ -326,6 +327,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: Plug 'anuvyklack/nvim-keymap-amend'
 " TODO: Plug 'anuvyklack/pretty-fold.nvim'
 
+" Formatting:
+" ```````````
+" TODO: https://github.com/sbdchd/neoformat
+
 " Git:
 " ````
 " TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
@@ -336,10 +341,15 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/adelarsq/neovcs.vim
 " TODO: https://github.com/hotwatermorning/auto-git-diff
 " TODO: https://github.com/rhysd/git-messenger.vim
+" TODO: https://github.com/sindrets/diffview.nvim
 " TODO: https://github.com/sjl/splice.vim
 " TODO: https://github.com/tanvirtin/vgit.nvim
 " TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
 " TODO: https://github.com/tpope/vim-fugitive
+
+" Highlight:
+" ``````````
+" TODO: https://github.com/rktjmp/highlight-current-n.nvim
 
 " Icons:
 " ``````
@@ -367,7 +377,6 @@ Plug 'williamboman/nvim-lsp-installer'
 " TODO: https://github.com/kdheepak/lazygit.nvim
 " TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
 " TODO: https://github.com/liuchengxu/vista.vim
-" TODO: https://github.com/liuchengxu/vista.vim
 " TODO: https://github.com/lukas-reineke/format.nvim
 " TODO: https://github.com/lukas-reineke/lsp-format.nvim
 " TODO: https://github.com/matsui54/denops-signature_help
@@ -377,8 +386,8 @@ Plug 'williamboman/nvim-lsp-installer'
 " TODO: https://github.com/onsails/diaglist.nvim
 " TODO: https://github.com/onsails/lspkind.nvim
 " TODO: https://github.com/ray-x/lsp_signature.nvim
-" TODO: https://github.com/ray-x/lsp_signature.nvim
 " TODO: https://github.com/ray-x/navigator.lua
+" TODO: https://github.com/rmagatti/goto-preview
 " TODO: https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
 " TODO: https://github.com/weilbith/nvim-code-action-menu
 
@@ -390,6 +399,14 @@ Plug 'williamboman/nvim-lsp-installer'
 " Marks:
 " ``````
 " TODO: https://github.com/chentau/marks.nvim
+
+" Quickfix:
+" `````````
+" TODO: https://github.com/stevearc/qf_helper.nvim
+
+" Rooter:
+" ```````
+" TODO: https://github.com/shaeinst/penvim
 
 " Session Manager:
 " ````````````````
@@ -425,6 +442,10 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed TODO: Explore more
 " TODO: https://github.com/tamton-aquib/staline.nvim
 " TODO: https://github.com/windwp/windline.nvim
 
+" Syntax:
+" ```````
+" TODO: https://github.com/tbastos/vim-lua " Lua syntax
+
 " Tab Line:
 " `````````
 " TODO: https://github.com/alvarosevilla95/luatab.nvim
@@ -437,7 +458,6 @@ Plug 'beauwilliams/statusline.lua' " Slowness observed TODO: Explore more
 " Telescope:
 " ``````````
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/plenary.nvim' " NOTE: This should be in Utilities
 " TODO: https://github.com/LinArcX/telescope-command-palette.nvim
 " TODO: https://github.com/camspiers/snap
 " TODO: https://github.com/nvim-telescope/telescope-hop.nvim
@@ -462,6 +482,7 @@ Plug 'folke/todo-comments.nvim' " BUG: Can not handle multiple todos in same lin
 " Treesitter:
 " ```````````
 Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'romgrk/nvim-treesitter-context' " BUG: Its buggy in windows
 " TODO: Folding
 " TODO: Incremental selection
 " TODO: Indentation
@@ -475,11 +496,11 @@ Plug 'nvim-treesitter/nvim-treesitter'
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 " TODO: https://github.com/p00f/nvim-ts-rainbow
-" https://github.com/ziontee113/syntax-tree-surfer
 
 " TUI:
 " ````
 " TODO: https://github.com/MunifTanjim/nui.nvim
+" TODO: https://github.com/rcarriga/nvim-notify
 
 " Utilities:
 " ``````````
@@ -487,6 +508,7 @@ Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \"
 let g:registers_window_border = "rounded"
 " TODO: Check if height can be reduced
 
+Plug 'nvim-lua/plenary.nvim'
 " TODO: Plug 'booperlv/nvim-gomove'
 " TODO: Plug 'folke/trouble.nvim'
 " TODO: Plug 'folke/which-key.nvim'
@@ -576,6 +598,7 @@ let g:registers_window_border = "rounded"
 " TODO: https://github.com/prabirshrestha/vim-lsp
 " TODO: https://github.com/puremourning/vimspector
 " TODO: https://github.com/rafcamlet/nvim-luapad
+" TODO: https://github.com/renerocksai/telekasten.nvim
 " TODO: https://github.com/rhysd/conflict-marker.vim
 " TODO: https://github.com/rickhowe/spotdiff.vim
 " TODO: https://github.com/rktjmp/lush.nvim
@@ -591,7 +614,9 @@ let g:registers_window_border = "rounded"
 " TODO: https://github.com/stevearc/aerial.nvim
 " TODO: https://github.com/stevearc/dressing.nvim
 " TODO: https://github.com/stsewd/sphinx.nvim
+" TODO: https://github.com/sudormrfbin/cheatsheet.nvim
 " TODO: https://github.com/sunjon/stylish.nvim
+" TODO: https://github.com/svermeulen/vimpeccable
 " TODO: https://github.com/terryma/vim-multiple-cursors
 " TODO: https://github.com/thaerkh/vim-workspace
 " TODO: https://github.com/tjdevries/nlua.nvim
@@ -601,6 +626,7 @@ let g:registers_window_border = "rounded"
 " TODO: https://github.com/vim-scripts/ShowMarks
 " TODO: https://github.com/vscode-neovim/vscode-neovim
 " TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
+" TODO: https://github.com/wellle/context.vim
 " TODO: https://github.com/whiteinge/diffconflicts
 
 " Word Highlight:
@@ -655,7 +681,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/mrjones2014/smart-splits.nvim
 " TODO: https://github.com/ms-jpq/coq_nvim
 " TODO: https://github.com/nacro90/numb.nvim
-" TODO: https://github.com/nacro90/numb.nvim
 " TODO: https://github.com/nanotee/nvim-lua-guide
 " TODO: https://github.com/neovim/nvim.net
 " TODO: https://github.com/neovim/nvimdev.nvim
@@ -664,19 +689,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/nyngwang/NeoRoot.lua
 " TODO: https://github.com/paretje/nvim-man
 " TODO: https://github.com/rafcamlet/nvim-luapad
-" TODO: https://github.com/rcarriga/nvim-notify
-" TODO: https://github.com/renerocksai/telekasten.nvim
-" TODO: https://github.com/rktjmp/highlight-current-n.nvim
-" TODO: https://github.com/rmagatti/goto-preview
-" TODO: https://github.com/romgrk/nvim-treesitter-context
-" TODO: https://github.com/sakhnik/nvim-gdb
-" TODO: https://github.com/sbdchd/neoformat
-" TODO: https://github.com/shaeinst/penvim
-" TODO: https://github.com/sindrets/diffview.nvim
-" TODO: https://github.com/stevearc/qf_helper.nvim
-" TODO: https://github.com/sudormrfbin/cheatsheet.nvim
-" TODO: https://github.com/svermeulen/vimpeccable
-" TODO: https://github.com/tbastos/vim-lua
 call plug#end()
 
 " LUA Section:
