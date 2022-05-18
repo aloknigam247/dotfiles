@@ -723,7 +723,9 @@ local lspconfig = require 'lspconfig'
 require("nvim-lsp-installer").setup {}
 
 local on_attach = function(_, bufnr)
+  -- vim-illuminate
   require 'illuminate'.on_attach(_)
+
   local opts = { buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -733,8 +735,8 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
   vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
   vim.keymap.set('n', '<leader>wl', function()
-    vim.inspect(vim.lsp.buf.list_workspace_folders())
-  end, opts)
+        vim.inspect(vim.lsp.buf.list_workspace_folders())
+    end, opts)
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
@@ -750,7 +752,11 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+-- LSP Signature
 require "lsp_signature".setup({})
+
+
 -- Status Line
 -- ```````````
 local statusline = require('statusline')
