@@ -122,6 +122,11 @@ Plug 'windwp/nvim-autopairs'
 " TODO: vim automatically cursor goes to next line but how we don't know yet, how to do it
 
 " COC:
+" TODO: https://github.com/ms-jpq/coq_nvim
+" TODO: https://github.com/neoclide/coc-json
+" TODO: https://github.com/neoclide/coc-sources
+" TODO: https://github.com/neoclide/coc-yank
+" TODO: https://github.com/neoclide/coc.nvim
 " TODO: https://github.com/xiyaowong/coc-lightbulb-
 
 " Coloring:
@@ -509,7 +514,10 @@ Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \"
 let g:registers_window_border = "rounded"
 " TODO: Check if height can be reduced
 
+Plug '/nacro90/numb.nvim' " Peek number line while jumping
 Plug 'nvim-lua/plenary.nvim'
+
+"
 " TODO: Plug 'booperlv/nvim-gomove'
 " TODO: Plug 'folke/trouble.nvim'
 " TODO: Plug 'folke/which-key.nvim'
@@ -525,6 +533,8 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/AndrewRadev/switch.vim
 " TODO: https://github.com/AndrewRadev/tagalong.vim
 " TODO: https://github.com/D0n9X1n/quickrun.vim
+" TODO: https://github.com/michaelb/sniprun
+" TODO: https://github.com/mrjones2014/legendary.nvim
 " TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
@@ -587,10 +597,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/monkoose/matchparen.nvim
 " TODO: https://github.com/mrjones2014/legendary.nvim
 " TODO: https://github.com/narajaon/onestatus
-" TODO: https://github.com/neoclide/coc-json
-" TODO: https://github.com/neoclide/coc-sources
-" TODO: https://github.com/neoclide/coc-yank
-" TODO: https://github.com/neoclide/coc.nvim
 " TODO: https://github.com/nvim-orgmode/orgmode
 " TODO: https://github.com/nyngwang/NeoRoot.lua
 " TODO: https://github.com/p00f/nvim-ts-rainbow
@@ -623,6 +629,8 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/terryma/vim-multiple-cursors
 " TODO: https://github.com/thaerkh/vim-workspace
 " TODO: https://github.com/tjdevries/nlua.nvim
+" TODO: https://github.com/dbeniamine/cheat.sh-vim
+" TODO: https://github.com/gaborvecsei/cryptoprice.nvim
 " TODO: https://github.com/tyru/caw.vim
 " TODO: https://github.com/urbainvaes/vim-ripple
 " TODO: https://github.com/vim-scripts/Conque-GDB
@@ -651,10 +659,8 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/andymass/vim-matchup
 " TODO: https://github.com/anuvyklack/pretty-fold.nvim
 " TODO: https://github.com/bennypowers/nvim-regexplainer
-" TODO: https://github.com/dbeniamine/cheat.sh-vim
 " TODO: https://github.com/folke/lua-dev.nvim
 " TODO: https://github.com/frabjous/knap
-" TODO: https://github.com/gaborvecsei/cryptoprice.nvim
 " TODO: https://github.com/gaborvecsei/memento.nvim
 " TODO: https://github.com/gbprod/substitute.nvim
 " TODO: https://github.com/gbprod/yanky.nvim
@@ -678,12 +684,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/mcauley-penney/tidy.nvim
 " TODO: https://github.com/mfussenegger/nvim-lint
 " TODO: https://github.com/mfussenegger/nvim-treehopper
-" TODO: https://github.com/michaelb/sniprun
-" TODO: https://github.com/milisims/nvim-luaref
-" TODO: https://github.com/mrjones2014/legendary.nvim
-" TODO: https://github.com/mrjones2014/smart-splits.nvim
-" TODO: https://github.com/ms-jpq/coq_nvim
-" TODO: https://github.com/nacro90/numb.nvim
 call plug#end()
 
 " LUA Section:
