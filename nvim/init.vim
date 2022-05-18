@@ -66,34 +66,36 @@
 " UI Client:
 " ``````````
 " Active:
-" https://github.com/akiyosi/goneovim
-" NOTE:
-" TODO: config
-" - Struggling with nerdfonts
-" - Slow and Hangy
+" https://github.com/akiyosi/goneovim " {
+    " NOTE:
+    " TODO: config
+    " - Struggling with nerdfonts
+    " - Slow and Hangy
+" }
 
 " Tested:
-" https://github.com/yatli/fvim
-" if exists('g:fvim_loaded')
-"     FVimCursorSmoothMove v:true
-"     FVimCursorSmoothBlink v:true
-"     FVimCustomTitleBar v:true
-"     FVimFontLigature v:true
-"     FVimUIPopupMenu v:false
-"     FVimUIWildMenu v:false
-" endif
-" NOTE:
-" + Cursor animations are good
-" + Rounded corners
-" + Titile Bar is good
-" - Ligatures not working
-" - Nerd Font support is not good
-" - Slow loading of UI
-"
-" https://github.com/Lyude/neovim-gtk
-" NOTE:
-" + Simple nothing special
-" - Not good in different DPI
+" https://github.com/yatli/fvim " {
+    " if exists('g:fvim_loaded')
+    "     FVimCursorSmoothMove v:true
+    "     FVimCursorSmoothBlink v:true
+    "     FVimCustomTitleBar v:true
+    "     FVimFontLigature v:true
+    "     FVimUIPopupMenu v:false
+    "     FVimUIWildMenu v:false
+    " endif
+    " NOTE:
+    " + Cursor animations are good
+    " + Rounded corners
+    " + Titile Bar is good
+    " - Ligatures not working
+    " - Nerd Font support is not good
+    " - Slow loading of UI
+" }
+" https://github.com/Lyude/neovim-gtk " {
+    " NOTE:
+    " + Simple nothing special
+    " - Not good in different DPI
+" }
 
 " TODO: https://github.com/equalsraf/neovim-qt
 " TODO: https://github.com/hismailbulut/Neoray
@@ -146,7 +148,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'mhartington/oceanic-next'
+Plug 'EdenEast/nightfox.nvim'
 
 " Accepted:
 " << Light >>
@@ -164,9 +166,8 @@ Plug 'mhartington/oceanic-next'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
+" Plug 'mhartington/oceanic-next'
 
-" TODO: Plug 'ChristianChiarulli/nvcode-color-schemes.vim'
-" TODO: Plug 'EdenEast/nightfox.nvim'
 " TODO: Plug 'nekonako/xresources-nvim'
 " TODO: Plug 'olimorris/onedarkpro.nvim' " check light
 " TODO: Plug 'projekt0n/github-nvim-theme'
@@ -216,10 +217,11 @@ Plug 'mhartington/oceanic-next'
 
 " Commenting:
 " ```````````
-Plug 'gennaro-tedesco/nvim-commaround'
+Plug 'gennaro-tedesco/nvim-commaround' " {
     " TODO:
     " Fix toggle mapping to VSCode one
     " Add filetype for powershell
+" }
 " TODO: Plug 'b3nj5m1n/kommentary'
 " TODO: Plug 'numToStr/Comment.nvim'
 " TODO: Plug 'terrortylor/nvim-comment'
@@ -230,15 +232,15 @@ Plug 'gennaro-tedesco/nvim-commaround'
 
 " Completion:
 " ```````````
-Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/nvim-cmp' " {
+    " TODO: Commandline
+    " TODO: LSP - explore
+    " TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
+    " TODO: Path
+    " TODO: Snippets
+" }
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
-
-" TODO: Commandline
-" TODO: LSP - explore
-" TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
-" TODO: Path
-" TODO: Snippets
 " TODO: https://github.com/OmniSharp/omnisharp-vim
 " TODO: https://github.com/PasiBergman/cmp-nuget
 " TODO: https://github.com/PasiBergman/cmp-nuget " For Nuget
@@ -345,6 +347,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/TimUntersberger/neogit
 " TODO: https://github.com/adelarsq/neovcs.vim
 " TODO: https://github.com/hotwatermorning/auto-git-diff
+" TODO: https://github.com/kdheepak/lazygit.nvim
 " TODO: https://github.com/rhysd/git-messenger.vim
 " TODO: https://github.com/sindrets/diffview.nvim
 " TODO: https://github.com/sjl/splice.vim
@@ -363,34 +366,31 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " LSP:
 " ````
-Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig' " {
+    " TODO: Autocompletion
+    " TODO: Code Actions
+    " TODO: Linitng
+    " TODO: Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+    " TODO: Snippets
+    " TODO: UI Customization
+" }
 Plug 'williamboman/nvim-lsp-installer'
-" TODO: Autocompletion
-" TODO: Code Actions
-" TODO: Linitng
-" TODO: Plug 'filipdutescu/renamer.nvim', { 'branch': 'master' }
-" TODO: Snippets
-" TODO: UI Customization
+Plug 'liuchengxu/vista.vim' " {
+    " TODO: explore options
+" }
+Plug 'ray-x/lsp_signature.nvim' " {
+    " TODO: explore options
+" }
 " TODO: https://github.com/RishabhRD/nvim-lsputils
-" TODO: https://github.com/alexaandru/nvim-lspupdate
-" TODO: https://github.com/iamcco/vim-language-server
+" TODO: https://github.com/gfanto/fzf-lsp.nvim
 " TODO: https://github.com/j-hui/fidget.nvim
-" TODO: https://github.com/jesseduffield/lazygit
-" TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
-" TODO: https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
-" TODO: https://github.com/junnplus/nvim-lsp-setup
-" TODO: https://github.com/kdheepak/lazygit.nvim
 " TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
-" TODO: https://github.com/liuchengxu/vista.vim
 " TODO: https://github.com/lukas-reineke/format.nvim
-" TODO: https://github.com/lukas-reineke/lsp-format.nvim
-" TODO: https://github.com/matsui54/denops-signature_help
 " TODO: https://github.com/nanotee/nvim-lsp-basics
 " TODO: https://github.com/nvim-lua/lsp-status.nvim
 " TODO: https://github.com/ojroques/nvim-lspfuzzy
 " TODO: https://github.com/onsails/diaglist.nvim
 " TODO: https://github.com/onsails/lspkind.nvim
-" TODO: https://github.com/ray-x/lsp_signature.nvim
 " TODO: https://github.com/ray-x/navigator.lua
 " TODO: https://github.com/rmagatti/goto-preview
 " TODO: https://github.com/tami5/lspsaga.nvim --> https://github.com/glepnir/lspsaga.nvim
@@ -432,7 +432,10 @@ Plug 'williamboman/nvim-lsp-installer'
 
 " Status Line:
 " ````````````
-Plug 'beauwilliams/statusline.lua' " Slowness observed TODO: Explore more
+Plug 'beauwilliams/statusline.lua' " {
+    " BUG: Slowness observed
+    " TODO: Explore more
+" }
 " TODO: https://github.com/NTBBloodbath/galaxyline.nvim
 " TODO: https://github.com/akinsho/bufferline.nvim
 " TODO: https://github.com/b0o/incline.nvim
@@ -469,9 +472,11 @@ Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/nvim-telescope/telescope-hop.nvim
 " TODO: https://github.com/nvim-telescope/telescope-packer.nvim
 " TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
+" TODO: https://github.com/voldikss/vim-floaterm
 
 " Terminal:
 " `````````
+" TODO: https://github.com/akinsho/toggleterm.nvim
 " TODO: https://github.com/nikvdp/neomux
 " TODO: https://github.com/numToStr/FTerm.nvim
 " TODO: https://github.com/oberblastmeister/termwrapper.nvim
@@ -479,7 +484,10 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " Todo:
 " `````
-Plug 'folke/todo-comments.nvim' " BUG: Can not handle multiple todos in same line
+" Plug 'folke/todo-comments.nvim' " {
+    " BUG: Can not handle multiple todos in same line
+    " BUG: Makes vim scrolling slow
+" }
 " TODO: Quickfix
 " TODO: Search
 " TODO: Telescope
@@ -487,14 +495,17 @@ Plug 'folke/todo-comments.nvim' " BUG: Can not handle multiple todos in same lin
 
 " Treesitter:
 " ```````````
-Plug 'nvim-treesitter/nvim-treesitter'
-" Plug 'romgrk/nvim-treesitter-context' " BUG: Its buggy in windows
-" TODO: Folding
-" TODO: Incremental selection
-" TODO: Indentation
-" TODO: Wiki
+Plug 'nvim-treesitter/nvim-treesitter' " {
+    " TODO: Folding
+    " TODO: Incremental selection
+    " TODO: Indentation
+    " TODO: Wiki
+" }
+" Plug 'romgrk/nvim-treesitter-context' " {
+    " BUG: Its buggy in windows
+" }
+" TODO: https://github.com/RRethy/nvim-treesitter-endwise
 " TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
-" TODO: https://github.com/lewis6991/spellsitter.nvim
 " TODO: https://github.com/lewis6991/spellsitter.nvim
 " TODO: https://github.com/m-demare/hlargs.nvim
 " TODO: https://github.com/mfussenegger/nvim-treehopper
@@ -510,14 +521,12 @@ Plug 'nvim-treesitter/nvim-treesitter'
 
 " Utilities:
 " ``````````
-Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \"
-let g:registers_window_border = "rounded"
-" TODO: Check if height can be reduced
-
+Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \" {
+    let g:registers_window_border = "rounded"
+    " TODO: Check if height can be reduced
+" }
 Plug '/nacro90/numb.nvim' " Peek number line while jumping
 Plug 'nvim-lua/plenary.nvim'
-
-"
 " TODO: Plug 'booperlv/nvim-gomove'
 " TODO: Plug 'folke/trouble.nvim'
 " TODO: Plug 'folke/which-key.nvim'
@@ -545,7 +554,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/NTBBloodbath/rest.nvim
 " TODO: https://github.com/Pocco81/AbbrevMan.nvim
 " TODO: https://github.com/Pocco81/TrueZen.nvim
-" TODO: https://github.com/RRethy/nvim-treesitter-endwise
 " TODO: https://github.com/SmiteshP/nvim-gps
 " TODO: https://github.com/TaDaa/vimade
 " TODO: https://github.com/ThePrimeagen/harpoon
@@ -604,7 +612,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/pechorin/any-jump.vim
 " TODO: https://github.com/phaazon/hop.nvim
 " TODO: https://github.com/pianocomposer321/yabs.nvim
-" TODO: https://github.com/prabirshrestha/vim-lsp
 " TODO: https://github.com/puremourning/vimspector
 " TODO: https://github.com/rafcamlet/nvim-luapad
 " TODO: https://github.com/renerocksai/telekasten.nvim
@@ -639,14 +646,17 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
 " TODO: https://github.com/wellle/context.vim
 " TODO: https://github.com/whiteinge/diffconflicts
+" TODO: https://github.com/mfussenegger/nvim-lint
+" TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
 
 " Word Highlight:
 " ```````````````
-Plug 'RRethy/vim-illuminate'
-" BUG: highlight colors are not good
-hi def link LspReferenceText WildMenu
-hi def link LspReferenceWrite WildMenu
-hi def link LspReferenceRead WildMenu
+Plug 'RRethy/vim-illuminate' " {
+    " BUG: highlight colors are not good
+    hi def link LspReferenceText WildMenu
+    hi def link LspReferenceWrite WildMenu
+    hi def link LspReferenceRead WildMenu
+" }
 " TODO: Plug 'xiyaowong/nvim-cursorword'
 " TODO: Plug 'yamatsum/nvim-cursorline'
 " TODO: https://github.com/dominikduda/vim_current_word
@@ -665,7 +675,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/gbprod/substitute.nvim
 " TODO: https://github.com/gbprod/yanky.nvim
 " TODO: https://github.com/gennaro-tedesco/nvim-jqx
-" TODO: https://github.com/gfanto/fzf-lsp.nvim
 " TODO: https://github.com/ggandor/leap.nvim
 " TODO: https://github.com/henriquehbr/nvim-startup.lua " NOTE: startup time analyser
 " TODO: https://github.com/ibhagwan/fzf-lua
@@ -682,8 +691,6 @@ hi def link LspReferenceRead WildMenu
 " TODO: https://github.com/matbme/JABS.nvim
 " TODO: https://github.com/max397574/better-escape.nvim
 " TODO: https://github.com/mcauley-penney/tidy.nvim
-" TODO: https://github.com/mfussenegger/nvim-lint
-" TODO: https://github.com/mfussenegger/nvim-treehopper
 call plug#end()
 
 " LUA Section:
@@ -743,6 +750,7 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+require "lsp_signature".setup({})
 -- Status Line
 -- ```````````
 local statusline = require('statusline')
@@ -750,21 +758,21 @@ statusline.tabline = false
 
 -- Todo-comments
 -- `````````````
-require("todo-comments").setup {
-  keywords = {
-    FIX = {
-      icon = " ", -- icon used for the sign, and in search results
-      color = "error", -- can be a hex color, or a named color (see below)
-      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-      -- signs = false, -- configure signs for some keywords individually
-    },
-    TODO = { icon = " ", color = "info" },
-    HACK = { icon = " ", color = "warning" },
-    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-  }
-}
+-- require("todo-comments").setup {
+--   keywords = {
+--     FIX = {
+--       icon = " ", -- icon used for the sign, and in search results
+--       color = "error", -- can be a hex color, or a named color (see below)
+--       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+--       -- signs = false, -- configure signs for some keywords individually
+--     },
+--     TODO = { icon = " ", color = "info" },
+--     HACK = { icon = " ", color = "warning" },
+--     WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+--     PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+--     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+--   }
+-- }
 
 -- Treesitter
 -- ``````````
@@ -912,7 +920,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme OceanicNext         " Set colorscheme 
+colorscheme nightfox         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
