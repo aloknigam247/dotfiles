@@ -8,10 +8,6 @@
 
 " TODO: Fix keymappings for <C-right arrow> <C-left arror> word movements
 " TODO: Highlight only overlength chars
-" augroup vimrc_autocmds
-"   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-"   autocmd BufEnter * match OverLength /\%74v.*/
-" augroup END
 " TODO: blink on yank
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
 " TODO: set linebreak
@@ -315,12 +311,19 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 
+" Doc Generater:
+" ``````````````
+" TODO: https://github.com/danymat/neogen
+" TODO: https://github.com/kkoomen/vim-doge
+" TODO: https://github.com/nvim-treesitter/nvim-tree-docs
+
 " File Explorer:
 " ``````````````
 Plug 'nvim-neo-tree/neo-tree.nvim' " {
     " BUG: Does not replace netrw
     " BUG: fuzzy search does not seems to work
     " good for fit status tree
+    " shows lsp warnings in tree
 " }
 " TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
 " TODO: https://github.com/Shougo/defx.nvim
@@ -929,8 +932,8 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 colorscheme aurora         " Set colorscheme 
-highlight clear CursorLine   " No underline on text when cursorline is on
-highlight clear CursorLineNR " No underline on line numbers when cursorline is on
+" highlight clear CursorLine   " No underline on text when cursorline is on
+" highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
 
 
@@ -967,6 +970,7 @@ imap <C-Left> <C-\><C-O>B
 
 let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 
@@ -988,7 +992,11 @@ augroup illuminate_augroup
 augroup END
 
 " TODO:Highlight text if it goes out of scope
-" highlight ColorColumn ctermbg=magenta
-" call matchadd('ColorColumn', '\%81v', 100)
+    " highlight ColorColumn ctermbg=white
+    " call matchadd('ColorColumn', '\%8v', 100)
+augroup vimrc_autocmds
+  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+  autocmd BufEnter * match OverLength /\%101v/
+augroup END
 
 " vim: fdm=marker
