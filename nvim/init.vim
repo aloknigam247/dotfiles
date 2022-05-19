@@ -146,30 +146,31 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'EdenEast/nightfox.nvim'
+Plug 'ray-x/aurora'
 
 " Accepted:
 " << Light >>
+" Plug 'EdenEast/nightfox.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'marko-cerovac/material.nvim'
+" Plug 'olimorris/onedarkpro.nvim'
+" Plug 'projekt0n/github-nvim-theme'
 
 " << Dark >>
+" Plug 'EdenEast/nightfox.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'marko-cerovac/material.nvim'
-" Plug 'olimorris/onedarkpro.nvim'
 " Plug 'mhartington/oceanic-next'
+" Plug 'olimorris/onedarkpro.nvim'
+" Plug 'projekt0n/github-nvim-theme'
 
-" TODO: Plug 'nekonako/xresources-nvim'
-" TODO: Plug 'olimorris/onedarkpro.nvim' " check light
-" TODO: Plug 'projekt0n/github-nvim-theme'
-" TODO: Plug 'ray-x/aurora'
 " TODO: Plug 'rebelot/kanagawa.nvim'
 " TODO: Plug 'rktjmp/lush.nvim'
 " TODO: Plug 'rmehri01/onenord.nvim'
@@ -924,7 +925,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme nightfox         " Set colorscheme 
+colorscheme aurora         " Set colorscheme 
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
@@ -982,9 +983,6 @@ augroup illuminate_augroup
     autocmd!
     autocmd VimEnter * hi link illuminatedWord MatchParen
 augroup END
-
-" NOTE: Some tricks
-" ctrl-R and then register, puts the register value in the insert mode
 
 " TODO:Highlight text if it goes out of scope
 " highlight ColorColumn ctermbg=magenta
