@@ -65,7 +65,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "FiraCode Nerd Font Retina",
+                "face": "VictorMono NF",
                 "size": 11
             },
             "intenseTextStyle": "all",
