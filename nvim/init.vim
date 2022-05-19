@@ -67,8 +67,8 @@
 " ``````````
 " Active:
 " https://github.com/akiyosi/goneovim " {
-    " NOTE:
     " TODO: config
+    " + Supports extra symbols
     " - Struggling with nerdfonts
     " - Slow and Hangy
 " }
@@ -83,7 +83,6 @@
     "     FVimUIPopupMenu v:false
     "     FVimUIWildMenu v:false
     " endif
-    " NOTE:
     " + Cursor animations are good
     " + Rounded corners
     " + Titile Bar is good
@@ -92,7 +91,6 @@
     " - Slow loading of UI
 " }
 " https://github.com/Lyude/neovim-gtk " {
-    " NOTE:
     " + Simple nothing special
     " - Not good in different DPI
 " }
