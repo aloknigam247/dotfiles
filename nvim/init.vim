@@ -317,16 +317,14 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " File Explorer:
 " ``````````````
+Plug 'nvim-neo-tree/neo-tree.nvim'
 " TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
 " TODO: https://github.com/Shougo/defx.nvim
 " TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
 " TODO: https://github.com/elihunter173/dirbuf.nvim
 " TODO: https://github.com/kyazdani42/nvim-tree.lua
 " TODO: https://github.com/ms-jpq/chadtree
-" TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
-" TODO: https://github.com/tamago324/lir.nvim
 " TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-" TODO: https://github.com/zgpio/tree.nvim
 
 " Folding:
 " ````````
@@ -515,7 +513,6 @@ Plug 'nvim-treesitter/nvim-treesitter' " {
 
 " TUI:
 " ````
-" TODO: https://github.com/MunifTanjim/nui.nvim
 " TODO: https://github.com/rcarriga/nvim-notify
 
 " Utilities:
@@ -524,8 +521,10 @@ Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \" {
     let g:registers_window_border = "rounded"
     " TODO: Check if height can be reduced
 " }
-Plug '/nacro90/numb.nvim' " Peek number line while jumping
+Plug 'MunifTanjim/nui.nvim'
+" Plug 'nacro90/numb.nvim' " Peek number line while jumping
 Plug 'nvim-lua/plenary.nvim'
+
 " TODO: Plug 'booperlv/nvim-gomove'
 " TODO: Plug 'folke/trouble.nvim'
 " TODO: Plug 'folke/which-key.nvim'
