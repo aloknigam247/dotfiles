@@ -317,7 +317,11 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " File Explorer:
 " ``````````````
-Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim' " {
+    " BUG: Does not replace netrw
+    " BUG: fuzzy search does not seems to work
+    " good for fit status tree
+" }
 " TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
 " TODO: https://github.com/Shougo/defx.nvim
 " TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
