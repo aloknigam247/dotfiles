@@ -109,4 +109,4 @@ function prompt {
 }
 
 $readline = Get-PSReadLineOption
-Set-PSReadLineOption -Colors @{ Command = $PSStyle.Italic + $readline.CommandColor + $PSStyle.ItalicOff }
+Set-PSReadLineOption -Colors @{ Command = $PSStyle.Italic + $readline.CommandColor }
