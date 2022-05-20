@@ -143,7 +143,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'ray-x/aurora'
+Plug 'rebelot/kanagawa.nvim'
 
 " Accepted:
 " << Light >>
@@ -167,8 +167,8 @@ Plug 'ray-x/aurora'
 " Plug 'mhartington/oceanic-next'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
+" Plug 'ray-x/aurora'
 
-" TODO: Plug 'rebelot/kanagawa.nvim'
 " TODO: Plug 'rktjmp/lush.nvim'
 " TODO: Plug 'rmehri01/onenord.nvim'
 " TODO: Plug 'sainnhe/edge'
@@ -918,7 +918,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme aurora         " Set colorscheme 
+colorscheme kanagawa         " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
