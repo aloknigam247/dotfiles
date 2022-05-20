@@ -35,10 +35,8 @@ Start-Job {
 
 # Aliases
 # ```````
-Set-Alias -Name v 
-          -Value "C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe"
-Set-Alias -Name spslocal
-          -Value "d:\nugetcache\onedrive.deploymentagentsdk.9.0.288-g69360218f1\\loadsandbox.ps1"
+Set-Alias -Name v -Value "C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe"
+Set-Alias -Name spslocal -Value "d:\nugetcache\onedrive.deploymentagentsdk.9.0.288-g69360218f1\\loadsandbox.ps1"
 
 # Functions
 # `````````
