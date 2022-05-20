@@ -986,4 +986,6 @@ augroup vimrc_autocmds
   autocmd BufEnter * match OverLength /\%101v/
 augroup END
 
+set guifont=VictorMono_NF:h12
+
 " vim: fdm=marker
