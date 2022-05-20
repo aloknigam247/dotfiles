@@ -118,6 +118,7 @@ Plug 'windwp/nvim-autopairs'
 " TODO: vim automatically cursor goes to next line but how we don't know yet, how to do it
 
 " COC:
+" ````
 " TODO: https://github.com/ms-jpq/coq_nvim
 " TODO: https://github.com/neoclide/coc-json
 " TODO: https://github.com/neoclide/coc-sources
@@ -769,21 +770,7 @@ statusline.tabline = false
 
 -- Todo-comments
 -- `````````````
--- require("todo-comments").setup {
---   keywords = {
---     FIX = {
---       icon = " ", -- icon used for the sign, and in search results
---       color = "error", -- can be a hex color, or a named color (see below)
---       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
---       -- signs = false, -- configure signs for some keywords individually
---     },
---     TODO = { icon = " ", color = "info" },
---     HACK = { icon = " ", color = "warning" },
---     WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
---     PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
---     NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
---   }
--- }
+-- require("todo-comments").setup {}
 
 -- Treesitter
 -- ``````````
