@@ -33,6 +33,7 @@ Start-Job {
 
 } | Out-Null
 
+
 # Aliases
 # ```````
 # Set-Alias -Name v -Value "C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe"
@@ -106,6 +107,7 @@ Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocomp
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 
+
 # Prompt Styling
 # ``````````````
 function prompt {
@@ -114,3 +116,7 @@ function prompt {
 
 $readline = Get-PSReadLineOption
 Set-PSReadLineOption -Colors @{ Command = $PSStyle.Italic + $readline.CommandColor }
+
+
+# Settings
+$env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
