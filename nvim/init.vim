@@ -143,7 +143,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'rebelot/kanagawa.nvim'
+Plug 'rmehri01/onenord.nvim'
 
 " Accepted:
 " << Light >>
@@ -168,9 +168,8 @@ Plug 'rebelot/kanagawa.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'ray-x/aurora'
+" Plug 'rebelot/kanagawa.nvim'
 
-" TODO: Plug 'rktjmp/lush.nvim'
-" TODO: Plug 'rmehri01/onenord.nvim'
 " TODO: Plug 'sainnhe/edge'
 " TODO: Plug 'sainnhe/everforest'
 " TODO: Plug 'sainnhe/gruvbox-material'
@@ -544,6 +543,7 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: Plug 'jbyuki/venn.nvim'
 " TODO: Plug 'kevinhwang91/nvim-hlslens'
 " TODO: Plug 'kyazdani42/nvim-web-devicons'
+" TODO: Plug 'rktjmp/lush.nvim'
 " TODO: Plug 'wbthomason/packer.nvim'
 " TODO: https://github.com/AndrewRadev/switch.vim
 " TODO: https://github.com/AndrewRadev/tagalong.vim
@@ -896,7 +896,7 @@ set tabstop=4                         " Indent using spaces
 " ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=dark           " Select appropriate colors for dark or light
+set background=light           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -918,7 +918,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme kanagawa         " Set colorscheme 
+colorscheme onenord         " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
@@ -986,6 +986,6 @@ augroup vimrc_autocmds
   autocmd BufEnter * match OverLength /\%101v/
 augroup END
 
-set guifont=VictorMono_NF:h12
+set guifont=VictorMono_NF:h11
 
 " vim: fdm=marker
