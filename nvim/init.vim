@@ -142,8 +142,8 @@ Plug 'windwp/nvim-autopairs'
 " ````````````
 " Current:
 " << Light >>
+Plug 'jsit/toast.vim'
 " << Dark >>
-Plug 'rmehri01/onenord.nvim'
 
 " Accepted:
 " << Light >>
@@ -155,6 +155,7 @@ Plug 'rmehri01/onenord.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
+" Plug 'rmehri01/onenord.nvim'
 
 " << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -169,13 +170,29 @@ Plug 'rmehri01/onenord.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
+" Plug 'rmehri01/onenord.nvim'
 
+" TODO: Plug 'Yagua/nebulous.nvim'
+" TODO: Plug 'cpea2506/one_monokai.nvim'
+" TODO: Plug 'dracula/vim'
+" TODO: Plug 'dylanaraps/wal.vim'
+" TODO: Plug 'fenetikm/falcon'
+" TODO: Plug 'katawful/kat.nvim'
+" TODO: Plug 'kvrohit/rasmus.nvim'
+" TODO: Plug 'ldelossa/vimdark'
+" TODO: Plug 'marko-cerovac/material.nvim'
+" TODO: Plug 'mcchrish/zenbones.nvim'
+" TODO: Plug 'mrjones2014/lighthaus.nvim'
+" TODO: Plug 'ntk148v/vim-horizon'
+" TODO: Plug 'rafalbromirski/vim-aurora'
+" TODO: Plug 'rafamadriz/neon'
 " TODO: Plug 'sainnhe/edge'
 " TODO: Plug 'sainnhe/everforest'
 " TODO: Plug 'sainnhe/gruvbox-material'
 " TODO: Plug 'sainnhe/sonokai'
 " TODO: Plug 'savq/melange'
 " TODO: Plug 'shaunsingh/moonlight.nvim'
+" TODO: Plug 'sickill/vim-monokai'
 " TODO: Plug 'simrat39/symbols-outline.nvim'
 " TODO: Plug 'stevearc/aerial.nvim'
 " TODO: Plug 'tanvirtin/monokai.nvim'
@@ -184,31 +201,10 @@ Plug 'rmehri01/onenord.nvim'
 " TODO: Plug 'tjdevries/colorbuddy.vim'
 " TODO: Plug 'tjdevries/gruvbuddy.nvim'
 " TODO: Plug 'tomasiser/vim-code-dark'
+" TODO: Plug 'wuelnerdotexe/vim-enfocado'
 " TODO: Plug 'yashguptaz/calvera-dark.nvim'
-" TODO: https://github.com/AlphaTechnolog/pywal.nvim
-" TODO: https://github.com/EdenEast/nightfox.nvim
-" TODO: https://github.com/Mangeshrex/uwu.vim
-" TODO: https://github.com/PHSix/nvim-hybrid
-" TODO: https://github.com/Yagua/nebulous.nvim
-" TODO: https://github.com/cpea2506/one_monokai.nvim
-" TODO: https://github.com/dracula/vim
-" TODO: https://github.com/dylanaraps/wal.vim
-" TODO: https://github.com/fenetikm/falcon
-" TODO: https://github.com/jsit/toast.vim
-" TODO: https://github.com/katawful/kat.nvim
-" TODO: https://github.com/kvrohit/rasmus.nvim
-" TODO: https://github.com/ldelossa/vimdark
-" TODO: https://github.com/marko-cerovac/material.nvim
-" TODO: https://github.com/mcchrish/zenbones.nvim
-" TODO: https://github.com/mrjones2014/lighthaus.nvim
-" TODO: https://github.com/ntk148v/vim-horizon
-" TODO: https://github.com/rafalbromirski/vim-aurora
-" TODO: https://github.com/rafamadriz/neon
-" TODO: https://github.com/rebelot/kanagawa.nvim
-" TODO: https://github.com/sainnhe/everforest
-" TODO: https://github.com/sickill/vim-monokai
-" TODO: https://github.com/wuelnerdotexe/vim-enfocado
-" TODO: https://github.com/yashguptaz/calvera-dark.nvim
+
+" Plug 'AlphaTechnolog/pywal.nvim'
 
 " Commenting:
 " ```````````
@@ -851,7 +847,6 @@ require('nvim-treesitter.configs').setup {
 ---- windline
 --require('wlsample.airline_anim')
 --require('gitsigns').setup()
---
 EOLUA
 
 
@@ -918,7 +913,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme onenord         " Set colorscheme 
+colorscheme toast            " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
