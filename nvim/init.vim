@@ -524,12 +524,13 @@ Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \" {
     let g:registers_window_border = "rounded"
     " TODO: Check if height can be reduced
 " }
-Plug 'MunifTanjim/nui.nvim'
 " Plug 'nacro90/numb.nvim' " Peek number line while jumping
+Plug 'MunifTanjim/nui.nvim'
+Plug 'folke/trouble.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 
 " TODO: Plug 'booperlv/nvim-gomove'
-" TODO: Plug 'folke/trouble.nvim'
 " TODO: Plug 'folke/which-key.nvim'
 " TODO: Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 " TODO: Plug 'gennaro-tedesco/nvim-peekup'
@@ -538,7 +539,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: Plug 'jbyuki/one-small-step-for-vimkind'
 " TODO: Plug 'jbyuki/venn.nvim'
 " TODO: Plug 'kevinhwang91/nvim-hlslens'
-" TODO: Plug 'kyazdani42/nvim-web-devicons'
 " TODO: Plug 'rktjmp/lush.nvim'
 " TODO: Plug 'wbthomason/packer.nvim'
 " TODO: https://github.com/AndrewRadev/switch.vim
