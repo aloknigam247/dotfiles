@@ -142,7 +142,7 @@ Plug 'windwp/nvim-autopairs'
 " ````````````
 " Current:
 " << Light >>
-Plug 'jsit/toast.vim'
+Plug 'marko-cerovac/material.nvim'
 " << Dark >>
 
 " Accepted:
@@ -152,10 +152,12 @@ Plug 'jsit/toast.vim'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
+" Plug 'jsit/toast.vim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rmehri01/onenord.nvim'
+" Plug 'katawful/kat.nvim'
 
 " << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -164,6 +166,7 @@ Plug 'jsit/toast.vim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'glepnir/zephyr-nvim'
+" Plug 'jsit/toast.vim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'olimorris/onedarkpro.nvim'
@@ -171,16 +174,14 @@ Plug 'jsit/toast.vim'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
+" Plug 'katawful/kat.nvim'
 
 " TODO: Plug 'Yagua/nebulous.nvim'
 " TODO: Plug 'cpea2506/one_monokai.nvim'
 " TODO: Plug 'dracula/vim'
 " TODO: Plug 'dylanaraps/wal.vim'
 " TODO: Plug 'fenetikm/falcon'
-" TODO: Plug 'katawful/kat.nvim'
-" TODO: Plug 'kvrohit/rasmus.nvim'
 " TODO: Plug 'ldelossa/vimdark'
-" TODO: Plug 'marko-cerovac/material.nvim'
 " TODO: Plug 'mcchrish/zenbones.nvim'
 " TODO: Plug 'mrjones2014/lighthaus.nvim'
 " TODO: Plug 'ntk148v/vim-horizon'
@@ -913,7 +914,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme toast            " Set colorscheme 
+colorscheme material            " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
