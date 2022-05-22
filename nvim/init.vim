@@ -67,6 +67,8 @@
     " + Supports extra symbols
     " - Struggling with nerdfonts
     " - Slow and Hangy
+    " - Left out glyph in UI
+    " - Cursor shifts back and forward in insert mode
 " }
 
 " Tested:
@@ -235,7 +237,6 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/OmniSharp/omnisharp-vim
 " TODO: https://github.com/PasiBergman/cmp-nuget
-" TODO: https://github.com/PasiBergman/cmp-nuget " For Nuget
 " TODO: https://github.com/Shougo/deoplete.nvim
 " TODO: https://github.com/davidsierradz/cmp-conventionalcommits
 " TODO: https://github.com/dmitmel/cmp-cmdline-history
@@ -252,13 +253,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/noib3/nvim-compleet
 " TODO: https://github.com/nxvu699134/vn-night.nvim
 " TODO: https://github.com/octaltree/cmp-look
-" TODO: https://github.com/octaltree/cmp-look
 " TODO: https://github.com/rambhosale/cmp-bootstrap.nvim
 " TODO: https://github.com/ray-x/cmp-treesitter
 " TODO: https://github.com/tzachar/cmp-fuzzy-buffer
-" TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 " TODO: https://github.com/tzachar/cmp-tabnine
-" TODO: https://github.com/uga-rosa/cmp-dictionary
 " TODO: https://github.com/uga-rosa/cmp-dictionary
 " TODO: https://github.com/vappolinario/cmp-clippy
 " TODO: https://github.com/voldikss/coc-browser
@@ -777,7 +775,6 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false
     }
 }
-
 
 --require('aerial').setup({})
 --local dap = require"dap"
