@@ -126,7 +126,7 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "colorScheme": "Material",
+                "colorScheme": "Material Lighter",
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
@@ -229,6 +229,29 @@
             "selectionBackground": "#FFFFFF",
             "white": "#FFFFFF",
             "yellow": "#FFCB6B"
+        },
+        {
+            "background": "#FAFAFA",
+            "black": "#000000",
+            "blue": "#6182B8",
+            "brightBlack": "#90A4AE",
+            "brightBlue": "#6182B8",
+            "brightCyan": "#39ADB5",
+            "brightGreen": "#91B859",
+            "brightPurple": "#9C3EDA",
+            "brightRed": "#E53935",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#E2931D",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#39ADB5",
+            "foreground": "#90A4AE",
+            "green": "#91B859",
+            "name": "Material Lighter",
+            "purple": "#9C3EDA",
+            "red": "#E53935",
+            "selectionBackground": "#FFFFFF",
+            "white": "#FFFFFF",
+            "yellow": "#E2931D"
         },
         {
             "background": "#272822",
@@ -528,27 +551,6 @@
             "selectionBackground": "#FFFFFF",
             "white": "#C0C0C0",
             "yellow": "#808000"
-        },
-        {
-            "name": "Material Lighter",
-            "background": "#fafafa",
-            "foreground": "#90a4ae",
-            "black": "#000000",
-            "blue": "#6182b8",
-            "brightBlack": "#90a4ae",
-            "brightBlue": "#6182b8",
-            "brightCyan": "#39adb5",
-            "brightGreen": "#91b859",
-            "brightPurple": "#9c3eda",
-            "brightRed": "#e53935",
-            "brightWhite": "#ffffff",
-            "brightYellow": "#e2931d",
-            "cyan": "#39adb5",
-            "green": "#91b859",
-            "purple": "#9c3eda",
-            "red": "#e53935",
-            "white": "#ffffff",
-            "yellow": "#e2931d"
         }
     ],
     "showTabsInTitlebar": true,
