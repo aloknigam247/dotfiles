@@ -142,8 +142,8 @@ Plug 'windwp/nvim-autopairs'
 " ````````````
 " Current:
 " << Light >>
-Plug 'marko-cerovac/material.nvim'
 " << Dark >>
+Plug 'marko-cerovac/material.nvim'
 
 " Accepted:
 " << Light >>
