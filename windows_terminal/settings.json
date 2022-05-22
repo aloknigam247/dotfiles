@@ -528,6 +528,27 @@
             "selectionBackground": "#FFFFFF",
             "white": "#C0C0C0",
             "yellow": "#808000"
+        },
+        {
+            "name": "Material Lighter",
+            "background": "#fafafa",
+            "foreground": "#90a4ae",
+            "black": "#000000",
+            "blue": "#6182b8",
+            "brightBlack": "#90a4ae",
+            "brightBlue": "#6182b8",
+            "brightCyan": "#39adb5",
+            "brightGreen": "#91b859",
+            "brightPurple": "#9c3eda",
+            "brightRed": "#e53935",
+            "brightWhite": "#ffffff",
+            "brightYellow": "#e2931d",
+            "cyan": "#39adb5",
+            "green": "#91b859",
+            "purple": "#9c3eda",
+            "red": "#e53935",
+            "white": "#ffffff",
+            "yellow": "#e2931d"
         }
     ],
     "showTabsInTitlebar": true,
