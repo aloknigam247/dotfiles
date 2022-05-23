@@ -63,6 +63,7 @@ function vpi {
 
 # Msys2 functions
 Remove-Alias ls # remove default alias for ls
+
 function grep {
     C:\msys64\usr\bin\grep --color=auto -En $args
 }
@@ -87,8 +88,8 @@ function ls {
     C:\msys64\usr\bin\ls.exe -F --color=auto $args
 }
 
-function pacman {
-    C:\msys64\usr\bin\pacman.exe $args
+function rm {
+    C:\msys64\usr\bin\rm.exe -rf $args
 }
 
 function tree {
@@ -98,6 +99,8 @@ function tree {
 function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
+
+New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 
 
 # Autocompletion
