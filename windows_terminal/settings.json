@@ -111,7 +111,7 @@
                 "elevate": true,
                 "guid": "{e8108736-25ad-4830-9477-5aa7377915de}",
                 "hidden": false,
-                "icon": "D:\\spo\\src\\otools\\bin\\SPOEnlistmentCMD.ico",
+                "icon": "D:\\spocore\\src\\otools\\bin\\SPOEnlistmentPS.ico",
                 "name": "SPO PS",
                 "startingDirectory": "%USERPROFILE%"
             },
@@ -121,7 +121,7 @@
                 "elevate": true,
                 "guid": "{bc45fbbd-e6ab-4b75-ad50-ecec8e3d502e}",
                 "hidden": false,
-                "icon": "D:\\spo\\src\\otools\\bin\\SPOEnlistmentCMD.ico",
+                "icon": "D:\\spocore\\src\\otools\\bin\\SPOEnlistmentCMD.ico",
                 "name": "SPO",
                 "startingDirectory": "%USERPROFILE%"
             },
