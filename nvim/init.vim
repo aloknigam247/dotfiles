@@ -69,6 +69,7 @@
     " - Slow and Hangy
     " - Left out glyph in UI
     " - Cursor shifts back and forward in insert mode
+    " X not good to use
 " }
 
 " Tested:
