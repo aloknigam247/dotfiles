@@ -228,6 +228,7 @@ Plug 'gennaro-tedesco/nvim-commaround' " {
 " ```````````
 Plug 'hrsh7th/nvim-cmp' " {
     " TODO: Commandline
+    " TODO: Hover doc
     " TODO: LSP - explore
     " TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
     " TODO: Path
