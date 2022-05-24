@@ -696,7 +696,6 @@ Plug 'RRethy/vim-illuminate' " {
 " TODO: https://github.com/max397574/better-escape.nvim
 " TODO: https://github.com/mcauley-penney/tidy.nvim
 call plug#end()
-lua require"gitlinker".setup()
 
 " LUA Section:
 " ````````````
