@@ -341,6 +341,7 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Git:
 " ````
+Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
 " TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
 " TODO: Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " TODO: Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
@@ -695,6 +696,7 @@ Plug 'RRethy/vim-illuminate' " {
 " TODO: https://github.com/max397574/better-escape.nvim
 " TODO: https://github.com/mcauley-penney/tidy.nvim
 call plug#end()
+lua require"gitlinker".setup()
 
 " LUA Section:
 " ````````````
