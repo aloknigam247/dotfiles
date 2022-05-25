@@ -62,6 +62,8 @@
 " UI Client:
 " ``````````
 " Active:
+" TODO: https://github.com/equalsraf/neovim-qt
+" Tested:
 " https://github.com/akiyosi/goneovim " {
     " TODO: config
     " + Supports extra symbols
@@ -72,7 +74,6 @@
     " X not good to use
 " }
 
-" Tested:
 " https://github.com/yatli/fvim " {
     " if exists('g:fvim_loaded')
     "     FVimCursorSmoothMove v:true
@@ -92,9 +93,9 @@
 " https://github.com/Lyude/neovim-gtk " {
     " + Simple nothing special
     " - Not good in different DPI
+    " X not good to use
 " }
 
-" TODO: https://github.com/equalsraf/neovim-qt
 " TODO: https://github.com/hismailbulut/Neoray
 " TODO: https://github.com/jeanguyomarch/eovim
 " TODO: https://github.com/neovide/neovide
@@ -131,8 +132,7 @@ Plug 'windwp/nvim-autopairs'
 
 " Coloring:
 " `````````
-" TODO: https://github.com/Pocco81/HighStr.nvim
-" TODO: https://github.com/RRethy/vim-hexokinase
+" TODO: Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
 " TODO: https://github.com/azabiong/vim-highlighter
 " TODO: https://github.com/lilydjwg/colorizer
 " TODO: https://github.com/neoclide/coc-highlight
@@ -146,7 +146,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'marko-cerovac/material.nvim'
+Plug 'Yagua/nebulous.nvim'
 
 " Accepted:
 " << Light >>
@@ -161,6 +161,7 @@ Plug 'marko-cerovac/material.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rmehri01/onenord.nvim'
 " Plug 'katawful/kat.nvim'
+" Plug 'marko-cerovac/material.nvim'
 
 " << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -178,8 +179,8 @@ Plug 'marko-cerovac/material.nvim'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
 " Plug 'katawful/kat.nvim'
+" Plug 'marko-cerovac/material.nvim'
 
-" TODO: Plug 'Yagua/nebulous.nvim'
 " TODO: Plug 'cpea2506/one_monokai.nvim'
 " TODO: Plug 'dracula/vim'
 " TODO: Plug 'dylanaraps/wal.vim'
@@ -266,6 +267,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Configuration:
 " ``````````````
+" {{{
 " TODO: https://github.com/AstroNvim/AstroNvim
 " TODO: https://github.com/Avimitin/nvim
 " TODO: https://github.com/CanKolay3499/CNvim
@@ -297,6 +299,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/ray-x/dotfiles
 " TODO: https://github.com/ray-x/go.nvim
 " TODO: https://github.com/shaeinst/roshnivim
+" }}}
 
 " Debugger:
 " `````````
@@ -779,6 +782,8 @@ require('nvim-treesitter.configs').setup {
     }
 }
 
+require("nebulous").setup { variant = "night" }
+
 --require('aerial').setup({})
 --local dap = require"dap"
 --dap.configurations.lua = { 
@@ -914,7 +919,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme material            " Set colorscheme 
+colorscheme nebulous            " Set colorscheme 
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}

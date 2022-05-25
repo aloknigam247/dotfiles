@@ -50,7 +50,8 @@ function evrc {
 }
 
 function v {
-    C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe --geometry=1200x800 $args
+    # C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe --geometry=1200x800 $args
+    C:\tools\neovim\nvim-win64\bin\nvim-qt.exe $args
 }
 
 function vpcl {
