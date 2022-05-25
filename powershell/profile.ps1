@@ -115,7 +115,7 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle Lis
 # Prompt Styling
 # ``````````````
 function prompt {
-    ' ' + $(get-location) + ' > '
+    '`e[0;105m' + ' ' + $(get-location) + ' > '
 }
 
 $readline = Get-PSReadLineOption
