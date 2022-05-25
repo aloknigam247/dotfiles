@@ -14,9 +14,9 @@ Start-Job {
     $git_status = git status --short
 
     if ($git_status) {
-        $dt = Get-Date -Format "dd-MM-yyyy"
+        $dt = Get-Date
         git add .
-        git commit -m "$dt updates"
+        git commit -m "Updated at $d"
         git push
 
         # Send ballon notification
