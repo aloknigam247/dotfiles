@@ -14,9 +14,9 @@ Start-Job {
     $git_status = git status --short
 
     if ($git_status) {
-        $dt = Get-Date -Format "dd-MM-yyyy"
+        $dt = Get-Date
         git add .
-        git commit -m "$dt updates"
+        git commit -m "Updated at $dt"
         git push
 
         # Send ballon notification
@@ -50,7 +50,8 @@ function evrc {
 }
 
 function v {
-    C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe --geometry=1200x800 $args
+    # C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe --geometry=1200x800 $args
+    C:\tools\neovim\nvim-win64\bin\nvim-qt.exe $args
 }
 
 function vpcl {
@@ -114,7 +115,7 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle Lis
 # Prompt Styling
 # ``````````````
 function prompt {
-    ' ' + $(get-location) + ' > '
+    "`e[48;5;27m " + $(get-location) + "`e[0m "
 }
 
 $readline = Get-PSReadLineOption
