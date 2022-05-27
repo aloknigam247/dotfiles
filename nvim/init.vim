@@ -223,6 +223,9 @@ Plug 'gennaro-tedesco/nvim-commaround' " {
 " TODO: Plug 'terrortylor/nvim-comment'
 " TODO: Plug 'winston0410/commented.nvim'
 " TODO: https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+" TODO: https://github.com/danymat/neogen
+" TODO: https://github.com/gennaro-tedesco/nvim-commaround
+" TODO: https://github.com/s1n7ax/nvim-comment-frame
 " TODO: https://github.com/tpope/vim-commentary
 " TODO: https://github.com/winston0410/commented.nvim
 
@@ -298,10 +301,13 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/lalitmee/cobalt2.nvim
 " TODO: https://github.com/mnabila/nvimrc
 " TODO: https://github.com/nvim-lua/kickstart.nvim
+" TODO: https://github.com/nvoid-lua/nvoid
 " TODO: https://github.com/optimizacija/neovim-config
 " TODO: https://github.com/ray-x/dotfiles
 " TODO: https://github.com/ray-x/go.nvim
 " TODO: https://github.com/shaeinst/roshnivim
+" TODO: https://github.com/shaunsingh/nyoom.nvim
+" TODO: https://github.com/vi-tality/neovitality
 " }}}
 
 " Debugger:
@@ -330,10 +336,16 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " }
 " TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
 " TODO: https://github.com/Shougo/defx.nvim
+" TODO: https://github.com/TimUntersberger/neofs
 " TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
+" TODO: https://github.com/Xuyuanp/yanil
 " TODO: https://github.com/elihunter173/dirbuf.nvim
+" TODO: https://github.com/is0n/fm-nvim
+" TODO: https://github.com/kevinhwang91/rnvimr
 " TODO: https://github.com/kyazdani42/nvim-tree.lua
 " TODO: https://github.com/ms-jpq/chadtree
+" TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
+" TODO: https://github.com/tamago324/lir.nvim
 " TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
 
 " Folding:
@@ -347,7 +359,6 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Git:
 " ````
-Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
 " TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
 " TODO: Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " TODO: Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
@@ -362,6 +373,7 @@ Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
 " TODO: https://github.com/tanvirtin/vgit.nvim
 " TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
 " TODO: https://github.com/tpope/vim-fugitive
+" TODO: https://github.com/tveskag/nvim-blame-line
 
 " Highlight:
 " ``````````
@@ -431,6 +443,8 @@ Plug 'ray-x/lsp_signature.nvim' " {
 " Quickfix:
 " `````````
 " TODO: https://github.com/stevearc/qf_helper.nvim
+" https://github.com/kevinhwang91/nvim-bqf
+"
 
 " Rooter:
 " ```````
@@ -442,6 +456,7 @@ Plug 'ray-x/lsp_signature.nvim' " {
 " TODO: https://github.com/Shatur/neovim-session-manager
 " TODO: https://github.com/olimorris/persisted.nvim
 " TODO: https://github.com/rmagatti/auto-session
+" TODO: https://github.com/jedrzejboczar/possession.nvim
 
 " Snippets:
 " `````````
@@ -564,6 +579,7 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/AndrewRadev/switch.vim
 " TODO: https://github.com/AndrewRadev/tagalong.vim
 " TODO: https://github.com/D0n9X1n/quickrun.vim
+" TODO: https://github.com/David-Kunz/jester
 " TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
@@ -572,7 +588,7 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/Iron-E/vim-libmodal
 " TODO: https://github.com/LoricAndre/fzterm.nvim
 " TODO: https://github.com/MattesGroeger/vim-bookmarks
-" TODO: https://github.com/jbyuki/carrot.nvim
+" TODO: https://github.com/NFrid/due.nvim
 " TODO: https://github.com/NTBBloodbath/rest.nvim
 " TODO: https://github.com/Pocco81/AbbrevMan.nvim
 " TODO: https://github.com/Pocco81/TrueZen.nvim
@@ -595,6 +611,7 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/bfredl/nvim-luadev
 " TODO: https://github.com/bignimbus/you-are-here.vim
 " TODO: https://github.com/booperlv/nvim-gomove
+" TODO: https://github.com/chipsenkbeil/distant.nvim
 " TODO: https://github.com/chrisbra/NrrwRgn
 " TODO: https://github.com/coc-extensions/coc-powershell
 " TODO: https://github.com/code-biscuits/nvim-biscuits
@@ -615,6 +632,7 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/ggandor/leap.nvim
 " TODO: https://github.com/glacambre/firenvim
 " TODO: https://github.com/glacambre/firenvim, { 'do': { _ -> firenvim#install(0) } }
+" TODO: https://github.com/glepnir/indent-guides.nvim
 " TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
 " TODO: https://github.com/haya14busa/is.vim
 " TODO: https://github.com/haya14busa/vim-asterisk
@@ -624,9 +642,11 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/is0n/jaq-nvim
 " TODO: https://github.com/jakewvincent/mkdnflow.nvim
 " TODO: https://github.com/jamestthompson3/nvim-remote-containers
+" TODO: https://github.com/jbyuki/carrot.nvim
 " TODO: https://github.com/jbyuki/instant.nvim
 " TODO: https://github.com/jbyuki/one-small-step-for-vimkind
 " TODO: https://github.com/jbyuki/venn.nvim
+" TODO: https://github.com/jedrzejboczar/toggletasks.nvim
 " TODO: https://github.com/jpalardy/vim-slime
 " TODO: https://github.com/jsfaint/gen_tags.vim
 " TODO: https://github.com/jubnzv/mdeval.nvim
@@ -638,9 +658,11 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/kassio/neoterm
 " TODO: https://github.com/kevinhwang91/nvim-bqf
 " TODO: https://github.com/kevinhwang91/nvim-hlslens
+" TODO: https://github.com/klen/nvim-test
 " TODO: https://github.com/kshenoy/vim-signature
 " TODO: https://github.com/lambdalisue/glyph-palette.vim
 " TODO: https://github.com/lambdalisue/nerdfont.vim
+" TODO: https://github.com/ldelossa/gh.nvim
 " TODO: https://github.com/lifepillar/vim-colortemplate
 " TODO: https://github.com/lifepillar/vim-mucomplete
 " TODO: https://github.com/liuchengxu/vim-clap
@@ -659,6 +681,7 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/monkoose/matchparen.nvim
 " TODO: https://github.com/mrjones2014/legendary.nvim
 " TODO: https://github.com/narajaon/onestatus
+" TODO: https://github.com/nvim-neorg/neorg
 " TODO: https://github.com/nvim-orgmode/orgmode
 " TODO: https://github.com/nyngwang/NeoRoot.lua
 " TODO: https://github.com/p00f/nvim-ts-rainbow
@@ -668,8 +691,10 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/phaazon/hop.nvim
 " TODO: https://github.com/pianocomposer321/yabs.nvim
 " TODO: https://github.com/puremourning/vimspector
+" TODO: https://github.com/pwntester/octo.nvim
 " TODO: https://github.com/rafcamlet/nvim-luapad
 " TODO: https://github.com/ranjithshegde/orgWiki.nvim
+" TODO: https://github.com/rcarriga/vim-ultest
 " TODO: https://github.com/renerocksai/telekasten.nvim
 " TODO: https://github.com/rhysd/conflict-marker.vim
 " TODO: https://github.com/rickhowe/spotdiff.vim
@@ -677,7 +702,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/romainl/vim-cool
 " TODO: https://github.com/sbdchd/neoformat
 " TODO: https://github.com/sheerun/vim-polyglot
-" TODO: https://github.com/nvim-neorg/neorg
 " TODO: https://github.com/sidebar-nvim/sidebar.nvim
 " TODO: https://github.com/sillybun/vim-repl
 " TODO: https://github.com/simnalamburt/vim-mundo
@@ -691,7 +715,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/svermeulen/vimpeccable
 " TODO: https://github.com/terryma/vim-multiple-cursors
 " TODO: https://github.com/thaerkh/vim-workspace
-" TODO: https://github.com/NFrid/due.nvim
 " TODO: https://github.com/tjdevries/nlua.nvim
 " TODO: https://github.com/tyru/caw.vim
 " TODO: https://github.com/urbainvaes/vim-ripple
