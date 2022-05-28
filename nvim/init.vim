@@ -252,12 +252,18 @@ Plug 'hrsh7th/nvim-cmp' " {
 " }
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-cmdline' " {
+"   BUG: / completion for buffer is not working
+"   TODO: Completion selection is not working
+" }
+" Plug 'dmitmel/cmp-cmdline-history' " {
+"   TODO: how to select completion
+" }
 " TODO: https://github.com/David-Kunz/cmp-npm
 " TODO: https://github.com/OmniSharp/omnisharp-vim
 " TODO: https://github.com/PasiBergman/cmp-nuget
 " TODO: https://github.com/Shougo/deoplete.nvim
 " TODO: https://github.com/davidsierradz/cmp-conventionalcommits
-" TODO: https://github.com/dmitmel/cmp-cmdline-history
 " TODO: https://github.com/f3fora/cmp-nuspell
 " TODO: https://github.com/f3fora/cmp-spell
 " TODO: https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
@@ -320,6 +326,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Debugger:
 " `````````
+" {{{
 " TODO: Plug 'mfussenegger/nvim-dap'
 " TODO: https://github.com/Pocco81/DAPInstall.nvim
 " TODO: https://github.com/Pocco81/dap-buddy.nvim
@@ -327,6 +334,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/rcarriga/nvim-dap-ui
 " TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
+" }}}
 
 " Doc Generater:
 " ``````````````
@@ -358,12 +366,16 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Folding:
 " ````````
+" {{{
 " TODO: Plug 'anuvyklack/nvim-keymap-amend'
 " TODO: Plug 'anuvyklack/pretty-fold.nvim'
+" }}}
 
 " Formatting:
 " ```````````
+" {{{
 " TODO: https://github.com/sbdchd/neoformat
+" }}}
 
 " Git:
 " ````
@@ -440,8 +452,11 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Mapping:
 " ````````
+" {{{
+" TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/LionC/nest.nvim
 " TODO: https://github.com/b0o/mapx.nvim
+" }}}
 
 " Marks:
 " ``````
@@ -450,14 +465,17 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Quickfix:
 " `````````
+" {{{
 " TODO: https://github.com/stevearc/qf_helper.nvim
-" https://github.com/kevinhwang91/nvim-bqf
-"
+" TODO: https://github.com/kevinhwang91/nvim-bqf
+" }}}
 
 " Rooter:
 " ```````
+" {{{
 " TODO: https://github.com/shaeinst/penvim
 " TODO: https://github.com/nyngwang/NeoRoot.lua
+" }}}
 
 " Session Manager:
 " ````````````````
@@ -468,6 +486,7 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Snippets:
 " `````````
+" {{{
 " TODO: https://github.com/L3MON4D3/LuaSnip
 " TODO: https://github.com/dcampos/nvim-snippy
 " TODO: https://github.com/ellisonleao/carbon-now.nvim
@@ -477,6 +496,7 @@ Plug 'ray-x/lsp_signature.nvim' " {
 " TODO: https://github.com/rafamadriz/friendly-snippets
 " TODO: https://github.com/saadparwaiz1/cmp_luasnip
 " TODO: https://github.com/smjonas/snippet-converter.nvim
+" }}}
 
 " Status Line:
 " ````````````
@@ -514,7 +534,8 @@ Plug 'beauwilliams/statusline.lua' " {
 
 " Telescope:
 " ``````````
-Plug 'nvim-telescope/telescope.nvim'
+" {{{
+" TODO: Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/AckslD/nvim-neoclip.lua
 " TODO: https://github.com/LinArcX/telescope-command-palette.nvim
 " TODO: https://github.com/camspiers/snap
@@ -523,9 +544,11 @@ Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/nvim-telescope/telescope-packer.nvim
 " TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
 " TODO: https://github.com/voldikss/vim-floaterm
+" }}}
 
 " Terminal:
 " `````````
+" {{{
 " TODO: https://github.com/akinsho/toggleterm.nvim
 " TODO: https://github.com/nikvdp/neomux
 " TODO: https://github.com/numToStr/FTerm.nvim
@@ -534,6 +557,7 @@ Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/pianocomposer321/consolation.nvim
 " TODO: https://github.com/LoricAndre/OneTerm.nvim
 " TODO: https://github.com/jlesquembre/nterm.nvim
+" }}}
 
 " Todo Marker:
 " ````````````
@@ -569,7 +593,9 @@ Plug 'nvim-treesitter/nvim-treesitter' " {
 
 " TUI:
 " ````
+" {{{
 " TODO: https://github.com/rcarriga/nvim-notify
+" }}}
 
 " Utilities:
 " ``````````
@@ -582,12 +608,6 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/trouble.nvim' " NOTE: It should go in LSP
 Plug 'nvim-lua/plenary.nvim'
 
-" TODO: https://github.com/AllenDang/nvim-expand-expr
-" TODO: https://github.com/AndrewRadev/switch.vim
-" TODO: https://github.com/AndrewRadev/tagalong.vim
-" TODO: https://github.com/D0n9X1n/quickrun.vim
-" TODO: https://github.com/David-Kunz/jester
-" TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
 " TODO: https://github.com/Iron-E/nvim-marktext
@@ -828,77 +848,6 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false
     }
 }
-
-
---require('aerial').setup({})
---local dap = require"dap"
---dap.configurations.lua = { 
---  { 
---    type = 'nlua', 
---    request = 'attach',
---    name = "Attach to running Neovim instance",
---    host = function()
---      local value = vim.fn.input('Host [127.0.0.1]: ')
---      if value ~= "" then
---        return value
---      end
---      return '127.0.0.1'
---    end,
---    port = function()
---      local val = tonumber(vim.fn.input('Port: '))
---      assert(val, "Please provide a port number")
---      return val
---    end,
---  }
---}
---
---dap.adapters.nlua = function(callback, config)
---  callback({ type = 'server', host = config.host, port = config.port })
---end
---
---
---require"gitlinker".setup()
---
-
---
----- ensure that packer is installed
---local vim = vim
---local execute = vim.api.nvim_command
---local fn = vim.fn
---local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
---if fn.empty(fn.glob(install_path)) > 0 then
---    execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
---    execute 'packadd packer.nvim'
---end
---vim.cmd('packadd packer.nvim')
---local packer = require'packer'
---local util = require'packer.util'
---packer.init({
---  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
---})
------ startup and add configure plugins
---packer.startup(function()
---  local use = use
---  -- add you plugins here like:
---  end
---)
----- Shade
----- Illuminate
-----  require'lspconfig'.gopls.setup {
-----    on_attach = function(client)
-----      -- [[ other on_attach code ]]
-----      require 'illuminate'.on_attach(client)
-----    end,
-----  }
----- aplha-nvim
---require("alpha").setup(require'alpha.themes.startify'.config)
---
----- focus.nvim
----- require("focus").setup()
---
----- windline
---require('wlsample.airline_anim')
---require('gitsigns').setup()
 EOLUA
 
 
