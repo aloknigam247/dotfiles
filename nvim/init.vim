@@ -62,7 +62,7 @@
 " UI Client:
 " ``````````
 " Active:
-" TODO: https://github.com/equalsraf/neovim-qt
+" https://github.com/equalsraf/neovim-qt
 " Tested:
 " https://github.com/akiyosi/goneovim " {
     " TODO: config
@@ -110,44 +110,54 @@
 call plug#begin()
 " Auto Pair:
 " ``````````
+" {{{
 Plug 'windwp/nvim-autopairs'
 " TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
 " TODO: Create rule to not pair " for vim files
 " TODO: https://github.com/ZhiyuanLck/smart-pairs
 " TODO: https://github.com/max-0406/autoclose.nvim
-" TODO: https://github.com/neoclide/coc-pairs
 " TODO: https://github.com/rstacruz/vim-closer
 " TODO: https://github.com/steelsojka/pears.nvim
 " TODO: https://github.com/theHamsta/nvim-treesitter-pairs
-" TODO: vim automatically cursor goes to next line but how we don't know yet, how to do it
+" }}}
 
 " COC:
 " ````
+" {{{
+" TODO: https://github.com/coc-extensions/coc-powershell
+" TODO: https://github.com/iamcco/coc-vimlsp
 " TODO: https://github.com/ms-jpq/coq_nvim
+" TODO: https://github.com/neoclide/coc-highlight
 " TODO: https://github.com/neoclide/coc-json
+" TODO: https://github.com/neoclide/coc-neco
+" TODO: https://github.com/neoclide/coc-pairs
+" TODO: https://github.com/neoclide/coc-snippets
 " TODO: https://github.com/neoclide/coc-sources
 " TODO: https://github.com/neoclide/coc-yank
 " TODO: https://github.com/neoclide/coc.nvim
+" TODO: https://github.com/voldikss/coc-browser
 " TODO: https://github.com/xiyaowong/coc-lightbulb-
+" }}}
 
 " Coloring:
 " `````````
+" {{{
 " TODO: Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
 " TODO: https://github.com/azabiong/vim-highlighter
 " TODO: https://github.com/lilydjwg/colorizer
 " TODO: https://github.com/m00qek/baleia.nvim
-" TODO: https://github.com/neoclide/coc-highlight
 " TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-terminal.lua
 " TODO: https://github.com/t9md/vim-quickhl
 " Plug 'tribela/vim-transparent' " Make theme transparent
+" }}}
 
 " Colorscheme:
 " ````````````
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'Yagua/nebulous.nvim'
+Plug 'cpea2506/one_monokai.nvim'
 
 " Accepted:
 " << Light >>
@@ -169,9 +179,11 @@ Plug 'Yagua/nebulous.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
+" Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'jsit/toast.vim'
+" Plug 'katawful/kat.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'olimorris/onedarkpro.nvim'
@@ -179,10 +191,7 @@ Plug 'Yagua/nebulous.nvim'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
-" Plug 'katawful/kat.nvim'
-" Plug 'marko-cerovac/material.nvim'
 
-" TODO: Plug 'cpea2506/one_monokai.nvim'
 " TODO: Plug 'dracula/vim'
 " TODO: Plug 'dylanaraps/wal.vim'
 " TODO: Plug 'fenetikm/falcon'
@@ -213,6 +222,7 @@ Plug 'Yagua/nebulous.nvim'
 
 " Commenting:
 " ```````````
+" {{{
 Plug 'gennaro-tedesco/nvim-commaround' " {
     " TODO:
     " Fix toggle mapping to VSCode one
@@ -228,6 +238,7 @@ Plug 'gennaro-tedesco/nvim-commaround' " {
 " TODO: https://github.com/s1n7ax/nvim-comment-frame
 " TODO: https://github.com/tpope/vim-commentary
 " TODO: https://github.com/winston0410/commented.nvim
+" }}}
 
 " Completion:
 " ```````````
@@ -253,13 +264,11 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
 " TODO: https://github.com/hrsh7th/cmp-nvim-lua
 " TODO: https://github.com/hrsh7th/cmp-path
-" TODO: https://github.com/iamcco/coc-vimlsp
 " TODO: https://github.com/jameshiew/nvim-magic
 " TODO: https://github.com/kristijanhusak/vim-dadbod-completion
 " TODO: https://github.com/lukas-reineke/cmp-rg
 " TODO: https://github.com/lukas-reineke/cmp-under-comparator
 " TODO: https://github.com/meetcw/cmp-browser-source
-" TODO: https://github.com/neoclide/coc-neco
 " TODO: https://github.com/noib3/nvim-compleet
 " TODO: https://github.com/nxvu699134/vn-night.nvim
 " TODO: https://github.com/octaltree/cmp-look
@@ -272,7 +281,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/tzachar/cmp-tabnine
 " TODO: https://github.com/uga-rosa/cmp-dictionary
 " TODO: https://github.com/vappolinario/cmp-clippy
-" TODO: https://github.com/voldikss/coc-browser
 " TODO: https://github.com/zbirenbaum/copilot-cmp
 
 " Configuration:
@@ -464,7 +472,6 @@ Plug 'ray-x/lsp_signature.nvim' " {
 " TODO: https://github.com/dcampos/nvim-snippy
 " TODO: https://github.com/ellisonleao/carbon-now.nvim
 " TODO: https://github.com/hrsh7th/vim-vsnip
-" TODO: https://github.com/neoclide/coc-snippets
 " TODO: https://github.com/norcalli/snippets.nvim
 " TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
 " TODO: https://github.com/rafamadriz/friendly-snippets
@@ -613,7 +620,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/booperlv/nvim-gomove
 " TODO: https://github.com/chipsenkbeil/distant.nvim
 " TODO: https://github.com/chrisbra/NrrwRgn
-" TODO: https://github.com/coc-extensions/coc-powershell
 " TODO: https://github.com/code-biscuits/nvim-biscuits
 " TODO: https://github.com/craigemery/vim-autotag
 " TODO: https://github.com/danymat/neogen
@@ -823,7 +829,6 @@ require('nvim-treesitter.configs').setup {
     }
 }
 
-require("nebulous").setup { variant = "night" }
 
 --require('aerial').setup({})
 --local dap = require"dap"
@@ -936,7 +941,6 @@ set tabstop=4                         " Indent using spaces
 
 " UI Options:
 " ```````````
-" {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
 set background=light           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
@@ -960,10 +964,9 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme nebulous            " Set colorscheme 
+colorscheme one_monokai            " Set colorscheme
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
-" }}}
 
 
 " Search Options:
