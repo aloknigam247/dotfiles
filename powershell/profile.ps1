@@ -112,10 +112,14 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocom
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 
 
+# Posh-git
+Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
+
+
 # Prompt Styling
 # ``````````````
 function prompt {
-    "`e[48;5;27m " + $(get-location) + " `e[0m "
+    "`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
 }
 
 $readline = Get-PSReadLineOption

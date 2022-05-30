@@ -62,7 +62,7 @@
 " UI Client:
 " ``````````
 " Active:
-" TODO: https://github.com/equalsraf/neovim-qt
+" https://github.com/equalsraf/neovim-qt
 " Tested:
 " https://github.com/akiyosi/goneovim " {
     " TODO: config
@@ -110,44 +110,54 @@
 call plug#begin()
 " Auto Pair:
 " ``````````
+" {{{
 Plug 'windwp/nvim-autopairs'
 " TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
 " TODO: Create rule to not pair " for vim files
 " TODO: https://github.com/ZhiyuanLck/smart-pairs
 " TODO: https://github.com/max-0406/autoclose.nvim
-" TODO: https://github.com/neoclide/coc-pairs
 " TODO: https://github.com/rstacruz/vim-closer
 " TODO: https://github.com/steelsojka/pears.nvim
 " TODO: https://github.com/theHamsta/nvim-treesitter-pairs
-" TODO: vim automatically cursor goes to next line but how we don't know yet, how to do it
+" }}}
 
 " COC:
 " ````
+" {{{
+" TODO: https://github.com/coc-extensions/coc-powershell
+" TODO: https://github.com/iamcco/coc-vimlsp
 " TODO: https://github.com/ms-jpq/coq_nvim
+" TODO: https://github.com/neoclide/coc-highlight
 " TODO: https://github.com/neoclide/coc-json
+" TODO: https://github.com/neoclide/coc-neco
+" TODO: https://github.com/neoclide/coc-pairs
+" TODO: https://github.com/neoclide/coc-snippets
 " TODO: https://github.com/neoclide/coc-sources
 " TODO: https://github.com/neoclide/coc-yank
 " TODO: https://github.com/neoclide/coc.nvim
+" TODO: https://github.com/voldikss/coc-browser
 " TODO: https://github.com/xiyaowong/coc-lightbulb-
+" }}}
 
 " Coloring:
 " `````````
+" {{{
 " TODO: Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
 " TODO: https://github.com/azabiong/vim-highlighter
 " TODO: https://github.com/lilydjwg/colorizer
 " TODO: https://github.com/m00qek/baleia.nvim
-" TODO: https://github.com/neoclide/coc-highlight
 " TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-terminal.lua
 " TODO: https://github.com/t9md/vim-quickhl
 " Plug 'tribela/vim-transparent' " Make theme transparent
+" }}}
 
 " Colorscheme:
 " ````````````
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'Yagua/nebulous.nvim'
+Plug 'cpea2506/one_monokai.nvim'
 
 " Accepted:
 " << Light >>
@@ -169,9 +179,11 @@ Plug 'Yagua/nebulous.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
+" Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'jsit/toast.vim'
+" Plug 'katawful/kat.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'olimorris/onedarkpro.nvim'
@@ -179,10 +191,7 @@ Plug 'Yagua/nebulous.nvim'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
-" Plug 'katawful/kat.nvim'
-" Plug 'marko-cerovac/material.nvim'
 
-" TODO: Plug 'cpea2506/one_monokai.nvim'
 " TODO: Plug 'dracula/vim'
 " TODO: Plug 'dylanaraps/wal.vim'
 " TODO: Plug 'fenetikm/falcon'
@@ -213,6 +222,7 @@ Plug 'Yagua/nebulous.nvim'
 
 " Commenting:
 " ```````````
+" {{{
 Plug 'gennaro-tedesco/nvim-commaround' " {
     " TODO:
     " Fix toggle mapping to VSCode one
@@ -228,6 +238,7 @@ Plug 'gennaro-tedesco/nvim-commaround' " {
 " TODO: https://github.com/s1n7ax/nvim-comment-frame
 " TODO: https://github.com/tpope/vim-commentary
 " TODO: https://github.com/winston0410/commented.nvim
+" }}}
 
 " Completion:
 " ```````````
@@ -241,25 +252,29 @@ Plug 'hrsh7th/nvim-cmp' " {
 " }
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-cmdline' " {
+"   BUG: / completion for buffer is not working
+"   TODO: Completion selection is not working
+" }
+" Plug 'dmitmel/cmp-cmdline-history' " {
+"   TODO: how to select completion
+" }
 " TODO: https://github.com/David-Kunz/cmp-npm
 " TODO: https://github.com/OmniSharp/omnisharp-vim
 " TODO: https://github.com/PasiBergman/cmp-nuget
 " TODO: https://github.com/Shougo/deoplete.nvim
 " TODO: https://github.com/davidsierradz/cmp-conventionalcommits
-" TODO: https://github.com/dmitmel/cmp-cmdline-history
 " TODO: https://github.com/f3fora/cmp-nuspell
 " TODO: https://github.com/f3fora/cmp-spell
 " TODO: https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
 " TODO: https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
 " TODO: https://github.com/hrsh7th/cmp-nvim-lua
 " TODO: https://github.com/hrsh7th/cmp-path
-" TODO: https://github.com/iamcco/coc-vimlsp
 " TODO: https://github.com/jameshiew/nvim-magic
 " TODO: https://github.com/kristijanhusak/vim-dadbod-completion
 " TODO: https://github.com/lukas-reineke/cmp-rg
 " TODO: https://github.com/lukas-reineke/cmp-under-comparator
 " TODO: https://github.com/meetcw/cmp-browser-source
-" TODO: https://github.com/neoclide/coc-neco
 " TODO: https://github.com/noib3/nvim-compleet
 " TODO: https://github.com/nxvu699134/vn-night.nvim
 " TODO: https://github.com/octaltree/cmp-look
@@ -272,7 +287,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/tzachar/cmp-tabnine
 " TODO: https://github.com/uga-rosa/cmp-dictionary
 " TODO: https://github.com/vappolinario/cmp-clippy
-" TODO: https://github.com/voldikss/coc-browser
 " TODO: https://github.com/zbirenbaum/copilot-cmp
 
 " Configuration:
@@ -312,6 +326,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Debugger:
 " `````````
+" {{{
 " TODO: Plug 'mfussenegger/nvim-dap'
 " TODO: https://github.com/Pocco81/DAPInstall.nvim
 " TODO: https://github.com/Pocco81/dap-buddy.nvim
@@ -319,6 +334,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/rcarriga/nvim-dap-ui
 " TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
+" }}}
 
 " Doc Generater:
 " ``````````````
@@ -350,12 +366,16 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Folding:
 " ````````
+" {{{
 " TODO: Plug 'anuvyklack/nvim-keymap-amend'
 " TODO: Plug 'anuvyklack/pretty-fold.nvim'
+" }}}
 
 " Formatting:
 " ```````````
+" {{{
 " TODO: https://github.com/sbdchd/neoformat
+" }}}
 
 " Git:
 " ````
@@ -432,8 +452,11 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Mapping:
 " ````````
+" {{{
+" TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/LionC/nest.nvim
 " TODO: https://github.com/b0o/mapx.nvim
+" }}}
 
 " Marks:
 " ``````
@@ -442,14 +465,17 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Quickfix:
 " `````````
+" {{{
 " TODO: https://github.com/stevearc/qf_helper.nvim
-" https://github.com/kevinhwang91/nvim-bqf
-"
+" TODO: https://github.com/kevinhwang91/nvim-bqf
+" }}}
 
 " Rooter:
 " ```````
+" {{{
 " TODO: https://github.com/shaeinst/penvim
 " TODO: https://github.com/nyngwang/NeoRoot.lua
+" }}}
 
 " Session Manager:
 " ````````````````
@@ -460,16 +486,17 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Snippets:
 " `````````
+" {{{
 " TODO: https://github.com/L3MON4D3/LuaSnip
 " TODO: https://github.com/dcampos/nvim-snippy
 " TODO: https://github.com/ellisonleao/carbon-now.nvim
 " TODO: https://github.com/hrsh7th/vim-vsnip
-" TODO: https://github.com/neoclide/coc-snippets
 " TODO: https://github.com/norcalli/snippets.nvim
 " TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
 " TODO: https://github.com/rafamadriz/friendly-snippets
 " TODO: https://github.com/saadparwaiz1/cmp_luasnip
 " TODO: https://github.com/smjonas/snippet-converter.nvim
+" }}}
 
 " Status Line:
 " ````````````
@@ -507,7 +534,8 @@ Plug 'beauwilliams/statusline.lua' " {
 
 " Telescope:
 " ``````````
-Plug 'nvim-telescope/telescope.nvim'
+" {{{
+" TODO: Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/AckslD/nvim-neoclip.lua
 " TODO: https://github.com/LinArcX/telescope-command-palette.nvim
 " TODO: https://github.com/camspiers/snap
@@ -516,9 +544,11 @@ Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/nvim-telescope/telescope-packer.nvim
 " TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
 " TODO: https://github.com/voldikss/vim-floaterm
+" }}}
 
 " Terminal:
 " `````````
+" {{{
 " TODO: https://github.com/akinsho/toggleterm.nvim
 " TODO: https://github.com/nikvdp/neomux
 " TODO: https://github.com/numToStr/FTerm.nvim
@@ -527,6 +557,7 @@ Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/pianocomposer321/consolation.nvim
 " TODO: https://github.com/LoricAndre/OneTerm.nvim
 " TODO: https://github.com/jlesquembre/nterm.nvim
+" }}}
 
 " Todo Marker:
 " ````````````
@@ -562,7 +593,9 @@ Plug 'nvim-treesitter/nvim-treesitter' " {
 
 " TUI:
 " ````
+" {{{
 " TODO: https://github.com/rcarriga/nvim-notify
+" }}}
 
 " Utilities:
 " ``````````
@@ -575,12 +608,6 @@ Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/trouble.nvim' " NOTE: It should go in LSP
 Plug 'nvim-lua/plenary.nvim'
 
-" TODO: https://github.com/AllenDang/nvim-expand-expr
-" TODO: https://github.com/AndrewRadev/switch.vim
-" TODO: https://github.com/AndrewRadev/tagalong.vim
-" TODO: https://github.com/D0n9X1n/quickrun.vim
-" TODO: https://github.com/David-Kunz/jester
-" TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
 " TODO: https://github.com/Iron-E/nvim-marktext
@@ -613,7 +640,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/booperlv/nvim-gomove
 " TODO: https://github.com/chipsenkbeil/distant.nvim
 " TODO: https://github.com/chrisbra/NrrwRgn
-" TODO: https://github.com/coc-extensions/coc-powershell
 " TODO: https://github.com/code-biscuits/nvim-biscuits
 " TODO: https://github.com/craigemery/vim-autotag
 " TODO: https://github.com/danymat/neogen
@@ -822,78 +848,6 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false
     }
 }
-
-require("nebulous").setup { variant = "night" }
-
---require('aerial').setup({})
---local dap = require"dap"
---dap.configurations.lua = { 
---  { 
---    type = 'nlua', 
---    request = 'attach',
---    name = "Attach to running Neovim instance",
---    host = function()
---      local value = vim.fn.input('Host [127.0.0.1]: ')
---      if value ~= "" then
---        return value
---      end
---      return '127.0.0.1'
---    end,
---    port = function()
---      local val = tonumber(vim.fn.input('Port: '))
---      assert(val, "Please provide a port number")
---      return val
---    end,
---  }
---}
---
---dap.adapters.nlua = function(callback, config)
---  callback({ type = 'server', host = config.host, port = config.port })
---end
---
---
---require"gitlinker".setup()
---
-
---
----- ensure that packer is installed
---local vim = vim
---local execute = vim.api.nvim_command
---local fn = vim.fn
---local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
---if fn.empty(fn.glob(install_path)) > 0 then
---    execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
---    execute 'packadd packer.nvim'
---end
---vim.cmd('packadd packer.nvim')
---local packer = require'packer'
---local util = require'packer.util'
---packer.init({
---  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
---})
------ startup and add configure plugins
---packer.startup(function()
---  local use = use
---  -- add you plugins here like:
---  end
---)
----- Shade
----- Illuminate
-----  require'lspconfig'.gopls.setup {
-----    on_attach = function(client)
-----      -- [[ other on_attach code ]]
-----      require 'illuminate'.on_attach(client)
-----    end,
-----  }
----- aplha-nvim
---require("alpha").setup(require'alpha.themes.startify'.config)
---
----- focus.nvim
----- require("focus").setup()
---
----- windline
---require('wlsample.airline_anim')
---require('gitsigns').setup()
 EOLUA
 
 
@@ -936,7 +890,6 @@ set tabstop=4                         " Indent using spaces
 
 " UI Options:
 " ```````````
-" {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
 set background=light           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
@@ -960,10 +913,9 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme nebulous            " Set colorscheme 
+colorscheme one_monokai            " Set colorscheme
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
-" }}}
 
 
 " Search Options:
