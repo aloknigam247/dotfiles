@@ -610,7 +610,6 @@ Plug 'nvim-lua/plenary.nvim'
 
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
-" TODO: https://github.com/Iron-E/nvim-marktext
 " TODO: https://github.com/Iron-E/nvim-tabmode
 " TODO: https://github.com/Iron-E/vim-libmodal
 " TODO: https://github.com/LoricAndre/fzterm.nvim

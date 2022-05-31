@@ -113,14 +113,13 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle Lis
 
 
 # Posh-git
-#Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
+Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
 
 
 # Prompt Styling
 # ``````````````
 function prompt {
-    #"`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
-    "`e[48;5;27m " + $(get-location) + " `e[0m "
+    "`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
 }
 
 $readline = Get-PSReadLineOption
