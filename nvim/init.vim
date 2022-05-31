@@ -363,6 +363,7 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
 " TODO: https://github.com/tamago324/lir.nvim
 " TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+" TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
 
 " Focus Mode:
 " ```````````
@@ -399,6 +400,7 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
 " TODO: https://github.com/tpope/vim-fugitive
 " TODO: https://github.com/tveskag/nvim-blame-line
+" TODO: https://github.com/whiteinge/diffconflicts
 
 " Highlight:
 " ``````````
@@ -752,11 +754,8 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/urbainvaes/vim-ripple
 " TODO: https://github.com/vim-scripts/Conque-GDB
 " TODO: https://github.com/vim-scripts/ShowMarks
-" TODO: https://github.com/vscode-neovim/vscode-neovim
-" TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
 " TODO: https://github.com/wbthomason/packer.nvim
 " TODO: https://github.com/wellle/context.vim
-" TODO: https://github.com/whiteinge/diffconflicts
 
 " Word Highlight:
 " ```````````````
