@@ -157,7 +157,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'dracula/vim'
+Plug 'fenetikm/falcon'
 
 " Accepted:
 " << Light >>
@@ -194,7 +194,6 @@ Plug 'dracula/vim'
 " Plug 'cpea2506/one_monokai.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'fenetikm/falcon'
 " TODO: Plug 'ldelossa/vimdark'
 " TODO: Plug 'mcchrish/zenbones.nvim'
 " TODO: Plug 'mrjones2014/lighthaus.nvim'
@@ -919,7 +918,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme dracula            " Set colorscheme
+colorscheme falcon            " Set colorscheme
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
