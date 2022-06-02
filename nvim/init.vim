@@ -6,6 +6,7 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+" {{{
 " TODO: Fix keymappings for <C-right arrow> <C-left arror> word movements
 " TODO: Highlight only overlength chars
 " TODO: blink on yank
@@ -57,7 +58,7 @@
   "t"	automatic formatting of text, but not comments
   "c"	automatic formatting for comments, but not text (good for C code)
   "tc"	automatic formatting for text and comments
-" 
+" }}}
 
 " UI Client:
 " ``````````
@@ -160,7 +161,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'fenetikm/falcon'
+Plug 'mrjones2014/lighthaus.nvim'
 
 " Accepted:
 " << Light >>
@@ -170,12 +171,13 @@ Plug 'fenetikm/falcon'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'jsit/toast.vim'
+" Plug 'katawful/kat.nvim'
 " Plug 'marko-cerovac/material.nvim'
+" Plug 'marko-cerovac/material.nvim'
+" Plug 'mcchrish/zenbones.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rmehri01/onenord.nvim'
-" Plug 'katawful/kat.nvim'
-" Plug 'marko-cerovac/material.nvim'
 
 " << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -184,22 +186,21 @@ Plug 'fenetikm/falcon'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
+" Plug 'cpea2506/one_monokai.nvim'
+" Plug 'fenetikm/falcon'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'jsit/toast.vim'
 " Plug 'katawful/kat.nvim'
 " Plug 'marko-cerovac/material.nvim'
+" Plug 'mcchrish/zenbones.nvim'
 " Plug 'mhartington/oceanic-next'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
-" Plug 'cpea2506/one_monokai.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'ldelossa/vimdark'
-" TODO: Plug 'mcchrish/zenbones.nvim'
-" TODO: Plug 'mrjones2014/lighthaus.nvim'
 " TODO: Plug 'ntk148v/vim-horizon'
 " TODO: Plug 'rafalbromirski/vim-aurora'
 " TODO: Plug 'rafamadriz/neon'
@@ -666,6 +667,7 @@ Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \" {
 Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/trouble.nvim' " NOTE: It should go in LSP
 Plug 'nvim-lua/plenary.nvim'
+Plug 'rktjmp/lush.nvim'
 
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
@@ -743,7 +745,6 @@ Plug 'nvim-lua/plenary.nvim'
 " TODO: https://github.com/rcarriga/vim-ultest
 " TODO: https://github.com/renerocksai/telekasten.nvim
 " TODO: https://github.com/rickhowe/spotdiff.vim
-" TODO: https://github.com/rktjmp/lush.nvim
 " TODO: https://github.com/sheerun/vim-polyglot
 " TODO: https://github.com/sidebar-nvim/sidebar.nvim
 " TODO: https://github.com/simnalamburt/vim-mundo
@@ -917,7 +918,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme falcon            " Set colorscheme
+colorscheme lighthaus            " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
