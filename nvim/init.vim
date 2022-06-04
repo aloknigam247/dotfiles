@@ -63,8 +63,10 @@
 " UI Client:
 " ``````````
 " Active:
-" https://github.com/equalsraf/neovim-qt
 " Tested:
+" https://github.com/equalsraf/neovim-qt {
+"   BUG: Only takes monospace fonts
+" }
 " https://github.com/akiyosi/goneovim " {
     " TODO: config
     " + Supports extra symbols
@@ -1007,6 +1009,6 @@ augroup vimrc_autocmds
   autocmd BufEnter * match OverLength /\%101v/
 augroup END
 
-set guifont=VictorMono_NF:h11
+" set guifont=VictorMono_NF:h11
 
 " vim: fdm=marker
