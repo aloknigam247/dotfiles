@@ -246,6 +246,7 @@ Plug 'gennaro-tedesco/nvim-commaround' " {
 
 " Completion:
 " ```````````
+" {{{
 Plug 'hrsh7th/nvim-cmp' " {
     " TODO: Commandline
     " TODO: Hover doc
@@ -292,6 +293,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/uga-rosa/cmp-dictionary
 " TODO: https://github.com/vappolinario/cmp-clippy
 " TODO: https://github.com/zbirenbaum/copilot-cmp
+" }}}
 
 " Configuration:
 " ``````````````
@@ -344,20 +346,23 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Doc Generater:
 " ``````````````
+" {{{
 " TODO: https://github.com/danymat/neogen
 " TODO: https://github.com/kkoomen/vim-doge
 " TODO: https://github.com/nvim-treesitter/nvim-tree-docs
+" }}}
 
 " File Explorer:
 " ``````````````
+" {{{
 Plug 'nvim-neo-tree/neo-tree.nvim' " {
     " BUG: Does not replace netrw
     " BUG: fuzzy search does not seems to work
     " good for fit status tree
     " shows lsp warnings in tree
+    " goord .gitignore support
 " }
 " TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
-" TODO: https://github.com/Shougo/defx.nvim
 " TODO: https://github.com/TimUntersberger/neofs
 " TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
 " TODO: https://github.com/Xuyuanp/yanil
@@ -370,12 +375,15 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " TODO: https://github.com/tamago324/lir.nvim
 " TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
 " TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
+" }}}
 
 " Focus Mode:
 " ```````````
+" {{{
 " TODO: https://github.com/Pocco81/TrueZen.nvim
 " TODO: https://github.com/hoschi/yode-nvim
 " TODO: https://github.com/junegunn/goyo.vim
+" }}}
 
 " Folding:
 " ````````
@@ -421,15 +429,17 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Icons:
 " ``````
+" {{{
 Plug 'kyazdani42/nvim-web-devicons'
 " TODO: https://github.com/adelarsq/vim-emoji-icon-theme
 " TODO: https://github.com/kristijanhusak/defx-icons
 " TODO: https://github.com/lambdalisue/nerdfont.vim
 " TODO: https://github.com/yamatsum/nvim-nonicons
+" }}}
 
 " Indentation:
 " ````````````
-" TODO: https://github.com/glepnir/indent-guides.nvim
+Plug 'glepnir/indent-guides.nvim'
 " TODO: https://github.com/lukas-reineke/indent-blankline.nvim
 
 " LSP:
@@ -518,9 +528,11 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " REPL:
 " `````
+" {{{
 " TODO: https://github.com/jpalardy/vim-slime
 " TODO: https://github.com/sillybun/vim-repl
 " TODO: https://github.com/urbainvaes/vim-ripple
+" }}}
 
 " Rooter:
 " ```````
@@ -531,10 +543,12 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Session Manager:
 " ````````````````
+" {{{
 " TODO: https://github.com/Shatur/neovim-session-manager
 " TODO: https://github.com/olimorris/persisted.nvim
 " TODO: https://github.com/rmagatti/auto-session
 " TODO: https://github.com/jedrzejboczar/possession.nvim
+" }}}
 
 " Snippets:
 " `````````
@@ -554,6 +568,7 @@ Plug 'ray-x/lsp_signature.nvim' " {
 " ````````````
 Plug 'beauwilliams/statusline.lua' " {
     " BUG: Slowness observed
+    " BOTH
     " TODO: Explore more
 " }
 " TODO: https://github.com/NTBBloodbath/galaxyline.nvim
@@ -571,7 +586,9 @@ Plug 'beauwilliams/statusline.lua' " {
 
 " Syntax:
 " ```````
+" {{{
 " TODO: https://github.com/tbastos/vim-lua " Lua syntax
+" }}}
 
 " Tab Line:
 " `````````
@@ -616,6 +633,7 @@ Plug 'beauwilliams/statusline.lua' " {
 
 " Todo Marker:
 " ````````````
+" {{{
 " Plug 'folke/todo-comments.nvim' " {
     " BUG: Can not handle multiple todos in same line
     " BUG: Makes vim scrolling slow
@@ -624,6 +642,7 @@ Plug 'beauwilliams/statusline.lua' " {
 " TODO: Search
 " TODO: Telescope
 " TODO: Trouble
+" }}}
 
 " Treesitter:
 " ```````````
@@ -839,7 +858,7 @@ require "lsp_signature".setup({})
 -- Status Line
 -- ```````````
 local statusline = require('statusline')
-statusline.tabline = false
+statusline.tabline = true
 
 -- Todo-comments
 -- `````````````
