@@ -63,6 +63,14 @@
 " UI Client:
 " ``````````
 " Active:
+" https://github.com/hismailbulut/Neoray {
+"   - Less features
+"   + Easy and simple to use
+"   + Very quick
+"   + nice writing animations
+"   - No Ligatures
+"   - No font
+" }
 " Tested:
 " https://github.com/equalsraf/neovim-qt {
 "   BUG: Only takes monospace fonts
@@ -99,7 +107,6 @@
     " X not good to use
 " }
 
-" TODO: https://github.com/hismailbulut/Neoray
 " TODO: https://github.com/jeanguyomarch/eovim
 " TODO: https://github.com/neovide/neovide
 " TODO: https://github.com/rohit-px2/nvui
@@ -164,7 +171,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'mrjones2014/lighthaus.nvim'
+Plug 'catppuccin/nvim'
 
 " Accepted:
 " << Light >>
@@ -203,7 +210,6 @@ Plug 'mrjones2014/lighthaus.nvim'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
 
-" TODO: Plug 'catppuccin/nvim'
 " TODO: Plug 'dylanaraps/wal.vim'
 " TODO: Plug 'ntk148v/vim-horizon'
 " TODO: Plug 'rafalbromirski/vim-aurora'
@@ -409,7 +415,12 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
 " TODO: Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " TODO: Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
-" TODO: https://github.com/APZelos/blamer.nvim
+Plug 'APZelos/blamer.nvim' " {
+    let g:blamer_enabled = 1
+    let g:blamer_delay = 100
+    let g:blamer_relative_time = 1
+    let g:blamer_prefix = ' > '
+" }
 " TODO: https://github.com/TimUntersberger/neogit
 " TODO: https://github.com/adelarsq/neovcs.vim
 " TODO: https://github.com/hotwatermorning/auto-git-diff
@@ -429,7 +440,9 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Highlight:
 " ``````````
+" {{{
 " TODO: https://github.com/rktjmp/highlight-current-n.nvim
+" }}}
 
 " Icons:
 " ``````
@@ -443,8 +456,10 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 " Indentation:
 " ````````````
+" {{{
 Plug 'glepnir/indent-guides.nvim'
 " TODO: https://github.com/lukas-reineke/indent-blankline.nvim
+" }}}
 
 " LSP:
 " ````
@@ -463,7 +478,7 @@ Plug 'liuchengxu/vista.vim' " {
 Plug 'ray-x/lsp_signature.nvim' " {
     " TODO: explore options
 " }
-" TODO: https://git.sr.ht/~whynothugo/lsp_lines.nvim
+Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 " TODO: https://github.com/RishabhRD/nvim-lsputils
 " TODO: https://github.com/amrbashir/nvim-docs-view
 " TODO: https://github.com/folke/lsp-colors.nvim
@@ -522,7 +537,9 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Project:
 " ````````
+" {{{
 " TODO: https://github.com/thaerkh/vim-workspace
+" }}}
 
 " Quickfix:
 " `````````
@@ -571,9 +588,9 @@ Plug 'ray-x/lsp_signature.nvim' " {
 
 " Status Line:
 " ````````````
+" {{{
 Plug 'beauwilliams/statusline.lua' " {
     " BUG: Slowness observed
-    " BOTH
     " TODO: Explore more
 " }
 " TODO: https://github.com/NTBBloodbath/galaxyline.nvim
@@ -588,6 +605,7 @@ Plug 'beauwilliams/statusline.lua' " {
 " TODO: https://github.com/ojroques/nvim-hardline
 " TODO: https://github.com/tamton-aquib/staline.nvim
 " TODO: https://github.com/windwp/windline.nvim
+" }}}
 
 " Syntax:
 " ```````
@@ -597,6 +615,7 @@ Plug 'beauwilliams/statusline.lua' " {
 
 " Tab Line:
 " `````````
+" {{{
 " TODO: https://github.com/akinsho/bufferline.nvim
 " TODO: https://github.com/alvarosevilla95/luatab.nvim
 " TODO: https://github.com/bagrat/vim-buffet
@@ -607,6 +626,7 @@ Plug 'beauwilliams/statusline.lua' " {
 " TODO: https://github.com/pacha/vem-tabline
 " TODO: https://github.com/rafcamlet/tabline-framework.nvim
 " TODO: https://github.com/romgrk/barbar.nvim
+" }}}
 
 " Telescope:
 " ``````````
@@ -663,12 +683,12 @@ Plug 'nvim-treesitter/nvim-treesitter' " {
 " TODO: https://github.com/RRethy/nvim-treesitter-endwise
 " TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
 " TODO: https://github.com/lewis6991/spellsitter.nvim
-" TODO: https://github.com/m-demare/hlargs.nvim
+Plug 'm-demare/hlargs.nvim' " NOTE: may not be required
 " TODO: https://github.com/mfussenegger/nvim-treehopper
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-context
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-" TODO: https://github.com/p00f/nvim-ts-rainbow
+" Plug 'p00f/nvim-ts-rainbow' " BUG: not working
 
 " TUI:
 " ````
@@ -683,6 +703,7 @@ Plug 'nvim-treesitter/nvim-treesitter' " {
 
 " Utilities:
 " ``````````
+" {{{
 Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \" {
     let g:registers_window_border = "rounded"
     " TODO: Check if height can be reduced
@@ -780,6 +801,7 @@ Plug 'rktjmp/lush.nvim'
 " TODO: https://github.com/vim-scripts/ShowMarks
 " TODO: https://github.com/wbthomason/packer.nvim
 " TODO: https://github.com/wellle/context.vim
+" }}}
 
 " Word Highlight:
 " ```````````````
@@ -859,6 +881,12 @@ end
 -- LSP Signature
 require "lsp_signature".setup({})
 
+-- LSP Lines
+require("lsp_lines").register_lsp_virtual_lines()
+vim.diagnostic.config({
+  virtual_text = false,
+})
+-- vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
 
 -- Status Line
 -- ```````````
@@ -877,6 +905,7 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false
     }
 }
+require('hlargs').setup()
 EOLUA
 
 
@@ -942,7 +971,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme lighthaus            " Set colorscheme
+colorscheme catppuccin       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
@@ -1010,5 +1039,15 @@ augroup vimrc_autocmds
 augroup END
 
 " set guifont=VictorMono_NF:h11
+
+if exists('g:neoray')
+    NeoraySet Transparency   0.95
+    NeoraySet ContextMenuOn  TRUE
+    NeoraySet BoxDrawingOn   TRUE
+    NeoraySet WindowState    centered
+    NeoraySet WindowSize     120x60
+    NeoraySet KeyZoomIn      <C-ScrollWheelUp>
+    NeoraySet KeyZoomOut     <C-ScrollWheelDown>
+endif
 
 " vim: fdm=marker
