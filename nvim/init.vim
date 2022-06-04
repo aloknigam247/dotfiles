@@ -119,7 +119,6 @@
 " Plugins - Vim-plug
 " ``````````````````
 call plug#begin()
-Plug 'equalsraf/neovim-gui-shim'
 " Auto Pair:
 " ``````````
 " {{{
@@ -172,7 +171,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'catppuccin/nvim'
+Plug 'ntk148v/vim-horizon'
 
 " Accepted:
 " << Light >>
@@ -181,9 +180,9 @@ Plug 'catppuccin/nvim'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
+" Plug 'catppuccin/nvim'
 " Plug 'jsit/toast.vim'
 " Plug 'katawful/kat.nvim'
-" Plug 'marko-cerovac/material.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mcchrish/zenbones.nvim'
 " Plug 'olimorris/onedarkpro.nvim'
@@ -197,6 +196,7 @@ Plug 'catppuccin/nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
+" Plug 'catppuccin/nvim'
 " Plug 'cpea2506/one_monokai.nvim'
 " Plug 'fenetikm/falcon'
 " Plug 'glepnir/zephyr-nvim'
@@ -212,7 +212,6 @@ Plug 'catppuccin/nvim'
 " Plug 'rmehri01/onenord.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'ntk148v/vim-horizon'
 " TODO: Plug 'rafalbromirski/vim-aurora'
 " TODO: Plug 'rafamadriz/neon'
 " TODO: Plug 'sainnhe/edge'
@@ -420,14 +419,14 @@ Plug 'APZelos/blamer.nvim' " {
     let g:blamer_enabled = 1
     let g:blamer_delay = 100
     let g:blamer_relative_time = 1
-    let g:blamer_prefix = ' > '
+    let g:blamer_prefix = '  '
 " }
+Plug 'mhinz/vim-signify'
 " TODO: https://github.com/TimUntersberger/neogit
 " TODO: https://github.com/adelarsq/neovcs.vim
 " TODO: https://github.com/hotwatermorning/auto-git-diff
 " TODO: https://github.com/kdheepak/lazygit.nvim
 " TODO: https://github.com/ldelossa/gh.nvim
-" TODO: https://github.com/mhinz/vim-signify
 " TODO: https://github.com/pwntester/octo.nvim
 " TODO: https://github.com/rhysd/conflict-marker.vim
 " TODO: https://github.com/rhysd/git-messenger.vim
@@ -973,7 +972,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme catppuccin       " Set colorscheme
+colorscheme horizon       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
@@ -1043,7 +1042,7 @@ augroup END
 " set guifont=VictorMono_NF:h11
 
 if exists('g:neoray')
-    NeoraySet Transparency   0.95
+    NeoraySet Transparency   1
     NeoraySet ContextMenuOn  TRUE
     NeoraySet BoxDrawingOn   TRUE
     NeoraySet WindowState    centered
