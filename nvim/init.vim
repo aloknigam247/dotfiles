@@ -70,6 +70,7 @@
 "   + nice writing animations
 "   - No Ligatures
 "   - No font
+"   + cutosm context menu is very good
 " }
 " Tested:
 " https://github.com/equalsraf/neovim-qt {
@@ -591,6 +592,7 @@ Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 " {{{
 Plug 'beauwilliams/statusline.lua' " {
     " BUG: Slowness observed
+    " BUG: no mouse support in tabline
     " TODO: Explore more
 " }
 " TODO: https://github.com/NTBBloodbath/galaxyline.nvim
