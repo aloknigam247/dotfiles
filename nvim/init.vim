@@ -109,6 +109,7 @@
 " Plugins - Vim-plug
 " ``````````````````
 call plug#begin()
+Plug 'equalsraf/neovim-gui-shim'
 " Auto Pair:
 " ``````````
 " {{{
@@ -200,6 +201,7 @@ Plug 'mrjones2014/lighthaus.nvim'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
 
+" TODO: Plug 'catppuccin/nvim'
 " TODO: Plug 'dylanaraps/wal.vim'
 " TODO: Plug 'ntk148v/vim-horizon'
 " TODO: Plug 'rafalbromirski/vim-aurora'
@@ -483,6 +485,7 @@ Plug 'ray-x/lsp_signature.nvim' " {
 " TODO: https://github.com/ray-x/navigator.lua
 " TODO: https://github.com/rmagatti/goto-preview
 " TODO: https://github.com/simrat39/symbols-outline.nvim
+" TODO: https://github.com/smjonas/inc-rename.nvim
 " TODO: https://github.com/stevearc/aerial.nvim
 " TODO: https://github.com/tami5/lspsaga.nvim
 " TODO: https://github.com/weilbith/nvim-code-action-menu
