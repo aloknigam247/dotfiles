@@ -479,12 +479,12 @@ Plug 'ray-x/lsp_signature.nvim' " {
     " TODO: explore options
 " }
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
-" TODO: https://github.com/RishabhRD/nvim-lsputils
+" Plug 'RishabhRD/nvim-lsputils' " BUG: problem in popfix
 " TODO: https://github.com/amrbashir/nvim-docs-view
-" TODO: https://github.com/folke/lsp-colors.nvim
+Plug 'folke/lsp-colors.nvim'
 " TODO: https://github.com/gfanto/fzf-lsp.nvim
 " TODO: https://github.com/glepnir/lspsaga.nvim
-" TODO: https://github.com/j-hui/fidget.nvim
+Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
 " TODO: https://github.com/jubnzv/virtual-types.nvim
 " TODO: https://github.com/kosayoda/nvim-lightbulb
@@ -617,7 +617,7 @@ Plug 'beauwilliams/statusline.lua' " {
 " Tab Line:
 " `````````
 " {{{
-" TODO: https://github.com/akinsho/bufferline.nvim
+Plug 'akinsho/bufferline.nvim'
 " TODO: https://github.com/alvarosevilla95/luatab.nvim
 " TODO: https://github.com/bagrat/vim-buffet
 " TODO: https://github.com/crispgm/nvim-tabline
@@ -632,7 +632,7 @@ Plug 'beauwilliams/statusline.lua' " {
 " Telescope:
 " ``````````
 " {{{
-" TODO: Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/AckslD/nvim-neoclip.lua
 " TODO: https://github.com/LinArcX/telescope-command-palette.nvim
 " TODO: https://github.com/camspiers/snap
@@ -889,10 +889,16 @@ vim.diagnostic.config({
 })
 -- vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
 
+require("fidget").setup{}
+
 -- Status Line
 -- ```````````
 local statusline = require('statusline')
-statusline.tabline = true
+statusline.tabline = false
+
+-- Tabline
+-- ```````
+require("bufferline").setup{}
 
 -- Todo-comments
 -- `````````````
