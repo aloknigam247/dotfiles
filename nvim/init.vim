@@ -71,6 +71,7 @@
 "   - No Ligatures
 "   - No font
 "   + cutosm context menu is very useful
+"   + Centered window
 " }
 " Tested:
 " https://github.com/equalsraf/neovim-qt {
