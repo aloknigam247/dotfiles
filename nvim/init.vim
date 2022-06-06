@@ -67,10 +67,10 @@
 "   - Less features
 "   + Easy and simple to use
 "   + Very quick
-"   + nice writing animations
+"   + nice writing and cursor animations
 "   - No Ligatures
 "   - No font
-"   + cutosm context menu is very good
+"   + cutosm context menu is very useful
 " }
 " Tested:
 " https://github.com/equalsraf/neovim-qt {
@@ -171,7 +171,7 @@ Plug 'windwp/nvim-autopairs'
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'ntk148v/vim-horizon'
+Plug 'rafalbromirski/vim-aurora'
 
 " Accepted:
 " << Light >>
@@ -205,6 +205,7 @@ Plug 'ntk148v/vim-horizon'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mcchrish/zenbones.nvim'
 " Plug 'mhartington/oceanic-next'
+" Plug 'ntk148v/vim-horizon'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'ray-x/aurora'
@@ -212,7 +213,6 @@ Plug 'ntk148v/vim-horizon'
 " Plug 'rmehri01/onenord.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'rafalbromirski/vim-aurora'
 " TODO: Plug 'rafamadriz/neon'
 " TODO: Plug 'sainnhe/edge'
 " TODO: Plug 'sainnhe/everforest'
@@ -415,14 +415,14 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
 " TODO: Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " TODO: Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
-Plug 'APZelos/blamer.nvim' " {
-    let g:blamer_enabled = 1
-    let g:blamer_delay = 100
-    let g:blamer_relative_time = 1
-    let g:blamer_prefix = '  '
+" Plug 'APZelos/blamer.nvim' " {
+"     let g:blamer_enabled = 1
+"     let g:blamer_delay = 100
+"     let g:blamer_relative_time = 1
+"     let g:blamer_prefix = '  '
 " }
 Plug 'mhinz/vim-signify'
-" TODO: https://github.com/TimUntersberger/neogit
+Plug 'TimUntersberger/neogit'
 " TODO: https://github.com/adelarsq/neovcs.vim
 " TODO: https://github.com/hotwatermorning/auto-git-diff
 " TODO: https://github.com/kdheepak/lazygit.nvim
@@ -913,6 +913,10 @@ require('nvim-treesitter.configs').setup {
     }
 }
 require('hlargs').setup()
+
+-- Neogit
+require('neogit').setup {}
+
 EOLUA
 
 
@@ -978,7 +982,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme horizon       " Set colorscheme
+colorscheme aurora       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
