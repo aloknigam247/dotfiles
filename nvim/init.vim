@@ -449,8 +449,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 " Indentation:
 " ````````````
-Plug 'glepnir/indent-guides.nvim'
-" TODO: https://github.com/lukas-reineke/indent-blankline.nvim
+" Plug 'glepnir/indent-guides.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " LSP:
 " ````
@@ -913,6 +913,12 @@ require('hlargs').setup()
 
 -- Neogit
 require('neogit').setup {}
+
+require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+}
 
 EOLUA
 
