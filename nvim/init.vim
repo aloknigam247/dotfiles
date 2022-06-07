@@ -117,8 +117,8 @@
 " TODO: https://github.com/vhakulinen/gnvim
 
 
-" Plugins - Vim-plug
-" ``````````````````
+" Plugins:
+" ````````
 call plug#begin()
 " Auto Pair:
 " ``````````
@@ -153,7 +153,6 @@ Plug 'windwp/nvim-autopairs'
 
 " Coloring:
 " `````````
-" {{{
 " TODO: Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
 " TODO: https://github.com/azabiong/vim-highlighter
 " TODO: https://github.com/jbyuki/carrot.nvim
@@ -165,14 +164,13 @@ Plug 'windwp/nvim-autopairs'
 " TODO: https://github.com/norcalli/nvim-terminal.lua
 " TODO: https://github.com/t9md/vim-quickhl
 " Plug 'tribela/vim-transparent' " Make theme transparent
-" }}}
 
 " Colorscheme:
 " ````````````
 " Current:
 " << Light >>
 " << Dark >>
-Plug 'rafalbromirski/vim-aurora'
+Plug 'rafamadriz/neon'
 
 " Accepted:
 " << Light >>
@@ -209,12 +207,12 @@ Plug 'rafalbromirski/vim-aurora'
 " Plug 'ntk148v/vim-horizon'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
+" Plug 'rafalbromirski/vim-aurora'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'rafamadriz/neon'
 " TODO: Plug 'sainnhe/edge'
 " TODO: Plug 'sainnhe/everforest'
 " TODO: Plug 'sainnhe/gruvbox-material'
@@ -231,7 +229,6 @@ Plug 'rafalbromirski/vim-aurora'
 " TODO: Plug 'tomasiser/vim-code-dark'
 " TODO: Plug 'wuelnerdotexe/vim-enfocado'
 " TODO: Plug 'yashguptaz/calvera-dark.nvim'
-
 " Plug 'AlphaTechnolog/pywal.nvim'
 
 " Commenting:
@@ -390,11 +387,9 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Focus Mode:
 " ```````````
-" {{{
-" TODO: https://github.com/Pocco81/TrueZen.nvim
+Plug 'Pocco81/TrueZen.nvim'
 " TODO: https://github.com/hoschi/yode-nvim
 " TODO: https://github.com/junegunn/goyo.vim
-" }}}
 
 " Folding:
 " ````````
@@ -406,13 +401,12 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 
 " Formatting:
 " ```````````
-" {{{
-" TODO: https://github.com/mhartington/formatter.nvim
+Plug 'mhartington/formatter.nvim'
 " TODO: https://github.com/sbdchd/neoformat
-" }}}
 
 " Git:
 " ````
+" {{{
 " TODO: Plug 'f-person/git-blame.nvim' " not working, needs review
 " TODO: Plug 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
 " TODO: Plug 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
@@ -437,12 +431,11 @@ Plug 'sindrets/diffview.nvim'
 " TODO: https://github.com/tpope/vim-fugitive
 " TODO: https://github.com/tveskag/nvim-blame-line
 " TODO: https://github.com/whiteinge/diffconflicts
+" }}}
 
 " Highlight:
 " ``````````
-" {{{
 " TODO: https://github.com/rktjmp/highlight-current-n.nvim
-" }}}
 
 " Icons:
 " ``````
@@ -456,10 +449,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 " Indentation:
 " ````````````
-" {{{
 Plug 'glepnir/indent-guides.nvim'
 " TODO: https://github.com/lukas-reineke/indent-blankline.nvim
-" }}}
 
 " LSP:
 " ````
@@ -519,7 +510,7 @@ Plug 'j-hui/fidget.nvim'
 " }}}
 
 " Marks Bookmarks:
-" ``````
+" ````````````````
 " {{{
 " TODO: https://github.com/MattesGroeger/vim-bookmarks
 " TODO: https://github.com/ThePrimeagen/harpoon
@@ -674,6 +665,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " Treesitter:
 " ```````````
+" {{{
 Plug 'nvim-treesitter/nvim-treesitter' " {
     " TODO: Folding
     " TODO: Incremental selection
@@ -694,6 +686,7 @@ Plug 'nvim-treesitter/nvim-treesitter-context' " {
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 " Plug 'p00f/nvim-ts-rainbow' " BUG: not working
+" }}}
 
 " TUI:
 " ````
@@ -963,6 +956,7 @@ set tabstop=4                         " Indent using spaces
 
 " UI Options:
 " ```````````
+" {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
 set background=light           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
@@ -986,7 +980,8 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-colorscheme aurora       " Set colorscheme
+" }}}
+colorscheme neon       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
@@ -997,6 +992,7 @@ highlight clear CursorLineNR " No underline on line numbers when cursorline is o
 set ignorecase " Ignore case when searching
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 " }}}
+
 
 " Filetype Specific Options:
 " ``````````````````````````
@@ -1022,6 +1018,7 @@ imap <C-Right> <C-\><C-O>E
 imap <C-Left> <C-\><C-O>B
 " }}}
 
+" {{{
 let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
@@ -1052,6 +1049,7 @@ augroup vimrc_autocmds
   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
   autocmd BufEnter * match OverLength /\%101v/
 augroup END
+" }}}
 
 " set guifont=VictorMono_NF:h11
 
