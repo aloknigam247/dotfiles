@@ -449,8 +449,10 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 " Indentation:
 " ````````````
+" {{{
 " Plug 'glepnir/indent-guides.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+" }}}
 
 " LSP:
 " ````
