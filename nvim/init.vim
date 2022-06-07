@@ -424,14 +424,13 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " }
 Plug 'mhinz/vim-signify'
 Plug 'TimUntersberger/neogit'
-" TODO: https://github.com/adelarsq/neovcs.vim
+Plug 'sindrets/diffview.nvim'
 " TODO: https://github.com/hotwatermorning/auto-git-diff
 " TODO: https://github.com/kdheepak/lazygit.nvim
 " TODO: https://github.com/ldelossa/gh.nvim
 " TODO: https://github.com/pwntester/octo.nvim
 " TODO: https://github.com/rhysd/conflict-marker.vim
 " TODO: https://github.com/rhysd/git-messenger.vim
-" TODO: https://github.com/sindrets/diffview.nvim
 " TODO: https://github.com/sjl/splice.vim
 " TODO: https://github.com/tanvirtin/vgit.nvim
 " TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
@@ -464,6 +463,7 @@ Plug 'glepnir/indent-guides.nvim'
 
 " LSP:
 " ````
+" {{{
 Plug 'neovim/nvim-lspconfig' " {
     " TODO: Autocompletion
     " TODO: Code Actions
@@ -507,6 +507,7 @@ Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/stevearc/aerial.nvim
 " TODO: https://github.com/tami5/lspsaga.nvim
 " TODO: https://github.com/weilbith/nvim-code-action-menu
+" }}}
 
 " Mapping:
 " ````````
@@ -682,12 +683,14 @@ Plug 'nvim-treesitter/nvim-treesitter' " {
 " Plug 'romgrk/nvim-treesitter-context' " {
     " BUG: Its buggy in windows
 " }
+Plug 'm-demare/hlargs.nvim' " NOTE: may not be required
+Plug 'nvim-treesitter/nvim-treesitter-context' " {
+"    BUG: Makes scroll slow
+" }
 " TODO: https://github.com/RRethy/nvim-treesitter-endwise
 " TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
 " TODO: https://github.com/lewis6991/spellsitter.nvim
-Plug 'm-demare/hlargs.nvim' " NOTE: may not be required
 " TODO: https://github.com/mfussenegger/nvim-treehopper
-" TODO: https://github.com/nvim-treesitter/nvim-treesitter-context
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 " Plug 'p00f/nvim-ts-rainbow' " BUG: not working
@@ -807,6 +810,7 @@ Plug 'rktjmp/lush.nvim'
 
 " Word Highlight:
 " ```````````````
+" {{{
 Plug 'RRethy/vim-illuminate' " {
     " BUG: highlight colors are not good
     hi def link LspReferenceText WildMenu
@@ -816,8 +820,7 @@ Plug 'RRethy/vim-illuminate' " {
 " TODO: Plug 'xiyaowong/nvim-cursorword'
 " TODO: Plug 'yamatsum/nvim-cursorline'
 " TODO: https://github.com/dominikduda/vim_current_word
-
-" Archived:
+"}}}
 call plug#end()
 
 " LUA Section:
@@ -1057,7 +1060,7 @@ if exists('g:neoray')
     NeoraySet ContextMenuOn  TRUE
     NeoraySet BoxDrawingOn   TRUE
     NeoraySet WindowState    centered
-    NeoraySet WindowSize     120x60
+    NeoraySet WindowSize     120x40
     NeoraySet KeyZoomIn      <C-ScrollWheelUp>
     NeoraySet KeyZoomOut     <C-ScrollWheelDown>
 endif
