@@ -123,9 +123,11 @@ call plug#begin()
 " Auto Pair:
 " ``````````
 " {{{
-Plug 'windwp/nvim-autopairs'
-" TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
-" TODO: Create rule to not pair " for vim files
+Plug 'windwp/nvim-autopairs' " {
+    " TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
+    " TODO: Create rule to not pair " for vim files
+    " BUG: braces Indentation is not correct in some situation
+" }
 " TODO: https://github.com/ZhiyuanLck/smart-pairs
 " TODO: https://github.com/max-0406/autoclose.nvim
 " TODO: https://github.com/rstacruz/vim-closer
@@ -136,6 +138,7 @@ Plug 'windwp/nvim-autopairs'
 " COC:
 " ````
 " {{{
+" TODO: https://github.com/OmniSharp/omnisharp-vim
 " TODO: https://github.com/coc-extensions/coc-powershell
 " TODO: https://github.com/iamcco/coc-vimlsp
 " TODO: https://github.com/ms-jpq/coq_nvim
@@ -153,17 +156,19 @@ Plug 'windwp/nvim-autopairs'
 
 " Coloring:
 " `````````
+" {{{
+" Plug 'azabiong/vim-highlighter' " NOTE: Good to use
 " TODO: Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
-" TODO: https://github.com/azabiong/vim-highlighter
-" TODO: https://github.com/jbyuki/carrot.nvim
 " TODO: https://github.com/lambdalisue/glyph-palette.vim
 " TODO: https://github.com/lilydjwg/colorizer
 " TODO: https://github.com/m00qek/baleia.nvim
 " TODO: https://github.com/machakann/vim-highlightedyank
 " TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-terminal.lua
+" TODO: https://github.com/rktjmp/highlight-current-n.nvim
 " TODO: https://github.com/t9md/vim-quickhl
 " Plug 'tribela/vim-transparent' " Make theme transparent
+" }}}
 
 " Colorscheme:
 " ````````````
@@ -171,6 +176,7 @@ Plug 'windwp/nvim-autopairs'
 " << Light >>
 " << Dark >>
 Plug 'rafamadriz/neon'
+let g:neon_style = "light"
 
 " Accepted:
 " << Light >>
@@ -273,7 +279,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 "   TODO: how to select completion
 " }
 " TODO: https://github.com/David-Kunz/cmp-npm
-" TODO: https://github.com/OmniSharp/omnisharp-vim
 " TODO: https://github.com/PasiBergman/cmp-nuget
 " TODO: https://github.com/Shougo/deoplete.nvim
 " TODO: https://github.com/davidsierradz/cmp-conventionalcommits
@@ -340,7 +345,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Debugger:
 " `````````
-" {{{
 " TODO: Plug 'mfussenegger/nvim-dap'
 " TODO: https://github.com/Pocco81/DAPInstall.nvim
 " TODO: https://github.com/Pocco81/dap-buddy.nvim
@@ -350,7 +354,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 " TODO: https://github.com/vim-scripts/Conque-GDB
-" }}}
 
 " Doc Generater:
 " ``````````````
@@ -432,10 +435,6 @@ Plug 'sindrets/diffview.nvim'
 " TODO: https://github.com/tveskag/nvim-blame-line
 " TODO: https://github.com/whiteinge/diffconflicts
 " }}}
-
-" Highlight:
-" ``````````
-" TODO: https://github.com/rktjmp/highlight-current-n.nvim
 
 " Icons:
 " ``````
@@ -522,13 +521,11 @@ Plug 'j-hui/fidget.nvim'
 
 " OrgMode:
 " ````````
-" {{{
 " TODO: https://github.com/TravonteD/org-capture-filetype
 " TODO: https://github.com/akinsho/org-bullets.nvim
 " TODO: https://github.com/nvim-neorg/neorg
 " TODO: https://github.com/nvim-orgmode/orgmode
 " TODO: https://github.com/ranjithshegde/orgWiki.nvim
-" }}}
 
 " Project:
 " ````````
@@ -611,7 +608,6 @@ Plug 'beauwilliams/statusline.lua' " {
 
 " Tab Line:
 " `````````
-" {{{
 Plug 'akinsho/bufferline.nvim'
 " TODO: https://github.com/alvarosevilla95/luatab.nvim
 " TODO: https://github.com/bagrat/vim-buffet
@@ -622,7 +618,6 @@ Plug 'akinsho/bufferline.nvim'
 " TODO: https://github.com/pacha/vem-tabline
 " TODO: https://github.com/rafcamlet/tabline-framework.nvim
 " TODO: https://github.com/romgrk/barbar.nvim
-" }}}
 
 " Telescope:
 " ``````````
@@ -692,14 +687,12 @@ Plug 'nvim-treesitter/nvim-treesitter-context' " {
 
 " TUI:
 " ````
-" {{{
-" TODO: https://github.com/VonHeikemen/fine-cmdline.nvim
-" TODO: https://github.com/VonHeikemen/searchbox.nvim
+Plug 'VonHeikemen/fine-cmdline.nvim'
+Plug 'VonHeikemen/searchbox.nvim'
 " TODO: https://github.com/rcarriga/nvim-notify
 " TODO: https://github.com/skywind3000/vim-quickui
 " TODO: https://github.com/stevearc/dressing.nvim
 " TODO: https://github.com/sunjon/stylish.nvim
-" }}}
 
 " Utilities:
 " ``````````
@@ -897,7 +890,14 @@ statusline.tabline = false
 
 -- Tabline
 -- ```````
-require("bufferline").setup{}
+require("bufferline").setup {
+    options = {
+        mode = "tabs",
+        diagnostics = "nvim_lsp",
+        separator_style = "thick",
+        always_show_bufferline = false
+    }
+}
 
 -- Todo-comments
 -- `````````````
@@ -919,6 +919,14 @@ require('neogit').setup {}
 require("indent_blankline").setup {
 }
 
+require('fine-cmdline').setup({
+    popup = {
+        win_options = {
+            winhighlight = "Normal:Normal,FloatBorder:SpecialChar"
+        }
+    }
+})
+vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
 EOLUA
 
 
@@ -970,7 +978,7 @@ set culopt=number,screenline " Highlight current line and line number of current
 set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=tab:>-               " Show space as ·, tab as clear spaces
+set lcs=space:·,tab:>-       " Show space as ·, tab as clear spaces
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
