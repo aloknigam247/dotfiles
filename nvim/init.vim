@@ -175,6 +175,7 @@ Plug 'windwp/nvim-autopairs' " {
 " Current:
 " << Light >>
 Plug 'sainnhe/edge'
+let g:edge_style = 'aura'
 " << Dark >>
 
 " Accepted:
@@ -345,12 +346,11 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 
 " Debugger:
 " `````````
-" TODO: Plug 'mfussenegger/nvim-dap'
-" TODO: https://github.com/Pocco81/DAPInstall.nvim
-" TODO: https://github.com/Pocco81/dap-buddy.nvim
-" TODO: https://github.com/mfussenegger/nvim-dap-python
+Plug 'mfussenegger/nvim-dap'
+Plug 'Pocco81/dap-buddy.nvim'
+Plug 'mfussenegger/nvim-dap-python'
 " TODO: https://github.com/puremourning/vimspector
-" TODO: https://github.com/rcarriga/nvim-dap-ui
+Plug 'rcarriga/nvim-dap-ui'
 " TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 " TODO: https://github.com/vim-scripts/Conque-GDB
@@ -512,20 +512,20 @@ Plug 'j-hui/fidget.nvim'
 
 " Marks Bookmarks:
 " ````````````````
-" {{{
-" TODO: https://github.com/MattesGroeger/vim-bookmarks
+Plug 'MattesGroeger/vim-bookmarks'
 " TODO: https://github.com/ThePrimeagen/harpoon
 " TODO: https://github.com/Yilin-Yang/vim-markbar
 " TODO: https://github.com/chentau/marks.nvim
-" }}}
 
 " OrgMode:
 " ````````
+" {{{
 " TODO: https://github.com/TravonteD/org-capture-filetype
 " TODO: https://github.com/akinsho/org-bullets.nvim
 " TODO: https://github.com/nvim-neorg/neorg
 " TODO: https://github.com/nvim-orgmode/orgmode
 " TODO: https://github.com/ranjithshegde/orgWiki.nvim
+" }}}
 
 " Project:
 " ````````
@@ -611,7 +611,6 @@ Plug 'beauwilliams/statusline.lua' " {
 Plug 'akinsho/bufferline.nvim'
 " TODO: https://github.com/alvarosevilla95/luatab.nvim
 " TODO: https://github.com/bagrat/vim-buffet
-" TODO: https://github.com/crispgm/nvim-tabline
 " TODO: https://github.com/kdheepak/tabline.nvim
 " TODO: https://github.com/mengelbrecht/lightline-bufferline
 " TODO: https://github.com/noib3/nvim-cokeline
@@ -687,12 +686,14 @@ Plug 'nvim-treesitter/nvim-treesitter-context' " {
 
 " TUI:
 " ````
+" {{{
 Plug 'VonHeikemen/fine-cmdline.nvim'
 Plug 'VonHeikemen/searchbox.nvim'
-" TODO: https://github.com/rcarriga/nvim-notify
+Plug 'rcarriga/nvim-notify'
 " TODO: https://github.com/skywind3000/vim-quickui
 " TODO: https://github.com/stevearc/dressing.nvim
 " TODO: https://github.com/sunjon/stylish.nvim
+" }}}
 
 " Utilities:
 " ``````````
@@ -971,7 +972,7 @@ set tabstop=4                         " Indent using spaces
 " ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=light           " Select appropriate colors for dark or light
+set background=dark           " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
