@@ -471,7 +471,7 @@ Plug 'liuchengxu/vista.vim' " {
 Plug 'ray-x/lsp_signature.nvim' " {
     " TODO: explore options
 " }
-Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+" Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 " Plug 'RishabhRD/nvim-lsputils' " BUG: problem in popfix
 " TODO: https://github.com/amrbashir/nvim-docs-view
 Plug 'folke/lsp-colors.nvim'
@@ -876,10 +876,10 @@ end
 require "lsp_signature".setup({})
 
 -- LSP Lines
-require("lsp_lines").register_lsp_virtual_lines()
-vim.diagnostic.config({
-  virtual_text = false,
-})
+-- require("lsp_lines").register_lsp_virtual_lines()
+-- vim.diagnostic.config({
+--   virtual_text = false,
+-- })
 -- vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
 
 require("fidget").setup{}
