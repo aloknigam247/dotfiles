@@ -174,8 +174,7 @@ Plug 'windwp/nvim-autopairs' " {
 " ````````````
 " Current:
 " << Light >>
-Plug 'sainnhe/edge'
-let g:edge_style = 'aura'
+Plug 'sainnhe/everforest'
 " << Dark >>
 
 " Accepted:
@@ -193,6 +192,7 @@ let g:edge_style = 'aura'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rafamadriz/neon'
+" Plug 'sainnhe/edge'
 " Plug 'rmehri01/onenord.nvim'
 
 " << Dark >>
@@ -200,6 +200,7 @@ let g:edge_style = 'aura'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
+" Plug 'sainnhe/edge'
 " Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'catppuccin/nvim'
@@ -221,7 +222,6 @@ let g:edge_style = 'aura'
 " Plug 'rmehri01/onenord.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'sainnhe/everforest'
 " TODO: Plug 'sainnhe/gruvbox-material'
 " TODO: Plug 'sainnhe/sonokai'
 " TODO: Plug 'savq/melange'
@@ -995,7 +995,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme edge       " Set colorscheme
+colorscheme everforest       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
