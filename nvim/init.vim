@@ -510,12 +510,44 @@ Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/svermeulen/vimpeccable
 " }}}
 
-" Marks Bookmarks:
+" Marks/Bookmarks:
 " ````````````````
-Plug 'MattesGroeger/vim-bookmarks'
+" Guide:
+" https://vim.fandom.com/wiki/Using_marks
+" |----------------+---------------------------------------------------------------|
+" | Command        | Description                                                   |
+" |----------------+---------------------------------------------------------------|
+" | ''             | jump back (to line in current buffer where jumped from)       |
+" | 'a             | jump to line of mark a (first non-blank character in line)    |
+" | :delmarks a    | delete mark a                                                 |
+" | :delmarks a-d  | delete marks a, b, c, d                                       |
+" | :delmarks aA   | delete marks a, A                                             |
+" | :delmarks abxy | delete marks a, b, x, y                                       |
+" | :delmarks!     | delete all lowercase marks for the current buffer (a-z)       |
+" | :marks         | list all the current marks                                    |
+" | :marks aB      | list marks a, B                                               |
+" | ['             | jump to previous line with a lowercase mark                   |
+" | [`             | jump to previous lowercase mark                               |
+" | ]'             | jump to next line with a lowercase mark                       |
+" | ]`             | jump to next lowercase mark                                   |
+" | `"             | jump to position where last exited current buffer             |
+" | `.             | jump to position where last change occurred in current buffer |
+" | `0             | jump to position in last file edited (when exited Vim)        |
+" | `1             | like `0 but the previous file (also `2 etc)                   |
+" | `< or `>       | jump to beginning/end of last visual selection                |
+" | `[ or `]       | jump to beginning/end of previously changed or yanked text    |
+" | ``             | jump back (to position in current buffer where jumped from)   |
+" | `a             | jump to position (line and column) of mark a                  |
+" | c'a            | change text from current line to line of mark a               |
+" | d'a            | delete from current line to line of mark a                    |
+" | d`a            | delete from current cursor position to position of mark a     |
+" | ma             | set mark a at current cursor location                         |
+" | y`a            | yank text to unnamed buffer from cursor to position of mark a |
+" |----------------+---------------------------------------------------------------|
+" Plug 'MattesGroeger/vim-bookmarks'
 " TODO: https://github.com/ThePrimeagen/harpoon
 " TODO: https://github.com/Yilin-Yang/vim-markbar
-" TODO: https://github.com/chentau/marks.nvim
+" Plug 'chentoast/marks.nvim'
 
 " OrgMode:
 " ````````
@@ -617,6 +649,11 @@ Plug 'akinsho/bufferline.nvim'
 " TODO: https://github.com/pacha/vem-tabline
 " TODO: https://github.com/rafcamlet/tabline-framework.nvim
 " TODO: https://github.com/romgrk/barbar.nvim
+
+" Tables:
+" ```````
+Plug 'dhruvasagar/vim-table-mode'
+" TODO: https://github.com/godlygeek/tabular
 
 " Telescope:
 " ``````````
