@@ -972,7 +972,7 @@ set tabstop=4                         " Indent using spaces
 " ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=dark           " Select appropriate colors for dark or light
+set background=light          " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
