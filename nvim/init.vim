@@ -157,17 +157,26 @@ Plug 'windwp/nvim-autopairs' " {
 " Coloring:
 " `````````
 " {{{
+Plug 'RRethy/vim-illuminate' " {
+    " BUG: highlight colors are not good
+    hi def link LspReferenceText WildMenu
+    hi def link LspReferenceWrite WildMenu
+    hi def link LspReferenceRead WildMenu
+" }
+Plug 'lilydjwg/colorizer'
+Plug 'machakann/vim-highlightedyank'
 " Plug 'azabiong/vim-highlighter' " NOTE: Good to use
+" Plug 'tribela/vim-transparent' " Make theme transparent
 " TODO: Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
+" TODO: Plug 'xiyaowong/nvim-cursorword'
+" TODO: Plug 'yamatsum/nvim-cursorline'
+" TODO: https://github.com/dominikduda/vim_current_word
 " TODO: https://github.com/lambdalisue/glyph-palette.vim
-" TODO: https://github.com/lilydjwg/colorizer
 " TODO: https://github.com/m00qek/baleia.nvim
-" TODO: https://github.com/machakann/vim-highlightedyank
 " TODO: https://github.com/norcalli/nvim-colorizer.lua
 " TODO: https://github.com/norcalli/nvim-terminal.lua
 " TODO: https://github.com/rktjmp/highlight-current-n.nvim
 " TODO: https://github.com/t9md/vim-quickhl
-" Plug 'tribela/vim-transparent' " Make theme transparent
 " }}}
 
 " Colorscheme:
@@ -347,10 +356,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Debugger:
 " `````````
 Plug 'mfussenegger/nvim-dap'
-Plug 'Pocco81/dap-buddy.nvim'
-Plug 'mfussenegger/nvim-dap-python'
+" Plug 'Pocco81/dap-buddy.nvim'
+" Plug 'mfussenegger/nvim-dap-python'
+" Plug 'rcarriga/nvim-dap-ui'
 " TODO: https://github.com/puremourning/vimspector
-Plug 'rcarriga/nvim-dap-ui'
 " TODO: https://github.com/sakhnik/nvim-gdb
 " TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 " TODO: https://github.com/vim-scripts/Conque-GDB
@@ -833,20 +842,6 @@ Plug 'rktjmp/lush.nvim'
 " TODO: https://github.com/wbthomason/packer.nvim
 " TODO: https://github.com/wellle/context.vim
 " }}}
-
-" Word Highlight:
-" ```````````````
-" {{{
-Plug 'RRethy/vim-illuminate' " {
-    " BUG: highlight colors are not good
-    hi def link LspReferenceText WildMenu
-    hi def link LspReferenceWrite WildMenu
-    hi def link LspReferenceRead WildMenu
-" }
-" TODO: Plug 'xiyaowong/nvim-cursorword'
-" TODO: Plug 'yamatsum/nvim-cursorline'
-" TODO: https://github.com/dominikduda/vim_current_word
-"}}}
 call plug#end()
 
 " LUA Section:
@@ -872,6 +867,14 @@ cmp.setup({
         { name = 'nvim_lsp' }
     })
 })
+
+-- DAP
+-- ```
+local dap = require('dap')
+dap.adapters.python = {
+    type = 'executable';
+    command = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+}
 
 -- LSP
 -- ```
@@ -1009,7 +1012,7 @@ set tabstop=4                         " Indent using spaces
 " ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=light          " Select appropriate colors for dark or light
+set background=dark          " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
