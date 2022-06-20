@@ -521,6 +521,7 @@ Plug 'j-hui/fidget.nvim'
 
 " Marks/Bookmarks:
 " ````````````````
+" {{{
 " Guide:
 " https://vim.fandom.com/wiki/Using_marks
 " |----------------+---------------------------------------------------------------|
@@ -556,7 +557,9 @@ Plug 'j-hui/fidget.nvim'
 " Plug 'MattesGroeger/vim-bookmarks'
 " TODO: https://github.com/ThePrimeagen/harpoon
 " TODO: https://github.com/Yilin-Yang/vim-markbar
+" TODO: https://github.com/kshenoy/vim-signature
 " Plug 'chentoast/marks.nvim'
+" }}}
 
 " OrgMode:
 " ````````
