@@ -875,6 +875,15 @@ dap.adapters.python = {
     type = 'executable';
     command = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
 }
+dap.configurations.python = {
+    {
+        type = 'python';
+        request = 'launch';
+        name = "Launch file";
+        program = "${file}";
+        pythonPath = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+    }
+}
 
 -- LSP
 -- ```
