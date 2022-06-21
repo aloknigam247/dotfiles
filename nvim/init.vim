@@ -183,8 +183,8 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
-Plug 'sainnhe/everforest'
 " << Dark >>
+Plug 'sainnhe/gruvbox-material'
 
 " Accepted:
 " << Light >>
@@ -203,6 +203,7 @@ Plug 'sainnhe/everforest'
 " Plug 'rafamadriz/neon'
 " Plug 'sainnhe/edge'
 " Plug 'rmehri01/onenord.nvim'
+" Plug 'sainnhe/everforest'
 
 " << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -215,6 +216,7 @@ Plug 'sainnhe/everforest'
 " Plug 'catppuccin/nvim'
 " Plug 'cpea2506/one_monokai.nvim'
 " Plug 'fenetikm/falcon'
+" Plug 'sainnhe/everforest'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'jsit/toast.vim'
 " Plug 'katawful/kat.nvim'
@@ -231,7 +233,6 @@ Plug 'sainnhe/everforest'
 " Plug 'rmehri01/onenord.nvim'
 
 " TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'sainnhe/gruvbox-material'
 " TODO: Plug 'sainnhe/sonokai'
 " TODO: Plug 'savq/melange'
 " TODO: Plug 'shaunsingh/moonlight.nvim'
@@ -1047,7 +1048,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme everforest       " Set colorscheme
+colorscheme gruvbox-material       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
