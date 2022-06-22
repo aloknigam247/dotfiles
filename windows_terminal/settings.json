@@ -126,7 +126,7 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "colorScheme": "Material Lighter",
+                "colorScheme": "dayfox",
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
@@ -184,29 +184,6 @@
             "selectionBackground": "#FFFFFF",
             "white": "#CCCCCC",
             "yellow": "#C19C00"
-        },
-        {
-            "name" : "dayfox",
-            "background" : "#eaeaea",
-            "foreground" : "#1d344f",
-            "cursorColor": "#1d344f",
-            "selectionBackground": "#ced5de",
-            "black" : "#1d344f",
-            "blue" : "#4d688e",
-            "cyan" : "#6ca7bd",
-            "green" : "#618774",
-            "purple" : "#8e6f98",
-            "red" : "#b95d76",
-            "white" : "#cdd1d5",
-            "yellow" : "#ba793e",
-            "brightBlack" : "#24476f",
-            "brightBlue" : "#4e75aa",
-            "brightCyan" : "#74b2c9",
-            "brightGreen" : "#629f81",
-            "brightPurple" : "#9f75ac",
-            "brightRed" : "#c76882",
-            "brightWhite" : "#cfd6dd",
-            "brightYellow" : "#ca884a"
         },
         {
             "background": "#121212",
@@ -575,6 +552,29 @@
             "selectionBackground": "#FFFFFF",
             "white": "#C0C0C0",
             "yellow": "#808000"
+        },
+        {
+            "background": "#EAEAEA",
+            "black": "#1D344F",
+            "blue": "#4D688E",
+            "brightBlack": "#24476F",
+            "brightBlue": "#4E75AA",
+            "brightCyan": "#74B2C9",
+            "brightGreen": "#629F81",
+            "brightPurple": "#9F75AC",
+            "brightRed": "#C76882",
+            "brightWhite": "#CFD6DD",
+            "brightYellow": "#CA884A",
+            "cursorColor": "#1D344F",
+            "cyan": "#6CA7BD",
+            "foreground": "#1D344F",
+            "green": "#618774",
+            "name": "dayfox",
+            "purple": "#8E6F98",
+            "red": "#B95D76",
+            "selectionBackground": "#CED5DE",
+            "white": "#CDD1D5",
+            "yellow": "#BA793E"
         }
     ],
     "showTabsInTitlebar": true,
