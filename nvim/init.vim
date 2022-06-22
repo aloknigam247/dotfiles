@@ -183,12 +183,11 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
+Plug 'EdenEast/nightfox.nvim'
 " << Dark >>
-Plug 'sainnhe/gruvbox-material'
 
 " Accepted:
 " << Light >>
-" Plug 'EdenEast/nightfox.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
@@ -201,8 +200,8 @@ Plug 'sainnhe/gruvbox-material'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rafamadriz/neon'
-" Plug 'sainnhe/edge'
 " Plug 'rmehri01/onenord.nvim'
+" Plug 'sainnhe/edge'
 " Plug 'sainnhe/everforest'
 
 " << Dark >>
@@ -210,42 +209,41 @@ Plug 'sainnhe/gruvbox-material'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'sainnhe/edge'
 " Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'catppuccin/nvim'
 " Plug 'cpea2506/one_monokai.nvim'
 " Plug 'fenetikm/falcon'
-" Plug 'sainnhe/everforest'
 " Plug 'glepnir/zephyr-nvim'
 " Plug 'jsit/toast.vim'
 " Plug 'katawful/kat.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mcchrish/zenbones.nvim'
-" Plug 'rafamadriz/neon'
 " Plug 'mhartington/oceanic-next'
 " Plug 'ntk148v/vim-horizon'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rafalbromirski/vim-aurora'
+" Plug 'rafamadriz/neon'
 " Plug 'ray-x/aurora'
 " Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
+" Plug 'sainnhe/edge'
+" Plug 'sainnhe/everforest'
+" Plug 'sainnhe/sonokai'
+" Plug 'savq/melange'
+" Plug 'shaunsingh/moonlight.nvim'
+" Plug 'sickill/vim-monokai'
+" Plug 'tanvirtin/monokai.nvim'
+" Plug 'tiagovla/tokyodark.nvim'
+" Plug 'titanzero/zephyrium'
+" Plug 'tjdevries/colorbuddy.vim'
+" Plug 'tjdevries/gruvbuddy.nvim'
+" Plug 'tomasiser/vim-code-dark'
+" Plug 'wuelnerdotexe/vim-enfocado'
+" Plug 'yashguptaz/calvera-dark.nvim'
 
-" TODO: Plug 'dylanaraps/wal.vim'
-" TODO: Plug 'sainnhe/sonokai'
-" TODO: Plug 'savq/melange'
-" TODO: Plug 'shaunsingh/moonlight.nvim'
-" TODO: Plug 'sickill/vim-monokai'
-" TODO: Plug 'stevearc/aerial.nvim'
-" TODO: Plug 'tanvirtin/monokai.nvim'
-" TODO: Plug 'tiagovla/tokyodark.nvim'
-" TODO: Plug 'titanzero/zephyrium'
-" TODO: Plug 'tjdevries/colorbuddy.vim'
-" TODO: Plug 'tjdevries/gruvbuddy.nvim'
-" TODO: Plug 'tomasiser/vim-code-dark'
-" TODO: Plug 'wuelnerdotexe/vim-enfocado'
-" TODO: Plug 'yashguptaz/calvera-dark.nvim'
+" Plug 'dylanaraps/wal.vim'
 " Plug 'AlphaTechnolog/pywal.nvim'
 
 " Commenting:
@@ -860,11 +858,11 @@ require('nvim-autopairs').setup({})
 local cmp = require('cmp')
 cmp.setup({
     mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = ({
         { name = 'buffer' },
@@ -1048,7 +1046,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme gruvbox-material       " Set colorscheme
+colorscheme nightfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 

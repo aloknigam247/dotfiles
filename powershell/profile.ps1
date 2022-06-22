@@ -88,6 +88,7 @@ function ls {
     C:\msys64\usr\bin\ls.exe -F --color=auto $args
 }
 
+Remove-Alias rm
 function rm {
     C:\msys64\usr\bin\rm.exe -rf $args
 }
