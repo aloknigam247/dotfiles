@@ -183,7 +183,7 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
-Plug 'EdenEast/nightfox.nvim'
+Plug 'EdenEast/nightfox.nvim' " Dayfox, Dawnfox
 " << Dark >>
 
 " Accepted:
@@ -1046,7 +1046,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme nightfox       " Set colorscheme
+colorscheme dayfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
