@@ -183,12 +183,12 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
-Plug 'EdenEast/nightfox.nvim' " Dayfox, Dawnfox
+Plug 'NLKNguyen/papercolor-theme'
+" Plug 'EdenEast/nightfox.nvim' " Dayfox -> json, powershell, shell
 " << Dark >>
 
 " Accepted:
 " << Light >>
-" Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
 " Plug 'ayu-theme/ayu-vim'
@@ -1023,7 +1023,7 @@ set tabstop=4                         " Indent using spaces
 " ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=dark          " Select appropriate colors for dark or light
+set background=light          " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -1046,7 +1046,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme dayfox       " Set colorscheme
+colorscheme papercolor       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
