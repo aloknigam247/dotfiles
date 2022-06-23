@@ -183,7 +183,7 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'NLKNguyen/papercolor-theme' " markdown
 " Plug 'EdenEast/nightfox.nvim' " Dayfox -> json, powershell, shell
 " << Dark >>
 
