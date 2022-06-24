@@ -183,26 +183,22 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
+Plug 'EdenEast/nightfox.nvim' " Dayfox -> json, powershell, shell
 Plug 'NLKNguyen/papercolor-theme' " markdown
-" Plug 'EdenEast/nightfox.nvim' " Dayfox -> json, powershell, shell
-" << Dark >>
-
-" Accepted:
-" << Light >>
-" Plug 'Th3Whit3Wolf/one-nvim'
-" Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'ayu-theme/ayu-vim'
-" Plug 'catppuccin/nvim'
-" Plug 'jsit/toast.vim'
-" Plug 'katawful/kat.nvim'
-" Plug 'marko-cerovac/material.nvim'
-" Plug 'mcchrish/zenbones.nvim'
-" Plug 'olimorris/onedarkpro.nvim'
-" Plug 'projekt0n/github-nvim-theme'
-" Plug 'rafamadriz/neon'
-" Plug 'rmehri01/onenord.nvim'
-" Plug 'sainnhe/edge'
-" Plug 'sainnhe/everforest'
+Plug 'Th3Whit3Wolf/one-nvim'
+Plug 'Th3Whit3Wolf/onebuddy'
+Plug 'ayu-theme/ayu-vim'
+Plug 'catppuccin/nvim'
+Plug 'jsit/toast.vim'
+Plug 'katawful/kat.nvim'
+Plug 'marko-cerovac/material.nvim'
+Plug 'mcchrish/zenbones.nvim'
+Plug 'olimorris/onedarkpro.nvim'
+Plug 'projekt0n/github-nvim-theme'
+Plug 'rafamadriz/neon'
+Plug 'rmehri01/onenord.nvim'
+Plug 'sainnhe/edge'
+Plug 'sainnhe/everforest'
 
 " << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
