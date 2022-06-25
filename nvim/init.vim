@@ -562,8 +562,9 @@ Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/TravonteD/org-capture-filetype
 " TODO: https://github.com/akinsho/org-bullets.nvim
 " TODO: https://github.com/nvim-neorg/neorg
-" TODO: https://github.com/nvim-orgmode/orgmode
+Plug 'nvim-orgmode/orgmode'
 " TODO: https://github.com/ranjithshegde/orgWiki.nvim
+" TODO: https://github.com/lukas-reineke/headlines.nvim
 " }}}
 
 " Project:
@@ -731,7 +732,7 @@ Plug 'nvim-treesitter/nvim-treesitter-context' " {
 " TUI:
 " ````
 " {{{
-Plug 'VonHeikemen/fine-cmdline.nvim'
+" Plug 'VonHeikemen/fine-cmdline.nvim'
 Plug 'VonHeikemen/searchbox.nvim'
 Plug 'rcarriga/nvim-notify'
 " TODO: https://github.com/skywind3000/vim-quickui
@@ -844,6 +845,7 @@ call plug#end()
 
 " LUA Section:
 " ````````````
+" {{{
 lua << EOLUA
 -- Auto Pair
 -- `````````
@@ -967,15 +969,16 @@ require('neogit').setup {}
 require("indent_blankline").setup {
 }
 
-require('fine-cmdline').setup({
-    popup = {
-        win_options = {
-            winhighlight = "Normal:Normal,FloatBorder:SpecialChar"
-        }
-    }
-})
-vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
+-- require('fine-cmdline').setup({
+--     popup = {
+--         win_options = {
+--             winhighlight = "Normal:Normal,FloatBorder:SpecialChar"
+--         }
+--     }
+-- })
+-- vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
 EOLUA
+"}}}
 
 
 " Variables:
