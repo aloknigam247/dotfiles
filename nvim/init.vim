@@ -329,6 +329,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " TODO: https://github.com/Theory-of-Everything/nii-nvim
 " TODO: https://github.com/Ultra-Code/awesome-neovim
 " TODO: https://github.com/VapourNvim/VapourNvim
+" TODO: https://github.com/alpha2phi/neovim-for-beginner
 " TODO: https://github.com/artart222/CodeArt
 " TODO: https://github.com/askfiy/nvim
 " TODO: https://github.com/b0o/nvim-conf
@@ -351,8 +352,8 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Debugger:
 " `````````
 Plug 'mfussenegger/nvim-dap'
-" Plug 'Pocco81/dap-buddy.nvim'
-" Plug 'mfussenegger/nvim-dap-python'
+Plug 'Pocco81/dap-buddy.nvim'
+Plug 'mfussenegger/nvim-dap-python'
 " Plug 'rcarriga/nvim-dap-ui'
 " TODO: https://github.com/puremourning/vimspector
 " TODO: https://github.com/sakhnik/nvim-gdb
@@ -870,20 +871,26 @@ cmp.setup({
 
 -- DAP
 -- ```
-local dap = require('dap')
-dap.adapters.python = {
-    type = 'executable';
-    command = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
-}
-dap.configurations.python = {
-    {
-        type = 'python';
-        request = 'launch';
-        name = "Launch file";
-        program = "${file}";
-        pythonPath = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
-    }
-}
+--local dap = require('dap')
+--dap.adapters.python = {
+--    type = 'executable';
+--    command = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+--}
+--dap.configurations.python = {
+--    {
+--        type = 'python';
+--        request = 'launch';
+--        name = "Launch file";
+--        program = "${file}";
+--        pythonPath = 'C:\\Users\\aloknigam\\AppData\\Local\\Programs\\Python\\Python310\\python.exe';
+--    }
+--}
+
+require('dap-python').setup('C:\\Users\\aloknigam\\learn\\python\\.virtualenvs\\debugpy\\Scripts\\python')
+-- require('dap').set_log_level('TRACE')
+
+
+
 
 -- LSP
 -- ```
