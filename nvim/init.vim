@@ -183,61 +183,61 @@ Plug 'machakann/vim-highlightedyank'
 " ````````````
 " Current:
 " << Light >>
-Plug 'EdenEast/nightfox.nvim' " Dayfox -> json, powershell, shell
-Plug 'NLKNguyen/papercolor-theme' " markdown
-Plug 'Th3Whit3Wolf/one-nvim'
-Plug 'Th3Whit3Wolf/onebuddy'
-Plug 'ayu-theme/ayu-vim'
-Plug 'catppuccin/nvim'
-Plug 'jsit/toast.vim'
-Plug 'katawful/kat.nvim'
-Plug 'marko-cerovac/material.nvim'
-Plug 'mcchrish/zenbones.nvim'
-Plug 'olimorris/onedarkpro.nvim'
-Plug 'projekt0n/github-nvim-theme'
-Plug 'rafamadriz/neon'
-Plug 'rmehri01/onenord.nvim'
-Plug 'sainnhe/edge'
-Plug 'sainnhe/everforest'
-
-" << Dark >>
 " Plug 'EdenEast/nightfox.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
 " Plug 'Th3Whit3Wolf/onebuddy'
-" Plug 'Yagua/nebulous.nvim'
 " Plug 'ayu-theme/ayu-vim'
 " Plug 'catppuccin/nvim'
-" Plug 'cpea2506/one_monokai.nvim'
-" Plug 'fenetikm/falcon'
-" Plug 'glepnir/zephyr-nvim'
 " Plug 'jsit/toast.vim'
 " Plug 'katawful/kat.nvim'
 " Plug 'marko-cerovac/material.nvim'
 " Plug 'mcchrish/zenbones.nvim'
-" Plug 'mhartington/oceanic-next'
-" Plug 'ntk148v/vim-horizon'
 " Plug 'olimorris/onedarkpro.nvim'
 " Plug 'projekt0n/github-nvim-theme'
-" Plug 'rafalbromirski/vim-aurora'
 " Plug 'rafamadriz/neon'
-" Plug 'ray-x/aurora'
-" Plug 'rebelot/kanagawa.nvim'
 " Plug 'rmehri01/onenord.nvim'
 " Plug 'sainnhe/edge'
 " Plug 'sainnhe/everforest'
-" Plug 'sainnhe/sonokai'
-" Plug 'savq/melange'
-" Plug 'shaunsingh/moonlight.nvim'
-" Plug 'sickill/vim-monokai'
-" Plug 'tanvirtin/monokai.nvim'
-" Plug 'tiagovla/tokyodark.nvim'
-" Plug 'titanzero/zephyrium'
-" Plug 'tjdevries/colorbuddy.vim'
-" Plug 'tjdevries/gruvbuddy.nvim'
-" Plug 'tomasiser/vim-code-dark'
-" Plug 'wuelnerdotexe/vim-enfocado'
-" Plug 'yashguptaz/calvera-dark.nvim'
+
+" << Dark >>
+Plug 'EdenEast/nightfox.nvim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'Th3Whit3Wolf/one-nvim'
+Plug 'Th3Whit3Wolf/onebuddy'
+Plug 'Yagua/nebulous.nvim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'catppuccin/nvim'
+Plug 'cpea2506/one_monokai.nvim'
+Plug 'fenetikm/falcon'
+Plug 'glepnir/zephyr-nvim'
+Plug 'jsit/toast.vim'
+Plug 'katawful/kat.nvim'
+Plug 'marko-cerovac/material.nvim'
+Plug 'mcchrish/zenbones.nvim'
+Plug 'mhartington/oceanic-next'
+Plug 'ntk148v/vim-horizon'
+Plug 'olimorris/onedarkpro.nvim'
+Plug 'projekt0n/github-nvim-theme'
+Plug 'rafalbromirski/vim-aurora'
+Plug 'rafamadriz/neon'
+Plug 'ray-x/aurora'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'rmehri01/onenord.nvim'
+Plug 'sainnhe/edge'
+Plug 'sainnhe/everforest'
+Plug 'sainnhe/sonokai'
+Plug 'savq/melange'
+Plug 'shaunsingh/moonlight.nvim'
+Plug 'sickill/vim-monokai'
+Plug 'tanvirtin/monokai.nvim'
+Plug 'tiagovla/tokyodark.nvim'
+Plug 'titanzero/zephyrium'
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'tjdevries/gruvbuddy.nvim'
+Plug 'tomasiser/vim-code-dark'
+Plug 'wuelnerdotexe/vim-enfocado'
+Plug 'yashguptaz/calvera-dark.nvim'
 
 " Plug 'dylanaraps/wal.vim'
 " Plug 'AlphaTechnolog/pywal.nvim'
@@ -1029,7 +1029,7 @@ set tabstop=4                         " Indent using spaces
 " ```````````
 " {{{
 let g:netrw_banner = 0        " Turn off banner in netrw
-set background=light          " Select appropriate colors for dark or light
+set background=dark          " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -1052,7 +1052,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme papercolor       " Set colorscheme
+colorscheme nightfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
