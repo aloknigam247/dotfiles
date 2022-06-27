@@ -201,7 +201,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'sainnhe/everforest'
 
 " << Dark >>
-Plug 'EdenEast/nightfox.nvim'
+Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'Th3Whit3Wolf/one-nvim'
 Plug 'Th3Whit3Wolf/onebuddy'
@@ -622,12 +622,12 @@ Plug 'nvim-orgmode/orgmode'
 " Status Line:
 " ````````````
 " {{{
-Plug 'beauwilliams/statusline.lua' " {
+" Plug 'beauwilliams/statusline.lua' " {
     " BUG: Slowness observed
     " BUG: no mouse support in tabline
     " TODO: Explore more
 " }
-" TODO: https://github.com/NTBBloodbath/galaxyline.nvim
+Plug 'NTBBloodbath/galaxyline.nvim'
 " TODO: https://github.com/b0o/incline.nvim
 " TODO: https://github.com/datwaft/bubbly.nvim
 " TODO: https://github.com/feline-nvim/feline.nvim
@@ -942,8 +942,9 @@ require("fidget").setup{}
 
 -- Status Line
 -- ```````````
-local statusline = require('statusline')
-statusline.tabline = false
+-- local statusline = require('statusline')
+-- statusline.tabline = false
+require("galaxyline.themes.spaceline")
 
 -- Tabline
 -- ```````
@@ -1052,7 +1053,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme nightfox       " Set colorscheme
+colorscheme duskfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
