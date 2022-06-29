@@ -627,9 +627,7 @@ Plug 'nvim-orgmode/orgmode'
     " BUG: no mouse support in tabline
     " TODO: Explore more
 " }
-Plug 'NTBBloodbath/galaxyline.nvim'
-" TODO: https://github.com/b0o/incline.nvim
-" TODO: https://github.com/datwaft/bubbly.nvim
+Plug 'datwaft/bubbly.nvim'
 " TODO: https://github.com/feline-nvim/feline.nvim
 " TODO: https://github.com/glepnir/galaxyline.nvim
 " TODO: https://github.com/itchyny/lightline.vim
@@ -944,7 +942,6 @@ require("fidget").setup{}
 -- ```````````
 -- local statusline = require('statusline')
 -- statusline.tabline = false
-require("galaxyline.themes.spaceline")
 
 -- Tabline
 -- ```````
