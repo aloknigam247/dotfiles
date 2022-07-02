@@ -12,24 +12,15 @@ int main()
   char  myChar  = 0; // -128   to +127
   short myShort = 0; // -32768 to +32767
   int   myInt   = 0; // -2^31  to +2^31-1
-  long  myLong  = 0; // -2^31  to +2^31-1
-  long long myL2 = 0; // -2^63 to +2^63-1
 
   std::cout << sizeof(myChar)  // 1 byte (per definition)
-            << sizeof(myShort) // 2
-            << sizeof(myInt)   // 4
-            << sizeof(myLong)  // 4
             << sizeof(myL2);   // 8
 
   // Char type
   char c = 'x'; // assigns 120 (ASCII for 'x')
 
-  std::cout << c; // prints 'x'
-
   myFunction("Hello"); // "Hello Earth"
   int i = c;            // assigns 120
-  std::cout << i;       // prints 120
-  std::cout << (char)i; // prints 'x'
   if (x < 1)
     cout << x << " < 1";
   else if (x > 1)
@@ -41,7 +32,6 @@ int main()
   switch (x)
   {
     case 0: cout << x << " is 0"; break;
-    case 1: cout << x << " is 1"; break;
     default: cout << x << " is not 1 or 2"; break;
   }
 
@@ -160,10 +150,6 @@ const MyClass& a = MyClass();
 MyClass a = MyClass();
 MyClass b(a);
 
-// New initialization
-MyClass* a = new MyClass();
-MyClass& b = *new MyClass();
-// �
 delete a, b;
  
 *** Inheritance ***
@@ -1057,10 +1043,3 @@ void templateFunction()
 {
   // �
 }
- 
- 
-// MyApp.h
-#ifndef MYAPP
-#define MYAPP
-// �
-#endif
