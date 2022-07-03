@@ -526,8 +526,8 @@ Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/svermeulen/vimpeccable
 " }}}
 
-" Marks/Bookmarks:
-" ````````````````
+" Marks:
+" ``````
 " {{{
 " Guide:
 " https://vim.fandom.com/wiki/Using_marks
@@ -573,8 +573,8 @@ Plug 'j-hui/fidget.nvim'
 " {{{
 " TODO: https://github.com/TravonteD/org-capture-filetype
 " TODO: https://github.com/akinsho/org-bullets.nvim
-" TODO: https://github.com/nvim-neorg/neorg
-Plug 'nvim-orgmode/orgmode'
+Plug 'nvim-neorg/neorg'
+" Plug 'nvim-orgmode/orgmode'
 " TODO: https://github.com/ranjithshegde/orgWiki.nvim
 " TODO: https://github.com/lukas-reineke/headlines.nvim
 " }}}
@@ -993,6 +993,12 @@ require("indent_blankline").setup {
 --     }
 -- })
 -- vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
+
+require('neorg').setup {
+    load = {
+        ["core.defaults"] = {}
+    }
+}
 EOLUA
 "}}}
 
