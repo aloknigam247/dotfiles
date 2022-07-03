@@ -996,7 +996,8 @@ require("indent_blankline").setup {
 
 require('neorg').setup {
     load = {
-        ["core.defaults"] = {}
+        ["core.defaults"] = {},
+        ["core.norg.concealer"] = {}
     }
 }
 EOLUA
