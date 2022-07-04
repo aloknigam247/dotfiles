@@ -1147,7 +1147,12 @@ augroup vimrc_autocmds
 augroup END
 " }}}
 
-" set guifont=VictorMono_NF:h11
+set guifont=VictorMono_NF:h11
 
+let g:neovide_transparency=0.9
+let g:neovide_floating_blur_amount_x = 2.0
+let g:neovide_floating_blur_amount_y = 2.0
+let g:neovide_cursor_vfx_mode = "railgun"
+let g:neovide_cursor_vfx_particle_lifetime=2
 
 " vim: fdm=marker
