@@ -50,7 +50,7 @@ function evrc {
 }
 
 function v {
-   C:\Users\aloknigam\Downloads\neoray-win64.exe $args
+   C:\Users\aloknigam\scoop\shims\neovide.exe  $args
 }
 
 function vpcl {

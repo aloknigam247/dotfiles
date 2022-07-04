@@ -63,6 +63,8 @@
 " UI Client:
 " ``````````
 " Active:
+" TODO: https://github.com/neovide/neovide
+" Tested:
 " https://github.com/hismailbulut/Neoray {
 "   - Less features
 "   + Easy and simple to use
@@ -72,8 +74,16 @@
 "   - No font
 "   + cutosm context menu is very useful
 "   + Centered window
+" "if exists('g:neoray')
+" "    NeoraySet Transparency   1
+" "    NeoraySet ContextMenuOn  TRUE
+" "    NeoraySet BoxDrawingOn   TRUE
+" "    NeoraySet WindowState    centered
+" "    NeoraySet WindowSize     120x40
+" "    NeoraySet KeyZoomIn      <C-ScrollWheelUp>
+" "    NeoraySet KeyZoomOut     <C-ScrollWheelDown>
+" "endif
 " }
-" Tested:
 " https://github.com/equalsraf/neovim-qt {
 "   BUG: Only takes monospace fonts
 " }
@@ -109,8 +119,6 @@
     " X not good to use
 " }
 
-" TODO: https://github.com/jeanguyomarch/eovim
-" TODO: https://github.com/neovide/neovide
 " TODO: https://github.com/rohit-px2/nvui
 " TODO: https://github.com/sakhnik/nvim-ui
 " TODO: https://github.com/smolck/uivonim
@@ -123,12 +131,12 @@ call plug#begin()
 " Auto Pair:
 " ``````````
 " {{{
-Plug 'windwp/nvim-autopairs' " {
+" Plug 'windwp/nvim-autopairs' " {
     " TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
     " TODO: Create rule to not pair " for vim files
     " BUG: braces Indentation is not correct in some situation
 " }
-" TODO: https://github.com/ZhiyuanLck/smart-pairs
+Plug 'ZhiyuanLck/smart-pairs'
 " TODO: https://github.com/max-0406/autoclose.nvim
 " TODO: https://github.com/rstacruz/vim-closer
 " TODO: https://github.com/steelsojka/pears.nvim
@@ -859,7 +867,8 @@ call plug#end()
 lua << EOLUA
 -- Auto Pair
 -- `````````
-require('nvim-autopairs').setup({})
+-- require('nvim-autopairs').setup({})
+require('pairs'):setup()
 
 -- Completion
 -- ``````````
@@ -1140,14 +1149,5 @@ augroup END
 
 " set guifont=VictorMono_NF:h11
 
-if exists('g:neoray')
-    NeoraySet Transparency   1
-    NeoraySet ContextMenuOn  TRUE
-    NeoraySet BoxDrawingOn   TRUE
-    NeoraySet WindowState    centered
-    NeoraySet WindowSize     120x40
-    NeoraySet KeyZoomIn      <C-ScrollWheelUp>
-    NeoraySet KeyZoomOut     <C-ScrollWheelDown>
-endif
 
 " vim: fdm=marker
