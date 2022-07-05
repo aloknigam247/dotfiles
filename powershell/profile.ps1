@@ -101,6 +101,10 @@ function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
 
+function desktop {
+    Set-Location 'C:\Users\aloknigam\OneDrive - Microsoft\Desktop\'
+}
+
 New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 
 
