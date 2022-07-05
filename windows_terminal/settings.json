@@ -97,35 +97,6 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "colorScheme": "Campbell Powershell",
-                "commandline": "C:\\Windows\\system32\\wsl.exe -d Arch",
-                "guid": "{c23c56a9-030f-41bc-95fa-5adf7d4bf444}",
-                "hidden": false,
-                "icon": "C:\\Users\\aloknigam\\dotfiles\\arch\\arch-icon.png",
-                "name": "Arch",
-                "opacity": 74,
-                "startingDirectory": "%USERPROFILE%"
-            },
-            {
-                "commandline": "%SystemRoot%\\System32\\cmd.exe /k  \"D:\\spo\\src\\otools\\bin\\psEnv\\powershellCLR4.bat\"",
-                "elevate": true,
-                "guid": "{e8108736-25ad-4830-9477-5aa7377915de}",
-                "hidden": false,
-                "icon": "D:\\spocore\\src\\otools\\bin\\SPOEnlistmentPS.ico",
-                "name": "SPO PS",
-                "startingDirectory": "%USERPROFILE%"
-            },
-            {
-                "colorScheme": "Solarized Dark",
-                "commandline": "%SystemRoot%\\System32\\cmd.exe /k \"D:\\spo\\src\\otools\\bin\\OpenEnlistment.bat\"",
-                "elevate": true,
-                "guid": "{bc45fbbd-e6ab-4b75-ad50-ecec8e3d502e}",
-                "hidden": false,
-                "icon": "D:\\spocore\\src\\otools\\bin\\SPOEnlistmentCMD.ico",
-                "name": "SPO",
-                "startingDirectory": "%USERPROFILE%"
-            },
-            {
                 "colorScheme": "Ollie",
                 "elevate": false,
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
