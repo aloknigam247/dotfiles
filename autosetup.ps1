@@ -1,4 +1,4 @@
-$app_list = @("nvim", "powershell", "windows_terminal")
+$app_lit = @("nvim", "powershell", "windows_terminal")
 
 Write-Output "Application List:"
 for ($i=0; $i -lt $app_list.Count; $i++) {
