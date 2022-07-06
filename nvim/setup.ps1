@@ -1,3 +1,7 @@
+$choco_pkgs = @(
+    "mingw"
+)
+
 $winget_pkgs = @(
     "Neovim.Neovim",
     "OpenJS.NodeJS",

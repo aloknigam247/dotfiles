@@ -1,3 +1,11 @@
-$winget_pkgs = @("Microsoft.PowerShell.Preview")
+$choco_pkgs = @(
+    "poshgit"
+)
 
-$files = @{"profile.ps1" = $PROFILE.CurrentUserAllHosts;}
+$winget_pkgs = @(
+    "Microsoft.PowerShell.Preview"
+)
+
+$files = @{
+    "profile.ps1" = $PROFILE.CurrentUserAllHosts;
+}

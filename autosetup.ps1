@@ -1,26 +1,36 @@
+#TODO: install choco function
+
 function choco_install {
-    foreach ($pkg in $args.Split(" ")) {
+    $pkgs = $args[0]
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
         $status = choco list --localonly $pkg
         if ($status[-1] -eq "1 packages installed.") {
-            echo "choco install $pkg -y"
-        } else {
             Write-Verbose "Package $pkg already installed" -verbose
+        } else {
+            choco install $pkg -y
         }
     }
 }
 
 function winget_install {
-    foreach ($pkg in $args.Split(" ")) {
-        winget list -e --id $pkg
+    $pkgs = $args[0]
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
         $status = winget list -e --id $pkg
         if ($status[2] -eq "No installed package found matching input criteria.") {
-            echo "winget install -e --id $pkg"
+            winget install -e --id $pkg
         } else {
             Write-Verbose "Package $pkg already installed" -verbose
         }
     }
 }
-
 
 $app_list = @("nvim", "powershell", "win_pkgs", "windows_terminal")
 $app_install = @()
@@ -40,13 +50,14 @@ if ($opt -eq "*") {
     }
 }
 
+$root = Get-Location
 foreach ($app in $app_install) {
     Write-Output "`nInstalling: $app"
     Set-Location $app
     $cwd = Get-Location
     if (Test-Path setup.ps1) {
         # reset supported tags
-        $choco_pkgs = @("a")
+        $choco_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
 
@@ -62,7 +73,7 @@ foreach ($app in $app_install) {
             $dest = $files[$key]
             $dir = Split-Path -Parent $dest
             if (-not (Test-Path $dir)) {
-                #mkdir $dir
+                mkdir $dir
             }
             if (Test-Path $dest) {
                 $target = Get-Item $dest | Select-Object -ExpandProperty Target
@@ -70,17 +81,17 @@ foreach ($app in $app_install) {
                     Write-Verbose "$src already linked" -verbose
                 } else {
                     Write-Output "backup $dest --> ${dest}.orig"
-                    #Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                    Move-Item -Force -Path $dest -Destination "${dest}.orig"
                     Write-Output "Linking $src --> $dest"
-                    #New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                    New-Item -ItemType SymbolicLink -Path $dest -Target $src
                 }
             } else {
                 Write-Output "Linking $src --> $dest"
-                #New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                New-Item -ItemType SymbolicLink -Path $dest -Target $src
             }
         }
     } else {
         Write-Output "No setup.ps1 found for $app"
     }
-    Set-Location -
+    Set-Location $root
 }
