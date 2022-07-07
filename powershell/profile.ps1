@@ -145,7 +145,7 @@ function promptGen {
 $prompt_string = promptGen
 
 function prompt {
-    $prompt_string
+    "$prompt_string"
     #"`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
 }
 
