@@ -1,4 +1,5 @@
 #TODO: install choco function
+#TODO: check for admin role
 
 function choco_install {
     $pkgs = $args[0]
