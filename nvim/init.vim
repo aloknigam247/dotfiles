@@ -189,17 +189,18 @@ Plug 'machakann/vim-highlightedyank'
 
 " Colorscheme:
 " ````````````
-" |------------+-------+------|
-" | Language   | Light | Dark |
-" |------------+-------+------|
-" | cpp        |       |      |
-" | csharp     |       |      |
-" | markdown   |       |      |
-" | powershell |       |      |
-" | python     |       |      |
-" | shell      |       |      |
-" | vim        |       |      |
-" |------------+-------+------|
+" |------------+-------+---------|
+" | Language   | Light | Dark    |
+" |------------+-------+---------|
+" | cpp        |       |         |
+" | csharp     |       |         |
+" | markdown   |       |         |
+" | norg       |       | duskfox |
+" | powershell |       |         |
+" | python     |       |         |
+" | shell      |       |         |
+" | vim        |       |         |
+" |------------+-------+---------|
 " Current:
 " << Light >>
 " Plug 'EdenEast/nightfox.nvim'
