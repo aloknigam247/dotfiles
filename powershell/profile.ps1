@@ -54,11 +54,11 @@ function v {
 }
 
 function vpcl {
-    nvim -c PlugClean! -c qa
+    nvim -c "PlugClean! | only" -c qa
 }
 
 function vpi {
-    nvim -c PlugInstall -c qa
+    nvim -c "PlugInstall | only" -c qa
 }
 
 # Msys2 functions
