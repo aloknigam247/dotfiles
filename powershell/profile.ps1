@@ -13,7 +13,7 @@ Start-Job {
     git pull
     $git_status = git status --short
 
-    if ($git_status) {
+    if ($false && $git_status) {
         $dt = Get-Date
         git add .
         git commit -m "Updated at $dt"
