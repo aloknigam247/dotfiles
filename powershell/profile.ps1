@@ -13,7 +13,7 @@ Start-Job {
     git pull
     $git_status = git status --short
 
-    if ($false && $git_status) {
+    if ($git_status) {
         $dt = Get-Date
         git add .
         git commit -m "Updated at $dt"
@@ -125,10 +125,7 @@ Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
 function promptGen {
     $blocks = @(
         @{
-            'text' = '$(Get-Location)'
-        },
-        @{
-            'text' = " > "
+            'text' = '$(Get-Location) ⟩⟩ '
         }
     )
     
@@ -145,8 +142,7 @@ function promptGen {
 $prompt_string = promptGen
 
 function prompt {
-    "$prompt_string"
-    #"`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
+    $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
 }
 
 $readline = Get-PSReadLineOption
