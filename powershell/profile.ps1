@@ -122,8 +122,31 @@ Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
 
 # Prompt Styling
 # ``````````````
+function promptGen {
+    $blocks = @(
+        @{
+            'text' = '$(Get-Location)'
+        },
+        @{
+            'text' = " > "
+        }
+    )
+    
+    $prompt_string = ""
+    foreach ($block in $blocks) {
+        if ($block.Contains('text')) {
+            $prompt_string += $block['text']
+        }
+    }
+
+    return $prompt_string
+}
+
+$prompt_string = promptGen
+
 function prompt {
-    "`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
+    $prompt_string
+    #"`e[48;5;27m " + $(get-location) + " $(Get-GitBranch) `e[0m "
 }
 
 $readline = Get-PSReadLineOption
