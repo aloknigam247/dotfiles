@@ -528,7 +528,7 @@
     "showTabsInTitlebar": true,
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
-    "theme": "light",
+    "theme": "dark",
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
     "windowingBehavior": "useNew"
