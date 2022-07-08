@@ -8,10 +8,6 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": "unbound",
-            "keys": "ctrl+v"
-        },
-        {
             "command": "paste"
         },
         {
@@ -21,6 +17,10 @@
                 "singleLine": false
             },
             "keys": "ctrl+c"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+v"
         },
         {
             "command": 
@@ -528,7 +528,7 @@
     "showTabsInTitlebar": true,
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
-    "theme": "system",
+    "theme": "light",
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
     "windowingBehavior": "useNew"
