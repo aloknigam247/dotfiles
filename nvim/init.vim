@@ -217,6 +217,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'projekt0n/github-nvim-theme'
 " Plug 'rafamadriz/neon'
 " Plug 'rmehri01/onenord.nvim'
+" Plug 'rose-pine/neovim'
 " Plug 'sainnhe/edge'
 " Plug 'sainnhe/everforest'
 
@@ -244,6 +245,7 @@ Plug 'rafamadriz/neon'
 Plug 'ray-x/aurora'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'rmehri01/onenord.nvim'
+Plug 'rose-pine/neovim'
 Plug 'sainnhe/edge'
 Plug 'sainnhe/everforest'
 Plug 'sainnhe/sonokai'
@@ -688,6 +690,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'nvim-telescope/telescope.nvim'
 " TODO: https://github.com/AckslD/nvim-neoclip.lua
 " TODO: https://github.com/LinArcX/telescope-command-palette.nvim
+" TODO: https://github.com/axkirillov/easypick.nvim
 " TODO: https://github.com/camspiers/snap
 " TODO: https://github.com/crispgm/telescope-heading.nvim
 " TODO: https://github.com/nvim-telescope/telescope-hop.nvim
@@ -745,6 +748,7 @@ Plug 'nvim-treesitter/nvim-treesitter-context' " {
 " TODO: https://github.com/mfussenegger/nvim-treehopper
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
 " TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+" TODO: https://github.com/nvim-treesitter/playground
 " Plug 'p00f/nvim-ts-rainbow' " BUG: not working
 " }}}
 
@@ -772,6 +776,7 @@ Plug 'folke/trouble.nvim' " NOTE: It should go in LSP
 Plug 'nvim-lua/plenary.nvim'
 Plug 'rktjmp/lush.nvim'
 
+" TODO: https://github.com/nvim-neotest/neotest
 " TODO: https://github.com/Iron-E/nvim-bufmode
 " TODO: https://github.com/Iron-E/nvim-libmodal
 " TODO: https://github.com/Iron-E/nvim-tabmode
