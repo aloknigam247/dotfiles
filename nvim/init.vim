@@ -196,7 +196,7 @@ Plug 'machakann/vim-highlightedyank'
 " | csharp     |       | duskfox    |
 " | json       |       | papercolor |
 " | markdown   |       | duskfox    |
-" | norg       |       | duskfox    |
+" | norg       |       | nightfox   |
 " | powershell |       | duskfox    |
 " | python     |       | nightfox   |
 " | shell      |       | nightfox   |
