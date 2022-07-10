@@ -194,7 +194,7 @@ Plug 'machakann/vim-highlightedyank'
 " |------------+-------+---------|
 " | cpp        |       |         |
 " | csharp     |       |         |
-" | markdown   |       |         |
+" | markdown   |       | duskfox |
 " | norg       |       | duskfox |
 " | powershell |       |         |
 " | python     |       |         |

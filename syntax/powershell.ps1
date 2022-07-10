@@ -50,15 +50,12 @@ You can leverage the pipeline and Parameter Binding to populate the -trigger Par
 
                 $NewParams++
                 $ParamNumber++
+                $CommandResults = Invoke-RestMethod -Method POST -Uri $URL -Headers $hdrs -Body:($Variables | ConvertTo-Json) -UserAgent:(Get-JCUserAgent)
             }
 
             return $dict
 
         }
-
-    }
-
-    begin
 
     {
         Write-Verbose 'Verifying JCAPI Key'
@@ -82,78 +79,5 @@ You can leverage the pipeline and Parameter Binding to populate the -trigger Par
 
         Write-Debug $PSCmdlet.ParameterSetName
 
-    }
-
-    process
-
-    {
-
-        if ($PSCmdlet.ParameterSetName -eq 'Variables')
-        {
-
-            $Variables = @{ }
-
-            $VariableArrayList = New-Object System.Collections.ArrayList
-
-            foreach ($param in $PSBoundParameters.GetEnumerator())
-            {
-
-
-                if ($param.Key -like "Variable*")
-                {
-                    $RawObject = [pscustomobject]@{
-
-                        ObjectNumber = ($Param.key).Split('_')[0]
-                        Type         = ($Param.key).Split('_')[1]
-                        Value        = $Param.value
-                    }
-
-                    $VariableArrayList.Add($RawObject) | Out-Null
-
-                    $UniqueVariables = $VariableArrayList | Select-Object ObjectNumber -Unique
-
-                }
-
-
-            }
-
-            foreach ($O in  $UniqueVariables)
-            {
-                $Props = $VariableArrayList | Where-Object ObjectNumber -EQ $O.ObjectNumber
-
-                $VariableName = $Props | Where-Object Type -EQ 'Name'
-                $VariableValue = $Props | Where-Object Type -EQ 'Value'
-
-                $Variables.add($VariableName.value, $VariableValue.value)
-
-            }
-
-
-        }
-
-        $URL = "$JCUrlBasePath/api/command/trigger/$trigger"
-        Write-Verbose $URL
-
-        if ($Variables)
-        {
-            $CommandResults = Invoke-RestMethod -Method POST -Uri $URL -Headers $hdrs -Body:($Variables | ConvertTo-Json) -UserAgent:(Get-JCUserAgent)
-
-        }
-
-        else
-        {
-            $CommandResults = Invoke-RestMethod -Method POST -Uri $URL -Headers $hdrs -UserAgent:(Get-JCUserAgent)
-
-        }
-
-
-        $resultsArray += $CommandResults
-
-    }
-
-    end
-
-    {
-        return $resultsArray
     }
 }
