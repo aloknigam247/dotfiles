@@ -189,18 +189,20 @@ Plug 'machakann/vim-highlightedyank'
 
 " Colorscheme:
 " ````````````
-" |------------+-------+----------|
-" | Language   | Light | Dark     |
-" |------------+-------+----------|
-" | cpp        |       | duskfox  |
-" | csharp     |       | duskfox  |
-" | markdown   |       | duskfox  |
-" | norg       |       | duskfox  |
-" | powershell |       | duskfox  |
-" | python     |       | nightfox  |
-" | shell      |       | nightfox |
-" | vim        |       | duskfox  |
-" |------------+-------+----------|
+" |------------+-------+------------|
+" | Language   | Light | Dark       |
+" |------------+-------+------------|
+" | cpp        |       | duskfox    |
+" | csharp     |       | duskfox    |
+" | json       |       | papercolor |
+" | markdown   |       | duskfox    |
+" | norg       |       | duskfox    |
+" | powershell |       | duskfox    |
+" | python     |       | nightfox   |
+" | shell      |       | nightfox   |
+" | vim        |       | duskfox    |
+" | yaml       |       | papercolor |
+" |------------+-------+------------|
 " Current:
 " << Light >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -223,7 +225,7 @@ Plug 'machakann/vim-highlightedyank'
 
 " << Dark >>
 Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'NLKNguyen/papercolor-theme' " TODO: space · color is not good
 Plug 'Th3Whit3Wolf/one-nvim'
 Plug 'Th3Whit3Wolf/onebuddy'
 Plug 'Yagua/nebulous.nvim'
