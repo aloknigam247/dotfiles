@@ -122,13 +122,26 @@ Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
 
 # Prompt Styling
 # ``````````````
+function gitBlock {
+    $branch = Get-GitBranch
+    if ($null -eq $branch) {
+        return ""
+    } else {
+        return " ⟩⟩ $branch"
+    }
+
+}
+
 function promptGen {
     $blocks = @(
         @{
-            'text' = '$(Get-Location) ⟩⟩ '
+            'text' = '$(Get-Location)'
         },
         @{
-            'text' = '$(Get-GitBranch) ⟩⟩ '
+            'text' = '$(gitBlock)'
+        },
+        @{
+            'text' = " ⟩⟩ "
         }
     )
     
