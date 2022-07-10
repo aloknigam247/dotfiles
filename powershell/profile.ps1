@@ -126,6 +126,9 @@ function promptGen {
     $blocks = @(
         @{
             'text' = '$(Get-Location) ⟩⟩ '
+        },
+        @{
+            'text' = '$(Get-GitBranch) ⟩⟩ '
         }
     )
     

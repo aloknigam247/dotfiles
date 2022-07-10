@@ -189,18 +189,18 @@ Plug 'machakann/vim-highlightedyank'
 
 " Colorscheme:
 " ````````````
-" |------------+-------+---------|
-" | Language   | Light | Dark    |
-" |------------+-------+---------|
-" | cpp        |       |         |
-" | csharp     |       |         |
-" | markdown   |       | duskfox |
-" | norg       |       | duskfox |
-" | powershell |       |         |
-" | python     |       |         |
-" | shell      |       |         |
-" | vim        |       |         |
-" |------------+-------+---------|
+" |------------+-------+----------|
+" | Language   | Light | Dark     |
+" |------------+-------+----------|
+" | cpp        |       | duskfox  |
+" | csharp     |       | duskfox  |
+" | markdown   |       | duskfox  |
+" | norg       |       | duskfox  |
+" | powershell |       | duskfox  |
+" | python     |       | nightfox  |
+" | shell      |       | nightfox |
+" | vim        |       | duskfox  |
+" |------------+-------+----------|
 " Current:
 " << Light >>
 " Plug 'EdenEast/nightfox.nvim'
@@ -1083,7 +1083,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme duskfox       " Set colorscheme
+colorscheme papercolor       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 

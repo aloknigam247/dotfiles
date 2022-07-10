@@ -623,40 +623,6 @@ class MyClass
 };
  
  
-class MyClass
-{
- public:
-  static int si;
-  const static double csd;
-  const static int csi = 5;
-};
-int MyClass::si = 1;
-const double MyClass::csd = 1.23;
- 
-*** Preprocessor ***
- 
-#include <iostream> // search default directory
-#include "MyFile" // search current, then default
-#include "C:\MyFile" // absolute path
-#include "..\MyFile" // relative path
-
-// Macros
-#define MACRO 0 // macro definition
-int x = MACRO; // x = 0
-
-#undef MACRO // macro undefine
-#undef MACRO // allowed
-
-#define MAX(a,b) a>b ? a:b
-int x = MAX(MACRO, 1); // evaluates to 1
-
-#define MAX(a,b)  \
-            a>b ? \
-            a:b
-  
-// Conditional compilation directives
-#define DEBUG_LEVEL 3
- 
 #if DEBUG_LEVEL > 2
  // �
 #elif DEBUG_LEVEL == 2
@@ -668,23 +634,6 @@ int x = MAX(MACRO, 1); // evaluates to 1
  
 // Compile if defined
 #define DEBUG
-
-#if defined DEBUG
- // �
-#elif !defined DEBUG
- // �
-#endif
-
-#ifdef DEBUG
- // �
-#endif
- 
-#ifndef DEBUG
- // �
-#endif
- 
-// Error directive
-#error Compilation aborted
 
 // Line directive
 #line 5 "My MyApp Error"
