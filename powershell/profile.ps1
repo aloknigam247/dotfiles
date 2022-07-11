@@ -136,7 +136,8 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 function promptGen {
     $blocks = @(
         @{
-            'text' = '$dir_icon  '
+            'text' = '$dir_icon  ';
+            'fg' = '#8AC926'
         }
         @{
             'text' = '$(Get-Location)'
@@ -151,12 +152,23 @@ function promptGen {
     
     $prompt_string = ""
     foreach ($block in $blocks) {
+        if ($block.Contains('fg')) {
+            $fg = $block['fg']
+            $fg_r_hex = "0x$($fg.Substring(1, 2))"
+            $fg_g_hex = "0x$($fg.Substring(3, 2))"
+            $fg_b_hex = "0x$($fg.Substring(5, 2))"
+            $fg_r = [int]$fg_r_hex
+            $fg_g = [int]$fg_g_hex
+            $fg_b = [int]$fg_b_hex
+            $format = ("`e[38;2;$fg_r;$fg_g;$fg_b" + "m")
+            $prompt_string += $format
+        }
         if ($block.Contains('text')) {
             $prompt_string += $block['text']
         }
     }
 
-    return $prompt_string
+    return $prompt_string + "`e[0m"
 }
 
 $prompt_string = promptGen

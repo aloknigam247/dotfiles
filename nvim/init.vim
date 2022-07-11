@@ -205,6 +205,7 @@ Plug 'machakann/vim-highlightedyank'
 " |------------+-------+------------|
 " Current:
 " << Light >>
+" "Plug 'ChrisKempson/Tomorrow-Theme'
 " Plug 'EdenEast/nightfox.nvim'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'Th3Whit3Wolf/one-nvim'
@@ -224,6 +225,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'sainnhe/everforest'
 
 " << Dark >>
+Plug 'ChrisKempson/Tomorrow-Theme'
 Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
 Plug 'NLKNguyen/papercolor-theme' " TODO: space · color is not good
 Plug 'Th3Whit3Wolf/one-nvim'
