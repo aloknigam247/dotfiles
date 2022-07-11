@@ -190,4 +190,5 @@ Set-PSReadLineOption -Colors @{ Command = $PSStyle.Italic + $readline.CommandCol
 
 
 # Settings
+Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
