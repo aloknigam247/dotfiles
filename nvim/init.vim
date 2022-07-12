@@ -973,6 +973,190 @@ require("fidget").setup{}
 -- ```````````
 -- local statusline = require('statusline')
 -- statusline.tabline = false
+-- Bubbly
+ vim.g.bubbly_palette = {
+   background = "#34343c",
+   foreground = "#c5cdd9",
+   black = "#3e4249",
+   red = "#ec7279",
+   green = "#a0c980",
+   yellow = "#deb974",
+   blue = "#6cb6eb",
+   purple = "#d38aea",
+   cyan = "#5dbbc1",
+   white = "#c5cdd9",
+   lightgrey = "#57595e",
+   darkgrey = "#404247"
+ }
+
+ vim.g.bubbly_statusline = {
+   'mode',
+   'truncate',
+   'path',
+   'branch',
+   'signify',
+   'gitsigns',
+   'coc',
+   'builtinlsp.diagnostic_count',
+   'builtinlsp.current_function',
+   'divisor',
+   'filetype',
+   'progress'
+ }
+
+vim.g.bubbly_symbols = {
+  default = 'PANIC!',
+
+  path = {
+    readonly = '',
+    unmodifiable = '',
+    modified = '+',
+  },
+  signify = {
+    added = '+%s', -- requires 1 '%s'
+    modified = '~%s', -- requires 1 '%s'
+    removed = '-%s', -- requires 1 '%s'
+  },
+  gitsigns = {
+    added = '+%s', -- requires 1 '%s'
+    modified = '~%s', -- requires 1 '%s'
+    removed = '-%s', -- requires 1 '%s'
+  },
+  coc = {
+    error = ' %s', -- requires 1 '%s'
+    warning = ' %s', -- requires 1 '%s'
+  },
+  builtinlsp = {
+    diagnostic_count = {
+      error = ' %s', -- requires 1 '%s'
+      warning = ' %s', --requires 1 '%s'
+    },
+  },
+  branch = ' %s', -- requires 1 '%s'
+  total_buffer_number = '﬘ %s', --requires 1 '%d'
+  lsp_status = {
+    diagnostics = {
+      error = ' %d',
+      warning = ' %d',
+      hint = ' %d',
+      info = ' %d',
+    },
+  },
+}
+
+vim.g.bubbly_tags = {
+  default = 'HELP ME PLEASE!',
+
+  mode = {
+    normal = 'NORMAL',
+    insert = 'INSERT',
+    visual = 'VISUAL',
+    visualblock = 'VISUAL-B',
+    command = 'COMMAND',
+    terminal = 'TERMINAL',
+    replace = 'REPLACE',
+    default = 'UNKOWN',
+  },
+  paste = 'PASTE',
+  filetype = {
+    noft = '<none>',
+    conf = ' config',
+    config = ' config',
+    css = ' css',
+    diff = '繁 diff',
+    dockerfile = ' docker',
+    email = ' mail',
+    gitconfig = ' git config',
+    html = ' html',
+    javascript = ' javascript',
+    javascriptreact = ' javascript',
+    json = ' json',
+    less = ' less',
+    lua = ' lua',
+    mail = ' mail',
+    make = ' make',
+    markdown = ' markdown',
+    php = ' php',
+    plain = ' text',
+    plaintext = ' text',
+    ps1 = '>_ powershell',
+    python = ' python',
+    sass = ' sass',
+    scss = ' scss',
+    text = ' text',
+    typescript = ' typescript',
+    typescriptreact = ' typescript',
+    vim = ' vim',
+    xml = '謹 xml',
+  },
+}
+
+vim.g.bubbly_colors = {
+  default = 'red',
+
+  mode = {
+    normal = 'green', -- uses by default 'background' as the foreground color.
+    insert = 'blue',
+    visual = 'red',
+    visualblock = 'red',
+    command = 'red',
+    terminal = 'blue',
+    replace = 'yellow',
+    default = 'white'
+  },
+  path = {
+    readonly = { background = 'lightgrey', foreground = 'foreground' },
+    unmodifiable = { background = 'darkgrey', foreground = 'foreground' },
+    path = 'white',
+    modified = { background = 'lightgrey', foreground = 'foreground' },
+  },
+  branch = 'purple',
+  signify = {
+    added = 'green',
+    modified = 'blue',
+    removed = 'red',
+  },
+  gitsigns = {
+    added = 'green',
+    modified = 'blue',
+    removed = 'red',
+  },
+  paste = 'red',
+  coc = {
+    error = 'red',
+    warning = 'yellow',
+    status = { background = 'lightgrey', foreground = 'foreground' },
+  },
+  builtinlsp = {
+    diagnostic_count = {
+      error = 'red',
+      warning = 'yellow',
+    },
+    current_function = 'purple',
+  },
+  filetype = 'blue',
+  progress = {
+    rowandcol = { background = 'lightgrey', foreground = 'foreground' },
+    percentage = { background = 'darkgrey', foreground = 'foreground' },
+  },
+  tabline = {
+    active = 'blue',
+    inactive = 'white',
+    close = 'darkgrey',
+  },
+  total_buffer_number = 'cyan',
+  lsp_status = {
+    messages = 'white',
+    diagnostics = {
+      error = 'red',
+      warning = 'yellow',
+      hint = 'white',
+      info = 'blue',
+    },
+  },
+}
+
+vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
 
 -- Tabline
 -- ```````
