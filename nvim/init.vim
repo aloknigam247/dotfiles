@@ -189,20 +189,20 @@ Plug 'machakann/vim-highlightedyank'
 
 " Colorscheme:
 " ````````````
-" |------------+-------+------------|
-" | Language   | Light | Dark       |
-" |------------+-------+------------|
-" | cpp        |       | duskfox    |
-" | csharp     |       | duskfox    |
-" | json       |       | papercolor |
-" | markdown   |       | duskfox    |
-" | norg       |       | nightfox   |
-" | powershell |       | duskfox    |
-" | python     |       | nightfox   |
-" | shell      |       | nightfox   |
-" | vim        |       | duskfox    |
-" | yaml       |       | papercolor |
-" |------------+-------+------------|
+" |------------+-------+------|
+" | Language   | Light | Dark |
+" |------------+-------+------|
+" | cpp        |       |      |
+" | csharp     |       |      |
+" | json       |       |      |
+" | markdown   |       |      |
+" | norg       |       |      |
+" | powershell |       |      |
+" | python     |       |      |
+" | shell      |       |      |
+" | vim        |       |      |
+" | yaml       |       |      |
+" |------------+-------+------|
 " Current:
 " << Light >>
 " "Plug 'ChrisKempson/Tomorrow-Theme'
@@ -225,7 +225,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'sainnhe/everforest'
 
 " << Dark >>
-Plug 'ChrisKempson/Tomorrow-Theme'
+autocmd FileType vim colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
 Plug 'NLKNguyen/papercolor-theme' " TODO: space · color is not good
 Plug 'Th3Whit3Wolf/one-nvim'
@@ -1087,7 +1087,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme papercolor       " Set colorscheme
+colorscheme duskfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
