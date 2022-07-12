@@ -225,6 +225,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'sainnhe/everforest'
 
 " << Dark >>
+autocmd FileType json colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType vim colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
@@ -996,9 +997,6 @@ require("fidget").setup{}
    'branch',
    'signify',
    'gitsigns',
-   'coc',
-   'builtinlsp.diagnostic_count',
-   'builtinlsp.current_function',
    'divisor',
    'filetype',
    'progress'
