@@ -65,7 +65,7 @@ function vpi {
     nvim -c "PlugInstall | only" -c qa
     rm '$null'
 }
-function nvim {
+function nv {
     nvim $args
     rm '$null'
 }
