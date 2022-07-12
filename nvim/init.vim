@@ -653,7 +653,7 @@ Plug 'nvim-neorg/neorg'
     " BUG: no mouse support in tabline
     " TODO: Explore more
 " }
-Plug 'datwaft/bubbly.nvim'
+Plug 'datwaft/bubbly.nvim' " BUG: error in branch tag
 " TODO: https://github.com/feline-nvim/feline.nvim
 " TODO: https://github.com/glepnir/galaxyline.nvim
 " TODO: https://github.com/itchyny/lightline.vim
@@ -1075,7 +1075,7 @@ vim.g.bubbly_tags = {
     php = ' php',
     plain = ' text',
     plaintext = ' text',
-    ps1 = '>_ powershell',
+    ps1 = ' powershell',
     python = ' python',
     sass = ' sass',
     scss = ' scss',
