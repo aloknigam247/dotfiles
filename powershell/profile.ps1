@@ -67,7 +67,7 @@ function vpi {
 }
 function nv {
     nvim $args
-    rm '$null'
+    rm '.\$null'
 }
 
 # Msys2 functions
