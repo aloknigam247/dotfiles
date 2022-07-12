@@ -225,6 +225,7 @@ Plug 'machakann/vim-highlightedyank'
 " Plug 'sainnhe/everforest'
 
 " << Dark >>
+autocmd FileType norg colorscheme duskfox | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType vim colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
 Plug 'NLKNguyen/papercolor-theme' " TODO: space · color is not good
