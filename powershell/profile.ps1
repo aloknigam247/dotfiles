@@ -43,22 +43,31 @@ Set-Alias -Name spslocal -Value "d:\nugetcache\onedrive.deploymentagentsdk.9.0.2
 # `````````
 function eprc {
     nvim $PROFILE.CurrentUserAllHosts
+    rm '$null'
 }
 
 function evrc {
     nvim $env:LOCALAPPDATA\nvim\init.vim
+    rm '$null'
 }
 
 function v {
    C:\Users\aloknigam\scoop\shims\neovide.exe --multigrid $args
+    rm '$null'
 }
 
 function vpcl {
     nvim -c "PlugClean! | only" -c qa
+    rm '$null'
 }
 
 function vpi {
     nvim -c "PlugInstall | only" -c qa
+    rm '$null'
+}
+function nvim {
+    nvim $args
+    rm '$null'
 }
 
 # Msys2 functions

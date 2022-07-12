@@ -231,8 +231,6 @@ autocmd FileType vim colorscheme one-nvim | highlight clear CursorLine | highlig
 Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
 Plug 'NLKNguyen/papercolor-theme' " TODO: space · color is not good
 Plug 'Th3Whit3Wolf/one-nvim'
-Plug 'Th3Whit3Wolf/onebuddy'
-Plug 'Yagua/nebulous.nvim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'catppuccin/nvim'
 Plug 'cpea2506/one_monokai.nvim'
@@ -975,32 +973,32 @@ require("fidget").setup{}
 -- local statusline = require('statusline')
 -- statusline.tabline = false
 -- Bubbly
- vim.g.bubbly_palette = {
-   background = "#34343c",
-   foreground = "#c5cdd9",
-   black = "#3e4249",
-   red = "#ec7279",
-   green = "#a0c980",
-   yellow = "#deb974",
-   blue = "#6cb6eb",
-   purple = "#d38aea",
-   cyan = "#5dbbc1",
-   white = "#c5cdd9",
-   lightgrey = "#57595e",
-   darkgrey = "#404247"
- }
+vim.g.bubbly_palette = {
+  background = "#34343c",
+  foreground = "#c5cdd9",
+  black = "#3e4249",
+  red = "#ec7279",
+  green = "#a0c980",
+  yellow = "#deb974",
+  blue = "#6cb6eb",
+  purple = "#d38aea",
+  cyan = "#5dbbc1",
+  white = "#c5cdd9",
+  lightgrey = "#57595e",
+  darkgrey = "#404247"
+}
 
- vim.g.bubbly_statusline = {
-   'mode',
-   'truncate',
-   'path',
-   'branch',
-   'signify',
-   'gitsigns',
-   'divisor',
-   'filetype',
-   'progress'
- }
+vim.g.bubbly_statusline = {
+  'mode',
+  'truncate',
+  'path',
+  'branch', -- creates a null file
+  'signify',
+  'gitsigns',
+  'divisor',
+  'filetype',
+  'progress'
+}
 
 vim.g.bubbly_symbols = {
   default = 'PANIC!',
