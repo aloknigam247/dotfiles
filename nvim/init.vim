@@ -992,7 +992,7 @@ vim.g.bubbly_statusline = {
   'mode',
   'truncate',
   'path',
-  'branch', -- creates a null file
+--  'branch', -- creates a $null file
   'signify',
   'gitsigns',
   'divisor',
