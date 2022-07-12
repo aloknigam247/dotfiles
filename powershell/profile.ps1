@@ -66,7 +66,7 @@ function vpi {
     rm '$null'
 }
 function nv {
-    nvim $args
+    C:\Program Files\Neovim\bin\nvim.exe $args
     rm '.\$null'
 }
 
