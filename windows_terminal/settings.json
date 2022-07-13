@@ -526,6 +526,7 @@
         }
     ],
     "showTabsInTitlebar": true,
+    "startOnUserLogin": true,
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
     "theme": "dark",

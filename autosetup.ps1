@@ -3,6 +3,96 @@
 #TODO: winget first install Y error
 #TODO: install fonts
 
+function DrawMenu {
+    param ($menuItems, $menuPosition, $Multiselect, $selection)
+    $l = $menuItems.length
+    for ($i = 0; $i -le $l;$i++) {
+        if ($menuItems[$i] -ne $null) {
+            $item = $menuItems[$i]
+            if ($Multiselect) {
+                if ($selection -contains $i) {
+                    $item = ' ' + $item
+                } else {
+                    $item = ' ' + $item
+                }
+            }
+            if ($i -eq $menuPosition) {
+                Write-Host "> $($item)" -ForegroundColor Green
+            } else {
+                Write-Host "  $($item)"
+            }
+        }
+    }
+}
+
+function Toggle-Selection {
+    param ($pos, [array]$selection)
+        if ($selection -contains $pos) { 
+            $result = $selection | where {$_ -ne $pos}
+        } else {
+            $selection += $pos
+                $result = $selection
+        }
+    $result
+}
+
+function Menu {
+    param ([array]$menuItems, [switch]$ReturnIndex=$false, [switch]$Multiselect)
+    $vkeycode = 0
+    $pos = 0
+    $selection = @()
+    if ($menuItems.Length -gt 0) {
+        try {
+            [console]::CursorVisible=$false #prevents cursor flickering
+            DrawMenu $menuItems $pos $Multiselect $selection
+            while ($vkeycode -ne 13 -and $vkeycode -ne 27) {
+                $press = $host.ui.rawui.readkey("NoEcho,IncludeKeyDown")
+                $vkeycode = $press.virtualkeycode
+                if ($vkeycode -eq 38 -or $press.Character -eq 'k') {$pos--}
+                if ($vkeycode -eq 40 -or $press.Character -eq 'j') {$pos++}
+                if ($vkeycode -eq 36) { $pos = 0 }
+                if ($vkeycode -eq 35) { $pos = $menuItems.length - 1 }
+                if ($press.Character -eq ' ') { $selection = Toggle-Selection $pos $selection }
+                if ($pos -lt 0) {$pos = 0}
+                if ($vkeycode -eq 27) {$pos = $null }
+                if ($pos -ge $menuItems.length) {$pos = $menuItems.length -1}
+                if ($vkeycode -ne 27) {
+                    $startPos = [System.Console]::CursorTop - $menuItems.Length
+                    [System.Console]::SetCursorPosition(0, $startPos)
+                    DrawMenu $menuItems $pos $Multiselect $selection
+                }
+            }
+        }
+        finally {
+            [System.Console]::SetCursorPosition(0, $startPos + $menuItems.Length)
+            [console]::CursorVisible = $true
+        }
+    }
+    else {
+        $pos = $null
+    }
+
+    if ($ReturnIndex -eq $false -and $pos -ne $null)
+    {
+        if ($Multiselect){
+            return $menuItems[$selection]
+        }
+        else {
+            return $menuItems[$pos]
+        }
+    }
+    else 
+    {
+        if ($Multiselect){
+            return $selection
+        }
+        else {
+            return $pos
+        }
+    }
+}
+
+
 function choco_install {
     $pkgs = $args[0]
     if ($pkgs.Length -eq 0) {
@@ -36,22 +126,8 @@ function winget_install {
 }
 
 $app_list = @("nvim", "powershell", "win_pkgs", "windows_terminal")
-$app_install = @()
-
-Write-Output "Application List:"
-for ($i=0; $i -lt $app_list.Count; $i++) {
-    "    ${i}: {0}" -f $app_list[$i]
-}
-
-$opt = Read-Host "Space seperated index list of dotfiles to install (* for all)"
-
-if ($opt -eq "*") {
-    $app_install = $app_list
-} else {
-    foreach ($o in $opt.Split(" ")) {
-        $app_install += $app_list[$o]
-    }
-}
+Write-Output "Application List: (space to select, enter to install)"
+$app_install = Menu $app_list -Multiselect
 
 $root = Get-Location
 foreach ($app in $app_install) {
