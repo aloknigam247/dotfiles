@@ -231,7 +231,6 @@ Plug 'EdenEast/nightfox.nvim' " duskfox, nighfox, nordfox, terafox
 Plug 'NLKNguyen/papercolor-theme' " TODO: space · color is not good
 Plug 'Th3Whit3Wolf/one-nvim'
 Plug 'ayu-theme/ayu-vim'
-Plug 'catppuccin/nvim'
 Plug 'cpea2506/one_monokai.nvim'
 Plug 'fenetikm/falcon'
 Plug 'glepnir/zephyr-nvim'
