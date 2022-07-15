@@ -143,6 +143,11 @@ Plug 'ZhiyuanLck/smart-pairs'
 " TODO: https://github.com/theHamsta/nvim-treesitter-pairs
 " }}}
 
+" Cheatsheet
+" {{{
+Plug 'sudormrfbin/cheatsheet.nvim'
+" }}}
+
 " COC:
 " ````
 " {{{
@@ -469,10 +474,8 @@ Plug 'sindrets/diffview.nvim'
 " ``````
 " {{{
 Plug 'kyazdani42/nvim-web-devicons'
-" TODO: https://github.com/adelarsq/vim-emoji-icon-theme
+Plug 'yamatsum/nvim-nonicons'
 " TODO: https://github.com/kristijanhusak/defx-icons
-" TODO: https://github.com/lambdalisue/nerdfont.vim
-" TODO: https://github.com/yamatsum/nvim-nonicons
 " }}}
 
 " Indentation:
@@ -508,7 +511,7 @@ Plug 'folke/lsp-colors.nvim'
 " TODO: https://github.com/glepnir/lspsaga.nvim
 Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
-" TODO: https://github.com/jubnzv/virtual-types.nvim
+Plug 'jubnzv/virtual-types.nvim'
 " TODO: https://github.com/kosayoda/nvim-lightbulb
 " TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
 " TODO: https://github.com/ldelossa/litee-bookmarks.nvim
@@ -533,15 +536,12 @@ Plug 'j-hui/fidget.nvim'
 " Mapping:
 " ````````
 " {{{
+Plug 'folke/which-key.nvim'
 " TODO: https://github.com/FeiyouG/command_center.nvim
 " TODO: https://github.com/LionC/nest.nvim
 " TODO: https://github.com/b0o/mapx.nvim
 " TODO: https://github.com/svermeulen/vimpeccable
 " }}}
-
-" Mapping:
-" ````````
-Plug 'folke/which-key.nvim'
 
 " Marks:
 " ``````
@@ -780,6 +780,7 @@ Plug 'tversteeg/registers.nvim' " Displays registers on ^R and \" {
 Plug 'MunifTanjim/nui.nvim'
 Plug 'folke/trouble.nvim' " NOTE: It should go in LSP
 Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
 Plug 'rktjmp/lush.nvim'
 
 " TODO: https://github.com/nvim-neotest/neotest
@@ -855,11 +856,8 @@ Plug 'rktjmp/lush.nvim'
 " TODO: https://github.com/simnalamburt/vim-mundo
 " TODO: https://github.com/srstevenson/vim-picker
 " TODO: https://github.com/stsewd/sphinx.nvim
-Plug 'udormrfbin/cheatsheet.nvim'
-Plug 'nvim-lua/popup.nvim'
 " TODO: https://github.com/mg979/vim-visual-multi
 " TODO: https://github.com/tjdevries/nlua.nvim
-" TODO: https://github.com/vim-scripts/ShowMarks
 " TODO: https://github.com/wbthomason/packer.nvim
 " TODO: https://github.com/wellle/context.vim
 " }}}
@@ -922,6 +920,7 @@ require("nvim-lsp-installer").setup {}
 local on_attach = function(_, bufnr)
   -- vim-illuminate
   require 'illuminate'.on_attach(_)
+  require 'virtualtypes'.on_attach(_)
 
   local opts = { buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -1049,7 +1048,6 @@ vim.g.bubbly_tags = {
   },
   paste = 'PASTE',
   filetype = {
-    noft = '<none>',
     conf = ' config',
     config = ' config',
     css = ' css',
@@ -1066,6 +1064,8 @@ vim.g.bubbly_tags = {
     mail = ' mail',
     make = ' make',
     markdown = ' markdown',
+    noft = '<none>',
+    norg = '🦄 norg',
     php = ' php',
     plain = ' text',
     plaintext = ' text',
