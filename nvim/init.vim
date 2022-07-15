@@ -419,6 +419,7 @@ Plug 'nvim-neo-tree/neo-tree.nvim' " {
 " Focus Mode:
 " ```````````
 Plug 'Pocco81/TrueZen.nvim'
+Plug 'folke/twilight.nvim'
 " TODO: https://github.com/hoschi/yode-nvim
 " TODO: https://github.com/junegunn/goyo.vim
 
@@ -537,6 +538,10 @@ Plug 'j-hui/fidget.nvim'
 " TODO: https://github.com/b0o/mapx.nvim
 " TODO: https://github.com/svermeulen/vimpeccable
 " }}}
+
+" Mapping:
+" ````````
+Plug 'folke/which-key.nvim'
 
 " Marks:
 " ``````
@@ -798,21 +803,15 @@ Plug 'rktjmp/lush.nvim'
 " TODO: https://github.com/booperlv/nvim-gomove
 " TODO: https://github.com/chipsenkbeil/distant.nvim
 " TODO: https://github.com/chrisbra/NrrwRgn
-" TODO: https://github.com/code-biscuits/nvim-biscuits
 " TODO: https://github.com/craigemery/vim-autotag
-" TODO: https://github.com/danymat/neogen
 " TODO: https://github.com/dbeniamine/cheat.sh-vim
 " TODO: https://github.com/folke/lua-dev.nvim
-" TODO: https://github.com/folke/twilight.nvim
-" TODO: https://github.com/folke/which-key.nvim
 " TODO: https://github.com/frabjous/knap
 " TODO: https://github.com/gaborvecsei/cryptoprice.nvim
-" TODO: https://github.com/gaborvecsei/memento.nvim
 " TODO: https://github.com/gbprod/substitute.nvim
 " TODO: https://github.com/gbprod/yanky.nvim
 " TODO: https://github.com/gelguy/wilder.nvim, { 'do': function('UpdateRemotePlugins') }
 " TODO: https://github.com/gennaro-tedesco/nvim-jqx
-" TODO: https://github.com/gennaro-tedesco/nvim-peekup
 " TODO: https://github.com/ggandor/leap.nvim
 " TODO: https://github.com/glacambre/firenvim, { 'do': { _ -> firenvim#install(0) } }
 " TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
@@ -826,18 +825,15 @@ Plug 'rktjmp/lush.nvim'
 " TODO: https://github.com/jbyuki/instant.nvim
 " TODO: https://github.com/jbyuki/one-small-step-for-vimkind
 " TODO: https://github.com/jbyuki/venn.nvim
-" TODO: https://github.com/jedrzejboczar/toggletasks.nvim
 " TODO: https://github.com/jubnzv/mdeval.nvim
 " TODO: https://github.com/junegunn/fzf
 " TODO: https://github.com/junegunn/vim-easy-align
-" TODO: https://github.com/junegunn/vim-peekaboo
 " TODO: https://github.com/junegunn/vim-slash
 " TODO: https://github.com/kevinhwang91/nvim-hlslens
 " TODO: https://github.com/klen/nvim-test
 " TODO: https://github.com/kshenoy/vim-signature
 " TODO: https://github.com/lifepillar/vim-colortemplate
 " TODO: https://github.com/liuchengxu/vim-clap
-" TODO: https://github.com/lukas-reineke/headlines.nvim
 " TODO: https://github.com/markonm/traces.vim
 " TODO: https://github.com/matbme/JABS.nvim
 " TODO: https://github.com/matveyt/neoclip
@@ -859,7 +855,8 @@ Plug 'rktjmp/lush.nvim'
 " TODO: https://github.com/simnalamburt/vim-mundo
 " TODO: https://github.com/srstevenson/vim-picker
 " TODO: https://github.com/stsewd/sphinx.nvim
-" TODO: https://github.com/sudormrfbin/cheatsheet.nvim
+Plug 'udormrfbin/cheatsheet.nvim'
+Plug 'nvim-lua/popup.nvim'
 " TODO: https://github.com/mg979/vim-visual-multi
 " TODO: https://github.com/tjdevries/nlua.nvim
 " TODO: https://github.com/vim-scripts/ShowMarks
@@ -1176,6 +1173,9 @@ require('nvim-treesitter.configs').setup {
 }
 require('hlargs').setup()
 
+-- Twilight
+require("twilight").setup {}
+
 -- Neogit
 require('neogit').setup {}
 
@@ -1191,12 +1191,18 @@ require("indent_blankline").setup {
 -- })
 -- vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
 
+
+-- Neorg
 require('neorg').setup {
     load = {
         ["core.defaults"] = {},
         ["core.norg.concealer"] = {}
     }
 }
+
+-- Which-Key
+require("which-key").setup {}
+
 EOLUA
 "}}}
 
