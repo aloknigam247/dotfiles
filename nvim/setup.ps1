@@ -10,5 +10,6 @@ $winget_pkgs = @(
 
 $files = @{
     "init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";
+    "plugins.lua" = "$env:LOCALAPPDATA\nvim\lua\plugins.lua";
     "site" = "$env:LOCALAPPDATA\nvim-data\site";
 }

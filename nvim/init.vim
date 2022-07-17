@@ -125,6 +125,8 @@
 " TODO: https://github.com/vhakulinen/gnvim
 
 
+" "lua require('plugins')
+
 " Plugins:
 " ````````
 call plug#begin()
