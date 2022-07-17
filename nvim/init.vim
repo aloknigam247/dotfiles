@@ -125,7 +125,11 @@
 " TODO: https://github.com/vhakulinen/gnvim
 
 
-" "lua require('plugins')
+lua require('plugins')
+augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+augroup end
 
 " Plugins:
 " ````````
