@@ -997,7 +997,7 @@ end
                     text = ' text',
                     typescript = ' typescript',
                     typescriptreact = ' typescript',
-                    vim = ' vim',
+                    vim = ' vim',
                     xml = '謹 xml',
                 },
             }

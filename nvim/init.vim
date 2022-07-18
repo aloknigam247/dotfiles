@@ -281,7 +281,7 @@ let g:neovide_cursor_vfx_mode = "pixiedust"
 let g:neovide_cursor_vfx_particle_lifetime=2
 let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
-let g:neovide_remember_window_size = v:false
+let g:neovide_remember_window_size = v:true
 " let g:neovide_transparency=0.9
 
 " vim: fdm=marker
