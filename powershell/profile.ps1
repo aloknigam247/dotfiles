@@ -50,7 +50,7 @@ function evrc {
 }
 
 function v {
-   C:\Users\aloknigam\scoop\shims\neovide.exe --multigrid $args
+   C:\Users\aloknigam\scoop\shims\neovide.exe --multigrid --geometry=100x40 $args
 }
 
 function vpcl {
