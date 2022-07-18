@@ -7,5 +7,5 @@ $winget_pkgs = @(
 )
 
 $files = @{
-    "profile.ps1" = $PROFILE.CurrentUserAllHosts;
+    "profile.ps1" = $PROFILE.AllUsersAllHosts;
 }
