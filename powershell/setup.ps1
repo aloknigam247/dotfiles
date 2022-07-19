@@ -3,7 +3,8 @@ $choco_pkgs = @(
 )
 
 $winget_pkgs = @(
-    "Microsoft.PowerShell.Preview"
+    "Microsoft.PowerShell.Preview",
+    "gerardog.gsudo"
 )
 
 $files = @{
