@@ -42,7 +42,7 @@ Set-Alias -Name spslocal -Value "d:\nugetcache\onedrive.deploymentagentsdk.9.0.2
 # Functions
 # `````````
 function eprc {
-    nvim $PROFILE.CurrentUserAllHosts
+    nvim $PROFILE.AllUsersAllHosts
 }
 
 function evrc {
@@ -105,6 +105,88 @@ function desktop {
     Set-Location 'C:\Users\aloknigam\OneDrive - Microsoft\Desktop\'
 }
 
+function Format-Text {
+    param(
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(Position=0)]
+        [String]$text,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [String]$bg,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [String]$fg,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [ValidateSet("blink","bold","hidden","italic","reverse","strikethrough","underline")]
+        [Array]$styles,
+
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [Switch]$headonly,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Switch]$notail
+    )
+
+    $head = ""
+
+    # create background header
+    if ($bg -ne "") {
+        $bg_r_hex = "0x$($bg.Substring(1, 2))"
+        $bg_g_hex = "0x$($bg.Substring(3, 2))"
+        $bg_b_hex = "0x$($bg.Substring(5, 2))"
+        $bg_r = [int]$bg_r_hex
+        $bg_g = [int]$bg_g_hex
+        $bg_b = [int]$bg_b_hex
+        $head = "48;2;$bg_r;$bg_g;$bg_b"
+    }
+
+    # create forground header
+    if ($fg -ne "") {
+        if ($head -ne "") { $head += ";" } # seperator
+        $fg_r_hex = "0x$($fg.Substring(1, 2))"
+        $fg_g_hex = "0x$($fg.Substring(3, 2))"
+        $fg_b_hex = "0x$($fg.Substring(5, 2))"
+        $fg_r = [int]$fg_r_hex
+        $fg_g = [int]$fg_g_hex
+        $fg_b = [int]$fg_b_hex
+        $head += "38;2;$fg_r;$fg_g;$fg_b"
+    }
+
+    # create effects header
+    foreach ($style in $styles) {
+        if ($head -ne "") { $head += ";" } # seperator
+        switch ($style) {
+            "blink"         { $head += "5" }
+            "bold"          { $head += "1" }
+            "hidden"        { $head += "8" }
+            "italic"        { $head += "3" }
+            "reverse"       { $head += "7" }
+            "strikethrough" { $head += "9" }
+            "underline"     { $head += "4" }
+        }
+    }
+
+    if ($head -ne "") {
+        $head = "`e[$head" + "m"
+        if ($headOnly -eq $true) {
+            return $head 
+        }
+        $head += $text
+        if ($noTail -eq $false) {
+            $head += "`e[0m"
+        }
+    } else {
+        $head = $text
+    }
+
+    return $head
+}
+
+
 New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 
 
@@ -137,7 +219,8 @@ function promptGen {
     $blocks = @(
         @{
             'text' = '$dir_icon  ';
-            'fg' = '#8AC926'
+            'fg' = '#8AC926';
+            'styles' = "italic"
         }
         @{
             'text' = '$(Get-Location)'
@@ -152,20 +235,7 @@ function promptGen {
     
     $prompt_string = ""
     foreach ($block in $blocks) {
-        if ($block.Contains('fg')) {
-            $fg = $block['fg']
-            $fg_r_hex = "0x$($fg.Substring(1, 2))"
-            $fg_g_hex = "0x$($fg.Substring(3, 2))"
-            $fg_b_hex = "0x$($fg.Substring(5, 2))"
-            $fg_r = [int]$fg_r_hex
-            $fg_g = [int]$fg_g_hex
-            $fg_b = [int]$fg_b_hex
-            $format = ("`e[38;2;$fg_r;$fg_g;$fg_b" + "m")
-            $prompt_string += $format
-        }
-        if ($block.Contains('text')) {
-            $prompt_string += $block['text']
-        }
+        $prompt_string += Format-Text @block -noTail
     }
 
     return $prompt_string + "`e[0m"
@@ -185,9 +255,18 @@ function prompt {
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
 }
 
-$readline = Get-PSReadLineOption
-Set-PSReadLineOption -Colors @{ Command = $PSStyle.Italic + $readline.CommandColor }
-
+Set-PSReadLineOption -Colors @{
+    "Command" = (Format-Text -headOnly -fg "#F42C04" -styles "bold");
+    "Comment" = (Format-Text -headOnly -fg "#989FCE");
+    "Emphasis" = (Format-Text -headOnly -fg "#ECA400");
+    "Keyword" = (Format-Text -headOnly -fg "#F7F4F3" -styles "italic");
+    "ListPredictionSelected" = (Format-Text -headOnly -styles "reverse");
+    "Member" = (Format-Text -headOnly -styles "italic");
+    "Number" = (Format-Text -headOnly -fg "#F24333");
+    "Parameter" = (Format-Text -headOnly -fg "#9183EC");
+    "Selection" = (Format-Text -headOnly -bg "#3C6E71");
+    "String" = (Format-Text -headOnly -fg "#E4FF1A");
+}
 
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D

@@ -9,14 +9,14 @@ ret = require('packer').startup(function()
         -- BUG: braces Indentation is not correct in some situation
         -- TODO: Create rule to not pair " for vim files
     -- }
-    use {
+--[[     use {
         'ZhiyuanLck/smart-pairs',
-        -- event = 'InsertEnter',
+        event = 'InsertEnter',
         config = function()
             require('pairs').setup()
         end
-    }
-    -- TODO: https://github.com/max-0406/autoclose.nvim
+    } ]]
+    use 'max-0406/autoclose.nvim'
     -- TODO: https://github.com/rstacruz/vim-closer
     -- TODO: https://github.com/steelsojka/pears.nvim
     -- TODO: https://github.com/theHamsta/nvim-treesitter-pairs
@@ -1068,4 +1068,5 @@ end
             }
 
             vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
+
 return ret
