@@ -109,6 +109,23 @@ function choco_install {
     }
 }
 
+function scoop_install {
+    $pkgs = $args[0]
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        scoop which $pkg
+        $status = $?
+        if ($status -eq $true) {
+            Write-Verbose "Package $pkg already installed" -verbose
+        } else {
+            scoop install $pkg
+        }
+    }
+}
+
 function winget_install {
     $pkgs = $args[0]
     if ($pkgs.Length -eq 0) {
@@ -125,7 +142,7 @@ function winget_install {
     }
 }
 
-$app_list = @("nvim", "powershell", "win_pkgs", "windows_terminal")
+$app_list = @("neovim", "powershell", "win_pkgs", "windows_terminal")
 Write-Output "Application List: (space to select, enter to install)"
 $app_install = Menu $app_list -Multiselect
 
@@ -137,6 +154,7 @@ foreach ($app in $app_install) {
     if (Test-Path setup.ps1) {
         # reset supported tags
         $choco_pkgs = @()
+        $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
 
@@ -144,6 +162,7 @@ foreach ($app in $app_install) {
 
         Write-Output "Installing Packages"
         choco_install $choco_pkgs
+        scoop_install $scoop_pkgs
         winget_install $winget_pkgs
 
         Write-Output "Installing Configs"

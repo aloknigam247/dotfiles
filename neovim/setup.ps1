@@ -1,4 +1,4 @@
-$choco_pkgs = @(
+$scoop_pkgs = @(
     "mingw"
 )
 

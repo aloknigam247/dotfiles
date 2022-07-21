@@ -60,71 +60,6 @@
   "tc"	automatic formatting for text and comments
 " }}}
 
-" UI Client:
-" ``````````
-" Active:
-" TODO: https://github.com/neovide/neovide
-" Tested:
-" https://github.com/hismailbulut/Neoray {
-"   - Less features
-"   + Easy and simple to use
-"   + Very quick
-"   + nice writing and cursor animations
-"   - No Ligatures
-"   - No font
-"   + cutosm context menu is very useful
-"   + Centered window
-" "if exists('g:neoray')
-" "    NeoraySet Transparency   1
-" "    NeoraySet ContextMenuOn  TRUE
-" "    NeoraySet BoxDrawingOn   TRUE
-" "    NeoraySet WindowState    centered
-" "    NeoraySet WindowSize     120x40
-" "    NeoraySet KeyZoomIn      <C-ScrollWheelUp>
-" "    NeoraySet KeyZoomOut     <C-ScrollWheelDown>
-" "endif
-" }
-" https://github.com/equalsraf/neovim-qt {
-"   BUG: Only takes monospace fonts
-" }
-" https://github.com/akiyosi/goneovim " {
-    " TODO: config
-    " + Supports extra symbols
-    " - Struggling with nerdfonts
-    " - Slow and Hangy
-    " - Left out glyph in UI
-    " - Cursor shifts back and forward in insert mode
-    " X not good to use
-" }
-
-" https://github.com/yatli/fvim " {
-    " if exists('g:fvim_loaded')
-    "     FVimCursorSmoothMove v:true
-    "     FVimCursorSmoothBlink v:true
-    "     FVimCustomTitleBar v:true
-    "     FVimFontLigature v:true
-    "     FVimUIPopupMenu v:false
-    "     FVimUIWildMenu v:false
-    " endif
-    " + Cursor animations are good
-    " + Rounded corners
-    " + Titile Bar is good
-    " - Ligatures not working
-    " - Nerd Font support is not good
-    " - Slow loading of UI
-" }
-" https://github.com/Lyude/neovim-gtk " {
-    " + Simple nothing special
-    " - Not good in different DPI
-    " X not good to use
-" }
-
-" TODO: https://github.com/rohit-px2/nvui
-" TODO: https://github.com/sakhnik/nvim-ui
-" TODO: https://github.com/smolck/uivonim
-" TODO: https://github.com/vhakulinen/gnvim
-
-
 " Plugins:
 " ````````
 lua require('plugins')
@@ -135,7 +70,8 @@ lua require('plugins')
 autocmd FileType json colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType lua colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
-autocmd FileType vim colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
 
 call plug#begin()
 call plug#end()
@@ -205,7 +141,7 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
 " }}}
-colorscheme duskfox       " Set colorscheme
+colorscheme nightfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 
@@ -275,8 +211,10 @@ augroup vimrc_autocmds
 augroup END
 " }}}
 
-set guifont=VictorMono_NF:h13
 
+" UI Client:
+" ``````````
+set guifont=VictorMono_NF:h13
 let g:neovide_cursor_vfx_mode = "pixiedust"
 let g:neovide_cursor_vfx_particle_lifetime=2
 let g:neovide_floating_blur_amount_x = 2.0

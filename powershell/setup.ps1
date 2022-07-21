@@ -1,5 +1,5 @@
-$choco_pkgs = @(
-    "poshgit"
+$scoop_pkgs = @(
+    "posh-git"
 )
 
 $winget_pkgs = @(
