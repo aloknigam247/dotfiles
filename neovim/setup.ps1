@@ -1,5 +1,6 @@
 $scoop_pkgs = @(
-    "mingw"
+    "mingw",
+    "pandoc"
 )
 
 $winget_pkgs = @(

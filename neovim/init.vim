@@ -74,8 +74,12 @@ autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight cl
 autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
 
 call plug#begin()
+Plug 'windwp/windline.nvim'
 call plug#end()
 
+lua << EOF
+require('wlsample.bubble')
+EOF
 
 " Variables:
 " ``````````

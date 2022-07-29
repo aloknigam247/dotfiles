@@ -46,7 +46,7 @@ function eprc {
 }
 
 function evrc {
-    nvim $env:LOCALAPPDATA\nvim\init.vim
+    nvim $env:LOCALAPPDATA\nvim\init.vim -O $env:LOCALAPPDATA\nvim\lua\plugins.lua
 }
 
 function v {

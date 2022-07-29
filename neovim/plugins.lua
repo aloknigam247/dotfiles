@@ -9,7 +9,7 @@ ret = require('packer').startup(function()
         -- BUG: braces Indentation is not correct in some situation
         -- TODO: Create rule to not pair " for vim files
     -- }
---[[     use {
+    --[[     use {
         'ZhiyuanLck/smart-pairs',
         event = 'InsertEnter',
         config = function()
@@ -456,7 +456,11 @@ ret = require('packer').startup(function()
     -- TODO: https://github.com/b0o/mapx.nvim
     -- TODO: https://github.com/svermeulen/vimpeccable
     -- }}}
-    -- 
+
+    -- Markdown:
+    -- `````````
+    use 'davidgranstrom/nvim-markdown-preview'
+
     -- Marks:
     -- ``````
     -- {{{
@@ -588,14 +592,7 @@ ret = require('packer').startup(function()
     -- }
     -- TODO: https://github.com/itchyny/lightline.vim
     -- TODO: https://github.com/nvim-lualine/lualine.nvim
-    use {
-        'windwp/windline.nvim',
-        config = function()
-            local windline = require('windline')
-            windline.setup({
-              })
-        end
-    }
+    -- 'windwp/windline.nvim'
     -- }}}
 
     -- Syntax:
