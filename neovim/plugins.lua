@@ -581,20 +581,21 @@ ret = require('packer').startup(function()
     --     " BUG: no mouse support in tabline
     --     " TODO: Explore more
     -- }
+    -- use {
+    --     'datwaft/bubbly.nvim', -- BUG: error in branch tag
+    --     config = function()
+    --     end
+    -- }
+    -- TODO: https://github.com/itchyny/lightline.vim
+    -- TODO: https://github.com/nvim-lualine/lualine.nvim
     use {
-        'datwaft/bubbly.nvim', -- BUG: error in branch tag
+        'windwp/windline.nvim',
         config = function()
+            local windline = require('windline')
+            windline.setup({
+              })
         end
     }
-    -- TODO: https://github.com/feline-nvim/feline.nvim
-    -- TODO: https://github.com/glepnir/galaxyline.nvim
-    -- TODO: https://github.com/itchyny/lightline.vim
-    -- TODO: https://github.com/konapun/vacuumline.nvim
-    -- TODO: https://github.com/nvim-lualine/lualine.nvim
-    -- TODO: https://github.com/ojroques/nvim-hardline
-    -- TODO: https://github.com/ojroques/nvim-hardline
-    -- TODO: https://github.com/tamton-aquib/staline.nvim
-    -- TODO: https://github.com/windwp/windline.nvim
     -- }}}
 
     -- Syntax:
