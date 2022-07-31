@@ -75,6 +75,7 @@ autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight
 
 call plug#begin()
 Plug 'windwp/windline.nvim'
+Plug 'rstacruz/vim-closer'
 call plug#end()
 
 lua << EOF

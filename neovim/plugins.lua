@@ -16,8 +16,6 @@ ret = require('packer').startup(function()
             require('pairs').setup()
         end
     } ]]
-    use 'max-0406/autoclose.nvim'
-    -- TODO: https://github.com/rstacruz/vim-closer
     -- TODO: https://github.com/steelsojka/pears.nvim
     -- TODO: https://github.com/theHamsta/nvim-treesitter-pairs
 
