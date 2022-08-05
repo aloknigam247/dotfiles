@@ -69,7 +69,7 @@
                 "size": 13
             },
             "intenseTextStyle": "all",
-            "opacity": 74,
+            "opacity": 25,
             "padding": "8",
             "scrollbarState": "hidden",
             "useAcrylic": true
@@ -103,8 +103,13 @@
                 "hidden": false,
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 85,
-                "source": "Windows.Terminal.PowershellCore"
+                "opacity": 25,
+                "source": "Windows.Terminal.PowershellCore",
+                "unfocusedAppearance": 
+                {
+                    "cursorShape": "emptyBox",
+                    "experimental.retroTerminalEffect": true
+                }
             }
         ]
     },

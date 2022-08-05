@@ -1,4 +1,5 @@
-ret = require('packer').startup(function()
+ret = require('packer').startup({
+    function()
     -- packer manages itself
     use 'wbthomason/packer.nvim'
 
@@ -806,7 +807,7 @@ ret = require('packer').startup(function()
     -- TODO: https://github.com/wellle/context.vim
     -- }}}
 end
-)
+})
 
 -- DAP
 -- ```
@@ -831,238 +832,238 @@ end
 
 
 
--- LSP
--- ```
-local lspconfig = require 'lspconfig'
-
-local on_attach = function(_, bufnr)
-  -- vim-illuminate
-  require 'illuminate'.on_attach(_)
-  require 'virtualtypes'.on_attach(_)
-
-  local opts = { buffer = bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wl', function()
-        vim.inspect(vim.lsp.buf.list_workspace_folders())
-    end, opts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
-end
-
--- Auto-Initialize serves
-local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
-
--- LSP Lines
--- require("lsp_lines").register_lsp_virtual_lines()
--- vim.diagnostic.config({
---   virtual_text = false,
--- })
--- vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
-
-
--- require('fine-cmdline').setup({
---     popup = {
---         win_options = {
---             winhighlight = "Normal:Normal,FloatBorder:SpecialChar"
---         }
---     }
--- })
--- vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
-            vim.g.bubbly_palette = {
-                background = "#34343c",
-                foreground = "#c5cdd9",
-                black = "#3e4249",
-                red = "#ec7279",
-                green = "#a0c980",
-                yellow = "#deb974",
-                blue = "#6cb6eb",
-                purple = "#d38aea",
-                cyan = "#5dbbc1",
-                white = "#c5cdd9",
-                lightgrey = "#57595e",
-                darkgrey = "#404247"
-            }
-
-            vim.g.bubbly_statusline = {
-                'mode',
-                'truncate',
-                'path',
-                --  'branch', -- creates a $null file
-                'signify',
-                'gitsigns',
-                'divisor',
-                'filetype',
-                'progress'
-            }
-
-            vim.g.bubbly_symbols = {
-                default = 'PANIC!',
-
-                path = {
-                    readonly = '',
-                    unmodifiable = '',
-                    modified = '+',
-                },
-                signify = {
-                    added = '+%s', -- requires 1 '%s'
-                    modified = '~%s', -- requires 1 '%s'
-                    removed = '-%s', -- requires 1 '%s'
-                },
-                gitsigns = {
-                    added = '+%s', -- requires 1 '%s'
-                    modified = '~%s', -- requires 1 '%s'
-                    removed = '-%s', -- requires 1 '%s'
-                },
-                coc = {
-                    error = ' %s', -- requires 1 '%s'
-                    warning = ' %s', -- requires 1 '%s'
-                },
-                builtinlsp = {
-                    diagnostic_count = {
-                        error = ' %s', -- requires 1 '%s'
-                        warning = ' %s', --requires 1 '%s'
-                    },
-                },
-                branch = ' %s', -- requires 1 '%s'
-                total_buffer_number = '﬘ %s', --requires 1 '%d'
-                lsp_status = {
-                    diagnostics = {
-                        error = ' %d',
-                        warning = ' %d',
-                        hint = ' %d',
-                        info = ' %d',
-                    },
-                },
-            }
-
-            vim.g.bubbly_tags = {
-                default = 'HELP ME PLEASE!',
-
-                mode = {
-                    normal = 'NORMAL',
-                    insert = 'INSERT',
-                    visual = 'VISUAL',
-                    visualblock = 'VISUAL-B',
-                    command = 'COMMAND',
-                    terminal = 'TERMINAL',
-                    replace = 'REPLACE',
-                    default = 'UNKOWN',
-                },
-                paste = 'PASTE',
-                filetype = {
-                    conf = ' config',
-                    config = ' config',
-                    css = ' css',
-                    diff = '繁 diff',
-                    dockerfile = ' docker',
-                    email = ' mail',
-                    gitconfig = ' git config',
-                    html = ' html',
-                    javascript = ' javascript',
-                    javascriptreact = ' javascript',
-                    json = ' json',
-                    less = ' less',
-                    lua = ' lua',
-                    mail = ' mail',
-                    make = ' make',
-                    markdown = ' markdown',
-                    noft = '<none>',
-                    norg = '🦄 norg',
-                    php = ' php',
-                    plain = ' text',
-                    plaintext = ' text',
-                    ps1 = ' powershell',
-                    python = ' python',
-                    sass = ' sass',
-                    scss = ' scss',
-                    text = ' text',
-                    typescript = ' typescript',
-                    typescriptreact = ' typescript',
-                    vim = ' vim',
-                    xml = '謹 xml',
-                },
-            }
-
-            vim.g.bubbly_colors = {
-                default = 'red',
-
-                mode = {
-                    normal = 'green', -- uses by default 'background' as the foreground color.
-                    insert = 'blue',
-                    visual = 'red',
-                    visualblock = 'red',
-                    command = 'red',
-                    terminal = 'blue',
-                    replace = 'yellow',
-                    default = 'white'
-                },
-                path = {
-                    readonly = { background = 'lightgrey', foreground = 'foreground' },
-                    unmodifiable = { background = 'darkgrey', foreground = 'foreground' },
-                    path = 'white',
-                    modified = { background = 'lightgrey', foreground = 'foreground' },
-                },
-                branch = 'purple',
-                signify = {
-                    added = 'green',
-                    modified = 'blue',
-                    removed = 'red',
-                },
-                gitsigns = {
-                    added = 'green',
-                    modified = 'blue',
-                    removed = 'red',
-                },
-                paste = 'red',
-                coc = {
-                    error = 'red',
-                    warning = 'yellow',
-                    status = { background = 'lightgrey', foreground = 'foreground' },
-                },
-                builtinlsp = {
-                    diagnostic_count = {
-                        error = 'red',
-                        warning = 'yellow',
-                    },
-                    current_function = 'purple',
-                },
-                filetype = 'blue',
-                progress = {
-                    rowandcol = { background = 'lightgrey', foreground = 'foreground' },
-                    percentage = { background = 'darkgrey', foreground = 'foreground' },
-                },
-                tabline = {
-                    active = 'blue',
-                    inactive = 'white',
-                    close = 'darkgrey',
-                },
-                total_buffer_number = 'cyan',
-                lsp_status = {
-                    messages = 'white',
-                    diagnostics = {
-                        error = 'red',
-                        warning = 'yellow',
-                        hint = 'white',
-                        info = 'blue',
-                    },
-                },
-            }
-
-            vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
-
-return ret
+---- LSP
+---- ```
+--local lspconfig = require 'lspconfig'
+--
+--local on_attach = function(_, bufnr)
+--  -- vim-illuminate
+--  require 'illuminate'.on_attach(_)
+--  require 'virtualtypes'.on_attach(_)
+--
+--  local opts = { buffer = bufnr }
+--  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+--  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+--  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+--  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+--  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+--  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+--  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+--  vim.keymap.set('n', '<leader>wl', function()
+--        vim.inspect(vim.lsp.buf.list_workspace_folders())
+--    end, opts)
+--  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+--  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+--  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+--  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+--  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+--end
+--
+---- Auto-Initialize serves
+--local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
+--for _, lsp in ipairs(servers) do
+--  lspconfig[lsp].setup {
+--    on_attach = on_attach,
+--    capabilities = capabilities,
+--  }
+--end
+--
+---- LSP Lines
+---- require("lsp_lines").register_lsp_virtual_lines()
+---- vim.diagnostic.config({
+----   virtual_text = false,
+---- })
+---- vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
+--
+--
+---- require('fine-cmdline').setup({
+----     popup = {
+----         win_options = {
+----             winhighlight = "Normal:Normal,FloatBorder:SpecialChar"
+----         }
+----     }
+---- })
+---- vim.api.nvim_set_keymap('n', ':', '<cmd>FineCmdline<CR>', {noremap = true})
+--            vim.g.bubbly_palette = {
+--                background = "#34343c",
+--                foreground = "#c5cdd9",
+--                black = "#3e4249",
+--                red = "#ec7279",
+--                green = "#a0c980",
+--                yellow = "#deb974",
+--                blue = "#6cb6eb",
+--                purple = "#d38aea",
+--                cyan = "#5dbbc1",
+--                white = "#c5cdd9",
+--                lightgrey = "#57595e",
+--                darkgrey = "#404247"
+--            }
+--
+--            vim.g.bubbly_statusline = {
+--                'mode',
+--                'truncate',
+--                'path',
+--                --  'branch', -- creates a $null file
+--                'signify',
+--                'gitsigns',
+--                'divisor',
+--                'filetype',
+--                'progress'
+--            }
+--
+--            vim.g.bubbly_symbols = {
+--                default = 'PANIC!',
+--
+--                path = {
+--                    readonly = '',
+--                    unmodifiable = '',
+--                    modified = '+',
+--                },
+--                signify = {
+--                    added = '+%s', -- requires 1 '%s'
+--                    modified = '~%s', -- requires 1 '%s'
+--                    removed = '-%s', -- requires 1 '%s'
+--                },
+--                gitsigns = {
+--                    added = '+%s', -- requires 1 '%s'
+--                    modified = '~%s', -- requires 1 '%s'
+--                    removed = '-%s', -- requires 1 '%s'
+--                },
+--                coc = {
+--                    error = ' %s', -- requires 1 '%s'
+--                    warning = ' %s', -- requires 1 '%s'
+--                },
+--                builtinlsp = {
+--                    diagnostic_count = {
+--                        error = ' %s', -- requires 1 '%s'
+--                        warning = ' %s', --requires 1 '%s'
+--                    },
+--                },
+--                branch = ' %s', -- requires 1 '%s'
+--                total_buffer_number = '﬘ %s', --requires 1 '%d'
+--                lsp_status = {
+--                    diagnostics = {
+--                        error = ' %d',
+--                        warning = ' %d',
+--                        hint = ' %d',
+--                        info = ' %d',
+--                    },
+--                },
+--            }
+--
+--            vim.g.bubbly_tags = {
+--                default = 'HELP ME PLEASE!',
+--
+--                mode = {
+--                    normal = 'NORMAL',
+--                    insert = 'INSERT',
+--                    visual = 'VISUAL',
+--                    visualblock = 'VISUAL-B',
+--                    command = 'COMMAND',
+--                    terminal = 'TERMINAL',
+--                    replace = 'REPLACE',
+--                    default = 'UNKOWN',
+--                },
+--                paste = 'PASTE',
+--                filetype = {
+--                    conf = ' config',
+--                    config = ' config',
+--                    css = ' css',
+--                    diff = '繁 diff',
+--                    dockerfile = ' docker',
+--                    email = ' mail',
+--                    gitconfig = ' git config',
+--                    html = ' html',
+--                    javascript = ' javascript',
+--                    javascriptreact = ' javascript',
+--                    json = ' json',
+--                    less = ' less',
+--                    lua = ' lua',
+--                    mail = ' mail',
+--                    make = ' make',
+--                    markdown = ' markdown',
+--                    noft = '<none>',
+--                    norg = '🦄 norg',
+--                    php = ' php',
+--                    plain = ' text',
+--                    plaintext = ' text',
+--                    ps1 = ' powershell',
+--                    python = ' python',
+--                    sass = ' sass',
+--                    scss = ' scss',
+--                    text = ' text',
+--                    typescript = ' typescript',
+--                    typescriptreact = ' typescript',
+--                    vim = ' vim',
+--                    xml = '謹 xml',
+--                },
+--            }
+--
+--            vim.g.bubbly_colors = {
+--                default = 'red',
+--
+--                mode = {
+--                    normal = 'green', -- uses by default 'background' as the foreground color.
+--                    insert = 'blue',
+--                    visual = 'red',
+--                    visualblock = 'red',
+--                    command = 'red',
+--                    terminal = 'blue',
+--                    replace = 'yellow',
+--                    default = 'white'
+--                },
+--                path = {
+--                    readonly = { background = 'lightgrey', foreground = 'foreground' },
+--                    unmodifiable = { background = 'darkgrey', foreground = 'foreground' },
+--                    path = 'white',
+--                    modified = { background = 'lightgrey', foreground = 'foreground' },
+--                },
+--                branch = 'purple',
+--                signify = {
+--                    added = 'green',
+--                    modified = 'blue',
+--                    removed = 'red',
+--                },
+--                gitsigns = {
+--                    added = 'green',
+--                    modified = 'blue',
+--                    removed = 'red',
+--                },
+--                paste = 'red',
+--                coc = {
+--                    error = 'red',
+--                    warning = 'yellow',
+--                    status = { background = 'lightgrey', foreground = 'foreground' },
+--                },
+--                builtinlsp = {
+--                    diagnostic_count = {
+--                        error = 'red',
+--                        warning = 'yellow',
+--                    },
+--                    current_function = 'purple',
+--                },
+--                filetype = 'blue',
+--                progress = {
+--                    rowandcol = { background = 'lightgrey', foreground = 'foreground' },
+--                    percentage = { background = 'darkgrey', foreground = 'foreground' },
+--                },
+--                tabline = {
+--                    active = 'blue',
+--                    inactive = 'white',
+--                    close = 'darkgrey',
+--                },
+--                total_buffer_number = 'cyan',
+--                lsp_status = {
+--                    messages = 'white',
+--                    diagnostics = {
+--                        error = 'red',
+--                        warning = 'yellow',
+--                        hint = 'white',
+--                        info = 'blue',
+--                    },
+--                },
+--            }
+--
+--            vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
+--
+--return ret

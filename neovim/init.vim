@@ -62,7 +62,13 @@
 
 " Plugins:
 " ````````
-lua require('plugins')
+call plug#begin()
+Plug 'windwp/windline.nvim'
+Plug 'rstacruz/vim-closer'
+Plug 'wbthomason/packer.nvim'
+call plug#end()
+
+"lua require('plugins')
 " augroup packer_user_config
 "     autocmd!
 "     autocmd BufWritePost plugins.lua source <afile> | PackerSync
@@ -72,11 +78,6 @@ autocmd FileType lua colorscheme papercolor | highlight clear CursorLine | highl
 autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
-
-call plug#begin()
-Plug 'windwp/windline.nvim'
-Plug 'rstacruz/vim-closer'
-call plug#end()
 
 lua << EOF
 require('wlsample.bubble')
