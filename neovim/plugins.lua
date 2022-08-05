@@ -388,12 +388,14 @@ ret = require('packer').startup({
     --   TODO: Snippets
     --   TODO: UI Customization
     -- }
-    use {
-        'williamboman/nvim-lsp-installer',
-        config = function()
-            require("nvim-lsp-installer").setup()
-        end
-    }
+    --use {
+    --    'williamboman/nvim-lsp-installer',
+    --    config = function()
+    --        require("nvim-lsp-installer").setup()
+    --    end
+    --}
+    use { "williamboman/mason.nvim" }
+    use { "williamboman/mason-lspconfig.nvim" }
     use 'liuchengxu/vista.vim' -- {
     --     " TODO: explore options
     -- }
@@ -859,14 +861,25 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
+require("mason").setup()
+require("mason-lspconfig").setup()
 -- Auto-Initialize serves
-local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
+local servers = require('mason-registry').get_installed_packages_names()
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
+    print(lsp)
+    lspconfig[lsp].setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
 end
+--local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
+--for _, lsp in ipairs(servers) do
+--    print(lsp)
+--    lspconfig[lsp].setup {
+--        on_attach = on_attach,
+--        capabilities = capabilities,
+--    }
+--end
 
 -- LSP Lines
 -- require("lsp_lines").register_lsp_virtual_lines()
