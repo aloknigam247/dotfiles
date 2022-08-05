@@ -68,7 +68,7 @@ Plug 'rstacruz/vim-closer'
 Plug 'wbthomason/packer.nvim'
 call plug#end()
 
-"lua require('plugins')
+lua require('plugins')
 " augroup packer_user_config
 "     autocmd!
 "     autocmd BufWritePost plugins.lua source <afile> | PackerSync
