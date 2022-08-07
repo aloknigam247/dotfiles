@@ -421,7 +421,7 @@ ret = require('packer').startup({
         end
     }
     -- TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
-    use 'jubnzv/virtual-types.nvim'
+    -- use 'jubnzv/virtual-types.nvim'
     -- TODO: https://github.com/kosayoda/nvim-lightbulb
     -- TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
     -- TODO: https://github.com/ldelossa/litee-bookmarks.nvim
@@ -509,17 +509,17 @@ ret = require('packer').startup({
     -- {{{
     -- TODO: https://github.com/TravonteD/org-capture-filetype
     -- TODO: https://github.com/akinsho/org-bullets.nvim
-    use {
-        'nvim-neorg/neorg',
-        config = function()
-            require('nvim-treesitter.configs').setup {
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false
-                }
-            }
-        end
-    }
+    --use {
+    --    'nvim-neorg/neorg',
+    --    config = function()
+    --        require('nvim-treesitter.configs').setup {
+    --            highlight = {
+    --                enable = true,
+    --                additional_vim_regex_highlighting = false
+    --            }
+    --        }
+    --    end
+    --}
     -- use 'nvim-orgmode/orgmode'
     -- TODO: https://github.com/ranjithshegde/orgWiki.nvim
     -- TODO: https://github.com/lukas-reineke/headlines.nvim
@@ -841,7 +841,6 @@ local lspconfig = require 'lspconfig'
 local on_attach = function(_, bufnr)
   -- vim-illuminate
   require 'illuminate'.on_attach(_)
-  require 'virtualtypes'.on_attach(_)
 
   local opts = { buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -863,15 +862,14 @@ end
 
 require("mason").setup()
 require("mason-lspconfig").setup()
+require("mason-lspconfig").setup_handlers {
+    function (server_name)
+        require("lspconfig")[server_name].setup {
+            on_attach = on_attach,
+        }
+    end
+}
 -- Auto-Initialize serves
-local servers = require('mason-registry').get_installed_packages_names()
-for _, lsp in ipairs(servers) do
-    print(lsp)
-    lspconfig[lsp].setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-    }
-end
 --local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
 --for _, lsp in ipairs(servers) do
 --    print(lsp)

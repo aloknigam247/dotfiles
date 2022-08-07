@@ -77,6 +77,7 @@ autocmd FileType json colorscheme papercolor | highlight clear CursorLine | high
 autocmd FileType lua colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType python colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
