@@ -1,4 +1,9 @@
 ret = require('packer').startup({
+    config = {
+        display = {
+            open_fn = require('packer.util').float
+        }
+    },
     function()
     -- packer manages itself
     use 'wbthomason/packer.nvim'
@@ -10,13 +15,13 @@ ret = require('packer').startup({
         -- BUG: braces Indentation is not correct in some situation
         -- TODO: Create rule to not pair " for vim files
     -- }
-    --[[     use {
-        'ZhiyuanLck/smart-pairs',
-        event = 'InsertEnter',
-        config = function()
-            require('pairs').setup()
-        end
-    } ]]
+    -- use {
+    --     'ZhiyuanLck/smart-pairs',
+    --     event = 'InsertEnter',
+    --     config = function()
+    --         require('pairs').setup()
+    --     end
+    -- }
     use {
         'steelsojka/pears.nvim',
         config = function()
@@ -76,7 +81,7 @@ ret = require('packer').startup({
             }
         end
     }
-    -- TODO: use 'yamatsum/nvim-cursorline'
+    use 'yamatsum/nvim-cursorline'
     -- TODO: https://github.com/dominikduda/vim_current_word
     -- TODO: https://github.com/lambdalisue/glyph-palette.vim
     -- TODO: https://github.com/m00qek/baleia.nvim
@@ -1097,5 +1102,3 @@ require("mason-lspconfig").setup_handlers {
             }
 
             vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
-
-return ret
