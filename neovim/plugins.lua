@@ -1,4 +1,7 @@
 ret = require('packer').startup({
+    config = {
+        log = { level = 'debug' }
+    },
     function()
     -- packer manages itself
     use 'wbthomason/packer.nvim'
@@ -17,7 +20,12 @@ ret = require('packer').startup({
             require('pairs').setup()
         end
     } ]]
-    -- TODO: https://github.com/steelsojka/pears.nvim
+    use {
+        'steelsojka/pears.nvim',
+        config = function()
+            require('pears').setup()
+        end
+    }
     -- TODO: https://github.com/theHamsta/nvim-treesitter-pairs
 
     -- Cheatsheet:
@@ -43,7 +51,7 @@ ret = require('packer').startup({
 
     -- Coloring:
     -- `````````
-    use 'RRethy/vim-illuminate' -- {
+    -- use 'RRethy/vim-illuminate' -- {
     --     " BUG: highlight colors are not good
     --     hi def link LspReferenceText WildMenu
     --     hi def link LspReferenceWrite WildMenu
@@ -54,7 +62,23 @@ ret = require('packer').startup({
     -- use 'azabiong/vim-highlighter' -- NOTE: Good to use
     -- use 'tribela/vim-transparent' -- Make theme transparent
     -- TODO: use 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
-    -- TODO: use 'xiyaowong/nvim-cursorword'
+    use {
+        'xiyaowong/nvim-cursorword',
+        config = function()
+            require('nvim-cursorline').setup {
+                cursorline = {
+                    enable = true,
+                    timeout = 1000,
+                    number = false,
+                },
+                cursorword = {
+                    enable = true,
+                    min_length = 3,
+                    hl = { underline = true },
+                }
+            }
+        end
+    }
     -- TODO: use 'yamatsum/nvim-cursorline'
     -- TODO: https://github.com/dominikduda/vim_current_word
     -- TODO: https://github.com/lambdalisue/glyph-palette.vim
@@ -840,7 +864,7 @@ local lspconfig = require 'lspconfig'
 
 local on_attach = function(_, bufnr)
   -- vim-illuminate
-  require 'illuminate'.on_attach(_)
+  -- require 'illuminate'.on_attach(_)
 
   local opts = { buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)

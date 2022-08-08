@@ -1,3 +1,7 @@
+$scoop_pkgs = @(
+    "bat"
+)
+
 $winget_pkgs = @(
     "GitHub.cli",
     "Google.Chrome",
