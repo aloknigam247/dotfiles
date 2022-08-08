@@ -64,7 +64,7 @@
 " ````````
 call plug#begin()
 Plug 'windwp/windline.nvim'
-Plug 'wbthomason/packer.nvim'
+" Plug 'wbthomason/packer.nvim'
 call plug#end()
 
 lua require('plugins')
@@ -148,10 +148,10 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 " set winblend " TODO:
-" }}}
 colorscheme nightfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
+" }}}
 
 
 " Search Options:
