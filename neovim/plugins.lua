@@ -1,7 +1,4 @@
 ret = require('packer').startup({
-    config = {
-        log = { level = 'debug' }
-    },
     function()
     -- packer manages itself
     use 'wbthomason/packer.nvim'
