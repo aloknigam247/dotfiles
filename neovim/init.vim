@@ -124,7 +124,8 @@ set tabstop=4                         " Indent using spaces
 " UI Options:
 " ```````````
 " {{{
-let g:netrw_banner = 0        " Turn off banner in netrw
+let g:netrw_banner = 0       " Turn off banner in netrw
+let g:vimsyn_embed = 'lpr'   " embededded script highlight
 set background=dark          " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
