@@ -1,6 +1,5 @@
 Markdown Cheatsheet<a name="TOP"></a>
 ===================
-disable
 
 - - - - 
 # Heading 1 #

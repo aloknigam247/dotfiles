@@ -116,6 +116,7 @@ set cpoptions+=Z                      " When using w! while the 'readonly' optio
 set expandtab                         " Convert tabs to spaces
 set history=1000                      " Increase undo limit
 set noswapfile                        " Disable swap files
+set nowritebackup                     " Disable intermediate backup file
 set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 " }}}

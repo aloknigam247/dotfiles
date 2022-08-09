@@ -4,6 +4,7 @@ ret = require('packer').startup({
             open_fn = require('packer.util').float
         }
     },
+
     function()
     -- packer manages itself
     use 'wbthomason/packer.nvim'
@@ -83,10 +84,9 @@ ret = require('packer').startup({
     }
     use 'yamatsum/nvim-cursorline'
     -- TODO: https://github.com/dominikduda/vim_current_word
-    -- TODO: https://github.com/lambdalisue/glyph-palette.vim
-    -- TODO: https://github.com/m00qek/baleia.nvim
+    -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
+    -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
     -- TODO: https://github.com/norcalli/nvim-colorizer.lua
-    -- TODO: https://github.com/norcalli/nvim-terminal.lua
     -- TODO: https://github.com/rktjmp/highlight-current-n.nvim
     -- TODO: https://github.com/t9md/vim-quickhl
 

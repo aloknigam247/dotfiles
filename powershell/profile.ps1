@@ -200,6 +200,7 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle Lis
 
 # Posh-git
 #Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
+Import-Module posh-git
 
 # winget tab completion
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
@@ -244,8 +245,10 @@ function promptGen {
 $prompt_string = promptGen
 
 function prompt {
-    #$branch = Get-GitBranch
-    $branch = $null
+    $branch = git branch --show-current 2>&1
+    if ($? -eq $false) {
+        $branch = $null
+    }
     $git_branch = ""
     $dir_icon = ""
     if ($null -ne $branch) {
