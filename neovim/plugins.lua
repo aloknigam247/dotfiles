@@ -718,7 +718,7 @@ ret = require('packer').startup({
             require('hlargs').setup()
         end
     }
-    use 'nvim-treesitter/nvim-treesitter-context' -- {
+    -- use 'nvim-treesitter/nvim-treesitter-context' -- {
     --    BUG: Makes scroll slow
     -- }
     -- TODO: https://github.com/RRethy/nvim-treesitter-endwise
