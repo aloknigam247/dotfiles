@@ -109,7 +109,24 @@ function choco_install {
     }
 }
 
+$script:scoop = $false
+function ensure_scoop {
+    Get-Command scoop 2>&1
+    if ($? -eq $false) {
+        echo "Scoop not insalled"
+        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        scoop bucket add extras
+    }
+    echo "Scoop insalled"
+    $script:scoop = $true
+}
+
 function scoop_install {
+    echo "scoop install"
+    $script:scoop
+    if ($script:scoop -eq $false) {
+        ensure_scoop
+    }
     $pkgs = $args[0]
     if ($pkgs.Length -eq 0) {
         return
