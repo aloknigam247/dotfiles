@@ -245,7 +245,7 @@ function promptGen {
 $prompt_string = promptGen
 
 function prompt {
-    $branch = git branch --show-current 2>&1
+    $branch = git branch --format="%(refname:lstrip=2)" 2>&1
     if ($? -eq $false) {
         $branch = $null
     }
