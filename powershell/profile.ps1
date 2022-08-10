@@ -243,11 +243,19 @@ function promptGen {
 }
 
 $prompt_string = promptGen
+$git_version = git
 
 function prompt {
-    $branch = git branch --format="%(refname:lstrip=2)" 2>&1
-    if ($? -eq $false) {
-        $branch = $null
+    if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
+        $branch = git symbolic-ref --short HEAD 2>&1
+            if ($? -eq $false) {
+                $branch = $null
+            }
+    } else {
+        $branch = git branch --show-current 2>&1
+            if ($? -eq $false) {
+                $branch = $null
+            }
     }
     $git_branch = ""
     $dir_icon = ""
