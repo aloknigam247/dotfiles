@@ -108,7 +108,7 @@
                 "unfocusedAppearance": 
                 {
                     "cursorShape": "emptyBox",
-                    "experimental.retroTerminalEffect": true
+                    "experimental.retroTerminalEffect": false
                 }
             }
         ]
