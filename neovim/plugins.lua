@@ -396,7 +396,7 @@ ret = require('packer').startup({
     -- ``````
     -- {{{
     use 'kyazdani42/nvim-web-devicons'
-    use 'yamatsum/nvim-nonicons'
+    -- use 'yamatsum/nvim-nonicons'
     -- TODO: https://github.com/kristijanhusak/defx-icons
     -- }}}
 
