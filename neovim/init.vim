@@ -79,6 +79,7 @@ autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highli
 autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType python colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
 require('wlsample.bubble')
