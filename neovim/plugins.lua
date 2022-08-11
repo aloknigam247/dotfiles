@@ -1,3 +1,12 @@
+--[[
+  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
+ ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
+ ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
+ ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
+ ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
+ ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
+]]
+
 ret = require('packer').startup({
     config = {
         display = {
@@ -831,7 +840,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/stsewd/sphinx.nvim
     -- TODO: https://github.com/mg979/vim-visual-multi
     -- TODO: https://github.com/tjdevries/nlua.nvim
-    -- TODO: https://github.com/wbthomason/packer.nvim
     -- TODO: https://github.com/wellle/context.vim
     -- }}}
 end
