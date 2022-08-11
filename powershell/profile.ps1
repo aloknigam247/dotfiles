@@ -221,16 +221,16 @@ function promptGen {
         @{
             'text' = '$dir_icon  ';
             'fg' = '#8AC926';
-            'styles' = "italic"
+            'styles' = "italic";
         }
         @{
-            'text' = '$(Get-Location)'
+            'text' = '$(Get-Location)';
         },
         @{
-            'text' = '$git_branch'
+            'text' = '$git_branch';
         },
         @{
-            'text' = " ⟩⟩ "
+            'text' = " ⟩⟩ ";
         }
     )
     
