@@ -712,12 +712,22 @@ ret = require('packer').startup({
     -- Treesitter:
     -- ```````````
     -- {{{
-    use 'nvim-treesitter/nvim-treesitter' -- {
-    --     " TODO: Folding
-    --     " TODO: Incremental selection
-    --     " TODO: Indentation
-    --     " TODO: Wiki
-    -- }
+    use {
+        'nvim-treesitter/nvim-treesitter', -- {
+        --     " TODO: Folding
+        --     " TODO: Incremental selection
+        --     " TODO: Indentation
+        --     " TODO: Wiki
+        -- }
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                auto_install = true,
+                highlight = {
+                    enable = true
+                }
+            }
+        end
+    }
     -- use 'romgrk/nvim-treesitter-context' -- {
     --     " BUG: Its buggy in windows
     -- }
@@ -734,7 +744,20 @@ ret = require('packer').startup({
     -- TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
     -- TODO: https://github.com/lewis6991/spellsitter.nvim
     -- TODO: https://github.com/mfussenegger/nvim-treehopper
-    -- TODO: https://github.com/nvim-treesitter/nvim-treesitter-refactor
+    use {
+        'nvim-treesitter/nvim-treesitter-refactor',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                refactor = {
+                    highlight_definitions = {
+                        enable = true,
+                        -- Set to false if you have an `updatetime` of ~100.
+                        clear_on_cursor_move = true,
+                    },
+                },
+            }
+        end
+    }
     -- TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     -- TODO: https://github.com/nvim-treesitter/playground
     -- use 'p00f/nvim-ts-rainbow' " BUG: not working

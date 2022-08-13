@@ -74,12 +74,12 @@ lua require('plugins')
 " augroup end
 autocmd FileType cs colorscheme nightfox | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType json colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
-autocmd FileType lua colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR | set list!
+autocmd FileType lua colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType markdown colorscheme edge | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType python colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
-autocmd FileType vim colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType vim colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
