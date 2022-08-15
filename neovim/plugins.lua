@@ -721,10 +721,10 @@ ret = require('packer').startup({
         config = function()
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
-                ignore_install = {"yaml"},
+                ignore_install = { "markdown", "yaml" },
                 highlight = {
                     enable = true,
-                    disable = { "yaml" }
+                    disable = { "markdown", "yaml" }
                 }
             }
         end
