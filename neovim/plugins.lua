@@ -143,7 +143,6 @@ ret = require('packer').startup({
     use 'cpea2506/one_monokai.nvim'
     use 'fenetikm/falcon'
     use 'glepnir/zephyr-nvim'
-    use 'jsit/toast.vim'
     use 'marko-cerovac/material.nvim'
     use 'mcchrish/zenbones.nvim'
     use 'mhartington/oceanic-next'
@@ -722,8 +721,10 @@ ret = require('packer').startup({
         config = function()
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
+                ignore_install = {"yaml"},
                 highlight = {
-                    enable = true
+                    enable = true,
+                    disable = { "yaml" }
                 }
             }
         end

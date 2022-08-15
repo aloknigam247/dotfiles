@@ -64,7 +64,6 @@
 " ````````
 call plug#begin()
 Plug 'windwp/windline.nvim'
-" Plug 'wbthomason/packer.nvim'
 call plug#end()
 
 lua require('plugins')
@@ -73,6 +72,7 @@ lua require('plugins')
 "     autocmd BufWritePost plugins.lua source <afile> | PackerSync
 " augroup end
 autocmd FileType cs colorscheme nightfox | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType gitcommit colorscheme falcon | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType json colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType lua colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType markdown colorscheme edge | highlight clear CursorLine | highlight clear CursorLineNR
