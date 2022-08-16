@@ -128,7 +128,7 @@ function Format-Text {
         [Switch]$headonly,
 
         [Parameter(ParameterSetName = "Complete")]
-        [Switch]$notail
+        [Switch]$noreset
     )
 
     $head = ""
@@ -176,7 +176,7 @@ function Format-Text {
             return $head 
         }
         $head += $text
-        if ($noTail -eq $false) {
+        if ($noreset -eq $false) {
             $head += "`e[0m"
         }
     } else {
@@ -219,24 +219,32 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 function promptGen {
     $blocks = @(
         @{
-            'text' = '$dir_icon  ';
-            'fg' = '#8AC926';
-            'styles' = "italic";
+            'text' = '$dir_icon  '
+            'fg' = '#8AC926'
         }
         @{
-            'text' = '$(Get-Location)';
+            'text' = '$(Get-Location)'
+            'fg' = '#A3BCF9'
+            'styles' = "italic"
         },
         @{
-            'text' = '$git_branch';
+            'text' = " ⟩⟩ "
+            'fg' = '#8AC926'
+        }
+        @{
+            'text' = '$git_branch'
+            'fg' = '#F4B860'
+            'styles' = "italic"
         },
         @{
-            'text' = " ⟩⟩ ";
+            'text' = " ⟩⟩ "
+            'fg' = '#8AC926'
         }
     )
-    
+
     $prompt_string = ""
     foreach ($block in $blocks) {
-        $prompt_string += Format-Text @block -noTail
+        $prompt_string += Format-Text @block
     }
 
     return $prompt_string + "`e[0m"
