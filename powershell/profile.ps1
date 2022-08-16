@@ -269,7 +269,7 @@ function prompt {
     $dir_icon = ""
     if ($null -ne $branch) {
         $dir_icon = ""
-        $git_branch = " ⟩⟩  $branch"
+        $git_branch = " $branch"
     }
 
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
