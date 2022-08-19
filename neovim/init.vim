@@ -83,7 +83,8 @@ autocmd FileType vim colorscheme one_monokai | highlight clear CursorLine | high
 autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
-require('wlsample.bubble')
+require('wlsample.bubble2')
+--require('neo-tree').setup{filesystem {hijack_netrw_behavior = "open_current"}}
 EOF
 
 " Variables:

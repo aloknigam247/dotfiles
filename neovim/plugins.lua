@@ -313,7 +313,9 @@ ret = require('packer').startup({
 
     -- File Explorer:
     -- ``````````````
-    use 'nvim-neo-tree/neo-tree.nvim' -- {
+    use {
+        'nvim-neo-tree/neo-tree.nvim',
+    } -- {
     --  BUG: Does not replace netrw
     --  BUG: fuzzy search does not seems to work
     --  good for fit status tree
@@ -745,20 +747,20 @@ ret = require('packer').startup({
     -- TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
     -- TODO: https://github.com/lewis6991/spellsitter.nvim
     -- TODO: https://github.com/mfussenegger/nvim-treehopper
-    use {
-        'nvim-treesitter/nvim-treesitter-refactor',
-        config = function()
-            require'nvim-treesitter.configs'.setup {
-                refactor = {
-                    highlight_definitions = {
-                        enable = true,
-                        -- Set to false if you have an `updatetime` of ~100.
-                        clear_on_cursor_move = true,
-                    },
-                },
-            }
-        end
-    }
+    --use {
+    --    'nvim-treesitter/nvim-treesitter-refactor',
+    --    config = function()
+    --        require'nvim-treesitter.configs'.setup {
+    --            refactor = {
+    --                highlight_definitions = {
+    --                    enable = true,
+    --                    -- Set to false if you have an `updatetime` of ~100.
+    --                    clear_on_cursor_move = true,
+    --                },
+    --            },
+    --        }
+    --    end
+    --}
     -- TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     -- TODO: https://github.com/nvim-treesitter/playground
     -- use 'p00f/nvim-ts-rainbow' " BUG: not working
