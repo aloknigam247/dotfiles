@@ -307,6 +307,12 @@ ret = require('packer').startup({
 
     -- Doc Generater:
     -- ``````````````
+    use {
+        "danymat/neogen",
+        config = function()
+            require('neogen').setup {}
+        end
+    }
     -- TODO: https://github.com/danymat/neogen
     -- TODO: https://github.com/kkoomen/vim-doge
     -- TODO: https://github.com/nvim-treesitter/nvim-tree-docs
