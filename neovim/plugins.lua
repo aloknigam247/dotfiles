@@ -95,6 +95,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/dominikduda/vim_current_word
     -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
     -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
+    -- TODO: https://github.com/mrshmllow/document-color.nvim
     -- TODO: https://github.com/norcalli/nvim-colorizer.lua
     -- TODO: https://github.com/rktjmp/highlight-current-n.nvim
     -- TODO: https://github.com/t9md/vim-quickhl
@@ -207,6 +208,7 @@ ret = require('packer').startup({
         -- }
         config = function()
             local cmp = require('cmp')
+            local lspkind = require('lspkind')
             cmp.setup({
                 mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -218,7 +220,12 @@ ret = require('packer').startup({
             sources = ({
                 { name = 'buffer' },
                 { name = 'nvim_lsp' }
-            })
+            }),
+            formatting = {
+                format = lspkind.cmp_format({
+                    mode = 'symbol_text', -- show only symbol annotations
+                })
+            }
         })
         end
     }
@@ -282,6 +289,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/crivotz/nv-ide
     -- TODO: https://github.com/cstsunfu/.sea.nvim
     -- TODO: https://github.com/echasnovski/mini.nvim
+    -- TODO: https://github.com/glepnir/nvim
     -- TODO: https://github.com/jdhao/nvim-config
     -- TODO: https://github.com/lalitmee/cobalt2.nvim
     -- TODO: https://github.com/mnabila/nvimrc
@@ -422,14 +430,16 @@ ret = require('packer').startup({
     -- LSP:
     -- ````
     -- {{{
-    use 'neovim/nvim-lspconfig' -- {
-    --   TODO: Autocompletion
-    --   TODO: Code Actions
-    --   TODO: Linitng
-    --   TODO: use 'filipdutescu/renamer.nvim', { 'branch': 'master' }
-    --   TODO: Snippets
-    --   TODO: UI Customization
-    -- }
+    use {
+        'neovim/nvim-lspconfig' -- {
+        --   TODO: diagnostics
+        --   TODO: Autocompletion
+        --   TODO: Code Actions
+        --   TODO: Linitng
+        --   TODO: use 'filipdutescu/renamer.nvim', { 'branch': 'master' }
+        --   TODO: Snippets
+        --   TODO: UI Customization
+    }
     --use {
     --    'williamboman/nvim-lsp-installer',
     --    config = function()
@@ -475,7 +485,9 @@ ret = require('packer').startup({
     -- TODO: https://github.com/nvim-lua/lsp-status.nvim
     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
     -- TODO: https://github.com/onsails/diaglist.nvim
-    -- TODO: https://github.com/onsails/lspkind.nvim
+    use {
+        'onsails/lspkind.nvim'
+    }
     -- TODO: https://github.com/ray-x/navigator.lua
     -- TODO: https://github.com/rmagatti/goto-preview
     -- TODO: https://github.com/simrat39/symbols-outline.nvim
@@ -570,6 +582,8 @@ ret = require('packer').startup({
     -- Project:
     -- ````````
     -- {{{
+    -- TODO: https://github.com/charludo/projectmgr.nvim
+    -- TODO: https://github.com/rmagatti/auto-session
     -- TODO: https://github.com/thaerkh/vim-workspace
     -- }}}
 
@@ -729,10 +743,10 @@ ret = require('packer').startup({
         config = function()
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
-                ignore_install = { "markdown", "yaml" },
+                ignore_install = { "help", "markdown", "yaml" },
                 highlight = {
                     enable = true,
-                    disable = { "markdown", "yaml" }
+                    disable = { "help", "markdown", "yaml" }
                 }
             }
         end
@@ -797,7 +811,7 @@ ret = require('packer').startup({
     use 'nvim-lua/popup.nvim'
     use 'rktjmp/lush.nvim'
 
-    -- TODO: https://github.com/nvim-neotest/neotest
+    -- TODO: https://github.com/AndrewRadev/inline_edit.vim
     -- TODO: https://github.com/Iron-E/nvim-bufmode
     -- TODO: https://github.com/Iron-E/nvim-libmodal
     -- TODO: https://github.com/Iron-E/nvim-tabmode
@@ -845,6 +859,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/junegunn/vim-easy-align
     -- TODO: https://github.com/junegunn/vim-slash
     -- TODO: https://github.com/kevinhwang91/nvim-hlslens
+    -- TODO: https://github.com/kevinhwang91/nvim-ufo
     -- TODO: https://github.com/klen/nvim-test
     -- TODO: https://github.com/kshenoy/vim-signature
     -- TODO: https://github.com/lifepillar/vim-colortemplate
@@ -852,11 +867,13 @@ ret = require('packer').startup({
     -- TODO: https://github.com/markonm/traces.vim
     -- TODO: https://github.com/matbme/JABS.nvim
     -- TODO: https://github.com/matveyt/neoclip
+    -- TODO: https://github.com/mg979/vim-visual-multi
     -- TODO: https://github.com/mhinz/vim-galore
     -- TODO: https://github.com/michaelb/sniprun
     -- TODO: https://github.com/milisims/nvim-luaref
     -- TODO: https://github.com/monkoose/matchparen.nvim
     -- TODO: https://github.com/mrjones2014/legendary.nvim
+    -- TODO: https://github.com/nvim-neotest/neotest
     -- TODO: https://github.com/paretje/nvim-man
     -- TODO: https://github.com/pechorin/any-jump.vim
     -- TODO: https://github.com/phaazon/hop.nvim
@@ -870,7 +887,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/simnalamburt/vim-mundo
     -- TODO: https://github.com/srstevenson/vim-picker
     -- TODO: https://github.com/stsewd/sphinx.nvim
-    -- TODO: https://github.com/mg979/vim-visual-multi
     -- TODO: https://github.com/tjdevries/nlua.nvim
     -- TODO: https://github.com/wellle/context.vim
     -- }}}
