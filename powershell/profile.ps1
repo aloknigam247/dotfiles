@@ -36,8 +36,8 @@ Start-Job {
 
 # Aliases
 # ```````
-# Set-Alias -Name v -Value "C:\Users\aloknigam\Downloads\goneovim-windows\goneovim-windows\goneovim.exe"
-Set-Alias -Name spslocal -Value "d:\nugetcache\onedrive.deploymentagentsdk.9.0.288-g69360218f1\\loadsandbox.ps1"
+# Msys2
+New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 
 # Functions
 # `````````
@@ -61,9 +61,12 @@ function vpi {
     nvim -c "PlugInstall | only" -c qa
 }
 
-# Msys2 functions
-Remove-Alias ls # remove default alias for ls
+function pdbg {
+    code .
+    python -m debugpy --listen 5678 --wait-for-client $args
+}
 
+# Msys2 functions
 function grep {
     C:\msys64\usr\bin\grep --color=auto -En $args
 }
@@ -84,6 +87,7 @@ function lla {
     C:\msys64\usr\bin\ls.exe -AlF --color=auto $args
 }
 
+Remove-Alias ls # remove default alias for ls
 function ls {
     C:\msys64\usr\bin\ls.exe -F --color=auto $args
 }
@@ -101,8 +105,14 @@ function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
 
+# Path functions
 function desktop {
     Set-Location 'C:\Users\aloknigam\OneDrive - Microsoft\Desktop\'
+}
+
+# Git functions
+function gs {
+    git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args
 }
 
 function Format-Text {
@@ -186,10 +196,6 @@ function Format-Text {
     return $head
 }
 
-
-New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
-
-
 # Autocompletion
 # ``````````````
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
@@ -228,7 +234,7 @@ function promptGen {
             'styles' = "italic"
         },
         @{
-            'text' = " ⟩⟩ "
+            'text' = " ⟩⟩"
             'fg' = '#8AC926'
         }
         @{
@@ -237,7 +243,7 @@ function promptGen {
             'styles' = "italic"
         },
         @{
-            'text' = " ⟩⟩ "
+            'text' = "⟩⟩ "
             'fg' = '#8AC926'
         }
     )
@@ -251,7 +257,8 @@ function promptGen {
 }
 
 $prompt_string = promptGen
-$git_version = git
+echo $prompt_string.replace("`e","\e")
+echo ""
 
 function prompt {
     if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
@@ -269,7 +276,7 @@ function prompt {
     $dir_icon = ""
     if ($null -ne $branch) {
         $dir_icon = ""
-        $git_branch = " $branch"
+        $git_branch = "  $branch "
     }
 
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)

@@ -20,11 +20,15 @@ ret = require('packer').startup({
 
     -- Auto Pair:
     -- ``````````
-    -- use 'windwp/nvim-autopairs' -- {
+     use {
+        'windwp/nvim-autopairs',
+        config = function()
+            require("nvim-autopairs").setup()
+        end
         -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
         -- BUG: braces Indentation is not correct in some situation
         -- TODO: Create rule to not pair " for vim files
-    -- }
+     }
     -- use {
     --     'ZhiyuanLck/smart-pairs',
     --     event = 'InsertEnter',
@@ -32,20 +36,16 @@ ret = require('packer').startup({
     --         require('pairs').setup()
     --     end
     -- }
-    use {
-        'steelsojka/pears.nvim',
-        config = function()
-            require('pears').setup()
-        end
-    }
-    -- TODO: https://github.com/theHamsta/nvim-treesitter-pairs
 
     -- Cheatsheet:
     -- ```````````
+    -- {{{
     -- use 'sudormrfbin/cheatsheet.nvim'
+    -- }}}
 
     -- COC:
     -- ````
+    -- {{{
     -- TODO: https://github.com/OmniSharp/omnisharp-vim
     -- TODO: https://github.com/coc-extensions/coc-powershell
     -- TODO: https://github.com/iamcco/coc-vimlsp
@@ -60,6 +60,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/neoclide/coc.nvim
     -- TODO: https://github.com/voldikss/coc-browser
     -- TODO: https://github.com/xiyaowong/coc-lightbulb-
+    -- }}}
 
     -- Coloring:
     -- `````````
@@ -95,7 +96,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/dominikduda/vim_current_word
     -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
     -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
-    -- TODO: https://github.com/mrshmllow/document-color.nvim
     -- TODO: https://github.com/norcalli/nvim-colorizer.lua
     -- TODO: https://github.com/rktjmp/highlight-current-n.nvim
     -- TODO: https://github.com/t9md/vim-quickhl
@@ -238,8 +238,6 @@ ret = require('packer').startup({
     -- use 'dmitmel/cmp-cmdline-history' " {
     --   TODO: how to select completion
     -- }
-    -- TODO: https://github.com/David-Kunz/cmp-npm
-    -- TODO: https://github.com/PasiBergman/cmp-nuget
     -- TODO: https://github.com/Shougo/deoplete.nvim
     -- TODO: https://github.com/davidsierradz/cmp-conventionalcommits
     -- TODO: https://github.com/f3fora/cmp-nuspell
@@ -799,7 +797,6 @@ ret = require('packer').startup({
 
     -- Utilities:
     -- ``````````
-    -- {{{
     use 'tversteeg/registers.nvim' -- Displays registers on ^R and " {
     --     let g:registers_window_border = "rounded"
     --     " TODO: Check if height can be reduced
@@ -811,12 +808,14 @@ ret = require('packer').startup({
     use 'nvim-lua/popup.nvim'
     use 'rktjmp/lush.nvim'
 
-    -- TODO: https://github.com/AndrewRadev/inline_edit.vim
+    use {
+        'AndrewRadev/inline_edit.vim'
+    }
     -- TODO: https://github.com/Iron-E/nvim-bufmode
     -- TODO: https://github.com/Iron-E/nvim-libmodal
     -- TODO: https://github.com/Iron-E/nvim-tabmode
     -- TODO: https://github.com/Iron-E/vim-libmodal
-    -- TODO: https://github.com/NFrid/due.nvim
+    -- TODO: https://github.com/NFrid/due.nvim -- can't find the use case
     -- TODO: https://github.com/NTBBloodbath/rest.nvim
     -- TODO: https://github.com/Pocco81/AbbrevMan.nvim
     -- TODO: https://github.com/RishabhRD/nvim-cheat.sh
@@ -889,7 +888,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/stsewd/sphinx.nvim
     -- TODO: https://github.com/tjdevries/nlua.nvim
     -- TODO: https://github.com/wellle/context.vim
-    -- }}}
 end
 })
 
@@ -1158,3 +1156,5 @@ require("mason-lspconfig").setup_handlers {
             }
 
             vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
+
+-- vim: fdm=marker
