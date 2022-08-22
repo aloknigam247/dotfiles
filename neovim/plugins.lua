@@ -222,21 +222,21 @@ ret = require('packer').startup({
                 { name = 'nvim_lsp' }
             }),
             formatting = {
-                local cmp = require('cmp')
                 format = function(entry, vim_item)
-                    -- Kind icons
-                    vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-                    -- Source
-                    vim_item.menu = ({
-                        buffer = "[Buffer]",
-                        nvim_lsp = "[LSP]",
-                        luasnip = "[LuaSnip]",
-                        nvim_lua = "[Lua]",
-                        latex_symbols = "[LaTeX]",
-                    })[entry.source.name]
+                    vim_item.mode = 'symbol_text' -- show only symbol annotations
+
+                    if entry.source.name == "buffer" then
+                        vim_item.menu = "[Buffer]"
+                    elseif entry.source.name == "nvim_lsp" then
+                        vim_item.menu = '{' .. entry.source.source.client.name .. '}'
+                    else
+                        vim_item.menu = '[' .. entry.source.name .. ']'
+                    end
+                    
                     return vim_item
                 end
-                                format = lspkind.cmp_format({
+                --[[
+                format = lspkind.cmp_format({
                     mode = 'symbol_text', -- show only symbol annotations
                     menu = ({
                         buffer = "[Buffer]",
@@ -245,7 +245,7 @@ ret = require('packer').startup({
                         nvim_lua = "[Lua]",
                         latex_symbols = "[Latex]",
                     })
-                })
+                })]]
             }
         })
         end
