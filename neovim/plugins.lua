@@ -222,8 +222,29 @@ ret = require('packer').startup({
                 { name = 'nvim_lsp' }
             }),
             formatting = {
-                format = lspkind.cmp_format({
+                local cmp = require('cmp')
+                format = function(entry, vim_item)
+                    -- Kind icons
+                    vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+                    -- Source
+                    vim_item.menu = ({
+                        buffer = "[Buffer]",
+                        nvim_lsp = "[LSP]",
+                        luasnip = "[LuaSnip]",
+                        nvim_lua = "[Lua]",
+                        latex_symbols = "[LaTeX]",
+                    })[entry.source.name]
+                    return vim_item
+                end
+                                format = lspkind.cmp_format({
                     mode = 'symbol_text', -- show only symbol annotations
+                    menu = ({
+                        buffer = "[Buffer]",
+                        nvim_lsp = "[LSP]",
+                        luasnip = "[LuaSnip]",
+                        nvim_lua = "[Lua]",
+                        latex_symbols = "[Latex]",
+                    })
                 })
             }
         })
@@ -417,12 +438,14 @@ ret = require('packer').startup({
     -- ````````````
     -- {{{
     -- use 'glepnir/indent-guides.nvim'
+    --[[
     use {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
             require("indent_blankline").setup()
         end
     }
+    MAA4-1227046ckecl   ]]
     -- }}}
 
     -- LSP:
