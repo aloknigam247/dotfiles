@@ -257,9 +257,6 @@ function promptGen {
 }
 
 $prompt_string = promptGen
-echo $prompt_string.replace("`e","\e")
-echo ""
-
 function prompt {
     if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
         $branch = git symbolic-ref --short HEAD 2>&1
