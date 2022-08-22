@@ -827,7 +827,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/andymass/vim-matchup
     -- TODO: https://github.com/bennypowers/nvim-regexplainer
     -- TODO: https://github.com/bfredl/nvim-luadev
-    -- TODO: https://github.com/bignimbus/you-are-here.vim
     -- TODO: https://github.com/booperlv/nvim-gomove
     -- TODO: https://github.com/chipsenkbeil/distant.nvim
     -- TODO: https://github.com/chrisbra/NrrwRgn
