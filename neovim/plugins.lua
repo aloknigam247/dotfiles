@@ -222,21 +222,16 @@ ret = require('packer').startup({
                 { name = 'nvim_lsp' }
             }),
             formatting = {
-                format = function(entry, v_item)
-                    local menu_item = ""
-
+                format = function(entry, vim_item)
                     if entry.source.name == "buffer" then
-                        menu_item = "[Buffer]"
+                        vim_item.menu = "[Buffer]"
                     elseif entry.source.name == "nvim_lsp" then
-                        menu_item = '{' .. entry.source.source.client.name .. '}'
+                        vim_item.menu = '{' .. entry.source.source.client.name .. '}'
                     else
-                        menu_item = '[' .. entry.source.name .. ']'
+                        vim_item.menu = '[' .. entry.source.name .. ']'
                     end
-                    
-                    return lspkind.cmp_format()
-                        --mode = 'symbol_text',
-                        --menu = menu_item
-                    --})
+
+                    return vim_item
                 end
                 --[[
                 format = lspkind.cmp_format({
