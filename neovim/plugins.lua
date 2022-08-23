@@ -148,6 +148,7 @@ ret = require('packer').startup({
     use 'mcchrish/zenbones.nvim'
     use 'mhartington/oceanic-next'
     use 'ntk148v/vim-horizon'
+    use 'nxvu699134/vn-night.nvim'
     use 'olimorris/onedarkpro.nvim'
     use 'projekt0n/github-nvim-theme'
     use 'rafalbromirski/vim-aurora'
@@ -219,7 +220,10 @@ ret = require('packer').startup({
             }),
             sources = ({
                 { name = 'buffer' },
-                { name = 'nvim_lsp' }
+                { name = 'nvim_lsp' },
+                { name = 'path' },
+                { name = 'nvim_lsp_signature_help' },
+                { name = 'spell' }
             }),
             formatting = {
                 format = function(entry, vim_item)
@@ -260,27 +264,25 @@ ret = require('packer').startup({
     -- TODO: https://github.com/Shougo/deoplete.nvim
     -- TODO: https://github.com/davidsierradz/cmp-conventionalcommits
     -- TODO: https://github.com/f3fora/cmp-nuspell
-    -- TODO: https://github.com/f3fora/cmp-spell
+    use {
+        'f3fora/cmp-spell'
+    }
     -- TODO: https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
-    -- TODO: https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+    use {
+        'hrsh7th/cmp-nvim-lsp-signature-help'
+    }
     -- TODO: https://github.com/hrsh7th/cmp-nvim-lua
-    -- TODO: https://github.com/hrsh7th/cmp-path
+    use {
+        'hrsh7th/cmp-path'
+    }
     -- TODO: https://github.com/jameshiew/nvim-magic
     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
     -- TODO: https://github.com/lukas-reineke/cmp-rg
     -- TODO: https://github.com/lukas-reineke/cmp-under-comparator
     -- TODO: https://github.com/meetcw/cmp-browser-source
-    -- TODO: https://github.com/noib3/nvim-compleet
-    -- TODO: https://github.com/nxvu699134/vn-night.nvim
-    -- TODO: https://github.com/octaltree/cmp-look
-    -- TODO: https://github.com/petertriho/cmp-git
-    -- TODO: https://github.com/rambhosale/cmp-bootstrap.nvim
-    -- TODO: https://github.com/ray-x/cmp-treesitter
     -- TODO: https://github.com/rcarriga/cmp-dap
     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
-    -- TODO: https://github.com/tzachar/cmp-tabnine
-    -- TODO: https://github.com/uga-rosa/cmp-dictionary
     -- TODO: https://github.com/vappolinario/cmp-clippy
     -- TODO: https://github.com/zbirenbaum/copilot-cmp
 

@@ -107,7 +107,6 @@
                 "source": "Windows.Terminal.PowershellCore",
                 "unfocusedAppearance": 
                 {
-                    "cursorShape": "emptyBox",
                     "experimental.retroTerminalEffect": false
                 }
             },
