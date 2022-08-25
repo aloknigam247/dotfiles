@@ -188,7 +188,6 @@ ret = require('packer').startup({
     -- TODO: use 'terrortylor/nvim-comment'
     -- TODO: use 'winston0410/commented.nvim'
     -- TODO: https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-    -- TODO: https://github.com/danymat/neogen
     -- TODO: https://github.com/gennaro-tedesco/nvim-commaround
     -- TODO: https://github.com/s1n7ax/nvim-comment-frame
     -- TODO: https://github.com/tpope/vim-commentary
@@ -218,13 +217,6 @@ ret = require('packer').startup({
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
-            sources = ({
-                { name = 'buffer' },
-                { name = 'nvim_lsp' },
-                { name = 'path' },
-                { name = 'nvim_lsp_signature_help' },
-                { name = 'spell' }
-            }),
             formatting = {
                 format = function(entry, vim_item)
                     if entry.source.name == "buffer" then
@@ -248,7 +240,20 @@ ret = require('packer').startup({
                         latex_symbols = "[Latex]",
                     })
                 })]]
-            }
+            },
+            snippet = {
+                expand = function(args)
+                    require('luasnip').lsp_expand(args.body)
+                end
+            },
+            sources = ({
+                { name = 'buffer' },
+                { name = 'luasnip' },
+                { name = 'nvim_lsp' },
+                { name = 'nvim_lsp_signature_help' },
+                { name = 'path' },
+                { name = 'spell' }
+            })
         })
         end
     }
@@ -649,7 +654,12 @@ ret = require('packer').startup({
     -- Snippets:
     -- `````````
     -- {{{
-    -- TODO: https://github.com/L3MON4D3/LuaSnip
+    use {
+        'L3MON4D3/LuaSnip',
+    }
+    use {
+        'saadparwaiz1/cmp_luasnip'
+    }
     -- TODO: https://github.com/dcampos/nvim-snippy
     -- TODO: https://github.com/ellisonleao/carbon-now.nvim
     -- TODO: https://github.com/hrsh7th/vim-vsnip
@@ -678,12 +688,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/itchyny/lightline.vim
     -- TODO: https://github.com/nvim-lualine/lualine.nvim
     -- 'windwp/windline.nvim'
-    -- }}}
-
-    -- Syntax:
-    -- ```````
-    -- {{{
-    -- TODO: https://github.com/tbastos/vim-lua " Lua syntax
     -- }}}
 
     -- Tab Line:
@@ -759,15 +763,18 @@ ret = require('packer').startup({
     -- Todo Marker:
     -- ````````````
     -- {{{
-    -- use 'folke/todo-comments.nvim' " {
--- require("todo-comments").setup {}
-    --     " BUG: Can not handle multiple todos in same line
-    --     " BUG: Makes vim scrolling slow
-    -- }
-    -- TODO: Quickfix
-    -- TODO: Search
-    -- TODO: Telescope
-    -- TODO: Trouble
+     use {
+         'folke/todo-comments.nvim',
+         config = function()
+             require("todo-comments").setup()
+         end
+        -- BUG: Can not handle multiple todos in same line
+        -- BUG: Makes vim scrolling slow
+        -- TODO: Quickfix
+        -- TODO: Search
+        -- TODO: Telescope
+        -- TODO: Trouble
+     }
     -- }}}
 
     -- Treesitter:
@@ -829,12 +836,9 @@ ret = require('packer').startup({
     -- TUI:
     -- ````
     -- {{{
-    -- use 'VonHeikemen/fine-cmdline.nvim'
-    -- use 'VonHeikemen/searchbox.nvim'
-    -- use 'rcarriga/nvim-notify'
-    -- TODO: https://github.com/skywind3000/vim-quickui
-    -- TODO: https://github.com/stevearc/dressing.nvim
-    -- TODO: https://github.com/sunjon/stylish.nvim
+    use 'rcarriga/nvim-notify'
+    use 'skywind3000/vim-quickui'
+    use 'stevearc/dressing.nvim'
     -- }}}
 
     -- Utilities:
