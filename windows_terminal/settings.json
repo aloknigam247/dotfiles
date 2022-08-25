@@ -104,11 +104,7 @@
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "opacity": 25,
-                "source": "Windows.Terminal.PowershellCore",
-                "unfocusedAppearance": 
-                {
-                    "experimental.retroTerminalEffect": false
-                }
+                "source": "Windows.Terminal.PowershellCore"
             },
             {
                 "guid": "{a675af90-ce44-5ebf-9552-d128880519e6}",

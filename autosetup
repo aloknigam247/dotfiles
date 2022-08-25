@@ -31,9 +31,9 @@ for o in ${opt[@]}; do
                         echo "backup $dest --> $dest.orig"
                         mv $dest $dest.orig
                     fi
-                
+
                     echo "linking $src --> $dest"
-            	    ln -fs $(pwd)/$src $dest
+                    ln -fs $(pwd)/$src $dest
                 fi
 
             done

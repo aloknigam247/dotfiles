@@ -415,14 +415,21 @@ ret = require('packer').startup({
     -- TODO: https://github.com/hotwatermorning/auto-git-diff
     -- TODO: https://github.com/kdheepak/lazygit.nvim
     -- TODO: https://github.com/ldelossa/gh.nvim
-    -- TODO: https://github.com/pwntester/octo.nvim
+    use {
+        'pwntester/octo.nvim',
+        config = function()
+            require('octo').setup()
+        end
+    }
     -- TODO: https://github.com/rhysd/conflict-marker.vim
-    -- TODO: https://github.com/rhysd/git-messenger.vim
+    use {
+        'rhysd/git-messenger.vim'
+        -- TODO: explore options
+    }
     -- TODO: https://github.com/sjl/splice.vim
     -- TODO: https://github.com/tanvirtin/vgit.nvim
     -- TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
     -- TODO: https://github.com/tpope/vim-fugitive
-    -- TODO: https://github.com/tveskag/nvim-blame-line
     -- TODO: https://github.com/whiteinge/diffconflicts
     -- }}}
 
@@ -445,7 +452,7 @@ ret = require('packer').startup({
             require("indent_blankline").setup()
         end
     }
-    MAA4-1227046ckecl   ]]
+    ]]
     -- }}}
 
     -- LSP:
@@ -705,7 +712,10 @@ ret = require('packer').startup({
 
     -- Tables:
     -- ```````
-    use 'dhruvasagar/vim-table-mode'
+    use {
+        'dhruvasagar/vim-table-mode',
+        cmd = 'TableModeEnable'
+    }
     -- TODO: https://github.com/godlygeek/tabular
 
     -- Telescope:
@@ -716,11 +726,19 @@ ret = require('packer').startup({
     -- TODO: https://github.com/LinArcX/telescope-command-palette.nvim
     -- TODO: https://github.com/axkirillov/easypick.nvim
     -- TODO: https://github.com/camspiers/snap
-    -- TODO: https://github.com/crispgm/telescope-heading.nvim
-    -- TODO: https://github.com/nvim-telescope/telescope-hop.nvim
-    -- TODO: https://github.com/nvim-telescope/telescope-packer.nvim
+    use {
+        'crispgm/telescope-heading.nvim',
+        config = function()
+            require('telescope').load_extension('heading')
+        end
+    }
+    use {
+        'nvim-telescope/telescope-packer.nvim',
+        config = function()
+            require("telescope").load_extension('packer')
+        end
+    }
     -- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
-    -- TODO: https://github.com/voldikss/vim-floaterm
     -- }}}
 
     -- Terminal:
@@ -735,6 +753,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/oberblastmeister/termwrapper.nvim
     -- TODO: https://github.com/pianocomposer321/consolation.nvim
     -- TODO: https://github.com/s1n7ax/nvim-terminal
+    -- TODO: https://github.com/voldikss/vim-floaterm
     -- }}}
 
     -- Todo Marker:

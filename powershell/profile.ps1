@@ -17,6 +17,7 @@ Start-Job {
         $dt = Get-Date
         git add .
         git commit -m "Updated at $dt"
+        rm .git\index.lock # fix lock error
         git push
 
         # Send ballon notification
@@ -46,7 +47,8 @@ function eprc {
 }
 
 function evrc {
-    nvim $env:LOCALAPPDATA\nvim\init.vim -O $env:LOCALAPPDATA\nvim\lua\plugins.lua
+    # nvim $env:LOCALAPPDATA\nvim\init.vim -O $env:LOCALAPPDATA\nvim\lua\plugins.lua
+    nvim $env:LOCALAPPDATA\nvim\lua\plugins.lua
 }
 
 function v {
@@ -236,6 +238,7 @@ function promptGen {
         @{
             'text' = " ⟩⟩"
             'fg' = '#8AC926'
+            'styles' = 'bold'
         }
         @{
             'text' = '$git_branch'
@@ -245,6 +248,7 @@ function promptGen {
         @{
             'text' = "⟩⟩ "
             'fg' = '#8AC926'
+            'styles' = 'bold'
         }
     )
 
