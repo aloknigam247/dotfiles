@@ -215,15 +215,25 @@ ret = require('packer').startup({
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             -- cmp.setup.cmdline(':', {
+            --     mapping = cmp.mapping.preset.cmdline(),
+            --     sources = cmp.config.sources({
+            --         { name = 'path' }
+            --     }, {
+            --         { name = 'cmdline' }
+            --     })
+            --     )
+            -- cmp.setup.cmdline(':', {
             --     sources = {
             --         { name = 'cmdline_history' }
             --     }
             -- }),
-            -- cmp.setup.cmdline(':', {
-            --     sources = {
-            --         { name = 'cmdline' }
-            --     }
-            -- }),
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'cmdline' },
+                    { name = 'cmdline_history' }
+                }
+            }),
             formatting = {
                 format = function(entry, vim_item)
                     if entry.source.name == "buffer" then
@@ -267,12 +277,12 @@ ret = require('packer').startup({
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-nvim-lsp'
     -- use 'dmitmel/cmp-cmdline-history'
-    -- use {
-    --     'hrsh7th/cmp-cmdline'
-    --   -- BUG: / completion for buffer is not working
-    --   -- TODO: Completion selection is not working
-    -- }
-    -- use 'dmitmel/cmp-cmdline-history' " {
+    use {
+        'hrsh7th/cmp-cmdline'
+      -- BUG: / completion for buffer is not working
+      -- TODO: Completion selection is not working
+    }
+    use 'dmitmel/cmp-cmdline-history' -- {
     --   TODO: how to select completion
     -- }
     -- TODO: https://github.com/Shougo/deoplete.nvim
