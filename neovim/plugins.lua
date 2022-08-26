@@ -65,39 +65,38 @@ ret = require('packer').startup({
     -- Coloring:
     -- `````````
     -- use 'RRethy/vim-illuminate' -- {
-    --     " BUG: highlight colors are not good
-    --     hi def link LspReferenceText WildMenu
-    --     hi def link LspReferenceWrite WildMenu
-    --     hi def link LspReferenceRead WildMenu
+        -- BUG: highlight colors are not good
+        -- hi def link LspReferenceText WildMenu
+        -- hi def link LspReferenceWrite WildMenu
+        -- hi def link LspReferenceRead WildMenu
     -- }
     use 'lilydjwg/colorizer'
     use 'machakann/vim-highlightedyank'
     -- use 'azabiong/vim-highlighter' -- NOTE: Good to use
     -- use 'tribela/vim-transparent' -- Make theme transparent
     -- TODO: use 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
-    use {
-        'xiyaowong/nvim-cursorword',
-        config = function()
-            require('nvim-cursorline').setup {
-                cursorline = {
-                    enable = true,
-                    timeout = 1000,
-                    number = false,
-                },
-                cursorword = {
-                    enable = true,
-                    min_length = 3,
-                    hl = { underline = true },
-                }
-            }
-        end
-    }
+    --use {
+    --    'xiyaowong/nvim-cursorword',
+    --    config = function()
+    --        require('nvim-cursorline').setup {
+    --            cursorline = {
+    --                enable = true,
+    --                timeout = 1000,
+    --                number = false,
+    --            },
+    --            cursorword = {
+    --                enable = true,
+    --                min_length = 3,
+    --                hl = { underline = true },
+    --            }
+    --        }
+    --    end
+    --}
     use 'yamatsum/nvim-cursorline'
-    -- TODO: https://github.com/dominikduda/vim_current_word
+    use 'dominikduda/vim_current_word'
     -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
     -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
     -- TODO: https://github.com/norcalli/nvim-colorizer.lua
-    -- TODO: https://github.com/rktjmp/highlight-current-n.nvim
     -- TODO: https://github.com/t9md/vim-quickhl
 
     -- Colorscheme:
@@ -138,7 +137,7 @@ ret = require('packer').startup({
 
     -- << Dark >>
     use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
-    use 'NLKNguyen/papercolor-theme' -- TODO: space · color is not good
+    use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
     use 'Th3Whit3Wolf/one-nvim'
     use 'ayu-theme/ayu-vim'
     use 'cpea2506/one_monokai.nvim'
@@ -198,14 +197,12 @@ ret = require('packer').startup({
     -- ```````````
     use {
         'hrsh7th/nvim-cmp',
-        -- {
-        --  " TODO: Commandline
-        --  " TODO: Hover doc
-        --  " TODO: LSP - explore
-        --  " TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
-        --  " TODO: Path
-        --  " TODO: Snippets
-        -- }
+        --  TODO: Commandline
+        --  TODO: Hover doc
+        --  TODO: LSP - explore
+        --  TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
+        --  TODO: Snippets
+        --  TODO: / suggetions
         config = function()
             local cmp = require('cmp')
             local lspkind = require('lspkind')
@@ -217,6 +214,16 @@ ret = require('packer').startup({
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
+            -- cmp.setup.cmdline(':', {
+            --     sources = {
+            --         { name = 'cmdline_history' }
+            --     }
+            -- }),
+            -- cmp.setup.cmdline(':', {
+            --     sources = {
+            --         { name = 'cmdline' }
+            --     }
+            -- }),
             formatting = {
                 format = function(entry, vim_item)
                     if entry.source.name == "buffer" then
@@ -259,9 +266,11 @@ ret = require('packer').startup({
     }
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-nvim-lsp'
-    -- use 'hrsh7th/cmp-cmdline' " {
-    --   BUG: / completion for buffer is not working
-    --   TODO: Completion selection is not working
+    -- use 'dmitmel/cmp-cmdline-history'
+    -- use {
+    --     'hrsh7th/cmp-cmdline'
+    --   -- BUG: / completion for buffer is not working
+    --   -- TODO: Completion selection is not working
     -- }
     -- use 'dmitmel/cmp-cmdline-history' " {
     --   TODO: how to select completion
@@ -293,6 +302,7 @@ ret = require('packer').startup({
 
     -- Configuration:
     -- ``````````````
+    -- {{{
     -- TODO: https://github.com/AstroNvim/AstroNvim
     -- TODO: https://github.com/Avimitin/nvim
     -- TODO: https://github.com/CanKolay3499/CNvim
@@ -325,6 +335,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/shaeinst/roshnivim
     -- TODO: https://github.com/shaunsingh/nyoom.nvim
     -- TODO: https://github.com/vi-tality/neovitality
+    -- }}}
 
     -- Debugger:
     -- `````````
@@ -345,7 +356,6 @@ ret = require('packer').startup({
             require('neogen').setup {}
         end
     }
-    -- TODO: https://github.com/danymat/neogen
     -- TODO: https://github.com/kkoomen/vim-doge
     -- TODO: https://github.com/nvim-treesitter/nvim-tree-docs
 
@@ -353,13 +363,20 @@ ret = require('packer').startup({
     -- ``````````````
     use {
         'nvim-neo-tree/neo-tree.nvim',
-    } -- {
-    --  BUG: Does not replace netrw
-    --  BUG: fuzzy search does not seems to work
-    --  good for fit status tree
-    --  shows lsp warnings in tree
-    --  goord .gitignore support
-    -- }
+        config = function()
+            require("neo-tree").setup({
+                filesystem = {
+                    hijack_netrw_behavior = "open_default",
+                    -- "open_current",  
+                    -- "disabled", 
+                }
+            })
+        end
+        --  BUG: fuzzy search does not seems to work
+        --  good for fit status tree
+        --  shows lsp warnings in tree
+        --  goord .gitignore support
+    }
     -- TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
     -- TODO: https://github.com/TimUntersberger/neofs
     -- TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
@@ -383,15 +400,29 @@ ret = require('packer').startup({
             require("twilight").setup()
         end
     }
+    -- TODO: https://github.com/folke/zen-mode.nvim
     -- TODO: https://github.com/hoschi/yode-nvim
     -- TODO: https://github.com/junegunn/goyo.vim
 
     -- Folding:
     -- ````````
-    -- TODO: use 'anuvyklack/nvim-keymap-amend'
-    -- TODO: use 'anuvyklack/pretty-fold.nvim'
-    -- TODO: https://github.com/anuvyklack/pretty-fold.nvim
-    -- 
+    -- {{{
+    use {
+        'anuvyklack/pretty-fold.nvim',
+        config = function()
+            require('pretty-fold').setup()
+        end
+    }
+    use 'anuvyklack/keymap-amend.nvim'
+    use {
+        'anuvyklack/fold-preview.nvim',
+        requires = 'anuvyklack/keymap-amend.nvim',
+        config = function()
+            require('fold-preview').setup()
+        end
+    }
+    --}}}
+
     -- Formatting:
     -- ```````````
     -- use 'mhartington/formatter.nvim'
@@ -402,7 +433,7 @@ ret = require('packer').startup({
     -- {{{
     -- TODO: use 'f-person/git-blame.nvim' " not working, needs review
     -- TODO: use 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
-    -- TODO: use 'ruifm/gitlinker.nvim' " NOTE: Good plugin worth lazy loading
+    use 'ruifm/gitlinker.nvim' -- NOTE: Good plugin worth lazy loading
     -- use 'APZelos/blamer.nvim' " {
     --     let g:blamer_enabled = 1
     --     let g:blamer_delay = 100
@@ -426,7 +457,7 @@ ret = require('packer').startup({
             require('octo').setup()
         end
     }
-    -- TODO: https://github.com/rhysd/conflict-marker.vim
+    use 'rhysd/conflict-marker.vim'
     use {
         'rhysd/git-messenger.vim'
         -- TODO: explore options
@@ -615,6 +646,7 @@ ret = require('packer').startup({
     -- Project:
     -- ````````
     -- {{{
+    -- TODO: https://github.com/ahmedkhalf/project.nvim
     -- TODO: https://github.com/charludo/projectmgr.nvim
     -- TODO: https://github.com/rmagatti/auto-session
     -- TODO: https://github.com/thaerkh/vim-workspace
@@ -781,12 +813,7 @@ ret = require('packer').startup({
     -- ```````````
     -- {{{
     use {
-        'nvim-treesitter/nvim-treesitter', -- {
-        --     " TODO: Folding
-        --     " TODO: Incremental selection
-        --     " TODO: Indentation
-        --     " TODO: Wiki
-        -- }
+        'nvim-treesitter/nvim-treesitter',
         config = function()
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
@@ -868,7 +895,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/SmiteshP/nvim-gps
     -- TODO: https://github.com/ThemerCorp/themer.lua
     -- TODO: https://github.com/WolfgangMehner/vim-plugins
-    -- TODO: https://github.com/ahmedkhalf/project.nvim
     -- TODO: https://github.com/amirrezaask/fuzzy.nvim
     -- TODO: https://github.com/andymass/vim-matchup
     -- TODO: https://github.com/bennypowers/nvim-regexplainer
@@ -878,6 +904,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/chrisbra/NrrwRgn
     -- TODO: https://github.com/craigemery/vim-autotag
     -- TODO: https://github.com/dbeniamine/cheat.sh-vim
+    -- TODO: https://github.com/doums/suit.nvim
     -- TODO: https://github.com/folke/lua-dev.nvim
     -- TODO: https://github.com/frabjous/knap
     -- TODO: https://github.com/gaborvecsei/cryptoprice.nvim
@@ -897,10 +924,10 @@ ret = require('packer').startup({
     -- TODO: https://github.com/jamestthompson3/nvim-remote-containers
     -- TODO: https://github.com/jbyuki/instant.nvim
     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
-    -- TODO: https://github.com/jbyuki/venn.nvim
+    use 'jbyuki/venn.nvim'
     -- TODO: https://github.com/jubnzv/mdeval.nvim
     -- TODO: https://github.com/junegunn/fzf
-    -- TODO: https://github.com/junegunn/vim-easy-align
+    use 'junegunn/vim-easy-align'
     -- TODO: https://github.com/junegunn/vim-slash
     -- TODO: https://github.com/kevinhwang91/nvim-hlslens
     -- TODO: https://github.com/kevinhwang91/nvim-ufo
@@ -909,7 +936,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/lifepillar/vim-colortemplate
     -- TODO: https://github.com/liuchengxu/vim-clap
     -- TODO: https://github.com/markonm/traces.vim
-    -- TODO: https://github.com/matbme/JABS.nvim
     -- TODO: https://github.com/matveyt/neoclip
     -- TODO: https://github.com/mg979/vim-visual-multi
     -- TODO: https://github.com/mhinz/vim-galore
@@ -927,7 +953,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/renerocksai/telekasten.nvim
     -- TODO: https://github.com/rickhowe/spotdiff.vim
     -- TODO: https://github.com/sheerun/vim-polyglot
-    -- TODO: https://github.com/sidebar-nvim/sidebar.nvim
+    use 'sidebar-nvim/sidebar.nvim'
     -- TODO: https://github.com/simnalamburt/vim-mundo
     -- TODO: https://github.com/srstevenson/vim-picker
     -- TODO: https://github.com/stsewd/sphinx.nvim

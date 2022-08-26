@@ -143,7 +143,7 @@ set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
-set pumblend=0               " pseudo-transparency for popup-menu
+set pumblend=10              " pseudo-transparency effect for popup-menu
 set shortmess=aoOtT          " Short messages
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
@@ -152,7 +152,7 @@ set title                    " Set console title
 "set ttymouse=sgr             " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
-" set winblend " TODO:
+set winblend=10              " pseudo-transparency effect for float window
 colorscheme nightfox       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
@@ -215,9 +215,8 @@ augroup illuminate_augroup
     autocmd VimEnter * hi link illuminatedWord MatchParen
 augroup END
 
-" TODO:Highlight text if it goes out of scope
-    " highlight ColorColumn ctermbg=white
-    " call matchadd('ColorColumn', '\%8v', 100)
+" highlight ColorColumn ctermbg=white
+" call matchadd('ColorColumn', '\%8v', 100)
 augroup vimrc_autocmds
   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
   autocmd BufEnter * match OverLength /\%101v/
