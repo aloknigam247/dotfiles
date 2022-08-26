@@ -509,7 +509,7 @@ ret = require('packer').startup({
     --    config = function()
     --        require("nvim-lsp-installer").setup()
     --    end
-    --}
+    --} -- replaced by mason.nvim
     use { "williamboman/mason.nvim" }
     use { "williamboman/mason-lspconfig.nvim" }
     use 'liuchengxu/vista.vim' -- {
@@ -524,10 +524,30 @@ ret = require('packer').startup({
         --     " TODO: explore options
         -- }
     }
-    -- use 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+    use {
+        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+        as = 'lsp_lines',
+        config = function()
+            require("lsp_lines").setup()
+            --require("lsp_lines").register_lsp_virtual_lines()
+            vim.diagnostic.config({
+                virtual_text = false,
+            })
+            vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
+        end
+    }
     -- use 'RishabhRD/nvim-lsputils' " BUG: problem in popfix
-    -- TODO: https://github.com/amrbashir/nvim-docs-view
-    -- use 'folke/lsp-colors.nvim'
+    use {
+        "amrbashir/nvim-docs-view",
+        -- cmd = { "DocsViewToggle" },
+        config = function()
+            require("docs-view").setup {
+                position = "right",
+                width = 60,
+            }
+        end
+    }
+    use 'folke/lsp-colors.nvim'
     -- TODO: https://github.com/gfanto/fzf-lsp.nvim
     -- TODO: https://github.com/glepnir/lspsaga.nvim
     use {
@@ -537,8 +557,11 @@ ret = require('packer').startup({
         end
     }
     -- TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
-    -- use 'jubnzv/virtual-types.nvim'
-    -- TODO: https://github.com/kosayoda/nvim-lightbulb
+    use 'jubnzv/virtual-types.nvim'
+    use {
+        'kosayoda/nvim-lightbulb',
+        requires = 'antoinemadec/FixCursorHold.nvim'
+    }
     -- TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
     -- TODO: https://github.com/ldelossa/litee-bookmarks.nvim
     -- TODO: https://github.com/ldelossa/litee-calltree.nvim
@@ -553,10 +576,30 @@ ret = require('packer').startup({
         'onsails/lspkind.nvim'
     }
     -- TODO: https://github.com/ray-x/navigator.lua
-    -- TODO: https://github.com/rmagatti/goto-preview
-    -- TODO: https://github.com/simrat39/symbols-outline.nvim
-    -- TODO: https://github.com/smjonas/inc-rename.nvim
-    -- TODO: https://github.com/stevearc/aerial.nvim
+    use {
+        'rmagatti/goto-preview',
+        config = function()
+            require('goto-preview').setup {}
+        end
+    }
+    use {
+        'simrat39/symbols-outline.nvim',
+        config = function()
+            require("symbols-outline").setup()
+        end
+    }
+    --use {
+    --    "smjonas/inc-rename.nvim",
+    --    config = function()
+    --        require("inc_rename").setup()
+    --    end,
+    --}
+    use {
+        'stevearc/aerial.nvim',
+        config = function()
+            require('aerial').setup({})
+        end
+    }
     use 'tami5/lspsaga.nvim'
     -- TODO: https://github.com/weilbith/nvim-code-action-menu
     -- }}}
@@ -990,25 +1033,26 @@ end
 local lspconfig = require 'lspconfig'
 
 local on_attach = function(_, bufnr)
-  -- vim-illuminate
-  -- require 'illuminate'.on_attach(_)
+    -- vim-illuminate
+    -- require 'illuminate'.on_attach(_)
 
-  local opts = { buffer = bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<leader>wl', function()
+    require("aerial").on_attach(_, bufnr)
+    local opts = { buffer = bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function()
         vim.inspect(vim.lsp.buf.list_workspace_folders())
     end, opts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-  vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
 require("mason").setup()
@@ -1030,12 +1074,6 @@ require("mason-lspconfig").setup_handlers {
 --    }
 --end
 
--- LSP Lines
--- require("lsp_lines").register_lsp_virtual_lines()
--- vim.diagnostic.config({
---   virtual_text = false,
--- })
--- vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
 
 
 -- require('fine-cmdline').setup({
