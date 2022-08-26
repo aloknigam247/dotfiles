@@ -557,7 +557,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/simrat39/symbols-outline.nvim
     -- TODO: https://github.com/smjonas/inc-rename.nvim
     -- TODO: https://github.com/stevearc/aerial.nvim
-    -- TODO: https://github.com/tami5/lspsaga.nvim
+    use 'tami5/lspsaga.nvim'
     -- TODO: https://github.com/weilbith/nvim-code-action-menu
     -- }}}
     -- 
