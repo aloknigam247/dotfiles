@@ -214,24 +214,17 @@ ret = require('packer').startup({
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
-            -- cmp.setup.cmdline(':', {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = cmp.config.sources({
-            --         { name = 'path' }
-            --     }, {
-            --         { name = 'cmdline' }
-            --     })
-            --     )
-            -- cmp.setup.cmdline(':', {
-            --     sources = {
-            --         { name = 'cmdline_history' }
-            --     }
-            -- }),
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
                     { name = 'cmdline' },
                     { name = 'cmdline_history' }
+                }
+            }),
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
                 }
             }),
             formatting = {
@@ -268,6 +261,7 @@ ret = require('packer').startup({
                 { name = 'luasnip' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
+                { name = 'nvim_lua' },
                 { name = 'path' },
                 { name = 'spell' }
             })
@@ -275,35 +269,20 @@ ret = require('packer').startup({
         end
     }
     use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-nvim-lsp'
-    -- use 'dmitmel/cmp-cmdline-history'
-    use {
-        'hrsh7th/cmp-cmdline'
-      -- BUG: / completion for buffer is not working
-      -- TODO: Completion selection is not working
-    }
-    use 'dmitmel/cmp-cmdline-history' -- {
-    --   TODO: how to select completion
-    -- }
+    use 'hrsh7th/cmp-nvim-lsp-signature-help'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'hrsh7th/cmp-path'
+    use 'dmitmel/cmp-cmdline-history'
     -- TODO: https://github.com/Shougo/deoplete.nvim
-    -- TODO: https://github.com/davidsierradz/cmp-conventionalcommits
     -- TODO: https://github.com/f3fora/cmp-nuspell
-    use {
-        'f3fora/cmp-spell'
-    }
+    use 'f3fora/cmp-spell'
     -- TODO: https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
-    use {
-        'hrsh7th/cmp-nvim-lsp-signature-help'
-    }
-    -- TODO: https://github.com/hrsh7th/cmp-nvim-lua
-    use {
-        'hrsh7th/cmp-path'
-    }
     -- TODO: https://github.com/jameshiew/nvim-magic
     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
     -- TODO: https://github.com/lukas-reineke/cmp-rg
     -- TODO: https://github.com/lukas-reineke/cmp-under-comparator
-    -- TODO: https://github.com/meetcw/cmp-browser-source
     -- TODO: https://github.com/rcarriga/cmp-dap
     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
@@ -442,7 +421,12 @@ ret = require('packer').startup({
     -- ````
     -- {{{
     -- TODO: use 'f-person/git-blame.nvim' " not working, needs review
-    -- TODO: use 'lewis6991/gitsigns.nvim' " BUG: Conflicts with todo-comments
+    use {
+        'lewis6991/gitsigns.nvim', -- BUG: Conflicts with todo-comments
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
     use 'ruifm/gitlinker.nvim' -- NOTE: Good plugin worth lazy loading
     -- use 'APZelos/blamer.nvim' " {
     --     let g:blamer_enabled = 1
@@ -870,10 +854,10 @@ ret = require('packer').startup({
         config = function()
             require'nvim-treesitter.configs'.setup {
                 auto_install = true,
-                ignore_install = { "help", "markdown", "yaml" },
+                ignore_install = { "help", "yaml" },
                 highlight = {
                     enable = true,
-                    disable = { "help", "markdown", "yaml" }
+                    disable = { "help", "yaml" }
                 }
             }
         end
