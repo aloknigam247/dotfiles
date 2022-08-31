@@ -927,32 +927,29 @@ ret = require('packer').startup({
     -- TODO: https://github.com/NFrid/due.nvim -- can't find the use case
     -- TODO: https://github.com/NTBBloodbath/rest.nvim
     use 'pocco81/abbrevman.nvim'
-    -- TODO: https://github.com/RishabhRD/nvim-cheat.sh
-    -- TODO: https://github.com/SmiteshP/nvim-gps
+    use {
+        'RishabhRD/nvim-cheat.sh',
+        'RishabhRD/popfix'
+    }
+    use 'SmiteshP/nvim-navic'
     -- TODO: https://github.com/ThemerCorp/themer.lua
     -- TODO: https://github.com/WolfgangMehner/vim-plugins
     -- TODO: https://github.com/amirrezaask/fuzzy.nvim
-    -- TODO: https://github.com/andymass/vim-matchup
-    -- TODO: https://github.com/bennypowers/nvim-regexplainer
+    use 'andymass/vim-matchup'
     -- TODO: https://github.com/bfredl/nvim-luadev
     -- TODO: https://github.com/booperlv/nvim-gomove
     -- TODO: https://github.com/chipsenkbeil/distant.nvim
     -- TODO: https://github.com/chrisbra/NrrwRgn
     -- TODO: https://github.com/craigemery/vim-autotag
-    -- TODO: https://github.com/dbeniamine/cheat.sh-vim
-    -- TODO: https://github.com/doums/suit.nvim
+    use 'doums/suit.nvim'
     -- TODO: https://github.com/folke/lua-dev.nvim
     -- TODO: https://github.com/frabjous/knap
     -- TODO: https://github.com/gaborvecsei/cryptoprice.nvim
     -- TODO: https://github.com/gbprod/substitute.nvim
     -- TODO: https://github.com/gbprod/yanky.nvim
-    -- TODO: https://github.com/gelguy/wilder.nvim, { 'do': function('UpdateRemotePlugins') }
-    -- TODO: https://github.com/gennaro-tedesco/nvim-jqx
     -- TODO: https://github.com/ggandor/leap.nvim
     -- TODO: https://github.com/glacambre/firenvim, { 'do': { _ -> firenvim#install(0) } }
     -- TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
-    -- TODO: https://github.com/haya14busa/is.vim
-    -- TODO: https://github.com/haya14busa/vim-asterisk
     -- TODO: https://github.com/henriquehbr/nvim-startup.lua " NOTE: startup time analyser
     -- TODO: https://github.com/ibhagwan/fzf-lua
     -- TODO: https://github.com/is0n/jaq-nvim
@@ -964,16 +961,18 @@ ret = require('packer').startup({
     -- TODO: https://github.com/jubnzv/mdeval.nvim
     -- TODO: https://github.com/junegunn/fzf
     use 'junegunn/vim-easy-align'
-    -- TODO: https://github.com/junegunn/vim-slash
-    -- TODO: https://github.com/kevinhwang91/nvim-hlslens
-    -- TODO: https://github.com/kevinhwang91/nvim-ufo
+    use 'kevinhwang91/nvim-hlslens'
+    use {
+        'kevinhwang91/nvim-ufo',
+        'kevinhwang91/promise-async'
+    }
     -- TODO: https://github.com/klen/nvim-test
     -- TODO: https://github.com/kshenoy/vim-signature
     -- TODO: https://github.com/lifepillar/vim-colortemplate
     -- TODO: https://github.com/liuchengxu/vim-clap
     -- TODO: https://github.com/markonm/traces.vim
     -- TODO: https://github.com/matveyt/neoclip
-    -- TODO: https://github.com/mg979/vim-visual-multi
+    use 'mg979/vim-visual-multi'
     -- TODO: https://github.com/mhinz/vim-galore
     -- TODO: https://github.com/michaelb/sniprun
     -- TODO: https://github.com/milisims/nvim-luaref
@@ -1025,11 +1024,12 @@ end
 -- ```
 local lspconfig = require 'lspconfig'
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     -- vim-illuminate
     -- require 'illuminate'.on_attach(_)
 
-    require("aerial").on_attach(_, bufnr)
+    require("aerial").on_attach(client, bufnr)
+    require("nvim-navic").attach(client, bufnr)
     local opts = { buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
