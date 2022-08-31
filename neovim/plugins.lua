@@ -20,27 +20,30 @@ ret = require('packer').startup({
 
     -- Auto Pair:
     -- ``````````
-     use {
+    -- {{{
+    use {
         'windwp/nvim-autopairs',
+        event = 'InsertEnter',
         config = function()
             require("nvim-autopairs").setup()
         end
         -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
-        -- BUG: braces Indentation is not correct in some situation
+        -- BUG: braces Indentation is not correct in some situation, powershell
         -- TODO: Create rule to not pair " for vim files
-     }
+    }
     -- use {
     --     'ZhiyuanLck/smart-pairs',
-    --     event = 'InsertEnter',
+    --     -- event = 'InsertEnter',
     --     config = function()
     --         require('pairs').setup()
     --     end
     -- }
+    -- }}}
 
     -- Cheatsheet:
     -- ```````````
     -- {{{
-    -- use 'sudormrfbin/cheatsheet.nvim'
+    use 'sudormrfbin/cheatsheet.nvim'
     -- }}}
 
     -- COC:
@@ -921,13 +924,9 @@ ret = require('packer').startup({
     use {
         'AndrewRadev/inline_edit.vim'
     }
-    -- TODO: https://github.com/Iron-E/nvim-bufmode
-    -- TODO: https://github.com/Iron-E/nvim-libmodal
-    -- TODO: https://github.com/Iron-E/nvim-tabmode
-    -- TODO: https://github.com/Iron-E/vim-libmodal
     -- TODO: https://github.com/NFrid/due.nvim -- can't find the use case
     -- TODO: https://github.com/NTBBloodbath/rest.nvim
-    -- TODO: https://github.com/Pocco81/AbbrevMan.nvim
+    use 'pocco81/abbrevman.nvim'
     -- TODO: https://github.com/RishabhRD/nvim-cheat.sh
     -- TODO: https://github.com/SmiteshP/nvim-gps
     -- TODO: https://github.com/ThemerCorp/themer.lua
