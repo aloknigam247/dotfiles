@@ -603,6 +603,7 @@ ret = require('packer').startup({
 
     -- Lua:
     -- ````
+    -- TODO: https://github.com/milisims/nvim-luaref
     -- TODO: https://github.com/rafcamlet/nvim-luapad
     -- TODO: https://github.com/tjdevries/nlua.nvim
 
@@ -837,6 +838,14 @@ ret = require('packer').startup({
     -- TODO: https://github.com/voldikss/vim-floaterm
     -- }}}
 
+    -- Test & Run:
+    -- `````
+    -- TODO: https://github.com/jubnzv/mdeval.nvim
+    -- TODO: https://github.com/klen/nvim-test
+    -- TODO: https://github.com/michaelb/sniprun
+    -- TODO: https://github.com/nvim-neotest/neotest
+    -- TODO: https://github.com/pianocomposer321/yabs.nvim
+
     -- Todo Marker:
     -- ````````````
     -- {{{
@@ -963,7 +972,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/jbyuki/instant.nvim
     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
     use 'jbyuki/venn.nvim'
-    -- TODO: https://github.com/jubnzv/mdeval.nvim
     -- TODO: https://github.com/junegunn/fzf
     use 'junegunn/vim-easy-align'
     use 'kevinhwang91/nvim-hlslens'
@@ -971,7 +979,6 @@ ret = require('packer').startup({
         'kevinhwang91/nvim-ufo',
         'kevinhwang91/promise-async'
     }
-    -- TODO: https://github.com/klen/nvim-test
     -- TODO: https://github.com/kshenoy/vim-signature
     -- TODO: https://github.com/lifepillar/vim-colortemplate
     -- TODO: https://github.com/liuchengxu/vim-clap
@@ -979,19 +986,12 @@ ret = require('packer').startup({
     -- TODO: https://github.com/matveyt/neoclip
     use 'mg979/vim-visual-multi'
     -- TODO: https://github.com/mhinz/vim-galore
-    -- TODO: https://github.com/michaelb/sniprun
-    -- TODO: https://github.com/milisims/nvim-luaref
     -- TODO: https://github.com/monkoose/matchparen.nvim
-    -- TODO: https://github.com/mrjones2014/legendary.nvim
-    -- TODO: https://github.com/nvim-neotest/neotest
+    use 'mrjones2014/legendary.nvim'
     -- TODO: https://github.com/paretje/nvim-man
     -- TODO: https://github.com/pechorin/any-jump.vim
     -- TODO: https://github.com/phaazon/hop.nvim
-    -- TODO: https://github.com/pianocomposer321/yabs.nvim
-    -- TODO: https://github.com/rcarriga/vim-ultest
-    -- TODO: https://github.com/renerocksai/telekasten.nvim
-    -- TODO: https://github.com/rickhowe/spotdiff.vim
-    -- TODO: https://github.com/sheerun/vim-polyglot
+    use 'rickhowe/spotdiff.vim'
     use 'sidebar-nvim/sidebar.nvim'
     use 'simnalamburt/vim-mundo'
     use 'wellle/context.vim'
