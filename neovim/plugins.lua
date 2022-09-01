@@ -600,7 +600,12 @@ ret = require('packer').startup({
     use 'tami5/lspsaga.nvim'
     -- TODO: https://github.com/weilbith/nvim-code-action-menu
     -- }}}
-    -- 
+
+    -- Lua:
+    -- ````
+    -- TODO: https://github.com/rafcamlet/nvim-luapad
+    -- TODO: https://github.com/tjdevries/nlua.nvim
+
     -- Mapping:
     -- ````````
     -- {{{
@@ -983,17 +988,13 @@ ret = require('packer').startup({
     -- TODO: https://github.com/pechorin/any-jump.vim
     -- TODO: https://github.com/phaazon/hop.nvim
     -- TODO: https://github.com/pianocomposer321/yabs.nvim
-    -- TODO: https://github.com/rafcamlet/nvim-luapad
     -- TODO: https://github.com/rcarriga/vim-ultest
     -- TODO: https://github.com/renerocksai/telekasten.nvim
     -- TODO: https://github.com/rickhowe/spotdiff.vim
     -- TODO: https://github.com/sheerun/vim-polyglot
     use 'sidebar-nvim/sidebar.nvim'
-    -- TODO: https://github.com/simnalamburt/vim-mundo
-    -- TODO: https://github.com/srstevenson/vim-picker
-    -- TODO: https://github.com/stsewd/sphinx.nvim
-    -- TODO: https://github.com/tjdevries/nlua.nvim
-    -- TODO: https://github.com/wellle/context.vim
+    use 'simnalamburt/vim-mundo'
+    use 'wellle/context.vim'
 end
 })
 
