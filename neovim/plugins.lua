@@ -435,12 +435,15 @@ ret = require('packer').startup({
         end
     }
     use 'ruifm/gitlinker.nvim' -- NOTE: Good plugin worth lazy loading
-    -- use 'APZelos/blamer.nvim' " {
-    --     let g:blamer_enabled = 1
-    --     let g:blamer_delay = 100
-    --     let g:blamer_relative_time = 1
-    --     let g:blamer_prefix = '  '
-    -- }
+    use {
+        'APZelos/blamer.nvim',
+        config = function()
+            vim.g.blamer_enabled = 1
+            vim.g.blamer_delay = 100
+            vim.g.blamer_relative_time = 1
+            vim.g.blamer_prefix = '  '
+        end
+    }
     use 'mhinz/vim-signify'
     use {
         'TimUntersberger/neogit',
