@@ -853,6 +853,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/michaelb/sniprun
     -- TODO: https://github.com/nvim-neotest/neotest
     -- TODO: https://github.com/pianocomposer321/yabs.nvim
+    -- TODO: https://github.com/smzm/hydrovim
 
     -- Todo Marker:
     -- ````````````
