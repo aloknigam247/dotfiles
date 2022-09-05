@@ -147,7 +147,7 @@ ret = require('packer').startup({
     use 'fenetikm/falcon'
     use 'glepnir/zephyr-nvim'
     use 'marko-cerovac/material.nvim'
-    use 'mcchrish/zenbones.nvim'
+    use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
     use 'mhartington/oceanic-next'
     use 'ntk148v/vim-horizon'
     use 'nxvu699134/vn-night.nvim'
