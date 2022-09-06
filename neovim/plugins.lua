@@ -422,6 +422,7 @@ ret = require('packer').startup({
 
     -- FZF:
     -- ````
+    -- TODO: https://github.com/ibhagwan/fzf-lua
     -- TODO: https://github.com/junegunn/fzf
 
     -- Git:
@@ -610,6 +611,8 @@ ret = require('packer').startup({
 
     -- Lua:
     -- ````
+    -- TODO: https://github.com/bfredl/nvim-luadev
+    -- TODO: https://github.com/folke/lua-dev.nvim
     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
     -- TODO: https://github.com/milisims/nvim-luaref
     -- TODO: https://github.com/rafcamlet/nvim-luapad
@@ -633,6 +636,7 @@ ret = require('packer').startup({
     -- Markdown:
     -- `````````
     use 'davidgranstrom/nvim-markdown-preview'
+    -- TODO: https://github.com/frabjous/knap
 
     -- Marks:
     -- ``````
@@ -791,14 +795,7 @@ ret = require('packer').startup({
             }
         end
     }
-    -- TODO: https://github.com/alvarosevilla95/luatab.nvim
-    -- TODO: https://github.com/bagrat/vim-buffet
-    -- TODO: https://github.com/kdheepak/tabline.nvim
-    -- TODO: https://github.com/mengelbrecht/lightline-bufferline
-    -- TODO: https://github.com/noib3/nvim-cokeline
-    -- TODO: https://github.com/pacha/vem-tabline
-    -- TODO: https://github.com/rafcamlet/tabline-framework.nvim
-    -- TODO: https://github.com/romgrk/barbar.nvim
+    -- use 'mengelbrecht/lightline-bufferline'
 
     -- Tables:
     -- ```````
@@ -812,7 +809,6 @@ ret = require('packer').startup({
     -- ``````````
     -- {{{
     use 'nvim-telescope/telescope.nvim'
-    -- TODO: https://github.com/AckslD/nvim-neoclip.lua
     -- TODO: https://github.com/LinArcX/telescope-command-palette.nvim
     -- TODO: https://github.com/axkirillov/easypick.nvim
     -- TODO: https://github.com/camspiers/snap
@@ -878,8 +874,11 @@ ret = require('packer').startup({
     use {
         'nvim-treesitter/nvim-treesitter',
         config = function()
-            require'nvim-treesitter.configs'.setup {
+            require('nvim-treesitter.configs').setup {
                 auto_install = true,
+                endwise = {
+                    enable = true,
+                },
                 ignore_install = { "help", "yaml" },
                 highlight = {
                     enable = true,
@@ -888,39 +887,36 @@ ret = require('packer').startup({
             }
         end
     }
-    -- use 'romgrk/nvim-treesitter-context' -- {
-    --     " BUG: Its buggy in windows
-    -- }
     use {
         'm-demare/hlargs.nvim', -- NOTE: may not be required
         config = function()
             require('hlargs').setup()
         end
     }
-    -- use 'nvim-treesitter/nvim-treesitter-context' -- {
-    --    BUG: Makes scroll slow
-    -- }
-    -- TODO: https://github.com/RRethy/nvim-treesitter-endwise
-    -- TODO: https://github.com/RRethy/nvim-treesitter-textsubjects
-    -- TODO: https://github.com/lewis6991/spellsitter.nvim
-    -- TODO: https://github.com/mfussenegger/nvim-treehopper
-    --use {
-    --    'nvim-treesitter/nvim-treesitter-refactor',
-    --    config = function()
-    --        require'nvim-treesitter.configs'.setup {
-    --            refactor = {
-    --                highlight_definitions = {
-    --                    enable = true,
-    --                    -- Set to false if you have an `updatetime` of ~100.
-    --                    clear_on_cursor_move = true,
-    --                },
-    --            },
-    --        }
-    --    end
-    --}
-    -- TODO: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    -- TODO: https://github.com/nvim-treesitter/playground
-    -- use 'p00f/nvim-ts-rainbow' " BUG: not working
+    use 'nvim-treesitter/nvim-treesitter-context'
+    use 'RRethy/nvim-treesitter-endwise'
+    use {
+        'lewis6991/spellsitter.nvim',
+        config = function()
+            require('spellsitter').setup()
+        end
+    }
+    use {
+        'nvim-treesitter/nvim-treesitter-refactor',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                refactor = {
+                    highlight_definitions = {
+                        enable = true,
+                        -- Set to false if you have an `updatetime` of ~100.
+                        clear_on_cursor_move = true,
+                    },
+                },
+            }
+        end
+    }
+    use 'nvim-treesitter/playground'
+    use 'p00f/nvim-ts-rainbow'
     -- }}}
 
     -- TUI:
@@ -947,34 +943,25 @@ ret = require('packer').startup({
     use {
         'AndrewRadev/inline_edit.vim'
     }
-    -- TODO: https://github.com/NFrid/due.nvim -- can't find the use case
-    -- TODO: https://github.com/NTBBloodbath/rest.nvim
+    use 'NTBBloodbath/rest.nvim'
     use 'pocco81/abbrevman.nvim'
     use {
         'RishabhRD/nvim-cheat.sh',
         'RishabhRD/popfix'
     }
     use 'SmiteshP/nvim-navic'
-    -- TODO: https://github.com/ThemerCorp/themer.lua
-    -- TODO: https://github.com/WolfgangMehner/vim-plugins
-    -- TODO: https://github.com/amirrezaask/fuzzy.nvim
     use 'andymass/vim-matchup'
-    -- TODO: https://github.com/bfredl/nvim-luadev
-    -- TODO: https://github.com/booperlv/nvim-gomove
-    -- TODO: https://github.com/chipsenkbeil/distant.nvim
-    -- TODO: https://github.com/chrisbra/NrrwRgn
-    -- TODO: https://github.com/craigemery/vim-autotag
+    use 'booperlv/nvim-gomove'
+    use 'chipsenkbeil/distant.nvim'
+    use 'chrisbra/NrrwRgn'
     use 'doums/suit.nvim'
-    -- TODO: https://github.com/folke/lua-dev.nvim
-    -- TODO: https://github.com/frabjous/knap
-    -- TODO: https://github.com/gaborvecsei/cryptoprice.nvim
-    -- TODO: https://github.com/gbprod/substitute.nvim
-    -- TODO: https://github.com/gbprod/yanky.nvim
-    -- TODO: https://github.com/ggandor/leap.nvim
-    -- TODO: https://github.com/glacambre/firenvim, { 'do': { _ -> firenvim#install(0) } }
+    use {
+        'glacambre/firenvim',
+        run = function()
+            vim.fn['firenvim#install'](0)
+        end 
+    }
     -- TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
-    -- TODO: https://github.com/henriquehbr/nvim-startup.lua " NOTE: startup time analyser
-    -- TODO: https://github.com/ibhagwan/fzf-lua
     -- TODO: https://github.com/is0n/jaq-nvim
     -- TODO: https://github.com/jakewvincent/mkdnflow.nvim
     -- TODO: https://github.com/jamestthompson3/nvim-remote-containers
