@@ -82,7 +82,7 @@ autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highli
 autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 " autocmd FileType python colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
 " autocmd FileType python colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
-autocmd FileType python colorscheme monokai_sode | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType python colorscheme monokai_soda | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType sh colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType vim colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR
 autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
