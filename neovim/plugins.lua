@@ -24,7 +24,8 @@ ret = require('packer').startup({
     },
 
     function()
-    -- packer manages itself
+    -- Packer:
+    -- ```````
     use 'wbthomason/packer.nvim'
 
     -- Auto Pair:
@@ -40,13 +41,6 @@ ret = require('packer').startup({
         -- BUG: braces Indentation is not correct in some situation, powershell
         -- TODO: Create rule to not pair " for vim files
     }
-    -- use {
-    --     'ZhiyuanLck/smart-pairs',
-    --     -- event = 'InsertEnter',
-    --     config = function()
-    --         require('pairs').setup()
-    --     end
-    -- }
     -- }}}
 
     -- Cheatsheet:
@@ -82,10 +76,10 @@ ret = require('packer').startup({
         -- hi def link LspReferenceWrite WildMenu
         -- hi def link LspReferenceRead WildMenu
     -- }
-    use 'lilydjwg/colorizer'
+    -- use 'lilydjwg/colorizer'
     use 'machakann/vim-highlightedyank'
-    -- use 'azabiong/vim-highlighter' -- NOTE: Good to use
-    -- use 'tribela/vim-transparent' -- Make theme transparent
+    use 'azabiong/vim-highlighter' -- NOTE: Good to use
+    use 'tribela/vim-transparent' -- Make theme transparent
     -- TODO: use 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
     --use {
     --    'xiyaowong/nvim-cursorword',
@@ -108,7 +102,7 @@ ret = require('packer').startup({
     use 'dominikduda/vim_current_word'
     -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
     -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
-    -- TODO: https://github.com/norcalli/nvim-colorizer.lua
+    use 'norcalli/nvim-colorizer.lua'
     -- TODO: https://github.com/t9md/vim-quickhl
 
     -- Colorscheme:
@@ -189,12 +183,12 @@ ret = require('packer').startup({
 
     -- Commenting:
     -- ```````````
-    use 'gennaro-tedesco/nvim-commaround' -- {
+    -- use 'gennaro-tedesco/nvim-commaround' -- {
     --  " TODO:
     --  " Fix toggle mapping to VSCode one
     --  " Add filetype for powershell
     -- }
-    -- TODO: use 'b3nj5m1n/kommentary'
+    use 'b3nj5m1n/kommentary'
     -- TODO: use 'numToStr/Comment.nvim'
     -- TODO: use 'terrortylor/nvim-comment'
     -- TODO: use 'winston0410/commented.nvim'
@@ -209,12 +203,9 @@ ret = require('packer').startup({
     -- ```````````
     use {
         'hrsh7th/nvim-cmp',
-        --  TODO: Commandline
         --  TODO: Hover doc
         --  TODO: LSP - explore
-        --  TODO: Menu UI Changes https://github.com/hrsh7th/nvim-cmp/wiki/Menu-Appearance
         --  TODO: Snippets
-        --  TODO: / suggetions
         config = function()
             local cmp = require('cmp')
             local lspkind = require('lspkind')
@@ -236,7 +227,8 @@ ret = require('packer').startup({
             cmp.setup.cmdline('/', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    { name = 'buffer' }
+                    { name = 'buffer' },
+                    { name = 'nvim_lsp_document_symbol' }
                 }
             }),
             formatting = {
@@ -270,7 +262,9 @@ ret = require('packer').startup({
             },
             sources = ({
                 { name = 'buffer' },
+                { name = 'dictionary' },
                 { name = 'luasnip' },
+                { name = 'nuspell' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'nvim_lua' },
@@ -278,19 +272,39 @@ ret = require('packer').startup({
                 { name = 'spell' }
             })
         })
+
+        -- Show source in diagnostics
+        vim.diagnostic.config({
+            virtual_text = {
+                source = "always",  -- Or "if_many"
+            },
+            float = {
+                source = "always",  -- Or "if_many"
+            },
+        })
+
+        -- Change diagnostic symbols in the sign column (gutter)
+        local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+        for type, icon in pairs(signs) do
+            local hl = "DiagnosticSign" .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+        end
         end
     }
+    use 'dmitmel/cmp-cmdline-history'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-nvim-lsp-document-symbol'
     use 'hrsh7th/cmp-nvim-lsp-signature-help'
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-path'
-    use 'dmitmel/cmp-cmdline-history'
-    -- TODO: https://github.com/Shougo/deoplete.nvim
-    -- TODO: https://github.com/f3fora/cmp-nuspell
+    use 'uga-rosa/cmp-dictionary'
+    use {
+        'f3fora/cmp-nuspell',
+        rocks = { 'lua-nuspell' }
+    }
     use 'f3fora/cmp-spell'
-    -- TODO: https://github.com/hrsh7th/cmp-nvim-lsp-document-symbol
     -- TODO: https://github.com/jameshiew/nvim-magic
     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
     -- TODO: https://github.com/lukas-reineke/cmp-rg
@@ -298,7 +312,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/rcarriga/cmp-dap
     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
-    -- TODO: https://github.com/vappolinario/cmp-clippy
     -- TODO: https://github.com/zbirenbaum/copilot-cmp
 
     -- Configuration:
@@ -362,23 +375,23 @@ ret = require('packer').startup({
 
     -- File Explorer:
     -- ``````````````
-    use {
-        'nvim-neo-tree/neo-tree.nvim',
-        config = function()
-            require("neo-tree").setup({
-                filesystem = {
-                    hijack_netrw_behavior = "open_default",
-                    -- "open_current",  
-                    -- "disabled", 
-                }
-            })
-        end
-        --  BUG: fuzzy search does not seems to work
-        --  good for fit status tree
-        --  shows lsp warnings in tree
-        --  goord .gitignore support
-    }
-    -- TODO: https://github.com/PhilRunninger/nerdtree-visual-selection
+    -- use {
+    --     'nvim-neo-tree/neo-tree.nvim',
+    --     config = function()
+    --         require("neo-tree").setup({
+    --             filesystem = {
+    --                 hijack_netrw_behavior = "open_default",
+    --                 -- "open_current",  
+    --                 -- "disabled", 
+    --             }
+    --         })
+    --     end
+    --     --  BUG: fuzzy search does not seems to work
+    --     --  good for fit status tree
+    --     --  shows lsp warnings in tree
+    --     --  good .gitignore support
+    -- }
+    use 'PhilRunninger/nerdtree-visual-selection'
     -- TODO: https://github.com/TimUntersberger/neofs
     -- TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
     -- TODO: https://github.com/Xuyuanp/yanil
@@ -391,19 +404,6 @@ ret = require('packer').startup({
     -- TODO: https://github.com/tamago324/lir.nvim
     -- TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
     -- TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
-
-    -- Focus Mode:
-    -- ```````````
-    -- use 'Pocco81/TrueZen.nvim'
-    use {
-        'folke/twilight.nvim',
-        config = function()
-            require("twilight").setup()
-        end
-    }
-    -- TODO: https://github.com/folke/zen-mode.nvim
-    -- TODO: https://github.com/hoschi/yode-nvim
-    -- TODO: https://github.com/junegunn/goyo.vim
 
     -- Folding:
     -- ````````
@@ -494,7 +494,7 @@ ret = require('packer').startup({
     -- Indentation:
     -- ````````````
     -- {{{
-    -- use 'glepnir/indent-guides.nvim'
+    use 'glepnir/indent-guides.nvim'
     --[[
     use {
         'lukas-reineke/indent-blankline.nvim',
