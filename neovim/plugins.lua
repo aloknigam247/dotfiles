@@ -272,23 +272,6 @@ ret = require('packer').startup({
                 { name = 'spell' }
             })
         })
-
-        -- Show source in diagnostics
-        vim.diagnostic.config({
-            virtual_text = {
-                source = "always",  -- Or "if_many"
-            },
-            float = {
-                source = "always",  -- Or "if_many"
-            },
-        })
-
-        -- Change diagnostic symbols in the sign column (gutter)
-        local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
         end
     }
     use 'dmitmel/cmp-cmdline-history'
@@ -959,7 +942,7 @@ ret = require('packer').startup({
         'RishabhRD/popfix'
     }
     use 'SmiteshP/nvim-navic'
-    use 'andymass/vim-matchup'
+    -- use 'andymass/vim-matchup'
     use 'booperlv/nvim-gomove'
     use 'chipsenkbeil/distant.nvim'
     use 'chrisbra/NrrwRgn'
@@ -1054,6 +1037,37 @@ require("mason-lspconfig").setup_handlers {
         }
     end
 }
+
+-- Show source in diagnostics
+vim.diagnostic.config({
+    virtual_text = {
+        source = "always",  -- Or "if_many"
+    },
+    float = {
+        source = "always",  -- Or "if_many"
+    },
+})
+
+-- Change diagnostic symbols in the sign column (gutter)
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+-- Highlight line number instead of having icons in sign column
+vim.cmd [[
+highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
+highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
+highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
+highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+
+sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
+sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
+sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
+sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
+]]
+
 -- Auto-Initialize serves
 -- NOTE: not needed after mason
 --local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
