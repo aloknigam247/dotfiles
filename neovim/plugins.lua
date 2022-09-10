@@ -9,9 +9,18 @@
 
 ret = require('packer').startup({
     config = {
+        auto_clean = true,
         display = {
             open_fn = require('packer.util').float
-        }
+        },
+        log = {
+            level = 'debug'
+        },
+        profile = {
+            enable = true,
+            threshold = 0.1
+        },
+        autoremove = true
     },
 
     function()
