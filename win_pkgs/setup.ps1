@@ -1,5 +1,6 @@
 $scoop_pkgs = @(
-    "bat"
+    "bat",
+    "lazygit"
 )
 
 $winget_pkgs = @(

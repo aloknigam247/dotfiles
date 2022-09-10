@@ -13,9 +13,9 @@ ret = require('packer').startup({
         display = {
             open_fn = require('packer.util').float
         },
-        log = {
-            level = 'debug'
-        },
+        -- log = {
+        --     level = 'debug'
+        -- },
         profile = {
             enable = true,
             threshold = 0.1
@@ -79,7 +79,7 @@ ret = require('packer').startup({
     -- use 'lilydjwg/colorizer'
     use 'machakann/vim-highlightedyank'
     use 'azabiong/vim-highlighter' -- NOTE: Good to use
-    use 'tribela/vim-transparent' -- Make theme transparent
+    -- use 'tribela/vim-transparent' -- Make theme transparent
     -- TODO: use 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
     --use {
     --    'xiyaowong/nvim-cursorword',
@@ -264,7 +264,7 @@ ret = require('packer').startup({
                 { name = 'buffer' },
                 { name = 'dictionary' },
                 { name = 'luasnip' },
-                { name = 'nuspell' },
+                -- { name = 'nuspell' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'nvim_lua' },
@@ -283,10 +283,10 @@ ret = require('packer').startup({
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-path'
     use 'uga-rosa/cmp-dictionary'
-    use {
-        'f3fora/cmp-nuspell',
-        rocks = { 'lua-nuspell' }
-    }
+    -- use {
+    --     'f3fora/cmp-nuspell',
+    --     rocks = { 'lua-nuspell' }
+    -- }
     use 'f3fora/cmp-spell'
     -- TODO: https://github.com/jameshiew/nvim-magic
     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
@@ -446,7 +446,7 @@ ret = require('packer').startup({
     }
     -- use 'sindrets/diffview.nvim'
     -- TODO: https://github.com/hotwatermorning/auto-git-diff
-    -- TODO: https://github.com/kdheepak/lazygit.nvim
+    use 'kdheepak/lazygit.nvim'
     -- TODO: https://github.com/ldelossa/gh.nvim
     use {
         'pwntester/octo.nvim',
@@ -591,12 +591,12 @@ ret = require('packer').startup({
     --        require("inc_rename").setup()
     --    end,
     --}
-    use {
-        'stevearc/aerial.nvim',
-        config = function()
-            require('aerial').setup({})
-        end
-    }
+    -- use {
+    --     'stevearc/aerial.nvim',
+    --     config = function()
+    --         require('aerial').setup({})
+    --     end
+    -- }
     use 'tami5/lspsaga.nvim'
     -- TODO: https://github.com/weilbith/nvim-code-action-menu
     -- }}}
@@ -893,20 +893,20 @@ ret = require('packer').startup({
             require('spellsitter').setup()
         end
     }
-    use {
-        'nvim-treesitter/nvim-treesitter-refactor',
-        config = function()
-            require'nvim-treesitter.configs'.setup {
-                refactor = {
-                    highlight_definitions = {
-                        enable = true,
-                        -- Set to false if you have an `updatetime` of ~100.
-                        clear_on_cursor_move = true,
-                    },
-                },
-            }
-        end
-    }
+    -- use {
+    --     'nvim-treesitter/nvim-treesitter-refactor',
+    --     config = function()
+    --         require'nvim-treesitter.configs'.setup {
+    --             refactor = {
+    --                 highlight_definitions = {
+    --                     enable = true,
+    --                     -- Set to false if you have an `updatetime` of ~100.
+    --                     clear_on_cursor_move = true,
+    --                 },
+    --             },
+    --         }
+    --     end
+    -- }
     use 'nvim-treesitter/playground'
     use 'p00f/nvim-ts-rainbow'
     -- }}}
@@ -1008,7 +1008,7 @@ local on_attach = function(client, bufnr)
     -- vim-illuminate
     -- require 'illuminate'.on_attach(_)
 
-    require("aerial").on_attach(client, bufnr)
+    -- require("aerial").on_attach(client, bufnr)
     require("nvim-navic").attach(client, bufnr)
     local opts = { buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
