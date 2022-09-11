@@ -477,7 +477,7 @@ ret = require('packer').startup({
     -- Indentation:
     -- ````````````
     -- {{{
-    use 'glepnir/indent-guides.nvim'
+    -- use 'glepnir/indent-guides.nvim'
     --[[
     use {
         'lukas-reineke/indent-blankline.nvim',
@@ -521,18 +521,18 @@ ret = require('packer').startup({
         --     " TODO: explore options
         -- }
     }
-    use {
-        'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
-        as = 'lsp_lines',
-        config = function()
-            require("lsp_lines").setup()
-            --require("lsp_lines").register_lsp_virtual_lines()
-            vim.diagnostic.config({
-                virtual_text = false,
-            })
-            vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
-        end
-    }
+    -- use {
+    --     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    --     as = 'lsp_lines',
+    --     config = function()
+    --         require("lsp_lines").setup()
+    --         --require("lsp_lines").register_lsp_virtual_lines()
+    --         vim.diagnostic.config({
+    --             virtual_text = false,
+    --         })
+    --         vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
+    --     end
+    -- }
     -- use 'RishabhRD/nvim-lsputils' " BUG: problem in popfix
     use {
         "amrbashir/nvim-docs-view",
