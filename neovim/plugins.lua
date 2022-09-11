@@ -107,20 +107,6 @@ ret = require('packer').startup({
 
     -- Colorscheme:
     -- ````````````
-    -- |------------+-------+------|
-    -- | Language   | Light | Dark |
-    -- |------------+-------+------|
-    -- | cpp        |       |      |
-    -- | csharp     |       |      |
-    -- | json       |       |      |
-    -- | markdown   |       |      |
-    -- | norg       |       |      |
-    -- | powershell |       |      |
-    -- | python     |       |      |
-    -- | shell      |       |      |
-    -- | vim        |       |      |
-    -- | yaml       |       |      |
-    -- |------------+-------+------|
     -- Current:
     -- << Light >>
     -- use 'ChrisKempson/Tomorrow-Theme'
@@ -184,11 +170,12 @@ ret = require('packer').startup({
     -- Commenting:
     -- ```````````
     -- use 'gennaro-tedesco/nvim-commaround' -- {
-    --  " TODO:
-    --  " Fix toggle mapping to VSCode one
-    --  " Add filetype for powershell
+    --  TODO:
+    --  Fix toggle mapping to VSCode one
+    --  Add filetype for powershell
+    --  BUG: Issue with -[[]]
     -- }
-    use 'b3nj5m1n/kommentary'
+    use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem
     -- TODO: use 'numToStr/Comment.nvim'
     -- TODO: use 'terrortylor/nvim-comment'
     -- TODO: use 'winston0410/commented.nvim'
@@ -374,19 +361,11 @@ ret = require('packer').startup({
     --     --  shows lsp warnings in tree
     --     --  good .gitignore support
     -- }
-    use 'PhilRunninger/nerdtree-visual-selection'
     -- TODO: https://github.com/TimUntersberger/neofs
-    -- TODO: https://github.com/Xuyuanp/nerdtree-git-plugin
-    -- TODO: https://github.com/Xuyuanp/yanil
     -- TODO: https://github.com/elihunter173/dirbuf.nvim
-    -- TODO: https://github.com/is0n/fm-nvim
-    -- TODO: https://github.com/kevinhwang91/rnvimr
-    -- TODO: https://github.com/kyazdani42/nvim-tree.lua
-    -- TODO: https://github.com/ms-jpq/chadtree
+    use 'ms-jpq/chadtree'
     -- TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
     -- TODO: https://github.com/tamago324/lir.nvim
-    -- TODO: https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-    -- TODO: https://github.com/vwxyutarooo/nerdtree-devicons-syntax
 
     -- Folding:
     -- ````````
