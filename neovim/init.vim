@@ -7,6 +7,7 @@
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
 " {{{
+" TODO: vim motions
 " TODO: Fix keymappings for <C-right arrow> <C-left arror> word movements
 " TODO: Highlight only overlength chars
 " TODO: blink on yank
@@ -89,7 +90,7 @@ autocmd FileType vim colorscheme one_monokai | highlight clear CursorLine | high
 autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
-require('wlsample.airline')
+require('wlsample.airline_anim')
 --require('neo-tree').setup{filesystem {hijack_netrw_behavior = "open_current"}}
 EOF
 
@@ -119,6 +120,7 @@ set path+=**              " Look for all files in sub dirs
 " Editor Settings:
 " ````````````````
 " {{{
+set bomb                              " Keep the BOM file marker
 set breakindent                       " Every wrapped line will continue visually indented
 set completeopt=menu,menuone,noselect " for nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
@@ -128,6 +130,7 @@ set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
 set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
+setglobal bomb                        " Keep the BOM file marker
 " }}}
 
 

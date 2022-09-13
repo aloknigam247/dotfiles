@@ -103,7 +103,7 @@
                 "hidden": false,
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 25,
+                "opacity": 75,
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
@@ -226,7 +226,7 @@
             "brightRed": "#E74856",
             "brightWhite": "#F2F2F2",
             "brightYellow": "#FFB700",
-            "cursorColor": "#70e000",
+            "cursorColor": "#70E000",
             "cyan": "#07BEB8",
             "foreground": "#CCCCCC",
             "green": "#13A10E",

@@ -103,7 +103,7 @@ ret = require('packer').startup({
     -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
     -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
     use 'norcalli/nvim-colorizer.lua'
-    -- TODO: https://github.com/t9md/vim-quickhl
+    use 't9md/vim-quickhl'
 
     -- Colorscheme:
     -- ````````````
@@ -304,6 +304,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/artart222/CodeArt
     -- TODO: https://github.com/askfiy/nvim
     -- TODO: https://github.com/b0o/nvim-conf
+    -- TODO: https://github.com/craftzdog/dotfiles-public
     -- TODO: https://github.com/crivotz/nv-ide
     -- TODO: https://github.com/cstsunfu/.sea.nvim
     -- TODO: https://github.com/echasnovski/mini.nvim
@@ -345,6 +346,10 @@ ret = require('packer').startup({
 
     -- File Explorer:
     -- ``````````````
+    -- TODO: https://github.com/TimUntersberger/neofs
+    -- TODO: https://github.com/elihunter173/dirbuf.nvim
+    -- TODO: https://github.com/mrbjarksen/neo-tree-diagnostics.nvim
+    use 'ms-jpq/chadtree'
     -- use {
     --     'nvim-neo-tree/neo-tree.nvim',
     --     config = function()
@@ -361,9 +366,6 @@ ret = require('packer').startup({
     --     --  shows lsp warnings in tree
     --     --  good .gitignore support
     -- }
-    -- TODO: https://github.com/TimUntersberger/neofs
-    -- TODO: https://github.com/elihunter173/dirbuf.nvim
-    use 'ms-jpq/chadtree'
     -- TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
     -- TODO: https://github.com/tamago324/lir.nvim
 
@@ -395,6 +397,8 @@ ret = require('packer').startup({
     -- ````
     -- TODO: https://github.com/ibhagwan/fzf-lua
     -- TODO: https://github.com/junegunn/fzf
+    -- TODO: https://github.com/junegunn/fzf.vim
+    -- TODO: https://github.com/ojroques/nvim-lspfuzzy
 
     -- Git:
     -- ````
@@ -586,6 +590,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/folke/lua-dev.nvim
     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
     -- TODO: https://github.com/milisims/nvim-luaref
+    -- TODO: https://github.com/nanotee/nvim-lua-guide
     -- TODO: https://github.com/rafcamlet/nvim-luapad
     -- TODO: https://github.com/tjdevries/nlua.nvim
 
@@ -606,8 +611,9 @@ ret = require('packer').startup({
 
     -- Markdown:
     -- `````````
-    use 'davidgranstrom/nvim-markdown-preview'
+    -- TODO: https://github.com/AckslD/nvim-FeMaco.lua
     -- TODO: https://github.com/frabjous/knap
+    use 'davidgranstrom/nvim-markdown-preview'
 
     -- Marks:
     -- ``````
@@ -656,17 +662,24 @@ ret = require('packer').startup({
     -- {{{
     -- TODO: https://github.com/TravonteD/org-capture-filetype
     -- TODO: https://github.com/akinsho/org-bullets.nvim
-    --use {
-    --    'nvim-neorg/neorg',
-    --    config = function()
-    --        require('nvim-treesitter.configs').setup {
-    --            highlight = {
-    --                enable = true,
-    --                additional_vim_regex_highlighting = false
-    --            }
-    --        }
-    --    end
-    --}
+    use {
+        'nvim-neorg/neorg',
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                highlight = {
+                    enable = true,
+                    additional_vim_regex_highlighting = false
+                }
+            }
+            require('neorg').setup {
+                ["core.norg.concealer"] = {
+                    config = { -- Note that this table is optional and doesn't need to be provided
+                    -- Configuration here
+                }
+            }
+            }
+        end
+    }
     -- use 'nvim-orgmode/orgmode'
     -- TODO: https://github.com/ranjithshegde/orgWiki.nvim
     -- TODO: https://github.com/lukas-reineke/headlines.nvim
@@ -678,6 +691,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/ahmedkhalf/project.nvim
     -- TODO: https://github.com/charludo/projectmgr.nvim
     -- TODO: https://github.com/rmagatti/auto-session
+    -- TODO: https://github.com/smolovk/projector.nvim
     -- TODO: https://github.com/thaerkh/vim-workspace
     -- }}}
 
@@ -806,6 +820,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/jlesquembre/nterm.nvim
     -- TODO: https://github.com/kassio/neoterm
     -- TODO: https://github.com/nikvdp/neomux
+    -- TODO: https://github.com/nikvdp/neomux
     -- TODO: https://github.com/numToStr/FTerm.nvim
     -- TODO: https://github.com/oberblastmeister/termwrapper.nvim
     -- TODO: https://github.com/pianocomposer321/consolation.nvim
@@ -815,6 +830,7 @@ ret = require('packer').startup({
 
     -- Test & Run:
     -- `````
+    -- TODO: https://github.com/andythigpen/nvim-coverage
     -- TODO: https://github.com/jubnzv/mdeval.nvim
     -- TODO: https://github.com/klen/nvim-test
     -- TODO: https://github.com/michaelb/sniprun
@@ -900,21 +916,20 @@ ret = require('packer').startup({
 
     -- Utilities:
     -- ``````````
+    use '0x100101/lab.nvim'
+    use 'AndrewRadev/inline_edit.vim'
+    use 'NTBBloodbath/rest.nvim'
+    use 'MunifTanjim/nui.nvim'
     use 'tversteeg/registers.nvim' -- Displays registers on ^R and " {
     --     let g:registers_window_border = "rounded"
     --     " TODO: Check if height can be reduced
     -- }
-    use 'nacro90/numb.nvim' -- Peek number line while jumping TODO: functionality hidden
-    use 'MunifTanjim/nui.nvim'
     use 'folke/trouble.nvim' -- NOTE: It should go in LSP
+    use 'nacro90/numb.nvim' -- Peek number line while jumping TODO: functionality hidden
     use 'nvim-lua/plenary.nvim'
     use 'nvim-lua/popup.nvim'
     use 'rktjmp/lush.nvim'
 
-    use {
-        'AndrewRadev/inline_edit.vim'
-    }
-    use 'NTBBloodbath/rest.nvim'
     use 'pocco81/abbrevman.nvim'
     use {
         'RishabhRD/nvim-cheat.sh',
@@ -945,13 +960,16 @@ ret = require('packer').startup({
         'kevinhwang91/promise-async'
     }
     -- TODO: https://github.com/lifepillar/vim-colortemplate
+    use 'lewis6991/impatient.nvim'
     use 'mg979/vim-visual-multi'
     use 'mrjones2014/legendary.nvim'
+    -- use 'ojroques/vim-oscyank'
     use 'paretje/nvim-man'
     use 'pechorin/any-jump.vim'
     use 'rickhowe/spotdiff.vim'
     use 'sidebar-nvim/sidebar.nvim'
     use 'simnalamburt/vim-mundo'
+    -- TODO: https://github.com/tpope/vim-surround
     use 'wellle/context.vim'
 end
 })
