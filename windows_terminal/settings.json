@@ -45,7 +45,7 @@
     "firstWindowPreference": "defaultProfile",
     "initialCols": 85,
     "initialRows": 20,
-    "launchMode": "focus",
+    "launchMode": "default",
     "profiles": 
     {
         "defaults": 
@@ -365,7 +365,7 @@
             "name": "powershell",
             "tab": 
             {
-                "background": "#FFFF00FF",
+                "background": "terminalBackground",
                 "showCloseButton": "hover",
                 "unfocusedBackground": "accent"
             },
