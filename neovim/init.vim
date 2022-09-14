@@ -139,7 +139,7 @@ setglobal bomb                        " Keep the BOM file marker
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
-set background=dark          " Select appropriate colors for dark or light
+set background=light          " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -153,6 +153,7 @@ set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
 set shortmess=aoOtT          " Short messages
+set signcolumn=auto:5        " Set max size of signcolumn
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support

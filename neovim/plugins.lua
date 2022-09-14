@@ -109,8 +109,8 @@ ret = require('packer').startup({
     -- ````````````
     -- Current:
     -- << Light >>
-    use 'ChrisKempson/Tomorrow-Theme'
     use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
+    use 'Mofiqul/adwaita.nvim'
     use 'NLKNguyen/papercolor-theme'
     use 'Th3Whit3Wolf/one-nvim'
     use 'Th3Whit3Wolf/onebuddy'
@@ -126,7 +126,6 @@ ret = require('packer').startup({
     use 'rose-pine/neovim'
     use 'sainnhe/edge'
     use 'sainnhe/everforest'
-    use 'Mofiqul/adwaita.nvim'
 
     -- << Dark >>
     -- use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
@@ -850,7 +849,11 @@ ret = require('packer').startup({
      use {
          'folke/todo-comments.nvim',
          config = function()
-             require("todo-comments").setup()
+             require("todo-comments").setup({
+                 keywords = {
+                     THOUGHT = { icon = "🤔", color = "info"}
+                 }
+             })
          end
         -- BUG: Can not handle multiple todos in same line
         -- BUG: Makes vim scrolling slow
