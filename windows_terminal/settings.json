@@ -371,8 +371,8 @@
             },
             "tabRow": 
             {
-                "background": "#FFFF00",
-                "unfocusedBackground": "#FF0000"
+                "background": "#FFFF0000",
+                "unfocusedBackground": "#FF000000"
             },
             "window": 
             {
