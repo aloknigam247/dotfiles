@@ -366,7 +366,7 @@
             "tab": 
             {
                 "background": "terminalBackground",
-                "showCloseButton": "always",
+                "showCloseButton": "hover",
                 "unfocusedBackground": "terminalBackground"
             },
             "tabRow": 
