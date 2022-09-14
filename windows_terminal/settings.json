@@ -365,9 +365,9 @@
             "name": "powershell",
             "tab": 
             {
-                "background": "accent",
+                "background": "terminalBackground",
                 "showCloseButton": "hover",
-                "unfocusedBackground": "terminalBackground"
+                "unfocusedBackground": "accent"
             },
             "tabRow": 
             {
@@ -382,5 +382,4 @@
     ],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
-    "windowingBehavior": "useNew"
-}
+    "windowingBehavior"
