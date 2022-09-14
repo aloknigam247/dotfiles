@@ -367,7 +367,7 @@
             {
                 "background": "terminalBackground",
                 "showCloseButton": "always",
-                "unfocusedBackground": "#FFFFFFFF"
+                "unfocusedBackground": "accent"
             },
             "tabRow": 
             {
