@@ -365,7 +365,7 @@
             "name": "powershell",
             "tab": 
             {
-                "background": "terminalBackground",
+                "background": "accent",
                 "showCloseButton": "hover",
                 "unfocusedBackground": "terminalBackground"
             },
