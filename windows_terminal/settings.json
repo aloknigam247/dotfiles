@@ -359,7 +359,21 @@
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
     "theme": "dark",
-    "themes": [],
+    "themes": [
+        {
+            "name": "powershell",
+            "window": {
+                "applicationTheme": "dark"
+            },
+            "tab": {
+                "background": "terminalBackground",
+                "unfocusedBackground": "#000000"
+            },
+            "tabRow": {
+                "unfocusedBackground": "#333333"
+            }
+        },
+    ],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
     "windowingBehavior": "useNew"
