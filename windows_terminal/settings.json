@@ -371,12 +371,12 @@
             },
             "tabRow": 
             {
-                "background": "#FFFF0000",
-                "unfocusedBackground": "#FF000000"
+                "background": "terminalBackground",
+                "unfocusedBackground": "#FF8800FF"
             },
             "window": 
             {
-                "applicationTheme": "system"
+                "applicationTheme": "light"
             }
         }
     ],
