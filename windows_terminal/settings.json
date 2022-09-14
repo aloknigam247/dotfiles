@@ -73,7 +73,8 @@
             "opacity": 25,
             "padding": "8",
             "scrollbarState": "hidden",
-            "useAcrylic": true
+            "useAcrylic": true,
+            "useAtlasEngine": false
         },
         "list": 
         [
