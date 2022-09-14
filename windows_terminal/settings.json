@@ -358,21 +358,27 @@
     "startOnUserLogin": false,
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
-    "theme": "dark",
-    "themes": [
+    "theme": "powershell",
+    "themes": 
+    [
         {
             "name": "powershell",
-            "window": {
-                "applicationTheme": "dark"
-            },
-            "tab": {
+            "tab": 
+            {
                 "background": "terminalBackground",
-                "unfocusedBackground": "#000000"
+                "showCloseButton": "always",
+                "unfocusedBackground": "#FFFFFFFF"
             },
-            "tabRow": {
-                "unfocusedBackground": "#333333"
+            "tabRow": 
+            {
+                "background": "terminalBackground",
+                "unfocusedBackground": "terminalBackground"
+            },
+            "window": 
+            {
+                "applicationTheme": "dark"
             }
-        },
+        }
     ],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
