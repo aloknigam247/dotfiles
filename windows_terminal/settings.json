@@ -38,6 +38,7 @@
     ],
     "alwaysShowNotificationIcon": false,
     "alwaysShowTabs": true,
+    "autoHideWindow": true,
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
@@ -49,7 +50,7 @@
     {
         "defaults": 
         {
-            "adjustIndistinguishableColors": true,
+            "adjustIndistinguishableColors": "indexed",
             "altGrAliasing": true,
             "antialiasingMode": "grayscale",
             "backgroundImage": null,
@@ -358,6 +359,7 @@
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
     "theme": "dark",
+    "themes": [],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
     "windowingBehavior": "useNew"
