@@ -96,7 +96,7 @@ autocmd FileType python colorscheme adwaita | highlight clear CursorLine | highl
 " autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
-require('wlsample.airline_anim')
+require('wlsample.wind')
 --require('neo-tree').setup{filesystem {hijack_netrw_behavior = "open_current"}}
 EOF
 
@@ -159,7 +159,7 @@ set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
 set shortmess=aoOtT          " Short messages
-set signcolumn=auto:5        " Set max size of signcolumn
+set signcolumn=auto:9        " Set max size of signcolumn
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support

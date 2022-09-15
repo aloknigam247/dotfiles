@@ -140,6 +140,7 @@ ret = require('packer').startup({
     -- use 'kaiuri/nvim-juliana'
     -- use 'lmburns/kimbox'
     -- use 'marko-cerovac/material.nvim'
+    -- use 'maxmx03/FluoroMachine.nvim'
     -- use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
     -- use 'mhartington/oceanic-next'
     -- use 'ntk148v/vim-horizon'
@@ -157,6 +158,7 @@ ret = require('packer').startup({
     -- use 'sainnhe/edge'
     -- use 'sainnhe/everforest'
     -- use 'sainnhe/sonokai'
+    -- use 'sam4llis/nvim-tundra'
     -- use 'savq/melange'
     -- use 'shaunsingh/moonlight.nvim'
     -- use 'sickill/vim-monokai'
@@ -292,6 +294,7 @@ ret = require('packer').startup({
     -- Configuration:
     -- ``````````````
     -- {{{
+    -- TODO: https://github.com/Abstract-IDE/Abstract
     -- TODO: https://github.com/AstroNvim/AstroNvim
     -- TODO: https://github.com/Avimitin/nvim
     -- TODO: https://github.com/CanKolay3499/CNvim
@@ -329,11 +332,12 @@ ret = require('packer').startup({
 
     -- Debugger:
     -- `````````
-    use 'mfussenegger/nvim-dap'
+    -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
     use 'Pocco81/dap-buddy.nvim'
+    use 'mfussenegger/nvim-dap'
     use 'mfussenegger/nvim-dap-python'
-    use 'rcarriga/nvim-dap-ui'
     -- TODO: https://github.com/puremourning/vimspector
+    use 'rcarriga/nvim-dap-ui'
     -- TODO: https://github.com/sakhnik/nvim-gdb
     -- TODO: https://github.com/theHamsta/nvim-dap-virtual-text
     -- TODO: https://github.com/vim-scripts/Conque-GDB
@@ -476,6 +480,10 @@ ret = require('packer').startup({
     ]]
     -- }}}
 
+    -- Lint:
+    -- `````
+    -- TODO: https://github.com/mfussenegger/nvim-lint
+
     -- LSP:
     -- ````
     -- {{{
@@ -547,16 +555,22 @@ ret = require('packer').startup({
         'kosayoda/nvim-lightbulb',
         requires = 'antoinemadec/FixCursorHold.nvim'
     }
+    -- TODO: https://github.com/Decodetalkers/csharpls-extended-lsp.nvim
+    -- TODO: https://github.com/Hoffs/omnisharp-extended-lsp.nvim
+    -- TODO: https://github.com/andrewferrier/textobj-diagnostic.nvim
+    -- TODO: https://github.com/anuvyklack/hydra.nvim
+    -- TODO: https://github.com/jayp0521/mason-null-ls.nvim
     -- TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
     -- TODO: https://github.com/ldelossa/litee-bookmarks.nvim
     -- TODO: https://github.com/ldelossa/litee-calltree.nvim
     -- TODO: https://github.com/ldelossa/litee.nvim
     -- TODO: https://github.com/lukas-reineke/format.nvim
-    -- TODO: https://github.com/mfussenegger/nvim-lint
     -- TODO: https://github.com/nanotee/nvim-lsp-basics
     -- TODO: https://github.com/nvim-lua/lsp-status.nvim
     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
     -- TODO: https://github.com/onsails/diaglist.nvim
+    -- TODO: https://github.com/p00f/clangd_extensions.nvim
+    -- TODO: https://github.com/razzmatazz/csharp-language-server
     use {
         'onsails/lspkind.nvim'
     }
@@ -660,6 +674,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/Yilin-Yang/vim-markbar
     use 'kshenoy/vim-signature'
     -- use 'chentoast/marks.nvim'
+    -- TODO: https://github.com/crusj/bookmarks.nvim
     -- }}}
 
     -- OrgMode:
@@ -696,6 +711,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/ahmedkhalf/project.nvim
     -- TODO: https://github.com/charludo/projectmgr.nvim
     -- TODO: https://github.com/rmagatti/auto-session
+    -- TODO: https://github.com/romainchapou/confiture.nvim
     -- TODO: https://github.com/smolovk/projector.nvim
     -- TODO: https://github.com/thaerkh/vim-workspace
     -- }}}
@@ -767,6 +783,7 @@ ret = require('packer').startup({
     -- }
     -- TODO: https://github.com/itchyny/lightline.vim
     -- TODO: https://github.com/nvim-lualine/lualine.nvim
+    -- TODO: https://github.com/rebelot/heirline.nvim
     -- 'windwp/windline.nvim'
     -- }}}
 
@@ -786,6 +803,7 @@ ret = require('packer').startup({
         end
     }
     -- use 'mengelbrecht/lightline-bufferline'
+    -- TODO: https://github.com/nanozuki/tabby.nvim
 
     -- Tables:
     -- ```````
@@ -815,6 +833,7 @@ ret = require('packer').startup({
         end
     }
     -- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
+    -- TODO: https://github.com/ptethng/telescope-makefile
     -- }}}
 
     -- Terminal:
@@ -835,6 +854,7 @@ ret = require('packer').startup({
 
     -- Test & Run:
     -- `````
+    -- TODO: https://github.com/EthanJWright/vs-tasks.nvim
     -- TODO: https://github.com/andythigpen/nvim-coverage
     -- TODO: https://github.com/jubnzv/mdeval.nvim
     -- TODO: https://github.com/klen/nvim-test
@@ -842,6 +862,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/nvim-neotest/neotest
     -- TODO: https://github.com/pianocomposer321/yabs.nvim
     -- TODO: https://github.com/smzm/hydrovim
+    -- TODO: https://github.com/stevearc/overseer.nvim
 
     -- Todo Marker:
     -- ````````````
@@ -921,6 +942,7 @@ ret = require('packer').startup({
     use 'rcarriga/nvim-notify'
     use 'skywind3000/vim-quickui'
     use 'stevearc/dressing.nvim'
+    -- TODO: https://github.com/vigoux/notifier.nvim
     -- }}}
 
     -- Utilities:
@@ -929,6 +951,7 @@ ret = require('packer').startup({
     use 'AndrewRadev/inline_edit.vim'
     use 'NTBBloodbath/rest.nvim'
     use 'MunifTanjim/nui.nvim'
+    -- TODO: https://github.com/ThePrimeagen/refactoring.nvim
     use 'tversteeg/registers.nvim' -- Displays registers on ^R and " {
     --     let g:registers_window_border = "rounded"
     --     " TODO: Check if height can be reduced
@@ -956,11 +979,26 @@ ret = require('packer').startup({
             vim.fn['firenvim#install'](0)
         end 
     }
+    -- TODO: https://github.com/cuducos/yaml.nvim
+    -- TODO: https://github.com/esensar/nvim-dev-container
+    -- TODO: https://github.com/github/copilot.vim
     -- TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
     -- TODO: https://github.com/is0n/jaq-nvim
     -- TODO: https://github.com/jakewvincent/mkdnflow.nvim
     -- TODO: https://github.com/jamestthompson3/nvim-remote-containers
+    -- TODO: https://github.com/gaoDean/autolist.nvim
+    -- TODO: https://github.com/Djancyp/better-comments.nvim
     -- TODO: https://github.com/jbyuki/instant.nvim
+    -- TODO: https://github.com/kylechui/nvim-surround
+    -- TODO: https://github.com/linty-org/key-menu.nvim
+    -- TODO: https://github.com/linty-org/readline.nvim
+    -- TODO: https://github.com/miversen33/import.nvim
+    -- TODO: https://github.com/nvim-colortils/colortils.nvim
+    -- TODO: https://github.com/phaazon/mind.nvim
+    -- TODO: https://github.com/someone-stole-my-name/yaml-companion.nvim
+    -- TODO: https://github.com/ziontee113/color-picker.nvim
+    -- TODO: https://github.com/andrewferrier/debugprint.nvim
+    -- TODO: https://github.com/lcheylus/overlength.nvim
     use 'jbyuki/venn.nvim'
     use 'junegunn/vim-easy-align'
     use 'kevinhwang91/nvim-hlslens'
