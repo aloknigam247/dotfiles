@@ -72,6 +72,12 @@ lua require('plugins')
 "     autocmd!
 "     autocmd BufWritePost plugins.lua source <afile> | PackerSync
 " augroup end
+
+" Light
+autocmd FileType lua colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType python colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR
+
+" Dark
 " autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
 " autocmd FileType cs colorscheme nightfox | highlight clear CursorLine | highlight clear CursorLineNR
 " autocmd FileType gitcommit colorscheme falcon | highlight clear CursorLine | highlight clear CursorLineNR

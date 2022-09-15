@@ -107,6 +107,7 @@ ret = require('packer').startup({
 
     -- Colorscheme:
     -- ````````````
+    use 'tjdevries/colorbuddy.vim'
     -- Current:
     -- << Light >>
     use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
@@ -162,7 +163,6 @@ ret = require('packer').startup({
     -- use 'tanvirtin/monokai.nvim'
     -- use 'tiagovla/tokyodark.nvim'
     -- use 'titanzero/zephyrium'
-    -- use 'tjdevries/colorbuddy.vim'
     -- use 'tjdevries/gruvbuddy.nvim'
     -- use 'tomasiser/vim-code-dark'
     -- use 'wuelnerdotexe/vim-enfocado'
