@@ -20,7 +20,7 @@ ret = require('packer').startup({
             enable = true,
             threshold = 0.1
         },
-        autoremove = true
+        -- autoremove = true
     },
 
     function()
@@ -46,7 +46,15 @@ ret = require('packer').startup({
     -- Cheatsheet:
     -- ```````````
     -- {{{
-    use 'sudormrfbin/cheatsheet.nvim'
+    use {
+        'sudormrfbin/cheatsheet.nvim',
+        cmd = 'Cheatsheet',
+        requires = {
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'},
+        }
+    }
     -- }}}
 
     -- COC:
@@ -973,6 +981,12 @@ ret = require('packer').startup({
     use 'chipsenkbeil/distant.nvim'
     use 'chrisbra/NrrwRgn'
     use 'doums/suit.nvim'
+    use {
+        'gen740/SmoothCursor.nvim',
+        config = function()
+            require('smoothcursor').setup()
+        end
+    }
     use {
         'glacambre/firenvim',
         run = function()

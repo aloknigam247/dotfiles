@@ -74,7 +74,7 @@ lua require('plugins')
 " augroup end
 
 " Light
-autocmd FileType lua colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR
+autocmd FileType lua colorscheme PaperColor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 autocmd FileType python colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR
 
 " Dark
