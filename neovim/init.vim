@@ -238,6 +238,12 @@ augroup vimrc_autocmds
 augroup END
 " }}}
 
+hi def IlluminatedWordText gui=underline
+hi def IlluminatedWordRead gui=underline
+hi def IlluminatedWordWrite gui=underline
+hi def link LspReferenceText WildMenu
+hi def link LspReferenceWrite WildMenu
+hi def link LspReferenceRead WildMenu
 
 " UI Client:
 " ``````````

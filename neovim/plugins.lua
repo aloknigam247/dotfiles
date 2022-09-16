@@ -18,7 +18,7 @@ ret = require('packer').startup({
         -- },
         profile = {
             enable = true,
-            threshold = 0.1
+            threshold = 0.0001
         },
         -- autoremove = true
     },
@@ -78,36 +78,31 @@ ret = require('packer').startup({
 
     -- Coloring:
     -- `````````
-    -- use 'RRethy/vim-illuminate' -- {
-        -- BUG: highlight colors are not good
-        -- hi def link LspReferenceText WildMenu
-        -- hi def link LspReferenceWrite WildMenu
-        -- hi def link LspReferenceRead WildMenu
-    -- }
+    use {
+        'RRethy/vim-illuminate',
+        config = function()
+            require('illuminate').configure({
+                providers = {
+                    'lsp',
+                    -- 'treesitter',
+                    'regex'
+                }
+            })
+        vim.cmd[[
+        hi def IlluminatedWordText gui=underline
+        hi def IlluminatedWordRead gui=underline
+        hi def IlluminatedWordWrite gui=underline
+        hi def link LspReferenceText WildMenu
+        hi def link LspReferenceWrite WildMenu
+        hi def link LspReferenceRead WildMenu
+        ]]
+        end
+        -- FIXME: highlight colors are not good
+    }
     -- use 'lilydjwg/colorizer'
     use 'machakann/vim-highlightedyank'
     use 'azabiong/vim-highlighter' -- NOTE: Good to use
     -- use 'tribela/vim-transparent' -- Make theme transparent
-    -- TODO: use 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' } " GO dependency
-    --use {
-    --    'xiyaowong/nvim-cursorword',
-    --    config = function()
-    --        require('nvim-cursorline').setup {
-    --            cursorline = {
-    --                enable = true,
-    --                timeout = 1000,
-    --                number = false,
-    --            },
-    --            cursorword = {
-    --                enable = true,
-    --                min_length = 3,
-    --                hl = { underline = true },
-    --            }
-    --        }
-    --    end
-    --}
-    use 'yamatsum/nvim-cursorline'
-    use 'dominikduda/vim_current_word'
     -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
     -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
     use 'norcalli/nvim-colorizer.lua'
@@ -363,28 +358,28 @@ ret = require('packer').startup({
 
     -- File Explorer:
     -- ``````````````
-    -- TODO: https://github.com/TimUntersberger/neofs
     -- TODO: https://github.com/elihunter173/dirbuf.nvim
-    -- TODO: https://github.com/mrbjarksen/neo-tree-diagnostics.nvim
-    use 'ms-jpq/chadtree'
-    -- use {
-    --     'nvim-neo-tree/neo-tree.nvim',
-    --     config = function()
-    --         require("neo-tree").setup({
-    --             filesystem = {
-    --                 hijack_netrw_behavior = "open_default",
-    --                 -- "open_current",  
-    --                 -- "disabled", 
-    --             }
-    --         })
-    --     end
-    --     --  BUG: fuzzy search does not seems to work
-    --     --  good for fit status tree
-    --     --  shows lsp warnings in tree
-    --     --  good .gitignore support
-    -- }
-    -- TODO: https://github.com/nvim-neo-tree/neo-tree.nvim
-    -- TODO: https://github.com/tamago324/lir.nvim
+    use {
+        "mrbjarksen/neo-tree-diagnostics.nvim",
+        requires = "nvim-neo-tree/neo-tree.nvim",
+        module = "neo-tree.sources.diagnostics", -- if wanting to lazyload
+    }
+    use {
+        'nvim-neo-tree/neo-tree.nvim',
+        config = function()
+            require("neo-tree").setup({
+                filesystem = {
+                    hijack_netrw_behavior = "open_default",
+                    -- "open_current",  
+                    -- "disabled", 
+                }
+            })
+        end
+        --  BUG: fuzzy search does not seems to work
+        --  good for fit status tree
+        --  shows lsp warnings in tree
+        --  good .gitignore support
+    }
 
     -- Folding:
     -- ````````
@@ -981,12 +976,12 @@ ret = require('packer').startup({
     use 'chipsenkbeil/distant.nvim'
     use 'chrisbra/NrrwRgn'
     use 'doums/suit.nvim'
-    use {
+    --[[ use {
         'gen740/SmoothCursor.nvim',
         config = function()
             require('smoothcursor').setup()
         end
-    }
+    } ]]
     use {
         'glacambre/firenvim',
         run = function()
