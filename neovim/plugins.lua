@@ -78,6 +78,7 @@ ret = require('packer').startup({
 
     -- Coloring:
     -- `````````
+    -- {{{
     use {
         'RRethy/vim-illuminate',
         config = function()
@@ -99,14 +100,30 @@ ret = require('packer').startup({
         end
         -- FIXME: highlight colors are not good
     }
-    -- use 'lilydjwg/colorizer'
-    use 'machakann/vim-highlightedyank'
     use 'azabiong/vim-highlighter' -- NOTE: Good to use
-    -- use 'tribela/vim-transparent' -- Make theme transparent
-    -- use { 'm00qek/baleia.nvim', tag = 'v1.2.0' } -- [archived] termical color support in neovim
-    -- use 'norcalli/nvim-terminal.lua' -- [archived] termical color support in neovim
-    use 'norcalli/nvim-colorizer.lua'
-    use 't9md/vim-quickhl'
+    use 'machakann/vim-highlightedyank'
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            require('colorizer').setup()
+        end
+    }
+    use {
+        't9md/vim-quickhl',
+        config = function()
+            vim.cmd[[
+            nmap <Space>m <Plug>(quickhl-manual-this)
+            xmap <Space>m <Plug>(quickhl-manual-this)
+            nmap <Space>M <Plug>(quickhl-manual-reset)
+            xmap <Space>M <Plug>(quickhl-manual-reset)
+            ]]
+        end
+    }
+    use {
+        'tribela/vim-transparent',
+        cmd = 'TransparentEnable'
+    }
+    -- }}}
 
     -- Colorscheme:
     -- ````````````
@@ -358,6 +375,7 @@ ret = require('packer').startup({
 
     -- File Explorer:
     -- ``````````````
+    -- {{{
     -- TODO: https://github.com/elihunter173/dirbuf.nvim
     use {
         "mrbjarksen/neo-tree-diagnostics.nvim",
@@ -369,17 +387,13 @@ ret = require('packer').startup({
         config = function()
             require("neo-tree").setup({
                 filesystem = {
-                    hijack_netrw_behavior = "open_default",
-                    -- "open_current",  
-                    -- "disabled", 
+                    hijack_netrw_behavior = "open_default"
                 }
             })
-        end
-        --  BUG: fuzzy search does not seems to work
-        --  good for fit status tree
-        --  shows lsp warnings in tree
-        --  good .gitignore support
+        end,
+        cmd = "NeoTree"
     }
+    -- }}}
 
     -- Folding:
     -- ````````
@@ -415,50 +429,61 @@ ret = require('packer').startup({
     -- Git:
     -- ````
     -- {{{
-    -- TODO: use 'f-person/git-blame.nvim' " not working, needs review
-    use {
-        'lewis6991/gitsigns.nvim', -- BUG: Conflicts with todo-comments
-        config = function()
-            require('gitsigns').setup()
-        end
-    }
-    use 'ruifm/gitlinker.nvim' -- NOTE: Good plugin worth lazy loading
     use {
         'APZelos/blamer.nvim',
+        cmd = 'BlamerToggle',
         config = function()
-            vim.g.blamer_enabled = 1
             vim.g.blamer_delay = 100
             vim.g.blamer_relative_time = 1
             vim.g.blamer_prefix = '  '
         end
     }
-    use 'mhinz/vim-signify'
     use {
         'TimUntersberger/neogit',
+        cmd = 'Neogit',
         config = function()
             require('neogit').setup()
         end
     }
-    -- use 'sindrets/diffview.nvim'
     -- TODO: https://github.com/hotwatermorning/auto-git-diff
-    use 'kdheepak/lazygit.nvim'
-    -- TODO: https://github.com/ldelossa/gh.nvim
+    use 'ldelossa/gh.nvim'
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
     use {
         'pwntester/octo.nvim',
+        cmd = 'Octo',
         config = function()
             require('octo').setup()
         end
     }
     use 'rhysd/conflict-marker.vim'
     use {
-        'rhysd/git-messenger.vim'
-        -- TODO: explore options
+        'rhysd/git-messenger.vim',
+        cmd = 'GitMessenger'
     }
-    -- TODO: https://github.com/sjl/splice.vim
-    -- TODO: https://github.com/tanvirtin/vgit.nvim
-    -- TODO: https://github.com/tommcdo/vim-fugitive-blame-ext
-    -- TODO: https://github.com/tpope/vim-fugitive
-    -- TODO: https://github.com/whiteinge/diffconflicts
+    use {
+        'ruifm/gitlinker.nvim',
+        config = function()
+            require('gitlinker').setup()
+        end
+    }
+    use {
+        'sindrets/diffview.nvim',
+        cmd = 'DiffviewOpen',
+        requires = 'nvim-lua/plenary.nvim'
+    }
+    use {
+        'tanvirtin/vgit.nvim',
+        requires = 'nvim-lua/plenary.nvim'
+    }
+    use {
+        'whiteinge/diffconflicts',
+        cmd = 'DiffConflicts'
+    }
     -- }}}
 
     -- Icons:
