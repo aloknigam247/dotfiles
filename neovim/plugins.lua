@@ -28,8 +28,7 @@ ret = require('packer').startup({
     -- ```````
     use 'wbthomason/packer.nvim'
 
-    -- Auto Pair:
-    -- ``````````
+    -- ──────────────────── Auto Pair ────────────────────
     -- {{{
     use {
         'windwp/nvim-autopairs',
@@ -43,8 +42,7 @@ ret = require('packer').startup({
     }
     -- }}}
 
-    -- Cheatsheet:
-    -- ```````````
+    -- ──────────────────── Cheatsheet ────────────────────
     -- {{{
     use {
         'sudormrfbin/cheatsheet.nvim',
@@ -127,6 +125,7 @@ ret = require('packer').startup({
 
     -- Colorscheme:
     -- ````````````
+    -- {{{
     use 'tjdevries/colorbuddy.vim'
     -- Current:
     -- << Light >>
@@ -189,26 +188,17 @@ ret = require('packer').startup({
     -- use 'tomasiser/vim-code-dark'
     -- use 'wuelnerdotexe/vim-enfocado'
     -- use 'yashguptaz/calvera-dark.nvim'
-    
+
     -- use 'dylanaraps/wal.vim'
     -- use 'AlphaTechnolog/pywal.nvim'
-
+    -- }}}
 
     -- Commenting:
     -- ```````````
-    -- use 'gennaro-tedesco/nvim-commaround' -- {
-    --  TODO:
-    --  Fix toggle mapping to VSCode one
-    --  Add filetype for powershell
-    --  BUG: Issue with -[[]]
-    -- }
     use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem
     -- TODO: use 'numToStr/Comment.nvim'
-    -- TODO: use 'terrortylor/nvim-comment'
-    -- TODO: use 'winston0410/commented.nvim'
-    -- TODO: https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-    -- TODO: https://github.com/gennaro-tedesco/nvim-commaround
     -- TODO: https://github.com/s1n7ax/nvim-comment-frame
+    -- TODO: use 'terrortylor/nvim-comment'
     -- TODO: https://github.com/tpope/vim-commentary
     -- TODO: https://github.com/tyru/caw.vim
     -- TODO: https://github.com/winston0410/commented.nvim
@@ -387,7 +377,7 @@ ret = require('packer').startup({
         config = function()
             require("neo-tree").setup({
                 filesystem = {
-                    hijack_netrw_behavior = "open_default"
+                    hijack_netrw_behavior = "open_current"
                 }
             })
         end,
@@ -491,21 +481,19 @@ ret = require('packer').startup({
     -- {{{
     use 'kyazdani42/nvim-web-devicons'
     -- use 'yamatsum/nvim-nonicons'
-    -- TODO: https://github.com/kristijanhusak/defx-icons
     -- }}}
 
-    -- Indentation:
-    -- ````````````
+    -- ──────────────────── Indentation ────────────────────
     -- {{{
-    -- use 'glepnir/indent-guides.nvim'
-    --[[
     use {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
-            require("indent_blankline").setup()
+            require("indent_blankline").setup({
+                --[[ show_current_context = true,
+                show_current_context_start = true, ]]
+            })
         end
     }
-    ]]
     -- }}}
 
     -- Lint:
@@ -515,6 +503,7 @@ ret = require('packer').startup({
     -- LSP:
     -- ````
     -- {{{
+    -- TODO: https://github.com/Kasama/nvim-custom-diagnostic-highlight
     use {
         'neovim/nvim-lspconfig' -- {
         --   TODO: diagnostics
@@ -797,22 +786,20 @@ ret = require('packer').startup({
     -- Status Line:
     -- ````````````
     -- {{{
-    -- use 'beauwilliams/statusline.lua' -- {
--- local statusline = require('statusline')
--- statusline.tabline = false
-    --     " BUG: Slowness observed
-    --     " BUG: no mouse support in tabline
-    --     " TODO: Explore more
-    -- }
     -- use {
     --     'datwaft/bubbly.nvim', -- BUG: error in branch tag
     --     config = function()
     --     end
     -- }
     -- TODO: https://github.com/itchyny/lightline.vim
-    -- TODO: https://github.com/nvim-lualine/lualine.nvim
+    use {
+        'nvim-lualine/lualine.nvim',
+        config = function()
+            require('lualine').setup()
+        end,
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
     -- TODO: https://github.com/rebelot/heirline.nvim
-    -- 'windwp/windline.nvim'
     -- }}}
 
     -- Tab Line:
@@ -1013,26 +1000,27 @@ ret = require('packer').startup({
             vim.fn['firenvim#install'](0)
         end 
     }
+    -- TODO: https://github.com/Djancyp/better-comments.nvim
+    -- TODO: https://github.com/andrewferrier/debugprint.nvim
     -- TODO: https://github.com/cuducos/yaml.nvim
     -- TODO: https://github.com/esensar/nvim-dev-container
+    -- TODO: https://github.com/gaoDean/autolist.nvim
     -- TODO: https://github.com/github/copilot.vim
     -- TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
     -- TODO: https://github.com/is0n/jaq-nvim
     -- TODO: https://github.com/jakewvincent/mkdnflow.nvim
     -- TODO: https://github.com/jamestthompson3/nvim-remote-containers
-    -- TODO: https://github.com/gaoDean/autolist.nvim
-    -- TODO: https://github.com/Djancyp/better-comments.nvim
     -- TODO: https://github.com/jbyuki/instant.nvim
     -- TODO: https://github.com/kylechui/nvim-surround
+    -- TODO: https://github.com/lcheylus/overlength.nvim
     -- TODO: https://github.com/linty-org/key-menu.nvim
     -- TODO: https://github.com/linty-org/readline.nvim
     -- TODO: https://github.com/miversen33/import.nvim
     -- TODO: https://github.com/nvim-colortils/colortils.nvim
     -- TODO: https://github.com/phaazon/mind.nvim
+    -- TODO: https://github.com/sindrets/winshift.nvim
     -- TODO: https://github.com/someone-stole-my-name/yaml-companion.nvim
     -- TODO: https://github.com/ziontee113/color-picker.nvim
-    -- TODO: https://github.com/andrewferrier/debugprint.nvim
-    -- TODO: https://github.com/lcheylus/overlength.nvim
     use 'jbyuki/venn.nvim'
     use 'junegunn/vim-easy-align'
     use 'kevinhwang91/nvim-hlslens'

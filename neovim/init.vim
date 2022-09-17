@@ -64,7 +64,6 @@
 " Plugins:
 " ````````
 call plug#begin()
-Plug 'windwp/windline.nvim'
 call plug#end()
 
 lua require('plugins')
@@ -74,8 +73,6 @@ lua require('plugins')
 " augroup end
 
 " Light
-autocmd FileType lua colorscheme PaperColor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
-autocmd FileType python colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR
 
 " Dark
 " autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
@@ -96,7 +93,6 @@ autocmd FileType python colorscheme adwaita | highlight clear CursorLine | highl
 " autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 
 lua << EOF
-require('wlsample.wind')
 --require('neo-tree').setup{filesystem {hijack_netrw_behavior = "open_current"}}
 EOF
 
@@ -151,8 +147,10 @@ set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
 set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
+set laststatus=3             " Global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=space:·,tab:>-       " Show space as ·, tab as clear spaces
+" set lcs=space:·,tab:>-     " Show space as ·, tab as clear spaces
+set lcs=tab:>-               " Show space as ·, tab as clear spaces
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
