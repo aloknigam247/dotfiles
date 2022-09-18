@@ -230,10 +230,10 @@ augroup END
 
 " highlight ColorColumn ctermbg=white
 " call matchadd('ColorColumn', '\%8v', 100)
-augroup vimrc_autocmds
-  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-  autocmd BufEnter * match OverLength /\%101v/
-augroup END
+" augroup vimrc_autocmds
+"   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+"   autocmd BufEnter * match OverLength /\%101v/
+" augroup END
 " }}}
 
 hi def IlluminatedWordText gui=underline
