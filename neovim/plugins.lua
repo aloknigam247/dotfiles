@@ -699,7 +699,7 @@ require('packer').startup({
     -- {{{
     -- TODO: https://github.com/TravonteD/org-capture-filetype
     -- TODO: https://github.com/akinsho/org-bullets.nvim
-    --[[ use {
+    use {
         'nvim-neorg/neorg',
         config = function()
             require('nvim-treesitter.configs').setup {
@@ -716,7 +716,7 @@ require('packer').startup({
             }
             }
         end
-    } ]]
+    }
     -- use 'nvim-orgmode/orgmode'
     -- TODO: https://github.com/ranjithshegde/orgWiki.nvim
     -- TODO: https://github.com/lukas-reineke/headlines.nvim
@@ -908,22 +908,22 @@ require('packer').startup({
         config = function()
             require('nvim-treesitter.configs').setup {
                 auto_install = true,
-                --[[ endwise = {
+                endwise = {
                     enable = true,
-                }, ]]
+                },
                 ignore_install = { "help", "yaml" },
                 highlight = {
                     enable = true,
-                    --disable = ignore_install
+                    disable = ignore_install
                 },
-                --[[rainbow = {
+                rainbow = {
                     enable = true,
                     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
                     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                     max_file_lines = nil, -- Do not enable for files with more than n lines, int
                     -- colors = {}, -- table of hex strings
                     -- termcolors = {} -- table of colour name strings
-                }]]
+                }
             }
         end
     }
@@ -934,7 +934,7 @@ require('packer').startup({
         end
     }
     -- use 'nvim-treesitter/nvim-treesitter-context' -- FIXME: conflicts with context.vim
-    --[[ use {
+    use {
         'RRethy/nvim-treesitter-endwise',
         config = function()
             require('nvim-treesitter.configs').setup {
@@ -943,27 +943,27 @@ require('packer').startup({
                 },
             }
         end
-    } ]]
+    }
     use {
         'lewis6991/spellsitter.nvim',
         config = function()
             require('spellsitter').setup()
         end
     }
-    -- use {
-    --     'nvim-treesitter/nvim-treesitter-refactor',
-    --     config = function()
-    --         require'nvim-treesitter.configs'.setup {
-    --             refactor = {
-    --                 highlight_definitions = {
-    --                     enable = true,
-    --                     -- Set to false if you have an `updatetime` of ~100.
-    --                     clear_on_cursor_move = true,
-    --                 },
-    --             },
-    --         }
-    --     end
-    -- }
+    use {
+        'nvim-treesitter/nvim-treesitter-refactor',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                refactor = {
+                    highlight_definitions = {
+                        enable = true,
+                        -- Set to false if you have an `updatetime` of ~100.
+                        clear_on_cursor_move = true,
+                    },
+                },
+            }
+        end
+    }
     use 'nvim-treesitter/playground'
     use 'p00f/nvim-ts-rainbow'
     -- }}}
