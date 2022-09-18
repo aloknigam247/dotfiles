@@ -7,7 +7,8 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 
-ret = require('packer').startup({
+-- local ret = require('packer').startup({
+require('packer').startup({
     config = {
         auto_clean = true,
         display = {
@@ -23,7 +24,7 @@ ret = require('packer').startup({
         -- autoremove = true
     },
 
-    function()
+    function(use)
     -- Packer:
     -- ```````
     use 'wbthomason/packer.nvim'
@@ -212,7 +213,7 @@ ret = require('packer').startup({
         --  TODO: Snippets
         config = function()
             local cmp = require('cmp')
-            local lspkind = require('lspkind')
+            -- local lspkind = require('lspkind')
             cmp.setup({
                 mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -363,10 +364,12 @@ ret = require('packer').startup({
     -- TODO: https://github.com/kkoomen/vim-doge
     -- TODO: https://github.com/nvim-treesitter/nvim-tree-docs
 
-    -- File Explorer:
-    -- ``````````````
+    -- ──────────────────── File Explorer ────────────────────
     -- {{{
-    -- TODO: https://github.com/elihunter173/dirbuf.nvim
+    use {
+        'elihunter173/dirbuf.nvim',
+        cmd = 'Dirbuf'
+    }
     use {
         "mrbjarksen/neo-tree-diagnostics.nvim",
         requires = "nvim-neo-tree/neo-tree.nvim",
@@ -416,8 +419,7 @@ ret = require('packer').startup({
     -- TODO: https://github.com/junegunn/fzf.vim
     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
 
-    -- Git:
-    -- ````
+    -- ──────────────────── Git ────────────────────
     -- {{{
     use {
         'APZelos/blamer.nvim',
@@ -998,7 +1000,7 @@ ret = require('packer').startup({
         'glacambre/firenvim',
         run = function()
             vim.fn['firenvim#install'](0)
-        end 
+        end
     }
     -- TODO: https://github.com/Djancyp/better-comments.nvim
     -- TODO: https://github.com/andrewferrier/debugprint.nvim
@@ -1068,8 +1070,6 @@ end
 
 -- LSP
 -- ```
-local lspconfig = require 'lspconfig'
-
 local on_attach = function(client, bufnr)
     -- vim-illuminate
     -- require 'illuminate'.on_attach(_)
@@ -1136,6 +1136,8 @@ sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=Dia
 
 -- Auto-Initialize serves
 -- NOTE: not needed after mason
+-- local lspconfig = require 'lspconfig'
+
 --local servers = require'nvim-lsp-installer.servers'.get_installed_server_names()
 --for _, lsp in ipairs(servers) do
 --    print(lsp)
@@ -1335,4 +1337,7 @@ vim.g.bubbly_colors = {
 
 vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
 
+require("lspconfig").powershell_es.setup({
+        bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services/"
+    })
 -- vim: fdm=marker

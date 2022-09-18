@@ -107,6 +107,19 @@ function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
 
+function which {
+    $cm = Get-Command $arg[0]
+    type = $cm.CommandType
+
+    if ($type -eq "Function") {
+        $cm.Definition
+    } elseif ($type -eq "Application") {
+        $cm.Source
+    } else {
+        Write-Host "Unknown"
+    }
+}
+
 # Path functions
 function desktop {
     Set-Location 'C:\Users\aloknigam\OneDrive - Microsoft\Desktop\'
