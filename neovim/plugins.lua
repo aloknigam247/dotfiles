@@ -384,7 +384,7 @@ require('packer').startup({
                 }
             })
         end,
-        cmd = "NeoTree"
+        cmd = "Neotree"
     }
     -- }}}
 
@@ -478,11 +478,9 @@ require('packer').startup({
     }
     -- }}}
 
-    -- Icons:
-    -- ``````
+    -- ──────────────────── Icons ────────────────────
     -- {{{
     use 'kyazdani42/nvim-web-devicons'
-    -- use 'yamatsum/nvim-nonicons'
     -- }}}
 
     -- ──────────────────── Indentation ────────────────────
@@ -917,6 +915,14 @@ require('packer').startup({
                 highlight = {
                     enable = true,
                     disable = ignore_install
+                },
+                rainbow = {
+                    enable = true,
+                    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+                    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+                    max_file_lines = nil, -- Do not enable for files with more than n lines, int
+                    -- colors = {}, -- table of hex strings
+                    -- termcolors = {} -- table of colour name strings
                 }
             }
         end
@@ -927,8 +933,17 @@ require('packer').startup({
             require('hlargs').setup()
         end
     }
-    use 'nvim-treesitter/nvim-treesitter-context'
-    use 'RRethy/nvim-treesitter-endwise'
+    -- use 'nvim-treesitter/nvim-treesitter-context' -- FIXME: conflicts with context.vim
+    use {
+        'RRethy/nvim-treesitter-endwise',
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                endwise = {
+                    enable = true,
+                },
+            }
+        end
+    }
     use {
         'lewis6991/spellsitter.nvim',
         config = function()
@@ -1065,9 +1080,6 @@ end
 -- require('dap-python').setup('C:\\Users\\aloknigam\\learn\\python\\.virtualenvs\\debugpy\\Scripts\\python')
 -- require('dap').set_log_level('TRACE')
 
-
-
-
 -- LSP
 -- ```
 local on_attach = function(client, bufnr)
@@ -1123,10 +1135,10 @@ end
 
 -- Highlight line number instead of having icons in sign column
 vim.cmd [[
-highlight! DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
-highlight! DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
-highlight! DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
-highlight! DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
+highlight! DiagnosticLineNrError guibg=#E94B3C guifg=#2D2926 gui=bold
+highlight! DiagnosticLineNrWarn guibg=#D6ED17 guifg=#606060 gui=bold
+highlight! DiagnosticLineNrInfo guibg=#FEE715 guifg=#101820 gui=bold
+highlight! DiagnosticLineNrHint guibg=#9CC3D5 guifg=#0063B2 gui=bold
 
 sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
 sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
@@ -1338,6 +1350,7 @@ vim.g.bubbly_colors = {
 vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
 
 require("lspconfig").powershell_es.setup({
-        bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services/"
+        bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services\\",
+        cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\Start-EditorServices.ps1"}
     })
 -- vim: fdm=marker
