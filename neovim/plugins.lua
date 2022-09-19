@@ -390,8 +390,7 @@ require('packer').startup({
     }
     -- }}}
 
-    -- Folding:
-    -- ````````
+    -- ──────────────────── Folding ────────────────────
     -- {{{
     use {
         'anuvyklack/pretty-fold.nvim',
@@ -505,7 +504,12 @@ require('packer').startup({
     -- LSP:
     -- ````
     -- {{{
-    -- TODO: https://github.com/Kasama/nvim-custom-diagnostic-highlight
+    use {
+        'Kasama/nvim-custom-diagnostic-highlight',
+        config = function()
+            require('nvim-custom-diagnostic-highlight').setup {}
+        end
+    }
     use {
         'neovim/nvim-lspconfig' -- {
         --   TODO: diagnostics
@@ -561,14 +565,35 @@ require('packer').startup({
     }
     use 'folke/lsp-colors.nvim'
     -- TODO: https://github.com/gfanto/fzf-lsp.nvim
-    -- TODO: https://github.com/glepnir/lspsaga.nvim
+    use({
+        "glepnir/lspsaga.nvim",
+        branch = "main",
+        config = function()
+            local saga = require("lspsaga")
+
+            saga.init_lsp_saga({
+                -- your configuration
+            })
+        end,
+    })
     use {
         'j-hui/fidget.nvim',
         config = function()
             require("fidget").setup()
         end
     }
-    -- TODO: https://github.com/jose-elias-alvarez/null-ls.nvim
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = function()
+            require("null-ls").setup({
+                sources = {
+                    require("null-ls").builtins.formatting.stylua,
+                    require("null-ls").builtins.diagnostics.eslint,
+                    require("null-ls").builtins.completion.spell,
+                },
+            })
+        end
+    }
     use 'jubnzv/virtual-types.nvim'
     use {
         'kosayoda/nvim-lightbulb',
@@ -688,7 +713,7 @@ require('packer').startup({
     -- | ma             | set mark a at current cursor location                         |
     -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
     -- |----------------+---------------------------------------------------------------|
-    -- use 'MattesGroeger/vim-bookmarks'
+    use 'MattesGroeger/vim-bookmarks'
     -- TODO: https://github.com/ThePrimeagen/harpoon
     -- TODO: https://github.com/Yilin-Yang/vim-markbar
     use 'kshenoy/vim-signature'
@@ -738,8 +763,13 @@ require('packer').startup({
     -- Quickfix:
     -- `````````
     -- {{{
-    -- TODO: https://github.com/kevinhwang91/nvim-bqf
-    -- TODO: https://github.com/stevearc/qf_helper.nvim
+    use 'kevinhwang91/nvim-bqf'
+    use {
+        'stevearc/qf_helper.nvim',
+        config = function()
+            require'qf_helper'.setup()
+        end
+    }
     -- }}}
 
     -- REPL:
@@ -1143,9 +1173,10 @@ end
 -- ```
 local on_attach = function(client, bufnr)
     -- vim-illuminate
-    -- require 'illuminate'.on_attach(_)
+    require 'illuminate'.on_attach(_)
 
     -- require("aerial").on_attach(client, bufnr)
+    require'virtualtypes'.on_attach()
     require("nvim-navic").attach(client, bufnr)
     local opts = { buffer = bufnr }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
