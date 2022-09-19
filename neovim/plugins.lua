@@ -81,13 +81,6 @@ require('packer').startup({
     use {
         'RRethy/vim-illuminate',
         config = function()
-            require('illuminate').configure({
-                providers = {
-                    'lsp',
-                    -- 'treesitter',
-                    'regex'
-                }
-            })
         vim.cmd[[
         hi def IlluminatedWordText gui=underline
         hi def IlluminatedWordRead gui=underline
@@ -1173,7 +1166,7 @@ end
 -- ```
 local on_attach = function(client, bufnr)
     -- vim-illuminate
-    require 'illuminate'.on_attach(_)
+    -- require 'illuminate'.on_attach(_)
 
     -- require("aerial").on_attach(client, bufnr)
     require'virtualtypes'.on_attach()
