@@ -149,6 +149,7 @@ require('packer').startup({
     use 'sainnhe/everforest'
 
     -- << Dark >>
+    -- use 'Almo7aya/neogruvbox.nvim'
     -- use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
     -- use 'Mofiqul/adwaita.nvim'
     -- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
@@ -347,6 +348,7 @@ require('packer').startup({
     use 'Pocco81/dap-buddy.nvim'
     use 'mfussenegger/nvim-dap'
     use 'mfussenegger/nvim-dap-python'
+    -- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
     -- TODO: https://github.com/puremourning/vimspector
     use 'rcarriga/nvim-dap-ui'
     -- TODO: https://github.com/sakhnik/nvim-gdb
@@ -804,7 +806,7 @@ require('packer').startup({
 
     -- Tab Line:
     -- `````````
-    use {
+    --[[ use {
         'akinsho/bufferline.nvim',
         config = function()
             require("bufferline").setup {
@@ -816,25 +818,30 @@ require('packer').startup({
                 }
             }
         end
-    }
+    } ]]
     -- use 'mengelbrecht/lightline-bufferline'
-    -- TODO: https://github.com/nanozuki/tabby.nvim
+    use 'nanozuki/tabby.nvim'
 
-    -- Tables:
-    -- ```````
+    -- ──────────────────── Tables ────────────────────
+    -- {{{
     use {
         'dhruvasagar/vim-table-mode',
         cmd = 'TableModeEnable'
     }
-    -- TODO: https://github.com/godlygeek/tabular
+    use 'godlygeek/tabular'
+    -- }}}
 
-    -- Telescope:
-    -- ``````````
+    -- ──────────────────── Telescope ────────────────────
     -- {{{
     use 'nvim-telescope/telescope.nvim'
-    -- TODO: https://github.com/LinArcX/telescope-command-palette.nvim
-    -- TODO: https://github.com/axkirillov/easypick.nvim
-    -- TODO: https://github.com/camspiers/snap
+    use {
+        'LinArcX/telescope-command-palette.nvim',
+        config = function()
+            require('telescope').load_extension('command_palette')
+        end
+    }
+    use 'axkirillov/easypick.nvim'
+    use 'camspiers/snap'
     use {
         'crispgm/telescope-heading.nvim',
         config = function()
@@ -847,8 +854,12 @@ require('packer').startup({
             require("telescope").load_extension('packer')
         end
     }
-    -- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
-    -- TODO: https://github.com/ptethng/telescope-makefile
+    --[[ use {
+        'ptethng/telescope-makefile',
+        config = function()
+            require'telescope'.load_extension('make')
+        end
+    } ]]
     -- }}}
 
     -- Terminal:
@@ -858,7 +869,6 @@ require('packer').startup({
     -- TODO: https://github.com/akinsho/toggleterm.nvim
     -- TODO: https://github.com/jlesquembre/nterm.nvim
     -- TODO: https://github.com/kassio/neoterm
-    -- TODO: https://github.com/nikvdp/neomux
     -- TODO: https://github.com/nikvdp/neomux
     -- TODO: https://github.com/numToStr/FTerm.nvim
     -- TODO: https://github.com/oberblastmeister/termwrapper.nvim
@@ -871,6 +881,7 @@ require('packer').startup({
     -- `````
     -- TODO: https://github.com/EthanJWright/vs-tasks.nvim
     -- TODO: https://github.com/andythigpen/nvim-coverage
+    -- TODO: https://github.com/is0n/jaq-nvim
     -- TODO: https://github.com/jubnzv/mdeval.nvim
     -- TODO: https://github.com/klen/nvim-test
     -- TODO: https://github.com/michaelb/sniprun
@@ -891,8 +902,6 @@ require('packer').startup({
                  }
              })
          end
-        -- BUG: Can not handle multiple todos in same line
-        -- BUG: Makes vim scrolling slow
         -- TODO: Quickfix
         -- TODO: Search
         -- TODO: Telescope
@@ -974,7 +983,14 @@ require('packer').startup({
     use 'rcarriga/nvim-notify'
     use 'skywind3000/vim-quickui'
     use 'stevearc/dressing.nvim'
-    -- TODO: https://github.com/vigoux/notifier.nvim
+    use {
+        "vigoux/notifier.nvim",
+        config = function()
+            require'notifier'.setup {
+                -- You configuration here
+            }
+        end
+    }
     -- }}}
 
     -- Utilities:
@@ -983,61 +999,72 @@ require('packer').startup({
     use 'AndrewRadev/inline_edit.vim'
     use 'NTBBloodbath/rest.nvim'
     use 'MunifTanjim/nui.nvim'
-    -- TODO: https://github.com/ThePrimeagen/refactoring.nvim
-    use 'tversteeg/registers.nvim' -- Displays registers on ^R and " {
-    --     let g:registers_window_border = "rounded"
-    --     " TODO: Check if height can be reduced
-    -- }
-    use 'folke/trouble.nvim' -- NOTE: It should go in LSP
-    use 'nacro90/numb.nvim' -- Peek number line while jumping TODO: functionality hidden
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-lua/popup.nvim'
-    use 'rktjmp/lush.nvim'
-
-    use 'pocco81/abbrevman.nvim'
     use {
         'RishabhRD/nvim-cheat.sh',
         'RishabhRD/popfix'
     }
     use 'SmiteshP/nvim-navic'
-    -- use 'andymass/vim-matchup'
+    use 'ThePrimeagen/refactoring.nvim'
+    use {
+        'andrewferrier/debugprint.nvim',
+        config = function()
+            require("debugprint").setup()
+        end
+    }
+    use 'andymass/vim-matchup'
     use 'booperlv/nvim-gomove'
     use 'chipsenkbeil/distant.nvim'
     use 'chrisbra/NrrwRgn'
+    use 'cuducos/yaml.nvim'
     use 'doums/suit.nvim'
-    --[[ use {
+    -- TODO: https://github.com/esensar/nvim-dev-container
+    use 'folke/trouble.nvim' -- NOTE: It should go in LSP
+    use {
+        'gaoDean/autolist.nvim',
+        config = function()
+            require('autolist').setup()
+        end
+    }
+    use {
         'gen740/SmoothCursor.nvim',
         config = function()
-            require('smoothcursor').setup()
+            require('smoothcursor').setup({
+                autostart = true,
+                cursor = "",             -- cursor shape (need nerd font)
+                intervals = 35,           -- tick interval
+                linehl = nil,             -- highlight sub-cursor line like 'cursorline', "CursorLine" recommended
+                type = "default",         -- define cursor movement calculate function, "default" or "exp" (exponential).
+                fancy = {
+                    enable = true,       -- enable fancy mode
+                    head = { cursor = "▷", texthl = "SmoothCursor", linehl = nil },
+                    body = {
+                        { cursor = "", texthl = "SmoothCursorRed" },
+                        { cursor = "", texthl = "SmoothCursorOrange" },
+                        { cursor = "●", texthl = "SmoothCursorYellow" },
+                        { cursor = "●", texthl = "SmoothCursorGreen" },
+                        { cursor = "•", texthl = "SmoothCursorAqua" },
+                        { cursor = ".", texthl = "SmoothCursorBlue" },
+                        { cursor = ".", texthl = "SmoothCursorPurple" },
+                    },
+                    tail = { cursor = nil, texthl = "SmoothCursor" }
+                },
+                priority = 10,           -- set marker priority
+                speed = 25,               -- max is 100 to stick to your current position
+                texthl = "SmoothCursor",  -- highlight group, default is { bg = nil, fg = "#FFD400" }
+                threshold = 3,
+                timeout = 3000,
+            })
         end
-    } ]]
+    }
     use {
         'glacambre/firenvim',
         run = function()
             vim.fn['firenvim#install'](0)
         end
     }
-    -- TODO: https://github.com/Djancyp/better-comments.nvim
-    -- TODO: https://github.com/andrewferrier/debugprint.nvim
-    -- TODO: https://github.com/cuducos/yaml.nvim
-    -- TODO: https://github.com/esensar/nvim-dev-container
-    -- TODO: https://github.com/gaoDean/autolist.nvim
-    -- TODO: https://github.com/github/copilot.vim
-    -- TODO: https://github.com/haringsrob/nvim_context_vt " NOTE: Good but should be off by default
-    -- TODO: https://github.com/is0n/jaq-nvim
-    -- TODO: https://github.com/jakewvincent/mkdnflow.nvim
+    use 'haringsrob/nvim_context_vt'
     -- TODO: https://github.com/jamestthompson3/nvim-remote-containers
     -- TODO: https://github.com/jbyuki/instant.nvim
-    -- TODO: https://github.com/kylechui/nvim-surround
-    -- TODO: https://github.com/lcheylus/overlength.nvim
-    -- TODO: https://github.com/linty-org/key-menu.nvim
-    -- TODO: https://github.com/linty-org/readline.nvim
-    -- TODO: https://github.com/miversen33/import.nvim
-    -- TODO: https://github.com/nvim-colortils/colortils.nvim
-    -- TODO: https://github.com/phaazon/mind.nvim
-    -- TODO: https://github.com/sindrets/winshift.nvim
-    -- TODO: https://github.com/someone-stole-my-name/yaml-companion.nvim
-    -- TODO: https://github.com/ziontee113/color-picker.nvim
     use 'jbyuki/venn.nvim'
     use 'junegunn/vim-easy-align'
     use 'kevinhwang91/nvim-hlslens'
@@ -1045,18 +1072,50 @@ require('packer').startup({
         'kevinhwang91/nvim-ufo',
         'kevinhwang91/promise-async'
     }
+    -- TODO: https://github.com/krady21/compiler-explorer.nvim
+    -- TODO: https://github.com/kylechui/nvim-surround
     -- TODO: https://github.com/lifepillar/vim-colortemplate
+    use 'linty-org/key-menu.nvim'
+    -- TODO: https://github.com/linty-org/readline.nvim
     use 'lewis6991/impatient.nvim'
     use 'mg979/vim-visual-multi'
+    use 'miversen33/import.nvim'
     use 'mrjones2014/legendary.nvim'
+    use {
+        'nacro90/numb.nvim',
+        config = function()
+            require('numb').setup()
+        end
+    }
+    -- TODO: https://github.com/nvim-colortils/colortils.nvim
     -- use 'ojroques/vim-oscyank'
+    use 'nvim-lua/plenary.nvim'
+    use 'nvim-lua/popup.nvim'
+    -- TODO: https://github.com/p00f/godbolt.nvim
     use 'paretje/nvim-man'
     use 'pechorin/any-jump.vim'
+    use {
+        'phaazon/mind.nvim',
+        branch = 'v2.2',
+        config = function()
+            require'mind'.setup()
+        end
+    }
+    use 'pocco81/abbrevman.nvim'
     use 'rickhowe/spotdiff.vim'
+    use 'rktjmp/lush.nvim'
     use 'sidebar-nvim/sidebar.nvim'
     use 'simnalamburt/vim-mundo'
+    -- TODO: https://github.com/sindrets/winshift.nvim
     -- TODO: https://github.com/tpope/vim-surround
+    use {
+        'tversteeg/registers.nvim',
+        config = function()
+            vim.cmd[[let g:registers_window_border = "rounded"]]
+        end
+    }
     use 'wellle/context.vim'
+    -- TODO: https://github.com/ziontee113/color-picker.nvim
 end
 })
 
@@ -1349,8 +1408,8 @@ vim.g.bubbly_colors = {
 
 vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
 
-require("lspconfig").powershell_es.setup({
+--[[ require("lspconfig").powershell_es.setup({
         bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services\\",
         cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\Start-EditorServices.ps1"}
-    })
+    }) ]]
 -- vim: fdm=marker
