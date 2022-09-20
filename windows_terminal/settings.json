@@ -104,7 +104,7 @@
                 "hidden": false,
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 25,
+                "opacity": 60,
                 "source": "Windows.Terminal.PowershellCore"
             }
         ]
