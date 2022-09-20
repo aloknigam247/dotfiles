@@ -260,10 +260,11 @@ require('packer').startup({
                 end
             },
             sources = ({
+                -- { name = 'nuspell' },
                 { name = 'buffer' },
                 { name = 'dictionary' },
                 { name = 'luasnip' },
-                -- { name = 'nuspell' },
+                { name = 'nvim_insert_text_lsp' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'nvim_lua' },
@@ -509,7 +510,6 @@ require('packer').startup({
         --   TODO: Autocompletion
         --   TODO: Code Actions
         --   TODO: Linitng
-        --   TODO: use 'filipdutescu/renamer.nvim', { 'branch': 'master' }
         --   TODO: Snippets
         --   TODO: UI Customization
     }
@@ -592,22 +592,28 @@ require('packer').startup({
         'kosayoda/nvim-lightbulb',
         requires = 'antoinemadec/FixCursorHold.nvim'
     }
-    -- TODO: https://github.com/Decodetalkers/csharpls-extended-lsp.nvim
-    -- TODO: https://github.com/Hoffs/omnisharp-extended-lsp.nvim
-    -- TODO: https://github.com/andrewferrier/textobj-diagnostic.nvim
+    use 'Decodetalkers/csharpls-extended-lsp.nvim'
+    use 'Hoffs/omnisharp-extended-lsp.nvim'
+    use {
+        'andrewferrier/textobj-diagnostic.nvim',
+        config = function()
+            require("textobj-diagnostic").setup()
+        end
+    }
     -- TODO: https://github.com/anuvyklack/hydra.nvim
-    -- TODO: https://github.com/jayp0521/mason-null-ls.nvim
-    -- TODO: https://github.com/kwkarlwang/cmp-nvim-insert-text-lsp
-    -- TODO: https://github.com/ldelossa/litee-bookmarks.nvim
-    -- TODO: https://github.com/ldelossa/litee-calltree.nvim
-    -- TODO: https://github.com/ldelossa/litee.nvim
-    -- TODO: https://github.com/lukas-reineke/format.nvim
-    -- TODO: https://github.com/nanotee/nvim-lsp-basics
-    -- TODO: https://github.com/nvim-lua/lsp-status.nvim
+    use 'filipdutescu/renamer.nvim'
+    use 'jayp0521/mason-null-ls.nvim'
+    use 'kwkarlwang/cmp-nvim-insert-text-lsp'
+    use 'ldelossa/litee-bookmarks.nvim'
+    use 'ldelossa/litee-calltree.nvim'
+    use 'ldelossa/litee.nvim'
+    use 'lukas-reineke/format.nvim'
+    use 'nanotee/nvim-lsp-basics'
+    use 'nvim-lua/lsp-status.nvim'
     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
-    -- TODO: https://github.com/onsails/diaglist.nvim
-    -- TODO: https://github.com/p00f/clangd_extensions.nvim
-    -- TODO: https://github.com/razzmatazz/csharp-language-server
+    use 'onsails/diaglist.nvim'
+    use 'p00f/clangd_extensions.nvim'
+    use 'razzmatazz/csharp-language-server'
     use {
         'onsails/lspkind.nvim'
     }
@@ -913,8 +919,8 @@ require('packer').startup({
     -- TODO: https://github.com/smzm/hydrovim
     -- TODO: https://github.com/stevearc/overseer.nvim
 
-    -- Todo Marker:
-    -- ````````````
+
+    -- ──────────────────── Todo Marker ────────────────────
     -- {{{
      use {
          'folke/todo-comments.nvim',
@@ -1000,8 +1006,7 @@ require('packer').startup({
     use 'p00f/nvim-ts-rainbow'
     -- }}}
 
-    -- TUI:
-    -- ````
+    -- ──────────────────── TUI ────────────────────
     -- {{{
     use 'rcarriga/nvim-notify'
     use 'skywind3000/vim-quickui'
@@ -1040,8 +1045,8 @@ require('packer').startup({
     use 'chrisbra/NrrwRgn'
     use 'cuducos/yaml.nvim'
     use 'doums/suit.nvim'
-    -- TODO: https://github.com/esensar/nvim-dev-container
-    use 'folke/trouble.nvim' -- NOTE: It should go in LSP
+    use 'esensar/nvim-dev-container'
+    use 'folke/trouble.nvim'
     use {
         'gaoDean/autolist.nvim',
         config = function()
@@ -1086,8 +1091,8 @@ require('packer').startup({
         end
     }
     use 'haringsrob/nvim_context_vt'
-    -- TODO: https://github.com/jamestthompson3/nvim-remote-containers
-    -- TODO: https://github.com/jbyuki/instant.nvim
+    use 'jamestthompson3/nvim-remote-containers'
+    use 'jbyuki/instant.nvim'
     use 'jbyuki/venn.nvim'
     use 'junegunn/vim-easy-align'
     use 'kevinhwang91/nvim-hlslens'
@@ -1095,8 +1100,8 @@ require('packer').startup({
         'kevinhwang91/nvim-ufo',
         'kevinhwang91/promise-async'
     }
-    -- TODO: https://github.com/krady21/compiler-explorer.nvim
-    -- TODO: https://github.com/kylechui/nvim-surround
+    use 'krady21/compiler-explorer.nvim'
+    use 'kylechui/nvim-surround'
     -- TODO: https://github.com/lifepillar/vim-colortemplate
     use 'linty-org/key-menu.nvim'
     -- TODO: https://github.com/linty-org/readline.nvim
@@ -1110,11 +1115,10 @@ require('packer').startup({
             require('numb').setup()
         end
     }
-    -- TODO: https://github.com/nvim-colortils/colortils.nvim
-    -- use 'ojroques/vim-oscyank'
+    use 'ojroques/vim-oscyank'
     use 'nvim-lua/plenary.nvim'
     use 'nvim-lua/popup.nvim'
-    -- TODO: https://github.com/p00f/godbolt.nvim
+    use 'p00f/godbolt.nvim'
     use 'paretje/nvim-man'
     use 'pechorin/any-jump.vim'
     use {
@@ -1129,8 +1133,8 @@ require('packer').startup({
     use 'rktjmp/lush.nvim'
     use 'sidebar-nvim/sidebar.nvim'
     use 'simnalamburt/vim-mundo'
-    -- TODO: https://github.com/sindrets/winshift.nvim
-    -- TODO: https://github.com/tpope/vim-surround
+    use 'sindrets/winshift.nvim'
+    use 'tpope/vim-surround'
     use {
         'tversteeg/registers.nvim',
         config = function()
@@ -1138,7 +1142,6 @@ require('packer').startup({
         end
     }
     use 'wellle/context.vim'
-    -- TODO: https://github.com/ziontee113/color-picker.nvim
 end
 })
 
@@ -1189,12 +1192,16 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_insert_text_lsp').update_capabilities(capabilities)
+
 require("mason").setup()
 require("mason-lspconfig").setup()
 require("mason-lspconfig").setup_handlers {
     function (server_name)
         require("lspconfig")[server_name].setup {
             on_attach = on_attach,
+            capabilities = capabilities
         }
     end
 }
