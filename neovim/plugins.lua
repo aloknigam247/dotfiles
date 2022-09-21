@@ -59,7 +59,6 @@ require('packer').startup({
     -- COC:
     -- ````
     -- {{{
-    -- TODO: https://github.com/OmniSharp/omnisharp-vim
     -- TODO: https://github.com/coc-extensions/coc-powershell
     -- TODO: https://github.com/iamcco/coc-vimlsp
     -- TODO: https://github.com/ms-jpq/coq_nvim
@@ -309,6 +308,7 @@ require('packer').startup({
     -- TODO: https://github.com/LunarVim/LunarVim
     -- TODO: https://github.com/NTBBloodbath/doom-nvim
     -- TODO: https://github.com/NvChad/NvChad
+    -- TODO: https://github.com/OmniSharp/omnisharp-vim
     -- TODO: https://github.com/Shadorain/shadovim
     -- TODO: https://github.com/TeoDev1611/astro.nvim
     -- TODO: https://github.com/Theory-of-Everything/nii-nvim
@@ -673,7 +673,10 @@ require('packer').startup({
 
     -- Markdown:
     -- `````````
-    -- TODO: https://github.com/AckslD/nvim-FeMaco.lua
+    use {
+        'AckslD/nvim-FeMaco.lua',
+        config = 'require("femaco").setup()',
+    }
     -- TODO: https://github.com/frabjous/knap
     use 'davidgranstrom/nvim-markdown-preview'
 
