@@ -142,47 +142,47 @@ require('packer').startup({
     use 'sainnhe/everforest'
 
     -- << Dark >>
-    -- use 'Almo7aya/neogruvbox.nvim'
-    -- use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
-    -- use 'Mofiqul/adwaita.nvim'
-    -- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
-    -- use 'Th3Whit3Wolf/one-nvim'
-    -- use 'ayu-theme/ayu-vim'
-    -- use 'cpea2506/one_monokai.nvim'
-    -- use 'fenetikm/falcon'
-    -- use 'glepnir/zephyr-nvim'
-    -- use 'kaiuri/nvim-juliana'
-    -- use 'lmburns/kimbox'
-    -- use 'marko-cerovac/material.nvim'
-    -- use 'maxmx03/FluoroMachine.nvim'
-    -- use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
-    -- use 'mhartington/oceanic-next'
-    -- use 'ntk148v/vim-horizon'
-    -- use 'nxvu699134/vn-night.nvim'
-    -- use 'olimorris/onedarkpro.nvim'
-    -- use 'projekt0n/github-nvim-theme'
-    -- use 'rafalbromirski/vim-aurora'
-    -- use 'rafamadriz/neon'
-    -- use 'ray-x/aurora'
-    -- use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
-    -- use 'rebelot/kanagawa.nvim'
-    -- use 'rmehri01/onenord.nvim'
-    -- use 'rockyzhang24/arctic.nvim'
-    -- use 'rose-pine/neovim'
-    -- use 'sainnhe/edge'
-    -- use 'sainnhe/everforest'
-    -- use 'sainnhe/sonokai'
-    -- use 'sam4llis/nvim-tundra'
-    -- use 'savq/melange'
-    -- use 'shaunsingh/moonlight.nvim'
-    -- use 'sickill/vim-monokai'
-    -- use 'tanvirtin/monokai.nvim'
-    -- use 'tiagovla/tokyodark.nvim'
-    -- use 'titanzero/zephyrium'
-    -- use 'tjdevries/gruvbuddy.nvim'
-    -- use 'tomasiser/vim-code-dark'
-    -- use 'wuelnerdotexe/vim-enfocado'
-    -- use 'yashguptaz/calvera-dark.nvim'
+    use 'Almo7aya/neogruvbox.nvim'
+    use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
+    use 'Mofiqul/adwaita.nvim'
+    use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
+    use 'Th3Whit3Wolf/one-nvim'
+    use 'ayu-theme/ayu-vim'
+    use 'cpea2506/one_monokai.nvim'
+    use 'fenetikm/falcon'
+    use 'glepnir/zephyr-nvim'
+    use 'kaiuri/nvim-juliana'
+    use 'lmburns/kimbox'
+    use 'marko-cerovac/material.nvim'
+    use 'maxmx03/FluoroMachine.nvim'
+    use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
+    use 'mhartington/oceanic-next'
+    use 'ntk148v/vim-horizon'
+    use 'nxvu699134/vn-night.nvim'
+    use 'olimorris/onedarkpro.nvim'
+    use 'projekt0n/github-nvim-theme'
+    use 'rafalbromirski/vim-aurora'
+    use 'rafamadriz/neon'
+    use 'ray-x/aurora'
+    use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
+    use 'rebelot/kanagawa.nvim'
+    use 'rmehri01/onenord.nvim'
+    use 'rockyzhang24/arctic.nvim'
+    use 'rose-pine/neovim'
+    use 'sainnhe/edge'
+    use 'sainnhe/everforest'
+    use 'sainnhe/sonokai'
+    use 'sam4llis/nvim-tundra'
+    use 'savq/melange'
+    use 'shaunsingh/moonlight.nvim'
+    use 'sickill/vim-monokai'
+    use 'tanvirtin/monokai.nvim'
+    use 'tiagovla/tokyodark.nvim'
+    use 'titanzero/zephyrium'
+    use 'tjdevries/gruvbuddy.nvim'
+    use 'tomasiser/vim-code-dark'
+    use 'wuelnerdotexe/vim-enfocado'
+    use 'yashguptaz/calvera-dark.nvim'
 
     -- use 'dylanaraps/wal.vim'
     -- use 'AlphaTechnolog/pywal.nvim'
@@ -782,7 +782,6 @@ require('packer').startup({
     -- Rooter:
     -- ```````
     -- {{{
-    -- TODO: https://github.com/shaeinst/penvim
     -- TODO: https://github.com/nyngwang/NeoRoot.lua
     -- }}}
 
@@ -894,8 +893,13 @@ require('packer').startup({
     -- Terminal:
     -- `````````
     -- {{{
-    -- TODO: https://github.com/LoricAndre/OneTerm.nvim
-    -- TODO: https://github.com/akinsho/toggleterm.nvim
+    use {
+        "akinsho/toggleterm.nvim",
+        tag = '*',
+        config = function()
+            require("toggleterm").setup()
+        end
+    }
     -- TODO: https://github.com/jlesquembre/nterm.nvim
     -- TODO: https://github.com/kassio/neoterm
     -- TODO: https://github.com/nikvdp/neomux
