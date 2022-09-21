@@ -380,7 +380,7 @@ require('packer').startup({
                 }
             })
         end,
-        cmd = "Neotree"
+        -- cmd = "Neotree"
     }
     -- }}}
 
