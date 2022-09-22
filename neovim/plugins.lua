@@ -493,7 +493,7 @@ require('packer').startup({
 
     -- Lint:
     -- `````
-    -- TODO: https://github.com/mfussenegger/nvim-lint
+    use 'mfussenegger/nvim-lint'
 
     -- LSP:
     -- ````
@@ -504,15 +504,7 @@ require('packer').startup({
             require('nvim-custom-diagnostic-highlight').setup {}
         end
     }
-    use {
-        'neovim/nvim-lspconfig' -- {
-        --   TODO: diagnostics
-        --   TODO: Autocompletion
-        --   TODO: Code Actions
-        --   TODO: Linitng
-        --   TODO: Snippets
-        --   TODO: UI Customization
-    }
+    use 'neovim/nvim-lspconfig'
     --use {
     --    'williamboman/nvim-lsp-installer',
     --    config = function()
@@ -648,13 +640,13 @@ require('packer').startup({
 
     -- Lua:
     -- ````
-    -- TODO: https://github.com/bfredl/nvim-luadev
+    use 'bfredl/nvim-luadev'
     -- TODO: https://github.com/folke/lua-dev.nvim
     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
     -- TODO: https://github.com/milisims/nvim-luaref
     -- TODO: https://github.com/nanotee/nvim-lua-guide
     -- TODO: https://github.com/rafcamlet/nvim-luapad
-    -- TODO: https://github.com/tjdevries/nlua.nvim
+    use 'tjdevries/nlua.nvim'
 
     -- Mapping:
     -- ````````
@@ -665,7 +657,12 @@ require('packer').startup({
             require("which-key").setup()
         end
     }
-    -- TODO: https://github.com/FeiyouG/command_center.nvim
+    use {
+        'FeiyouG/command_center.nvim',
+        config = function()
+            require("telescope").load_extension("command_center")
+        end
+    }
     -- TODO: https://github.com/LionC/nest.nvim
     -- TODO: https://github.com/b0o/mapx.nvim
     -- TODO: https://github.com/svermeulen/vimpeccable
@@ -717,7 +714,6 @@ require('packer').startup({
     -- |----------------+---------------------------------------------------------------|
     use 'MattesGroeger/vim-bookmarks'
     -- TODO: https://github.com/ThePrimeagen/harpoon
-    -- TODO: https://github.com/Yilin-Yang/vim-markbar
     use 'kshenoy/vim-signature'
     -- use 'chentoast/marks.nvim'
     -- TODO: https://github.com/crusj/bookmarks.nvim
@@ -748,7 +744,12 @@ require('packer').startup({
     }
     -- use 'nvim-orgmode/orgmode'
     -- TODO: https://github.com/ranjithshegde/orgWiki.nvim
-    -- TODO: https://github.com/lukas-reineke/headlines.nvim
+    use {
+        'lukas-reineke/headlines.nvim',
+        config = function()
+            require('headlines').setup()
+        end,
+    }
     -- }}}
 
     -- Project:
@@ -1200,7 +1201,10 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_insert_text_lsp').update_capabilities(capabilities)
+local capabilities = function()
+    require('cmp_nvim_insert_text_lsp').update_capabilities(capabilities)
+    require('cmp_nvim_lsp').update_capabilities(capabilities)
+end
 
 require("mason").setup()
 require("mason-lspconfig").setup()
