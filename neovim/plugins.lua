@@ -1113,7 +1113,7 @@ require('packer').startup({
     -- TODO: https://github.com/lifepillar/vim-colortemplate
     use 'linty-org/key-menu.nvim'
     -- TODO: https://github.com/linty-org/readline.nvim
-    use 'lewis6991/impatient.nvim'
+    use 'lewis6991/impatient.nvim' -- It should be first plugin to take effect
     use 'mg979/vim-visual-multi'
     use 'miversen33/import.nvim'
     use 'mrjones2014/legendary.nvim'
