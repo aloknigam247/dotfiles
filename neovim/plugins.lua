@@ -11,9 +11,14 @@
 require('packer').startup({
     config = {
         auto_clean = true,
+		-- PERF: [ABSTRACT IDE] Move to lua dir so impatient.nvim can cache it
+		-- compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
         display = {
             open_fn = require('packer.util').float
         },
+		git = {
+		    clone_timeout = 600, -- Timeout, in seconds, for git clones
+		},
         -- log = {
         --     level = 'debug'
         -- },
@@ -30,6 +35,7 @@ require('packer').startup({
     use 'wbthomason/packer.nvim'
 
     -- ──────────────────── Auto Pair ────────────────────
+    -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     -- {{{
     use {
         'windwp/nvim-autopairs',
@@ -189,7 +195,7 @@ require('packer').startup({
 
     -- Commenting:
     -- ```````````
-    use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem
+    use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem -- keys gc gcc
     -- TODO: use 'numToStr/Comment.nvim'
     -- TODO: https://github.com/s1n7ax/nvim-comment-frame
     -- TODO: use 'terrortylor/nvim-comment'
@@ -511,7 +517,7 @@ require('packer').startup({
     --        require("nvim-lsp-installer").setup()
     --    end
     --} -- replaced by mason.nvim
-    use { "williamboman/mason.nvim" }
+    use { "williamboman/mason.nvim" } -- TODO: settings
     use { "williamboman/mason-lspconfig.nvim" }
     use 'liuchengxu/vista.vim' -- {
     --     " TODO: explore options
@@ -892,6 +898,7 @@ require('packer').startup({
             require'telescope'.load_extension('make')
         end
     } ]]
+    -- TODO: https://github.com/nvim-telescope/telescope-file-browser.nvim
     -- }}}
 
     -- Terminal:
@@ -1031,6 +1038,7 @@ require('packer').startup({
 
     -- Utilities:
     -- ``````````
+    -- TODO: https://github.com/nathom/filetype.nvim -- PERF: just after impatient for perf improvement
     use '0x100101/lab.nvim'
     use 'AndrewRadev/inline_edit.vim'
     use 'NTBBloodbath/rest.nvim'
@@ -1113,7 +1121,7 @@ require('packer').startup({
     -- TODO: https://github.com/lifepillar/vim-colortemplate
     use 'linty-org/key-menu.nvim'
     -- TODO: https://github.com/linty-org/readline.nvim
-    use 'lewis6991/impatient.nvim' -- It should be first plugin to take effect
+    use 'lewis6991/impatient.nvim' -- PERF: It should be first plugin to take effect init.vim
     use 'mg979/vim-visual-multi'
     use 'miversen33/import.nvim'
     use 'mrjones2014/legendary.nvim'
@@ -1447,6 +1455,655 @@ vim.g.bubbly_colors = {
         },
     },
 }
+
+
+--[[
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ Abstract-IDE configs ❱━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+{{{
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
+
+local import_cmp, cmp = pcall(require, 'cmp')
+if not import_cmp then return end
+
+local import_luasnip, luasnip = pcall(require, 'luasnip')
+if not import_luasnip then return end
+
+
+cmp.setup({
+
+	-- -- Disabling completion in certain contexts, such as comments
+	-- enabled = function()
+	-- 	-- disable completion in comments
+	-- 	local context = require 'cmp.config.context'
+	-- 	-- keep command mode completion enabled when cursor is in a comment
+	-- 	if vim.api.nvim_get_mode().mode == 'c' then
+	-- 		return true
+	-- 	else
+	-- 		return not context.in_treesitter_capture("comment")
+	-- 			and not context.in_syntax_group("Comment")
+	-- 	end
+	-- end,
+
+	completion = {
+		-- completeopt = 'menu,menuone,noinsert',
+	},
+
+	snippet = {
+		expand = function(args) luasnip.lsp_expand(args.body) end,
+	},
+
+	formatting = {
+
+		format = function(entry, vim_item)
+			-- fancy icons and a name of kind
+			local import_lspkind, lspkind = pcall(require, "lspkind")
+			if import_lspkind then
+				vim_item.kind = lspkind.presets.default[vim_item.kind]
+			end
+
+			-- limit completion width
+			local ELLIPSIS_CHAR = '…'
+			local MAX_LABEL_WIDTH = 35
+			local label = vim_item.abbr
+			local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
+			if truncated_label ~= label then
+				vim_item.abbr = truncated_label .. ELLIPSIS_CHAR
+			end
+
+			-- set a name for each source
+			vim_item.menu = ({
+				buffer = "[Buff]",
+				nvim_lsp = "[LSP]",
+				luasnip = "[LuaSnip]",
+				nvim_lua = "[Lua]",
+				latex_symbols = "[Latex]",
+			})[entry.source.name]
+			return vim_item
+		end,
+	},
+
+	sources = {
+		{name = 'nvim_lsp'},
+		{name = 'nvim_lsp_signature_help' },
+		{name = 'nvim_lua'},
+		{name = 'path'},
+		{name = 'luasnip'},
+		{name = 'buffer', keyword_length = 1},
+		-- {name = 'calc'},
+	},
+
+	window = {
+		documentation = {
+			border = {"┌", "─", "┐", "│", "┘", "─", "└", "│"},
+		},
+		completion = {
+			border = {"┌", "─", "┐", "│", "┘", "─", "└", "│"},
+		}
+	},
+
+	experimental = {
+		-- ghost_text = true,
+	},
+
+})
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━❰ end configs ❱━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ configs ❱━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+--------------------------
+-- telescope-dap.nvim
+pcall(require'telescope'.load_extension, 'dap')
+--------------------------
+
+
+--------------------------
+-- nvim-dap-ui
+require("dapui").setup({
+	icons = {expanded = "▾", collapsed = "▸"},
+	-- Expand lines larger than the window
+	-- Requires >= 0.7
+	expand_lines = vim.fn.has("nvim-0.7"),
+	sidebar = {
+		-- You can change the order of elements in the sidebar
+		elements = {
+			-- Provide as ID strings or tables with "id" and "size" keys
+			{
+				id = "scopes",
+				size = 0.25, -- Can be float or integer > 1
+			},
+			{id = "breakpoints", size = 0.25},
+			{id = "stacks", size = 0.25},
+			{id = "watches", size = 00.25},
+		},
+		size = 40,
+		position = "left", -- Can be "left", "right", "top", "bottom"
+	},
+	tray = {
+		elements = {"repl", "console"},
+		size = 10,
+		position = "bottom", -- Can be "left", "right", "top", "bottom"
+	},
+	floating = {
+		max_height = nil, -- These can be integers or a float between 0 and 1.
+		max_width = nil, -- Floats will be treated as percentage of your screen.
+		border = "single", -- Border style. Can be "single", "double" or "rounded"
+		mappings = {close = {"q", "<Esc>"}},
+	},
+	windows = {indent = 1},
+	render = {
+		max_type_length = nil, -- Can be integer or nil.
+	},
+})
+
+-- end nvim-dap-ui
+--------------------------
+
+--------------------------
+-- nvim-dap-virtual-text
+require("nvim-dap-virtual-text").setup {
+	enabled = true, -- enable this plugin (the default)
+	enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+	highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+	highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+	show_stop_reason = true, -- show stop reason when stopped for exceptions
+	commented = false, -- prefix virtual text with comment string
+	only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
+	all_references = false, -- show virtual text on all all references of the variable (not only definitions)
+	filter_references_pattern = '<module', -- filter references (not definitions) pattern when all_references is activated (Lua gmatch pattern, default filters out Python modules)
+	-- experimental features:
+	virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
+	all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+	virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
+	virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
+	-- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
+}
+-- end nvim-dap-virtual-text
+--------------------------
+
+
+--------------------------
+-- nvim-dap
+
+
+
+-- end nvim-dap
+--------------------------
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━❰ end configs ❱━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ Mappings ❱━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+-- ───────────────────────────────────────────────── --
+local on_attach = function(client, bufnr)
+
+	local function buf_set_keymap(...) api.nvim_buf_set_keymap(bufnr, ...) end
+	local function buf_set_option(...) api.nvim_buf_set_option(bufnr, ...) end
+
+	---------------------
+	-- Avoiding LSP formatting conflicts
+	-- ref: https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
+	-- 2nd red: https://github.com/neovim/nvim-lspconfig/issues/1891#issuecomment-1157964108
+	-- nevim 0.8.x
+	client.server_capabilities.documentFormattingProvider = false
+	client.server_capabilities.documentRangeFormattingProvider = false
+	-- nevim 0.7.x
+	client.resolved_capabilities.document_formatting = false
+	client.resolved_capabilities.document_range_formatting = false
+	--------------------------
+
+	-- Enable completion triggered by <c-x><c-o>
+	buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+	-- Mappings.
+	local options = {noremap = true, silent = true}
+
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	-- ───────────────────────────────────────────────── --
+	buf_set_keymap('n', '<Space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', options)
+	buf_set_keymap('n', '<Space>q', '<cmd>lua vim.diagnostic.set_loclist({})<CR>', options)
+	buf_set_keymap('n', '<Space>n', '<cmd>lua vim.diagnostic.goto_next()<CR>', options)
+	buf_set_keymap('n', '<Space>b', '<cmd>lua vim.diagnostic.goto_prev()<CR>', options)
+
+	buf_set_keymap('n', '<Space>d', '<Cmd>lua vim.lsp.buf.definition()<CR>', options)
+	buf_set_keymap('n', '<Space>D', '<Cmd>lua vim.lsp.buf.declaration()<CR>', options)
+	buf_set_keymap('n', '<Space>T', '<cmd>lua vim.lsp.buf.type_definition()<CR>', options)
+	buf_set_keymap('n', '<Space>i', '<cmd>lua vim.lsp.buf.implementation()<CR>', options)
+	buf_set_keymap('n', '<Space>s', '<cmd>lua vim.lsp.buf.signature_help()<CR>', options)
+	buf_set_keymap('n', '<Space>h', '<Cmd>lua vim.lsp.buf.hover()<CR>', options)
+	buf_set_keymap('n', 'K',        '<Cmd>lua vim.lsp.buf.hover()<CR>', options)
+	-- using 'filipdutescu/renamer.nvim' for rename
+	-- buf_set_keymap('n', '<space>rn',	'<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+	buf_set_keymap('n', '<Space>r', '<cmd>Telescope lsp_references<CR>', options)
+	buf_set_keymap("n", "<Space>f", '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', options)
+
+	buf_set_keymap('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>',       options)
+	buf_set_keymap('x', '<Space>a', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', options)
+
+	-- buf_set_keymap('n', '<leader>wa',   '<cmd>lua vim.lsp.buf.add_workleader_folder()<CR>',          opts)
+	-- buf_set_keymap('n', '<leader>wr',   '<cmd>lua vim.lsp.buf.remove_workleader_folder()<CR>',       opts)
+	-- buf_set_keymap('n', '<leader>wl',   '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workleader_folders()))<CR>', opts)
+end
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━❰ end Mappings ❱━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+
+
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ configs ❱━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+local function setup_lsp_config()
+
+	-- options for lsp diagnostic
+	-- ───────────────────────────────────────────────── --
+	vim.diagnostic.config({
+		float = {
+			border = "rounded",
+			focusable = true,
+			style = "minimal",
+			source = "always",
+			header = "",
+			prefix = "",
+		},
+	})
+
+	handlers["textDocument/publishDiagnostics"] = lsp.with(
+		lsp.diagnostic.on_publish_diagnostics,
+		{
+			underline = true,
+			signs = true,
+			update_in_insert = true,
+			virtual_text = {
+				true,
+				spacing = 6,
+				-- severity_limit='Error'  -- Only show virtual text on error
+			},
+		}
+	)
+
+	handlers["textDocument/hover"] = lsp.with(handlers.hover, {border = "rounded"})
+	handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, {border = "rounded"})
+
+	-- show diagnostic on float window(like auto complete)
+	-- vim.api.nvim_command [[ autocmd CursorHold  *.lua,*.sh,*.bash,*.dart,*.py,*.cpp,*.c,js lua vim.lsp.diagnostic.show_line_diagnostics() ]]
+
+	-- set LSP diagnostic symbols/signs
+	-- ─────────────────────────────────────────────────--
+-- 	api.nvim_command [[ sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl= ]]
+-- 	api.nvim_command [[ sign define DiagnosticSignWarn  text= texthl=DiagnosticSignWarn  linehl= numhl= ]]
+-- 	api.nvim_command [[ sign define DiagnosticSignInfo  text= texthl=DiagnosticSignInfo  linehl= numhl= ]]
+-- 	api.nvim_command [[ sign define DiagnosticSignHint  text= texthl=DiagnosticSignHint  linehl= numhl= ]]
+-- 
+-- 	api.nvim_command [[ hi DiagnosticUnderlineError cterm=underline gui=underline guisp=#840000 ]]
+-- 	api.nvim_command [[ hi DiagnosticUnderlineHint cterm=underline  gui=underline guisp=#07454b ]]
+-- 	api.nvim_command [[ hi DiagnosticUnderlineWarn cterm=underline  gui=underline guisp=#2f2905 ]]
+-- 	api.nvim_command [[ hi DiagnosticUnderlineInfo cterm=underline  gui=underline guisp=#265478 ]]
+
+	-- Auto-format files prior to saving them
+	-- vim.api.nvim_command[[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)]]
+
+	--[[
+	" to change colors, it's better to define in color scheme
+	" highlight LspDiagnosticsUnderlineError         guifg=#EB4917 gui=undercurl
+	" highlight LspDiagnosticsUnderlineWarning       guifg=#EBA217 gui=undercurl
+	" highlight LspDiagnosticsUnderlineInformation   guifg=#17D6EB gui=undercurl
+	" highlight LspDiagnosticsUnderlineHint          guifg=#17EB7A gui=undercurl
+	--]]
+    --[[
+end
+
+
+-- ───────────────────────────────────────────────── --
+-- setup LSPs
+-- ───────────────────────────────────────────────── --
+local function setup_lsp(mason_lspconfig)
+
+	local tbl_deep_extend = vim.tbl_deep_extend
+	local capabilities = lsp.protocol.make_client_capabilities()
+	local lsp_options = {
+		on_attach = on_attach,
+		flags = {
+			debounce_text_changes = 150,
+		},
+		capabilities = capabilities
+	}
+	local import_cmp_lsp, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
+	if import_cmp_lsp then
+		lsp_options.capabilities = (cmp_lsp).update_capabilities(capabilities)
+	end
+
+	-- for Flutter and Dart
+	-- don't put this on setup_handlers to set it because dart LSP is installed and maintained by akinsho/flutter-tools.nvim
+	lspconfig["dartls"].setup(lsp_options)
+
+	mason_lspconfig.setup_handlers({
+
+		function (server_name)
+			require("lspconfig")[server_name].setup(lsp_options)
+		end,
+
+		["clangd"] = function ()
+			lspconfig.clangd.setup(
+				tbl_deep_extend(
+					"force", lsp_options,
+					{ capabilities = { offsetEncoding = { "utf-16" } } }
+				)
+			)
+		end,
+		["html"] = function ()
+			lspconfig.html.setup(
+				tbl_deep_extend(
+					"force", lsp_options,
+					{ filetypes = {"html", "htmldjango"} }
+				)
+			)
+		end,
+		["cssls"] = function ()
+			lspconfig.cssls.setup(
+				tbl_deep_extend(
+					"force", lsp_options,
+					{
+						capabilities = {
+							textDocument = { completion= { completionItem = { snippetSupport = true } } }
+						},
+					}
+				)
+			)
+		end,
+		["sumneko_lua"] = function ()
+			lspconfig.sumneko_lua.setup(
+				tbl_deep_extend(
+					"force", lsp_options,
+					{
+						settings = {
+							Lua = {
+								diagnostics = {
+									-- Get the language server to recognize the 'vim', 'use' global
+									globals = {'vim', 'use', 'require'},
+								},
+								workspace = {
+									-- Make the server aware of Neovim runtime files
+									library = api.nvim_get_runtime_file("", true),
+								},
+								-- Do not send telemetry data containing a randomized but unique identifier
+								telemetry = {enable = false},
+							},
+						}
+					}
+				)
+			)
+		end,
+	})
+end
+
+-- make sure `lspconfig` is not loaded after `mason-lspconfig`.
+-- Also, make sure not to set up any servers via `lspconfig` _before_ calling `mason-lspconfig`'s setup function.
+
+
+	-- require("mason-lspconfig").setup_handlers({
+local import_mlspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
+if not import_mlspconfig then return end
+
+-- import nvim-lsp-installer configs
+local import_mconfig, mconfig = pcall(require, "plugins.mason_nvim")
+if not import_mconfig then return end
+
+mason.setup(mconfig.setup) -- setup mason
+setup_lsp_config() -- setup lsp configs (mainly UI)
+setup_lsp(mason_lspconfig) -- setup lsp (like pyright, ccls ...)
+
+-- ───────────────────────────────────────────────── --
+-- end LSP setup
+-- ───────────────────────────────────────────────── --
+
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━❰ end configs ❱━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ configs ❱━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+local imported_surround, surround = pcall(require, 'nvim-surround')
+if not imported_surround then return end
+
+
+surround.setup({
+	keymaps = { -- vim-surround style keymaps
+		visual = "S",
+		delete = "ds",
+		change = "cs",
+		insert = "<C-g>s",
+                -- insert_line = "<C-g>S",
+                -- normal = "ys",
+                -- normal_cur = "yss",
+                -- normal_line = "yS",
+                -- normal_cur_line = "ySS",
+                -- visual_line = "gS",
+	},
+	surrounds = {
+                ["("] = { add = { "( ", " )" }, },
+                [")"] = { add = { "(", ")" }, },
+                ["{"] = { add = { "{ ", " }" }, },
+                ["}"] = { add = { "{", "}" }, },
+                ["<"] = { add = { "< ", " >" }, },
+                [">"] = { add = { "<", ">" }, },
+                ["["] = { add = { "[ ", " ]" }, },
+                ["]"] = { add = { "[", "]" }, },
+                ["'"] = { add = { "'", "'" }, },
+                ['"'] = { add = { '"', '"' }, },
+                ["`"] = { add = { "`", "`" }, },
+	},
+        aliases = {
+                ["a"] = ">", -- Single character aliases apply everywhere
+                ["b"] = ")",
+                ["B"] = "}",
+                ["r"] = "]",
+                -- Table aliases only apply for changes/deletions
+                ["q"] = { '"', "'", "`" }, -- Any quote character
+                ["s"] = { ")", "]", "}", ">", "'", '"', "`" }, -- Any surrounding delimiter
+        },
+	highlight= { -- Highlight before inserting/changing surrounds
+		duration = 0,
+	},
+        move_cursor = "begin",
+})
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ configs ❱━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+-- safely import telescope
+local telescope_imported_ok, telescope = pcall(require, 'telescope')
+if not telescope_imported_ok then return end
+
+telescope.setup {
+
+	defaults = {
+		vimgrep_arguments = {
+			'rg',
+			'--color=never',
+			'--no-heading',
+			'--with-filename',
+			'--line-number',
+			'--column',
+			'--smart-case',
+		},
+
+		initial_mode = "insert",
+		selection_strategy = "reset",
+		sorting_strategy = "ascending",
+		layout_strategy = "horizontal",
+		layout_config = {
+			horizontal = {
+				mirror = false,
+				prompt_position = "top",
+				preview_width = 0.4,
+			},
+			vertical = { mirror = false, },
+			width = 0.8,
+			height = 0.9,
+            preview_cutoff = 80,
+		},
+		file_ignore_patterns = {
+			"__pycache__/", "__pycache__/*",
+
+			"build/",       "gradle/",  "node_modules/", "node_modules/*",
+			"smalljre_*/*", "target/",  "vendor/*","venv/",
+
+			".dart_tool/",  ".git/",   ".github/", ".gradle/",      ".idea/",        ".vscode/",
+
+			"%.sqlite3",    "%.ipynb", "%.lock",   "%.pdb",
+			"%.dll",        "%.class", "%.exe",    "%.cache", "%.pdf",  "%.dylib",
+			"%.jar",        "%.docx",  "%.met",    "%.burp",  "%.mp4",  "%.mkv", "%.rar",
+			"%.zip",        "%.7z",    "%.tar",    "%.bz2",   "%.epub", "%.flac","%.tar.gz",
+		},
+
+		file_sorter = require'telescope.sorters'.get_fuzzy_file,
+		generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
+		file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+		grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+		qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+
+		prompt_prefix = "🔎︎ ",
+		selection_caret = "➤ ",
+		entry_prefix = "  ",
+		winblend = 0,
+		border = {},
+		borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
+		color_devicons = true,
+		use_less = true,
+		set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
+		path_display = {'truncate'}, -- How file paths are displayed ()
+
+		preview = {
+			msg_bg_fillchar = " ",
+			treesitter = false,
+		},
+
+		live_grep = {
+			preview = {
+				treesitter = false
+			}
+		},
+
+		-- Developer configurations: Not meant for general override
+		buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
+	},
+
+	extensions = {
+
+		fzf = {
+			fuzzy = true, -- false will only do exact matching
+			override_generic_sorter = true, -- override the generic sorter
+			override_file_sorter = true, -- override the file sorter
+			case_mode = "smart_case", -- or "ignore_case" or "respect_case". the default case_mode is "smart_case"
+		},
+
+		media_files = {
+			-- filetypes whitelist
+			filetypes = {"png", "jpg", "mp4", "webm", "pdf"},
+			find_cmd = "fd" -- find command (defaults to `fd`)
+		},
+
+		file_browser = {
+			theme = "ivy",
+			-- disables netrw and use telescope-file-browser in its place
+			hijack_netrw = true,
+		},
+
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown {
+				winblend = 15,
+				layout_config = {
+					prompt_position = "top",
+					width = 64,
+					height = 15,
+				},
+				border = {},
+				previewer = false,
+				shorten_path = false,
+			},
+		}
+
+	},
+
+}
+-- To get telescope-extension loaded and working with telescope,
+-- you need to call load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+require("telescope").load_extension('file_browser')
+require('telescope').load_extension('media_files')
+require("telescope").load_extension("ui-select")
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━❰ end configs ❱━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+
+
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━❰ Mappings ❱━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+
+local keymap = vim.api.nvim_set_keymap
+local options = { silent = true, noremap = true }
+
+--      --> Launch Telescope without any argument
+keymap('n', "tt",   "<cmd>lua require('telescope.builtin').builtin() <CR>", options)
+
+--      --> Lists available Commands
+keymap('n', "tc",   "<cmd>lua require('telescope.builtin').commands() <CR>", options)
+
+--      --> Lists available help tags and opens a new window with the relevant help info on
+keymap('n', "th",   "<cmd>lua require('telescope.builtin').help_tags() <CR>", options)
+
+--       --> show all availabe MAPPING
+keymap('n', "tm", "<cmd>lua require('telescope.builtin').keymaps() <CR>", options)
+
+--       --> show buffers/opened files
+keymap('n', "<C-b>", "<cmd>lua require('telescope.builtin').buffers() <CR>", options)
+keymap('n', "tb",  "<cmd>lua require('telescope.builtin').buffers() <CR>", options)
+
+--       --> show and grep current buffer
+keymap('n', "tw", "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find() <CR>", options)
+keymap('n', "tg", "<cmd>lua require('telescope.builtin').live_grep() <CR>", options)
+
+--       --> Find Files
+-- NOTE1: to get project root's directory, extra plugin (github.com/ygm2/rooter.nvim) is used.
+-- any config related to project root is in seperate config file (lua/plugin_confs/rooter_nvim.lua)
+-- to change settings related to working directory, refer to rooter_nvim.lua config file
+
+-- Find files from current file's project
+keymap('n', "<C-p>", ":Telescope find_files <cr>", options)
+keymap('n', "tp",    ":Telescope find_files <cr>", options)
+-- show all files from current working directory
+keymap('n', "<C-f>", "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') }) <CR>", options)
+keymap('n', "tf",    "<cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') }) <CR>", options)
+
+--       --> show symbols (@nvim-telescope/telescope-symbols.nvim)
+keymap('n', "ts", "<cmd>lua require('telescope.builtin').symbols{ sources = {'emoji', 'kaomoji', 'gitmoji'} } <CR>", options)
+
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━❰ end Mappings ❱━━━━━━━━━━━━━━━━ --
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
+}}}
+]]
 
 vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
 
