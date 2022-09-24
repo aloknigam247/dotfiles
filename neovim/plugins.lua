@@ -305,8 +305,6 @@ require('packer').startup({
     -- Configuration:
     -- ``````````````
     -- {{{
-    -- TODO: https://github.com/Abstract-IDE/Abstract
-    -- TODO: https://github.com/AstroNvim/AstroNvim
     -- TODO: https://github.com/Avimitin/nvim
     -- TODO: https://github.com/CanKolay3499/CNvim
     -- TODO: https://github.com/CosmicNvim/CosmicNvim
@@ -2104,6 +2102,36 @@ keymap('n', "ts", "<cmd>lua require('telescope.builtin').symbols{ sources = {'em
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
 }}}
 ]]
+
+--[[
+-- Options from AstroNvim
+-- {{{
+astronvim.url_matcher =
+  "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+
+--- Add syntax matching rules for highlighting URLs/URIs
+function astronvim.set_url_match()
+  astronvim.delete_url_match()
+  if vim.g.highlighturl_enabled then vim.fn.matchadd("HighlightURL", astronvim.url_matcher, 15) end
+end
+
+--- Toggle URL/URI syntax highlighting rules
+function astronvim.toggle_url_match()
+  vim.g.highlighturl_enabled = not vim.g.highlighturl_enabled
+  astronvim.set_url_match()
+end
+
+augroup("highlighturl", { clear = true })
+cmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
+  desc = "URL Highlighting",
+  group = "highlighturl",
+  pattern = "*",
+  callback = function() astronvim.set_url_match() end,
+})
+
+maps.n["<leader>u"] = { function() astronvim.toggle_url_match() end, desc = "Toggle URL Highlights" }
+-- }}}
+--]]
 
 vim.g.bubbly_inactive_color = { background = 'lightgrey', foreground = 'foreground' }
 

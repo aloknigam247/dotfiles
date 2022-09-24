@@ -73,6 +73,7 @@ lua require('plugins')
 " augroup end
 
 " Light
+autocmd FileType lua colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 
 " Dark
 " autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
@@ -132,6 +133,7 @@ set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
 set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
+set wrap                              " Enable wrap
 setglobal bomb                        " Keep the BOM file marker
 " }}}
 
@@ -253,6 +255,7 @@ let g:neovide_remember_window_size = v:true
 let g:neovide_transparency=0.95
 
 " Options from abstract ide
+" {{{
 " opt.listchars = {
 " 	nbsp = '⦸', -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
 " 	extends = '»', -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
@@ -287,5 +290,6 @@ let g:neovide_transparency=0.95
 "         end,
 " 	}
 " )
+" }}}
 
 " vim: fdm=marker
