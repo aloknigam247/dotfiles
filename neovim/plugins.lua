@@ -14,7 +14,23 @@ require('packer').startup({
 		-- PERF: [ABSTRACT IDE] Move to lua dir so impatient.nvim can cache it
 		-- compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
         display = {
-            open_fn = require('packer.util').float
+            -- open_fn = require('packer.util').float
+            open_fn = function()
+                local result, win, buf = require('packer.util').float {
+                    border = {
+                        { '╭', 'FloatBorder' },
+                        { '─', 'FloatBorder' },
+                        { '╮', 'FloatBorder' },
+                        { '│', 'FloatBorder' },
+                        { '╯', 'FloatBorder' },
+                        { '─', 'FloatBorder' },
+                        { '╰', 'FloatBorder' },
+                        { '│', 'FloatBorder' },
+                    },
+                }
+                vim.api.nvim_win_set_option(win, 'winhighlight', 'NormalFloat:Normal')
+                return result, win, buf
+            end
         },
 		git = {
 		    clone_timeout = 600, -- Timeout, in seconds, for git clones
@@ -30,6 +46,8 @@ require('packer').startup({
     },
 
     function(use)
+    -- Completed Section
+    -- {{{
     -- Packer:
     -- ```````
     use 'wbthomason/packer.nvim'
@@ -39,10 +57,21 @@ require('packer').startup({
     -- {{{
     use {
         'windwp/nvim-autopairs',
-        event = 'InsertEnter',
         config = function()
-            require("nvim-autopairs").setup()
-        end
+            local npairs = require("nvim-autopairs")
+            npairs.setup()
+            -- npairs.get_rule('"')[1].not_filetypes = { "vim" }
+
+            -- Insert `(` after select function or method item
+            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+            local cmp = require('cmp')
+            cmp.event:on(
+                'confirm_done',
+                cmp_autopairs.on_confirm_done()
+            )
+        end,
+        event = 'InsertEnter',
+        requires = 'nvim-cmp'
         -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
         -- BUG: braces Indentation is not correct in some situation, powershell
         -- TODO: Create rule to not pair " for vim files
@@ -60,6 +89,7 @@ require('packer').startup({
             {'nvim-lua/plenary.nvim'},
         }
     }
+    -- }}}
     -- }}}
 
     -- COC:
@@ -81,7 +111,6 @@ require('packer').startup({
     -- }}}
 
     -- Coloring:
-    -- `````````
     -- {{{
     use {
         'RRethy/vim-illuminate',
@@ -96,8 +125,9 @@ require('packer').startup({
         ]]
         end
         -- FIXME: highlight colors are not good
+        -- FIXME: not working
     }
-    use 'azabiong/vim-highlighter' -- NOTE: Good to use
+    use 'azabiong/vim-highlighter'
     use 'machakann/vim-highlightedyank'
     use {
         'norcalli/nvim-colorizer.lua',
@@ -194,14 +224,9 @@ require('packer').startup({
     -- }}}
 
     -- Commenting:
-    -- ```````````
     use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem -- keys gc gcc
     -- TODO: use 'numToStr/Comment.nvim'
-    -- TODO: https://github.com/s1n7ax/nvim-comment-frame
-    -- TODO: use 'terrortylor/nvim-comment'
-    -- TODO: https://github.com/tpope/vim-commentary
-    -- TODO: https://github.com/tyru/caw.vim
-    -- TODO: https://github.com/winston0410/commented.nvim
+    use 's1n7ax/nvim-comment-frame'
 
     -- Completion:
     -- ```````````
@@ -626,20 +651,20 @@ require('packer').startup({
             require("symbols-outline").setup()
         end
     }
-    --use {
-    --    "smjonas/inc-rename.nvim",
-    --    config = function()
-    --        require("inc_rename").setup()
-    --    end,
-    --}
-    -- use {
-    --     'stevearc/aerial.nvim',
-    --     config = function()
-    --         require('aerial').setup({})
-    --     end
-    -- }
+    --[[ use {
+       "smjonas/inc-rename.nvim",
+       config = function()
+           require("inc_rename").setup()
+       end,
+    } ]] -- NOTE: needs neovim v0.8
+    use {
+        'stevearc/aerial.nvim',
+        config = function()
+            require('aerial').setup({})
+        end
+    }
     use 'tami5/lspsaga.nvim'
-    -- TODO: https://github.com/weilbith/nvim-code-action-menu
+    use 'weilbith/nvim-code-action-menu'
     -- }}}
 
     -- Lua:
@@ -720,7 +745,7 @@ require('packer').startup({
     -- TODO: https://github.com/ThePrimeagen/harpoon
     use 'kshenoy/vim-signature'
     -- use 'chentoast/marks.nvim'
-    -- TODO: https://github.com/crusj/bookmarks.nvim
+    use 'crusj/bookmarks.nvim'
     -- }}}
 
     -- OrgMode:
@@ -768,7 +793,6 @@ require('packer').startup({
     -- }}}
 
     -- Quickfix:
-    -- `````````
     -- {{{
     use 'kevinhwang91/nvim-bqf'
     use {
@@ -1036,7 +1060,6 @@ require('packer').startup({
 
     -- Utilities:
     -- ``````````
-    -- TODO: https://github.com/nathom/filetype.nvim -- PERF: just after impatient for perf improvement
     use '0x100101/lab.nvim'
     use 'AndrewRadev/inline_edit.vim'
     use 'NTBBloodbath/rest.nvim'
@@ -1129,9 +1152,10 @@ require('packer').startup({
             require('numb').setup()
         end
     }
-    use 'ojroques/vim-oscyank'
+    use 'nathom/filetype.nvim' -- PERF: just after impatient for perf improvement
     use 'nvim-lua/plenary.nvim'
     use 'nvim-lua/popup.nvim'
+    use 'ojroques/vim-oscyank'
     use 'p00f/godbolt.nvim'
     use 'paretje/nvim-man'
     use 'pechorin/any-jump.vim'
