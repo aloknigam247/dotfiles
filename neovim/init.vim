@@ -7,9 +7,7 @@
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
 " {{{
-" TODO: vim motions
 " TODO: Fix keymappings for <C-right arrow> <C-left arror> word movements
-" TODO: Highlight only overlength chars
 " TODO: blink on yank
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
 " TODO: set linebreak
@@ -73,7 +71,7 @@ lua require('plugins')
 " augroup end
 
 " Light
-autocmd FileType lua colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
+autocmd FileType lua colorscheme morning | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 
 " Dark
 " autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
@@ -168,7 +166,7 @@ set title                    " Set console title
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 set winblend=10              " pseudo-transparency effect for float window
-colorscheme dayfox       " Set colorscheme
+colorscheme morning       " Set colorscheme
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
