@@ -90,25 +90,6 @@ require('packer').startup({
         }
     }
     -- }}}
-    -- }}}
-
-    -- COC:
-    -- ````
-    -- {{{
-    -- TODO: https://github.com/coc-extensions/coc-powershell
-    -- TODO: https://github.com/iamcco/coc-vimlsp
-    -- TODO: https://github.com/ms-jpq/coq_nvim
-    -- TODO: https://github.com/neoclide/coc-highlight
-    -- TODO: https://github.com/neoclide/coc-json
-    -- TODO: https://github.com/neoclide/coc-neco
-    -- TODO: https://github.com/neoclide/coc-pairs
-    -- TODO: https://github.com/neoclide/coc-snippets
-    -- TODO: https://github.com/neoclide/coc-sources
-    -- TODO: https://github.com/neoclide/coc-yank
-    -- TODO: https://github.com/neoclide/coc.nvim
-    -- TODO: https://github.com/voldikss/coc-browser
-    -- TODO: https://github.com/xiyaowong/coc-lightbulb-
-    -- }}}
 
     -- Coloring:
     -- {{{
@@ -150,6 +131,7 @@ require('packer').startup({
         'tribela/vim-transparent',
         cmd = 'TransparentEnable'
     }
+    -- }}}
     -- }}}
 
     -- Colorscheme:
@@ -596,7 +578,7 @@ require('packer').startup({
             require("fidget").setup()
         end
     }
-    use {
+    --[[ use {
         'jose-elias-alvarez/null-ls.nvim',
         config = function()
             require("null-ls").setup({
@@ -607,7 +589,7 @@ require('packer').startup({
                 },
             })
         end
-    }
+    } ]]
     use 'jubnzv/virtual-types.nvim'
     use {
         'kosayoda/nvim-lightbulb',
@@ -623,7 +605,7 @@ require('packer').startup({
     }
     -- TODO: https://github.com/anuvyklack/hydra.nvim
     use 'filipdutescu/renamer.nvim'
-    use 'jayp0521/mason-null-ls.nvim'
+    -- use 'jayp0521/mason-null-ls.nvim'
     use 'kwkarlwang/cmp-nvim-insert-text-lsp'
     use 'ldelossa/litee-bookmarks.nvim'
     use 'ldelossa/litee-calltree.nvim'

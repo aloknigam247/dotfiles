@@ -73,7 +73,7 @@ lua require('plugins')
 " augroup end
 
 " Light
-autocmd FileType lua colorscheme adwaita | highlight clear CursorLine | highlight clear CursorLineNR | set list!
+autocmd FileType lua colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
 
 " Dark
 " autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
