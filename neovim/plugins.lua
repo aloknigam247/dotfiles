@@ -7,6 +7,9 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 
+-- Functionality to maintain
+-- color of trailing spaces
+
 -- local ret = require('packer').startup({
 require('packer').startup({
     config = {
@@ -35,9 +38,9 @@ require('packer').startup({
 		git = {
 		    clone_timeout = 600, -- Timeout, in seconds, for git clones
 		},
-        -- log = {
-        --     level = 'debug'
-        -- },
+        log = {
+            level = 'debug'
+        },
         profile = {
             enable = true,
             threshold = 0.0001
@@ -52,29 +55,28 @@ require('packer').startup({
         --━━━━━━━━━━━━━━━━━━━❰ Auto Pair ❱━━━━━━━━━━━━━━━━━━━--
         -- ──────────────────── Auto Pair ────────────────────
         -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        -- {{{
-        use {
-            'windwp/nvim-autopairs',
-            config = function()
-                local npairs = require("nvim-autopairs")
-                npairs.setup()
-                -- npairs.get_rule('"')[1].not_filetypes = { "vim" }
+        -- use {
+        --     'windwp/nvim-autopairs',
+        --     after ??
+        --     config = function()
+        --         local npairs = require("nvim-autopairs")
+        --         npairs.setup()
+        --         -- npairs.get_rule('"')[1].not_filetypes = { "vim" }
 
-                -- Insert `(` after select function or method item
-                -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-                -- local cmp = require('cmp')
-                -- cmp.event:on(
-                --     'confirm_done',
-                --     cmp_autopairs.on_confirm_done()
-                -- )
-            end,
-            event = 'InsertEnter',
-            -- requires = 'nvim-cmp'
-            -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
-            -- BUG: braces Indentation is not correct in some situation, powershell
-            -- TODO: Create rule to not pair " for vim files
-        }
-        -- }}}
+        --         -- Insert `(` after select function or method item
+        --         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        --         -- local cmp = require('cmp')
+        --         -- cmp.event:on(
+        --         --     'confirm_done',
+        --         --     cmp_autopairs.on_confirm_done()
+        --         -- )
+        --     end,
+        --     event = 'InsertEnter',
+        --     -- requires = 'nvim-cmp'
+        --     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
+        --     -- BUG: braces Indentation is not correct in some situation, powershell
+        --     -- TODO: Create rule to not pair " for vim files
+        -- }
 
 --     -- ──────────────────── Cheatsheet ────────────────────
 --     -- {{{
