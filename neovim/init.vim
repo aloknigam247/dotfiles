@@ -1,4 +1,4 @@
-"
+﻿"
 "  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
 " ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
 " ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
@@ -7,7 +7,6 @@
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
 " {{{
-" TODO: Fix keymappings for <C-right arrow> <C-left arror> word movements
 " TODO: blink on yank
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
 " TODO: set linebreak
@@ -149,8 +148,8 @@ set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set laststatus=3             " Global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-" set lcs=space:·,tab:>-     " Show space as ·, tab as clear spaces
-set lcs=tab:>-               " Show space as ·, tab as clear spaces
+" set lcs=lead:·,trail:·,multispace:·,tab:<->   " Show space as ·, tab as clear spaces
+set lcs=tab:<->               " Show space as ·, tab as clear spaces
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
@@ -194,14 +193,14 @@ autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as ba
 " Mappings:
 " `````````
 " {{{
-map <C-a> ^
-map <C-e> $
-map <C-Right> E
-map <C-Left> B
+imap <C-Left> <C-\><C-O>B
+imap <C-Right> <C-\><C-O>E<C-\><C-O>l
 imap <C-a> <C-\><C-O>^
 imap <C-e> <C-\><C-O>$
-imap <C-Right> <C-\><C-O>E
-imap <C-Left> <C-\><C-O>B
+map <C-Left> B
+map <C-Right> E
+map <C-a> ^
+map <C-e> $
 " }}}
 
 " {{{
