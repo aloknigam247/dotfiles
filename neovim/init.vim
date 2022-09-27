@@ -9,7 +9,6 @@
 " {{{
 " TODO: blink on yank
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
-" TODO: set linebreak
 " TODO: key mapping gq
 " TODO: key mapping vip
 " TODO: http://blog.ezyang.com/2010/03/vim-textwidth/
@@ -126,6 +125,7 @@ set completeopt=menu,menuone,noselect " for nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
 set history=1000                      " Increase undo limit
+set linebreak                         " Break wrapped line at 'breakat'
 set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
 set shiftwidth=4                      " When shifting, indent using spaces
