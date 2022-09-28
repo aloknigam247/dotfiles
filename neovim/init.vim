@@ -9,8 +9,6 @@
 " {{{
 " TODO: blink on yank
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
-" TODO: key mapping gq
-" TODO: key mapping vip
 " TODO: http://blog.ezyang.com/2010/03/vim-textwidth/
 " TODO: set fo formatting options
 " t	Auto-wrap text using textwidth
@@ -201,6 +199,10 @@ map <C-Left> B
 map <C-Right> E
 map <C-a> ^
 map <C-e> $
+" usefull mapping
+" gq format lines
+" gw format lines with cursor remains at same place
+" vip select paragraph
 " }}}
 
 " {{{
