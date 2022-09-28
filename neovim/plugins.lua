@@ -51,6 +51,7 @@ require('packer').startup({
     function(use)
         --━━━━━━━━━━━━━━━━━━━❰ Packer ❱━━━━━━━━━━━━━━━━━━━--
         use 'wbthomason/packer.nvim'
+        -- filetype ?
  
         --━━━━━━━━━━━━━━━━━━━❰ Auto Pair ❱━━━━━━━━━━━━━━━━━━━--
         -- ──────────────────── Auto Pair ────────────────────

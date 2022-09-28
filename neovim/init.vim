@@ -10,49 +10,41 @@
 " TODO: blink on yank
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
 " TODO: http://blog.ezyang.com/2010/03/vim-textwidth/
-" TODO: set fo formatting options
-" t	Auto-wrap text using textwidth
-" c	Auto-wrap comments using textwidth, inserting the current comment leader automatically.
-" r	Automatically insert the current comment leader after hitting <Enter> in Insert mode.
-" o	Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.  In case comment is unwanted in a specific place use CTRL-U to quickly delete it.
-" q	Allow formatting of comments with "gq". Note that formatting will not change blank lines or lines containing only the comment leader.  A new paragraph starts after such a line, or when the comment leader changes.
-" w	Trailing white space indicates a paragraph continues in the next line. A line that ends in a non-white character ends a paragraph.
-" a	Automatic formatting of paragraphs.  Every time text is inserted or deleted the paragraph will be reformatted.  See |auto-format|. When the 'c' flag is present this only happens for recognized comments.
-" n	When formatting text, recognize numbered lists.  This actually uses the 'formatlistpat' option, thus any kind of list can be used. The indent of the text after the number is used for the next line.  The default is to find a number, optionally followed by '.', ':', ')', ']' or '}'.  Note that 'autoindent' must be set too.  Doesn't work well together with "2".
-"	Example: >
-"		1. the first item
-"		   wraps
-"		2. the second item
-" 2	When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead of the indent of the first line. This supports paragraphs in which the first line has a different indent than the rest.  Note that 'autoindent' must be set too.
-" Example: >
-"			first line of a paragraph
-"		second line of the same paragraph
-"		third line.
-"<	This also works inside comments, ignoring the comment leader.
-" v	Vi-compatible auto-wrapping in insert mode: Only break a line at a blank that you have entered during the current insert command.  (Note: this is not 100% Vi compatible.  Vi has some "unexpected features" or bugs in this area.  It uses the screen column instead of the line column.)
-" b	Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.  If the line was longer than 'textwidth' when you started the insert, or you do not enter a blank in the insert before reaching 'textwidth', Vim does not perform auto-wrapping.
-" l	Long lines are not broken in insert mode: When a line was longer than 'textwidth' when the insert command started, Vim does not automatically format it.
-" 1	Don't break a line after a one-letter word.  It's broken before it instead (if possible).
-" j	Where it makes sense, remove a comment leader when joining lines.  For
-"	example, joining:
-"		int i;   // the index ~
-"		         // in the list ~
-"	Becomes:
-"		int i;   // the index in the list
-" p	Don't break lines at single spaces that follow periods.  This is intended to complement 'joinspaces' and |cpo-J|, for prose with sentences separated by two spaces.  For example, with 'textwidth' set to 28:
-"		Surely you're joking, Mr. Feynman!
-"	Becomes:
-"		Surely you're joking,
-"		Mr. Feynman!
-"	Instead of:
-"		Surely you're joking, Mr.
-"		Feynman!
-" With 't' and 'c' you can specify when Vim performs auto-wrapping:
-" value	action	~
-  ""	no automatic formatting (you can use "gq" for manual formatting)
-  "t"	automatic formatting of text, but not comments
-  "c"	automatic formatting for comments, but not text (good for C code)
-  "tc"	automatic formatting for text and comments
+" Options from abstract ide
+" opt.listchars = {
+" 	nbsp = '⦸', -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
+" 	extends = '»', -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
+" 	precedes = '«', -- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
+" 	tab = '  ', -- '▷─' WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7) + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
+" 	trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
+" 	space = ' ',
+" }
+" opt.fillchars = {
+" 	diff = '∙', -- BULLET OPERATOR (U+2219, UTF-8: E2 88 99)
+" 	eob = ' ', -- NO-BREAK SPACE (U+00A0, UTF-8: C2 A0) to suppress ~ at EndOfBuffer
+" 	fold = '·', -- MIDDLE DOT (U+00B7, UTF-8: C2 B7)
+" 	vert = '│', -- window border when window splits vertically ─ ┴ ┬ ┤ ├ ┼
+" }
+" 
+" opt.scrolloff = 1 -- when scrolling, keep cursor 1 lines away from screen border
+" opt.shiftround = true
+" opt.inccommand = 'split' -- live preview of :s results
+" opt.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
+" opt.wildignore = vim.opt.wildignore + '*.o,*.rej,*.so' -- patterns to ignore during file-navigation
+" 
+" api.nvim_create_autocmd(
+" 	"TextYankPost",
+" 	{
+"         desc = "highlight text on yank",
+"         pattern = "*",
+" 		group = group,
+"         callback = function()
+" 			vim.highlight.on_yank {
+" 				higroup="Search", timeout=150, on_visual=true
+" 			}
+"         end,
+" 	}
+" )
 " }}}
 
 " Plugins:
@@ -122,13 +114,16 @@ set breakindent                       " Every wrapped line will continue visuall
 set completeopt=menu,menuone,noselect " for nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
+set formatoptions=tcroqwanvbl1jp      " Set auto formating options 'fo-table'
 set history=1000                      " Increase undo limit
 set linebreak                         " Break wrapped line at 'breakat'
 set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
 set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
+set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
+set wrapmargin=0                      " Disable wrap margin
 setglobal bomb                        " Keep the BOM file marker
 " }}}
 
@@ -252,43 +247,5 @@ let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
 let g:neovide_remember_window_size = v:true
 let g:neovide_transparency=0.95
-
-" Options from abstract ide
-" {{{
-" opt.listchars = {
-" 	nbsp = '⦸', -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
-" 	extends = '»', -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
-" 	precedes = '«', -- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00AB, UTF-8: C2 AB)
-" 	tab = '  ', -- '▷─' WHITE RIGHT-POINTING TRIANGLE (U+25B7, UTF-8: E2 96 B7) + BOX DRAWINGS HEAVY TRIPLE DASH HORIZONTAL (U+2505, UTF-8: E2 94 85)
-" 	trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
-" 	space = ' ',
-" }
-" opt.fillchars = {
-" 	diff = '∙', -- BULLET OPERATOR (U+2219, UTF-8: E2 88 99)
-" 	eob = ' ', -- NO-BREAK SPACE (U+00A0, UTF-8: C2 A0) to suppress ~ at EndOfBuffer
-" 	fold = '·', -- MIDDLE DOT (U+00B7, UTF-8: C2 B7)
-" 	vert = '│', -- window border when window splits vertically ─ ┴ ┬ ┤ ├ ┼
-" }
-" 
-" opt.scrolloff = 1 -- when scrolling, keep cursor 1 lines away from screen border
-" opt.shiftround = true
-" opt.inccommand = 'split' -- live preview of :s results
-" opt.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
-" opt.wildignore = vim.opt.wildignore + '*.o,*.rej,*.so' -- patterns to ignore during file-navigation
-" 
-" api.nvim_create_autocmd(
-" 	"TextYankPost",
-" 	{
-"         desc = "highlight text on yank",
-"         pattern = "*",
-" 		group = group,
-"         callback = function()
-" 			vim.highlight.on_yank {
-" 				higroup="Search", timeout=150, on_visual=true
-" 			}
-"         end,
-" 	}
-" )
-" }}}
 
 " vim: fdm=marker
