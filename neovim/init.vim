@@ -6,38 +6,12 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+"━━━━━━━━━━━━━━━━━━━❰ Plugins ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
-" TODO: blink on yank
-" au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
-" TODO: http://blog.ezyang.com/2010/03/vim-textwidth/
-" Options from abstract ide
-" opt.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
-"
-" api.nvim_create_autocmd(
-" 	"TextYankPost",
-" 	{
-"         desc = "highlight text on yank",
-"         pattern = "*",
-" 		group = group,
-"         callback = function()
-" 			vim.highlight.on_yank {
-" 				higroup="Search", timeout=150, on_visual=true
-" 			}
-"         end,
-" 	}
-" )
-" }}}
-
-" Plugins:
-" ````````
 call plug#begin()
 call plug#end()
-
 lua require('plugins')
-" augroup packer_user_config
-"     autocmd!
-"     autocmd BufWritePost plugins.lua source <afile> | PackerSync
-" augroup end
+" }}}
 
 " Light
 autocmd FileType lua colorscheme morning | highlight clear CursorLine | highlight clear CursorLineNR | set list!
@@ -62,22 +36,36 @@ autocmd FileType lua colorscheme morning | highlight clear CursorLine | highligh
 
 lua << EOF
 --require('neo-tree').setup{filesystem {hijack_netrw_behavior = "open_current"}}
+-- TODO: blink on yank
+-- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
+-- Highlight on yank
+vim.api.nvim_create_autocmd(
+	"TextYankPost",
+	{
+		desc = "highlight text on yank",
+		pattern = "*",
+		group = group,
+		callback = function()
+			vim.highlight.on_yank {
+				higroup="ColorColumn", timeout=300, on_visual=true
+			}
+		end,
+	}
+)
 EOF
 
-" Variables:
-" ``````````
+"━━━━━━━━━━━━━━━━━━━❰ Variables ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 let &titleold             = getcwd() " Set console title to path on vim exit
 let c_curly_error         = 1        " Show curly braces error
-let c_space_errors        = 1        " Highlight trailing spaces
+" let c_space_errors      = 1        " Highlight trailing spaces
 let g:diff_translations   = 0        " Disables localisations and speeds up syntax highlighting in diff mode
 let g:load_doxygen_syntax = 1        " Recognize doxygen comment style
 let g:netrw_liststyle     = 3        " Set netrw style as tree
 " }}}
 
 
-" Config Options:
-" ```````````````
+"━━━━━━━━━━━━━━━━━━━❰ Config Options ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 set autowrite             " Auto write changes
 set clipboard=unnamedplus " Use + clipboard buffer
@@ -87,12 +75,11 @@ set path+=**              " Look for all files in sub dirs
 " }}}
 
 
-" Editor Settings:
-" ````````````````
+"━━━━━━━━━━━━━━━━━━━❰ Editor Settings ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 set bomb                              " Keep the BOM file marker
 set breakindent                       " Every wrapped line will continue visually indented
-set completeopt=menu,menuone,noselect " for nvim-cmp
+set completeopt=menu,menuone,noselect " For nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
 set formatoptions=tcroqwanvbl1jp      " Set auto formating options 'fo-table'
@@ -111,8 +98,7 @@ setglobal bomb                        " Keep the BOM file marker
 " }}}
 
 
-" UI Options:
-" ```````````
+"━━━━━━━━━━━━━━━━━━━❰ UI Settings ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
@@ -125,8 +111,7 @@ set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
 set laststatus=3             " Global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-" set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«   " Show space as ·, tab
-set lcs=trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«   " Show space as ·, tab
+set lcs=lead:\ ,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
@@ -152,16 +137,14 @@ highlight clear CursorLineNR " No underline on line numbers when cursorline is o
 " }}}
 
 
-" Search Options:
-" ```````````````
+"━━━━━━━━━━━━━━━━━━━❰ Search Options ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 set ignorecase " Ignore case when searching
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 " }}}
 
 
-" Filetype Specific Options:
-" ``````````````````````````
+"━━━━━━━━━━━━━━━━━━━❰ Filetype Options ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 autocmd BufNewFile,BufRead *.qel set filetype=tcl       " Set qel filetype as tcl
 autocmd BufNewFile,BufRead *.cyt set filetype=sh        " Set cyt filetype as bash
@@ -171,8 +154,7 @@ autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as ba
 " }}}
 
 
-" Mappings:
-" `````````
+"━━━━━━━━━━━━━━━━━━━❰ Mappings ❱━━━━━━━━━━━━━━━━━━━"
 " {{{
 imap <C-Left> <C-\><C-O>B
 imap <C-Right> <C-\><C-O>E<C-\><C-O>l
@@ -203,7 +185,6 @@ augroup RestoreCursorShapeOnExit
     autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
 augroup END
 
-" au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
 
 " Workaround for vim-illuminate
 augroup illuminate_augroup
@@ -212,11 +193,11 @@ augroup illuminate_augroup
 augroup END
 
 " highlight ColorColumn ctermbg=white
-" call matchadd('ColorColumn', '\%8v', 100)
-" augroup vimrc_autocmds
-"   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-"   autocmd BufEnter * match OverLength /\%101v/
-" augroup END
+call matchadd('ColorColumn', '\%101v', 100)
+augroup vimrc_autocmds
+  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+  autocmd BufEnter * match OverLength /\%101v/
+augroup END
 " }}}
 
 hi def IlluminatedWordText gui=underline
@@ -226,14 +207,13 @@ hi def link LspReferenceText WildMenu
 hi def link LspReferenceWrite WildMenu
 hi def link LspReferenceRead WildMenu
 
-" UI Client:
-" ``````````
+"━━━━━━━━━━━━━━━━━━━❰ GUI ❱━━━━━━━━━━━━━━━━━━━"
 set guifont=VictorMono_NF:h13
 let g:neovide_cursor_vfx_mode = "pixiedust"
 let g:neovide_cursor_vfx_particle_lifetime=2
 let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
-" let g:neovide_remember_window_size = v:true
+let g:neovide_remember_window_size = v:true
 let g:neovide_transparency=0.95
 
 let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
