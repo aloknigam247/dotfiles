@@ -111,7 +111,7 @@ set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
 set laststatus=3             " Global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=lead:\ ,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«
+set lcs=lead:\ ,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
