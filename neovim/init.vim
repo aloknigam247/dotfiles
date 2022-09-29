@@ -11,9 +11,8 @@
 " au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true} " Highlight on yank
 " TODO: http://blog.ezyang.com/2010/03/vim-textwidth/
 " Options from abstract ide
-" opt.shiftround = true
 " opt.shell = 'zsh' -- shell to use for `!`, `:!`, `system()` etc.
-" 
+"
 " api.nvim_create_autocmd(
 " 	"TextYankPost",
 " 	{
@@ -126,8 +125,8 @@ set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
 set laststatus=3             " Global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«   " Show space as ·, tab
-" set lcs=tab:»\               " Show space as ·, tab as clear spaces
+" set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«   " Show space as ·, tab
+set lcs=trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:▷,precedes:«   " Show space as ·, tab
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
@@ -147,6 +146,7 @@ set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
 colorscheme morning       " Set colorscheme
+hi NonText guifg=grey70 guibg=grey90
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
@@ -233,7 +233,13 @@ let g:neovide_cursor_vfx_mode = "pixiedust"
 let g:neovide_cursor_vfx_particle_lifetime=2
 let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
-let g:neovide_remember_window_size = v:true
+" let g:neovide_remember_window_size = v:true
 let g:neovide_transparency=0.95
+
+let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
+let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
+let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+set shellquote= shellxquote=
 
 " vim: fdm=marker
