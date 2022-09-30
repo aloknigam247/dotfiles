@@ -8,7 +8,6 @@
 ]]
 
 -- Functionality to maintain
--- color of trailing spaces
 
 -- local ret = require('packer').startup({
 require('packer').startup({
@@ -169,6 +168,7 @@ require('packer').startup({
 --     use 'fenetikm/falcon'
 --     use 'glepnir/zephyr-nvim'
 --     use 'kaiuri/nvim-juliana'
+--     use 'kartikp10/noctis.nvim'
 --     use 'lmburns/kimbox'
 --     use 'marko-cerovac/material.nvim'
 --     use 'maxmx03/FluoroMachine.nvim'
@@ -351,6 +351,7 @@ require('packer').startup({
 --     -- `````````
 --     -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
 --     use 'Pocco81/dap-buddy.nvim'
+--     -- TODO: https://github.com/jayp0521/mason-nvim-dap.nvim
 --     use 'mfussenegger/nvim-dap'
 --     use 'mfussenegger/nvim-dap-python'
 --     -- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
@@ -915,6 +916,7 @@ require('packer').startup({
 --             require("toggleterm").setup()
 --         end
 --     }
+--     -- TODO: https://github.com/elijahdanko/ttymux.nvim
 --     -- TODO: https://github.com/jlesquembre/nterm.nvim
 --     -- TODO: https://github.com/kassio/neoterm
 --     -- TODO: https://github.com/nikvdp/neomux
@@ -1044,6 +1046,7 @@ require('packer').startup({
 --     -- ``````````
 --     use '0x100101/lab.nvim'
 --     use 'AndrewRadev/inline_edit.vim'
+--     -- TODO: https://github.com/ElPiloto/significant.nvim
 --     use 'NTBBloodbath/rest.nvim'
 --     use 'MunifTanjim/nui.nvim'
 --     use {
@@ -1064,6 +1067,7 @@ require('packer').startup({
 --     use 'chrisbra/NrrwRgn'
 --     use 'cuducos/yaml.nvim'
 --     use 'doums/suit.nvim'
+--     -- TODO: https://github.com/dstein64/vim-startuptime
 --     use 'esensar/nvim-dev-container'
 --     use 'folke/trouble.nvim'
 --     use {

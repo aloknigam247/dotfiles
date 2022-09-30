@@ -6,55 +6,14 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
-"━━━━━━━━━━━━━━━━━━━❰ Plugins ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 call plug#begin()
 call plug#end()
 lua require('plugins')
 " }}}
 
-" Light
-autocmd FileType lua colorscheme morning | highlight clear CursorLine | highlight clear CursorLineNR | set list!
-
-" Dark
-" autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType cs colorscheme nightfox | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType gitcommit colorscheme falcon | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType json colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
-" " autocmd FileType lua colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR | set list!
-" autocmd FileType lua colorscheme onedarkpro | highlight clear CursorLine | highlight clear CursorLineNR | set list!
-" autocmd FileType markdown colorscheme edge | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType make colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
-" " autocmd FileType python colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
-" " autocmd FileType python colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType python colorscheme monokai_soda | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType sh colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType vim colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR
-" autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
-
-lua << EOF
---require('neo-tree').setup{filesystem {hijack_netrw_behavior = "open_current"}}
--- TODO: blink on yank
--- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
--- Highlight on yank
-vim.api.nvim_create_autocmd(
-	"TextYankPost",
-	{
-		desc = "highlight text on yank",
-		pattern = "*",
-		group = group,
-		callback = function()
-			vim.highlight.on_yank {
-				higroup="ColorColumn", timeout=300, on_visual=true
-			}
-		end,
-	}
-)
-EOF
-
-"━━━━━━━━━━━━━━━━━━━❰ Variables ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let &titleold             = getcwd() " Set console title to path on vim exit
 let c_curly_error         = 1        " Show curly braces error
@@ -64,8 +23,7 @@ let g:load_doxygen_syntax = 1        " Recognize doxygen comment style
 let g:netrw_liststyle     = 3        " Set netrw style as tree
 " }}}
 
-
-"━━━━━━━━━━━━━━━━━━━❰ Config Options ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Config Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 set autowrite             " Auto write changes
 set clipboard=unnamedplus " Use + clipboard buffer
@@ -74,8 +32,7 @@ set nobackup              " Do not create backup file
 set path+=**              " Look for all files in sub dirs
 " }}}
 
-
-"━━━━━━━━━━━━━━━━━━━❰ Editor Settings ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Editor Settings  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 set bomb                              " Keep the BOM file marker
 set breakindent                       " Every wrapped line will continue visually indented
@@ -97,8 +54,7 @@ set scrolloff=3                       " Scroll offset
 setglobal bomb                        " Keep the BOM file marker
 " }}}
 
-
-"━━━━━━━━━━━━━━━━━━━❰ UI Settings ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
@@ -136,25 +92,51 @@ highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
 
-
-"━━━━━━━━━━━━━━━━━━━❰ Search Options ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Search Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 set ignorecase " Ignore case when searching
 set smartcase  " Switch search to case-sensitive when query contains an uppercase letter
 " }}}
 
-
-"━━━━━━━━━━━━━━━━━━━❰ Filetype Options ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Filetype Options ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 autocmd BufNewFile,BufRead *.qel set filetype=tcl       " Set qel filetype as tcl
 autocmd BufNewFile,BufRead *.cyt set filetype=sh        " Set cyt filetype as bash
 autocmd BufNewFile,BufRead *.make set filetype=make     " Set make filetype as Makefile
 autocmd BufNewFile,BufRead *.v set filetype=verilog     " Set .v filetype as bash
 autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as bash
+
+" Filetype functions
+function FT_settings(scheme)
+    execute "colorscheme " .. a:scheme
+    hi NonText guifg=grey70 guibg=grey90
+    highlight clear CursorLine
+    highlight clear CursorLineNR
+endfunction
+
+" Filetype autocommands
+autocmd FileType lua call FT_settings("morning")
+
+" Dark
+" autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType cs colorscheme nightfox | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType gitcommit colorscheme falcon | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType json colorscheme papercolor | highlight clear CursorLine | highlight clear CursorLineNR | set list!
+" " autocmd FileType lua colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR | set list!
+" autocmd FileType lua colorscheme onedarkpro | highlight clear CursorLine | highlight clear CursorLineNR | set list!
+" autocmd FileType markdown colorscheme edge | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType make colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType norg colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType ps1 colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
+" " autocmd FileType python colorscheme one-nvim | highlight clear CursorLine | highlight clear CursorLineNR
+" " autocmd FileType python colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType python colorscheme monokai_soda | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType sh colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType vim colorscheme one_monokai | highlight clear CursorLine | highlight clear CursorLineNR
+" autocmd FileType xml colorscheme ayu | highlight clear CursorLine | highlight clear CursorLineNR
 " }}}
 
-
-"━━━━━━━━━━━━━━━━━━━❰ Mappings ❱━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 imap <C-Left> <C-\><C-O>B
 imap <C-Right> <C-\><C-O>E<C-\><C-O>l
@@ -170,7 +152,37 @@ map <C-e> $
 " vip select paragraph
 " }}}
 
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰        GUI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+set guifont=VictorMono_NF:h13
+let g:neovide_cursor_vfx_mode = "pixiedust"
+let g:neovide_cursor_vfx_particle_lifetime=2
+let g:neovide_floating_blur_amount_x = 2.0
+let g:neovide_floating_blur_amount_y = 2.0
+let g:neovide_remember_window_size = v:true
+let g:neovide_transparency=0.95
+" }}}
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MISC       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+" {{{
+lua << EOF
+-- Blink on yank
+-- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
+vim.api.nvim_create_autocmd(
+	"TextYankPost",
+	{
+		desc = "highlight text on yank",
+		pattern = "*",
+		group = group,
+		callback = function()
+			vim.highlight.on_yank {
+				higroup="ColorColumn", timeout=300, on_visual=true
+			}
+		end,
+	}
+)
+EOF
+
 let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
@@ -198,7 +210,6 @@ augroup vimrc_autocmds
   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
   autocmd BufEnter * match OverLength /\%101v/
 augroup END
-" }}}
 
 hi def IlluminatedWordText gui=underline
 hi def IlluminatedWordRead gui=underline
@@ -207,19 +218,11 @@ hi def link LspReferenceText WildMenu
 hi def link LspReferenceWrite WildMenu
 hi def link LspReferenceRead WildMenu
 
-"━━━━━━━━━━━━━━━━━━━❰ GUI ❱━━━━━━━━━━━━━━━━━━━"
-set guifont=VictorMono_NF:h13
-let g:neovide_cursor_vfx_mode = "pixiedust"
-let g:neovide_cursor_vfx_particle_lifetime=2
-let g:neovide_floating_blur_amount_x = 2.0
-let g:neovide_floating_blur_amount_y = 2.0
-let g:neovide_remember_window_size = v:true
-let g:neovide_transparency=0.95
-
 let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
 let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
 let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
 let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 set shellquote= shellxquote=
+" }}}
 
 " vim: fdm=marker
