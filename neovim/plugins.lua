@@ -78,6 +78,7 @@ use {
 --     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
 --     -- BUG: braces Indentation is not correct in some situation, powershell
 --     -- TODO: Create rule to not pair " for vim files
+--     -- TODO: check if #include < | > pair is possible ?
 }
 
 --     -- ──────────────────── Cheatsheet ────────────────────
