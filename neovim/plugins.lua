@@ -9,74 +9,76 @@
 
 -- Functionality to maintain
 
--- local ret = require('packer').startup({
 require('packer').startup({
-    config = {
-        auto_clean = true,
-		-- PERF: [ABSTRACT IDE] Move to lua dir so impatient.nvim can cache it
-		-- compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
-        display = {
-            -- open_fn = require('packer.util').float
-            open_fn = function()
-                local result, win, buf = require('packer.util').float {
-                    border = {
-                        { '╭', 'FloatBorder' },
-                        { '─', 'FloatBorder' },
-                        { '╮', 'FloatBorder' },
-                        { '│', 'FloatBorder' },
-                        { '╯', 'FloatBorder' },
-                        { '─', 'FloatBorder' },
-                        { '╰', 'FloatBorder' },
-                        { '│', 'FloatBorder' },
-                    },
-                }
-                vim.api.nvim_win_set_option(win, 'winhighlight', 'NormalFloat:Normal')
-                return result, win, buf
-            end
-        },
-		git = {
-		    clone_timeout = 600, -- Timeout, in seconds, for git clones
-		},
-        log = {
-            level = 'debug'
-        },
-        profile = {
-            enable = true,
-            threshold = 0.0001
-        },
-        -- autoremove = true
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--{{{
+config = {
+    auto_clean = true,
+    -- PERF: [ABSTRACT IDE] Move to lua dir so impatient.nvim can cache it
+    -- compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
+    display = {
+        -- open_fn = require('packer.util').float
+        open_fn = function()
+            local result, win, buf = require('packer.util').float {
+                border = {
+                    { '╭', 'FloatBorder' },
+                    { '─', 'FloatBorder' },
+                    { '╮', 'FloatBorder' },
+                    { '│', 'FloatBorder' },
+                    { '╯', 'FloatBorder' },
+                    { '─', 'FloatBorder' },
+                    { '╰', 'FloatBorder' },
+                    { '│', 'FloatBorder' },
+                },
+            }
+            vim.api.nvim_win_set_option(win, 'winhighlight', 'NormalFloat:Normal')
+            return result, win, buf
+        end
     },
+    git = {
+        clone_timeout = 600, -- Timeout, in seconds, for git clones
+    },
+    log = {
+        -- level = 'debug'
+    },
+    profile = {
+        enable = true,
+        threshold = 0.0001
+    },
+    -- autoremove = true
+},
+--}}}
 
-    function(use)
-        --━━━━━━━━━━━━━━━━━━━❰ Packer ❱━━━━━━━━━━━━━━━━━━━--
-        use 'wbthomason/packer.nvim'
-        -- filetype ?
- 
-        --━━━━━━━━━━━━━━━━━━━❰ Auto Pair ❱━━━━━━━━━━━━━━━━━━━--
-        -- ──────────────────── Auto Pair ────────────────────
-        -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        -- use {
-        --     'windwp/nvim-autopairs',
-        --     after ??
-        --     config = function()
-        --         local npairs = require("nvim-autopairs")
-        --         npairs.setup()
-        --         -- npairs.get_rule('"')[1].not_filetypes = { "vim" }
+function(use)
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Packer     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+--{{{
+use 'wbthomason/packer.nvim'
+-- filetype ?
+--}}}
 
-        --         -- Insert `(` after select function or method item
-        --         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        --         -- local cmp = require('cmp')
-        --         -- cmp.event:on(
-        --         --     'confirm_done',
-        --         --     cmp_autopairs.on_confirm_done()
-        --         -- )
-        --     end,
-        --     event = 'InsertEnter',
-        --     -- requires = 'nvim-cmp'
-        --     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
-        --     -- BUG: braces Indentation is not correct in some situation, powershell
-        --     -- TODO: Create rule to not pair " for vim files
-        -- }
+--━━━━━━━━━━━━━━━━━━━❰ Auto Pair ❱━━━━━━━━━━━━━━━━━━━
+use {
+     'windwp/nvim-autopairs',
+--     after ??
+     config = function()
+         local npairs = require("nvim-autopairs")
+         npairs.setup()
+--         -- npairs.get_rule('"')[1].not_filetypes = { "vim" }
+--         insert space for (|) to ( | )
+--         -- Insert `(` after select function or method item
+--         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+--         -- local cmp = require('cmp')
+--         -- cmp.event:on(
+--         --     'confirm_done',
+--         --     cmp_autopairs.on_confirm_done()
+--         -- )
+     end,
+     event = 'InsertEnter',
+--     -- requires = 'nvim-cmp'
+--     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
+--     -- BUG: braces Indentation is not correct in some situation, powershell
+--     -- TODO: Create rule to not pair " for vim files
+}
 
 --     -- ──────────────────── Cheatsheet ────────────────────
 --     -- {{{
@@ -1067,7 +1069,7 @@ require('packer').startup({
 --     use 'chrisbra/NrrwRgn'
 --     use 'cuducos/yaml.nvim'
 --     use 'doums/suit.nvim'
---     -- TODO: https://github.com/dstein64/vim-startuptime
+       use 'dstein64/vim-startuptime'
 --     use 'esensar/nvim-dev-container'
 --     use 'folke/trouble.nvim'
 --     use {

@@ -10,7 +10,8 @@
 " {{{
 call plug#begin()
 call plug#end()
-lua require('plugins')
+"lua require('plugins')
+autocmd FileType lua lua require('plugins')
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -152,7 +153,7 @@ map <C-e> $
 " vip select paragraph
 " }}}
 
-"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰        GUI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 set guifont=VictorMono_NF:h13
 let g:neovide_cursor_vfx_mode = "pixiedust"
@@ -223,6 +224,9 @@ let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [
 let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
 let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 set shellquote= shellxquote=
+
+
+let g:startuptime_event_width = 0
 " }}}
 
 " vim: fdm=marker
