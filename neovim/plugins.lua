@@ -60,15 +60,16 @@ use 'wbthomason/packer.nvim'
 use {
      'windwp/nvim-autopairs',
 --     after ??
-     config = function()
-         local npairs = require("nvim-autopairs")
-         npairs.setup({
+    config = function()
+        local npairs = require("nvim-autopairs")
+        local Rule   = require("nvim-autopairs.rule")
+        npairs.setup({
             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
-         })
-         npairs.add_rule(
+        })
+        npairs.add_rules {
             Rule('"', '"')
-                :with_par(cond.not_filetypes({"vim"}))
-         )
+                :with_par(cond.not_filetypes({"vim"})),
+        }
 --         insert space for (|) to ( | )
 --         -- Insert `(` after select function or method item
 --         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
@@ -77,11 +78,10 @@ use {
 --         --     'confirm_done',
 --         --     cmp_autopairs.on_confirm_done()
 --         -- )
-     end,
-     event = 'InsertEnter',
+    end,
+    event = 'InsertEnter',
 --     -- requires = 'nvim-cmp'
 --     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
---     -- BUG: braces Indentation is not correct in some situation, powershell
 --     -- TODO: check if #include < | > pair is possible ?
 }
 
