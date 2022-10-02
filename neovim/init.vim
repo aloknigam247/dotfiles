@@ -59,8 +59,9 @@ setglobal bomb                        " Keep the BOM file marker
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
-set background=light          " Select appropriate colors for dark or light
+set background=light         " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
+set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
 set cursorline               " Highlight the line currently under cursor
@@ -88,7 +89,7 @@ set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
 colorscheme morning       " Set colorscheme
-hi NonText guifg=grey70 guibg=grey90
+hi NonText guifg=grey70 guibg=#e4e4e4
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
@@ -110,7 +111,7 @@ autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as ba
 " Filetype functions
 function FT_settings(scheme)
     execute "colorscheme " .. a:scheme
-    hi NonText guifg=grey70 guibg=grey90
+    hi NonText guifg=grey70 guibg=#e4e4e4
     highlight clear CursorLine
     highlight clear CursorLineNR
 endfunction

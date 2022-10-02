@@ -62,8 +62,13 @@ use {
 --     after ??
      config = function()
          local npairs = require("nvim-autopairs")
-         npairs.setup()
---         -- npairs.get_rule('"')[1].not_filetypes = { "vim" }
+         npairs.setup({
+            enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
+         })
+         npairs.add_rule(
+            Rule('"', '"')
+                :with_par(cond.not_filetypes({"vim"}))
+         )
 --         insert space for (|) to ( | )
 --         -- Insert `(` after select function or method item
 --         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
@@ -77,7 +82,6 @@ use {
 --     -- requires = 'nvim-cmp'
 --     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
 --     -- BUG: braces Indentation is not correct in some situation, powershell
---     -- TODO: Create rule to not pair " for vim files
 --     -- TODO: check if #include < | > pair is possible ?
 }
 
