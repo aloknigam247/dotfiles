@@ -68,7 +68,7 @@ use {
         })
         npairs.add_rules {
             Rule('"', '"')
-                :with_par(cond.not_filetypes({"vim"})),
+                :with_pair(cond.not_filetypes({"vim"})),
         }
 --         insert space for (|) to ( | )
 --         -- Insert `(` after select function or method item
