@@ -11,7 +11,7 @@ $winget_pkgs = @(
 
 $files = @{
     "init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";
-#    "packer.nvim" = "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim";
-    "plug.vim" = "$env:LOCALAPPDATA\nvim-data\site\autoload\plug.vim";
+    # "packer.nvim" = "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim";
+    # "plug.vim" = "$env:LOCALAPPDATA\nvim-data\site\autoload\plug.vim";
     "plugins.lua" = "$env:LOCALAPPDATA\nvim\lua\plugins.lua";
 }

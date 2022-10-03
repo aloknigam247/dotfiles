@@ -8,9 +8,9 @@
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-call plug#begin()
-call plug#end()
-"lua require('plugins')
+" call plug#begin()
+" call plug#end()
+" lua require('plugins')
 autocmd FileType lua lua require('plugins')
 " }}}
 

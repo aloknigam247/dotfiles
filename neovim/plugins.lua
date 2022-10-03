@@ -157,30 +157,31 @@ use {
 --        ]]
     end
 }
-     use 'azabiong/vim-highlighter'
---     use 'machakann/vim-highlightedyank'
---     use {
---         'norcalli/nvim-colorizer.lua',
---         config = function()
---             require('colorizer').setup()
---         end
---     }
---     use {
---         't9md/vim-quickhl',
---         config = function()
---             vim.cmd[[
---             nmap <Space>m <Plug>(quickhl-manual-this)
---             xmap <Space>m <Plug>(quickhl-manual-this)
---             nmap <Space>M <Plug>(quickhl-manual-reset)
---             xmap <Space>M <Plug>(quickhl-manual-reset)
---             ]]
---         end
---     }
---     use {
---         'tribela/vim-transparent',
---         cmd = 'TransparentEnable'
---     }
--- 
+--     use 'azabiong/vim-highlighter'
+use {
+    'norcalli/nvim-colorizer.lua',
+    cmd = "ColorizerToggle",
+    config = function()
+        require('colorizer').setup()
+    end
+}
+use {
+    't9md/vim-quickhl',
+    config = function()
+        vim.cmd[[
+            nmap <Leader>w <Plug>(quickhl-manual-this)
+            xmap <Leader>w <Plug>(quickhl-manual-this)
+            nmap <Leader>W <Plug>(quickhl-manual-reset)
+            xmap <Leader>W <Plug>(quickhl-manual-reset)
+        ]]
+    end,
+    keys = {'<Leader>w', "<Leader>W"}
+}
+use {
+    'tribela/vim-transparent',
+    cmd = 'TransparentEnable'
+}
+
 --     -- Colorscheme:
 --     -- ````````````
 --     -- {{{
@@ -252,7 +253,7 @@ use {
 --     -- use 'dylanaraps/wal.vim'
 --     -- use 'AlphaTechnolog/pywal.nvim'
 --     -- }}}
--- 
+--
 --     -- Commenting:
 --     use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem -- keys gc gcc
 --     -- TODO: use 'numToStr/Comment.nvim'
@@ -1115,7 +1116,10 @@ use {
 --     use 'chrisbra/NrrwRgn'
 --     use 'cuducos/yaml.nvim'
 --     use 'doums/suit.nvim'
-       use 'dstein64/vim-startuptime'
+       use {
+           'dstein64/vim-startuptime',
+           cmd = "StartupTime"
+       }
 --     use 'esensar/nvim-dev-container'
 --     use 'folke/trouble.nvim'
 --     use {
