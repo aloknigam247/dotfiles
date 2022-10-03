@@ -147,19 +147,17 @@ use {
 use {
     'RRethy/vim-illuminate',
     config = function()
-        vim.cmd[[
-            hi def IlluminatedWordText gui=underline
-            hi def IlluminatedWordRead gui=underline
-            hi def IlluminatedWordWrite gui=underline
-            hi def link LspReferenceText WildMenu
-            hi def link LspReferenceWrite WildMenu
-            hi def link LspReferenceRead WildMenu
-        ]]
+--        vim.cmd[[
+--            hi def IlluminatedWordText gui=underline
+--            hi def IlluminatedWordRead gui=underline
+--            hi def IlluminatedWordWrite gui=underline
+--            hi def link LspReferenceText WildMenu
+--            hi def link LspReferenceWrite WildMenu
+--            hi def link LspReferenceRead WildMenu
+--        ]]
     end
-        -- FIXME: highlight colors are not good
-        -- FIXME: not working
 }
---     use 'azabiong/vim-highlighter'
+     use 'azabiong/vim-highlighter'
 --     use 'machakann/vim-highlightedyank'
 --     use {
 --         'norcalli/nvim-colorizer.lua',

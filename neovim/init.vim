@@ -117,7 +117,7 @@ function FT_settings(scheme)
 endfunction
 
 " Filetype autocommands
-autocmd FileType lua call FT_settings("morning")
+"autocmd FileType lua call FT_settings("morning")
 
 " Dark
 " autocmd FileType cpp colorscheme zephyr | highlight clear CursorLine | highlight clear CursorLineNR
@@ -167,23 +167,6 @@ let g:neovide_transparency=0.95
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MISC       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-lua << EOF
--- Blink on yank
--- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
-vim.api.nvim_create_autocmd(
-	"TextYankPost",
-	{
-		desc = "highlight text on yank",
-		pattern = "*",
-		group = group,
-		callback = function()
-			vim.highlight.on_yank {
-				higroup="ColorColumn", timeout=300, on_visual=true
-			}
-		end,
-	}
-)
-EOF
 
 let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
@@ -215,12 +198,24 @@ set shellquote= shellxquote=
 
 
 let g:startuptime_event_width = 0
+
+lua << EOF
+-- Blink on yank
+-- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
+vim.api.nvim_create_autocmd(
+	"TextYankPost",
+	{
+		desc = "highlight text on yank",
+		pattern = "*",
+		group = group,
+		callback = function()
+			vim.highlight.on_yank {
+				higroup="ColorColumn", timeout=300, on_visual=true
+			}
+		end,
+	}
+)
+EOF
 " }}}
 
-        hi def IlluminatedWordText gui=underline
-        hi def IlluminatedWordRead gui=underline
-        hi def IlluminatedWordWrite gui=underline
-        hi def link LspReferenceText WildMenu
-        hi def link LspReferenceWrite WildMenu
-        hi def link LspReferenceRead WildMenu
 " vim: fdm=marker
