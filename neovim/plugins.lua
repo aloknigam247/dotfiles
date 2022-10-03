@@ -10,8 +10,7 @@
 -- Functionality to maintain
 
 require('packer').startup({
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
---{{{
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 config = {
     auto_clean = true,
     -- PERF: [ABSTRACT IDE] Move to lua dir so impatient.nvim can cache it
@@ -47,17 +46,15 @@ config = {
     },
     -- autoremove = true
 },
---}}}
+-- <~>
 
 function(use)
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Packer     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
---{{{
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Packer     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use 'wbthomason/packer.nvim'
 -- filetype ?
---}}}
+-- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Auto Pairs ❱━━━━━━━━━━━━━━━━━━━
---{{{
+--━━━━━━━━━━━━━━━━━━━❰ Auto Pairs ❱━━━━━━━━━━━━━━━━━━━</>
 use {
      'windwp/nvim-autopairs',
 --     after ??
@@ -141,9 +138,9 @@ use {
     event = 'InsertEnter',
 --     -- requires = 'nvim-cmp'
 }
---}}}
+-- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Coloring ❱━━━━━━━━━━━━━━━━━━━
+--━━━━━━━━━━━━━━━━━━━❰ Coloring ❱━━━━━━━━━━━━━━━━━━━</>
 use {
     'RRethy/vim-illuminate',
     config = function()
@@ -157,7 +154,7 @@ use {
 --        ]]
     end
 }
---     use 'azabiong/vim-highlighter'
+--     use 'azabiong/vim-highlighter' -- Archieved
 use {
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
@@ -177,18 +174,16 @@ use {
     end,
     keys = {'<Leader>w', "<Leader>W"}
 }
-use {
-    'tribela/vim-transparent',
-    cmd = 'TransparentEnable'
-}
+-- use {
+--     'tribela/vim-transparent',   -- Archieved
+--     cmd = 'TransparentEnable'
+-- }
+-- <~>
 
---     -- Colorscheme:
---     -- ````````````
---     -- {{{
+--━━━━━━━━━━━━━━━━━━━❰ Colorscheme ❱━━━━━━━━━━━━━━━━━━━</>
 --     use 'tjdevries/colorbuddy.vim'
---     -- Current:
---     -- << Light >>
---     use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
+-- << Light >>
+use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 --     use 'Mofiqul/adwaita.nvim'
 --     use 'NLKNguyen/papercolor-theme'
 --     use 'Th3Whit3Wolf/one-nvim'
@@ -249,16 +244,27 @@ use {
 --     use 'tomasiser/vim-code-dark'
 --     use 'wuelnerdotexe/vim-enfocado'
 --     use 'yashguptaz/calvera-dark.nvim'
--- 
---     -- use 'dylanaraps/wal.vim'
---     -- use 'AlphaTechnolog/pywal.nvim'
---     -- }}}
---
---     -- Commenting:
---     use 'b3nj5m1n/kommentary' -- NOTE: Fixed --[[]] problem -- keys gc gcc
+-- <~>
+
+--━━━━━━━━━━━━━━━━━━━❰ Commenting ❱━━━━━━━━━━━━━━━━━━━
+use {
+    'b3nj5m1n/kommentary',
+    config = function()
+        require('kommentary.config').configure_language("default", {
+            prefer_single_line_comments = true,
+        })
+        vim.api.nvim_set_keymap("n", "<C-t>", "<Plug>kommentary_line_default", {})
+        vim.api.nvim_set_keymap("v", "<C-t>", "<Plug>kommentary_visual_default", {})
+    end,
+    keys = { "<C-t>" },
+    setup = function()
+        vim.g.kommentary_create_default_mappings = false
+    end
+}
 --     -- TODO: use 'numToStr/Comment.nvim'
 --     use 's1n7ax/nvim-comment-frame'
--- 
+
+
 --     -- Completion:
 --     -- ```````````
 --     use {
@@ -2201,4 +2207,4 @@ end
 --         bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services\\",
 --         cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\Start-EditorServices.ps1"}
 --     }) ]]
--- -- vim: fdm=marker
+-- vim: fmr=</>,<~>  fdm=marker

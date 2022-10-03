@@ -67,9 +67,10 @@ set culopt=number,screenline " Highlight current line and line number of current
 set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
+set fillchars=fold:\         " No dot characters in fold
 set laststatus=2             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=lead:\ ,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
+set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
@@ -88,8 +89,8 @@ set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
-colorscheme morning       " Set colorscheme
-hi NonText guifg=grey70 guibg=#e4e4e4
+colorscheme dayfox           " Set colorscheme
+"hi NonText guifg=grey70 guibg=#e4e4e4
 highlight clear CursorLine   " No underline on text when cursorline is on
 highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 " }}}
