@@ -56,21 +56,80 @@ use 'wbthomason/packer.nvim'
 -- filetype ?
 --}}}
 
---━━━━━━━━━━━━━━━━━━━❰ Auto Pair ❱━━━━━━━━━━━━━━━━━━━
+--━━━━━━━━━━━━━━━━━━━❰ Auto Pairs ❱━━━━━━━━━━━━━━━━━━━
+--{{{
 use {
      'windwp/nvim-autopairs',
 --     after ??
     config = function()
         local npairs = require("nvim-autopairs")
         local Rule   = require("nvim-autopairs.rule")
+        local cond = require'nvim-autopairs.conds'
+
         npairs.setup({
             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
         })
         npairs.add_rules {
+            -- #include <> pair for c and cpp
+            Rule("#include <", ">", { "c", "cpp" }),
+            -- Disable " rule for vim
             Rule('"', '"')
-                :with_pair(cond.not_filetypes({"vim"})),
+            :with_pair(cond.not_filetypes({"vim"})),
+            -- Add spaces in pair after parentheses
+            -- (|) --> space --> ( | )
+            -- ( | ) --> ) --> ( )|
+            Rule(' ', ' ')
+            :with_pair(function (opts)
+                local pair = opts.line:sub(opts.col - 1, opts.col)
+                return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+            end),
+            Rule('( ', ' )')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%)') ~= nil
+            end)
+            :use_key(')'),
+            Rule('{ ', ' }')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%}') ~= nil
+            end)
+            :use_key('}'),
+            Rule('[ ', ' ]')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%]') ~= nil
+            end)
+            :use_key(']'),
+            -- Auto add space on =
+            Rule('=', '')
+            :with_pair(cond.not_inside_quote())
+            :with_pair(function(opts)
+                local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+                if last_char:match('[%w%=%s]') then
+                    return true
+                end
+                return false
+            end)
+            :replace_endpair(function(opts)
+                local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+                local next_char = opts.line:sub(opts.col, opts.col)
+                next_char = next_char == ' ' and '' or ' '
+                if prev_2char:match('%w$') then
+                    return '<bs> =' .. next_char
+                end
+                if prev_2char:match('%=$') then
+                    return next_char
+                end
+                if prev_2char:match('=') then
+                    return '<bs><bs>=' .. next_char
+                end
+                return ''
+            end)
+            :set_end_pair_length(0)
+            :with_move(cond.none())
+            :with_del(cond.none())
         }
---         insert space for (|) to ( | )
 --         -- Insert `(` after select function or method item
 --         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 --         -- local cmp = require('cmp')
@@ -81,40 +140,25 @@ use {
     end,
     event = 'InsertEnter',
 --     -- requires = 'nvim-cmp'
---     -- TODO: Create custom rule to Expand multiple pairs on enter key, similar to vim-closer, already implemented in its wiki
---     -- TODO: check if #include < | > pair is possible ?
 }
+--}}}
 
---     -- ──────────────────── Cheatsheet ────────────────────
---     -- {{{
---     use {
---         'sudormrfbin/cheatsheet.nvim',
---         cmd = 'Cheatsheet',
---         requires = {
---             {'nvim-telescope/telescope.nvim'},
---             {'nvim-lua/popup.nvim'},
---             {'nvim-lua/plenary.nvim'},
---         }
---     }
---     -- }}}
--- 
---     -- Coloring:
---     -- {{{
---     use {
---         'RRethy/vim-illuminate',
---         config = function()
---         vim.cmd[[
---         hi def IlluminatedWordText gui=underline
---         hi def IlluminatedWordRead gui=underline
---         hi def IlluminatedWordWrite gui=underline
---         hi def link LspReferenceText WildMenu
---         hi def link LspReferenceWrite WildMenu
---         hi def link LspReferenceRead WildMenu
---         ]]
---         end
---         -- FIXME: highlight colors are not good
---         -- FIXME: not working
---     }
+--━━━━━━━━━━━━━━━━━━━❰ Coloring ❱━━━━━━━━━━━━━━━━━━━
+use {
+    'RRethy/vim-illuminate',
+    config = function()
+        vim.cmd[[
+            hi def IlluminatedWordText gui=underline
+            hi def IlluminatedWordRead gui=underline
+            hi def IlluminatedWordWrite gui=underline
+            hi def link LspReferenceText WildMenu
+            hi def link LspReferenceWrite WildMenu
+            hi def link LspReferenceRead WildMenu
+        ]]
+    end
+        -- FIXME: highlight colors are not good
+        -- FIXME: not working
+}
 --     use 'azabiong/vim-highlighter'
 --     use 'machakann/vim-highlightedyank'
 --     use {
@@ -138,7 +182,6 @@ use {
 --         'tribela/vim-transparent',
 --         cmd = 'TransparentEnable'
 --     }
---     -- }}}
 -- 
 --     -- Colorscheme:
 --     -- ````````````

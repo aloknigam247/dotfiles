@@ -200,25 +200,12 @@ augroup RestoreCursorShapeOnExit
 augroup END
 
 
-" Workaround for vim-illuminate
-augroup illuminate_augroup
-    autocmd!
-    autocmd VimEnter * hi link illuminatedWord MatchParen
-augroup END
-
 " highlight ColorColumn ctermbg=white
 call matchadd('ColorColumn', '\%101v', 100)
 augroup vimrc_autocmds
   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
   autocmd BufEnter * match OverLength /\%101v/
 augroup END
-
-hi def IlluminatedWordText gui=underline
-hi def IlluminatedWordRead gui=underline
-hi def IlluminatedWordWrite gui=underline
-hi def link LspReferenceText WildMenu
-hi def link LspReferenceWrite WildMenu
-hi def link LspReferenceRead WildMenu
 
 let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
 let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
@@ -230,4 +217,10 @@ set shellquote= shellxquote=
 let g:startuptime_event_width = 0
 " }}}
 
+        hi def IlluminatedWordText gui=underline
+        hi def IlluminatedWordRead gui=underline
+        hi def IlluminatedWordWrite gui=underline
+        hi def link LspReferenceText WildMenu
+        hi def link LspReferenceWrite WildMenu
+        hi def link LspReferenceRead WildMenu
 " vim: fdm=marker
