@@ -246,7 +246,7 @@ use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 --     use 'yashguptaz/calvera-dark.nvim'
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Commenting ❱━━━━━━━━━━━━━━━━━━━
+--━━━━━━━━━━━━━━━━━━━❰ Comments ❱━━━━━━━━━━━━━━━━━━━</>
 use {
     'b3nj5m1n/kommentary',
     config = function()
@@ -261,18 +261,15 @@ use {
         vim.g.kommentary_create_default_mappings = false
     end
 }
---     -- TODO: use 'numToStr/Comment.nvim'
---     use 's1n7ax/nvim-comment-frame'
+-- <~>
 
-
---     -- Completion:
---     -- ```````````
---     use {
---         'hrsh7th/nvim-cmp',
+--━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━
+use {
+    'hrsh7th/nvim-cmp',
 --         --  TODO: Hover doc
 --         --  TODO: LSP - explore
 --         --  TODO: Snippets
---         config = function()
+     config = function()
 --             local cmp = require('cmp')
 --             -- local lspkind = require('lspkind')
 --             cmp.setup({
@@ -339,8 +336,8 @@ use {
 --                 { name = 'spell' }
 --             })
 --         })
---         end
---     }
+    end
+}
 --     use 'dmitmel/cmp-cmdline-history'
 --     use 'hrsh7th/cmp-buffer'
 --     use 'hrsh7th/cmp-cmdline'
@@ -904,6 +901,7 @@ use {
 -- 
 --     -- Tab Line:
 --     -- `````````
+--     -- TODO: https://github.com/B4mbus/nvim-headband
 --     --[[ use {
 --         'akinsho/bufferline.nvim',
 --         config = function()
@@ -1084,6 +1082,7 @@ use {
 -- 
 --     -- ──────────────────── TUI ────────────────────
 --     -- {{{
+--     -- TODO: https://github.com/folke/noice.nvim
 --     use 'rcarriga/nvim-notify'
 --     use 'skywind3000/vim-quickui'
 --     use 'stevearc/dressing.nvim'
@@ -1100,6 +1099,7 @@ use {
 --     -- Utilities:
 --     -- ``````````
 --     use '0x100101/lab.nvim'
+--     -- TODO: https://github.com/Almo7aya/openingh.nvim
 --     use 'AndrewRadev/inline_edit.vim'
 --     -- TODO: https://github.com/ElPiloto/significant.nvim
 --     use 'NTBBloodbath/rest.nvim'
@@ -1211,6 +1211,7 @@ use {
 --         end
 --     }
 --     use 'pocco81/abbrevman.nvim'
+--     -- TODO: https://github.com/ranelpadon/python-copy-reference.vim
 --     use 'rickhowe/spotdiff.vim'
 --     use 'rktjmp/lush.nvim'
 --     use 'sidebar-nvim/sidebar.nvim'
