@@ -277,13 +277,6 @@ use {
             experimental = {
                 ghost_text = true
             },
-            mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
-                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
-                ['<C-e>'] = cmp.mapping.abort(),
-                ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-            }),
 --             cmp.setup.cmdline(':', {
 --                 mapping = cmp.mapping.preset.cmdline(),
 --                 sources = {
@@ -299,11 +292,11 @@ use {
 --                 }
 --             }),
             formatting = {
-                -- TODO: colors
+                fields = { "abbr", "kind", "menu" },
                 format = function(entry, vim_item)
                     if entry.source.name == "buffer" then
-                        -- vim_item.menu = "[Buffer]"
-                        vim_item.menu = ""
+                        vim_item.menu = "[Buffer]"
+                        -- vim_item.menu = ""
                     elseif entry.source.name == "nvim_lsp" then
                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
                     else
@@ -337,29 +330,47 @@ use {
                         Operator = ' ',
                         TypeParameter = ' ',
                     }
-                    vim_item.kind = cmp_kinds[vim_item.kind] or ''
+                    vim_item.kind = cmp_kinds[vim_item.kind] .. vim_item.kind or vim_item.kind
 
                     return vim_item
                 end
             },
+            mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+            }),
 --             snippet = {
 --                 expand = function(args)
 --                     require('luasnip').lsp_expand(args.body)
 --                 end
 --             },
             sources = ({
---                 -- { name = 'nuspell' },
-                { name = 'buffer' },
+                {
+                    name = 'buffer',
+                    option = {
+                        get_bufnrs = function()
+                            return vim.api.nvim_list_bufs()
+                        end
+                    }
+                },
                 { name = 'custom' },
 --                 { name = 'dictionary' },
 --                 { name = 'luasnip' },
+--                 { name = 'nuspell' },
 --                 { name = 'nvim_insert_text_lsp' },
 --                 { name = 'nvim_lsp' },
 --                 { name = 'nvim_lsp_signature_help' },
 --                 { name = 'nvim_lua' },
 --                 { name = 'path' },
 --                 { name = 'spell' }
-            })
+            }),
+            window = {
+                -- completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            }
         })
     end
 }
@@ -2293,8 +2304,40 @@ end
       { label = 'TypeParameter', kind = 25 },
     })
   end
+-- vim.cmd[[
+--     CmpDocumentation guifg=#1d344f guibg=#dbdbdb
+--     CmpDocumentationBorder guifg=#ced5de guibg=#dbdbdb
+--     CmpItemAbbr guifg=#1d344f
+--     CmpItemAbbrDeprecated cterm=strikethrough gui=strikethrough guifg=#2e537d
+--     CmpItemAbbrMatch guifg=#485e7d
+--     CmpItemAbbrMatchFuzzy guifg=#485e7d
+--     CmpItemKindClass links to Type
+--     CmpItemKindConstant links to TSConstant
+--     CmpItemKindConstructor links to Function
+--     CmpItemKindDefault guifg=#485e7d
+--     CmpItemKindEnum links to Constant
+--     CmpItemKindEnumMember links to TSField
+--     CmpItemKindEvent links to Constant
+--     CmpItemKindField links to TSField
+--     CmpItemKindFunction links to Function
+--     CmpItemKindInterface links to Constant
+--     CmpItemKindKeyword links to Identifier
+--     CmpItemKindMethod links to Function
+--     CmpItemKindModule links to TSNamespace
+--     CmpItemKindOperator links to Operator
+--     CmpItemKindProperty links to TSProperty
+--     CmpItemKindReference links to Keyword
+--     CmpItemKindSnippet guifg=#233f5e
+--     CmpItemKindStruct links to Type
+--     CmpItemKindTypeParameter links to TSField
+--     CmpItemKindUnit links to Constant
+--     CmpItemKindValue links to Keyword
+--     CmpItemKindVariable links to TSVariable
+--     CmpItemMenu links to Comment
+-- ]]
 
-  ---Resolve completion item (optional). This is called right before the completion is about to be displayed.
+  ---Resolve completion item (optional). This is called right before the completion is about to be 
+  --displayed.
   ---Useful for setting the text shown in the documentation window (`completion_item.documentation`).
   ---@param completion_item lsp.CompletionItem
   ---@param callback fun(completion_item: lsp.CompletionItem|nil)
@@ -2314,6 +2357,5 @@ end
   end
   ---Register your source to nvim-cmp.
   require('cmp').register_source('custom', source.new())
-
 
 -- vim: fmr=</>,<~>  fdm=marker
