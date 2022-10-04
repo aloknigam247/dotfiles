@@ -34,6 +34,7 @@ config = {
             return result, win, buf
         end
     },
+    ensure_dependencies = true,
     git = {
         clone_timeout = 600, -- Timeout, in seconds, for git clones
     },
@@ -269,17 +270,17 @@ use {
 --         --  TODO: Hover doc
 --         --  TODO: LSP - explore
 --         --  TODO: Snippets
-     config = function()
---             local cmp = require('cmp')
+    config = function()
+        local cmp = require('cmp')
 --             -- local lspkind = require('lspkind')
---             cmp.setup({
---                 mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
---                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
---                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
---                 ['<C-Space>'] = cmp.mapping.complete(),
---                 ['<C-e>'] = cmp.mapping.abort(),
---                 ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
---             }),
+        cmp.setup({
+            mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+            }),
 --             cmp.setup.cmdline(':', {
 --                 mapping = cmp.mapping.preset.cmdline(),
 --                 sources = {
@@ -294,38 +295,58 @@ use {
 --                     { name = 'nvim_lsp_document_symbol' }
 --                 }
 --             }),
---             formatting = {
---                 format = function(entry, vim_item)
---                     if entry.source.name == "buffer" then
---                         vim_item.menu = "[Buffer]"
---                     elseif entry.source.name == "nvim_lsp" then
---                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
---                     else
---                         vim_item.menu = '[' .. entry.source.name .. ']'
---                     end
--- 
---                     return vim_item
---                 end
---                 --[[
---                 format = lspkind.cmp_format({
---                     mode = 'symbol_text', -- show only symbol annotations
---                     menu = ({
---                         buffer = "[Buffer]",
---                         nvim_lsp = "[LSP]",
---                         luasnip = "[LuaSnip]",
---                         nvim_lua = "[Lua]",
---                         latex_symbols = "[Latex]",
---                     })
---                 })]]
---             },
+            formatting = {
+                -- TODO: colors
+                format = function(entry, vim_item)
+                    if entry.source.name == "buffer" then
+                        -- vim_item.menu = "[Buffer]"
+                        vim_item.menu = ""
+                    elseif entry.source.name == "nvim_lsp" then
+                        vim_item.menu = '{' .. entry.source.source.client.name .. '}'
+                    else
+                        vim_item.menu = '[' .. entry.source.name .. ']'
+                    end
+
+                    local cmp_kinds = {
+                        Text = ' ',
+                        Method = ' ',
+                        Function = ' ',
+                        Constructor = ' ',
+                        Field = ' ',
+                        Variable = ' ',
+                        Class = ' ',
+                        Interface = ' ',
+                        Module = ' ',
+                        Property = ' ',
+                        Unit = ' ',
+                        Value = ' ',
+                        Enum = ' ',
+                        Keyword = ' ',
+                        Snippet = ' ',
+                        Color = ' ',
+                        File = ' ',
+                        Reference = ' ',
+                        Folder = ' ',
+                        EnumMember = ' ',
+                        Constant = ' ',
+                        Struct = ' ',
+                        Event = ' ',
+                        Operator = ' ',
+                        TypeParameter = ' ',
+                    }
+                    vim_item.kind = cmp_kinds[vim_item.kind] or ''
+
+                    return vim_item
+                end
+            },
 --             snippet = {
 --                 expand = function(args)
 --                     require('luasnip').lsp_expand(args.body)
 --                 end
 --             },
---             sources = ({
+            sources = ({
 --                 -- { name = 'nuspell' },
---                 { name = 'buffer' },
+                { name = 'buffer' },
 --                 { name = 'dictionary' },
 --                 { name = 'luasnip' },
 --                 { name = 'nvim_insert_text_lsp' },
@@ -334,12 +355,12 @@ use {
 --                 { name = 'nvim_lua' },
 --                 { name = 'path' },
 --                 { name = 'spell' }
---             })
---         })
+            })
+        })
     end
 }
 --     use 'dmitmel/cmp-cmdline-history'
---     use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-buffer'
 --     use 'hrsh7th/cmp-cmdline'
 --     use 'hrsh7th/cmp-nvim-lsp'
 --     use 'hrsh7th/cmp-nvim-lsp-document-symbol'
