@@ -55,7 +55,7 @@ use 'wbthomason/packer.nvim'
 -- filetype ?
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Auto Pairs ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
      'windwp/nvim-autopairs',
 --     after ??
@@ -128,16 +128,15 @@ use {
             :with_move(cond.none())
             :with_del(cond.none())
         }
---         -- Insert `(` after select function or method item
---         -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
---         -- local cmp = require('cmp')
---         -- cmp.event:on(
---         --     'confirm_done',
---         --     cmp_autopairs.on_confirm_done()
---         -- )
+        -- Insert `(` after select function or method item
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        local cmp = require('cmp')
+        cmp.event:on(
+            'confirm_done',
+            cmp_autopairs.on_confirm_done()
+        )
     end,
     event = 'InsertEnter',
---     -- requires = 'nvim-cmp'
 }
 -- <~>
 
@@ -264,71 +263,65 @@ use {
 }
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━
+--━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━</>
 use {
     'hrsh7th/nvim-cmp',
---         --  TODO: Hover doc
---         --  TODO: LSP - explore
 --         --  TODO: Snippets
     config = function()
         local cmp = require('cmp')
---             -- local lspkind = require('lspkind')
         cmp.setup({
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'cmdline' },
+                    { name = 'cmdline_history' }
+                }
+            }),
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' },
+                    -- { name = 'nvim_lsp_document_symbol' }
+                }
+            }),
             experimental = {
                 ghost_text = true
             },
---             cmp.setup.cmdline(':', {
---                 mapping = cmp.mapping.preset.cmdline(),
---                 sources = {
---                     { name = 'cmdline' },
---                     { name = 'cmdline_history' }
---                 }
---             }),
---             cmp.setup.cmdline('/', {
---                 mapping = cmp.mapping.preset.cmdline(),
---                 sources = {
---                     { name = 'buffer' },
---                     { name = 'nvim_lsp_document_symbol' }
---                 }
---             }),
             formatting = {
                 fields = { "abbr", "kind", "menu" },
                 format = function(entry, vim_item)
-                    if entry.source.name == "buffer" then
-                        vim_item.menu = "[Buffer]"
-                        -- vim_item.menu = ""
-                    elseif entry.source.name == "nvim_lsp" then
+                    if entry.source.name == "nvim_lsp" then
                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
                     else
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
 
                     local cmp_kinds = {
-                        Text = ' ',
-                        Method = ' ',
-                        Function = ' ',
-                        Constructor = ' ',
-                        Field = ' ',
-                        Variable = ' ',
                         Class = ' ',
+                        Color = ' ',
+                        Constant = ' ',
+                        Constructor = ' ',
+                        Enum = ' ',
+                        EnumMember = ' ',
+                        Event = ' ',
+                        Field = ' ',
+                        File = ' ',
+                        Folder = ' ',
+                        Function = ' ',
                         Interface = ' ',
+                        Keyword = ' ',
+                        Method = ' ',
                         Module = ' ',
+                        Operator = ' ',
                         Property = ' ',
+                        Reference = ' ',
+                        Snippet = ' ',
+                        Struct = ' ',
+                        Text = ' ',
+                        TypeParameter = ' ',
                         Unit = ' ',
                         Value = ' ',
-                        Enum = ' ',
-                        Keyword = ' ',
-                        Snippet = ' ',
-                        Color = ' ',
-                        File = ' ',
-                        Reference = ' ',
-                        Folder = ' ',
-                        EnumMember = ' ',
-                        Constant = ' ',
-                        Struct = ' ',
-                        Event = ' ',
-                        Operator = ' ',
-                        TypeParameter = ' ',
+                        Variable = ' ',
                     }
                     vim_item.kind = cmp_kinds[vim_item.kind] .. vim_item.kind or vim_item.kind
 
@@ -340,7 +333,7 @@ use {
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
-                ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ['<TAB>'] = cmp.mapping.confirm({ select = true }),
             }),
 --             snippet = {
 --                 expand = function(args)
@@ -357,15 +350,14 @@ use {
                     }
                 },
                 { name = 'custom' },
---                 { name = 'dictionary' },
 --                 { name = 'luasnip' },
 --                 { name = 'nuspell' },
 --                 { name = 'nvim_insert_text_lsp' },
---                 { name = 'nvim_lsp' },
+                { name = 'nvim_lsp' },
 --                 { name = 'nvim_lsp_signature_help' },
---                 { name = 'nvim_lua' },
---                 { name = 'path' },
---                 { name = 'spell' }
+                { name = 'nvim_lua' },
+                { name = 'path' },
+                { name = 'spell' }
             }),
             window = {
                 -- completion = cmp.config.window.bordered(),
@@ -374,20 +366,19 @@ use {
         })
     end
 }
---     use 'dmitmel/cmp-cmdline-history'
+    use 'dmitmel/cmp-cmdline-history'
     use 'hrsh7th/cmp-buffer'
---     use 'hrsh7th/cmp-cmdline'
---     use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-nvim-lsp'
 --     use 'hrsh7th/cmp-nvim-lsp-document-symbol'
 --     use 'hrsh7th/cmp-nvim-lsp-signature-help'
---     use 'hrsh7th/cmp-nvim-lua'
---     use 'hrsh7th/cmp-path'
---     use 'uga-rosa/cmp-dictionary'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'hrsh7th/cmp-path'
 --     -- use {
 --     --     'f3fora/cmp-nuspell',
 --     --     rocks = { 'lua-nuspell' }
 --     -- }
---     use 'f3fora/cmp-spell'
+    use 'f3fora/cmp-spell'
 --     -- TODO: https://github.com/jameshiew/nvim-magic
 --     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
 --     -- TODO: https://github.com/lukas-reineke/cmp-rg
@@ -396,45 +387,46 @@ use {
 --     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 --     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
 --     -- TODO: https://github.com/zbirenbaum/copilot-cmp
--- 
---     -- Configuration:
---     -- ``````````````
---     -- {{{
---     -- TODO: https://github.com/Avimitin/nvim
---     -- TODO: https://github.com/CanKolay3499/CNvim
---     -- TODO: https://github.com/CosmicNvim/CosmicNvim
---     -- TODO: https://github.com/JryChn/ModuleVim
---     -- TODO: https://github.com/LunarVim/LunarVim
---     -- TODO: https://github.com/NTBBloodbath/doom-nvim
---     -- TODO: https://github.com/NvChad/NvChad
---     -- TODO: https://github.com/OmniSharp/omnisharp-vim
---     -- TODO: https://github.com/Shadorain/shadovim
---     -- TODO: https://github.com/TeoDev1611/astro.nvim
---     -- TODO: https://github.com/Theory-of-Everything/nii-nvim
---     -- TODO: https://github.com/Ultra-Code/awesome-neovim
---     -- TODO: https://github.com/VapourNvim/VapourNvim
---     -- TODO: https://github.com/alpha2phi/neovim-for-beginner
---     -- TODO: https://github.com/artart222/CodeArt
---     -- TODO: https://github.com/askfiy/nvim
---     -- TODO: https://github.com/b0o/nvim-conf
---     -- TODO: https://github.com/craftzdog/dotfiles-public
---     -- TODO: https://github.com/crivotz/nv-ide
---     -- TODO: https://github.com/cstsunfu/.sea.nvim
---     -- TODO: https://github.com/echasnovski/mini.nvim
---     -- TODO: https://github.com/glepnir/nvim
---     -- TODO: https://github.com/jdhao/nvim-config
---     -- TODO: https://github.com/lalitmee/cobalt2.nvim
---     -- TODO: https://github.com/mnabila/nvimrc
---     -- TODO: https://github.com/nvim-lua/kickstart.nvim
---     -- TODO: https://github.com/nvoid-lua/nvoid
---     -- TODO: https://github.com/optimizacija/neovim-config
---     -- TODO: https://github.com/ray-x/dotfiles
---     -- TODO: https://github.com/ray-x/go.nvim
---     -- TODO: https://github.com/shaeinst/roshnivim
---     -- TODO: https://github.com/shaunsingh/nyoom.nvim
---     -- TODO: https://github.com/vi-tality/neovitality
---     -- }}}
--- 
+-- <~>
+
+-- Configuration:</>
+-- ``````````````
+-- {{{
+-- TODO: https://github.com/Avimitin/nvim
+-- TODO: https://github.com/cankolay3499/cnvim
+-- TODO: https://github.com/CosmicNvim/CosmicNvim
+-- TODO: https://github.com/JryChn/ModuleVim
+-- TODO: https://github.com/LunarVim/LunarVim
+-- TODO: https://github.com/NTBBloodbath/doom-nvim
+-- TODO: https://github.com/NvChad/NvChad
+-- TODO: https://github.com/OmniSharp/omnisharp-vim
+-- TODO: https://github.com/Shadorain/shadovim
+-- TODO: https://github.com/TeoDev1611/astro.nvim
+-- TODO: https://github.com/Theory-of-Everything/nii-nvim
+-- TODO: https://github.com/Ultra-Code/awesome-neovim
+-- TODO: https://github.com/VapourNvim/VapourNvim
+-- TODO: https://github.com/alpha2phi/neovim-for-beginner
+-- TODO: https://github.com/artart222/CodeArt
+-- TODO: https://github.com/askfiy/nvim
+-- TODO: https://github.com/b0o/nvim-conf
+-- TODO: https://github.com/craftzdog/dotfiles-public
+-- TODO: https://github.com/crivotz/nv-ide
+-- TODO: https://github.com/cstsunfu/.sea.nvim
+-- TODO: https://github.com/echasnovski/mini.nvim
+-- TODO: https://github.com/glepnir/nvim
+-- TODO: https://github.com/jdhao/nvim-config
+-- TODO: https://github.com/lalitmee/cobalt2.nvim
+-- TODO: https://github.com/mnabila/nvimrc
+-- TODO: https://github.com/nvim-lua/kickstart.nvim
+-- TODO: https://github.com/nvoid-lua/nvoid
+-- TODO: https://github.com/optimizacija/neovim-config
+-- TODO: https://github.com/ray-x/dotfiles
+-- TODO: https://github.com/ray-x/go.nvim
+-- TODO: https://github.com/shaeinst/roshnivim
+-- TODO: https://github.com/shaunsingh/nyoom.nvim
+-- TODO: https://github.com/vi-tality/neovitality
+-- }}}
+
 --     -- Debugger:
 --     -- `````````
 --     -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
@@ -448,18 +440,18 @@ use {
 --     -- TODO: https://github.com/sakhnik/nvim-gdb
 --     -- TODO: https://github.com/theHamsta/nvim-dap-virtual-text
 --     -- TODO: https://github.com/vim-scripts/Conque-GDB
--- 
---     -- Doc Generater:
---     -- ``````````````
---     use {
---         "danymat/neogen",
---         config = function()
---             require('neogen').setup {}
---         end
---     }
---     -- TODO: https://github.com/kkoomen/vim-doge
---     -- TODO: https://github.com/nvim-treesitter/nvim-tree-docs
--- 
+-- <~>
+
+--━━━━━━━━━━━━━━━━━━━❰ Doc Generater ❱━━━━━━━━━━━━━━━━━━━
+-- use {
+--     "danymat/neogen",
+--     config = function()
+--         require('neogen').setup {}
+--     end
+-- }
+-- https://github.com/kkoomen/vim-doge
+-- https://github.com/nvim-treesitter/nvim-tree-docs
+
 --     -- ──────────────────── File Explorer ────────────────────
 --     -- {{{
 --     use {
@@ -471,37 +463,31 @@ use {
 --         requires = "nvim-neo-tree/neo-tree.nvim",
 --         module = "neo-tree.sources.diagnostics", -- if wanting to lazyload
 --     }
---     use {
---         'nvim-neo-tree/neo-tree.nvim',
---         config = function()
---             require("neo-tree").setup({
---                 filesystem = {
---                     hijack_netrw_behavior = "open_current"
---                 }
---             })
---         end,
---         -- cmd = "Neotree"
---     }
+-- use {
+--     'nvim-neo-tree/neo-tree.nvim',
+--     config = function()
+--         require("neo-tree").setup({
+--             filesystem = {
+--                 hijack_netrw_behavior = "open_current"
+--             }
+--         })
+--     end,
+--     -- cmd = "Neotree"
+-- }
 --     -- }}}
--- 
---     -- ──────────────────── Folding ────────────────────
---     -- {{{
---     use {
---         'anuvyklack/pretty-fold.nvim',
---         config = function()
---             require('pretty-fold').setup()
---         end
---     }
---     use 'anuvyklack/keymap-amend.nvim'
---     use {
---         'anuvyklack/fold-preview.nvim',
---         requires = 'anuvyklack/keymap-amend.nvim',
---         config = function()
---             require('fold-preview').setup()
---         end
---     }
---     --}}}
--- 
+
+--━━━━━━━━━━━━━━━━━━━❰ Folding❱━━━━━━━━━━━━━━━━━━━</>
+use {
+    'anuvyklack/pretty-fold.nvim',
+    config = function()
+        require('pretty-fold').setup {
+            fill_char = ' ',
+            process_comment_signs = 'delete'
+        }
+    end
+}
+-- <~>
+
 --     -- Formatting:
 --     -- ```````````
 --     -- use 'mhartington/formatter.nvim'
@@ -534,12 +520,12 @@ use {
 --     }
 --     -- TODO: https://github.com/hotwatermorning/auto-git-diff
 --     use 'ldelossa/gh.nvim'
---     use {
---         'lewis6991/gitsigns.nvim',
---         config = function()
---             require('gitsigns').setup()
---         end
---     }
+use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+        require('gitsigns').setup()
+    end
+}
 --     use {
 --         'pwntester/octo.nvim',
 --         cmd = 'Octo',
@@ -604,15 +590,27 @@ use {
 --             require('nvim-custom-diagnostic-highlight').setup {}
 --         end
 --     }
---     use 'neovim/nvim-lspconfig'
---     --use {
---     --    'williamboman/nvim-lsp-installer',
---     --    config = function()
---     --        require("nvim-lsp-installer").setup()
---     --    end
---     --} -- replaced by mason.nvim
---     use { "williamboman/mason.nvim" } -- TODO: settings
---     use { "williamboman/mason-lspconfig.nvim" }
+use 'neovim/nvim-lspconfig'
+use {
+    'williamboman/mason.nvim',
+    config = function()
+        require("mason").setup()
+    end
+}
+use {
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+        require("mason-lspconfig").setup()
+        require("mason-lspconfig").setup_handlers {
+            function (server_name)
+                require("lspconfig")[server_name].setup {
+                    on_attach = on_attach,
+                    capabilities = capabilities
+                }
+            end
+        }
+    end
+}
 --     use 'liuchengxu/vista.vim' -- {
 --     --     " TODO: explore options
 --     -- }
@@ -1317,7 +1315,6 @@ end
 --     require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- end
 -- 
--- require("mason").setup()
 -- require("mason-lspconfig").setup()
 -- require("mason-lspconfig").setup_handlers {
 --     function (server_name)
@@ -2357,5 +2354,7 @@ end
   end
   ---Register your source to nvim-cmp.
   require('cmp').register_source('custom', source.new())
+
+
 
 -- vim: fmr=</>,<~>  fdm=marker
