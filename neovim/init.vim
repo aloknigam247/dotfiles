@@ -184,11 +184,11 @@ augroup END
 
 
 " highlight ColorColumn ctermbg=white
-call matchadd('ColorColumn', '\%101v', 100)
-augroup vimrc_autocmds
-  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-  autocmd BufEnter * match OverLength /\%101v/
-augroup END
+" call matchadd('ColorColumn', '\%101v', 100)
+" augroup vimrc_autocmds
+"   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+"   autocmd BufEnter * match OverLength /\%101v/
+" augroup END
 
 let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
 let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'

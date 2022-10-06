@@ -7,8 +7,6 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 
--- Functionality to maintain
-
 require('packer').startup({
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 config = {
@@ -246,7 +244,7 @@ use 'Almo7aya/neogruvbox.nvim'
 --     use 'yashguptaz/calvera-dark.nvim'
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Comments ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'b3nj5m1n/kommentary',
     config = function()
@@ -273,8 +271,14 @@ use {
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    { name = 'cmdline' },
-                    { name = 'cmdline_history' }
+                    {
+                        name = 'cmdline',
+                        max_item_count = 10
+                    },
+                    {
+                        name = 'cmdline_history',
+                        max_item_count = 15
+                    }
                 }
             }),
             cmp.setup.cmdline('/', {
@@ -292,6 +296,12 @@ use {
                 format = function(entry, vim_item)
                     if entry.source.name == "nvim_lsp" then
                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
+                    elseif entry.source.name == "cmdline" then
+                        vim_item.menu = "(options)"
+                        vim_item.kind = "Options"
+                    elseif entry.source.name == "cmdline_history" then
+                        vim_item.menu = "(history)"
+                        vim_item.kind = "History"
                     else
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
@@ -308,11 +318,13 @@ use {
                         File = ' ',
                         Folder = ' ',
                         Function = ' ',
+                        History = ' ',
                         Interface = ' ',
                         Keyword = ' ',
                         Method = ' ',
                         Module = ' ',
                         Operator = ' ',
+                        Options = ' ',
                         Property = ' ',
                         Reference = ' ',
                         Snippet = ' ',
@@ -323,7 +335,8 @@ use {
                         Value = ' ',
                         Variable = ' ',
                     }
-                    vim_item.kind = cmp_kinds[vim_item.kind] .. vim_item.kind or vim_item.kind
+                    local kind_symbol = cmp_kinds[vim_item.kind]
+                    vim_item.kind = kind_symbol and kind_symbol .. vim_item.kind or vim_item.kind
 
                     return vim_item
                 end
@@ -351,7 +364,6 @@ use {
                 },
                 { name = 'custom' },
 --                 { name = 'luasnip' },
---                 { name = 'nuspell' },
 --                 { name = 'nvim_insert_text_lsp' },
                 { name = 'nvim_lsp' },
 --                 { name = 'nvim_lsp_signature_help' },
@@ -360,7 +372,6 @@ use {
                 { name = 'spell' }
             }),
             window = {
-                -- completion = cmp.config.window.bordered(),
                 documentation = cmp.config.window.bordered(),
             }
         })
@@ -374,10 +385,6 @@ use {
 --     use 'hrsh7th/cmp-nvim-lsp-signature-help'
     use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-path'
---     -- use {
---     --     'f3fora/cmp-nuspell',
---     --     rocks = { 'lua-nuspell' }
---     -- }
     use 'f3fora/cmp-spell'
 --     -- TODO: https://github.com/jameshiew/nvim-magic
 --     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
