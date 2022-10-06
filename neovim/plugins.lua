@@ -509,28 +509,37 @@ use {
 -- 
 --     -- ──────────────────── Git ────────────────────
 --     -- {{{
---     use {
---         'APZelos/blamer.nvim',
---         cmd = 'BlamerToggle',
---         config = function()
---             vim.g.blamer_delay = 100
---             vim.g.blamer_relative_time = 1
---             vim.g.blamer_prefix = '  '
---         end
---     }
---     use {
---         'TimUntersberger/neogit',
---         cmd = 'Neogit',
---         config = function()
---             require('neogit').setup()
---         end
---     }
 --     -- TODO: https://github.com/hotwatermorning/auto-git-diff
 --     use 'ldelossa/gh.nvim'
 use {
     'lewis6991/gitsigns.nvim',
     config = function()
-        require('gitsigns').setup()
+        require('gitsigns').setup {
+            signs = {
+                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'   , show_count = true},
+                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
+                delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
+            },
+            show_deleted = true,
+            count_chars = {
+                [1]   = '',
+                [2]   = '',
+                [3]   = '',
+                [4]   = '',
+                [5]   = '',
+                [6]   = '',
+                [7]   = '',
+                [8]   = '',
+                [9]   = '',
+                ['+'] = '',
+            },
+            current_line_blame_formatter_opts = {
+                relative_time = true
+            },
+            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+        }
     end
 }
 --     use {
