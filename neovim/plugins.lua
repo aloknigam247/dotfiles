@@ -140,21 +140,21 @@ use {
 }
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Coloring ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'RRethy/vim-illuminate',
     config = function()
---        vim.cmd[[
---            hi def IlluminatedWordText gui=underline
---            hi def IlluminatedWordRead gui=underline
---            hi def IlluminatedWordWrite gui=underline
---            hi def link LspReferenceText WildMenu
---            hi def link LspReferenceWrite WildMenu
---            hi def link LspReferenceRead WildMenu
---        ]]
+       vim.cmd[[
+           hi IlluminatedWordText guibg = #59656F guifg = #FFFFFF
+           hi IlluminatedWordRead guibg = #F26419
+           hi IlluminatedWordWrite guibg = #55DDE0
+           hi LspReferenceText guibg = #679436
+           hi LspReferenceWrite guibg = #A5BE00
+           hi LspReferenceRead guibg = #427AA1
+       ]]
     end
 }
---     use 'azabiong/vim-highlighter' -- Archieved
+use 'azabiong/vim-highlighter' -- Archieved
 use {
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
@@ -174,16 +174,16 @@ use {
     end,
     keys = {'<Leader>w', "<Leader>W"}
 }
--- use {
---     'tribela/vim-transparent',   -- Archieved
---     cmd = 'TransparentEnable'
--- }
+use {
+    'tribela/vim-transparent',   -- Archieved
+    cmd = 'TransparentEnable'
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━❰ Colorscheme ❱━━━━━━━━━━━━━━━━━━━</>
 --     use 'tjdevries/colorbuddy.vim'
 -- << Light >>
-use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
+-- use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 --     use 'Mofiqul/adwaita.nvim'
 --     use 'NLKNguyen/papercolor-theme'
 --     use 'Th3Whit3Wolf/one-nvim'
@@ -202,7 +202,7 @@ use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 --     use 'sainnhe/everforest'
 -- 
 --     -- << Dark >>
---     use 'Almo7aya/neogruvbox.nvim'
+use 'Almo7aya/neogruvbox.nvim'
 --     use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 --     use 'Mofiqul/adwaita.nvim'
 --     use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
@@ -476,7 +476,7 @@ use {
 -- }
 --     -- }}}
 
---━━━━━━━━━━━━━━━━━━━❰ Folding❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'anuvyklack/pretty-fold.nvim',
     config = function()

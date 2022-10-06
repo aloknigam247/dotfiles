@@ -51,7 +51,6 @@ set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
 set wrapmargin=0                      " Disable wrap margin
-set scrolloff=3                       " Scroll offset
 setglobal bomb                        " Keep the BOM file marker
 " }}}
 
@@ -89,7 +88,7 @@ set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
-colorscheme dayfox           " Set colorscheme
+colorscheme neogruvbox           " Set colorscheme
 "hi NonText guifg=grey70 guibg=#e4e4e4
 highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
@@ -110,7 +109,7 @@ autocmd BufNewFile,BufRead *.v set filetype=verilog     " Set .v filetype as bas
 autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as bash
 
 " Filetype functions
-function FT_settings(scheme)
+function! FT_settings(scheme)
     execute "colorscheme " .. a:scheme
     hi NonText guifg=grey70 guibg=#e4e4e4
     highlight clear CursorLine
@@ -200,6 +199,21 @@ set shellquote= shellxquote=
 
 let g:startuptime_event_width = 0
 
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+function! SynT()
+  for id in synstack(line("."), col("."))
+    echo synIDattr(id, "name")
+  endfor
+endfunction
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
 lua << EOF
 -- Blink on yank
 -- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
