@@ -2341,4 +2341,13 @@ end
 --         bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services\\",
 --         cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\Start-EditorServices.ps1"}
 --     }) ]]
+
+vim.diagnostic.config({
+    virtual_text = {
+        source = true
+    },
+    severity_sort = true
+})
+
+
 -- vim: fmr=</>,<~>  fdm=marker
