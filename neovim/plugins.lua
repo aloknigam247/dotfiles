@@ -272,7 +272,7 @@ use {
                 sources = {
                     {
                         name = 'cmdline',
-                        max_item_count = 10
+                        -- max_item_count = 10
                     },
                     {
                         name = 'cmdline_history',
@@ -679,14 +679,11 @@ use {
 --         end
 --     }
 --     -- }}}
--- 
---     -- Lint:
---     -- `````
---     use 'mfussenegger/nvim-lint'
--- 
---     -- LSP:
---     -- ````
---     -- {{{
+
+-- ──────────────────── Lint ────────────────────
+-- use 'mfussenegger/nvim-lint'
+
+-- ──────────────────── LSP ────────────────────
 --     use {
 --         'Kasama/nvim-custom-diagnostic-highlight',
 --         config = function()

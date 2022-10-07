@@ -109,7 +109,7 @@ function treea {
 
 function which($arg) {
     $cm = Get-Command $arg[0]
-    type = $cm.CommandType
+    $type = $cm.CommandType
 
     if ($type -eq "Function") {
         $cm.Definition
