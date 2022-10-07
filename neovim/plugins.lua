@@ -200,8 +200,7 @@ use {
 --     use 'sainnhe/everforest'
 -- 
 --     -- << Dark >>
-use 'Almo7aya/neogruvbox.nvim'
---     use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
+use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 --     use 'Mofiqul/adwaita.nvim'
 --     use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
 --     use 'Th3Whit3Wolf/one-nvim'
@@ -261,253 +260,253 @@ use {
 }
 -- <~>
 
--- --━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━</>
--- use {
---     'hrsh7th/nvim-cmp',
--- --         --  TODO: Snippets
---     config = function()
---         local cmp = require('cmp')
---         cmp.setup({
---             cmp.setup.cmdline(':', {
---                 mapping = cmp.mapping.preset.cmdline(),
---                 sources = {
---                     {
---                         name = 'cmdline',
---                         max_item_count = 10
---                     },
---                     {
---                         name = 'cmdline_history',
---                         max_item_count = 15
---                     }
---                 }
---             }),
---             cmp.setup.cmdline('/', {
---                 mapping = cmp.mapping.preset.cmdline(),
---                 sources = {
---                     { name = 'buffer' },
---                     -- { name = 'nvim_lsp_document_symbol' }
---                 }
---             }),
---             experimental = {
---                 ghost_text = true
---             },
---             formatting = {
---                 fields = { "abbr", "kind", "menu" },
---                 format = function(entry, vim_item)
---                     if entry.source.name == "nvim_lsp" then
---                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
---                     elseif entry.source.name == "cmdline" then
---                         vim_item.menu = "(options)"
---                         vim_item.kind = "Options"
---                     elseif entry.source.name == "cmdline_history" then
---                         vim_item.menu = "(history)"
---                         vim_item.kind = "History"
---                     else
---                         vim_item.menu = '[' .. entry.source.name .. ']'
---                     end
+--━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━</>
+use {
+    'hrsh7th/nvim-cmp',
+    -- TODO: Snippets
+    config = function()
+        local cmp = require('cmp')
+        cmp.setup({
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    {
+                        name = 'cmdline',
+                        max_item_count = 10
+                    },
+                    {
+                        name = 'cmdline_history',
+                        max_item_count = 15
+                    }
+                }
+            }),
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' },
+                    -- { name = 'nvim_lsp_document_symbol' }
+                }
+            }),
+            experimental = {
+                ghost_text = true
+            },
+            formatting = {
+                fields = { "abbr", "kind", "menu" },
+                format = function(entry, vim_item)
+                    if entry.source.name == "nvim_lsp" then
+                        vim_item.menu = '{' .. entry.source.source.client.name .. '}'
+                    elseif entry.source.name == "cmdline" then
+                        vim_item.menu = "(options)"
+                        vim_item.kind = "Options"
+                    elseif entry.source.name == "cmdline_history" then
+                        vim_item.menu = "(history)"
+                        vim_item.kind = "History"
+                    else
+                        vim_item.menu = '[' .. entry.source.name .. ']'
+                    end
 
---                     local cmp_kinds = {
---                         Class = ' ',
---                         Color = ' ',
---                         Constant = ' ',
---                         Constructor = ' ',
---                         Enum = ' ',
---                         EnumMember = ' ',
---                         Event = ' ',
---                         Field = ' ',
---                         File = ' ',
---                         Folder = ' ',
---                         Function = ' ',
---                         History = ' ',
---                         Interface = ' ',
---                         Keyword = ' ',
---                         Method = ' ',
---                         Module = ' ',
---                         Operator = ' ',
---                         Options = ' ',
---                         Property = ' ',
---                         Reference = ' ',
---                         Snippet = ' ',
---                         Struct = ' ',
---                         Text = ' ',
---                         TypeParameter = ' ',
---                         Unit = ' ',
---                         Value = ' ',
---                         Variable = ' ',
---                     }
---                     local kind_symbol = cmp_kinds[vim_item.kind]
---                     vim_item.kind = kind_symbol and kind_symbol .. vim_item.kind or vim_item.kind
+                    local cmp_kinds = {
+                        Class = ' ',
+                        Color = ' ',
+                        Constant = ' ',
+                        Constructor = ' ',
+                        Enum = ' ',
+                        EnumMember = ' ',
+                        Event = ' ',
+                        Field = ' ',
+                        File = ' ',
+                        Folder = ' ',
+                        Function = ' ',
+                        History = ' ',
+                        Interface = ' ',
+                        Keyword = ' ',
+                        Method = ' ',
+                        Module = ' ',
+                        Operator = ' ',
+                        Options = ' ',
+                        Property = ' ',
+                        Reference = ' ',
+                        Snippet = ' ',
+                        Struct = ' ',
+                        Text = ' ',
+                        TypeParameter = ' ',
+                        Unit = ' ',
+                        Value = ' ',
+                        Variable = ' ',
+                    }
+                    local kind_symbol = cmp_kinds[vim_item.kind]
+                    vim_item.kind = kind_symbol and kind_symbol .. vim_item.kind or vim_item.kind
 
---                     return vim_item
+                    return vim_item
+                end
+            },
+            mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<TAB>'] = cmp.mapping.confirm({ select = true }),
+            }),
+--             snippet = {
+--                 expand = function(args)
+--                     require('luasnip').lsp_expand(args.body)
 --                 end
 --             },
---             mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
---                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
---                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
---                 ['<C-Space>'] = cmp.mapping.complete(),
---                 ['<C-e>'] = cmp.mapping.abort(),
---                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
---             }),
--- --             snippet = {
--- --                 expand = function(args)
--- --                     require('luasnip').lsp_expand(args.body)
--- --                 end
--- --             },
---             sources = ({
---                 {
---                     name = 'buffer',
---                     option = {
---                         get_bufnrs = function()
---                             return vim.api.nvim_list_bufs()
---                         end
---                     }
---                 },
---                 { name = 'custom' },
--- --                 { name = 'luasnip' },
--- --                 { name = 'nvim_insert_text_lsp' },
---                 { name = 'nvim_lsp' },
--- --                 { name = 'nvim_lsp_signature_help' },
---                 { name = 'nvim_lua' },
---                 { name = 'path' },
---                 { name = 'spell' }
---             }),
---             window = {
---                 documentation = cmp.config.window.bordered(),
---             }
---         })
---
---         -- Custom source test
---   local source = {}
--- 
---   ---Return whether this source is available in the current context or not (optional).
---   ---@return boolean
---   function source:is_available()
---     return true
---   end
--- 
---   ---Return the debug name of this source (optional).
---   ---@return string
---   function source:get_debug_name()
---     return 'debug name'
---   end
--- 
---   ---Return the keyword pattern for triggering completion (optional).
---   ---If this is ommited, nvim-cmp will use a default keyword pattern. See |cmp-config.completion.keyword_pattern|.
---   ---@return string
---   function source:get_keyword_pattern()
---     return [[\k\+]]
---   end
--- 
---   ---Return trigger characters for triggering completion (optional).
---   function source:get_trigger_characters()
---     return { '@' }
---   end
--- 
---   ---Invoke completion (required).
---   ---@param params cmp.SourceCompletionApiParams
---   ---@param callback fun(response: lsp.CompletionResponse|nil)
---   function source:complete(params, callback)
---     callback({
---       { label = 'Text', kind = 1 },
---       { label = 'Method', kind = 2 },
---       { label = 'Function', kind = 3 },
---       { label = 'Constructor', kind = 4 },
---       { label = 'Field', kind = 5 },
---       { label = 'Variable', kind = 6 },
---       { label = 'Class', kind = 7 },
---       { label = 'Interface', kind = 8 },
---       { label = 'Module', kind = 9 },
---       { label = 'Property', kind = 10 },
---       { label = 'Unit', kind = 11 },
---       { label = 'Value', kind = 12 },
---       { label = 'Enum', kind = 13 },
---       { label = 'Keyword', kind = 14 },
---       { label = 'Snippet', kind = 15 },
---       { label = 'Color', kind = 16 },
---       { label = 'File', kind = 17 },
---       { label = 'Reference', kind = 18 },
---       { label = 'Folder', kind = 19 },
---       { label = 'EnumMember', kind = 20 },
---       { label = 'Constant', kind = 21 },
---       { label = 'Struct', kind = 22 },
---       { label = 'Event', kind = 23 },
---       { label = 'Operator', kind = 24 },
---       { label = 'TypeParameter', kind = 25 },
---     })
---   end
--- -- vim.cmd[[
--- --     CmpDocumentation guifg=#1d344f guibg=#dbdbdb
--- --     CmpDocumentationBorder guifg=#ced5de guibg=#dbdbdb
--- --     CmpItemAbbr guifg=#1d344f
--- --     CmpItemAbbrDeprecated cterm=strikethrough gui=strikethrough guifg=#2e537d
--- --     CmpItemAbbrMatch guifg=#485e7d
--- --     CmpItemAbbrMatchFuzzy guifg=#485e7d
--- --     CmpItemKindClass links to Type
--- --     CmpItemKindConstant links to TSConstant
--- --     CmpItemKindConstructor links to Function
--- --     CmpItemKindDefault guifg=#485e7d
--- --     CmpItemKindEnum links to Constant
--- --     CmpItemKindEnumMember links to TSField
--- --     CmpItemKindEvent links to Constant
--- --     CmpItemKindField links to TSField
--- --     CmpItemKindFunction links to Function
--- --     CmpItemKindInterface links to Constant
--- --     CmpItemKindKeyword links to Identifier
--- --     CmpItemKindMethod links to Function
--- --     CmpItemKindModule links to TSNamespace
--- --     CmpItemKindOperator links to Operator
--- --     CmpItemKindProperty links to TSProperty
--- --     CmpItemKindReference links to Keyword
--- --     CmpItemKindSnippet guifg=#233f5e
--- --     CmpItemKindStruct links to Type
--- --     CmpItemKindTypeParameter links to TSField
--- --     CmpItemKindUnit links to Constant
--- --     CmpItemKindValue links to Keyword
--- --     CmpItemKindVariable links to TSVariable
--- --     CmpItemMenu links to Comment
--- -- ]]
--- 
---   ---Resolve completion item (optional). This is called right before the completion is about to be 
---   --displayed.
---   ---Useful for setting the text shown in the documentation window (`completion_item.documentation`).
---   ---@param completion_item lsp.CompletionItem
---   ---@param callback fun(completion_item: lsp.CompletionItem|nil)
---   function source:resolve(completion_item, callback)
---     callback(completion_item)
---   end
--- 
---   ---Executed after the item was selected.
---   ---@param completion_item lsp.CompletionItem
---   ---@param callback fun(completion_item: lsp.CompletionItem|nil)
---   function source:execute(completion_item, callback)
---     callback(completion_item)
---   end
--- 
---   function source:new()
---       return setmetatable({}, {__index = source})
---   end
---   ---Register your source to nvim-cmp.
---   require('cmp').register_source('custom', source.new())
---     end
--- }
---     use 'dmitmel/cmp-cmdline-history'
---     use 'hrsh7th/cmp-buffer'
---     use 'hrsh7th/cmp-cmdline'
---     use 'hrsh7th/cmp-nvim-lsp'
--- --     use 'hrsh7th/cmp-nvim-lsp-document-symbol'
--- --     use 'hrsh7th/cmp-nvim-lsp-signature-help'
---     use 'hrsh7th/cmp-nvim-lua'
---     use 'hrsh7th/cmp-path'
---     use 'f3fora/cmp-spell'
--- --     -- TODO: https://github.com/jameshiew/nvim-magic
--- --     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
--- --     -- TODO: https://github.com/lukas-reineke/cmp-rg
--- --     -- TODO: https://github.com/lukas-reineke/cmp-under-comparator
--- --     -- TODO: https://github.com/rcarriga/cmp-dap
--- --     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
--- --     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
--- --     -- TODO: https://github.com/zbirenbaum/copilot-cmp
--- -- <~>
+            sources = ({
+                {
+                    name = 'buffer',
+                    option = {
+                        get_bufnrs = function()
+                            return vim.api.nvim_list_bufs()
+                        end
+                    }
+                },
+                { name = 'custom' },
+--                 { name = 'luasnip' },
+--                 { name = 'nvim_insert_text_lsp' },
+                { name = 'nvim_lsp' },
+--                 { name = 'nvim_lsp_signature_help' },
+                { name = 'nvim_lua' },
+                { name = 'path' },
+                { name = 'spell' }
+            }),
+            window = {
+                documentation = cmp.config.window.bordered(),
+            }
+        })
+
+        -- Custom source test
+        local source = {}
+
+        ---Return whether this source is available in the current context or not (optional).
+        ---@return boolean
+        function source:is_available()
+            return true
+        end
+
+        ---Return the debug name of this source (optional).
+        ---@return string
+        function source:get_debug_name()
+            return 'debug name'
+        end
+
+        ---Return the keyword pattern for triggering completion (optional).
+        ---If this is ommited, nvim-cmp will use a default keyword pattern. See |cmp-config.completion.keyword_pattern|.
+        ---@return string
+        function source:get_keyword_pattern()
+            return [[\k\+]]
+        end
+
+        ---Return trigger characters for triggering completion (optional).
+        function source:get_trigger_characters()
+            return { '@' }
+        end
+
+        ---Invoke completion (required).
+        ---@param params cmp.SourceCompletionApiParams
+        ---@param callback fun(response: lsp.CompletionResponse|nil)
+        function source:complete(params, callback)
+            callback({
+                { label = 'Text', kind = 1 },
+                { label = 'Method', kind = 2 },
+                { label = 'Function', kind = 3 },
+                { label = 'Constructor', kind = 4 },
+                { label = 'Field', kind = 5 },
+                { label = 'Variable', kind = 6 },
+                { label = 'Class', kind = 7 },
+                { label = 'Interface', kind = 8 },
+                { label = 'Module', kind = 9 },
+                { label = 'Property', kind = 10 },
+                { label = 'Unit', kind = 11 },
+                { label = 'Value', kind = 12 },
+                { label = 'Enum', kind = 13 },
+                { label = 'Keyword', kind = 14 },
+                { label = 'Snippet', kind = 15 },
+                { label = 'Color', kind = 16 },
+                { label = 'File', kind = 17 },
+                { label = 'Reference', kind = 18 },
+                { label = 'Folder', kind = 19 },
+                { label = 'EnumMember', kind = 20 },
+                { label = 'Constant', kind = 21 },
+                { label = 'Struct', kind = 22 },
+                { label = 'Event', kind = 23 },
+                { label = 'Operator', kind = 24 },
+                { label = 'TypeParameter', kind = 25 },
+            })
+        end
+        -- vim.cmd[[
+        --     CmpDocumentation guifg=#1d344f guibg=#dbdbdb
+        --     CmpDocumentationBorder guifg=#ced5de guibg=#dbdbdb
+        --     CmpItemAbbr guifg=#1d344f
+        --     CmpItemAbbrDeprecated cterm=strikethrough gui=strikethrough guifg=#2e537d
+        --     CmpItemAbbrMatch guifg=#485e7d
+        --     CmpItemAbbrMatchFuzzy guifg=#485e7d
+        --     CmpItemKindClass links to Type
+        --     CmpItemKindConstant links to TSConstant
+        --     CmpItemKindConstructor links to Function
+        --     CmpItemKindDefault guifg=#485e7d
+        --     CmpItemKindEnum links to Constant
+        --     CmpItemKindEnumMember links to TSField
+        --     CmpItemKindEvent links to Constant
+        --     CmpItemKindField links to TSField
+        --     CmpItemKindFunction links to Function
+        --     CmpItemKindInterface links to Constant
+        --     CmpItemKindKeyword links to Identifier
+        --     CmpItemKindMethod links to Function
+        --     CmpItemKindModule links to TSNamespace
+        --     CmpItemKindOperator links to Operator
+        --     CmpItemKindProperty links to TSProperty
+        --     CmpItemKindReference links to Keyword
+        --     CmpItemKindSnippet guifg=#233f5e
+        --     CmpItemKindStruct links to Type
+        --     CmpItemKindTypeParameter links to TSField
+        --     CmpItemKindUnit links to Constant
+        --     CmpItemKindValue links to Keyword
+        --     CmpItemKindVariable links to TSVariable
+        --     CmpItemMenu links to Comment
+        -- ]]
+
+        ---Resolve completion item (optional). This is called right before the completion is about to be 
+        --displayed.
+        ---Useful for setting the text shown in the documentation window (`completion_item.documentation`).
+        ---@param completion_item lsp.CompletionItem
+        ---@param callback fun(completion_item: lsp.CompletionItem|nil)
+        function source:resolve(completion_item, callback)
+            callback(completion_item)
+        end
+
+        ---Executed after the item was selected.
+        ---@param completion_item lsp.CompletionItem
+        ---@param callback fun(completion_item: lsp.CompletionItem|nil)
+        function source:execute(completion_item, callback)
+            callback(completion_item)
+        end
+
+        function source:new()
+            return setmetatable({}, {__index = source})
+        end
+        ---Register your source to nvim-cmp.
+        require('cmp').register_source('custom', source.new())
+    end
+}
+    use 'dmitmel/cmp-cmdline-history'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-nvim-lsp'
+--     use 'hrsh7th/cmp-nvim-lsp-document-symbol'
+--     use 'hrsh7th/cmp-nvim-lsp-signature-help'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'hrsh7th/cmp-path'
+    use 'f3fora/cmp-spell'
+--     -- TODO: https://github.com/jameshiew/nvim-magic
+--     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
+--     -- TODO: https://github.com/lukas-reineke/cmp-rg
+--     -- TODO: https://github.com/lukas-reineke/cmp-under-comparator
+--     -- TODO: https://github.com/rcarriga/cmp-dap
+--     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+--     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
+--     -- TODO: https://github.com/zbirenbaum/copilot-cmp
+-- <~>
 
 -- Configuration:</>
 -- ``````````````
@@ -619,75 +618,50 @@ use {
 --     -- TODO: https://github.com/junegunn/fzf
 --     -- TODO: https://github.com/junegunn/fzf.vim
 --     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
---
---     -- ──────────────────── Git ────────────────────
---     -- {{{
---     -- TODO: https://github.com/hotwatermorning/auto-git-diff
---     use 'ldelossa/gh.nvim'
--- use {
---     'lewis6991/gitsigns.nvim',
---     config = function()
---         require('gitsigns').setup {
---             signs = {
---                 add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'   , show_count = true},
---                 change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
---                 delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
---                 topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
---                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
---             },
---             show_deleted = true,
---             count_chars = {
---                 [1]   = '',
---                 [2]   = '',
---                 [3]   = '',
---                 [4]   = '',
---                 [5]   = '',
---                 [6]   = '',
---                 [7]   = '',
---                 [8]   = '',
---                 [9]   = '',
---                 ['+'] = '',
---             },
---             current_line_blame_formatter_opts = {
---                 relative_time = true
---             },
---             current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
---         }
---     end
--- }
---     use {
---         'pwntester/octo.nvim',
---         cmd = 'Octo',
---         config = function()
---             require('octo').setup()
---         end
---     }
---     use 'rhysd/conflict-marker.vim'
---     use {
---         'rhysd/git-messenger.vim',
---         cmd = 'GitMessenger'
---     }
---     use {
---         'ruifm/gitlinker.nvim',
---         config = function()
---             require('gitlinker').setup()
---         end
---     }
---     use {
---         'sindrets/diffview.nvim',
---         cmd = 'DiffviewOpen',
---         requires = 'nvim-lua/plenary.nvim'
---     }
---     use {
---         'tanvirtin/vgit.nvim',
---         requires = 'nvim-lua/plenary.nvim'
---     }
---     use {
---         'whiteinge/diffconflicts',
---         cmd = 'DiffConflicts'
---     }
---     -- }}}
--- 
+
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- use 'hotwatermorning/auto-git-diff' -- Archieved
+-- use 'ldelossa/gh.nvim' -- Archieved
+use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+        require('gitsigns').setup {
+            signs = {
+                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'   , show_count = true},
+                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
+                delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
+                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
+            },
+            -- show_deleted = true,
+            count_chars = {
+                [1]   = '',
+                [2]   = '',
+                [3]   = '',
+                [4]   = '',
+                [5]   = '',
+                [6]   = '',
+                [7]   = '',
+                [8]   = '',
+                [9]   = '',
+                ['+'] = '',
+            },
+            current_line_blame_formatter_opts = {
+                relative_time = true
+            },
+            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+        }
+    end
+}
+-- use 'pwntester/octo.nvim' -- Archieved
+-- use 'rhysd/conflict-marker.vim' -- Archieved
+-- use 'rhysd/git-messenger.vim' -- Archieved
+-- use 'ruifm/gitlinker.nvim' -- Archieved
+-- use 'sindrets/diffview.nvim' -- Archieved
+-- use 'tanvirtin/vgit.nvim' -- Archieved
+-- use 'whiteinge/diffconflicts' -- Archieved
+-- <~>
+
 --     -- ──────────────────── Icons ────────────────────
 --     -- {{{
 --     use 'kyazdani42/nvim-web-devicons'
