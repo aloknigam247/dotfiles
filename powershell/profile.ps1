@@ -107,7 +107,7 @@ function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
 
-function which {
+function which($arg) {
     $cm = Get-Command $arg[0]
     type = $cm.CommandType
 
