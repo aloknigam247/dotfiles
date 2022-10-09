@@ -7,6 +7,17 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 
+local border_shape = {
+    { '╭', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╮', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+    { '╯', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╰', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+}
+
 require('packer').startup({
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 config = {
@@ -17,16 +28,7 @@ config = {
         -- open_fn = require('packer.util').float
         open_fn = function()
             local result, win, buf = require('packer.util').float {
-                border = {
-                    { '╭', 'FloatBorder' },
-                    { '─', 'FloatBorder' },
-                    { '╮', 'FloatBorder' },
-                    { '│', 'FloatBorder' },
-                    { '╯', 'FloatBorder' },
-                    { '─', 'FloatBorder' },
-                    { '╰', 'FloatBorder' },
-                    { '│', 'FloatBorder' },
-                },
+                border = border_shape
             }
             vim.api.nvim_win_set_option(win, 'winhighlight', 'NormalFloat:Normal')
             return result, win, buf
@@ -683,13 +685,29 @@ use {
 -- ──────────────────── Lint ────────────────────
 -- use 'mfussenegger/nvim-lint'
 
--- ──────────────────── LSP ────────────────────
---     use {
---         'Kasama/nvim-custom-diagnostic-highlight',
---         config = function()
---             require('nvim-custom-diagnostic-highlight').setup {}
---         end
---     }
+--━━━━━━━━━━━━━━━━━━━❰ LSP ❱━━━━━━━━━━━━━━━━━━━
+use {
+    'Kasama/nvim-custom-diagnostic-highlight',
+    config = function()
+        require('nvim-custom-diagnostic-highlight').setup {}
+    end
+}
+use {
+    'liuchengxu/vista.vim',
+    config = function()
+        vim.cmd[[
+        let g:vista_default_executive = 'nvim_lsp'
+        let g:vista_icon_indent = ["╰─ ", "├─ "]
+        let g:vista#renderer#icons = {
+            \   "constant": "",
+            \   "class": "",
+            \   "function": "",
+            \   "variable": "",
+            \  }
+        ]]
+    end,
+    cmd = 'Vista'
+}
 use {
     'neovim/nvim-lspconfig',
     config = function()
@@ -716,10 +734,10 @@ use {
         vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
         vim.cmd[[
-        sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
-        sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
-        sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
-        sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
+        sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
+        sign define DiagnosticSignWarn  text= texthl=DiagnosticSignWarn  linehl= numhl=
+        sign define DiagnosticSignInfo  text= texthl=DiagnosticSignInfo  linehl= numhl=
+        sign define DiagnosticSignHint  text= texthl=DiagnosticSignHint  linehl= numhl=
         ]]
 
     end
@@ -727,12 +745,17 @@ use {
 use {
     'williamboman/mason.nvim',
     config = function()
-        require("mason").setup()
+        require("mason").setup({
+            ui = {
+                border = "rounded"
+            }
+        })
     end
 }
 use {
     'williamboman/mason-lspconfig.nvim',
     config = function()
+        require("mason-lspconfig").setup()
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         local on_attach = function(client, bufnr)
@@ -757,25 +780,14 @@ use {
             -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
         end
-        local border = {
-            { '╭', 'FloatBorder' },
-            { '─', 'FloatBorder' },
-            { '╮', 'FloatBorder' },
-            { '│', 'FloatBorder' },
-            { '╯', 'FloatBorder' },
-            { '─', 'FloatBorder' },
-            { '╰', 'FloatBorder' },
-            { '│', 'FloatBorder' },
-        }
         -- LSP settings (for overriding per client)
         local handlers =  {
-            ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
+            ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
+            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}),
         }
         -- Add additional capabilities supported by nvim-cmp
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-        require("mason-lspconfig").setup()
         require("mason-lspconfig").setup_handlers {
             function (server_name)
                 require("lspconfig")[server_name].setup {
@@ -787,9 +799,6 @@ use {
         }
     end
 }
---     use 'liuchengxu/vista.vim' -- {
---     --     " TODO: explore options
---     -- }
 --     use {
 --         'ray-x/lsp_signature.nvim',
 --         config = function()
