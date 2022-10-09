@@ -923,8 +923,7 @@ use {
 -- 
 --     -- Lua:
 --     -- ````
---     use 'bfredl/nvim-luadev'
---     -- TODO: https://github.com/folke/lua-dev.nvim
+use 'folke/lua-dev.nvim'
 --     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
 --     -- TODO: https://github.com/milisims/nvim-luaref
 --     -- TODO: https://github.com/nanotee/nvim-lua-guide
