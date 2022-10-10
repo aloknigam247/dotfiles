@@ -708,10 +708,21 @@ use {
     end,
     cmd = 'Vista'
 }
+use 'neovim/nvim-lspconfig'
 use {
-    'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
     config = function()
-        -- TODO: right click options
+        require("mason").setup({
+            ui = {
+                border = "rounded"
+            }
+        })
+    end
+}
+use {
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+        require("mason-lspconfig").setup()
         -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
         local opts = { noremap=true, silent=true }
         -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -740,22 +751,6 @@ use {
         sign define DiagnosticSignHint  text= texthl=DiagnosticSignHint  linehl= numhl=
         ]]
 
-    end
-}
-use {
-    'williamboman/mason.nvim',
-    config = function()
-        require("mason").setup({
-            ui = {
-                border = "rounded"
-            }
-        })
-    end
-}
-use {
-    'williamboman/mason-lspconfig.nvim',
-    config = function()
-        require("mason-lspconfig").setup()
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         local on_attach = function(client, bufnr)
@@ -764,21 +759,31 @@ use {
             -- Mappings.
             -- See `:help vim.lsp.*` for documentation on any of the below functions
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
-            -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-            -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-            -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-            -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, bufopts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
             -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
             -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
             -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
             -- vim.keymap.set('n', '<space>wl', function()
             --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             -- end, bufopts)
-            -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-            -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+            vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
+            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-            -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+            vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+            vim.cmd[[
+            aunmenu PopUp
+            nnoremenu PopUp.Declaration\ (gD) gD
+            nnoremenu PopUp.Definition\ (gd) gd
+            nnoremenu PopUp.Implementation\ (gi) gi
+            nnoremenu PopUp.References\ (gr) gr
+            nnoremenu PopUp.Hover\ (\\h) <leader>rn
+            nnoremenu PopUp.Rename\ (\\rn) <leader>rn
+            nnoremenu PopUp.Type\ Definition\ (gt) gt
+            ]]
         end
         -- LSP settings (for overriding per client)
         local handlers =  {
