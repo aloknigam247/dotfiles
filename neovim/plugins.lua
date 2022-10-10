@@ -147,7 +147,7 @@ use {
        vim.cmd[[
            hi IlluminatedWordText guibg = #59656F guifg = #FFFFFF
            hi IlluminatedWordRead guibg = #F26419
-           hi IlluminatedWordWrite guibg = #55DDE0
+           hi IlluminatedWordWrite guibg = #1F7A8C
            hi LspReferenceText guibg = #679436
            hi LspReferenceWrite guibg = #A5BE00
            hi LspReferenceRead guibg = #427AA1
@@ -925,25 +925,25 @@ use {
 --     use 'tami5/lspsaga.nvim'
 --     use 'weilbith/nvim-code-action-menu'
 --     -- }}}
--- 
+
 --     -- Lua:
 --     -- ````
-use 'folke/lua-dev.nvim'
 --     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
 --     -- TODO: https://github.com/milisims/nvim-luaref
 --     -- TODO: https://github.com/nanotee/nvim-lua-guide
 --     -- TODO: https://github.com/rafcamlet/nvim-luapad
---     use 'tjdevries/nlua.nvim'
--- 
+--
 --     -- Mapping:
---     -- ````````
---     -- {{{
---     use {
---         'folke/which-key.nvim',
---         config = function()
---             require("which-key").setup()
---         end
---     }
+use {
+    'folke/which-key.nvim',
+    config = function()
+        require("which-key").setup({
+            window = {
+                border = "single"
+            }
+        })
+    end
+}
 --     use {
 --         'FeiyouG/command_center.nvim',
 --         config = function()
@@ -954,7 +954,7 @@ use 'folke/lua-dev.nvim'
 --     -- TODO: https://github.com/b0o/mapx.nvim
 --     -- TODO: https://github.com/svermeulen/vimpeccable
 --     -- }}}
--- 
+
 --     -- Markdown:
 --     -- `````````
 --     use {

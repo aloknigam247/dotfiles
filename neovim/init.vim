@@ -88,7 +88,7 @@ set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
-colorscheme nightfox           " Set colorscheme
+colorscheme dayfox           " Set colorscheme
 "hi NonText guifg=grey70 guibg=#e4e4e4
 highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
