@@ -44,7 +44,7 @@
     "firstWindowPreference": "defaultProfile",
     "initialCols": 85,
     "initialRows": 20,
-    "launchMode": "focus",
+    "launchMode": "default",
     "profiles": 
     {
         "defaults": 
