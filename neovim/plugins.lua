@@ -932,10 +932,11 @@ use {
 --     -- TODO: https://github.com/milisims/nvim-luaref
 --     -- TODO: https://github.com/nanotee/nvim-lua-guide
 --     -- TODO: https://github.com/rafcamlet/nvim-luapad
---
---     -- Mapping:
+
+--━━━━━━━━━━━━━━━━━━━❰ Mapping ❱━━━━━━━━━━━━━━━━━━━
 use {
     'folke/which-key.nvim',
+    -- TODO: create maps using which-key
     config = function()
         require("which-key").setup({
             window = {
@@ -944,26 +945,16 @@ use {
         })
     end
 }
---     use {
---         'FeiyouG/command_center.nvim',
---         config = function()
---             require("telescope").load_extension("command_center")
---         end
---     }
---     -- TODO: https://github.com/LionC/nest.nvim
---     -- TODO: https://github.com/b0o/mapx.nvim
---     -- TODO: https://github.com/svermeulen/vimpeccable
---     -- }}}
 
---     -- Markdown:
---     -- `````````
---     use {
---         'AckslD/nvim-FeMaco.lua',
---         config = 'require("femaco").setup()',
---     }
---     -- TODO: https://github.com/frabjous/knap
---     use 'davidgranstrom/nvim-markdown-preview'
--- 
+---- Markdown:
+---- `````````
+--use {
+--    'AckslD/nvim-FeMaco.lua',
+--    config = 'require("femaco").setup()',
+--}
+---- TODO: https://github.com/frabjous/knap
+--use 'davidgranstrom/nvim-markdown-preview'
+
 --     -- Marks:
 --     -- ``````
 --     -- {{{
