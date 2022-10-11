@@ -115,6 +115,8 @@ function which($arg) {
         $cm.Definition
     } elseif ($type -eq "Application") {
         $cm.Source
+    } elseif ($type -eq "Alias") {
+        $cm.DisplayName
     } else {
         Write-Host "Unknown"
     }
