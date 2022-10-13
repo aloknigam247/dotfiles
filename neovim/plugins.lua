@@ -795,11 +795,30 @@ use {
         capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
         require("mason-lspconfig").setup_handlers {
             function (server_name)
-                require("lspconfig")[server_name].setup {
-                    capabilities = capabilities,
-                    handlers = handlers,
-                    on_attach = on_attach
-                }
+                if server_name == "omnisharp" then
+                    vim.lsp.set_log_level("TRACE")
+                    require'lspconfig'.omnisharp.setup {
+                        cmd = { "dotnet", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll", "-v"},
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach
+                    }
+                elseif server_name == "omnisharp_mono" then
+                    vim.lsp.set_log_level("TRACE")
+                    require'lspconfig'.omnisharp_mono.setup {
+                        -- cmd = { "C:/Program Files/Mono/bin/mono.exe", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe", "-v"},
+                        cmd = { "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe", "-v"},
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach
+                    }
+                else
+                    require("lspconfig")[server_name].setup {
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach
+                    }
+                end
             end
         }
     end
