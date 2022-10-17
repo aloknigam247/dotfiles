@@ -629,8 +629,8 @@ use {
     config = function()
         require('gitsigns').setup {
             signs = {
-                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'   , show_count = true},
-                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
+                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
                 delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
                 topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
@@ -971,10 +971,9 @@ use {
 --    'AckslD/nvim-FeMaco.lua',
 --    config = 'require("femaco").setup()',
 --}
----- TODO: https://github.com/frabjous/knap
---use 'davidgranstrom/nvim-markdown-preview'
+use 'davidgranstrom/nvim-markdown-preview'
 
---     -- Marks:
+-- Marks:
 --     -- ``````
 --     -- {{{
 --     -- Guide:
@@ -1009,7 +1008,16 @@ use {
 --     -- | ma             | set mark a at current cursor location                         |
 --     -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 --     -- |----------------+---------------------------------------------------------------|
---     use 'MattesGroeger/vim-bookmarks'
+use {
+    'MattesGroeger/vim-bookmarks',
+    config = function()
+        vim.cmd[[
+        let g:bookmark_no_default_key_mappings = 1
+        nmap bm <Plug>BookmarkToggle
+        nmap ba <Plug>BookmarkShowAll
+        ]]
+    end
+}
 --     -- TODO: https://github.com/ThePrimeagen/harpoon
 --     use 'kshenoy/vim-signature'
 --     -- use 'chentoast/marks.nvim'
