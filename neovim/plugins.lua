@@ -812,6 +812,22 @@ use {
                         handlers = handlers,
                         on_attach = on_attach
                     }
+                elseif server_name == "sumneko_lua" then
+                    require'lspconfig'.sumneko_lua.setup {
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach,
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { "vim" }
+                                },
+                                workspace = {
+                                    library = vim.api.nvim_get_runtime_file("", true)
+                                }
+                            }
+                        }
+                    }
                 else
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities,
@@ -1018,8 +1034,8 @@ use {
         ]]
     end
 }
---     -- TODO: https://github.com/ThePrimeagen/harpoon
---     use 'kshenoy/vim-signature'
+--     -- TODO: https://github.com/ThePrimeagen/harpoon --> plenary
+use 'kshenoy/vim-signature'
 --     -- use 'chentoast/marks.nvim'
 --     use 'crusj/bookmarks.nvim'
 --     -- }}}

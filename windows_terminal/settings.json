@@ -352,9 +352,27 @@
     "startOnUserLogin": false,
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
-    "theme": "dark",
-    "themes": [],
+    "theme": "Seamless",
+    "themes": [
+        {
+            "name": "Seamless",
+            "tab":
+            {
+                "background": "terminalBackground",
+                "unfocusedBackground": "#FFFFFF00",
+                "showCloseButton": "always"
+            },
+            "tabRow":
+            {
+                "background": "terminalBackground",
+                "unfocusedBackground": "#2C2C2CFF"
+            },
+            "window":
+            {
+                "applicationTheme": "dark"
+            }
+        }
+    ],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
-    "windowingBehavior": "useNew"
-}
+    "windowingBehavior": "useNew
