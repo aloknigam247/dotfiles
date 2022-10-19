@@ -375,4 +375,5 @@
     ],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": true,
-    "windowingBehavior": "useNew
+    "windowingBehavior": "useNew"
+}
