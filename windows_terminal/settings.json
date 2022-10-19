@@ -106,12 +106,6 @@
                 "name": "PowerShell 7",
                 "opacity": 60,
                 "source": "Windows.Terminal.PowershellCore"
-            },
-            {
-                "guid": "{63e31163-583f-5850-9c1e-24e227dd2da9}",
-                "hidden": false,
-                "name": "PowerShell (dotnet global)",
-                "source": "Windows.Terminal.PowershellCore"
             }
         ]
     },
@@ -353,21 +347,22 @@
     "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
     "theme": "Seamless",
-    "themes": [
+    "themes": 
+    [
         {
             "name": "Seamless",
-            "tab":
+            "tab": 
             {
                 "background": "terminalBackground",
-                "unfocusedBackground": "#FFFFFF00",
-                "showCloseButton": "always"
+                "showCloseButton": "always",
+                "unfocusedBackground": "#FFFFFF00"
             },
-            "tabRow":
+            "tabRow": 
             {
                 "background": "terminalBackground",
                 "unfocusedBackground": "#2C2C2CFF"
             },
-            "window":
+            "window": 
             {
                 "applicationTheme": "dark"
             }
