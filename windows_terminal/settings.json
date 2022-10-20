@@ -351,18 +351,18 @@
     [
         {
             "name": "Seamless",
-            "tab": 
+            "tab":
             {
                 "background": "terminalBackground",
                 "showCloseButton": "always",
                 "unfocusedBackground": "#FFFFFF00"
             },
-            "tabRow": 
+            "tabRow":
             {
                 "background": "terminalBackground",
                 "unfocusedBackground": "#2C2C2CFF"
             },
-            "window": 
+            "window":
             {
                 "applicationTheme": "dark"
             }

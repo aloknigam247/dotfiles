@@ -637,16 +637,16 @@ use {
             },
             -- show_deleted = true,
             count_chars = {
-                [1]   = '',
-                [2]   = '',
-                [3]   = '',
-                [4]   = '',
-                [5]   = '',
-                [6]   = '',
-                [7]   = '',
-                [8]   = '',
-                [9]   = '',
-                ['+'] = '',
+                [1]   = ' ',
+                [2]   = ' ',
+                [3]   = ' ',
+                [4]   = ' ',
+                [5]   = ' ',
+                [6]   = ' ',
+                [7]   = ' ',
+                [8]   = ' ',
+                [9]   = ' ',
+                ['+'] = ' ',
             },
             current_line_blame_formatter_opts = {
                 relative_time = true
@@ -1075,15 +1075,8 @@ use 'kshenoy/vim-signature'
 -- 
 --     -- Project:
 --     -- ````````
---     -- {{{
---     -- TODO: https://github.com/ahmedkhalf/project.nvim
---     -- TODO: https://github.com/charludo/projectmgr.nvim
---     -- TODO: https://github.com/rmagatti/auto-session
---     -- TODO: https://github.com/romainchapou/confiture.nvim
---     -- TODO: https://github.com/smolovk/projector.nvim
---     -- TODO: https://github.com/thaerkh/vim-workspace
---     -- }}}
--- 
+--     -- TODO: https://github.com/ahmedkhalf/project.nvim --> treesitter
+
 --     -- Quickfix:
 --     -- {{{
 --     use 'kevinhwang91/nvim-bqf'
@@ -1094,28 +1087,28 @@ use 'kshenoy/vim-signature'
 --         end
 --     }
 --     -- }}}
--- 
---     -- REPL:
---     -- `````
---     -- {{{
---     -- TODO: https://github.com/jpalardy/vim-slime
---     -- TODO: https://github.com/sillybun/vim-repl
---     -- TODO: https://github.com/urbainvaes/vim-ripple
---     -- }}}
--- 
+
 --     -- Rooter:
 --     -- ```````
 --     -- {{{
---     -- TODO: https://github.com/nyngwang/NeoRoot.lua
+use {
+    'nyngwang/NeoRoot.lua', -- does not recognize .git
+    config = function()
+        require('neo-root').setup {
+            CUR_MODE = 1 -- 1 for file/buffer mode, 2 for proj-mode
+        }
+    end
+}
 --     -- }}}
 -- 
 --     -- Session Manager:
 --     -- ````````````````
 --     -- {{{
 --     -- TODO: https://github.com/Shatur/neovim-session-manager
+--     -- TODO: https://github.com/jedrzejboczar/possession.nvim
 --     -- TODO: https://github.com/olimorris/persisted.nvim
 --     -- TODO: https://github.com/rmagatti/auto-session
---     -- TODO: https://github.com/jedrzejboczar/possession.nvim
+--     -- TODO: https://github.com/thaerkh/vim-workspace
 --     -- }}}
 -- 
 --     -- Snippets:
