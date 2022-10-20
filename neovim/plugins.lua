@@ -636,18 +636,18 @@ use {
                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
             },
             -- show_deleted = true,
-            count_chars = {
-                [1]   = ' ',
-                [2]   = ' ',
-                [3]   = ' ',
-                [4]   = ' ',
-                [5]   = ' ',
-                [6]   = ' ',
-                [7]   = ' ',
-                [8]   = ' ',
-                [9]   = ' ',
-                ['+'] = ' ',
-            },
+            -- count_chars = {
+            --     [1]   = ' ',
+            --     [2]   = ' ',
+            --     [3]   = ' ',
+            --     [4]   = ' ',
+            --     [5]   = ' ',
+            --     [6]   = ' ',
+            --     [7]   = ' ',
+            --     [8]   = ' ',
+            --     [9]   = ' ',
+            --     ['+'] = ' ',
+            -- },
             current_line_blame_formatter_opts = {
                 relative_time = true
             },
@@ -1090,27 +1090,22 @@ use 'kshenoy/vim-signature'
 
 --     -- Rooter:
 --     -- ```````
---     -- {{{
-use {
-    'nyngwang/NeoRoot.lua', -- does not recognize .git
-    config = function()
-        require('neo-root').setup {
-            CUR_MODE = 1 -- 1 for file/buffer mode, 2 for proj-mode
-        }
-    end
-}
---     -- }}}
 -- 
 --     -- Session Manager:
 --     -- ````````````````
 --     -- {{{
---     -- TODO: https://github.com/Shatur/neovim-session-manager
---     -- TODO: https://github.com/jedrzejboczar/possession.nvim
---     -- TODO: https://github.com/olimorris/persisted.nvim
---     -- TODO: https://github.com/rmagatti/auto-session
+--     -- TODO: https://github.com/Shatur/neovim-session-manager --> plenary
+--     -- TODO: https://github.com/jedrzejboczar/possession.nvim --> plenary
+--     -- TODO: https://github.com/olimorris/persisted.nvim --> telescope
+use {
+  'rmagatti/auto-session',
+  config = function()
+    require("auto-session").setup {}
+  end
+}
 --     -- TODO: https://github.com/thaerkh/vim-workspace
 --     -- }}}
--- 
+
 --     -- Snippets:
 --     -- `````````
 --     -- {{{
