@@ -1093,18 +1093,17 @@ use 'kshenoy/vim-signature'
 -- 
 --     -- Session Manager:
 --     -- ````````````````
---     -- {{{
 --     -- TODO: https://github.com/Shatur/neovim-session-manager --> plenary
 --     -- TODO: https://github.com/jedrzejboczar/possession.nvim --> plenary
 --     -- TODO: https://github.com/olimorris/persisted.nvim --> telescope
 use {
   'rmagatti/auto-session',
   config = function()
-    require("auto-session").setup {}
+    require("auto-session").setup{}
+    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end
 }
 --     -- TODO: https://github.com/thaerkh/vim-workspace
---     -- }}}
 
 --     -- Snippets:
 --     -- `````````
@@ -1202,6 +1201,7 @@ use {
 --         end
 --     } ]]
 --     -- TODO: https://github.com/nvim-telescope/telescope-file-browser.nvim
+--     -- TODO: https://github.com/rmagatti/session-lens
 --     -- }}}
 -- 
 --     -- Terminal:
