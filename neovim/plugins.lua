@@ -268,6 +268,7 @@ use {
     -- TODO: Snippets
     config = function()
         local cmp = require('cmp')
+        local snippy = require("snippy")
         cmp.setup({
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
@@ -343,17 +344,42 @@ use {
                 end
             },
             mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
-                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
+                -- ['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
+                -- ['<C-f>'] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
+                -- ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
+                -- ["<Tab>"] = cmp.mapping(function(fallback)
+                --     if cmp.visible() then
+                --         -- cmp.mapping.confirm({ select = true })
+                --         cmp.select_next_item()
+                --     elseif snippy.can_expand_or_advance() then
+                --         snippy.expand_or_advance()
+                --     elseif has_words_before() then
+                --         cmp.complete()
+                --     else
+                --         fallback()
+                --     end
+                -- end, { "i", "s" }),
+
+                -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+                --     if cmp.visible() then
+                --         cmp.select_prev_item()
+                --     elseif snippy.can_jump(-1) then
+                --         snippy.previous()
+                --     else
+                --         fallback()
+                --     end
+                -- end, { "i", "s" }),
             }),
---             snippet = {
---                 expand = function(args)
---                     require('luasnip').lsp_expand(args.body)
---                 end
---             },
+            snippet = {
+                expand = function(args)
+                    -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+                    -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    require('snippy').expand_snippet(args.body) -- For `snippy` users.
+                    -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                end
+            },
             sources = ({
                 {
                     name = 'buffer',
@@ -364,12 +390,12 @@ use {
                     }
                 },
                 { name = 'custom' },
---                 { name = 'luasnip' },
 --                 { name = 'nvim_insert_text_lsp' },
                 { name = 'nvim_lsp' },
 --                 { name = 'nvim_lsp_signature_help' },
-                { name = 'nvim_lua' },
+                -- { name = 'nvim_lua' },
                 { name = 'path' },
+                { name = 'snippy' },
                 { name = 'spell' }
             }),
             window = {
@@ -377,118 +403,118 @@ use {
             }
         })
 
-        -- Custom source test
-        local source = {}
+        -- -- Custom source test
+        -- local source = {}
 
-        ---Return whether this source is available in the current context or not (optional).
-        ---@return boolean
-        function source:is_available()
-            return true
-        end
+        -- ---Return whether this source is available in the current context or not (optional).
+        -- ---@return boolean
+        -- function source:is_available()
+        --     return true
+        -- end
 
-        ---Return the debug name of this source (optional).
-        ---@return string
-        function source:get_debug_name()
-            return 'debug name'
-        end
+        -- ---Return the debug name of this source (optional).
+        -- ---@return string
+        -- function source:get_debug_name()
+        --     return 'debug name'
+        -- end
 
-        ---Return the keyword pattern for triggering completion (optional).
-        ---If this is ommited, nvim-cmp will use a default keyword pattern. See |cmp-config.completion.keyword_pattern|.
-        ---@return string
-        function source:get_keyword_pattern()
-            return [[\k\+]]
-        end
+        -- ---Return the keyword pattern for triggering completion (optional).
+        -- ---If this is ommited, nvim-cmp will use a default keyword pattern. See |cmp-config.completion.keyword_pattern|.
+        -- ---@return string
+        -- function source:get_keyword_pattern()
+        --     return [[\k\+]]
+        -- end
 
-        ---Return trigger characters for triggering completion (optional).
-        function source:get_trigger_characters()
-            return { '@' }
-        end
+        -- ---Return trigger characters for triggering completion (optional).
+        -- function source:get_trigger_characters()
+        --     return { '@' }
+        -- end
 
-        ---Invoke completion (required).
-        ---@param params cmp.SourceCompletionApiParams
-        ---@param callback fun(response: lsp.CompletionResponse|nil)
-        function source:complete(params, callback)
-            callback({
-                { label = 'Text', kind = 1 },
-                { label = 'Method', kind = 2 },
-                { label = 'Function', kind = 3 },
-                { label = 'Constructor', kind = 4 },
-                { label = 'Field', kind = 5 },
-                { label = 'Variable', kind = 6 },
-                { label = 'Class', kind = 7 },
-                { label = 'Interface', kind = 8 },
-                { label = 'Module', kind = 9 },
-                { label = 'Property', kind = 10 },
-                { label = 'Unit', kind = 11 },
-                { label = 'Value', kind = 12 },
-                { label = 'Enum', kind = 13 },
-                { label = 'Keyword', kind = 14 },
-                { label = 'Snippet', kind = 15 },
-                { label = 'Color', kind = 16 },
-                { label = 'File', kind = 17 },
-                { label = 'Reference', kind = 18 },
-                { label = 'Folder', kind = 19 },
-                { label = 'EnumMember', kind = 20 },
-                { label = 'Constant', kind = 21 },
-                { label = 'Struct', kind = 22 },
-                { label = 'Event', kind = 23 },
-                { label = 'Operator', kind = 24 },
-                { label = 'TypeParameter', kind = 25 },
-            })
-        end
-        -- vim.cmd[[
-        --     CmpDocumentation guifg=#1d344f guibg=#dbdbdb
-        --     CmpDocumentationBorder guifg=#ced5de guibg=#dbdbdb
-        --     CmpItemAbbr guifg=#1d344f
-        --     CmpItemAbbrDeprecated cterm=strikethrough gui=strikethrough guifg=#2e537d
-        --     CmpItemAbbrMatch guifg=#485e7d
-        --     CmpItemAbbrMatchFuzzy guifg=#485e7d
-        --     CmpItemKindClass links to Type
-        --     CmpItemKindConstant links to TSConstant
-        --     CmpItemKindConstructor links to Function
-        --     CmpItemKindDefault guifg=#485e7d
-        --     CmpItemKindEnum links to Constant
-        --     CmpItemKindEnumMember links to TSField
-        --     CmpItemKindEvent links to Constant
-        --     CmpItemKindField links to TSField
-        --     CmpItemKindFunction links to Function
-        --     CmpItemKindInterface links to Constant
-        --     CmpItemKindKeyword links to Identifier
-        --     CmpItemKindMethod links to Function
-        --     CmpItemKindModule links to TSNamespace
-        --     CmpItemKindOperator links to Operator
-        --     CmpItemKindProperty links to TSProperty
-        --     CmpItemKindReference links to Keyword
-        --     CmpItemKindSnippet guifg=#233f5e
-        --     CmpItemKindStruct links to Type
-        --     CmpItemKindTypeParameter links to TSField
-        --     CmpItemKindUnit links to Constant
-        --     CmpItemKindValue links to Keyword
-        --     CmpItemKindVariable links to TSVariable
-        --     CmpItemMenu links to Comment
-        -- ]]
+        -- ---Invoke completion (required).
+        -- ---@param params cmp.SourceCompletionApiParams
+        -- ---@param callback fun(response: lsp.CompletionResponse|nil)
+        -- function source:complete(params, callback)
+        --     callback({
+        --         { label = 'Text', kind = 1 },
+        --         { label = 'Method', kind = 2 },
+        --         { label = 'Function', kind = 3 },
+        --         { label = 'Constructor', kind = 4 },
+        --         { label = 'Field', kind = 5 },
+        --         { label = 'Variable', kind = 6 },
+        --         { label = 'Class', kind = 7 },
+        --         { label = 'Interface', kind = 8 },
+        --         { label = 'Module', kind = 9 },
+        --         { label = 'Property', kind = 10 },
+        --         { label = 'Unit', kind = 11 },
+        --         { label = 'Value', kind = 12 },
+        --         { label = 'Enum', kind = 13 },
+        --         { label = 'Keyword', kind = 14 },
+        --         { label = 'Snippet', kind = 15 },
+        --         { label = 'Color', kind = 16 },
+        --         { label = 'File', kind = 17 },
+        --         { label = 'Reference', kind = 18 },
+        --         { label = 'Folder', kind = 19 },
+        --         { label = 'EnumMember', kind = 20 },
+        --         { label = 'Constant', kind = 21 },
+        --         { label = 'Struct', kind = 22 },
+        --         { label = 'Event', kind = 23 },
+        --         { label = 'Operator', kind = 24 },
+        --         { label = 'TypeParameter', kind = 25 },
+        --     })
+        -- end
+        -- -- vim.cmd[[
+        -- --     CmpDocumentation guifg=#1d344f guibg=#dbdbdb
+        -- --     CmpDocumentationBorder guifg=#ced5de guibg=#dbdbdb
+        -- --     CmpItemAbbr guifg=#1d344f
+        -- --     CmpItemAbbrDeprecated cterm=strikethrough gui=strikethrough guifg=#2e537d
+        -- --     CmpItemAbbrMatch guifg=#485e7d
+        -- --     CmpItemAbbrMatchFuzzy guifg=#485e7d
+        -- --     CmpItemKindClass links to Type
+        -- --     CmpItemKindConstant links to TSConstant
+        -- --     CmpItemKindConstructor links to Function
+        -- --     CmpItemKindDefault guifg=#485e7d
+        -- --     CmpItemKindEnum links to Constant
+        -- --     CmpItemKindEnumMember links to TSField
+        -- --     CmpItemKindEvent links to Constant
+        -- --     CmpItemKindField links to TSField
+        -- --     CmpItemKindFunction links to Function
+        -- --     CmpItemKindInterface links to Constant
+        -- --     CmpItemKindKeyword links to Identifier
+        -- --     CmpItemKindMethod links to Function
+        -- --     CmpItemKindModule links to TSNamespace
+        -- --     CmpItemKindOperator links to Operator
+        -- --     CmpItemKindProperty links to TSProperty
+        -- --     CmpItemKindReference links to Keyword
+        -- --     CmpItemKindSnippet guifg=#233f5e
+        -- --     CmpItemKindStruct links to Type
+        -- --     CmpItemKindTypeParameter links to TSField
+        -- --     CmpItemKindUnit links to Constant
+        -- --     CmpItemKindValue links to Keyword
+        -- --     CmpItemKindVariable links to TSVariable
+        -- --     CmpItemMenu links to Comment
+        -- -- ]]
 
-        ---Resolve completion item (optional). This is called right before the completion is about to be 
-        --displayed.
-        ---Useful for setting the text shown in the documentation window (`completion_item.documentation`).
-        ---@param completion_item lsp.CompletionItem
-        ---@param callback fun(completion_item: lsp.CompletionItem|nil)
-        function source:resolve(completion_item, callback)
-            callback(completion_item)
-        end
+        -- ---Resolve completion item (optional). This is called right before the completion is about to be 
+        -- --displayed.
+        -- ---Useful for setting the text shown in the documentation window (`completion_item.documentation`).
+        -- ---@param completion_item lsp.CompletionItem
+        -- ---@param callback fun(completion_item: lsp.CompletionItem|nil)
+        -- function source:resolve(completion_item, callback)
+        --     callback(completion_item)
+        -- end
 
-        ---Executed after the item was selected.
-        ---@param completion_item lsp.CompletionItem
-        ---@param callback fun(completion_item: lsp.CompletionItem|nil)
-        function source:execute(completion_item, callback)
-            callback(completion_item)
-        end
+        -- ---Executed after the item was selected.
+        -- ---@param completion_item lsp.CompletionItem
+        -- ---@param callback fun(completion_item: lsp.CompletionItem|nil)
+        -- function source:execute(completion_item, callback)
+        --     callback(completion_item)
+        -- end
 
-        function source:new()
-            return setmetatable({}, {__index = source})
-        end
-        ---Register your source to nvim-cmp.
-        require('cmp').register_source('custom', source.new())
+        -- function source:new()
+        --     return setmetatable({}, {__index = source})
+        -- end
+        -- ---Register your source to nvim-cmp.
+        -- require('cmp').register_source('custom', source.new())
     end
 }
     use 'dmitmel/cmp-cmdline-history'
@@ -497,7 +523,7 @@ use {
     use 'hrsh7th/cmp-nvim-lsp'
 --     use 'hrsh7th/cmp-nvim-lsp-document-symbol'
 --     use 'hrsh7th/cmp-nvim-lsp-signature-help'
-    use 'hrsh7th/cmp-nvim-lua'
+    -- use 'hrsh7th/cmp-nvim-lua'
     use 'hrsh7th/cmp-path'
     use 'f3fora/cmp-spell'
 --     -- TODO: https://github.com/jameshiew/nvim-magic
@@ -974,6 +1000,10 @@ use {
     -- TODO: create maps using which-key
     config = function()
         require("which-key").setup({
+            -- popup_mappings = {
+            --     scroll_down = '<c-d>', -- binding to scroll down inside the popup
+            --     scroll_up = '<c-u>', -- binding to scroll up inside the popup
+            -- },
             window = {
                 border = "single"
             }
@@ -1107,23 +1137,32 @@ use {
 
 --     -- Snippets:
 --     -- `````````
---     -- {{{
---     use {
---         'L3MON4D3/LuaSnip',
---     }
---     use {
---         'saadparwaiz1/cmp_luasnip'
---     }
---     -- TODO: https://github.com/dcampos/nvim-snippy
+use {
+    'dcampos/nvim-snippy',
+    config = function()
+        require('snippy').setup({
+            mappings = {
+                is = {
+                    ['<Tab>'] = 'expand_or_advance',
+                    ['<S-Tab>'] = 'previous',
+                }
+            }
+        })
+    end,
+    requires = {
+        'dcampos/cmp-snippy',
+        'honza/vim-snippets'
+    }
+}
 --     -- TODO: https://github.com/ellisonleao/carbon-now.nvim
 --     -- TODO: https://github.com/hrsh7th/vim-vsnip
 --     -- TODO: https://github.com/norcalli/snippets.nvim
+--     -- TODO: https://github.com/notomo/cmp-neosnippet
 --     -- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
 --     -- TODO: https://github.com/rafamadriz/friendly-snippets
 --     -- TODO: https://github.com/saadparwaiz1/cmp_luasnip
 --     -- TODO: https://github.com/smjonas/snippet-converter.nvim
---     -- }}}
--- 
+
 --     -- Status Line:
 --     -- ````````````
 --     -- {{{
