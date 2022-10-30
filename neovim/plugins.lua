@@ -265,7 +265,6 @@ use {
 --━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━</>
 use {
     'hrsh7th/nvim-cmp',
-    -- TODO: Snippets
     config = function()
         local cmp = require('cmp')
         local snippy = require("snippy")
@@ -349,28 +348,6 @@ use {
                 -- ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
-                -- ["<Tab>"] = cmp.mapping(function(fallback)
-                --     if cmp.visible() then
-                --         -- cmp.mapping.confirm({ select = true })
-                --         cmp.select_next_item()
-                --     elseif snippy.can_expand_or_advance() then
-                --         snippy.expand_or_advance()
-                --     elseif has_words_before() then
-                --         cmp.complete()
-                --     else
-                --         fallback()
-                --     end
-                -- end, { "i", "s" }),
-
-                -- ["<S-Tab>"] = cmp.mapping(function(fallback)
-                --     if cmp.visible() then
-                --         cmp.select_prev_item()
-                --     elseif snippy.can_jump(-1) then
-                --         snippy.previous()
-                --     else
-                --         fallback()
-                --     end
-                -- end, { "i", "s" }),
             }),
             snippet = {
                 expand = function(args)
@@ -1172,13 +1149,14 @@ use {
 --     --     end
 --     -- }
 --     -- TODO: https://github.com/itchyny/lightline.vim
---     use {
---         'nvim-lualine/lualine.nvim',
---         config = function()
---             require('lualine').setup()
---         end,
---         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
---     }
+use {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+        require('lualine').setup{
+        }
+    end,
+    -- requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+}
 --     -- TODO: https://github.com/rebelot/heirline.nvim
 --     -- }}}
 -- 
