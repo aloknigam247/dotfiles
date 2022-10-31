@@ -802,7 +802,7 @@ use {
             function (server_name)
                 if server_name == "powershell_es" then
                     lspconfig.powershell_es.setup {
-                        bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
+                        cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
                         capabilities = capabilities,
                         handlers = handlers,
                         on_attach = on_attach
