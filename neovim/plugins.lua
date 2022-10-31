@@ -801,19 +801,22 @@ use {
                 if server_name == "omnisharp" then
                     vim.lsp.set_log_level("TRACE")
                     require'lspconfig'.omnisharp.setup {
-                        cmd = { "dotnet", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll", "-v"},
+                        cmd = { "dotnet", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll"},
                         capabilities = capabilities,
                         handlers = handlers,
-                        on_attach = on_attach
+                        on_attach = on_attach,
+                        enable_ms_build_load_projects_on_demand = true,
+                        organize_imports_on_format = true
                     }
                 elseif server_name == "omnisharp_mono" then
                     vim.lsp.set_log_level("TRACE")
                     require'lspconfig'.omnisharp_mono.setup {
-                        -- cmd = { "C:/Program Files/Mono/bin/mono.exe", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe", "-v"},
-                        cmd = { "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe", "-v"},
+                        cmd = { "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe"},
                         capabilities = capabilities,
                         handlers = handlers,
-                        on_attach = on_attach
+                        on_attach = on_attach,
+                        enable_ms_build_load_projects_on_demand = true,
+                        organize_imports_on_format = true
                     }
                 elseif server_name == "sumneko_lua" then
                     require'lspconfig'.sumneko_lua.setup {
