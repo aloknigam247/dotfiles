@@ -566,7 +566,7 @@ use {
 --     -- TODO: https://github.com/vim-scripts/Conque-GDB
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Doc Generater ❱━━━━━━━━━━━━━━━━━━━
+--━━━━━━━━━━━━━━━━━━━❰ Doc Generater ❱━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --     "danymat/neogen",
 --     config = function()
@@ -574,9 +574,9 @@ use {
 --     end
 -- }
 -- https://github.com/kkoomen/vim-doge
--- https://github.com/nvim-treesitter/nvim-tree-docs
+-- https://github.com/nvim-treesitter/nvim-tree-docs<~>
 
---     -- ──────────────────── File Explorer ────────────────────
+--     -- ──────────────────── File Explorer ────────────────────</>
 --     -- {{{
 --     use {
 --         'elihunter173/dirbuf.nvim',
@@ -599,6 +599,7 @@ use {
 --     -- cmd = "Neotree"
 -- }
 --     -- }}}
+-- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -612,17 +613,19 @@ use {
 }
 -- <~>
 
---     -- Formatting:
+--     -- Formatting:</>
 --     -- ```````````
 --     -- use 'mhartington/formatter.nvim'
 --     -- TODO: https://github.com/sbdchd/neoformat
--- 
---     -- FZF:
+-- <~>
+
+--     -- FZF:</>
 --     -- ````
 --     -- TODO: https://github.com/ibhagwan/fzf-lua
 --     -- TODO: https://github.com/junegunn/fzf
 --     -- TODO: https://github.com/junegunn/fzf.vim
 --     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
+-- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'hotwatermorning/auto-git-diff' -- Archieved
@@ -667,12 +670,13 @@ use {
 -- use 'whiteinge/diffconflicts' -- Archieved
 -- <~>
 
---     -- ──────────────────── Icons ────────────────────
+--     -- ──────────────────── Icons ────────────────────</>
 --     -- {{{
 --     use 'kyazdani42/nvim-web-devicons'
 --     -- }}}
--- 
---     -- ──────────────────── Indentation ────────────────────
+-- <~>
+
+--     -- ──────────────────── Indentation ────────────────────</>
 --     -- {{{
 --     use {
 --         'lukas-reineke/indent-blankline.nvim',
@@ -683,10 +687,11 @@ use {
 --             })
 --         end
 --     }
---     -- }}}
+--     -- }}}<~>
 
--- ──────────────────── Lint ────────────────────
+-- ──────────────────── Lint ────────────────────</>
 -- use 'mfussenegger/nvim-lint'
+-- <~>
 
 --━━━━━━━━━━━━━━━━━━━❰ LSP ❱━━━━━━━━━━━━━━━━━━━
 use {
@@ -695,23 +700,26 @@ use {
         require('nvim-custom-diagnostic-highlight').setup {}
     end
 }
-use {
-    'liuchengxu/vista.vim',
-    config = function()
-        vim.cmd[[
-        let g:vista_default_executive = 'nvim_lsp'
-        let g:vista_icon_indent = ["╰─ ", "├─ "]
-        let g:vista#renderer#icons = {
-            \   "constant": "",
-            \   "class": "",
-            \   "function": "",
-            \   "variable": "",
-            \  }
-        ]]
-    end,
-    cmd = 'Vista'
-}
+
+-- use {
+--     'liuchengxu/vista.vim',
+--     config = function()
+--         vim.cmd[[
+--         let g:vista_default_executive = 'nvim_lsp'
+--         let g:vista_icon_indent = ["╰─ ", "├─ "]
+--         let g:vista#renderer#icons = {
+--             \   "constant": "",
+--             \   "class": "",
+--             \   "function": "",
+--             \   "variable": "",
+--             \  }
+--         ]]
+--     end,
+--     cmd = 'Vista'
+-- }
+
 use 'neovim/nvim-lspconfig'
+
 use {
     'williamboman/mason.nvim',
     config = function()
@@ -722,6 +730,7 @@ use {
         })
     end
 }
+
 use {
     'williamboman/mason-lspconfig.nvim',
     config = function()
@@ -852,6 +861,7 @@ use {
         }
     end
 }
+
 --     use {
 --         'ray-x/lsp_signature.nvim',
 --         config = function()
