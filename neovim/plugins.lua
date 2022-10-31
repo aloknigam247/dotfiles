@@ -262,7 +262,7 @@ use {
 }
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Completion ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -1106,7 +1106,9 @@ use 'kshenoy/vim-signature'
 use {
   'rmagatti/auto-session',
   config = function()
-    require("auto-session").setup{}
+    require("auto-session").setup{
+        auto_session_suppress_dirs = { "~/"}
+    }
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end
 }
@@ -1140,10 +1142,7 @@ use {
 --     -- TODO: https://github.com/saadparwaiz1/cmp_luasnip
 --     -- TODO: https://github.com/smjonas/snippet-converter.nvim
 
---     -- Status Line:
---     -- ````````````
---     -- {{{
---     -- TODO: https://github.com/itchyny/lightline.vim
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
 -- vim.g.bubbly_symbols = {
 --     default = 'PANIC!',
@@ -1186,8 +1185,6 @@ use {
 -- }
 -- 
 -- vim.g.bubbly_tags = {
---     default = 'HELP ME PLEASE!',
--- 
 --     mode = {
 --         normal = 'NORMAL',
 --         insert = 'INSERT',
@@ -1230,71 +1227,6 @@ use {
 --         typescriptreact = ' typescript',
 --         vim = ' vim',
 --         xml = '謹 xml',
---     },
--- }
--- 
--- vim.g.bubbly_colors = {
---     default = 'red',
--- 
---     mode = {
---         normal = 'green', -- uses by default 'background' as the foreground color.
---         insert = 'blue',
---         visual = 'red',
---         visualblock = 'red',
---         command = 'red',
---         terminal = 'blue',
---         replace = 'yellow',
---         default = 'white'
---     },
---     path = {
---         readonly = { background = 'lightgrey', foreground = 'foreground' },
---         unmodifiable = { background = 'darkgrey', foreground = 'foreground' },
---         path = 'white',
---         modified = { background = 'lightgrey', foreground = 'foreground' },
---     },
---     branch = 'purple',
---     signify = {
---         added = 'green',
---         modified = 'blue',
---         removed = 'red',
---     },
---     gitsigns = {
---         added = 'green',
---         modified = 'blue',
---         removed = 'red',
---     },
---     paste = 'red',
---     coc = {
---         error = 'red',
---         warning = 'yellow',
---         status = { background = 'lightgrey', foreground = 'foreground' },
---     },
---     builtinlsp = {
---         diagnostic_count = {
---             error = 'red',
---             warning = 'yellow',
---         },
---         current_function = 'purple',
---     },
---     filetype = 'blue',
---     progress = {
---         rowandcol = { background = 'lightgrey', foreground = 'foreground' },
---         percentage = { background = 'darkgrey', foreground = 'foreground' },
---     },
---     tabline = {
---         active = 'blue',
---         inactive = 'white',
---         close = 'darkgrey',
---     },
---     total_buffer_number = 'cyan',
---     lsp_status = {
---         messages = 'white',
---         diagnostics = {
---             error = 'red',
---             warning = 'yellow',
---             hint = 'white',
---             info = 'blue',
---         },
 --     },
 -- }
     'nvim-lualine/lualine.nvim',
@@ -1342,9 +1274,8 @@ use {
     end,
     -- requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 }
---     -- TODO: https://github.com/rebelot/heirline.nvim
---     -- }}}
--- 
+-- <~>
+
 --     -- Tab Line:
 --     -- `````````
 --     -- TODO: https://github.com/B4mbus/nvim-headband
