@@ -725,7 +725,9 @@ use {
 use {
     'williamboman/mason-lspconfig.nvim',
     config = function()
-        require("mason-lspconfig").setup()
+        local lspconfig = require('lspconfig')
+        local mason_lspconfig = require('mason-lspconfig')
+        mason_lspconfig.setup()
         -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
         local opts = { noremap=true, silent=true }
         -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -796,11 +798,17 @@ use {
         -- Add additional capabilities supported by nvim-cmp
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-        require("mason-lspconfig").setup_handlers {
+        mason_lspconfig.setup_handlers {
             function (server_name)
-                if server_name == "omnisharp" then
-                    vim.lsp.set_log_level("TRACE")
-                    require'lspconfig'.omnisharp.setup {
+                if server_name == "powershell_es" then
+                    lspconfig.powershell_es.setup {
+                        bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach
+                    }
+                elseif server_name == "omnisharp" then
+                    lspconfig.omnisharp.setup {
                         cmd = { "dotnet", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll"},
                         capabilities = capabilities,
                         handlers = handlers,
@@ -809,8 +817,7 @@ use {
                         organize_imports_on_format = true
                     }
                 elseif server_name == "omnisharp_mono" then
-                    vim.lsp.set_log_level("TRACE")
-                    require'lspconfig'.omnisharp_mono.setup {
+                    lspconfig.omnisharp_mono.setup {
                         cmd = { "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe"},
                         capabilities = capabilities,
                         handlers = handlers,
@@ -819,7 +826,7 @@ use {
                         organize_imports_on_format = true
                     }
                 elseif server_name == "sumneko_lua" then
-                    require'lspconfig'.sumneko_lua.setup {
+                    lspconfig.sumneko_lua.setup {
                         capabilities = capabilities,
                         handlers = handlers,
                         on_attach = on_attach,
@@ -835,7 +842,7 @@ use {
                         }
                     }
                 else
-                    require("lspconfig")[server_name].setup {
+                    lspconfig[server_name].setup {
                         capabilities = capabilities,
                         handlers = handlers,
                         on_attach = on_attach
