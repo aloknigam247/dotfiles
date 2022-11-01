@@ -750,13 +750,13 @@ use {
             },
             severity_sort = true,
             virtual_text = {
-                prefix = '',
+                prefix = ' ',
                 source = true
             }
         })
 
-        vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
-        vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+        -- vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
+        -- vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
         vim.cmd[[
         sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
@@ -767,7 +767,7 @@ use {
 
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
-        local on_attach = function(client, bufnr)
+        local on_attach = function(_, bufnr)
             -- Enable completion triggered by <c-x><c-o>
             vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
             -- Mappings.
@@ -790,13 +790,13 @@ use {
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
             vim.cmd[[
             aunmenu PopUp
-            nnoremenu PopUp.Declaration\ (gD) gD
-            nnoremenu PopUp.Definition\ (gd) gd
-            nnoremenu PopUp.Implementation\ (gi) gi
-            nnoremenu PopUp.References\ (gr) gr
-            nnoremenu PopUp.Hover\ (\\h) <leader>rn
-            nnoremenu PopUp.Rename\ (\\rn) <leader>rn
-            nnoremenu PopUp.Type\ Definition\ (gt) gt
+            nnoremenu PopUp.Declaration\ (gD) <Cmd>lua vim.lsp.buf.declaration()<CR>
+            nnoremenu PopUp.Definition\ (gd) <Cmd>lua vim.lsp.buf.definition()<CR>
+            nnoremenu PopUp.Implementation\ (gi) <Cmd>lua vim.lsp.buf.implementation()<CR>
+            nnoremenu PopUp.References\ (gr) <Cmd>lua vim.lsp.buf.references()<CR>
+            nnoremenu PopUp.Hover\ (\\h) <Cmd>lua vim.lsp.buf.hover()<CR>
+            nnoremenu PopUp.Rename\ (\\rn) <Cmd>lua vim.lsp.buf.rename()<CR>
+            nnoremenu PopUp.Type\ Definition\ (gt) <Cmd>lua vim.lsp.buf.type_definition()<CR>
             ]]
         end
         -- LSP settings (for overriding per client)
@@ -991,7 +991,7 @@ use {
 --     -- TODO: https://github.com/nanotee/nvim-lua-guide
 --     -- TODO: https://github.com/rafcamlet/nvim-luapad
 
---━━━━━━━━━━━━━━━━━━━❰ Mapping ❱━━━━━━━━━━━━━━━━━━━
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Mapping     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'folke/which-key.nvim',
     -- TODO: create maps using which-key
@@ -1007,6 +1007,7 @@ use {
         })
     end
 }
+-- <~>
 
 ---- Markdown:
 ---- `````````
