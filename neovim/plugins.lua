@@ -701,22 +701,22 @@ use {
     end
 }
 
--- use {
---     'liuchengxu/vista.vim',
---     config = function()
---         vim.cmd[[
---         let g:vista_default_executive = 'nvim_lsp'
---         let g:vista_icon_indent = ["╰─ ", "├─ "]
---         let g:vista#renderer#icons = {
---             \   "constant": "",
---             \   "class": "",
---             \   "function": "",
---             \   "variable": "",
---             \  }
---         ]]
---     end,
---     cmd = 'Vista'
--- }
+use {
+    'liuchengxu/vista.vim',
+    config = function()
+        vim.cmd[[
+        let g:vista_default_executive = 'nvim_lsp'
+        let g:vista_icon_indent = ["╰─ ", "├─ "]
+        let g:vista#renderer#icons = {
+            \   "constant": "",
+            \   "class": "",
+            \   "function": "",
+            \   "variable": "",
+            \  }
+        ]]
+    end,
+    cmd = 'Vista'
+}
 
 use 'neovim/nvim-lspconfig'
 
@@ -758,13 +758,6 @@ use {
         -- vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
         -- vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
-        vim.cmd[[
-        sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
-        sign define DiagnosticSignWarn  text= texthl=DiagnosticSignWarn  linehl= numhl=
-        sign define DiagnosticSignInfo  text= texthl=DiagnosticSignInfo  linehl= numhl=
-        sign define DiagnosticSignHint  text= texthl=DiagnosticSignHint  linehl= numhl=
-        ]]
-
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
         local on_attach = function(_, bufnr)
@@ -805,8 +798,9 @@ use {
             ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}),
         }
         -- Add additional capabilities supported by nvim-cmp
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+        -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
             function (server_name)
                 if server_name == "powershell_es" then
@@ -862,15 +856,16 @@ use {
     end
 }
 
---     use {
---         'ray-x/lsp_signature.nvim',
---         config = function()
---             require "lsp_signature".setup()
---         end
---         -- {
---         --     " TODO: explore options
---         -- }
---     }
+use {
+    'ray-x/lsp_signature.nvim',
+    config = function()
+        require "lsp_signature".setup({
+            hint_enable = false,
+            noice = false
+        })
+    end
+}
+
 --     -- use {
 --     --     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
 --     --     as = 'lsp_lines',
