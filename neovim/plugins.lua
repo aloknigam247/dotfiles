@@ -878,7 +878,26 @@ use {
 --     --         vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
 --     --     end
 --     -- }
---     -- use 'RishabhRD/nvim-lsputils' " BUG: problem in popfix
+
+use {
+    -- BUG: references windows is very slow
+    'RishabhRD/nvim-lsputils',
+    config = function()
+        vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
+        vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
+        vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+        vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+        vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+        vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+        vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+        vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+    end,
+    event = 'LspAttach'
+}
+use {
+    'RishabhRD/popfix'
+}
+
 --     use {
 --         "amrbashir/nvim-docs-view",
 --         -- cmd = { "DocsViewToggle" },
@@ -902,12 +921,12 @@ use {
 --             })
 --         end,
 --     })
---     use {
---         'j-hui/fidget.nvim',
---         config = function()
---             require("fidget").setup()
---         end
---     }
+use {
+    'j-hui/fidget.nvim',
+    config = function()
+        require("fidget").setup()
+    end
+}
 --     --[[ use {
 --         'jose-elias-alvarez/null-ls.nvim',
 --         config = function()
@@ -1122,9 +1141,8 @@ use 'kshenoy/vim-signature'
 use {
   'rmagatti/auto-session',
   config = function()
-    require("auto-session").setup{
-        auto_session_suppress_dirs = { "~/"}
-    }
+    require("auto-session").setup({})
+    vim.g.auto_session_suppress_dirs = { "~/" }
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end
 }
@@ -1406,33 +1424,31 @@ use {
 --      }
 --     -- }}}
 -- 
---     -- Treesitter:
---     -- ```````````
---     -- {{{
---     use {
---         'nvim-treesitter/nvim-treesitter',
---         config = function()
---             require('nvim-treesitter.configs').setup {
---                 auto_install = true,
---                 endwise = {
---                     enable = true,
---                 },
---                 ignore_install = { "help", "yaml" },
---                 highlight = {
---                     enable = true,
---                     disable = ignore_install
---                 },
---                 rainbow = {
---                     enable = true,
---                     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
---                     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
---                     max_file_lines = nil, -- Do not enable for files with more than n lines, int
---                     -- colors = {}, -- table of hex strings
---                     -- termcolors = {} -- table of colour name strings
---                 }
---             }
---         end
---     }
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+use {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+        require('nvim-treesitter.configs').setup {
+            auto_install = true,
+            -- endwise = {
+            --     enable = true,
+            -- },
+            ignore_install = { "help", "yaml" },
+            highlight = {
+                enable = true,
+                disable = ignore_install
+            },
+            rainbow = {
+                enable = true,
+                -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+                extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+                max_file_lines = nil, -- Do not enable for files with more than n lines, int
+                -- colors = {}, -- table of hex strings
+                -- termcolors = {} -- table of colour name strings
+            }
+        }
+    end
+}
 --     use {
 --         'm-demare/hlargs.nvim', -- NOTE: may not be required
 --         config = function()
@@ -1471,7 +1487,8 @@ use {
 --         end
 --     }
 --     use 'nvim-treesitter/playground'
---     use 'p00f/nvim-ts-rainbow'
+
+use 'p00f/nvim-ts-rainbow'
 --     -- }}}
 -- 
 --     -- ──────────────────── TUI ────────────────────
