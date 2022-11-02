@@ -668,6 +668,7 @@ use {
 -- use 'sindrets/diffview.nvim' -- Archieved
 -- use 'tanvirtin/vgit.nvim' -- Archieved
 -- use 'whiteinge/diffconflicts' -- Archieved
+-- https://github.com/akinsho/git-conflict.nvim
 -- <~>
 
 --     -- ──────────────────── Icons ────────────────────</>
