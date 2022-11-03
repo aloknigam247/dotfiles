@@ -662,12 +662,12 @@ use {
     end
 }
 -- use 'pwntester/octo.nvim' -- Archieved
--- use 'rhysd/conflict-marker.vim' -- Archieved
+use 'rhysd/conflict-marker.vim' -- Archieved
 -- use 'rhysd/git-messenger.vim' -- Archieved
 -- use 'ruifm/gitlinker.nvim' -- Archieved
--- use 'sindrets/diffview.nvim' -- Archieved
+use 'sindrets/diffview.nvim' -- Archieved
+use 'nvim-lua/plenary.nvim'
 -- use 'tanvirtin/vgit.nvim' -- Archieved
--- use 'whiteinge/diffconflicts' -- Archieved
 -- https://github.com/akinsho/git-conflict.nvim
 -- <~>
 
