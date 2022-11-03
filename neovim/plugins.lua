@@ -22,6 +22,7 @@ require('packer').startup({
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 config = {
     auto_clean = true,
+    auto_reload_compiled = false,
     -- PERF: [ABSTRACT IDE] Move to lua dir so impatient.nvim can cache it
     -- compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.lua',
     display = {
@@ -267,7 +268,6 @@ use {
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
-        local snippy = require("snippy")
         cmp.setup({
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
@@ -799,9 +799,8 @@ use {
             ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}),
         }
         -- Add additional capabilities supported by nvim-cmp
-        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-        -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-        local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
             function (server_name)
                 if server_name == "powershell_es" then
@@ -1429,12 +1428,13 @@ use {
 use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
+        local ignore_install = { "help", "yaml" }
         require('nvim-treesitter.configs').setup {
             auto_install = true,
-            -- endwise = {
-            --     enable = true,
-            -- },
-            ignore_install = { "help", "yaml" },
+            endwise = {
+                enable = true,
+            },
+            ignore_install = ignore_install,
             highlight = {
                 enable = true,
                 disable = ignore_install
@@ -1450,29 +1450,28 @@ use {
         }
     end
 }
---     use {
---         'm-demare/hlargs.nvim', -- NOTE: may not be required
---         config = function()
---             require('hlargs').setup()
---         end
---     }
---     -- use 'nvim-treesitter/nvim-treesitter-context' -- FIXME: conflicts with context.vim
---     use {
---         'RRethy/nvim-treesitter-endwise',
---         config = function()
---             require('nvim-treesitter.configs').setup {
---                 endwise = {
---                     enable = true,
---                 },
---             }
---         end
---     }
---     use {
---         'lewis6991/spellsitter.nvim',
---         config = function()
---             require('spellsitter').setup()
---         end
---     }
+
+use {
+    'm-demare/hlargs.nvim',
+    after = 'nvim-treesitter',
+    config = function()
+        require('hlargs').setup()
+    end
+}
+
+use 'nvim-treesitter/nvim-treesitter-context' -- FIXME: conflicts with context.vim
+
+use {
+    'RRethy/nvim-treesitter-endwise',
+    config = function()
+        require('nvim-treesitter.configs').setup {
+            endwise = {
+                enable = true,
+            },
+        }
+    end
+}
+
 --     use {
 --         'nvim-treesitter/nvim-treesitter-refactor',
 --         config = function()
@@ -1487,6 +1486,7 @@ use {
 --             }
 --         end
 --     }
+
 --     use 'nvim-treesitter/playground'
 
 use 'p00f/nvim-ts-rainbow'
