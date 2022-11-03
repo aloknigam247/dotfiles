@@ -1423,8 +1423,8 @@ use {
 --         -- TODO: Trouble
 --      }
 --     -- }}}
--- 
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -1459,17 +1459,32 @@ use {
     end
 }
 
-use 'nvim-treesitter/nvim-treesitter-context' -- FIXME: conflicts with context.vim
+use {
+    'nvim-treesitter/nvim-treesitter-context',
+    after = 'nvim-treesitter',
+    config = function()
+        require'treesitter-context'.setup {
+            separator = '━',
+            patterns = {
+                lua = {
+                    'field'
+                }
+            }
+        }
+    end
+}
 
 use {
     'RRethy/nvim-treesitter-endwise',
+    after = 'nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
             endwise = {
                 enable = true,
             },
         }
-    end
+    end,
+    ft = 'lua'
 }
 
 --     use {
@@ -1487,11 +1502,14 @@ use {
 --         end
 --     }
 
---     use 'nvim-treesitter/playground'
+-- use 'nvim-treesitter/playground'
 
-use 'p00f/nvim-ts-rainbow'
---     -- }}}
--- 
+use {
+    'p00f/nvim-ts-rainbow',
+    after = 'nvim-treesitter'
+}
+-- <~>
+
 --     -- ──────────────────── TUI ────────────────────
 --     -- {{{
 --     -- TODO: https://github.com/folke/noice.nvim
