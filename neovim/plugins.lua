@@ -717,7 +717,46 @@ use {
     end
 }
 
-use 'SmiteshP/nvim-navic'
+use {
+    'SmiteshP/nvim-navic',
+    config = function()
+        require('nvim-navic').setup {
+            icons = {
+                File = ' ',
+                Module = ' ',
+                Namespace = ' ',
+                Package = ' ',
+                Class = ' ',
+                Method = ' ',
+                Property = ' ',
+                Field = ' ',
+                Constructor = ' ',
+                Enum = ' ',
+                Interface = ' ',
+                Function = ' ',
+                Variable = ' ',
+                Constant = ' ',
+                String = ' ',
+                Number = ' ',
+                Boolean = ' ',
+                Array = ' ',
+                Object = ' ',
+                Key = ' ',
+                Null = ' ',
+                EnumMember = ' ',
+                Struct = ' ',
+                Event = ' ',
+                Operator = ' ',
+                TypeParameter = ' '
+            },
+            highlight = true,
+            separator = "  ",
+            depth_limit = 0,
+            depth_limit_indicator = "..",
+            safe_output = true
+        }
+    end
+}
 
 use {
     'liuchengxu/vista.vim',
@@ -778,8 +817,8 @@ use {
 
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
-        local navic = require('nvim-navic')
         local on_attach = function(client, bufnr)
+            local navic = require('nvim-navic')
             -- Enable completion triggered by <c-x><c-o>
             vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
             -- Mappings.
@@ -1293,6 +1332,7 @@ use {
 -- }
     'nvim-lualine/lualine.nvim',
     config = function()
+        local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
         --         icons_enabled = true,
@@ -1329,7 +1369,11 @@ use {
         --         lualine_z = {}
         --     },
         --     tabline = {},
-        --     winbar = {},
+        winbar = {
+            lualine_a = {
+                { navic.get_location, cond = navic.is_available }
+            }
+        },
         --     inactive_winbar = {},
         --     extensions = {}
         }
@@ -1472,8 +1516,9 @@ use {
 use {
     'nvim-treesitter/nvim-treesitter-context',
     after = 'nvim-treesitter',
+    cmd = 'TSContextToggle',
     config = function()
-        require'treesitter-context'.setup {
+        require('treesitter-context').setup {
             separator = '━',
             patterns = {
                 lua = {
