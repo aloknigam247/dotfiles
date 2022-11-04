@@ -8,10 +8,11 @@
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+" lua require('impatient')
 " call plug#begin()
 " call plug#end()
 " lua require('plugins')
-autocmd FileType lua lua require('plugins')
+autocmd BufRead plugins.lua lua require('plugins')
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

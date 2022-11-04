@@ -717,6 +717,8 @@ use {
     end
 }
 
+use 'SmiteshP/nvim-navic'
+
 use {
     'liuchengxu/vista.vim',
     config = function()
@@ -776,7 +778,8 @@ use {
 
         -- Use an on_attach function to only map the following keys
         -- after the language server attaches to the current buffer
-        local on_attach = function(_, bufnr)
+        local navic = require('nvim-navic')
+        local on_attach = function(client, bufnr)
             -- Enable completion triggered by <c-x><c-o>
             vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
             -- Mappings.
@@ -807,6 +810,8 @@ use {
             nnoremenu PopUp.Rename\ (\\rn) <Cmd>lua vim.lsp.buf.rename()<CR>
             nnoremenu PopUp.Type\ Definition\ (gt) <Cmd>lua vim.lsp.buf.type_definition()<CR>
             ]]
+
+            navic.attach(client, bufnr)
         end
         -- LSP settings (for overriding per client)
         local handlers =  {
@@ -894,24 +899,24 @@ use {
 --     --     end
 --     -- }
 
--- use {
---     -- BUG: references windows is very slow
---     'RishabhRD/nvim-lsputils',
---     config = function()
---         -- vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
---         -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler -- using nvim-bqf
---         -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
---         -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
---         -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
---         -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
---         -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
---         -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
---     end,
---     event = 'LspAttach'
--- }
--- use {
---     'RishabhRD/popfix'
--- }
+use {
+    -- BUG: references windows is very slow
+    'RishabhRD/nvim-lsputils',
+    config = function()
+        -- vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
+        -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler -- using nvim-bqf
+        -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+        -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+        -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+        -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+        -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+        -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+    end,
+    event = 'LspAttach'
+}
+use {
+    'RishabhRD/popfix'
+}
 
 --     use {
 --         "amrbashir/nvim-docs-view",
@@ -937,12 +942,12 @@ use {
 --         end,
 --     })
 
--- use { -- using noice
---     'j-hui/fidget.nvim',
---     config = function()
---         require("fidget").setup()
---     end
--- }
+use {
+    'j-hui/fidget.nvim',
+    config = function()
+        require("fidget").setup()
+    end
+}
 
 --     --[[ use {
 --         'jose-elias-alvarez/null-ls.nvim',
@@ -1155,20 +1160,21 @@ use {
 --     -- Rooter:
 --     -- ```````
 -- 
---     -- Session Manager:
---     -- ````````````````
---     -- TODO: https://github.com/Shatur/neovim-session-manager --> plenary
---     -- TODO: https://github.com/jedrzejboczar/possession.nvim --> plenary
---     -- TODO: https://github.com/olimorris/persisted.nvim --> telescope
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Sessions   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
   'rmagatti/auto-session',
   config = function()
+    vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
     require("auto-session").setup({})
-    vim.g.auto_session_suppress_dirs = { "~/" }
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end
+  --   if vim.g.persisting then
+  --     return "  |"
+  -- elseif vim.g.persisting == false then
+  --     return "  |"
+  -- end
 }
---     -- TODO: https://github.com/thaerkh/vim-workspace
+-- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Snippets   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -1516,21 +1522,21 @@ use {
 
 --     -- ──────────────────── TUI ────────────────────
 --     -- {{{
-use({
-  'folke/noice.nvim',
-  config = function()
-    require("noice").setup()
-  end,
-  requires = {
-    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-    "MunifTanjim/nui.nvim",
-    -- OPTIONAL:
-    --   `nvim-notify` is only needed, if you want to use the notification view.
-    --   If not available, we use `mini` as the fallback
-    "rcarriga/nvim-notify",
-    }
-})
-    use 'rcarriga/nvim-notify'
+-- use({
+--   'folke/noice.nvim',
+--   config = function()
+--     require("noice").setup()
+--   end,
+--   requires = {
+--     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+--     "MunifTanjim/nui.nvim",
+--     -- OPTIONAL:
+--     --   `nvim-notify` is only needed, if you want to use the notification view.
+--     --   If not available, we use `mini` as the fallback
+--     "rcarriga/nvim-notify",
+--     }
+-- })
+    -- use 'rcarriga/nvim-notify'
 --     use 'skywind3000/vim-quickui'
 --     use 'stevearc/dressing.nvim'
 --     use {
@@ -1545,17 +1551,17 @@ use({
 -- 
 --     -- Utilities:
 --     -- ``````````
---     use '0x100101/lab.nvim'
---     -- TODO: https://github.com/Almo7aya/openingh.nvim
---     use 'AndrewRadev/inline_edit.vim'
---     -- TODO: https://github.com/ElPiloto/significant.nvim
---     use 'NTBBloodbath/rest.nvim'
-use 'MunifTanjim/nui.nvim'
+--     -- TODO: https://github.com/Almo7aya/openingh.nvim -- NOTE: needs PR for VSO
+use {
+    'AndrewRadev/inline_edit.vim',
+    cmd = 'InlineEdit'
+}
+--     -- TODO: https://github.com/ElPiloto/significant.nvim -- NOTE: awesome plugin but not usage now
+-- use 'MunifTanjim/nui.nvim'
 --     use {
 --         'RishabhRD/nvim-cheat.sh',
 --         'RishabhRD/popfix'
 --     }
---     use 'SmiteshP/nvim-navic'
 --     use 'ThePrimeagen/refactoring.nvim'
 --     use {
 --         'andrewferrier/debugprint.nvim',
@@ -1569,10 +1575,10 @@ use 'MunifTanjim/nui.nvim'
 --     use 'chrisbra/NrrwRgn'
 --     use 'cuducos/yaml.nvim'
 --     use 'doums/suit.nvim'
-       use {
-           'dstein64/vim-startuptime',
-           cmd = "StartupTime"
-       }
+use {
+    'dstein64/vim-startuptime',
+    cmd = 'StartupTime'
+}
 --     use 'esensar/nvim-dev-container'
 --     use 'folke/trouble.nvim'
 --     use {
@@ -1633,7 +1639,7 @@ use 'MunifTanjim/nui.nvim'
 --     -- TODO: https://github.com/lifepillar/vim-colortemplate
 --     use 'linty-org/key-menu.nvim'
 --     -- TODO: https://github.com/linty-org/readline.nvim
---     use 'lewis6991/impatient.nvim' -- PERF: It should be first plugin to take effect init.vim
+use 'lewis6991/impatient.nvim'
 --     use 'mg979/vim-visual-multi'
 --     use 'miversen33/import.nvim'
 --     use 'mrjones2014/legendary.nvim'
@@ -1671,10 +1677,9 @@ use 'MunifTanjim/nui.nvim'
 --             vim.cmd[[let g:registers_window_border = "rounded"]]
 --         end
 --     }
---     use 'wellle/context.vim'
 end
 })
--- 
+
 -- -- DAP
 -- -- ```
 -- --local dap = require('dap')
