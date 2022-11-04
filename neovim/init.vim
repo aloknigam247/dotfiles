@@ -68,7 +68,7 @@ set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\         " No dot characters in fold
 set laststatus=2             " Disable global statusline
-set lazyredraw               " Don't redraw screen on macros, registers and other commands.
+" set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support

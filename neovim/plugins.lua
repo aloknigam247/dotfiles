@@ -155,7 +155,20 @@ use {
        ]]
     end
 }
+
 use 'azabiong/vim-highlighter' -- Archieved
+
+use {
+    'folke/todo-comments.nvim',
+    config = function()
+        require("todo-comments").setup({
+            keywords = {
+                THOUGHT = { icon = "🤔", color = "info"}
+            }
+        })
+    end
+}
+
 use {
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
@@ -163,6 +176,7 @@ use {
         require('colorizer').setup()
     end
 }
+
 use {
     't9md/vim-quickhl',
     config = function()
@@ -175,6 +189,7 @@ use {
     end,
     keys = {'<Leader>w', "<Leader>W"}
 }
+
 use {
     'tribela/vim-transparent',   -- Archieved
     cmd = 'TransparentEnable'
@@ -796,7 +811,7 @@ use {
         -- LSP settings (for overriding per client)
         local handlers =  {
             ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
-            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}),
+            -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
         }
         -- Add additional capabilities supported by nvim-cmp
         local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -879,24 +894,24 @@ use {
 --     --     end
 --     -- }
 
-use {
-    -- BUG: references windows is very slow
-    'RishabhRD/nvim-lsputils',
-    config = function()
-        -- vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-        -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler -- using nvim-bqf
-        -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
-        -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-        -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-        -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-        -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-        -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-    end,
-    event = 'LspAttach'
-}
-use {
-    'RishabhRD/popfix'
-}
+-- use {
+--     -- BUG: references windows is very slow
+--     'RishabhRD/nvim-lsputils',
+--     config = function()
+--         -- vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
+--         -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler -- using nvim-bqf
+--         -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
+--         -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+--         -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
+--         -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
+--         -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
+--         -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
+--     end,
+--     event = 'LspAttach'
+-- }
+-- use {
+--     'RishabhRD/popfix'
+-- }
 
 --     use {
 --         "amrbashir/nvim-docs-view",
@@ -921,12 +936,14 @@ use {
 --             })
 --         end,
 --     })
-use {
-    'j-hui/fidget.nvim',
-    config = function()
-        require("fidget").setup()
-    end
-}
+
+-- use { -- using noice
+--     'j-hui/fidget.nvim',
+--     config = function()
+--         require("fidget").setup()
+--     end
+-- }
+
 --     --[[ use {
 --         'jose-elias-alvarez/null-ls.nvim',
 --         config = function()
@@ -1119,20 +1136,21 @@ use 'kshenoy/vim-signature'
 --     -- ````````
 --     -- TODO: https://github.com/ahmedkhalf/project.nvim --> treesitter
 
---     -- Quickfix:
---     -- {{{
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Quickfix   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
+    -- TODO: fzf
     'kevinhwang91/nvim-bqf',
+    config = function()
+        require('bqf').setup({
+            auto_resize_height = true,
+            preview = {
+                border_chars = {'│', '│', '─', ' ', '╭', '╮', '╰', '╯', '█'}
+            }
+        })
+    end,
     ft = 'qf'
 }
-
-use {
-    'stevearc/qf_helper.nvim',
-    config = function()
-        require('qf_helper').setup()
-    end
-}
---     -- }}}
+-- <~>
 
 --     -- Rooter:
 --     -- ```````
@@ -1152,8 +1170,7 @@ use {
 }
 --     -- TODO: https://github.com/thaerkh/vim-workspace
 
---     -- Snippets:
---     -- `````````
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Snippets   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'dcampos/nvim-snippy',
     config = function()
@@ -1171,14 +1188,15 @@ use {
         'honza/vim-snippets'
     }
 }
---     -- TODO: https://github.com/ellisonleao/carbon-now.nvim
---     -- TODO: https://github.com/hrsh7th/vim-vsnip
---     -- TODO: https://github.com/norcalli/snippets.nvim
---     -- TODO: https://github.com/notomo/cmp-neosnippet
---     -- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
---     -- TODO: https://github.com/rafamadriz/friendly-snippets
---     -- TODO: https://github.com/saadparwaiz1/cmp_luasnip
---     -- TODO: https://github.com/smjonas/snippet-converter.nvim
+-- TODO: https://github.com/ellisonleao/carbon-now.nvim
+-- TODO: https://github.com/hrsh7th/vim-vsnip
+-- TODO: https://github.com/norcalli/snippets.nvim
+-- TODO: https://github.com/notomo/cmp-neosnippet
+-- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
+-- TODO: https://github.com/rafamadriz/friendly-snippets
+-- TODO: https://github.com/saadparwaiz1/cmp_luasnip
+-- TODO: https://github.com/smjonas/snippet-converter.nvim
+-- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -1408,25 +1426,7 @@ use {
 --     -- TODO: https://github.com/pianocomposer321/yabs.nvim
 --     -- TODO: https://github.com/smzm/hydrovim
 --     -- TODO: https://github.com/stevearc/overseer.nvim
--- 
--- 
---     -- ──────────────────── Todo Marker ────────────────────
---     -- {{{
---      use {
---          'folke/todo-comments.nvim',
---          config = function()
---              require("todo-comments").setup({
---                  keywords = {
---                      THOUGHT = { icon = "🤔", color = "info"}
---                  }
---              })
---          end
---         -- TODO: Quickfix
---         -- TODO: Search
---         -- TODO: Telescope
---         -- TODO: Trouble
---      }
---     -- }}}
+
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -1516,8 +1516,21 @@ use {
 
 --     -- ──────────────────── TUI ────────────────────
 --     -- {{{
---     -- TODO: https://github.com/folke/noice.nvim
---     use 'rcarriga/nvim-notify'
+use({
+  'folke/noice.nvim',
+  config = function()
+    require("noice").setup()
+  end,
+  requires = {
+    -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+    "MunifTanjim/nui.nvim",
+    -- OPTIONAL:
+    --   `nvim-notify` is only needed, if you want to use the notification view.
+    --   If not available, we use `mini` as the fallback
+    "rcarriga/nvim-notify",
+    }
+})
+    use 'rcarriga/nvim-notify'
 --     use 'skywind3000/vim-quickui'
 --     use 'stevearc/dressing.nvim'
 --     use {
@@ -1537,7 +1550,7 @@ use {
 --     use 'AndrewRadev/inline_edit.vim'
 --     -- TODO: https://github.com/ElPiloto/significant.nvim
 --     use 'NTBBloodbath/rest.nvim'
---     use 'MunifTanjim/nui.nvim'
+use 'MunifTanjim/nui.nvim'
 --     use {
 --         'RishabhRD/nvim-cheat.sh',
 --         'RishabhRD/popfix'
