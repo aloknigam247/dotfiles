@@ -18,6 +18,45 @@ local border_shape = {
     { '│', 'FloatBorder' },
 }
 
+Cmp_kinds = {
+    Array = ' ',
+    Boolean = ' ',
+    Class = ' ',
+    Color = ' ',
+    Constant = ' ',
+    Constructor = ' ',
+    Enum = ' ',
+    EnumMember = ' ',
+    Event = ' ',
+    Field = ' ',
+    File = ' ',
+    Folder = ' ',
+    Function = ' ',
+    History = ' ',
+    Interface = ' ',
+    Key = ' ',
+    Keyword = ' ',
+    Method = ' ',
+    Module = ' ',
+    Namespace = ' ',
+    Null = ' ',
+    Number = ' ',
+    Object = ' ',
+    Operator = ' ',
+    Options = ' ',
+    Package = ' ',
+    Property = ' ',
+    Reference = ' ',
+    Snippet = ' ',
+    String = ' ',
+    Struct = ' ',
+    Text = ' ',
+    TypeParameter = ' ',
+    Unit = ' ',
+    Value = ' ',
+    Variable = ' ',
+}
+
 require('packer').startup({
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 config = {
@@ -322,36 +361,7 @@ use {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
 
-                    local cmp_kinds = {
-                        Class = ' ',
-                        Color = ' ',
-                        Constant = ' ',
-                        Constructor = ' ',
-                        Enum = ' ',
-                        EnumMember = ' ',
-                        Event = ' ',
-                        Field = ' ',
-                        File = ' ',
-                        Folder = ' ',
-                        Function = ' ',
-                        History = ' ',
-                        Interface = ' ',
-                        Keyword = ' ',
-                        Method = ' ',
-                        Module = ' ',
-                        Operator = ' ',
-                        Options = ' ',
-                        Property = ' ',
-                        Reference = ' ',
-                        Snippet = ' ',
-                        Struct = ' ',
-                        Text = ' ',
-                        TypeParameter = ' ',
-                        Unit = ' ',
-                        Value = ' ',
-                        Variable = ' ',
-                    }
-                    local kind_symbol = cmp_kinds[vim_item.kind]
+                    local kind_symbol = Cmp_kinds[vim_item.kind]
                     vim_item.kind = kind_symbol and kind_symbol .. vim_item.kind or vim_item.kind
 
                     return vim_item
@@ -721,35 +731,8 @@ use {
     'SmiteshP/nvim-navic',
     config = function()
         require('nvim-navic').setup {
-            icons = {
-                File = ' ',
-                Module = ' ',
-                Namespace = ' ',
-                Package = ' ',
-                Class = ' ',
-                Method = ' ',
-                Property = ' ',
-                Field = ' ',
-                Constructor = ' ',
-                Enum = ' ',
-                Interface = ' ',
-                Function = ' ',
-                Variable = ' ',
-                Constant = ' ',
-                String = ' ',
-                Number = ' ',
-                Boolean = ' ',
-                Array = ' ',
-                Object = ' ',
-                Key = ' ',
-                Null = ' ',
-                EnumMember = ' ',
-                Struct = ' ',
-                Event = ' ',
-                Operator = ' ',
-                TypeParameter = ' '
-            },
-            highlight = true,
+            icons = Cmp_kinds,
+            highlight = false,
             separator = "  ",
             depth_limit = 0,
             depth_limit_indicator = "..",
@@ -1072,6 +1055,9 @@ use {
     -- TODO: create maps using which-key
     config = function()
         require("which-key").setup({
+            plugins = {
+                registers = false
+            },
             -- popup_mappings = {
             --     scroll_down = '<c-d>', -- binding to scroll down inside the popup
             --     scroll_up = '<c-u>', -- binding to scroll up inside the popup
@@ -1370,7 +1356,7 @@ use {
         --     },
         --     tabline = {},
         winbar = {
-            lualine_a = {
+            lualine_b = {
                 { navic.get_location, cond = navic.is_available }
             }
         },
@@ -1506,6 +1492,11 @@ use {
 }
 
 use {
+    'haringsrob/nvim_context_vt',
+    after = 'nvim-treesitter'
+}
+
+use {
     'm-demare/hlargs.nvim',
     after = 'nvim-treesitter',
     config = function()
@@ -1604,11 +1595,6 @@ use {
 --     -- TODO: https://github.com/ElPiloto/significant.nvim -- NOTE: awesome plugin but not usage now
 -- use 'MunifTanjim/nui.nvim'
 --     use {
---         'RishabhRD/nvim-cheat.sh',
---         'RishabhRD/popfix'
---     }
---     use 'ThePrimeagen/refactoring.nvim'
---     use {
 --         'andrewferrier/debugprint.nvim',
 --         config = function()
 --             require("debugprint").setup()
@@ -1617,7 +1603,6 @@ use {
 --     use 'andymass/vim-matchup'
 --     use 'booperlv/nvim-gomove'
 --     use 'chipsenkbeil/distant.nvim'
---     use 'chrisbra/NrrwRgn'
 --     use 'cuducos/yaml.nvim'
 --     use 'doums/suit.nvim'
 use {
@@ -1669,7 +1654,6 @@ use {
 --             vim.fn['firenvim#install'](0)
 --         end
 --     }
---     use 'haringsrob/nvim_context_vt'
 --     use 'jamestthompson3/nvim-remote-containers'
 --     use 'jbyuki/instant.nvim'
 --     use 'jbyuki/venn.nvim'
@@ -1716,12 +1700,22 @@ use 'lewis6991/impatient.nvim'
 --     use 'simnalamburt/vim-mundo'
 --     use 'sindrets/winshift.nvim'
 --     use 'tpope/vim-surround'
---     use {
---         'tversteeg/registers.nvim',
---         config = function()
---             vim.cmd[[let g:registers_window_border = "rounded"]]
---         end
---     }
+use {
+    'tversteeg/registers.nvim',
+    config = function()
+        require("registers").setup({
+            show = '*+"',
+            show_empty = false,
+            register_user_command = false,
+            symbols = {
+                tab = '»'
+            },
+            window = {
+                border = 'rounded'
+            }
+        })
+    end
+}
 end
 })
 
