@@ -8,10 +8,51 @@
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-" lua require('impatient')
+lua require('impatient')
 " call plug#begin()
 " call plug#end()
 " lua require('plugins')
+lua << EOF
+vim.g.cmp_kinds = {
+    Array = ' ',
+    Boolean = ' ',
+    Class = ' ',
+    Color = ' ',
+    Constant = ' ',
+    Constructor = ' ',
+    Enum = ' ',
+    EnumMember = ' ',
+    Event = ' ',
+    Field = ' ',
+    File = ' ',
+    Folder = ' ',
+    Function = ' ',
+    History = ' ',
+    Interface = ' ',
+    Key = ' ',
+    Keyword = ' ',
+    Method = ' ',
+    Module = ' ',
+    Namespace = ' ',
+    Null = ' ',
+    Number = ' ',
+    Object = ' ',
+    Operator = ' ',
+    Options = ' ',
+    Package = ' ',
+    Property = ' ',
+    Reference = ' ',
+    Snippet = ' ',
+    String = ' ',
+    Struct = ' ',
+    Text = ' ',
+    TypeParameter = ' ',
+    Unit = ' ',
+    Value = ' ',
+    Variable = ' '
+}
+EOF
+
 autocmd BufRead plugins.lua lua require('plugins')
 " }}}
 
@@ -89,7 +130,7 @@ set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
-colorscheme nightfox           " Set colorscheme
+colorscheme duskfox           " Set colorscheme
 "hi NonText guifg=grey70 guibg=#e4e4e4
 highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
