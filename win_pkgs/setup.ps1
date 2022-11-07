@@ -1,6 +1,7 @@
 $scoop_pkgs = @(
     "bat",
     "lazygit"
+    "ripgrep"
 )
 
 $winget_pkgs = @(

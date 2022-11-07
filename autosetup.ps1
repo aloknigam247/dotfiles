@@ -138,7 +138,7 @@ function scoop_install {
         if ($status -eq $true) {
             Write-Verbose "Package $pkg already installed" -verbose
         } else {
-            scoop install $pkg
+            scoop install --no-update-scoop $pkg
         }
     }
 }
