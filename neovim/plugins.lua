@@ -187,6 +187,8 @@ use {
     end
 }
 
+--use 'melkster/modicator.nvim'
+
 use {
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
@@ -220,65 +222,76 @@ use {
 --     use 'tjdevries/colorbuddy.vim'
 -- << Light >>
 -- use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
---     use 'Mofiqul/adwaita.nvim'
---     use 'NLKNguyen/papercolor-theme'
---     use 'Th3Whit3Wolf/one-nvim'
---     use 'Th3Whit3Wolf/onebuddy'
---     use 'ayu-theme/ayu-vim'
---     use 'catppuccin/nvim'
---     use 'jsit/toast.vim'
---     use 'marko-cerovac/material.nvim'
---     use 'mcchrish/zenbones.nvim'
---     use 'olimorris/onedarkpro.nvim'
---     use 'projekt0n/github-nvim-theme'
---     use 'rafamadriz/neon'
---     use 'rmehri01/onenord.nvim'
---     use 'rose-pine/neovim'
---     use 'sainnhe/edge'
---     use 'sainnhe/everforest'
--- 
+-- use 'Mofiqul/adwaita.nvim'
+-- use 'NLKNguyen/papercolor-theme'
+-- use 'Th3Whit3Wolf/one-nvim'
+-- use 'Th3Whit3Wolf/onebuddy'
+-- use 'catppuccin/nvim'
+-- use 'jsit/toast.vim'
+-- use 'marko-cerovac/material.nvim'
+-- use 'mcchrish/zenbones.nvim'
+-- use 'olimorris/onedarkpro.nvim'
+-- use 'projekt0n/github-nvim-theme'
+-- use 'rafamadriz/neon'
+-- use 'rmehri01/onenord.nvim'
+-- use 'rose-pine/neovim'
+-- use 'sainnhe/edge'
+-- use 'sainnhe/everforest'
+-- use 'Shatur/neovim-ayu'
+-- use 'atelierbram/Base2Tone-nvim'
+-- use 'ray-x/starry.nvim' -- limestone
+-- use 'Tsuzat/NeoSolarized.nvim'
+
 --     -- << Dark >>
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
---     use 'Mofiqul/adwaita.nvim'
---     use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
---     use 'Th3Whit3Wolf/one-nvim'
---     use 'ayu-theme/ayu-vim'
---     use 'cpea2506/one_monokai.nvim'
---     use 'fenetikm/falcon'
---     use 'glepnir/zephyr-nvim'
---     use 'kaiuri/nvim-juliana'
---     use 'kartikp10/noctis.nvim'
---     use 'lmburns/kimbox'
---     use 'marko-cerovac/material.nvim'
---     use 'maxmx03/FluoroMachine.nvim'
---     use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
---     use 'mhartington/oceanic-next'
---     use 'ntk148v/vim-horizon'
---     use 'nxvu699134/vn-night.nvim'
---     use 'olimorris/onedarkpro.nvim'
---     use 'projekt0n/github-nvim-theme'
---     use 'rafalbromirski/vim-aurora'
---     use 'rafamadriz/neon'
---     use 'ray-x/aurora'
---     use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
---     use 'rebelot/kanagawa.nvim'
---     use 'rmehri01/onenord.nvim'
---     use 'rockyzhang24/arctic.nvim'
---     use 'rose-pine/neovim'
---     use 'sainnhe/edge'
---     use 'sainnhe/everforest'
---     use 'sainnhe/sonokai'
---     use 'sam4llis/nvim-tundra'
---     use 'savq/melange'
---     use 'shaunsingh/moonlight.nvim'
---     use 'sickill/vim-monokai'
---     use 'tanvirtin/monokai.nvim'
---     use 'tiagovla/tokyodark.nvim'
---     use 'titanzero/zephyrium'
---     use 'tjdevries/gruvbuddy.nvim'
---     use 'tomasiser/vim-code-dark'
---     use 'wuelnerdotexe/vim-enfocado'
---     use 'yashguptaz/calvera-dark.nvim'
+-- use 'Mofiqul/adwaita.nvim'
+-- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
+-- use 'Th3Whit3Wolf/one-nvim'
+-- use 'Shatur/neovim-ayu'
+-- use 'cpea2506/one_monokai.nvim'
+-- use 'fenetikm/falcon'
+-- use 'Hoffs/theme-sunset.nvim'
+-- use 'kvrohit/mellow.nvim'
+-- use 'Tsuzat/NeoSolarized.nvim'
+-- use 'atelierbram/Base2Tone-nvim'
+-- use 'glepnir/zephyr-nvim'
+-- use 'kaiuri/nvim-juliana'
+-- use 'kartikp10/noctis.nvim'
+-- use 'lmburns/kimbox'
+-- use 'LunarVim/darkplus.nvim'
+-- use 'w3barsi/barstrata.nvim'
+-- use 'marko-cerovac/material.nvim'
+-- use 'maxmx03/FluoroMachine.nvim'
+-- use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
+-- use 'mhartington/oceanic-next'
+-- use 'ntk148v/vim-horizon'
+-- use 'nxvu699134/vn-night.nvim'
+-- use 'olimorris/onedarkpro.nvim'
+-- use 'projekt0n/github-nvim-theme'
+-- use 'rafalbromirski/vim-aurora'
+-- use 'rafamadriz/neon'
+-- use 'ray-x/aurora'
+-- use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
+-- use 'rebelot/kanagawa.nvim'
+-- use 'rmehri01/onenord.nvim'
+-- use 'rockyzhang24/arctic.nvim'
+-- use 'rose-pine/neovim'
+-- use 'sainnhe/edge'
+-- use 'sainnhe/everforest'
+-- use 'sainnhe/sonokai'
+-- use 'sam4llis/nvim-tundra'
+-- use 'Yazeed1s/oh-lucy.nvim'
+-- use 'luisiacc/gruvbox-baby'
+-- use 'savq/melange'
+-- use 'shaunsingh/moonlight.nvim'
+-- use 'sickill/vim-monokai'
+-- use 'tanvirtin/monokai.nvim'
+-- use 'tiagovla/tokyodark.nvim'
+-- use 'titanzero/zephyrium'
+-- use 'tjdevries/gruvbuddy.nvim'
+-- use 'tomasiser/vim-code-dark'
+-- use 'wuelnerdotexe/vim-enfocado'
+-- use 'yashguptaz/calvera-dark.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1507,7 +1520,9 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- use 'gorbit99/codewindow.nvim'
 use 'doums/suit.nvim'
+-- use 'folke/drop.nvim'
 -- use({
 --   'folke/noice.nvim',
 --   config = function()
@@ -1538,6 +1553,7 @@ use {
 }
 
 -- https://github.com/ElPiloto/significant.nvim -- NOTE: awesome plugin but not usage now
+-- https://github.com/NarutoXY/silicon.lua
 
 use {
     'andrewferrier/debugprint.nvim',
@@ -1594,6 +1610,8 @@ use {
 -- }
 -- use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
 
+-- https://github.com/krivahtoo/silicon.nvim
+
 use 'kylechui/nvim-surround'
 
 --     -- TODO: https://github.com/linty-org/readline.nvim
@@ -1609,7 +1627,9 @@ use {
     end
 }
 
--- use 'ojroques/vim-oscyank' --NOTE: not required now
+-- use 'ojroques/vim-oscyank' -- NOTE: not required now
+
+-- use 'pechorin/any-jump.vim' -- NOTE:does not use LSP 
 
 use 'rickhowe/spotdiff.vim'
 
