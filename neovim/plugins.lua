@@ -7,6 +7,7 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
     { '─', 'FloatBorder' },
@@ -21,7 +22,6 @@ local border_shape = {
 vim.cmd[[autocmd User PackerCompileDone lua vim.notify("PackerCompile Done", vim.log.levels.INFO)]]
 
 require('packer').startup({
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 config = {
     auto_clean = true,
     auto_reload_compiled = false,
@@ -52,8 +52,8 @@ config = {
 },
 -- <~>
 
-function(use)
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Packer     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+function(use)
 use 'wbthomason/packer.nvim'
 -- <~>
 
@@ -186,7 +186,12 @@ use {
     end
 }
 
---use 'melkster/modicator.nvim'
+use {
+    'melkster/modicator.nvim',
+    config = function()
+        require('modicator').setup()
+    end
+}
 
 use {
     'norcalli/nvim-colorizer.lua',
@@ -211,7 +216,7 @@ use {
 
 use {
     'tribela/vim-transparent',
-    cmd = 'TransparentEnable'
+    cmd = 'TransparentToggle'
 }
 -- <~>
 
@@ -223,8 +228,11 @@ use {
 -- use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 -- use 'Mofiqul/adwaita.nvim'
 -- use 'NLKNguyen/papercolor-theme'
+-- use 'Shatur/neovim-ayu'
 -- use 'Th3Whit3Wolf/one-nvim'
 -- use 'Th3Whit3Wolf/onebuddy'
+-- use 'Tsuzat/NeoSolarized.nvim'
+-- use 'atelierbram/Base2Tone-nvim'
 -- use 'catppuccin/nvim'
 -- use 'jsit/toast.vim'
 -- use 'marko-cerovac/material.nvim'
@@ -232,33 +240,31 @@ use {
 -- use 'olimorris/onedarkpro.nvim'
 -- use 'projekt0n/github-nvim-theme'
 -- use 'rafamadriz/neon'
+-- use 'ray-x/starry.nvim' -- limestone
 -- use 'rmehri01/onenord.nvim'
 -- use 'rose-pine/neovim'
 -- use 'sainnhe/edge'
 -- use 'sainnhe/everforest'
--- use 'Shatur/neovim-ayu'
--- use 'atelierbram/Base2Tone-nvim'
--- use 'ray-x/starry.nvim' -- limestone
--- use 'Tsuzat/NeoSolarized.nvim'
 
 --     -- << Dark >>
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
+-- use 'Hoffs/theme-sunset.nvim'
+-- use 'LunarVim/darkplus.nvim'
 -- use 'Mofiqul/adwaita.nvim'
 -- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
--- use 'Th3Whit3Wolf/one-nvim'
 -- use 'Shatur/neovim-ayu'
+-- use 'Th3Whit3Wolf/one-nvim'
+-- use 'Tsuzat/NeoSolarized.nvim'
+-- use 'Yazeed1s/oh-lucy.nvim'
+-- use 'atelierbram/Base2Tone-nvim'
 -- use 'cpea2506/one_monokai.nvim'
 -- use 'fenetikm/falcon'
--- use 'Hoffs/theme-sunset.nvim'
--- use 'kvrohit/mellow.nvim'
--- use 'Tsuzat/NeoSolarized.nvim'
--- use 'atelierbram/Base2Tone-nvim'
 -- use 'glepnir/zephyr-nvim'
 -- use 'kaiuri/nvim-juliana'
 -- use 'kartikp10/noctis.nvim'
+-- use 'kvrohit/mellow.nvim'
 -- use 'lmburns/kimbox'
--- use 'LunarVim/darkplus.nvim'
--- use 'w3barsi/barstrata.nvim'
+-- use 'luisiacc/gruvbox-baby'
 -- use 'marko-cerovac/material.nvim'
 -- use 'maxmx03/FluoroMachine.nvim'
 -- use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
@@ -279,8 +285,6 @@ use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 -- use 'sainnhe/everforest'
 -- use 'sainnhe/sonokai'
 -- use 'sam4llis/nvim-tundra'
--- use 'Yazeed1s/oh-lucy.nvim'
--- use 'luisiacc/gruvbox-baby'
 -- use 'savq/melange'
 -- use 'shaunsingh/moonlight.nvim'
 -- use 'sickill/vim-monokai'
@@ -289,6 +293,7 @@ use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 -- use 'titanzero/zephyrium'
 -- use 'tjdevries/gruvbuddy.nvim'
 -- use 'tomasiser/vim-code-dark'
+-- use 'w3barsi/barstrata.nvim'
 -- use 'wuelnerdotexe/vim-enfocado'
 -- use 'yashguptaz/calvera-dark.nvim'
 -- <~>
@@ -360,8 +365,8 @@ use {
                 end
             },
             mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
-                -- ['<C-b>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
-                -- ['<C-f>'] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
+                ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
+                ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
             }),
@@ -598,9 +603,56 @@ use {
     'nvim-neo-tree/neo-tree.nvim',
     cmd = 'Neotree',
     config = function()
+        vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
         require('neo-tree').setup({
+            default_component_configs = {
+                git_status = {
+                    symbols = {
+                        -- Change type
+                        added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+                        modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                        deleted   = "",-- this can only be used in the git_status source
+                        renamed   = "",-- this can only be used in the git_status source
+                        -- Status type
+                        untracked = "",
+                        ignored   = "",
+                        unstaged  = "",
+                        staged    = "",
+                        conflict  = "",
+                    }
+                },
+                icon = {
+                    folder_closed = '',
+                    folder_open = '',
+                    folder_empty = '',
+                    default = ''
+                },
+                indent = {
+                    last_indent_marker = '╰'
+                }
+            },
+            diagnostics = {
+              autopreview = true, -- Whether to automatically enable preview mode
+              autopreview_config = {}, -- Config table to pass to autopreview (for example `{ use_float = true }`)
+              autopreview_event = "neo_tree_buffer_enter", -- The event to enable autopreview upon (for example `"neo_tree_window_after_open"`)
+              bind_to_cwd = true,
+              diag_sort_function = "severity", -- "severity" means diagnostic items are sorted by severity in addition to their positions.
+                                               -- "position" means diagnostic items are sorted strictly by their positions.
+                                               -- May also be a function.
+              follow_behavior = { -- Behavior when `follow_current_file` is true
+                always_focus_file = true, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
+                expand_followed = true, -- Ensure the node of the followed file is expanded
+                collapse_others = true, -- Ensure other nodes are collapsed
+              },
+            },
             filesystem = {
+                follow_current_file = true,
                 hijack_netrw_behavior = 'open_current'
+            },
+            popup_border_style = "rounded",
+            sources = {
+                "diagnostics",
+                "filesystem"
             }
         })
     end
@@ -1330,16 +1382,16 @@ use {
         --         lualine_z = {}
         --     },
         --     tabline = {},
-        winbar = {
-            lualine_b = {
-                { navic.get_location, cond = navic.is_available }
-            }
-        },
-        inactive_winbar = {
-            lualine_b = {
-                { navic.get_location, cond = navic.is_available }
-            }
-        },
+        -- winbar = {
+        --     lualine_b = {
+        --         { navic.get_location, cond = navic.is_available }
+        --     }
+        -- },
+        -- inactive_winbar = {
+        --     lualine_b = {
+        --         { navic.get_location, cond = navic.is_available }
+        --     }
+        -- },
         --     extensions = {}
         }
     end,
