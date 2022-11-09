@@ -162,7 +162,12 @@ function! SetColo(scheme)
 endfunction
 
 let dark_colos = [
+            \ 'NeoSolarized',
+            \ 'PaperColor',
             \ 'adwaita',
+            \ 'ayu-dark',
+            \ 'ayu-light',
+            \ 'ayu-mirage',
             \ 'blue',
             \ 'carbonfox',
             \ 'darkblue',
@@ -183,6 +188,9 @@ let dark_colos = [
             \ 'murphy',
             \ 'nightfox',
             \ 'nordfox',
+            \ 'oh-lucy',
+            \ 'oh-lucy-evening',
+            \ 'one-nvim',
             \ 'pablo',
             \ 'peachpuff',
             \ 'quiet',

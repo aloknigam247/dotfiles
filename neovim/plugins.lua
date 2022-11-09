@@ -250,11 +250,11 @@ use {
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 use 'LunarVim/darkplus.nvim'
 use 'Mofiqul/adwaita.nvim'
--- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
--- use 'Shatur/neovim-ayu'
--- use 'Th3Whit3Wolf/one-nvim'
--- use 'Tsuzat/NeoSolarized.nvim'
--- use 'Yazeed1s/oh-lucy.nvim'
+use 'NLKNguyen/papercolor-theme'
+use 'Shatur/neovim-ayu'
+use 'Th3Whit3Wolf/one-nvim'
+use 'Tsuzat/NeoSolarized.nvim'
+use 'Yazeed1s/oh-lucy.nvim'
 -- use 'atelierbram/Base2Tone-nvim'
 -- use 'cpea2506/one_monokai.nvim'
 -- use 'fenetikm/falcon'
@@ -1680,7 +1680,7 @@ use {
 
 -- use 'ojroques/vim-oscyank' -- NOTE: not required now
 
--- use 'pechorin/any-jump.vim' -- NOTE:does not use LSP 
+-- use 'pechorin/any-jump.vim' -- NOTE: does not use LSP 
 
 use 'rickhowe/spotdiff.vim'
 
