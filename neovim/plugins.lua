@@ -698,9 +698,9 @@ use {
             signs = {
                 add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
                 change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
-                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn', show_count = true},
-                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn', show_count = true},
+                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
             },
             current_line_blame_formatter_opts = {
                 relative_time = true
@@ -1570,7 +1570,8 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use 'gorbit99/codewindow.nvim'
+use 'gorbit99/codewindow.nvim'
+
 use 'doums/suit.nvim'
 -- use 'folke/drop.nvim'
 -- use({
@@ -1711,13 +1712,13 @@ end
 -- -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
 -- -- ━━━━━━━━━━━━━━━━━━━❰ configs ❱━━━━━━━━━━━━━━━━━━━ --
 -- -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
--- 
+--
 -- --------------------------
 -- -- telescope-dap.nvim
 -- pcall(require'telescope'.load_extension, 'dap')
 -- --------------------------
--- 
--- 
+--
+--
 -- --------------------------
 -- -- nvim-dap-ui
 -- require("dapui").setup({
@@ -1821,6 +1822,4 @@ end
 
 -- maps.n["<leader>u"] = { function() toggle_url_match() end, desc = "Toggle URL Highlights" }
 -- }}}
-
-
 -- vim: fmr=</>,<~>  fdm=marker
