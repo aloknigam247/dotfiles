@@ -248,7 +248,6 @@ use {
 
 --     -- << Dark >>
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
--- use 'Hoffs/theme-sunset.nvim'
 -- use 'LunarVim/darkplus.nvim'
 -- use 'Mofiqul/adwaita.nvim'
 -- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
