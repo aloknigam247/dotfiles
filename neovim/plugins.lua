@@ -186,12 +186,12 @@ use {
     end
 }
 
-use {
-    'melkster/modicator.nvim',
-    config = function()
-        require('modicator').setup()
-    end
-}
+-- use {
+--     'melkster/modicator.nvim',
+--     config = function()
+--         require('modicator').setup()
+--     end
+-- }
 
 use {
     'norcalli/nvim-colorizer.lua',
@@ -248,8 +248,8 @@ use {
 
 --     -- << Dark >>
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
--- use 'LunarVim/darkplus.nvim'
--- use 'Mofiqul/adwaita.nvim'
+use 'LunarVim/darkplus.nvim'
+use 'Mofiqul/adwaita.nvim'
 -- use 'NLKNguyen/papercolor-theme' -- BUG: space · color is not good
 -- use 'Shatur/neovim-ayu'
 -- use 'Th3Whit3Wolf/one-nvim'

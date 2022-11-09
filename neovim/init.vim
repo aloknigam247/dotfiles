@@ -130,7 +130,6 @@ set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
-colorscheme duskfox          " Set colorscheme
 "hi NonText guifg=grey70 guibg=#e4e4e4
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
@@ -155,12 +154,47 @@ autocmd BufNewFile,BufRead *.v set filetype=verilog     " Set .v filetype as bas
 autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as bash
 
 " Filetype functions
-function! FT_settings(scheme)
+function! SetColo(scheme)
     execute "colorscheme " .. a:scheme
-    hi NonText guifg=grey70 guibg=#e4e4e4
-    highlight clear CursorLine
-    highlight clear CursorLineNR
+    " hi NonText guifg=grey70 guibg=#e4e4e4
+    " highlight clear CursorLine
+    " highlight clear CursorLineNR
 endfunction
+
+let dark_colos = [
+            \ 'adwaita',
+            \ 'blue',
+            \ 'carbonfox',
+            \ 'darkblue',
+            \ 'darkplus',
+            \ 'dawnfox',
+            \ 'dayfox',
+            \ 'default',
+            \ 'delek',
+            \ 'dessert',
+            \ 'duskfox',
+            \ 'elflord',
+            \ 'evening',
+            \ 'habamax',
+            \ 'industry',
+            \ 'koehler',
+            \ 'lunarperche',
+            \ 'morning',
+            \ 'murphy',
+            \ 'nightfox',
+            \ 'nordfox',
+            \ 'pablo',
+            \ 'peachpuff',
+            \ 'quiet',
+            \ 'ron',
+            \ 'shine',
+            \ 'slate',
+            \ 'terafox',
+            \ 'torte',
+            \ 'zellner',
+            \ ]
+let ind = rand() % len(dark_colos)
+call SetColo(dark_colos[ind])
 
 " Filetype autocommands
 "autocmd FileType lua call FT_settings("morning")
