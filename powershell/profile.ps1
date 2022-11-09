@@ -294,7 +294,7 @@ function prompt {
         $dir_icon = ""
         $git_branch = "  $branch "
     }
-    if ($SSH_CLIENT -ne $null) {
+    if ($env:SSH_CLIENT -ne $null) {
         $dir_icon = ""
     }
 
