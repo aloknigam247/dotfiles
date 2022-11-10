@@ -221,9 +221,9 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━❰ Colorscheme ❱━━━━━━━━━━━━━━━━━━━</>
---     -- TODO: https://github.com/lifepillar/vim-colortemplate
---     use 'rktjmp/lush.nvim'
---     use 'tjdevries/colorbuddy.vim'
+-- https://github.com/lifepillar/vim-colortemplate
+-- use 'rktjmp/lush.nvim'
+-- use 'tjdevries/colorbuddy.vim'
 -- << Light >>
 -- use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 -- use 'Mofiqul/adwaita.nvim'
