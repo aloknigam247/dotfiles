@@ -69,12 +69,16 @@ function pdbg {
 }
 
 # Msys2 functions
+function bash {
+    C:\msys64\usr\bin\bash $args
+}
+
 function grep {
     C:\msys64\usr\bin\grep --color=auto -En $args
 }
 
 function fnd {
-    C:\msys64\usr\bin\find.exe $args  | C:\msys64\usr\bin\sed 's|/|\\|g'
+    C:\msys64\usr\bin\find.exe $args | C:\msys64\usr\bin\sed 's|/|\\|g'
 }
 
 function la {

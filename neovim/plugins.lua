@@ -792,6 +792,8 @@ use 'sindrets/diffview.nvim' -- Archieved
 --         xml = '謹 xml',
 --     },
 -- }
+-- use 'DaikyXendo/nvim-material-icon'
+
 use 'kyazdani42/nvim-web-devicons'
 -- <~>
 
