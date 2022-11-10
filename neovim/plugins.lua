@@ -1683,9 +1683,7 @@ use {
 use {
     'ojroques/vim-oscyank',
     cond = function()
-        local res = os.getenv("SSH_CLIENT") ~= nil
-        vim.notify("oscyank: " .. tostring(res))
-        return res
+        return os.getenv("SSH_CLIENT") ~= nil
     end,
     config = function()
         vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif]]
