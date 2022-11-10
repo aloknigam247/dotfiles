@@ -70,7 +70,7 @@ function pdbg {
 
 # Msys2 functions
 function bash {
-    C:\msys64\usr\bin\bash $args
+    C:\msys64\usr\bin\bash -c $args
 }
 
 function grep {
