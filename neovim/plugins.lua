@@ -1684,7 +1684,7 @@ use {
     'ojroques/vim-oscyank',
     cond = function()
         local res = os.getenv("SSH_CLIENT") == nil
-        vim.notify("oscyank: " .. res)
+        vim.notify("oscyank: " .. tostring(res))
         return res
     end,
     config = function()
