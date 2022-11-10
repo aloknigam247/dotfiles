@@ -229,7 +229,7 @@ call SetColo(dark_colos[ind])
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 imap <C-Left> <C-\><C-O>B
-imap <C-Right> <C-\><C-O>E<C-\><C-O>l
+imap <C-Right> <C-\><C-O>E<C-\><C-O>a
 imap <C-a> <C-\><C-O>^
 imap <C-e> <C-\><C-O>$
 map <C-Left> B

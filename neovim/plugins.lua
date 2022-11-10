@@ -1401,8 +1401,7 @@ use {
 
 --     -- Tab Line:</>
 --     -- `````````
---     -- TODO: https://github.com/B4mbus/nvim-headband
---     --[[ use {
+--     use {
 --         'akinsho/bufferline.nvim',
 --         config = function()
 --             require("bufferline").setup {
@@ -1414,7 +1413,7 @@ use {
 --                 }
 --             }
 --         end
---     } ]]
+--     }
 --     -- use 'mengelbrecht/lightline-bufferline'
 --     use 'nanozuki/tabby.nvim'
 -- <~>
@@ -1435,7 +1434,7 @@ use {
     'nvim-telescope/telescope.nvim',
     config = function()
         require('telescope').setup({
-            externsions = {
+            extensions = {
                 heading = {
                     treesitter = true
                 }
@@ -1465,18 +1464,17 @@ use {
 -- https://github.com/voldikss/vim-floaterm
 -- <~>
 
---     -- Test & Run:</>
---     -- `````
---     -- TODO: https://github.com/EthanJWright/vs-tasks.nvim
---     -- TODO: https://github.com/andythigpen/nvim-coverage
---     -- TODO: https://github.com/is0n/jaq-nvim
---     -- TODO: https://github.com/jubnzv/mdeval.nvim
---     -- TODO: https://github.com/klen/nvim-test
---     -- TODO: https://github.com/michaelb/sniprun
---     -- TODO: https://github.com/nvim-neotest/neotest
---     -- TODO: https://github.com/pianocomposer321/yabs.nvim
---     -- TODO: https://github.com/smzm/hydrovim
---     -- TODO: https://github.com/stevearc/overseer.nvim
+-- Test & Run:</>
+-- TODO: https://github.com/EthanJWright/vs-tasks.nvim
+-- TODO: https://github.com/andythigpen/nvim-coverage
+-- TODO: https://github.com/is0n/jaq-nvim
+-- TODO: https://github.com/jubnzv/mdeval.nvim
+-- TODO: https://github.com/klen/nvim-test
+-- TODO: https://github.com/michaelb/sniprun
+-- TODO: https://github.com/nvim-neotest/neotest
+-- TODO: https://github.com/pianocomposer321/yabs.nvim
+-- TODO: https://github.com/smzm/hydrovim
+-- TODO: https://github.com/stevearc/overseer.nvim
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1563,7 +1561,11 @@ use {
 --         end
 --     }
 
--- use 'nvim-treesitter/playground'
+use {
+    'nvim-treesitter/playground',
+    after = 'nvim-treesitter',
+    cmd = 'TSHighlightCapturesUnderCursor'
+}
 
 use {
     'p00f/nvim-ts-rainbow',
@@ -1667,8 +1669,6 @@ use {
 
 use 'kylechui/nvim-surround'
 
---     -- TODO: https://github.com/linty-org/readline.nvim
-
 use 'lewis6991/impatient.nvim'
 
 use 'mg979/vim-visual-multi'
@@ -1681,8 +1681,10 @@ use {
 }
 
 use {
+    -- Lua copy https://github.com/ojroques/nvim-osc52
     'ojroques/vim-oscyank',
     cond = function()
+        -- Check if connection is ssh
         return os.getenv("SSH_CLIENT") ~= nil
     end,
     config = function()
@@ -1690,7 +1692,7 @@ use {
     end
 }
 
--- use 'pechorin/any-jump.vim' -- NOTE: does not use LSP 
+-- use 'pechorin/any-jump.vim' -- NOTE: does not use LSP
 
 use 'rickhowe/spotdiff.vim'
 
