@@ -140,7 +140,8 @@ function gs {
 function scmd {
     $cmd = "/k SET INETROOT=E:\substrate& cd /d E:\substrate& E:\substrate\tools\path1st\myenv.cmd"
     $cmd = $cmd + "& cd /d " + (Get-Location) + "& " + $args[0]
-    echo $cmd
+    Write-Host -ForegroundColor Blue "Executing: " $cmd
+    cmd $cmd
 }
 
 function Format-Text {
