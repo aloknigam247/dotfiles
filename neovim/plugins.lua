@@ -1683,7 +1683,7 @@ use {
 use {
     'ojroques/vim-oscyank',
     cond = function()
-        local res = os.getenv("SSH_CLIENT") == nil
+        local res = os.getenv("SSH_CLIENT") ~= nil
         vim.notify("oscyank: " .. tostring(res))
         return res
     end,
