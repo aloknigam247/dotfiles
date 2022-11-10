@@ -176,7 +176,7 @@ let dark_colos = [
             \ 'dayfox',
             \ 'default',
             \ 'delek',
-            \ 'dessert',
+            \ 'desert',
             \ 'duskfox',
             \ 'elflord',
             \ 'evening',
