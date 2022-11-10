@@ -112,6 +112,7 @@
                 "guid": "{7ac9e988-059d-49bc-8b24-b3d2014480f8}",
                 "hidden": false,
                 "name": "DevBox",
+                "opacity": 75,
                 "tabTitle": "DevBox"
             }
         ]
