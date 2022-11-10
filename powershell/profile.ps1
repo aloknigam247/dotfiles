@@ -70,7 +70,7 @@ function pdbg {
 
 # Msys2 functions
 function bash {
-    C:\msys64\usr\bin\bash -c $args
+    C:\msys64\usr\bin\bash -c $args[0]
 }
 
 function grep {
@@ -134,6 +134,13 @@ function desktop {
 # Git functions
 function gs {
     git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args
+}
+
+# Substrate functions
+function scmd {
+    $cmd = "/k SET INETROOT=E:\substrate& cd /d E:\substrate& E:\substrate\tools\path1st\myenv.cmd"
+    $cmd = $cmd + "& cd /d " + (Get-Location) + "& " + $args[0]
+    echo $cmd
 }
 
 function Format-Text {
