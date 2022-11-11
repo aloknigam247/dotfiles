@@ -1596,7 +1596,13 @@ use 'doums/suit.nvim'
 use {
     'rcarriga/nvim-notify',
     config = function()
-        vim.notify = require("notify")
+        local notify = require('notify')
+        notify.setup({
+            minimum_width = 0,
+            render = 'minimal',
+            stages = 'slide'
+        })
+        vim.notify = notify
     end
 }
 -- <~>

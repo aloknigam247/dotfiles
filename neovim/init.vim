@@ -8,11 +8,109 @@
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-lua require('impatient')
 " call plug#begin()
 " call plug#end()
-" lua require('plugins')
 lua << EOF
+require('impatient')
+vim.notify = require('notify')
+function ColoRand()
+    local colos = {
+            'NeoSolarized',
+            'PaperColor',
+            'adwaita',
+            'ayu-dark',
+            'ayu-light',
+            'ayu-mirage',
+            'base2tone_cave_dark',
+            'base2tone_cave_light',
+            'base2tone_desert_dark',
+            'base2tone_desert_light',
+            'base2tone_drawbridge_dark',
+            'base2tone_drawbridge_light',
+            'base2tone_earth_dark',
+            'base2tone_earth_light',
+            'base2tone_evening_dark',
+            'base2tone_evening_light',
+            'base2tone_field_dark',
+            'base2tone_field_light',
+            'base2tone_forest_dark',
+            'base2tone_forest_light',
+            'base2tone_garden_dark',
+            'base2tone_garden_light',
+            'base2tone_heath_dark',
+            'base2tone_heath_light',
+            'base2tone_lake_dark',
+            'base2tone_lake_light',
+            'base2tone_lavender_dark',
+            'base2tone_lavender_light',
+            'base2tone_mall_dark',
+            'base2tone_mall_light',
+            'base2tone_meadow_dark',
+            'base2tone_meadow_light',
+            'base2tone_morning_dark',
+            'base2tone_morning_light',
+            'base2tone_motel_dark',
+            'base2tone_motel_light',
+            'base2tone_pool_dark',
+            'base2tone_pool_light',
+            'base2tone_porch_dark',
+            'base2tone_porch_light',
+            'base2tone_sea_dark',
+            'base2tone_sea_light',
+            'base2tone_space_dark',
+            'base2tone_space_light',
+            'base2tone_suburb_dark',
+            'base2tone_suburb_light',
+            'blue',
+            'carbonfox',
+            'darkblue',
+            'darkplus',
+            'dawnfox',
+            'dayfox',
+            'default',
+            'delek',
+            'desert',
+            'duskfox',
+            'elflord',
+            'evening',
+            'falcon',
+            'gruvbox-baby',
+            'habamax',
+            'industry',
+            'juliana',
+            'kimbox',
+            'koehler',
+            'lunarperche',
+            'mellow',
+            'morning',
+            'murphy',
+            'nightfox',
+            'noctis',
+            'nordfox',
+            'oh-lucy',
+            'oh-lucy-evening',
+            'one-nvim',
+            'one_monokai',
+            'pablo',
+            'peachpuff',
+            'quiet',
+            'ron',
+            'shine',
+            'slate',
+            'terafox',
+            'torte',
+            'zellner',
+            'zephyr',
+    }
+    math.randomseed(os.time())
+    local ind = math.random(0, table.getn(colos))
+    local cmd = "colorscheme " .. colos[ind]
+    vim.cmd(cmd)
+    vim.notify(cmd)
+end
+
+vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
+
 vim.g.cmp_kinds = {
     Array = ' ',
     Boolean = ' ',
@@ -130,6 +228,7 @@ set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
+ColoRand
 "hi NonText guifg=grey70 guibg=#e4e4e4
 " highlight clear CursorLine   " No underline on text when cursorline is on
 " highlight clear CursorLineNR " No underline on line numbers when cursorline is on
@@ -152,105 +251,6 @@ autocmd BufNewFile,BufRead *.cyt set filetype=sh        " Set cyt filetype as ba
 autocmd BufNewFile,BufRead *.make set filetype=make     " Set make filetype as Makefile
 autocmd BufNewFile,BufRead *.v set filetype=verilog     " Set .v filetype as bash
 autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as bash
-
-" Filetype functions
-function! SetColo(scheme)
-    execute "colorscheme " .. a:scheme
-    " hi NonText guifg=grey70 guibg=#e4e4e4
-    " highlight clear CursorLine
-    " highlight clear CursorLineNR
-endfunction
-
-let dark_colos = [
-            \ 'NeoSolarized',
-            \ 'PaperColor',
-            \ 'adwaita',
-            \ 'ayu-dark',
-            \ 'ayu-light',
-            \ 'ayu-mirage',
-            \ 'base2tone_cave_dark',
-            \ 'base2tone_cave_light',
-            \ 'base2tone_desert_dark',
-            \ 'base2tone_desert_light',
-            \ 'base2tone_drawbridge_dark',
-            \ 'base2tone_drawbridge_light',
-            \ 'base2tone_earth_dark',
-            \ 'base2tone_earth_light',
-            \ 'base2tone_evening_dark',
-            \ 'base2tone_evening_light',
-            \ 'base2tone_field_dark',
-            \ 'base2tone_field_light',
-            \ 'base2tone_forest_dark',
-            \ 'base2tone_forest_light',
-            \ 'base2tone_garden_dark',
-            \ 'base2tone_garden_light',
-            \ 'base2tone_heath_dark',
-            \ 'base2tone_heath_light',
-            \ 'base2tone_lake_dark',
-            \ 'base2tone_lake_light',
-            \ 'base2tone_lavender_dark',
-            \ 'base2tone_lavender_light',
-            \ 'base2tone_mall_dark',
-            \ 'base2tone_mall_light',
-            \ 'base2tone_meadow_dark',
-            \ 'base2tone_meadow_light',
-            \ 'base2tone_morning_dark',
-            \ 'base2tone_morning_light',
-            \ 'base2tone_motel_dark',
-            \ 'base2tone_motel_light',
-            \ 'base2tone_pool_dark',
-            \ 'base2tone_pool_light',
-            \ 'base2tone_porch_dark',
-            \ 'base2tone_porch_light',
-            \ 'base2tone_sea_dark',
-            \ 'base2tone_sea_light',
-            \ 'base2tone_space_dark',
-            \ 'base2tone_space_light',
-            \ 'base2tone_suburb_dark',
-            \ 'base2tone_suburb_light',
-            \ 'blue',
-            \ 'carbonfox',
-            \ 'darkblue',
-            \ 'darkplus',
-            \ 'dawnfox',
-            \ 'dayfox',
-            \ 'default',
-            \ 'delek',
-            \ 'desert',
-            \ 'duskfox',
-            \ 'elflord',
-            \ 'evening',
-            \ 'falcon',
-            \ 'gruvbox-baby',
-            \ 'habamax',
-            \ 'industry',
-            \ 'juliana',
-            \ 'kimbox',
-            \ 'koehler',
-            \ 'lunarperche',
-            \ 'mellow',
-            \ 'morning',
-            \ 'murphy',
-            \ 'nightfox',
-            \ 'noctis',
-            \ 'nordfox',
-            \ 'oh-lucy',
-            \ 'oh-lucy-evening',
-            \ 'one-nvim',
-            \ 'one_monokai',
-            \ 'pablo',
-            \ 'peachpuff',
-            \ 'quiet',
-            \ 'ron',
-            \ 'shine',
-            \ 'slate',
-            \ 'terafox',
-            \ 'torte',
-            \ 'zellner',
-            \ 'zephyr',
-            \ ]
-let ind = rand() % len(dark_colos)
-call SetColo(dark_colos[ind])
 
 " Filetype autocommands
 "autocmd FileType lua call FT_settings("morning")
