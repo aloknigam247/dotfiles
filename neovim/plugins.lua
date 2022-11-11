@@ -841,6 +841,8 @@ use {
     end
 }
 
+-- use 'joechrisellis/lsp-format-modifications.nvim'
+
 use {
     'liuchengxu/vista.vim',
     config = function()
