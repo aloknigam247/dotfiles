@@ -1,5 +1,6 @@
 $scoop_pkgs = @(
     "bat",
+    "dos2unix"
     "lazygit"
     "ripgrep"
 )
