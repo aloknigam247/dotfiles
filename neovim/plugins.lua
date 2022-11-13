@@ -157,7 +157,7 @@ use {
     config = function()
        vim.cmd[[
            hi IlluminatedWordText guibg = #59656F guifg = #FFFFFF
-           hi IlluminatedWordRead guibg = #F26419
+           hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
            hi IlluminatedWordWrite guibg = #1F7A8C
            hi LspReferenceText guibg = #679436
            hi LspReferenceWrite guibg = #A5BE00
@@ -1384,7 +1384,9 @@ use {
         --         lualine_y = {},
         --         lualine_z = {}
         --     },
-        --     tabline = {},
+        -- tabline = {
+        --     lualine_a = {'filename'},
+        -- },
         -- winbar = {
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
@@ -1417,7 +1419,7 @@ use {
 --         end
 --     }
 --     -- use 'mengelbrecht/lightline-bufferline'
---     use 'nanozuki/tabby.nvim'
+use 'nanozuki/tabby.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>

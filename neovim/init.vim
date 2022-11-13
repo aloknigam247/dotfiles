@@ -299,9 +299,10 @@ let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
 let g:neovide_remember_window_size = v:true
 let g:neovide_transparency=0.95
+map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 " }}}
 
-"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MISC       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MIS       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 
 let g:termdebug_wide = 163
