@@ -1,5 +1,6 @@
 $scoop_pkgs = @(
     "posh-git"
+    "zoxide"
 )
 
 $winget_pkgs = @(
