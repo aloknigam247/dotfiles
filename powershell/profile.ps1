@@ -126,6 +126,35 @@ function which($arg) {
     }
 }
 
+function sed {
+    [CmdletBinding()]
+    param (
+        [switch] $i,
+        [switch] $n,
+        [switch] $r,
+        [Parameter(Mandatory = $true)]
+        [string] $pattern,
+        [string[]] $files
+
+    )
+
+    # echo $PSBoundParameters
+
+    $param_n = $n ? '-n' : ''
+    $param_i = $i ? '-i' : ''
+    $param_r = $r ? '-r' : ''
+
+    foreach($file in $files) {
+        if($i) {
+            dos2unix -b -q $file
+        }
+        Invoke-Expression "C:\msys64\usr\bin\sed.exe $param_i $param_n $param_r $pattern $file"
+        if($i) {
+            unix2dos -b -q $file
+        }
+    }
+}
+
 # Path functions
 function desktop {
     Set-Location 'C:\Users\aloknigam\OneDrive - Microsoft\Desktop\'
