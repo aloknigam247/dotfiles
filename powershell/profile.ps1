@@ -328,6 +328,7 @@ Set-PSReadLineOption -Colors @{
 
 # Zoxide
 Invoke-Expression $(zoxide init --hook pwd powershell | Out-String)
+New-Alias -Name cd -Value Set-Location
 
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
