@@ -109,6 +109,7 @@ function ColoRand()
             { 'kanagawabones' },
             { 'kimbox' },
             { 'koehler' },
+            { 'lunaperche' },
             { 'material', function() vim.g.material_style = 'darker' end },
             { 'material', function() vim.g.material_style = 'deep ocean' end },
             { 'material', function() vim.g.material_style = 'lighter' end },
@@ -117,8 +118,9 @@ function ColoRand()
             { 'melange', function() vim.g.background = 'dark' end },
             { 'melange', function() vim.g.background = 'light' end },
             { 'mellow' },
-            { 'monnlight' },
+            { 'moonlight' },
             { 'morning' },
+            { 'mosel' },
             { 'murphy' },
             { 'neobones' },
             { 'neon', function() vim.g.neon_style = 'dark' end },
@@ -361,13 +363,20 @@ map <C-e> $
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-set guifont=VictorMono_NF:h13
-let g:neovide_cursor_vfx_mode = "pixiedust"
-let g:neovide_cursor_vfx_particle_lifetime=2
+let g:neovide_cursor_animation_length=0.13
+let g:neovide_cursor_trail_size = 0.8
+let g:neovide_cursor_vfx_mode = "railgun"
+let g:neovide_cursor_vfx_particle_density = 15.0
+let g:neovide_cursor_vfx_particle_lifetime=5
 let g:neovide_floating_blur_amount_x = 2.0
-let g:neovide_floating_blur_amount_y = 2.0
+let g:neovide_floating_blur_amount_y = 10.0
+let g:neovide_fullscreen = v:false
+let g:neovide_refresh_rate = 60
 let g:neovide_remember_window_size = v:true
+let g:neovide_scroll_animation_length = 0.0
 let g:neovide_transparency=0.95
+let g:neovide_underline_automatic_scaling = v:true
+set guifont=VictorMono_NF:h13
 map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 " }}}
 

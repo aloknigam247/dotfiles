@@ -247,16 +247,17 @@ use 'sainnhe/edge'
 use 'sainnhe/everforest'
 
 --     -- << Dark >>
+use 'Domeee/mosel.nvim'
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 use 'LunarVim/darkplus.nvim'
 use 'Mofiqul/adwaita.nvim'
 use 'NLKNguyen/papercolor-theme'
-use 'catppuccin/nvim'
 use 'Shatur/neovim-ayu'
 use 'Th3Whit3Wolf/one-nvim'
 use 'Tsuzat/NeoSolarized.nvim'
 use 'Yazeed1s/oh-lucy.nvim'
 use 'atelierbram/Base2Tone-nvim'
+use 'catppuccin/nvim'
 use 'cpea2506/one_monokai.nvim'
 use 'fenetikm/falcon'
 use 'glepnir/zephyr-nvim'
@@ -566,17 +567,19 @@ use 'f3fora/cmp-spell'
 
 -- -- Debugger:</>
 -- -- `````````
--- -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/PatschD/zippy.nvim
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/jayp0521/mason-nvim-dap.nvim
+-- https://github.com/nvim-telescope/telescope-vimspector.nvim
+-- https://github.com/puremourning/vimspector
+-- https://github.com/sakhnik/nvim-gdb
+-- https://github.com/theHamsta/nvim-dap-virtual-text
+-- https://github.com/tpope/vim-scriptease
+-- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
--- -- TODO: https://github.com/jayp0521/mason-nvim-dap.nvim
 -- use 'mfussenegger/nvim-dap'
 -- use 'mfussenegger/nvim-dap-python'
--- -- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
--- -- TODO: https://github.com/puremourning/vimspector
 -- use 'rcarriga/nvim-dap-ui'
--- -- TODO: https://github.com/sakhnik/nvim-gdb
--- -- TODO: https://github.com/theHamsta/nvim-dap-virtual-text
--- -- TODO: https://github.com/vim-scripts/Conque-GDB
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━❰ Doc Generater ❱━━━━━━━━━━━━━━━━━━━</>
@@ -1430,7 +1433,8 @@ use {
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'axkirillov/easypick.nvim' -- NOTE: No need now
-
+-- https://github.com/adoyle-h/ad-telescope-extensions.nvim
+-- https://github.com/princejoogie/dir-telescope.nvim
 use {
     'crispgm/telescope-heading.nvim',
     after = 'telescope.nvim',
@@ -1466,6 +1470,7 @@ use {
 -- https://github.com/elijahdanko/ttymux.nvim
 -- https://github.com/jlesquembre/nterm.nvim
 -- https://github.com/kassio/neoterm
+-- https://github.com/nat-418/termitary.nvim
 -- https://github.com/nikvdp/neomux
 -- https://github.com/numToStr/FTerm.nvim
 -- https://github.com/oberblastmeister/termwrapper.nvim
@@ -1584,6 +1589,11 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/nvim-zh/colorful-winsep.nvim
+-- https://github.com/petertriho/nvim-scrollbar
+-- https://github.com/lewis6991/satellite.nvim
+-- https://github.com/ziontee113/neo-minimap
+
 use 'gorbit99/codewindow.nvim'
 
 use 'doums/suit.nvim'
@@ -1618,6 +1628,15 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Utilities   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/cshuaimin/ssr.nvim
+-- https://github.com/cbochs/portal.nvim
+-- https://github.com/tommcdo/vim-exchange
+-- https://github.com/kwkarlwang/bufjump.nvim
+-- https://github.com/cbochs/grapple.nvim
+-- https://github.com/echasnovski/mini.nvim
+-- https://github.com/phaazon/notisys.nvim
+-- https://github.com/smjonas/live-command.nvim
+
 use {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
