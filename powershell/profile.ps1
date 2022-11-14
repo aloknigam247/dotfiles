@@ -326,6 +326,9 @@ Set-PSReadLineOption -Colors @{
     "String" = (Format-Text -headOnly -fg "#E4FF1A");
 }
 
+# Zoxide
+Invoke-Expression $(zoxide init --hook pwd powershell | Out-String)
+
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
