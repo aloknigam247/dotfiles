@@ -220,37 +220,38 @@ use {
 }
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Colorscheme ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/lifepillar/vim-colortemplate
 -- use 'rktjmp/lush.nvim'
 -- use 'tjdevries/colorbuddy.vim'
 -- << Light >>
--- use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
--- use 'Mofiqul/adwaita.nvim'
--- use 'NLKNguyen/papercolor-theme'
--- use 'Shatur/neovim-ayu'
--- use 'Th3Whit3Wolf/one-nvim'
+use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
+use 'Mofiqul/adwaita.nvim'
+use 'NLKNguyen/papercolor-theme'
+use 'Shatur/neovim-ayu'
+use 'Th3Whit3Wolf/one-nvim'
 -- use 'Th3Whit3Wolf/onebuddy'
--- use 'Tsuzat/NeoSolarized.nvim'
--- use 'atelierbram/Base2Tone-nvim'
--- use 'catppuccin/nvim'
--- use 'jsit/toast.vim'
--- use 'marko-cerovac/material.nvim'
--- use 'mcchrish/zenbones.nvim'
--- use 'olimorris/onedarkpro.nvim'
--- use 'projekt0n/github-nvim-theme'
--- use 'rafamadriz/neon'
+use 'Tsuzat/NeoSolarized.nvim'
+use 'atelierbram/Base2Tone-nvim'
+use 'catppuccin/nvim'
+use 'jsit/toast.vim'
+use 'marko-cerovac/material.nvim'
+use 'mcchrish/zenbones.nvim'
+use 'olimorris/onedarkpro.nvim'
+use 'projekt0n/github-nvim-theme'
+use 'rafamadriz/neon'
 -- use 'ray-x/starry.nvim' -- limestone
 -- use 'rmehri01/onenord.nvim'
--- use 'rose-pine/neovim'
--- use 'sainnhe/edge'
--- use 'sainnhe/everforest'
+use 'rose-pine/neovim'
+use 'sainnhe/edge'
+use 'sainnhe/everforest'
 
 --     -- << Dark >>
 use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
 use 'LunarVim/darkplus.nvim'
 use 'Mofiqul/adwaita.nvim'
 use 'NLKNguyen/papercolor-theme'
+use 'catppuccin/nvim'
 use 'Shatur/neovim-ayu'
 use 'Th3Whit3Wolf/one-nvim'
 use 'Tsuzat/NeoSolarized.nvim'
@@ -264,37 +265,37 @@ use 'kartikp10/noctis.nvim'
 use 'kvrohit/mellow.nvim'
 use 'lmburns/kimbox'
 use 'luisiacc/gruvbox-baby'
--- use 'marko-cerovac/material.nvim'
--- use 'maxmx03/FluoroMachine.nvim'
--- use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
--- use 'mhartington/oceanic-next'
--- use 'ntk148v/vim-horizon'
--- use 'nxvu699134/vn-night.nvim'
--- use 'olimorris/onedarkpro.nvim'
--- use 'projekt0n/github-nvim-theme'
--- use 'rafalbromirski/vim-aurora'
--- use 'rafamadriz/neon'
+use 'marko-cerovac/material.nvim'
+use 'maxmx03/FluoroMachine.nvim'
+use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
+use 'mhartington/oceanic-next'
+use 'ntk148v/vim-horizon'
+use 'nxvu699134/vn-night.nvim'
+use 'olimorris/onedarkpro.nvim'
+use 'projekt0n/github-nvim-theme'
+use 'rafalbromirski/vim-aurora'
+use 'rafamadriz/neon'
 -- use 'ray-x/aurora'
 -- use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
--- use 'rebelot/kanagawa.nvim'
+use 'rebelot/kanagawa.nvim'
 -- use 'rmehri01/onenord.nvim'
--- use 'rockyzhang24/arctic.nvim'
--- use 'rose-pine/neovim'
--- use 'sainnhe/edge'
--- use 'sainnhe/everforest'
--- use 'sainnhe/sonokai'
--- use 'sam4llis/nvim-tundra'
--- use 'savq/melange'
--- use 'shaunsingh/moonlight.nvim'
+use 'rockyzhang24/arctic.nvim'
+use 'rose-pine/neovim'
+use 'sainnhe/edge'
+use 'sainnhe/everforest'
+use 'sainnhe/sonokai'
+use 'sam4llis/nvim-tundra'
+use 'savq/melange'
+use 'shaunsingh/moonlight.nvim'
 -- use 'sickill/vim-monokai'
 -- use 'tanvirtin/monokai.nvim'
--- use 'tiagovla/tokyodark.nvim'
--- use 'titanzero/zephyrium'
+use 'tiagovla/tokyodark.nvim'
+use 'titanzero/zephyrium'
 -- use 'tjdevries/gruvbuddy.nvim'
--- use 'tomasiser/vim-code-dark'
--- use 'w3barsi/barstrata.nvim'
--- use 'wuelnerdotexe/vim-enfocado'
--- use 'yashguptaz/calvera-dark.nvim'
+use 'tomasiser/vim-code-dark'
+use 'w3barsi/barstrata.nvim'
+use 'wuelnerdotexe/vim-enfocado'
+use 'yashguptaz/calvera-dark.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1419,7 +1420,12 @@ use {
 --         end
 --     }
 --     -- use 'mengelbrecht/lightline-bufferline'
-use 'nanozuki/tabby.nvim'
+use {
+    'nanozuki/tabby.nvim',
+    config = function()
+        require('tabby').setup()
+    end
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
