@@ -203,7 +203,6 @@ use {
             ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
         }
         modicator.setup({
-            -- NOTE: Modicator requires line_numbers and cursorline to be enabled
             line_numbers = true,
             cursorline = true,
             highlights = {
@@ -264,7 +263,7 @@ use 'olimorris/onedarkpro.nvim'
 use 'projekt0n/github-nvim-theme'
 use 'rafamadriz/neon'
 -- use 'ray-x/starry.nvim' -- limestone
--- use 'rmehri01/onenord.nvim'
+use 'rmehri01/onenord.nvim'
 use 'rose-pine/neovim'
 use 'sainnhe/edge'
 use 'sainnhe/everforest'
@@ -300,12 +299,11 @@ use 'ntk148v/vim-horizon'
 use 'nxvu699134/vn-night.nvim'
 use 'olimorris/onedarkpro.nvim'
 use 'projekt0n/github-nvim-theme'
-use 'rafalbromirski/vim-aurora'
 use 'rafamadriz/neon'
--- use 'ray-x/aurora'
+use 'ray-x/aurora'
 -- use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
 use 'rebelot/kanagawa.nvim'
--- use 'rmehri01/onenord.nvim'
+use 'rmehri01/onenord.nvim'
 use 'rockyzhang24/arctic.nvim'
 use 'rose-pine/neovim'
 use 'sainnhe/edge'
@@ -1687,7 +1685,6 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/nvim-zh/colorful-winsep.nvim
 -- https://github.com/petertriho/nvim-scrollbar
 -- https://github.com/lewis6991/satellite.nvim
 -- https://github.com/ziontee113/neo-minimap
@@ -1710,6 +1707,31 @@ use 'doums/suit.nvim'
 --     "rcarriga/nvim-notify",
 --     }
 -- })
+
+use {
+    "nvim-zh/colorful-winsep.nvim",
+    config = function ()
+        require("colorful-winsep").setup({
+            -- highlight for Window separator
+            -- highlight = {
+            --     guibg = "#16161E",
+            --     guifg = "#1F3442",
+            -- },
+            -- timer refresh rate
+            interval = 30,
+            -- This plugin will not be activated for filetype in the following table.
+            no_exec_files = { "packer", "TelescopePrompt", "mason", "CompetiTest", "NvimTree" },
+            -- Symbols for separator lines, the order: horizontal, vertical, top left, top right, bottom left, bottom right.
+            symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+            close_event = function()
+                -- Executed after closing the window separator
+            end,
+            create_event = function()
+                -- Executed after creating the window separator
+            end,
+        })
+    end
+}
 
 use {
     'rcarriga/nvim-notify',
