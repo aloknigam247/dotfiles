@@ -152,6 +152,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/David-Kunz/markid
 use {
     'RRethy/vim-illuminate',
     config = function()
@@ -243,15 +244,16 @@ use {
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/lifepillar/vim-colortemplate
+-- https://github.com/folke/styler.nvim
 use 'rktjmp/lush.nvim' -- zenbones
--- use 'tjdevries/colorbuddy.vim'
+use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 -- << Light >>
 use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
 use 'Mofiqul/adwaita.nvim'
 use 'NLKNguyen/papercolor-theme'
 use 'Shatur/neovim-ayu'
 use 'Th3Whit3Wolf/one-nvim'
--- use 'Th3Whit3Wolf/onebuddy'
+use 'Th3Whit3Wolf/onebuddy'
 use 'Tsuzat/NeoSolarized.nvim'
 use 'atelierbram/Base2Tone-nvim'
 use 'catppuccin/nvim'
@@ -275,6 +277,7 @@ use 'Mofiqul/adwaita.nvim'
 use 'NLKNguyen/papercolor-theme'
 use 'Shatur/neovim-ayu'
 use 'Th3Whit3Wolf/one-nvim'
+use 'Th3Whit3Wolf/onebuddy'
 use 'Tsuzat/NeoSolarized.nvim'
 use 'Yazeed1s/oh-lucy.nvim'
 use 'atelierbram/Base2Tone-nvim'
@@ -287,8 +290,10 @@ use 'kartikp10/noctis.nvim'
 use 'kvrohit/mellow.nvim'
 use 'lmburns/kimbox'
 use 'luisiacc/gruvbox-baby'
+use 'iandwelker/rose-pine-vim'
 use 'marko-cerovac/material.nvim'
 use 'maxmx03/FluoroMachine.nvim'
+use 'metalelf0/jellybeans-nvim'
 use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
 use 'mhartington/oceanic-next'
 use 'ntk148v/vim-horizon'
@@ -313,7 +318,8 @@ use 'shaunsingh/moonlight.nvim'
 -- use 'tanvirtin/monokai.nvim'
 use 'tiagovla/tokyodark.nvim'
 use 'titanzero/zephyrium'
--- use 'tjdevries/gruvbuddy.nvim'
+use 'theniceboy/nvim-deus'
+use 'tjdevries/gruvbuddy.nvim'
 use 'tomasiser/vim-code-dark'
 use 'w3barsi/barstrata.nvim'
 use 'wuelnerdotexe/vim-enfocado'
@@ -914,6 +920,7 @@ use 'nvim-lua/plenary.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━❰ LSP ❱━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/gfanto/fzf-lsp.nvim
 use {
     'Kasama/nvim-custom-diagnostic-highlight',
     config = function()
@@ -1525,6 +1532,7 @@ use {
 -- use 'axkirillov/easypick.nvim' -- NOTE: No need now
 -- https://github.com/adoyle-h/ad-telescope-extensions.nvim
 -- https://github.com/princejoogie/dir-telescope.nvim
+--https://github.com/kelly-lin/telescope-ag
 use {
     'crispgm/telescope-heading.nvim',
     after = 'telescope.nvim',
@@ -1721,11 +1729,13 @@ use {
 -- https://github.com/cshuaimin/ssr.nvim
 -- https://github.com/cbochs/portal.nvim
 -- https://github.com/tommcdo/vim-exchange
+-- https://github.com/AckslD/nvim-trevJ.lua
 -- https://github.com/kwkarlwang/bufjump.nvim
 -- https://github.com/cbochs/grapple.nvim
 -- https://github.com/echasnovski/mini.nvim
 -- https://github.com/phaazon/notisys.nvim
 -- https://github.com/smjonas/live-command.nvim
+--https://github.com/phaazon/hop.nvim
 
 use {
     'AndrewRadev/inline_edit.vim',
