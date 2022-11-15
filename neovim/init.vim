@@ -95,7 +95,7 @@ function ColoRand()
         { 'everforest', function() vim.g.background = 'dark' end },
         { 'everforest', function() vim.g.background = 'light' end },
         { 'falcon' },
-        { 'fluromachine' },
+        { 'fluoromachine' },
         { 'forestbones' },
         { 'github_dark' },
         { 'github_light' },
