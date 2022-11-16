@@ -1369,7 +1369,7 @@ use {
         require('bqf').setup({
             auto_resize_height = true,
             preview = {
-                border_chars = {'│', '│', '─', ' ', '╭', '╮', '╰', '╯', '█'}
+                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
             }
         })
     end,
@@ -1491,11 +1491,12 @@ use {
         --         { navic.get_location, cond = navic.is_available }
         --     }
         -- },
-        -- inactive_winbar = {
+        inactive_winbar = {
+            lualine_a = {'filename'},
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
         --     }
-        -- },
+        },
         --     extensions = {}
         }
     end,
@@ -1805,13 +1806,6 @@ use 'chipsenkbeil/distant.nvim'
 use {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime'
-}
-
-use {
-    'gaoDean/autolist.nvim',
-    config = function()
-        require('autolist').setup()
-    end
 }
 
 -- use {
