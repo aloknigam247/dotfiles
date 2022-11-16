@@ -544,17 +544,17 @@ use 'hrsh7th/cmp-cmdline'
 use 'hrsh7th/cmp-nvim-lsp'
 use 'hrsh7th/cmp-path'
 use 'f3fora/cmp-spell'
---     -- TODO: https://github.com/jameshiew/nvim-magic
---     -- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
---     -- TODO: https://github.com/lukas-reineke/cmp-rg
---     -- TODO: https://github.com/lukas-reineke/cmp-under-comparator
---     -- TODO: https://github.com/rcarriga/cmp-dap
---     -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
---     -- TODO: https://github.com/tzachar/cmp-fuzzy-path
---     -- TODO: https://github.com/zbirenbaum/copilot-cmp
+-- TODO: https://github.com/jameshiew/nvim-magic
+-- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
+-- TODO: https://github.com/lukas-reineke/cmp-rg
+-- TODO: https://github.com/lukas-reineke/cmp-under-comparator
+-- TODO: https://github.com/rcarriga/cmp-dap
+-- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+-- TODO: https://github.com/tzachar/cmp-fuzzy-path
+-- TODO: https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 
--- Configuration:</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configuration  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: https://github.com/Avimitin/nvim
 -- TODO: https://github.com/cankolay3499/cnvim
 -- TODO: https://github.com/CosmicNvim/CosmicNvim
@@ -590,8 +590,7 @@ use 'f3fora/cmp-spell'
 -- TODO: https://github.com/vi-tality/neovitality
 -- <~>
 
--- -- Debugger:</>
--- -- `````````
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- --------------------------
 -- -- telescope-dap.nvim
 -- pcall(require'telescope'.load_extension, 'dap')
@@ -676,7 +675,7 @@ use 'f3fora/cmp-spell'
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ Doc Generater ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     "danymat/neogen",
     after = 'nvim-treesitter',
@@ -759,6 +758,9 @@ use {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'anuvyklack/pretty-fold.nvim',
+    cond = function()
+        return vim.o.foldmethod == "marker"
+    end,
     config = function()
         require('pretty-fold').setup {
             fill_char = ' ',
@@ -766,16 +768,31 @@ use {
         }
     end
 }
---     use {
---         'kevinhwang91/nvim-ufo',
---         'kevinhwang91/promise-async'
---     }
+
+use {
+    'kevinhwang91/nvim-ufo',
+    cond = function()
+        return vim.o.foldmethod ~= "marker"
+    end,
+    config = function()
+        vim.o.foldcolumn = '1' -- '0' is not bad
+        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevelstart = 99
+        vim.o.foldenable = true
+        require('ufo').setup({
+            provider_selector = function(bufnr, filetype, buftype)
+                return {'treesitter', 'indent'}
+            end
+        })
+    end
+}
+
 -- <~>
 
---     -- Formatting:</>
---     -- ```````````
---     -- use 'mhartington/formatter.nvim'
---     -- TODO: https://github.com/sbdchd/neoformat
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- use 'mhartington/formatter.nvim'
+-- https://github.com/sbdchd/neoformat
+-- use 'joechrisellis/lsp-format-modifications.nvim'
 -- <~>
 
 --     -- FZF:</>
@@ -909,6 +926,7 @@ use {
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Libraries   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use 'MunifTanjim/nui.nvim'
+use 'kevinhwang91/promise-async'
 use 'nvim-lua/plenary.nvim'
 -- use 'nvim-lua/popup.nvim'
 -- <~>
@@ -939,8 +957,6 @@ use {
         }
     end
 }
-
--- use 'joechrisellis/lsp-format-modifications.nvim'
 
 use {
     'liuchengxu/vista.vim',
@@ -1428,7 +1444,7 @@ use {
 use {
     'nvim-lualine/lualine.nvim',
     config = function()
-        local navic = require("nvim-navic")
+        -- local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
         --         icons_enabled = true,
@@ -1758,7 +1774,6 @@ use {
 -- https://github.com/echasnovski/mini.nvim
 -- https://github.com/phaazon/notisys.nvim
 -- https://github.com/smjonas/live-command.nvim
---https://github.com/phaazon/hop.nvim
 
 use {
     'AndrewRadev/inline_edit.vim',
