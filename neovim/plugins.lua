@@ -158,10 +158,11 @@ use {
     'RRethy/vim-illuminate',
     config = function()
         -- TODO: fix colors
-       vim.cmd[[
-           hi IlluminatedWordText guibg = #59656F guifg = #FFFFFF
+        -- TODO: use bacl ground colors
+        vim.cmd[[
+           hi IlluminatedWordText guibg = underline
            hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
-           hi IlluminatedWordWrite guibg = #1F7A8C
+           hi IlluminatedWordWrite guibg = #1F7A8C gui = italic
            hi LspReferenceText guibg = #679436
            hi LspReferenceWrite guibg = #A5BE00
            hi LspReferenceRead guibg = #427AA1
@@ -260,6 +261,28 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- local function hex_to_rgb(hex)
+--   return HEX_DIGITS[string.sub(hex, 1, 1)] * 16 + HEX_DIGITS[string.sub(hex, 2, 2)],
+--     HEX_DIGITS[string.sub(hex, 3, 3)] * 16 + HEX_DIGITS[string.sub(hex, 4, 4)],
+--     HEX_DIGITS[string.sub(hex, 5, 5)] * 16 + HEX_DIGITS[string.sub(hex, 6, 6)]
+-- end
+
+-- local function rgb_to_hex(r, g, b)
+--   return bit.tohex(bit.bor(bit.lshift(r, 16), bit.lshift(g, 8), b), 6)
+-- end
+
+-- local function darken(hex, pct)
+--   pct = 1 - pct
+--   local r, g, b = hex_to_rgb(string.sub(hex, 2))
+--   r = math.floor(r * pct)
+--   g = math.floor(g * pct)
+--   b = math.floor(b * pct)
+--   return string.format("#%s", rgb_to_hex(r, g, b))
+-- end
+--       local darkerbg = darken(M.colors.base00, 0.1)
+--       local darkercursorline = darken(M.colors.base01, 0.1)
+--       local darkerstatusline = darken(M.colors.base02, 0.1)
+
 -- TODO: lazyload
 -- https://github.com/lifepillar/vim-colortemplate
 -- https://github.com/folke/styler.nvim
@@ -372,7 +395,6 @@ use {
                 sources = {
                     {
                         name = 'cmdline',
-                        -- max_item_count = 10
                     },
                     {
                         name = 'cmdline_history',
@@ -404,7 +426,6 @@ use {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
                     local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
-                    -- local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
                     vim_item.kind = kind_symbol and kind_symbol .. vim_item.kind or vim_item.kind
 
                     return vim_item
@@ -560,20 +581,20 @@ use {
     event = "InsertEnter",
     module = "cmp"
 }
-use 'dmitmel/cmp-cmdline-history'
-use 'hrsh7th/cmp-buffer'
-use 'hrsh7th/cmp-cmdline'
-use 'hrsh7th/cmp-nvim-lsp'
-use 'hrsh7th/cmp-path'
-use 'f3fora/cmp-spell'
--- TODO: https://github.com/jameshiew/nvim-magic
--- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
--- TODO: https://github.com/lukas-reineke/cmp-rg
--- TODO: https://github.com/lukas-reineke/cmp-under-comparator
--- TODO: https://github.com/rcarriga/cmp-dap
--- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
--- TODO: https://github.com/tzachar/cmp-fuzzy-path
--- TODO: https://github.com/zbirenbaum/copilot-cmp
+use { 'dmitmel/cmp-cmdline-history', after = "nvim-cmp" }
+use { 'hrsh7th/cmp-buffer', after = "nvim-cmp" }
+use { 'hrsh7th/cmp-cmdline', after = "nvim-cmp" }
+use { 'hrsh7th/cmp-nvim-lsp', after = "nvim-cmp" }
+use { 'hrsh7th/cmp-path', after = "nvim-cmp" }
+use { 'f3fora/cmp-spell', after = "nvim-cmp" }
+-- https://github.com/jameshiew/nvim-magic
+-- https://github.com/kristijanhusak/vim-dadbod-completion
+-- https://github.com/lukas-reineke/cmp-rg
+-- https://github.com/lukas-reineke/cmp-under-comparator
+-- https://github.com/rcarriga/cmp-dap
+-- https://github.com/tzachar/cmp-fuzzy-buffer
+-- https://github.com/tzachar/cmp-fuzzy-path
+-- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configuration  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -811,8 +832,10 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use 'mhartington/formatter.nvim'
--- TODO: https://github.com/sbdchd/neoformat
+use {
+    'sbdchd/neoformat',
+    cmd = "Neoformat"
+}
 -- TODO: use 'joechrisellis/lsp-format-modifications.nvim'
 -- <~>
 
@@ -845,10 +868,14 @@ use {
         }
     end
 }
--- TODO: -- use 'pwntester/octo.nvim' -- Archieved
 -- TODO: use 'rhysd/conflict-marker.vim' -- Archieved
--- TODO: -- use 'rhysd/git-messenger.vim' -- Archieved
--- TODO: -- use 'ruifm/gitlinker.nvim' -- Archieved
+
+use {
+    'rhysd/git-messenger.vim',
+    cmd = "GitMessenger"
+}
+
+use 'ruifm/gitlinker.nvim'
 -- TODO: use 'sindrets/diffview.nvim' -- Archieved
 -- TODO: -- use 'tanvirtin/vgit.nvim' -- Archieved
 -- TODO: -- https://github.com/akinsho/git-conflict.nvim
@@ -1850,6 +1877,7 @@ use 'gorbit99/codewindow.nvim' -- TODO: net setup
 use 'doums/suit.nvim'
 
 use {
+    -- TODO: enable and disable commands
     'folke/drop.nvim',
     config = function()
         require('drop').setup({
@@ -1864,7 +1892,8 @@ use {
             }
         )
         vim.api.nvim_create_autocmd(
-            "CursorMoved", {
+            { "CursorMoved", "CursorMovedI" },
+            {
                 pattern = "*",
                 callback = function()
                     require('drop').hide()

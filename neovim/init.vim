@@ -303,7 +303,7 @@ set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support
 set title                    " Set console title
 "set ttymouse=sgr            " Fix mouse support in half screen
-set updatetime=15000         " CursorHold time
+set updatetime=60000         " CursorHold time
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 set wildignore="*.exe"       " Files to ignore in wildmenu
