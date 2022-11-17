@@ -303,6 +303,7 @@ set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support
 set title                    " Set console title
 "set ttymouse=sgr            " Fix mouse support in half screen
+set updatetime=15000         " CursorHold time
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 set wildignore="*.exe"       " Files to ignore in wildmenu
@@ -357,6 +358,12 @@ autocmd BufNewFile,BufRead *.vg set filetype=verilog    " Set cyt filetype as ba
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+" map("i", "<C-a>", "<Home>")
+" map("i", "<C-e>", "<End>")
+" map("i", "<C-b>", "<ESC>bi")
+" map("i", "<C-f>", "<ESC>wa")
+" map("i", "<C-n>", "<ESC>ja")
+" map("i", "<C-p>", "<ESC>ka")
 imap <C-Left> <C-\><C-O>B
 imap <C-Right> <C-\><C-O>E<C-\><C-O>a
 imap <C-a> <C-\><C-O>^
@@ -462,4 +469,12 @@ highlight ConflictMarkerOurs guibg=#2e5049
 highlight ConflictMarkerTheirs guibg=#344f69
 highlight ConflictMarkerEnd guibg=#2f628e
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
+lua << EOF
+url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+
+vim.fn.matchadd("HighlightURL", url_matcher, 15)
+EOF
+highlight HighlightURL gui=underline cterm=underline
+
 " vim: fdm=marker

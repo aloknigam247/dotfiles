@@ -70,86 +70,86 @@ use 'wbthomason/packer.nvim'
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
-     'windwp/nvim-autopairs',
-     config = function()
-         local npairs = require("nvim-autopairs")
-         local Rule = require("nvim-autopairs.rule")
-         local cond = require'nvim-autopairs.conds'
+    'windwp/nvim-autopairs',
+    config = function()
+        local npairs = require("nvim-autopairs")
+        local Rule = require("nvim-autopairs.rule")
+        local cond = require'nvim-autopairs.conds'
 
-         npairs.setup({
-             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
-         })
-         npairs.add_rules {
-             -- #include <> pair for c and cpp
-             Rule("#include <", ">", { "c", "cpp" }),
-             -- Disable " rule for vim
-             Rule('"', '"')
-             :with_pair(cond.not_filetypes({"vim"})),
-             -- Add spaces in pair after parentheses
-             -- (|) --> space --> ( | )
-             -- ( | ) --> ) --> ( )|
-             Rule(' ', ' ')
-             :with_pair(function (opts)
-                 local pair = opts.line:sub(opts.col - 1, opts.col)
-                 return vim.tbl_contains({ '()', '[]', '{}' }, pair)
-             end),
-             Rule('( ', ' )')
-             :with_pair(function() return false end)
-             :with_move(function(opts)
-                 return opts.prev_char:match('.%)') ~= nil
-             end)
-             :use_key(')'),
-             Rule('{ ', ' }')
-             :with_pair(function() return false end)
-             :with_move(function(opts)
-                 return opts.prev_char:match('.%}') ~= nil
-             end)
-             :use_key('}'),
-             Rule('[ ', ' ]')
-             :with_pair(function() return false end)
-             :with_move(function(opts)
-                 return opts.prev_char:match('.%]') ~= nil
-             end)
-             :use_key(']'),
-             -- Auto add space on =
-             Rule('=', '')
-             :with_pair(cond.not_inside_quote())
-             :with_pair(function(opts)
-                 local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-                 if last_char:match('[%w%=%s]') then
-                     return true
-                 end
-                 return false
-             end)
-             :replace_endpair(function(opts)
-                 local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
-                 local next_char = opts.line:sub(opts.col, opts.col)
-                 next_char = next_char == ' ' and '' or ' '
-                 if prev_2char:match('%w$') then
-                     return '<bs> =' .. next_char
-                 end
-                 if prev_2char:match('%=$') then
-                     return next_char
-                 end
-                 if prev_2char:match('=') then
-                     return '<bs><bs>=' .. next_char
-                 end
-                 return ''
-             end)
-             :set_end_pair_length(0)
-             :with_move(cond.none())
-             :with_del(cond.none())
-         }
-         -- Insert `(` after select function or method item
-         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-         local cmp = require('cmp')
-         cmp.event:on(
-         'confirm_done',
-         cmp_autopairs.on_confirm_done()
-         )
-     end,
-     event = 'InsertEnter',
- }
+        npairs.setup({
+            enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
+        })
+        npairs.add_rules {
+            -- #include <> pair for c and cpp
+            Rule("#include <", ">", { "c", "cpp" }),
+            -- Disable " rule for vim
+            Rule('"', '"')
+            :with_pair(cond.not_filetypes({"vim"})),
+            -- Add spaces in pair after parentheses
+            -- (|) --> space --> ( | )
+            -- ( | ) --> ) --> ( )|
+            Rule(' ', ' ')
+            :with_pair(function (opts)
+                local pair = opts.line:sub(opts.col - 1, opts.col)
+                return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+            end),
+            Rule('( ', ' )')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%)') ~= nil
+            end)
+            :use_key(')'),
+            Rule('{ ', ' }')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%}') ~= nil
+            end)
+            :use_key('}'),
+            Rule('[ ', ' ]')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%]') ~= nil
+            end)
+            :use_key(']'),
+            -- Auto add space on =
+            Rule('=', '')
+            :with_pair(cond.not_inside_quote())
+            :with_pair(function(opts)
+                local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+                if last_char:match('[%w%=%s]') then
+                    return true
+                end
+                return false
+            end)
+            :replace_endpair(function(opts)
+                local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+                local next_char = opts.line:sub(opts.col, opts.col)
+                next_char = next_char == ' ' and '' or ' '
+                if prev_2char:match('%w$') then
+                    return '<bs> =' .. next_char
+                end
+                if prev_2char:match('%=$') then
+                    return next_char
+                end
+                if prev_2char:match('=') then
+                    return '<bs><bs>=' .. next_char
+                end
+                return ''
+            end)
+            :set_end_pair_length(0)
+            :with_move(cond.none())
+            :with_del(cond.none())
+        }
+        -- Insert `(` after select function or method item
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        local cmp = require('cmp')
+        cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+        )
+    end,
+    event = 'InsertEnter',
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -157,6 +157,7 @@ use {
 use {
     'RRethy/vim-illuminate',
     config = function()
+        -- TODO: fix colors
        vim.cmd[[
            hi IlluminatedWordText guibg = #59656F guifg = #FFFFFF
            hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
@@ -171,6 +172,11 @@ use {
 use 'azabiong/vim-highlighter' -- TODO: create context menu
 
 use {
+    'folke/lsp-colors.nvim',
+    event = "LspAttach"
+}
+
+use {
     -- TODO: show todo comments in statusline
     'folke/todo-comments.nvim',
     config = function()
@@ -179,20 +185,30 @@ use {
                 THOUGHT = { icon = "🤔", color = "info"}
             }
         })
-    end
+    end,
+    event = "BufRead"
 }
 
 use {
     'kevinhwang91/nvim-hlslens',
     config = function()
         require('hlslens').setup()
-    end
+    end,
+    keys = {
+        { "n", "n" },
+        { "n", "N" },
+        { "n", "*" },
+        { "n", "#" },
+        { "n", "g*" },
+        { "n", "g#" },
+    }
 }
 
 use {
     'melkster/modicator.nvim',
     after = 'lualine.nvim',
     config = function()
+        -- TODO: on click functions for sections
         local modicator = require('modicator')
         local modes = {
             ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
@@ -244,6 +260,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: lazyload
 -- https://github.com/lifepillar/vim-colortemplate
 -- https://github.com/folke/styler.nvim
 use 'rktjmp/lush.nvim' -- zenbones
@@ -344,6 +361,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: lazyload other pluggins too
 use {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -538,7 +556,9 @@ use {
         -- end
         -- ---Register your source to nvim-cmp.
         -- require('cmp').register_source('custom', source.new())
-    end
+    end,
+    event = "InsertEnter",
+    module = "cmp"
 }
 use 'dmitmel/cmp-cmdline-history'
 use 'hrsh7th/cmp-buffer'
@@ -557,7 +577,6 @@ use 'f3fora/cmp-spell'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configuration  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/Avimitin/nvim
 -- TODO: https://github.com/cankolay3499/cnvim
 -- TODO: https://github.com/CosmicNvim/CosmicNvim
 -- TODO: https://github.com/JryChn/ModuleVim
@@ -589,7 +608,6 @@ use 'f3fora/cmp-spell'
 -- TODO: https://github.com/ray-x/go.nvim
 -- TODO: https://github.com/shaeinst/roshnivim
 -- TODO: https://github.com/shaunsingh/nyoom.nvim
--- TODO: https://github.com/vi-tality/neovitality
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -838,82 +856,20 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: insert icons
--- vim.g.bubbly_symbols = {
---     default = 'PANIC!',
--- 
---     path = {
---         readonly = '',
---         unmodifiable = '',
---         modified = '+',
---     },
---     signify = {
---         added = '+%s', -- requires 1 '%s'
---         modified = '~%s', -- requires 1 '%s'
---         removed = '-%s', -- requires 1 '%s'
---     },
---     gitsigns = {
---         added = '+%s', -- requires 1 '%s'
---         modified = '~%s', -- requires 1 '%s'
---         removed = '-%s', -- requires 1 '%s'
---     },
---     coc = {
---         error = ' %s', -- requires 1 '%s'
---         warning = ' %s', -- requires 1 '%s'
---     },
---     builtinlsp = {
---         diagnostic_count = {
---             error = ' %s', -- requires 1 '%s'
---             warning = ' %s', --requires 1 '%s'
---         },
---     },
---     branch = ' %s', -- requires 1 '%s'
---     total_buffer_number = '﬘ %s', --requires 1 '%d'
---     lsp_status = {
---         diagnostics = {
---             error = ' %d',
---             warning = ' %d',
---             hint = ' %d',
---             info = ' %d',
---         },
---     },
--- }
---     filetype = {
---         conf = ' config',
---         config = ' config',
---         css = ' css',
---         diff = '繁 diff',
---         dockerfile = ' docker',
---         email = ' mail',
---         gitconfig = ' git config',
---         html = ' html',
---         javascript = ' javascript',
---         javascriptreact = ' javascript',
---         json = ' json',
---         less = ' less',
---         lua = ' lua',
---         mail = ' mail',
---         make = ' make',
---         markdown = ' markdown',
---         noft = '<none>',
---         norg = '🦄 norg',
---         php = ' php',
---         plain = ' text',
---         plaintext = ' text',
---         ps1 = ' powershell',
---         python = ' python',
---         sass = ' sass',
---         scss = ' scss',
---         text = ' text',
---         typescript = ' typescript',
---         typescriptreact = ' typescript',
---         vim = ' vim',
---         xml = '謹 xml',
---     },
--- }
--- use 'DaikyXendo/nvim-material-icon'
+use {
+    'DaikyXendo/nvim-material-icon'
+}
 
-use 'kyazdani42/nvim-web-devicons'
+use {
+    'kyazdani42/nvim-web-devicons',
+    after = "nvim-material-icon",
+    config = function()
+        require'nvim-web-devicons'.setup({
+            override = require('nvim-material-icon').get_icons()
+        })
+    end
+    -- module = "nvim-web-devicons"
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Indentation  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -924,7 +880,8 @@ use {
             show_current_context = true,
             show_current_context_start = true
         })
-    end
+    end,
+    event = "BufRead"
 }
 --     <~>
 
@@ -941,6 +898,7 @@ use 'nvim-lua/plenary.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━❰ LSP ❱━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Load lsp for Mason lsp installed languages
 -- TODO: https://github.com/gfanto/fzf-lsp.nvim
 use {
     'Kasama/nvim-custom-diagnostic-highlight',
@@ -980,7 +938,7 @@ use {
     cmd = 'Vista'
 }
 
-use 'neovim/nvim-lspconfig'
+use 'neovim/nvim-lspconfig' -- TODO: require('mason-registry').get_installed_package_names()
 
 use {
     'williamboman/mason.nvim',
@@ -1006,6 +964,31 @@ use {
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
+        -- TODO:
+        -- -- Setup diagnostic icons and signs
+        -- vim.diagnostic.config({
+        --     virtual_text = {
+        --         prefix = "",
+        --         spacing = 4,
+        --         format = function(diagnostic)
+        --             local icons = {
+        --                 ERROR = " ",
+        --                 WARN = " ",
+        --                 HINT = " ",
+        --                 INFO = " ",
+        --             }
+        --             return string.format(
+        --             "%s %s",
+        --             icons[vim.diagnostic.severity[diagnostic.severity]],
+        --             diagnostic.message
+        --             )
+        --         end,
+        --     },
+        --     signs = true,
+        --     underline = true,
+        --     -- update diagnostic in insert mode will be annoying when the output is too verbose
+        --     update_in_insert = false,
+        -- })
         vim.diagnostic.config({
             float = {
                 source = true
@@ -1063,6 +1046,32 @@ use {
         }
 
         -- Add additional capabilities supported by nvim-cmp
+        -- TODO:
+        -- -- Gets a new ClientCapabilities object describing the LSP client
+        -- -- capabilities.
+        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+        -- capabilities.textDocument.completion.completionItem = {
+        --     documentationFormat = {
+        --         "markdown",
+        --         "plaintext",
+        --     },
+        --     snippetSupport = true,
+        --     preselectSupport = true,
+        --     insertReplaceSupport = true,
+        --     labelDetailsSupport = true,
+        --     deprecatedSupport = true,
+        --     commitCharactersSupport = true,
+        --     tagSupport = {
+        --         valueSet = { 1 },
+        --     },
+        --     resolveSupport = {
+        --         properties = {
+        --             "documentation",
+        --             "detail",
+        --             "additionalTextEdits",
+        --         },
+        --     },
+        -- }
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
@@ -1173,8 +1182,61 @@ use {
 --             }
 --         end
 --     }
---     TODO: use 'folke/lsp-colors.nvim'
 --     -- TODO: https://github.com/gfanto/fzf-lsp.nvim
+
+-- -- TODO:
+-- -- lspsaga
+-- --
+-- config.lspsaga_config = function()
+--   local enable_winbar = require("editor.utils").vhas("nvim-0.8.0")
+--   local saga = require("lspsaga")
+--   local themes = require("lspsaga.lspkind")
+--   themes[12][2] = " "
+
+--   -- use custom config
+--   saga.init_lsp_saga({
+--     -- when cursor in saga window you config these to move
+--     move_in_saga = { prev = "k", next = "j" },
+--     diagnostic_header = { " ", " ", " ", " " },
+--     scroll_in_preview = {
+--       scroll_down = "<C-d>",
+--       scroll_up = "<C-u>",
+--     },
+--     code_action_icon = "ﯦ ",
+--     -- same as nvim-lightbulb but async
+--     code_action_lightbulb = {
+--       sign = false,
+--       virtual_text = true,
+--     },
+--     finder_icons = {
+--       def = "  ",
+--       ref = "  ",
+--       link = "  ",
+--     },
+--     finder_action_keys = {
+--       open = "<CR>",
+--       vsplit = "s",
+--       split = "i",
+--       tabe = "t",
+--       quit = "q",
+--       scroll_down = "<C-f>",
+--       scroll_up = "<C-b>", -- quit can be a table
+--     },
+--     -- show symbols in winbar must be neovim 0.8.0,
+--     -- close it until neovim 0.8.0 become stable
+--     symbol_in_winbar = {
+--       in_custom = false,
+--       enable = enable_winbar,
+--       separator = "  ",
+--       show_file = true,
+--       click_support = false,
+--     },
+--   })
+
+--   -- set lightbulb as comment like
+--   vim.api.nvim_set_hl(0, "LspSagaLightBulb", { fg = "#E8C266" })
+-- end
+
 --     TODO: use({
 --         "glepnir/lspsaga.nvim",
 --         branch = "main",
@@ -1233,9 +1295,6 @@ use {
 --    TODO: use 'onsails/diaglist.nvim'
 --    TODO: use 'p00f/clangd_extensions.nvim'
 --    TODO: use 'razzmatazz/csharp-language-server'
---    TODO: use {
---         'onsails/lspkind.nvim'
---     }
 --     -- TODO: https://github.com/ray-x/navigator.lua
 --    TODO: use {
 --         'rmagatti/goto-preview',
@@ -1386,6 +1445,7 @@ use 'folke/trouble.nvim'
 use {
     -- TODO: fzf
     'kevinhwang91/nvim-bqf',
+    after = "nvim-lspconfig",
     config = function()
         require('bqf').setup({
             auto_resize_height = true,
@@ -1431,22 +1491,24 @@ use {
             }
         })
     end,
-    requires = {
+    requires = { -- BUG: fix this
         'dcampos/cmp-snippy',
         'honza/vim-snippets'
     }
 }
--- TODO: https://github.com/ellisonleao/carbon-now.nvim
--- TODO: https://github.com/hrsh7th/vim-vsnip
--- TODO: https://github.com/norcalli/snippets.nvim
--- TODO: https://github.com/notomo/cmp-neosnippet
--- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
--- TODO: https://github.com/rafamadriz/friendly-snippets
--- TODO: https://github.com/saadparwaiz1/cmp_luasnip
--- TODO: https://github.com/smjonas/snippet-converter.nvim
+-- https://github.com/ellisonleao/carbon-now.nvim
+-- https://github.com/hrsh7th/vim-vsnip
+-- https://github.com/norcalli/snippets.nvim
+-- https://github.com/notomo/cmp-neosnippet
+-- https://github.com/quangnguyen30192/cmp-nvim-ultisnips
+-- https://github.com/rafamadriz/friendly-snippets
+-- https://github.com/saadparwaiz1/cmp_luasnip
+-- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: make clickable items
+-- TODO: Compete setup
 use {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -1554,6 +1616,70 @@ use {
 --  TODO: https://github.com/adoyle-h/ad-telescope-extensions.nvim
 --  TODO: https://github.com/princejoogie/dir-telescope.nvim
 -- TODO: https://github.com/kelly-lin/telescope-ag
+-- TODO: tele configs
+-- return function()
+--   local ok, telescope = pcall(require, "telescope")
+--   if not ok then
+--     return
+--   end
+
+--   telescope.setup({
+--     defaults = {
+--       vimgrep_arguments = {
+--         "rg",
+--         "--color=never",
+--         "--no-heading",
+--         "--with-filename",
+--         "--line-number",
+--         "--column",
+--         "--smart-case",
+--       },
+--       prompt_prefix = "  ",
+--       selection_caret = "  ",
+--       entry_prefix = "  ",
+--       initial_mode = "insert",
+--       selection_strategy = "reset",
+--       sorting_strategy = "descending",
+--       layout_strategy = "flex",
+--       layout_config = {
+--         horizontal = {
+--           prompt_position = "top",
+--           preview_width = 0.55,
+--         },
+--         vertical = {
+--           mirror = false,
+--         },
+--         width = 0.87,
+--         height = 0.80,
+--         preview_cutoff = 120,
+--       },
+--       file_sorter = require("telescope.sorters").get_fuzzy_file,
+--       file_ignore_patterns = {},
+--       generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+--       path_display = { "absolute" },
+--       winblend = 0,
+--       border = {},
+--       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+--       color_devicons = true,
+--       use_less = true,
+--       set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+--       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+--       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+--       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+--       -- Developer configurations: Not meant for general override
+--       buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+--     },
+--     extensions = {
+--       fzf = {
+--         fuzzy = true, -- false will only do exact matching
+--         override_generic_sorter = false, -- override the generic sorter
+--         override_file_sorter = true, -- override the file sorter
+--         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+--         -- the default case_mode is "smart_case"
+--       },
+--     },
+--   })
+-- end
 use {
     'crispgm/telescope-heading.nvim',
     after = 'telescope.nvim',
@@ -1565,6 +1691,7 @@ use {
 
 use {
     'nvim-telescope/telescope.nvim',
+    cmd = "Telescope",
     config = function()
         require('telescope').setup({
             extensions = {
@@ -1586,16 +1713,16 @@ use {
     end,
     tag = '*'
 }
--- TODO: https://github.com/elijahdanko/ttymux.nvim
--- TODO: https://github.com/jlesquembre/nterm.nvim
--- TODO: https://github.com/kassio/neoterm
--- TODO: https://github.com/nat-418/termitary.nvim
--- TODO: https://github.com/nikvdp/neomux
--- TODO: https://github.com/numToStr/FTerm.nvim
--- TODO: https://github.com/oberblastmeister/termwrapper.nvim
--- TODO: https://github.com/pianocomposer321/consolation.nvim
--- TODO: https://github.com/s1n7ax/nvim-terminal
--- TODO: https://github.com/voldikss/vim-floaterm
+-- https://github.com/elijahdanko/ttymux.nvim
+-- https://github.com/jlesquembre/nterm.nvim
+-- https://github.com/kassio/neoterm
+-- https://github.com/nat-418/termitary.nvim
+-- https://github.com/nikvdp/neomux
+-- https://github.com/numToStr/FTerm.nvim
+-- https://github.com/oberblastmeister/termwrapper.nvim
+-- https://github.com/pianocomposer321/consolation.nvim
+-- https://github.com/s1n7ax/nvim-terminal
+-- https://github.com/voldikss/vim-floaterm
 -- <~>
 
 -- Test & Run:</>
@@ -1708,14 +1835,45 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:  https://github.com/petertriho/nvim-scrollbar
+use {
+    'petertriho/nvim-scrollbar',
+    config = function()
+        require("scrollbar").setup()
+    end
+}
+
 -- TODO:  https://github.com/lewis6991/satellite.nvim
 -- TODO:  https://github.com/ziontee113/neo-minimap
 
-use 'gorbit99/codewindow.nvim'
+use 'gorbit99/codewindow.nvim' -- TODO: net setup
 
 use 'doums/suit.nvim'
--- TODO:  use 'folke/drop.nvim'
+
+use {
+    'folke/drop.nvim',
+    config = function()
+        require('drop').setup({
+            theme = "leaves"
+        })
+        vim.api.nvim_create_autocmd(
+            "CursorHold", {
+                pattern = "*",
+                callback = function()
+                    require('drop').show()
+                end
+            }
+        )
+        vim.api.nvim_create_autocmd(
+            "CursorMoved", {
+                pattern = "*",
+                callback = function()
+                    require('drop').hide()
+                end
+            }
+        )
+    end
+}
+
 -- TODO:  use({
 --   'folke/noice.nvim',
 --   config = function()
@@ -1771,15 +1929,10 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Utilities   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/cshuaimin/ssr.nvim
 -- TODO: https://github.com/cbochs/portal.nvim
--- TODO: https://github.com/tommcdo/vim-exchange
 -- TODO: https://github.com/AckslD/nvim-trevJ.lua
 -- TODO: https://github.com/kwkarlwang/bufjump.nvim
--- TODO: https://github.com/cbochs/grapple.nvim
 -- TODO: https://github.com/echasnovski/mini.nvim
--- TODO: https://github.com/phaazon/notisys.nvim
--- TODO: https://github.com/smjonas/live-command.nvim
 
 use {
     'AndrewRadev/inline_edit.vim',
@@ -1787,7 +1940,6 @@ use {
 }
 
 -- https://github.com/ElPiloto/significant.nvim -- NOTE: awesome plugin but not usage now
--- https://github.com/NarutoXY/silicon.lua
 
 use {
     'andrewferrier/debugprint.nvim',
@@ -1835,9 +1987,8 @@ use {
 --         vim.fn['firenvim#install'](0)
 --     end
 -- }
--- TODO:  use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
 
--- TODO:  https://github.com/krivahtoo/silicon.nvim
+-- use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
 
 use 'kylechui/nvim-surround'
 
@@ -1864,11 +2015,7 @@ use {
     end
 }
 
---  TODO: use 'pechorin/any-jump.vim' -- NOTE: does not use LSP
-
 use 'rickhowe/spotdiff.vim'
-
-use 'simnalamburt/vim-mundo'
 
 use {
     'tversteeg/registers.nvim',
@@ -1889,36 +2036,4 @@ use {
 end
 })
 -- <~>
-
--- -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
--- -- ━━━━━━━━━━━━━━━━━━━❰ Abstract-IDE configs ❱━━━━━━━━━━━━━━━━━━━ --
--- -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ --
--- Options from AstroNvim
--- {{{
-    -- TODO: url matcher
-url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
-
---- Add syntax matching rules for highlighting URLs/URIs
-function set_url_match()
-  -- delete_url_match()
-  vim.fn.matchadd("HighlightURL", url_matcher, 15)
-  -- if vim.g.highlighturl_enabled then vim.fn.matchadd("HighlightURL", url_matcher, 15) end
-end
-
---- Toggle URL/URI syntax highlighting rules
-function toggle_url_match()
-  vim.g.highlighturl_enabled = not vim.g.highlighturl_enabled
-  set_url_match()
-end
-
--- augroup("highlighturl", { clear = true })
--- cmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
---   desc = "URL Highlighting",
---   group = "highlighturl",
---   pattern = "*",
---   callback = function() set_url_match() end,
--- })
-
--- maps.n["<leader>u"] = { function() toggle_url_match() end, desc = "Toggle URL Highlights" }
--- }}}
 -- vim: fmr=</>,<~>  fdm=marker
