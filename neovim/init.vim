@@ -11,7 +11,7 @@
 " call plug#begin()
 " call plug#end()
 lua << EOF
-require('impatient')
+-- require('impatient')
 vim.notify = require('notify')
 function ColoRand()
     local colos = {
@@ -486,6 +486,17 @@ highlight ConflictMarkerEnd guibg=#2f628e
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
 lua << EOF
+vim.diagnostic.config({
+    float = {
+        source = true
+    },
+    severity_sort = true,
+    virtual_text = {
+        prefix = ' ',
+        source = true
+    }
+})
+
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 vim.fn.matchadd("HighlightURL", url_matcher, 15)

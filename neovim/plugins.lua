@@ -59,11 +59,12 @@ use 'wbthomason/packer.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-    use {
-        'dhruvasagar/vim-table-mode',
-        cmd = 'TableModeEnable'
-    }
+use {
+    'dhruvasagar/vim-table-mode',
+    cmd = 'TableModeEnable'
+}
 
+-- use 'echasnovski/mini.align'
 -- use 'junegunn/vim-easy-align'
 -- use 'godlygeek/tabular'
 -- <~>
@@ -153,7 +154,8 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/David-Kunz/markid
+use 'David-Kunz/markid'
+
 use {
     'RRethy/vim-illuminate',
     config = function()
@@ -337,7 +339,7 @@ use 'Tsuzat/NeoSolarized.nvim'
 use 'Yazeed1s/oh-lucy.nvim'
 use 'atelierbram/Base2Tone-nvim'
 use 'catppuccin/nvim'
-use 'cpea2506/one_monokai.nvim'
+-- use 'cpea2506/one_monokai.nvim'
 use 'fenetikm/falcon'
 use 'glepnir/zephyr-nvim'
 use 'kaiuri/nvim-juliana'
@@ -346,7 +348,7 @@ use 'kvrohit/mellow.nvim'
 use 'lmburns/kimbox'
 use 'luisiacc/gruvbox-baby'
 use 'iandwelker/rose-pine-vim'
-use 'marko-cerovac/material.nvim'
+-- use 'marko-cerovac/material.nvim'
 use 'maxmx03/FluoroMachine.nvim'
 use 'metalelf0/jellybeans-nvim'
 use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
@@ -367,9 +369,9 @@ use 'sainnhe/everforest'
 use 'sainnhe/sonokai'
 use 'sam4llis/nvim-tundra'
 use 'savq/melange'
-use 'shaunsingh/moonlight.nvim'
--- TODO: use 'sickill/vim-monokai'
--- TODO: use 'tanvirtin/monokai.nvim'
+-- use 'shaunsingh/moonlight.nvim'
+-- use 'sickill/vim-monokai'
+-- use 'tanvirtin/monokai.nvim'
 use 'tiagovla/tokyodark.nvim'
 use 'titanzero/zephyrium'
 use 'theniceboy/nvim-deus'
@@ -398,7 +400,6 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: lazyload other pluggins too
 use {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -471,15 +472,13 @@ use {
                 { name = 'custom' },
                 { name = 'nvim_lsp' },
                 { name = 'path' },
-                { name = 'snippy' },
-                { name = 'spell' }
+                { name = 'snippy' }
             }),
             window = {
                 documentation = cmp.config.window.bordered(),
             }
         })
 
-        -- TODO: Custom source test
         -- local source = {}
 
         -- ---Return whether this source is available in the current context or not (optional).
@@ -595,12 +594,13 @@ use {
     event = "InsertEnter",
     module = "cmp"
 }
-use { 'dmitmel/cmp-cmdline-history', after = "nvim-cmp" }
-use { 'hrsh7th/cmp-buffer', after = "nvim-cmp" }
-use { 'hrsh7th/cmp-cmdline', after = "nvim-cmp" }
-use { 'hrsh7th/cmp-nvim-lsp', after = "nvim-cmp" }
-use { 'hrsh7th/cmp-path', after = "nvim-cmp" }
-use { 'f3fora/cmp-spell', after = "nvim-cmp" }
+
+use 'dmitmel/cmp-cmdline-history'
+use 'hrsh7th/cmp-buffer'
+use 'hrsh7th/cmp-cmdline'
+use 'hrsh7th/cmp-nvim-lsp' -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
+use 'hrsh7th/cmp-path'
+
 -- https://github.com/jameshiew/nvim-magic
 -- https://github.com/kristijanhusak/vim-dadbod-completion
 -- https://github.com/lukas-reineke/cmp-rg
@@ -612,7 +612,7 @@ use { 'f3fora/cmp-spell', after = "nvim-cmp" }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Abstract-IDE dap configs
+-- Abstract-IDE dap configs
 -- --------------------------
 -- -- telescope-dap.nvim
 -- pcall(require'telescope'.load_extension, 'dap')
@@ -682,19 +682,20 @@ use { 'f3fora/cmp-spell', after = "nvim-cmp" }
 -- }
 -- -- end nvim-dap-virtual-text
 -- -- end nvim-dap
--- TODO: https://github.com/PatschD/zippy.nvim
--- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
--- TODO: https://github.com/jayp0521/mason-nvim-dap.nvim
--- TODO: https://github.com/nvim-telescope/telescope-vimspector.nvim
--- TODO: https://github.com/puremourning/vimspector
--- TODO: https://github.com/sakhnik/nvim-gdb
--- TODO: https://github.com/theHamsta/nvim-dap-virtual-text
--- TODO: https://github.com/tpope/vim-scriptease
--- TODO: https://github.com/vim-scripts/Conque-GDB
--- TODO: use 'Pocco81/dap-buddy.nvim'
--- TODO: use 'mfussenegger/nvim-dap'
--- TODO: use 'mfussenegger/nvim-dap-python'
--- TODO: use 'rcarriga/nvim-dap-ui'
+-- https://github.com/PatschD/zippy.nvim
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/jayp0521/mason-nvim-dap.nvim
+-- https://github.com/jbyuki/one-small-step-for-vimkind
+-- https://github.com/nvim-telescope/telescope-vimspector.nvim
+-- https://github.com/puremourning/vimspector
+-- https://github.com/sakhnik/nvim-gdb
+-- https://github.com/theHamsta/nvim-dap-virtual-text
+-- https://github.com/tpope/vim-scriptease
+-- https://github.com/vim-scripts/Conque-GDB
+-- use 'Pocco81/dap-buddy.nvim'
+-- use 'mfussenegger/nvim-dap'
+-- use 'mfussenegger/nvim-dap-python'
+-- use 'rcarriga/nvim-dap-ui'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -812,19 +813,20 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'sbdchd/neoformat',
-    cmd = "Neoformat"
-}
--- TODO: use 'joechrisellis/lsp-format-modifications.nvim'
+-- use {
+--     'sbdchd/neoformat',
+--     cmd = "Neoformat"
+-- }
+-- use 'joechrisellis/lsp-format-modifications.nvim'
+-- use 'lukas-reineke/format.nvim'
 -- <~>
 
---     -- FZF:</>
---     -- ````
---     -- TODO: https://github.com/ibhagwan/fzf-lua
---     -- TODO: https://github.com/junegunn/fzf
---     -- TODO: https://github.com/junegunn/fzf.vim
---     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       FZF      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/gfanto/fzf-lsp.nvim
+-- https://github.com/ibhagwan/fzf-lua
+-- https://github.com/junegunn/fzf
+-- https://github.com/junegunn/fzf.vim
+-- https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -899,13 +901,14 @@ use 'nvim-lua/plenary.nvim'
 -- <~>
 
 -- ──────────────────── Lint ────────────────────</>
--- TODO: lint setup
 -- use 'mfussenegger/nvim-lint'
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━❰ LSP ❱━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: Load lsp for Mason lsp installed languages
--- TODO: https://github.com/gfanto/fzf-lsp.nvim
+-- use 'Decodetalkers/csharpls-extended-lsp.nvim'
+-- use 'Hoffs/omnisharp-extended-lsp.nvim'
+
 use {
     'Kasama/nvim-custom-diagnostic-highlight',
     config = function()
@@ -944,7 +947,7 @@ use {
     cmd = 'Vista'
 }
 
-use 'neovim/nvim-lspconfig' -- TODO: require('mason-registry').get_installed_package_names()
+use 'neovim/nvim-lspconfig'
 
 use {
     'williamboman/mason.nvim',
@@ -969,45 +972,6 @@ use {
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
-        -- TODO:
-        -- -- Setup diagnostic icons and signs
-        -- vim.diagnostic.config({
-        --     virtual_text = {
-        --         prefix = "",
-        --         spacing = 4,
-        --         format = function(diagnostic)
-        --             local icons = {
-        --                 ERROR = " ",
-        --                 WARN = " ",
-        --                 HINT = " ",
-        --                 INFO = " ",
-        --             }
-        --             return string.format(
-        --             "%s %s",
-        --             icons[vim.diagnostic.severity[diagnostic.severity]],
-        --             diagnostic.message
-        --             )
-        --         end,
-        --     },
-        --     signs = true,
-        --     underline = true,
-        --     -- update diagnostic in insert mode will be annoying when the output is too verbose
-        --     update_in_insert = false,
-        -- })
-        vim.diagnostic.config({
-            float = {
-                source = true
-            },
-            severity_sort = true,
-            virtual_text = {
-                prefix = ' ',
-                source = true
-            }
-        })
-
-        -- vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
-        -- vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 
         local on_attach = function(client, bufnr)
             local navic = require('nvim-navic')
@@ -1145,20 +1109,6 @@ use {
     end
 }
 
---     TODO: lsp_lines
---     -- use {
---     --     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
---     --     as = 'lsp_lines',
---     --     config = function()
---     --         require("lsp_lines").setup()
---     --         --require("lsp_lines").register_lsp_virtual_lines()
---     --         vim.diagnostic.config({
---     --             virtual_text = false,
---     --         })
---     --         vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
---     --     end
---     -- }
-
 use {
     -- BUG: references windows is very slow
     'RishabhRD/nvim-lsputils',
@@ -1177,8 +1127,6 @@ use {
 use {
     'RishabhRD/popfix'
 }
-
---     -- TODO: https://github.com/gfanto/fzf-lsp.nvim
 
 use({
     "glepnir/lspsaga.nvim",
@@ -1257,31 +1205,13 @@ use {
     event = "LspAttach"
 }
 
---     TODO: use {
---         'jose-elias-alvarez/null-ls.nvim',
---         config = function()
---             require("null-ls").setup({
---                 sources = {
---                     require("null-ls").builtins.formatting.stylua,
---                     require("null-ls").builtins.diagnostics.eslint,
---                     require("null-ls").builtins.completion.spell,
---                 },
---             })
---         end
---     } ]]
---     TODO:L use 'Decodetalkers/csharpls-extended-lsp.nvim'
---     TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
---    TODO:  -- use 'jayp0521/mason-null-ls.nvim'
---    TODO:  use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-
+use 'jayp0521/mason-null-ls.nvim'
+use 'jose-elias-alvarez/null-ls.nvim'
 use 'ldelossa/litee-bookmarks.nvim'
+use 'ldelossa/litee-calltree.nvim'
 use 'ldelossa/litee-filetree.nvim'
 use 'ldelossa/litee-symboltree.nvim'
-use 'ldelossa/litee-calltree.nvim'
 use 'ldelossa/litee.nvim'
-
---    TODO:  use 'lukas-reineke/format.nvim'
---     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
 
 use {
     'p00f/clangd_extensions.nvim',
@@ -1378,7 +1308,7 @@ use {
     end
 }
 
---    TODO: use 'razzmatazz/csharp-language-server'
+use 'razzmatazz/csharp-language-server'
 
 use 'ray-x/navigator.lua'
 
@@ -1412,11 +1342,6 @@ use {
 }
 
 use 'weilbith/nvim-code-action-menu'
--- <~>
-
---     -- Lua:</>
---     -- ````
---     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Mapping     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1495,37 +1420,35 @@ use 'kshenoy/vim-signature'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
 
---     -- OrgMode:</>
---     -- ````````
---     -- {{{
---     -- TODO: https://github.com/TravonteD/org-capture-filetype
---     -- TODO: https://github.com/akinsho/org-bullets.nvim
---     TODO: use {
---         'nvim-neorg/neorg',
---         config = function()
---             require('nvim-treesitter.configs').setup {
---                 highlight = {
---                     enable = true,
---                     additional_vim_regex_highlighting = false
---                 }
---             }
---             require('neorg').setup {
---                 ["core.norg.concealer"] = {
---                     config = { -- Note that this table is optional and doesn't need to be provided
---                     -- Configuration here
---                 }
---             }
---             }
---         end
---     }
---     TODO: -- use 'nvim-orgmode/orgmode'
---     -- TODO: https://github.com/ranjithshegde/orgWiki.nvim
---     TODO: use {
---         'lukas-reineke/headlines.nvim',
---         config = function()
---             require('headlines').setup()
---         end,
---     }
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Orgmode     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/TravonteD/org-capture-filetype
+-- https://github.com/akinsho/org-bullets.nvim
+use {
+    'nvim-neorg/neorg',
+    config = function()
+        require('nvim-treesitter.configs').setup {
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false
+            }
+        }
+        require('neorg').setup {
+            ["core.norg.concealer"] = {
+                config = { -- Note that this table is optional and doesn't need to be provided
+                -- Configuration here
+                }
+            }
+        }
+    end
+}
+-- use 'nvim-orgmode/orgmode'
+-- https://github.com/ranjithshegde/orgWiki.nvim
+-- use {
+--      'lukas-reineke/headlines.nvim',
+--      config = function()
+--          require('headlines').setup()
+--      end,
+--  }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Quickfix   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1556,12 +1479,6 @@ use {
     require("auto-session").setup({})
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end
-  --   TODO: icons for session
-  --   if vim.g.persisting then
-  --     return "  |"
-  -- elseif vim.g.persisting == false then
-  --     return "  |"
-  -- end
 }
 -- <~>
 
@@ -1594,8 +1511,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: make clickable items
--- TODO: Compete setup
+-- TODO: Compete setup, clickable items
 use {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -1642,8 +1558,8 @@ use {
                         }
                     }
                 },
-        --         lualine_x = {'encoding', 'fileformat', 'filetype'},
-        --         lualine_y = {'progress'},
+                -- lualine_x = {'encoding', 'fileformat', 'filetype'},
+                -- lualine_y = { 'progress'},
                 -- lualine_z = {'location'}
             },
         --     inactive_sections = {
@@ -1674,23 +1590,22 @@ use {
 }
 -- <~>
 
---     -- Tab Line:</>
---     -- `````````
---     TODO:  use {
---         'akinsho/bufferline.nvim',
---         config = function()
---             require("bufferline").setup {
---                 options = {
---                     mode = "tabs",
---                     diagnostics = "nvim_lsp",
---                     separator_style = "thick",
---                     always_show_bufferline = false
---                 }
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- use {
+--     'akinsho/bufferline.nvim',
+--     config = function()
+--         require("bufferline").setup {
+--             options = {
+--                 mode = "tabs",
+--                 diagnostics = "nvim_lsp",
+--                 separator_style = "thick",
+--                 always_show_bufferline = false
 --             }
---         end
---     }
---    TODO:   -- use 'mengelbrecht/lightline-bufferline'
---  TODO: use {
+--         }
+--     end
+-- }
+-- use 'mengelbrecht/lightline-bufferline'
+-- use {
 --     'nanozuki/tabby.nvim',
 --     config = function()
 --         require('tabby').setup()
@@ -1699,70 +1614,6 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: tele configs
--- return function()
---   local ok, telescope = pcall(require, "telescope")
---   if not ok then
---     return
---   end
-
---   telescope.setup({
---     defaults = {
---       vimgrep_arguments = {
---         "rg",
---         "--color=never",
---         "--no-heading",
---         "--with-filename",
---         "--line-number",
---         "--column",
---         "--smart-case",
---       },
---       prompt_prefix = "  ",
---       selection_caret = "  ",
---       entry_prefix = "  ",
---       initial_mode = "insert",
---       selection_strategy = "reset",
---       sorting_strategy = "descending",
---       layout_strategy = "flex",
---       layout_config = {
---         horizontal = {
---           prompt_position = "top",
---           preview_width = 0.55,
---         },
---         vertical = {
---           mirror = false,
---         },
---         width = 0.87,
---         height = 0.80,
---         preview_cutoff = 120,
---       },
---       file_sorter = require("telescope.sorters").get_fuzzy_file,
---       file_ignore_patterns = {},
---       generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
---       path_display = { "absolute" },
---       winblend = 0,
---       border = {},
---       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
---       color_devicons = true,
---       use_less = true,
---       set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
---       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
---       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
---       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
---       -- Developer configurations: Not meant for general override
---       buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
---     },
---     extensions = {
---       fzf = {
---         fuzzy = true, -- false will only do exact matching
---         override_generic_sorter = false, -- override the generic sorter
---         override_file_sorter = true, -- override the file sorter
---         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
---         -- the default case_mode is "smart_case"
---       },
---     },
---   })
--- end
 use {
     'crispgm/telescope-heading.nvim',
     after = 'telescope.nvim',
@@ -1777,11 +1628,23 @@ use {
     cmd = "Telescope",
     config = function()
         require('telescope').setup({
+            defaults = {
+                dynamic_preview_title = true,
+                entry_prefix = "   ",
+                file_ignore_patterns = {},
+                file_sorter = require("telescope.sorters").get_fuzzy_file,
+                generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+                initial_mode = "insert",
+                multi_icon = " ",
+                prompt_prefix = "  ",
+                selection_caret = " ",
+                timeout = 2000,
+            },
             extensions = {
                 heading = {
                     treesitter = true
                 }
-            }
+            },
         })
     end
 }
@@ -1890,21 +1753,6 @@ use {
     ft = 'lua'
 }
 
---    TODO:   use {
---         'nvim-treesitter/nvim-treesitter-refactor',
---         config = function()
---             require'nvim-treesitter.configs'.setup {
---                 refactor = {
---                     highlight_definitions = {
---                         enable = true,
---                         -- Set to false if you have an `updatetime` of ~100.
---                         clear_on_cursor_move = true,
---                     },
---                 },
---             }
---         end
---     }
-
 use {
     'nvim-treesitter/playground',
     after = 'nvim-treesitter',
@@ -1918,41 +1766,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'lewis6991/satellite.nvim',
-    config = function()
-        require('satellite').setup()
-    end
-}
-
-use {
-    -- TODO: enable and disable commands
-    'folke/drop.nvim',
-    config = function()
-        require('drop').setup({
-            theme = "leaves"
-        })
-        vim.api.nvim_create_autocmd(
-            "CursorHold", {
-                pattern = "*",
-                callback = function()
-                    require('drop').show()
-                end
-            }
-        )
-        vim.api.nvim_create_autocmd(
-            { "CursorMoved", "CursorMovedI" },
-            {
-                pattern = "*",
-                callback = function()
-                    require('drop').hide()
-                end
-            }
-        )
-    end
-}
-
--- TODO:  use({
+-- use({
 --   'folke/noice.nvim',
 --   config = function()
 --     require("noice").setup()
@@ -2007,10 +1821,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Utilities   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/cbochs/portal.nvim
--- TODO: https://github.com/AckslD/nvim-trevJ.lua
--- TODO: https://github.com/kwkarlwang/bufjump.nvim
--- TODO: https://github.com/echasnovski/mini.nvim
+use 'AckslD/nvim-trevJ.lua'
 
 use {
     'AndrewRadev/inline_edit.vim',
@@ -2052,6 +1863,8 @@ use {
     keys = { "<Leader>dp", "<Leader>dP", "<Leader>dv", "<Leader>dV", }
 }
 
+use 'cbochs/portal.nvim'
+
 use 'chipsenkbeil/distant.nvim'
 
 use {
@@ -2060,6 +1873,8 @@ use {
 }
 
 -- use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
+
+use 'kwkarlwang/bufjump.nvim'
 
 use 'kylechui/nvim-surround'
 
