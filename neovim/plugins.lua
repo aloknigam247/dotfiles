@@ -158,7 +158,23 @@ use {
     'RRethy/vim-illuminate',
     config = function()
         -- TODO: fix colors
-        -- TODO: use bacl ground colors
+        -- function LightenDarkenColor(col, amt)
+        --     local num = tonumber(col, 16)
+        --     local r = bit.rshift(num, 16) + amt
+        --     local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+        --     local g = bit.band(num, 0x0000FF) + amt
+        --     local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+        --     return string.format("%#x", newColor)
+        -- end
+
+        -- local bg = vim.api.nvim_get_hl_by_name('Normal', true).background
+        -- bg = string.format("%X", tostring(bg))
+        -- print(bg)
+        -- bg = LightenDarkenColor(bg, 40)
+        -- print(bg)
+        -- vim.api.nvim_set_hl(0, "IlluminatedWordText", {
+        --     bg = bg
+        -- })
         vim.cmd[[
            hi IlluminatedWordText guibg = underline
            hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
@@ -170,7 +186,7 @@ use {
     end
 }
 
-use 'azabiong/vim-highlighter' -- TODO: create context menu
+-- use 'azabiong/vim-highlighter'
 
 use {
     'folke/lsp-colors.nvim',
@@ -178,7 +194,6 @@ use {
 }
 
 use {
-    -- TODO: show todo comments in statusline
     'folke/todo-comments.nvim',
     config = function()
         require("todo-comments").setup({
@@ -209,7 +224,6 @@ use {
     'melkster/modicator.nvim',
     after = 'lualine.nvim',
     config = function()
-        -- TODO: on click functions for sections
         local modicator = require('modicator')
         local modes = {
             ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
@@ -304,7 +318,7 @@ use 'mcchrish/zenbones.nvim'
 use 'olimorris/onedarkpro.nvim'
 use 'projekt0n/github-nvim-theme'
 use 'rafamadriz/neon'
--- TODO: use 'ray-x/starry.nvim' -- limestone
+use 'ray-x/starry.nvim' -- limestone
 use 'rmehri01/onenord.nvim'
 use 'rose-pine/neovim'
 use 'sainnhe/edge'
@@ -343,7 +357,7 @@ use 'olimorris/onedarkpro.nvim'
 use 'projekt0n/github-nvim-theme'
 use 'rafamadriz/neon'
 use 'ray-x/aurora'
--- TODO: use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
+use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
 use 'rebelot/kanagawa.nvim'
 use 'rmehri01/onenord.nvim'
 use 'rockyzhang24/arctic.nvim'
@@ -597,40 +611,6 @@ use { 'f3fora/cmp-spell', after = "nvim-cmp" }
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configuration  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/cankolay3499/cnvim
--- TODO: https://github.com/CosmicNvim/CosmicNvim
--- TODO: https://github.com/JryChn/ModuleVim
--- TODO: https://github.com/LunarVim/LunarVim
--- TODO: https://github.com/NTBBloodbath/doom-nvim
--- TODO: https://github.com/NvChad/NvChad
--- TODO: https://github.com/OmniSharp/omnisharp-vim
--- TODO: https://github.com/Shadorain/shadovim
--- TODO: https://github.com/TeoDev1611/astro.nvim
--- TODO: https://github.com/Theory-of-Everything/nii-nvim
--- TODO: https://github.com/Ultra-Code/awesome-neovim
--- TODO: https://github.com/VapourNvim/VapourNvim
--- TODO: https://github.com/alpha2phi/neovim-for-beginner
--- TODO: https://github.com/artart222/CodeArt
--- TODO: https://github.com/askfiy/nvim
--- TODO: https://github.com/b0o/nvim-conf
--- TODO: https://github.com/craftzdog/dotfiles-public
--- TODO: https://github.com/crivotz/nv-ide
--- TODO: https://github.com/cstsunfu/.sea.nvim
--- TODO: https://github.com/echasnovski/mini.nvim
--- TODO: https://github.com/glepnir/nvim
--- TODO: https://github.com/jdhao/nvim-config
--- TODO: https://github.com/lalitmee/cobalt2.nvim
--- TODO: https://github.com/mnabila/nvimrc
--- TODO: https://github.com/nvim-lua/kickstart.nvim
--- TODO: https://github.com/nvoid-lua/nvoid
--- TODO: https://github.com/optimizacija/neovim-config
--- TODO: https://github.com/ray-x/dotfiles
--- TODO: https://github.com/ray-x/go.nvim
--- TODO: https://github.com/shaeinst/roshnivim
--- TODO: https://github.com/shaunsingh/nyoom.nvim
--- <~>
-
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: Abstract-IDE dap configs
 -- --------------------------
@@ -848,8 +828,9 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use 'hotwatermorning/auto-git-diff' -- Archieved
--- use 'ldelossa/gh.nvim' -- Archieved
+-- https://github.com/akinsho/git-conflict.nvim
+-- use 'hotwatermorning/auto-git-diff'
+-- use 'ldelossa/gh.nvim'
 use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -868,18 +849,16 @@ use {
         }
     end
 }
--- TODO: use 'rhysd/conflict-marker.vim' -- Archieved
 
 use {
     'rhysd/git-messenger.vim',
     cmd = "GitMessenger"
 }
 
-use 'ruifm/gitlinker.nvim'
--- TODO: use 'sindrets/diffview.nvim' -- Archieved
--- TODO: -- use 'tanvirtin/vgit.nvim' -- Archieved
--- TODO: -- https://github.com/akinsho/git-conflict.nvim
--- TODO: -- https://github.com/Almo7aya/openingh.nvim -- NOTE: needs PR for VSO
+use {
+    'sindrets/diffview.nvim',
+    cmd = "DiffviewOpen"
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1199,88 +1178,83 @@ use {
     'RishabhRD/popfix'
 }
 
---     TODO: use {
---         "amrbashir/nvim-docs-view",
---         -- cmd = { "DocsViewToggle" },
---         config = function()
---             require("docs-view").setup {
---                 position = "right",
---                 width = 60,
---             }
---         end
---     }
 --     -- TODO: https://github.com/gfanto/fzf-lsp.nvim
 
--- -- TODO:
--- -- lspsaga
--- --
--- config.lspsaga_config = function()
---   local enable_winbar = require("editor.utils").vhas("nvim-0.8.0")
---   local saga = require("lspsaga")
---   local themes = require("lspsaga.lspkind")
---   themes[12][2] = " "
+use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = function()
+        local saga = require("lspsaga")
 
---   -- use custom config
---   saga.init_lsp_saga({
---     -- when cursor in saga window you config these to move
---     move_in_saga = { prev = "k", next = "j" },
---     diagnostic_header = { " ", " ", " ", " " },
---     scroll_in_preview = {
---       scroll_down = "<C-d>",
---       scroll_up = "<C-u>",
---     },
---     code_action_icon = "ﯦ ",
---     -- same as nvim-lightbulb but async
---     code_action_lightbulb = {
---       sign = false,
---       virtual_text = true,
---     },
---     finder_icons = {
---       def = "  ",
---       ref = "  ",
---       link = "  ",
---     },
---     finder_action_keys = {
---       open = "<CR>",
---       vsplit = "s",
---       split = "i",
---       tabe = "t",
---       quit = "q",
---       scroll_down = "<C-f>",
---       scroll_up = "<C-b>", -- quit can be a table
---     },
---     -- show symbols in winbar must be neovim 0.8.0,
---     -- close it until neovim 0.8.0 become stable
---     symbol_in_winbar = {
---       in_custom = false,
---       enable = enable_winbar,
---       separator = "  ",
---       show_file = true,
---       click_support = false,
---     },
---   })
-
---   -- set lightbulb as comment like
---   vim.api.nvim_set_hl(0, "LspSagaLightBulb", { fg = "#E8C266" })
--- end
-
---     TODO: use({
---         "glepnir/lspsaga.nvim",
---         branch = "main",
---         config = function()
---             local saga = require("lspsaga")
--- 
---             saga.init_lsp_saga({
---                 -- your configuration
---             })
---         end,
---     })
+        saga.init_lsp_saga({
+            -- "single" | "double" | "rounded" | "bold" | "plus"
+            border_style = "rounded",
+            diagnostic_header = { " ", " ", " ", "ﴞ " },
+            -- finder icons
+            finder_icons = {
+                def = '  ',
+                ref = '諭 ',
+                link = '  ',
+            },
+            finder_action_keys = {
+                open = {'o', '<CR>'},
+                vsplit = 's',
+                split = 'i',
+                tabe = 't',
+                quit = {'q', '<ESC>'},
+            },
+            definition_action_keys = {
+                edit = '<C-c>o',
+                vsplit = '<C-c>v',
+                split = '<C-c>i',
+                tabe = '<C-c>t',
+                quit = 'q',
+            },
+            rename_action_quit = '<C-c>',
+            rename_in_select = true,
+            -- show symbols in winbar must nightly
+            -- in_custom mean use lspsaga api to get symbols
+            -- and set it to your custom winbar or some winbar plugins.
+            -- if in_cusomt = true you must set in_enable to false
+            symbol_in_winbar = {
+                in_custom = false,
+                enable = false,
+                separator = ' ',
+                show_file = true,
+                -- define how to customize filename, eg: %:., %
+                -- if not set, use default value `%:t`
+                -- more information see `vim.fn.expand` or `expand`
+                -- ## only valid after set `show_file = true`
+                file_formatter = "",
+                click_support = false,
+            },
+            -- show outline
+            show_outline = {
+                win_position = 'right',
+                --set special filetype win that outline window split.like NvimTree neotree
+                -- defx, db_ui
+                win_with = '',
+                win_width = 30,
+                auto_enter = true,
+                auto_preview = true,
+                virt_text = '┃',
+                jump_key = 'o',
+                -- auto refresh when change buffer
+                auto_refresh = true,
+            },
+            -- custom lsp kind
+            -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
+            custom_kind = {}
+        })
+    end,
+})
 
 use {
     'j-hui/fidget.nvim',
     config = function()
         require("fidget").setup()
-    end
+    end,
+    event = "LspAttach"
 }
 
 --     TODO: use {
@@ -1295,68 +1269,154 @@ use {
 --             })
 --         end
 --     } ]]
---     TODO: use 'jubnzv/virtual-types.nvim'
---     TODO: use {
---         'kosayoda/nvim-lightbulb',
---         requires = 'antoinemadec/FixCursorHold.nvim'
---     }
 --     TODO:L use 'Decodetalkers/csharpls-extended-lsp.nvim'
 --     TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
---     TODO: use {
---         'andrewferrier/textobj-diagnostic.nvim',
---         config = function()
---             require("textobj-diagnostic").setup()
---         end
---     }
---     -- TODO: https://github.com/anuvyklack/hydra.nvim
---    TODO:  use 'filipdutescu/renamer.nvim'
 --    TODO:  -- use 'jayp0521/mason-null-ls.nvim'
 --    TODO:  use 'kwkarlwang/cmp-nvim-insert-text-lsp'
---    TODO:  use 'ldelossa/litee-bookmarks.nvim'
---    TODO:  use 'ldelossa/litee-calltree.nvim'
---    TODO:  use 'ldelossa/litee.nvim'
+
+use 'ldelossa/litee-bookmarks.nvim'
+use 'ldelossa/litee-filetree.nvim'
+use 'ldelossa/litee-symboltree.nvim'
+use 'ldelossa/litee-calltree.nvim'
+use 'ldelossa/litee.nvim'
+
 --    TODO:  use 'lukas-reineke/format.nvim'
---    TODO:  use 'nanotee/nvim-lsp-basics'
---    TODO:  use 'nvim-lua/lsp-status.nvim'
 --     -- TODO: https://github.com/ojroques/nvim-lspfuzzy
---    TODO: use 'onsails/diaglist.nvim'
---    TODO: use 'p00f/clangd_extensions.nvim'
+
+use {
+    'p00f/clangd_extensions.nvim',
+    config = function()
+        require("clangd_extensions").setup {
+            server = {
+                -- options to pass to nvim-lspconfig
+                -- i.e. the arguments to require("lspconfig").clangd.setup({})
+            },
+            extensions = {
+                -- defaults:
+                -- Automatically set inlay hints (type hints)
+                autoSetHints = true,
+                -- These apply to the default ClangdSetInlayHints command
+                inlay_hints = {
+                    -- Only show inlay hints for the current line
+                    only_current_line = false,
+                    -- Event which triggers a refersh of the inlay hints.
+                    -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+                    -- not that this may cause  higher CPU usage.
+                    -- This option is only respected when only_current_line and
+                    -- autoSetHints both are true.
+                    only_current_line_autocmd = "CursorHold",
+                    -- whether to show parameter hints with the inlay hints or not
+                    show_parameter_hints = true,
+                    -- prefix for parameter hints
+                    parameter_hints_prefix = "<- ",
+                    -- prefix for all the other hints (type, chaining)
+                    other_hints_prefix = "=> ",
+                    -- whether to align to the length of the longest line in the file
+                    max_len_align = false,
+                    -- padding from the left if max_len_align is true
+                    max_len_align_padding = 1,
+                    -- whether to align to the extreme right or not
+                    right_align = false,
+                    -- padding from the right if right_align is true
+                    right_align_padding = 7,
+                    -- The color of the hints
+                    highlight = "Comment",
+                    -- The highlight group priority for extmark
+                    priority = 100,
+                },
+                ast = {
+                    -- These are unicode, should be available in any font
+                    role_icons = {
+                        type = "🄣",
+                        declaration = "🄓",
+                        expression = "🄔",
+                        statement = ";",
+                        specifier = "🄢",
+                        ["template argument"] = "🆃",
+                    },
+                    kind_icons = {
+                        Compound = "🄲",
+                        Recovery = "🅁",
+                        TranslationUnit = "🅄",
+                        PackExpansion = "🄿",
+                        TemplateTypeParm = "🅃",
+                        TemplateTemplateParm = "🅃",
+                        TemplateParamObject = "🅃",
+                    },
+                    --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
+                    role_icons = {
+                        type = "",
+                        declaration = "",
+                        expression = "",
+                        specifier = "",
+                        statement = "",
+                        ["template argument"] = "",
+                    },
+
+                    kind_icons = {
+                        Compound = "",
+                        Recovery = "",
+                        TranslationUnit = "",
+                        PackExpansion = "",
+                        TemplateTypeParm = "",
+                        TemplateTemplateParm = "",
+                        TemplateParamObject = "",
+                    }, ]]
+
+                    highlights = {
+                        detail = "Comment",
+                    },
+                },
+                memory_usage = {
+                    border = "none",
+                },
+                symbol_info = {
+                    border = "none",
+                },
+            },
+        }
+    end
+}
+
 --    TODO: use 'razzmatazz/csharp-language-server'
---     -- TODO: https://github.com/ray-x/navigator.lua
---    TODO: use {
---         'rmagatti/goto-preview',
---         config = function()
---             require('goto-preview').setup {}
---         end
---     }
---    TODO: use {
---         'simrat39/symbols-outline.nvim',
---         config = function()
---             require("symbols-outline").setup()
---         end
---     }
---    TODO: --[[ use {
---        "smjonas/inc-rename.nvim",
---        config = function()
---            require("inc_rename").setup()
---        end,
---     } ]] -- NOTE: needs neovim v0.8
---   TODO:  use {
---         'stevearc/aerial.nvim',
---         config = function()
---             require('aerial').setup({})
---         end
---     }
---   TODO:  use 'tami5/lspsaga.nvim'
---   TODO:  use 'weilbith/nvim-code-action-menu'
+
+use 'ray-x/navigator.lua'
+
+use {
+    'rmagatti/goto-preview',
+    config = function()
+        require('goto-preview').setup()
+    end
+}
+
+use {
+    'simrat39/symbols-outline.nvim',
+    config = function()
+        require("symbols-outline").setup()
+    end
+}
+
+use {
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    config = function()
+        require("inc_rename").setup()
+    end,
+}
+
+use {
+    'stevearc/aerial.nvim',
+    config = function()
+        require('aerial').setup({})
+    end
+}
+
+use 'weilbith/nvim-code-action-menu'
 -- <~>
 
 --     -- Lua:</>
 --     -- ````
 --     -- TODO: https://github.com/jbyuki/one-small-step-for-vimkind
---     -- TODO: https://github.com/milisims/nvim-luaref
---     -- TODO: https://github.com/nanotee/nvim-lua-guide
---     -- TODO: https://github.com/rafcamlet/nvim-luapad
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Mapping     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1419,7 +1479,8 @@ use 'davidgranstrom/nvim-markdown-preview'
 -- |----------------+---------------------------------------------------------------|
 use {
     'MattesGroeger/vim-bookmarks',
-    config = function()
+    keys = { "bm", "ba" },
+    setup = function()
         vim.cmd[[
         let g:bookmark_no_default_key_mappings = 1
         nmap bm <Plug>BookmarkToggle
@@ -1428,10 +1489,10 @@ use {
     end
 }
 
---     -- TODO: https://github.com/ThePrimeagen/harpoon --> plenary
+-- https://github.com/ThePrimeagen/harpoon --> plenary
 use 'kshenoy/vim-signature'
---     -- use 'chentoast/marks.nvim'
---     use 'crusj/bookmarks.nvim'
+-- use 'chentoast/marks.nvim'
+-- use 'crusj/bookmarks.nvim'
 -- <~>
 
 --     -- OrgMode:</>
@@ -1470,7 +1531,6 @@ use 'kshenoy/vim-signature'
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Quickfix   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use 'folke/trouble.nvim'
 use {
-    -- TODO: fzf
     'kevinhwang91/nvim-bqf',
     after = "nvim-lspconfig",
     config = function()
@@ -1584,7 +1644,7 @@ use {
                 },
         --         lualine_x = {'encoding', 'fileformat', 'filetype'},
         --         lualine_y = {'progress'},
-        --         lualine_z = {'location'}
+                -- lualine_z = {'location'}
             },
         --     inactive_sections = {
         --         lualine_a = {},
@@ -1639,10 +1699,6 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
---  TODO: use 'axkirillov/easypick.nvim' -- NOTE: No need now
---  TODO: https://github.com/adoyle-h/ad-telescope-extensions.nvim
---  TODO: https://github.com/princejoogie/dir-telescope.nvim
--- TODO: https://github.com/kelly-lin/telescope-ag
 -- TODO: tele configs
 -- return function()
 --   local ok, telescope = pcall(require, "telescope")
@@ -1729,6 +1785,18 @@ use {
         })
     end
 }
+
+use {
+    'princejoogie/dir-telescope.nvim',
+    after = "telescope.nvim",
+    cmd = { "FileInDirectory", "GrepInDirectory" },
+    config = function()
+        require("dir-telescope").setup({
+            hidden = true,
+            respect_gitignore = true,
+        })
+    end
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1752,17 +1820,10 @@ use {
 -- https://github.com/voldikss/vim-floaterm
 -- <~>
 
--- Test & Run:</>
--- TODO: https://github.com/EthanJWright/vs-tasks.nvim
--- TODO: https://github.com/andythigpen/nvim-coverage
--- TODO: https://github.com/is0n/jaq-nvim
--- TODO: https://github.com/jubnzv/mdeval.nvim
--- TODO: https://github.com/klen/nvim-test
--- TODO: https://github.com/michaelb/sniprun
--- TODO: https://github.com/nvim-neotest/neotest
--- TODO: https://github.com/pianocomposer321/yabs.nvim
--- TODO: https://github.com/smzm/hydrovim
--- TODO: https://github.com/stevearc/overseer.nvim
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/andythigpen/nvim-coverage
+-- https://github.com/klen/nvim-test
+-- https://github.com/nvim-neotest/neotest
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1791,11 +1852,6 @@ use {
         }
     end
 }
-
---  TODO: use {
---     'haringsrob/nvim_context_vt',
---     after = 'nvim-treesitter'
--- }
 
 use {
     'm-demare/hlargs.nvim',
@@ -1863,18 +1919,11 @@ use {
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
-    'petertriho/nvim-scrollbar',
+    'lewis6991/satellite.nvim',
     config = function()
-        require("scrollbar").setup()
+        require('satellite').setup()
     end
 }
-
--- TODO:  https://github.com/lewis6991/satellite.nvim
--- TODO:  https://github.com/ziontee113/neo-minimap
-
-use 'gorbit99/codewindow.nvim' -- TODO: net setup
-
-use 'doums/suit.nvim'
 
 use {
     -- TODO: enable and disable commands
@@ -2009,13 +2058,6 @@ use {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime'
 }
-
--- TODO:  use {
---     'glacambre/firenvim',
---     run = function()
---         vim.fn['firenvim#install'](0)
---     end
--- }
 
 -- use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
 
