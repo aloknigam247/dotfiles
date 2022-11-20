@@ -203,7 +203,7 @@ function ColoRand()
     local bg = selection[2]
     local module = selection[3]
     local precmd = selection.precmd
-    print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
+    -- print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
     vim.o.background = bg
     if (precmd) then
         precmd()
@@ -212,7 +212,7 @@ function ColoRand()
         require(module)
     end
     vim.cmd.colorscheme(scheme)
-    vim.notify("Colorscheme: " .. scheme, vim.log.levels.INFO, { minimum_width = 0, render = 'minimal' })
+    vim.notify("Colorscheme: " .. scheme .. " - " .. bg, vim.log.levels.INFO, { minimum_width = 0, render = 'minimal' })
 end
 
 vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })

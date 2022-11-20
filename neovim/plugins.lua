@@ -1175,7 +1175,11 @@ use({
 use {
     'j-hui/fidget.nvim',
     config = function()
-        require("fidget").setup()
+        require("fidget").setup({
+            text = {
+                spinner = 'arc'
+            }
+        })
     end,
     event = "LspAttach"
 }
@@ -1400,21 +1404,32 @@ use 'kshenoy/vim-signature'
 -- https://github.com/akinsho/org-bullets.nvim
 use {
     'nvim-neorg/neorg',
+    after = "nvim-treesitter",
     config = function()
-        require('nvim-treesitter.configs').setup {
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false
-            }
-        }
+        -- require('nvim-treesitter.configs').setup {
+        --     highlight = {
+        --         enable = true,
+        --         additional_vim_regex_highlighting = false
+        --     }
+        -- }
+        print("neorg loaded default")
         require('neorg').setup {
-            ["core.norg.concealer"] = {
-                config = { -- Note that this table is optional and doesn't need to be provided
-                -- Configuration here
-                }
+            load = {
+                ["core.highlights"] = {},
+                ["core.integrations.treesitter"] = {},
+                ["core.neorgcmd"] = {},
+                ["core.norg.completion"] = {},
+                ["core.norg.concealer"] = {},
+                ["core.norg.esupports.hop"] = {},
+                ["core.norg.esupports.indent"] = {},
+                ["core.norg.qol.toc"] = {},
+                ["core.norg.qol.todo_items"] = {},
+                ["core.syntax"] = {}
+
             }
         }
-    end
+    end,
+    -- ft = "neorg"
 }
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
@@ -1560,7 +1575,7 @@ use {
         },
         --     extensions = {}
         }
-    end,
+    end
 }
 -- <~>
 
