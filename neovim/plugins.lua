@@ -7,7 +7,6 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 
--- TODO: Speedup
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
@@ -159,7 +158,6 @@ use 'David-Kunz/markid'
 use {
     'RRethy/vim-illuminate',
     config = function()
-        -- TODO: fix colors
         -- function LightenDarkenColor(col, amt)
         --     local num = tonumber(col, 16)
         --     local r = bit.rshift(num, 16) + amt
@@ -299,87 +297,66 @@ use {
 --       local darkercursorline = darken(M.colors.base01, 0.1)
 --       local darkerstatusline = darken(M.colors.base02, 0.1)
 
--- TODO: lazyload
 -- https://github.com/lifepillar/vim-colortemplate
 -- https://github.com/folke/styler.nvim
 use 'rktjmp/lush.nvim' -- zenbones
 use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
--- << Light >>
-use 'EdenEast/nightfox.nvim' -- dayfox dawnfox
-use 'Mofiqul/adwaita.nvim'
-use 'NLKNguyen/papercolor-theme'
-use 'Shatur/neovim-ayu'
-use 'Th3Whit3Wolf/one-nvim'
-use 'Th3Whit3Wolf/onebuddy'
-use 'Tsuzat/NeoSolarized.nvim'
-use 'atelierbram/Base2Tone-nvim'
-use 'catppuccin/nvim'
-use 'jsit/toast.vim'
-use 'marko-cerovac/material.nvim'
-use 'mcchrish/zenbones.nvim'
-use 'olimorris/onedarkpro.nvim'
-use 'projekt0n/github-nvim-theme'
-use 'rafamadriz/neon'
-use 'ray-x/starry.nvim' -- limestone
-use 'rmehri01/onenord.nvim'
-use 'rose-pine/neovim'
-use 'sainnhe/edge'
-use 'sainnhe/everforest'
 
---     -- << Dark >>
-use 'Domeee/mosel.nvim'
-use 'EdenEast/nightfox.nvim' -- duskfox, nighfox, nordfox, terafox
-use 'LunarVim/darkplus.nvim'
-use 'Mofiqul/adwaita.nvim'
-use 'NLKNguyen/papercolor-theme'
-use 'Shatur/neovim-ayu'
-use 'Th3Whit3Wolf/one-nvim'
-use 'Th3Whit3Wolf/onebuddy'
-use 'Tsuzat/NeoSolarized.nvim'
-use 'Yazeed1s/oh-lucy.nvim'
-use 'atelierbram/Base2Tone-nvim'
-use 'catppuccin/nvim'
--- use 'cpea2506/one_monokai.nvim'
-use 'fenetikm/falcon'
-use 'glepnir/zephyr-nvim'
-use 'kaiuri/nvim-juliana'
-use 'kartikp10/noctis.nvim'
-use 'kvrohit/mellow.nvim'
-use 'lmburns/kimbox'
-use 'luisiacc/gruvbox-baby'
-use 'iandwelker/rose-pine-vim'
--- use 'marko-cerovac/material.nvim'
-use 'maxmx03/FluoroMachine.nvim'
-use 'metalelf0/jellybeans-nvim'
-use 'mcchrish/zenbones.nvim' -- duckbones forestbones kanagawabones neobones nordbones randombones rosebones seoulbones tokyobones vimbones zenburned zenwritten
-use 'mhartington/oceanic-next'
-use 'ntk148v/vim-horizon'
-use 'nxvu699134/vn-night.nvim'
-use 'olimorris/onedarkpro.nvim'
-use 'projekt0n/github-nvim-theme'
-use 'rafamadriz/neon'
-use 'ray-x/aurora'
-use 'ray-x/starry.nvim' -- Moonlight Dracula Dracula_blood Monokai Mariana Emerald Middlenight_blue Earlysummer Darksolar Ukraine
-use 'rebelot/kanagawa.nvim'
-use 'rmehri01/onenord.nvim'
-use 'rockyzhang24/arctic.nvim'
-use 'rose-pine/neovim'
-use 'sainnhe/edge'
-use 'sainnhe/everforest'
-use 'sainnhe/sonokai'
-use 'sam4llis/nvim-tundra'
-use 'savq/melange'
--- use 'shaunsingh/moonlight.nvim'
--- use 'sickill/vim-monokai'
--- use 'tanvirtin/monokai.nvim'
-use 'tiagovla/tokyodark.nvim'
-use 'titanzero/zephyrium'
-use 'theniceboy/nvim-deus'
-use 'tjdevries/gruvbuddy.nvim'
-use 'tomasiser/vim-code-dark'
-use 'w3barsi/barstrata.nvim'
-use 'wuelnerdotexe/vim-enfocado'
-use 'yashguptaz/calvera-dark.nvim'
+use { 'Domeee/mosel.nvim' }
+use { 'EdenEast/nightfox.nvim' }
+use { 'LunarVim/darkplus.nvim' }
+use { 'Mofiqul/adwaita.nvim' }
+use { 'NLKNguyen/papercolor-theme' }
+use { 'Shatur/neovim-ayu' }
+use { 'Th3Whit3Wolf/one-nvim' }
+use { 'Th3Whit3Wolf/onebuddy' }
+use { 'Tsuzat/NeoSolarized.nvim', module = "NeoSolarized", config = function ()  require('NeoSolarized').setup({ transparent = false }) end }
+use { 'Yazeed1s/oh-lucy.nvim' }
+use { 'atelierbram/Base2Tone-nvim' }
+use { 'catppuccin/nvim' }
+use { 'cpea2506/one_monokai.nvim' }
+use { 'fenetikm/falcon' }
+use { 'folke/tokyonight.nvim' }
+use { 'glepnir/zephyr-nvim' }
+use { 'iandwelker/rose-pine-vim' }
+use { 'jsit/toast.vim' }
+use { 'kaiuri/nvim-juliana' }
+use { 'kartikp10/noctis.nvim' }
+use { 'kvrohit/mellow.nvim' }
+use { 'lmburns/kimbox' }
+use { 'luisiacc/gruvbox-baby' }
+use { 'marko-cerovac/material.nvim' }
+use { 'maxmx03/FluoroMachine.nvim' }
+use { 'mcchrish/zenbones.nvim' }
+use { 'metalelf0/jellybeans-nvim' }
+use { 'mhartington/oceanic-next' }
+use { 'ntk148v/vim-horizon' }
+use { 'nxvu699134/vn-night.nvim' }
+use { 'olimorris/onedarkpro.nvim' }
+use { 'projekt0n/github-nvim-theme' }
+use { 'rafamadriz/neon' }
+use { 'ray-x/aurora' }
+use { 'ray-x/starry.nvim' }
+use { 'rebelot/kanagawa.nvim' }
+use { 'rmehri01/onenord.nvim' }
+use { 'rockyzhang24/arctic.nvim' }
+use { 'rose-pine/neovim' }
+use { 'sainnhe/edge' }
+use { 'sainnhe/everforest' }
+use { 'sainnhe/sonokai' }
+use { 'sam4llis/nvim-tundra' }
+use { 'savq/melange' }
+use { 'shaunsingh/moonlight.nvim' }
+use { 'sickill/vim-monokai' }
+use { 'tanvirtin/monokai.nvim' }
+use { 'theniceboy/nvim-deus' }
+use { 'tiagovla/tokyodark.nvim' }
+use { 'titanzero/zephyrium' }
+use { 'tjdevries/gruvbuddy.nvim' }
+use { 'tomasiser/vim-code-dark' }
+use { 'w3barsi/barstrata.nvim' }
+use { 'wuelnerdotexe/vim-enfocado' }
+use { 'yashguptaz/calvera-dark.nvim' }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -905,7 +882,6 @@ use 'nvim-lua/plenary.nvim'
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Load lsp for Mason lsp installed languages
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- use 'Hoffs/omnisharp-extended-lsp.nvim'
 
@@ -1016,7 +992,6 @@ use {
         }
 
         -- Add additional capabilities supported by nvim-cmp
-        -- TODO:
         -- -- Gets a new ClientCapabilities object describing the LSP client
         -- -- capabilities.
         -- local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -1511,7 +1486,6 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Compete setup, clickable items
 use {
     'nvim-lualine/lualine.nvim',
     config = function()
