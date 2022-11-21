@@ -165,8 +165,6 @@ function ColoRand()
         { 'rose-pine', 'dark', '_' },
         { 'rose-pine', function() require('rose-pine').setup({dark_variant = 'main'}) end },
         { 'rose-pine', function() require('rose-pine').setup({dark_variant = 'moon'}) end },
-        { 'rose-pine-dark', 'dark', '_' },
-        { 'rose-pine-light', 'light', '_' },
         { 'rosebones', 'dark', '_' },
         { 'seoulbones', 'dark', '_' },
         { 'shine', 'dark', '_' },

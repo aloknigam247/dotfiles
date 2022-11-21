@@ -318,7 +318,6 @@ use { 'cpea2506/one_monokai.nvim' }
 use { 'fenetikm/falcon' }
 use { 'folke/tokyonight.nvim' }
 use { 'glepnir/zephyr-nvim' }
-use { 'iandwelker/rose-pine-vim' }
 use { 'jsit/toast.vim' }
 use { 'kaiuri/nvim-juliana' }
 use { 'kartikp10/noctis.nvim' }
@@ -864,7 +863,23 @@ use {
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
-    'DaikyXendo/nvim-material-icon'
+    'DaikyXendo/nvim-material-icon',
+    config = function()
+        require('nvim-material-icon').setup({
+            override = {
+                json = {
+                    color = "#cbcb41",
+                    cterm_color = "185",
+                    icon = "ﬥ ",
+                    name = "Json"
+                },
+                norg = {
+                    icon = '🦄 ',
+                    name = "Neorg"
+                }
+            }
+        })
+    end
 }
 
 use {
@@ -1550,6 +1565,12 @@ use {
         --         lualine_b = {'branch', 'diff', 'diagnostics'},
                 lualine_c = {
                     {
+                        'fileypes',
+                        colored = true,
+                        icon_only = true,
+                        icon = {align = 'right' }
+                    },
+                    {
                         'filename',
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = false,   -- Display new file status (new file means no write after created)
@@ -1630,7 +1651,7 @@ use {
     config = function()
         require('telescope').load_extension('heading')
     end,
-    ft = { 'markdown' }
+    ft = 'markdown'
 }
 
 use {
