@@ -447,6 +447,7 @@ use {
                     }
                 },
                 { name = 'custom' },
+                { name = 'neorg' },
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'snippy' }
@@ -1177,6 +1178,7 @@ use {
     config = function()
         require("fidget").setup({
             text = {
+                done = '陼',
                 spinner = 'arc'
             }
         })
@@ -1406,30 +1408,28 @@ use {
     'nvim-neorg/neorg',
     after = "nvim-treesitter",
     config = function()
-        -- require('nvim-treesitter.configs').setup {
-        --     highlight = {
-        --         enable = true,
-        --         additional_vim_regex_highlighting = false
-        --     }
-        -- }
-        print("neorg loaded default")
+        require('nvim-treesitter.configs').setup {
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false
+            }
+        }
         require('neorg').setup {
             load = {
                 ["core.highlights"] = {},
                 ["core.integrations.treesitter"] = {},
                 ["core.neorgcmd"] = {},
-                ["core.norg.completion"] = {},
+                ["core.norg.completion"] = { config = { engine = 'nvim-cmp' } },
                 ["core.norg.concealer"] = {},
                 ["core.norg.esupports.hop"] = {},
                 ["core.norg.esupports.indent"] = {},
                 ["core.norg.qol.toc"] = {},
                 ["core.norg.qol.todo_items"] = {},
                 ["core.syntax"] = {}
-
             }
         }
     end,
-    -- ft = "neorg"
+    ft = "norg"
 }
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim

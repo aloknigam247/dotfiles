@@ -451,4 +451,3 @@ consective new lines.
       why {# Variables} have to be lowercased.
       
 #comment
-vim:tw=100:ft=norg:norl:
