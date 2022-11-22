@@ -167,7 +167,7 @@ function ColoRand()
         { 'rose-pine', 'dark', '_', precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end },
         { 'rosebones', 'dark', '_' },
         { 'seoulbones', 'dark', '_' },
-        { 'shine', 'dark', '_' },
+        { 'shine', 'light', '_' },
         { 'slate', 'dark', '_' },
         { 'sonokai', 'dark', '_', precmd = function() vim.g.sonokai_style = 'andromeda' end },
         { 'sonokai', 'dark', '_', precmd = function() vim.g.sonokai_style = 'atlantis' end },
