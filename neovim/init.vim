@@ -132,7 +132,7 @@ function ColoRand()
         { 'middlenight_blue', 'dark', '_' },
         { 'monokai', 'dark', '_' },
         { 'moonlight', 'dark', '_' },
-        { 'morning', 'dark', '_' },
+        { 'morning', 'light', '_' },
         { 'mosel', 'dark', '_' },
         { 'murphy', 'dark', '_' },
         { 'neobones', 'dark', '_' },
