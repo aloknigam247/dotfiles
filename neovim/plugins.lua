@@ -310,7 +310,7 @@ use { 'NLKNguyen/papercolor-theme' }
 use { 'Shatur/neovim-ayu' }
 use { 'Th3Whit3Wolf/one-nvim' }
 use { 'Th3Whit3Wolf/onebuddy' }
-use { 'Tsuzat/NeoSolarized.nvim', module = "NeoSolarized", config = function ()  require('NeoSolarized').setup({ transparent = false }) end }
+use { 'Tsuzat/NeoSolarized.nvim', config = function ()  require('NeoSolarized').setup({ transparent = false }) end }
 use { 'Yazeed1s/oh-lucy.nvim' }
 use { 'atelierbram/Base2Tone-nvim' }
 use { 'catppuccin/nvim' }
@@ -926,7 +926,8 @@ use {
     'Kasama/nvim-custom-diagnostic-highlight',
     config = function()
         require('nvim-custom-diagnostic-highlight').setup {}
-    end
+    end,
+    event = 'LspAttach'
 }
 
 use {
@@ -940,7 +941,8 @@ use {
             depth_limit_indicator = "..",
             safe_output = true
         }
-    end
+    end,
+    event = 'LspAttach'
 }
 
 use {
@@ -960,21 +962,27 @@ use {
     cmd = 'Vista'
 }
 
-use 'neovim/nvim-lspconfig'
+use {
+    'neovim/nvim-lspconfig',
+    ft = { "lua", "python" }
+}
 
 use {
     'williamboman/mason.nvim',
+    cmd = 'Mason',
     config = function()
         require("mason").setup({
             ui = {
                 border = "rounded"
             }
         })
-    end
+    end,
+    module = 'mason'
 }
 
 use {
     'williamboman/mason-lspconfig.nvim',
+    after = 'nvim-lspconfig',
     config = function()
         local lspconfig = require('lspconfig')
         local mason_lspconfig = require('mason-lspconfig')
@@ -1118,7 +1126,8 @@ use {
             hint_enable = false,
             noice = false
         })
-    end
+    end,
+    event = 'LspAttach'
 }
 
 use {
@@ -1207,6 +1216,7 @@ use({
             custom_kind = {}
         })
     end,
+    event = 'LspAttach'
 })
 
 use {
@@ -1232,6 +1242,7 @@ use 'ldelossa/litee.nvim'
 
 use {
     'p00f/clangd_extensions.nvim',
+    after = 'nvim-lspconfig',
     config = function()
         require("clangd_extensions").setup {
             server = {
@@ -1322,7 +1333,8 @@ use {
                 },
             },
         }
-    end
+    end,
+    ft = { "c", "cpp" }
 }
 
 use 'razzmatazz/csharp-language-server'
@@ -1333,14 +1345,16 @@ use {
     'rmagatti/goto-preview',
     config = function()
         require('goto-preview').setup()
-    end
+    end,
+    event = 'LspAttach'
 }
 
 use {
     'simrat39/symbols-outline.nvim',
     config = function()
         require("symbols-outline").setup()
-    end
+    end,
+    event = 'LspAttach'
 }
 
 use {
@@ -1349,10 +1363,12 @@ use {
     config = function()
         require("inc_rename").setup()
     end,
+    event = 'LspAttach'
 }
 
 use {
     'stevearc/aerial.nvim',
+    cmd = 'AerialToggle',
     config = function()
         require('aerial').setup({})
     end
@@ -1542,11 +1558,11 @@ use {
     config = function()
         -- local navic = require("nvim-navic")
         require('lualine').setup {
-            options = {
+            -- options = {
         --         icons_enabled = true,
         --         theme = 'auto',
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                -- component_separators = { left = '', right = ''},
+                -- section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
         --             winbar = {},
@@ -1559,40 +1575,40 @@ use {
         --             tabline = 1000,
         --             winbar = 1000,
         --         }
-            },
-            sections = {
+            -- },
+            -- sections = {
         --         lualine_a = {'mode'},
         --         lualine_b = {'branch', 'diff', 'diagnostics'},
-                lualine_c = {
-                    {
-                        'fileypes',
-                        colored = true,
-                        icon_only = true,
-                        icon = {align = 'right' }
-                    },
-                    {
-                        'filename',
-                        file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = false,   -- Display new file status (new file means no write after created)
-                        path = 0,                -- 0: Just the filename
-                        -- 1: Relative path
-                        -- 2: Absolute path
-                        -- 3: Absolute path, with tilde as the home directory
+                -- lualine_c = {
+                --     {
+                --         'fileypes',
+                --         colored = true,
+                --         icon_only = true,
+                --         icon = {align = 'right' }
+                --     },
+                --     {
+                --         'filename',
+                --         file_status = true,      -- Displays file status (readonly status, modified status)
+                --         newfile_status = false,   -- Display new file status (new file means no write after created)
+                --         path = 0,                -- 0: Just the filename
+                --         -- 1: Relative path
+                --         -- 2: Absolute path
+                --         -- 3: Absolute path, with tilde as the home directory
 
-                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        -- for other components. (terrible name, any suggestions?)
-                        symbols = {
-                            modified = '[+]',      -- Text to show when the file is modified.
-                            readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
-                            unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                            newfile = '[New]',     -- Text to show for new created file before first writting
-                        }
-                    }
-                },
+                --         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                --         -- for other components. (terrible name, any suggestions?)
+                --         symbols = {
+                --             modified = '[+]',      -- Text to show when the file is modified.
+                --             readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+                --             unnamed = '[No Name]', -- Text to show for unnamed buffers.
+                --             newfile = '[New]',     -- Text to show for new created file before first writting
+                --         }
+                --     }
+                -- },
                 -- lualine_x = {'encoding', 'fileformat', 'filetype'},
                 -- lualine_y = { 'progress'},
                 -- lualine_z = {'location'}
-            },
+            -- },
         --     inactive_sections = {
         --         lualine_a = {},
         --         lualine_b = {},
@@ -1609,12 +1625,12 @@ use {
         --         { navic.get_location, cond = navic.is_available }
         --     }
         -- },
-        inactive_winbar = {
-            lualine_a = {'filename'},
+        -- inactive_winbar = {
+            -- lualine_a = {'filename'},
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
         --     }
-        },
+        -- },
         --     extensions = {}
         }
     end
@@ -1842,6 +1858,7 @@ use {
     config = function()
         local notify = require('notify')
         notify.setup({
+            background_colour = vim.api.nvim_get_hl_by_name('Normal', true).background and 'Normal' or '#000000',
             minimum_width = 0,
             render = 'minimal',
             stages = 'slide'

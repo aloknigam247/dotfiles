@@ -11,7 +11,7 @@
 " call plug#begin()
 " call plug#end()
 lua << EOF
--- require('impatient')
+require('impatient')
 vim.notify = require('notify')
 function ColoRand()
     local colos = {
@@ -201,7 +201,7 @@ function ColoRand()
     local bg = selection[2]
     local module = selection[3]
     local precmd = selection.precmd
-    -- print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
+    print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
     vim.o.background = bg
     if (precmd) then
         precmd()
@@ -414,7 +414,7 @@ let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 10.0
 let g:neovide_fullscreen = v:false
 let g:neovide_refresh_rate = 60
-let g:neovide_remember_window_size = v:true
+let g:neovide_remember_window_size = v:false
 let g:neovide_scroll_animation_length = 0.0
 let g:neovide_transparency=0.95
 let g:neovide_underline_automatic_scaling = v:true
@@ -422,7 +422,7 @@ set guifont=VictorMono_NF:h13
 map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 " }}}
 
-"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MIS       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MISC       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 
 let g:termdebug_wide = 163
