@@ -1753,7 +1753,7 @@ use {
 use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-        local ignore_install = { "help", "yaml" }
+        local ignore_install = { "help", "norg", "norg_meta", "yaml" }
         require('nvim-treesitter.configs').setup {
             auto_install = true,
             endwise = {
