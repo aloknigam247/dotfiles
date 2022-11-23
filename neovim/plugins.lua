@@ -64,8 +64,11 @@ use {
 }
 
 -- use 'echasnovski/mini.align'
--- use 'junegunn/vim-easy-align'
--- use 'godlygeek/tabular'
+
+use {
+    'junegunn/vim-easy-align',
+    cmd = 'EasyAlign'
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -229,7 +232,7 @@ use {
             ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
             ['S'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['V'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-            ['c'] = vim.api.nvim_get_hl_by_name('lualine_a_command', true).background,
+            ['c'] = vim.fn.hlexists('lualine_a_command') and vim.api.nvim_get_hl_by_name('lualine_a_command', true).background or vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['i'] = vim.api.nvim_get_hl_by_name('lualine_a_insert', true).background,
             ['n'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
@@ -381,24 +384,24 @@ use {
     config = function()
         local cmp = require('cmp')
         cmp.setup({
-            cmp.setup.cmdline(':', {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    {
-                        name = 'cmdline',
-                    },
-                    {
-                        name = 'cmdline_history',
-                        max_item_count = 15
-                    }
-                }
-            }),
-            cmp.setup.cmdline('/', {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = 'buffer' }
-                }
-            }),
+            -- cmp.setup.cmdline(':', {
+            --     mapping = cmp.mapping.preset.cmdline(),
+            --     sources = {
+            --         {
+            --             name = 'cmdline',
+            --         },
+            --         {
+            --             name = 'cmdline_history',
+            --             max_item_count = 15
+            --         }
+            --     }
+            -- }),
+            -- cmp.setup.cmdline('/', {
+            --     mapping = cmp.mapping.preset.cmdline(),
+            --     sources = {
+            --         { name = 'buffer' }
+            --     }
+            -- }),
             experimental = {
                 ghost_text = true
             },
@@ -1965,7 +1968,12 @@ use {
                 border = 'rounded'
             }
         })
-    end
+    end,
+    keys = {
+        { "n", "\"" },
+        { "v", "\"" },
+        { "i", "<C-R>"}
+    }
 }
 end
 })
