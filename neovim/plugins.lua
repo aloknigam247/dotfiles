@@ -1483,6 +1483,10 @@ use {
                 ["core.syntax"] = {}
             }
         }
+        vim.cmd [[
+        au InsertEnter *.norg :Neorg toggle-concealer
+        au InsertLeave *.norg :Neorg toggle-concealer
+        ]]
     end,
     ft = "norg"
 }
