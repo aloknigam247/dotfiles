@@ -191,10 +191,14 @@ use {
 
 -- use 'azabiong/vim-highlighter'
 
+use 'doums/monark.nvim'
+
 use {
     'folke/lsp-colors.nvim',
     event = "LspAttach"
 }
+
+-- https://github.com/folke/paint.nvim
 
 use {
     'folke/todo-comments.nvim',
@@ -249,6 +253,8 @@ use {
         modicator.set_highlight(modes['n'])
     end
 }
+
+-- https://github.com/nat-418/scamp.nvim
 
 use {
     'norcalli/nvim-colorizer.lua',
@@ -396,12 +402,12 @@ use {
             --         }
             --     }
             -- }),
-            -- cmp.setup.cmdline('/', {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = {
-            --         { name = 'buffer' }
-            --     }
-            -- }),
+            cmp.setup.cmdline('/', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
+                }
+            }),
             experimental = {
                 ghost_text = true
             },
@@ -1926,6 +1932,8 @@ use {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime'
 }
+
+-- https://github.com/folke/neoconf.nvim
 
 -- use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
 
