@@ -210,6 +210,7 @@ function ColoRand()
         require(module)
     end
     vim.cmd.colorscheme(scheme)
+    vim.cmd[[highlight clear CursorLine]]
     vim.notify("Colorscheme: " .. scheme .. " - " .. bg, vim.log.levels.INFO, { minimum_width = 0, render = 'minimal' })
 end
 

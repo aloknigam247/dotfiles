@@ -161,25 +161,37 @@ use 'David-Kunz/markid'
 use {
     'RRethy/vim-illuminate',
     config = function()
-        -- function LightenDarkenColor(col, amt)
-        --     local num = tonumber(col, 16)
-        --     local r = bit.rshift(num, 16) + amt
-        --     local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-        --     local g = bit.band(num, 0x0000FF) + amt
-        --     local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-        --     return string.format("%#x", newColor)
-        -- end
+        require('illuminate').configure({
+            providers =  {
+                -- 'lsp',
+                -- 'treesitter',
+                'regex'
+            }
+        })
+        function LightenDarkenColor(col, amt)
+            local num = tonumber(col, 16)
+            local r = bit.rshift(num, 16) + amt
+            local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+            local g = bit.band(num, 0x0000FF) + amt
+            local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+            return string.format("#%X", newColor)
+        end
 
-        -- local bg = vim.api.nvim_get_hl_by_name('Normal', true).background
-        -- bg = string.format("%X", tostring(bg))
+        local bg = vim.api.nvim_get_hl_by_name('Normal', true).background
+        bg = string.format("%X", tostring(bg))
         -- print(bg)
-        -- bg = LightenDarkenColor(bg, 40)
+        if (vim.o.background ==  "dark") then
+            bg = LightenDarkenColor(bg, 40)
+        else
+            bg = LightenDarkenColor(bg, -40)
+        end
         -- print(bg)
-        -- vim.api.nvim_set_hl(0, "IlluminatedWordText", {
-        --     bg = bg
-        -- })
+        vim.api.nvim_set_hl(0, "IlluminatedWordText", {
+            bg = bg,
+            -- underline = true
+        })
         vim.cmd[[
-           hi IlluminatedWordText guibg = underline
+           " hi IlluminatedWordText guibg = underline
            hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
            hi IlluminatedWordWrite guibg = #1F7A8C gui = italic
            hi LspReferenceText guibg = #679436
@@ -1108,7 +1120,7 @@ use {
                         settings = {
                             Lua = {
                                 diagnostics = {
-                                    globals = { "vim" }
+                                    globals = { "bit", "vim" }
                                 },
                                 workspace = {
                                     library = vim.api.nvim_get_runtime_file("", true)
