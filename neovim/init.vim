@@ -188,7 +188,7 @@ function ColoRand()
         { 'ukraine',                    'dark',  '_' },
         { 'vimbones',                   'dark',  '_' },
         { 'vn-night',                   'dark',  '_' },
-        { 'zellner',                    'dark',  '_' },
+        { 'zellner',                    'light', '_' },
         { 'zenburned',                  'dark',  '_' },
         { 'zenwritten',                 'dark',  '_' },
         { 'zephyr',                     'dark',  '_' },
