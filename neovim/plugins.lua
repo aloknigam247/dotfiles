@@ -156,7 +156,7 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use 'David-Kunz/markid'
+-- use 'David-Kunz/markid'
 
 use {
     'RRethy/vim-illuminate',
@@ -164,7 +164,7 @@ use {
         require('illuminate').configure({
             providers =  {
                 -- 'lsp',
-                -- 'treesitter',
+                'treesitter',
                 'regex'
             }
         })
@@ -202,8 +202,6 @@ use {
 }
 
 -- use 'azabiong/vim-highlighter'
-
-use 'doums/monark.nvim'
 
 use {
     'folke/lsp-colors.nvim',
@@ -396,7 +394,7 @@ use {
 }
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -593,11 +591,29 @@ use {
     module = "cmp"
 }
 
-use 'dmitmel/cmp-cmdline-history'
-use 'hrsh7th/cmp-buffer'
-use 'hrsh7th/cmp-cmdline'
-use 'hrsh7th/cmp-nvim-lsp' -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-use 'hrsh7th/cmp-path'
+use {
+    'dcampos/cmp-snippy',
+    after = 'nvim-cmp'
+}
+
+use {
+    'dmitmel/cmp-cmdline-history',
+    after = 'nvim-cmp'
+}
+
+use {
+    'hrsh7th/cmp-buffer',
+    after = 'nvim-cmp'
+}
+
+use {'hrsh7th/cmp-cmdline',
+    after = 'nvim-cmp'
+}
+
+use {
+    'hrsh7th/cmp-nvim-lsp', -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
+    after = 'nvim-cmp'
+}
 
 -- https://github.com/jameshiew/nvim-magic
 -- https://github.com/kristijanhusak/vim-dadbod-completion
@@ -831,45 +847,45 @@ use {
 -- https://github.com/akinsho/git-conflict.nvim
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
-use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-        require('gitsigns').setup {
-            signs = {
-                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-            },
-            current_line_blame_formatter_opts = {
-                relative_time = true
-            },
-            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
-        }
+-- use {
+--     'lewis6991/gitsigns.nvim',
+--     config = function()
+--         require('gitsigns').setup {
+--             signs = {
+--                 add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+--                 change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+--                 delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+--                 topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+--                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+--             },
+--             current_line_blame_formatter_opts = {
+--                 relative_time = true
+--             },
+--             current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+--         }
 
-        -- Navigation
-        local gs = package.loaded.gitsigns
+--         -- Navigation
+--         local gs = package.loaded.gitsigns
 
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
+--         local function map(mode, l, r, opts)
+--             opts = opts or {}
+--             opts.buffer = bufnr
+--             vim.keymap.set(mode, l, r, opts)
+--         end
 
-        map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
+--         map('n', ']c', function()
+--             if vim.wo.diff then return ']c' end
+--             vim.schedule(function() gs.next_hunk() end)
+--             return '<Ignore>'
+--         end, {expr=true})
 
-        map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
-    end
-}
+--         map('n', '[c', function()
+--             if vim.wo.diff then return '[c' end
+--             vim.schedule(function() gs.prev_hunk() end)
+--             return '<Ignore>'
+--         end, {expr=true})
+--     end
+-- }
 
 use {
     'rhysd/git-messenger.vim',
@@ -1398,26 +1414,6 @@ use {
 use 'weilbith/nvim-code-action-menu'
 -- <~>
 
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Mapping     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'folke/which-key.nvim',
-    config = function()
-        require("which-key").setup({
-            plugins = {
-                registers = false
-            },
-            -- popup_mappings = {
-            --     scroll_down = '<c-d>', -- binding to scroll down inside the popup
-            --     scroll_up = '<c-u>', -- binding to scroll up inside the popup
-            -- },
-            window = {
-                border = "single"
-            }
-        })
-    end
-}
--- <~>
-
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO lazyload
 use 'davidgranstrom/nvim-markdown-preview'
@@ -1519,7 +1515,10 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Quickfix   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use 'folke/trouble.nvim'
+use {
+    'folke/trouble.nvim',
+    cmd = 'TroubleToggle'
+}
 use {
     'kevinhwang91/nvim-bqf',
     after = "nvim-lspconfig",
@@ -1552,6 +1551,7 @@ use {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Snippets   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'dcampos/nvim-snippy',
+    after = 'nvim-cmp',
     config = function()
         require('snippy').setup({
             mappings = {
@@ -1562,8 +1562,8 @@ use {
             }
         })
     end,
+    opt = true,
     requires = { -- BUG: fix this
-        'dcampos/cmp-snippy',
         'honza/vim-snippets'
     }
 }
@@ -1771,11 +1771,12 @@ use {
             endwise = {
                 enable = true,
             },
-            ignore_install = ignore_install,
             highlight = {
                 enable = true,
                 disable = ignore_install
             },
+            ignore_install = ignore_install,
+            markid = { enable = true },
             rainbow = {
                 enable = true,
                 -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
@@ -1788,13 +1789,13 @@ use {
     end
 }
 
-use {
-    'm-demare/hlargs.nvim',
-    after = 'nvim-treesitter',
-    config = function()
-        require('hlargs').setup()
-    end
-}
+-- use {
+--     'm-demare/hlargs.nvim',
+--     after = 'nvim-treesitter',
+--     config = function()
+--         require('hlargs').setup()
+--     end
+-- }
 
 use {
     'nvim-treesitter/nvim-treesitter-context',
@@ -1938,7 +1939,7 @@ use {
 
 use 'cbochs/portal.nvim'
 
-use 'chipsenkbeil/distant.nvim'
+-- use 'chipsenkbeil/distant.nvim'
 
 use {
     'dstein64/vim-startuptime',

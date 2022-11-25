@@ -11,7 +11,7 @@
 " call plug#begin()
 " call plug#end()
 lua << EOF
-require('impatient')
+-- require('impatient')
 vim.notify = require('notify')
 function ColoRand()
     local colos = {
@@ -83,7 +83,7 @@ function ColoRand()
         { 'dawnfox',                    'dark',  '_' },
         { 'dayfox',                     'dark',  '_' },
         { 'deepocean',                  'dark',  '_' },
-        { 'delek',                      'dark',  '_' },
+        { 'delek',                      'light', '_' },
         { 'desert',                     'dark',  '_' },
         { 'deus',                       'dark',  '_' },
         { 'dracula',                    'dark',  '_' },
@@ -386,7 +386,7 @@ let g:neovide_cursor_vfx_particle_lifetime=5
 let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 10.0
 let g:neovide_fullscreen = v:false
-let g:neovide_refresh_rate = 60
+let g:neovide_refresh_rate = 120
 let g:neovide_remember_window_size = v:false
 let g:neovide_scroll_animation_length = 0.0
 let g:neovide_transparency=0.95
