@@ -11,20 +11,29 @@
 " call plug#begin()
 " call plug#end()
 lua << EOF
--- require('impatient')
-vim.notify = function()
-    return require('notify')
+require('impatient')
+-- require('pepperfish')
+-- profiler = newProfiler()
+-- profiler:start()
+
+--vim.api.nvim_create_autocmd('VimLeave', {callback = function()
+--    profiler:stop()
+--    local outfile = io.open( "profile.txt", "w+" )
+--    profiler:report( outfile )
+--    outfile:close()
+--end})
+vim.notify = function(msg, level, opt)
+    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+    vim.notify(msg, level, opt)
 end
+
 function ColoRand()
     local colos = {
-        { 'NeoSolarized',               'dark',  '_' },
-        { 'NeoSolarized',               'light', '_' },
         { 'OceanicNext',                'dark',  '_' },
         { 'PaperColor',                 'dark',  '_' },
         { 'PaperColor',                 'light', '_' },
         { 'adwaita',                    'dark',  '_' },
         { 'adwaita',                    'light', '_' },
-        { 'arctic',                     'dark',  '_' },
         { 'aurora',                     'dark',  '_' },
         { 'ayu-dark',                   'dark',  '_' },
         { 'ayu-light',                  'dark',  '_' },
@@ -90,7 +99,6 @@ function ColoRand()
         { 'deus',                       'dark',  '_' },
         { 'dracula',                    'dark',  '_' },
         { 'dracula_blood',              'dark',  '_' },
-        { 'duckbones',                  'dark',  '_' },
         { 'duskfox',                    'dark',  '_' },
         { 'earlysummer',                'dark',  '_' },
         { 'edge',                       'dark',  '_' },
@@ -104,7 +112,6 @@ function ColoRand()
         { 'everforest',                 'light', '_' },
         { 'falcon',                     'dark',  '_' },
         { 'fluoromachine',              'dark',  '_' },
-        { 'forestbones',                'dark',  '_' },
         { 'github_dark',                'dark',  '_' },
         { 'github_light',               'dark',  '_' },
         { 'gruvbox-baby',               'dark',  '_' },
@@ -116,7 +123,6 @@ function ColoRand()
         { 'jellybeans-nvim',            'dark',  '_' },
         { 'juliana',                    'dark',  '_' },
         { 'kanagawa',                   'dark',  '_' },
-        { 'kanagawabones',              'dark',  '_' },
         { 'kimbox',                     'dark',  '_' },
         { 'koehler',                    'dark',  '_' },
         { 'limestone',                  'dark',  '_' },
@@ -133,18 +139,16 @@ function ColoRand()
         { 'mellow',                     'dark',  '_' },
         { 'middlenight_blue',           'dark',  '_' },
         { 'monokai',                    'dark',  '_' },
+        { 'monokai_pro',                'dark',  '_' },
         { 'moonlight',                  'dark',  '_' },
         { 'morning',                    'light', '_' },
         { 'mosel',                      'dark',  '_' },
         { 'murphy',                     'dark',  '_' },
-        { 'neobones',                   'dark',  '_' },
         { 'neon',                       'dark',  '_',   precmd = function() vim.g.neon_style = 'dark' end },
         { 'neon',                       'dark',  '_',   precmd = function() vim.g.neon_style = 'default' end },
         { 'neon',                       'dark',  '_',   precmd = function() vim.g.neon_style = 'doom' end },
         { 'neon',                       'light', '_',   precmd = function() vim.g.neon_style = 'light' end },
         { 'nightfox',                   'dark',  '_' },
-        { 'noctis',                     'dark',  '_' },
-        { 'nordbones',                  'dark',  '_' },
         { 'nordfox',                    'dark',  '_' },
         { 'oceanic',                    'dark',  '_' },
         { 'oh-lucy',                    'dark',  '_' },
@@ -162,13 +166,10 @@ function ColoRand()
         { 'palenight',                  'dark',  '_' },
         { 'peachpuff',                  'dark',  '_' },
         { 'quiet',                      'dark',  '_' },
-        { 'randombones',                'dark',  '_' },
         { 'ron',                        'dark',  '_' },
         { 'rose-pine',                  'dark',  '_' },
         { 'rose-pine',                  'dark',  '_',   precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
         { 'rose-pine',                  'dark',  '_',   precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end },
-        { 'rosebones',                  'dark',  '_' },
-        { 'seoulbones',                 'dark',  '_' },
         { 'shine',                      'light', '_' },
         { 'slate',                      'dark',  '_' },
         { 'sonokai',                    'dark',  '_',   precmd = function() vim.g.sonokai_style = 'andromeda' end },
@@ -179,7 +180,6 @@ function ColoRand()
         { 'terafox',                    'dark',  '_' },
         { 'toast',                      'dark',  '_' },
         { 'toast',                      'light', '_' },
-        { 'tokyobones',                 'dark',  '_' },
         { 'tokyodark',                  'dark',  '_' },
         { 'tokyonight-day',             'light', '_' },
         { 'tokyonight-moon',            'dark',  '_' },
@@ -188,7 +188,6 @@ function ColoRand()
         { 'torte',                      'dark',  '_' },
         { 'tundra',                     'dark',  '_' },
         { 'ukraine',                    'dark',  '_' },
-        { 'vimbones',                   'dark',  '_' },
         { 'vn-night',                   'dark',  '_' },
         { 'zellner',                    'light', '_' },
         { 'zenburned',                  'dark',  '_' },
@@ -198,7 +197,6 @@ function ColoRand()
     }
     math.randomseed(os.time())
     local ind = math.random(1, table.getn(colos))
-    ind = 8
     local selection = colos[ind]
     local scheme = selection[1]
     local bg = selection[2]
@@ -214,7 +212,6 @@ function ColoRand()
     end
     vim.cmd.colorscheme(scheme)
     vim.cmd[[highlight clear CursorLine]]
-    -- vim.notify("Colorscheme: " .. scheme .. " - " .. bg, vim.log.levels.INFO, { minimum_width = 0, render = 'minimal' })
 end
 
 vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
@@ -265,19 +262,21 @@ autocmd BufRead plugins.lua lua require('plugins')
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-let g:loaded_2html_plugin= 1
-let g:loaded_gzip = 1
-let g:loaded_man = 1
-let g:loaded_matchit = 1
-let g:loaded_matchparen = 1
-let g:loaded_netrwPlugin = 1
-let g:loaded_remote_plugins = 1
-let g:loaded_shada_plugin = 1
-let g:loaded_spellfile_plugin = 1
-let g:loaded_tarPlugin= 1
-let g:loaded_tutor_mode_plugin= 1
-let g:loaded_zip = 1
-let g:loaded_zipPlugin = 1
+let g:loaded_matchparen        = 1
+let g:loaded_matchit           = 1
+let g:loaded_logiPat           = 1
+let g:loaded_rrhelper          = 1
+let g:loaded_tarPlugin         = 1
+let g:loaded_man               = 1
+let g:loaded_gzip              = 1
+let g:loaded_zipPlugin         = 1
+let g:loaded_2html_plugin      = 1
+let g:loaded_shada_plugin      = 1
+let g:loaded_spellfile_plugin  = 1
+let g:loaded_netrw             = 1
+let g:loaded_netrwPlugin       = 1
+let g:loaded_tutor_mode_plugin = 1
+let g:loaded_remote_plugins    = 1
 
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
@@ -334,7 +333,7 @@ set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\         " No dot characters in fold
 set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
-" set lazyredraw               " Don't redraw screen on macros, registers and other commands.
+set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support

@@ -237,32 +237,32 @@ use {
     }
 }
 
-use {
-    'melkster/modicator.nvim',
-    -- after = 'lualine.nvim',
-    config = function()
-        local modicator = require('modicator')
-        local modes = {
-            ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
-            ['S'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['V'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-            ['c'] = vim.fn.hlexists('lualine_a_command') and vim.api.nvim_get_hl_by_name('lualine_a_command', true).background or vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['i'] = vim.api.nvim_get_hl_by_name('lualine_a_insert', true).background,
-            ['n'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-        }
-        modicator.setup({
-            line_numbers = true,
-            cursorline = true,
-            highlights = {
-                modes = modes
-            }
-        })
+-- use {
+--     'melkster/modicator.nvim',
+--     -- after = 'lualine.nvim',
+--     config = function()
+--         local modicator = require('modicator')
+--         local modes = {
+--             ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
+--             ['S'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
+--             ['V'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
+--             ['c'] = vim.fn.hlexists('lualine_a_command') and vim.api.nvim_get_hl_by_name('lualine_a_command', true).background or vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
+--             ['i'] = vim.api.nvim_get_hl_by_name('lualine_a_insert', true).background,
+--             ['n'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
+--             ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
+--             ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
+--         }
+--         modicator.setup({
+--             line_numbers = true,
+--             cursorline = true,
+--             highlights = {
+--                 modes = modes
+--             }
+--         })
 
-        modicator.set_highlight(modes['n'])
-    end
-}
+--         modicator.set_highlight(modes['n'])
+--     end
+-- }
 
 -- https://github.com/nat-418/scamp.nvim
 
@@ -288,37 +288,16 @@ use {
 }
 
 use {
+    -- https://github.com/xiyaowong/nvim-transparent
     'tribela/vim-transparent',
     cmd = 'TransparentToggle'
 }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- local function hex_to_rgb(hex)
---   return HEX_DIGITS[string.sub(hex, 1, 1)] * 16 + HEX_DIGITS[string.sub(hex, 2, 2)],
---     HEX_DIGITS[string.sub(hex, 3, 3)] * 16 + HEX_DIGITS[string.sub(hex, 4, 4)],
---     HEX_DIGITS[string.sub(hex, 5, 5)] * 16 + HEX_DIGITS[string.sub(hex, 6, 6)]
--- end
-
--- local function rgb_to_hex(r, g, b)
---   return bit.tohex(bit.bor(bit.lshift(r, 16), bit.lshift(g, 8), b), 6)
--- end
-
--- local function darken(hex, pct)
---   pct = 1 - pct
---   local r, g, b = hex_to_rgb(string.sub(hex, 2))
---   r = math.floor(r * pct)
---   g = math.floor(g * pct)
---   b = math.floor(b * pct)
---   return string.format("#%s", rgb_to_hex(r, g, b))
--- end
---       local darkerbg = darken(M.colors.base00, 0.1)
---       local darkercursorline = darken(M.colors.base01, 0.1)
---       local darkerstatusline = darken(M.colors.base02, 0.1)
 
 -- https://github.com/lifepillar/vim-colortemplate
 -- https://github.com/folke/styler.nvim
-use 'rktjmp/lush.nvim' -- zenbones
 use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 
 use { 'Domeee/mosel.nvim' }
@@ -329,8 +308,8 @@ use { 'NLKNguyen/papercolor-theme' }
 use { 'Shatur/neovim-ayu' }
 use { 'Th3Whit3Wolf/one-nvim' }
 use { 'Th3Whit3Wolf/onebuddy' }
-use { 'Tsuzat/NeoSolarized.nvim', config = function ()  require('NeoSolarized').setup({ transparent = false }) end }
 use { 'Yazeed1s/oh-lucy.nvim' }
+use { 'aca/vim-monokai-pro' }
 use { 'atelierbram/Base2Tone-nvim' }
 use { 'catppuccin/nvim' }
 use { 'cpea2506/one_monokai.nvim' }
@@ -339,13 +318,11 @@ use { 'folke/tokyonight.nvim' }
 use { 'glepnir/zephyr-nvim' }
 use { 'jsit/toast.vim' }
 use { 'kaiuri/nvim-juliana' }
-use { 'kartikp10/noctis.nvim' }
 use { 'kvrohit/mellow.nvim' }
 use { 'lmburns/kimbox' }
 use { 'luisiacc/gruvbox-baby' }
 use { 'marko-cerovac/material.nvim' }
 use { 'maxmx03/FluoroMachine.nvim' }
-use { 'mcchrish/zenbones.nvim' }
 use { 'metalelf0/jellybeans-nvim' }
 use { 'mhartington/oceanic-next' }
 use { 'ntk148v/vim-horizon' }
@@ -357,7 +334,6 @@ use { 'ray-x/aurora' }
 use { 'ray-x/starry.nvim' }
 use { 'rebelot/kanagawa.nvim' }
 use { 'rmehri01/onenord.nvim' }
-use { 'rockyzhang24/arctic.nvim' }
 use { 'rose-pine/neovim' }
 use { 'sainnhe/edge' }
 use { 'sainnhe/everforest' }
@@ -793,18 +769,18 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'anuvyklack/pretty-fold.nvim',
-    cond = function()
-        return vim.o.foldmethod == "marker"
-    end,
-    config = function()
-        require('pretty-fold').setup {
-            fill_char = ' ',
-            process_comment_signs = 'delete'
-        }
-    end
-}
+-- use {
+--     'anuvyklack/pretty-fold.nvim',
+--     cond = function()
+--         return vim.o.foldmethod == "marker"
+--     end,
+--     config = function()
+--         require('pretty-fold').setup {
+--             fill_char = ' ',
+--             process_comment_signs = 'delete'
+--         }
+--     end
+-- }
 
 use {
     'kevinhwang91/nvim-ufo',
@@ -1465,7 +1441,10 @@ use {
 }
 
 -- https://github.com/ThePrimeagen/harpoon --> plenary
-use 'kshenoy/vim-signature'
+use {
+    'kshenoy/vim-signature',
+    cmd = 'marks'
+}
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
@@ -1803,7 +1782,6 @@ use {
 
 use {
     'nvim-treesitter/nvim-treesitter-context',
-    after = 'nvim-treesitter',
     cmd = 'TSContextToggle',
     config = function()
         require('treesitter-context').setup {
@@ -1819,7 +1797,6 @@ use {
 
 use {
     'RRethy/nvim-treesitter-endwise',
-    after = 'nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
             endwise = {
@@ -1832,13 +1809,11 @@ use {
 
 use {
     'nvim-treesitter/playground',
-    after = 'nvim-treesitter',
     cmd = 'TSHighlightCapturesUnderCursor'
 }
 
 use {
     'p00f/nvim-ts-rainbow',
-    after = 'nvim-treesitter'
 }
 -- <~>
 
@@ -1880,7 +1855,9 @@ use {
                 -- Executed after creating the window separator
             end,
         })
-    end
+        vim.api.nvim_create_user_command('NvimSeparatorDel', function() require('colorful-winsep').NvimSeparatorDel() end, {})
+    end,
+    event = 'WinNew'
 }
 
 use {
@@ -1895,7 +1872,8 @@ use {
         })
         vim.notify = notify
     end,
-    lock = true
+    lock = true,
+    module = 'notify'
 }
 -- <~>
 
@@ -1965,9 +1943,13 @@ use 'mg979/vim-visual-multi'
 
 use {
     'nacro90/numb.nvim',
+    cond = function()
+        return vim.api.nvim_get_mode().mode == 'c'
+    end,
     config = function()
         require('numb').setup()
-    end
+    end,
+    event = 'ModeChanged'
 }
 
 use {
