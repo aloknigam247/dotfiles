@@ -239,7 +239,7 @@ use {
 
 use {
     'melkster/modicator.nvim',
-    after = 'lualine.nvim',
+    -- after = 'lualine.nvim',
     config = function()
         local modicator = require('modicator')
         local modes = {
@@ -1601,9 +1601,10 @@ use {
         --             winbar = 1000,
         --         }
             -- },
-            -- sections = {
-        --         lualine_a = {'mode'},
-        --         lualine_b = {'branch', 'diff', 'diagnostics'},
+            sections = {
+                -- lualine_a = {'mode'},
+                -- lualine_b = {'branch', 'diff', 'diagnostics'},
+                lualine_b = {},
                 -- lualine_c = {
                 --     {
                 --         'fileypes',
@@ -1630,6 +1631,9 @@ use {
                 --         }
                 --     }
                 -- },
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = {}
                 -- lualine_x = {'encoding', 'fileformat', 'filetype'},
                 -- lualine_y = { 'progress'},
                 -- lualine_z = {'location'}
@@ -1655,7 +1659,7 @@ use {
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
         --     }
-        -- },
+        },
         --     extensions = {}
         }
     end
@@ -1890,7 +1894,8 @@ use {
             stages = 'slide'
         })
         vim.notify = notify
-    end
+    end,
+    lock = true
 }
 -- <~>
 

@@ -11,8 +11,10 @@
 " call plug#begin()
 " call plug#end()
 lua << EOF
- require('impatient')
-vim.notify = require('notify')
+-- require('impatient')
+vim.notify = function()
+    return require('notify')
+end
 function ColoRand()
     local colos = {
         { 'NeoSolarized',               'dark',  '_' },
@@ -196,12 +198,13 @@ function ColoRand()
     }
     math.randomseed(os.time())
     local ind = math.random(1, table.getn(colos))
+    ind = 8
     local selection = colos[ind]
     local scheme = selection[1]
     local bg = selection[2]
     local module = selection[3]
     local precmd = selection.precmd
-    print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
+    -- print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
     vim.o.background = bg
     if (precmd) then
         precmd()
@@ -211,7 +214,7 @@ function ColoRand()
     end
     vim.cmd.colorscheme(scheme)
     vim.cmd[[highlight clear CursorLine]]
-    vim.notify("Colorscheme: " .. scheme .. " - " .. bg, vim.log.levels.INFO, { minimum_width = 0, render = 'minimal' })
+    -- vim.notify("Colorscheme: " .. scheme .. " - " .. bg, vim.log.levels.INFO, { minimum_width = 0, render = 'minimal' })
 end
 
 vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
@@ -262,6 +265,20 @@ autocmd BufRead plugins.lua lua require('plugins')
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+let g:loaded_2html_plugin= 1
+let g:loaded_gzip = 1
+let g:loaded_man = 1
+let g:loaded_matchit = 1
+let g:loaded_matchparen = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_remote_plugins = 1
+let g:loaded_shada_plugin = 1
+let g:loaded_spellfile_plugin = 1
+let g:loaded_tarPlugin= 1
+let g:loaded_tutor_mode_plugin= 1
+let g:loaded_zip = 1
+let g:loaded_zipPlugin = 1
+
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
 let c_space_errors = 1             " Highlight trailing spaces
@@ -389,7 +406,7 @@ let g:neovide_cursor_animation_length=0
 let g:neovide_fullscreen = v:false
 " let g:neovide_refresh_rate = 120
 let g:neovide_remember_window_size = v:false
-" let g:neovide_scroll_animation_length = 0.0
+let g:neovide_scroll_animation_length = 0.0
 " let g:neovide_transparency=0.95
 " let g:neovide_underline_automatic_scaling = v:true
 set guifont=VictorMono_NF:h13
