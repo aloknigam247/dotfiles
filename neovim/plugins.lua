@@ -198,7 +198,8 @@ use {
            hi LspReferenceWrite guibg = #A5BE00
            hi LspReferenceRead guibg = #427AA1
        ]]
-    end
+    end,
+    event = 'CursorHold'
 }
 
 -- use 'azabiong/vim-highlighter'
@@ -823,45 +824,45 @@ use {
 -- https://github.com/akinsho/git-conflict.nvim
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
--- use {
---     'lewis6991/gitsigns.nvim',
---     config = function()
---         require('gitsigns').setup {
---             signs = {
---                 add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
---                 change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
---                 delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
---                 topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
---                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
---             },
---             current_line_blame_formatter_opts = {
---                 relative_time = true
---             },
---             current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
---         }
+use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+        require('gitsigns').setup {
+            signs = {
+                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+            },
+            current_line_blame_formatter_opts = {
+                relative_time = true
+            },
+            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+        }
 
---         -- Navigation
---         local gs = package.loaded.gitsigns
+        -- Navigation
+        local gs = package.loaded.gitsigns
 
---         local function map(mode, l, r, opts)
---             opts = opts or {}
---             opts.buffer = bufnr
---             vim.keymap.set(mode, l, r, opts)
---         end
+        local function map(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+        end
 
---         map('n', ']c', function()
---             if vim.wo.diff then return ']c' end
---             vim.schedule(function() gs.next_hunk() end)
---             return '<Ignore>'
---         end, {expr=true})
+        map('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+        end, {expr=true})
 
---         map('n', '[c', function()
---             if vim.wo.diff then return '[c' end
---             vim.schedule(function() gs.prev_hunk() end)
---             return '<Ignore>'
---         end, {expr=true})
---     end
--- }
+        map('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+        end, {expr=true})
+    end
+}
 
 use {
     'rhysd/git-messenger.vim',
@@ -921,9 +922,20 @@ use {
 --     <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Libraries   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use 'MunifTanjim/nui.nvim'
-use 'kevinhwang91/promise-async'
-use 'nvim-lua/plenary.nvim'
+use {
+    'MunifTanjim/nui.nvim',
+    module = 'nui'
+}
+
+use {
+    'kevinhwang91/promise-async',
+    module = 'promise-async'
+}
+
+use {
+    'nvim-lua/plenary.nvim',
+    module = 'plenary'
+}
 -- use 'nvim-lua/popup.nvim'
 -- <~>
 
@@ -1814,6 +1826,7 @@ use {
 
 use {
     'p00f/nvim-ts-rainbow',
+    cmd = 'asd'
 }
 -- <~>
 
@@ -1872,7 +1885,6 @@ use {
         })
         vim.notify = notify
     end,
-    lock = true,
     module = 'notify'
 }
 -- <~>
@@ -1964,7 +1976,10 @@ use {
     end
 }
 
-use 'rickhowe/spotdiff.vim'
+use {
+    'rickhowe/spotdiff.vim',
+    cmd = 'Diffthis'
+}
 
 use {
     'tversteeg/registers.nvim',
