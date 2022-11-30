@@ -11,7 +11,7 @@
 " call plug#begin()
 " call plug#end()
 lua << EOF
-require('impatient')
+-- require('impatient')
 -- require('pepperfish')
 -- profiler = newProfiler()
 -- profiler:start()
@@ -197,6 +197,7 @@ function ColoRand()
     }
     math.randomseed(os.time())
     local ind = math.random(1, table.getn(colos))
+    ind = 1
     local selection = colos[ind]
     local scheme = selection[1]
     local bg = selection[2]

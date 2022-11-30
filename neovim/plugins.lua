@@ -564,8 +564,8 @@ use {
         -- ---Register your source to nvim-cmp.
         -- require('cmp').register_source('custom', source.new())
     end,
-    event = "InsertEnter",
-    module = "cmp"
+    event = {"InsertEnter", "ModeChanged"}
+    -- module = "cmp"
 }
 
 use {
@@ -690,14 +690,14 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    "danymat/neogen",
-    after = 'nvim-treesitter',
-    cmd = 'Neogen',
-    config = function()
-        require('neogen').setup {}
-    end
-}
+-- use {
+--     "danymat/neogen",
+--     after = 'nvim-treesitter',
+--     cmd = 'Neogen',
+--     config = function()
+--         require('neogen').setup {}
+--     end
+-- }
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
@@ -824,45 +824,45 @@ use {
 -- https://github.com/akinsho/git-conflict.nvim
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
-use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-        require('gitsigns').setup {
-            signs = {
-                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-            },
-            current_line_blame_formatter_opts = {
-                relative_time = true
-            },
-            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
-        }
+-- use {
+--     'lewis6991/gitsigns.nvim',
+--     config = function()
+--         require('gitsigns').setup {
+--             signs = {
+--                 add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+--                 change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+--                 delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+--                 topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+--                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+--             },
+--             current_line_blame_formatter_opts = {
+--                 relative_time = true
+--             },
+--             current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+--         }
 
-        -- Navigation
-        local gs = package.loaded.gitsigns
+--         -- Navigation
+--         local gs = package.loaded.gitsigns
 
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
+--         local function map(mode, l, r, opts)
+--             opts = opts or {}
+--             opts.buffer = bufnr
+--             vim.keymap.set(mode, l, r, opts)
+--         end
 
-        map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
+--         map('n', ']c', function()
+--             if vim.wo.diff then return ']c' end
+--             vim.schedule(function() gs.next_hunk() end)
+--             return '<Ignore>'
+--         end, {expr=true})
 
-        map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
-    end
-}
+--         map('n', '[c', function()
+--             if vim.wo.diff then return '[c' end
+--             vim.schedule(function() gs.prev_hunk() end)
+--             return '<Ignore>'
+--         end, {expr=true})
+--     end
+-- }
 
 use {
     'rhysd/git-messenger.vim',
@@ -876,36 +876,36 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'DaikyXendo/nvim-material-icon',
-    config = function()
-        require('nvim-material-icon').setup({
-            override = {
-                json = {
-                    color = "#cbcb41",
-                    cterm_color = "185",
-                    icon = "ﬥ ",
-                    name = "Json"
-                },
-                norg = {
-                    icon = '🦄 ',
-                    name = "Neorg"
-                }
-            }
-        })
-    end
-}
+-- use {
+--     'DaikyXendo/nvim-material-icon',
+--     config = function()
+--         require('nvim-material-icon').setup({
+--             override = {
+--                 json = {
+--                     color = "#cbcb41",
+--                     cterm_color = "185",
+--                     icon = "ﬥ ",
+--                     name = "Json"
+--                 },
+--                 norg = {
+--                     icon = '🦄 ',
+--                     name = "Neorg"
+--                 }
+--             }
+--         })
+--     end
+-- }
 
-use {
-    'kyazdani42/nvim-web-devicons',
-    after = "nvim-material-icon",
-    config = function()
-        require'nvim-web-devicons'.setup({
-            override = require('nvim-material-icon').get_icons()
-        })
-    end
-    -- module = "nvim-web-devicons"
-}
+-- use {
+--     'kyazdani42/nvim-web-devicons',
+--     after = "nvim-material-icon",
+--     config = function()
+--         require'nvim-web-devicons'.setup({
+--             override = require('nvim-material-icon').get_icons()
+--         })
+--     end
+--     -- module = "nvim-web-devicons"
+-- }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Indentation  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -913,8 +913,8 @@ use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
         require("indent_blankline").setup({
-            show_current_context = true,
-            show_current_context_start = true
+            -- show_current_context = true,
+            -- show_current_context_start = true
         })
     end,
     event = "BufRead"
@@ -989,6 +989,7 @@ use {
 
 use {
     'neovim/nvim-lspconfig',
+    event = 'BufWinEnter',
     ft = { "lua", "python" }
 }
 
@@ -1088,7 +1089,7 @@ use {
         --     },
         -- }
         local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
             function (server_name)
                 if server_name == "powershell_es" then
@@ -1399,7 +1400,10 @@ use {
     end
 }
 
-use 'weilbith/nvim-code-action-menu'
+use {
+    'weilbith/nvim-code-action-menu',
+    cmd = 'CodeActionMenu'
+}
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1464,37 +1468,37 @@ use {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Orgmode     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/TravonteD/org-capture-filetype
 -- https://github.com/akinsho/org-bullets.nvim
-use {
-    'nvim-neorg/neorg',
-    after = "nvim-treesitter",
-    config = function()
-        require('nvim-treesitter.configs').setup {
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false
-            }
-        }
-        require('neorg').setup {
-            load = {
-                ["core.highlights"] = {},
-                ["core.integrations.treesitter"] = {},
-                ["core.neorgcmd"] = {},
-                ["core.norg.completion"] = { config = { engine = 'nvim-cmp' } },
-                ["core.norg.concealer"] = {},
-                ["core.norg.esupports.hop"] = {},
-                ["core.norg.esupports.indent"] = {},
-                ["core.norg.qol.toc"] = {},
-                ["core.norg.qol.todo_items"] = {},
-                ["core.syntax"] = {}
-            }
-        }
-        vim.cmd [[
-        au InsertEnter *.norg :Neorg toggle-concealer
-        au InsertLeave *.norg :Neorg toggle-concealer
-        ]]
-    end,
-    ft = "norg"
-}
+-- use {
+--     'nvim-neorg/neorg',
+--     after = "nvim-treesitter",
+--     config = function()
+--         require('nvim-treesitter.configs').setup {
+--             highlight = {
+--                 enable = true,
+--                 additional_vim_regex_highlighting = false
+--             }
+--         }
+--         require('neorg').setup {
+--             load = {
+--                 ["core.highlights"] = {},
+--                 ["core.integrations.treesitter"] = {},
+--                 ["core.neorgcmd"] = {},
+--                 ["core.norg.completion"] = { config = { engine = 'nvim-cmp' } },
+--                 ["core.norg.concealer"] = {},
+--                 ["core.norg.esupports.hop"] = {},
+--                 ["core.norg.esupports.indent"] = {},
+--                 ["core.norg.qol.toc"] = {},
+--                 ["core.norg.qol.todo_items"] = {},
+--                 ["core.syntax"] = {}
+--             }
+--         }
+--         vim.cmd [[
+--         au InsertEnter *.norg :Neorg toggle-concealer
+--         au InsertLeave *.norg :Neorg toggle-concealer
+--         ]]
+--     end,
+--     ft = "norg"
+-- }
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
 -- use {
@@ -1510,6 +1514,7 @@ use {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle'
 }
+
 use {
     'kevinhwang91/nvim-bqf',
     after = "nvim-lspconfig",
@@ -1521,7 +1526,8 @@ use {
             }
         })
     end,
-    ft = 'qf'
+    event = 'QuickFixCmdPre'
+    -- ft = 'qf'
 }
 -- <~>
 
@@ -1529,14 +1535,14 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Sessions   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-  'rmagatti/auto-session',
-  config = function()
-    vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
-    require("auto-session").setup({})
-    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
-  end
-}
+-- use {
+--   'rmagatti/auto-session',
+--   config = function()
+--     vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
+--     require("auto-session").setup({})
+--     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+--   end
+-- }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Snippets   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1569,92 +1575,92 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'nvim-lualine/lualine.nvim',
-    config = function()
-        -- local navic = require("nvim-navic")
-        require('lualine').setup {
-            -- options = {
-        --         icons_enabled = true,
-        --         theme = 'auto',
-                -- component_separators = { left = '', right = ''},
-                -- section_separators = { left = '', right = ''},
-        --         disabled_filetypes = {
-        --             statusline = {},
-        --             winbar = {},
-        --         },
-        --         ignore_focus = {},
-        --         always_divide_middle = true,
-        --         globalstatus = false,
-        --         refresh = {
-        --             statusline = 1000,
-        --             tabline = 1000,
-        --             winbar = 1000,
-        --         }
-            -- },
-            sections = {
-                -- lualine_a = {'mode'},
-                -- lualine_b = {'branch', 'diff', 'diagnostics'},
-                lualine_b = {},
-                -- lualine_c = {
-                --     {
-                --         'fileypes',
-                --         colored = true,
-                --         icon_only = true,
-                --         icon = {align = 'right' }
-                --     },
-                --     {
-                --         'filename',
-                --         file_status = true,      -- Displays file status (readonly status, modified status)
-                --         newfile_status = false,   -- Display new file status (new file means no write after created)
-                --         path = 0,                -- 0: Just the filename
-                --         -- 1: Relative path
-                --         -- 2: Absolute path
-                --         -- 3: Absolute path, with tilde as the home directory
+-- use {
+--     'nvim-lualine/lualine.nvim',
+--     config = function()
+--         -- local navic = require("nvim-navic")
+--         require('lualine').setup {
+--             -- options = {
+--         --         icons_enabled = true,
+--         --         theme = 'auto',
+--                 -- component_separators = { left = '', right = ''},
+--                 -- section_separators = { left = '', right = ''},
+--         --         disabled_filetypes = {
+--         --             statusline = {},
+--         --             winbar = {},
+--         --         },
+--         --         ignore_focus = {},
+--         --         always_divide_middle = true,
+--         --         globalstatus = false,
+--         --         refresh = {
+--         --             statusline = 1000,
+--         --             tabline = 1000,
+--         --             winbar = 1000,
+--         --         }
+--             -- },
+--             sections = {
+--                 -- lualine_a = {'mode'},
+--                 -- lualine_b = {'branch', 'diff', 'diagnostics'},
+--                 lualine_b = {},
+--                 -- lualine_c = {
+--                 --     {
+--                 --         'fileypes',
+--                 --         colored = true,
+--                 --         icon_only = true,
+--                 --         icon = {align = 'right' }
+--                 --     },
+--                 --     {
+--                 --         'filename',
+--                 --         file_status = true,      -- Displays file status (readonly status, modified status)
+--                 --         newfile_status = false,   -- Display new file status (new file means no write after created)
+--                 --         path = 0,                -- 0: Just the filename
+--                 --         -- 1: Relative path
+--                 --         -- 2: Absolute path
+--                 --         -- 3: Absolute path, with tilde as the home directory
 
-                --         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                --         -- for other components. (terrible name, any suggestions?)
-                --         symbols = {
-                --             modified = '[+]',      -- Text to show when the file is modified.
-                --             readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
-                --             unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                --             newfile = '[New]',     -- Text to show for new created file before first writting
-                --         }
-                --     }
-                -- },
-                lualine_x = {},
-                lualine_y = {},
-                lualine_z = {}
-                -- lualine_x = {'encoding', 'fileformat', 'filetype'},
-                -- lualine_y = { 'progress'},
-                -- lualine_z = {'location'}
-            -- },
-        --     inactive_sections = {
-        --         lualine_a = {},
-        --         lualine_b = {},
-        --         lualine_c = {'filename'},
-        --         lualine_x = {'location'},
-        --         lualine_y = {},
-        --         lualine_z = {}
-        --     },
-        -- tabline = {
-        --     lualine_a = {'filename'},
-        -- },
-        -- winbar = {
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-        --     }
-        -- },
-        -- inactive_winbar = {
-            -- lualine_a = {'filename'},
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-        --     }
-        },
-        --     extensions = {}
-        }
-    end
-}
+--                 --         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+--                 --         -- for other components. (terrible name, any suggestions?)
+--                 --         symbols = {
+--                 --             modified = '[+]',      -- Text to show when the file is modified.
+--                 --             readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+--                 --             unnamed = '[No Name]', -- Text to show for unnamed buffers.
+--                 --             newfile = '[New]',     -- Text to show for new created file before first writting
+--                 --         }
+--                 --     }
+--                 -- },
+--                 lualine_x = {},
+--                 lualine_y = {},
+--                 lualine_z = {}
+--                 -- lualine_x = {'encoding', 'fileformat', 'filetype'},
+--                 -- lualine_y = { 'progress'},
+--                 -- lualine_z = {'location'}
+--             -- },
+--         --     inactive_sections = {
+--         --         lualine_a = {},
+--         --         lualine_b = {},
+--         --         lualine_c = {'filename'},
+--         --         lualine_x = {'location'},
+--         --         lualine_y = {},
+--         --         lualine_z = {}
+--         --     },
+--         -- tabline = {
+--         --     lualine_a = {'filename'},
+--         -- },
+--         -- winbar = {
+--         --     lualine_b = {
+--         --         { navic.get_location, cond = navic.is_available }
+--         --     }
+--         -- },
+--         -- inactive_winbar = {
+--             -- lualine_a = {'filename'},
+--         --     lualine_b = {
+--         --         { navic.get_location, cond = navic.is_available }
+--         --     }
+--         },
+--         --     extensions = {}
+--         }
+--     end
+-- }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1757,32 +1763,32 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'nvim-treesitter/nvim-treesitter',
-    config = function()
-        local ignore_install = { "help", "norg", "norg_meta", "yaml" }
-        require('nvim-treesitter.configs').setup {
-            auto_install = true,
-            endwise = {
-                enable = true,
-            },
-            highlight = {
-                enable = true,
-                disable = ignore_install
-            },
-            ignore_install = ignore_install,
-            markid = { enable = true },
-            rainbow = {
-                enable = true,
-                -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-                extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                max_file_lines = nil, -- Do not enable for files with more than n lines, int
-                -- colors = {}, -- table of hex strings
-                -- termcolors = {} -- table of colour name strings
-            }
-        }
-    end
-}
+-- use {
+--     'nvim-treesitter/nvim-treesitter',
+--     config = function()
+--         local ignore_install = { "help", "norg", "norg_meta", "yaml" }
+--         require('nvim-treesitter.configs').setup {
+--             auto_install = true,
+--             endwise = {
+--                 enable = true,
+--             },
+--             highlight = {
+--                 enable = true,
+--                 disable = ignore_install
+--             },
+--             ignore_install = ignore_install,
+--             markid = { enable = true },
+--             rainbow = {
+--                 enable = true,
+--                 -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+--                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+--                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
+--                 -- colors = {}, -- table of hex strings
+--                 -- termcolors = {} -- table of colour name strings
+--             }
+--         }
+--     end
+-- }
 
 -- use {
 --     'm-demare/hlargs.nvim',
@@ -1807,17 +1813,17 @@ use {
     end
 }
 
-use {
-    'RRethy/nvim-treesitter-endwise',
-    config = function()
-        require('nvim-treesitter.configs').setup {
-            endwise = {
-                enable = true,
-            },
-        }
-    end,
-    ft = 'lua'
-}
+-- use {
+--     'RRethy/nvim-treesitter-endwise',
+--     config = function()
+--         require('nvim-treesitter.configs').setup {
+--             endwise = {
+--                 enable = true,
+--             },
+--         }
+--     end,
+--     ft = 'lua'
+-- }
 
 use {
     'nvim-treesitter/playground',
@@ -1951,7 +1957,7 @@ use 'kylechui/nvim-surround'
 
 use 'lewis6991/impatient.nvim'
 
-use 'mg979/vim-visual-multi'
+-- use 'mg979/vim-visual-multi'
 
 use {
     'nacro90/numb.nvim',
