@@ -564,8 +564,8 @@ use {
         -- ---Register your source to nvim-cmp.
         -- require('cmp').register_source('custom', source.new())
     end,
-    event = {"InsertEnter", "ModeChanged"}
-    -- module = "cmp"
+    event = "CmdlineEnter",
+    module = "cmp"
 }
 
 use {
@@ -917,7 +917,7 @@ use {
             -- show_current_context_start = true
         })
     end,
-    event = "BufRead"
+    event = "CursorHold"
 }
 --     <~>
 
@@ -990,7 +990,8 @@ use {
 use {
     'neovim/nvim-lspconfig',
     event = 'CursorHold',
-    ft = { "lua", "python" }
+    cond = function() return true end,
+    -- ft = { "lua", "python" }
 }
 
 use {

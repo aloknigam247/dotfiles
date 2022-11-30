@@ -263,21 +263,23 @@ autocmd BufRead plugins.lua lua require('plugins')
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-let g:loaded_matchparen        = 1
-let g:loaded_matchit           = 1
-let g:loaded_logiPat           = 1
-let g:loaded_rrhelper          = 1
-let g:loaded_tarPlugin         = 1
-let g:loaded_man               = 1
-let g:loaded_gzip              = 1
-let g:loaded_zipPlugin         = 1
-let g:loaded_2html_plugin      = 1
-let g:loaded_shada_plugin      = 1
-let g:loaded_spellfile_plugin  = 1
-let g:loaded_netrw             = 1
-let g:loaded_netrwPlugin       = 1
-let g:loaded_tutor_mode_plugin = 1
-let g:loaded_remote_plugins    = 1
+let b:did_ftplugin              = 1
+let g:loaded_2html_plugin       = 1
+" let g:loaded_clipboard_provider = 1
+let g:loaded_gzip               = 1
+let g:loaded_logiPat            = 1
+let g:loaded_man                = 1
+let g:loaded_matchit            = 1
+let g:loaded_matchparen         = 1
+let g:loaded_netrw              = 1
+let g:loaded_netrwPlugin        = 1
+let g:loaded_remote_plugins     = 1
+let g:loaded_rrhelper           = 1
+let g:loaded_shada_plugin       = 1
+let g:loaded_spellfile_plugin   = 1
+let g:loaded_tarPlugin          = 1
+let g:loaded_tutor_mode_plugin  = 1
+let g:loaded_zipPlugin          = 1
 
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
@@ -315,6 +317,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
+set updatetime=2000                   " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
 setglobal bomb                        " Keep the BOM file marker
 " }}}
