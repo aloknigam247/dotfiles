@@ -6,6 +6,7 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+syntax off
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 " call plug#begin()
@@ -265,7 +266,7 @@ autocmd BufRead plugins.lua lua require('plugins')
 " {{{
 let b:did_ftplugin              = 1
 let g:loaded_2html_plugin       = 1
-" let g:loaded_clipboard_provider = 1
+let g:loaded_clipboard_provider = 1
 let g:loaded_gzip               = 1
 let g:loaded_logiPat            = 1
 let g:loaded_man                = 1
