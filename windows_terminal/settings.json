@@ -19,6 +19,10 @@
             "keys": "ctrl+shift+f"
         },
         {
+            "command": "unbound",
+            "keys": "ctrl+v"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -26,10 +30,6 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+v"
         },
         {
             "command": "toggleFocusMode",
@@ -116,16 +116,10 @@
                 "tabTitle": "DevBox"
             },
             {
-                "guid": "{f9ceaf27-504c-58d7-927c-d1d6a7ac7d3c}",
-                "hidden": false,
-                "name": "Ubuntu 22.04.1 LTS",
-                "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
-            },
-            {
-                "guid": "{17bf3de4-5353-5709-bcf9-835bd952a95e}",
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
                 "hidden": true,
-                "name": "Ubuntu-22.04",
-                "source": "Windows.Terminal.Wsl"
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
             }
         ]
     },
