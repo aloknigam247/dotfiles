@@ -266,7 +266,7 @@ autocmd BufRead plugins.lua lua require('plugins')
 " {{{
 let b:did_ftplugin              = 1
 let g:loaded_2html_plugin       = 1
-let g:loaded_clipboard_provider = 1
+" let g:loaded_clipboard_provider = 1
 let g:loaded_gzip               = 1
 let g:loaded_logiPat            = 1
 let g:loaded_man                = 1
@@ -318,7 +318,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
-set updatetime=2000                   " CursorHold time
+set updatetime=500                   " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
 setglobal bomb                        " Keep the BOM file marker
 " }}}

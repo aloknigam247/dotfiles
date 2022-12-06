@@ -819,46 +819,46 @@ use {
 -- https://github.com/akinsho/git-conflict.nvim
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
-use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-        require('gitsigns').setup {
-            signs = {
-                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-            },
-            current_line_blame_formatter_opts = {
-                relative_time = true
-            },
-            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
-        }
+-- use {
+--     'lewis6991/gitsigns.nvim',
+--     config = function()
+--         require('gitsigns').setup {
+--             signs = {
+--                 add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+--                 change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+--                 delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+--                 topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+--                 changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+--             },
+--             current_line_blame_formatter_opts = {
+--                 relative_time = true
+--             },
+--             current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+--         }
 
-        -- Navigation
-        local gs = package.loaded.gitsigns
+--         -- Navigation
+--         local gs = package.loaded.gitsigns
 
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
+--         local function map(mode, l, r, opts)
+--             opts = opts or {}
+--             opts.buffer = bufnr
+--             vim.keymap.set(mode, l, r, opts)
+--         end
 
-        map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
+--         map('n', ']c', function()
+--             if vim.wo.diff then return ']c' end
+--             vim.schedule(function() gs.next_hunk() end)
+--             return '<Ignore>'
+--         end, {expr=true})
 
-        map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
-    end,
-    event = 'CursorHold'
-}
+--         map('n', '[c', function()
+--             if vim.wo.diff then return '[c' end
+--             vim.schedule(function() gs.prev_hunk() end)
+--             return '<Ignore>'
+--         end, {expr=true})
+--     end,
+--     event = 'CursorHold'
+-- }
 
 use {
     'rhysd/git-messenger.vim',
@@ -1605,89 +1605,89 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'nvim-lualine/lualine.nvim',
-    config = function()
-        -- local navic = require("nvim-navic")
-        require('lualine').setup {
-            options = {
-        --         icons_enabled = true,
-        --         theme = 'auto',
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
-        --         disabled_filetypes = {
-        --             statusline = {},
-        --             winbar = {},
-        --         },
-        --         ignore_focus = {},
-        --         always_divide_middle = true,
-        --         globalstatus = false,
-        --         refresh = {
-        --             statusline = 1000,
-        --             tabline = 1000,
-        --             winbar = 1000,
-        --         }
-            },
-            sections = {
-                lualine_a = {'mode'},
-                lualine_b = {'branch', 'diff', 'diagnostics'},
-                lualine_c = {
-                    {
-                        'fileypes',
-                        colored = true,
-                        -- icon_only = true,
-                        icon = {align = 'right' }
-                    },
-                    {
-                        'filename',
-                        file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = false,   -- Display new file status (new file means no write after created)
-                        path = 0,                -- 0: Just the filename
-                        -- 1: Relative path
-                        -- 2: Absolute path
-                        -- 3: Absolute path, with tilde as the home directory
+-- use {
+--     'nvim-lualine/lualine.nvim',
+--     config = function()
+--         -- local navic = require("nvim-navic")
+--         require('lualine').setup {
+--             options = {
+--         --         icons_enabled = true,
+--         --         theme = 'auto',
+--                 component_separators = { left = '', right = ''},
+--                 section_separators = { left = '', right = ''},
+--         --         disabled_filetypes = {
+--         --             statusline = {},
+--         --             winbar = {},
+--         --         },
+--         --         ignore_focus = {},
+--         --         always_divide_middle = true,
+--         --         globalstatus = false,
+--         --         refresh = {
+--         --             statusline = 1000,
+--         --             tabline = 1000,
+--         --             winbar = 1000,
+--         --         }
+--             },
+--             sections = {
+--                 lualine_a = {'mode'},
+--                 lualine_b = {'branch', 'diff', 'diagnostics'},
+--                 lualine_c = {
+--                     {
+--                         'fileypes',
+--                         colored = true,
+--                         -- icon_only = true,
+--                         icon = {align = 'right' }
+--                     },
+--                     {
+--                         'filename',
+--                         file_status = true,      -- Displays file status (readonly status, modified status)
+--                         newfile_status = false,   -- Display new file status (new file means no write after created)
+--                         path = 0,                -- 0: Just the filename
+--                         -- 1: Relative path
+--                         -- 2: Absolute path
+--                         -- 3: Absolute path, with tilde as the home directory
 
-                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        -- for other components. (terrible name, any suggestions?)
-                        symbols = {
-                            modified = '[+]',      -- Text to show when the file is modified.
-                            readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
-                            unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                            newfile = '[New]',     -- Text to show for new created file before first writting
-                        }
-                    }
-                },
-                lualine_x = {'encoding', 'fileformat', 'filetype'},
-                lualine_y = { 'progress'},
-                lualine_z = {'location'}
-            },
-            inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = {'filename'},
-                lualine_x = {'location'},
-                lualine_y = {},
-                lualine_z = {}
-        --     },
-        -- tabline = {
-        --     lualine_a = {'filename'},
-        -- },
-        -- winbar = {
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-        --     }
-        -- },
-        -- inactive_winbar = {
-            -- lualine_a = {'filename'},
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-        --     }
-        },
-        --     extensions = {}
-        }
-    end,
-    event = 'CursorHold'
-}
+--                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+--                         -- for other components. (terrible name, any suggestions?)
+--                         symbols = {
+--                             modified = '[+]',      -- Text to show when the file is modified.
+--                             readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+--                             unnamed = '[No Name]', -- Text to show for unnamed buffers.
+--                             newfile = '[New]',     -- Text to show for new created file before first writting
+--                         }
+--                     }
+--                 },
+--                 lualine_x = {'encoding', 'fileformat', 'filetype'},
+--                 lualine_y = { 'progress'},
+--                 lualine_z = {'location'}
+--             },
+--             inactive_sections = {
+--                 lualine_a = {},
+--                 lualine_b = {},
+--                 lualine_c = {'filename'},
+--                 lualine_x = {'location'},
+--                 lualine_y = {},
+--                 lualine_z = {}
+--         --     },
+--         -- tabline = {
+--         --     lualine_a = {'filename'},
+--         -- },
+--         -- winbar = {
+--         --     lualine_b = {
+--         --         { navic.get_location, cond = navic.is_available }
+--         --     }
+--         -- },
+--         -- inactive_winbar = {
+--             -- lualine_a = {'filename'},
+--         --     lualine_b = {
+--         --         { navic.get_location, cond = navic.is_available }
+--         --     }
+--         },
+--         --     extensions = {}
+--         }
+--     end,
+--     event = 'CursorHold'
+-- }
 -- <~>
 
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1790,30 +1790,30 @@ use {
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use {
-    'nvim-treesitter/nvim-treesitter',
-    config = function()
-        local ignore_install = { "help", "norg", "norg_meta", "yaml" }
-        require('nvim-treesitter.configs').setup {
-            auto_install = true,
-            highlight = {
-                enable = true,
-                disable = ignore_install
-            },
-            ignore_install = ignore_install,
-            markid = { enable = true },
-            rainbow = {
-                enable = true,
-                -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-                extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                max_file_lines = nil, -- Do not enable for files with more than n lines, int
-                -- colors = {}, -- table of hex strings
-                -- termcolors = {} -- table of colour name strings
-            }
-        }
-    end,
-    -- event = 'CursorHold'
-}
+-- use {
+--     'nvim-treesitter/nvim-treesitter',
+--     config = function()
+--         local ignore_install = { "help", "norg", "norg_meta", "yaml" }
+--         require('nvim-treesitter.configs').setup {
+--             auto_install = true,
+--             highlight = {
+--                 enable = true,
+--                 disable = ignore_install
+--             },
+--             ignore_install = ignore_install,
+--             markid = { enable = true },
+--             rainbow = {
+--                 enable = true,
+--                 -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+--                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+--                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
+--                 -- colors = {}, -- table of hex strings
+--                 -- termcolors = {} -- table of colour name strings
+--             }
+--         }
+--     end,
+--     -- event = 'CursorHold'
+-- }
 
 -- use {
 --     'm-demare/hlargs.nvim',
@@ -1843,10 +1843,10 @@ use {
     cmd = 'TSHighlightCapturesUnderCursor'
 }
 
-use {
-    'p00f/nvim-ts-rainbow',
-    after = 'nvim-treesitter'
-}
+-- use {
+--     'p00f/nvim-ts-rainbow',
+--     after = 'nvim-treesitter'
+-- }
 -- <~>
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
