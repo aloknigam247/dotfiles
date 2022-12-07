@@ -209,7 +209,7 @@ vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
 
 vim.g.cmp_kinds = {
     Array         = ' ',
-    Boolean       = 'ﱹ ',
+    Boolean       = ' ',
     Class         = ' ',
     Color         = ' ',
     Constant      = ' ',

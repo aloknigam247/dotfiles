@@ -6,7 +6,7 @@
  ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
--- 
+
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
@@ -260,14 +260,14 @@ use {
             ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
             ['S'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['V'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-            ['c'] = vim.api.nvim_get_hl_by_name('lualine_a_command', true).background,
+            ['c'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['i'] = vim.api.nvim_get_hl_by_name('lualine_a_insert', true).background,
             ['n'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
         }
-        if not vim.fn.hlexists('lualine_a_command') then
-            modes['c'] = modes['n']
+        if vim.fn.hlexists('lualine_a_command') then
+            modes['c'] = vim.api.nvim_get_hl_by_name('lualine_a_command', true).background
         end
         modicator.setup({
             line_numbers = true,
@@ -383,7 +383,7 @@ use {
     end
 }
 -- <~>
----━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -813,7 +813,7 @@ use {
 -- use 'joechrisellis/lsp-format-modifications.nvim'
 -- use 'lukas-reineke/format.nvim'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       FZF      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- https://github.com/ibhagwan/fzf-lua
 -- https://github.com/junegunn/fzf
@@ -936,10 +936,10 @@ use {
 }
 -- use 'nvim-lua/popup.nvim'
 -- <~>
--- ──────────────────── Lint ────────────────────</>
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Lint      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'mfussenegger/nvim-lint'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- use 'Hoffs/omnisharp-extended-lsp.nvim'
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
@@ -1556,7 +1556,7 @@ use {
 --     -- ft = 'qf'
 -- }
 -- <~>
---     -- Rooter:</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Rooter    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Sessions   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
