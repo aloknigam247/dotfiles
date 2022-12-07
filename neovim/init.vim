@@ -9,20 +9,8 @@
 " syntax off
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-" call plug#begin()
-" call plug#end()
 lua << EOF
--- require('impatient')
--- require('pepperfish')
--- profiler = newProfiler()
--- profiler:start()
-
---vim.api.nvim_create_autocmd('VimLeave', {callback = function()
---    profiler:stop()
---    local outfile = io.open( "profile.txt", "w+" )
---    profiler:report( outfile )
---    outfile:close()
---end})
+require('impatient')
 vim.notify = function(msg, level, opt)
     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
     vim.notify(msg, level, opt)
@@ -150,6 +138,7 @@ function ColoRand()
         { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'doom' end },
         { 'neon',                       'light', '_', precmd = function() vim.g.neon_style = 'light' end },
         { 'nightfox',                   'dark',  '_' },
+        { 'nord',                       'dark',  '_' },
         { 'nordfox',                    'dark',  '_' },
         { 'oceanic',                    'dark',  '_' },
         { 'oh-lucy',                    'dark',  '_' },
@@ -220,7 +209,7 @@ vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
 
 vim.g.cmp_kinds = {
     Array         = ' ',
-    Boolean       = ' ',
+    Boolean       = 'ﱹ ',
     Class         = ' ',
     Color         = ' ',
     Constant      = ' ',
@@ -263,24 +252,6 @@ autocmd BufRead plugins.lua lua require('plugins')
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-" let b:did_ftplugin              = 1
-" let g:loaded_2html_plugin       = 1
-" let g:loaded_clipboard_provider = 1
-" let g:loaded_gzip               = 1
-" let g:loaded_logiPat            = 1
-" let g:loaded_man                = 1
-" let g:loaded_matchit            = 1
-" let g:loaded_matchparen         = 1
-" let g:loaded_netrw              = 1
-" let g:loaded_netrwPlugin        = 1
-" let g:loaded_remote_plugins     = 1
-" let g:loaded_rrhelper           = 1
-" let g:loaded_shada_plugin       = 1
-" let g:loaded_spellfile_plugin   = 1
-" let g:loaded_tarPlugin          = 1
-" let g:loaded_tutor_mode_plugin  = 1
-" let g:loaded_zipPlugin          = 1
-
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
 let c_space_errors = 1             " Highlight trailing spaces
@@ -290,13 +261,6 @@ let g:diff_translations = 0        " Disables localisations and speeds up syntax
 let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
 let g:netrw_liststyle = 3          " Set netrw style as tree
 " }}}
-
-" function! Clipp()
-"     unlet g:loaded_clipboard_provider
-"     runtime autoload/provider/clipboard.vim
-" endfun
-
-" autocmd TextYankPost * ++once :call Clipp()
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Config Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
@@ -331,9 +295,10 @@ setglobal bomb                        " Keep the BOM file marker
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+ColoRand
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
-set background=light         " Select appropriate colors for dark or light
+" set background=light         " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
@@ -357,17 +322,12 @@ set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support
 set title                    " Set console title
-"set ttymouse=sgr            " Fix mouse support in half screen
 set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
 set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
-ColoRand
-"hi NonText guifg=grey70 guibg=#e4e4e4
-" highlight clear CursorLine   " No underline on text when cursorline is on
-" highlight clear CursorLineNR " No underline on line numbers when cursorline is on
 sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
 sign define DiagnosticSignWarn  text= texthl=DiagnosticSignWarn  linehl= numhl=
 sign define DiagnosticSignInfo  text= texthl=DiagnosticSignInfo  linehl= numhl=
@@ -382,12 +342,6 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-" map("i", "<C-a>", "<Home>")
-" map("i", "<C-e>", "<End>")
-" map("i", "<C-b>", "<ESC>bi")
-" map("i", "<C-f>", "<ESC>wa")
-" map("i", "<C-n>", "<ESC>ja")
-" map("i", "<C-p>", "<ESC>ka")
 imap <C-Left> <C-\><C-O>B
 imap <C-Right> <C-\><C-O>E<C-\><C-O>a
 imap <C-a> <C-\><C-O>^

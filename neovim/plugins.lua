@@ -6,8 +6,8 @@
  ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- 
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
     { '─', 'FloatBorder' },
@@ -50,13 +50,11 @@ config = {
     -- autoremove = true
 },
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Packer     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Packer     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 function(use)
 use 'wbthomason/packer.nvim'
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModeEnable'
@@ -69,8 +67,7 @@ use {
     cmd = 'EasyAlign'
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'windwp/nvim-autopairs',
     config = function()
@@ -153,8 +150,7 @@ use {
     event = 'InsertEnter',
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --     'David-Kunz/markid',
 --     -- after = 'nvim-treesitter'
@@ -264,12 +260,15 @@ use {
             ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
             ['S'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['V'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-            ['c'] = vim.fn.hlexists('lualine_a_command') and vim.api.nvim_get_hl_by_name('lualine_a_command', true).background or vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
+            ['c'] = vim.api.nvim_get_hl_by_name('lualine_a_command', true).background,
             ['i'] = vim.api.nvim_get_hl_by_name('lualine_a_insert', true).background,
             ['n'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
         }
+        if not vim.fn.hlexists('lualine_a_command') then
+            modes['c'] = modes['n']
+        end
         modicator.setup({
             line_numbers = true,
             cursorline = true,
@@ -309,8 +308,7 @@ use {
     cmd = 'TransparentToggle'
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
 -- https://github.com/lifepillar/vim-colortemplate
 -- https://github.com/folke/styler.nvim
@@ -331,6 +329,7 @@ use { 'catppuccin/nvim' }
 use { 'cpea2506/one_monokai.nvim' }
 use { 'fenetikm/falcon' }
 use { 'folke/tokyonight.nvim' }
+use { 'gbprod/nord.nvim' }
 use { 'glepnir/zephyr-nvim' }
 use { 'jsit/toast.vim' }
 use { 'kaiuri/nvim-juliana' }
@@ -368,8 +367,7 @@ use { 'w3barsi/barstrata.nvim' }
 use { 'wuelnerdotexe/vim-enfocado' }
 use { 'yashguptaz/calvera-dark.nvim' }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'b3nj5m1n/kommentary',
     config = function()
@@ -385,8 +383,7 @@ use {
     end
 }
 -- <~>
-
----━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -611,8 +608,7 @@ use {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Abstract-IDE dap configs
 -- --------------------------
 -- -- telescope-dap.nvim
@@ -698,8 +694,7 @@ use {
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --     "danymat/neogen",
 --     after = 'nvim-treesitter',
@@ -711,8 +706,7 @@ use {
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'mrbjarksen/neo-tree-diagnostics.nvim',
     after = 'neo-tree.nvim',
@@ -778,8 +772,7 @@ use {
     end
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --     'anuvyklack/pretty-fold.nvim',
 --     cond = function()
@@ -812,8 +805,7 @@ use {
 -- }
 
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --     'sbdchd/neoformat',
 --     cmd = "Neoformat"
@@ -821,16 +813,14 @@ use {
 -- use 'joechrisellis/lsp-format-modifications.nvim'
 -- use 'lukas-reineke/format.nvim'
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       FZF      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       FZF      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- https://github.com/ibhagwan/fzf-lua
 -- https://github.com/junegunn/fzf
 -- https://github.com/junegunn/fzf.vim
 -- https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/akinsho/git-conflict.nvim
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
@@ -885,8 +875,7 @@ use {
     cmd = "DiffviewOpen"
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'DaikyXendo/nvim-material-icon',
     config = function()
@@ -918,8 +907,7 @@ use {
     end
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Indentation  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -931,8 +919,7 @@ use {
     event = "CursorHold"
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Libraries   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Libraries   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'MunifTanjim/nui.nvim',
     module = 'nui'
@@ -949,14 +936,14 @@ use {
 }
 -- use 'nvim-lua/popup.nvim'
 -- <~>
-
 -- ──────────────────── Lint ────────────────────</>
 -- use 'mfussenegger/nvim-lint'
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- use 'Hoffs/omnisharp-extended-lsp.nvim'
+-- https://github.com/lvimuser/lsp-inlayhints.nvim
+-- https://github.com/DNLHC/glance.nvim
 
 use {
     'Kasama/nvim-custom-diagnostic-highlight',
@@ -1448,15 +1435,14 @@ use {
     cmd = 'CodeActionMenu'
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/DanRoscigno/nvim-markdown-grammarly
 use {
     'davidgranstrom/nvim-markdown-preview',
     cmd = 'MarkdownPreview'
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
 -- https://vim.fandom.com/wiki/Using_marks
 -- |----------------+---------------------------------------------------------------|
@@ -1509,8 +1495,7 @@ use {
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Orgmode     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Orgmode     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/TravonteD/org-capture-filetype
 -- https://github.com/akinsho/org-bullets.nvim
 
@@ -1550,8 +1535,7 @@ use {
 --      end,
 --  }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Quickfix   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Quickfix   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle'
@@ -1572,11 +1556,9 @@ use {
 --     -- ft = 'qf'
 -- }
 -- <~>
-
 --     -- Rooter:</>
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Sessions   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Sessions   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --   'rmagatti/auto-session',
 --   config = function()
@@ -1586,8 +1568,7 @@ use {
 --   end
 -- }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Snippets   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Snippets   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'dcampos/nvim-snippy',
     after = 'nvim-cmp',
@@ -1615,8 +1596,7 @@ use {
 -- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Status Line  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -1695,8 +1675,7 @@ use {
     event = 'CursorHold'
 }
 -- <~>
-
--- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
 --     'akinsho/bufferline.nvim',
 --     config = function()
@@ -1718,8 +1697,7 @@ use {
 --     end
 -- }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'crispgm/telescope-heading.nvim',
     after = 'telescope.nvim',
@@ -1767,8 +1745,7 @@ use {
     end
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     "akinsho/toggleterm.nvim",
     cmd = 'ToggleTerm',
@@ -1788,14 +1765,13 @@ use {
 -- https://github.com/s1n7ax/nvim-terminal
 -- https://github.com/voldikss/vim-floaterm
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
 -- https://github.com/klen/nvim-test
 -- https://github.com/nvim-neotest/neotest
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/Wansmer/treesj
 use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -1859,8 +1835,10 @@ use {
     after = 'nvim-treesitter'
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       TUI      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       TUI      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/tamton-aquib/zone.nvim
+-- https://github.com/tamton-aquib/duck.nvim
+-- https://github.com/Eandrju/cellular-automaton.nvim
 -- use({
 --   'folke/noice.nvim',
 --   config = function()
@@ -1909,9 +1887,8 @@ use {
     module = 'notify'
 }
 -- <~>
-
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Utilities   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-use 'AckslD/nvim-trevJ.lua'
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- use 'AckslD/nvim-trevJ.lua'
 
 use {
     'AndrewRadev/inline_edit.vim',
