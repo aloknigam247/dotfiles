@@ -130,11 +130,11 @@ function ColoRand()
         { 'lunaperche',                 'dark',  '_' },
         { 'mariana',                    'dark',  '_' },
         { 'material',                   'dark',  '_' },
-        { 'material',                   'dark',  '_',   precmd = function() vim.g.material_style = 'darker' end },
-        { 'material',                   'dark',  '_',   precmd = function() vim.g.material_style = 'deep ocean' end },
-        { 'material',                   'dark',  '_',   precmd = function() vim.g.material_style = 'lighter' end },
-        { 'material',                   'dark',  '_',   precmd = function() vim.g.material_style = 'oceanic' end },
-        { 'material',                   'dark',  '_',   precmd = function() vim.g.material_style = 'palenight' end },
+        { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'darker' end },
+        { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'deep ocean' end },
+        { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'lighter' end },
+        { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'oceanic' end },
+        { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'palenight' end },
         { 'melange',                    'dark',  '_' },
         { 'melange',                    'light', '_' },
         { 'mellow',                     'dark',  '_' },
@@ -145,10 +145,10 @@ function ColoRand()
         { 'morning',                    'light', '_' },
         { 'mosel',                      'dark',  '_' },
         { 'murphy',                     'dark',  '_' },
-        { 'neon',                       'dark',  '_',   precmd = function() vim.g.neon_style = 'dark' end },
-        { 'neon',                       'dark',  '_',   precmd = function() vim.g.neon_style = 'default' end },
-        { 'neon',                       'dark',  '_',   precmd = function() vim.g.neon_style = 'doom' end },
-        { 'neon',                       'light', '_',   precmd = function() vim.g.neon_style = 'light' end },
+        { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'dark' end },
+        { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'default' end },
+        { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'doom' end },
+        { 'neon',                       'light', '_', precmd = function() vim.g.neon_style = 'light' end },
         { 'nightfox',                   'dark',  '_' },
         { 'nordfox',                    'dark',  '_' },
         { 'oceanic',                    'dark',  '_' },
@@ -159,7 +159,7 @@ function ColoRand()
         { 'onebuddy',                   'dark',  '_' },
         { 'onebuddy',                   'light', '_' },
         { 'onedarkpro',                 'dark',  '_' },
-        { 'onedarkpro',                 'dark',  '_',   precmd = function() require('onedarkpro').setup({dark_theme = 'onedark_dark'}) end },
+        { 'onedarkpro',                 'dark',  '_', precmd = function() require('onedarkpro').setup({dark_theme = 'onedark_dark'}) end },
         { 'onedarkpro',                 'light', '_' },
         { 'onenord',                    'dark',  '_' },
         { 'onenord',                    'light', '_' },
@@ -169,15 +169,15 @@ function ColoRand()
         { 'quiet',                      'dark',  '_' },
         { 'ron',                        'dark',  '_' },
         { 'rose-pine',                  'dark',  '_' },
-        { 'rose-pine',                  'dark',  '_',   precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
-        { 'rose-pine',                  'dark',  '_',   precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end },
+        { 'rose-pine',                  'dark',  '_', precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
+        { 'rose-pine',                  'dark',  '_', precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end },
         { 'shine',                      'light', '_' },
         { 'slate',                      'dark',  '_' },
-        { 'sonokai',                    'dark',  '_',   precmd = function() vim.g.sonokai_style = 'andromeda' end },
-        { 'sonokai',                    'dark',  '_',   precmd = function() vim.g.sonokai_style = 'atlantis' end },
-        { 'sonokai',                    'dark',  '_',   precmd = function() vim.g.sonokai_style = 'default' end },
-        { 'sonokai',                    'dark',  '_',   precmd = function() vim.g.sonokai_style = 'maia' end },
-        { 'sonokai',                    'dark',  '_',   precmd = function() vim.g.sonokai_style = 'shusia' end },
+        { 'sonokai',                    'dark',  '_', precmd = function() vim.g.sonokai_style = 'andromeda' end },
+        { 'sonokai',                    'dark',  '_', precmd = function() vim.g.sonokai_style = 'atlantis' end },
+        { 'sonokai',                    'dark',  '_', precmd = function() vim.g.sonokai_style = 'default' end },
+        { 'sonokai',                    'dark',  '_', precmd = function() vim.g.sonokai_style = 'maia' end },
+        { 'sonokai',                    'dark',  '_', precmd = function() vim.g.sonokai_style = 'shusia' end },
         { 'terafox',                    'dark',  '_' },
         { 'toast',                      'dark',  '_' },
         { 'toast',                      'light', '_' },
@@ -198,7 +198,6 @@ function ColoRand()
     }
     math.randomseed(os.time())
     local ind = math.random(1, table.getn(colos))
-    ind = 1
     local selection = colos[ind]
     local scheme = selection[1]
     local bg = selection[2]
@@ -264,23 +263,23 @@ autocmd BufRead plugins.lua lua require('plugins')
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-let b:did_ftplugin              = 1
-let g:loaded_2html_plugin       = 1
+" let b:did_ftplugin              = 1
+" let g:loaded_2html_plugin       = 1
 " let g:loaded_clipboard_provider = 1
-let g:loaded_gzip               = 1
-let g:loaded_logiPat            = 1
-let g:loaded_man                = 1
-let g:loaded_matchit            = 1
-let g:loaded_matchparen         = 1
-let g:loaded_netrw              = 1
-let g:loaded_netrwPlugin        = 1
-let g:loaded_remote_plugins     = 1
-let g:loaded_rrhelper           = 1
-let g:loaded_shada_plugin       = 1
-let g:loaded_spellfile_plugin   = 1
-let g:loaded_tarPlugin          = 1
-let g:loaded_tutor_mode_plugin  = 1
-let g:loaded_zipPlugin          = 1
+" let g:loaded_gzip               = 1
+" let g:loaded_logiPat            = 1
+" let g:loaded_man                = 1
+" let g:loaded_matchit            = 1
+" let g:loaded_matchparen         = 1
+" let g:loaded_netrw              = 1
+" let g:loaded_netrwPlugin        = 1
+" let g:loaded_remote_plugins     = 1
+" let g:loaded_rrhelper           = 1
+" let g:loaded_shada_plugin       = 1
+" let g:loaded_spellfile_plugin   = 1
+" let g:loaded_tarPlugin          = 1
+" let g:loaded_tutor_mode_plugin  = 1
+" let g:loaded_zipPlugin          = 1
 
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
@@ -291,6 +290,13 @@ let g:diff_translations = 0        " Disables localisations and speeds up syntax
 let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
 let g:netrw_liststyle = 3          " Set netrw style as tree
 " }}}
+
+" function! Clipp()
+"     unlet g:loaded_clipboard_provider
+"     runtime autoload/provider/clipboard.vim
+" endfun
+
+" autocmd TextYankPost * ++once :call Clipp()
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Config Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
@@ -503,6 +509,6 @@ vim.diagnostic.config({
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
-vim.fn.matchadd("HighlightURL", url_matcher, 15)
+vim.fn.matchadd("HighlightURL", url_matcher, 1)
 EOF
 highlight HighlightURL gui=underline cterm=underline
