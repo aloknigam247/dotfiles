@@ -43,10 +43,10 @@ config = {
     log = {
         -- level = 'debug'
     },
-    profile = {
-        enable = true,
-        threshold = 0.0001
-    },
+    -- profile = {
+    --     enable = true,
+    --     threshold = 0.0001
+    -- },
     -- autoremove = true
 },
 -- <~>
@@ -266,7 +266,7 @@ use {
             ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
             ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
         }
-        if vim.fn.hlexists('lualine_a_command') then
+        if vim.fn.hlexists('lualine_a_command') ~= 0 then
             modes['c'] = vim.api.nvim_get_hl_by_name('lualine_a_command', true).background
         end
         modicator.setup({
@@ -278,7 +278,8 @@ use {
         })
 
         modicator.set_highlight(modes['n'])
-    end
+    end,
+    lock = true
 }
 
 use {
@@ -1535,7 +1536,7 @@ use {
 --      end,
 --  }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Quickfix   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle'
@@ -1559,14 +1560,14 @@ use {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Rooter    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Sessions   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use {
---   'rmagatti/auto-session',
---   config = function()
---     vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
---     require("auto-session").setup({})
---     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
---   end
--- }
+use {
+  'rmagatti/auto-session',
+  config = function()
+    vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
+    require("auto-session").setup({})
+    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+  end
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Snippets   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -1644,7 +1645,7 @@ use {
                     }
                 },
                 lualine_x = {'encoding', 'fileformat', 'filetype'},
-                lualine_y = { 'progress'},
+                lualine_y = {'progress'},
                 lualine_z = {'location'}
             },
             inactive_sections = {
@@ -1662,12 +1663,12 @@ use {
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
         --     }
-        -- },
-        -- inactive_winbar = {
-            -- lualine_a = {'filename'},
+        },
+        inactive_winbar = {
+            lualine_a = {'filename'},
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
-        --     }
+            -- }
         },
         --     extensions = {}
         }
@@ -1855,24 +1856,6 @@ use {
 -- })
 
 use {
-    "nvim-zh/colorful-winsep.nvim",
-    config = function ()
-        require("colorful-winsep").setup({
-            -- highlight for Window separator
-            -- highlight = {
-            --     guibg = "#16161E",
-            --     guifg = "#1F3442",
-            -- },
-            interval = 30,
-            no_exec_files = { "packer", "TelescopePrompt", "mason","NvimTree" },
-            symbols = { "─", "│", "╭", "╮", "╰", "╯" },
-        })
-        vim.api.nvim_create_user_command('NvimSeparatorDel', function() require('colorful-winsep').NvimSeparatorDel() end, {})
-    end,
-    event = 'WinNew'
-}
-
-use {
     'rcarriga/nvim-notify',
     config = function()
         local notify = require('notify')
@@ -1961,7 +1944,7 @@ use {
     config = function()
         require('numb').setup()
     end,
-    event = 'ModeChanged'
+    event = "CmdlineEnter",
 }
 
 use {

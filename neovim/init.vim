@@ -7,6 +7,10 @@
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
 " syntax off
+" au BufRead * echo "BufRead"
+" au BufEnter * echo "BufEnter"
+" au BufReadPost * echo "BufReadPost"
+" au BufWinEnter * echo "BufWinEnter"
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 lua << EOF
@@ -201,6 +205,7 @@ function ColoRand()
         require(module)
     end
     vim.cmd.colorscheme(scheme)
+    vim.g.ColoRand = scheme
     vim.cmd[[highlight clear CursorLine]]
 end
 
@@ -288,7 +293,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
-set updatetime=500                   " CursorHold time
+set updatetime=800                   " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
 setglobal bomb                        " Keep the BOM file marker
 " }}}
