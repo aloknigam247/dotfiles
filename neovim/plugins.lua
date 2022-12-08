@@ -315,57 +315,57 @@ use {
 -- https://github.com/folke/styler.nvim
 use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 
-use { 'Domeee/mosel.nvim' }
-use { 'EdenEast/nightfox.nvim' }
-use { 'LunarVim/darkplus.nvim' }
-use { 'Mofiqul/adwaita.nvim' }
-use { 'NLKNguyen/papercolor-theme' }
-use { 'Shatur/neovim-ayu' }
-use { 'Th3Whit3Wolf/one-nvim' }
-use { 'Th3Whit3Wolf/onebuddy' }
-use { 'Yazeed1s/oh-lucy.nvim' }
-use { 'aca/vim-monokai-pro' }
-use { 'atelierbram/Base2Tone-nvim' }
-use { 'catppuccin/nvim' }
-use { 'cpea2506/one_monokai.nvim' }
-use { 'fenetikm/falcon' }
-use { 'folke/tokyonight.nvim' }
-use { 'gbprod/nord.nvim' }
-use { 'glepnir/zephyr-nvim' }
-use { 'jsit/toast.vim' }
-use { 'kaiuri/nvim-juliana' }
-use { 'kvrohit/mellow.nvim' }
-use { 'lmburns/kimbox' }
-use { 'luisiacc/gruvbox-baby' }
-use { 'marko-cerovac/material.nvim' }
-use { 'maxmx03/FluoroMachine.nvim' }
-use { 'metalelf0/jellybeans-nvim' }
-use { 'mhartington/oceanic-next' }
-use { 'ntk148v/vim-horizon' }
-use { 'nxvu699134/vn-night.nvim' }
-use { 'olimorris/onedarkpro.nvim' }
-use { 'projekt0n/github-nvim-theme' }
-use { 'rafamadriz/neon' }
-use { 'ray-x/aurora' }
-use { 'ray-x/starry.nvim' }
-use { 'rebelot/kanagawa.nvim' }
-use { 'rmehri01/onenord.nvim' }
-use { 'rose-pine/neovim' }
-use { 'sainnhe/edge' }
-use { 'sainnhe/everforest' }
-use { 'sainnhe/sonokai' }
-use { 'sam4llis/nvim-tundra' }
-use { 'savq/melange' }
-use { 'shaunsingh/moonlight.nvim' }
-use { 'sickill/vim-monokai' }
-use { 'tanvirtin/monokai.nvim' }
-use { 'theniceboy/nvim-deus' }
-use { 'tiagovla/tokyodark.nvim' }
-use { 'titanzero/zephyrium' }
-use { 'tjdevries/gruvbuddy.nvim' }
-use { 'tomasiser/vim-code-dark' }
-use { 'w3barsi/barstrata.nvim' }
-use { 'wuelnerdotexe/vim-enfocado' }
+use { 'Domeee/mosel.nvim'            }
+use { 'EdenEast/nightfox.nvim'       }
+use { 'LunarVim/darkplus.nvim'       }
+use { 'Mofiqul/adwaita.nvim'         }
+use { 'NLKNguyen/papercolor-theme'   }
+use { 'Shatur/neovim-ayu'            }
+use { 'Th3Whit3Wolf/one-nvim'        }
+use { 'Th3Whit3Wolf/onebuddy'        }
+use { 'Yazeed1s/oh-lucy.nvim'        }
+use { 'aca/vim-monokai-pro'          }
+use { 'atelierbram/Base2Tone-nvim'   }
+use { 'catppuccin/nvim'              }
+use { 'cpea2506/one_monokai.nvim'    }
+use { 'fenetikm/falcon'              }
+use { 'folke/tokyonight.nvim'        }
+use { 'gbprod/nord.nvim'             }
+use { 'glepnir/zephyr-nvim'          }
+use { 'jsit/toast.vim'               }
+use { 'kaiuri/nvim-juliana'          }
+use { 'kvrohit/mellow.nvim'          }
+use { 'lmburns/kimbox'               }
+use { 'luisiacc/gruvbox-baby'        }
+use { 'marko-cerovac/material.nvim'  }
+use { 'maxmx03/FluoroMachine.nvim'   }
+use { 'metalelf0/jellybeans-nvim'    }
+use { 'mhartington/oceanic-next'     }
+use { 'ntk148v/vim-horizon'          }
+use { 'nxvu699134/vn-night.nvim'     }
+use { 'olimorris/onedarkpro.nvim'    }
+use { 'projekt0n/github-nvim-theme'  }
+use { 'rafamadriz/neon'              }
+use { 'ray-x/aurora'                 }
+use { 'ray-x/starry.nvim'            }
+use { 'rebelot/kanagawa.nvim'        }
+use { 'rmehri01/onenord.nvim'        }
+use { 'rose-pine/neovim'             }
+use { 'sainnhe/edge'                 }
+use { 'sainnhe/everforest'           }
+use { 'sainnhe/sonokai'              }
+use { 'sam4llis/nvim-tundra'         }
+use { 'savq/melange'                 }
+use { 'shaunsingh/moonlight.nvim'    }
+use { 'sickill/vim-monokai'          }
+use { 'tanvirtin/monokai.nvim'       }
+use { 'theniceboy/nvim-deus'         }
+use { 'tiagovla/tokyodark.nvim'      }
+use { 'titanzero/zephyrium'          }
+use { 'tjdevries/gruvbuddy.nvim'     }
+use { 'tomasiser/vim-code-dark'      }
+use { 'w3barsi/barstrata.nvim'       }
+use { 'wuelnerdotexe/vim-enfocado'   }
 use { 'yashguptaz/calvera-dark.nvim' }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -396,10 +396,6 @@ use {
                     {
                         name = 'cmdline',
                     },
-            --         {
-            --             name = 'cmdline_history',
-            --             max_item_count = 15
-            --         }
                 }
             }),
             cmp.setup.cmdline('/', {
@@ -454,7 +450,6 @@ use {
                         end
                     }
                 },
-                { name = 'custom' },
                 { name = 'neorg' },
                 { name = 'nvim_lsp' },
                 { name = 'path' },
@@ -465,117 +460,6 @@ use {
             }
         })
 
-        -- local source = {}
-
-        -- ---Return whether this source is available in the current context or not (optional).
-        -- ---@return boolean
-        -- function source:is_available()
-        --     return true
-        -- end
-
-        -- ---Return the debug name of this source (optional).
-        -- ---@return string
-        -- function source:get_debug_name()
-        --     return 'debug name'
-        -- end
-
-        -- ---Return the keyword pattern for triggering completion (optional).
-        -- ---If this is ommited, nvim-cmp will use a default keyword pattern. See |cmp-config.completion.keyword_pattern|.
-        -- ---@return string
-        -- function source:get_keyword_pattern()
-        --     return [[\k\+]]
-        -- end
-
-        -- ---Return trigger characters for triggering completion (optional).
-        -- function source:get_trigger_characters()
-        --     return { '@' }
-        -- end
-
-        -- ---Invoke completion (required).
-        -- ---@param params cmp.SourceCompletionApiParams
-        -- ---@param callback fun(response: lsp.CompletionResponse|nil)
-        -- function source:complete(params, callback)
-        --     callback({
-        --         { label = 'Text', kind = 1 },
-        --         { label = 'Method', kind = 2 },
-        --         { label = 'Function', kind = 3 },
-        --         { label = 'Constructor', kind = 4 },
-        --         { label = 'Field', kind = 5 },
-        --         { label = 'Variable', kind = 6 },
-        --         { label = 'Class', kind = 7 },
-        --         { label = 'Interface', kind = 8 },
-        --         { label = 'Module', kind = 9 },
-        --         { label = 'Property', kind = 10 },
-        --         { label = 'Unit', kind = 11 },
-        --         { label = 'Value', kind = 12 },
-        --         { label = 'Enum', kind = 13 },
-        --         { label = 'Keyword', kind = 14 },
-        --         { label = 'Snippet', kind = 15 },
-        --         { label = 'Color', kind = 16 },
-        --         { label = 'File', kind = 17 },
-        --         { label = 'Reference', kind = 18 },
-        --         { label = 'Folder', kind = 19 },
-        --         { label = 'EnumMember', kind = 20 },
-        --         { label = 'Constant', kind = 21 },
-        --         { label = 'Struct', kind = 22 },
-        --         { label = 'Event', kind = 23 },
-        --         { label = 'Operator', kind = 24 },
-        --         { label = 'TypeParameter', kind = 25 },
-        --     })
-        -- end
-        -- -- vim.cmd[[
-        -- --     CmpDocumentation guifg=#1d344f guibg=#dbdbdb
-        -- --     CmpDocumentationBorder guifg=#ced5de guibg=#dbdbdb
-        -- --     CmpItemAbbr guifg=#1d344f
-        -- --     CmpItemAbbrDeprecated cterm=strikethrough gui=strikethrough guifg=#2e537d
-        -- --     CmpItemAbbrMatch guifg=#485e7d
-        -- --     CmpItemAbbrMatchFuzzy guifg=#485e7d
-        -- --     CmpItemKindClass links to Type
-        -- --     CmpItemKindConstant links to TSConstant
-        -- --     CmpItemKindConstructor links to Function
-        -- --     CmpItemKindDefault guifg=#485e7d
-        -- --     CmpItemKindEnum links to Constant
-        -- --     CmpItemKindEnumMember links to TSField
-        -- --     CmpItemKindEvent links to Constant
-        -- --     CmpItemKindField links to TSField
-        -- --     CmpItemKindFunction links to Function
-        -- --     CmpItemKindInterface links to Constant
-        -- --     CmpItemKindKeyword links to Identifier
-        -- --     CmpItemKindMethod links to Function
-        -- --     CmpItemKindModule links to TSNamespace
-        -- --     CmpItemKindOperator links to Operator
-        -- --     CmpItemKindProperty links to TSProperty
-        -- --     CmpItemKindReference links to Keyword
-        -- --     CmpItemKindSnippet guifg=#233f5e
-        -- --     CmpItemKindStruct links to Type
-        -- --     CmpItemKindTypeParameter links to TSField
-        -- --     CmpItemKindUnit links to Constant
-        -- --     CmpItemKindValue links to Keyword
-        -- --     CmpItemKindVariable links to TSVariable
-        -- --     CmpItemMenu links to Comment
-        -- -- ]]
-
-        -- ---Resolve completion item (optional). This is called right before the completion is about to be 
-        -- --displayed.
-        -- ---Useful for setting the text shown in the documentation window (`completion_item.documentation`).
-        -- ---@param completion_item lsp.CompletionItem
-        -- ---@param callback fun(completion_item: lsp.CompletionItem|nil)
-        -- function source:resolve(completion_item, callback)
-        --     callback(completion_item)
-        -- end
-
-        -- ---Executed after the item was selected.
-        -- ---@param completion_item lsp.CompletionItem
-        -- ---@param callback fun(completion_item: lsp.CompletionItem|nil)
-        -- function source:execute(completion_item, callback)
-        --     callback(completion_item)
-        -- end
-
-        -- function source:new()
-        --     return setmetatable({}, {__index = source})
-        -- end
-        -- ---Register your source to nvim-cmp.
-        -- require('cmp').register_source('custom', source.new())
     end,
     event = "CmdlineEnter",
     module = "cmp"
@@ -830,11 +714,11 @@ use {
     config = function()
         require('gitsigns').setup {
             signs = {
-                add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-                change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-                delete       = {hl = 'GitSignsDelete', text = '', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-                changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+                add          = { hl = 'GitSignsAdd'   , text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
+                change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+                delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+                topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+                changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
             },
             current_line_blame_formatter_opts = {
                 relative_time = true
@@ -946,6 +830,7 @@ use {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
+-- TODO:
 use {
     'Kasama/nvim-custom-diagnostic-highlight',
     config = function()
@@ -954,6 +839,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     'SmiteshP/nvim-navic',
     config = function()
@@ -969,6 +855,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     'liuchengxu/vista.vim',
     config = function()
@@ -990,7 +877,6 @@ use {
     'neovim/nvim-lspconfig',
     event = 'CursorHold',
     cond = function() return true end,
-    -- ft = { "lua", "python" }
 }
 
 use {
@@ -1156,6 +1042,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     -- BUG: references windows is very slow
     'RishabhRD/nvim-lsputils',
@@ -1176,6 +1063,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use({
     "glepnir/lspsaga.nvim",
     branch = "main",
@@ -1259,36 +1147,43 @@ use {
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'jayp0521/mason-null-ls.nvim',
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'jose-elias-alvarez/null-ls.nvim',
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'ldelossa/litee-bookmarks.nvim',
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'ldelossa/litee-calltree.nvim',
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'ldelossa/litee-filetree.nvim',
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'ldelossa/litee-symboltree.nvim',
     event = "LspAttach"
 }
 
+-- TODO:
 use {
     'ldelossa/litee.nvim',
     event = "LspAttach"
@@ -1393,11 +1288,13 @@ use {
 
 -- use 'razzmatazz/csharp-language-server'
 
+-- TODO:
 use {
     'ray-x/navigator.lua',
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     'rmagatti/goto-preview',
     config = function()
@@ -1406,6 +1303,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     'simrat39/symbols-outline.nvim',
     config = function()
@@ -1414,6 +1312,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
@@ -1423,6 +1322,7 @@ use {
     event = 'LspAttach'
 }
 
+-- TODO:
 use {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
@@ -1431,13 +1331,14 @@ use {
     end
 }
 
+-- TODO:
 use {
     'weilbith/nvim-code-action-menu',
     cmd = 'CodeActionMenu'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/DanRoscigno/nvim-markdown-grammarly
+-- TODO: https://github.com/DanRoscigno/nvim-markdown-grammarly
 use {
     'davidgranstrom/nvim-markdown-preview',
     cmd = 'MarkdownPreview'
@@ -1507,16 +1408,16 @@ use {
         -- require('nvim-treesitter')
         require('neorg').setup {
             load = {
-                ["core.highlights"] = {},
+                ["core.highlights"]              = {},
                 ["core.integrations.treesitter"] = {},
-                ["core.neorgcmd"] = {},
-                ["core.norg.completion"] = { config = { engine = 'nvim-cmp' } },
-                ["core.norg.concealer"] = {},
-                ["core.norg.esupports.hop"] = {},
-                ["core.norg.esupports.indent"] = {},
-                ["core.norg.qol.toc"] = {},
-                ["core.norg.qol.todo_items"] = {},
-                ["core.syntax"] = {}
+                ["core.neorgcmd"]                = {},
+                ["core.norg.completion"]         = { config = { engine = 'nvim-cmp' } },
+                ["core.norg.concealer"]          = {},
+                ["core.norg.esupports.hop"]      = {},
+                ["core.norg.esupports.indent"]   = {},
+                ["core.norg.qol.toc"]            = {},
+                ["core.norg.qol.todo_items"]     = {},
+                ["core.syntax"]                  = {}
             }
         }
         vim.cmd [[
@@ -1542,7 +1443,7 @@ use {
     cmd = 'TroubleToggle'
 }
 
--- use {
+-- TODO: use {
 --     'kevinhwang91/nvim-bqf',
 --     after = "nvim-lspconfig",
 --     config = function()
@@ -1677,7 +1578,7 @@ use {
 }
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use {
+-- TODO: use {
 --     'akinsho/bufferline.nvim',
 --     config = function()
 --         require("bufferline").setup {
@@ -1772,7 +1673,7 @@ use {
 -- https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/Wansmer/treesj
+-- TODO: https://github.com/Wansmer/treesj
 use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -1803,7 +1704,7 @@ use {
     module = 'nvim-treesitter'
 }
 
--- use {
+-- TODO: use {
 --     'm-demare/hlargs.nvim',
 --     after = 'nvim-treesitter',
 --     config = function()
@@ -1837,9 +1738,9 @@ use {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       TUI      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/tamton-aquib/zone.nvim
--- https://github.com/tamton-aquib/duck.nvim
--- https://github.com/Eandrju/cellular-automaton.nvim
+-- TODO: https://github.com/tamton-aquib/zone.nvim
+-- TODO: https://github.com/tamton-aquib/duck.nvim
+-- TODO: https://github.com/Eandrju/cellular-automaton.nvim
 -- use({
 --   'folke/noice.nvim',
 --   config = function()
@@ -1871,7 +1772,7 @@ use {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use 'AckslD/nvim-trevJ.lua'
+-- TODO: use 'AckslD/nvim-trevJ.lua'
 
 use {
     'AndrewRadev/inline_edit.vim',
@@ -1934,7 +1835,7 @@ use 'lewis6991/impatient.nvim'
 
 -- use 'mg979/vim-visual-multi'
 
--- https://github.com/nat-418/scamp.nvim
+-- TODO: https://github.com/nat-418/scamp.nvim
 
 use {
     'nacro90/numb.nvim',
