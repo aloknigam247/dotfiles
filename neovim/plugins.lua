@@ -1028,6 +1028,7 @@ use {
                 end
             end
         }
+        vim.cmd('LspStart')
     end
 }
 
@@ -1502,7 +1503,7 @@ use {
 use {
     'nvim-lualine/lualine.nvim',
     config = function()
-        -- local navic = require("nvim-navic")
+        local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
         --         icons_enabled = true,
@@ -1556,14 +1557,14 @@ use {
                 lualine_x = {'location'},
                 lualine_y = {},
                 lualine_z = {}
-        --     },
+            },
         -- tabline = {
         --     lualine_a = {'filename'},
         -- },
-        -- winbar = {
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-        --     }
+        winbar = {
+            lualine_b = {
+                { navic.get_location, cond = navic.is_available }
+            }
         },
         inactive_winbar = {
             lualine_a = {'filename'},
