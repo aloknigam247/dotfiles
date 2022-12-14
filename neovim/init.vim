@@ -150,11 +150,14 @@ function ColoRand()
         { 'one_monokai',                'dark',  '_' },
         { 'onebuddy',                   'dark',  '_' },
         { 'onebuddy',                   'light', '_' },
-        { 'onedarkpro',                 'dark',  '_' },
-        { 'onedarkpro',                 'dark',  '_', precmd = function() require('onedarkpro').setup({dark_theme = 'onedark_dark'}) end },
-        { 'onedarkpro',                 'light', '_' },
+        { 'onedark',                    'dark',  '_' },
+        { 'onedark_dark',               'dark',  '_' },
+        { 'onedark_vivid',              'dark',  '_' },
+        { 'onelight',                   'light', '_' },
         { 'onenord',                    'dark',  '_' },
         { 'onenord',                    'light', '_' },
+        { 'oxocarbon',                  'dark',  '_' },
+        { 'oxocarbon',                  'light', '_' },
         { 'pablo',                      'dark',  '_' },
         { 'palenight',                  'dark',  '_' },
         { 'peachpuff',                  'dark',  '_' },
@@ -184,7 +187,6 @@ function ColoRand()
         { 'vn-night',                   'dark',  '_' },
         { 'zellner',                    'light', '_' },
         { 'zenburned',                  'dark',  '_' },
-        { 'zenwritten',                 'dark',  '_' },
         { 'zephyr',                     'dark',  '_' },
         { 'zephyrium',                  'dark',  '_' },
     }
@@ -465,18 +467,43 @@ vim.diagnostic.config({
     }
 })
 
-sleeper = vim.loop.new_timer()
+sleeper = {
+    timer = vim.loop.new_timer(),
+    last = 0,
+    sleeps = {
+        { start = function() require('drop').setup({theme = "leaves"}); require('drop').show(); end, stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "snow"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "stars"}); require('drop').show(); end,  stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "xmas"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
+        { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() vim.notify("start") end,                                                stop = function() vim.notify("stop") end },
+    }
+}
 
 function resetSleeper()
-    sleeper:stop()
-
-    sleeper:start(1000, 0, function()
-        vim.notify("Sleeper done")
+    -- print("Sleeper last " .. sleeper.last)
+    sleeper.timer:stop()
+    if sleeper.last ~= 0 then
+        sleeper.sleeps[sleeper.last].stop()
     end
-    )
+
+    sleeper.timer:start(20000, 0, vim.schedule_wrap(function()
+        local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
+        sleeper.sleeps[new_sleeps].start()
+        sleeper.last = new_sleeps
+    end
+    ))
 end
 
-vim.api.nvim_create_autocmd('CursorMoved', {callback = resetSleeper})
+vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = resetSleeper})
 
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"

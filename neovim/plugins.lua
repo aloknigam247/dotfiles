@@ -315,58 +315,59 @@ use {
 -- https://github.com/folke/styler.nvim
 use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 
-use { 'Domeee/mosel.nvim'            }
-use { 'EdenEast/nightfox.nvim'       }
-use { 'LunarVim/darkplus.nvim'       }
-use { 'Mofiqul/adwaita.nvim'         }
-use { 'NLKNguyen/papercolor-theme'   }
-use { 'Shatur/neovim-ayu'            }
-use { 'Th3Whit3Wolf/one-nvim'        }
-use { 'Th3Whit3Wolf/onebuddy'        }
-use { 'Yazeed1s/oh-lucy.nvim'        }
-use { 'aca/vim-monokai-pro'          }
-use { 'atelierbram/Base2Tone-nvim'   }
-use { 'catppuccin/nvim'              }
-use { 'cpea2506/one_monokai.nvim'    }
-use { 'fenetikm/falcon'              }
-use { 'folke/tokyonight.nvim'        }
-use { 'gbprod/nord.nvim'             }
-use { 'glepnir/zephyr-nvim'          }
-use { 'jsit/toast.vim'               }
-use { 'kaiuri/nvim-juliana'          }
-use { 'kvrohit/mellow.nvim'          }
-use { 'lmburns/kimbox'               }
-use { 'luisiacc/gruvbox-baby'        }
-use { 'marko-cerovac/material.nvim'  }
-use { 'maxmx03/FluoroMachine.nvim'   }
-use { 'metalelf0/jellybeans-nvim'    }
-use { 'mhartington/oceanic-next'     }
-use { 'ntk148v/vim-horizon'          }
-use { 'nxvu699134/vn-night.nvim'     }
-use { 'olimorris/onedarkpro.nvim'    }
-use { 'projekt0n/github-nvim-theme'  }
-use { 'rafamadriz/neon'              }
-use { 'ray-x/aurora'                 }
-use { 'ray-x/starry.nvim'            }
-use { 'rebelot/kanagawa.nvim'        }
-use { 'rmehri01/onenord.nvim'        }
-use { 'rose-pine/neovim'             }
-use { 'sainnhe/edge'                 }
-use { 'sainnhe/everforest'           }
-use { 'sainnhe/sonokai'              }
-use { 'sam4llis/nvim-tundra'         }
-use { 'savq/melange'                 }
-use { 'shaunsingh/moonlight.nvim'    }
-use { 'sickill/vim-monokai'          }
-use { 'tanvirtin/monokai.nvim'       }
-use { 'theniceboy/nvim-deus'         }
-use { 'tiagovla/tokyodark.nvim'      }
-use { 'titanzero/zephyrium'          }
-use { 'tjdevries/gruvbuddy.nvim'     }
-use { 'tomasiser/vim-code-dark'      }
-use { 'w3barsi/barstrata.nvim'       }
-use { 'wuelnerdotexe/vim-enfocado'   }
-use { 'yashguptaz/calvera-dark.nvim' }
+use { 'Domeee/mosel.nvim'                }
+use { 'EdenEast/nightfox.nvim'           }
+use { 'LunarVim/darkplus.nvim'           }
+use { 'Mofiqul/adwaita.nvim'             }
+use { 'NLKNguyen/papercolor-theme'       }
+use { 'Shatur/neovim-ayu'                }
+use { 'Th3Whit3Wolf/one-nvim'            }
+use { 'Th3Whit3Wolf/onebuddy'            }
+use { 'Yazeed1s/oh-lucy.nvim'            }
+use { 'aca/vim-monokai-pro'              }
+use { 'atelierbram/Base2Tone-nvim'       }
+use { 'catppuccin/nvim'                  }
+use { 'cpea2506/one_monokai.nvim'        }
+use { 'fenetikm/falcon'                  }
+use { 'folke/tokyonight.nvim'            }
+use { 'gbprod/nord.nvim'                 }
+use { 'glepnir/zephyr-nvim'              }
+use { 'jsit/toast.vim'                   }
+use { 'kaiuri/nvim-juliana'              }
+use { 'kvrohit/mellow.nvim'              }
+use { 'lmburns/kimbox'                   }
+use { 'luisiacc/gruvbox-baby'            }
+use { 'marko-cerovac/material.nvim'      }
+use { 'maxmx03/FluoroMachine.nvim'       }
+use { 'metalelf0/jellybeans-nvim'        }
+use { 'mhartington/oceanic-next'         }
+use { 'ntk148v/vim-horizon'              }
+use { 'nxvu699134/vn-night.nvim'         }
+use { 'nyoom-engineering/oxocarbon.nvim' }
+use { 'olimorris/onedarkpro.nvim'        }
+use { 'projekt0n/github-nvim-theme'      }
+use { 'rafamadriz/neon'                  }
+use { 'ray-x/aurora'                     }
+use { 'ray-x/starry.nvim'                }
+use { 'rebelot/kanagawa.nvim'            }
+use { 'rmehri01/onenord.nvim'            }
+use { 'rose-pine/neovim'                 }
+use { 'sainnhe/edge'                     }
+use { 'sainnhe/everforest'               }
+use { 'sainnhe/sonokai'                  }
+use { 'sam4llis/nvim-tundra'             }
+use { 'savq/melange'                     }
+use { 'shaunsingh/moonlight.nvim'        }
+use { 'sickill/vim-monokai'              }
+use { 'tanvirtin/monokai.nvim'           }
+use { 'theniceboy/nvim-deus'             }
+use { 'tiagovla/tokyodark.nvim'          }
+use { 'titanzero/zephyrium'              }
+use { 'tjdevries/gruvbuddy.nvim'         }
+use { 'tomasiser/vim-code-dark'          }
+use { 'w3barsi/barstrata.nvim'           }
+use { 'wuelnerdotexe/vim-enfocado'       }
+use { 'yashguptaz/calvera-dark.nvim'     }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -707,6 +708,7 @@ use {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/akinsho/git-conflict.nvim
+-- https://github.com/cynix/vim-mergetool
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 use {
@@ -1449,6 +1451,22 @@ use {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Rooter    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+use {
+    'tamton-aquib/zone.nvim',
+    module = 'zone'
+}
+
+use {
+    'tamton-aquib/duck.nvim',
+    module = 'duck'
+}
+
+use {
+    'folke/drop.nvim',
+    module = 'drop'
+}
+-- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Sessions   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
   'rmagatti/auto-session',
@@ -1727,9 +1745,6 @@ use {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       TUI      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/tamton-aquib/zone.nvim
--- TODO: https://github.com/tamton-aquib/duck.nvim
--- TODO: https://github.com/Eandrju/cellular-automaton.nvim
 -- use({
 --   'folke/noice.nvim',
 --   config = function()
