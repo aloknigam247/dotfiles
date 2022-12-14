@@ -830,22 +830,12 @@ use {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
--- TODO:
-use {
-    'Kasama/nvim-custom-diagnostic-highlight',
-    config = function()
-        require('nvim-custom-diagnostic-highlight').setup {}
-    end,
-    event = 'LspAttach'
-}
-
--- TODO:
 use {
     'SmiteshP/nvim-navic',
     config = function()
         require('nvim-navic').setup {
             icons = vim.g.cmp_kinds,
-            highlight = false,
+            highlight = true,
             separator = "  ",
             depth_limit = 0,
             depth_limit_indicator = "..",
@@ -1069,9 +1059,7 @@ use({
     "glepnir/lspsaga.nvim",
     branch = "main",
     config = function()
-        local saga = require("lspsaga")
-
-        saga.init_lsp_saga({
+        require('lspsaga').init_lsp_saga({
             -- "single" | "double" | "rounded" | "bold" | "plus"
             border_style = "rounded",
             diagnostic_header = { " ", " ", " ", "ﴞ " },
