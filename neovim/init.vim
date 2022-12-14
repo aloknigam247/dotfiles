@@ -465,6 +465,20 @@ vim.diagnostic.config({
     }
 })
 
+sleeper = vim.loop.new_timer()
+
+function resetSleeper()
+    sleeper:stop()
+
+    sleeper:start(1000, 0, function()
+        vim.notify("Sleeper done")
+    end
+    )
+end
+
+vim.api.nvim_create_autocmd('CursorMoved', {callback = resetSleeper})
+
+
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 vim.fn.matchadd("HighlightURL", url_matcher, 1)
