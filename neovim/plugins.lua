@@ -906,7 +906,7 @@ use {
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-            vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, bufopts)
+            vim.keymap.set('n', '<leader>h', "<cmd>Lspsaga hover_doc<CR>", bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
             -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
             -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -915,10 +915,12 @@ use {
             --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             -- end, bufopts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
-            vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+            vim.keymap.set('n', '<leader>rn', "<cmd>Lspsaga rename<CR>", bufopts)
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+            vim.keymap.set('n', '[d', "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
+            vim.keymap.set('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
             vim.cmd[[
             aunmenu PopUp
             nnoremenu PopUp.Declaration\ (gD) <Cmd>lua vim.lsp.buf.declaration()<CR>
@@ -1035,48 +1037,56 @@ use {
     event = 'LspAttach'
 }
 
--- TODO:
+-- TODO:lsp_finder mapping ?
+-- TODO:peek_definition mapping ?
+-- TODO:winbar ?
 use {
-    -- BUG: references windows is very slow
-    'RishabhRD/nvim-lsputils',
-    config = function()
-        -- vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-        -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler -- using nvim-bqf
-        -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
-        -- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
-        -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
-        -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
-        -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
-        -- vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-    end,
-    event = 'LspAttach'
-}
-use {
-    'RishabhRD/popfix',
-    event = 'LspAttach'
-}
-
--- TODO:
-use({
     "glepnir/lspsaga.nvim",
     branch = "main",
     config = function()
         require('lspsaga').init_lsp_saga({
-            -- "single" | "double" | "rounded" | "bold" | "plus"
             border_style = "rounded",
+            saga_winblend = 0,
+            move_in_saga = { prev = '<C-p>',next = '<C-n>'},
             diagnostic_header = { " ", " ", " ", "ﴞ " },
+            -- preview lines above of lsp_finder
+            preview_lines_above = 0,
+            -- preview lines of lsp_finder and definition preview
+            max_preview_lines = 10,
+            -- use emoji lightbulb in default
+            code_action_icon = "💡",
+            -- if true can press number to execute the codeaction in codeaction window
+            code_action_num_shortcut = true,
+            -- same as nvim-lightbulb but async
+            code_action_lightbulb = {
+                enable = true,
+                enable_in_insert = false,
+                cache_code_action = true,
+                sign = false,
+                update_time = 150,
+                sign_priority = 20,
+                virtual_text = true,
+            },
             -- finder icons
             finder_icons = {
                 def = '  ',
                 ref = '諭 ',
                 link = '  ',
             },
+            -- finder do lsp request timeout
+            -- if your project is big enough or your server very slow
+            -- you may need to increase this value
+            finder_request_timeout = 1500,
             finder_action_keys = {
                 open = {'o', '<CR>'},
-                vsplit = 's',
-                split = 'i',
+                vsplit = 'v',
+                split = 's',
                 tabe = 't',
                 quit = {'q', '<ESC>'},
+            },
+            code_action_keys = {
+                quit = 'q',
+                exec = '<CR>',
             },
             definition_action_keys = {
                 edit = '<C-c>o',
@@ -1093,7 +1103,7 @@ use({
             -- if in_cusomt = true you must set in_enable to false
             symbol_in_winbar = {
                 in_custom = false,
-                enable = false,
+                enable = true,
                 separator = ' ',
                 show_file = true,
                 -- define how to customize filename, eg: %:., %
@@ -1119,11 +1129,16 @@ use({
             },
             -- custom lsp kind
             -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
-            custom_kind = {}
+            custom_kind = {},
+            -- if you don't use nvim-lspconfig you must pass your server name and
+            -- the related filetypes into this table
+            -- like server_filetype_map = { metals = { "sbt", "scala" } }
+            server_filetype_map = {},
         })
+
     end,
     event = 'LspAttach'
-})
+}
 
 use {
     'j-hui/fidget.nvim',
@@ -1449,7 +1464,7 @@ use {
 --     -- ft = 'qf'
 -- }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Rooter    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -1467,7 +1482,7 @@ use {
     module = 'drop'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Sessions   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
   'rmagatti/auto-session',
   config = function()
@@ -1477,7 +1492,7 @@ use {
   end
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Snippets   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
     'dcampos/nvim-snippy',
     after = 'nvim-cmp',
@@ -1744,7 +1759,7 @@ use {
     after = 'nvim-treesitter'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       TUI      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use({
 --   'folke/noice.nvim',
 --   config = function()
