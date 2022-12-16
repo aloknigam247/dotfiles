@@ -315,6 +315,7 @@ use {
 -- https://github.com/folke/styler.nvim
 use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 
+-- TODO: lazyload
 use { 'Domeee/mosel.nvim'                }
 use { 'EdenEast/nightfox.nvim'           }
 use { 'LunarVim/darkplus.nvim'           }
@@ -339,7 +340,6 @@ use { 'lmburns/kimbox'                   }
 use { 'luisiacc/gruvbox-baby'            }
 use { 'marko-cerovac/material.nvim'      }
 use { 'maxmx03/FluoroMachine.nvim'       }
-use { 'metalelf0/jellybeans-nvim'        }
 use { 'mhartington/oceanic-next'         }
 use { 'ntk148v/vim-horizon'              }
 use { 'nxvu699134/vn-night.nvim'         }
@@ -1137,45 +1137,20 @@ use {
     event = "LspAttach"
 }
 
--- TODO:
 use {
     'jayp0521/mason-null-ls.nvim',
+    config = function ()
+        local mnls = require("mason-null-ls")
+        mnls.setup({
+            automatic_setup = true
+        })
+        mnls.setup_handlers({})
+    end,
     event = "LspAttach"
 }
 
--- TODO:
 use {
     'jose-elias-alvarez/null-ls.nvim',
-    event = "LspAttach"
-}
-
--- TODO:
-use {
-    'ldelossa/litee-bookmarks.nvim',
-    event = "LspAttach"
-}
-
--- TODO:
-use {
-    'ldelossa/litee-calltree.nvim',
-    event = "LspAttach"
-}
-
--- TODO:
-use {
-    'ldelossa/litee-filetree.nvim',
-    event = "LspAttach"
-}
-
--- TODO:
-use {
-    'ldelossa/litee-symboltree.nvim',
-    event = "LspAttach"
-}
-
--- TODO:
-use {
-    'ldelossa/litee.nvim',
     event = "LspAttach"
 }
 
@@ -1369,12 +1344,21 @@ use {
 -- |----------------+---------------------------------------------------------------|
 use {
     'MattesGroeger/vim-bookmarks',
-    keys = { "bm", "ba" },
-    setup = function()
+    keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
+    config = function()
         vim.cmd[[
-        let g:bookmark_no_default_key_mappings = 1
-        nmap bm <Plug>BookmarkToggle
-        nmap ba <Plug>BookmarkShowAll
+            let g:bookmark_annotation_sign = ''
+            let g:bookmark_display_annotation = 1
+            let g:bookmark_highlight_lines = 1
+            let g:bookmark_location_list = 1
+            let g:bookmark_no_default_key_mappings = 1
+            let g:bookmark_save_per_working_dir = 1
+            let g:bookmark_sign = ''
+            nmap ba <Plug>BookmarkAnnotate
+            nmap bm <Plug>BookmarkToggle
+            nmap bn <Plug>BookmarkNext
+            nmap bp <Plug>BookmarkPrev
+            nmap bs <Plug>BookmarkShowAll
         ]]
     end
 }
@@ -1433,20 +1417,18 @@ use {
     cmd = 'TroubleToggle'
 }
 
--- TODO: use {
---     'kevinhwang91/nvim-bqf',
---     after = "nvim-lspconfig",
---     config = function()
---         require('bqf').setup({
---             auto_resize_height = true,
---             preview = {
---                 border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
---             }
---         })
---     end,
---     event = 'QuickFixCmdPre'
---     -- ft = 'qf'
--- }
+use {
+    'kevinhwang91/nvim-bqf',
+    config = function()
+        require('bqf').setup({
+            auto_resize_height = true,
+            preview = {
+                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
+            }
+        })
+    end,
+    ft = 'qf'
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- <~>

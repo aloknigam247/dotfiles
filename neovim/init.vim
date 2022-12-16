@@ -112,7 +112,6 @@ function ColoRand()
         { 'habamax',                    'dark',  '_' },
         { 'horizon',                    'dark',  '_' },
         { 'industry',                   'dark',  '_' },
-        { 'jellybeans-nvim',            'dark',  '_' },
         { 'juliana',                    'dark',  '_' },
         { 'kanagawa',                   'dark',  '_' },
         { 'kimbox',                     'dark',  '_' },
