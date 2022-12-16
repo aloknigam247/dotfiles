@@ -899,37 +899,36 @@ use {
 
         local on_attach = function(client, bufnr)
             local navic = require('nvim-navic')
-            -- Enable completion triggered by <c-x><c-o>
-            vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
             -- Mappings.
-            -- See `:help vim.lsp.*` for documentation on any of the below functions
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', '<F2>', "<cmd>Lspsaga rename<CR>", bufopts)
+            vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
             vim.keymap.set('n', '<leader>h', "<cmd>Lspsaga hover_doc<CR>", bufopts)
+            vim.keymap.set('n', '[d', "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
+            vim.keymap.set('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
             -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
             -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
             -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
             -- vim.keymap.set('n', '<space>wl', function()
             --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             -- end, bufopts)
-            vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
-            vim.keymap.set('n', '<leader>rn', "<cmd>Lspsaga rename<CR>", bufopts)
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-            vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-            vim.keymap.set('n', '[d', "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
-            vim.keymap.set('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
+
             vim.cmd[[
-            aunmenu PopUp
-            nnoremenu PopUp.Declaration\ (gD) <Cmd>lua vim.lsp.buf.declaration()<CR>
-            nnoremenu PopUp.Definition\ (gd) <Cmd>lua vim.lsp.buf.definition()<CR>
-            nnoremenu PopUp.Implementation\ (gi) <Cmd>lua vim.lsp.buf.implementation()<CR>
-            nnoremenu PopUp.References\ (gr) <Cmd>lua vim.lsp.buf.references()<CR>
-            nnoremenu PopUp.Hover\ (\\h) <Cmd>lua vim.lsp.buf.hover()<CR>
-            nnoremenu PopUp.Rename\ (\\rn) <Cmd>lua vim.lsp.buf.rename()<CR>
-            nnoremenu PopUp.Type\ Definition\ (gt) <Cmd>lua vim.lsp.buf.type_definition()<CR>
+                aunmenu PopUp
+                nnoremenu PopUp.Declaration\ \ \ \ \ \ \ \ \ \ \ \ gD <Cmd>lua vim.lsp.buf.declaration()<CR>
+                nnoremenu PopUp.Definition\ \ \ \ \ \ \ \ \ \ \ \ F12 <Cmd>lua vim.lsp.buf.definition()<CR>
+                nnoremenu PopUp.Hover\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\h <Cmd>lua vim.lsp.buf.hover()<CR>
+                nnoremenu PopUp.Implementation\ \ \ \ \ \ \ \ \ gi <Cmd>lua vim.lsp.buf.implementation()<CR>
+                nnoremenu PopUp.LSP\ Finder  <Cmd>Lspsaga lsp_finder<CR>
+                nnoremenu PopUp.References\ \ \ \ \ \ Shift\ F12 <Cmd>lua vim.lsp.buf.references()<CR>
+                nnoremenu PopUp.Rename\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2 <Cmd>lua vim.lsp.buf.rename()<CR>
+                nnoremenu PopUp.Type\ Definition\ \ \ \ \ \ \ \ gt <Cmd>lua vim.lsp.buf.type_definition()<CR>
             ]]
 
             navic.attach(client, bufnr)
@@ -1037,9 +1036,6 @@ use {
     event = 'LspAttach'
 }
 
--- TODO:lsp_finder mapping ?
--- TODO:peek_definition mapping ?
--- TODO:winbar ?
 use {
     "glepnir/lspsaga.nvim",
     branch = "main",
@@ -1067,15 +1063,11 @@ use {
                 sign_priority = 20,
                 virtual_text = true,
             },
-            -- finder icons
             finder_icons = {
                 def = '  ',
                 ref = '諭 ',
                 link = '  ',
             },
-            -- finder do lsp request timeout
-            -- if your project is big enough or your server very slow
-            -- you may need to increase this value
             finder_request_timeout = 1500,
             finder_action_keys = {
                 open = {'o', '<CR>'},
@@ -1103,13 +1095,9 @@ use {
             -- if in_cusomt = true you must set in_enable to false
             symbol_in_winbar = {
                 in_custom = false,
-                enable = true,
+                enable = false,
                 separator = ' ',
-                show_file = true,
-                -- define how to customize filename, eg: %:., %
-                -- if not set, use default value `%:t`
-                -- more information see `vim.fn.expand` or `expand`
-                -- ## only valid after set `show_file = true`
+                show_file = false,
                 file_formatter = "",
                 click_support = false,
             },
@@ -1130,12 +1118,8 @@ use {
             -- custom lsp kind
             -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
             custom_kind = {},
-            -- if you don't use nvim-lspconfig you must pass your server name and
-            -- the related filetypes into this table
-            -- like server_filetype_map = { metals = { "sbt", "scala" } }
             server_filetype_map = {},
         })
-
     end,
     event = 'LspAttach'
 }
@@ -1584,7 +1568,8 @@ use {
         -- },
         winbar = {
             lualine_b = {
-                { navic.get_location, cond = navic.is_available }
+                { navic.get_location, cond = navic.is_available },
+                -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
             }
         },
         inactive_winbar = {
