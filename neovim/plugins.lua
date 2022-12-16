@@ -316,8 +316,8 @@ use {
 use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 
 -- TODO: lazyload
-use { 'Domeee/mosel.nvim'                }
-use { 'EdenEast/nightfox.nvim'           }
+use { 'Domeee/mosel.nvim', module = 'mosel'                }
+use { 'EdenEast/nightfox.nvim', module = 'nightfox'           }
 use { 'LunarVim/darkplus.nvim'           }
 use { 'Mofiqul/adwaita.nvim'             }
 use { 'NLKNguyen/papercolor-theme'       }
@@ -326,7 +326,7 @@ use { 'Th3Whit3Wolf/one-nvim'            }
 use { 'Th3Whit3Wolf/onebuddy'            }
 use { 'Yazeed1s/oh-lucy.nvim'            }
 use { 'aca/vim-monokai-pro'              }
-use { 'atelierbram/Base2Tone-nvim'       }
+use { 'atelierbram/Base2Tone-nvim', module_pattern = 'base2tone*'        }
 use { 'catppuccin/nvim'                  }
 use { 'cpea2506/one_monokai.nvim'        }
 use { 'fenetikm/falcon'                  }
@@ -1296,9 +1296,11 @@ use {
     end
 }
 
--- TODO:
 use {
     'weilbith/nvim-code-action-menu',
+    config = function ()
+        vim.g.code_action_menu_window_border = 'rounded'
+    end,
     cmd = 'CodeActionMenu'
 }
 -- <~>
@@ -1662,7 +1664,7 @@ use {
 -- https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/Wansmer/treesj
+-- https://github.com/Wansmer/treesj
 use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -1758,14 +1760,14 @@ use {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use 'AckslD/nvim-trevJ.lua'
+-- use 'AckslD/nvim-trevJ.lua'
 
 use {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
 }
 
--- https://github.com/ElPiloto/significant.nvim -- NOTE: awesome plugin but not usage now
+-- https://github.com/ElPiloto/significant.nvim
 
 use {
     'andrewferrier/debugprint.nvim',
@@ -1811,7 +1813,7 @@ use {
 
 -- https://github.com/folke/neoconf.nvim
 
--- use 'jbyuki/instant.nvim' -- NOTE: good but no use case now
+-- use 'jbyuki/instant.nvim'
 
 use 'kwkarlwang/bufjump.nvim'
 
@@ -1821,7 +1823,7 @@ use 'lewis6991/impatient.nvim'
 
 -- use 'mg979/vim-visual-multi'
 
--- TODO: https://github.com/nat-418/scamp.nvim
+-- https://github.com/nat-418/scamp.nvim
 
 use {
     'nacro90/numb.nvim',
