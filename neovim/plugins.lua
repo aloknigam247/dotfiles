@@ -341,8 +341,8 @@ use { 'mhartington/oceanic-next',         event = 'User oceanic-next' }
 use { 'ntk148v/vim-horizon',              event = 'User horizon'      }
 use { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'     }
 use { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'    }
-use { 'olimorris/onedarkpro.nvim',        event = 'User onedark'      }
-use { 'projekt0n/github-nvim-theme',      event = 'User github-theme' }
+use { 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'   }
+use { 'projekt0n/github-nvim-theme',      event = 'User github'       }
 use { 'rafamadriz/neon',                  event = 'User neon'         }
 use { 'ray-x/aurora',                     event = 'User aurora'       }
 use { 'ray-x/starry.nvim',                event = 'User starry'       }
@@ -355,8 +355,8 @@ use { 'sainnhe/sonokai',                  event = 'User sonokai'      }
 use { 'sam4llis/nvim-tundra',             event = 'User tundra'       }
 use { 'savq/melange',                     event = 'User melange'      }
 use { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'    }
-use { 'sickill/vim-monokai',              event = 'User monokai'      }
-use { 'tanvirtin/monokai.nvim',           event = 'User monokai'      }
+use { 'sickill/vim-monokai',              event = 'User vim-monokai'  }
+use { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim' }
 use { 'theniceboy/nvim-deus',             event = 'User deus'         }
 use { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'    }
 use { 'titanzero/zephyrium',              event = 'User zephyrium'    }
@@ -877,7 +877,7 @@ use {
             }
         })
     end,
-    module = 'mason'
+    -- module = 'mason'
 }
 
 use {
@@ -1035,6 +1035,7 @@ use {
 use {
     "glepnir/lspsaga.nvim",
     branch = "main",
+    cmd = 'Lspsaga',
     config = function()
         require('lspsaga').init_lsp_saga({
             border_style = "rounded",
@@ -1116,8 +1117,7 @@ use {
             custom_kind = {},
             server_filetype_map = {},
         })
-    end,
-    event = 'LspAttach'
+    end
 }
 
 use {
@@ -1267,10 +1267,10 @@ use {
 -- TODO:
 use {
     'simrat39/symbols-outline.nvim',
+    cmd = 'SymbolsOutline',
     config = function()
         require("symbols-outline").setup()
-    end,
-    event = 'LspAttach'
+    end
 }
 
 -- TODO:
@@ -1279,8 +1279,7 @@ use {
     cmd = "IncRename",
     config = function()
         require("inc_rename").setup()
-    end,
-    event = 'LspAttach'
+    end
 }
 
 -- TODO:
@@ -1687,7 +1686,8 @@ use {
             }
         }
     end,
-    event = 'CursorHold',
+    event = 'User LazyLoad0',
+    -- event = 'CursorHold',
     module = 'nvim-treesitter'
 }
 
