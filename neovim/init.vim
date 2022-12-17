@@ -15,7 +15,7 @@
 " {{{
 lua << EOF
 require('impatient')
-
+vim.lsp.set_log_level("debug")
 vim.api.nvim_create_autocmd('UIEnter', {callback = function()
     -- vim.defer_fn(function() vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'}) end, 0)
     vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'})

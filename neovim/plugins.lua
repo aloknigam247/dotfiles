@@ -863,8 +863,7 @@ use {
 
 use {
     'neovim/nvim-lspconfig',
-    event = 'CursorHold',
-    cond = function() return true end,
+    event = 'CursorHold'
 }
 
 use {
