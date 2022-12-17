@@ -28,56 +28,56 @@ function ColoRand()
         { 'adwaita',                    'dark',  '_' },
         { 'adwaita',                    'light', '_' },
         { 'aurora',                     'dark',  '_' },
-        { 'ayu-dark',                   'dark',  '_' },
-        { 'ayu-light',                  'light', '_' },
-        { 'ayu-mirage',                 'dark',  '_' },
+        { 'ayu-dark',                   'dark',  'ayu' },
+        { 'ayu-light',                  'light', 'ayu' },
+        { 'ayu-mirage',                 'dark',  'ayu' },
         { 'barstrata',                  'dark',  '_' },
-        { 'base2tone_cave_dark',        'dark',  'base2tone_cave_dark' },
-        { 'base2tone_cave_light',       'light', 'base2tone_cave_light' },
-        { 'base2tone_desert_dark',      'dark',  'base2tone_desert_dark' },
-        { 'base2tone_desert_light',     'light', 'base2tone_desert_light' },
-        { 'base2tone_drawbridge_dark',  'dark',  'base2tone_drawbridge_dark' },
-        { 'base2tone_drawbridge_light', 'light', 'base2tone_drawbridge_light' },
-        { 'base2tone_earth_dark',       'dark',  'base2tone_earth_dark' },
-        { 'base2tone_earth_light',      'light', 'base2tone_earth_light' },
-        { 'base2tone_evening_dark',     'dark',  'base2tone_evening_dark' },
-        { 'base2tone_evening_light',    'light', 'base2tone_evening_light' },
-        { 'base2tone_field_dark',       'dark',  'base2tone_field_dark' },
-        { 'base2tone_field_light',      'light', 'base2tone_field_light' },
-        { 'base2tone_forest_dark',      'dark',  'base2tone_forest_dark' },
-        { 'base2tone_forest_light',     'light', 'base2tone_forest_light' },
-        { 'base2tone_garden_dark',      'dark',  'base2tone_garden_dark' },
-        { 'base2tone_garden_light',     'light', 'base2tone_garden_light' },
-        { 'base2tone_heath_dark',       'dark',  'base2tone_heath_dark' },
-        { 'base2tone_heath_light',      'light', 'base2tone_heath_light' },
-        { 'base2tone_lake_dark',        'dark',  'base2tone_lake_dark' },
-        { 'base2tone_lake_light',       'light', 'base2tone_lake_light' },
-        { 'base2tone_lavender_dark',    'dark',  'base2tone_lavender_dark' },
-        { 'base2tone_lavender_light',   'light', 'base2tone_lavender_light' },
-        { 'base2tone_mall_dark',        'dark',  'base2tone_mall_dark' },
-        { 'base2tone_mall_light',       'light', 'base2tone_mall_light' },
-        { 'base2tone_meadow_dark',      'dark',  'base2tone_meadow_dark' },
-        { 'base2tone_meadow_light',     'light', 'base2tone_meadow_light' },
-        { 'base2tone_morning_dark',     'dark',  'base2tone_morning_dark' },
-        { 'base2tone_morning_light',    'light', 'base2tone_morning_light' },
-        { 'base2tone_motel_light',      'light', 'base2tone_motel_light' },
-        { 'base2tone_pool_dark',        'dark',  'base2tone_pool_dark' },
-        { 'base2tone_pool_light',       'light', 'base2tone_pool_light' },
-        { 'base2tone_porch_dark',       'dark',  'base2tone_porch_dark' },
-        { 'base2tone_porch_light',      'light', 'base2tone_porch_light' },
-        { 'base2tone_sea_dark',         'dark',  'base2tone_sea_dark' },
-        { 'base2tone_sea_light',        'light', 'base2tone_sea_light' },
-        { 'base2tone_space_dark',       'dark',  'base2tone_space_dark' },
-        { 'base2tone_space_light',      'light', 'base2tone_space_light' },
-        { 'base2tone_suburb_dark',      'dark',  'base2tone_suburb_dark' },
-        { 'base2tone_suburb_light',     'light', 'base2tone_suburb_light' },
+        { 'base2tone_cave_dark',        'dark',  'base2tone' },
+        { 'base2tone_cave_light',       'light', 'base2tone' },
+        { 'base2tone_desert_dark',      'dark',  'base2tone' },
+        { 'base2tone_desert_light',     'light', 'base2tone' },
+        { 'base2tone_drawbridge_dark',  'dark',  'base2tone' },
+        { 'base2tone_drawbridge_light', 'light', 'base2tone' },
+        { 'base2tone_earth_dark',       'dark',  'base2tone' },
+        { 'base2tone_earth_light',      'light', 'base2tone' },
+        { 'base2tone_evening_dark',     'dark',  'base2tone' },
+        { 'base2tone_evening_light',    'light', 'base2tone' },
+        { 'base2tone_field_dark',       'dark',  'base2tone' },
+        { 'base2tone_field_light',      'light', 'base2tone' },
+        { 'base2tone_forest_dark',      'dark',  'base2tone' },
+        { 'base2tone_forest_light',     'light', 'base2tone' },
+        { 'base2tone_garden_dark',      'dark',  'base2tone' },
+        { 'base2tone_garden_light',     'light', 'base2tone' },
+        { 'base2tone_heath_dark',       'dark',  'base2tone' },
+        { 'base2tone_heath_light',      'light', 'base2tone' },
+        { 'base2tone_lake_dark',        'dark',  'base2tone' },
+        { 'base2tone_lake_light',       'light', 'base2tone' },
+        { 'base2tone_lavender_dark',    'dark',  'base2tone' },
+        { 'base2tone_lavender_light',   'light', 'base2tone' },
+        { 'base2tone_mall_dark',        'dark',  'base2tone' },
+        { 'base2tone_mall_light',       'light', 'base2tone' },
+        { 'base2tone_meadow_dark',      'dark',  'base2tone' },
+        { 'base2tone_meadow_light',     'light', 'base2tone' },
+        { 'base2tone_morning_dark',     'dark',  'base2tone' },
+        { 'base2tone_morning_light',    'light', 'base2tone' },
+        { 'base2tone_motel_light',      'light', 'base2tone' },
+        { 'base2tone_pool_dark',        'dark',  'base2tone' },
+        { 'base2tone_pool_light',       'light', 'base2tone' },
+        { 'base2tone_porch_dark',       'dark',  'base2tone' },
+        { 'base2tone_porch_light',      'light', 'base2tone' },
+        { 'base2tone_sea_dark',         'dark',  'base2tone' },
+        { 'base2tone_sea_light',        'light', 'base2tone' },
+        { 'base2tone_space_dark',       'dark',  'base2tone' },
+        { 'base2tone_space_light',      'light', 'base2tone' },
+        { 'base2tone_suburb_dark',      'dark',  'base2tone' },
+        { 'base2tone_suburb_light',     'light', 'base2tone' },
         { 'blue',                       'dark',  '_' },
         { 'calvera',                    'dark',  '_' },
         { 'carbonfox',                  'dark',  'nightfox' },
-        { 'catppuccin-frappe',          'dark',  '_' },
-        { 'catppuccin-latte',           'dark',  '_' },
-        { 'catppuccin-macchiato',       'dark',  '_' },
-        { 'catppuccin-mocha',           'dark',  '_' },
+        { 'catppuccin-frappe',          'dark',  'catppuccin' },
+        { 'catppuccin-latte',           'dark',  'catppuccin' },
+        { 'catppuccin-macchiato',       'dark',  'catppuccin' },
+        { 'catppuccin-mocha',           'dark',  'catppuccin' },
         { 'codedark',                   'dark',  '_' },
         { 'darkblue',                   'dark',  '_' },
         { 'darker',                     'dark',  '_' },
@@ -104,11 +104,9 @@ function ColoRand()
         { 'everforest',                 'light', '_' },
         { 'falcon',                     'dark',  '_' },
         { 'fluoromachine',              'dark',  '_' },
-        { 'github_dark',                'dark',  '_' },
-        { 'github_light',               'light', '_' },
+        { 'github_dark',                'dark',  'github' },
+        { 'github_light',               'light', 'github' },
         { 'gruvbox-baby',               'dark',  '_' },
-        { 'gruvbuddy',                  'dark',  '_' },
-        { 'gruvbuddy',                  'light', '_' },
         { 'habamax',                    'dark',  '_' },
         { 'horizon',                    'dark',  '_' },
         { 'industry',                   'dark',  '_' },
@@ -133,7 +131,7 @@ function ColoRand()
         { 'monokai_pro',                'dark',  '_' },
         { 'moonlight',                  'light', '_' },
         { 'morning',                    'light', '_' },
-        { 'mosel',                      'dark',  'mosel' },
+        { 'mosel',                      'dark',  '_' },
         { 'murphy',                     'dark',  '_' },
         { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'dark' end },
         { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'default' end },
@@ -144,14 +142,12 @@ function ColoRand()
         { 'nordfox',                    'dark',  'nightfox' },
         { 'oceanic',                    'dark',  '_' },
         { 'oh-lucy',                    'dark',  '_' },
-        { 'oh-lucy-evening',            'dark',  '_' },
+        { 'oh-lucy-evening',            'dark',  'oh-lucy' },
         { 'one-nvim',                   'dark',  '_' },
         { 'one_monokai',                'dark',  '_' },
-        { 'onebuddy',                   'dark',  '_' },
-        { 'onebuddy',                   'light', '_' },
-        { 'onedark',                    'dark',  '_' },
-        { 'onedark_dark',               'dark',  '_' },
-        { 'onedark_vivid',              'dark',  '_' },
+        { 'onedark',                    'dark',  'onedarkpro' },
+        { 'onedark_dark',               'dark',  'onedarkpro' },
+        { 'onedark_vivid',              'dark',  'onedarkpro' },
         { 'onelight',                   'light', '_' },
         { 'onenord',                    'dark',  '_' },
         { 'onenord',                    'light', '_' },
@@ -201,8 +197,11 @@ function ColoRand()
     if (precmd) then
         precmd()
     end
-    if (module ~= '_') then
-        require(module)
+    if (module == '_') then
+        vim.api.nvim_exec_autocmds('User', {pattern = scheme})
+    else
+        -- require(module)
+        vim.api.nvim_exec_autocmds('User', {pattern = module})
     end
     vim.cmd.colorscheme(scheme)
     vim.g.ColoRand = scheme
@@ -210,7 +209,7 @@ function ColoRand()
 end
 
 vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
--- vim.api.nvim_create_autocmd('UIEnter', {callback = ColoRand})
+vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
 
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -300,7 +299,7 @@ setglobal bomb                        " Keep the BOM file marker
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-ColoRand
+" ColoRand
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
 " set background=light         " Select appropriate colors for dark or light

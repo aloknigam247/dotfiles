@@ -313,61 +313,57 @@ use {
 
 -- https://github.com/lifepillar/vim-colortemplate
 -- https://github.com/folke/styler.nvim
-use 'tjdevries/colorbuddy.vim' -- onebuddy gruvbuddy
 
--- TODO: lazyload
-use { 'Domeee/mosel.nvim', module = 'mosel'                }
-use { 'EdenEast/nightfox.nvim', module = 'nightfox'           }
-use { 'LunarVim/darkplus.nvim'           }
-use { 'Mofiqul/adwaita.nvim'             }
-use { 'NLKNguyen/papercolor-theme'       }
-use { 'Shatur/neovim-ayu'                }
-use { 'Th3Whit3Wolf/one-nvim'            }
-use { 'Th3Whit3Wolf/onebuddy'            }
-use { 'Yazeed1s/oh-lucy.nvim'            }
-use { 'aca/vim-monokai-pro'              }
-use { 'atelierbram/Base2Tone-nvim', module_pattern = 'base2tone*'        }
-use { 'catppuccin/nvim'                  }
-use { 'cpea2506/one_monokai.nvim'        }
-use { 'fenetikm/falcon'                  }
-use { 'folke/tokyonight.nvim'            }
-use { 'gbprod/nord.nvim'                 }
-use { 'glepnir/zephyr-nvim'              }
-use { 'jsit/toast.vim'                   }
-use { 'kaiuri/nvim-juliana'              }
-use { 'kvrohit/mellow.nvim'              }
-use { 'lmburns/kimbox'                   }
-use { 'luisiacc/gruvbox-baby'            }
-use { 'marko-cerovac/material.nvim'      }
-use { 'maxmx03/FluoroMachine.nvim'       }
-use { 'mhartington/oceanic-next'         }
-use { 'ntk148v/vim-horizon'              }
-use { 'nxvu699134/vn-night.nvim'         }
-use { 'nyoom-engineering/oxocarbon.nvim' }
-use { 'olimorris/onedarkpro.nvim'        }
-use { 'projekt0n/github-nvim-theme'      }
-use { 'rafamadriz/neon'                  }
-use { 'ray-x/aurora'                     }
-use { 'ray-x/starry.nvim'                }
-use { 'rebelot/kanagawa.nvim'            }
-use { 'rmehri01/onenord.nvim'            }
-use { 'rose-pine/neovim'                 }
-use { 'sainnhe/edge'                     }
-use { 'sainnhe/everforest'               }
-use { 'sainnhe/sonokai'                  }
-use { 'sam4llis/nvim-tundra'             }
-use { 'savq/melange'                     }
-use { 'shaunsingh/moonlight.nvim'        }
-use { 'sickill/vim-monokai'              }
-use { 'tanvirtin/monokai.nvim'           }
-use { 'theniceboy/nvim-deus'             }
-use { 'tiagovla/tokyodark.nvim'          }
-use { 'titanzero/zephyrium'              }
-use { 'tjdevries/gruvbuddy.nvim'         }
-use { 'tomasiser/vim-code-dark'          }
-use { 'w3barsi/barstrata.nvim'           }
-use { 'wuelnerdotexe/vim-enfocado'       }
-use { 'yashguptaz/calvera-dark.nvim'     }
+use { 'Domeee/mosel.nvim', event = 'User mosel'                }
+use { 'EdenEast/nightfox.nvim', event = 'User nightfox'           }
+use { 'LunarVim/darkplus.nvim', event = 'User darkplus'           }
+use { 'Mofiqul/adwaita.nvim', event = 'User adwaita'             }
+use { 'NLKNguyen/papercolor-theme', event = 'User PaperColor'       }
+use { 'Shatur/neovim-ayu', event = 'User ayu'                }
+use { 'Th3Whit3Wolf/one-nvim', event = 'User one-nvim'            }
+use { 'Yazeed1s/oh-lucy.nvim', event = 'User oh-lucy'            }
+use { 'aca/vim-monokai-pro', event = 'User monokai_pro'              }
+use { 'atelierbram/Base2Tone-nvim', event = 'User base2tone'        }
+use { 'catppuccin/nvim', event = 'User catppuccin'                  }
+use { 'cpea2506/one_monokai.nvim', event = 'User one_monokai'        }
+use { 'fenetikm/falcon', event = 'User falcon'                  }
+use { 'folke/tokyonight.nvim', event = 'User tokyonight'            }
+use { 'gbprod/nord.nvim', event = 'User nord'                 }
+use { 'glepnir/zephyr-nvim', event = 'User zephyr'              }
+use { 'jsit/toast.vim', event = 'User toast'                   }
+use { 'kaiuri/nvim-juliana', event = 'User juliana'              }
+use { 'kvrohit/mellow.nvim', event = 'User mellow'              }
+use { 'lmburns/kimbox', event = 'User kimbox'                   }
+use { 'luisiacc/gruvbox-baby', event = 'User gruvbox-baby'            }
+use { 'marko-cerovac/material.nvim', event = 'User material'      }
+use { 'maxmx03/FluoroMachine.nvim', event = 'User fluromachine'       }
+use { 'mhartington/oceanic-next', event = 'User oceanic-next'         }
+use { 'ntk148v/vim-horizon', event = 'User horizon'              }
+use { 'nxvu699134/vn-night.nvim', event = 'User vn-night'         }
+use { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon' }
+use { 'olimorris/onedarkpro.nvim', event = 'User onedark'        }
+use { 'projekt0n/github-nvim-theme', event = 'User github-theme'      }
+use { 'rafamadriz/neon', event = 'User neon'                  }
+use { 'ray-x/aurora', event = 'User aurora'                     }
+use { 'ray-x/starry.nvim', event = 'User starry'                }
+use { 'rebelot/kanagawa.nvim', event = 'User kanagawa'            }
+use { 'rmehri01/onenord.nvim', event = 'User onenord'            }
+use { 'rose-pine/neovim', event = 'User rose-pine'                 }
+use { 'sainnhe/edge', event = 'User edge'                     }
+use { 'sainnhe/everforest', event = 'User everforest'               }
+use { 'sainnhe/sonokai', event = 'User sonokai'                  }
+use { 'sam4llis/nvim-tundra', event = 'User tundra'             }
+use { 'savq/melange', event = 'User melange'                     }
+use { 'shaunsingh/moonlight.nvim', event = 'User moonlight'        }
+use { 'sickill/vim-monokai', event = 'User monokai'              }
+use { 'tanvirtin/monokai.nvim', event = 'User monokai'           }
+use { 'theniceboy/nvim-deus', event = 'User deus'             }
+use { 'tiagovla/tokyodark.nvim', event = 'User tokyodark'          }
+use { 'titanzero/zephyrium', event = 'User zephyrium'              }
+use { 'tomasiser/vim-code-dark', event = 'User codedark'          }
+use { 'w3barsi/barstrata.nvim', event = 'User barstrata'           }
+use { 'wuelnerdotexe/vim-enfocado', event = 'User enfocado'       }
+use { 'yashguptaz/calvera-dark.nvim', event = 'User calvera'     }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 use {
@@ -1802,7 +1798,7 @@ use {
     keys = { "<Leader>dp", "<Leader>dP", "<Leader>dv", "<Leader>dV", }
 }
 
-use 'cbochs/portal.nvim'
+-- use 'cbochs/portal.nvim'
 
 -- use 'chipsenkbeil/distant.nvim'
 
