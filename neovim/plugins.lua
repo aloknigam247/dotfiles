@@ -212,7 +212,7 @@ use {
            hi LspReferenceRead guibg = #427AA1
        ]]
     end,
-    event = 'CursorHold'
+    event = 'CursorMoved'
 }
 
 -- use 'azabiong/vim-highlighter'
@@ -565,23 +565,23 @@ use {
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/jayp0521/mason-nvim-dap.nvim
-use {
-    'jbyuki/one-small-step-for-vimkind',
-    config = function()
-        local dap = require"dap"
-        dap.configurations.lua = {
-            {
-                type = 'nlua',
-                request = 'attach',
-                name = "Attach to running Neovim instance",
-            }
-        }
+-- use {
+--     'jbyuki/one-small-step-for-vimkind',
+--     config = function()
+--         local dap = require"dap"
+--         dap.configurations.lua = {
+--             {
+--                 type = 'nlua',
+--                 request = 'attach',
+--                 name = "Attach to running Neovim instance",
+--             }
+--         }
 
-        dap.adapters.nlua = function(callback, config)
-            callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
-        end
-    end
-}
+--         dap.adapters.nlua = function(callback, config)
+--             callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+--         end
+--     end
+-- }
 -- https://github.com/nvim-telescope/telescope-vimspector.nvim
 -- https://github.com/puremourning/vimspector
 -- https://github.com/sakhnik/nvim-gdb
@@ -589,22 +589,22 @@ use {
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
-use {
-    'mfussenegger/nvim-dap',
-    config = function()
-        vim.cmd[[
-            nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
-            nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
-            nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
-            nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
-            nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
-            nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-            nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-            nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
-            nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
-        ]]
-    end
-}
+-- use {
+--     'mfussenegger/nvim-dap',
+--     config = function()
+--         vim.cmd[[
+--             nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+--             nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
+--             nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
+--             nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
+--             nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+--             nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+--             nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+--             nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
+--             nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+--         ]]
+--     end
+-- }
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
@@ -810,17 +810,17 @@ use {
             }
         })
     end,
-    event = 'CursorHold'
+    module = 'nvim-material-icon'
 }
 
 use {
     'kyazdani42/nvim-web-devicons',
-    after = "nvim-material-icon",
     config = function()
         require'nvim-web-devicons'.setup({
             override = require('nvim-material-icon').get_icons()
         })
-    end
+    end,
+    module = 'nvim-web-devicons'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
