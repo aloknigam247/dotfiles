@@ -498,13 +498,12 @@ sleeper = {
 }
 
 function resetSleeper()
-    -- print("Sleeper last " .. sleeper.last)
     sleeper.timer:stop()
     if sleeper.last ~= 0 then
         sleeper.sleeps[sleeper.last].stop()
     end
 
-    sleeper.timer:start(20000, 0, vim.schedule_wrap(function()
+    sleeper.timer:start(50000, 0, vim.schedule_wrap(function()
         local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
         sleeper.sleeps[new_sleeps].start()
         sleeper.last = new_sleeps
