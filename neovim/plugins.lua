@@ -491,6 +491,7 @@ use {
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 -- Abstract-IDE dap configs
 -- --------------------------
 -- -- telescope-dap.nvim
@@ -568,28 +569,16 @@ use {
     'jbyuki/one-small-step-for-vimkind',
     config = function()
         local dap = require"dap"
-        dap.configurations.lua = { 
-            { 
-                type = 'nlua', 
+        dap.configurations.lua = {
+            {
+                type = 'nlua',
                 request = 'attach',
                 name = "Attach to running Neovim instance",
-                host = function()
-                    local value = vim.fn.input('Host [127.0.0.1]: ')
-                    if value ~= "" then
-                        return value
-                    end
-                    return '127.0.0.1'
-                end,
-                port = function()
-                    local val = tonumber(vim.fn.input('Port: '))
-                    assert(val, "Please provide a port number")
-                    return val
-                end,
             }
         }
 
         dap.adapters.nlua = function(callback, config)
-            callback({ type = 'server', host = config.host, port = config.port })
+            callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
         end
     end
 }
@@ -600,7 +589,22 @@ use {
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
-use 'mfussenegger/nvim-dap'
+use {
+    'mfussenegger/nvim-dap',
+    config = function()
+        vim.cmd[[
+            nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+            nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
+            nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
+            nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
+            nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+            nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+            nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+            nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
+            nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+        ]]
+    end
+}
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
@@ -749,29 +753,30 @@ use {
             current_line_blame_formatter_opts = {
                 relative_time = true
             },
-            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`'
+            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`',
+            on_attach = function (bufnr)
+                local gs = package.loaded.gitsigns
+
+                local function map(mode, l, r, opts)
+                    opts = opts or {}
+                    opts.buffer = bufnr
+                    vim.keymap.set(mode, l, r, opts)
+                end
+
+                -- Navigation
+                map('n', ']c', function()
+                    if vim.wo.diff then return ']c' end
+                    vim.schedule(function() gs.next_hunk() end)
+                    return '<Ignore>'
+                end, {expr=true})
+
+                map('n', '[c', function()
+                    if vim.wo.diff then return '[c' end
+                    vim.schedule(function() gs.prev_hunk() end)
+                    return '<Ignore>'
+                end, {expr=true})
+            end
         }
-
-        -- Navigation
-        local gs = package.loaded.gitsigns
-
-        local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-        end
-
-        map('n', ']c', function()
-            if vim.wo.diff then return ']c' end
-            vim.schedule(function() gs.next_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
-
-        map('n', '[c', function()
-            if vim.wo.diff then return '[c' end
-            vim.schedule(function() gs.prev_hunk() end)
-            return '<Ignore>'
-        end, {expr=true})
     end,
     event = 'CursorHold'
 }
@@ -856,38 +861,38 @@ use {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
--- use {
---     'SmiteshP/nvim-navic',
---     config = function()
---         require('nvim-navic').setup {
---             icons = vim.g.cmp_kinds,
---             highlight = true,
---             separator = "  ",
---             depth_limit = 0,
---             depth_limit_indicator = "..",
---             safe_output = true
---         }
---     end,
---     event = 'LspAttach'
--- }
+use {
+    'SmiteshP/nvim-navic',
+    config = function()
+        require('nvim-navic').setup {
+            icons = vim.g.cmp_kinds,
+            highlight = true,
+            separator = "  ",
+            depth_limit = 0,
+            depth_limit_indicator = "..",
+            safe_output = true
+        }
+    end,
+    event = 'LspAttach'
+}
 
--- -- TODO:
--- use {
---     'liuchengxu/vista.vim',
---     config = function()
---         vim.cmd[[
---         let g:vista_default_executive = 'nvim_lsp'
---         let g:vista_icon_indent = ["╰─ ", "├─ "]
---         let g:vista#renderer#icons = {
---             \   "constant": "",
---             \   "class": "",
---             \   "function": "",
---             \   "variable": "",
---             \  }
---         ]]
---     end,
---     cmd = 'Vista'
--- }
+-- TODO:
+use {
+    'liuchengxu/vista.vim',
+    config = function()
+        vim.cmd[[
+        let g:vista_default_executive = 'nvim_lsp'
+        let g:vista_icon_indent = ["╰─ ", "├─ "]
+        let g:vista#renderer#icons = {
+            \   "constant": "",
+            \   "class": "",
+            \   "function": "",
+            \   "variable": "",
+            \  }
+        ]]
+    end,
+    cmd = 'Vista'
+}
 
 use {
     'neovim/nvim-lspconfig',
@@ -904,7 +909,7 @@ use {
             }
         })
     end,
-    -- module = 'mason'
+    module = 'mason'
 }
 
 use {
@@ -913,427 +918,427 @@ use {
     config = function()
         local mason_lspconfig = require('mason-lspconfig')
         mason_lspconfig.setup()
---         -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
---         local opts = { noremap=true, silent=true }
---         -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
---         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
---         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
---         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+        -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
+        local opts = { noremap=true, silent=true }
+        -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+        -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
---         local on_attach = function(client, bufnr)
---             local navic = require('nvim-navic')
---             -- Mappings.
---             local bufopts = { noremap=true, silent=true, buffer=bufnr }
---             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
---             vim.keymap.set('n', '<F2>', "<cmd>Lspsaga rename<CR>", bufopts)
---             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
---             vim.keymap.set('n', '<leader>h', "<cmd>Lspsaga hover_doc<CR>", bufopts)
---             vim.keymap.set('n', '[d', "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
---             vim.keymap.set('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
---             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
---             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
---             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
---             -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
---             -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
---             -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
---             -- vim.keymap.set('n', '<space>wl', function()
---             --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
---             -- end, bufopts)
---             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
---             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+        local on_attach = function(client, bufnr)
+            local navic = require('nvim-navic')
+            -- Mappings.
+            local bufopts = { noremap=true, silent=true, buffer=bufnr }
+            vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', '<F2>', "<cmd>Lspsaga rename<CR>", bufopts)
+            vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
+            vim.keymap.set('n', '<leader>h', "<cmd>Lspsaga hover_doc<CR>", bufopts)
+            vim.keymap.set('n', '[d', "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
+            vim.keymap.set('n', ']d', "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
+            -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+            -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+            -- vim.keymap.set('n', '<space>wl', function()
+            --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            -- end, bufopts)
+            -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+            -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
---             vim.cmd[[
---                 aunmenu PopUp
---                 nnoremenu PopUp.Declaration\ \ \ \ \ \ \ \ \ \ \ \ gD <Cmd>lua vim.lsp.buf.declaration()<CR>
---                 nnoremenu PopUp.Definition\ \ \ \ \ \ \ \ \ \ \ \ F12 <Cmd>lua vim.lsp.buf.definition()<CR>
---                 nnoremenu PopUp.Hover\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\h <Cmd>lua vim.lsp.buf.hover()<CR>
---                 nnoremenu PopUp.Implementation\ \ \ \ \ \ \ \ \ gi <Cmd>lua vim.lsp.buf.implementation()<CR>
---                 nnoremenu PopUp.LSP\ Finder  <Cmd>Lspsaga lsp_finder<CR>
---                 nnoremenu PopUp.References\ \ \ \ \ \ Shift\ F12 <Cmd>lua vim.lsp.buf.references()<CR>
---                 nnoremenu PopUp.Rename\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2 <Cmd>lua vim.lsp.buf.rename()<CR>
---                 nnoremenu PopUp.Type\ Definition\ \ \ \ \ \ \ \ gt <Cmd>lua vim.lsp.buf.type_definition()<CR>
---             ]]
+            vim.cmd[[
+                aunmenu PopUp
+                nnoremenu PopUp.Declaration\ \ \ \ \ \ \ \ \ \ \ \ gD <Cmd>lua vim.lsp.buf.declaration()<CR>
+                nnoremenu PopUp.Definition\ \ \ \ \ \ \ \ \ \ \ \ F12 <Cmd>lua vim.lsp.buf.definition()<CR>
+                nnoremenu PopUp.Hover\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\h <Cmd>lua vim.lsp.buf.hover()<CR>
+                nnoremenu PopUp.Implementation\ \ \ \ \ \ \ \ \ gi <Cmd>lua vim.lsp.buf.implementation()<CR>
+                nnoremenu PopUp.LSP\ Finder  <Cmd>Lspsaga lsp_finder<CR>
+                nnoremenu PopUp.References\ \ \ \ \ \ Shift\ F12 <Cmd>lua vim.lsp.buf.references()<CR>
+                nnoremenu PopUp.Rename\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2 <Cmd>lua vim.lsp.buf.rename()<CR>
+                nnoremenu PopUp.Type\ Definition\ \ \ \ \ \ \ \ gt <Cmd>lua vim.lsp.buf.type_definition()<CR>
+            ]]
 
---             navic.attach(client, bufnr)
---         end
+            navic.attach(client, bufnr)
+        end
 
---         -- LSP settings (for overriding per client)
---         local handlers =  {
---             ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
---             -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
---         }
+        -- LSP settings (for overriding per client)
+        local handlers =  {
+            ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
+            -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
+        }
 
---         -- Add additional capabilities supported by nvim-cmp
---         -- -- Gets a new ClientCapabilities object describing the LSP client
---         -- -- capabilities.
---         -- local capabilities = vim.lsp.protocol.make_client_capabilities()
---         -- capabilities.textDocument.completion.completionItem = {
---         --     documentationFormat = {
---         --         "markdown",
---         --         "plaintext",
---         --     },
---         --     snippetSupport = true,
---         --     preselectSupport = true,
---         --     insertReplaceSupport = true,
---         --     labelDetailsSupport = true,
---         --     deprecatedSupport = true,
---         --     commitCharactersSupport = true,
---         --     tagSupport = {
---         --         valueSet = { 1 },
---         --     },
---         --     resolveSupport = {
---         --         properties = {
---         --             "documentation",
---         --             "detail",
---         --             "additionalTextEdits",
---         --         },
---         --     },
---         -- }
---         local capabilities = vim.lsp.protocol.make_client_capabilities()
---         -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        -- Add additional capabilities supported by nvim-cmp
+        -- -- Gets a new ClientCapabilities object describing the LSP client
+        -- -- capabilities.
+        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+        -- capabilities.textDocument.completion.completionItem = {
+        --     documentationFormat = {
+        --         "markdown",
+        --         "plaintext",
+        --     },
+        --     snippetSupport = true,
+        --     preselectSupport = true,
+        --     insertReplaceSupport = true,
+        --     labelDetailsSupport = true,
+        --     deprecatedSupport = true,
+        --     commitCharactersSupport = true,
+        --     tagSupport = {
+        --         valueSet = { 1 },
+        --     },
+        --     resolveSupport = {
+        --         properties = {
+        --             "documentation",
+        --             "detail",
+        --             "additionalTextEdits",
+        --         },
+        --     },
+        -- }
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
---                 -- if server_name == "powershell_es" then
---                 --     lspconfig.powershell_es.setup {
---                 --         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
---                 --         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
---                 --         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices" -LogPath "./powershell_es.log" -SessionDetailsPath "./powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal -EnableConsoleRepl'},
---                 --         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "Import-Module 'C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\PowerShellEditorServices.psd1'; Start-EditorServices -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2022.12.1' -AdditionalModules @('PowerShellEditorServices.VSCode') -BundledModulesPath 'c:\\Users\\aloknigam\\.vscode\\extensions\\ms-vscode.powershell-2022.12.1\\modules' -EnableConsoleRepl -LogLevel 'Normal' -LogPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\logs\\1671314645-cea5c434-0147-4205-b2be-5907f5a8b7de1671314642966\\EditorServices.log' -SessionDetailsPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\sessions\\PSES-VSCode-39524-314832.json' -FeatureFlags @() -Stdio"},
---                 --         -- bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
---                 --         capabilities = capabilities,
---                 --         -- root_dir = function() return 'C:/Users/aloknigam/learn/powershell' end,
---                 --         handlers = handlers,
---                 --         on_attach = on_attach
---                 --     }
---                 -- elseif server_name == "omnisharp" then
---                 --     lspconfig.omnisharp.setup {
---                 --         cmd = { "dotnet", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll"},
---                 --         capabilities = capabilities,
---                 --         handlers = handlers,
---                 --         on_attach = on_attach,
---                 --         on_init = function(client, result)
---                 --             print(vim.inspect(client))
---                 --             print(vim.inspect(result))
---                 --         end,
---                 --         enable_ms_build_load_projects_on_demand = true,
---                 --         organize_imports_on_format = true
---                 --     }
---                 -- elseif server_name == "omnisharp_mono" then
---                 --     lspconfig.omnisharp_mono.setup {
---                 --         cmd = { "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe"},
---                 --         capabilities = capabilities,
---                 --         handlers = handlers,
---                 --         on_attach = on_attach,
---                 --         enable_ms_build_load_projects_on_demand = true,
---                 --         organize_imports_on_format = true
---                 --     }
---                 -- elseif server_name == "sumneko_lua" then
---                 --     lspconfig.sumneko_lua.setup {
---                 --         capabilities = capabilities,
---                 --         handlers = handlers,
---                 --         on_attach = on_attach,
---                 --         settings = {
---                 --             Lua = {
---                 --                 diagnostics = {
---                 --                     globals = { "bit", "vim" }
---                 --                 },
---                 --                 workspace = {
---                 --                     library = vim.api.nvim_get_runtime_file("", true)
---                 --                 }
---                 --             }
---                 --         }
---                 --     }
---                 -- else
-                    lspconfig[server_name].setup {
---                         capabilities = capabilities,
---                         -- handlers = handlers,
---                         -- on_attach = on_attach
+                if server_name == "powershell_es" then
+                    lspconfig.powershell_es.setup {
+                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
+                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
+                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices" -LogPath "./powershell_es.log" -SessionDetailsPath "./powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal -EnableConsoleRepl'},
+                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "Import-Module 'C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\PowerShellEditorServices.psd1'; Start-EditorServices -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2022.12.1' -AdditionalModules @('PowerShellEditorServices.VSCode') -BundledModulesPath 'c:\\Users\\aloknigam\\.vscode\\extensions\\ms-vscode.powershell-2022.12.1\\modules' -EnableConsoleRepl -LogLevel 'Normal' -LogPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\logs\\1671314645-cea5c434-0147-4205-b2be-5907f5a8b7de1671314642966\\EditorServices.log' -SessionDetailsPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\sessions\\PSES-VSCode-39524-314832.json' -FeatureFlags @() -Stdio"},
+                        -- bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
+                        capabilities = capabilities,
+                        -- root_dir = function() return 'C:/Users/aloknigam/learn/powershell' end,
+                        handlers = handlers,
+                        on_attach = on_attach
                     }
---                 -- end
+                elseif server_name == "omnisharp" then
+                    lspconfig.omnisharp.setup {
+                        cmd = { "dotnet", "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll"},
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach,
+                        on_init = function(client, result)
+                            print(vim.inspect(client))
+                            print(vim.inspect(result))
+                        end,
+                        enable_ms_build_load_projects_on_demand = true,
+                        organize_imports_on_format = true
+                    }
+                elseif server_name == "omnisharp_mono" then
+                    lspconfig.omnisharp_mono.setup {
+                        cmd = { "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe"},
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach,
+                        enable_ms_build_load_projects_on_demand = true,
+                        organize_imports_on_format = true
+                    }
+                elseif server_name == "sumneko_lua" then
+                    lspconfig.sumneko_lua.setup {
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach,
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { "bit", "vim" }
+                                },
+                                -- workspace = {
+                                --     library = vim.api.nvim_get_runtime_file("", true)
+                                -- }
+                            }
+                        }
+                    }
+                else
+                    lspconfig[server_name].setup {
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach
+                    }
+                end
             end
         }
---         vim.cmd('LspStart')
+        vim.cmd('LspStart')
     end
 }
 
+use {
+    'ray-x/lsp_signature.nvim',
+    config = function()
+        require "lsp_signature".setup({
+            hint_enable = false,
+            noice = false
+        })
+    end,
+    event = 'LspAttach'
+}
+
+use {
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    cmd = 'Lspsaga',
+    config = function()
+        require('lspsaga').init_lsp_saga({
+            border_style = "rounded",
+            saga_winblend = 0,
+            move_in_saga = { prev = '<C-p>',next = '<C-n>'},
+            diagnostic_header = { " ", " ", " ", "ﴞ " },
+            -- preview lines above of lsp_finder
+            preview_lines_above = 0,
+            -- preview lines of lsp_finder and definition preview
+            max_preview_lines = 10,
+            -- use emoji lightbulb in default
+            code_action_icon = "💡",
+            -- if true can press number to execute the codeaction in codeaction window
+            code_action_num_shortcut = true,
+            -- same as nvim-lightbulb but async
+            code_action_lightbulb = {
+                enable = true,
+                enable_in_insert = false,
+                cache_code_action = true,
+                sign = false,
+                update_time = 150,
+                sign_priority = 20,
+                virtual_text = true,
+            },
+            finder_icons = {
+                def = '  ',
+                ref = '諭 ',
+                link = '  ',
+            },
+            finder_request_timeout = 1500,
+            finder_action_keys = {
+                open = {'o', '<CR>'},
+                vsplit = 'v',
+                split = 's',
+                tabe = 't',
+                quit = {'q', '<ESC>'},
+            },
+            code_action_keys = {
+                quit = 'q',
+                exec = '<CR>',
+            },
+            definition_action_keys = {
+                edit = '<C-c>o',
+                vsplit = '<C-c>v',
+                split = '<C-c>i',
+                tabe = '<C-c>t',
+                quit = 'q',
+            },
+            rename_action_quit = '<C-c>',
+            rename_in_select = true,
+            -- show symbols in winbar must nightly
+            -- in_custom mean use lspsaga api to get symbols
+            -- and set it to your custom winbar or some winbar plugins.
+            -- if in_cusomt = true you must set in_enable to false
+            symbol_in_winbar = {
+                in_custom = false,
+                enable = false,
+                separator = ' ',
+                show_file = false,
+                file_formatter = "",
+                click_support = false,
+            },
+            -- show outline
+            show_outline = {
+                win_position = 'right',
+                --set special filetype win that outline window split.like NvimTree neotree
+                -- defx, db_ui
+                win_with = '',
+                win_width = 30,
+                auto_enter = true,
+                auto_preview = true,
+                virt_text = '┃',
+                jump_key = 'o',
+                -- auto refresh when change buffer
+                auto_refresh = true,
+            },
+            -- custom lsp kind
+            -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
+            custom_kind = {},
+            server_filetype_map = {},
+        })
+    end
+}
+
+use {
+    'j-hui/fidget.nvim',
+    config = function()
+        require("fidget").setup({
+            text = {
+                done = '陼',
+                spinner = 'arc'
+            }
+        })
+    end,
+    event = "LspAttach"
+}
+
+use {
+    'jayp0521/mason-null-ls.nvim',
+    config = function ()
+        local mnls = require("mason-null-ls")
+        mnls.setup({
+            automatic_setup = true
+        })
+        mnls.setup_handlers({})
+    end,
+    event = "LspAttach"
+}
+
+use {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = "LspAttach"
+}
+
 -- use {
---     'ray-x/lsp_signature.nvim',
+--     'p00f/clangd_extensions.nvim',
+--     after = 'nvim-lspconfig',
 --     config = function()
---         require "lsp_signature".setup({
---             hint_enable = false,
---             noice = false
---         })
+--         require("clangd_extensions").setup {
+--             server = {
+--                 -- options to pass to nvim-lspconfig
+--                 -- i.e. the arguments to require("lspconfig").clangd.setup({})
+--             },
+--             extensions = {
+--                 -- defaults:
+--                 -- Automatically set inlay hints (type hints)
+--                 autoSetHints = true,
+--                 -- These apply to the default ClangdSetInlayHints command
+--                 inlay_hints = {
+--                     -- Only show inlay hints for the current line
+--                     only_current_line = false,
+--                     -- Event which triggers a refersh of the inlay hints.
+--                     -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+--                     -- not that this may cause  higher CPU usage.
+--                     -- This option is only respected when only_current_line and
+--                     -- autoSetHints both are true.
+--                     only_current_line_autocmd = "CursorHold",
+--                     -- whether to show parameter hints with the inlay hints or not
+--                     show_parameter_hints = true,
+--                     -- prefix for parameter hints
+--                     parameter_hints_prefix = "<- ",
+--                     -- prefix for all the other hints (type, chaining)
+--                     other_hints_prefix = "=> ",
+--                     -- whether to align to the length of the longest line in the file
+--                     max_len_align = false,
+--                     -- padding from the left if max_len_align is true
+--                     max_len_align_padding = 1,
+--                     -- whether to align to the extreme right or not
+--                     right_align = false,
+--                     -- padding from the right if right_align is true
+--                     right_align_padding = 7,
+--                     -- The color of the hints
+--                     highlight = "Comment",
+--                     -- The highlight group priority for extmark
+--                     priority = 100,
+--                 },
+--                 ast = {
+--                     -- These are unicode, should be available in any font
+--                     role_icons = {
+--                         type = "🄣",
+--                         declaration = "🄓",
+--                         expression = "🄔",
+--                         statement = ";",
+--                         specifier = "🄢",
+--                         ["template argument"] = "🆃",
+--                     },
+--                     kind_icons = {
+--                         Compound = "🄲",
+--                         Recovery = "🅁",
+--                         TranslationUnit = "🅄",
+--                         PackExpansion = "🄿",
+--                         TemplateTypeParm = "🅃",
+--                         TemplateTemplateParm = "🅃",
+--                         TemplateParamObject = "🅃",
+--                     },
+--                     --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
+--                     role_icons = {
+--                         type = "",
+--                         declaration = "",
+--                         expression = "",
+--                         specifier = "",
+--                         statement = "",
+--                         ["template argument"] = "",
+--                     },
+
+--                     kind_icons = {
+--                         Compound = "",
+--                         Recovery = "",
+--                         TranslationUnit = "",
+--                         PackExpansion = "",
+--                         TemplateTypeParm = "",
+--                         TemplateTemplateParm = "",
+--                         TemplateParamObject = "",
+--                     }, ]]
+
+--                     highlights = {
+--                         detail = "Comment",
+--                     },
+--                 },
+--                 memory_usage = {
+--                     border = "none",
+--                 },
+--                 symbol_info = {
+--                     border = "none",
+--                 },
+--             },
+--         }
 --     end,
---     event = 'LspAttach'
+--     ft = { "c", "cpp" }
 -- }
 
--- use {
---     "glepnir/lspsaga.nvim",
---     branch = "main",
---     cmd = 'Lspsaga',
---     config = function()
---         require('lspsaga').init_lsp_saga({
---             border_style = "rounded",
---             saga_winblend = 0,
---             move_in_saga = { prev = '<C-p>',next = '<C-n>'},
---             diagnostic_header = { " ", " ", " ", "ﴞ " },
---             -- preview lines above of lsp_finder
---             preview_lines_above = 0,
---             -- preview lines of lsp_finder and definition preview
---             max_preview_lines = 10,
---             -- use emoji lightbulb in default
---             code_action_icon = "💡",
---             -- if true can press number to execute the codeaction in codeaction window
---             code_action_num_shortcut = true,
---             -- same as nvim-lightbulb but async
---             code_action_lightbulb = {
---                 enable = true,
---                 enable_in_insert = false,
---                 cache_code_action = true,
---                 sign = false,
---                 update_time = 150,
---                 sign_priority = 20,
---                 virtual_text = true,
---             },
---             finder_icons = {
---                 def = '  ',
---                 ref = '諭 ',
---                 link = '  ',
---             },
---             finder_request_timeout = 1500,
---             finder_action_keys = {
---                 open = {'o', '<CR>'},
---                 vsplit = 'v',
---                 split = 's',
---                 tabe = 't',
---                 quit = {'q', '<ESC>'},
---             },
---             code_action_keys = {
---                 quit = 'q',
---                 exec = '<CR>',
---             },
---             definition_action_keys = {
---                 edit = '<C-c>o',
---                 vsplit = '<C-c>v',
---                 split = '<C-c>i',
---                 tabe = '<C-c>t',
---                 quit = 'q',
---             },
---             rename_action_quit = '<C-c>',
---             rename_in_select = true,
---             -- show symbols in winbar must nightly
---             -- in_custom mean use lspsaga api to get symbols
---             -- and set it to your custom winbar or some winbar plugins.
---             -- if in_cusomt = true you must set in_enable to false
---             symbol_in_winbar = {
---                 in_custom = false,
---                 enable = false,
---                 separator = ' ',
---                 show_file = false,
---                 file_formatter = "",
---                 click_support = false,
---             },
---             -- show outline
---             show_outline = {
---                 win_position = 'right',
---                 --set special filetype win that outline window split.like NvimTree neotree
---                 -- defx, db_ui
---                 win_with = '',
---                 win_width = 30,
---                 auto_enter = true,
---                 auto_preview = true,
---                 virt_text = '┃',
---                 jump_key = 'o',
---                 -- auto refresh when change buffer
---                 auto_refresh = true,
---             },
---             -- custom lsp kind
---             -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
---             custom_kind = {},
---             server_filetype_map = {},
---         })
---     end
--- }
+-- use 'razzmatazz/csharp-language-server'
 
--- use {
---     'j-hui/fidget.nvim',
---     config = function()
---         require("fidget").setup({
---             text = {
---                 done = '陼',
---                 spinner = 'arc'
---             }
---         })
---     end,
---     event = "LspAttach"
--- }
+-- TODO:
+use {
+    'ray-x/navigator.lua',
+    event = 'LspAttach'
+}
 
--- use {
---     'jayp0521/mason-null-ls.nvim',
---     config = function ()
---         local mnls = require("mason-null-ls")
---         mnls.setup({
---             automatic_setup = true
---         })
---         mnls.setup_handlers({})
---     end,
---     event = "LspAttach"
--- }
+-- TODO:
+use {
+    'rmagatti/goto-preview',
+    config = function()
+        require('goto-preview').setup()
+    end,
+    event = 'LspAttach'
+}
 
--- use {
---     'jose-elias-alvarez/null-ls.nvim',
---     event = "LspAttach"
--- }
+-- TODO:
+use {
+    'simrat39/symbols-outline.nvim',
+    cmd = 'SymbolsOutline',
+    config = function()
+        require("symbols-outline").setup()
+    end
+}
 
--- -- use {
--- --     'p00f/clangd_extensions.nvim',
--- --     after = 'nvim-lspconfig',
--- --     config = function()
--- --         require("clangd_extensions").setup {
--- --             server = {
--- --                 -- options to pass to nvim-lspconfig
--- --                 -- i.e. the arguments to require("lspconfig").clangd.setup({})
--- --             },
--- --             extensions = {
--- --                 -- defaults:
--- --                 -- Automatically set inlay hints (type hints)
--- --                 autoSetHints = true,
--- --                 -- These apply to the default ClangdSetInlayHints command
--- --                 inlay_hints = {
--- --                     -- Only show inlay hints for the current line
--- --                     only_current_line = false,
--- --                     -- Event which triggers a refersh of the inlay hints.
--- --                     -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
--- --                     -- not that this may cause  higher CPU usage.
--- --                     -- This option is only respected when only_current_line and
--- --                     -- autoSetHints both are true.
--- --                     only_current_line_autocmd = "CursorHold",
--- --                     -- whether to show parameter hints with the inlay hints or not
--- --                     show_parameter_hints = true,
--- --                     -- prefix for parameter hints
--- --                     parameter_hints_prefix = "<- ",
--- --                     -- prefix for all the other hints (type, chaining)
--- --                     other_hints_prefix = "=> ",
--- --                     -- whether to align to the length of the longest line in the file
--- --                     max_len_align = false,
--- --                     -- padding from the left if max_len_align is true
--- --                     max_len_align_padding = 1,
--- --                     -- whether to align to the extreme right or not
--- --                     right_align = false,
--- --                     -- padding from the right if right_align is true
--- --                     right_align_padding = 7,
--- --                     -- The color of the hints
--- --                     highlight = "Comment",
--- --                     -- The highlight group priority for extmark
--- --                     priority = 100,
--- --                 },
--- --                 ast = {
--- --                     -- These are unicode, should be available in any font
--- --                     role_icons = {
--- --                         type = "🄣",
--- --                         declaration = "🄓",
--- --                         expression = "🄔",
--- --                         statement = ";",
--- --                         specifier = "🄢",
--- --                         ["template argument"] = "🆃",
--- --                     },
--- --                     kind_icons = {
--- --                         Compound = "🄲",
--- --                         Recovery = "🅁",
--- --                         TranslationUnit = "🅄",
--- --                         PackExpansion = "🄿",
--- --                         TemplateTypeParm = "🅃",
--- --                         TemplateTemplateParm = "🅃",
--- --                         TemplateParamObject = "🅃",
--- --                     },
--- --                     --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
--- --                     role_icons = {
--- --                         type = "",
--- --                         declaration = "",
--- --                         expression = "",
--- --                         specifier = "",
--- --                         statement = "",
--- --                         ["template argument"] = "",
--- --                     },
+-- TODO:
+use {
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    config = function()
+        require("inc_rename").setup()
+    end
+}
 
--- --                     kind_icons = {
--- --                         Compound = "",
--- --                         Recovery = "",
--- --                         TranslationUnit = "",
--- --                         PackExpansion = "",
--- --                         TemplateTypeParm = "",
--- --                         TemplateTemplateParm = "",
--- --                         TemplateParamObject = "",
--- --                     }, ]]
+-- TODO:
+use {
+    'stevearc/aerial.nvim',
+    cmd = 'AerialToggle',
+    config = function()
+        require('aerial').setup({})
+    end
+}
 
--- --                     highlights = {
--- --                         detail = "Comment",
--- --                     },
--- --                 },
--- --                 memory_usage = {
--- --                     border = "none",
--- --                 },
--- --                 symbol_info = {
--- --                     border = "none",
--- --                 },
--- --             },
--- --         }
--- --     end,
--- --     ft = { "c", "cpp" }
--- -- }
-
--- -- use 'razzmatazz/csharp-language-server'
-
--- -- TODO:
--- use {
---     'ray-x/navigator.lua',
---     event = 'LspAttach'
--- }
-
--- -- TODO:
--- use {
---     'rmagatti/goto-preview',
---     config = function()
---         require('goto-preview').setup()
---     end,
---     event = 'LspAttach'
--- }
-
--- -- TODO:
--- use {
---     'simrat39/symbols-outline.nvim',
---     cmd = 'SymbolsOutline',
---     config = function()
---         require("symbols-outline").setup()
---     end
--- }
-
--- -- TODO:
--- use {
---     "smjonas/inc-rename.nvim",
---     cmd = "IncRename",
---     config = function()
---         require("inc_rename").setup()
---     end
--- }
-
--- -- TODO:
--- use {
---     'stevearc/aerial.nvim',
---     cmd = 'AerialToggle',
---     config = function()
---         require('aerial').setup({})
---     end
--- }
-
--- use {
---     'weilbith/nvim-code-action-menu',
---     config = function ()
---         vim.g.code_action_menu_window_border = 'rounded'
---     end,
---     cmd = 'CodeActionMenu'
--- }
+use {
+    'weilbith/nvim-code-action-menu',
+    config = function ()
+        vim.g.code_action_menu_window_border = 'rounded'
+    end,
+    cmd = 'CodeActionMenu'
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: https://github.com/DanRoscigno/nvim-markdown-grammarly
