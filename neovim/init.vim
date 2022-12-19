@@ -170,7 +170,6 @@ function ColoRand()
         { 'palenight',                  'dark',  '_' },
         { 'peachpuff',                  'dark',  '_' },
         { 'quiet',                      'dark',  '_' },
-        { 'ron',                        'dark',  '_' },
         { 'rose-pine',                  'dark',  '_' },
         { 'rose-pine',                  'dark',  '_', precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
         { 'rose-pine',                  'dark',  '_', precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end },
@@ -217,7 +216,7 @@ function ColoRand()
         vim.api.nvim_exec_autocmds('User', {pattern = module})
     end
     vim.cmd.colorscheme(scheme)
-    vim.g.ColoRand = scheme
+    vim.g.ColoRand = scheme .. ':' .. bg .. ':' .. module
     vim.cmd[[highlight clear CursorLine]]
 end
 

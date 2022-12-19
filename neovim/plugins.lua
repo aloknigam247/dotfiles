@@ -6,7 +6,7 @@
  ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
-
+-- TODO: format on paste
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
@@ -564,7 +564,35 @@ use {
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/jayp0521/mason-nvim-dap.nvim
--- https://github.com/jbyuki/one-small-step-for-vimkind
+use {
+    'jbyuki/one-small-step-for-vimkind',
+    config = function()
+        local dap = require"dap"
+        dap.configurations.lua = { 
+            { 
+                type = 'nlua', 
+                request = 'attach',
+                name = "Attach to running Neovim instance",
+                host = function()
+                    local value = vim.fn.input('Host [127.0.0.1]: ')
+                    if value ~= "" then
+                        return value
+                    end
+                    return '127.0.0.1'
+                end,
+                port = function()
+                    local val = tonumber(vim.fn.input('Port: '))
+                    assert(val, "Please provide a port number")
+                    return val
+                end,
+            }
+        }
+
+        dap.adapters.nlua = function(callback, config)
+            callback({ type = 'server', host = config.host, port = config.port })
+        end
+    end
+}
 -- https://github.com/nvim-telescope/telescope-vimspector.nvim
 -- https://github.com/puremourning/vimspector
 -- https://github.com/sakhnik/nvim-gdb
@@ -572,7 +600,7 @@ use {
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
--- use 'mfussenegger/nvim-dap'
+use 'mfussenegger/nvim-dap'
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
