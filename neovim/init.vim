@@ -193,7 +193,6 @@ function ColoRand()
         { 'ukraine',                    'dark',  'starry' },
         { 'vn-night',                   'dark',  '_' },
         { 'zellner',                    'light', '_' },
-        { 'zenburned',                  'dark',  '_' },
         { 'zephyr',                     'dark',  '_' },
         { 'zephyrium',                  'dark',  '_' },
     }
