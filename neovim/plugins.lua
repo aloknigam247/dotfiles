@@ -852,9 +852,6 @@ use {
 }
 -- use 'nvim-lua/popup.nvim'
 -- <~>
--- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Lint      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use 'mfussenegger/nvim-lint'
--- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- use 'Hoffs/omnisharp-extended-lsp.nvim'
@@ -1281,7 +1278,8 @@ use {
 --             },
 --         }
 --     end,
---     ft = { "c", "cpp" }
+--     event = 'LspAttach'
+--     -- ft = { "c", "cpp" }
 -- }
 
 -- use 'razzmatazz/csharp-language-server'
