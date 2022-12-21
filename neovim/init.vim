@@ -15,6 +15,13 @@
 " {{{
 lua << EOF
 require('impatient')
+local fname = vim.fn.expand('%')
+local lazyfile = "lazyplugins.lua"
+if fname:sub(-#lazyfile) ==  lazyfile then
+    require('lazyplugins')
+end
+
+-- require("lazy").setup(plugins, opts)
 vim.lsp.set_log_level("debug")
 vim.api.nvim_create_autocmd('UIEnter', {callback = function()
     -- vim.defer_fn(function() vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'}) end, 0)
@@ -511,7 +518,6 @@ function resetSleeper()
 end
 
 vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = resetSleeper})
-
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
