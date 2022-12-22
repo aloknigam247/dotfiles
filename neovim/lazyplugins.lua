@@ -1022,7 +1022,7 @@ Plugins = {
                         capabilities = capabilities,
                         handlers = handlers,
                         on_attach = on_attach,
-                        root_dir = require('lspconfig.util').find_git_ancestor,
+                        root_dir = vim.fn.getcwd,
                         enable_ms_build_load_projects_on_demand = true,
                         organize_imports_on_format = true
                     }
