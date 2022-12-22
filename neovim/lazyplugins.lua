@@ -1061,7 +1061,7 @@ Plugins = {
         }
         vim.cmd('LspStart')
     end,
-    dependencies = 'neovim/nvim-lspconfig',
+    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' }, -- mason should come from require
     event = 'CursorHold'
 },
 
