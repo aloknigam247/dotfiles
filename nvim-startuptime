@@ -1,0 +1,80 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.126  000.126: --- NVIM STARTING ---
+000.253  000.127: event init
+000.365  000.112: early init
+011.432  011.067: locale set
+011.499  000.068: init first window
+012.144  000.644: inits 1
+012.646  000.502: window checked
+012.796  000.150: parsing arguments
+014.027  000.262  000.262: require('vim.shared')
+014.652  000.251  000.251: require('vim._meta')
+014.657  000.623  000.371: require('vim._editor')
+014.661  000.996  000.112: require('vim._init_packages')
+014.670  000.878: init lua interpreter
+014.937  000.267: expanding arguments
+014.968  000.031: inits 2
+015.456  000.488: init highlight
+015.460  000.004: waiting for UI
+019.683  004.224: done waiting for UI
+019.706  000.022: clear screen
+019.974  000.268: init default mappings
+020.009  000.035: init default autocommands
+023.060  000.126  000.126: sourcing C:\Program Files\Neovim\share\nvim\runtime\ftplugin.vim
+023.540  000.086  000.086: sourcing C:\Program Files\Neovim\share\nvim\runtime\indent.vim
+027.634  000.465  000.465: require('lazy')
+027.703  000.031  000.031: require('ffi')
+028.161  000.449  000.449: require('lazy.core.util')
+028.547  000.376  000.376: require('lazy.core.config')
+029.311  000.312  000.312: require('lazy.core.handler')
+029.325  000.769  000.458: require('lazy.core.loader')
+030.492  000.625  000.625: require('lazy.core.cache')
+030.506  001.174  000.550: require('lazy.core.plugin')
+033.847  000.541  000.541: require('lazy.core.handler.keys')
+034.199  000.202  000.202: require('lazy.core.handler.event')
+034.210  000.349  000.147: require('lazy.core.handler.ft')
+034.386  000.167  000.167: require('lazy.core.handler.cmd')
+034.798  000.203  000.203: require('vim.keymap')
+036.714  000.340  000.340: sourcing C:\Program Files\Neovim\share\nvim\runtime/filetype.lua
+037.612  000.451  000.451: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/gzip.vim
+037.865  000.038  000.038: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/health.vim
+038.139  000.105  000.105: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/man.lua
+038.372  000.069  000.069: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/nvim.lua
+038.974  000.023  000.023: sourcing C:\Users\aloknigam\AppData\Local\nvim-data/rplugin.vim
+038.997  000.467  000.444: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/rplugin.vim
+039.244  000.103  000.103: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/shada.vim
+039.460  000.043  000.043: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/spellfile.vim
+039.774  000.166  000.166: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/tarPlugin.vim
+040.093  000.158  000.158: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/tohtml.vim
+040.286  000.042  000.042: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/tutor.vim
+040.652  000.218  000.218: sourcing C:\Program Files\Neovim\share\nvim\runtime/plugin/zipPlugin.vim
+041.151  015.375  008.651: require('lazyplugins')
+050.203  007.830  007.830: sourcing C:\Users\aloknigam\AppData\Local\nvim-data\lazy\oceanic-next\colors\OceanicNext.vim
+051.908  000.023  000.023: require('vim.F')
+051.981  001.750  001.727: require('vim.diagnostic')
+052.136  028.215  003.261: sourcing C:\Users\aloknigam\AppData\Local\nvim\init.vim
+052.162  003.726: sourcing vimrc file(s)
+052.614  000.122  000.122: sourcing C:\Program Files\Neovim\share\nvim\runtime\filetype.lua
+053.385  000.156  000.156: sourcing C:\Program Files\Neovim\share\nvim\runtime\syntax\synload.vim
+053.564  000.646  000.490: sourcing C:\Program Files\Neovim\share\nvim\runtime\syntax\syntax.vim
+053.615  000.685: inits 3
+057.982  004.367: reading ShaDa
+061.949  001.705  001.705: require('vim.filetype')
+063.096  000.116  000.116: sourcing C:\Program Files\Neovim\share\nvim\runtime\ftplugin\lua.vim
+063.830  000.065  000.065: sourcing C:\Program Files\Neovim\share\nvim\runtime\ftplugin\lua.lua
+064.502  000.069  000.069: sourcing C:\Program Files\Neovim\share\nvim\runtime\indent\lua.vim
+066.461  001.382  001.382: sourcing C:\Program Files\Neovim\share\nvim\runtime\syntax\lua.vim
+066.879  005.560: opening buffers
+066.884  000.005: BufEnter autocommands
+066.888  000.004: editing files in windows
+066.975  000.086: VimEnter autocommands
+067.036  000.062: UIEnter autocommands
+082.056  010.927  010.927: sourcing C:\Program Files\Neovim\share\nvim\runtime\autoload\provider\clipboard.vim
+082.087  004.124: before starting main loop
+082.647  000.560: first screen update
+082.655  000.007: --- NVIM STARTED ---

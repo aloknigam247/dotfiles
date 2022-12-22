@@ -11,7 +11,7 @@
 LazyConfig = {
   root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
   defaults = {
-    lazy = false, -- should plugins be lazy-loaded?
+    lazy = true, -- should plugins be lazy-loaded?
     version = nil,
   },
   lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
@@ -258,7 +258,7 @@ Plugins = {
        ]]
     end,
     -- dependencies = 'nvim-treesitter', TODO:
-    event = 'CursorMoved'
+    event = 'CursorHold'
 },
 
 -- use 'azabiong/vim-highlighter'
@@ -376,7 +376,7 @@ Plugins = {
 { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'  },
 { 'marko-cerovac/material.nvim',      event = 'User material'      },
 { 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine' },
-{ 'mhartington/oceanic-next',         event = 'User oceanic-next'  },
+{ 'mhartington/oceanic-next',         event = 'User OceanicNext'   },
 { 'ntk148v/vim-horizon',              event = 'User horizon'       },
 { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'      },
 { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'     },
@@ -414,9 +414,9 @@ Plugins = {
         vim.api.nvim_set_keymap("n", "<C-t>", "<Plug>kommentary_line_default", {})
         vim.api.nvim_set_keymap("v", "<C-t>", "<Plug>kommentary_visual_default", {})
     end,
-    init = function()
-        vim.g.kommentary_create_default_mappings = false
-    end,
+    -- init = function()
+        -- vim.g.kommentary_create_default_mappings = false
+    -- end,
     keys = { "<C-t>" }
 },
 -- <~>
@@ -497,9 +497,8 @@ Plugins = {
 
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    dependencies = { "dcampos/cmp-snippy", "hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
+    dependencies = { "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
     event = { "CmdlineEnter", "InsertEnter" }
-    -- module = "cmp"
 },
 
 -- https://github.com/jameshiew/nvim-magic
@@ -643,12 +642,6 @@ Plugins = {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
-    'mrbjarksen/neo-tree-diagnostics.nvim',
-    -- after = 'neo-tree.nvim', TODO:lazyload
-    module = 'neo-tree.sources.diagnostics' -- if wanting to lazyload
-},
-
-{
     'nvim-neo-tree/neo-tree.nvim',
     cmd = 'Neotree',
     config = function()
@@ -704,7 +697,8 @@ Plugins = {
                 "filesystem"
             }
         })
-    end
+    end,
+    dependencies = 'mrbjarksen/neo-tree-diagnostics.nvim'
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -831,7 +825,6 @@ Plugins = {
             }
         })
     end,
-    -- module = 'nvim-material-icon' TODO:lazyload
 },
 
 {
@@ -841,7 +834,6 @@ Plugins = {
             override = require('nvim-material-icon').get_icons()
         })
     end,
-    -- module = 'nvim-web-devicons' TODO:lazyload
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -857,20 +849,17 @@ Plugins = {
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Libraries   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
-    'MunifTanjim/nui.nvim',
-    module = 'nui'
-},
+-- {
+--     'MunifTanjim/nui.nvim',
+-- },
 
-{
-    'kevinhwang91/promise-async',
-    module = 'promise-async'
-},
+-- {
+--     'kevinhwang91/promise-async',
+-- },
 
-{
-    'nvim-lua/plenary.nvim',
-    module = 'plenary'
-},
+-- {
+--     'nvim-lua/plenary.nvim',
+-- },
 -- use 'nvim-lua/popup.nvim'
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -926,7 +915,6 @@ Plugins = {
             }
         })
     end,
-    module = 'mason'
 },
 
 {
@@ -1072,7 +1060,7 @@ Plugins = {
         }
         vim.cmd('LspStart')
     end,
-    dependencies = 'nvim-lspconfig',
+    dependencies = 'neovim/nvim-lspconfig',
     event = 'CursorHold'
 },
 
@@ -1429,7 +1417,6 @@ Plugins = {
 
 {
     'nvim-neorg/neorg',
-    after = "nvim-treesitter",
     config = function()
         -- require('nvim-treesitter')
         require('neorg').setup {
@@ -1451,6 +1438,7 @@ Plugins = {
         au InsertLeave *.norg :Neorg toggle-concealer
         ]]
     end,
+    dependencies = 'nvim-telescope/telescope.nvim',
     ft = "norg"
 },
 
@@ -1487,17 +1475,14 @@ Plugins = {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
     'tamton-aquib/zone.nvim',
-    module = 'zone'
 },
 
 {
     'tamton-aquib/duck.nvim',
-    module = 'duck'
 },
 
 {
     'folke/drop.nvim',
-    module = 'drop'
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1513,7 +1498,6 @@ Plugins = {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
     'dcampos/nvim-snippy',
-    after = 'nvim-cmp',
     config = function()
         require('snippy').setup({
             mappings = {
@@ -1524,10 +1508,7 @@ Plugins = {
             }
         })
     end,
-    opt = true,
-    requires = { -- BUG: fix this
-        'honza/vim-snippets'
-    }
+    dependencies = 'honza/vim-snippets'
 },
 -- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/hrsh7th/vim-vsnip
@@ -1644,7 +1625,6 @@ Plugins = {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
     'crispgm/telescope-heading.nvim',
-    after = 'telescope.nvim',
     config = function()
         require('telescope').load_extension('heading')
     end,
@@ -1674,19 +1654,20 @@ Plugins = {
                 }
             },
         })
-    end
+    end,
+    dependencies = 'nvim-lua/plenary.nvim'
 },
 
 {
     'princejoogie/dir-telescope.nvim',
-    after = "telescope.nvim",
     cmd = { "FileInDirectory", "GrepInDirectory" },
     config = function()
         require("dir-telescope").setup({
             hidden = true,
             respect_gitignore = true,
         })
-    end
+    end,
+    dependencies = 'nvim-telescope/telescope.nvim',
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1745,7 +1726,6 @@ Plugins = {
     dependencies = 'p00f/nvim-ts-rainbow',
     event = 'User VeryLazy',
     -- event = 'User LazyLoad0',
-    module = 'nvim-treesitter'
 },
 
 -- TODO: use {
@@ -1809,7 +1789,6 @@ Plugins = {
         })
         vim.notify = notify
     end,
-    module = 'notify'
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>

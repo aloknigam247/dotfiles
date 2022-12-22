@@ -15,7 +15,6 @@
 " {{{
 lua << EOF
 -- require("lazy").setup(plugins, opts)
-vim.lsp.set_log_level("debug")
 vim.api.nvim_create_autocmd('UIEnter', {callback = function()
     -- vim.defer_fn(function() vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'}) end, 0)
     vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'})
@@ -372,22 +371,24 @@ map <C-e> $
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-" let g:neovide_cursor_animation_length=0.13
-let g:neovide_cursor_animation_length=0
-" let g:neovide_cursor_trail_size = 0.8
-" let g:neovide_cursor_vfx_mode = "railgun"
-" let g:neovide_cursor_vfx_particle_density = 15.0
-" let g:neovide_cursor_vfx_particle_lifetime=5
-" let g:neovide_floating_blur_amount_x = 2.0
-" let g:neovide_floating_blur_amount_y = 10.0
-let g:neovide_fullscreen = v:false
-" let g:neovide_refresh_rate = 120
-let g:neovide_remember_window_size = v:false
-let g:neovide_scroll_animation_length = 0.0
-let g:neovide_transparency=0.95
-" let g:neovide_underline_automatic_scaling = v:true
-set guifont=VictorMono_NF:h13
-map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
+if exists("g:neovide")
+    " let g:neovide_cursor_animation_length=0.13
+    let g:neovide_cursor_animation_length=0
+    " let g:neovide_cursor_trail_size = 0.8
+    " let g:neovide_cursor_vfx_mode = "railgun"
+    " let g:neovide_cursor_vfx_particle_density = 15.0
+    " let g:neovide_cursor_vfx_particle_lifetime=5
+    " let g:neovide_floating_blur_amount_x = 2.0
+    " let g:neovide_floating_blur_amount_y = 10.0
+    let g:neovide_fullscreen = v:false
+    " let g:neovide_refresh_rate = 120
+    let g:neovide_remember_window_size = v:false
+    let g:neovide_scroll_animation_length = 0.0
+    let g:neovide_transparency=0.95
+    " let g:neovide_underline_automatic_scaling = v:true
+    set guifont=VictorMono_NF:h13
+    map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
+endif
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       MISC       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -415,7 +416,8 @@ augroup END
 "   autocmd BufEnter * match OverLength /\%101v/
 " augroup END
 
-let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
+" let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
+let &shell = 'pwsh'
 let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
 let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
 let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
@@ -466,13 +468,20 @@ highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 lua << EOF
 local fname = vim.fn.expand('%')
 local lazyfile = "lazyplugins.lua"
-if fname:sub(-#lazyfile) ==  lazyfile then
+-- if fname:sub(-#lazyfile) ==  lazyfile then
     require('lazyplugins')
     ColoRand()
-else
-    require('impatient')
-    vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
-end
+    vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
+        vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
+        vim.cmd([[
+        unlet g:loaded_clipboard_provider
+        runtime autoload/provider/clipboard.vim
+        ]])
+    end})
+-- else
+--     require('impatient')
+--     vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
+-- end
 
 vim.diagnostic.config({
     float = {
