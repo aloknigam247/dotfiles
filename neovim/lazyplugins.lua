@@ -644,6 +644,7 @@ Plugins = {
 {
     'nvim-neo-tree/neo-tree.nvim',
     cmd = 'Neotree',
+    module = false,
     config = function()
         vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
         require('neo-tree').setup({
@@ -698,7 +699,7 @@ Plugins = {
             }
         })
     end,
-    dependencies = 'mrbjarksen/neo-tree-diagnostics.nvim'
+    dependencies = { 'MunifTanjim/nui.nvim', 'mrbjarksen/neo-tree-diagnostics.nvim', 'nvim-lua/plenary.nvim' }
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1185,11 +1186,7 @@ Plugins = {
         })
         mnls.setup_handlers({})
     end,
-    event = "LspAttach"
-},
-
-{
-    'jose-elias-alvarez/null-ls.nvim',
+    dependencies = 'jose-elias-alvarez/null-ls.nvim',
     event = "LspAttach"
 },
 
