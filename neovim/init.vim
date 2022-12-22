@@ -14,11 +14,12 @@
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 lua << EOF
-require('impatient')
 local fname = vim.fn.expand('%')
 local lazyfile = "lazyplugins.lua"
 if fname:sub(-#lazyfile) ==  lazyfile then
     require('lazyplugins')
+else
+    require('impatient')
 end
 
 -- require("lazy").setup(plugins, opts)
@@ -29,10 +30,10 @@ vim.api.nvim_create_autocmd('UIEnter', {callback = function()
 end})
 
 
-vim.notify = function(msg, level, opt)
-    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
-    vim.notify(msg, level, opt)
-end
+-- vim.notify = function(msg, level, opt)
+--     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+--     vim.notify(msg, level, opt)
+-- end
 
 function ColoRand()
     local colos = {
