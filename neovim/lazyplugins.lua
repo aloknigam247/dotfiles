@@ -47,7 +47,7 @@ LazyConfig = {
     throttle = 20, -- how frequently should the ui process render events
   },
   checker = {
-    enabled = true,
+    enabled = false,
     concurrency = nil, ---@type number? set to 1 to check for updates very slowly
     notify = true, -- get a notification when new updates are found
     frequency = 3600, -- check for updates every hour
@@ -292,7 +292,6 @@ Plugins = {
 
 {
     'melkster/modicator.nvim',
-    dependencies = 'nvim-lualine/lualine.nvim',
     config = function()
         local modicator = require('modicator')
         local modes = {
@@ -318,6 +317,8 @@ Plugins = {
 
         modicator.set_highlight(modes['n'])
     end,
+    dependencies = 'nvim-lualine/lualine.nvim',
+    event = 'CursorHold'
 },
 
 {
@@ -487,7 +488,6 @@ Plugins = {
                 },
                 { name = 'neorg' },
                 { name = 'nvim_lsp' },
-                { name = 'path' },
                 { name = 'snippy' }
             }),
             window = {
@@ -496,28 +496,10 @@ Plugins = {
         })
 
     end,
-    event = "CmdlineEnter"
+    -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
+    dependencies = { "dcampos/cmp-snippy", "hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
+    event = { "CmdlineEnter", "InsertEnter" }
     -- module = "cmp"
-},
-
-{
-    'dcampos/cmp-snippy',
-    -- dependencies = 'nvim-cmp' TODO:lazy
-},
-
-{
-    'hrsh7th/cmp-buffer',
-    -- dependencies = 'nvim-cmp' TODO:lazy
-},
-
-{
-    'hrsh7th/cmp-cmdline',
-    -- dependencies = 'nvim-cmp' TODO:lazy
-},
-
-{
-    'hrsh7th/cmp-nvim-lsp', -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    -- dependencies = 'nvim-cmp' TODO:lazy
 },
 
 -- https://github.com/jameshiew/nvim-magic
@@ -930,10 +912,9 @@ Plugins = {
     cmd = 'Vista'
 },
 
-{
-    'neovim/nvim-lspconfig',
-    event = 'CursorHold'
-},
+-- {
+    -- 'neovim/nvim-lspconfig',
+-- },
 
 {
     'williamboman/mason.nvim',
@@ -950,7 +931,6 @@ Plugins = {
 
 {
     'williamboman/mason-lspconfig.nvim',
-    after = 'nvim-lspconfig',
     config = function()
         local mason_lspconfig = require('mason-lspconfig')
         mason_lspconfig.setup()
@@ -1091,7 +1071,9 @@ Plugins = {
             end
         }
         vim.cmd('LspStart')
-    end
+    end,
+    dependencies = 'nvim-lspconfig',
+    event = 'CursorHold'
 },
 
 {
@@ -1437,7 +1419,6 @@ Plugins = {
 -- https://github.com/ThePrimeagen/harpoon --> plenary
 {
     'kshenoy/vim-signature',
-    -- cmd = 'marks'
 },
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
@@ -1634,6 +1615,7 @@ Plugins = {
         --     extensions = {}
         }
     end,
+    -- dependencies = "melkster/modicator.nvim",
     event = 'CursorHold'
 },
 -- <~>
@@ -1760,8 +1742,9 @@ Plugins = {
             }
         }
     end,
-    event = 'User LazyLoad0',
-    -- event = 'CursorHold',
+    dependencies = 'p00f/nvim-ts-rainbow',
+    event = 'User VeryLazy',
+    -- event = 'User LazyLoad0',
     module = 'nvim-treesitter'
 },
 
@@ -1793,10 +1776,10 @@ Plugins = {
     cmd = 'TSHighlightCapturesUnderCursor'
 },
 
-{
-    'p00f/nvim-ts-rainbow',
-    after = 'nvim-treesitter'
-},
+-- {
+--     'p00f/nvim-ts-rainbow',
+--     after = 'nvim-treesitter'
+-- },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use({
@@ -1909,7 +1892,7 @@ Plugins = {
 {
     -- Lua copy https://github.com/ojroques/nvim-osc52
     'ojroques/vim-oscyank',
-    cond = function()
+    enabled = function()
         -- Check if connection is ssh
         return os.getenv("SSH_CLIENT") ~= nil
     end,

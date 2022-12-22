@@ -14,14 +14,6 @@
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 lua << EOF
-local fname = vim.fn.expand('%')
-local lazyfile = "lazyplugins.lua"
-if fname:sub(-#lazyfile) ==  lazyfile then
-    require('lazyplugins')
-else
-    require('impatient')
-end
-
 -- require("lazy").setup(plugins, opts)
 vim.lsp.set_log_level("debug")
 vim.api.nvim_create_autocmd('UIEnter', {callback = function()
@@ -211,6 +203,7 @@ function ColoRand()
     local bg = selection[2]
     local module = selection[3]
     local precmd = selection.precmd
+    vim.g.ColoRand = scheme .. ':' .. bg .. ':' .. module
     -- print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
     vim.o.background = bg
     if (precmd) then
@@ -223,12 +216,10 @@ function ColoRand()
         vim.api.nvim_exec_autocmds('User', {pattern = module})
     end
     vim.cmd.colorscheme(scheme)
-    vim.g.ColoRand = scheme .. ':' .. bg .. ':' .. module
     vim.cmd[[highlight clear CursorLine]]
 end
 
 vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
-vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
 
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -473,6 +464,16 @@ highlight ConflictMarkerEnd guibg=#2f628e
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
 lua << EOF
+local fname = vim.fn.expand('%')
+local lazyfile = "lazyplugins.lua"
+if fname:sub(-#lazyfile) ==  lazyfile then
+    require('lazyplugins')
+    ColoRand()
+else
+    require('impatient')
+    vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
+end
+
 vim.diagnostic.config({
     float = {
         source = true

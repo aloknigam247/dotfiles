@@ -1399,7 +1399,6 @@ use {
 -- https://github.com/ThePrimeagen/harpoon --> plenary
 use {
     'kshenoy/vim-signature',
-    cmd = 'marks'
 }
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
