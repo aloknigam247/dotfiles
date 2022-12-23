@@ -8,10 +8,21 @@
 ]]
 -- TODO: format on paste
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+local border_shape = {
+    { '╭', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╮', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+    { '╯', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╰', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+}
+
 LazyConfig = {
   root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
   defaults = {
-    lazy = true, -- should plugins be lazy-loaded?
+    lazy = false, -- should plugins be lazy-loaded?
     version = nil,
   },
   lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
@@ -67,14 +78,14 @@ LazyConfig = {
     rtp = {
       reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
       disabled_plugins = {
-        -- "gzip",
-        "matchit",
-        "matchparen",
-        "netrwPlugin",
-        -- "tarPlugin",
-        -- "tohtml",
-        -- "tutor",
-        -- "zipPlugin",
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
       },
     },
   },
@@ -88,18 +99,8 @@ LazyConfig = {
     skip_if_doc_exists = true,
   },
 }
--- <~>
-
--- setup ➡️ init
--- requires ➡️ dependencies
--- as ➡️ name
--- opt ➡️ lazy
--- run ➡️ build
--- lock ➡️ pin
--- module is auto-loaded. No need to specify
-
-
 Plugins = {
+-- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
     'dhruvasagar/vim-table-mode',
@@ -331,15 +332,12 @@ Plugins = {
 
 {
     't9md/vim-quickhl',
-    config = function()
-        vim.cmd[[
-            nmap <Leader>w <Plug>(quickhl-manual-this)
-            xmap <Leader>w <Plug>(quickhl-manual-this)
-            nmap <Leader>W <Plug>(quickhl-manual-reset)
-            xmap <Leader>W <Plug>(quickhl-manual-reset)
-        ]]
-    end,
-    keys = {'<Leader>w', "<Leader>W"}
+    keys = {
+        { '<Leader>w', '<Plug>(quickhl-manual-this)', mode = 'n' },
+        { '<Leader>w', '<Plug>(quickhl-manual-this)', mode = 'x' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)', mode = 'n' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)', mode = 'x' }
+    }
 },
 
 {
@@ -411,13 +409,14 @@ Plugins = {
         require('kommentary.config').configure_language("default", {
             prefer_single_line_comments = true,
         })
-        vim.api.nvim_set_keymap("n", "<C-t>", "<Plug>kommentary_line_default", {})
-        vim.api.nvim_set_keymap("v", "<C-t>", "<Plug>kommentary_visual_default", {})
     end,
-    -- init = function()
-        -- vim.g.kommentary_create_default_mappings = false
-    -- end,
-    keys = { "<C-t>" }
+    init = function()
+        vim.g.kommentary_create_default_mappings = false
+    end,
+    keys = {
+        {'<C-t>', '<Plug>kommentary_line_default', mode = 'n'},
+        {'<C-t>', '<Plug>kommentary_visual_default', mode = 'v'},
+    }
 },
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -826,6 +825,7 @@ Plugins = {
             }
         })
     end,
+    lazy = true
 },
 
 {
@@ -835,6 +835,7 @@ Plugins = {
             override = require('nvim-material-icon').get_icons()
         })
     end,
+    lazy = true
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1405,6 +1406,7 @@ Plugins = {
 -- https://github.com/ThePrimeagen/harpoon --> plenary
 {
     'kshenoy/vim-signature',
+    lazy = true
 },
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
@@ -1473,14 +1475,17 @@ Plugins = {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
     'tamton-aquib/zone.nvim',
+    lazy = true
 },
 
 {
     'tamton-aquib/duck.nvim',
+    lazy = true
 },
 
 {
     'folke/drop.nvim',
+    lazy = true
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1490,7 +1495,7 @@ Plugins = {
     vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
     require("auto-session").setup({})
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
-  end
+  end,
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1506,7 +1511,8 @@ Plugins = {
             }
         })
     end,
-    dependencies = 'honza/vim-snippets'
+    dependencies = 'honza/vim-snippets',
+    lazy = true
 },
 -- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/hrsh7th/vim-vsnip
@@ -1787,6 +1793,7 @@ Plugins = {
         })
         vim.notify = notify
     end,
+    -- lazy = true
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1845,11 +1852,17 @@ Plugins = {
 
 -- use 'jbyuki/instant.nvim'
 
-{ 'kwkarlwang/bufjump.nvim' },
+{
+    'kwkarlwang/bufjump.nvim',
+    lazy = true
+},
 
-{ 'kylechui/nvim-surround' },
+{
+    'kylechui/nvim-surround',
+    lazy = true
+},
 
-{ 'lewis6991/impatient.nvim' },
+-- { 'lewis6991/impatient.nvim' },
 
 -- use 'mg979/vim-visual-multi'
 
@@ -1898,10 +1911,14 @@ Plugins = {
             }
         })
     end,
-    keys = { "\"" , "\"" , "<C-R>" }
+    keys = {
+        { '"', mode = 'n'     },
+        { '"', mode = 'v'     },
+        { '<C-R>', mode = 'i' }
+    }
 },
--- <~>
 }
 
 require("lazy").setup(Plugins, LazyConfig)
+-- <~>
 -- vim: fmr=</>,<~>

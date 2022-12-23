@@ -21,10 +21,10 @@ vim.api.nvim_create_autocmd('UIEnter', {callback = function()
 end})
 
 
--- vim.notify = function(msg, level, opt)
---     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
---     vim.notify(msg, level, opt)
--- end
+vim.notify = function(msg, level, opt)
+    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+    vim.notify(msg, level, opt)
+end
 
 function ColoRand()
     local colos = {
@@ -142,7 +142,6 @@ function ColoRand()
         { 'monokai_soda',               'dark',  'monokai.nvim' },
         { 'moonlight',                  'dark',  '_' },
         { 'moonlight',                  'dark',  'starry' },
-        { 'morning',                    'light', '_' },
         { 'mosel',                      'dark',  '_' },
         { 'murphy',                     'dark',  '_' },
         { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'dark' end },
@@ -468,7 +467,19 @@ lua << EOF
 local fname = vim.fn.expand('%')
 local lazyfile = "lazyplugins.lua"
 -- if fname:sub(-#lazyfile) ==  lazyfile then
-    require('lazyplugins')
+    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+    if not vim.loop.fs_stat(lazypath) then
+      vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+      })
+    end
+    vim.opt.runtimepath:prepend(lazypath)
+    require('init')
     ColoRand()
     vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
         vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
@@ -519,7 +530,7 @@ function resetSleeper()
         sleeper.sleeps[sleeper.last].stop()
     end
 
-    sleeper.timer:start(50000, 0, vim.schedule_wrap(function()
+    sleeper.timer:start(60000, 0, vim.schedule_wrap(function()
         local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
         sleeper.sleeps[new_sleeps].start()
         sleeper.last = new_sleeps
