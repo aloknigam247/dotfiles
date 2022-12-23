@@ -1013,7 +1013,7 @@ Plugins = {
                         -- bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
                         capabilities = capabilities,
                         -- root_dir = function() return 'C:/Users/aloknigam/learn/powershell' end,
-                        root_dir = require('lspconfig.util').find_git_ancestor,
+                        root_dir = function() return vim.fn.getcwd() end,
                         handlers = handlers,
                         on_attach = on_attach
                     }
