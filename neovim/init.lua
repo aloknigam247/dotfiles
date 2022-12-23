@@ -259,6 +259,7 @@ Plugins = {
        ]]
     end,
     -- dependencies = 'nvim-treesitter', TODO:
+    enabled = false,
     event = 'CursorHold'
 },
 
@@ -1418,11 +1419,10 @@ Plugins = {
 {
     'nvim-neorg/neorg',
     config = function()
-        -- require('nvim-treesitter')
         require('neorg').setup {
             load = {
                 ["core.highlights"]              = {},
-                ["core.integrations.treesitter"] = {},
+                ["core.integrations.treesitter"] = { config = {install_parsers = false} },
                 ["core.neorgcmd"]                = {},
                 ["core.norg.completion"]         = { config = { engine = 'nvim-cmp' } },
                 ["core.norg.concealer"]          = {},
@@ -1434,11 +1434,11 @@ Plugins = {
             }
         }
         vim.cmd [[
-        au InsertEnter *.norg :Neorg toggle-concealer
-        au InsertLeave *.norg :Neorg toggle-concealer
+            au InsertEnter *.norg :Neorg toggle-concealer
+            au InsertLeave *.norg :Neorg toggle-concealer
         ]]
     end,
-    dependencies = 'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
     ft = "norg"
 },
 
@@ -1704,15 +1704,14 @@ Plugins = {
 {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-        local ignore_install = { "help", "norg", "norg_meta", "yaml" }
         require('nvim-treesitter.configs').setup {
-            auto_install = true,
+            auto_install = false,
             highlight = {
                 additional_vim_regex_highlighting = false,
-                disable = ignore_install,
+                disable = { "help", "norg", "norg_meta", "yaml" },
                 enable = true
             },
-            ignore_install = ignore_install,
+            ignore_install = { "help", "norg", "norg_meta", "yaml" },
             -- markid = {
             --     enable = true,
             --     queries = { default = '(identifier) @markid' }

@@ -88,17 +88,17 @@ function ColoRand()
         { 'darkblue',                   'dark',  '_' },
         { 'darker',                     'dark',  '_' },
         { 'darkplus',                   'dark',  '_' },
-        { 'darksolar',                  'dark',  'starry' },
+        { 'darksolar',                  'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'dawnfox',                    'dark',  'nightfox' },
         { 'dayfox',                     'dark',  'nightfox' },
         { 'deepocean',                  'dark',  '_' },
         { 'delek',                      'light', '_' },
         { 'desert',                     'dark',  '_' },
         { 'deus',                       'dark',  '_' },
-        { 'dracula',                    'dark',  'starry' },
-        { 'dracula_blood',              'dark',  'starry' },
+        { 'dracula',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
+        { 'dracula_blood',              'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'duskfox',                    'dark',  'nightfox' },
-        { 'earlysummer',                'dark',  'starry' },
+        { 'earlysummer',                'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'edge',                       'dark',  '_' },
         { 'edge',                       'light', '_' },
         { 'elflord',                    'dark',  '_' },
@@ -120,7 +120,7 @@ function ColoRand()
         { 'kanagawa',                   'dark',  '_' },
         { 'kimbox',                     'dark',  '_' },
         { 'koehler',                    'dark',  '_' },
-        { 'limestone',                  'light', 'starry' },
+        { 'limestone',                  'light', 'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'lunaperche',                 'dark',  '_' },
         { 'mariana',                    'dark',  'monokai' },
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'darker' end },
@@ -128,20 +128,20 @@ function ColoRand()
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'lighter' end },
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'oceanic' end },
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'palenight' end },
-        { 'material',                   'dark',  'starry' },
+        { 'material',                   'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'melange',                    'dark',  '_' },
         { 'melange',                    'light', '_' },
         { 'mellow',                     'dark',  '_' },
-        { 'middlenight_blue',           'dark',  'starry' },
+        { 'middlenight_blue',           'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'monokai',                    'dark',  'monokai.nvim' },
-        { 'monokai',                    'dark',  'starry' },
+        { 'monokai',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'monokai',                    'dark',  'vim-monokai' },
         { 'monokai_pro',                'dark',  '_' },
         { 'monokai_pro',                'dark',  'monokai.nvim' },
         { 'monokai_ristretto',          'dark',  'monokai.nvim' },
         { 'monokai_soda',               'dark',  'monokai.nvim' },
         { 'moonlight',                  'dark',  '_' },
-        { 'moonlight',                  'dark',  'starry' },
+        { 'moonlight',                  'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'mosel',                      'dark',  '_' },
         { 'murphy',                     'dark',  '_' },
         { 'neon',                       'dark',  '_', precmd = function() vim.g.neon_style = 'dark' end },
@@ -152,6 +152,7 @@ function ColoRand()
         { 'nord',                       'dark',  '_' },
         { 'nordfox',                    'dark',  'nightfox' },
         { 'oh-lucy',                    'dark',  '_' },
+        { 'oceanic',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'oh-lucy-evening',            'dark',  'oh-lucy' },
         { 'one-nvim',                   'dark',  '_' },
         { 'one_monokai',                'dark',  '_' },
@@ -187,7 +188,7 @@ function ColoRand()
         { 'tokyonight-storm',           'dark',  'tokyonight' },
         { 'torte',                      'dark',  '_' },
         { 'tundra',                     'dark',  '_' },
-        { 'ukraine',                    'dark',  'starry' },
+        { 'ukraine',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'vn-night',                   'dark',  '_' },
         { 'zellner',                    'light', '_' },
         { 'zephyr',                     'dark',  '_' },
@@ -201,16 +202,15 @@ function ColoRand()
     local module = selection[3]
     local precmd = selection.precmd
     vim.g.ColoRand = scheme .. ':' .. bg .. ':' .. module
-    -- print("scheme:", scheme, "bg:", bg, "module:", module, "precmd:", precmd)
     vim.o.background = bg
-    if (precmd) then
-        precmd()
-    end
     if (module == '_') then
         vim.api.nvim_exec_autocmds('User', {pattern = scheme})
     else
         -- require(module)
         vim.api.nvim_exec_autocmds('User', {pattern = module})
+    end
+    if (precmd) then
+        precmd()
     end
     vim.cmd.colorscheme(scheme)
     vim.cmd[[highlight clear CursorLine]]
@@ -306,7 +306,6 @@ setglobal bomb                        " Keep the BOM file marker
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-" ColoRand
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " embededded script highlight
 " set background=light         " Select appropriate colors for dark or light
