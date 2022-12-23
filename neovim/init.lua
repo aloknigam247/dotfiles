@@ -259,7 +259,6 @@ Plugins = {
        ]]
     end,
     -- dependencies = 'nvim-treesitter', TODO:
-    enabled = false,
     event = 'CursorHold'
 },
 
