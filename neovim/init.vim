@@ -152,7 +152,6 @@ function ColoRand()
         { 'nightfox',                   'dark',  'nightfox' },
         { 'nord',                       'dark',  '_' },
         { 'nordfox',                    'dark',  'nightfox' },
-        { 'oceanic',                    'dark',  '_' },
         { 'oh-lucy',                    'dark',  '_' },
         { 'oh-lucy-evening',            'dark',  'oh-lucy' },
         { 'one-nvim',                   'dark',  '_' },
