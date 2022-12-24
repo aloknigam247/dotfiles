@@ -196,7 +196,7 @@ function ColoRand()
     }
     math.randomseed(os.time())
     local ind = math.random(1, table.getn(colos))
-    local selection = colos[ind]
+    local selection = colos[1]
     local scheme = selection[1]
     local bg = selection[2]
     local module = selection[3]

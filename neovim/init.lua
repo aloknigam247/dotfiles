@@ -22,7 +22,7 @@ local border_shape = {
 LazyConfig = {
   root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
   defaults = {
-    lazy = false, -- should plugins be lazy-loaded?
+    lazy = true, -- should plugins be lazy-loaded?
     version = nil,
   },
   lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
