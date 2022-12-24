@@ -122,7 +122,7 @@ function ColoRand()
         { 'koehler',                    'dark',  '_' },
         { 'limestone',                  'light', 'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'lunaperche',                 'dark',  '_' },
-        { 'mariana',                    'dark',  'monokai' },
+        { 'mariana',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'darker' end },
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'deep ocean' end },
         { 'material',                   'dark',  '_', precmd = function() vim.g.material_style = 'lighter' end },
