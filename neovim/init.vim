@@ -529,7 +529,7 @@ function resetSleeper()
         sleeper.sleeps[sleeper.last].stop()
     end
 
-    sleeper.timer:start(60000, 0, vim.schedule_wrap(function()
+    sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
         local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
         sleeper.sleeps[new_sleeps].start()
         sleeper.last = new_sleeps
@@ -537,7 +537,7 @@ function resetSleeper()
     ))
 end
 
-vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = resetSleeper})
+vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 

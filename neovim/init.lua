@@ -237,7 +237,8 @@ Plugins = {
         end
 
         local bg = vim.api.nvim_get_hl_by_name('Normal', true).background
-        bg = string.format("%X", tostring(bg))
+        bg = string.format("%X", bg)
+        -- bg = string.format("%X", tostring(bg))
         -- print(bg)
         if (vim.o.background ==  "dark") then
             bg = LightenDarkenColor(bg, 40)
