@@ -1605,19 +1605,40 @@ Plugins = {
 },
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use {
---     'akinsho/bufferline.nvim',
---     config = function()
---         require("bufferline").setup {
---             options = {
---                 mode = "tabs",
---                 diagnostics = "nvim_lsp",
---                 separator_style = "thick",
---                 always_show_bufferline = false
---             }
---         }
---     end
--- }
+{
+    'akinsho/bufferline.nvim',
+    config = function()
+        local sym_map = {
+            ['error']   = ' ',
+            ['hint']    = ' ',
+            ['info']    = ' ',
+            ['warning'] = ' ',
+        }
+        require("bufferline").setup {
+            options = {
+                always_show_bufferline = false,
+                diagnostics = "nvim_lsp",
+                middle_mouse_command = 'bdelete! %d',
+                mode = "tabs",
+                right_mouse_command = nil,
+                separator_style = "thick",
+                diagnostics_indicator = function(_, _, diagnostics_dict, context)
+                    if context.buffer:current() then
+                        return ''
+                    end
+                    local res = ''
+                    for k, v in pairs(diagnostics_dict) do
+                        res = res .. sym_map[k] .. v .. ' '
+                    end
+                    return res
+                end,
+                indicator = {
+                    style = 'underline'
+                }
+            }
+        }
+    end
+},
 -- use 'mengelbrecht/lightline-bufferline'
 -- use {
 --     'nanozuki/tabby.nvim',
@@ -1718,17 +1739,13 @@ Plugins = {
             -- },
             rainbow = {
                 enable = true,
-                -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
-                -- colors = {}, -- table of hex strings
-                -- termcolors = {} -- table of colour name strings
             }
         }
     end,
     dependencies = 'p00f/nvim-ts-rainbow',
     event = 'User VeryLazy',
-    -- event = 'User LazyLoad0',
 },
 
 -- TODO: use {
@@ -1758,11 +1775,6 @@ Plugins = {
     'nvim-treesitter/playground',
     cmd = 'TSHighlightCapturesUnderCursor'
 },
-
--- {
---     'p00f/nvim-ts-rainbow',
---     after = 'nvim-treesitter'
--- },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use({
@@ -1802,8 +1814,6 @@ Plugins = {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
 },
-
--- https://github.com/ElPiloto/significant.nvim
 
 {
     'andrewferrier/debugprint.nvim',
@@ -1915,7 +1925,7 @@ Plugins = {
         { '"', mode = 'v'     },
         { '<C-R>', mode = 'i' }
     }
-},
+}
 }
 
 require("lazy").setup(Plugins, LazyConfig)
