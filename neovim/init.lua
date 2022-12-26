@@ -293,37 +293,6 @@ Plugins = {
 },
 
 {
-    'melkster/modicator.nvim',
-    config = function()
-        local modicator = require('modicator')
-        local modes = {
-            ['R'] = vim.api.nvim_get_hl_by_name('lualine_a_replace', true).background,
-            ['S'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['V'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-            ['c'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['i'] = vim.api.nvim_get_hl_by_name('lualine_a_insert', true).background,
-            ['n'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['s'] = vim.api.nvim_get_hl_by_name('lualine_a_normal', true).background,
-            ['v'] = vim.api.nvim_get_hl_by_name('lualine_a_visual', true).background,
-        }
-        if vim.fn.hlexists('lualine_a_command') ~= 0 then
-            modes['c'] = vim.api.nvim_get_hl_by_name('lualine_a_command', true).background
-        end
-        modicator.setup({
-            line_numbers = true,
-            cursorline = true,
-            highlights = {
-                modes = modes
-            }
-        })
-
-        modicator.set_highlight(modes['n'])
-    end,
-    dependencies = 'nvim-lualine/lualine.nvim',
-    event = 'CursorHold'
-},
-
-{
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
     config = function()
@@ -1600,7 +1569,6 @@ Plugins = {
         --     extensions = {}
         }
     end,
-    -- dependencies = "melkster/modicator.nvim",
     event = 'CursorHold'
 },
 -- <~>
@@ -1891,7 +1859,7 @@ Plugins = {
 {
     -- Lua copy https://github.com/ojroques/nvim-osc52
     'ojroques/vim-oscyank',
-    enabled = function()
+    cond = function()
         -- Check if connection is ssh
         return os.getenv("SSH_CLIENT") ~= nil
     end,
