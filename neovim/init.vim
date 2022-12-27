@@ -299,7 +299,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
-set updatetime=800                   " CursorHold time
+set updatetime=800                    " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
 setglobal bomb                        " Keep the BOM file marker
 " }}}
@@ -326,7 +326,7 @@ set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
-set shortmess=Imn          " Short messages
+set shortmess=Imno           " Short messages
 set signcolumn=auto:9        " Set max size of signcolumn
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
@@ -538,6 +538,7 @@ function resetSleeper()
 end
 
 vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
+vim.api.nvim_create_autocmd({'CursorMoved'} , {callback = function() sleeper.timer:stop() end})
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 

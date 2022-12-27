@@ -467,7 +467,7 @@ Plugins = {
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
     dependencies = { "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
-    event = { "CmdlineEnter", "InsertEnter" }
+    event = { "CmdlineEnter", "InsertEnter" },
 },
 
 -- https://github.com/jameshiew/nvim-magic
@@ -872,10 +872,6 @@ Plugins = {
     end,
     cmd = 'Vista'
 },
-
--- {
-    -- 'neovim/nvim-lspconfig',
--- },
 
 {
     'williamboman/mason.nvim',
@@ -1509,7 +1505,7 @@ Plugins = {
         --         },
         --         ignore_focus = {},
         --         always_divide_middle = true,
-        --         globalstatus = false,
+                globalstatus = true,
         --         refresh = {
         --             statusline = 1000,
         --             tabline = 1000,
@@ -1517,8 +1513,24 @@ Plugins = {
         --         }
             },
             sections = {
-                lualine_a = {'mode'},
-                lualine_b = {'branch', 'diff', 'diagnostics'},
+                lualine_a = {
+                    {
+                        'mode',
+                        fmt = function(str)
+                            return str:sub(1,1)
+                        end
+                    }
+                },
+                lualine_b = {
+                    'branch',
+                    'diff',
+                    {
+                        'diagnostics',
+                        on_click = function()
+                            vim.cmd('TroubleToggle')
+                        end
+                    }
+                },
                 lualine_c = {
                     {
                         'filename',
@@ -1605,15 +1617,8 @@ Plugins = {
                 }
             }
         }
-    end
+    end,
 },
--- use 'mengelbrecht/lightline-bufferline'
--- use {
---     'nanozuki/tabby.nvim',
---     config = function()
---         require('tabby').setup()
---     end
--- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
@@ -1962,7 +1967,6 @@ Plugins = {
         })
         vim.notify = notify
     end,
-    -- lazy = true
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
