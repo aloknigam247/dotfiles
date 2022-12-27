@@ -319,14 +319,14 @@ set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\         " No dot characters in fold
 set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
-set lazyredraw               " Don't redraw screen on macros, registers and other commands.
+" set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
-set shortmess=aoOtT          " Short messages
+set shortmess=Imn          " Short messages
 set signcolumn=auto:9        " Set max size of signcolumn
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
