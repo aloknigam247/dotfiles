@@ -41,21 +41,51 @@ LazyConfig = {
     colorscheme = { },
   },
   ui = {
-    border = "rounded",
-    icons = {
-      cmd = " ",
-      config = "",
-      event = "",
-      ft = " ",
-      init = " ",
-      keys = " ",
-      plugin = " ",
-      runtime = " ",
-      source = " ",
-      start = "",
-      task = " ",
-    },
-    throttle = 20, -- how frequently should the ui process render events
+      size = { width = 0.8, height = 0.8 },
+      border = "rounded",
+      icons = {
+          loaded = "●",
+          not_loaded = "○",
+          cmd = " ",
+          config = "",
+          event = "",
+          ft = " ",
+          init = " ",
+          keys = " ",
+          plugin = " ",
+          runtime = " ",
+          source = " ",
+          start = "",
+          task = " ",
+          lazy = "鈴 ",
+          list = {
+              "●",
+              "➜",
+              "★",
+              "‒",
+          },
+      },
+      throttle = 20, -- how frequently should the ui process render events
+      custom_keys = {
+          ["<localleader>l"] = function(plugin)
+              require("lazy.util").open_cmd({ "lazygit", "log" }, {
+                  cwd = plugin.dir,
+                  terminal = true,
+                  close_on_exit = true,
+                  enter = true,
+              })
+          end,
+
+          -- open a terminal for the plugin dir
+          ["<localleader>t"] = function(plugin)
+              require("lazy.util").open_cmd({ vim.go.shell }, {
+                  cwd = plugin.dir,
+                  terminal = true,
+                  close_on_exit = true,
+                  enter = true,
+              })
+          end,
+      },
   },
   checker = {
     enabled = false,
