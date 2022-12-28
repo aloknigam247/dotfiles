@@ -102,7 +102,7 @@ LazyConfig = {
         "gzip",
         -- "matchit",
         -- "matchparen",
-        -- "netrwPlugin",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
@@ -632,65 +632,296 @@ Plugins = {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
-    'nvim-neo-tree/neo-tree.nvim',
-    cmd = 'Neotree',
-    module = false,
+    -- TODO: lazy load
+    'nvim-tree/nvim-tree.lua',
     config = function()
-        vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-        require('neo-tree').setup({
-            default_component_configs = {
-                git_status = {
-                    symbols = {
-                        -- Change type
-                        added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                        modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-                        deleted   = "",-- this can only be used in the git_status source
-                        renamed   = "",-- this can only be used in the git_status source
-                        -- Status type
-                        untracked = "",
-                        ignored   = "",
-                        unstaged  = "",
-                        staged    = "",
-                        conflict  = "",
-                    }
+        require("nvim-tree").setup {
+            auto_reload_on_write = true,
+            disable_netrw = true,
+            hijack_cursor = false,
+            hijack_netrw = true,
+            hijack_unnamed_buffer_when_opening = true,
+            ignore_buffer_on_setup = false,
+            open_on_setup = false,
+            open_on_setup_file = false,
+            sort_by = "name",
+            root_dirs = {},
+            prefer_startup_root = false,
+            sync_root_with_cwd = true,
+            reload_on_bufenter = false,
+            respect_buf_cwd = false,
+            on_attach = "disable",
+            remove_keymaps = false,
+            select_prompts = false,
+            view = {
+                adaptive_size = false,
+                centralize_selection = false,
+                width = 30,
+                hide_root_folder = false,
+                side = "left",
+                preserve_window_proportions = false,
+                number = false,
+                relativenumber = false,
+                signcolumn = "yes",
+                mappings = {
+                    custom_only = false,
+                    list = {
+                        -- user mappings go here
+                    },
                 },
-                icon = {
-                    folder_closed = '',
-                    folder_open = '',
-                    folder_empty = '',
-                    default = ''
+                float = {
+                    enable = false,
+                    quit_on_focus_loss = true,
+                    open_win_config = {
+                        relative = "editor",
+                        border = "rounded",
+                        width = 30,
+                        height = 30,
+                        row = 1,
+                        col = 1,
+                    },
                 },
-                indent = {
-                    last_indent_marker = '╰'
-                }
+            },
+            renderer = {
+                add_trailing = true,
+                group_empty = false,
+                highlight_git = true,
+                full_name = true,
+                highlight_opened_files = "all",
+                root_folder_label = ":~:s?$?/..?",
+                indent_width = 2,
+                indent_markers = {
+                    enable = true,
+                    inline_arrows = true,
+                    icons = {
+                        corner = "╰",
+                        edge = "│",
+                        item = "│",
+                        bottom = "─",
+                        none = " ",
+                    },
+                },
+                icons = {
+                    webdev_colors = true,
+                    git_placement = "after",
+                    padding = " ",
+                    symlink_arrow = " ➛ ",
+                    show = {
+                        file = true,
+                        folder = true,
+                        folder_arrow = true,
+                        git = true,
+                    },
+                    glyphs = {
+                        default = "",
+                        symlink = "",
+                        bookmark = "",
+                        folder = {
+                            arrow_closed = "",
+                            arrow_open = "",
+                            default = "",
+                            open = "",
+                            empty = "",
+                            empty_open = "",
+                            symlink = "",
+                            symlink_open = "",
+                        },
+                        git = {
+                            unstaged = "✗",
+                            staged = "✓",
+                            unmerged = "",
+                            renamed = "➜",
+                            untracked = "★",
+                            deleted = "",
+                            ignored = "◌",
+                        },
+                    },
+                },
+                special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+                symlink_destination = true,
+            },
+            hijack_directories = {
+                enable = true,
+                auto_open = true,
+            },
+            update_focused_file = {
+                enable = true,
+                debounce_delay = 15,
+                update_root = true,
+                ignore_list = {},
+            },
+            ignore_ft_on_setup = {},
+            system_open = {
+                cmd = "",
+                args = {},
             },
             diagnostics = {
-              autopreview = true, -- Whether to automatically enable preview mode
-              autopreview_config = {}, -- Config table to pass to autopreview (for example `{ use_float = true }`)
-              autopreview_event = "neo_tree_buffer_enter", -- The event to enable autopreview upon (for example `"neo_tree_window_after_open"`)
-              bind_to_cwd = true,
-              diag_sort_function = "severity", -- "severity" means diagnostic items are sorted by severity in addition to their positions.
-                                               -- "position" means diagnostic items are sorted strictly by their positions.
-                                               -- May also be a function.
-              follow_behavior = { -- Behavior when `follow_current_file` is true
-                always_focus_file = true, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
-                expand_followed = true, -- Ensure the node of the followed file is expanded
-                collapse_others = true, -- Ensure other nodes are collapsed
-              },
+                enable = true,
+                show_on_dirs = true,
+                show_on_open_dirs = false,
+                debounce_delay = 50,
+                severity = {
+                    min = vim.diagnostic.severity.HINT,
+                    max = vim.diagnostic.severity.ERROR,
+                },
+                icons = {
+                    error   = "",
+                    hint    = "",
+                    info    = "",
+                    warning = "",
+                },
             },
-            filesystem = {
-                follow_current_file = true,
-                hijack_netrw_behavior = 'open_current'
+            filters = {
+                dotfiles = false,
+                git_clean = false,
+                no_buffer = false,
+                custom = {},
+                exclude = {},
             },
-            popup_border_style = "rounded",
-            sources = {
-                "diagnostics",
-                "filesystem"
-            }
-        })
-    end,
-    dependencies = { 'MunifTanjim/nui.nvim', 'mrbjarksen/neo-tree-diagnostics.nvim', 'nvim-lua/plenary.nvim' }
+            filesystem_watchers = {
+                enable = true,
+                debounce_delay = 50,
+                ignore_dirs = {},
+            },
+            git = {
+                enable = true,
+                ignore = true,
+                show_on_dirs = true,
+                show_on_open_dirs = true,
+                timeout = 400,
+            },
+            actions = {
+                use_system_clipboard = true,
+                change_dir = {
+                    enable = true,
+                    global = false,
+                    restrict_above_cwd = false,
+                },
+                expand_all = {
+                    max_folder_discovery = 300,
+                    exclude = { ".git" },
+                },
+                file_popup = {
+                    open_win_config = {
+                        col = 1,
+                        row = 1,
+                        relative = "cursor",
+                        border = "rounded",
+                        style = "minimal",
+                    },
+                },
+                open_file = {
+                    quit_on_open = false,
+                    resize_window = true,
+                    window_picker = {
+                        enable = true,
+                        picker = "default",
+                        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+                        exclude = {
+                            filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+                            buftype = { "nofile", "terminal", "help" },
+                        },
+                    },
+                },
+                remove_file = {
+                    close_window = true,
+                },
+            },
+            trash = {
+                cmd = "gio trash",
+                require_confirm = true,
+            },
+            live_filter = {
+                prefix = "[FILTER]: ",
+                always_show_folders = true,
+            },
+            tab = {
+                sync = {
+                    open = false,
+                    close = false,
+                    ignore = {},
+                },
+            },
+            notify = {
+                threshold = vim.log.levels.INFO,
+            },
+            log = {
+                enable = false,
+                truncate = false,
+                types = {
+                    all = false,
+                    config = false,
+                    copy_paste = false,
+                    dev = false,
+                    diagnostics = false,
+                    git = false,
+                    profile = false,
+                    watcher = false,
+                },
+            },
+    }
+    end
 },
+-- {
+--     'nvim-neo-tree/neo-tree.nvim',
+--     cmd = 'Neotree',
+--     module = false,
+--     config = function()
+--         vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+--         require('neo-tree').setup({
+--             default_component_configs = {
+--                 git_status = {
+--                     symbols = {
+--                         -- Change type
+--                         added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+--                         modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
+--                         deleted   = "",-- this can only be used in the git_status source
+--                         renamed   = "",-- this can only be used in the git_status source
+--                         -- Status type
+--                         untracked = "",
+--                         ignored   = "",
+--                         unstaged  = "",
+--                         staged    = "",
+--                         conflict  = "",
+--                     }
+--                 },
+--                 icon = {
+--                     folder_closed = '',
+--                     folder_open = '',
+--                     folder_empty = '',
+--                     default = ''
+--                 },
+--                 indent = {
+--                     last_indent_marker = '╰'
+--                 }
+--             },
+--             diagnostics = {
+--               autopreview = true, -- Whether to automatically enable preview mode
+--               autopreview_config = {}, -- Config table to pass to autopreview (for example `{ use_float = true }`)
+--               autopreview_event = "neo_tree_buffer_enter", -- The event to enable autopreview upon (for example `"neo_tree_window_after_open"`)
+--               bind_to_cwd = true,
+--               diag_sort_function = "severity", -- "severity" means diagnostic items are sorted by severity in addition to their positions.
+--                                                -- "position" means diagnostic items are sorted strictly by their positions.
+--                                                -- May also be a function.
+--               follow_behavior = { -- Behavior when `follow_current_file` is true
+--                 always_focus_file = true, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
+--                 expand_followed = true, -- Ensure the node of the followed file is expanded
+--                 collapse_others = true, -- Ensure other nodes are collapsed
+--               },
+--             },
+--             filesystem = {
+--                 follow_current_file = true,
+--                 hijack_netrw_behavior = 'open_current'
+--             },
+--             popup_border_style = "rounded",
+--             sources = {
+--                 "diagnostics",
+--                 "filesystem"
+--             }
+--         })
+--     end,
+--     dependencies = { 'MunifTanjim/nui.nvim', 'mrbjarksen/neo-tree-diagnostics.nvim', 'nvim-lua/plenary.nvim' }
+-- },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use {
@@ -1465,7 +1696,11 @@ Plugins = {
   'rmagatti/auto-session',
   config = function()
     vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
-    require("auto-session").setup({})
+    require("auto-session").setup({
+        post_delete_cmds = {
+            "let g:auto_session_enabled = v:false"
+        }
+    })
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end,
 },
