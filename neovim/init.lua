@@ -44,29 +44,24 @@ LazyConfig = {
       size = { width = 0.8, height = 0.8 },
       border = "rounded",
       icons = {
-          loaded = "●",
-          not_loaded = "○",
+          not_loaded = "",
+          loaded = "",
           cmd = " ",
           config = "",
           event = "",
           ft = " ",
           init = " ",
           keys = " ",
-          plugin = " ",
+          plugin = " ",
           runtime = " ",
           source = " ",
           start = "",
           task = " ",
-          lazy = "鈴 ",
-          list = {
-              "●",
-              "➜",
-              "★",
-              "‒",
-          },
+          lazy = " ",
+          list = { "●", "", "", "" },
       },
       throttle = 20, -- how frequently should the ui process render events
-      custom_keys = false,
+      custom_keys = {},
   },
   diff = {
       -- diff command <d> can be one of:
@@ -262,19 +257,19 @@ Plugins = {
             return string.format("#%X", newColor)
         end
 
-        local bg = vim.api.nvim_get_hl_by_name('Normal', true).background
-        bg = string.format("%X", bg)
-        -- bg = string.format("%X", tostring(bg))
-        -- print(bg)
+        local bg
         if (vim.o.background ==  "dark") then
-            bg = LightenDarkenColor(bg, 40)
+            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+            local bs = string.format("%X", bg)
+            bg = LightenDarkenColor(bs, 40)
         else
-            bg = LightenDarkenColor(bg, -40)
+            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+            local bs = string.format("%X", bg)
+            bg = LightenDarkenColor(bs, -40)
         end
-        -- print(bg)
         vim.api.nvim_set_hl(0, "IlluminatedWordText", {
             bg = bg,
-            -- underline = true
+            underline = true
         })
         vim.cmd[[
            " hi IlluminatedWordText guibg = underline
@@ -624,14 +619,14 @@ Plugins = {
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use {
---     "danymat/neogen",
---     after = 'nvim-treesitter',
---     cmd = 'Neogen',
---     config = function()
---         require('neogen').setup {}
---     end
--- }
+{
+    "danymat/neogen",
+    cmd = 'Neogen',
+    config = function()
+        require('neogen').setup {}
+    end,
+    dependencies = 'nvim-treesitter/nvim-treesitter'
+},
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
@@ -808,14 +803,14 @@ Plugins = {
     config = function()
         require('nvim-material-icon').setup({
             override = {
-                json = {
-                    color = "#cbcb41",
-                    cterm_color = "185",
-                    icon = "ﬥ ",
-                    name = "Json"
-                },
+                -- json = {
+                --     color = "#cbcb41",
+                --     cterm_color = "185",
+                --     icon = "ﬥ ",
+                --     name = "Json"
+                -- },
                 norg = {
-                    icon = '🦄 ',
+                    icon = ' ',
                     name = "Neorg"
                 }
             }
@@ -845,20 +840,6 @@ Plugins = {
     end,
     event = "CursorHold"
 },
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Libraries   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- {
---     'MunifTanjim/nui.nvim',
--- },
-
--- {
---     'kevinhwang91/promise-async',
--- },
-
--- {
---     'nvim-lua/plenary.nvim',
--- },
--- use 'nvim-lua/popup.nvim'
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
@@ -1413,7 +1394,7 @@ Plugins = {
         require('neorg').setup {
             load = {
                 ["core.highlights"]              = {},
-                ["core.integrations.treesitter"] = { config = {install_parsers = false} },
+                ["core.integrations.treesitter"] = { config = { install_parsers = false } },
                 ["core.neorgcmd"]                = {},
                 ["core.norg.completion"]         = { config = { engine = 'nvim-cmp' } },
                 ["core.norg.concealer"]          = {},
@@ -1521,8 +1502,8 @@ Plugins = {
         -- local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
-        --         icons_enabled = true,
-        --         theme = 'auto',
+                icons_enabled = true,
+                theme = 'auto',
                 component_separators = { left = '', right = ''},
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
@@ -1532,11 +1513,11 @@ Plugins = {
         --         ignore_focus = {},
         --         always_divide_middle = true,
                 globalstatus = true,
-        --         refresh = {
-        --             statusline = 1000,
-        --             tabline = 1000,
-        --             winbar = 1000,
-        --         }
+                refresh = {
+                    statusline = 1000,
+                    tabline = 1000,
+                    winbar = 1000,
+                }
             },
             sections = {
                 lualine_a = {
@@ -1644,6 +1625,7 @@ Plugins = {
             }
         }
     end,
+    event = 'TabNew'
 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
