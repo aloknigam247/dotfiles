@@ -803,14 +803,14 @@ Plugins = {
     config = function()
         require('nvim-material-icon').setup({
             override = {
-                -- json = {
-                --     color = "#cbcb41",
-                --     cterm_color = "185",
-                --     icon = "ﬥ ",
-                --     name = "Json"
-                -- },
+                csproj = {
+                    color = '#854CC7',
+                    cterm_color = '98',
+                    icon = '',
+                    name = "Csproj"
+                },
                 norg = {
-                    icon = ' ',
+                    icon = '',
                     name = "Neorg"
                 }
             }
