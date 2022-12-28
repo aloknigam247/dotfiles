@@ -66,32 +66,26 @@ LazyConfig = {
           },
       },
       throttle = 20, -- how frequently should the ui process render events
-      custom_keys = {
-          ["<localleader>l"] = function(plugin)
-              require("lazy.util").open_cmd({ "lazygit", "log" }, {
-                  cwd = plugin.dir,
-                  terminal = true,
-                  close_on_exit = true,
-                  enter = true,
-              })
-          end,
-
-          -- open a terminal for the plugin dir
-          ["<localleader>t"] = function(plugin)
-              require("lazy.util").open_cmd({ vim.go.shell }, {
-                  cwd = plugin.dir,
-                  terminal = true,
-                  close_on_exit = true,
-                  enter = true,
-              })
-          end,
-      },
+      custom_keys = false,
+  },
+  diff = {
+      -- diff command <d> can be one of:
+      -- * browser: opens the github compare view. Note that this is always mapped to <K> as well,
+      --   so you can have a different command for diff <d>
+      -- * git: will run git diff and open a buffer with filetype git
+      -- * terminal_git: will open a pseudo terminal with git diff
+      -- * diffview.nvim: will open Diffview to show the diff
+      cmd = "git",
   },
   checker = {
     enabled = false,
     concurrency = nil, ---@type number? set to 1 to check for updates very slowly
     notify = true, -- get a notification when new updates are found
     frequency = 3600, -- check for updates every hour
+  },
+  change_detection = {
+      enabled = true,
+      notify = true, -- get a notification when changes are found
   },
   performance = {
     cache = {
@@ -103,10 +97,12 @@ LazyConfig = {
       --  * VimEnter: not useful to cache anything else beyond startup
       --  * BufReadPre: this will be triggered early when opening a file from the command line directly
       disable_events = { },
+      ttl = 3600 * 24 * 5, -- keep unused modules for up to 5 days
     },
     reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
       reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+      paths = {}, -- add any custom paths here that you want to indluce in the rtp
       disabled_plugins = {
         "gzip",
         -- "matchit",
