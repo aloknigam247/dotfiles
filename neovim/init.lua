@@ -324,7 +324,9 @@ Plugins = {
 {
     'nvim-zh/colorful-winsep.nvim',
     config = function ()
-        require('colorful-winsep').setup()
+        require('colorful-winsep').setup({
+            symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+        })
     end,
     event = 'WinNew'
 },
@@ -713,7 +715,7 @@ Plugins = {
                     webdev_colors = true,
                     git_placement = "after",
                     padding = " ",
-                    symlink_arrow = " ➛ ",
+                    symlink_arrow = " 壟 ",
                     show = {
                         file = true,
                         folder = true,
@@ -723,7 +725,7 @@ Plugins = {
                     glyphs = {
                         default = "",
                         symlink = "",
-                        bookmark = "",
+                        bookmark = "",
                         folder = {
                             arrow_closed = "",
                             arrow_open = "",
@@ -1801,11 +1803,11 @@ Plugins = {
                             modified = '●',      -- Text to show when the file is modified.
                             readonly = '',      -- Text to show when the file is non-modifiable or readonly.
                             unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                            newfile = '',     -- Text to show for new created file before first writting
+                            newfile = '[New]',     -- Text to show for new created file before first writting
                         }
                     }
                 },
-                lualine_x = {'encoding', 'fileformat'},
+                lualine_x = {'fileformat', 'encoding'},
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
             },
@@ -1832,7 +1834,7 @@ Plugins = {
         --         { navic.get_location, cond = navic.is_available }
             -- }
         },
-        --     extensions = {}
+        extensions = { 'nvim-tree' }
         }
     end,
     event = 'CursorHold'

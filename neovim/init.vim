@@ -329,7 +329,7 @@ set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
-set shortmess=FImno           " Short messages
+set shortmess=FIWmno         " Short messages
 set signcolumn=auto:9        " Set max size of signcolumn
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
