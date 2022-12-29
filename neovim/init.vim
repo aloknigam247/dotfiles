@@ -329,7 +329,7 @@ set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
-set shortmess=Imno           " Short messages
+set shortmess=FImno           " Short messages
 set signcolumn=auto:9        " Set max size of signcolumn
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
@@ -508,7 +508,7 @@ vim.diagnostic.config({
 
 sleeper = {
     timer = vim.loop.new_timer(),
-    last = 0,
+    last = 1,
     sleeps = {
         { start = function() require('drop').setup({theme = "leaves"}); require('drop').show(); end, stop = function() require('drop').hide() end },
         { start = function() require('drop').setup({theme = "snow"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
@@ -528,20 +528,18 @@ sleeper = {
 
 function resetSleeper()
     sleeper.timer:stop()
-    if sleeper.last ~= 0 then
-        sleeper.sleeps[sleeper.last].stop()
-    end
+    sleeper.sleeps[sleeper.last].stop()
 
     sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
-        local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
         sleeper.sleeps[new_sleeps].start()
+        local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
         sleeper.last = new_sleeps
     end
     ))
 end
 
 vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.timer:stop() end})
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.sleeps[sleeper.last].stop() end})
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 

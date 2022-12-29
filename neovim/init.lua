@@ -322,6 +322,14 @@ Plugins = {
 },
 
 {
+    'nvim-zh/colorful-winsep.nvim',
+    config = function ()
+        require('colorful-winsep').setup()
+    end,
+    event = 'WinNew'
+},
+
+{
     't9md/vim-quickhl',
     keys = {
         { '<Leader>w', '<Plug>(quickhl-manual-this)', mode = 'n' },
@@ -1056,6 +1064,7 @@ Plugins = {
         require'nvim-web-devicons'.setup({
             override = require('nvim-material-icon').get_icons()
         })
+        require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
     end,
     lazy = true
 },
@@ -1770,30 +1779,33 @@ Plugins = {
                         'diagnostics',
                         on_click = function()
                             vim.cmd('TroubleToggle')
-                        end
+                        end,
+                        sources = { 'nvim_diagnostic' },
+                        symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
                     }
                 },
                 lualine_c = {
+                    {
+                        'filetype',
+                        icon_only = true,
+                        padding = { left = 1, right = 0 },
+                        separator = ''
+                    },
                     {
                         'filename',
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = false,   -- Display new file status (new file means no write after created)
                         path = 0,                -- 0: Just the filename
-                        -- 1: Relative path
-                        -- 2: Absolute path
-                        -- 3: Absolute path, with tilde as the home directory
-
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        -- for other components. (terrible name, any suggestions?)
                         symbols = {
-                            modified = '[+]',      -- Text to show when the file is modified.
-                            readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+                            modified = '●',      -- Text to show when the file is modified.
+                            readonly = '',      -- Text to show when the file is non-modifiable or readonly.
                             unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                            newfile = '[New]',     -- Text to show for new created file before first writting
+                            newfile = '',     -- Text to show for new created file before first writting
                         }
                     }
                 },
-                lualine_x = {'encoding', 'fileformat', 'filetype'},
+                lualine_x = {'encoding', 'fileformat'},
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
             },
@@ -2275,8 +2287,6 @@ Plugins = {
     'kylechui/nvim-surround',
     lazy = true
 },
-
--- { 'lewis6991/impatient.nvim' },
 
 -- use 'mg979/vim-visual-multi'
 
