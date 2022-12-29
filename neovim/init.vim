@@ -164,7 +164,6 @@ function ColoRand()
         { 'pablo',                      'dark',  '_' },
         { 'palenight',                  'dark',  '_' },
         { 'peachpuff',                  'dark',  '_' },
-        { 'quiet',                      'dark',  '_' },
         { 'rose-pine',                  'dark',  '_' },
         { 'rose-pine',                  'dark',  '_', precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
         { 'rose-pine',                  'dark',  '_', precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end },
