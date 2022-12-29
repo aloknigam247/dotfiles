@@ -101,7 +101,6 @@ function ColoRand()
         { 'earlysummer',                'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'edge',                       'dark',  '_' },
         { 'edge',                       'light', '_' },
-        { 'elflord',                    'dark',  '_' },
         { 'emerald',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'enfocado',                   'dark',  '_' },
         { 'enfocado',                   'light', '_' },
@@ -542,7 +541,7 @@ function resetSleeper()
 end
 
 vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved'} , {callback = function() sleeper.timer:stop() end})
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.timer:stop() end})
 
 url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
