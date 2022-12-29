@@ -77,7 +77,6 @@ function ColoRand()
         { 'base2tone_space_light',      'light', 'base2tone' },
         { 'base2tone_suburb_dark',      'dark',  'base2tone' },
         { 'base2tone_suburb_light',     'light', 'base2tone' },
-        { 'blue',                       'dark',  '_' },
         { 'calvera',                    'dark',  '_' },
         { 'carbonfox',                  'dark',  'nightfox' },
         { 'catppuccin-frappe',          'dark',  'catppuccin' },
@@ -530,8 +529,8 @@ function resetSleeper()
     sleeper.sleeps[sleeper.last].stop()
 
     sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
-        sleeper.sleeps[new_sleeps].start()
-        local new_sleeps = (sleeper.last + 1) % table.getn(sleeper.sleeps) + 1
+        sleeper.sleeps[sleeper.last].start()
+        local new_sleeps = (sleeper.last) % table.getn(sleeper.sleeps) + 1
         sleeper.last = new_sleeps
     end
     ))

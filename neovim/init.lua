@@ -1404,6 +1404,10 @@ Plugins = {
 {
     'jayp0521/mason-null-ls.nvim',
     config = function ()
+        local null_ls = require("null-ls")
+        null_ls.setup {
+            sources = { null_ls.builtins.code_actions.gitsigns }
+        }
         local mnls = require("mason-null-ls")
         mnls.setup({
             automatic_setup = true
@@ -1759,6 +1763,13 @@ Plugins = {
 {
     'nvim-lualine/lualine.nvim',
     config = function()
+        Icon_index = 0
+        local function LspIcon()
+            local icons = {"䷀", "䷪",  "䷍", "䷈", "䷉", "䷌", "䷫"}
+            -- local icons = {'ﯺ', 'ﯸ', 'ﯹ'}
+            Icon_index = (Icon_index) % #icons + 1
+            return icons[Icon_index]
+        end
         -- local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
@@ -1794,8 +1805,16 @@ Plugins = {
                         'branch',
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
+                        on_click = function()
+                            vim.cmd("Telescope git_branches")
+                        end
                     },
-                    'diff',
+                    {
+                        'diff',
+                        on_click = function()
+                            vim.cmd("Telescope git_status")
+                        end
+                    },
                     {
                         'diagnostics',
                         on_click = function()
@@ -1827,7 +1846,22 @@ Plugins = {
                         }
                     }
                 },
-                lualine_x = {{'g:session_icon', separator = ''}, 'fileformat', 'encoding'},
+                lualine_x = {
+                    {
+                        LspIcon,
+                        -- color = { fg = '#610F7F' },
+                        cond = function()
+                            return vim.lsp.get_active_clients({bufnr = 0})[1] ~= nil
+                        end,
+                        on_click = function()
+                            vim.cmd("LspInfo")
+                        end,
+                        separator = ''
+                    },
+                    {'g:session_icon', separator = ''},
+                    'fileformat',
+                    'encoding'
+                },
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
             },
