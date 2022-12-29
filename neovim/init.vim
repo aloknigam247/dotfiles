@@ -104,7 +104,6 @@ function ColoRand()
         { 'emerald',                    'dark',  'starry', precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'enfocado',                   'dark',  '_' },
         { 'enfocado',                   'light', '_' },
-        { 'evening',                    'dark',  '_' },
         { 'everforest',                 'dark',  '_' },
         { 'everforest',                 'light', '_' },
         { 'falcon',                     'dark',  '_' },

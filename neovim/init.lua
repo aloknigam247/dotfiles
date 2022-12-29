@@ -301,6 +301,13 @@ Plugins = {
                 THOUGHT = { icon = "🤔", color = "info"}
             }
         })
+        vim.keymap.set("n", "]t", function()
+            require("todo-comments").jump_next()
+        end, { desc = "Next todo comment" })
+
+        vim.keymap.set("n", "[t", function()
+            require("todo-comments").jump_prev()
+        end, { desc = "Previous todo comment" })
     end,
     event = "CursorHold"
 },
@@ -1709,7 +1716,14 @@ Plugins = {
     vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
     require("auto-session").setup({
         post_delete_cmds = {
-            "let g:auto_session_enabled = v:false"
+            "let g:auto_session_enabled = v:false",
+            "unlet g:session_icon"
+        },
+        post_restore_cmds = {
+            "let g:session_icon = ''"
+        },
+        post_save_cmds = {
+            "let g:session_icon = ''"
         }
     })
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
@@ -1813,7 +1827,7 @@ Plugins = {
                         }
                     }
                 },
-                lualine_x = {'fileformat', 'encoding'},
+                lualine_x = {{'g:session_icon', separator = ''}, 'fileformat', 'encoding'},
                 lualine_y = {'progress'},
                 lualine_z = {'location'}
             },
