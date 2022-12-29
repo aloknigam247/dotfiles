@@ -1769,13 +1769,18 @@ Plugins = {
                 lualine_a = {
                     {
                         'mode',
+                        color = { gui = 'bold,italic' },
                         fmt = function(str)
                             return str:sub(1,1)
                         end
                     }
                 },
                 lualine_b = {
-                    'branch',
+                    {
+                        'branch',
+                        color = { gui = 'bold' },
+                        icon = {'', color = {fg = '#F14C28'}},
+                    },
                     'diff',
                     {
                         'diagnostics',
@@ -1795,6 +1800,7 @@ Plugins = {
                     },
                     {
                         'filename',
+                        color = { gui = 'italic' },
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = false,   -- Display new file status (new file means no write after created)
                         path = 0,                -- 0: Just the filename
