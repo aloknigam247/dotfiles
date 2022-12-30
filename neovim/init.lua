@@ -243,7 +243,7 @@ function ColoRand()
         { 'base16-tokyo-night-terminal-storm',    'dark',  'base16' },
         { 'base16-tokyodark',                     'dark',  'base16' },
         { 'base16-tokyodark-terminal',            'dark',  'base16' },
-        { 'base16-tomorrow',                      'dark',  'base16' },
+        { 'base16-tomorrow',                      'light', 'base16' },
         { 'base16-tomorrow-night',                'dark',  'base16' },
         { 'base16-tomorrow-night-eighties',       'dark',  'base16' },
         { 'base16-tube',                          'dark',  'base16' },
@@ -407,7 +407,7 @@ function ColoRand()
         { 'pablo',                                'dark',  '_' },
         { 'palenight',                            'dark',  '_' },
         { 'peachpuff',                            'dark',  '_' },
-        { 'pink-panic',                           'light', '_' },
+        { 'pink-panic',                           'dark',  '_' },
         { 'poimandres',                           'dark',  '_', precmd = function() require('poimandres').setup() end },
         { 'rose-pine',                            'dark',  '_' },
         { 'rose-pine',                            'dark',  '_',              precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
@@ -2369,7 +2369,21 @@ Plugins = {
                     'fileformat',
                     'encoding'
                 },
-                lualine_y = {'progress'},
+                lualine_y = {
+                    {
+                        'progress',
+                        on_click = function ()
+                            local satellite = require('satellite')
+                            if satellite.enabled then
+                                vim.cmd("SatelliteDisable")
+                                satellite.enabled = false
+                            else
+                                vim.cmd("SatelliteEnable")
+                                satellite.enabled = true
+                            end
+                        end
+                    }
+                },
                 lualine_z = {'location'}
             },
             inactive_sections = {
@@ -2853,6 +2867,15 @@ Plugins = {
 {
     'kwkarlwang/bufjump.nvim',
     lazy = true
+},
+
+{
+    'lewis6991/satellite.nvim',
+    cmd = 'SatelliteEnable',
+    config = function()
+        require('satellite').setup({ winblend = vim.o.winblend })
+        vim.cmd('hi link ScrollView lualine_a_normal')
+    end
 },
 
 {
