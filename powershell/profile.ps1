@@ -111,6 +111,10 @@ function treea {
     C:\msys64\usr\bin\tree.exe -aCF $args
 }
 
+function bat {
+    C:\Users\aloknigam\scoop\shims\bat.exe --paging=never --theme='Coldark-Dark' $args
+}
+
 function which($arg) {
     $cm = Get-Command $arg
     $type = $cm.CommandType
