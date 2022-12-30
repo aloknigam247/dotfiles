@@ -112,7 +112,7 @@ function treea {
 }
 
 function bat {
-    C:\Users\aloknigam\scoop\shims\bat.exe --paging=never --theme='Coldark-Dark' $args
+    C:\Users\aloknigam\scoop\shims\bat.exe --paging=never --theme='Coldark-Dark' --style='numbers,grid,changes' --italic-text=always $args
 }
 
 function which($arg) {
