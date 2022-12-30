@@ -20,105 +20,96 @@ local border_shape = {
 }
 
 LazyConfig = {
-  root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
-  defaults = {
-    lazy = false, -- should plugins be lazy-loaded?
-    version = nil,
-  },
-  lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
-  concurrency = nil, ---@type number limit the maximum amount of concurrent tasks
-  git = {
-    log = { "--since=3 days ago" }, -- show commits from the last 3 days
-    timeout = 120, -- kill processes that take more than 2 minutes
-    url_format = "https://github.com/%s.git",
-  },
-  dev = {
-    path = "~/projects",
-    patterns = {}, -- For example {"folke"}
-  },
-  install = {
-    missing = true,
-    colorscheme = { },
-  },
-  ui = {
-      size = { width = 0.8, height = 0.8 },
-      border = "rounded",
-      icons = {
-          not_loaded = "",
-          loaded = "",
-          cmd = " ",
-          config = "",
-          event = "",
-          ft = " ",
-          init = " ",
-          keys = " ",
-          plugin = " ",
-          runtime = " ",
-          source = " ",
-          start = "",
-          task = " ",
-          lazy = " ",
-          list = { "●", "", "", "" },
-      },
-      throttle = 20, -- how frequently should the ui process render events
-      custom_keys = {},
-  },
-  diff = {
-      -- diff command <d> can be one of:
-      -- * browser: opens the github compare view. Note that this is always mapped to <K> as well,
-      --   so you can have a different command for diff <d>
-      -- * git: will run git diff and open a buffer with filetype git
-      -- * terminal_git: will open a pseudo terminal with git diff
-      -- * diffview.nvim: will open Diffview to show the diff
-      cmd = "git",
-  },
-  checker = {
-    enabled = false,
-    concurrency = nil, ---@type number? set to 1 to check for updates very slowly
-    notify = true, -- get a notification when new updates are found
-    frequency = 3600, -- check for updates every hour
-  },
-  change_detection = {
-      enabled = true,
-      notify = true, -- get a notification when changes are found
-  },
-  performance = {
-    cache = {
-      enabled = true,
-      path = vim.fn.stdpath("state") .. "/lazy/cache",
-      -- Once one of the following events triggers, caching will be disabled.
-      -- To cache all modules, set this to `{}`, but that is not recommended.
-      -- The default is to disable on:
-      --  * VimEnter: not useful to cache anything else beyond startup
-      --  * BufReadPre: this will be triggered early when opening a file from the command line directly
-      disable_events = { },
-      ttl = 3600 * 24 * 5, -- keep unused modules for up to 5 days
+    root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
+    defaults = {
+        lazy = false, -- should plugins be lazy-loaded?
+        version = nil,
     },
-    reset_packpath = true, -- reset the package path to improve startup time
-    rtp = {
-      reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
-      paths = {}, -- add any custom paths here that you want to indluce in the rtp
-      disabled_plugins = {
-        "gzip",
-        -- "matchit",
-        -- "matchparen",
-        "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      },
+    lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
+    concurrency = nil, ---@type number limit the maximum amount of concurrent tasks
+    git = {
+        log = { "--since=3 days ago" }, -- show commits from the last 3 days
+        timeout = 120, -- kill processes that take more than 2 minutes
+        url_format = "https://github.com/%s.git",
     },
-  },
-  -- lazy can generate helptags from the headings in markdown readme files,
-  -- so :help works even for plugins that don't have vim docs.
-  -- when the readme opens with :help it will be correctly displayed as markdown
-  readme = {
-    root = vim.fn.stdpath("state") .. "/lazy/readme",
-    files = { "README.md" },
-    -- only generate markdown helptags for plugins that dont have docs
-    skip_if_doc_exists = true,
-  },
+    dev = {
+        path = "~/projects",
+        patterns = {}, -- For example {"folke"}
+    },
+    install = {
+        missing = true,
+        colorscheme = { },
+    },
+    ui = {
+        size = { width = 0.8, height = 0.8 },
+        border = "rounded",
+        icons = {
+            not_loaded = "",
+            loaded = "",
+            cmd = " ",
+            config = "",
+            event = "",
+            ft = " ",
+            init = " ",
+            keys = " ",
+            plugin = " ",
+            runtime = " ",
+            source = " ",
+            start = "",
+            task = " ",
+            lazy = " ",
+            list = { "●", "", "", "" },
+        },
+        throttle = 20, -- how frequently should the ui process render events
+        custom_keys = {},
+    },
+    diff = {
+        cmd = "git",
+    },
+    checker = {
+        enabled = false,
+        concurrency = nil, ---@type number? set to 1 to check for updates very slowly
+        notify = true, -- get a notification when new updates are found
+        frequency = 3600, -- check for updates every hour
+    },
+    change_detection = {
+        enabled = true,
+        notify = true, -- get a notification when changes are found
+    },
+    performance = {
+        cache = {
+            enabled = true,
+            path = vim.fn.stdpath("state") .. "/lazy/cache",
+            -- Once one of the following events triggers, caching will be disabled.
+            -- To cache all modules, set this to `{}`, but that is not recommended.
+            -- The default is to disable on:
+            --  * VimEnter: not useful to cache anything else beyond startup
+            --  * BufReadPre: this will be triggered early when opening a file from the command line directly
+            disable_events = { },
+            ttl = 3600 * 24 * 5, -- keep unused modules for up to 5 days
+        },
+        reset_packpath = true, -- reset the package path to improve startup time
+        rtp = {
+            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+            paths = {}, -- add any custom paths here that you want to indluce in the rtp
+            disabled_plugins = {
+                "gzip",
+                -- "matchit",
+                -- "matchparen",
+                "netrwPlugin",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        },
+    },
+    readme = {
+        root = vim.fn.stdpath("state") .. "/lazy/readme",
+        files = { "README.md" },
+        -- only generate markdown helptags for plugins that dont have docs
+        skip_if_doc_exists = true,
+    },
 }
 Plugins = {
 -- <~>
@@ -243,7 +234,7 @@ Plugins = {
     config = function()
         require('illuminate').configure({
             providers =  {
-                -- 'lsp',
+                'lsp',
                 'treesitter',
                 'regex'
             }
@@ -280,7 +271,6 @@ Plugins = {
            hi LspReferenceRead guibg = #427AA1
        ]]
     end,
-    -- dependencies = 'nvim-treesitter', TODO:
     event = 'CursorHold'
 },
 
@@ -291,7 +281,7 @@ Plugins = {
     event = "LspAttach"
 },
 
--- -- https://github.com/folke/paint.nvim
+-- https://github.com/folke/paint.nvim
 
 {
     'folke/todo-comments.nvim',
@@ -324,7 +314,7 @@ Plugins = {
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
     config = function()
-    require('colorizer').setup()
+        require('colorizer').setup()
     end
 },
 
@@ -364,6 +354,7 @@ Plugins = {
 { 'LunarVim/darkplus.nvim',           event = 'User darkplus'      },
 { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'       },
 { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'    },
+{ 'RRethy/nvim-base16',               event = 'User base16'        },
 { 'Shatur/neovim-ayu',                event = 'User ayu'           },
 { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'      },
 { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'       },
@@ -1849,7 +1840,6 @@ Plugins = {
                 lualine_x = {
                     {
                         LspIcon,
-                        -- color = { fg = '#610F7F' },
                         cond = function()
                             return vim.lsp.get_active_clients({bufnr = 0})[1] ~= nil
                         end,
@@ -1858,7 +1848,7 @@ Plugins = {
                         end,
                         separator = ''
                     },
-                    {'g:session_icon', separator = ''},
+                    { 'g:session_icon', separator = '' },
                     'fileformat',
                     'encoding'
                 },
@@ -2324,6 +2314,14 @@ Plugins = {
 -- use 'cbochs/portal.nvim'
 
 -- use 'chipsenkbeil/distant.nvim'
+
+{
+    'chrisbra/csv.vim',
+    config = function()
+        vim.g.csv_default_delim = ','
+    end,
+    ft = 'csv'
+},
 
 {
     'dstein64/vim-startuptime',
