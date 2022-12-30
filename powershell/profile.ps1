@@ -299,7 +299,7 @@ function promptGen {
         @{
             'text' = '$git_branch'
             'fg' = '#F4B860'
-            'styles' = "italic"
+            'styles' = "bold"
         },
         @{
             'text' = "⟩⟩ "
