@@ -600,9 +600,12 @@ LazyConfig = {
             paths = {}, -- add any custom paths here that you want to indluce in the rtp
             disabled_plugins = {
                 "gzip",
+                -- "health",
+                "man",
                 -- "matchit",
                 -- "matchparen",
                 "netrwPlugin",
+                "spellfile",
                 "tarPlugin",
                 "tohtml",
                 "tutor",
