@@ -494,10 +494,10 @@ vim.g.cmp_kinds = {
     Keyword       = ' ',
     Method        = ' ',
     Module        = ' ',
-    Namespace     = ' ',
+    Namespace     = 'ﬥ ',
     Null          = ' ',
     Number        = ' ',
-    Object        = ' ',
+    Object        = ' ',
     Operator      = ' ',
     Options       = ' ',
     Package       = ' ',
@@ -616,7 +616,6 @@ LazyConfig = {
     readme = {
         root = vim.fn.stdpath("state") .. "/lazy/readme",
         files = { "README.md" },
-        -- only generate markdown helptags for plugins that dont have docs
         skip_if_doc_exists = true,
     },
 }
@@ -840,10 +839,10 @@ Plugins = {
 {
     't9md/vim-quickhl',
     keys = {
-        { '<Leader>w', '<Plug>(quickhl-manual-this)', mode = 'n' },
-        { '<Leader>w', '<Plug>(quickhl-manual-this)', mode = 'x' },
-        { '<Leader>W', '<Plug>(quickhl-manual-reset)', mode = 'n' },
-        { '<Leader>W', '<Plug>(quickhl-manual-reset)', mode = 'x' }
+        { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
+        { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'n' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
     }
 },
 
@@ -867,6 +866,7 @@ Plugins = {
 { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          },
 { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     },
 { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                                },
+{ 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                            },
 { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 },
 { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                                 },
 { 'aca/vim-monokai-pro',              event = 'User monokai_pro'                                             },
@@ -896,7 +896,6 @@ Plugins = {
 { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'                                               },
 { 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'                                              },
 { 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              },
-{ 'overcache/NeoSolarized',           event = 'User NeoSolarized'                                            },
 { 'projekt0n/github-nvim-theme',      event = 'User github'                                                  },
 { 'rafamadriz/neon',                  event = 'User neon'                                                    },
 { 'ramojus/mellifluous.nvim',         event = 'User mellifluous', dependencies = 'rktjmp/lush.nvim'          },
@@ -2344,6 +2343,9 @@ Plugins = {
                         color = { gui = 'italic' },
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = false,   -- Display new file status (new file means no write after created)
+                        on_click = function()
+                            vim.cmd("NvimTreeToggle")
+                        end,
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
                         symbols = {
