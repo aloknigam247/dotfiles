@@ -48,7 +48,7 @@ alias settings='vim /mnt/c/Users/alokn/AppData/Local/Packages/Microsoft.WindowsT
 alias sr='source ~/.zshrc'
 alias tree='tree -CF'
 alias treea='tree -aCF'
-alias v="nvim"
+alias v="/mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40"
 alias vpcl='nvim -c PlugClean! -c qa'
 alias vpi='nvim -c PlugInstall -c qa'
 

@@ -88,13 +88,13 @@ function ColoRand()
         { 'base16-codeschool',                    'dark',  'base16' },
         { 'base16-colors',                        'dark',  'base16' },
         { 'base16-cupcake',                       'dark',  'base16' },
-        { 'base16-cupertino',                     'dark',  'base16' },
+        { 'base16-cupertino',                     'light', 'base16' },
         { 'base16-da-one-black',                  'dark',  'base16' },
         { 'base16-da-one-gray',                   'dark',  'base16' },
         { 'base16-da-one-ocean',                  'dark',  'base16' },
         { 'base16-da-one-paper',                  'dark',  'base16' },
         { 'base16-da-one-sea',                    'dark',  'base16' },
-        { 'base16-da-one-white',                  'dark',  'base16' },
+        { 'base16-da-one-white',                  'light', 'base16' },
         { 'base16-danqing',                       'dark',  'base16' },
         { 'base16-darcula',                       'dark',  'base16' },
         { 'base16-darkmoss',                      'dark',  'base16' },
@@ -2230,7 +2230,7 @@ Plugins = {
 {
   'rmagatti/auto-session',
   config = function()
-    vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam" }
+    vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam", "~" }
     require("auto-session").setup({
         post_delete_cmds = {
             "let g:auto_session_enabled = v:false",
