@@ -88,7 +88,7 @@ function ColoRand()
         { 'base16-codeschool',                    'dark',  'base16' },
         { 'base16-colors',                        'dark',  'base16' },
         { 'base16-cupcake',                       'dark',  'base16' },
-        { 'base16-cupertino',                     'dark',  'base16' },
+        { 'base16-cupertino',                     'light', 'base16' },
         { 'base16-da-one-black',                  'dark',  'base16' },
         { 'base16-da-one-gray',                   'dark',  'base16' },
         { 'base16-da-one-ocean',                  'dark',  'base16' },
