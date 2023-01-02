@@ -116,6 +116,7 @@
                 "tabTitle": "DevBox"
             },
             {
+                "colorScheme": "Ubuntu-ColorScheme",
                 "commandline": "ubuntu.exe",
                 "cursorShape": "filledBox",
                 "guid": "{a9b28329-d653-41b2-9907-79c9d4462d58}",

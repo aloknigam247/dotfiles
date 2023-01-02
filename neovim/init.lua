@@ -513,6 +513,83 @@ vim.g.cmp_kinds = {
     Variable      = ' '
 }
 
+vim.g.kindshl_dark = {
+    Array         = { fg = '#F42272' },
+    Boolean       = { fg = '#B8B8F3' },
+    Class         = { fg = '#519872' },
+    Color         = { fg = '#A4B494' },
+    Constant      = { fg = '#C5E063' },
+    Constructor   = { fg = '#4AAD52' },
+    Enum          = { fg = '#E3B5A4' },
+    EnumMember    = { fg = '#AF2BBF' },
+    Event         = { fg = '#6C91BF' },
+    Field         = { fg = '#5BC8AF' },
+    File          = { fg = '#EF8354' },
+    Folder        = { fg = '#BFC0C0' },
+    Function      = { fg = '#E56399' },
+    History       = { fg = '#C2F8CB' },
+    Interface     = { fg = '#8367C7' },
+    Key           = { fg = '#D1AC00' },
+    Keyword       = { fg = '#20A4F3' },
+    Method        = { fg = '#5603AD' },
+    Module        = { fg = '#F2FF49' },
+    Namespace     = { fg = '#FF4242' },
+    Null          = { fg = '#C1CFDA' },
+    Number        = { fg = '#FB62F6' },
+    Object        = { fg = '#F18F01' },
+    Operator      = { fg = '#048BA8' },
+    Options       = { fg = '#99C24D' },
+    Package       = { fg = '#AFA2FF' },
+    Property      = { fg = '#CED097' },
+    Reference     = { fg = '#1B2CC1' },
+    Snippet       = { fg = '#7692FF' },
+    String        = { fg = '#FEEA00' },
+    Struct        = { fg = '#D81159' },
+    Text          = { fg = '#0496FF' },
+    TypeParameter = { fg = '#FFFFFC' },
+    Unit          = { fg = '#C97B84' },
+    Value         = { fg = '#C6DDF0' },
+    Variable      = { fg = '#B7ADCF' }
+}
+vim.g.kindshl_light = {
+    Array         = { fg = '#0B6E4F' },
+    Boolean       = { fg = '#69140E' },
+    Class         = { fg = '#1D3557' },
+    Color         = { fg = '#FA9F42' },
+    Constant      = { fg = '#744FC6' },
+    Constructor   = { fg = '#755C1B' },
+    Enum          = { fg = '#A167A5' },
+    EnumMember    = { fg = '#B80C09' },
+    Event         = { fg = '#53A548' },
+    Field         = { fg = '#E2DC12' },
+    File          = { fg = '#486499' },
+    Folder        = { fg = '#A74482' },
+    Function      = { fg = '#228CDB' },
+    History       = { fg = '#85CB33' },
+    Interface     = { fg = '#537A5A' },
+    Key           = { fg = '#645DD7' },
+    Keyword       = { fg = '#E36414' },
+    Method        = { fg = '#197278' },
+    Module        = { fg = '#EC368D' },
+    Namespace     = { fg = '#2F9C95' },
+    Null          = { fg = '#56666B' },
+    Number        = { fg = '#A5BE00' },
+    Object        = { fg = '#80A1C1' },
+    Operator      = { fg = '#F1DB4B' },
+    Options       = { fg = '#2292A4' },
+    Package       = { fg = '#B98EA7' },
+    Property      = { fg = '#3777FF' },
+    Reference     = { fg = '#18A999' },
+    Snippet       = { fg = '#BF0D4B' },
+    String        = { fg = '#D5573B' },
+    Struct        = { fg = '#75485E' },
+    Text          = { fg = '#5762D5' },
+    TypeParameter = { fg = '#5D2E8C' },
+    Unit          = { fg = '#FF6666' },
+    Value         = { fg = '#2EC4B6' },
+    Variable      = { fg = '#548687' }
+}
+
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
@@ -1018,6 +1095,13 @@ Plugins = {
             }
         })
 
+        local kind_hl = vim.g.kindshl_dark
+        if vim.o.background == 'light' then
+            kind_hl = vim.g.kindshl_light
+        end
+        for key, value in pairs(kind_hl) do
+            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value)
+        end
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
     dependencies = { "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path", "kwkarlwang/cmp-nvim-insert-text-lsp", "ray-x/cmp-treesitter" },
