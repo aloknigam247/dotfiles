@@ -1004,9 +1004,14 @@ Plugins = {
                         end
                     }
                 },
+                { name = "buffer-lines" },
                 { name = 'neorg' },
+                { name = 'nerdfont' },
+                { name = 'nvim_insert_text_lsp' },
                 { name = 'nvim_lsp' },
-                { name = 'snippy' }
+                { name = 'path' },
+                { name = 'snippy' },
+                { name = 'treesitter' }
             }),
             window = {
                 documentation = cmp.config.window.bordered(),
@@ -1015,7 +1020,7 @@ Plugins = {
 
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    dependencies = { "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
+    dependencies = { "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path", "kwkarlwang/cmp-nvim-insert-text-lsp", "ray-x/cmp-treesitter" },
     event = { "CmdlineEnter", "InsertEnter" },
 },
 
@@ -1734,7 +1739,8 @@ Plugins = {
         --     },
         -- }
         local capabilities = vim.lsp.protocol.make_client_capabilities()
-        -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        capabilities = require('cmp_nvim_insert_text_lsp').update_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
@@ -1779,9 +1785,9 @@ Plugins = {
                                 diagnostics = {
                                     globals = { "bit", "vim" }
                                 },
-                                -- workspace = {
-                                --     library = vim.api.nvim_get_runtime_file("", true)
-                                -- }
+                                workspace = {
+                                    library = vim.api.nvim_get_runtime_file("", true)
+                                }
                             }
                         }
                     }
@@ -2530,10 +2536,18 @@ Plugins = {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Wansmer/treesj
 {
+    'RRethy/nvim-treesitter-endwise',
+    ft = 'lua'
+},
+
+{
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
             auto_install = false,
+            endwise = {
+                enable = true,
+            },
             highlight = {
                 additional_vim_regex_highlighting = false,
                 disable = { "help", "norg", "norg_meta", "yaml" },
@@ -2916,6 +2930,8 @@ Plugins = {
     'rickhowe/spotdiff.vim',
     cmd = 'Diffthis'
 },
+
+-- https://github.com/shortcuts/no-neck-pain.nvim
 
 {
     'tversteeg/registers.nvim',
