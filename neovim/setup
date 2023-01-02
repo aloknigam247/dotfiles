@@ -2,3 +2,7 @@ files=(
        [init.vim]=~/.config/nvim/init.vim
        [init.lua]=~/.config/nvim/lua/init.lua
       )
+
+cmds=(
+      'sudo apt install git'
+     )
