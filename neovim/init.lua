@@ -456,8 +456,8 @@ function ColoRand()
     local bg = selection[2]
     local module = selection[3]
     local precmd = selection.precmd
-    -- vim.g.ColoRand = scheme .. ':' .. bg .. ':' .. module
-    vim.notify("Colorscheme " .. scheme .. ':' .. bg .. ':' .. module)
+    -- vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
+    vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
     if (module == '_') then
         vim.api.nvim_exec_autocmds('User', {pattern = scheme})
