@@ -1,6 +1,4 @@
-        [init.vim]=~/.config/nvim/init.vim
-        [packer.nvim]=~/.local/share/nvim/site/pack/packer/start/packer.nvim
-        [plug.vim]=~/.local/share/nvim/site/autoload/plug.vim
-        [plugins.lua]=~/.config/nvim/lua/plugins.lua
+files=(
+       [init.vim]=~/.config/nvim/init.vim
+       [init.lua]=~/.config/nvim/lua/init.lua
       )
-
