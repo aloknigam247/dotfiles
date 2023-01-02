@@ -92,7 +92,7 @@ function ColoRand()
         { 'base16-da-one-black',                  'dark',  'base16' },
         { 'base16-da-one-gray',                   'dark',  'base16' },
         { 'base16-da-one-ocean',                  'dark',  'base16' },
-        { 'base16-da-one-paper',                  'dark',  'base16' },
+        { 'base16-da-one-paper',                  'light', 'base16' },
         { 'base16-da-one-sea',                    'dark',  'base16' },
         { 'base16-da-one-white',                  'light', 'base16' },
         { 'base16-danqing',                       'dark',  'base16' },
@@ -1039,7 +1039,7 @@ Plugins = {
                 ghost_text = true
             },
             formatting = {
-                fields = { "abbr", "kind", "menu" },
+                fields = { "kind", "abbr", "menu" },
                 format = function(entry, vim_item)
                     if entry.source.name == "nvim_lsp" then
                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
@@ -1053,7 +1053,7 @@ Plugins = {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
                     local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
-                    vim_item.kind = kind_symbol and kind_symbol .. vim_item.kind or vim_item.kind
+                    vim_item.kind = kind_symbol or vim_item.kind
 
                     return vim_item
                 end
