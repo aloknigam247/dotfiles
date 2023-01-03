@@ -109,7 +109,7 @@ function ColoRand()
         { 'base16-edge-light',                    'light', 'base16' },
         { 'base16-eighties',                      'dark',  'base16' },
         { 'base16-embers',                        'dark',  'base16' },
-        { 'base16-emil',                          'dark',  'base16' },
+        { 'base16-emil',                          'light', 'base16' },
         { 'base16-equilibrium-dark',              'dark',  'base16' },
         { 'base16-equilibrium-gray-dark',         'dark',  'base16' },
         { 'base16-equilibrium-gray-light',        'light', 'base16' },
