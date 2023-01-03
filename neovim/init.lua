@@ -2501,7 +2501,7 @@ Plugins = {
         --         { navic.get_location, cond = navic.is_available }
             -- }
         },
-        extensions = { 'nvim-tree' }
+        extensions = { 'nvim-tree', 'toggleterm' }
         }
     end,
     event = 'CursorHold'
