@@ -352,7 +352,6 @@ function ColoRand()
         { 'kanagawa',                             'dark',  '_' },
         { 'kanagawabones',                        'dark',  'zenbones' },
         { 'kimbox',                               'dark',  '_' },
-        { 'koehler',                              'dark',  '_' },
         { 'limestone',                            'light', 'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'lunaperche',                           'dark',  '_' },
         { 'mariana',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
@@ -2501,7 +2500,7 @@ Plugins = {
         --         { navic.get_location, cond = navic.is_available }
             -- }
         },
-        extensions = { 'nvim-tree', 'toggleterm' }
+        extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
     end,
     event = 'CursorHold'
