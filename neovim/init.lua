@@ -531,7 +531,7 @@ vim.g.kindshl_dark = {
     Interface     = { fg = '#8367C7' },
     Key           = { fg = '#D1AC00' },
     Keyword       = { fg = '#20A4F3' },
-    Method        = { fg = '#5603AD' },
+    Method        = { fg = '#D7D9D7' },
     Module        = { fg = '#F2FF49' },
     Namespace     = { fg = '#FF4242' },
     Null          = { fg = '#C1CFDA' },
@@ -1104,7 +1104,7 @@ Plugins = {
         end
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    dependencies = { "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path", "kwkarlwang/cmp-nvim-insert-text-lsp", "ray-x/cmp-treesitter" },
+    dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "kwkarlwang/cmp-nvim-insert-text-lsp", "ray-x/cmp-treesitter" },
     event = { "CmdlineEnter", "InsertEnter" },
 },
 
