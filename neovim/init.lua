@@ -170,7 +170,6 @@ function ColoRand()
         { 'base16-ia-light',                      'light', 'base16' },
         { 'base16-icy',                           'dark',  'base16' },
         { 'base16-irblack',                       'dark',  'base16' },
-        { 'base16-isotope',                       'dark',  'base16' },
         { 'base16-kanagawa',                      'dark',  'base16' },
         { 'base16-katy',                          'dark',  'base16' },
         { 'base16-kimber',                        'dark',  'base16' },
