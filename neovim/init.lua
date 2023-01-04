@@ -29,6 +29,29 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
+function LightenDarkenColor(col, amt)
+    local num = tonumber(col, 16)
+    local r = bit.rshift(num, 16) + amt
+    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+    local g = bit.band(num, 0x0000FF) + amt
+    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+    return string.format("#%X", newColor)
+end
+
+function FixNontext()
+    local bg
+    if (vim.o.background ==  "dark") then
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        local bs = string.format("%X", bg)
+        bg = LightenDarkenColor(bs, 60)
+    else
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        local bs = string.format("%X", bg)
+        bg = LightenDarkenColor(bs, -20)
+    end
+    vim.api.nvim_set_hl(0, "NonText", { fg = bg })
+end
+
 function ColoRand()
     local colos = {
         { 'NeoSolarized',                         'dark',  '_' },
@@ -232,7 +255,7 @@ function ColoRand()
         { 'base16-spaceduck',                     'dark',  'base16' },
         { 'base16-spacemacs',                     'dark',  'base16' },
         { 'base16-stella',                        'dark',  'base16' },
-        { 'base16-still-alive',                   'light', 'base16' },
+        { 'base16-still-alive',                   'light', 'base16', postcmd = function() FixNontext() end },
         { 'base16-summercamp',                    'dark',  'base16' },
         { 'base16-summerfruit-dark',              'dark',  'base16' },
         { 'base16-summerfruit-light',             'light', 'base16' },
@@ -910,15 +933,6 @@ Plugins = {
                 'regex'
             }
         })
-        function LightenDarkenColor(col, amt)
-            local num = tonumber(col, 16)
-            local r = bit.rshift(num, 16) + amt
-            local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-            local g = bit.band(num, 0x0000FF) + amt
-            local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-            return string.format("#%X", newColor)
-        end
-
         local bg
         if (vim.o.background ==  "dark") then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
