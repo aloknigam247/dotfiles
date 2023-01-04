@@ -6,11 +6,6 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
-" syntax off
-" au BufRead * echo "BufRead"
-" au BufEnter * echo "BufEnter"
-" au BufReadPost * echo "BufReadPost"
-" au BufWinEnter * echo "BufWinEnter"
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Plugins      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 " autocmd BufRead plugins.lua lua require('plugins')

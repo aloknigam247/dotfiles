@@ -6,18 +6,12 @@
  ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
--- require("lazy").setup(plugins, opts)
-vim.api.nvim_create_autocmd('UIEnter', {callback = function()
-    -- vim.defer_fn(function() vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'}) end, 0)
-    vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'})
-end})
-
-
-vim.notify = function(msg, level, opt)
-    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
-    vim.notify(msg, level, opt)
-end
+-- vim.notify = function(msg, level, opt)
+--     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+--     vim.notify(msg, level, opt)
+-- end
 
 function ColoRand()
     local colos = {
@@ -589,7 +583,6 @@ vim.g.kindshl_light = {
     Variable      = { fg = '#548687' }
 }
 
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
     { '─', 'FloatBorder' },
@@ -712,6 +705,7 @@ Plugins = {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
+    -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
         local npairs = require("nvim-autopairs")
@@ -1190,7 +1184,7 @@ Plugins = {
 -- -- end nvim-dap
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/jayp0521/mason-nvim-dap.nvim
+-- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- use {
 --     'jbyuki/one-small-step-for-vimkind',
 --     config = function()
@@ -2908,7 +2902,10 @@ Plugins = {
     cmd = 'InlineEdit'
 },
 
+-- https://github.com/EtiamNullam/deferred-clipboard.nvim
+
 {
+    -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
     config = function()
         local debugprint = require('debugprint')
