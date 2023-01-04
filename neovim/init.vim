@@ -16,11 +16,11 @@
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
 let c_space_errors = 1             " Highlight trailing spaces
-let g:markdown_folding = 1         " Enable markdown folding
-let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
-let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode
-let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
-let g:netrw_liststyle = 3          " Set netrw style as tree
+" let g:markdown_folding = 1         " Enable markdown folding
+" let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
+" let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode
+" let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
+" let g:netrw_liststyle = 3          " Set netrw style as tree
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Config Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -73,7 +73,7 @@ set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\         " No dot characters in fold
 set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
-" set lazyredraw               " Don't redraw screen on macros, registers and other commands.
+set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
@@ -193,107 +193,13 @@ function! SynGroup()
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
 lua << EOF
--- Blink on yank
--- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
-vim.api.nvim_create_autocmd(
-	"TextYankPost",
-	{
-		desc = "highlight text on yank",
-		pattern = "*",
-		group = group,
-		callback = function()
-			vim.highlight.on_yank {
-				higroup="ColorColumn", timeout=300, on_visual=true
-			}
-		end,
-	}
-)
 EOF
-" }}}
 highlight ConflictMarkerBegin guibg=#2f7366
 highlight ConflictMarkerOurs guibg=#2e5049
 highlight ConflictMarkerTheirs guibg=#344f69
 highlight ConflictMarkerEnd guibg=#2f628e
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
-lua << EOF
-local fname = vim.fn.expand('%')
-local lazyfile = "lazyplugins.lua"
--- if fname:sub(-#lazyfile) ==  lazyfile then
-    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-    if not vim.loop.fs_stat(lazypath) then
-      vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--single-branch",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-      })
-    end
-    vim.opt.runtimepath:prepend(lazypath)
-    require('init')
-    ColoRand()
-    vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
-        vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
-        vim.cmd([[
-        unlet g:loaded_clipboard_provider
-        runtime autoload/provider/clipboard.vim
-        ]])
-    end})
--- else
---     require('impatient')
---     vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
--- end
-
-vim.diagnostic.config({
-    float = {
-        source = true
-    },
-    severity_sort = true,
-    virtual_text = {
-        prefix = ' ',
-        source = true
-    }
-})
-
-sleeper = {
-    timer = vim.loop.new_timer(),
-    last = 1,
-    sleeps = {
-        { start = function() require('drop').setup({theme = "leaves"}); require('drop').show(); end, stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = "snow"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = "stars"}); require('drop').show(); end,  stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = "xmas"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
-        { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-    }
-}
-
-function resetSleeper()
-    sleeper.timer:stop()
-    sleeper.sleeps[sleeper.last].stop()
-
-    sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
-        sleeper.sleeps[sleeper.last].start()
-        local new_sleeps = (sleeper.last) % table.getn(sleeper.sleeps) + 1
-        sleeper.last = new_sleeps
-    end
-    ))
-end
-
-vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.sleeps[sleeper.last].stop() end})
-
-url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
-
-vim.fn.matchadd("HighlightURL", url_matcher, 1)
-EOF
 highlight HighlightURL gui=underline cterm=underline
+lua require('init')
+" }}}

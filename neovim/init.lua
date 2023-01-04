@@ -13,6 +13,22 @@
 --     vim.notify(msg, level, opt)
 -- end
 
+-- Blink on yank
+-- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
+vim.api.nvim_create_autocmd(
+	"TextYankPost",
+	{
+		desc = "highlight text on yank",
+		pattern = "*",
+		-- group = group,
+		callback = function()
+			vim.highlight.on_yank {
+				higroup="Search", timeout=300, on_visual=true
+			}
+		end,
+	}
+)
+
 function ColoRand()
     local colos = {
         { 'NeoSolarized',                         'dark',  '_' },
@@ -114,7 +130,7 @@ function ColoRand()
         { 'base16-everforest',                    'dark',  'base16' },
         { 'base16-flat',                          'dark',  'base16' },
         { 'base16-framer',                        'dark',  'base16' },
-        { 'base16-fruit-soda',                    'dark',  'base16' },
+        { 'base16-fruit-soda',                    'light', 'base16' },
         { 'base16-gigavolt',                      'dark',  'base16' },
         { 'base16-github',                        'light', 'base16' },
         { 'base16-google-dark',                   'dark',  'base16' },
@@ -544,6 +560,7 @@ vim.g.kindshl_dark = {
     Value         = { fg = '#C6DDF0' },
     Variable      = { fg = '#B7ADCF' }
 }
+
 vim.g.kindshl_light = {
     Array         = { fg = '#0B6E4F' },
     Boolean       = { fg = '#69140E' },
@@ -593,6 +610,83 @@ local border_shape = {
     { '╰', 'FloatBorder' },
     { '│', 'FloatBorder' },
 }
+
+local fname = vim.fn.expand('%')
+local lazyfile = "lazyplugins.lua"
+-- if fname:sub(-#lazyfile) ==  lazyfile then
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "--single-branch",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+    })
+    end
+    vim.opt.runtimepath:prepend(lazypath)
+    vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
+    vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
+    vim.cmd([[
+    unlet g:loaded_clipboard_provider
+    runtime autoload/provider/clipboard.vim
+    ]])
+end})
+-- else
+--     require('impatient')
+--     vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
+-- end
+
+vim.diagnostic.config({
+    float = {
+        source = true
+    },
+    severity_sort = true,
+    virtual_text = {
+        prefix = ' ',
+        source = true
+    }
+})
+
+url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+
+vim.fn.matchadd("HighlightURL", url_matcher, 1)
+
+sleeper = {
+    timer = vim.loop.new_timer(),
+    last = 1,
+    sleeps = {
+        { start = function() require('drop').setup({theme = "leaves"}); require('drop').show(); end, stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "snow"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "stars"}); require('drop').show(); end,  stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "xmas"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
+        { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+    }
+}
+
+function resetSleeper()
+    sleeper.timer:stop()
+    sleeper.sleeps[sleeper.last].stop()
+
+    sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
+        sleeper.sleeps[sleeper.last].start()
+        local new_sleeps = (sleeper.last) % table.getn(sleeper.sleeps) + 1
+        sleeper.last = new_sleeps
+    end
+    ))
+end
+
+vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.sleeps[sleeper.last].stop() end})
 
 LazyConfig = {
     root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
@@ -3038,5 +3132,6 @@ Plugins = {
 }
 
 require("lazy").setup(Plugins, LazyConfig)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~>
