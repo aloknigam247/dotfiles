@@ -6,18 +6,12 @@
  ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
--- require("lazy").setup(plugins, opts)
-vim.api.nvim_create_autocmd('UIEnter', {callback = function()
-    -- vim.defer_fn(function() vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'}) end, 0)
-    vim.api.nvim_exec_autocmds('User', {pattern = 'LazyLoad0'})
-end})
-
-
-vim.notify = function(msg, level, opt)
-    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
-    vim.notify(msg, level, opt)
-end
+-- vim.notify = function(msg, level, opt)
+--     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+--     vim.notify(msg, level, opt)
+-- end
 
 function ColoRand()
     local colos = {
@@ -109,7 +103,7 @@ function ColoRand()
         { 'base16-edge-light',                    'light', 'base16' },
         { 'base16-eighties',                      'dark',  'base16' },
         { 'base16-embers',                        'dark',  'base16' },
-        { 'base16-emil',                          'dark',  'base16' },
+        { 'base16-emil',                          'light', 'base16' },
         { 'base16-equilibrium-dark',              'dark',  'base16' },
         { 'base16-equilibrium-gray-dark',         'dark',  'base16' },
         { 'base16-equilibrium-gray-light',        'light', 'base16' },
@@ -351,7 +345,6 @@ function ColoRand()
         { 'kanagawa',                             'dark',  '_' },
         { 'kanagawabones',                        'dark',  'zenbones' },
         { 'kimbox',                               'dark',  '_' },
-        { 'koehler',                              'dark',  '_' },
         { 'limestone',                            'light', 'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'lunaperche',                           'dark',  '_' },
         { 'mariana',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
@@ -589,7 +582,6 @@ vim.g.kindshl_light = {
     Variable      = { fg = '#548687' }
 }
 
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local border_shape = {
     { '╭', 'FloatBorder' },
     { '─', 'FloatBorder' },
@@ -712,6 +704,7 @@ Plugins = {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 {
+    -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
         local npairs = require("nvim-autopairs")
@@ -1190,7 +1183,7 @@ Plugins = {
 -- -- end nvim-dap
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/jayp0521/mason-nvim-dap.nvim
+-- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- use {
 --     'jbyuki/one-small-step-for-vimkind',
 --     config = function()
@@ -2500,7 +2493,7 @@ Plugins = {
         --         { navic.get_location, cond = navic.is_available }
             -- }
         },
-        extensions = { 'nvim-tree', 'toggleterm' }
+        extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
     end,
     event = 'CursorHold'
@@ -2908,7 +2901,10 @@ Plugins = {
     cmd = 'InlineEdit'
 },
 
+-- https://github.com/EtiamNullam/deferred-clipboard.nvim
+
 {
+    -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
     config = function()
         local debugprint = require('debugprint')
