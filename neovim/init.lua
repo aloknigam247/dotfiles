@@ -769,7 +769,7 @@ LazyConfig = {
                 "netrwPlugin",
                 "spellfile",
                 "tarPlugin",
-                "tohtml",
+                -- "tohtml",
                 "tutor",
                 "zipPlugin",
             },
