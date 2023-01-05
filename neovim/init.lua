@@ -8,25 +8,25 @@
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
--- vim.notify = function(msg, level, opt)
---     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
---     vim.notify(msg, level, opt)
--- end
+vim.notify = function(msg, level, opt)
+    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+    vim.notify(msg, level, opt)
+end
 
 -- Blink on yank
 -- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
 vim.api.nvim_create_autocmd(
-	"TextYankPost",
-	{
-		desc = "highlight text on yank",
-		pattern = "*",
-		-- group = group,
-		callback = function()
-			vim.highlight.on_yank {
-				higroup="Search", timeout=300, on_visual=true
-			}
-		end,
-	}
+    "TextYankPost",
+    {
+        desc = "highlight text on yank",
+        pattern = "*",
+        -- group = group,
+        callback = function()
+            vim.highlight.on_yank {
+                higroup="Search", timeout=300, on_visual=true
+            }
+        end,
+    }
 )
 
 function LightenDarkenColor(col, amt)
@@ -235,7 +235,7 @@ function ColoRand()
         { 'base16-railscasts',                    'dark',  'base16' },
         { 'base16-rebecca',                       'dark',  'base16' },
         { 'base16-rose-pine',                     'dark',  'base16' },
-        { 'base16-rose-pine-dawn',                'dark',  'base16' },
+        { 'base16-rose-pine-dawn',                'light', 'base16' },
         { 'base16-rose-pine-moon',                'dark',  'base16' },
         { 'base16-sagelight',                     'dark',  'base16' },
         { 'base16-sakura',                        'dark',  'base16' },
@@ -631,23 +631,21 @@ local border_shape = {
     { '│', 'FloatBorder' },
 }
 
-local fname = vim.fn.expand('%')
-local lazyfile = "lazyplugins.lua"
--- if fname:sub(-#lazyfile) ==  lazyfile then
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--single-branch",
-    "https://github.com/folke/lazy.nvim.git",
-    lazypath,
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
     })
-    end
-    vim.opt.runtimepath:prepend(lazypath)
-    vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
-    vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
+end
+vim.opt.runtimepath:prepend(lazypath)
+
+vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
+vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
     vim.cmd([[
     unlet g:loaded_clipboard_provider
     runtime autoload/provider/clipboard.vim
@@ -705,20 +703,20 @@ function resetSleeper()
     ))
 end
 
-vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.sleeps[sleeper.last].stop() end})
+-- vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
+--vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.sleeps[sleeper.last].stop() end})
 
 LazyConfig = {
     root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
     defaults = {
-        lazy = false, -- should plugins be lazy-loaded?
+        lazy = true, -- should plugins be lazy-loaded?
         version = nil,
     },
     lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
     concurrency = nil, ---@type number limit the maximum amount of concurrent tasks
     git = {
         log = { "--since=3 days ago" }, -- show commits from the last 3 days
-        timeout = 120, -- kill processes that take more than 2 minutes
+        timeout = 12000, -- kill processes that take more than 2 minutes
         url_format = "https://github.com/%s.git",
     },
     dev = {
@@ -2760,9 +2758,10 @@ Plugins = {
 
 {
     'nvim-treesitter/nvim-treesitter-context',
-    cmd = 'TSContextToggle',
+    cmd = 'TSContextEnable',
     config = function()
         require('treesitter-context').setup {
+            enable = true,
             separator = '━',
             patterns = {
                 lua = {
