@@ -8,13 +8,10 @@
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
-vim.notify = function(msg, level, opt)
-    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
-    vim.notify(msg, level, opt)
-end
 
 -- Blink on yank
 -- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
+-- AutoCommands
 vim.api.nvim_create_autocmd(
     "TextYankPost",
     {
@@ -28,6 +25,14 @@ vim.api.nvim_create_autocmd(
         end,
     }
 )
+
+vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
+vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
+    vim.cmd([[
+    unlet g:loaded_clipboard_provider
+    runtime autoload/provider/clipboard.vim
+    ]])
+end})
 
 function LightenDarkenColor(col, amt)
     local num = tonumber(col, 16)
@@ -51,6 +56,554 @@ function FixNontext()
     end
     vim.api.nvim_set_hl(0, "NonText", { fg = bg })
 end
+
+vim.g.cmp_kinds = {
+    Array         = ' ',
+    Boolean       = ' ',
+    Class         = ' ',
+    Color         = ' ',
+    Constant      = ' ',
+    Constructor   = ' ',
+    Enum          = ' ',
+    EnumMember    = ' ',
+    Event         = ' ',
+    Field         = ' ',
+    File          = ' ',
+    Folder        = ' ',
+    Function      = ' ',
+    History       = ' ',
+    Interface     = ' ',
+    Key           = ' ',
+    Keyword       = ' ',
+    Method        = ' ',
+    Module        = ' ',
+    Namespace     = 'ﬥ ',
+    Null          = ' ',
+    Number        = ' ',
+    Object        = ' ',
+    Operator      = ' ',
+    Options       = ' ',
+    Package       = ' ',
+    Property      = ' ',
+    Reference     = ' ',
+    Snippet       = ' ',
+    String        = ' ',
+    Struct        = ' ',
+    Text          = ' ',
+    TypeParameter = ' ',
+    Unit          = ' ',
+    Value         = ' ',
+    Variable      = ' '
+}
+
+vim.g.kindshl_dark = {
+    Array         = { fg = '#F42272' },
+    Boolean       = { fg = '#B8B8F3' },
+    Class         = { fg = '#519872' },
+    Color         = { fg = '#A4B494' },
+    Constant      = { fg = '#C5E063' },
+    Constructor   = { fg = '#4AAD52' },
+    Enum          = { fg = '#E3B5A4' },
+    EnumMember    = { fg = '#AF2BBF' },
+    Event         = { fg = '#6C91BF' },
+    Field         = { fg = '#5BC8AF' },
+    File          = { fg = '#EF8354' },
+    Folder        = { fg = '#BFC0C0' },
+    Function      = { fg = '#E56399' },
+    History       = { fg = '#C2F8CB' },
+    Interface     = { fg = '#8367C7' },
+    Key           = { fg = '#D1AC00' },
+    Keyword       = { fg = '#20A4F3' },
+    Method        = { fg = '#D7D9D7' },
+    Module        = { fg = '#F2FF49' },
+    Namespace     = { fg = '#FF4242' },
+    Null          = { fg = '#C1CFDA' },
+    Number        = { fg = '#FB62F6' },
+    Object        = { fg = '#F18F01' },
+    Operator      = { fg = '#048BA8' },
+    Options       = { fg = '#99C24D' },
+    Package       = { fg = '#AFA2FF' },
+    Property      = { fg = '#CED097' },
+    Reference     = { fg = '#1B2CC1' },
+    Snippet       = { fg = '#7692FF' },
+    String        = { fg = '#FEEA00' },
+    Struct        = { fg = '#D81159' },
+    Text          = { fg = '#0496FF' },
+    TypeParameter = { fg = '#FFFFFC' },
+    Unit          = { fg = '#C97B84' },
+    Value         = { fg = '#C6DDF0' },
+    Variable      = { fg = '#B7ADCF' }
+}
+
+vim.g.kindshl_light = {
+    Array         = { fg = '#0B6E4F' },
+    Boolean       = { fg = '#69140E' },
+    Class         = { fg = '#1D3557' },
+    Color         = { fg = '#FA9F42' },
+    Constant      = { fg = '#744FC6' },
+    Constructor   = { fg = '#755C1B' },
+    Enum          = { fg = '#A167A5' },
+    EnumMember    = { fg = '#B80C09' },
+    Event         = { fg = '#53A548' },
+    Field         = { fg = '#E2DC12' },
+    File          = { fg = '#486499' },
+    Folder        = { fg = '#A74482' },
+    Function      = { fg = '#228CDB' },
+    History       = { fg = '#85CB33' },
+    Interface     = { fg = '#537A5A' },
+    Key           = { fg = '#645DD7' },
+    Keyword       = { fg = '#E36414' },
+    Method        = { fg = '#197278' },
+    Module        = { fg = '#EC368D' },
+    Namespace     = { fg = '#2F9C95' },
+    Null          = { fg = '#56666B' },
+    Number        = { fg = '#A5BE00' },
+    Object        = { fg = '#80A1C1' },
+    Operator      = { fg = '#F1DB4B' },
+    Options       = { fg = '#2292A4' },
+    Package       = { fg = '#B98EA7' },
+    Property      = { fg = '#3777FF' },
+    Reference     = { fg = '#18A999' },
+    Snippet       = { fg = '#BF0D4B' },
+    String        = { fg = '#D5573B' },
+    Struct        = { fg = '#75485E' },
+    Text          = { fg = '#5762D5' },
+    TypeParameter = { fg = '#5D2E8C' },
+    Unit          = { fg = '#FF6666' },
+    Value         = { fg = '#2EC4B6' },
+    Variable      = { fg = '#548687' }
+}
+
+local border_shape = {
+    { '╭', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╮', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+    { '╯', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╰', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+}
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
+
+vim.diagnostic.config({
+    float = {
+        source = true
+    },
+    severity_sort = true,
+    virtual_text = {
+        prefix = ' ',
+        source = true
+    }
+})
+
+url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+
+vim.fn.matchadd("HighlightURL", url_matcher, 1)
+
+LazyConfig = {
+    root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
+    defaults = {
+        lazy = true, -- should plugins be lazy-loaded?
+        version = nil,
+    },
+    lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
+    concurrency = nil, ---@type number limit the maximum amount of concurrent tasks
+    git = {
+        log = { "--since=3 days ago" }, -- show commits from the last 3 days
+        timeout = 12000, -- kill processes that take more than 2 minutes
+        url_format = "https://github.com/%s.git",
+    },
+    dev = {
+        path = "~/projects",
+        patterns = {}, -- For example {"folke"}
+    },
+    install = {
+        missing = true,
+        colorscheme = { },
+    },
+    ui = {
+        size = { width = 0.8, height = 0.8 },
+        border = "rounded",
+        icons = {
+            not_loaded = "",
+            loaded = "",
+            cmd = " ",
+            config = "",
+            event = "",
+            ft = " ",
+            init = " ",
+            keys = " ",
+            plugin = " ",
+            runtime = " ",
+            source = " ",
+            start = "",
+            task = " ",
+            lazy = " ",
+            list = { "●", "", "", "" },
+        },
+        throttle = 20, -- how frequently should the ui process render events
+        custom_keys = {},
+    },
+    diff = {
+        cmd = "git",
+    },
+    checker = {
+        enabled = false,
+        concurrency = nil, ---@type number? set to 1 to check for updates very slowly
+        notify = true, -- get a notification when new updates are found
+        frequency = 3600, -- check for updates every hour
+    },
+    change_detection = {
+        enabled = true,
+        notify = true, -- get a notification when changes are found
+    },
+    performance = {
+        cache = {
+            enabled = true,
+            path = vim.fn.stdpath("state") .. "/lazy/cache",
+            -- Once one of the following events triggers, caching will be disabled.
+            -- To cache all modules, set this to `{}`, but that is not recommended.
+            -- The default is to disable on:
+            --  * VimEnter: not useful to cache anything else beyond startup
+            --  * BufReadPre: this will be triggered early when opening a file from the command line directly
+            disable_events = { },
+            ttl = 3600 * 24 * 5, -- keep unused modules for up to 5 days
+        },
+        reset_packpath = true, -- reset the package path to improve startup time
+        rtp = {
+            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+            paths = {}, -- add any custom paths here that you want to indluce in the rtp
+            disabled_plugins = {
+                "gzip",
+                -- "health",
+                "man",
+                -- "matchit",
+                -- "matchparen",
+                "netrwPlugin",
+                "spellfile",
+                "tarPlugin",
+                "tohtml",
+                "tutor",
+                "zipPlugin",
+            },
+        },
+    },
+    readme = {
+        root = vim.fn.stdpath("state") .. "/lazy/readme",
+        files = { "README.md" },
+        skip_if_doc_exists = true,
+    },
+}
+
+Plugins = {}
+function AddPlugin(opts)
+    table.insert(Plugins, opts)
+end
+
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+AddPlugin {
+    'dhruvasagar/vim-table-mode',
+    cmd = 'TableModeEnable'
+}
+
+-- use 'echasnovski/mini.align',
+
+AddPlugin {
+    'junegunn/vim-easy-align',
+    cmd = 'EasyAlign'
+}
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+AddPlugin {
+    -- https://github.com/m4xshen/autoclose.nvim
+    'windwp/nvim-autopairs',
+    config = function()
+        local npairs = require("nvim-autopairs")
+        local Rule = require("nvim-autopairs.rule")
+        local cond = require'nvim-autopairs.conds'
+
+        npairs.setup({
+            enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
+        })
+        npairs.add_rules {
+            -- #include <> pair for c and cpp
+            Rule("#include <", ">", { "c", "cpp" }),
+            -- Disable " rule for vim
+            Rule('"', '"')
+            :with_pair(cond.not_filetypes({"vim"})),
+            -- Add spaces in pair after parentheses
+            -- (|) --> space --> ( | )
+            -- ( | ) --> ) --> ( )|
+            Rule(' ', ' ')
+            :with_pair(function (opts)
+                local pair = opts.line:sub(opts.col - 1, opts.col)
+                return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+            end),
+            Rule('( ', ' )')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%)') ~= nil
+            end)
+            :use_key(')'),
+            Rule('{ ', ' }')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%}') ~= nil
+            end)
+            :use_key('}'),
+            Rule('[ ', ' ]')
+            :with_pair(function() return false end)
+            :with_move(function(opts)
+                return opts.prev_char:match('.%]') ~= nil
+            end)
+            :use_key(']'),
+            -- Auto add space on =
+            Rule('=', '')
+            :with_pair(cond.not_inside_quote())
+            :with_pair(function(opts)
+                local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+                if last_char:match('[%w%=%s]') then
+                    return true
+                end
+                return false
+            end)
+            :replace_endpair(function(opts)
+                local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+                local next_char = opts.line:sub(opts.col, opts.col)
+                next_char = next_char == ' ' and '' or ' '
+                if prev_2char:match('%w$') then
+                    return '<bs> =' .. next_char
+                end
+                if prev_2char:match('%=$') then
+                    return next_char
+                end
+                if prev_2char:match('=') then
+                    return '<bs><bs>=' .. next_char
+                end
+                return ''
+            end)
+            :set_end_pair_length(0)
+            :with_move(cond.none())
+            :with_del(cond.none())
+        }
+        -- Insert `(` after select function or method item
+        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+        local cmp = require('cmp')
+        cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+        )
+    end,
+    event = 'InsertEnter',
+}
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- {
+--     'David-Kunz/markid',
+--     -- after = 'nvim-treesitter'
+--     config = function()
+--         local m = require'markid'
+--         require'nvim-treesitter.configs'.setup {
+--             markid = {
+--                 enable = true,
+--                 colors = m.colors.medium,
+--                 queries = m.queries,
+--                 is_supported = function(lang)
+--                     local queries = configs.get_module("markid").queries
+--                     return pcall(vim.treesitter.parse_query, lang, queries[lang] or queries['default'])
+--                 end
+--             }
+--         }
+--     end
+-- },
+
+AddPlugin {
+    'RRethy/vim-illuminate',
+    config = function()
+        require('illuminate').configure({
+            providers =  {
+                'lsp',
+                'treesitter',
+                'regex'
+            }
+        })
+        local bg
+        if (vim.o.background ==  "dark") then
+            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+            local bs = string.format("%X", bg)
+            bg = LightenDarkenColor(bs, 40)
+        else
+            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+            local bs = string.format("%X", bg)
+            bg = LightenDarkenColor(bs, -40)
+        end
+        vim.api.nvim_set_hl(0, "IlluminatedWordText", {
+            bg = bg,
+            underline = true
+        })
+        vim.cmd[[
+           " hi IlluminatedWordText guibg = underline
+           hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
+           hi IlluminatedWordWrite guibg = #1F7A8C gui = italic
+           hi LspReferenceText guibg = #679436
+           hi LspReferenceWrite guibg = #A5BE00
+           hi LspReferenceRead guibg = #427AA1
+       ]]
+    end,
+    event = 'CursorHold'
+}
+
+-- use 'azabiong/vim-highlighter'
+
+AddPlugin {
+    'folke/lsp-colors.nvim',
+    event = "LspAttach"
+}
+
+-- https://github.com/folke/paint.nvim
+
+AddPlugin {
+    'folke/todo-comments.nvim',
+    config = function()
+        require("todo-comments").setup({
+            keywords = {
+                THOUGHT = { icon = "🤔", color = "info"}
+            }
+        })
+        vim.keymap.set("n", "]t", function()
+            require("todo-comments").jump_next()
+        end, { desc = "Next todo comment" })
+
+        vim.keymap.set("n", "[t", function()
+            require("todo-comments").jump_prev()
+        end, { desc = "Previous todo comment" })
+    end,
+    event = "CursorHold"
+}
+
+AddPlugin {
+    'kevinhwang91/nvim-hlslens',
+    config = function()
+        require('hlslens').setup()
+    end,
+    keys = { "n", "N", "*", "#", "g*", "g#" }
+}
+
+AddPlugin {
+    'norcalli/nvim-colorizer.lua',
+    cmd = "ColorizerToggle",
+    config = function()
+        require('colorizer').setup()
+    end
+}
+
+AddPlugin {
+    'nvim-zh/colorful-winsep.nvim',
+    config = function ()
+        require('colorful-winsep').setup({
+            symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+        })
+    end,
+    event = 'WinNew'
+}
+
+AddPlugin {
+    't9md/vim-quickhl',
+    keys = {
+        { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
+        { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'n' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
+    }
+}
+
+AddPlugin {
+    -- https://github.com/xiyaowong/nvim-transparent
+    'tribela/vim-transparent',
+    cmd = 'TransparentToggle'
+}
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+
+-- https://github.com/lifepillar/vim-colortemplate
+-- https://github.com/folke/styler.nvim
+
+AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
+AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
+AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
+AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                                 }
+AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              }
+AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                                  }
+AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
+AddPlugin { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                                }
+AddPlugin { 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                            }
+AddPlugin { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 }
+AddPlugin { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                                 }
+AddPlugin { 'atelierbram/Base2Tone-nvim',       event = 'User base2tone'                                               }
+AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                              }
+AddPlugin { 'cpea2506/one_monokai.nvim',        event = 'User one_monokai'                                             }
+AddPlugin { 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                                 }
+AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
+AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              }
+AddPlugin { 'gbprod/nord.nvim',                 event = 'User nord'                                                    }
+AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
+AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
+AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 }
+AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
+AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                               }
+AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
+AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'                                                  }
+AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                            }
+AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                                }
+AddPlugin { 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine'                                           }
+AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             }
+AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
+AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'                                                 }
+AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
+AddPlugin { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'                                               }
+AddPlugin { 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'                                              }
+AddPlugin { 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              }
+AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                                  }
+AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
+AddPlugin { 'ramojus/mellifluous.nvim',         event = 'User mellifluous', dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'ray-x/aurora',                     event = 'User aurora'                                                  }
+AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
+AddPlugin { 'rebelot/kanagawa.nvim',            event = 'User kanagawa'                                                }
+AddPlugin { 'rmehri01/onenord.nvim',            event = 'User onenord'                                                 }
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
+AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                    }
+AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                              }
+AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
+AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  }
+AddPlugin { 'savq/melange',                     event = 'User melange'                                                 }
+AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
+AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
+AddPlugin { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'                                            }
+AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
+AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
+AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
+AddPlugin { 'tjdevries/gruvbuddy.nvim',         event = 'User gruvbuddy',   dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
+AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
+AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
+AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
 
 function ColoRand()
     local colos = {
@@ -483,8 +1036,9 @@ function ColoRand()
     local bg = selection[2]
     local module = selection[3]
     local precmd = selection.precmd
-    -- vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
-    vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
+    local postcmd = selection.postcmd
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
+    -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
     if (module == '_') then
         vim.api.nvim_exec_autocmds('User', {pattern = scheme})
@@ -497,602 +1051,15 @@ function ColoRand()
     end
     vim.cmd.colorscheme(scheme)
     vim.cmd[[highlight clear CursorLine]]
+    if (postcmd) then
+        postcmd()
+    end
 end
 
 vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
-
-vim.g.cmp_kinds = {
-    Array         = ' ',
-    Boolean       = ' ',
-    Class         = ' ',
-    Color         = ' ',
-    Constant      = ' ',
-    Constructor   = ' ',
-    Enum          = ' ',
-    EnumMember    = ' ',
-    Event         = ' ',
-    Field         = ' ',
-    File          = ' ',
-    Folder        = ' ',
-    Function      = ' ',
-    History       = ' ',
-    Interface     = ' ',
-    Key           = ' ',
-    Keyword       = ' ',
-    Method        = ' ',
-    Module        = ' ',
-    Namespace     = 'ﬥ ',
-    Null          = ' ',
-    Number        = ' ',
-    Object        = ' ',
-    Operator      = ' ',
-    Options       = ' ',
-    Package       = ' ',
-    Property      = ' ',
-    Reference     = ' ',
-    Snippet       = ' ',
-    String        = ' ',
-    Struct        = ' ',
-    Text          = ' ',
-    TypeParameter = ' ',
-    Unit          = ' ',
-    Value         = ' ',
-    Variable      = ' '
-}
-
-vim.g.kindshl_dark = {
-    Array         = { fg = '#F42272' },
-    Boolean       = { fg = '#B8B8F3' },
-    Class         = { fg = '#519872' },
-    Color         = { fg = '#A4B494' },
-    Constant      = { fg = '#C5E063' },
-    Constructor   = { fg = '#4AAD52' },
-    Enum          = { fg = '#E3B5A4' },
-    EnumMember    = { fg = '#AF2BBF' },
-    Event         = { fg = '#6C91BF' },
-    Field         = { fg = '#5BC8AF' },
-    File          = { fg = '#EF8354' },
-    Folder        = { fg = '#BFC0C0' },
-    Function      = { fg = '#E56399' },
-    History       = { fg = '#C2F8CB' },
-    Interface     = { fg = '#8367C7' },
-    Key           = { fg = '#D1AC00' },
-    Keyword       = { fg = '#20A4F3' },
-    Method        = { fg = '#D7D9D7' },
-    Module        = { fg = '#F2FF49' },
-    Namespace     = { fg = '#FF4242' },
-    Null          = { fg = '#C1CFDA' },
-    Number        = { fg = '#FB62F6' },
-    Object        = { fg = '#F18F01' },
-    Operator      = { fg = '#048BA8' },
-    Options       = { fg = '#99C24D' },
-    Package       = { fg = '#AFA2FF' },
-    Property      = { fg = '#CED097' },
-    Reference     = { fg = '#1B2CC1' },
-    Snippet       = { fg = '#7692FF' },
-    String        = { fg = '#FEEA00' },
-    Struct        = { fg = '#D81159' },
-    Text          = { fg = '#0496FF' },
-    TypeParameter = { fg = '#FFFFFC' },
-    Unit          = { fg = '#C97B84' },
-    Value         = { fg = '#C6DDF0' },
-    Variable      = { fg = '#B7ADCF' }
-}
-
-vim.g.kindshl_light = {
-    Array         = { fg = '#0B6E4F' },
-    Boolean       = { fg = '#69140E' },
-    Class         = { fg = '#1D3557' },
-    Color         = { fg = '#FA9F42' },
-    Constant      = { fg = '#744FC6' },
-    Constructor   = { fg = '#755C1B' },
-    Enum          = { fg = '#A167A5' },
-    EnumMember    = { fg = '#B80C09' },
-    Event         = { fg = '#53A548' },
-    Field         = { fg = '#E2DC12' },
-    File          = { fg = '#486499' },
-    Folder        = { fg = '#A74482' },
-    Function      = { fg = '#228CDB' },
-    History       = { fg = '#85CB33' },
-    Interface     = { fg = '#537A5A' },
-    Key           = { fg = '#645DD7' },
-    Keyword       = { fg = '#E36414' },
-    Method        = { fg = '#197278' },
-    Module        = { fg = '#EC368D' },
-    Namespace     = { fg = '#2F9C95' },
-    Null          = { fg = '#56666B' },
-    Number        = { fg = '#A5BE00' },
-    Object        = { fg = '#80A1C1' },
-    Operator      = { fg = '#F1DB4B' },
-    Options       = { fg = '#2292A4' },
-    Package       = { fg = '#B98EA7' },
-    Property      = { fg = '#3777FF' },
-    Reference     = { fg = '#18A999' },
-    Snippet       = { fg = '#BF0D4B' },
-    String        = { fg = '#D5573B' },
-    Struct        = { fg = '#75485E' },
-    Text          = { fg = '#5762D5' },
-    TypeParameter = { fg = '#5D2E8C' },
-    Unit          = { fg = '#FF6666' },
-    Value         = { fg = '#2EC4B6' },
-    Variable      = { fg = '#548687' }
-}
-
-local border_shape = {
-    { '╭', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╮', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-    { '╯', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╰', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-}
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--single-branch",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-    })
-end
-vim.opt.runtimepath:prepend(lazypath)
-
-vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
-vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
-    vim.cmd([[
-    unlet g:loaded_clipboard_provider
-    runtime autoload/provider/clipboard.vim
-    ]])
-end})
--- else
---     require('impatient')
---     vim.api.nvim_create_autocmd('VIMEnter', {callback = ColoRand})
--- end
-
-vim.diagnostic.config({
-    float = {
-        source = true
-    },
-    severity_sort = true,
-    virtual_text = {
-        prefix = ' ',
-        source = true
-    }
-})
-
-url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
-
-vim.fn.matchadd("HighlightURL", url_matcher, 1)
-
-sleeper = {
-    timer = vim.loop.new_timer(),
-    last = 1,
-    sleeps = {
-        { start = function() require('drop').setup({theme = "leaves"}); require('drop').show(); end, stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = "snow"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = "stars"}); require('drop').show(); end,  stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = "xmas"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
-        { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-    }
-}
-
-function resetSleeper()
-    sleeper.timer:stop()
-    sleeper.sleeps[sleeper.last].stop()
-
-    sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
-        sleeper.sleeps[sleeper.last].start()
-        local new_sleeps = (sleeper.last) % table.getn(sleeper.sleeps) + 1
-        sleeper.last = new_sleeps
-    end
-    ))
-end
-
--- vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
---vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() sleeper.sleeps[sleeper.last].stop() end})
-
-LazyConfig = {
-    root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
-    defaults = {
-        lazy = true, -- should plugins be lazy-loaded?
-        version = nil,
-    },
-    lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after running update.
-    concurrency = nil, ---@type number limit the maximum amount of concurrent tasks
-    git = {
-        log = { "--since=3 days ago" }, -- show commits from the last 3 days
-        timeout = 12000, -- kill processes that take more than 2 minutes
-        url_format = "https://github.com/%s.git",
-    },
-    dev = {
-        path = "~/projects",
-        patterns = {}, -- For example {"folke"}
-    },
-    install = {
-        missing = true,
-        colorscheme = { },
-    },
-    ui = {
-        size = { width = 0.8, height = 0.8 },
-        border = "rounded",
-        icons = {
-            not_loaded = "",
-            loaded = "",
-            cmd = " ",
-            config = "",
-            event = "",
-            ft = " ",
-            init = " ",
-            keys = " ",
-            plugin = " ",
-            runtime = " ",
-            source = " ",
-            start = "",
-            task = " ",
-            lazy = " ",
-            list = { "●", "", "", "" },
-        },
-        throttle = 20, -- how frequently should the ui process render events
-        custom_keys = {},
-    },
-    diff = {
-        cmd = "git",
-    },
-    checker = {
-        enabled = false,
-        concurrency = nil, ---@type number? set to 1 to check for updates very slowly
-        notify = true, -- get a notification when new updates are found
-        frequency = 3600, -- check for updates every hour
-    },
-    change_detection = {
-        enabled = true,
-        notify = true, -- get a notification when changes are found
-    },
-    performance = {
-        cache = {
-            enabled = true,
-            path = vim.fn.stdpath("state") .. "/lazy/cache",
-            -- Once one of the following events triggers, caching will be disabled.
-            -- To cache all modules, set this to `{}`, but that is not recommended.
-            -- The default is to disable on:
-            --  * VimEnter: not useful to cache anything else beyond startup
-            --  * BufReadPre: this will be triggered early when opening a file from the command line directly
-            disable_events = { },
-            ttl = 3600 * 24 * 5, -- keep unused modules for up to 5 days
-        },
-        reset_packpath = true, -- reset the package path to improve startup time
-        rtp = {
-            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
-            paths = {}, -- add any custom paths here that you want to indluce in the rtp
-            disabled_plugins = {
-                "gzip",
-                -- "health",
-                "man",
-                -- "matchit",
-                -- "matchparen",
-                "netrwPlugin",
-                "spellfile",
-                "tarPlugin",
-                "tohtml",
-                "tutor",
-                "zipPlugin",
-            },
-        },
-    },
-    readme = {
-        root = vim.fn.stdpath("state") .. "/lazy/readme",
-        files = { "README.md" },
-        skip_if_doc_exists = true,
-    },
-}
-Plugins = {
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
-    'dhruvasagar/vim-table-mode',
-    cmd = 'TableModeEnable'
-},
-
--- use 'echasnovski/mini.align',
-
-{
-    'junegunn/vim-easy-align',
-    cmd = 'EasyAlign'
-},
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
-    -- https://github.com/m4xshen/autoclose.nvim
-    'windwp/nvim-autopairs',
-    config = function()
-        local npairs = require("nvim-autopairs")
-        local Rule = require("nvim-autopairs.rule")
-        local cond = require'nvim-autopairs.conds'
-
-        npairs.setup({
-            enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
-        })
-        npairs.add_rules {
-            -- #include <> pair for c and cpp
-            Rule("#include <", ">", { "c", "cpp" }),
-            -- Disable " rule for vim
-            Rule('"', '"')
-            :with_pair(cond.not_filetypes({"vim"})),
-            -- Add spaces in pair after parentheses
-            -- (|) --> space --> ( | )
-            -- ( | ) --> ) --> ( )|
-            Rule(' ', ' ')
-            :with_pair(function (opts)
-                local pair = opts.line:sub(opts.col - 1, opts.col)
-                return vim.tbl_contains({ '()', '[]', '{}' }, pair)
-            end),
-            Rule('( ', ' )')
-            :with_pair(function() return false end)
-            :with_move(function(opts)
-                return opts.prev_char:match('.%)') ~= nil
-            end)
-            :use_key(')'),
-            Rule('{ ', ' }')
-            :with_pair(function() return false end)
-            :with_move(function(opts)
-                return opts.prev_char:match('.%}') ~= nil
-            end)
-            :use_key('}'),
-            Rule('[ ', ' ]')
-            :with_pair(function() return false end)
-            :with_move(function(opts)
-                return opts.prev_char:match('.%]') ~= nil
-            end)
-            :use_key(']'),
-            -- Auto add space on =
-            Rule('=', '')
-            :with_pair(cond.not_inside_quote())
-            :with_pair(function(opts)
-                local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-                if last_char:match('[%w%=%s]') then
-                    return true
-                end
-                return false
-            end)
-            :replace_endpair(function(opts)
-                local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
-                local next_char = opts.line:sub(opts.col, opts.col)
-                next_char = next_char == ' ' and '' or ' '
-                if prev_2char:match('%w$') then
-                    return '<bs> =' .. next_char
-                end
-                if prev_2char:match('%=$') then
-                    return next_char
-                end
-                if prev_2char:match('=') then
-                    return '<bs><bs>=' .. next_char
-                end
-                return ''
-            end)
-            :set_end_pair_length(0)
-            :with_move(cond.none())
-            :with_del(cond.none())
-        }
-        -- Insert `(` after select function or method item
-        local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-        local cmp = require('cmp')
-        cmp.event:on(
-        'confirm_done',
-        cmp_autopairs.on_confirm_done()
-        )
-    end,
-    event = 'InsertEnter',
-},
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- {
---     'David-Kunz/markid',
---     -- after = 'nvim-treesitter'
---     config = function()
---         local m = require'markid'
---         require'nvim-treesitter.configs'.setup {
---             markid = {
---                 enable = true,
---                 colors = m.colors.medium,
---                 queries = m.queries,
---                 is_supported = function(lang)
---                     local queries = configs.get_module("markid").queries
---                     return pcall(vim.treesitter.parse_query, lang, queries[lang] or queries['default'])
---                 end
---             }
---         }
---     end
--- },
-
-{
-    'RRethy/vim-illuminate',
-    config = function()
-        require('illuminate').configure({
-            providers =  {
-                'lsp',
-                'treesitter',
-                'regex'
-            }
-        })
-        local bg
-        if (vim.o.background ==  "dark") then
-            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-            local bs = string.format("%X", bg)
-            bg = LightenDarkenColor(bs, 40)
-        else
-            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-            local bs = string.format("%X", bg)
-            bg = LightenDarkenColor(bs, -40)
-        end
-        vim.api.nvim_set_hl(0, "IlluminatedWordText", {
-            bg = bg,
-            underline = true
-        })
-        vim.cmd[[
-           " hi IlluminatedWordText guibg = underline
-           hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
-           hi IlluminatedWordWrite guibg = #1F7A8C gui = italic
-           hi LspReferenceText guibg = #679436
-           hi LspReferenceWrite guibg = #A5BE00
-           hi LspReferenceRead guibg = #427AA1
-       ]]
-    end,
-    event = 'CursorHold'
-},
-
--- use 'azabiong/vim-highlighter'
-
-{
-    'folke/lsp-colors.nvim',
-    event = "LspAttach"
-},
-
--- https://github.com/folke/paint.nvim
-
-{
-    'folke/todo-comments.nvim',
-    config = function()
-        require("todo-comments").setup({
-            keywords = {
-                THOUGHT = { icon = "🤔", color = "info"}
-            }
-        })
-        vim.keymap.set("n", "]t", function()
-            require("todo-comments").jump_next()
-        end, { desc = "Next todo comment" })
-
-        vim.keymap.set("n", "[t", function()
-            require("todo-comments").jump_prev()
-        end, { desc = "Previous todo comment" })
-    end,
-    event = "CursorHold"
-},
-
-{
-    'kevinhwang91/nvim-hlslens',
-    config = function()
-        require('hlslens').setup()
-    end,
-    keys = { "n", "N", "*", "#", "g*", "g#" }
-},
-
-{
-    'norcalli/nvim-colorizer.lua',
-    cmd = "ColorizerToggle",
-    config = function()
-        require('colorizer').setup()
-    end
-},
-
-{
-    'nvim-zh/colorful-winsep.nvim',
-    config = function ()
-        require('colorful-winsep').setup({
-            symbols = { "─", "│", "╭", "╮", "╰", "╯" },
-        })
-    end,
-    event = 'WinNew'
-},
-
-{
-    't9md/vim-quickhl',
-    keys = {
-        { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
-        { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x' },
-        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'n' },
-        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
-    }
-},
-
-{
-    -- https://github.com/xiyaowong/nvim-transparent
-    'tribela/vim-transparent',
-    cmd = 'TransparentToggle'
-},
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-
--- https://github.com/lifepillar/vim-colortemplate
--- https://github.com/folke/styler.nvim
-
-{ 'Domeee/mosel.nvim',                event = 'User mosel'                                                   },
-{ 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                },
-{ 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                },
-{ 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                                 },
-{ 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              },
-{ 'RRethy/nvim-base16',               event = 'User base16'                                                  },
-{ 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          },
-{ 'Shatur/neovim-ayu',                event = 'User ayu'                                                     },
-{ 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                                },
-{ 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                            },
-{ 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 },
-{ 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                                 },
-{ 'atelierbram/Base2Tone-nvim',       event = 'User base2tone'                                               },
-{ 'catppuccin/nvim',                  event = 'User catppuccin'                                              },
-{ 'cpea2506/one_monokai.nvim',        event = 'User one_monokai'                                             },
-{ 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                                 },
-{ 'fenetikm/falcon',                  event = 'User falcon'                                                  },
-{ 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              },
-{ 'gbprod/nord.nvim',                 event = 'User nord'                                                    },
-{ 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  },
-{ 'jsit/toast.vim',                   event = 'User toast'                                                   },
-{ 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 },
-{ 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  },
-{ 'kvrohit/substrata.nvim',           event = 'User substrata'                                               },
-{ 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' },
-{ 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 },
-{ 'lmburns/kimbox',                   event = 'User kimbox'                                                  },
-{ 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                            },
-{ 'marko-cerovac/material.nvim',      event = 'User material'                                                },
-{ 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine'                                           },
-{ 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          },
-{ 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             },
-{ 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           },
-{ 'ntk148v/vim-horizon',              event = 'User horizon'                                                 },
-{ 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                },
-{ 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'                                               },
-{ 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'                                              },
-{ 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              },
-{ 'projekt0n/github-nvim-theme',      event = 'User github'                                                  },
-{ 'rafamadriz/neon',                  event = 'User neon'                                                    },
-{ 'ramojus/mellifluous.nvim',         event = 'User mellifluous', dependencies = 'rktjmp/lush.nvim'          },
-{ 'ray-x/aurora',                     event = 'User aurora'                                                  },
-{ 'ray-x/starry.nvim',                event = 'User starry'                                                  },
-{ 'rebelot/kanagawa.nvim',            event = 'User kanagawa'                                                },
-{ 'rmehri01/onenord.nvim',            event = 'User onenord'                                                 },
-{ 'rose-pine/neovim',                 event = 'User rose-pine'                                               },
-{ 'sainnhe/edge',                     event = 'User edge'                                                    },
-{ 'sainnhe/everforest',               event = 'User everforest'                                              },
-{ 'sainnhe/sonokai',                  event = 'User sonokai'                                                 },
-{ 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  },
-{ 'savq/melange',                     event = 'User melange'                                                 },
-{ 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               },
-{ 'sickill/vim-monokai',              event = 'User vim-monokai'                                             },
-{ 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'                                            },
-{ 'theniceboy/nvim-deus',             event = 'User deus'                                                    },
-{ 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               },
-{ 'titanzero/zephyrium',              event = 'User zephyrium'                                               },
-{ 'tjdevries/gruvbuddy.nvim',         event = 'User gruvbuddy',   dependencies = 'tjdevries/colorbuddy.nvim' },
-{ 'tomasiser/vim-code-dark',          event = 'User codedark'                                                },
-{ 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               },
-{ 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                },
-{ 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'b3nj5m1n/kommentary',
     config = function()
         require('kommentary.config').configure_language("default", {
@@ -1106,10 +1073,10 @@ Plugins = {
         {'<C-t>', '<Plug>kommentary_line_default', mode = 'n'},
         {'<C-t>', '<Plug>kommentary_visual_default', mode = 'v'},
     }
-},
+}
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -1181,7 +1148,6 @@ Plugins = {
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'snippy' },
-                { name = 'treesitter' }
             }),
             window = {
                 documentation = cmp.config.window.bordered(),
@@ -1197,9 +1163,9 @@ Plugins = {
         end
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "kwkarlwang/cmp-nvim-insert-text-lsp", "ray-x/cmp-treesitter" },
+    dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "kwkarlwang/cmp-nvim-insert-text-lsp" },
     event = { "CmdlineEnter", "InsertEnter" },
-},
+}
 
 -- https://github.com/jameshiew/nvim-magic
 -- https://github.com/kristijanhusak/vim-dadbod-completion
@@ -1329,19 +1295,19 @@ Plugins = {
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     "danymat/neogen",
     cmd = 'Neogen',
     config = function()
         require('neogen').setup {}
     end,
     dependencies = 'nvim-treesitter/nvim-treesitter'
-},
+}
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     -- TODO: lazy load
     'nvim-tree/nvim-tree.lua',
     config = function()
@@ -1571,7 +1537,7 @@ Plugins = {
             },
     }
     end
-},
+}
 -- {
 --     'nvim-neo-tree/neo-tree.nvim',
 --     cmd = 'Neotree',
@@ -1686,7 +1652,7 @@ Plugins = {
 -- https://github.com/cynix/vim-mergetool
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
-{
+AddPlugin {
     'lewis6991/gitsigns.nvim',
     config = function()
         require('gitsigns').setup {
@@ -1726,20 +1692,20 @@ Plugins = {
         }
     end,
     event = 'CursorHold'
-},
+}
 
-{
+AddPlugin {
     'rhysd/git-messenger.vim',
     cmd = "GitMessenger"
-},
+}
 
-{
+AddPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'DaikyXendo/nvim-material-icon',
     config = function()
         require('nvim-material-icon').setup({
@@ -1757,10 +1723,10 @@ Plugins = {
             }
         })
     end,
-    lazy = true
-},
+    -- lazy = true
+}
 
-{
+AddPlugin {
     'kyazdani42/nvim-web-devicons',
     config = function()
         require'nvim-web-devicons'.setup({
@@ -1768,11 +1734,11 @@ Plugins = {
         })
         require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
     end,
-    lazy = true
-},
+    -- lazy = true
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
         require("indent_blankline").setup({
@@ -1781,7 +1747,7 @@ Plugins = {
         })
     end,
     event = "CursorHold"
-},
+}
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
@@ -1789,7 +1755,7 @@ Plugins = {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
-{
+AddPlugin {
     'SmiteshP/nvim-navic',
     config = function()
         require('nvim-navic').setup {
@@ -1802,10 +1768,10 @@ Plugins = {
         }
     end,
     event = 'LspAttach'
-},
+}
 
 -- TODO:
-{
+AddPlugin {
     'liuchengxu/vista.vim',
     config = function()
         vim.cmd[[
@@ -1820,9 +1786,9 @@ Plugins = {
         ]]
     end,
     cmd = 'Vista'
-},
+}
 
-{
+AddPlugin {
     'williamboman/mason.nvim',
     cmd = 'Mason',
     config = function()
@@ -1832,9 +1798,9 @@ Plugins = {
             }
         })
     end,
-},
+}
 
-{
+AddPlugin {
     'williamboman/mason-lspconfig.nvim',
     config = function()
         local mason_lspconfig = require('mason-lspconfig')
@@ -1962,9 +1928,9 @@ Plugins = {
                                 diagnostics = {
                                     globals = { "bit", "vim" }
                                 },
-                                workspace = {
-                                    library = vim.api.nvim_get_runtime_file("", true)
-                                }
+                                -- workspace = {
+                                --     library = vim.api.nvim_get_runtime_file("", true)
+                                -- }
                             }
                         }
                     }
@@ -1981,9 +1947,9 @@ Plugins = {
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' }, -- mason should come from require
     event = 'CursorHold'
-},
+}
 
-{
+AddPlugin {
     'ray-x/lsp_signature.nvim',
     config = function()
         require "lsp_signature".setup({
@@ -1992,9 +1958,9 @@ Plugins = {
         })
     end,
     event = 'LspAttach'
-},
+}
 
-{
+AddPlugin {
     "glepnir/lspsaga.nvim",
     branch = "main",
     cmd = 'Lspsaga',
@@ -2080,9 +2046,9 @@ Plugins = {
             server_filetype_map = {},
         })
     end
-},
+}
 
-{
+AddPlugin {
     'j-hui/fidget.nvim',
     config = function()
         require("fidget").setup({
@@ -2093,9 +2059,9 @@ Plugins = {
         })
     end,
     event = "LspAttach"
-},
+}
 
-{
+AddPlugin {
     'jayp0521/mason-null-ls.nvim',
     config = function ()
         local mnls = require("mason-null-ls")
@@ -2106,7 +2072,7 @@ Plugins = {
     end,
     dependencies = 'jose-elias-alvarez/null-ls.nvim',
     event = "LspAttach"
-},
+}
 
 -- use {
 --     'p00f/clangd_extensions.nvim',
@@ -2209,61 +2175,61 @@ Plugins = {
 -- use 'razzmatazz/csharp-language-server'
 
 -- TODO:
-{
+AddPlugin {
     'ray-x/navigator.lua',
     event = 'LspAttach'
-},
+}
 
 -- TODO:
-{
+AddPlugin {
     'rmagatti/goto-preview',
     config = function()
         require('goto-preview').setup()
     end,
     event = 'LspAttach'
-},
+}
 
 -- TODO:
-{
+AddPlugin {
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
     config = function()
         require("symbols-outline").setup()
     end
-},
+}
 
 -- TODO:
-{
+AddPlugin {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
     config = function()
         require("inc_rename").setup()
     end
-},
+}
 
 -- TODO:
-{
+AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
     config = function()
         require('aerial').setup({})
     end
-},
+}
 
-{
+AddPlugin {
     'weilbith/nvim-code-action-menu',
     config = function ()
         vim.g.code_action_menu_window_border = 'rounded'
     end,
     cmd = 'CodeActionMenu'
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: https://github.com/DanRoscigno/nvim-markdown-grammarly
-{
+AddPlugin {
     'davidgranstrom/nvim-markdown-preview',
     cmd = 'MarkdownPreview'
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
@@ -2298,7 +2264,7 @@ Plugins = {
 -- | ma             | set mark a at current cursor location                         |
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
-{
+AddPlugin {
     'MattesGroeger/vim-bookmarks',
     keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
     config = function()
@@ -2317,13 +2283,13 @@ Plugins = {
             nmap bs <Plug>BookmarkShowAll
         ]]
     end
-},
+}
 
 -- https://github.com/ThePrimeagen/harpoon --> plenary
-{
+AddPlugin {
     'kshenoy/vim-signature',
-    lazy = true
-},
+    -- lazy = true
+}
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
@@ -2331,7 +2297,7 @@ Plugins = {
 -- https://github.com/TravonteD/org-capture-filetype
 -- https://github.com/akinsho/org-bullets.nvim
 
-{
+AddPlugin {
     'nvim-neorg/neorg',
     config = function()
         require('neorg').setup {
@@ -2355,7 +2321,7 @@ Plugins = {
     end,
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
     ft = "norg"
-},
+}
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
@@ -2367,12 +2333,12 @@ Plugins = {
 --  }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle'
-},
+}
 
-{
+AddPlugin {
     'kevinhwang91/nvim-bqf',
     config = function()
         require('bqf').setup({
@@ -2383,28 +2349,52 @@ Plugins = {
         })
     end,
     ft = 'qf'
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
-    'tamton-aquib/zone.nvim',
-    lazy = true
-},
+AddPlugin { 'tamton-aquib/zone.nvim' }
+AddPlugin { 'tamton-aquib/duck.nvim' }
+AddPlugin { 'folke/drop.nvim' }
 
-{
-    'tamton-aquib/duck.nvim',
-    lazy = true
-},
+Sleeper = {
+    timer = vim.loop.new_timer(),
+    last = 1,
+    sleeps = {
+        { start = function() require('drop').setup({theme = "leaves"}); require('drop').show(); end, stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "snow"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "stars"}); require('drop').show(); end,  stop = function() require('drop').hide() end },
+        { start = function() require('drop').setup({theme = "xmas"}); require('drop').show(); end,   stop = function() require('drop').hide() end },
+        { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+    }
+}
 
-{
-    'folke/drop.nvim',
-    lazy = true
-},
+function resetSleeper()
+    Sleeper.timer:stop()
+    Sleeper.sleeps[Sleeper.last].stop()
+
+    Sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
+        Sleeper.sleeps[Sleeper.last].start()
+        local new_sleeps = (Sleeper.last) % #Sleeper.sleeps + 1
+        Sleeper.last = new_sleeps
+    end
+    ))
+end
+
+vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end})
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
   'rmagatti/auto-session',
   config = function()
     vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam", "~" }
@@ -2422,10 +2412,10 @@ Plugins = {
     })
     vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
   end,
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'dcampos/nvim-snippy',
     config = function()
         require('snippy').setup({
@@ -2438,8 +2428,8 @@ Plugins = {
         })
     end,
     dependencies = 'honza/vim-snippets',
-    lazy = true
-},
+    -- lazy = true
+}
 -- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/hrsh7th/vim-vsnip
 -- https://github.com/norcalli/snippets.nvim
@@ -2450,7 +2440,7 @@ Plugins = {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
         Icon_index = 0
@@ -2598,10 +2588,10 @@ Plugins = {
         }
     end,
     event = 'CursorHold'
-},
+}
 -- <~>
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'akinsho/bufferline.nvim',
     config = function()
         local sym_map = {
@@ -2635,18 +2625,18 @@ Plugins = {
         }
     end,
     event = 'TabNew'
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     'crispgm/telescope-heading.nvim',
     config = function()
         require('telescope').load_extension('heading')
     end,
     ft = 'markdown'
-},
+}
 
-{
+AddPlugin {
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
     config = function()
@@ -2671,9 +2661,9 @@ Plugins = {
         })
     end,
     dependencies = 'nvim-lua/plenary.nvim'
-},
+}
 
-{
+AddPlugin {
     'princejoogie/dir-telescope.nvim',
     cmd = { "FileInDirectory", "GrepInDirectory" },
     config = function()
@@ -2683,17 +2673,17 @@ Plugins = {
         })
     end,
     dependencies = 'nvim-telescope/telescope.nvim',
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
     "akinsho/toggleterm.nvim",
     cmd = 'ToggleTerm',
     config = function()
         require("toggleterm").setup()
     end,
     -- tag = '*'
-},
+}
 -- https://github.com/elijahdanko/ttymux.nvim
 -- https://github.com/jlesquembre/nterm.nvim
 -- https://github.com/kassio/neoterm
@@ -2712,12 +2702,12 @@ Plugins = {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Wansmer/treesj
-{
+AddPlugin {
     'RRethy/nvim-treesitter-endwise',
     ft = 'lua'
-},
+}
 
-{
+AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
@@ -2742,9 +2732,9 @@ Plugins = {
             }
         }
     end,
-    dependencies = 'p00f/nvim-ts-rainbow',
+    dependencies = { 'mrjones2014/nvim-ts-rainbow' } ,
     event = 'User VeryLazy',
-},
+}
 
 -- TODO: use {
 --     'm-demare/hlargs.nvim',
@@ -2754,7 +2744,7 @@ Plugins = {
 --     end
 -- }
 
-{
+AddPlugin {
     'nvim-treesitter/nvim-treesitter-context',
     cmd = 'TSContextEnable',
     config = function()
@@ -2768,15 +2758,15 @@ Plugins = {
             }
         }
     end
-},
+}
 
-{
+AddPlugin {
     'nvim-treesitter/playground',
     cmd = 'TSHighlightCapturesUnderCursor'
-},
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-{
+AddPlugin {
   'folke/noice.nvim',
   config = function()
       require("noice").setup({
@@ -2979,9 +2969,9 @@ Plugins = {
   end,
   enabled = false,
   dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" }
-},
+}
 
-{
+AddPlugin {
     'rcarriga/nvim-notify',
     config = function()
         local notify = require('notify')
@@ -2993,19 +2983,23 @@ Plugins = {
         })
         vim.notify = notify
     end,
-},
+}
+vim.notify = function(msg, level, opt)
+    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
+    vim.notify(msg, level, opt)
+end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'AckslD/nvim-trevJ.lua'
 
-{
+AddPlugin {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
-},
+}
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
 
-{
+AddPlugin {
     -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
     config = function()
@@ -3037,54 +3031,54 @@ Plugins = {
         end)
     end,
     keys = { "<Leader>dp", "<Leader>dP", "<Leader>dv", "<Leader>dV", }
-},
+}
 
 -- use 'cbochs/portal.nvim'
 
 -- use 'chipsenkbeil/distant.nvim'
 
-{
+AddPlugin {
     'chrisbra/csv.vim',
     config = function()
         vim.g.csv_default_delim = ','
     end,
     ft = 'csv'
-},
+}
 
-{
+AddPlugin {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime'
-},
+}
 
 -- https://github.com/emileferreira/nvim-strict
 -- https://github.com/folke/neoconf.nvim
 -- use 'jbyuki/instant.nvim'
 -- https://github.com/jghauser/mkdir.nvim
 
-{
+AddPlugin {
     'kwkarlwang/bufjump.nvim',
-    lazy = true
-},
+    -- lazy = true
+}
 
-{
+AddPlugin {
     'lewis6991/satellite.nvim',
     cmd = 'SatelliteEnable',
     config = function()
         require('satellite').setup({ winblend = vim.o.winblend })
         vim.cmd('hi link ScrollView lualine_a_normal')
     end
-},
+}
 
-{
+AddPlugin {
     'kylechui/nvim-surround',
-    lazy = true
-},
+    -- lazy = true
+}
 
 -- use 'mg979/vim-visual-multi'
 
 -- https://github.com/nat-418/scamp.nvim
 
-{
+AddPlugin {
     'nacro90/numb.nvim',
     cond = function()
         return vim.api.nvim_get_mode().mode == 'c'
@@ -3093,9 +3087,9 @@ Plugins = {
         require('numb').setup()
     end,
     event = "CmdlineEnter",
-},
+}
 
-{
+AddPlugin {
     -- Lua copy https://github.com/ojroques/nvim-osc52
     'ojroques/vim-oscyank',
     cond = function()
@@ -3105,16 +3099,16 @@ Plugins = {
     config = function()
         vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif]]
     end
-},
+}
 
-{
+AddPlugin {
     'rickhowe/spotdiff.vim',
     cmd = 'Diffthis'
-},
+}
 
 -- https://github.com/shortcuts/no-neck-pain.nvim
 
-{
+AddPlugin {
     'tversteeg/registers.nvim',
     config = function()
         require("registers").setup({
@@ -3136,7 +3130,6 @@ Plugins = {
     }
 }
 -- https://github.com/utilyre/barbecue.nvim
-}
 
 require("lazy").setup(Plugins, LazyConfig)
 ColoRand()
