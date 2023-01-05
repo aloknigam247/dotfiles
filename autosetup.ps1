@@ -159,7 +159,7 @@ function winget_install {
     }
 }
 
-$app_list = @("neovim", "powershell", "win_pkgs", "windows_terminal")
+$app_list = @("clangd", "neovim", "powershell", "win_pkgs", "windows_terminal")
 Write-Output "Application List: (space to select, enter to install)"
 $app_install = Menu $app_list -Multiselect
 
