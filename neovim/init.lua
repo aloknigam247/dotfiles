@@ -796,7 +796,6 @@ function ColoRand()
         { 'base2tone_desert_light',               'light', 'base2tone' },
         { 'base2tone_drawbridge_dark',            'dark',  'base2tone' },
         { 'base2tone_drawbridge_light',           'light', 'base2tone' },
-        { 'base2tone_earth_dark',                 'dark',  'base2tone' },
         { 'base2tone_earth_light',                'light', 'base2tone' },
         { 'base2tone_evening_dark',               'dark',  'base2tone' },
         { 'base2tone_evening_light',              'light', 'base2tone' },
