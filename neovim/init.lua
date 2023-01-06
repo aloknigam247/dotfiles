@@ -10,13 +10,11 @@
 -- TODO: format on paste
 
 -- Blink on yank
--- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
--- AutoCommands
+-- TODO: group autocmd
 vim.api.nvim_create_autocmd(
     "TextYankPost", {
         desc = "highlight text on yank",
         pattern = "*",
-        -- group = group,
         callback = function()
             vim.highlight.on_yank {
                 higroup="Search", timeout=300, on_visual=true
@@ -25,7 +23,9 @@ vim.api.nvim_create_autocmd(
     }
 )
 
-vim.cmd([[ let g:loaded_clipboard_provider = 1 ]])
+-- TODO: group variable
+vim.g.loaded_clipboard_provider = 1
+-- TODO: group autocmd
 vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
     vim.cmd([[
     unlet g:loaded_clipboard_provider
@@ -33,6 +33,7 @@ vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
     ]])
 end})
 
+-- TODO: group functions
 function LightenDarkenColor(col, amt)
     local num = tonumber(col, 16)
     local r = bit.rshift(num, 16) + amt
@@ -42,20 +43,22 @@ function LightenDarkenColor(col, amt)
     return string.format("#%X", newColor)
 end
 
+-- TODO: group function
 function FixNontext()
     local bg
     if (vim.o.background ==  "dark") then
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-        local bs = string.format("%X", bg)
-        bg = LightenDarkenColor(bs, 60)
+        bg = string.format("%X", bg)
+        bg = LightenDarkenColor(bg, 60)
     else
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-        local bs = string.format("%X", bg)
-        bg = LightenDarkenColor(bs, -20)
+        bg= string.format("%X", bg)
+        bg = LightenDarkenColor(bg, -20)
     end
     vim.api.nvim_set_hl(0, "NonText", { fg = bg })
 end
 
+-- TODO: group variable
 vim.g.cmp_kinds = {
     Array         = ' ',
     Boolean       = ' ',
@@ -95,6 +98,7 @@ vim.g.cmp_kinds = {
     Variable      = ' '
 }
 
+-- TODO: group variable
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -134,14 +138,13 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
-local bg_mode = 'dark'
-if vim.o.background == 'light' then
-    bg_mode = 'light'
-end
+-- TODO: group actions
+local bg_mode = vim.o.background
 for key, value in pairs(kind_hl) do
     vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
 end
 
+-- TODO: group variable
 local border_shape = {
     { '╭', 'FloatBorder' },
     { '─', 'FloatBorder' },
@@ -153,19 +156,7 @@ local border_shape = {
     { '│', 'FloatBorder' },
 }
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--single-branch",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-    })
-end
-vim.opt.runtimepath:prepend(lazypath)
-
+-- TODO: group configuration
 vim.diagnostic.config({
     float = {
         source = true
@@ -177,6 +168,7 @@ vim.diagnostic.config({
     }
 })
 
+-- TODO: group variable
 local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 vim.fn.matchadd("HighlightURL", url_matcher, 1)
@@ -276,6 +268,7 @@ LazyConfig = {
     },
 }
 
+-- TODO: group function
 Plugins = {}
 function AddPlugin(opts)
     table.insert(Plugins, opts)
@@ -288,7 +281,7 @@ AddPlugin {
     cmd = 'TableModeEnable'
 }
 
--- use 'echasnovski/mini.align',
+-- use 'echasnovski/mini.align'
 
 AddPlugin {
     'junegunn/vim-easy-align',
@@ -368,7 +361,7 @@ AddPlugin {
             :with_move(cond.none())
             :with_del(cond.none())
         }
-        -- Insert `(` after select function or method item
+        -- Insert `()` after select function or method item
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
         local cmp = require('cmp')
         cmp.event:on(
@@ -380,25 +373,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- {
---     'David-Kunz/markid',
---     -- after = 'nvim-treesitter'
---     config = function()
---         local m = require'markid'
---         require'nvim-treesitter.configs'.setup {
---             markid = {
---                 enable = true,
---                 colors = m.colors.medium,
---                 queries = m.queries,
---                 is_supported = function(lang)
---                     local queries = configs.get_module("markid").queries
---                     return pcall(vim.treesitter.parse_query, lang, queries[lang] or queries['default'])
---                 end
---             }
---         }
---     end
--- },
-
 AddPlugin {
     'RRethy/vim-illuminate',
     config = function()
@@ -657,7 +631,7 @@ function ColoRand()
         { 'base16-decaf',                         'dark',  'base16' },
         { 'base16-default-dark',                  'dark',  'base16' },
         { 'base16-default-light',                 'light', 'base16' },
-        { 'base16-dirtysea',                      'dark',  'base16' },
+        { 'base16-dirtysea',                      'light', 'base16' },
         { 'base16-dracula',                       'dark',  'base16' },
         { 'base16-edge-light',                    'light', 'base16' },
         { 'base16-eighties',                      'dark',  'base16' },
@@ -2331,14 +2305,14 @@ Sleeper = {
         { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
         { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
         { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
-        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, zone_win, true) pcall(vim.api.nvim_buf_delete, zone_buf, {force=true}) end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
+        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
+        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
+        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
     }
 }
 
-function resetSleeper()
+function ResetSleeper()
     Sleeper.timer:stop()
     Sleeper.sleeps[Sleeper.last].stop()
 
@@ -2350,7 +2324,7 @@ function resetSleeper()
     ))
 end
 
-vim.api.nvim_create_autocmd({'CursorHold'} , {callback = resetSleeper})
+vim.api.nvim_create_autocmd({'CursorHold'} , {callback = ResetSleeper})
 vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end})
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2682,7 +2656,13 @@ AddPlugin {
             ignore_install = { "help", "norg", "norg_meta", "yaml" },
             -- markid = {
             --     enable = true,
-            --     queries = { default = '(identifier) @markid' }
+            --     colors = m.colors.medium,
+            --     queries = { default = '(variable) @markid'},
+            --     -- queries = m.queries,
+            --     -- is_supported = function(lang)
+            --     --     local queries = configs.get_module("markid").queries
+            --     --     return pcall(vim.treesitter.parse_query, lang, queries[lang] or queries['default'])
+            --     -- end
             -- },
             rainbow = {
                 enable = true,
@@ -2691,7 +2671,7 @@ AddPlugin {
             }
         }
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow' } ,
+    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'David-Kunz/markid', enabled = false }} ,
     event = 'User VeryLazy',
 }
 
@@ -3087,6 +3067,19 @@ AddPlugin {
     }
 }
 -- https://github.com/utilyre/barbecue.nvim
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--single-branch",
+        "https://github.com/folke/lazy.nvim.git",
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup(Plugins, LazyConfig)
 ColoRand()
