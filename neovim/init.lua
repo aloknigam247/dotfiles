@@ -13,8 +13,7 @@
 -- au TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=300, on_visual=true}
 -- AutoCommands
 vim.api.nvim_create_autocmd(
-    "TextYankPost",
-    {
+    "TextYankPost", {
         desc = "highlight text on yank",
         pattern = "*",
         -- group = group,
@@ -96,83 +95,52 @@ vim.g.cmp_kinds = {
     Variable      = ' '
 }
 
-vim.g.kindshl_dark = {
-    Array         = { fg = '#F42272' },
-    Boolean       = { fg = '#B8B8F3' },
-    Class         = { fg = '#519872' },
-    Color         = { fg = '#A4B494' },
-    Constant      = { fg = '#C5E063' },
-    Constructor   = { fg = '#4AAD52' },
-    Enum          = { fg = '#E3B5A4' },
-    EnumMember    = { fg = '#AF2BBF' },
-    Event         = { fg = '#6C91BF' },
-    Field         = { fg = '#5BC8AF' },
-    File          = { fg = '#EF8354' },
-    Folder        = { fg = '#BFC0C0' },
-    Function      = { fg = '#E56399' },
-    History       = { fg = '#C2F8CB' },
-    Interface     = { fg = '#8367C7' },
-    Key           = { fg = '#D1AC00' },
-    Keyword       = { fg = '#20A4F3' },
-    Method        = { fg = '#D7D9D7' },
-    Module        = { fg = '#F2FF49' },
-    Namespace     = { fg = '#FF4242' },
-    Null          = { fg = '#C1CFDA' },
-    Number        = { fg = '#FB62F6' },
-    Object        = { fg = '#F18F01' },
-    Operator      = { fg = '#048BA8' },
-    Options       = { fg = '#99C24D' },
-    Package       = { fg = '#AFA2FF' },
-    Property      = { fg = '#CED097' },
-    Reference     = { fg = '#1B2CC1' },
-    Snippet       = { fg = '#7692FF' },
-    String        = { fg = '#FEEA00' },
-    Struct        = { fg = '#D81159' },
-    Text          = { fg = '#0496FF' },
-    TypeParameter = { fg = '#FFFFFC' },
-    Unit          = { fg = '#C97B84' },
-    Value         = { fg = '#C6DDF0' },
-    Variable      = { fg = '#B7ADCF' }
+local kind_hl = {
+    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
+    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
+    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
+    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
+    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
+    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
+    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
+    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
+    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
+    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
+    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
+    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
+    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
+    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
+    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
+    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
+    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
+    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
+    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
+    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
+    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
+    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
+    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
+    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
+    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
+    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
+    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
+    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
+    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
+    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
+    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
+    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
+    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
+    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
+    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
+    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
-vim.g.kindshl_light = {
-    Array         = { fg = '#0B6E4F' },
-    Boolean       = { fg = '#69140E' },
-    Class         = { fg = '#1D3557' },
-    Color         = { fg = '#FA9F42' },
-    Constant      = { fg = '#744FC6' },
-    Constructor   = { fg = '#755C1B' },
-    Enum          = { fg = '#A167A5' },
-    EnumMember    = { fg = '#B80C09' },
-    Event         = { fg = '#53A548' },
-    Field         = { fg = '#E2DC12' },
-    File          = { fg = '#486499' },
-    Folder        = { fg = '#A74482' },
-    Function      = { fg = '#228CDB' },
-    History       = { fg = '#85CB33' },
-    Interface     = { fg = '#537A5A' },
-    Key           = { fg = '#645DD7' },
-    Keyword       = { fg = '#E36414' },
-    Method        = { fg = '#197278' },
-    Module        = { fg = '#EC368D' },
-    Namespace     = { fg = '#2F9C95' },
-    Null          = { fg = '#56666B' },
-    Number        = { fg = '#A5BE00' },
-    Object        = { fg = '#80A1C1' },
-    Operator      = { fg = '#F1DB4B' },
-    Options       = { fg = '#2292A4' },
-    Package       = { fg = '#B98EA7' },
-    Property      = { fg = '#3777FF' },
-    Reference     = { fg = '#18A999' },
-    Snippet       = { fg = '#BF0D4B' },
-    String        = { fg = '#D5573B' },
-    Struct        = { fg = '#75485E' },
-    Text          = { fg = '#5762D5' },
-    TypeParameter = { fg = '#5D2E8C' },
-    Unit          = { fg = '#FF6666' },
-    Value         = { fg = '#2EC4B6' },
-    Variable      = { fg = '#548687' }
-}
+local bg_mode = 'dark'
+if vim.o.background == 'light' then
+    bg_mode = 'light'
+end
+for key, value in pairs(kind_hl) do
+    vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
+end
 
 local border_shape = {
     { '╭', 'FloatBorder' },
@@ -209,7 +177,7 @@ vim.diagnostic.config({
     }
 })
 
-url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 vim.fn.matchadd("HighlightURL", url_matcher, 1)
 
@@ -1040,12 +1008,12 @@ function ColoRand()
     vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
-    if (module == '_') then
-        vim.api.nvim_exec_autocmds('User', {pattern = scheme})
-    else
-        -- require(module)
-        vim.api.nvim_exec_autocmds('User', {pattern = module})
-    end
+    -- if (module == '_') then
+    --     vim.api.nvim_exec_autocmds('User', {pattern = scheme})
+    -- else
+    --     vim.api.nvim_exec_autocmds('User', {pattern = module})
+    -- end
+    vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
     if (precmd) then
         precmd()
     end
@@ -1153,14 +1121,6 @@ AddPlugin {
                 documentation = cmp.config.window.bordered(),
             }
         })
-
-        local kind_hl = vim.g.kindshl_dark
-        if vim.o.background == 'light' then
-            kind_hl = vim.g.kindshl_light
-        end
-        for key, value in pairs(kind_hl) do
-            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value)
-        end
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
     dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "kwkarlwang/cmp-nvim-insert-text-lsp" },
@@ -2446,11 +2406,10 @@ AddPlugin {
         Icon_index = 0
         local function LspIcon()
             local icons = {"䷀", "䷪",  "䷍", "䷈", "䷉", "䷌", "䷫"}
-            -- local icons = {'ﯺ', 'ﯸ', 'ﯹ'}
             Icon_index = (Icon_index) % #icons + 1
             return icons[Icon_index]
         end
-        -- local navic = require("nvim-navic")
+        local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
                 icons_enabled = true,
@@ -2574,15 +2533,15 @@ AddPlugin {
         -- },
         winbar = {
             lualine_b = {
-                -- { navic.get_location, cond = navic.is_available },
+                { navic.get_location, cond = navic.is_available },
                 -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
             }
         },
         inactive_winbar = {
             lualine_a = {'filename'},
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-            -- }
+            lualine_b = {
+                { navic.get_location, cond = navic.is_available }
+            }
         },
         extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
@@ -3083,9 +3042,7 @@ AddPlugin {
     cond = function()
         return vim.api.nvim_get_mode().mode == 'c'
     end,
-    config = function()
-        require('numb').setup()
-    end,
+    config = true,
     event = "CmdlineEnter",
 }
 
