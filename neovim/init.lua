@@ -252,7 +252,7 @@ LazyConfig = {
                 "man",
                 -- "matchit",
                 -- "matchparen",
-                "netrwPlugin",
+                -- "netrwPlugin",
                 "spellfile",
                 "tarPlugin",
                 "tohtml",
@@ -472,12 +472,6 @@ AddPlugin {
         { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
     }
 }
-
-AddPlugin {
-    -- https://github.com/xiyaowong/nvim-transparent
-    'tribela/vim-transparent',
-    cmd = 'TransparentToggle'
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
@@ -677,7 +671,6 @@ function ColoRand()
         { 'base16-helios',                        'dark',  'base16' },
         { 'base16-hopscotch',                     'dark',  'base16' },
         { 'base16-horizon-dark',                  'dark',  'base16' },
-        { 'base16-horizon-light',                 'light', 'base16' },
         { 'base16-horizon-terminal-dark',         'dark',  'base16' },
         { 'base16-horizon-terminal-light',        'light', 'base16' },
         { 'base16-humanoid-dark',                 'dark',  'base16' },
@@ -737,7 +730,7 @@ function ColoRand()
         { 'base16-shades-of-purple',              'dark',  'base16' },
         { 'base16-shadesmear-dark',               'dark',  'base16' },
         { 'base16-shadesmear-light',              'light', 'base16' },
-        { 'base16-shapeshifter',                  'dark',  'base16' },
+        { 'base16-shapeshifter',                  'light', 'base16' },
         { 'base16-silk-dark',                     'dark',  'base16' },
         { 'base16-silk-light',                    'light', 'base16' },
         { 'base16-snazzy',                        'dark',  'base16' },
@@ -833,7 +826,7 @@ function ColoRand()
         { 'catppuccin-latte',                     'dark',  'catppuccin' },
         { 'catppuccin-macchiato',                 'dark',  'catppuccin' },
         { 'catppuccin-mocha',                     'dark',  'catppuccin' },
-        { 'cobalt2',                              'dark',  '_' },
+        { 'cobalt2',                              'dark',  '_', postcmd = function() require('colorbuddy').colorscheme('cobalt2') end },
         { 'codedark',                             'dark',  '_' },
         { 'darkblue',                             'dark',  '_' },
         { 'darker',                               'dark',  '_' },
@@ -926,7 +919,7 @@ function ColoRand()
         { 'oxocarbon',                            'light', '_' },
         { 'palenight',                            'dark',  '_' },
         { 'peachpuff',                            'dark',  '_' },
-        { 'pink-panic',                           'dark',  '_' },
+        { 'pink-panic',                           'light', '_' },
         { 'poimandres',                           'dark',  '_', precmd = function() require('poimandres').setup() end },
         { 'rose-pine',                            'dark',  '_' },
         { 'rose-pine',                            'dark',  '_',              precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end },
@@ -1080,7 +1073,6 @@ AddPlugin {
                         end
                     }
                 },
-                { name = "buffer-lines" },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
                 { name = 'nvim_lsp' },
@@ -1093,7 +1085,7 @@ AddPlugin {
         })
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
+    dependencies = { "aloknigam247/cmp-path", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
     event = { "CmdlineEnter", "InsertEnter" },
 }
 
@@ -1228,10 +1220,7 @@ AddPlugin {
 AddPlugin {
     "danymat/neogen",
     cmd = 'Neogen',
-    config = function()
-        require('neogen').setup {}
-    end,
-    dependencies = 'nvim-treesitter/nvim-treesitter'
+    config = true
 }
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
