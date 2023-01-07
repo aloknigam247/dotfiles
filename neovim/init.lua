@@ -667,7 +667,6 @@ function ColoRand()
         { 'base16-gruvbox-material-dark-hard',    'dark',  'base16' },
         { 'base16-gruvbox-material-dark-medium',  'dark',  'base16' },
         { 'base16-gruvbox-material-dark-soft',    'dark',  'base16' },
-        { 'base16-gruvbox-material-light-hard',   'light', 'base16' },
         { 'base16-gruvbox-material-light-medium', 'light', 'base16' },
         { 'base16-gruvbox-material-light-soft',   'light', 'base16' },
         { 'base16-hardcore',                      'dark',  'base16' },
@@ -844,7 +843,6 @@ function ColoRand()
         { 'dayfox',                               'dark',  'nightfox' },
         { 'deepocean',                            'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
         { 'delek',                                'light', '_' },
-        { 'desert',                               'dark',  '_' },
         { 'deus',                                 'dark',  '_' },
         { 'doubletrouble',                        'dark',  '_' },
         { 'dracula',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end },
@@ -2003,7 +2001,7 @@ AddPlugin {
         })
         mnls.setup_handlers({})
     end,
-    dependencies = 'jose-elias-alvarez/null-ls.nvim',
+    dependencies = { 'jose-elias-alvarez/null-ls.nvim', config = true },
     event = "LspAttach"
 }
 
@@ -2266,6 +2264,7 @@ AddPlugin {
 --  }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: config
 AddPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle'
