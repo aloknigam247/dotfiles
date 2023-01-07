@@ -710,7 +710,7 @@ function ColoRand()
         { 'base16-one-light',                     'light', 'base16' },
         { 'base16-onedark',                       'dark',  'base16' },
         { 'base16-outrun-dark',                   'dark',  'base16' },
-        { 'base16-pandora',                       'dark',  'base16' },
+        { 'base16-pandora',                       'dark',  'base16', postcmd = function() FixNontext() end },
         { 'base16-papercolor-dark',               'dark',  'base16' },
         { 'base16-papercolor-light',              'light', 'base16' },
         { 'base16-paraiso',                       'dark',  'base16' },
@@ -1083,7 +1083,6 @@ AddPlugin {
                 { name = "buffer-lines" },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_insert_text_lsp' },
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'snippy' },
@@ -1094,7 +1093,7 @@ AddPlugin {
         })
     end,
     -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
-    dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp", "kwkarlwang/cmp-nvim-insert-text-lsp" },
+    dependencies = { "aloknigam247/cmp-path", "amarakon/nvim-cmp-buffer-lines", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
     event = { "CmdlineEnter", "InsertEnter" },
 }
 
@@ -1564,10 +1563,10 @@ AddPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use {
---     'sbdchd/neoformat',
---     cmd = "Neoformat"
--- }
+AddPlugin {
+    'sbdchd/neoformat',
+    cmd = "Neoformat"
+}
 -- use 'joechrisellis/lsp-format-modifications.nvim'
 -- use 'lukas-reineke/format.nvim'
 -- <~>
@@ -1698,7 +1697,8 @@ AddPlugin {
             safe_output = true
         }
     end,
-    event = 'LspAttach'
+    event = 'LspAttach',
+    enabled = false
 }
 
 -- TODO:
@@ -1744,7 +1744,7 @@ AddPlugin {
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
         local on_attach = function(client, bufnr)
-            local navic = require('nvim-navic')
+            -- local navic = require('nvim-navic')
             -- Mappings.
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
@@ -1777,7 +1777,7 @@ AddPlugin {
                 nnoremenu PopUp.Type\ Definition\ \ \ \ \ \ \ \ gt <Cmd>lua vim.lsp.buf.type_definition()<CR>
             ]]
 
-            navic.attach(client, bufnr)
+            -- navic.attach(client, bufnr)
         end
 
         -- LSP settings (for overriding per client)
@@ -1814,7 +1814,6 @@ AddPlugin {
         -- }
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-        capabilities = require('cmp_nvim_insert_text_lsp').update_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
@@ -1910,6 +1909,7 @@ AddPlugin {
             -- if true can press number to execute the codeaction in codeaction window
             code_action_num_shortcut = true,
             -- same as nvim-lightbulb but async
+            -- BUG: no lightbulb visible
             code_action_lightbulb = {
                 enable = true,
                 enable_in_insert = false,
@@ -2267,7 +2267,54 @@ AddPlugin {
 -- TODO: config
 AddPlugin {
     'folke/trouble.nvim',
-    cmd = 'TroubleToggle'
+    cmd = 'TroubleToggle',
+    config = {
+        position = "bottom", -- position of the list can be: bottom, top, left, right
+        height = 10, -- height of the trouble list when position is top or bottom
+        width = 50, -- width of the list when position is left or right
+        icons = true, -- use devicons for filenames
+        mode = "document_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
+        fold_open = "", -- icon used for open folds
+        fold_closed = "", -- icon used for closed folds
+        group = true, -- group results by file
+        padding = true, -- add an extra new line on top of the list
+        action_keys = { -- key mappings for actions in the trouble list
+            -- map to {} to remove a mapping, for example:
+            -- close = {},
+            close = "q", -- close the list
+            cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+            refresh = "r", -- manually refresh
+            jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+            open_split = { "<c-x>" }, -- open buffer in new split
+            open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
+            open_tab = { "<c-t>" }, -- open buffer in new tab
+            jump_close = {"o"}, -- jump to the diagnostic and close the list
+            toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+            toggle_preview = "P", -- toggle auto_preview
+            hover = "K", -- opens a small popup with the full multiline message
+            preview = "p", -- preview the diagnostic location
+            close_folds = {"zM", "zm"}, -- close all folds
+            open_folds = {"zR", "zr"}, -- open all folds
+            toggle_fold = {"zA", "za"}, -- toggle fold of current file
+            previous = "k", -- previous item
+            next = "j" -- next item
+        },
+        indent_lines = true, -- add an indent guide below the fold icons
+        auto_open = false, -- automatically open the list when you have diagnostics
+        auto_close = false, -- automatically close the list when you have no diagnostics
+        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+        auto_fold = false, -- automatically fold a file trouble list at creation
+        auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
+        signs = {
+            -- icons / text used for a diagnostic
+            error = "",
+            warning = "",
+            hint = "",
+            information = "",
+            other = "﫠"
+        },
+        use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
+    }
 }
 
 AddPlugin {
@@ -2381,7 +2428,7 @@ AddPlugin {
             Icon_index = (Icon_index) % #icons + 1
             return icons[Icon_index]
         end
-        local navic = require("nvim-navic")
+        -- local navic = require("nvim-navic")
         require('lualine').setup {
             options = {
                 icons_enabled = true,
@@ -2503,18 +2550,18 @@ AddPlugin {
         -- tabline = {
         --     lualine_a = {'filename'},
         -- },
-        winbar = {
-            lualine_b = {
-                { navic.get_location, cond = navic.is_available },
-                -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
-            }
-        },
-        inactive_winbar = {
-            lualine_a = {'filename'},
-            lualine_b = {
-                { navic.get_location, cond = navic.is_available }
-            }
-        },
+        -- winbar = {
+        --     lualine_b = {
+        --         { navic.get_location, cond = navic.is_available },
+        --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
+        --     }
+        -- },
+        -- inactive_winbar = {
+        --     lualine_a = {'filename'},
+        --     lualine_b = {
+        --         { navic.get_location, cond = navic.is_available }
+        --     }
+        -- },
         extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
     end,
