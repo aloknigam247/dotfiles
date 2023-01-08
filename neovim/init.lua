@@ -399,11 +399,11 @@ AddPlugin {
         })
         vim.cmd[[
            " hi IlluminatedWordText guibg = underline
-           hi IlluminatedWordRead guibg = #A5BE00 guifg = #000000
-           hi IlluminatedWordWrite guibg = #1F7A8C gui = italic
-           hi LspReferenceText guibg = #679436
-           hi LspReferenceWrite guibg = #A5BE00
-           hi LspReferenceRead guibg = #427AA1
+           hi IlluminatedWordRead  guibg = #A5BE00 guifg = #000000
+           hi IlluminatedWordWrite guibg = #1F7A8C gui   = italic
+           hi LspReferenceText     guibg = #679436
+           hi LspReferenceWrite    guibg = #A5BE00
+           hi LspReferenceRead     guibg = #427AA1
        ]]
     end,
     event = 'CursorHold'
@@ -474,9 +474,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-
 -- https://github.com/lifepillar/vim-colortemplate
--- https://github.com/folke/styler.nvim
 
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
@@ -969,14 +967,9 @@ function ColoRand()
     local module = selection[3]
     local precmd = selection.precmd
     local postcmd = selection.postcmd
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
+    vim.b.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
-    -- if (module == '_') then
-    --     vim.api.nvim_exec_autocmds('User', {pattern = scheme})
-    -- else
-    --     vim.api.nvim_exec_autocmds('User', {pattern = module})
-    -- end
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
     if (precmd) then
         precmd()
