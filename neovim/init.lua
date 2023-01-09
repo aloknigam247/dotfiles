@@ -289,6 +289,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: irregularities with ""
 AddPlugin {
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
@@ -369,7 +370,7 @@ AddPlugin {
         cmp_autopairs.on_confirm_done()
         )
     end,
-    event = 'InsertEnter',
+    event = 'InsertEnter'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -398,68 +399,61 @@ AddPlugin {
             underline = true
         })
         vim.cmd[[
-           " hi IlluminatedWordText guibg = underline
            hi IlluminatedWordRead  guibg = #A5BE00 guifg = #000000
            hi IlluminatedWordWrite guibg = #1F7A8C gui   = italic
-           hi LspReferenceText     guibg = #679436
-           hi LspReferenceWrite    guibg = #A5BE00
-           hi LspReferenceRead     guibg = #427AA1
        ]]
     end,
     event = 'CursorHold'
 }
 
--- use 'azabiong/vim-highlighter'
+-- TODO: Use
+-- AddPlugin {
+--     'azabiong/vim-highlighter',
+--     cmd = 'Hi',
+--     config = function()
+--         vim.cmd[[
+--             let HiSet = '<Leader>h'
+--             let HiErase = '<Leader>H'
+--         ]]
+--     end,
+--     keys = { '<Leader>h' }
+-- }
 
 AddPlugin {
     'folke/lsp-colors.nvim',
     event = "LspAttach"
 }
 
--- https://github.com/folke/paint.nvim
-
 AddPlugin {
     'folke/todo-comments.nvim',
-    config = function()
-        require("todo-comments").setup({
-            keywords = {
-                THOUGHT = { icon = "🤔", color = "info"}
-            }
-        })
-        vim.keymap.set("n", "]t", function()
-            require("todo-comments").jump_next()
-        end, { desc = "Next todo comment" })
-
-        vim.keymap.set("n", "[t", function()
-            require("todo-comments").jump_prev()
-        end, { desc = "Previous todo comment" })
-    end,
-    event = "CursorHold"
+    config = {
+        keywords = {
+            THOUGHT = { icon = "🤔", color = "info"}
+        }
+    },
+    keys = {
+        { '[t', function() require("todo-comments").jump_prev() end, desc = 'Previous todo comment' },
+        { ']t', function() require("todo-comments").jump_next() end, desc = 'Next todo comment' }
+    }
 }
 
 AddPlugin {
     'kevinhwang91/nvim-hlslens',
-    config = function()
-        require('hlslens').setup()
-    end,
+    config = true,
     keys = { "n", "N", "*", "#", "g*", "g#" }
 }
 
 AddPlugin {
     'norcalli/nvim-colorizer.lua',
     cmd = "ColorizerToggle",
-    config = function()
-        require('colorizer').setup()
-    end
+    config = true
 }
 
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
-    config = function ()
-        require('colorful-winsep').setup({
-            symbols = { "─", "│", "╭", "╮", "╰", "╯" },
-        })
-    end,
+    config = {
+        symbols = { "─", "│", "╭", "╮", "╰", "╯" },
+    },
     event = 'WinNew'
 }
 
@@ -475,7 +469,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/lifepillar/vim-colortemplate
-
+-- TODO: check compact version
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
@@ -979,8 +973,6 @@ function ColoRand()
         postcmd()
     end
 end
-
-vim.api.nvim_create_user_command('ColoRand', ColoRand, { nargs = 0 })
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -1027,10 +1019,10 @@ AddPlugin {
                     if entry.source.name == "nvim_lsp" then
                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
                     elseif entry.source.name == "cmdline" then
-                        vim_item.menu = "(options)"
+                        -- vim_item.menu = "(options)"
                         vim_item.kind = "Options"
                     elseif entry.source.name == "cmdline_history" then
-                        vim_item.menu = "(history)"
+                        -- vim_item.menu = "(history)"
                         vim_item.kind = "History"
                     else
                         vim_item.menu = '[' .. entry.source.name .. ']'
@@ -1075,9 +1067,8 @@ AddPlugin {
             }
         })
     end,
-    -- use 'kwkarlwang/cmp-nvim-insert-text-lsp'
     dependencies = { "aloknigam247/cmp-path", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
-    event = { "CmdlineEnter", "InsertEnter" },
+    event = 'CmdlineEnter',
 }
 
 -- https://github.com/jameshiew/nvim-magic
@@ -1221,7 +1212,7 @@ AddPlugin {
     -- TODO: lazy load
     'nvim-tree/nvim-tree.lua',
     config = function()
-        require("nvim-tree").setup {
+        require('nvim-tree').setup {
             auto_reload_on_write = true,
             disable_netrw = true,
             hijack_cursor = false,
@@ -1230,13 +1221,13 @@ AddPlugin {
             ignore_buffer_on_setup = false,
             open_on_setup = false,
             open_on_setup_file = false,
-            sort_by = "name",
+            sort_by = 'name',
             root_dirs = {},
             prefer_startup_root = false,
             sync_root_with_cwd = true,
             reload_on_bufenter = false,
             respect_buf_cwd = false,
-            on_attach = "disable",
+            on_attach = 'disable',
             remove_keymaps = false,
             select_prompts = false,
             view = {
@@ -1244,11 +1235,11 @@ AddPlugin {
                 centralize_selection = false,
                 width = 30,
                 hide_root_folder = false,
-                side = "left",
+                side = 'left',
                 preserve_window_proportions = false,
                 number = false,
                 relativenumber = false,
-                signcolumn = "yes",
+                signcolumn = 'yes',
                 mappings = {
                     custom_only = false,
                     list = {
@@ -1259,8 +1250,8 @@ AddPlugin {
                     enable = false,
                     quit_on_focus_loss = true,
                     open_win_config = {
-                        relative = "editor",
-                        border = "rounded",
+                        relative = 'editor',
+                        border = 'rounded',
                         width = 30,
                         height = 30,
                         row = 1,
@@ -1273,25 +1264,25 @@ AddPlugin {
                 group_empty = false,
                 highlight_git = true,
                 full_name = true,
-                highlight_opened_files = "all",
-                root_folder_label = ":~:s?$?/..?",
+                highlight_opened_files = 'all',
+                root_folder_label = ':~:s?$?/..?',
                 indent_width = 2,
                 indent_markers = {
                     enable = true,
                     inline_arrows = true,
                     icons = {
-                        corner = "╰",
-                        edge = "│",
-                        item = "│",
-                        bottom = "─",
-                        none = " ",
+                        corner = '╰',
+                        edge = '│',
+                        item = '│',
+                        bottom = '─',
+                        none = ' ',
                     },
                 },
                 icons = {
                     webdev_colors = true,
-                    git_placement = "after",
-                    padding = " ",
-                    symlink_arrow = " 壟 ",
+                    git_placement = 'after',
+                    padding = ' ',
+                    symlink_arrow = ' 壟 ',
                     show = {
                         file = true,
                         folder = true,
@@ -1299,31 +1290,32 @@ AddPlugin {
                         git = true,
                     },
                     glyphs = {
-                        default = "",
-                        symlink = "",
-                        bookmark = "",
+                        default = '',
+                        symlink = '',
+                        bookmark = '',
                         folder = {
-                            arrow_closed = "",
-                            arrow_open = "",
-                            default = "",
-                            open = "",
-                            empty = "",
-                            empty_open = "",
-                            symlink = "",
-                            symlink_open = "",
+                            arrow_closed = '',
+                            arrow_open = '',
+                            default = '',
+                            open = '',
+                            empty = '',
+                            empty_open = '',
+                            symlink = '',
+                            symlink_open = '',
                         },
+                        -- TODO: icons
                         git = {
-                            unstaged = "✗",
-                            staged = "✓",
-                            unmerged = "",
-                            renamed = "➜",
-                            untracked = "★",
-                            deleted = "",
-                            ignored = "◌",
+                            unstaged = '✗',
+                            staged = '✓',
+                            unmerged = '',
+                            renamed = '➜',
+                            untracked = '★',
+                            deleted = '',
+                            ignored = '◌',
                         },
                     },
                 },
-                special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
                 symlink_destination = true,
             },
             hijack_directories = {
@@ -1338,7 +1330,7 @@ AddPlugin {
             },
             ignore_ft_on_setup = {},
             system_open = {
-                cmd = "",
+                cmd = '',
                 args = {},
             },
             diagnostics = {
@@ -1351,10 +1343,10 @@ AddPlugin {
                     max = vim.diagnostic.severity.ERROR,
                 },
                 icons = {
-                    error   = "",
-                    hint    = "",
-                    info    = "",
-                    warning = "",
+                    error   = '',
+                    hint    = '',
+                    info    = '',
+                    warning = '',
                 },
             },
             filters = {
@@ -1385,15 +1377,15 @@ AddPlugin {
                 },
                 expand_all = {
                     max_folder_discovery = 300,
-                    exclude = { ".git" },
+                    exclude = { '.git' },
                 },
                 file_popup = {
                     open_win_config = {
                         col = 1,
                         row = 1,
-                        relative = "cursor",
-                        border = "rounded",
-                        style = "minimal",
+                        relative = 'cursor',
+                        border = 'rounded',
+                        style = 'minimal',
                     },
                 },
                 open_file = {
@@ -1401,11 +1393,11 @@ AddPlugin {
                     resize_window = true,
                     window_picker = {
                         enable = true,
-                        picker = "default",
-                        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+                        picker = 'default',
+                        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
                         exclude = {
-                            filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-                            buftype = { "nofile", "terminal", "help" },
+                            filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
+                            buftype = { 'nofile', 'terminal', 'help' },
                         },
                     },
                 },
@@ -1414,11 +1406,11 @@ AddPlugin {
                 },
             },
             trash = {
-                cmd = "gio trash",
+                cmd = 'gio trash',
                 require_confirm = true,
             },
             live_filter = {
-                prefix = "[FILTER]: ",
+                prefix = '[FILTER]: ',
                 always_show_folders = true,
             },
             tab = {
@@ -2666,11 +2658,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Wansmer/treesj
-AddPlugin {
-    'RRethy/nvim-treesitter-endwise',
-    ft = 'lua'
-}
-
 AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
