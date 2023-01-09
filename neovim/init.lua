@@ -82,7 +82,7 @@ vim.g.cmp_kinds = {
     Namespace     = 'ﬥ ',
     Null          = ' ',
     Number        = ' ',
-    Object        = ' ',
+    Object        = ' ',
     Operator      = ' ',
     Options       = ' ',
     Package       = ' ',
@@ -122,7 +122,7 @@ local kind_hl = {
     Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
     Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
     Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
-    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
+    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
     Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
     Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
     Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
@@ -601,7 +601,7 @@ function ColoRand()
         { 'base16-classic-light',                 'light', 'base16' },
         { 'base16-codeschool',                    'dark',  'base16' },
         { 'base16-colors',                        'dark',  'base16' },
-        { 'base16-cupcake',                       'dark',  'base16' },
+        { 'base16-cupcake',                       'light', 'base16' },
         { 'base16-cupertino',                     'light', 'base16' },
         { 'base16-da-one-black',                  'dark',  'base16' },
         { 'base16-da-one-gray',                   'dark',  'base16' },
@@ -696,7 +696,6 @@ function ColoRand()
         { 'base16-outrun-dark',                   'dark',  'base16' },
         { 'base16-pandora',                       'dark',  'base16', postcmd = function() FixNontext() end },
         { 'base16-papercolor-dark',               'dark',  'base16' },
-        { 'base16-papercolor-light',              'light', 'base16' },
         { 'base16-paraiso',                       'dark',  'base16' },
         { 'base16-pasque',                        'dark',  'base16' },
         { 'base16-phd',                           'dark',  'base16' },
@@ -853,7 +852,6 @@ function ColoRand()
         { 'gruvbuddy',                            'dark',  '_' },
         { 'habamax',                              'dark',  '_' },
         { 'horizon',                              'dark',  '_' },
-        { 'industry',                             'dark',  '_' },
         { 'juliana',                              'dark',  '_' },
         { 'kanagawa',                             'dark',  '_' },
         { 'kanagawabones',                        'dark',  'zenbones' },
@@ -3053,7 +3051,8 @@ AddPlugin {
     end,
     config = function()
         vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif]]
-    end
+    end,
+    lazy = false
 }
 
 AddPlugin {
