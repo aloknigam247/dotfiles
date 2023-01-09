@@ -619,7 +619,6 @@ function ColoRand()
         { 'base16-darcula',                       'dark',  'base16' },
         { 'base16-darkmoss',                      'dark',  'base16' },
         { 'base16-darktooth',                     'dark',  'base16' },
-        { 'base16-darkviolet',                    'dark',  'base16' },
         { 'base16-decaf',                         'dark',  'base16' },
         { 'base16-default-dark',                  'dark',  'base16' },
         { 'base16-default-light',                 'light', 'base16' },
@@ -967,7 +966,7 @@ function ColoRand()
     local module = selection[3]
     local precmd = selection.precmd
     local postcmd = selection.postcmd
-    vim.b.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
@@ -1009,9 +1008,8 @@ AddPlugin {
             cmp.setup.cmdline(':', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    {
-                        name = 'cmdline',
-                    },
+                    { name = 'cmdline' },
+                    { name = 'path' },
                 }
             }),
             cmp.setup.cmdline('/', {
@@ -2356,23 +2354,29 @@ vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = functi
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-  'rmagatti/auto-session',
-  config = function()
-    vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam", "~" }
-    require("auto-session").setup({
-        post_delete_cmds = {
-            "let g:auto_session_enabled = v:false",
-            "unlet g:session_icon"
-        },
-        post_restore_cmds = {
-            "let g:session_icon = ''"
-        },
-        post_save_cmds = {
-            "let g:session_icon = ''"
-        }
-    })
-    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
-  end,
+    'rmagatti/auto-session',
+    cmd = 'SaveSession',
+    cond = function()
+        -- print(vim.fn.filereadable(vim.fn.stdpath "data" .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%"):gsub(":", "++") .. ".vim") == 1)
+        return vim.fn.filereadable(vim.fn.stdpath "data" .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%"):gsub(":", "++") .. ".vim") == 1
+    end,
+    config = function()
+        vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam", "~" }
+        require("auto-session").setup({
+            post_delete_cmds = {
+                "let g:auto_session_enabled = v:false",
+                "unlet g:session_icon"
+            },
+            post_restore_cmds = {
+                "let g:session_icon = ''"
+            },
+            post_save_cmds = {
+                "let g:session_icon = ''"
+            }
+        })
+        vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+    end,
+    lazy = false
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
