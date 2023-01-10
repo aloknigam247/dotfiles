@@ -2537,12 +2537,12 @@ AddPlugin {
         --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
         --     }
         -- },
-        -- inactive_winbar = {
-        --     lualine_a = {'filename'},
+        inactive_winbar = {
+            lualine_a = {'filename'},
         --     lualine_b = {
         --         { navic.get_location, cond = navic.is_available }
         --     }
-        -- },
+        },
         extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
     end,
