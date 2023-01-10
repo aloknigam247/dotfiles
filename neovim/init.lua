@@ -1513,23 +1513,29 @@ AddPlugin {
 --     end
 -- }
 
--- use {
---     'kevinhwang91/nvim-ufo',
---     cond = function()
---         return vim.o.foldmethod ~= "marker"
---     end,
---     config = function()
---         vim.o.foldcolumn = '1' -- '0' is not bad
---         vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
---         vim.o.foldlevelstart = 99
---         vim.o.foldenable = true
---         require('ufo').setup({
---             provider_selector = function(bufnr, filetype, buftype)
---                 return {'treesitter', 'indent'}
---             end
---         })
---     end
--- }
+-- TODO: work on it
+AddPlugin {
+    'kevinhwang91/nvim-ufo',
+    -- cond = function()
+    --     return vim.o.foldmethod ~= "marker"
+    -- end,
+    config = function()
+        vim.o.foldcolumn = '1' -- '0' is not bad
+        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevelstart = 99
+        vim.o.foldenable = true
+        require('ufo').setup({
+            provider_selector = function(bufnr, filetype, buftype)
+                return {'treesitter', 'indent'}
+            end
+        })
+        vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+    end,
+    dependencies = 'kevinhwang91/promise-async',
+    enabled = false,
+    lazy = false
+}
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1554,43 +1560,42 @@ AddPlugin {
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
     'lewis6991/gitsigns.nvim',
-    config = function()
-        require('gitsigns').setup {
-            signs = {
-                add          = { hl = 'GitSignsAdd'   , text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
-                change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-                delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-                topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-                changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-            },
-            current_line_blame_formatter_opts = {
-                relative_time = true
-            },
-            current_line_blame_formatter = '  <author>  <committer_time>  <summary>`',
-            on_attach = function (bufnr)
-                local gs = package.loaded.gitsigns
+    config = {
+        signs = {
+            add          = { hl = 'GitSignsAdd'   , text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
+            change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+            delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+            topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+        },
+        current_line_blame_formatter_opts = {
+            relative_time = true
+        },
+        current_line_blame_formatter = '  <author>  <committer_time>  <summary>`',
+        on_attach = function (bufnr)
+            local gs = package.loaded.gitsigns
 
-                local function map(mode, l, r, opts)
-                    opts = opts or {}
-                    opts.buffer = bufnr
-                    vim.keymap.set(mode, l, r, opts)
-                end
-
-                -- Navigation
-                map('n', ']c', function()
-                    if vim.wo.diff then return ']c' end
-                    vim.schedule(function() gs.next_hunk() end)
-                    return '<Ignore>'
-                end, {expr=true})
-
-                map('n', '[c', function()
-                    if vim.wo.diff then return '[c' end
-                    vim.schedule(function() gs.prev_hunk() end)
-                    return '<Ignore>'
-                end, {expr=true})
+            local function map(mode, l, r, opts)
+                opts = opts or {}
+                opts.buffer = bufnr
+                vim.keymap.set(mode, l, r, opts)
             end
-        }
-    end,
+
+            -- Navigation
+            map('n', ']c', function()
+                if vim.wo.diff then return ']c' end
+                vim.schedule(function() gs.next_hunk() end)
+                return '<Ignore>'
+            end, {expr=true})
+
+            map('n', '[c', function()
+                if vim.wo.diff then return '[c' end
+                vim.schedule(function() gs.prev_hunk() end)
+                return '<Ignore>'
+            end, {expr=true})
+        end,
+        trouble = false
+    },
     event = 'CursorHold'
 }
 
