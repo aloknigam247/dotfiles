@@ -1209,8 +1209,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: lazy load
     'nvim-tree/nvim-tree.lua',
-    config = function()
-        require('nvim-tree').setup {
+    config = {
             auto_reload_on_write = true,
             disable_netrw = true,
             hijack_cursor = false,
@@ -1436,7 +1435,6 @@ AddPlugin {
                 },
             },
     }
-    end
 }
 -- {
 --     'nvim-neo-tree/neo-tree.nvim',
@@ -1525,7 +1523,7 @@ AddPlugin {
         vim.o.foldlevelstart = 99
         vim.o.foldenable = true
         require('ufo').setup({
-            provider_selector = function(bufnr, filetype, buftype)
+            provider_selector = function(_, _, _)
                 return {'treesitter', 'indent'}
             end
         })
@@ -1612,22 +1610,20 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'DaikyXendo/nvim-material-icon',
-    config = function()
-        require('nvim-material-icon').setup({
-            override = {
-                csproj = {
-                    color = '#854CC7',
-                    cterm_color = '98',
-                    icon = '',
-                    name = "Csproj"
-                },
-                norg = {
-                    icon = '',
-                    name = "Neorg"
-                }
+    config = {
+        override = {
+            csproj = {
+                color = '#854CC7',
+                cterm_color = '98',
+                icon = '',
+                name = "Csproj"
+            },
+            norg = {
+                icon = '',
+                name = "Neorg"
             }
-        })
-    end,
+        }
+    },
     -- lazy = true
 }
 
@@ -1645,12 +1641,10 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'lukas-reineke/indent-blankline.nvim',
-    config = function()
-        require("indent_blankline").setup({
-            show_current_context = true,
-            show_current_context_start = true
-        })
-    end,
+    config = {
+        show_current_context = true,
+        show_current_context_start = true
+    },
     event = "CursorHold"
 }
 -- <~>
@@ -1662,16 +1656,14 @@ AddPlugin {
 
 AddPlugin {
     'SmiteshP/nvim-navic',
-    config = function()
-        require('nvim-navic').setup {
-            icons = vim.g.cmp_kinds,
-            highlight = true,
-            separator = "  ",
-            depth_limit = 0,
-            depth_limit_indicator = "..",
-            safe_output = true
-        }
-    end,
+    config = {
+        icons = vim.g.cmp_kinds,
+        highlight = true,
+        separator = "  ",
+        depth_limit = 0,
+        depth_limit_indicator = "..",
+        safe_output = true
+    },
     event = 'LspAttach',
     enabled = false
 }
@@ -1697,13 +1689,11 @@ AddPlugin {
 AddPlugin {
     'williamboman/mason.nvim',
     cmd = 'Mason',
-    config = function()
-        require("mason").setup({
-            ui = {
-                border = "rounded"
-            }
-        })
-    end,
+    config = {
+        ui = {
+            border = "rounded"
+        }
+    },
 }
 
 AddPlugin {
@@ -1956,14 +1946,12 @@ AddPlugin {
 
 AddPlugin {
     'j-hui/fidget.nvim',
-    config = function()
-        require("fidget").setup({
-            text = {
-                done = '陼',
-                spinner = 'arc'
-            }
-        })
-    end,
+    config = {
+        text = {
+            done = '陼',
+            spinner = 'arc'
+        }
+    },
     event = "LspAttach"
 }
 
@@ -2089,9 +2077,7 @@ AddPlugin {
 -- TODO:
 AddPlugin {
     'rmagatti/goto-preview',
-    config = function()
-        require('goto-preview').setup()
-    end,
+    config = true,
     event = 'LspAttach'
 }
 
@@ -2099,27 +2085,21 @@ AddPlugin {
 AddPlugin {
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
-    config = function()
-        require("symbols-outline").setup()
-    end
+    config = true
 }
 
 -- TODO:
 AddPlugin {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
-    config = function()
-        require("inc_rename").setup()
-    end
+    config = true
 }
 
 -- TODO:
 AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
-    config = function()
-        require('aerial').setup({})
-    end
+    config = true
 }
 
 AddPlugin {
@@ -2294,14 +2274,12 @@ AddPlugin {
 
 AddPlugin {
     'kevinhwang91/nvim-bqf',
-    config = function()
-        require('bqf').setup({
-            auto_resize_height = true,
-            preview = {
-                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
-            }
-        })
-    end,
+    config = {
+        auto_resize_height = true,
+        preview = {
+            border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
+        }
+    },
     ft = 'qf'
 }
 -- <~>
@@ -2377,16 +2355,14 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'dcampos/nvim-snippy',
-    config = function()
-        require('snippy').setup({
-            mappings = {
-                is = {
-                    ['<Tab>'] = 'expand_or_advance',
-                    ['<S-Tab>'] = 'previous',
-                }
+    config = {
+        mappings = {
+            is = {
+                ['<Tab>'] = 'expand_or_advance',
+                ['<S-Tab>'] = 'previous',
             }
-        })
-    end,
+        }
+    },
     dependencies = 'honza/vim-snippets',
     -- lazy = true
 }
@@ -2601,23 +2577,23 @@ AddPlugin {
     cmd = "Telescope",
     config = function()
         require('telescope').setup({
-            defaults = {
-                dynamic_preview_title = true,
-                entry_prefix = "   ",
-                file_ignore_patterns = {},
-                file_sorter = require("telescope.sorters").get_fuzzy_file,
-                generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-                initial_mode = "insert",
-                multi_icon = " ",
-                prompt_prefix = "  ",
-                selection_caret = " ",
-                timeout = 2000,
-            },
-            extensions = {
-                heading = {
-                    treesitter = true
-                }
-            },
+        defaults = {
+            dynamic_preview_title = true,
+            entry_prefix = "   ",
+            file_ignore_patterns = {},
+            file_sorter = require("telescope.sorters").get_fuzzy_file,
+            generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+            initial_mode = "insert",
+            multi_icon = " ",
+            prompt_prefix = "  ",
+            selection_caret = " ",
+            timeout = 2000,
+        },
+        extensions = {
+            heading = {
+                treesitter = true
+            }
+        },
         })
     end,
     dependencies = 'nvim-lua/plenary.nvim'
@@ -2626,12 +2602,10 @@ AddPlugin {
 AddPlugin {
     'princejoogie/dir-telescope.nvim',
     cmd = { "FileInDirectory", "GrepInDirectory" },
-    config = function()
-        require("dir-telescope").setup({
-            hidden = true,
-            respect_gitignore = true,
-        })
-    end,
+    config = {
+        hidden = true,
+        respect_gitignore = true,
+    },
     dependencies = 'nvim-telescope/telescope.nvim',
 }
 -- <~>
@@ -2639,10 +2613,7 @@ AddPlugin {
 AddPlugin {
     "akinsho/toggleterm.nvim",
     cmd = 'ToggleTerm',
-    config = function()
-        require("toggleterm").setup()
-    end,
-    -- tag = '*'
+    config = true
 }
 -- https://github.com/elijahdanko/ttymux.nvim
 -- https://github.com/jlesquembre/nterm.nvim
@@ -2708,17 +2679,15 @@ AddPlugin {
 AddPlugin {
     'nvim-treesitter/nvim-treesitter-context',
     cmd = 'TSContextEnable',
-    config = function()
-        require('treesitter-context').setup {
-            enable = true,
-            separator = '━',
-            patterns = {
-                lua = {
-                    'field'
-                }
+    config = {
+        enable = true,
+        separator = '━',
+        patterns = {
+            lua = {
+                'field'
             }
         }
-    end
+    }
 }
 
 AddPlugin {
@@ -2963,35 +2932,19 @@ AddPlugin {
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
-    config = function()
-        local debugprint = require('debugprint')
-        debugprint.setup({
-            create_keymaps = false,
-            create_commands = false
-        })
-        vim.keymap.set("n", "<Leader>dd", function()
-            debugprint.deleteprints()
-        end)
-        vim.keymap.set("n", "<Leader>dp", function()
-            debugprint.debugprint()
-        end)
-        vim.keymap.set("n", "<Leader>dP", function()
-            debugprint.debugprint({ above = true })
-        end)
-        vim.keymap.set("n", "<Leader>dv", function()
-            debugprint.debugprint({ variable = true })
-        end)
-        vim.keymap.set("n", "<Leader>dV", function()
-            debugprint.debugprint({ above = true, variable = true })
-        end)
-        vim.keymap.set("v", "<Leader>dv", function()
-            debugprint.debugprint({ variable = true })
-        end)
-        vim.keymap.set("v", "<Leader>dV", function()
-            debugprint.debugprint({ above = true, variable = true })
-        end)
-    end,
-    keys = { "<Leader>dp", "<Leader>dP", "<Leader>dv", "<Leader>dV", }
+    config = {
+        create_keymaps = false,
+        create_commands = false
+    },
+    keys = {
+        { "<Leader>dP", function() require('debugprint').debugprint({ above = true }) end,                           mode = 'n' },
+        { "<Leader>dV", function() require('debugprint').debugprint({ above = true,          variable = true }) end, mode = 'n' },
+        { "<Leader>dV", function() require('debugprint').debugprint({ above = true,          variable = true }) end, mode = 'v' },
+        { "<Leader>dd", function() require('debugprint').deleteprints() end,                                         mode = 'n' },
+        { "<Leader>dp", function() require('debugprint').debugprint() end,                                           mode = 'n' },
+        { "<Leader>dv", function() require('debugprint').debugprint({ variable = true }) end,                        mode = 'n' },
+        { "<Leader>dv", function() require('debugprint').debugprint({ variable = true }) end,                        mode = 'v' },
+    }
 }
 
 -- use 'cbochs/portal.nvim'
@@ -3070,19 +3023,17 @@ AddPlugin {
 
 AddPlugin {
     'tversteeg/registers.nvim',
-    config = function()
-        require("registers").setup({
-            show = '*+"',
-            show_empty = false,
-            register_user_command = false,
-            symbols = {
-                tab = '»'
-            },
-            window = {
-                border = 'rounded'
-            }
-        })
-    end,
+    config = {
+        show = '*+"',
+        show_empty = false,
+        register_user_command = false,
+        symbols = {
+            tab = '»'
+        },
+        window = {
+            border = 'rounded'
+        }
+    },
     keys = {
         { '"', mode = 'n'     },
         { '"', mode = 'v'     },
