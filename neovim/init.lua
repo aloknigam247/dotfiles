@@ -713,7 +713,7 @@ function ColoRand()
         { 'base16-rose-pine',                     'dark',  'base16' },
         { 'base16-rose-pine-dawn',                'light', 'base16' },
         { 'base16-rose-pine-moon',                'dark',  'base16' },
-        { 'base16-sagelight',                     'dark',  'base16' },
+        { 'base16-sagelight',                     'light', 'base16' },
         { 'base16-sakura',                        'dark',  'base16' },
         { 'base16-sandcastle',                    'dark',  'base16' },
         { 'base16-seti',                          'dark',  'base16' },
@@ -768,7 +768,6 @@ function ColoRand()
         { 'base16-windows-95-light',              'light', 'base16' },
         { 'base16-windows-highcontrast',          'dark',  'base16' },
         { 'base16-windows-highcontrast-light',    'light', 'base16' },
-        { 'base16-windows-nt',                    'dark',  'base16' },
         { 'base16-windows-nt-light',              'light', 'base16' },
         { 'base16-woodland',                      'dark',  'base16' },
         { 'base16-xcode-dusk',                    'dark',  'base16' },
@@ -989,7 +988,7 @@ AddPlugin {
     }
 }
 -- <~>
--- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'hrsh7th/nvim-cmp',
     config = function()
@@ -1065,7 +1064,7 @@ AddPlugin {
             }
         })
     end,
-    dependencies = { "aloknigam247/cmp-path", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" },
+    dependencies = { "aloknigam247/cmp-path", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" }, -- TODO: check if lazy
     event = 'CmdlineEnter',
 }
 
@@ -1339,6 +1338,7 @@ AddPlugin {
                     min = vim.diagnostic.severity.HINT,
                     max = vim.diagnostic.severity.ERROR,
                 },
+                -- TODO: use global icons
                 icons = {
                     error   = '',
                     hint    = '',
@@ -1498,6 +1498,7 @@ AddPlugin {
 -- },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: work on it
 -- use {
 --     'anuvyklack/pretty-fold.nvim',
 --     cond = function()
@@ -1545,6 +1546,7 @@ AddPlugin {
 -- use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: use FZF
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- https://github.com/ibhagwan/fzf-lua
 -- https://github.com/junegunn/fzf
@@ -1609,51 +1611,51 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'DaikyXendo/nvim-material-icon',
-    config = {
-        override = {
-            csproj = {
-                color = '#854CC7',
-                cterm_color = '98',
-                icon = '',
-                name = "Csproj"
-            },
-            norg = {
-                icon = '',
-                name = "Neorg"
-            }
+'DaikyXendo/nvim-material-icon',
+config = {
+    override = {
+        csproj = {
+            color = '#854CC7',
+            cterm_color = '98',
+            icon = '',
+            name = "Csproj"
+        },
+        norg = {
+            icon = '',
+            name = "Neorg"
         }
-    },
-    -- lazy = true
+    }
+}
 }
 
 AddPlugin {
-    'kyazdani42/nvim-web-devicons',
-    config = function()
-        require'nvim-web-devicons'.setup({
-            override = require('nvim-material-icon').get_icons()
-        })
-        require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
-    end,
-    -- lazy = true
+'kyazdani42/nvim-web-devicons',
+config = function()
+    require'nvim-web-devicons'.setup({
+        override = require('nvim-material-icon').get_icons()
+    })
+    require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
+end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'lukas-reineke/indent-blankline.nvim',
-    config = {
-        show_current_context = true,
-        show_current_context_start = true
-    },
-    event = "CursorHold"
+'lukas-reineke/indent-blankline.nvim',
+config = {
+    show_current_context = true,
+    show_current_context_start = true
+},
+event = "CursorHold"
 }
 -- <~>
--- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- use 'Hoffs/omnisharp-extended-lsp.nvim'
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
+-- TODO: resolve with Lspsaga
+-- TODO: use treesitter satatusline if LSP not available
 AddPlugin {
     'SmiteshP/nvim-navic',
     config = {
@@ -1668,13 +1670,14 @@ AddPlugin {
     enabled = false
 }
 
--- TODO:
+-- TODO: Resolve usage
 AddPlugin {
     'liuchengxu/vista.vim',
     config = function()
         vim.cmd[[
         let g:vista_default_executive = 'nvim_lsp'
         let g:vista_icon_indent = ["╰─ ", "├─ "]
+        " TODO: use global icons
         let g:vista#renderer#icons = {
             \   "constant": "",
             \   "class": "",
@@ -1693,7 +1696,7 @@ AddPlugin {
         ui = {
             border = "rounded"
         }
-    },
+    }
 }
 
 AddPlugin {
@@ -1730,6 +1733,7 @@ AddPlugin {
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
+            -- TODO: better popup management
             vim.cmd[[
                 aunmenu PopUp
                 nnoremenu PopUp.Declaration\ \ \ \ \ \ \ \ \ \ \ \ gD <Cmd>lua vim.lsp.buf.declaration()<CR>
@@ -1748,7 +1752,7 @@ AddPlugin {
         -- LSP settings (for overriding per client)
         local handlers =  {
             ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
-            -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
+            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
         }
 
         -- Add additional capabilities supported by nvim-cmp
@@ -1840,7 +1844,7 @@ AddPlugin {
         }
         vim.cmd('LspStart')
     end,
-    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' }, -- mason should come from require
+    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
     event = 'CursorHold'
 }
 
@@ -1864,7 +1868,7 @@ AddPlugin {
             border_style = "rounded",
             saga_winblend = 0,
             move_in_saga = { prev = '<C-p>',next = '<C-n>'},
-            diagnostic_header = { " ", " ", " ", "ﴞ " },
+            diagnostic_header = { " ", " ", " ", "ﴞ " }, -- TODO: should use global icons
             -- preview lines above of lsp_finder
             preview_lines_above = 0,
             -- preview lines of lsp_finder and definition preview
@@ -1885,9 +1889,9 @@ AddPlugin {
                 virtual_text = true,
             },
             finder_icons = {
-                def = '  ',
-                ref = '諭 ',
-                link = '  ',
+                def = ' ',
+                ref = '諭',
+                link = ' ',
             },
             finder_request_timeout = 1500,
             finder_action_keys = {
@@ -2068,34 +2072,34 @@ AddPlugin {
 
 -- use 'razzmatazz/csharp-language-server'
 
--- TODO:
+-- TODO: resolve usage
 AddPlugin {
     'ray-x/navigator.lua',
     event = 'LspAttach'
 }
 
--- TODO:
+-- TODO: resolve usage
 AddPlugin {
     'rmagatti/goto-preview',
     config = true,
     event = 'LspAttach'
 }
 
--- TODO:
+-- TODO: resolve usage
 AddPlugin {
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
     config = true
 }
 
--- TODO:
+-- TODO: resolve usage
 AddPlugin {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
     config = true
 }
 
--- TODO:
+-- TODO: resolve usage
 AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
@@ -2172,6 +2176,7 @@ AddPlugin {
 }
 
 -- https://github.com/ThePrimeagen/harpoon --> plenary
+-- TODO: lazy load
 AddPlugin {
     'kshenoy/vim-signature',
     -- lazy = true
@@ -2197,7 +2202,8 @@ AddPlugin {
                 ["core.norg.esupports.indent"]   = {},
                 ["core.norg.qol.toc"]            = {},
                 ["core.norg.qol.todo_items"]     = {},
-                ["core.syntax"]                  = {}
+                ["core.syntax"]                  = {},
+                ["core.defaults"] = {},
             }
         }
         vim.cmd [[
@@ -2277,13 +2283,14 @@ AddPlugin {
     config = {
         auto_resize_height = true,
         preview = {
-            border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
+            border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'} -- TODO: use global icons
         }
     },
     ft = 'qf'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: a rooter
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin { 'tamton-aquib/zone.nvim' }
@@ -2323,14 +2330,13 @@ function ResetSleeper()
 end
 
 vim.api.nvim_create_autocmd({'CursorHold'} , {callback = ResetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end})
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end}) -- TODO: fix loading of drop
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     cond = function()
-        -- print(vim.fn.filereadable(vim.fn.stdpath "data" .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%"):gsub(":", "++") .. ".vim") == 1)
         return vim.fn.filereadable(vim.fn.stdpath "data" .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%"):gsub(":", "++") .. ".vim") == 1
     end,
     config = function()
@@ -2364,7 +2370,6 @@ AddPlugin {
         }
     },
     dependencies = 'honza/vim-snippets',
-    -- lazy = true
 }
 -- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/hrsh7th/vim-vsnip
@@ -2465,6 +2470,7 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
+                    -- TODO: add showcmd
                     {
                         LspIcon,
                         cond = function()
@@ -2504,33 +2510,33 @@ AddPlugin {
                 lualine_y = {},
                 lualine_z = {}
             },
-        -- tabline = {
-        --     lualine_a = {'filename'},
-        -- },
-        winbar = {
-            lualine_a = {'filename'},
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available },
-        --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
-        --     }
-        },
-        inactive_winbar = {
-            lualine_a = {'filename'},
-        --     lualine_b = {
-        --         { navic.get_location, cond = navic.is_available }
-        --     }
-        },
-        extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
+            -- tabline = {
+            --     lualine_a = {'filename'},
+            -- },
+            winbar = {
+                lualine_a = {'filename'},
+            --     lualine_b = {
+            --         { navic.get_location, cond = navic.is_available },
+            --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
+            --     }
+            },
+            inactive_winbar = {
+                lualine_a = {'filename'},
+            --     lualine_b = {
+            --         { navic.get_location, cond = navic.is_available }
+            --     }
+            },
+            extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
     end,
     event = 'CursorHold'
 }
 -- <~>
--- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'akinsho/bufferline.nvim',
     config = function()
-        local sym_map = {
+        local sym_map = { -- TODO use global icons
             ['error']   = ' ',
             ['hint']    = ' ',
             ['info']    = ' ',
@@ -2577,23 +2583,23 @@ AddPlugin {
     cmd = "Telescope",
     config = function()
         require('telescope').setup({
-        defaults = {
-            dynamic_preview_title = true,
-            entry_prefix = "   ",
-            file_ignore_patterns = {},
-            file_sorter = require("telescope.sorters").get_fuzzy_file,
-            generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-            initial_mode = "insert",
-            multi_icon = " ",
-            prompt_prefix = "  ",
-            selection_caret = " ",
-            timeout = 2000,
-        },
-        extensions = {
-            heading = {
-                treesitter = true
-            }
-        },
+            defaults = {
+                dynamic_preview_title = true,
+                entry_prefix = "   ",
+                file_ignore_patterns = {},
+                file_sorter = require("telescope.sorters").get_fuzzy_file,
+                generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+                initial_mode = "insert",
+                multi_icon = " ",
+                prompt_prefix = "  ",
+                selection_caret = " ",
+                timeout = 2000,
+            },
+            extensions = {
+                heading = {
+                    treesitter = true
+                }
+            },
         })
     end,
     dependencies = 'nvim-lua/plenary.nvim'
@@ -2615,6 +2621,7 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
+-- TODO: resduce list
 -- https://github.com/elijahdanko/ttymux.nvim
 -- https://github.com/jlesquembre/nterm.nvim
 -- https://github.com/kassio/neoterm
@@ -2632,7 +2639,7 @@ AddPlugin {
 -- https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/Wansmer/treesj
+-- TODO: https://github.com/Wansmer/treesj
 AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -2643,11 +2650,11 @@ AddPlugin {
             },
             highlight = {
                 additional_vim_regex_highlighting = false,
-                disable = { "help", "norg", "norg_meta", "yaml" },
+                disable = { "help", "yaml" },
                 enable = true
             },
             ignore_install = { "help", "norg", "norg_meta", "yaml" },
-            -- markid = {
+            -- markid = { -- TODO: resolve
             --     enable = true,
             --     colors = m.colors.medium,
             --     queries = { default = '(variable) @markid'},
@@ -2689,13 +2696,9 @@ AddPlugin {
         }
     }
 }
-
-AddPlugin {
-    'nvim-treesitter/playground',
-    cmd = 'TSHighlightCapturesUnderCursor'
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: fix this
 AddPlugin {
   'folke/noice.nvim',
   config = function()
@@ -2704,7 +2707,6 @@ AddPlugin {
               enabled = true, -- enables the Noice cmdline UI
               view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
               opts = {}, -- global options for the cmdline. See section on views
-              ---@type table<string, CmdlineFormat>
               format = {
                   -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
                   -- view: (default is cmdline view)
@@ -2733,21 +2735,17 @@ AddPlugin {
           },
           popupmenu = {
               enabled = true, -- enables the Noice popupmenu UI
-              ---@type 'nui'|'cmp'
               backend = "cmp", -- backend to use to show regular cmdline completions
-              ---@type NoicePopupmenuItemKind|false
               -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
               kind_icons = {}, -- set to `false` to disable icons
           },
           -- default options for require('noice').redirect
           -- see the section on Command Redirection
-          ---@type NoiceRouteConfig
           redirect = {
               view = "popup",
               filter = { event = "msg_show" },
           },
           -- You can add any custom commands below that will be available with `:Noice command`
-          ---@type table<string, NoiceCommand>
           commands = {
               history = {
                   -- options for the message history that you get with `:Noice`
@@ -2801,9 +2799,7 @@ AddPlugin {
                   enabled = true,
                   -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
                   -- See the section on formatting for more details on how to customize.
-                  --- @type NoiceFormat|string
                   format = "lsp_progress",
-                  --- @type NoiceFormat|string
                   format_done = "lsp_progress_done",
                   throttle = 1000 / 30, -- frequency to update lsp progress message
                   view = "mini",
@@ -2819,7 +2815,6 @@ AddPlugin {
               hover = {
                   enabled = true,
                   view = nil, -- when nil, use defaults from documentation
-                  ---@type NoiceViewOptions
                   opts = {}, -- merged with defaults from documentation
               },
               signature = {
@@ -2831,7 +2826,6 @@ AddPlugin {
                       throttle = 50, -- Debounce lsp signature help request by 50ms
                   },
                   view = nil, -- when nil, use defaults from documentation
-                  ---@type NoiceViewOptions
                   opts = {}, -- merged with defaults from documentation
               },
               message = {
@@ -2843,7 +2837,6 @@ AddPlugin {
               -- defaults for hover and signature help
               documentation = {
                   view = "hover",
-                  ---@type NoiceViewOptions
                   opts = {
                       lang = "markdown",
                       replace = true,
@@ -2876,7 +2869,6 @@ AddPlugin {
               -- add any filetypes here, that shouldn't trigger smart move.
               excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
           },
-          ---@type NoicePresets
           presets = {
               -- you can enable a preset by setting it to true, or a table that will override the preset config
               -- you can also add custom presets that you can enable/disable with enabled=true
@@ -2887,13 +2879,9 @@ AddPlugin {
               lsp_doc_border = false, -- add a border to hover docs and signature help
           },
           throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
-          ---@type NoiceConfigViews
           views = {}, ---@see section on views
-          ---@type NoiceRouteConfig[]
           routes = {}, --- @see section on routes
-          ---@type table<string, NoiceFilter>
           status = {}, --- @see section on statusline components
-          ---@type NoiceFormatOptions
           format = {}, --- @see section on formatting
       })
   end,
@@ -2928,7 +2916,9 @@ AddPlugin {
 }
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
+-- TODO: https://github.com/Pocco81/true-zen.nvim
 
+-- TODO: not working
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
@@ -2969,9 +2959,9 @@ AddPlugin {
 -- use 'jbyuki/instant.nvim'
 -- https://github.com/jghauser/mkdir.nvim
 
+-- TODO: lazy load
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
-    -- lazy = true
 }
 
 AddPlugin {
@@ -2983,12 +2973,12 @@ AddPlugin {
     end
 }
 
+-- TODO: lazy load
 AddPlugin {
     'kylechui/nvim-surround',
-    -- lazy = true
 }
 
--- use 'mg979/vim-visual-multi'
+-- TODO: use 'mg979/vim-visual-multi'
 
 -- https://github.com/nat-418/scamp.nvim
 
@@ -3019,7 +3009,7 @@ AddPlugin {
     cmd = 'Diffthis'
 }
 
--- https://github.com/shortcuts/no-neck-pain.nvim
+-- TODO: https://github.com/shortcuts/no-neck-pain.nvim
 
 AddPlugin {
     'tversteeg/registers.nvim',
@@ -3040,7 +3030,7 @@ AddPlugin {
         { '<C-R>', mode = 'i' }
     }
 }
--- https://github.com/utilyre/barbecue.nvim
+-- TODO: https://github.com/utilyre/barbecue.nvim
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -3057,5 +3047,6 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup(Plugins, LazyConfig)
 ColoRand()
+vim.opt.runtimepath:append("C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser")
 -- <~>
 -- vim: fmr=</>,<~>
