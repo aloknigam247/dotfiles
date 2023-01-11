@@ -470,10 +470,14 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/lifepillar/vim-colortemplate
 -- TODO: check compact version
-function ColorPlugin(opts)
-    local event = 'User ' .. opts[1]:gsub("/", "_")
-    print("event:", event)
-    AddPlugin(opts)
+local colos = {}
+local function Dark(opts)
+    opts.bg = 'dark'
+    table.insert(colos, opts)
+end
+local function Light(opts)
+    opts.bg = 'light'
+    table.insert(colos, opts)
 end
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
@@ -538,435 +542,202 @@ AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'        
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
 AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
 
+Dark  { 'NeoSolarized',                         '_' }
+Light { 'NeoSolarized',                         '_' }
+Dark  { 'OceanicNext',                          '_' }
+Dark  { 'PaperColor',                           '_' }
+Light { 'PaperColor',                           '_' }
+Dark  { 'adwaita',                              '_' }
+Light { 'adwaita',                              '_' }
+Dark  { 'aurora',                               '_' }
+Dark  { 'ayu-dark',                             'ayu' }
+Light { 'ayu-light',                            'ayu' }
+Dark  { 'ayu-mirage',                           'ayu' }
+Dark  { 'barstrata',                            '_' }
+Dark  { 'base2tone_cave_dark',                  'base2tone' }
+Dark  { 'base2tone_desert_dark',                'base2tone' }
+Light { 'base2tone_desert_light',               'base2tone' }
+Dark  { 'base2tone_drawbridge_dark',            'base2tone' }
+Light { 'base2tone_drawbridge_light',           'base2tone' }
+Light { 'base2tone_earth_light',                'base2tone' }
+Dark  { 'base2tone_evening_dark',               'base2tone' }
+Light { 'base2tone_evening_light',              'base2tone' }
+Dark  { 'base2tone_field_dark',                 'base2tone' }
+Light { 'base2tone_field_light',                'base2tone' }
+Dark  { 'base2tone_forest_dark',                'base2tone' }
+Light { 'base2tone_forest_light',               'base2tone' }
+Dark  { 'base2tone_garden_dark',                'base2tone' }
+Light { 'base2tone_garden_light',               'base2tone' }
+Dark  { 'base2tone_heath_dark',                 'base2tone' }
+Light { 'base2tone_heath_light',                'base2tone' }
+Dark  { 'base2tone_lake_dark',                  'base2tone' }
+Light { 'base2tone_lake_light',                 'base2tone' }
+Dark  { 'base2tone_lavender_dark',              'base2tone' }
+Light { 'base2tone_lavender_light',             'base2tone' }
+Dark  { 'base2tone_mall_dark',                  'base2tone' }
+Light { 'base2tone_mall_light',                 'base2tone' }
+Dark  { 'base2tone_meadow_dark',                'base2tone' }
+Light { 'base2tone_meadow_light',               'base2tone' }
+Dark  { 'base2tone_morning_dark',               'base2tone' }
+Light { 'base2tone_morning_light',              'base2tone' }
+Light { 'base2tone_motel_light',                'base2tone' }
+Dark  { 'base2tone_pool_dark',                  'base2tone' }
+Light { 'base2tone_pool_light',                 'base2tone' }
+Dark  { 'base2tone_porch_dark',                 'base2tone' }
+Light { 'base2tone_porch_light',                'base2tone' }
+Dark  { 'base2tone_sea_dark',                   'base2tone' }
+Light { 'base2tone_sea_light',                  'base2tone' }
+Dark  { 'base2tone_space_dark',                 'base2tone' }
+Light { 'base2tone_space_light',                'base2tone' }
+Dark  { 'base2tone_suburb_dark',                'base2tone' }
+Light { 'base2tone_suburb_light',               'base2tone' }
+Dark  { 'calvera',                              '_' }
+Dark  { 'carbonfox',                            'nightfox' }
+Dark  { 'catppuccin-frappe',                    'catppuccin' }
+Dark  { 'catppuccin-latte',                     'catppuccin' }
+Dark  { 'catppuccin-macchiato',                 'catppuccin' }
+Dark  { 'catppuccin-mocha',                     'catppuccin' }
+Dark  { 'cobalt2',                              '_', postcmd = function() require('colorbuddy').colorscheme('cobalt2') end }
+Dark  { 'codedark',                             '_' }
+Dark  { 'darkblue',                             '_' }
+Dark  { 'darker',                               '_' }
+Dark  { 'darkplus',                             '_' }
+Dark  { 'darksolar',                            'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'dawnfox',                              'nightfox' }
+Dark  { 'dayfox',                               'nightfox' }
+Dark  { 'deepocean',                            'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Light { 'delek',                                '_' }
+Dark  { 'deus',                                 '_' }
+Dark  { 'doubletrouble',                        '_' }
+Dark  { 'dracula',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'dracula_blood',                        'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'duckbones',                            'zenbones' }
+Dark  { 'duskfox',                              'nightfox' }
+Dark  { 'earlysummer',                          'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'edge',                                 '_' }
+Light { 'edge',                                 '_' }
+Dark  { 'emerald',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'enfocado',                             '_' }
+Light { 'enfocado',                             '_' }
+Dark  { 'everforest',                           '_' }
+Light { 'everforest',                           '_' }
+Dark  { 'falcon',                               '_' }
+Dark  { 'fluoromachine',                        '_' }
+Dark  { 'forestbones',                          'zenbones' }
+Light { 'forestbones',                          'zenbones' }
+Dark  { 'github_dark',                          'github' }
+Light { 'github_light',                         'github' }
+Dark  { 'gruvbox',                              '_' }
+Light { 'gruvbox',                              '_' }
+Dark  { 'gruvbox-baby',                         '_' }
+Dark  { 'gruvbuddy',                            '_' }
+Dark  { 'habamax',                              '_' }
+Dark  { 'horizon',                              '_' }
+Dark  { 'juliana',                              '_' }
+Dark  { 'kanagawa',                             '_' }
+Dark  { 'kanagawabones',                        'zenbones' }
+Dark  { 'kimbox',                               '_' }
+Light { 'limestone',                            'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'lunaperche',                           '_' }
+Dark  { 'mariana',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'material',                             '_',              precmd = function() vim.g.material_style = 'darker' end }
+Dark  { 'material',                             '_',              precmd = function() vim.g.material_style = 'deep ocean' end }
+Dark  { 'material',                             '_',              precmd = function() vim.g.material_style = 'lighter' end }
+Dark  { 'material',                             '_',              precmd = function() vim.g.material_style = 'oceanic' end }
+Dark  { 'material',                             '_',              precmd = function() vim.g.material_style = 'palenight' end }
+Dark  { 'material',                             'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'melange',                              '_' }
+Light { 'melange',                              '_' }
+Dark  { 'mellifluous',                          '_' }
+Light { 'mellifluous',                          '_' }
+Dark  { 'mellow',                               '_' }
+Dark  { 'middlenight_blue',                     'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'minimal',                              '_' }
+Dark  { 'minimal-base16',                       'minimal' }
+Dark  { 'monokai',                              'monokai.nvim' }
+Dark  { 'monokai',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'monokai',                              'vim-monokai' }
+Dark  { 'monokai_pro',                          'monokai.nvim' }
+Dark  { 'monokai_ristretto',                    'monokai.nvim' }
+Dark  { 'monokai_soda',                         'monokai.nvim' }
+Dark  { 'moonlight',                            '_' }
+Dark  { 'moonlight',                            'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'mosel',                                '_' }
+Dark  { 'murphy',                               '_' }
+Dark  { 'neobones',                             'zenbones' }
+Light { 'neobones',                             'zenbones' }
+Dark  { 'neon',                                 '_',              precmd = function() vim.g.neon_style = 'dark' end }
+Dark  { 'neon',                                 '_',              precmd = function() vim.g.neon_style = 'default' end }
+Dark  { 'neon',                                 '_',              precmd = function() vim.g.neon_style = 'doom' end }
+Light { 'neon',                                 '_',              precmd = function() vim.g.neon_style = 'light' end }
+Dark  { 'nightfox',                             'nightfox' }
+Dark  { 'nord',                                 '_' }
+Dark  { 'nordbones',                            'zenbones' }
+Dark  { 'nordfox',                              'nightfox' }
+Dark  { 'oceanic',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'oh-lucy',                              '_' }
+Dark  { 'oh-lucy-evening',                      'oh-lucy' }
+Dark  { 'one-nvim',                             '_' }
+Dark  { 'one_monokai',                          '_' }
+Dark  { 'onedark',                              'onedarkpro' }
+Dark  { 'onedark_dark',                         'onedarkpro' }
+Dark  { 'onedark_vivid',                        'onedarkpro' }
+Light { 'onelight',                             '_' }
+Dark  { 'onenord',                              '_' }
+Light { 'onenord',                              '_' }
+Dark  { 'oxocarbon',                            '_' }
+Light { 'oxocarbon',                            '_' }
+Dark  { 'palenight',                            '_' }
+Dark  { 'peachpuff',                            '_' }
+Light { 'pink-panic',                           '_' }
+Dark  { 'poimandres',                           '_', precmd = function() require('poimandres').setup() end }
+Dark  { 'rose-pine',                            '_' }
+Dark  { 'rose-pine',                            '_',              precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end }
+Dark  { 'rose-pine',                            '_',              precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
+Dark  { 'rosebones',                            'zenbones' }
+Light { 'rosebones',                            'zenbones' }
+Dark  { 'seoulbones',                           'zenbones' }
+Light { 'seoulbones',                           'zenbones' }
+Dark  { 'sherbet',                              '_' }
+Light { 'shine',                                '_' }
+Dark  { 'slate',                                '_' }
+Dark  { 'sonokai',                              '_',              precmd = function() vim.g.sonokai_style = 'andromeda' end }
+Dark  { 'sonokai',                              '_',              precmd = function() vim.g.sonokai_style = 'atlantis' end }
+Dark  { 'sonokai',                              '_',              precmd = function() vim.g.sonokai_style = 'default' end }
+Dark  { 'sonokai',                              '_',              precmd = function() vim.g.sonokai_style = 'maia' end }
+Dark  { 'sonokai',                              '_',              precmd = function() vim.g.sonokai_style = 'shusia' end }
+Dark  { 'substrata',                            '_' }
+Dark  { 'terafox',                              'nightfox' }
+Dark  { 'toast',                                '_' }
+Light { 'toast',                                '_' }
+Dark  { 'tokyobones',                           'zenbones' }
+Light { 'tokyobones',                           'zenbones' }
+Dark  { 'tokyodark',                            '_' }
+Light { 'tokyonight-day',                       'tokyonight' }
+Dark  { 'tokyonight-moon',                      'tokyonight' }
+Dark  { 'tokyonight-night',                     'tokyonight' }
+Dark  { 'tokyonight-storm',                     'tokyonight' }
+Dark  { 'torte',                                '_' }
+Dark  { 'tundra',                               '_' }
+Dark  { 'ukraine',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
+Dark  { 'vimbones',                             'zenbones' }
+Dark  { 'vn-night',                             '_' }
+Light { 'zellner',                              '_' }
+Dark  { 'zenbones',                             '_' }
+Light { 'zenbones',                             '_' }
+Dark  { 'zenburned',                            'zenbones' }
+Dark  { 'zenwritten',                           'zenbones' }
+Light { 'zenwritten',                           'zenbones' }
+Dark  { 'zephyr',                               '_' }
+Dark  { 'zephyrium',                            '_' }
+
 function ColoRand()
-    local colos = {}
-    local function Dark(opts)
-        opts.bg = 'dark'
-        table.insert(colos, opts)
-    end
-    local function Light(opts)
-        opts.bg = 'light'
-        table.insert(colos, opts)
-    end
-Dark { 'NeoSolarized',                         'dark',  '_' }
-Light { 'NeoSolarized',                         'light', '_' }
-Dark { 'OceanicNext',                          'dark',  '_' }
-Dark { 'PaperColor',                           'dark',  '_' }
-Light { 'PaperColor',                           'light', '_' }
-Dark { 'adwaita',                              'dark',  '_' }
-Light { 'adwaita',                              'light', '_' }
-Dark { 'aurora',                               'dark',  '_' }
-Dark { 'ayu-dark',                             'dark',  'ayu' }
-Light { 'ayu-light',                            'light', 'ayu' }
-Dark { 'ayu-mirage',                           'dark',  'ayu' }
-Dark { 'barstrata',                            'dark',  '_' }
-Dark { 'base16-3024',                          'dark',  'base16' }
-Dark { 'base16-apathy',                        'dark',  'base16' }
-Dark { 'base16-apprentice',                    'dark',  'base16' }
-Dark { 'base16-ashes',                         'dark',  'base16' }
-Dark { 'base16-atelier-cave',                  'dark',  'base16' }
-Light { 'base16-atelier-cave-light',            'light', 'base16' }
-Dark { 'base16-atelier-dune',                  'dark',  'base16' }
-Light { 'base16-atelier-dune-light',            'light', 'base16' }
-Dark { 'base16-atelier-estuary',               'dark',  'base16' }
-Light { 'base16-atelier-estuary-light',         'light', 'base16' }
-Dark { 'base16-atelier-forest',                'dark',  'base16' }
-Light { 'base16-atelier-forest-light',          'light', 'base16' }
-Dark { 'base16-atelier-heath',                 'dark',  'base16' }
-Light { 'base16-atelier-heath-light',           'light', 'base16' }
-Dark { 'base16-atelier-lakeside',              'dark',  'base16' }
-Light { 'base16-atelier-lakeside-light',        'light', 'base16' }
-Dark { 'base16-atelier-plateau',               'dark',  'base16' }
-Light { 'base16-atelier-plateau-light',         'light', 'base16' }
-Dark { 'base16-atelier-savanna',               'dark',  'base16' }
-Light { 'base16-atelier-savanna-light',         'light', 'base16' }
-Dark { 'base16-atelier-seaside',               'dark',  'base16' }
-Light { 'base16-atelier-seaside-light',         'light', 'base16' }
-Dark { 'base16-atelier-sulphurpool',           'dark',  'base16' }
-Light { 'base16-atelier-sulphurpool-light',     'light', 'base16' }
-Dark { 'base16-atlas',                         'dark',  'base16' }
-Dark { 'base16-ayu-dark',                      'dark',  'base16' }
-Light { 'base16-ayu-light',                     'light', 'base16' }
-Dark { 'base16-ayu-mirage',                    'dark',  'base16' }
-Dark { 'base16-bespin',                        'dark',  'base16' }
-Dark { 'base16-black-metal',                   'dark',  'base16' }
-Dark { 'base16-black-metal-bathory',           'dark',  'base16' }
-Dark { 'base16-black-metal-burzum',            'dark',  'base16' }
-Dark { 'base16-black-metal-dark-funeral',      'dark',  'base16' }
-Dark { 'base16-black-metal-gorgoroth',         'dark',  'base16' }
-Dark { 'base16-black-metal-immortal',          'dark',  'base16' }
-Dark { 'base16-black-metal-khold',             'dark',  'base16' }
-Dark { 'base16-black-metal-marduk',            'dark',  'base16' }
-Dark { 'base16-black-metal-mayhem',            'dark',  'base16' }
-Dark { 'base16-black-metal-nile',              'dark',  'base16' }
-Dark { 'base16-black-metal-venom',             'dark',  'base16' }
-Dark { 'base16-blueforest',                    'dark',  'base16' }
-Dark { 'base16-blueish',                       'dark',  'base16' }
-Dark { 'base16-brewer',                        'dark',  'base16' }
-Dark { 'base16-bright',                        'dark',  'base16' }
-Dark { 'base16-brogrammer',                    'dark',  'base16' }
-Dark { 'base16-brushtrees',                    'dark',  'base16' }
-Dark { 'base16-brushtrees-dark',               'dark',  'base16' }
-Dark { 'base16-catppuccin',                    'dark',  'base16' }
-Dark { 'base16-chalk',                         'dark',  'base16' }
-Dark { 'base16-circus',                        'dark',  'base16' }
-Dark { 'base16-classic-dark',                  'dark',  'base16' }
-Light { 'base16-classic-light',                 'light', 'base16' }
-Dark { 'base16-codeschool',                    'dark',  'base16' }
-Dark { 'base16-colors',                        'dark',  'base16' }
-Light { 'base16-cupcake',                       'light', 'base16' }
-Light { 'base16-cupertino',                     'light', 'base16' }
-Dark { 'base16-da-one-black',                  'dark',  'base16' }
-Dark { 'base16-da-one-gray',                   'dark',  'base16' }
-Dark { 'base16-da-one-ocean',                  'dark',  'base16' }
-Light { 'base16-da-one-paper',                  'light', 'base16' }
-Dark { 'base16-da-one-sea',                    'dark',  'base16' }
-Light { 'base16-da-one-white',                  'light', 'base16' }
-Dark { 'base16-danqing',                       'dark',  'base16' }
-Dark { 'base16-darcula',                       'dark',  'base16' }
-Dark { 'base16-darkmoss',                      'dark',  'base16' }
-Dark { 'base16-darktooth',                     'dark',  'base16' }
-Dark { 'base16-decaf',                         'dark',  'base16' }
-Dark { 'base16-default-dark',                  'dark',  'base16' }
-Light { 'base16-default-light',                 'light', 'base16' }
-Light { 'base16-dirtysea',                      'light', 'base16' }
-Dark { 'base16-dracula',                       'dark',  'base16' }
-Light { 'base16-edge-light',                    'light', 'base16' }
-Dark { 'base16-eighties',                      'dark',  'base16' }
-Dark { 'base16-embers',                        'dark',  'base16' }
-Light { 'base16-emil',                          'light', 'base16' }
-Dark { 'base16-equilibrium-dark',              'dark',  'base16' }
-Dark { 'base16-equilibrium-gray-dark',         'dark',  'base16' }
-Light { 'base16-equilibrium-gray-light',        'light', 'base16' }
-Light { 'base16-equilibrium-light',             'light', 'base16' }
-Dark { 'base16-espresso',                      'dark',  'base16' }
-Dark { 'base16-eva',                           'dark',  'base16' }
-Dark { 'base16-eva-dim',                       'dark',  'base16' }
-Dark { 'base16-everforest',                    'dark',  'base16' }
-Dark { 'base16-flat',                          'dark',  'base16' }
-Dark { 'base16-framer',                        'dark',  'base16' }
-Light { 'base16-fruit-soda',                    'light', 'base16' }
-Dark { 'base16-gigavolt',                      'dark',  'base16' }
-Light { 'base16-github',                        'light', 'base16' }
-Dark { 'base16-google-dark',                   'dark',  'base16' }
-Light { 'base16-google-light',                  'light', 'base16' }
-Dark { 'base16-gotham',                        'dark',  'base16' }
-Dark { 'base16-grayscale-dark',                'dark',  'base16' }
-Light { 'base16-grayscale-light',               'light', 'base16' }
-Dark { 'base16-greenscreen',                   'dark',  'base16' }
-Dark { 'base16-gruber',                        'dark',  'base16' }
-Dark { 'base16-gruvbox-dark-hard',             'dark',  'base16' }
-Dark { 'base16-gruvbox-dark-medium',           'dark',  'base16' }
-Dark { 'base16-gruvbox-dark-pale',             'dark',  'base16' }
-Dark { 'base16-gruvbox-dark-soft',             'dark',  'base16' }
-Light { 'base16-gruvbox-light-hard',            'light', 'base16' }
-Light { 'base16-gruvbox-light-medium',          'light', 'base16' }
-Light { 'base16-gruvbox-light-soft',            'light', 'base16' }
-Dark { 'base16-gruvbox-material-dark-hard',    'dark',  'base16' }
-Dark { 'base16-gruvbox-material-dark-medium',  'dark',  'base16' }
-Dark { 'base16-gruvbox-material-dark-soft',    'dark',  'base16' }
-Light { 'base16-gruvbox-material-light-medium', 'light', 'base16' }
-Light { 'base16-gruvbox-material-light-soft',   'light', 'base16' }
-Dark { 'base16-hardcore',                      'dark',  'base16' }
-Dark { 'base16-harmonic-dark',                 'dark',  'base16' }
-Light { 'base16-harmonic-light',                'light', 'base16' }
-Dark { 'base16-heetch',                        'dark',  'base16' }
-Light { 'base16-heetch-light',                  'light', 'base16' }
-Dark { 'base16-helios',                        'dark',  'base16' }
-Dark { 'base16-hopscotch',                     'dark',  'base16' }
-Dark { 'base16-horizon-dark',                  'dark',  'base16' }
-Dark { 'base16-horizon-terminal-dark',         'dark',  'base16' }
-Light { 'base16-horizon-terminal-light',        'light', 'base16' }
-Dark { 'base16-humanoid-dark',                 'dark',  'base16' }
-Light { 'base16-humanoid-light',                'light', 'base16' }
-Dark { 'base16-ia-dark',                       'dark',  'base16' }
-Light { 'base16-ia-light',                      'light', 'base16' }
-Dark { 'base16-icy',                           'dark',  'base16' }
-Dark { 'base16-irblack',                       'dark',  'base16' }
-Dark { 'base16-kanagawa',                      'dark',  'base16' }
-Dark { 'base16-katy',                          'dark',  'base16' }
-Dark { 'base16-kimber',                        'dark',  'base16' }
-Dark { 'base16-lime',                          'dark',  'base16' }
-Dark { 'base16-macintosh',                     'dark',  'base16' }
-Dark { 'base16-marrakesh',                     'dark',  'base16' }
-Dark { 'base16-materia',                       'dark',  'base16' }
-Dark { 'base16-material',                      'dark',  'base16' }
-Dark { 'base16-material-darker',               'dark',  'base16' }
-Light { 'base16-material-lighter',              'light', 'base16' }
-Dark { 'base16-material-palenight',            'dark',  'base16' }
-Dark { 'base16-material-vivid',                'dark',  'base16' }
-Dark { 'base16-mellow-purple',                 'dark',  'base16' }
-Light { 'base16-mexico-light',                  'light', 'base16' }
-Dark { 'base16-mocha',                         'dark',  'base16' }
-Dark { 'base16-monokai',                       'dark',  'base16' }
-Dark { 'base16-nebula',                        'dark',  'base16' }
-Dark { 'base16-nord',                          'dark',  'base16' }
-Dark { 'base16-nova',                          'dark',  'base16' }
-Dark { 'base16-ocean',                         'dark',  'base16' }
-Dark { 'base16-oceanicnext',                   'dark',  'base16' }
-Light { 'base16-one-light',                     'light', 'base16' }
-Dark { 'base16-onedark',                       'dark',  'base16' }
-Dark { 'base16-outrun-dark',                   'dark',  'base16' }
-Dark { 'base16-pandora',                       'dark',  'base16', postcmd = function() FixNontext() end }
-Dark { 'base16-papercolor-dark',               'dark',  'base16' }
-Dark { 'base16-paraiso',                       'dark',  'base16' }
-Dark { 'base16-pasque',                        'dark',  'base16' }
-Dark { 'base16-phd',                           'dark',  'base16' }
-Dark { 'base16-pico',                          'dark',  'base16' }
-Dark { 'base16-pinky',                         'dark',  'base16' }
-Dark { 'base16-pop',                           'dark',  'base16' }
-Dark { 'base16-porple',                        'dark',  'base16' }
-Dark { 'base16-primer-dark',                   'dark',  'base16' }
-Dark { 'base16-primer-dark-dimmed',            'dark',  'base16' }
-Light { 'base16-primer-light',                  'light', 'base16' }
-Dark { 'base16-purpledream',                   'dark',  'base16' }
-Dark { 'base16-qualia',                        'dark',  'base16' }
-Dark { 'base16-railscasts',                    'dark',  'base16' }
-Dark { 'base16-rebecca',                       'dark',  'base16' }
-Dark { 'base16-rose-pine',                     'dark',  'base16' }
-Light { 'base16-rose-pine-dawn',                'light', 'base16' }
-Dark { 'base16-rose-pine-moon',                'dark',  'base16' }
-Light { 'base16-sagelight',                     'light', 'base16' }
-Dark { 'base16-sakura',                        'dark',  'base16' }
-Dark { 'base16-sandcastle',                    'dark',  'base16' }
-Dark { 'base16-seti',                          'dark',  'base16' }
-Dark { 'base16-shades-of-purple',              'dark',  'base16' }
-Dark { 'base16-shadesmear-dark',               'dark',  'base16' }
-Light { 'base16-shadesmear-light',              'light', 'base16' }
-Light { 'base16-shapeshifter',                  'light', 'base16' }
-Dark { 'base16-silk-dark',                     'dark',  'base16' }
-Light { 'base16-silk-light',                    'light', 'base16' }
-Dark { 'base16-snazzy',                        'dark',  'base16' }
-Dark { 'base16-solarflare',                    'dark',  'base16' }
-Light { 'base16-solarflare-light',              'light', 'base16' }
-Dark { 'base16-solarized-dark',                'dark',  'base16' }
-Light { 'base16-solarized-light',               'light', 'base16' }
-Dark { 'base16-spaceduck',                     'dark',  'base16' }
-Dark { 'base16-spacemacs',                     'dark',  'base16' }
-Dark { 'base16-stella',                        'dark',  'base16' }
-Light { 'base16-still-alive',                   'light', 'base16', postcmd = function() FixNontext() end }
-Dark { 'base16-summercamp',                    'dark',  'base16' }
-Dark { 'base16-summerfruit-dark',              'dark',  'base16' }
-Light { 'base16-summerfruit-light',             'light', 'base16' }
-Dark { 'base16-synth-midnight-dark',           'dark',  'base16' }
-Light { 'base16-synth-midnight-light',          'light', 'base16' }
-Dark { 'base16-tango',                         'dark',  'base16' }
-Dark { 'base16-tender',                        'dark',  'base16' }
-Dark { 'base16-tokyo-city-dark',               'dark',  'base16' }
-Light { 'base16-tokyo-city-light',              'light', 'base16' }
-Dark { 'base16-tokyo-city-terminal-dark',      'dark',  'base16' }
-Light { 'base16-tokyo-city-terminal-light',     'light', 'base16' }
-Dark { 'base16-tokyo-night-dark',              'dark',  'base16' }
-Light { 'base16-tokyo-night-light',             'light', 'base16' }
-Dark { 'base16-tokyo-night-storm',             'dark',  'base16' }
-Dark { 'base16-tokyo-night-terminal-dark',     'dark',  'base16' }
-Light { 'base16-tokyo-night-terminal-light',    'light', 'base16' }
-Dark { 'base16-tokyo-night-terminal-storm',    'dark',  'base16' }
-Dark { 'base16-tokyodark',                     'dark',  'base16' }
-Dark { 'base16-tokyodark-terminal',            'dark',  'base16' }
-Light { 'base16-tomorrow',                      'light', 'base16' }
-Dark { 'base16-tomorrow-night',                'dark',  'base16' }
-Dark { 'base16-tomorrow-night-eighties',       'dark',  'base16' }
-Dark { 'base16-tube',                          'dark',  'base16' }
-Dark { 'base16-twilight',                      'dark',  'base16' }
-Dark { 'base16-unikitty-dark',                 'dark',  'base16' }
-Light { 'base16-unikitty-light',                'light', 'base16' }
-Dark { 'base16-unikitty-reversible',           'dark',  'base16' }
-Dark { 'base16-uwunicorn',                     'dark',  'base16' }
-Dark { 'base16-vice',                          'dark',  'base16' }
-Dark { 'base16-vulcan',                        'dark',  'base16' }
-Dark { 'base16-windows-10',                    'dark',  'base16' }
-Light { 'base16-windows-10-light',              'light', 'base16' }
-Dark { 'base16-windows-95',                    'dark',  'base16' }
-Light { 'base16-windows-95-light',              'light', 'base16' }
-Dark { 'base16-windows-highcontrast',          'dark',  'base16' }
-Light { 'base16-windows-highcontrast-light',    'light', 'base16' }
-Light { 'base16-windows-nt-light',              'light', 'base16' }
-Dark { 'base16-woodland',                      'dark',  'base16' }
-Dark { 'base16-xcode-dusk',                    'dark',  'base16' }
-Dark { 'base16-zenburn',                       'dark',  'base16' }
-Dark { 'base2tone_cave_dark',                  'dark',  'base2tone' }
-Dark { 'base2tone_desert_dark',                'dark',  'base2tone' }
-Light { 'base2tone_desert_light',               'light', 'base2tone' }
-Dark { 'base2tone_drawbridge_dark',            'dark',  'base2tone' }
-Light { 'base2tone_drawbridge_light',           'light', 'base2tone' }
-Light { 'base2tone_earth_light',                'light', 'base2tone' }
-Dark { 'base2tone_evening_dark',               'dark',  'base2tone' }
-Light { 'base2tone_evening_light',              'light', 'base2tone' }
-Dark { 'base2tone_field_dark',                 'dark',  'base2tone' }
-Light { 'base2tone_field_light',                'light', 'base2tone' }
-Dark { 'base2tone_forest_dark',                'dark',  'base2tone' }
-Light { 'base2tone_forest_light',               'light', 'base2tone' }
-Dark { 'base2tone_garden_dark',                'dark',  'base2tone' }
-Light { 'base2tone_garden_light',               'light', 'base2tone' }
-Dark { 'base2tone_heath_dark',                 'dark',  'base2tone' }
-Light { 'base2tone_heath_light',                'light', 'base2tone' }
-Dark { 'base2tone_lake_dark',                  'dark',  'base2tone' }
-Light { 'base2tone_lake_light',                 'light', 'base2tone' }
-Dark { 'base2tone_lavender_dark',              'dark',  'base2tone' }
-Light { 'base2tone_lavender_light',             'light', 'base2tone' }
-Dark { 'base2tone_mall_dark',                  'dark',  'base2tone' }
-Light { 'base2tone_mall_light',                 'light', 'base2tone' }
-Dark { 'base2tone_meadow_dark',                'dark',  'base2tone' }
-Light { 'base2tone_meadow_light',               'light', 'base2tone' }
-Dark { 'base2tone_morning_dark',               'dark',  'base2tone' }
-Light { 'base2tone_morning_light',              'light', 'base2tone' }
-Light { 'base2tone_motel_light',                'light', 'base2tone' }
-Dark { 'base2tone_pool_dark',                  'dark',  'base2tone' }
-Light { 'base2tone_pool_light',                 'light', 'base2tone' }
-Dark { 'base2tone_porch_dark',                 'dark',  'base2tone' }
-Light { 'base2tone_porch_light',                'light', 'base2tone' }
-Dark { 'base2tone_sea_dark',                   'dark',  'base2tone' }
-Light { 'base2tone_sea_light',                  'light', 'base2tone' }
-Dark { 'base2tone_space_dark',                 'dark',  'base2tone' }
-Light { 'base2tone_space_light',                'light', 'base2tone' }
-Dark { 'base2tone_suburb_dark',                'dark',  'base2tone' }
-Light { 'base2tone_suburb_light',               'light', 'base2tone' }
-Dark { 'calvera',                              'dark',  '_' }
-Dark { 'carbonfox',                            'dark',  'nightfox' }
-Dark { 'catppuccin-frappe',                    'dark',  'catppuccin' }
-Dark { 'catppuccin-latte',                     'dark',  'catppuccin' }
-Dark { 'catppuccin-macchiato',                 'dark',  'catppuccin' }
-Dark { 'catppuccin-mocha',                     'dark',  'catppuccin' }
-Dark { 'cobalt2',                              'dark',  '_', postcmd = function() require('colorbuddy').colorscheme('cobalt2') end }
-Dark { 'codedark',                             'dark',  '_' }
-Dark { 'darkblue',                             'dark',  '_' }
-Dark { 'darker',                               'dark',  '_' }
-Dark { 'darkplus',                             'dark',  '_' }
-Dark { 'darksolar',                            'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'dawnfox',                              'dark',  'nightfox' }
-Dark { 'dayfox',                               'dark',  'nightfox' }
-Dark { 'deepocean',                            'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Light { 'delek',                                'light', '_' }
-Dark { 'deus',                                 'dark',  '_' }
-Dark { 'doubletrouble',                        'dark',  '_' }
-Dark { 'dracula',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'dracula_blood',                        'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'duckbones',                            'dark',  'zenbones' }
-Dark { 'duskfox',                              'dark',  'nightfox' }
-Dark { 'earlysummer',                          'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'edge',                                 'dark',  '_' }
-Light { 'edge',                                 'light', '_' }
-Dark { 'emerald',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'enfocado',                             'dark',  '_' }
-Light { 'enfocado',                             'light', '_' }
-Dark { 'everforest',                           'dark',  '_' }
-Light { 'everforest',                           'light', '_' }
-Dark { 'falcon',                               'dark',  '_' }
-Dark { 'fluoromachine',                        'dark',  '_' }
-Dark { 'forestbones',                          'dark',  'zenbones' }
-Light { 'forestbones',                          'light', 'zenbones' }
-Dark { 'github_dark',                          'dark',  'github' }
-Light { 'github_light',                         'light', 'github' }
-Dark { 'gruvbox',                              'dark',  '_' }
-Light { 'gruvbox',                              'light', '_' }
-Dark { 'gruvbox-baby',                         'dark',  '_' }
-Dark { 'gruvbuddy',                            'dark',  '_' }
-Dark { 'habamax',                              'dark',  '_' }
-Dark { 'horizon',                              'dark',  '_' }
-Dark { 'juliana',                              'dark',  '_' }
-Dark { 'kanagawa',                             'dark',  '_' }
-Dark { 'kanagawabones',                        'dark',  'zenbones' }
-Dark { 'kimbox',                               'dark',  '_' }
-Light { 'limestone',                            'light', 'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'lunaperche',                           'dark',  '_' }
-Dark { 'mariana',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'material',                             'dark',  '_',              precmd = function() vim.g.material_style = 'darker' end }
-Dark { 'material',                             'dark',  '_',              precmd = function() vim.g.material_style = 'deep ocean' end }
-Dark { 'material',                             'dark',  '_',              precmd = function() vim.g.material_style = 'lighter' end }
-Dark { 'material',                             'dark',  '_',              precmd = function() vim.g.material_style = 'oceanic' end }
-Dark { 'material',                             'dark',  '_',              precmd = function() vim.g.material_style = 'palenight' end }
-Dark { 'material',                             'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'melange',                              'dark',  '_' }
-Light { 'melange',                              'light', '_' }
-Dark { 'mellifluous',                          'dark',  '_' }
-Light { 'mellifluous',                          'light', '_' }
-Dark { 'mellow',                               'dark',  '_' }
-Dark { 'middlenight_blue',                     'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'minimal',                              'dark',  '_' }
-Dark { 'minimal-base16',                       'dark',  'minimal' }
-Dark { 'monokai',                              'dark',  'monokai.nvim' }
-Dark { 'monokai',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'monokai',                              'dark',  'vim-monokai' }
-Dark { 'monokai_pro',                          'dark',  'monokai.nvim' }
-Dark { 'monokai_ristretto',                    'dark',  'monokai.nvim' }
-Dark { 'monokai_soda',                         'dark',  'monokai.nvim' }
-Dark { 'moonlight',                            'dark',  '_' }
-Dark { 'moonlight',                            'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'mosel',                                'dark',  '_' }
-Dark { 'murphy',                               'dark',  '_' }
-Dark { 'neobones',                             'dark',  'zenbones' }
-Light { 'neobones',                             'light', 'zenbones' }
-Dark { 'neon',                                 'dark',  '_',              precmd = function() vim.g.neon_style = 'dark' end }
-Dark { 'neon',                                 'dark',  '_',              precmd = function() vim.g.neon_style = 'default' end }
-Dark { 'neon',                                 'dark',  '_',              precmd = function() vim.g.neon_style = 'doom' end }
-Light { 'neon',                                 'light', '_',              precmd = function() vim.g.neon_style = 'light' end }
-Dark { 'nightfox',                             'dark',  'nightfox' }
-Dark { 'nord',                                 'dark',  '_' }
-Dark { 'nordbones',                            'dark',  'zenbones' }
-Dark { 'nordfox',                              'dark',  'nightfox' }
-Dark { 'oceanic',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'oh-lucy',                              'dark',  '_' }
-Dark { 'oh-lucy-evening',                      'dark',  'oh-lucy' }
-Dark { 'one-nvim',                             'dark',  '_' }
-Dark { 'one_monokai',                          'dark',  '_' }
-Dark { 'onedark',                              'dark',  'onedarkpro' }
-Dark { 'onedark_dark',                         'dark',  'onedarkpro' }
-Dark { 'onedark_vivid',                        'dark',  'onedarkpro' }
-Light { 'onelight',                             'light', '_' }
-Dark { 'onenord',                              'dark',  '_' }
-Light { 'onenord',                              'light', '_' }
-Dark { 'oxocarbon',                            'dark',  '_' }
-Light { 'oxocarbon',                            'light', '_' }
-Dark { 'palenight',                            'dark',  '_' }
-Dark { 'peachpuff',                            'dark',  '_' }
-Light { 'pink-panic',                           'light', '_' }
-Dark { 'poimandres',                           'dark',  '_', precmd = function() require('poimandres').setup() end }
-Dark { 'rose-pine',                            'dark',  '_' }
-Dark { 'rose-pine',                            'dark',  '_',              precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end }
-Dark { 'rose-pine',                            'dark',  '_',              precmd = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
-Dark { 'rosebones',                            'dark',  'zenbones' }
-Light { 'rosebones',                            'light', 'zenbones' }
-Dark { 'seoulbones',                           'dark',  'zenbones' }
-Light { 'seoulbones',                           'light', 'zenbones' }
-Dark { 'sherbet',                              'dark',  '_' }
-Light { 'shine',                                'light', '_' }
-Dark { 'slate',                                'dark',  '_' }
-Dark { 'sonokai',                              'dark',  '_',              precmd = function() vim.g.sonokai_style = 'andromeda' end }
-Dark { 'sonokai',                              'dark',  '_',              precmd = function() vim.g.sonokai_style = 'atlantis' end }
-Dark { 'sonokai',                              'dark',  '_',              precmd = function() vim.g.sonokai_style = 'default' end }
-Dark { 'sonokai',                              'dark',  '_',              precmd = function() vim.g.sonokai_style = 'maia' end }
-Dark { 'sonokai',                              'dark',  '_',              precmd = function() vim.g.sonokai_style = 'shusia' end }
-Dark { 'substrata',                            'dark',  '_' }
-Dark { 'terafox',                              'dark',  'nightfox' }
-Dark { 'toast',                                'dark',  '_' }
-Light { 'toast',                                'light', '_' }
-Dark { 'tokyobones',                           'dark',  'zenbones' }
-Light { 'tokyobones',                           'light', 'zenbones' }
-Dark { 'tokyodark',                            'dark',  '_' }
-Light { 'tokyonight-day',                       'light', 'tokyonight' }
-Dark { 'tokyonight-moon',                      'dark',  'tokyonight' }
-Dark { 'tokyonight-night',                     'dark',  'tokyonight' }
-Dark { 'tokyonight-storm',                     'dark',  'tokyonight' }
-Dark { 'torte',                                'dark',  '_' }
-Dark { 'tundra',                               'dark',  '_' }
-Dark { 'ukraine',                              'dark',  'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
-Dark { 'vimbones',                             'dark',  'zenbones' }
-Dark { 'vn-night',                             'dark',  '_' }
-Light { 'zellner',                              'light', '_' }
-Dark { 'zenbones',                             'dark',  '_' }
-Light { 'zenbones',                             'light', '_' }
-Dark { 'zenburned',                            'dark',  'zenbones' }
-Dark { 'zenwritten',                           'dark',  'zenbones' }
-Light { 'zenwritten',                           'light', 'zenbones' }
-Dark { 'zephyr',                               'dark',  '_' }
-Dark { 'zephyrium',                            'dark',  '_' }
     math.randomseed(os.time())
     local ind = math.random(1, #colos)
     local selection = colos[ind]
     local scheme = selection[1]
-    local bg = selection[2]
-    local module = selection[3]
+    local bg = selection.bg
+    local module = selection[2]
     local precmd = selection.precmd
     local postcmd = selection.postcmd
     vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
@@ -1606,6 +1377,12 @@ AddPlugin {
                 return '<Ignore>'
             end, {expr=true})
         end,
+        diff_opts = {
+            internal = true
+        },
+        preview_config = {
+            border = 'rounded'
+        },
         trouble = false
     },
     event = 'CursorHold'
@@ -2983,6 +2760,45 @@ AddPlugin {
         require('satellite').setup({ winblend = vim.o.winblend })
         vim.cmd('hi link ScrollView lualine_a_normal')
     end
+}
+
+-- TODO: fix it
+AddPlugin {
+    'luukvbaal/statuscol.nvim',
+    config = function()
+        local builtin = require("statuscol.builtin")
+        local cfg = {
+            separator = false,     -- separator between line number and buffer text ("│" or extra " " padding)
+            -- Builtin line number string options for ScLn() segment
+            thousands = false,      -- or line number thousands separator string ("." / ",")
+            relculright = false,   -- whether to right-align the cursor line number with 'relativenumber' set
+            -- Custom line number string options for ScLn() segment
+            lnumfunc = nil,        -- custom function called by ScLn(), should return a string
+            reeval = false,        -- whether or not the string returned by lnumfunc should be reevaluated
+            -- Builtin 'statuscolumn' options
+            setopt = true,        -- whether to set the 'statuscolumn', providing builtin click actions
+            order = "FSNs",        -- order of the fold, sign, line number and separator segments
+            -- Click actions
+            Lnum                   = builtin.lnum_click,
+            FoldPlus               = builtin.foldplus_click,
+            FoldMinus              = builtin.foldminus_click,
+            FoldEmpty              = builtin.foldempty_click,
+            DapBreakpointRejected  = builtin.toggle_breakpoint,
+            DapBreakpoint          = builtin.toggle_breakpoint,
+            DapBreakpointCondition = builtin.toggle_breakpoint,
+            DiagnosticSignError    = builtin.diagnostic_click,
+            DiagnosticSignHint     = builtin.diagnostic_click,
+            DiagnosticSignInfo     = builtin.diagnostic_click,
+            DiagnosticSignWarn     = builtin.diagnostic_click,
+            GitSignsTopdelete      = builtin.gitsigns_click,
+            GitSignsUntracked      = builtin.gitsigns_click,
+            GitSignsAdd            = builtin.gitsigns_click,
+            GitSignsChangedelete   = builtin.gitsigns_click,
+            GitSignsDelete         = builtin.gitsigns_click,
+        }
+        require('statuscol').setup(cfg)
+    end,
+    enabled = false
 }
 
 -- TODO: lazy load
