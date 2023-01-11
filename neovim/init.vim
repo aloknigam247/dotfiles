@@ -137,7 +137,13 @@ if exists("g:neovide")
     let g:neovide_scroll_animation_length = 0.0
     let g:neovide_transparency=0.95
     " let g:neovide_underline_automatic_scaling = v:true
-    set guifont=VictorMono_NF:h13
+    " set guifont=VictorMono_NF:h13
+    lua << EOF
+        Font_size = 13
+        vim.o.guifont = 'VictorMono_NF:h' .. Font_size
+        vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = 'VictorMono_NF:h' .. Font_size end)
+        vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = 'VictorMono_NF:h' .. Font_size end)
+EOF
     map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif
 " }}}
@@ -192,8 +198,6 @@ function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
-lua << EOF
-EOF
 highlight ConflictMarkerBegin guibg=#2f7366
 highlight ConflictMarkerOurs guibg=#2e5049
 highlight ConflictMarkerTheirs guibg=#344f69
