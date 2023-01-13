@@ -9,17 +9,12 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
 
--- Blink on yank
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
     "TextYankPost", {
         desc = "highlight text on yank",
-        pattern = "*",
-        callback = function()
-            vim.highlight.on_yank {
-                higroup="Search", timeout=300, on_visual=true
-            }
-        end,
+        callback = function() vim.highlight.on_yank { higroup="Search", timeout=300 } end,
+        pattern = "*"
     }
 )
 
@@ -28,8 +23,8 @@ vim.g.loaded_clipboard_provider = 1
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
     vim.cmd([[
-    unlet g:loaded_clipboard_provider
-    runtime autoload/provider/clipboard.vim
+        unlet g:loaded_clipboard_provider
+        runtime autoload/provider/clipboard.vim
     ]])
 end})
 
@@ -424,6 +419,7 @@ AddPlugin {
     event = "LspAttach"
 }
 
+-- TODO: Add status line components
 AddPlugin {
     'folke/todo-comments.nvim',
     config = {
@@ -1342,6 +1338,7 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
+    -- TODO: change diff window to new tab
     'lewis6991/gitsigns.nvim',
     config = {
         signs = {
@@ -2079,7 +2076,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: a rooter
+-- TODO: Write a rooter
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin { 'tamton-aquib/zone.nvim' }
@@ -2221,7 +2218,7 @@ AddPlugin {
                     {
                         'diff',
                         on_click = function()
-                            vim.cmd("Telescope git_status")
+                            vim.cmd("Telescope git_status") -- TODO: Get a rooter for it
                         end
                     },
                     {
@@ -2368,6 +2365,8 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: better git diff renderer
+    -- TODO: mapping to scroll page in preview, Page UP/DOWN
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
     config = function()
@@ -2824,6 +2823,7 @@ AddPlugin {
     'ojroques/vim-oscyank',
     cond = function()
         -- Check if connection is ssh
+	-- TODO: use vim.env function
         return os.getenv("SSH_CLIENT") ~= nil
     end,
     config = function()
@@ -2873,6 +2873,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+-- TODO: lazy health
 require("lazy").setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append("C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser")
