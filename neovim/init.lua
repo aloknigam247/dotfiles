@@ -8,6 +8,7 @@
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
+-- TODO: sort plugins with sort options
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
