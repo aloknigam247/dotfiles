@@ -9,6 +9,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
 -- TODO: sort plugins with sort options
+-- TODO: fix auto nextline in vim
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -2301,14 +2302,14 @@ AddPlugin {
             --     lualine_a = {'filename'},
             -- },
             winbar = {
-                lualine_a = {'filename'},
+                lualine_a = {'filename'}, -- TODO: fix it
             --     lualine_b = {
             --         { navic.get_location, cond = navic.is_available },
             --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
             --     }
             },
             inactive_winbar = {
-                lualine_a = {'filename'},
+                lualine_a = {'filename'}, -- TODO: fix it
             --     lualine_b = {
             --         { navic.get_location, cond = navic.is_available }
             --     }
