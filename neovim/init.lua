@@ -425,7 +425,7 @@ AddPlugin {
 -- TODO: Add status line components
 AddPlugin {
     'folke/todo-comments.nvim',
-    config = {
+    opts = {
         keywords = {
             THOUGHT = { icon = "🤔", color = "info"}
         }
@@ -450,7 +450,7 @@ AddPlugin {
 
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
-    config = {
+    opts = {
         symbols = { "─", "│", "╭", "╮", "╰", "╯" },
     },
     event = 'WinNew'
@@ -716,7 +716,6 @@ Light { 'tokyonight-day',                       'tokyonight' }
 Dark  { 'tokyonight-moon',                      'tokyonight' }
 Dark  { 'tokyonight-night',                     'tokyonight' }
 Dark  { 'tokyonight-storm',                     'tokyonight' }
-Dark  { 'torte',                                '_' }
 Dark  { 'tundra',                               '_' }
 Dark  { 'ukraine',                              'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
 Dark  { 'vimbones',                             'zenbones' }
@@ -990,7 +989,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: lazy load
     'nvim-tree/nvim-tree.lua',
-    config = {
+    opts = {
             auto_reload_on_write = true,
             disable_netrw = true,
             hijack_cursor = false,
@@ -1343,7 +1342,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: change diff window to new tab
     'lewis6991/gitsigns.nvim',
-    config = {
+    opts = {
         signs = {
             add          = { hl = 'GitSignsAdd'   , text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
             change       = { hl = 'GitSignsChange', text = '│', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
@@ -1400,21 +1399,21 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-'DaikyXendo/nvim-material-icon',
-config = {
-    override = {
-        csproj = {
-            color = '#854CC7',
-            cterm_color = '98',
-            icon = '',
-            name = "Csproj"
-        },
-        norg = {
-            icon = '',
-            name = "Neorg"
+    'DaikyXendo/nvim-material-icon',
+    opts = {
+        override = {
+            csproj = {
+                color = '#854CC7',
+                cterm_color = '98',
+                icon = '',
+                name = "Csproj"
+            },
+            norg = {
+                icon = '',
+                name = "Neorg"
+            }
         }
     }
-}
 }
 
 AddPlugin {
@@ -1429,12 +1428,12 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-'lukas-reineke/indent-blankline.nvim',
-config = {
-    show_current_context = true,
-    show_current_context_start = true
-},
-event = "CursorHold"
+    'lukas-reineke/indent-blankline.nvim',
+    opts = {
+        show_current_context = true,
+        show_current_context_start = true
+    },
+    event = "CursorHold"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1446,8 +1445,9 @@ event = "CursorHold"
 -- TODO: resolve with Lspsaga
 -- TODO: use treesitter satatusline if LSP not available
 AddPlugin {
+    -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
-    config = {
+    opts = {
         icons = vim.g.cmp_kinds,
         highlight = true,
         separator = "  ",
@@ -1481,7 +1481,7 @@ AddPlugin {
 AddPlugin {
     'williamboman/mason.nvim',
     cmd = 'Mason',
-    config = {
+    opts = {
         ui = {
             border = "rounded"
         }
@@ -1649,6 +1649,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: fix new update
     "glepnir/lspsaga.nvim",
     branch = "main",
     cmd = 'Lspsaga',
@@ -1739,7 +1740,7 @@ AddPlugin {
 
 AddPlugin {
     'j-hui/fidget.nvim',
-    config = {
+    opts = {
         text = {
             done = '陼',
             spinner = 'arc'
@@ -2014,11 +2015,12 @@ AddPlugin {
 --  }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: :g output in quickfix ?
 -- TODO: config
 AddPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle',
-    config = {
+    opts = {
         position = "bottom", -- position of the list can be: bottom, top, left, right
         height = 10, -- height of the trouble list when position is top or bottom
         width = 50, -- width of the list when position is left or right
@@ -2068,13 +2070,18 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: fzf integrations
+    -- TODO: context
     'kevinhwang91/nvim-bqf',
-    config = {
-        auto_resize_height = true,
-        preview = {
-            border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'} -- TODO: use global icons
+    config = function()
+        require('bqf').setup {
+            auto_resize_height = true,
+            preview = {
+                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'} -- TODO: use global icons
+            }
         }
-    },
+        vim.cmd.packadd('cfilter')
+    end,
     ft = 'qf'
 }
 -- <~>
@@ -2150,7 +2157,7 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'dcampos/nvim-snippy',
-    config = {
+    opts = {
         mappings = {
             is = {
                 ['<Tab>'] = 'expand_or_advance',
@@ -2399,7 +2406,7 @@ AddPlugin {
 AddPlugin {
     'princejoogie/dir-telescope.nvim',
     cmd = { "FileInDirectory", "GrepInDirectory" },
-    config = {
+    opts = {
         hidden = true,
         respect_gitignore = true,
     },
@@ -2477,7 +2484,7 @@ AddPlugin {
 AddPlugin {
     'nvim-treesitter/nvim-treesitter-context',
     cmd = 'TSContextEnable',
-    config = {
+    opts = {
         enable = true,
         separator = '━',
         patterns = {
@@ -2713,7 +2720,7 @@ AddPlugin {
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
-    config = {
+    opts = {
         create_keymaps = false,
         create_commands = false
     },
@@ -2844,7 +2851,7 @@ AddPlugin {
 
 AddPlugin {
     'tversteeg/registers.nvim',
-    config = {
+    opts = {
         show = '*+"',
         show_empty = false,
         register_user_command = false,
@@ -2861,7 +2868,6 @@ AddPlugin {
         { '<C-R>', mode = 'i' }
     }
 }
--- TODO: https://github.com/utilyre/barbecue.nvim
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -2876,7 +2882,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- TODO: lazy health
 require("lazy").setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append("C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser")
