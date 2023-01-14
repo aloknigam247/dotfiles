@@ -10,6 +10,7 @@
 -- TODO: format on paste
 -- TODO: sort plugins with sort options
 -- TODO: fix auto nextline in vim
+-- TODO: convert vim.cmd[[]] to vim.cmd...
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
