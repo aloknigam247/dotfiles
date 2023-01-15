@@ -30,6 +30,20 @@ vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
         runtime autoload/provider/clipboard.vim
     ]])
 end})
+-- TODO: lazy load on TextYankPost
+-- vim.api.nvim_create_autocmd('TextYankPost', {
+--     pattern='*',
+--     callback = function()
+--         vim.cmd([[
+--             unlet g:loaded_clipboard_provider
+--             runtime autoload/provider/clipboard.vim
+--             echo v:register
+--             echo getreg(v:register)
+--             call setreg(v:register, getreg(v:register))
+--         ]])
+--     end,
+--     once = true
+-- })
 
 -- TODO: group functions
 function LightenDarkenColor(col, amt)
@@ -2833,8 +2847,7 @@ AddPlugin {
     'ojroques/vim-oscyank',
     cond = function()
         -- Check if connection is ssh
-	-- TODO: use vim.env function
-        return os.getenv("SSH_CLIENT") ~= nil
+        return vim.env.SSH_CLIENT ~= nil
     end,
     config = function()
         vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif]]
@@ -2846,8 +2859,6 @@ AddPlugin {
     'rickhowe/spotdiff.vim',
     cmd = 'Diffthis'
 }
-
--- TODO: https://github.com/shortcuts/no-neck-pain.nvim
 
 AddPlugin {
     'tversteeg/registers.nvim',
