@@ -677,7 +677,6 @@ Dark  { 'monokai_soda',                         'monokai.nvim' }
 Dark  { 'moonlight',                            '_' }
 Dark  { 'moonlight',                            'starry',         precmd = function() require('starry').setup({custom_highlights = { LineNr = { underline = false } } }) end }
 Dark  { 'mosel',                                '_' }
-Dark  { 'murphy',                               '_' }
 Dark  { 'neobones',                             'zenbones' }
 Light { 'neobones',                             'zenbones' }
 Dark  { 'neon',                                 '_',              precmd = function() vim.g.neon_style = 'dark' end }
