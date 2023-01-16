@@ -11,6 +11,7 @@
 -- TODO: sort plugins with sort options
 -- TODO: fix auto nextline in vim
 -- TODO: convert vim.cmd[[]] to vim.cmd...
+-- TODO: better word delimiters
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -2829,7 +2830,16 @@ AddPlugin {
     'kylechui/nvim-surround',
 }
 
--- TODO: use 'mg979/vim-visual-multi'
+AddPlugin {
+    'mg979/vim-visual-multi',
+    config = function()
+        vim.cmd[[
+            nmap <C-LeftMouse> <Plug>(VM-Mouse-Cursor)
+            nmap <C-RightMouse> <Plug>(VM-Mouse-Word)
+        ]]
+    end,
+    keys = { '<C-LeftMouse>', '<C-RightMouse>', '<C-Up>', '<C-Down>', '<C-N>' }
+}
 
 -- https://github.com/nat-418/scamp.nvim
 
