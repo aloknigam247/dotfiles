@@ -135,7 +135,8 @@ if exists("g:neovide")
     " set guifont=VictorMono_NF:h13
     lua << EOF
         Font_size = 13
-        vim.o.guifont = 'VictorMono_NF:h' .. Font_size
+        -- vim.o.guifont = 'VictorMono_NF:h' .. Font_size
+        vim.o.guifont = 'Iosevka:h' .. Font_size
         vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = 'VictorMono_NF:h' .. Font_size end)
         vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = 'VictorMono_NF:h' .. Font_size end)
 EOF
