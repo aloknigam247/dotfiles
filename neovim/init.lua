@@ -702,7 +702,7 @@ Dark  { 'oxocarbon',                            '_' }
 Light { 'oxocarbon',                            '_' }
 Dark  { 'palenight',                            '_' }
 Dark  { 'peachpuff',                            '_' }
-Light { 'pink-panic',                           '_' }
+Dark  { 'pink-panic',                           '_' }
 Dark  { 'poimandres',                           '_', precmd = function() require('poimandres').setup() end }
 Dark  { 'rose-pine',                            '_' }
 Dark  { 'rose-pine',                            '_',              precmd = function() require('rose-pine').setup({dark_variant = 'main'}) end }
@@ -2104,7 +2104,6 @@ AddPlugin {
 -- TODO: Write a rooter
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin { 'tamton-aquib/zone.nvim' }
 AddPlugin { 'tamton-aquib/duck.nvim' }
 AddPlugin { 'folke/drop.nvim' }
 
@@ -2121,10 +2120,6 @@ Sleeper = {
         { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
         { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
         { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "aura"}) end,            stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
-        { start = function() require('zone.styles.epilepsy').start({stage = "ictal"}) end,           stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
-        { start = function() require('zone.styles.treadmill').start({}) end,                         stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
-        { start = function() require('zone.styles.vanish').start({}) end,                            stop = function() pcall(vim.api.nvim_win_close, 0, true) pcall(vim.api.nvim_buf_delete, 0, {force=true}) end },
     }
 }
 
@@ -2133,9 +2128,8 @@ function ResetSleeper()
     Sleeper.sleeps[Sleeper.last].stop()
 
     Sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
+        Sleeper.last = math.random(1, #Sleeper.sleeps)
         Sleeper.sleeps[Sleeper.last].start()
-        local new_sleeps = (Sleeper.last) % #Sleeper.sleeps + 1
-        Sleeper.last = new_sleeps
     end
     ))
 end
@@ -2144,6 +2138,7 @@ vim.api.nvim_create_autocmd({'CursorHold'} , {callback = ResetSleeper})
 vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end}) -- TODO: fix loading of drop
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: no branch info on session restore
 AddPlugin {
     'rmagatti/auto-session',
     cmd = 'SaveSession',
@@ -2772,9 +2767,17 @@ AddPlugin {
 -- use 'jbyuki/instant.nvim'
 -- https://github.com/jghauser/mkdir.nvim
 
--- TODO: lazy load
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
+    config = {
+            on_success = function()
+                vim.cmd([[execute "normal! g`\"zz"]])
+            end
+        },
+    keys = {
+        { '<C-S-I>', function() require('bufjump').forward() end },
+        { '<C-S-O>', function() require('bufjump').backward() end }
+    }
 }
 
 AddPlugin {
