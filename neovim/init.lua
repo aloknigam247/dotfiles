@@ -708,7 +708,6 @@ Light { 'adwaita',                    '_'            }
 Light { 'ayu-light',                  'ayu'          }
 Light { 'base2tone_desert_light',     'base2tone'    }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
-Light { 'base2tone_earth_light',      'base2tone'    }
 Light { 'base2tone_evening_light',    'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
 Light { 'base2tone_forest_light',     'base2tone'    }
