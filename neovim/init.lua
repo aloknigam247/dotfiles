@@ -1363,7 +1363,6 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
-    -- TODO: change diff window to new tab
     'lewis6991/gitsigns.nvim',
     opts = {
         signs = {
@@ -2733,7 +2732,11 @@ AddPlugin {
 }
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
--- TODO: https://github.com/Pocco81/true-zen.nvim
+
+AddPlugin {
+    'Pocco81/true-zen.nvim',
+    cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
+}
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
