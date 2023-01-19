@@ -553,6 +553,7 @@ AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'        
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
 AddPlugin { 'tjdevries/gruvbuddy.nvim',         event = 'User gruvbuddy',   dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
+AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
 AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
@@ -582,6 +583,7 @@ Dark  { 'base2tone_porch_dark',       'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'base2tone_suburb_dark',      'base2tone'    }
+Dark  { 'bluloco-dark',               '_'            }
 Dark  { 'calvera',                    '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
 Dark  { 'catppuccin-frappe',          'catppuccin'   }
@@ -725,6 +727,7 @@ Light { 'base2tone_porch_light',      'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Light { 'base2tone_space_light',      'base2tone'    }
 Light { 'base2tone_suburb_light',     'base2tone'    }
+Light { 'bluloco-light',               '_'           }
 Light { 'delek',                      '_'            }
 Light { 'edge',                       '_'            }
 Light { 'enfocado',                   '_'            }
