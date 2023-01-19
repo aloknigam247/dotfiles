@@ -2491,17 +2491,73 @@ AddPlugin {
             }
         }
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'David-Kunz/markid', enabled = false }} ,
+    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'David-Kunz/markid', enabled = false }, { 'm-demare/hlargs.nvim' }} ,
     event = 'User VeryLazy',
 }
 
--- TODO: use {
---     'm-demare/hlargs.nvim',
---     after = 'nvim-treesitter',
---     config = function()
---         require('hlargs').setup()
---     end
--- }
+-- TODO:
+AddPlugin {
+    'm-demare/hlargs.nvim',
+    config = function()
+        require('hlargs').setup {
+            color = '#ef9062',
+            use_colorpalette = true,
+            colorpalette = {
+                { fg = "#ef9062" },
+                { fg = "#3AC6BE" },
+                { fg = "#35D27F" },
+                { fg = "#EB75D6" },
+                { fg = "#E5D180" },
+                { fg = "#8997F5" },
+                { fg = "#D49DA5" },
+                { fg = "#7FEC35" },
+                { fg = "#F6B223" },
+                { fg = "#F67C1B" },
+                { fg = "#DE9A4E" },
+                { fg = "#BBEA87" },
+                { fg = "#EEF06D" },
+                { fg = "#8FB272" },
+            },
+            highlight = {},
+            excluded_filetypes = {},
+            -- disable = function(lang, bufnr) -- If changed, `excluded_filetypes` will be ignored
+            --     return vim.tbl_contains(opts.excluded_filetypes, lang)
+            -- end,
+            paint_arg_declarations = true,
+            paint_arg_usages = true,
+            paint_catch_blocks = {
+                declarations = true,
+                usages = true
+            },
+            extras = {
+                named_parameters = true,
+            },
+            hl_priority = 10000,
+            excluded_argnames = {
+                declarations = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                },
+                usages = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                }
+            },
+            performance = {
+                parse_delay = 1,
+                slow_parse_delay = 50,
+                max_iterations = 400,
+                max_concurrent_partial_parses = 30,
+                debounce = {
+                    partial_parse = 3,
+                    partial_insert_mode = 100,
+                    total_parse = 700,
+                    slow_parse = 5000
+                }
+            }
+        }
+    end
+}
 
 AddPlugin {
     'nvim-treesitter/nvim-treesitter-context',
