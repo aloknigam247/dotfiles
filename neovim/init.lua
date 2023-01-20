@@ -2474,16 +2474,6 @@ AddPlugin {
                 enable = true
             },
             ignore_install = { "help", "norg", "norg_meta", "yaml" },
-            -- markid = { -- TODO: resolve
-            --     enable = true,
-            --     colors = m.colors.medium,
-            --     queries = { default = '(variable) @markid'},
-            --     -- queries = m.queries,
-            --     -- is_supported = function(lang)
-            --     --     local queries = configs.get_module("markid").queries
-            --     --     return pcall(vim.treesitter.parse_query, lang, queries[lang] or queries['default'])
-            --     -- end
-            -- },
             rainbow = {
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
@@ -2491,40 +2481,20 @@ AddPlugin {
             }
         }
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'David-Kunz/markid', enabled = false }, { 'm-demare/hlargs.nvim' }} ,
+    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } },
     event = 'User VeryLazy',
 }
 
--- TODO:
 AddPlugin {
+    -- https://github.com/David-Kunz/markid
     'm-demare/hlargs.nvim',
     config = function()
+        local dark   = { { fg = "#619e9d" }, { fg = "#9E6162" }, { fg = "#81A35C" }, { fg = "#7E5CA3" }, { fg = "#9E9261" }, { fg = "#616D9E" }, { fg = "#97687B" }, { fg = "#689784" }, { fg = "#999C63" }, { fg = "#66639C" } }
+        local bright = { { fg = "#f5c0c0" }, { fg = "#f5d3c0" }, { fg = "#f5eac0" }, { fg = "#dff5c0" }, { fg = "#c0f5c8" }, { fg = "#c0f5f1" }, { fg = "#c0dbf5" }, { fg = "#ccc0f5" }, { fg = "#f2c0f5" }, { fg = "#98fc03" } }
+        local colorpalette = vim.o.background == 'light' and dark or bright
         require('hlargs').setup {
-            color = '#ef9062',
             use_colorpalette = true,
-            colorpalette = {
-                { fg = "#ef9062" },
-                { fg = "#3AC6BE" },
-                { fg = "#35D27F" },
-                { fg = "#EB75D6" },
-                { fg = "#E5D180" },
-                { fg = "#8997F5" },
-                { fg = "#D49DA5" },
-                { fg = "#7FEC35" },
-                { fg = "#F6B223" },
-                { fg = "#F67C1B" },
-                { fg = "#DE9A4E" },
-                { fg = "#BBEA87" },
-                { fg = "#EEF06D" },
-                { fg = "#8FB272" },
-            },
-            highlight = {},
-            excluded_filetypes = {},
-            -- disable = function(lang, bufnr) -- If changed, `excluded_filetypes` will be ignored
-            --     return vim.tbl_contains(opts.excluded_filetypes, lang)
-            -- end,
-            paint_arg_declarations = true,
-            paint_arg_usages = true,
+            colorpalette = colorpalette,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -2532,7 +2502,6 @@ AddPlugin {
             extras = {
                 named_parameters = true,
             },
-            hl_priority = 10000,
             excluded_argnames = {
                 declarations = {
                     python = { 'self', 'cls' },
@@ -2541,18 +2510,6 @@ AddPlugin {
                 usages = {
                     python = { 'self', 'cls' },
                     lua = { 'self' }
-                }
-            },
-            performance = {
-                parse_delay = 1,
-                slow_parse_delay = 50,
-                max_iterations = 400,
-                max_concurrent_partial_parses = 30,
-                debounce = {
-                    partial_parse = 3,
-                    partial_insert_mode = 100,
-                    total_parse = 700,
-                    slow_parse = 5000
                 }
             }
         }
