@@ -553,6 +553,7 @@ AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'        
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
 AddPlugin { 'tjdevries/gruvbuddy.nvim',         event = 'User gruvbuddy',   dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
+AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
 AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
@@ -582,6 +583,7 @@ Dark  { 'base2tone_porch_dark',       'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'base2tone_suburb_dark',      'base2tone'    }
+Dark  { 'bluloco-dark',               '_'            }
 Dark  { 'calvera',                    '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
 Dark  { 'catppuccin-frappe',          'catppuccin'   }
@@ -724,6 +726,7 @@ Light { 'base2tone_porch_light',      'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Light { 'base2tone_space_light',      'base2tone'    }
 Light { 'base2tone_suburb_light',     'base2tone'    }
+Light { 'bluloco-light',               '_'           }
 Light { 'delek',                      '_'            }
 Light { 'edge',                       '_'            }
 Light { 'enfocado',                   '_'            }
@@ -2470,16 +2473,6 @@ AddPlugin {
                 enable = true
             },
             ignore_install = { "help", "norg", "norg_meta", "yaml" },
-            -- markid = { -- TODO: resolve
-            --     enable = true,
-            --     colors = m.colors.medium,
-            --     queries = { default = '(variable) @markid'},
-            --     -- queries = m.queries,
-            --     -- is_supported = function(lang)
-            --     --     local queries = configs.get_module("markid").queries
-            --     --     return pcall(vim.treesitter.parse_query, lang, queries[lang] or queries['default'])
-            --     -- end
-            -- },
             rainbow = {
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
@@ -2487,17 +2480,40 @@ AddPlugin {
             }
         }
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'David-Kunz/markid', enabled = false }} ,
+    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } },
     event = 'User VeryLazy',
 }
 
--- TODO: use {
---     'm-demare/hlargs.nvim',
---     after = 'nvim-treesitter',
---     config = function()
---         require('hlargs').setup()
---     end
--- }
+AddPlugin {
+    -- https://github.com/David-Kunz/markid
+    'm-demare/hlargs.nvim',
+    config = function()
+        local dark   = { { fg = "#619e9d" }, { fg = "#9E6162" }, { fg = "#81A35C" }, { fg = "#7E5CA3" }, { fg = "#9E9261" }, { fg = "#616D9E" }, { fg = "#97687B" }, { fg = "#689784" }, { fg = "#999C63" }, { fg = "#66639C" } }
+        local bright = { { fg = "#f5c0c0" }, { fg = "#f5d3c0" }, { fg = "#f5eac0" }, { fg = "#dff5c0" }, { fg = "#c0f5c8" }, { fg = "#c0f5f1" }, { fg = "#c0dbf5" }, { fg = "#ccc0f5" }, { fg = "#f2c0f5" }, { fg = "#98fc03" } }
+        local colorpalette = vim.o.background == 'light' and dark or bright
+        require('hlargs').setup {
+            use_colorpalette = true,
+            colorpalette = colorpalette,
+            paint_catch_blocks = {
+                declarations = true,
+                usages = true
+            },
+            extras = {
+                named_parameters = true,
+            },
+            excluded_argnames = {
+                declarations = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                },
+                usages = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                }
+            }
+        }
+    end
+}
 
 AddPlugin {
     'nvim-treesitter/nvim-treesitter-context',
