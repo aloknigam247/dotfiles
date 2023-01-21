@@ -2442,7 +2442,6 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
--- TODO: resduce list
 -- https://github.com/elijahdanko/ttymux.nvim
 -- https://github.com/jlesquembre/nterm.nvim
 -- https://github.com/kassio/neoterm
@@ -2460,7 +2459,12 @@ AddPlugin {
 -- https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/Wansmer/treesj
+AddPlugin {
+    'Wansmer/treesj',
+    cmd = 'TSJToggle',
+    config = true
+}
+
 AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
