@@ -780,6 +780,7 @@ function ColoRand()
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: prefer single line comments in xml
 AddPlugin {
     'b3nj5m1n/kommentary',
     config = function()
