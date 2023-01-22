@@ -12,6 +12,7 @@
 -- TODO: fix auto nextline in vim
 -- TODO: convert vim.cmd[[]] to vim.cmd...
 -- TODO: better word delimiters
+-- TODO: Use statuscolumn
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -2399,7 +2400,10 @@ AddPlugin {
 
 AddPlugin {
     -- TODO: better git diff renderer
+    -- TODO: ripgrep for live_grep and grep_string, find_files
     -- TODO: mapping to scroll page in preview, Page UP/DOWN
+    -- TODO: https://github.com/nvim-telescope/telescope-fzf-native.nvim
+    -- TODO: https://github.com/nvim-telescope/telescope-fzy-native.nvim
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
     config = function()
@@ -2415,6 +2419,7 @@ AddPlugin {
                 prompt_prefix = "  ",
                 selection_caret = " ",
                 timeout = 2000,
+                windblend = 0,
             },
             extensions = {
                 heading = {
