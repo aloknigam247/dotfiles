@@ -2407,6 +2407,7 @@ AddPlugin {
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
     config = function()
+        local actions = require "telescope.actions"
         require('telescope').setup({
             defaults = {
                 dynamic_preview_title = true,
@@ -2420,6 +2421,30 @@ AddPlugin {
                 selection_caret = " ",
                 timeout = 2000,
                 windblend = 0,
+                mappings = {
+                    i = {
+                        ["<C-d>"]      = false,
+                        ["<C-t>"]      = actions.select_tab,
+                        ["<C-u>"]      = false,
+                        ["<C-v>"]      = actions.select_vertical,
+                        ["<C-x>"]      = actions.select_horizontal,
+                        ["<PageDown>"] = actions.preview_scrolling_down,
+                        ["<PageUp>"]   = actions.preview_scrolling_up,
+                        ["<S-Tab>"]    = false,
+                        ["<Tab>"]      = actions.toggle_selection
+                    },
+                    n = {
+                        ["<C-d>"]      = false,
+                        ["<C-t>"]      = actions.select_tab,
+                        ["<C-u>"]      = false,
+                        ["<C-v>"]      = actions.select_vertical,
+                        ["<C-x>"]      = actions.select_horizontal,
+                        ["<PageDown>"] = actions.preview_scrolling_down,
+                        ["<PageUp>"]   = actions.preview_scrolling_up,
+                        ["<S-Tab>"]    = false,
+                        ["<Tab>"]      = actions.toggle_selection
+                    }
+                },
             },
             extensions = {
                 heading = {
