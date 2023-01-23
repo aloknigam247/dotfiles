@@ -676,7 +676,7 @@ Dark  { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
 Dark  { 'peachpuff',                  '_'            }
-Dark  { 'pink-panic',                 '_'            }
+Light { 'pink-panic',                 '_'            }
 Dark  { 'poimandres',                 '_',           precmd  = function() require('poimandres').setup()                end }
 Dark  { 'rose-pine',                  '_'            }
 Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant     =   'main'      })     end }
@@ -1370,6 +1370,7 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
+    -- TODO: how to view changes at current line
     'lewis6991/gitsigns.nvim',
     opts = {
         signs = {
@@ -1382,7 +1383,7 @@ AddPlugin {
         current_line_blame_formatter_opts = {
             relative_time = true
         },
-        current_line_blame_formatter = '  <author>  <committer_time>  <summary>`',
+        current_line_blame_formatter = '  <author>  <committer_time>  <summary>',
         on_attach = function (bufnr)
             local gs = package.loaded.gitsigns
 
@@ -2292,6 +2293,7 @@ AddPlugin {
                 },
                 lualine_x = {
                     -- TODO: add showcmd
+                    -- https://github.com/nvim-lualine/lualine.nvim/issues/949
                     {
                         LspIcon,
                         cond = function()
