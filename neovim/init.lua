@@ -8,6 +8,7 @@
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
+-- TODO: spell_suggest ?
 -- TODO: sort plugins with sort options
 -- TODO: fix auto nextline in vim
 -- TODO: convert vim.cmd[[]] to vim.cmd...
@@ -2399,9 +2400,7 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: better git diff renderer
-    -- TODO: ripgrep for live_grep and grep_string, find_files
-    -- TODO: mapping to scroll page in preview, Page UP/DOWN
+    -- TODO: padded dropdown menu
     -- TODO: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     -- TODO: https://github.com/nvim-telescope/telescope-fzy-native.nvim
     'nvim-telescope/telescope.nvim',
@@ -2452,6 +2451,7 @@ AddPlugin {
                 }
             },
         })
+        vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
     dependencies = 'nvim-lua/plenary.nvim'
 }
