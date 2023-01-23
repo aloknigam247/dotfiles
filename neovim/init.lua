@@ -495,8 +495,10 @@ local function Light(opts)
     opts.bg = 'light'
     table.insert(colos, opts)
 end
+AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'                                                  }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
+AddPlugin { 'JoosepAlviste/palenightfall.nvim', event = 'User palenightfall'                                           }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
 AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                                 }
 AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              }
@@ -664,6 +666,7 @@ Dark  { 'noctis_viola',               'noctis'       }
 Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
+Dark  { 'nordic',                     '_'            }
 Dark  { 'oceanic',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
 Dark  { 'oh-lucy',                    '_'            }
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
@@ -675,6 +678,7 @@ Dark  { 'onedark_vivid',              'onedarkpro'   }
 Dark  { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
+Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
 Dark  { 'poimandres',                 '_',           precmd  = function() require('poimandres').setup()                end }

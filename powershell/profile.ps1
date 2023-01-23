@@ -115,6 +115,7 @@ function bat {
     C:\Users\aloknigam\scoop\shims\bat.exe --paging=never --theme='Coldark-Dark' --style='numbers,changes' --italic-text=always $args
 }
 
+Remove-Alias cp
 function cp {
     Copy-Item -Recurse $args
 }
