@@ -8,10 +8,12 @@
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste
+-- TODO: spell_suggest ?
 -- TODO: sort plugins with sort options
 -- TODO: fix auto nextline in vim
 -- TODO: convert vim.cmd[[]] to vim.cmd...
 -- TODO: better word delimiters
+-- TODO: Use statuscolumn
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -674,7 +676,7 @@ Dark  { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
 Dark  { 'peachpuff',                  '_'            }
-Dark  { 'pink-panic',                 '_'            }
+Light { 'pink-panic',                 '_'            }
 Dark  { 'poimandres',                 '_',           precmd  = function() require('poimandres').setup()                end }
 Dark  { 'rose-pine',                  '_'            }
 Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant     =   'main'      })     end }
@@ -779,6 +781,7 @@ function ColoRand()
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: prefer single line comments in xml
 AddPlugin {
     'b3nj5m1n/kommentary',
     config = function()
@@ -1366,6 +1369,7 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
+    -- TODO: how to view changes at current line
     'lewis6991/gitsigns.nvim',
     opts = {
         signs = {
@@ -1378,7 +1382,7 @@ AddPlugin {
         current_line_blame_formatter_opts = {
             relative_time = true
         },
-        current_line_blame_formatter = '  <author>  <committer_time>  <summary>`',
+        current_line_blame_formatter = '  <author>  <committer_time>  <summary>',
         on_attach = function (bufnr)
             local gs = package.loaded.gitsigns
 
@@ -2288,6 +2292,7 @@ AddPlugin {
                 },
                 lualine_x = {
                     -- TODO: add showcmd
+                    -- https://github.com/nvim-lualine/lualine.nvim/issues/949
                     {
                         LspIcon,
                         cond = function()
@@ -2396,11 +2401,13 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: better git diff renderer
-    -- TODO: mapping to scroll page in preview, Page UP/DOWN
+    -- TODO: padded dropdown menu
+    -- TODO: https://github.com/nvim-telescope/telescope-fzf-native.nvim
+    -- TODO: https://github.com/nvim-telescope/telescope-fzy-native.nvim
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
     config = function()
+        local actions = require "telescope.actions"
         require('telescope').setup({
             defaults = {
                 dynamic_preview_title = true,
@@ -2413,6 +2420,31 @@ AddPlugin {
                 prompt_prefix = "  ",
                 selection_caret = " ",
                 timeout = 2000,
+                windblend = 0,
+                mappings = {
+                    i = {
+                        ["<C-d>"]      = false,
+                        ["<C-t>"]      = actions.select_tab,
+                        ["<C-u>"]      = false,
+                        ["<C-v>"]      = actions.select_vertical,
+                        ["<C-x>"]      = actions.select_horizontal,
+                        ["<PageDown>"] = actions.preview_scrolling_down,
+                        ["<PageUp>"]   = actions.preview_scrolling_up,
+                        ["<S-Tab>"]    = false,
+                        ["<Tab>"]      = actions.toggle_selection
+                    },
+                    n = {
+                        ["<C-d>"]      = false,
+                        ["<C-t>"]      = actions.select_tab,
+                        ["<C-u>"]      = false,
+                        ["<C-v>"]      = actions.select_vertical,
+                        ["<C-x>"]      = actions.select_horizontal,
+                        ["<PageDown>"] = actions.preview_scrolling_down,
+                        ["<PageUp>"]   = actions.preview_scrolling_up,
+                        ["<S-Tab>"]    = false,
+                        ["<Tab>"]      = actions.toggle_selection
+                    }
+                },
             },
             extensions = {
                 heading = {
@@ -2420,6 +2452,7 @@ AddPlugin {
                 }
             },
         })
+        vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
     dependencies = 'nvim-lua/plenary.nvim'
 }
@@ -2440,7 +2473,6 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
--- TODO: resduce list
 -- https://github.com/elijahdanko/ttymux.nvim
 -- https://github.com/jlesquembre/nterm.nvim
 -- https://github.com/kassio/neoterm
@@ -2458,7 +2490,12 @@ AddPlugin {
 -- https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/Wansmer/treesj
+AddPlugin {
+    'Wansmer/treesj',
+    cmd = 'TSJToggle',
+    config = true
+}
+
 AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
