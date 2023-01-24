@@ -2121,7 +2121,21 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Write a rooter
+vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
+    local filepath = vim.fn.bufname('%')
+    if filepath:sub(1, 1) ~= '/' and filepath:sub(2, 2) ~= ':' then
+        if filepath:sub(1, 2) == '.\\' or filepath:sub(1, 2) == './' then
+            filepath = filepath:sub(3)
+        end
+        filepath = vim.fn.getcwd() .. '/' .. filepath
+    end
+    local root = vim.fs.find({".git"}, {path = filepath, upward = true, limit = 1})
+    root = vim.fs.dirname(root[1])
+    if root then
+        vim.cmd.lc(root)
+    end
+end
+})
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin { 'tamton-aquib/duck.nvim' }
@@ -2258,7 +2272,7 @@ AddPlugin {
                     {
                         'diff',
                         on_click = function()
-                            vim.cmd("Telescope git_status") -- TODO: Get a rooter for it
+                            vim.cmd("Telescope git_status")
                         end
                     },
                     {
