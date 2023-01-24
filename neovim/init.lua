@@ -620,8 +620,8 @@ Dark  { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
 Dark  { 'gruvbox',                    '_'            }
 Dark  { 'gruvbox-baby',               '_'            }
-Dark  { 'gruvbuddy',                  '_'            }
-Dark  { 'habamax',                    '_'            }
+Dark  { 'gruvbuddy',                  '_',           postcmd = function() require('colorbuddy').colorscheme('gruvbuddy') end }
+Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
