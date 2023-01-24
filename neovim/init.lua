@@ -651,9 +651,9 @@ Dark  { 'moonlight',                  '_'            }
 Dark  { 'moonlight',                  'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style                             =   'dark'      end    }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style                             =   'default'   end    }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style                             =   'doom'      end    }
+Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'dark'    end, postcmd = function() FixNontext() end }
+Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'default' end, postcmd = function() FixNontext() end }
+Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'doom'    end, postcmd = function() FixNontext() end }
 Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis',                     '_'            }
 Dark  { 'noctis_azureus',             'noctis'       }
@@ -2341,14 +2341,28 @@ AddPlugin {
             --     lualine_a = {'filename'},
             -- },
             winbar = {
-                lualine_a = {'filename'}, -- TODO: fix it
+                lualine_a = {
+                    {
+                        'filename',
+                        cond = function()
+                            return vim.fn.winnr('$') > 2
+                        end
+                    }
+                },
             --     lualine_b = {
             --         { navic.get_location, cond = navic.is_available },
             --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
             --     }
             },
             inactive_winbar = {
-                lualine_a = {'filename'}, -- TODO: fix it
+                lualine_a = {
+                    {
+                        'filename',
+                        cond = function()
+                            return vim.fn.winnr('$') > 2
+                        end
+                    }
+                },
             --     lualine_b = {
             --         { navic.get_location, cond = navic.is_available }
             --     }
@@ -2412,8 +2426,9 @@ AddPlugin {
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
     config = function()
-        local actions = require "telescope.actions"
-        require('telescope').setup({
+        local actions = require 'telescope.actions'
+        local telescope = require('telescope')
+        telescope.setup({
             defaults = {
                 dynamic_preview_title = true,
                 entry_prefix = "   ",
@@ -2454,12 +2469,16 @@ AddPlugin {
             extensions = {
                 heading = {
                     treesitter = true
+                },
+                undo = {
+                    side_by_side = true
                 }
             },
         })
+        telescope.load_extension('undo')
         vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
-    dependencies = 'nvim-lua/plenary.nvim'
+    dependencies = { 'debugloop/telescope-undo.nvim', 'nvim-lua/plenary.nvim' }
 }
 
 AddPlugin {
