@@ -555,7 +555,6 @@ AddPlugin { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'     
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
 AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
-AddPlugin { 'tjdevries/gruvbuddy.nvim',         event = 'User gruvbuddy',   dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
 AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
@@ -620,7 +619,6 @@ Dark  { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
 Dark  { 'gruvbox',                    '_'            }
 Dark  { 'gruvbox-baby',               '_'            }
-Dark  { 'gruvbuddy',                  '_',           postcmd = function() require('colorbuddy').colorscheme('gruvbuddy') end }
 Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
@@ -2169,10 +2167,9 @@ function ResetSleeper()
 end
 
 vim.api.nvim_create_autocmd({'CursorHold'} , {callback = ResetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end}) -- TODO: fix loading of drop
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end})
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: no branch info on session restore
 AddPlugin {
     'rmagatti/auto-session',
     cmd = 'SaveSession',
