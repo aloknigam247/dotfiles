@@ -292,6 +292,7 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: change table characters
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModeEnable'
 }
@@ -555,7 +556,6 @@ AddPlugin { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'     
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
 AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
-AddPlugin { 'tjdevries/gruvbuddy.nvim',         event = 'User gruvbuddy',   dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
 AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
@@ -620,7 +620,6 @@ Dark  { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
 Dark  { 'gruvbox',                    '_'            }
 Dark  { 'gruvbox-baby',               '_'            }
-Dark  { 'gruvbuddy',                  '_',           postcmd = function() require('colorbuddy').colorscheme('gruvbuddy') end }
 Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
@@ -1574,8 +1573,10 @@ AddPlugin {
 
         -- LSP settings (for overriding per client)
         local handlers =  {
-            ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
-            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
+            -- ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
+            -- ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
+            ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
+            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
         }
 
         -- Add additional capabilities supported by nvim-cmp
@@ -2105,13 +2106,44 @@ AddPlugin {
 
 AddPlugin {
     -- TODO: fzf integrations
-    -- TODO: context
+    -- |-------------+----------------------------------------------------------+---------|
+    -- | Function    | Action                                                   | Def Key |
+    -- |-------------+----------------------------------------------------------+---------|
+    -- | open        | open the item under the cursor in quickfix window        | <CR>    |
+    -- | openc       | open the item, and close quickfix window                 | o       |
+    -- | drop        | use drop to open the item, and close quickfix window     | O       |
+    -- | tabdrop     | use tab drop to open the item, and close quickfix window |         |
+    -- | tab         | open the item in a new tab                               | t       |
+    -- | tabb        | open the item in a new tab, but stay at quickfix window  | T       |
+    -- | tabc        | open the item in a new tab, and close quickfix window    | <C-t>   |
+    -- | split       | open the item in vertical split                          | <C-x>   |
+    -- | vsplit      | open the item in horizontal split                        | <C-v>   |
+    -- | prevfile    | go to previous file under the cursor in quickfix window  | <C-p>   |
+    -- | nextfile    | go to next file under the cursor in quickfix window      | <C-n>   |
+    -- | prevhist    | go to previous quickfix list in quickfix window          | <       |
+    -- | nexthist    | go to next quickfix list in quickfix window              | >       |
+    -- | lastleave   | go to last leaving position in quickfix window           | '"      |
+    -- | stoggleup   | toggle sign and move cursor up                           | <S-Tab> |
+    -- | stoggledown | toggle sign and move cursor down                         | <Tab>   |
+    -- | stogglevm   | toggle multiple signs in visual mode                     | <Tab>   |
+    -- | stogglebuf  | toggle signs for same buffers under the cursor           | '<Tab>  |
+    -- | sclear      | clear the signs in current quickfix list                 | z<Tab>  |
+    -- | pscrollup   | scroll up half-page in preview window                    | <C-b>   |
+    -- | pscrolldown | scroll down half-page in preview window                  | <C-f>   |
+    -- | pscrollorig | scroll back to original position in preview window       | zo      |
+    -- | ptogglemode | toggle preview window between normal and max size        | zp      |
+    -- | ptoggleitem | toggle preview for an item of quickfix list              | p       |
+    -- | ptoggleauto | toggle auto preview when cursor moved                    | P       |
+    -- | filter      | create new list for signed items                         | zn      |
+    -- | filterr     | create new list for non-signed items                     | zN      |
+    -- | fzffilter   | enter fzf mode                                           | zf      |
+    -- |-------------+----------------------------------------------------------+---------|
     'kevinhwang91/nvim-bqf',
     config = function()
         require('bqf').setup {
             auto_resize_height = true,
             preview = {
-                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'} -- TODO: use global icons
+                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
             }
         }
         vim.cmd.packadd('cfilter')
@@ -2168,10 +2200,9 @@ function ResetSleeper()
 end
 
 vim.api.nvim_create_autocmd({'CursorHold'} , {callback = ResetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end}) -- TODO: fix loading of drop
+vim.api.nvim_create_autocmd({'CursorMoved', "CursorMovedI"} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end})
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: no branch info on session restore
 AddPlugin {
     'rmagatti/auto-session',
     cmd = 'SaveSession',
@@ -2358,7 +2389,7 @@ AddPlugin {
                     {
                         'filename',
                         cond = function()
-                            return vim.fn.winnr('$') > 2
+                            return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
                         end
                     }
                 },
