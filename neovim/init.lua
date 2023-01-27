@@ -804,6 +804,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: slow completion
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -1374,6 +1375,7 @@ AddPlugin {
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
     -- TODO: how to view changes at current line
+    -- TODO: global icons for git signs
     'lewis6991/gitsigns.nvim',
     opts = {
         signs = {
@@ -2095,6 +2097,7 @@ AddPlugin {
         auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
         signs = {
             -- icons / text used for a diagnostic
+            -- TODO: global icons
             error = "",
             warning = "",
             hint = "",
@@ -2106,7 +2109,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: fzf integrations
     -- |-------------+----------------------------------------------------------+---------|
     -- | Function    | Action                                                   | Def Key |
     -- |-------------+----------------------------------------------------------+---------|
@@ -2149,6 +2151,7 @@ AddPlugin {
         }
         vim.cmd.packadd('cfilter')
     end,
+    dependencies = 'junegunn/fzf',
     ft = 'qf'
 }
 -- <~>
