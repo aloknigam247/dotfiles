@@ -1563,11 +1563,11 @@ AddPlugin {
                 aunmenu PopUp
                 nnoremenu PopUp.Declaration\ \ \ \ \ \ \ \ \ \ \ \ gD <Cmd>lua vim.lsp.buf.declaration()<CR>
                 nnoremenu PopUp.Definition\ \ \ \ \ \ \ \ \ \ \ \ F12 <Cmd>lua vim.lsp.buf.definition()<CR>
-                nnoremenu PopUp.Hover\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\h <Cmd>lua vim.lsp.buf.hover()<CR>
+                nnoremenu PopUp.Hover\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\h <Cmd>Lspsaga hover_doc<CR>
                 nnoremenu PopUp.Implementation\ \ \ \ \ \ \ \ \ gi <Cmd>lua vim.lsp.buf.implementation()<CR>
                 nnoremenu PopUp.LSP\ Finder  <Cmd>Lspsaga lsp_finder<CR>
                 nnoremenu PopUp.References\ \ \ \ \ \ Shift\ F12 <Cmd>lua vim.lsp.buf.references()<CR>
-                nnoremenu PopUp.Rename\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2 <Cmd>lua vim.lsp.buf.rename()<CR>
+                nnoremenu PopUp.Rename\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2 <Cmd>Lspsaga rename<CR>
                 nnoremenu PopUp.Type\ Definition\ \ \ \ \ \ \ \ gt <Cmd>lua vim.lsp.buf.type_definition()<CR>
             ]]
 
@@ -1687,93 +1687,118 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: fix new update
     "glepnir/lspsaga.nvim",
     branch = "main",
     cmd = 'Lspsaga',
-    config = function()
-        require('lspsaga').init_lsp_saga({
-            border_style = "rounded",
-            saga_winblend = 0,
-            move_in_saga = { prev = '<C-p>',next = '<C-n>'},
-            diagnostic_header = { " ", " ", " ", "ﴞ " }, -- TODO: should use global icons
-            -- preview lines above of lsp_finder
-            preview_lines_above = 0,
-            -- preview lines of lsp_finder and definition preview
-            max_preview_lines = 10,
-            -- use emoji lightbulb in default
-            code_action_icon = "💡",
-            -- if true can press number to execute the codeaction in codeaction window
-            code_action_num_shortcut = true,
-            -- same as nvim-lightbulb but async
-            -- BUG: no lightbulb visible
-            code_action_lightbulb = {
-                enable = true,
-                enable_in_insert = false,
-                cache_code_action = true,
-                sign = false,
-                update_time = 150,
-                sign_priority = 20,
-                virtual_text = true,
+    opts = {
+        beacon = {
+            enable = true,
+            frequency = 7,
+        },
+        code_action = {
+            num_shortcut = true,
+            keys = {
+                -- string | table type
+                quit = "q",
+                exec = "<CR>",
             },
-            finder_icons = {
-                def = ' ',
-                ref = '諭',
-                link = ' ',
+        },
+        definition = {
+            edit = 'o',
+            vsplit = '<C-v>',
+            split = '<C-x>',
+            tabe = '<C-t>',
+            quit = 'q',
+        },
+        diagnostic = {
+            show_code_action = true,
+            show_source = true,
+            jump_num_shortcut = true,
+            --1 is max
+            max_width = 0.7,
+            custom_fix = nil,
+            custom_msg = nil,
+            text_hl_follow = false,
+            keys = {
+                exec_action = "o",
+                quit = "q",
+                go_action = "g"
             },
-            finder_request_timeout = 1500,
-            finder_action_keys = {
-                open = {'o', '<CR>'},
-                vsplit = 'v',
-                split = 's',
-                tabe = 't',
-                quit = {'q', '<ESC>'},
+        },
+        finder = {
+            open = {'o', '<CR>'},
+            vsplit = '<C-v>',
+            split = '<C-x>',
+            tabe = '<C-t>',
+            quit = {'q', '<ESC>'},
+        },
+        -- BUG: no lightbulb visible
+        lightbulb = {
+            enable = true,
+            enable_in_insert = true,
+            sign = true,
+            sign_priority = 40,
+            virtual_text = true,
+        },
+        outline = {
+            win_position = "right",
+            win_with = "",
+            win_width = 30,
+            show_detail = true,
+            auto_preview = true,
+            auto_refresh = true,
+            auto_close = true,
+            custom_sort = nil,
+            keys = {
+                jump = "o",
+                expand_collapse = "u",
+                quit = "q",
             },
-            code_action_keys = {
-                quit = 'q',
-                exec = '<CR>',
-            },
-            definition_action_keys = {
-                edit = '<C-c>o',
-                vsplit = '<C-c>v',
-                split = '<C-c>i',
-                tabe = '<C-c>t',
-                quit = 'q',
-            },
-            rename_action_quit = '<C-c>',
-            rename_in_select = true,
-            -- show symbols in winbar must nightly
-            -- in_custom mean use lspsaga api to get symbols
-            -- and set it to your custom winbar or some winbar plugins.
-            -- if in_cusomt = true you must set in_enable to false
-            symbol_in_winbar = {
-                in_custom = false,
-                enable = false,
-                separator = ' ',
-                show_file = false,
-                file_formatter = "",
-                click_support = false,
-            },
-            -- show outline
-            show_outline = {
-                win_position = 'right',
-                --set special filetype win that outline window split.like NvimTree neotree
-                -- defx, db_ui
-                win_with = '',
-                win_width = 30,
-                auto_enter = true,
-                auto_preview = true,
-                virt_text = '┃',
-                jump_key = 'o',
-                -- auto refresh when change buffer
-                auto_refresh = true,
-            },
-            -- custom lsp kind
-            -- usage { Field = 'color code'} or {Field = {your icon, your color code}}
-            custom_kind = {},
-            server_filetype_map = {},
-        })
-    end
+        },
+        preview = {
+            lines_above = 0,
+            lines_below = 10,
+        },
+        rename = {
+            quit = "<C-c>",
+            exec = "<CR>",
+            mark = "x",
+            confirm = "<CR>",
+            in_select = true,
+        },
+        request_timeout = 2000,
+        scroll_preview = {
+            scroll_down = "<C-n>",
+            scroll_up = "<C-p>",
+        },
+        symbol_in_winbar = {
+            enable = false,
+            separator = ' ',
+            hide_keyword = true,
+            show_file = true,
+            folder_level = 2,
+            respect_root = false,
+            color_mode = true,
+        },
+        ui = {
+            -- Currently, only the round theme exists
+            theme = "round",
+            -- This option only works in Neovim 0.9
+            title = true,
+            -- Border type can be single, double, rounded, solid, shadow.
+            border = "rounded",
+            winblend = 20,
+            expand = "",
+            collapse = "",
+            preview = " ",
+            code_action = "💡",
+            diagnostic = "🐞",
+            incoming = " ",
+            outgoing = " ",
+            hover = ' ',
+            kind = {}, -- TODO: custom kinds from globals
+        }
+    }
 }
 
 AddPlugin {
@@ -1934,6 +1959,7 @@ AddPlugin {
     config = true
 }
 
+-- TODO: use lspsaga
 AddPlugin {
     'weilbith/nvim-code-action-menu',
     config = function ()
@@ -2905,11 +2931,11 @@ AddPlugin {
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
-    config = {
-            on_success = function()
-                vim.cmd([[execute "normal! g`\"zz"]])
-            end
-        },
+    opts = {
+        on_success = function()
+            vim.cmd([[execute "normal! g`\"zz"]])
+        end
+    },
     keys = {
         { '<C-S-I>', function() require('bufjump').forward() end },
         { '<C-S-O>', function() require('bufjump').backward() end }
