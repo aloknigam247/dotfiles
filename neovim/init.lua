@@ -761,59 +761,6 @@ Dark  { 'zenwritten',                 'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     }
 Dark  { 'zephyr',                     '_'            }
 Dark  { 'zephyrium',                  '_'            }
-<<<<<<< HEAD
-Light { 'NeoSolarized',               '_'            }
-Light { 'PaperColor',                 '_',           postcmd = function() FixNontext()                                 end }
-Light { 'adwaita',                    '_'            }
-Light { 'ayu-light',                  'ayu'          }
-Light { 'base2tone_desert_light',     'base2tone'    }
-Light { 'base2tone_drawbridge_light', 'base2tone'    }
-Light { 'base2tone_evening_light',    'base2tone'    }
-Light { 'base2tone_field_light',      'base2tone'    }
-Light { 'base2tone_forest_light',     'base2tone'    }
-Light { 'base2tone_garden_light',     'base2tone'    }
-Light { 'base2tone_heath_light',      'base2tone'    }
-Light { 'base2tone_lake_light',       'base2tone'    }
-Light { 'base2tone_lavender_light',   'base2tone'    }
-Light { 'base2tone_mall_light',       'base2tone'    }
-Light { 'base2tone_meadow_light',     'base2tone'    }
-Light { 'base2tone_morning_light',    'base2tone'    }
-Light { 'base2tone_motel_light',      'base2tone'    }
-Light { 'base2tone_pool_light',       'base2tone'    }
-Light { 'base2tone_porch_light',      'base2tone'    }
-Light { 'base2tone_sea_light',        'base2tone'    }
-Light { 'base2tone_space_light',      'base2tone'    }
-Light { 'base2tone_suburb_light',     'base2tone'    }
-Light { 'bluloco-light',               '_'           }
-Light { 'delek',                      '_'            }
-Light { 'edge',                       '_'            }
-Light { 'enfocado',                   '_'            }
-Light { 'everforest',                 '_'            }
-Light { 'forestbones',                'zenbones'     }
-Light { 'github_light',               'github'       }
-Light { 'gruvbox',                    '_'            }
-Light { 'limestone',                  'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
-Light { 'melange',                    '_'            }
-Light { 'mellifluous',                '_'            }
-Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           precmd  = function() vim.g.neon_style                             =   'light'     end    }
-Light { 'noctis_hibernus',            'noctis'       }
-Light { 'noctis_lilac',               'noctis'       }
-Light { 'noctis_lux',                 'noctis'       }
-Light { 'onelight',                   '_'            }
-Light { 'onenord',                    '_'            }
-Light { 'oxocarbon',                  '_'            }
-Light { 'rosebones',                  'zenbones'     }
-Light { 'seoulbones',                 'zenbones'     }
-Light { 'shine',                      '_'            }
-Light { 'toast',                      '_'            }
-Light { 'tokyobones',                 'zenbones'     }
-Light { 'tokyonight-day',             'tokyonight'   }
-Light { 'zellner',                    '_'            }
-Light { 'zenbones',                   '_'            }
-Light { 'zenwritten',                 'zenbones'     }
-=======
->>>>>>> 37a15e2ed2868ad51feac33de1f78d73df4ab8ed
 
 function ColoRand()
     math.randomseed(os.time())
