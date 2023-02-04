@@ -287,6 +287,22 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 }
 
 
+# FZF Setup
+# ``````````````
+function LoadFZF($arg) {
+    $key = $arg[1]
+    Import-Module PSFzf
+    Set-PsFzfOption `
+    -PSReadlineChordProvider 'Alt+p' `
+    -PSReadlineChordReverseHistory 'Alt+h' `
+    -PSReadlineChordSetLocation 'Alt+d'
+    echo $key
+}
+
+Set-PSReadLineKeyHandler -Key Alt+d -ScriptBlock { LoadFZF 'Alt+d' }
+Set-PSReadLineKeyHandler -Key Alt+h -ScriptBlock { LoadFZF 'Alt+h' }
+Set-PSReadLineKeyHandler -Key Alt+p -ScriptBlock { LoadFZF 'Alt+p' }
+
 # Prompt Styling
 # ``````````````
 function promptGen {
