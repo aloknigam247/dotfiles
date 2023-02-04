@@ -291,12 +291,13 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # ``````````````
 function LoadFZF($arg) {
     $key = $arg[1]
+    echo $key
     Import-Module PSFzf
     Set-PsFzfOption `
-    -PSReadlineChordProvider 'Alt+p' `
-    -PSReadlineChordReverseHistory 'Alt+h' `
-    -PSReadlineChordSetLocation 'Alt+d'
-    echo $key
+        -PSReadlineChordProvider 'Alt+p' `
+        -PSReadlineChordReverseHistory 'Alt+h' `
+        -PSReadlineChordSetLocation 'Alt+d' `
+        -PSReadlineChordReverseHistoryArgs 'Alt+a'
 }
 
 Set-PSReadLineKeyHandler -Key Alt+d -ScriptBlock { LoadFZF 'Alt+d' }
