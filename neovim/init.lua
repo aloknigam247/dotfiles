@@ -7,9 +7,8 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: format on paste
+-- TODO: format on paste [change.txt --> insert.txt]
 -- TODO: spell_suggest ?
--- TODO: sort plugins with sort options
 -- TODO: fix auto nextline in vim
 -- TODO: convert vim.cmd[[]] to vim.cmd...
 -- TODO: better word delimiters
@@ -213,21 +212,21 @@ LazyConfig = {
         size = { width = 0.8, height = 0.8 },
         border = "rounded",
         icons = {
+            cmd        = " ",
+            config     = "",
+            event      = "",
+            ft         = " ",
+            init       = " ",
+            keys       = " ",
+            lazy       = " ",
+            list       = { "●", "", "", "" },
+            loaded     = "",
             not_loaded = "",
-            loaded = "",
-            cmd = " ",
-            config = "",
-            event = "",
-            ft = " ",
-            init = " ",
-            keys = " ",
-            plugin = " ",
-            runtime = " ",
-            source = " ",
-            start = "",
-            task = " ",
-            lazy = " ",
-            list = { "●", "", "", "" },
+            plugin     = " ",
+            runtime    = " ",
+            source     = " ",
+            start      = "",
+            task       = " ",
         },
         throttle = 20, -- how frequently should the ui process render events
         custom_keys = {},
@@ -496,98 +495,122 @@ local function Light(opts)
     opts.bg = 'light'
     table.insert(colos, opts)
 end
-AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'                                                  }
-AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
-AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
-AddPlugin { 'JoosepAlviste/palenightfall.nvim', event = 'User palenightfall'                                           }
-AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
-AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                                 }
-AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              }
-AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                                  }
-AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
-AddPlugin { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                                }
-AddPlugin { 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                            }
-AddPlugin { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 }
-AddPlugin { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                                 }
 AddPlugin { 'atelierbram/Base2Tone-nvim',       event = 'User base2tone'                                               }
-AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                              }
-AddPlugin { 'cpea2506/one_monokai.nvim',        event = 'User one_monokai'                                             }
-AddPlugin { 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                                 }
-AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
-AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              }
-AddPlugin { 'gbprod/nord.nvim',                 event = 'User nord'                                                    }
-AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
-AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
-AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 }
-AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
-AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                               }
-AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
-AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
-AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'                                                  }
-AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                            }
-AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                                }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine'                                           }
-AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             }
-AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
-AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'                                                 }
-AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
-AddPlugin { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'                                               }
-AddPlugin { 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'                                              }
-AddPlugin { 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              }
-AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                                  }
-AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
-AddPlugin { 'ramojus/mellifluous.nvim',         event = 'User mellifluous', dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                            }
+AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                                 }
 AddPlugin { 'ray-x/aurora',                     event = 'User aurora'                                                  }
-AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
-AddPlugin { 'rebelot/kanagawa.nvim',            event = 'User kanagawa'                                                }
-AddPlugin { 'rmehri01/onenord.nvim',            event = 'User onenord'                                                 }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
+AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
+AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
+AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
+AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
 AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                    }
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                              }
-AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
-AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  }
+AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
+AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                                  }
+AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                            }
+AddPlugin { 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                                 }
+AddPlugin { 'rebelot/kanagawa.nvim',            event = 'User kanagawa'                                                }
+AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'                                                  }
+AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                                }
 AddPlugin { 'savq/melange',                     event = 'User melange'                                                 }
-AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
-AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
-AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
+AddPlugin { 'ramojus/mellifluous.nvim',         event = 'User mellifluous', dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
+AddPlugin { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 }
 AddPlugin { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'                                            }
+AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
+AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
+AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
+AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
+AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
+AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
+AddPlugin { 'gbprod/nord.nvim',                 event = 'User nord'                                                    }
+AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'                                                  }
+AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                              }
+AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                                  }
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
+AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 }
+AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  }
+AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             }
+AddPlugin { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                                 }
+AddPlugin { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                                }
+AddPlugin { 'cpea2506/one_monokai.nvim',        event = 'User one_monokai'                                             }
+AddPlugin { 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'                                              }
+AddPlugin { 'rmehri01/onenord.nvim',            event = 'User onenord'                                                 }
+AddPlugin { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'                                               }
+AddPlugin { 'JoosepAlviste/palenightfall.nvim', event = 'User palenightfall'                                           }
+AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              }
+AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              }
+AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
+AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
+AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
+AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                               }
+AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
 AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
-AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
+AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
-AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
-AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
+AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'                                                 }
+AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
+AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
+AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
+AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
 
 Dark  { 'NeoSolarized',               '_'            }
+Light { 'NeoSolarized',               '_'            }
 Dark  { 'OceanicNext',                '_'            }
-Dark  { 'PaperColor',                 '_',           postcmd = function() FixNontext()                                 end }
+Dark  { 'PaperColor',                 '_',           postcmd = function() FixNontext() end }
+Light { 'PaperColor',                 '_',           postcmd = function() FixNontext() end }
 Dark  { 'adwaita',                    '_'            }
+Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
 Dark  { 'ayu-dark',                   'ayu'          }
+Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
 Dark  { 'base2tone_desert_dark',      'base2tone'    }
+Light { 'base2tone_desert_light',     'base2tone'    }
 Dark  { 'base2tone_drawbridge_dark',  'base2tone'    }
+Light { 'base2tone_drawbridge_light', 'base2tone'    }
+Light { 'base2tone_earth_light',      'base2tone'    }
 Dark  { 'base2tone_evening_dark',     'base2tone'    }
+Light { 'base2tone_evening_light',    'base2tone'    }
 Dark  { 'base2tone_field_dark',       'base2tone'    }
+Light { 'base2tone_field_light',      'base2tone'    }
 Dark  { 'base2tone_forest_dark',      'base2tone'    }
+Light { 'base2tone_forest_light',     'base2tone'    }
 Dark  { 'base2tone_garden_dark',      'base2tone'    }
+Light { 'base2tone_garden_light',     'base2tone'    }
 Dark  { 'base2tone_heath_dark',       'base2tone'    }
+Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
+Light { 'base2tone_lake_light',       'base2tone'    }
 Dark  { 'base2tone_lavender_dark',    'base2tone'    }
+Light { 'base2tone_lavender_light',   'base2tone'    }
 Dark  { 'base2tone_mall_dark',        'base2tone'    }
+Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_meadow_dark',      'base2tone'    }
+Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
+Light { 'base2tone_morning_light',    'base2tone'    }
+Light { 'base2tone_motel_light',      'base2tone'    }
 Dark  { 'base2tone_pool_dark',        'base2tone'    }
+Light { 'base2tone_pool_light',       'base2tone'    }
 Dark  { 'base2tone_porch_dark',       'base2tone'    }
+Light { 'base2tone_porch_light',      'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
+Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
+Light { 'base2tone_space_light',      'base2tone'    }
 Dark  { 'base2tone_suburb_dark',      'base2tone'    }
+Light { 'base2tone_suburb_light',     'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
+Light { 'bluloco-light',               '_'           }
 Dark  { 'calvera',                    '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
 Dark  { 'catppuccin-frappe',          'catppuccin'   }
@@ -599,26 +622,33 @@ Dark  { 'codedark',                   '_'            }
 Dark  { 'darkblue',                   '_'            }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
-Dark  { 'darksolar',                  'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'darksolar',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'dawnfox',                    'nightfox'     }
 Dark  { 'dayfox',                     'nightfox'     }
-Dark  { 'deepocean',                  'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'deepocean',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Light { 'delek',                      '_'            }
 Dark  { 'deus',                       '_'            }
 Dark  { 'doubletrouble',              '_'            }
-Dark  { 'dracula',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
-Dark  { 'dracula_blood',              'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'dracula',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'dracula_blood',              'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'duckbones',                  'zenbones'     }
 Dark  { 'duskfox',                    'nightfox'     }
-Dark  { 'earlysummer',                'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'earlysummer',                'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'edge',                       '_'            }
-Dark  { 'emerald',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Light { 'edge',                       '_'            }
+Dark  { 'emerald',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'enfocado',                   '_'            }
+Light { 'enfocado',                   '_'            }
 Dark  { 'everforest',                 '_'            }
+Light { 'everforest',                 '_'            }
 Dark  { 'falcon',                     '_'            }
 Dark  { 'fluoromachine',              '_'            }
 Dark  { 'forestbones',                'zenbones'     }
+Light { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
+Light { 'github_light',               'github'       }
 Dark  { 'gruvbox',                    '_'            }
+Light { 'gruvbox',                    '_'            }
 Dark  { 'gruvbox-baby',               '_'            }
 Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
@@ -626,30 +656,35 @@ Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kanagawabones',              'zenbones'     }
 Dark  { 'kimbox',                     '_'            }
+Light { 'limestone',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'lunaperche',                 '_'            }
-Dark  { 'mariana',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                         =   'darker'    end    }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                         =   'deep       ocean' end }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                         =   'lighter'   end    }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                         =   'oceanic'   end    }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                         =   'palenight' end    }
-Dark  { 'material',                   'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'mariana',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'darker'    end    }
+Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'deep       ocean' end }
+Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'lighter'   end    }
+Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'oceanic'   end    }
+Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'palenight' end    }
+Dark  { 'material',                   'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'melange',                    '_'            }
+Light { 'melange',                    '_'            }
 Dark  { 'mellifluous',                '_'            }
+Light { 'mellifluous',                '_'            }
 Dark  { 'mellow',                     '_'            }
-Dark  { 'middlenight_blue',           'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'middlenight_blue',           'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'minimal',                    '_'            }
 Dark  { 'minimal-base16',             'minimal'      }
 Dark  { 'monokai',                    'monokai.nvim' }
-Dark  { 'monokai',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'monokai',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'monokai',                    'vim-monokai'  }
 Dark  { 'monokai_pro',                'monokai.nvim' }
 Dark  { 'monokai_ristretto',          'monokai.nvim' }
 Dark  { 'monokai_soda',               'monokai.nvim' }
 Dark  { 'moonlight',                  '_'            }
-Dark  { 'moonlight',                  'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'moonlight',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
+Light { 'neobones',                   'zenbones'     }
+Light { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'light'   end, postcmd = function() FixNontext() end }
 Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'dark'    end, postcmd = function() FixNontext() end }
 Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'default' end, postcmd = function() FixNontext() end }
 Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'doom'    end, postcmd = function() FixNontext() end }
@@ -657,6 +692,9 @@ Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis',                     '_'            }
 Dark  { 'noctis_azureus',             'noctis'       }
 Dark  { 'noctis_bordo',               'noctis'       }
+Light { 'noctis_hibernus',            'noctis'       }
+Light { 'noctis_lilac',               'noctis'       }
+Light { 'noctis_lux',                 'noctis'       }
 Dark  { 'noctis_minimus',             'noctis'       }
 Dark  { 'noctis_obscuro',             'noctis'       }
 Dark  { 'noctis_sereno',              'noctis'       }
@@ -666,7 +704,7 @@ Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
-Dark  { 'oceanic',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'oceanic',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'oh-lucy',                    '_'            }
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
@@ -674,92 +712,53 @@ Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
 Dark  { 'onedark_dark',               'onedarkpro'   }
 Dark  { 'onedark_vivid',              'onedarkpro'   }
+Light { 'onelight',                   '_'            }
 Dark  { 'onenord',                    '_'            }
+Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
+Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
-Dark  { 'poimandres',                 '_',           precmd  = function() require('poimandres').setup()                end }
+Dark  { 'poimandres',                 '_',           precmd  = function() require('poimandres').setup() end }
 Dark  { 'rose-pine',                  '_'            }
-Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant     =   'main'      })     end }
-Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant     =   'moon'      })     end }
+Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant = 'main'}) end }
+Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
+Light { 'rosebones',                  'zenbones'     }
+Light { 'seoulbones',                 'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
+Light { 'shine',                      '_'            }
 Dark  { 'slate',                      '_'            }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style                          =   'andromeda' end    }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style                          =   'atlantis'  end    }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style                          =   'default'   end    }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style                          =   'maia'      end    }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style                          =   'shusia'    end    }
+Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'andromeda' end }
+Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'atlantis'  end }
+Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'default'   end }
+Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'maia'      end }
+Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'shusia'    end }
 Dark  { 'substrata',                  '_'            }
 Dark  { 'terafox',                    'nightfox'     }
 Dark  { 'toast',                      '_'            }
+Light { 'toast',                      '_'            }
 Dark  { 'tokyobones',                 'zenbones'     }
+Light { 'tokyobones',                 'zenbones'     }
 Dark  { 'tokyodark',                  '_'            }
+Light { 'tokyonight-day',             'tokyonight'   }
 Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_'            }
-Dark  { 'ukraine',                    'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
+Dark  { 'ukraine',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vimbones',                   'zenbones'     }
 Dark  { 'vn-night',                   '_'            }
+Light { 'zellner',                    '_'            }
 Dark  { 'zenbones',                   '_'            }
+Light { 'zenbones',                   '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
 Dark  { 'zenwritten',                 'zenbones'     }
+Light { 'zenwritten',                 'zenbones'     }
 Dark  { 'zephyr',                     '_'            }
 Dark  { 'zephyrium',                  '_'            }
-Light { 'NeoSolarized',               '_'            }
-Light { 'PaperColor',                 '_',           postcmd = function() FixNontext()                                 end }
-Light { 'adwaita',                    '_'            }
-Light { 'ayu-light',                  'ayu'          }
-Light { 'base2tone_desert_light',     'base2tone'    }
-Light { 'base2tone_drawbridge_light', 'base2tone'    }
-Light { 'base2tone_earth_light',      'base2tone'    }
-Light { 'base2tone_evening_light',    'base2tone'    }
-Light { 'base2tone_field_light',      'base2tone'    }
-Light { 'base2tone_forest_light',     'base2tone'    }
-Light { 'base2tone_garden_light',     'base2tone'    }
-Light { 'base2tone_heath_light',      'base2tone'    }
-Light { 'base2tone_lake_light',       'base2tone'    }
-Light { 'base2tone_lavender_light',   'base2tone'    }
-Light { 'base2tone_mall_light',       'base2tone'    }
-Light { 'base2tone_meadow_light',     'base2tone'    }
-Light { 'base2tone_morning_light',    'base2tone'    }
-Light { 'base2tone_motel_light',      'base2tone'    }
-Light { 'base2tone_pool_light',       'base2tone'    }
-Light { 'base2tone_porch_light',      'base2tone'    }
-Light { 'base2tone_sea_light',        'base2tone'    }
-Light { 'base2tone_space_light',      'base2tone'    }
-Light { 'base2tone_suburb_light',     'base2tone'    }
-Light { 'bluloco-light',               '_'           }
-Light { 'delek',                      '_'            }
-Light { 'edge',                       '_'            }
-Light { 'enfocado',                   '_'            }
-Light { 'everforest',                 '_'            }
-Light { 'forestbones',                'zenbones'     }
-Light { 'github_light',               'github'       }
-Light { 'gruvbox',                    '_'            }
-Light { 'limestone',                  'starry',      precmd  = function() require('starry').setup({custom_highlights   =   {           LineNr =   { underline = false }} }) end }
-Light { 'melange',                    '_'            }
-Light { 'mellifluous',                '_'            }
-Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           precmd  = function() vim.g.neon_style                             =   'light'     end    }
-Light { 'noctis_hibernus',            'noctis'       }
-Light { 'noctis_lilac',               'noctis'       }
-Light { 'noctis_lux',                 'noctis'       }
-Light { 'onelight',                   '_'            }
-Light { 'onenord',                    '_'            }
-Light { 'oxocarbon',                  '_'            }
-Light { 'rosebones',                  'zenbones'     }
-Light { 'seoulbones',                 'zenbones'     }
-Light { 'shine',                      '_'            }
-Light { 'toast',                      '_'            }
-Light { 'tokyobones',                 'zenbones'     }
-Light { 'tokyonight-day',             'tokyonight'   }
-Light { 'zellner',                    '_'            }
-Light { 'zenbones',                   '_'            }
-Light { 'zenwritten',                 'zenbones'     }
 
 function ColoRand()
     math.randomseed(os.time())
@@ -879,7 +878,15 @@ AddPlugin {
             }
         })
     end,
-    dependencies = { "aloknigam247/cmp-path", "chrisgrieser/cmp-nerdfont", "dcampos/cmp-snippy", "dcampos/nvim-snippy","hrsh7th/cmp-buffer", "hrsh7th/cmp-cmdline", "hrsh7th/cmp-nvim-lsp" }, -- TODO: check if lazy
+    dependencies = {
+        "aloknigam247/cmp-path",
+        "chrisgrieser/cmp-nerdfont",
+        "dcampos/cmp-snippy",
+        "dcampos/nvim-snippy",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-nvim-lsp",
+    }, -- TODO: check if lazy
     event = 'CmdlineEnter',
 }
 
@@ -1024,142 +1031,63 @@ AddPlugin {
     -- TODO: lazy load
     'nvim-tree/nvim-tree.lua',
     opts = {
-            auto_reload_on_write = true,
-            disable_netrw = true,
-            hijack_cursor = false,
-            hijack_netrw = true,
-            hijack_unnamed_buffer_when_opening = true,
-            ignore_buffer_on_setup = false,
-            open_on_setup = false,
-            open_on_setup_file = false,
-            sort_by = 'name',
-            root_dirs = {},
-            prefer_startup_root = false,
-            sync_root_with_cwd = true,
-            reload_on_bufenter = false,
-            respect_buf_cwd = false,
-            on_attach = 'disable',
-            remove_keymaps = false,
-            select_prompts = false,
-            view = {
-                adaptive_size = false,
-                centralize_selection = false,
-                width = 30,
-                hide_root_folder = false,
-                side = 'left',
-                preserve_window_proportions = false,
-                number = false,
-                relativenumber = false,
-                signcolumn = 'yes',
-                mappings = {
-                    custom_only = false,
-                    list = {
-                        -- user mappings go here
-                    },
-                },
-                float = {
-                    enable = false,
-                    quit_on_focus_loss = true,
-                    open_win_config = {
-                        relative = 'editor',
-                        border = 'rounded',
-                        width = 30,
-                        height = 30,
-                        row = 1,
-                        col = 1,
-                    },
-                },
-            },
-            renderer = {
-                add_trailing = true,
-                group_empty = false,
-                highlight_git = true,
-                full_name = true,
-                highlight_opened_files = 'all',
-                root_folder_label = ':~:s?$?/..?',
-                indent_width = 2,
-                indent_markers = {
+            actions = {
+                change_dir = {
                     enable = true,
-                    inline_arrows = true,
-                    icons = {
-                        corner = '╰',
-                        edge = '│',
-                        item = '│',
-                        bottom = '─',
-                        none = ' ',
+                    global = false,
+                    restrict_above_cwd = false,
+                },
+                expand_all = {
+                    exclude = { '.git' },
+                    max_folder_discovery = 300,
+                },
+                file_popup = {
+                    open_win_config = {
+                        border = 'rounded',
+                        col = 1,
+                        relative = 'cursor',
+                        row = 1,
+                        style = 'minimal',
                     },
                 },
-                icons = {
-                    webdev_colors = true,
-                    git_placement = 'after',
-                    padding = ' ',
-                    symlink_arrow = ' 壟 ',
-                    show = {
-                        file = true,
-                        folder = true,
-                        folder_arrow = true,
-                        git = true,
-                    },
-                    glyphs = {
-                        default = '',
-                        symlink = '',
-                        bookmark = '',
-                        folder = {
-                            arrow_closed = '',
-                            arrow_open = '',
-                            default = '',
-                            open = '',
-                            empty = '',
-                            empty_open = '',
-                            symlink = '',
-                            symlink_open = '',
+                open_file = {
+                    quit_on_open = false,
+                    resize_window = true,
+                    window_picker = {
+                        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+                        enable = true,
+                        exclude = {
+                            buftype = { 'nofile', 'terminal', 'help' },
+                            filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
                         },
-                        -- TODO: icons
-                        git = {
-                            unstaged = '✗',
-                            staged = '✓',
-                            unmerged = '',
-                            renamed = '➜',
-                            untracked = '★',
-                            deleted = '',
-                            ignored = '◌',
-                        },
+                        picker = 'default',
                     },
                 },
-                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
-                symlink_destination = true,
+                remove_file = { close_window = true },
+                use_system_clipboard = true,
             },
-            hijack_directories = {
-                enable = true,
-                auto_open = true,
-            },
-            update_focused_file = {
-                enable = true,
-                debounce_delay = 15,
-                update_root = true,
-                ignore_list = {},
-            },
-            ignore_ft_on_setup = {},
-            system_open = {
-                cmd = '',
-                args = {},
-            },
+            auto_reload_on_write = true,
             diagnostics = {
-                enable = true,
-                show_on_dirs = true,
-                show_on_open_dirs = false,
                 debounce_delay = 50,
-                severity = {
-                    min = vim.diagnostic.severity.HINT,
-                    max = vim.diagnostic.severity.ERROR,
-                },
-                -- TODO: use global icons
-                icons = {
+                enable = true,
+                icons = { -- TODO: use global icons
                     error   = '',
                     hint    = '',
                     info    = '',
                     warning = '',
                 },
+                severity = {
+                    min = vim.diagnostic.severity.HINT,
+                    max = vim.diagnostic.severity.ERROR,
+                },
+                show_on_dirs = true,
+                show_on_open_dirs = false,
+            },
+            disable_netrw = true,
+            filesystem_watchers = {
+                enable = true,
+                debounce_delay = 50,
+                ignore_dirs = {},
             },
             filters = {
                 dotfiles = false,
@@ -1168,11 +1096,6 @@ AddPlugin {
                 custom = {},
                 exclude = {},
             },
-            filesystem_watchers = {
-                enable = true,
-                debounce_delay = 50,
-                ignore_dirs = {},
-            },
             git = {
                 enable = true,
                 ignore = true,
@@ -1180,74 +1103,151 @@ AddPlugin {
                 show_on_open_dirs = true,
                 timeout = 400,
             },
-            actions = {
-                use_system_clipboard = true,
-                change_dir = {
+            hijack_cursor = false,
+            hijack_directories = {
+                auto_open = true,
+                enable = true,
+            },
+            hijack_netrw = true,
+            hijack_unnamed_buffer_when_opening = true,
+            ignore_buffer_on_setup = false,
+            ignore_ft_on_setup = {},
+            live_filter = {
+                always_show_folders = true,
+                prefix = '[FILTER]: ',
+            },
+            log = {
+                enable = false,
+                truncate = false,
+                types = {
+                    all         = false,
+                    config      = false,
+                    copy_paste  = false,
+                    dev         = false,
+                    diagnostics = false,
+                    git         = false,
+                    profile     = false,
+                    watcher     = false,
+                },
+            },
+            notify = { threshold = vim.log.levels.INFO },
+            on_attach = 'disable',
+            open_on_setup = false,
+            open_on_setup_file = false,
+            prefer_startup_root = false,
+            reload_on_bufenter = false,
+            remove_keymaps = false,
+            renderer = {
+                add_trailing = true,
+                full_name = true,
+                group_empty = false,
+                highlight_git = true,
+                highlight_opened_files = 'all',
+                indent_markers = {
                     enable = true,
-                    global = false,
-                    restrict_above_cwd = false,
-                },
-                expand_all = {
-                    max_folder_discovery = 300,
-                    exclude = { '.git' },
-                },
-                file_popup = {
-                    open_win_config = {
-                        col = 1,
-                        row = 1,
-                        relative = 'cursor',
-                        border = 'rounded',
-                        style = 'minimal',
+                    icons = {
+                        bottom = '─',
+                        corner = '╰',
+                        edge   = '│',
+                        item   = '│',
+                        none   = ' ',
                     },
+                    inline_arrows = true,
                 },
-                open_file = {
-                    quit_on_open = false,
-                    resize_window = true,
-                    window_picker = {
-                        enable = true,
-                        picker = 'default',
-                        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
-                        exclude = {
-                            filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
-                            buftype = { 'nofile', 'terminal', 'help' },
+                indent_width = 2,
+                root_folder_label = ':~:s?$?/..?',
+                icons = {
+                    git_placement = 'after',
+                    glyphs = {
+                        bookmark = '',
+                        default  = '',
+                        folder = {
+                            arrow_closed = '',
+                            arrow_open   = '',
+                            default      = '',
+                            empty        = '',
+                            empty_open   = '',
+                            open         = '',
+                            symlink      = '',
+                            symlink_open = '',
                         },
+                        git = {
+                            deleted   = '',
+                            ignored   = '◌',
+                            renamed   = '➜',
+                            staged    = '✓',
+                            unmerged  = '',
+                            unstaged  = '✗',
+                            untracked = '★',
+                        },
+                        -- TODO: icons
+                        symlink = '',
                     },
+                    padding = ' ',
+                    show = {
+                        file = true,
+                        folder = true,
+                        folder_arrow = true,
+                        git = true,
+                    },
+                    symlink_arrow = ' 壟 ',
+                    webdev_colors = true,
                 },
-                remove_file = {
-                    close_window = true,
+                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
+                symlink_destination = true,
+            },
+            respect_buf_cwd = false,
+            root_dirs = {},
+            select_prompts = false,
+            sort_by = 'name',
+            sync_root_with_cwd = true,
+            system_open = {
+                cmd = '',
+                args = {},
+            },
+            tab = {
+                sync = {
+                    close = false,
+                    ignore = {},
+                    open = false,
                 },
             },
             trash = {
                 cmd = 'gio trash',
                 require_confirm = true,
             },
-            live_filter = {
-                prefix = '[FILTER]: ',
-                always_show_folders = true,
+            update_focused_file = {
+                debounce_delay = 15,
+                enable = true,
+                ignore_list = {},
+                update_root = true,
             },
-            tab = {
-                sync = {
-                    open = false,
-                    close = false,
-                    ignore = {},
+            view = {
+                adaptive_size = false,
+                centralize_selection = false,
+                float = {
+                    enable = false,
+                    open_win_config = {
+                        border = 'rounded',
+                        col = 1,
+                        height = 30,
+                        relative = 'editor',
+                        row = 1,
+                        width = 30,
+                    },
+                    quit_on_focus_loss = true,
                 },
-            },
-            notify = {
-                threshold = vim.log.levels.INFO,
-            },
-            log = {
-                enable = false,
-                truncate = false,
-                types = {
-                    all = false,
-                    config = false,
-                    copy_paste = false,
-                    dev = false,
-                    diagnostics = false,
-                    git = false,
-                    profile = false,
-                    watcher = false,
+                hide_root_folder = false,
+                mappings = {
+                    custom_only = false,
+                    list = {}, -- user mappings go here
                 },
+                number = false,
+                preserve_window_proportions = false,
+                relativenumber = false,
+                side = 'left',
+                signcolumn = 'yes',
+                width = 30,
             },
     }
 }
@@ -1483,16 +1483,16 @@ AddPlugin {
 AddPlugin {
     -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
+    enabled = false,
+    event = 'LspAttach',
     opts = {
-        icons = vim.g.cmp_kinds,
-        highlight = true,
-        separator = "  ",
         depth_limit = 0,
         depth_limit_indicator = "..",
-        safe_output = true
+        highlight = true,
+        icons = vim.g.cmp_kinds,
+        safe_output = true,
+        separator = "  ",
     },
-    event = 'LspAttach',
-    enabled = false
 }
 
 -- TODO: Resolve usage
@@ -2282,6 +2282,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/rebelot/heirline.nvim
     'nvim-lualine/lualine.nvim',
     config = function()
         Icon_index = 0
