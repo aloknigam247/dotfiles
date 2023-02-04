@@ -291,7 +291,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # ``````````````
 function LoadFZF($arg) {
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
-    $key = $arg[1]
+    $key = $arg
     echo "key: $key"
     Import-Module PSFzf
     Set-PsFzfOption `
