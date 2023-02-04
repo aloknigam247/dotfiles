@@ -294,11 +294,22 @@ function LoadFZF($arg) {
     $key = $arg
     echo "key: $key"
     Import-Module PSFzf
+
     Set-PsFzfOption `
         -PSReadlineChordProvider 'Alt+p' `
         -PSReadlineChordReverseHistory 'Alt+h' `
         -PSReadlineChordSetLocation 'Alt+d' `
         -PSReadlineChordReverseHistoryArgs 'Alt+a'
+    Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
+    Set-PsFzfOption -TabExpansion
+
+    $env:FZF_DEFAULT_OPTS='
+        --color=fg:#ffffff,bg:-1,hl:#71b7c2
+        --color=fg+:#f0a330,bg+:#873df5,hl+:#a7daeb
+        --color=info:#afaf87,prompt:#d7005f,pointer:#ff59f1
+        --color=marker:#000000,spinner:#f0a6f5,header:#87afaf
+    '
+
     $wshell = New-Object -ComObject wscript.shell
     $wshell.SendKeys($key)
 }
