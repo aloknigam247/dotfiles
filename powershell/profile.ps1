@@ -291,7 +291,8 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # ``````````````
 function LoadFZF($arg) {
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
-    $key = $arg[0]
+    $key = $arg[1]
+    echo "key: $key"
     Import-Module PSFzf
     Set-PsFzfOption `
         -PSReadlineChordProvider 'Alt+p' `
@@ -299,7 +300,7 @@ function LoadFZF($arg) {
         -PSReadlineChordSetLocation 'Alt+d' `
         -PSReadlineChordReverseHistoryArgs 'Alt+a'
     $wshell = New-Object -ComObject wscript.shell
-    $wshell2.SendKeys($key)
+    $wshell.SendKeys($key)
 }
 
 Set-PSReadLineKeyHandler -Key Alt+d -ScriptBlock { LoadFZF '%d' }
