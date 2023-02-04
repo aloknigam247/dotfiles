@@ -2,7 +2,6 @@ $scoop_pkgs = @(
     "PSFzf"
     "fzf"
     "posh-git"
-    "zoxide"
 )
 
 $winget_pkgs = @(

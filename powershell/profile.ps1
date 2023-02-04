@@ -290,6 +290,8 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # FZF Setup
 # ``````````````
 function LoadFZF($arg) {
+    # TODO: Layout selection
+    # TODO: Examples https://github.com/junegunn/fzf/wiki/Examples
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
     $key = $arg
     echo "key: $key"
