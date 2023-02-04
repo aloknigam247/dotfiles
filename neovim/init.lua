@@ -10,7 +10,6 @@
 -- TODO: format on paste [change.txt --> insert.txt]
 -- TODO: spell_suggest ?
 -- TODO: fix auto nextline in vim
--- TODO: convert vim.cmd[[]] to vim.cmd...
 -- TODO: better word delimiters
 -- TODO: Use statuscolumn
 
@@ -1618,11 +1617,11 @@ AddPlugin {
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices" -LogPath "./powershell_es.log" -SessionDetailsPath "./powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal -EnableConsoleRepl'},
-                        cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "Import-Module 'C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\PowerShellEditorServices.psd1'; Start-EditorServices -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2022.12.1' -AdditionalModules @('PowerShellEditorServices.VSCode') -BundledModulesPath 'c:\\Users\\aloknigam\\.vscode\\extensions\\ms-vscode.powershell-2022.12.1\\modules' -EnableConsoleRepl -LogLevel 'Normal' -LogPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\logs\\1671314645-cea5c434-0147-4205-b2be-5907f5a8b7de1671314642966\\EditorServices.log' -SessionDetailsPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\sessions\\PSES-VSCode-39524-314832.json' -FeatureFlags @() -Stdio"},
+                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "Import-Module 'C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\PowerShellEditorServices.psd1'; Start-EditorServices -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2022.12.1' -AdditionalModules @('PowerShellEditorServices.VSCode') -BundledModulesPath 'c:\\Users\\aloknigam\\.vscode\\extensions\\ms-vscode.powershell-2022.12.1\\modules' -EnableConsoleRepl -LogLevel 'Normal' -LogPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\logs\\1671314645-cea5c434-0147-4205-b2be-5907f5a8b7de1671314642966\\EditorServices.log' -SessionDetailsPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\sessions\\PSES-VSCode-39524-314832.json' -FeatureFlags @() -Stdio"},
                         -- bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
                         capabilities = capabilities,
                         -- root_dir = function() return 'C:/Users/aloknigam/learn/powershell' end,
-                        root_dir = function() return vim.fn.getcwd() end,
+                        -- root_dir = function() return vim.fn.getcwd() end,
                         handlers = handlers,
                         on_attach = on_attach
                     }
@@ -1669,7 +1668,7 @@ AddPlugin {
                 end
             end
         }
-        vim.cmd('LspStart')
+        vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
     event = 'CursorHold'
@@ -1697,6 +1696,7 @@ AddPlugin {
         },
         code_action = {
             num_shortcut = true,
+            show_server_name = true,
             keys = {
                 -- string | table type
                 quit = "q",
@@ -1959,14 +1959,13 @@ AddPlugin {
     config = true
 }
 
--- TODO: use lspsaga
-AddPlugin {
-    'weilbith/nvim-code-action-menu',
-    config = function ()
-        vim.g.code_action_menu_window_border = 'rounded'
-    end,
-    cmd = 'CodeActionMenu'
-}
+-- AddPlugin {
+--     'weilbith/nvim-code-action-menu',
+--     config = function ()
+--         vim.g.code_action_menu_window_border = 'rounded'
+--     end,
+--     cmd = 'CodeActionMenu'
+-- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: https://github.com/DanRoscigno/nvim-markdown-grammarly
@@ -2175,7 +2174,7 @@ AddPlugin {
                 border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
             }
         }
-        vim.cmd.packadd('cfilter')
+        vim.cmd('packadd cfilter')
     end,
     dependencies = 'junegunn/fzf',
     ft = 'qf'
