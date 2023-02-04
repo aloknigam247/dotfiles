@@ -12,6 +12,10 @@
 -- TODO: fix auto nextline in vim
 -- TODO: better word delimiters
 -- TODO: Use statuscolumn
+-- TODO: location list
+-- TODO: quickfix
+-- TODO: marks
+-- TODO: better lcs for tab
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -1460,13 +1464,29 @@ end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: disable for Neorg
 AddPlugin {
     'lukas-reineke/indent-blankline.nvim',
-    opts = {
-        show_current_context = true,
-        show_current_context_start = true
-    },
+    config = function()
+        require("indent_blankline").setup {
+            bufname_exclude = {},
+            buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
+            char = '│',
+            char_blankline = '┆',
+            char_priority = 1,
+            context_char = '┃',
+            context_char_blankline = '┃',
+            context_start_priority = 1,
+            filetype_exclude = { 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
+            show_current_context = true,
+            show_current_context_start = true,
+        }
+        for _, color in pairs({'IndentBlanklineSpaceChar', 'IndentBlanklineChar'}) do
+            local hl = vim.api.nvim_get_hl_by_name(color, true)
+            hl.nocombine = false
+            vim.api.nvim_set_hl(0, color, hl)
+        end
+        -- vim.cmd.IndentBlanklineRefresh()
+    end,
     event = "CursorHold"
 }
 -- <~>
@@ -1559,15 +1579,22 @@ AddPlugin {
             -- TODO: better popup management
             vim.cmd[[
                 aunmenu PopUp
-                nnoremenu PopUp.Declaration\ \ \ \ \ \ \ \ \ \ \ \ gD <Cmd>lua vim.lsp.buf.declaration()<CR>
-                nnoremenu PopUp.Definition\ \ \ \ \ \ \ \ \ \ \ \ F12 <Cmd>lua vim.lsp.buf.definition()<CR>
-                nnoremenu PopUp.Hover\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\h <Cmd>Lspsaga hover_doc<CR>
-                nnoremenu PopUp.Implementation\ \ \ \ \ \ \ \ \ gi <Cmd>lua vim.lsp.buf.implementation()<CR>
-                nnoremenu PopUp.LSP\ Finder  <Cmd>Lspsaga lsp_finder<CR>
-                nnoremenu PopUp.References\ \ \ \ \ \ Shift\ F12 <Cmd>lua vim.lsp.buf.references()<CR>
-                nnoremenu PopUp.Rename\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ F2 <Cmd>Lspsaga rename<CR>
-                nnoremenu PopUp.Type\ Definition\ \ \ \ \ \ \ \ gt <Cmd>lua vim.lsp.buf.type_definition()<CR>
             ]]
+
+            -- TODO: group function
+            function PopupMenuAdd(title, action)
+                title = title:gsub(' ', '\\ ')
+                vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
+            end
+
+            PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
+            PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
+            PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
+            PopupMenuAdd('Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>')
+            PopupMenuAdd('LSP Finder',                 '<Cmd>Lspsaga lsp_finder<CR>')
+            PopupMenuAdd('References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>')
+            PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
+            PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
             -- navic.attach(client, bufnr)
         end
@@ -1730,7 +1757,6 @@ AddPlugin {
             tabe = '<C-t>',
             quit = {'q', '<ESC>'},
         },
-        -- BUG: no lightbulb visible
         lightbulb = {
             enable = true,
             enable_in_insert = true,
