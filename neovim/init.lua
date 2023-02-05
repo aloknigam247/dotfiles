@@ -9,14 +9,12 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: format on paste [change.txt --> insert.txt]
 -- TODO: spell_suggest ?
--- TODO: fix auto nextline in vim
--- TODO: better word delimiters
 -- TODO: Use statuscolumn
 -- TODO: location list
 -- TODO: quickfix
 -- TODO: marks
 -- TODO: better lcs for tab
--- TOOD: use command sequence to change background of terminal to nvim background
+-- TODO: use command sequence to change background of terminal to nvim background
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -1367,8 +1365,6 @@ AddPlugin {
 -- TODO: use FZF
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- https://github.com/ibhagwan/fzf-lua
--- https://github.com/junegunn/fzf
--- https://github.com/junegunn/fzf.vim
 -- https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
