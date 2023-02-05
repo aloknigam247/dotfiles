@@ -16,6 +16,7 @@
 -- TODO: quickfix
 -- TODO: marks
 -- TODO: better lcs for tab
+-- TOOD: use command sequence to change background of terminal to nvim background
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
