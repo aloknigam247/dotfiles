@@ -2442,9 +2442,10 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filename',
-                        cond = function()
-                            return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
-                        end
+                        -- TODO: Fix it
+                        -- cond = function()
+                        --     return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
+                        -- end
                     }
                 },
             --     lualine_b = {
@@ -2456,9 +2457,10 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filename',
-                        cond = function()
-                            return vim.fn.winnr('$') > 2
-                        end
+                        -- TODO: Fix it
+                        -- cond = function()
+                        --     return vim.fn.winnr('$') > 2
+                        -- end
                     }
                 },
             --     lualine_b = {
