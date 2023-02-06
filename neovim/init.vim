@@ -69,7 +69,7 @@ set fillchars=fold:\         " No dot characters in fold
 set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=lead:·,trail:•,multispace:·,tab:»\ ,nbsp:⦸,extends:»,precedes:«
+set lcs=lead:·,trail:•,multispace:·,tab:˜˜,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes

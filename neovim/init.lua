@@ -13,7 +13,6 @@
 -- TODO: location list
 -- TODO: quickfix
 -- TODO: marks
--- TODO: better lcs for tab
 -- TODO: use command sequence to change background of terminal to nvim background
 
 -- TODO: group autocmd
@@ -24,9 +23,6 @@ vim.api.nvim_create_autocmd(
         pattern = "*"
     }
 )
-
--- TODO: group variable
-vim.g.loaded_clipboard_provider = 1
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
     vim.cmd([[
@@ -34,6 +30,7 @@ vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
         runtime autoload/provider/clipboard.vim
     ]])
 end})
+
 -- TODO: lazy load on TextYankPost
 -- vim.api.nvim_create_autocmd('TextYankPost', {
 --     pattern='*',
@@ -74,6 +71,8 @@ function FixNontext()
     vim.api.nvim_set_hl(0, "NonText", { fg = bg })
 end
 
+-- TODO: group variable
+vim.g.loaded_clipboard_provider = 1
 -- TODO: group variable
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -154,12 +153,6 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
--- TODO: group actions
-local bg_mode = vim.o.background
-for key, value in pairs(kind_hl) do
-    vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
-end
-
 -- TODO: group variable
 local border_shape = {
     { '╭', 'FloatBorder' },
@@ -171,6 +164,12 @@ local border_shape = {
     { '╰', 'FloatBorder' },
     { '│', 'FloatBorder' },
 }
+
+-- TODO: group actions
+local bg_mode = vim.o.background
+for key, value in pairs(kind_hl) do
+    vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
+end
 
 -- TODO: group configuration
 vim.diagnostic.config({
@@ -1433,6 +1432,11 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: cpp 
+    -- TODO: csharp 
+    -- TODO: csv 
+    -- TODO: markdown 
+    -- TODO: powershell 
     'DaikyXendo/nvim-material-icon',
     opts = {
         override = {
@@ -1468,10 +1472,10 @@ AddPlugin {
             bufname_exclude = {},
             buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
             char = '│',
-            char_blankline = '┆',
+            char_blankline = '│', -- '┆'
             char_priority = 1,
-            context_char = '┃',
-            context_char_blankline = '┃',
+            context_char = '║', -- '┃'
+            context_char_blankline = '║', -- '┇'
             context_start_priority = 1,
             filetype_exclude = { 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
             show_current_context = true,
