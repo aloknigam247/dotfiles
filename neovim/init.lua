@@ -292,7 +292,6 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: change table characters
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModeEnable'
 }
