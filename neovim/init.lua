@@ -14,6 +14,7 @@
 -- TODO: quickfix
 -- TODO: marks
 -- TODO: use command sequence to change background of terminal to nvim background
+-- TODO: context aware popup, using autocmd and position clicked
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -653,7 +654,6 @@ Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
-Dark  { 'kanagawabones',              'zenbones'     }
 Dark  { 'kimbox',                     '_'            }
 Light { 'limestone',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'lunaperche',                 '_'            }
@@ -1465,6 +1465,7 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: does not work when indent space is 2 in file
     'lukas-reineke/indent-blankline.nvim',
     config = function()
         require("indent_blankline").setup {
