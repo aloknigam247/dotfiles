@@ -1029,6 +1029,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: lazy load
     'nvim-tree/nvim-tree.lua',
+    cmd = 'NvimTreeToggle',
     opts = {
             actions = {
                 change_dir = {
