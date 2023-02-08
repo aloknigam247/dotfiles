@@ -52,7 +52,7 @@ function evrc {
 }
 
 function v {
-   C:\Users\aloknigam\scoop\shims\neovide.exe --multigrid --geometry=110x40 $args
+   ~\scoop\shims\neovide.exe --multigrid --geometry=110x40 $args
 }
 
 function vpcl {
@@ -112,7 +112,7 @@ function treea {
 }
 
 function bat {
-    C:\Users\aloknigam\scoop\shims\bat.exe --paging=never --theme='Coldark-Dark' --style='numbers,changes' --italic-text=always $args
+    ~\scoop\shims\bat.exe --paging=never --theme='Coldark-Dark' --style='numbers,changes' --italic-text=always $args
 }
 
 function which($arg) {
@@ -161,7 +161,7 @@ function sed {
 
 # Path functions
 function desktop {
-    Set-Location 'C:\Users\aloknigam\OneDrive - Microsoft\Desktop\'
+    Set-Location '~\OneDrive - Microsoft\Desktop\'
 }
 
 # Git functions
@@ -355,6 +355,7 @@ function promptGen {
 
 $prompt_string = promptGen
 function prompt {
+    # TODO: User version and not COMPUTERNAME
     if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
         $branch = git symbolic-ref --short HEAD 2>&1
             if ($? -eq $false) {
