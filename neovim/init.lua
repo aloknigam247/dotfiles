@@ -15,6 +15,8 @@
 -- TODO: marks
 -- TODO: use command sequence to change background of terminal to nvim background
 -- TODO: context aware popup, using autocmd and position clicked
+-- TODO: motion.txt
+-- TODO: slow startup
 
 -- TODO: group autocmd
 vim.api.nvim_create_autocmd(
@@ -783,22 +785,19 @@ function ColoRand()
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: prefer single line comments in xml
 AddPlugin {
-    'b3nj5m1n/kommentary',
-    config = function()
-        require('kommentary.config').configure_language("default", {
-            prefer_single_line_comments = true,
-        })
-    end,
-    init = function()
-        vim.g.kommentary_create_default_mappings = false
-    end,
+    'numToStr/Comment.nvim',
+    opts = {
+        ignore = '^$',
+        extra = { eol = 'gce' },
+    },
     keys = {
-        {'<C-t>', '<Plug>kommentary_line_default', mode = 'n'},
-        {'<C-t>', '<Plug>kommentary_visual_default', mode = 'v'},
+        { 'gc', mode = { 'n', 'v' } },
+        { 'gb', mode = { 'n', 'v' } },
+        'gcc', 'gbc', 'gcO', 'gco', 'gce'
     }
 }
+
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -2207,6 +2206,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TOOD: should not be default
 vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
     local filepath = vim.fn.bufname('%')
     if filepath:sub(1, 1) ~= '/' and filepath:sub(2, 2) ~= ':' then
@@ -2444,7 +2444,7 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filename',
-                        -- TODO: Fix it
+                        -- TODO: Fix it, how about using multiple statusbars only ?
                         -- cond = function()
                         --     return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
                         -- end
@@ -3037,8 +3037,8 @@ AddPlugin {
         }
     },
     keys = {
-        { '"', mode = 'n'     },
-        { '"', mode = 'v'     },
+        { '"',     mode = 'n' },
+        { '"',     mode = 'v' },
         { '<C-R>', mode = 'i' }
     }
 }
