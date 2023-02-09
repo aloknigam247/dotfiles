@@ -45,6 +45,12 @@
     "initialCols": 85,
     "initialRows": 20,
     "launchMode": "default",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
@@ -69,7 +75,7 @@
                 "size": 14.0
             },
             "intenseTextStyle": "all",
-            "opacity": 25,
+            "opacity": 75,
             "padding": "8",
             "scrollbarState": "hidden",
             "useAcrylic": true,
@@ -429,7 +435,8 @@
             },
             "window": 
             {
-                "applicationTheme": "dark"
+                "applicationTheme": "dark",
+                "useMica": false
             }
         }
     ],
