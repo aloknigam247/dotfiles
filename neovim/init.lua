@@ -317,6 +317,7 @@ AddPlugin {
 -- use 'echasnovski/mini.align'
 
 AddPlugin {
+    -- TODO: learn
     'junegunn/vim-easy-align',
     cmd = 'EasyAlign'
 }
