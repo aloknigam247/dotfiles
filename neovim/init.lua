@@ -74,6 +74,21 @@ function FixNontext()
     vim.api.nvim_set_hl(0, "NonText", { fg = bg })
 end
 
+-- TODO: group function
+function FixVisual()
+    local bg
+    if (vim.o.background ==  "dark") then
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        bg = string.format("%X", bg)
+        bg = LightenDarkenColor(bg, 60)
+    else
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        bg= string.format("%X", bg)
+        bg = LightenDarkenColor(bg, -20)
+    end
+    vim.api.nvim_set_hl(0, "Visual", { bg = bg })
+end
+
 -- TODO: group variable
 vim.g.loaded_clipboard_provider = 1
 -- TODO: group variable
@@ -567,8 +582,8 @@ AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'        
 Dark  { 'NeoSolarized',               '_'            }
 Light { 'NeoSolarized',               '_'            }
 Dark  { 'OceanicNext',                '_'            }
-Dark  { 'PaperColor',                 '_',           postcmd = function() FixNontext() end }
-Light { 'PaperColor',                 '_',           postcmd = function() FixNontext() end }
+Dark  { 'PaperColor',                 '_',           postcmd = FixNontext }
+Light { 'PaperColor',                 '_',           postcmd = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
@@ -685,10 +700,10 @@ Dark  { 'moonlight',                  'starry',      precmd  = function() requir
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'light'   end, postcmd = function() FixNontext() end }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'dark'    end, postcmd = function() FixNontext() end }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'default' end, postcmd = function() FixNontext() end }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'doom'    end, postcmd = function() FixNontext() end }
+Light { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'light'   end, postcmd = FixVisual }
+Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'dark'    end, postcmd = FixVisual }
+Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'default' end, postcmd = FixVisual }
+Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'doom'    end, postcmd = FixVisual }
 Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis',                     '_'            }
 Dark  { 'noctis_azureus',             'noctis'       }
@@ -761,9 +776,9 @@ Light { 'zenwritten',                 'zenbones'     }
 Dark  { 'zephyr',                     '_'            }
 Dark  { 'zephyrium',                  '_'            }
 
-function ColoRand()
+function ColoRand(ind)
     math.randomseed(os.time())
-    local ind = math.random(1, #colos)
+    ind = ind or math.random(1, #colos)
     local selection = colos[ind]
     local scheme = selection[1]
     local bg = selection.bg
