@@ -2067,10 +2067,9 @@ AddPlugin {
 }
 
 -- https://github.com/ThePrimeagen/harpoon --> plenary
--- TODO: lazy load
 AddPlugin {
     'kshenoy/vim-signature',
-    -- lazy = true
+    cmd = 'SignatureToggle'
 }
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
