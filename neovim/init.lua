@@ -18,48 +18,9 @@
 -- TODO: motion.txt
 -- TODO: slow startup
 
--- TODO: group autocmd
-vim.api.nvim_create_autocmd(
-    "TextYankPost", {
-        desc = "highlight text on yank",
-        callback = function() vim.highlight.on_yank { higroup="Search", timeout=300 } end,
-        pattern = "*"
-    }
-)
--- TODO: group autocmd
-vim.api.nvim_create_autocmd('User', { pattern='VeryLazy', callback = function()
-    vim.cmd([[
-        unlet g:loaded_clipboard_provider
-        runtime autoload/provider/clipboard.vim
-    ]])
-end})
-
--- TODO: lazy load on TextYankPost
--- vim.api.nvim_create_autocmd('TextYankPost', {
---     pattern='*',
---     callback = function()
---         vim.cmd([[
---             unlet g:loaded_clipboard_provider
---             runtime autoload/provider/clipboard.vim
---             echo v:register
---             echo getreg(v:register)
---             call setreg(v:register, getreg(v:register))
---         ]])
---     end,
---     once = true
--- })
-
--- TODO: group functions
-function LightenDarkenColor(col, amt)
-    local num = tonumber(col, 16)
-    local r = bit.rshift(num, 16) + amt
-    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-    local g = bit.band(num, 0x0000FF) + amt
-    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-    return string.format("#%X", newColor)
-end
-
--- TODO: group function
+--
+-- Functions
+--
 function FixNontext()
     local bg
     if (vim.o.background ==  "dark") then
@@ -74,7 +35,6 @@ function FixNontext()
     vim.api.nvim_set_hl(0, "NonText", { fg = bg })
 end
 
--- TODO: group function
 function FixVisual()
     local bg
     if (vim.o.background ==  "dark") then
@@ -88,6 +48,41 @@ function FixVisual()
     end
     vim.api.nvim_set_hl(0, "Visual", { bg = bg })
 end
+
+function LightenDarkenColor(col, amt)
+    local num = tonumber(col, 16)
+    local r = bit.rshift(num, 16) + amt
+    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+    local g = bit.band(num, 0x0000FF) + amt
+    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+    return string.format("#%X", newColor)
+end
+
+--
+-- Auto Commands
+--
+vim.api.nvim_create_autocmd(
+    'TextYankPost', {
+        pattern = '*',
+        desc = 'Highlight text on yank',
+        callback = function()
+            vim.highlight.on_yank { higroup="Search", timeout=300 }
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    'User', {
+        pattern='VeryLazy',
+        desc = 'Lazy load clipboard provider',
+        callback = function()
+            vim.cmd([[
+                unlet g:loaded_clipboard_provider
+                runtime autoload/provider/clipboard.vim
+            ]])
+        end
+    }
+)
 
 -- TODO: group variable
 vim.g.loaded_clipboard_provider = 1
@@ -458,7 +453,6 @@ AddPlugin {
     event = "LspAttach"
 }
 
--- TODO: Add status line components
 AddPlugin {
     'folke/todo-comments.nvim',
     opts = {
@@ -504,16 +498,18 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/lifepillar/vim-colortemplate
--- TODO: check compact version
 local colos = {}
+
 local function Dark(opts)
     opts.bg = 'dark'
     table.insert(colos, opts)
 end
+
 local function Light(opts)
     opts.bg = 'light'
     table.insert(colos, opts)
 end
+
 AddPlugin { 'atelierbram/Base2Tone-nvim',       event = 'User base2tone'                                               }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine'                                           }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                            }
@@ -583,8 +579,8 @@ AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'        
 Dark  { 'NeoSolarized',               '_'            }
 Light { 'NeoSolarized',               '_'            }
 Dark  { 'OceanicNext',                '_'            }
-Dark  { 'PaperColor',                 '_',           postcmd = FixNontext }
-Light { 'PaperColor',                 '_',           postcmd = FixNontext }
+Dark  { 'PaperColor',                 '_',           post = FixNontext }
+Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
@@ -635,26 +631,26 @@ Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Dark  { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
-Dark  { 'cobalt2',                    '_',           postcmd = function() require('colorbuddy').colorscheme('cobalt2') end }
+Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
 Dark  { 'darkblue',                   '_'            }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
-Dark  { 'darksolar',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'darksolar',                  'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'dawnfox',                    'nightfox'     }
 Dark  { 'dayfox',                     'nightfox'     }
-Dark  { 'deepocean',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'deepocean',                  'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Light { 'delek',                      '_'            }
 Dark  { 'deus',                       '_'            }
 Dark  { 'doubletrouble',              '_'            }
-Dark  { 'dracula',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'dracula_blood',              'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'dracula',                    'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'dracula_blood',              'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'duckbones',                  'zenbones'     }
 Dark  { 'duskfox',                    'nightfox'     }
-Dark  { 'earlysummer',                'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'earlysummer',                'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'edge',                       '_'            }
 Light { 'edge',                       '_'            }
-Dark  { 'emerald',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'emerald',                    'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'enfocado',                   '_'            }
 Light { 'enfocado',                   '_'            }
 Dark  { 'everforest',                 '_'            }
@@ -673,38 +669,38 @@ Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kimbox',                     '_'            }
-Light { 'limestone',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Light { 'limestone',                  'starry',      pre  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'lunaperche',                 '_'            }
-Dark  { 'mariana',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'darker'    end    }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'deep       ocean' end }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'lighter'   end    }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'oceanic'   end    }
-Dark  { 'material',                   '_',           precmd  = function() vim.g.material_style                       = 'palenight' end    }
-Dark  { 'material',                   'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'mariana',                    'starry',      pre  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'material',                   '_',           pre  = function() vim.g.material_style                       = 'darker'    end    }
+Dark  { 'material',                   '_',           pre  = function() vim.g.material_style                       = 'deep       ocean' end }
+Dark  { 'material',                   '_',           pre  = function() vim.g.material_style                       = 'lighter'   end    }
+Dark  { 'material',                   '_',           pre  = function() vim.g.material_style                       = 'oceanic'   end    }
+Dark  { 'material',                   '_',           pre  = function() vim.g.material_style                       = 'palenight' end    }
+Dark  { 'material',                   'starry',      pre  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
 Dark  { 'mellifluous',                '_'            }
 Light { 'mellifluous',                '_'            }
 Dark  { 'mellow',                     '_'            }
-Dark  { 'middlenight_blue',           'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'middlenight_blue',           'starry',      pre  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'minimal',                    '_'            }
 Dark  { 'minimal-base16',             'minimal'      }
 Dark  { 'monokai',                    'monokai.nvim' }
-Dark  { 'monokai',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'monokai',                    'starry',      pre  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'monokai',                    'vim-monokai'  }
 Dark  { 'monokai_pro',                'monokai.nvim' }
 Dark  { 'monokai_ristretto',          'monokai.nvim' }
 Dark  { 'monokai_soda',               'monokai.nvim' }
 Dark  { 'moonlight',                  '_'            }
-Dark  { 'moonlight',                  'starry',      precmd  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'moonlight',                  'starry',      pre  = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'light'   end, postcmd = FixVisual }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'dark'    end, postcmd = FixVisual }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'default' end, postcmd = FixVisual }
-Dark  { 'neon',                       '_',           precmd  = function() vim.g.neon_style = 'doom'    end, postcmd = FixVisual }
+Light { 'neon',                       '_',           pre  = function() vim.g.neon_style = 'light'   end, post = FixVisual }
+Dark  { 'neon',                       '_',           pre  = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
+Dark  { 'neon',                       '_',           pre  = function() vim.g.neon_style = 'default' end, post = FixVisual }
+Dark  { 'neon',                       '_',           pre  = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
 Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis',                     '_'            }
 Dark  { 'noctis_azureus',             'noctis'       }
@@ -721,7 +717,7 @@ Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
-Dark  { 'oceanic',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
+Dark  { 'oceanic',                    'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'oh-lucy',                    '_'            }
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
@@ -738,21 +734,21 @@ Dark  { 'palenight',                  '_'            }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
-Dark  { 'poimandres',                 '_',           precmd  = function() require('poimandres').setup() end }
+Dark  { 'poimandres',                 '_',           pre  = function() require('poimandres').setup() end }
 Dark  { 'rose-pine',                  '_'            }
-Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant = 'main'}) end }
-Dark  { 'rose-pine',                  '_',           precmd  = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
+Dark  { 'rose-pine',                  '_',           pre  = function() require('rose-pine').setup({dark_variant = 'main'}) end }
+Dark  { 'rose-pine',                  '_',           pre  = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Light { 'seoulbones',                 'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
 Light { 'shine',                      '_'            }
 Dark  { 'slate',                      '_'            }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'andromeda' end }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'atlantis'  end }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'default'   end }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'maia'      end }
-Dark  { 'sonokai',                    '_',           precmd  = function() vim.g.sonokai_style = 'shusia'    end }
+Dark  { 'sonokai',                    '_',           pre  = function() vim.g.sonokai_style = 'andromeda' end }
+Dark  { 'sonokai',                    '_',           pre  = function() vim.g.sonokai_style = 'atlantis'  end }
+Dark  { 'sonokai',                    '_',           pre  = function() vim.g.sonokai_style = 'default'   end }
+Dark  { 'sonokai',                    '_',           pre  = function() vim.g.sonokai_style = 'maia'      end }
+Dark  { 'sonokai',                    '_',           pre  = function() vim.g.sonokai_style = 'shusia'    end }
 Dark  { 'substrata',                  '_'            }
 Dark  { 'terafox',                    'nightfox'     }
 Dark  { 'toast',                      '_'            }
@@ -765,7 +761,7 @@ Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_'            }
-Dark  { 'ukraine',                    'starry',      precmd  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
+Dark  { 'ukraine',                    'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vimbones',                   'zenbones'     }
 Dark  { 'vn-night',                   '_'            }
 Light { 'zellner',                    '_'            }
@@ -784,8 +780,8 @@ function ColoRand(ind)
     local scheme = selection[1]
     local bg = selection.bg
     local module = selection[2]
-    local precmd = selection.precmd
-    local postcmd = selection.postcmd
+    local precmd = selection.pre
+    local postcmd = selection.post
     vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
@@ -1186,6 +1182,7 @@ AddPlugin {
                             symlink      = '',
                             symlink_open = '',
                         },
+                        -- TODO: better icons
                         git = {
                             deleted   = '',
                             ignored   = '◌',
@@ -1362,8 +1359,8 @@ AddPlugin {
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
     dependencies = 'kevinhwang91/promise-async',
-    enabled = false,
-    lazy = false
+    -- enabled = false,
+    -- lazy = false
 }
 
 -- <~>
@@ -3076,4 +3073,4 @@ require("lazy").setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append("C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser")
 -- <~>
--- vim: fmr=</>,<~>
+-- vim: fmr=</>,<~> fdm=marker

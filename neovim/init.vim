@@ -66,7 +66,7 @@ set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\         " No dot characters in fold
-set foldmethod=marker        " Set fold method to marker
+" set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 set lcs=lead:·,trail:•,multispace:·,tab:˜˜,nbsp:⦸,extends:»,precedes:«
