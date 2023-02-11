@@ -398,4 +398,5 @@ Invoke-Expression $(zoxide init --hook pwd powershell | Out-String)
 
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
+$PSNativeCommandUseErrorActionPreference = $false
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"

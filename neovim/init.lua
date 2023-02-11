@@ -762,7 +762,6 @@ Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_'            }
 Dark  { 'ukraine',                    'starry',      pre  = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
-Dark  { 'vimbones',                   'zenbones'     }
 Dark  { 'vn-night',                   '_'            }
 Light { 'zellner',                    '_'            }
 Dark  { 'zenbones',                   '_'            }
@@ -2457,6 +2456,7 @@ AddPlugin {
                     {
                         'filename',
                         -- TODO: Fix it, how about using multiple statusbars only ?
+                        -- TODO: exclude filetypes
                         -- cond = function()
                         --     return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
                         -- end
