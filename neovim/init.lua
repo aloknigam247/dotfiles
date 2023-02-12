@@ -20,34 +20,6 @@
 --
 -- Functions
 --
-function FixNontext()
-    local bg
-    if (vim.o.background ==  "dark") then
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-        bg = string.format("%X", bg)
-        bg = LightenDarkenColor(bg, 60)
-    else
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-        bg = string.format("%X", bg)
-        bg = LightenDarkenColor(bg, -20)
-    end
-    vim.api.nvim_set_hl(0, "NonText", { fg = bg })
-end
-
-function FixVisual()
-    local bg
-    if (vim.o.background ==  "dark") then
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-        bg = string.format("%X", bg)
-        bg = LightenDarkenColor(bg, 60)
-    else
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-        bg = string.format("%X", bg)
-        bg = LightenDarkenColor(bg, -20)
-    end
-    vim.api.nvim_set_hl(0, "Visual", { bg = bg })
-end
-
 function LightenDarkenColor(col, amt)
     local num = tonumber(col, 16)
     local r = bit.rshift(num, 16) + amt
@@ -496,6 +468,49 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+function FixIndentBlankline()
+    for _, color in pairs({
+        'IndentBlanklineChar',
+        'IndentBlanklineContextChar',
+        'IndentBlanklineContextSpaceChar',
+        'IndentBlanklineSpaceChar',
+    }) do
+        local hl = vim.api.nvim_get_hl_by_name(color, true)
+        hl.background = nil
+        hl.nocombine = false
+        vim.api.nvim_set_hl(0, color, hl)
+    end
+end
+
+function FixNontext()
+    local bg
+    if (vim.o.background ==  "dark") then
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        bg = string.format("%X", bg)
+        bg = LightenDarkenColor(bg, 60)
+    else
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        bg = string.format("%X", bg)
+        bg = LightenDarkenColor(bg, -20)
+    end
+    vim.api.nvim_set_hl(0, "NonText", { fg = bg })
+    vim.api.nvim_set_hl(0, "IndentBlanklineSpaceChar", { fg = bg })
+end
+
+function FixVisual()
+    local bg
+    if (vim.o.background ==  "dark") then
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        bg = string.format("%X", bg)
+        bg = LightenDarkenColor(bg, 60)
+    else
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        bg = string.format("%X", bg)
+        bg = LightenDarkenColor(bg, -20)
+    end
+    vim.api.nvim_set_hl(0, "Visual", { bg = bg })
+end
+
 -- https://github.com/lifepillar/vim-colortemplate
 local colos = {}
 
@@ -654,7 +669,7 @@ Light { 'enfocado',                   '_'            }
 Dark  { 'everforest',                 '_'            }
 Light { 'everforest',                 '_'            }
 Dark  { 'falcon',                     '_'            }
-Dark  { 'fluoromachine',              '_'            }
+Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'     }
 Light { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
@@ -758,7 +773,7 @@ Light { 'tokyonight-day',             'tokyonight'   }
 Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
-Dark  { 'tundra',                     '_'            }
+Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end                                                     }
 Dark  { 'ukraine',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vn-night',                   '_'            }
 Light { 'zellner',                    '_'            }
@@ -1494,11 +1509,6 @@ AddPlugin {
             show_current_context = true,
             show_current_context_start = true,
         }
-        for _, color in pairs({'IndentBlanklineSpaceChar', 'IndentBlanklineChar'}) do
-            local hl = vim.api.nvim_get_hl_by_name(color, true)
-            hl.nocombine = false
-            vim.api.nvim_set_hl(0, color, hl)
-        end
         -- vim.cmd.IndentBlanklineRefresh()
     end,
     event = "CursorHold"
