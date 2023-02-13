@@ -297,7 +297,7 @@ AddPlugin {
     config = function()
         local npairs = require("nvim-autopairs")
         local Rule = require("nvim-autopairs.rule")
-        local cond = require'nvim-autopairs.conds'
+        local cond = require('nvim-autopairs.conds')
 
         npairs.setup({
             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
@@ -3045,18 +3045,14 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: fix it
     'tversteeg/registers.nvim',
     opts = {
-        -- show = '*+"',
-        show_empty = false,
         register_user_command = false,
-        symbols = {
-            tab = '»'
-        },
-        window = {
-            border = 'rounded'
-        }
+        show = "*+\"-/_=0123456789abcdefghijklmnopqrstuvwxyz",
+        show_empty = false,
+        symbols = { tab = '»' },
+        trim_whitespace = false,
+        window = { border = 'rounded' }
     },
     keys = {
         { '"',     mode = 'n' },
