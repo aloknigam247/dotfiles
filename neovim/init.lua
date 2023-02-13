@@ -16,6 +16,7 @@
 -- TODO: use command sequence to change background of terminal to nvim background
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: motion.txt
+-- TODO: ctrl arrow motion improvements, word separators
 
 --
 -- Functions
@@ -545,7 +546,6 @@ AddPlugin { 'rebelot/kanagawa.nvim',            event = 'User kanagawa'         
 AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'                                                  }
 AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                                }
 AddPlugin { 'savq/melange',                     event = 'User melange'                                                 }
-AddPlugin { 'ramojus/mellifluous.nvim',         event = 'User mellifluous', dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
 AddPlugin { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 }
 AddPlugin { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'                                            }
@@ -681,32 +681,30 @@ Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
-Dark  { 'kimbox',                     '_'            }
-Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
-Dark  { 'lunaperche',                 '_'            }
-Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style                       = 'darker'    end    }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style                       = 'deep       ocean' end }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style                       = 'lighter'   end    }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style                       = 'oceanic'   end    }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style                       = 'palenight' end    }
-Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
+Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'lunaperche',                 '_'                                                                                                                  }
+Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'darker'     end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'deep ocean' end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'lighter'    end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'oceanic'    end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'palenight'  end                                             }
+Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
-Dark  { 'mellifluous',                '_'            }
-Light { 'mellifluous',                '_'            }
 Dark  { 'mellow',                     '_'            }
-Dark  { 'middlenight_blue',           'starry',      pre = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'middlenight_blue',           'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'minimal',                    '_'            }
 Dark  { 'minimal-base16',             'minimal'      }
 Dark  { 'monokai',                    'monokai.nvim' }
-Dark  { 'monokai',                    'starry',      pre = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'monokai',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'monokai',                    'vim-monokai'  }
 Dark  { 'monokai_pro',                'monokai.nvim' }
 Dark  { 'monokai_ristretto',          'monokai.nvim' }
 Dark  { 'monokai_soda',               'monokai.nvim' }
 Dark  { 'moonlight',                  '_'            }
-Dark  { 'moonlight',                  'starry',      pre = function() require('starry').setup({custom_highlights = {           LineNr =   { underline = false }}}) end }
+Dark  { 'moonlight',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
@@ -717,7 +715,6 @@ Dark  { 'neon',                       '_',           pre = function() vim.g.neon
 Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis',                     '_'            }
 Dark  { 'noctis_azureus',             'noctis'       }
-Dark  { 'noctis_bordo',               'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
 Light { 'noctis_lux',                 'noctis'       }
@@ -730,7 +727,7 @@ Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
-Dark  { 'oceanic',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
+Dark  { 'oceanic',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'oh-lucy',                    '_'            }
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
@@ -777,8 +774,6 @@ Dark  { 'tundra',                     '_',           pre = function() require('n
 Dark  { 'ukraine',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vn-night',                   '_'            }
 Light { 'zellner',                    '_'            }
-Dark  { 'zenbones',                   '_'            }
-Light { 'zenbones',                   '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
 Dark  { 'zenwritten',                 'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     }
@@ -870,6 +865,7 @@ AddPlugin {
                 end
             },
             mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
+            -- TODO: how about <TAB> for complete common chars and arrow+enter to select completion
                 ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
                 ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
                 ['<C-e>'] = cmp.mapping.abort(),
@@ -1692,8 +1688,8 @@ AddPlugin {
                         enable_ms_build_load_projects_on_demand = true,
                         organize_imports_on_format = true
                     }
-                elseif server_name == "sumneko_lua" then
-                    lspconfig.sumneko_lua.setup {
+                elseif server_name == "lua_ls" then
+                    lspconfig.lua_ls.setup {
                         capabilities = capabilities,
                         handlers = handlers,
                         on_attach = on_attach,
@@ -2180,7 +2176,6 @@ AddPlugin {
     }
 }
 
-AddPlugin {
     -- |-------------+----------------------------------------------------------+---------|
     -- | Function    | Action                                                   | Def Key |
     -- |-------------+----------------------------------------------------------+---------|
@@ -2213,6 +2208,7 @@ AddPlugin {
     -- | filterr     | create new list for non-signed items                     | zN      |
     -- | fzffilter   | enter fzf mode                                           | zf      |
     -- |-------------+----------------------------------------------------------+---------|
+AddPlugin {
     'kevinhwang91/nvim-bqf',
     config = function()
         require('bqf').setup {
@@ -2648,6 +2644,8 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: explore indent
+    -- TODO: explore incremental_selection
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
