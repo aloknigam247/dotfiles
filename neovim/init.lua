@@ -292,6 +292,7 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: irregularities with ""
 AddPlugin {
+    -- TODO: rule for function() end in lua
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -2715,10 +2716,12 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: fix this
 AddPlugin {
+    -- TODO: configure it
   'folke/noice.nvim',
+  cond = function() return not vim.g.neovide end,
   config = function()
+      vim.o.lazyredraw = false
       require("noice").setup({
           cmdline = {
               enabled = true, -- enables the Noice cmdline UI
@@ -2902,8 +2905,8 @@ AddPlugin {
           format = {}, --- @see section on formatting
       })
   end,
-  enabled = false,
-  dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" }
+  dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
+  lazy = false
 }
 
 AddPlugin {
