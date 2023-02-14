@@ -1,6 +1,7 @@
 files=(
-       [init.vim]=~/.config/nvim/init.vim
+       [ftplugin]=~/.config/nvim/ftplugin
        [init.lua]=~/.config/nvim/lua/init.lua
+       [init.vim]=~/.config/nvim/init.vim
       )
 
 cmds=(

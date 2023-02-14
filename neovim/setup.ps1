@@ -10,7 +10,8 @@ $winget_pkgs = @(
 )
 
 $files = @{
+    "ftplugin" = "$env:LOCALAPPDATA\nvim\ftplugin";
+    "init.lua" = "$env:LOCALAPPDATA\nvim\lua\init.lua";
     "init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";
     "plugins.lua" = "$env:LOCALAPPDATA\nvim\lua\plugins.lua";
-    "init.lua" = "$env:LOCALAPPDATA\nvim\lua\init.lua";
 }
