@@ -19,6 +19,19 @@
 -- TODO: ctrl arrow motion improvements, word separators
 
 --
+-- Variables
+--
+local icons = {
+    diagnostic = {
+        error = '',
+        hint = '',
+        info = '',
+        other = '﫠',
+        warn = '',
+    }
+}
+
+--
 -- Functions
 --
 function LightenDarkenColor(col, amt)
@@ -2121,8 +2134,6 @@ AddPlugin {
 --  }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: :g output in quickfix ?
--- TODO: config
 AddPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle',
@@ -2135,7 +2146,7 @@ AddPlugin {
         fold_open = "", -- icon used for open folds
         fold_closed = "", -- icon used for closed folds
         group = true, -- group results by file
-        padding = true, -- add an extra new line on top of the list
+        padding = false, -- add an extra new line on top of the list
         action_keys = { -- key mappings for actions in the trouble list
             -- map to {} to remove a mapping, for example:
             -- close = {},
@@ -2162,15 +2173,14 @@ AddPlugin {
         auto_close = false, -- automatically close the list when you have no diagnostics
         auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
         auto_fold = false, -- automatically fold a file trouble list at creation
-        auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
+        auto_jump = { "lsp_definitions" }, -- for the given modes, automatically jump if there is only a single result
         signs = {
             -- icons / text used for a diagnostic
-            -- TODO: global icons
-            error = "",
-            warning = "",
-            hint = "",
-            information = "",
-            other = "﫠"
+            error = icons.diagnostic.error,
+            warning = icons.diagnostic.warn,
+            hint = icons.diagnostic.hint,
+            information = icons.diagnostic.info,
+            other = icons.diagnostic.other
         },
         use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
     }
@@ -2330,9 +2340,9 @@ AddPlugin {
     config = function()
         Icon_index = 0
         local function LspIcon()
-            local icons = {"䷀", "䷪",  "䷍", "䷈", "䷉", "䷌", "䷫"}
-            Icon_index = (Icon_index) % #icons + 1
-            return icons[Icon_index]
+            local anim = {"䷀", "䷪",  "䷍", "䷈", "䷉", "䷌", "䷫"}
+            Icon_index = (Icon_index) % #anim + 1
+            return anim[Icon_index]
         end
         -- local navic = require("nvim-navic")
         require('lualine').setup {
@@ -2717,7 +2727,26 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: configure it
+    -- TODO: cmdline
+    -- TODO: messages
+    -- TODO: popupmenu
+    -- TODO: redirect
+    -- TODO: commands
+    -- TODO: notify
+    -- TODO: lsp
+    -- TODO: markdown
+    -- TODO: smart_move
+    -- TODO: showmode in lualine
+    -- TODO: @recording messages from messages
+    -- TODO: cmdline and popup together
+    -- TODO: classic commandline
+    -- TODO: hide written messages
+    -- TODO: clean cmdline_popup
+    -- TODO: classic bottom cmdline for search
+    -- TODO: hide search in virtual text
+    -- TODO: lsp progress
+    -- TODO: notify-send
+    -- TODO: health checks
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
     config = function()
