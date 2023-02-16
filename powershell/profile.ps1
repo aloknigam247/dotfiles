@@ -400,3 +400,5 @@ Invoke-Expression $(zoxide init --hook pwd powershell | Out-String)
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $PSNativeCommandUseErrorActionPreference = $false
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
+
+$env:Path = $env:Path + ";E:\Auto-TDS"
