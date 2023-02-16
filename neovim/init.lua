@@ -1408,7 +1408,6 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
-    -- TODO: how to view changes at current line
     -- TODO: global icons for git signs
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -1458,6 +1457,13 @@ AddPlugin {
 
 AddPlugin {
     'rhysd/git-messenger.vim',
+    config = function()
+        vim.g.git_messenger_floating_win_opts = { ['border'] = 'rounded' }
+        -- vim.g.git_messenger_include_diff = 'current'
+        vim.g.git_messenger_max_popup_height = 20
+        vim.g.git_messenger_max_popup_width = 80
+        vim.g.git_messenger_popup_content_margins = false
+    end,
     cmd = "GitMessenger"
 }
 
