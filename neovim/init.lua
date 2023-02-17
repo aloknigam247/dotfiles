@@ -1143,11 +1143,11 @@ AddPlugin {
             diagnostics = {
                 debounce_delay = 50,
                 enable = true,
-                icons = { -- TODO: use global icons
-                    error   = '',
-                    hint    = '',
-                    info    = '',
-                    warning = '',
+                icons = {
+                    error   = icons.diagnostic.error,
+                    hint    = icons.diagnostic.hint,
+                    info    = icons.diagnostic.info,
+                    warning = icons.diagnostic.warn,
                 },
                 severity = {
                     min = vim.diagnostic.severity.HINT,
@@ -1244,18 +1244,17 @@ AddPlugin {
                             symlink      = '',
                             symlink_open = '',
                         },
-                        -- TODO: better icons
                         git = {
                             deleted   = '',
-                            ignored   = '◌',
+                            ignored   = '',
                             renamed   = '➜',
-                            staged    = '✓',
+                            staged    = '',
                             unmerged  = '',
-                            unstaged  = '✗',
-                            untracked = '★',
+                            unstaged  = '',
+                            untracked = '★', -- TODO: better icons
                         },
                         -- TODO: icons
-                        symlink = '',
+                        symlink = '',
                     },
                     padding = ' ',
                     show = {
@@ -1512,41 +1511,38 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: cpp 
-    -- TODO: csharp 
-    -- TODO: csv 
-    -- TODO: markdown 
-    -- TODO: powershell 
     'DaikyXendo/nvim-material-icon',
     opts = {
         override = {
-            csproj = {
-                color = '#854CC7',
-                cterm_color = '98',
-                icon = '',
-                name = "Csproj"
-            },
-            norg = {
-                icon = '',
-                name = "Neorg"
-            }
+            ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
+            cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
+            cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
+            cpp     = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cpp'       },
+            cs      = { color = '#596706', cterm_color = '58',  icon = '', name = 'Cs'        },
+            csproj  = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
+            csv     = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
+            md      = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
+            mdx     = { color = '#519ABA', cterm_color = '67',  icon = '', name = 'Mdx'       },
+            norg    = { color = '#40916C', cterm_color = '48',  icon = '', name = 'Neorg'     },
+            ps1     = { color = '#4D5A5E', cterm_color = '240', icon = '', name = 'PromptPs1' },
         }
     }
 }
 
 AddPlugin {
-'kyazdani42/nvim-web-devicons',
-config = function()
-    require'nvim-web-devicons'.setup({
-        override = require('nvim-material-icon').get_icons()
-    })
-    require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
-end
+    'kyazdani42/nvim-web-devicons',
+    config = function()
+        require('nvim-web-devicons').setup({
+            override = require('nvim-material-icon').get_icons()
+        })
+        require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
+    end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: does not work when indent space is 2 in file
+    -- TODO: does not work when indent space is 2 in file, shiftwidth is the option
+    -- TODO: delay in autocmd to speed up scrolling
     'lukas-reineke/indent-blankline.nvim',
     config = function()
         require("indent_blankline").setup {
@@ -2069,7 +2065,6 @@ AddPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/DanRoscigno/nvim-markdown-grammarly
 AddPlugin {
     'davidgranstrom/nvim-markdown-preview',
     cmd = 'MarkdownPreview'
@@ -2278,7 +2273,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: should not be default
+-- Command would be better for on demand
 vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
     local filepath = vim.fn.bufname('%')
     if filepath:sub(1, 1) ~= '/' and filepath:sub(2, 2) ~= ':' then
@@ -2290,7 +2285,9 @@ vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
     local root = vim.fs.find({".git"}, {path = filepath, upward = true, limit = 1})
     root = vim.fs.dirname(root[1])
     if root then
+        local cwd = vim.fn.getcwd()
         vim.cmd.lc(root)
+        vim.cmd.lc(cwd)
     end
 end
 })
