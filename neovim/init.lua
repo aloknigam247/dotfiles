@@ -21,6 +21,7 @@
 --
 -- Variables
 --
+-- TODO: summarise variables
 local icons = {
     diagnostic = {
         error = '',
@@ -30,48 +31,7 @@ local icons = {
         warn = '',
     }
 }
-
---
--- Functions
---
-function LightenDarkenColor(col, amt)
-    local num = tonumber(col, 16)
-    local r = bit.rshift(num, 16) + amt
-    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-    local g = bit.band(num, 0x0000FF) + amt
-    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-    return string.format("#%X", newColor)
-end
-
---
--- Auto Commands
---
-vim.api.nvim_create_autocmd(
-    'TextYankPost', {
-        pattern = '*',
-        desc = 'Highlight text on yank',
-        callback = function()
-            vim.highlight.on_yank { higroup="Search", timeout=300 }
-        end
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    'User', {
-        pattern='VeryLazy',
-        desc = 'Lazy load clipboard provider',
-        callback = function()
-            vim.cmd([[
-                unlet g:loaded_clipboard_provider
-                runtime autoload/provider/clipboard.vim
-            ]])
-        end
-    }
-)
-
--- TODO: group variable
 vim.g.loaded_clipboard_provider = 1
--- TODO: group variable
 vim.g.cmp_kinds = {
     Array         = ' ',
     Boolean       = ' ',
@@ -111,7 +71,6 @@ vim.g.cmp_kinds = {
     Variable      = ' '
 }
 
--- TODO: group variable
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -151,7 +110,6 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
--- TODO: group variable
 local border_shape = {
     { '╭', 'FloatBorder' },
     { '─', 'FloatBorder' },
@@ -162,6 +120,44 @@ local border_shape = {
     { '╰', 'FloatBorder' },
     { '│', 'FloatBorder' },
 }
+
+--
+-- Functions
+--
+function LightenDarkenColor(col, amt)
+    local num = tonumber(col, 16)
+    local r = bit.rshift(num, 16) + amt
+    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+    local g = bit.band(num, 0x0000FF) + amt
+    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+    return string.format("#%X", newColor)
+end
+
+--
+-- Auto Commands
+--
+vim.api.nvim_create_autocmd(
+    'TextYankPost', {
+        pattern = '*',
+        desc = 'Highlight text on yank',
+        callback = function()
+            vim.highlight.on_yank { higroup="Search", timeout=300 }
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    'User', {
+        pattern='VeryLazy',
+        desc = 'Lazy load clipboard provider',
+        callback = function()
+            vim.cmd([[
+                unlet g:loaded_clipboard_provider
+                runtime autoload/provider/clipboard.vim
+            ]])
+        end
+    }
+)
 
 -- TODO: group actions
 local bg_mode = vim.o.background
@@ -305,7 +301,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: irregularities with ""
 AddPlugin {
-    -- TODO: rule for function() end in lua
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -317,7 +312,9 @@ AddPlugin {
             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
         })
         npairs.add_rules {
-            -- #include <> pair for c and cpp
+            -- function() | end pair for lua
+            Rule("function() ", " end", { "lua" }),
+            -- #include <|> pair for c and cpp
             Rule("#include <", ">", { "c", "cpp" }),
             -- Disable " rule for vim
             Rule('"', '"')
