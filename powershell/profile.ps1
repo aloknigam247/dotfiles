@@ -396,6 +396,9 @@ Set-PSReadLineOption -Colors @{
 # Zoxide
 Invoke-Expression $(zoxide init --hook pwd powershell | Out-String)
 
+# Source rg command line completer
+. ~\scoop\apps\ripgrep\13.0.0\complete\_rg.ps1
+
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $PSNativeCommandUseErrorActionPreference = $false
