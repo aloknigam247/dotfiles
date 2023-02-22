@@ -2287,16 +2287,11 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin { 'tamton-aquib/duck.nvim' }
-AddPlugin { 'folke/drop.nvim' }
 
 Sleeper = {
     timer = vim.loop.new_timer(),
     last = 1,
     sleeps = {
-        { start = function() require('drop').setup({theme = 'leaves'}); require('drop').show(); end, stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = 'snow'}); require('drop').show(); end,   stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = 'stars'}); require('drop').show(); end,  stop = function() require('drop').hide() end },
-        { start = function() require('drop').setup({theme = 'xmas'}); require('drop').show(); end,   stop = function() require('drop').hide() end },
         { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
         { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
         { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
