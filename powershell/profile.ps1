@@ -393,9 +393,6 @@ Set-PSReadLineOption -Colors @{
     "String" = (Format-Text -headOnly -fg "#E4FF1A");
 }
 
-# Zoxide
-Invoke-Expression $(zoxide init --hook pwd powershell | Out-String)
-
 # Source rg command line completer
 . ~\scoop\apps\ripgrep\13.0.0\complete\_rg.ps1
 

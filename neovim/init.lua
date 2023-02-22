@@ -686,7 +686,7 @@ Light { 'bluloco-light',               '_'           }
 Dark  { 'calvera',                    '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
 Dark  { 'catppuccin-frappe',          'catppuccin'   }
-Dark  { 'catppuccin-latte',           'catppuccin'   }
+Light { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
