@@ -650,7 +650,6 @@ Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_desert_light',     'base2tone'    }
 Dark  { 'base2tone_drawbridge_dark',  'base2tone'    }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
-Light { 'base2tone_earth_light',      'base2tone'    }
 Dark  { 'base2tone_evening_dark',     'base2tone'    }
 Light { 'base2tone_evening_light',    'base2tone'    }
 Dark  { 'base2tone_field_dark',       'base2tone'    }
@@ -674,7 +673,6 @@ Light { 'base2tone_morning_light',    'base2tone'    }
 Light { 'base2tone_motel_light',      'base2tone'    }
 Light { 'base2tone_pool_light',       'base2tone'    }
 Dark  { 'base2tone_porch_dark',       'base2tone'    }
-Light { 'base2tone_porch_light',      'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
