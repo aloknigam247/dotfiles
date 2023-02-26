@@ -727,11 +727,11 @@ Dark  { 'kimbox',                     '_',           post = FixVisual           
 Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'lunaperche',                 '_'                                                                                                                  }
 Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'darker'     end                                             }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'deep ocean' end                                             }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'lighter'    end                                             }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'oceanic'    end                                             }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style  = 'palenight'  end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                              }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end                                              } -- TODO: fix number line
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
