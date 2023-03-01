@@ -1207,6 +1207,7 @@ AddPlugin {
                 group_empty = false,
                 highlight_git = true,
                 highlight_opened_files = 'all',
+                highlight_modified = 'all',
                 indent_markers = {
                     enable = true,
                     icons = {
@@ -1545,7 +1546,7 @@ AddPlugin {
             context_char = '║', -- '┃'
             context_char_blankline = '║', -- '┇'
             context_start_priority = 1,
-            filetype_exclude = { 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
+            filetype_exclude = { 'NvimTree', 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
             show_current_context = true,
             show_current_context_start = true,
         }
