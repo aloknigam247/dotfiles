@@ -1412,7 +1412,7 @@ AddPlugin {
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
     dependencies = 'kevinhwang91/promise-async',
-    -- enabled = false,
+    enabled = false,
     -- lazy = false
 }
 
