@@ -712,7 +712,6 @@ Light { 'everforest',                 '_'            }
 Dark  { 'falcon',                     '_'            }
 Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'     }
-Light { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
 Light { 'github_light',               'github'       }
 Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
