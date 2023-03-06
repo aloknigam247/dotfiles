@@ -119,6 +119,7 @@ function which($arg) {
     $cm = Get-Command $arg
     $type = $cm.CommandType
 
+    Write-Host "[$type]"
     if ($type -eq "Function") {
         $cm.Definition
     } elseif ($type -eq "Application") {
