@@ -647,7 +647,6 @@ Dark  { 'ayu-dark',                   'ayu'          }
 Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
-Light { 'base2tone_desert_light',     'base2tone'    }
 Dark  { 'base2tone_drawbridge_dark',  'base2tone'    }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Dark  { 'base2tone_evening_dark',     'base2tone'    }
