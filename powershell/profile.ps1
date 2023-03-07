@@ -371,6 +371,7 @@ function prompt {
     $git_branch = ""
     $dir_icon = ""
     if ($null -ne $branch) {
+        $branch = $branch.Replace("users/aloknigam/", " ")
         $dir_icon = ""
         $git_branch = "  $branch "
     }
