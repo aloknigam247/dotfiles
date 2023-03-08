@@ -844,6 +844,7 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: powershell multiline comment <# #>
     'numToStr/Comment.nvim',
     opts = {
         ignore = '^$',
