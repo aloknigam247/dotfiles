@@ -407,6 +407,7 @@ AddPlugin {
             bg = bg,
             underline = true
         })
+        -- TODO: Fix colors
         vim.cmd[[
            hi IlluminatedWordRead  guibg = #A5BE00 guifg = #000000
            hi IlluminatedWordWrite guibg = #1F7A8C gui   = italic
@@ -523,36 +524,36 @@ end
 function SeniorMarsTheme()
     require('gruvbox').setup({
         overrides = {
-            Normal = {bg = '#0E1018'},
-            VertSplit = {bg = '#0E1018'},
-            SignColumn = {bg = '#ff9900'},
-            Define = {link = 'GruvboxPurple'},
-            Macro = {link = 'GruvboxPurple'},
-            ['@constant.builtin'] = { link = 'GruvboxPurple'},
-            ['@storageclass.lifetime'] = { link = 'GruvboxAqua'},
-            ['@text.note'] = { link = 'TODO' },
-            CocCodeLens = {fg = '#878787'},
-            ContextVt = {fg = '#878787'},
-            Comment = {fg = '#fe8019', italic = true},
-            Folded = {italic = true, fg = '#fe8019', bg = '#3c3836'},
-            FoldColumn = {fg = '#fe8019', bg = '#0E1018'},
-            DiffAdd = {bold = true, reverse = false, fg = '', bg = '#2a4333'},
-            DiffChange = {bold = true, reverse = false, fg = '', bg = '#333841'},
-            DiffDelete = { bold = true, reverse = false, fg = '#442d30', bg = '#442d30'},
-            DiffText = {bold = true, reverse = false, fg = '', bg = '#213352'},
-            StatusLine = {bg = '#ffffff', fg = '#0E1018'},
-            StatusLineNC = {bg = '#3c3836', fg = '#0E1018'},
-            CursorLineNr = {fg = '#fabd2f', bg = '#0E1018'},
-            CocWarningFloat = {fg = '#dfaf87'},
-            CocInlayHint = {fg = '#87afaf'},
-            DiagnosticVirtualTextWarn = {fg = '#dfaf87'},
-            GruvboxOrangeSign = {fg = '#dfaf87', bg = '#0E1018'},
-            GruvboxAquaSign = {fg = '#8EC07C', bg = '#0E1018'},
-            GruvboxGreenSign = {fg = '#b8bb26', bg = '#0E1018'},
-            GruvboxRedSign = {fg = '#fb4934', bg = '#0E1018'},
-            GruvboxBlueSign = {fg = '#83a598', bg = '#0E1018'},
-            WilderMenu = {fg = '#ebdbb2', bg = '#0E1018'},
-            WilderAccent = {fg = '#f4468f', bg = '#0E1018'}
+            CocCodeLens                = { fg = '#878787' },
+            CocInlayHint               = { fg = '#87afaf' },
+            CocWarningFloat            = { fg = '#dfaf87' },
+            Comment                    = { fg = '#fe8019', italic = true },
+            ContextVt                  = { fg = '#878787' },
+            CursorLineNr               = { fg = '#fabd2f', bg = '#0E1018' },
+            Define                     = { link = 'GruvboxPurple' },
+            DiagnosticVirtualTextWarn  = { fg = '#dfaf87' },
+            DiffAdd                    = { bold = true, reverse = false, fg = '', bg = '#2a4333' },
+            DiffChange                 = { bold = true, reverse = false, fg = '', bg = '#333841' },
+            DiffDelete                 = { bold = true, reverse = false, fg = '#442d30', bg = '#442d30' },
+            DiffText                   = { bold = true, reverse = false, fg = '', bg = '#213352' },
+            FoldColumn                 = { fg = '#fe8019', bg = '#0E1018' },
+            Folded                     = { italic = true, fg = '#fe8019', bg = '#3c3836' },
+            GruvboxAquaSign            = { fg = '#8EC07C', bg = '#0E1018' },
+            GruvboxBlueSign            = { fg = '#83a598', bg = '#0E1018' },
+            GruvboxGreenSign           = { fg = '#b8bb26', bg = '#0E1018' },
+            GruvboxOrangeSign          = { fg = '#dfaf87', bg = '#0E1018' },
+            GruvboxRedSign             = { fg = '#fb4934', bg = '#0E1018' },
+            Macro                      = { link = 'GruvboxPurple' },
+            Normal                     = { bg = '#0E1018' },
+            SignColumn                 = { bg = '' },
+            StatusLine                 = { bg = '#ffffff', fg = '#0E1018' },
+            StatusLineNC               = { bg = '#3c3836', fg = '#0E1018' },
+            VertSplit                  = { bg = '#0E1018' },
+            WilderAccent               = { fg = '#f4468f', bg = '#0E1018' },
+            WilderMenu                 = { fg = '#ebdbb2', bg = '#0E1018' },
+            ['@constant.builtin']      = { link = 'GruvboxPurple' },
+            ['@storageclass.lifetime'] = { link = 'GruvboxAqua' },
+            ['@text.note']             = { link = 'TODO' },
         }
     })
 end
@@ -653,7 +654,6 @@ Dark  { 'base2tone_evening_dark',     'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
 Dark  { 'base2tone_forest_dark',      'base2tone'    }
 Light { 'base2tone_forest_light',     'base2tone'    }
-Dark  { 'base2tone_garden_dark',      'base2tone'    }
 Light { 'base2tone_garden_light',     'base2tone'    }
 Dark  { 'base2tone_heath_dark',       'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
