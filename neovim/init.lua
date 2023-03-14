@@ -650,7 +650,6 @@ Dark  { 'barstrata',                  '_'            }
 Dark  { 'base2tone_drawbridge_dark',  'base2tone'    }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Dark  { 'base2tone_evening_dark',     'base2tone'    }
-Dark  { 'base2tone_field_dark',       'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
 Dark  { 'base2tone_forest_dark',      'base2tone'    }
 Light { 'base2tone_forest_light',     'base2tone'    }
