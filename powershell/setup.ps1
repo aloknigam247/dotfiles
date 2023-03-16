@@ -1,6 +1,7 @@
 $scoop_pkgs = @(
     "PSFzf"
     "fzf"
+    "posh-git"
 )
 
 $winget_pkgs = @(
