@@ -267,10 +267,6 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocom
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 
 
-# Posh-git
-#Import-Module C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1
-Import-Module posh-git
-
 # winget tab completion
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -357,17 +353,26 @@ function promptGen {
 $prompt_string = promptGen
 function prompt {
     # TODO: User version and not COMPUTERNAME
-    if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
-        $branch = git symbolic-ref --short HEAD 2>&1
-            if ($? -eq $false) {
-                $branch = $null
-            }
-    } else {
-        $branch = git branch --show-current 2>&1
-            if ($? -eq $false) {
-                $branch = $null
-            }
+    # if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
+    #     $branch = git symbolic-ref --short HEAD 2>&1
+    #         if ($? -eq $false) {
+    #             $branch = $null
+    #         }
+    # } else {
+    #     $branch = git branch --show-current 2>&1
+    #         if ($? -eq $false) {
+    #             $branch = $null
+    #         }
+    # }
+
+    $branch = git rev-parse --abbrev-ref HEAD
+    if ($branch -eq "HEAD" ) {
+        $branch = git describe --tags --abbrev=0 2>&1
+        if($branch -eq "") {
+            $branch = git rev-parse --short HEAD
+        }
     }
+
     $git_branch = ""
     $dir_icon = ""
     if ($null -ne $branch) {
