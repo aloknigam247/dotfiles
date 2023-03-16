@@ -367,10 +367,7 @@ function prompt {
 
     $branch = git rev-parse --abbrev-ref HEAD
     if ($branch -eq "HEAD" ) {
-        $branch = git describe --tags --abbrev=0 2>&1
-        if($branch -eq "") {
-            $branch = git rev-parse --short HEAD
-        }
+        $branch = git describe --tags --always
     }
 
     $git_branch = ""
