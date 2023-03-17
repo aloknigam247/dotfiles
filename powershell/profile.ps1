@@ -358,7 +358,7 @@ $prompt_string = promptGen
 function prompt {
     $git_branch = ""
     $branch = git rev-parse --abbrev-ref HEAD
-    if ($branch -eq "HEAD" ) {
+    if ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
         $branch = git describe --tags --always
         $git_branch = "  $branch "
     } elseif ($branch) {
@@ -374,6 +374,9 @@ function prompt {
     if ($env:SSH_CLIENT -ne $null) {
         $dir_icon = ""
     }
+
+    $branch
+    $git_branch
 
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
 }
