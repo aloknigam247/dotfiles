@@ -360,10 +360,10 @@ function prompt {
     $branch = git rev-parse --abbrev-ref HEAD
     if ($branch -eq "HEAD" ) {
         $branch = git describe --tags --always
-        $git_branch = "  $branch "
-    } else {
+        $git_branch = "  $branch "
+    } elseif ($branch) {
         $branch = $branch.Replace("heads/", "")
-        $branch = $branch.Replace("users/aloknigam/", "~")
+        $branch = $branch.Replace("users/aloknigam", "~")
         $git_branch = "  $branch "
     }
 
