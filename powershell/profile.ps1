@@ -166,6 +166,10 @@ function desktop {
 }
 
 # Git functions
+function gl {
+    git log --color=always --pretty="%C(#B4AD2D) %C(#DBD56E)%h %Creset- %C(#88AB75) %s %C(#216E82)󰔟 %ar on %ah %C(#7D7C84)<%C(#ACABB0)%an %C(#7D7C84) %ae>%C(#DE8F6E)%d" $args
+}
+
 function gs {
     git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args
 }

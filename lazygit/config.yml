@@ -59,10 +59,8 @@ git:
   skipHookPrefix: WIP
   autoFetch: true
   autoRefresh: false
-  branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative
-    --pretty=medium {{branchName}} --
-  allBranchesLogCmd: git log --graph --all --color=always --abbrev-commit --decorate
-    --date=relative  --pretty=medium
+  branchLogCmd: git log --color=always --pretty="%C(#B4AD2D) %C(#DBD56E)%h %Creset- %C(#88AB75) %s %C(#216E82)󰔟 %ar on %ah %C(#7D7C84)<%C(#ACABB0)%an %C(#7D7C84) %ae>%C(#DE8F6E)%d" {{branchName}} --
+  allBranchesLogCmd: git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
   overrideGpg: false
   disableForcePushing: false
   commitPrefixes: {}
