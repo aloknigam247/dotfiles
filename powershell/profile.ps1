@@ -356,20 +356,7 @@ function promptGen {
 
 $prompt_string = promptGen
 function prompt {
-    # TODO: User version and not COMPUTERNAME
-    # if ($env:COMPUTERNAME -eq "ALOKNIGAM-IDC") {
-    #     $branch = git symbolic-ref --short HEAD 2>&1
-    #         if ($? -eq $false) {
-    #             $branch = $null
-    #         }
-    # } else {
-    #     $branch = git branch --show-current 2>&1
-    #         if ($? -eq $false) {
-    #             $branch = $null
-    #         }
-    # }
-
-    $git_branch = $null
+    $git_branch = ""
     $branch = git rev-parse --abbrev-ref HEAD
     if ($branch -eq "HEAD" ) {
         $branch = git describe --tags --always
