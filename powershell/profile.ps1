@@ -372,11 +372,13 @@ function prompt {
     $branch = git rev-parse --abbrev-ref HEAD
     if ($branch -eq "HEAD" ) {
         $branch = git describe --tags --always
+        $branch = "[$branch]"
     }
 
     $git_branch = ""
     $dir_icon = ""
     if ($null -ne $branch) {
+        $branch = $branch.Replace("heads/", "")
         $branch = $branch.Replace("users/aloknigam/", "~")
         $dir_icon = ""
         $git_branch = "  $branch "
