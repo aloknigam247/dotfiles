@@ -166,7 +166,14 @@ function desktop {
 }
 
 # Git functions
-function glog {
+Remove-Alias -Force gc
+function gc {
+    git checkout $args
+    git stash list
+}
+
+Remove-Alias -Force gl
+function gl {
     git log --color=always --pretty="%C(#B4AD2D) %C(#DBD56E)%h %Creset- %C(#88AB75) %s %C(#216E82)󰔟 %ar on %ah %C(#7D7C84)<%C(#ACABB0)%an %C(#7D7C84) %ae>%C(#DE8F6E)%d" $args
 }
 
