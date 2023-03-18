@@ -329,37 +329,94 @@ Set-PSReadLineKeyHandler -Key Alt+p -ScriptBlock { LoadFZF '%p' }
 
 # Prompt Styling
 # ``````````````
+$prompt_script = @{}
+
 function promptGen {
     $blocks = @(
         @{
-            'text' = '$dir_icon  '
-            'fg' = '#8AC926'
+            'params' = @{
+                'text' = '$script:dir_icon  '
+                'fg' = '#8AC926'
+            }
+            'execute' = @{
+                'sequence' = 2
+                'script' = {
+                    $script:dir_icon = ""
+                    if ($null -ne $script:git_branch) {
+                        $script:dir_icon = ""
+                    }
+                    if ($env:SSH_CLIENT -ne $null) {
+                        $script:dir_icon = ""
+                    }
+                }
+            }
         }
         @{
-            'text' = '$(Get-Location)'
-            'fg' = '#A3BCF9'
-            'styles' = "italic"
+            'params' = @{
+                'text' = '$(Get-Location)'
+                'fg' = '#A3BCF9'
+                'styles' = "italic"
+            }
         },
         @{
-            'text' = " ⟩⟩"
-            'fg' = '#8AC926'
-            'styles' = 'bold'
-        }
-        @{
-            'text' = '$git_branch'
-            'fg' = '#F4B860'
-            'styles' = "bold"
+            'params' = @{
+                'text' = ' ⟩⟩'
+                'fg' = '#8AC926'
+                'styles' = 'bold'
+            }
         },
         @{
-            'text' = "⟩⟩ "
-            'fg' = '#8AC926'
-            'styles' = 'bold'
+            'params' = @{
+                'text' = '$script:git_branch'
+                'fg' = '#F4B860'
+                'styles' = "bold"
+            }
+            'execute' = @{
+                'sequence' = 1
+                'script' = {
+                    $git_branch = ""
+                    $branch = git rev-parse --abbrev-ref HEAD
+                    if ($null -eq $branch) {
+                        $git_branch = ""
+                    } elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
+                        $branch = git describe --tags --always
+                        $git_branch = "  $branch "
+                    } elseif ($branch) {
+                        $branch = $branch.Replace("heads/", "")
+                        $branch = $branch.Replace("users/aloknigam", "~")
+                        $git_branch = "  $branch "
+                    }
+                    $script:git_branch = $git_branch
+                }
+            }
+        },
+        @{
+            'params' = @{
+                'text' = '$script:git_sep '
+                'fg' = '#8AC926'
+                'styles' = 'bold'
+            }
+            'execute' = @{
+                'sequence' = 3
+                'script' = {
+                    if ($script:git_branch) {
+                        $script:git_sep = "⟩⟩"
+                    } else {
+                        $script:git_sep = ""
+                    }
+                }
+            }
         }
     )
 
     $prompt_string = ""
     foreach ($block in $blocks) {
-        $prompt_string += Format-Text @block
+        $params = $block.params
+        $prompt_string += Format-Text @params
+        if ($block.ContainsKey('execute')) {
+            $execute = $block.execute
+            $prompt_script[$execute['sequence']] = $execute['script']
+        }
     }
 
     return $prompt_string + "`e[0m"
@@ -367,25 +424,14 @@ function promptGen {
 
 $prompt_string = promptGen
 function prompt {
-    $git_branch = ""
-    $branch = git rev-parse --abbrev-ref HEAD
-    if ($null -eq $branch) {
-        $git_branch = ""
-    } elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
-        $branch = git describe --tags --always
-        $git_branch = "  $branch "
-    } elseif ($branch) {
-        $branch = $branch.Replace("heads/", "")
-        $branch = $branch.Replace("users/aloknigam", "~")
-        $git_branch = "  $branch "
-    }
-
-    $dir_icon = ""
-    if ($null -ne $git_branch) {
-        $dir_icon = ""
-    }
-    if ($env:SSH_CLIENT -ne $null) {
-        $dir_icon = ""
+    $count = $prompt_script.Count
+    $i = 0
+    while($i -le $count) {
+        $script = $prompt_script[$i]
+        if ($script) {
+            Invoke-Command $script
+        }
+        $i = $i + 1
     }
 
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
