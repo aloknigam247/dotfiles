@@ -17,7 +17,7 @@ Start-Job {
         $dt = Get-Date
         git add .
         git commit -m "Updated at $dt"
-        rm .git\index.lock # fix lock error
+        Remove-Item .git\index.lock # fix lock error
         git push
 
         # Send ballon notification
@@ -301,7 +301,6 @@ function LoadFZF($arg) {
     # TODO: Examples https://github.com/junegunn/fzf/wiki/Examples
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
     $key = $arg
-    echo "key: $key"
     Import-Module PSFzf
 
     Set-PsFzfOption `
@@ -345,7 +344,7 @@ function promptGen {
                     if ($null -ne $script:git_branch) {
                         $script:dir_icon = ""
                     }
-                    if ($env:SSH_CLIENT -ne $null) {
+                    if ($null -ne $env:SSH_CLIENT) {
                         $script:dir_icon = ""
                     }
                 }

@@ -937,7 +937,7 @@ AddPlugin {
         })
     end,
     dependencies = {
-        'aloknigam247/cmp-path',
+        'hrsh7th/cmp-path',
         'chrisgrieser/cmp-nerdfont',
         'dcampos/cmp-snippy',
         'dcampos/nvim-snippy',
