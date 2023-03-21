@@ -419,14 +419,11 @@ AddPlugin {
 -- TODO: Use
 -- AddPlugin {
 --     'azabiong/vim-highlighter',
---     cmd = 'Hi',
+--     -- cmd = 'Hi',
 --     config = function()
---         vim.cmd[[
---             let HiSet = '<Leader>h'
---             let HiErase = '<Leader>H'
---         ]]
 --     end,
---     keys = { '<Leader>h' }
+--     lazy = false
+--     -- keys = { '<Leader>g' }
 -- }
 
 AddPlugin {
