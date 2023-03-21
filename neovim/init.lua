@@ -3129,5 +3129,24 @@ vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
+
+-- https://github.com/JellyApple102/easyread.nvim
+-- https://github.com/echasnovski/mini.splitjoin
+-- https://github.com/NTBBloodbath/sweetie.nvim
+-- https://github.com/astaos/nvim-ultivisual
+-- https://github.com/cbochs/portal.nvim
+-- https://github.com/HiPhish/nvim-ts-rainbow2
+-- https://github.com/loctvl842/monokai-pro.nvim
+-- https://github.com/aaronhallaert/advanced-git-search.nvim
+-- https://github.com/askfiy/visual_studio_code
+-- https://github.com/typicode/bg.nvim
+
+
+
+
+
+
+
+
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
