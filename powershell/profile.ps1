@@ -162,7 +162,7 @@ function sed {
 
 # Path functions
 function desktop {
-    Set-Location '~\OneDrive - Microsoft\Desktop\'
+    Set-Location $([Environment]::GetFolderPath("Desktop"))
 }
 
 # Git functions

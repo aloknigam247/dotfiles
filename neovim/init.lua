@@ -3130,23 +3130,35 @@ require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 
--- https://github.com/JellyApple102/easyread.nvim
--- https://github.com/echasnovski/mini.splitjoin
--- https://github.com/NTBBloodbath/sweetie.nvim
--- https://github.com/astaos/nvim-ultivisual
--- https://github.com/cbochs/portal.nvim
--- https://github.com/HiPhish/nvim-ts-rainbow2
--- https://github.com/loctvl842/monokai-pro.nvim
--- https://github.com/aaronhallaert/advanced-git-search.nvim
--- https://github.com/askfiy/visual_studio_code
--- https://github.com/typicode/bg.nvim
-
-
-
-
-
-
-
+-- TODO: https://github.com/JellyApple102/easyread.nvim
+-- TODO: https://github.com/echasnovski/mini.splitjoin
+-- TODO: https://github.com/NTBBloodbath/sweetie.nvim
+-- TODO: https://github.com/astaos/nvim-ultivisual
+-- TODO: https://github.com/cbochs/portal.nvim
+-- TODO: https://github.com/HiPhish/nvim-ts-rainbow2
+-- TODO: https://github.com/loctvl842/monokai-pro.nvim
+-- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
+-- TODO: https://github.com/askfiy/visual_studio_code
+-- TODO: https://github.com/typicode/bg.nvim
+-- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
+-- TODO: https://github.com/echasnovski/mini.bracketed
+-- TODO: https://github.com/igorgue/danger
+-- TODO: https://github.com/AndrewRadev/splitjoin.vim
+-- TODO: https://github.com/ziontee113/SelectEase
+-- TODO: https://github.com/tamton-aquib/flirt.nvim
+-- TODO: https://github.com/tummetott/reticle.nvim
+-- TODO: https://github.com/roobert/node-type.nvim
+-- TODO: https://github.com/lalitmee/browse.nvim
+-- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+-- TODO: https://github.com/roobert/surround-ui.nvim
+-- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
+-- TODO: https://github.com/tom-anders/telescope-vim-bookmarks.nvim
+-- TODO: https://github.com/axlebedev/vim-footprints
+-- TODO: https://github.com/Jxstxs/conceal.nvim
+-- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
+-- TODO: https://github.com/luukvbaal/statuscol.nvim
+-- TODO: https://github.com/doums/dmap.nvim
+-- TODO: https://github.com/CKolkey/ts-node-action
 
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
