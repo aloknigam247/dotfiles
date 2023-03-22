@@ -591,7 +591,6 @@ AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'         
 AddPlugin { 'savq/melange',                     event = 'User melange'                                                 }
 AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
 AddPlugin { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 }
-AddPlugin { 'tanvirtin/monokai.nvim',           event = 'User monokai.nvim'                                            }
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
@@ -730,12 +729,8 @@ Dark  { 'mellow',                     '_'            }
 Dark  { 'middlenight_blue',           'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'minimal',                    '_'            }
 Dark  { 'minimal-base16',             'minimal'      }
-Dark  { 'monokai',                    'monokai.nvim' }
 Dark  { 'monokai',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'monokai',                    'vim-monokai'  }
-Dark  { 'monokai_pro',                'monokai.nvim' }
-Dark  { 'monokai_ristretto',          'monokai.nvim' }
-Dark  { 'monokai_soda',               'monokai.nvim' }
 Dark  { 'moonlight',                  '_'            }
 Dark  { 'moonlight',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'mosel',                      '_'            }
