@@ -654,7 +654,6 @@ Dark  { 'base2tone_heath_dark',       'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
-Dark  { 'base2tone_lavender_dark',    'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Dark  { 'base2tone_mall_dark',        'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
@@ -2664,7 +2663,7 @@ AddPlugin {
     'Wansmer/treesj',
     cmd = 'TSJToggle',
     opts = {
-        max_join_length = 1000
+        max_join_length = 10000
     }
 }
 
