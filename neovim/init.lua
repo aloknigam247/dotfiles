@@ -7,9 +7,8 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: format on paste [change.txt --> insert.txt]
+-- TODO: format on paste [change.txt --> insert.txt], workaround use <C-R> in insert mode
 -- TODO: spell_suggest ?
--- TODO: Use statuscolumn
 -- TODO: location list/quickfix
 -- TODO: marks
 -- TODO: use command sequence to change background of terminal to nvim background
@@ -32,6 +31,13 @@ local icons = {
         warn  = '',
     }
 }
+
+local var = {
+a = 'b'
+}
+
+
+
 vim.g.loaded_clipboard_provider = 1
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -435,6 +441,7 @@ AddPlugin {
     'folke/todo-comments.nvim',
     opts = {
         keywords = {
+            DOCME   = { icon = '📝',  color = 'hint' },
             THOUGHT = { icon = '🤔', color = 'info'}
         }
     },
@@ -1467,7 +1474,8 @@ AddPlugin {
         },
         trouble = false
     },
-    event = 'CursorHold'
+    -- event = 'CursorHold',
+    keys = { '[c', 'c]' }
 }
 
 AddPlugin {
@@ -2083,7 +2091,6 @@ AddPlugin {
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
     'MattesGroeger/vim-bookmarks',
-    keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
     config = function()
         vim.cmd[[
             let g:bookmark_annotation_sign = ''
@@ -2099,7 +2106,8 @@ AddPlugin {
             nmap bp <Plug>BookmarkPrev
             nmap bs <Plug>BookmarkShowAll
         ]]
-    end
+    end,
+    keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
 }
 
 -- https://github.com/ThePrimeagen/harpoon --> plenary
