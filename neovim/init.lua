@@ -669,7 +669,6 @@ Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Light { 'base2tone_morning_light',    'base2tone'    }
 Light { 'base2tone_motel_light',      'base2tone'    }
-Light { 'base2tone_pool_light',       'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
@@ -1601,9 +1600,24 @@ AddPlugin {
     }
 }
 
+
 AddPlugin {
     'williamboman/mason-lspconfig.nvim',
+    cmd = 'LspToggle',
     config = function()
+        -- Toggle LSP
+        vim.api.nvim_create_user_command(
+        'LspToggle',
+        function()
+            if #vim.lsp.get_active_clients({bufnr = 0}) == 0 then
+                vim.cmd('LspStart')
+            else
+                vim.cmd('LspStop')
+            end
+        end,
+        { nargs = 0 }
+        )
+
         local mason_lspconfig = require('mason-lspconfig')
         mason_lspconfig.setup()
         -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
@@ -1755,7 +1769,7 @@ AddPlugin {
         vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    event = 'CursorHold'
+    -- event = 'CursorHold'
 }
 
 AddPlugin {
@@ -2451,7 +2465,7 @@ AddPlugin {
                     {
                         LspIcon,
                         cond = function()
-                            return vim.lsp.get_active_clients({bufnr = 0})[1] ~= nil
+                            return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
                         end,
                         on_click = function()
                             vim.cmd('LspInfo')
