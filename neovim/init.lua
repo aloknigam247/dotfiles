@@ -667,13 +667,11 @@ Dark  { 'base2tone_meadow_dark',      'base2tone'    }
 Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Light { 'base2tone_morning_light',    'base2tone'    }
-Light { 'base2tone_motel_light',      'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Light { 'base2tone_space_light',      'base2tone'    }
 Dark  { 'base2tone_suburb_dark',      'base2tone'    }
-Light { 'base2tone_suburb_light',     'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',               '_'           }
 Dark  { 'calvera',                    '_'            }
@@ -838,6 +836,7 @@ end
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- TODO: powershell multiline comment <# #>
+    -- TODO: python multiline comment """ """
     'numToStr/Comment.nvim',
     opts = {
         ignore = '^$',
@@ -883,10 +882,8 @@ AddPlugin {
                     if entry.source.name == 'nvim_lsp' then
                         vim_item.menu = '{' .. entry.source.source.client.name .. '}'
                     elseif entry.source.name == 'cmdline' then
-                        -- vim_item.menu = '(options)'
                         vim_item.kind = 'Options'
                     elseif entry.source.name == 'cmdline_history' then
-                        -- vim_item.menu = '(history)'
                         vim_item.kind = 'History'
                     else
                         vim_item.menu = '[' .. entry.source.name .. ']'
@@ -917,7 +914,7 @@ AddPlugin {
                     name = 'buffer',
                     option = {
                         get_bufnrs = function()
-                            return vim.api.nvim_list_bufs()
+                            return vim.api.nvim_list_bufs() -- TODO: disable for buffers > 1000 lines
                         end
                     }
                 },
@@ -942,6 +939,7 @@ AddPlugin {
         'hrsh7th/cmp-nvim-lsp',
     }, -- TODO: check if lazy
     event = 'CmdlineEnter',
+    -- enabled = false
 }
 
 -- https://github.com/jameshiew/nvim-magic
@@ -1473,7 +1471,7 @@ AddPlugin {
         trouble = false
     },
     -- event = 'CursorHold',
-    keys = { '[c', 'c]' }
+    keys = { '[c', ']c' }
 }
 
 AddPlugin {
@@ -1606,15 +1604,15 @@ AddPlugin {
     config = function()
         -- Toggle LSP
         vim.api.nvim_create_user_command(
-        'LspToggle',
-        function()
-            if #vim.lsp.get_active_clients({bufnr = 0}) == 0 then
-                vim.cmd('LspStart')
-            else
-                vim.cmd('LspStop')
-            end
-        end,
-        { nargs = 0 }
+            'LspToggle',
+            function()
+                if #vim.lsp.get_active_clients({bufnr = 0}) == 0 then
+                    vim.cmd('LspStart')
+                else
+                    vim.cmd('LspStop')
+                end
+            end,
+            { nargs = 0 }
         )
 
         local mason_lspconfig = require('mason-lspconfig')
@@ -2324,9 +2322,6 @@ vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = functi
 AddPlugin {
     'rmagatti/auto-session',
     cmd = 'SaveSession',
-    cond = function()
-        return vim.fn.filereadable(vim.fn.stdpath 'data' .. '\\sessions\\' .. vim.fn.getcwd():gsub('\\', '%%'):gsub(':', '++') .. '.vim') == 1
-    end,
     config = function()
         vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
         require('auto-session').setup({
@@ -2343,7 +2338,11 @@ AddPlugin {
         })
         vim.o.sessionoptions = 'blank,buffers,curdir,help,tabpages,winsize,winpos,terminal'
     end,
-    lazy = false
+    init = function()
+        if vim.fn.filereadable(vim.fn.stdpath 'data' .. '\\sessions\\' .. vim.fn.getcwd():gsub('\\', '%%'):gsub(':', '++') .. '.vim') == 1 then
+            require('auto-session')
+        end
+    end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3146,6 +3145,7 @@ ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 
 -- TODO: https://github.com/AndrewRadev/splitjoin.vim
+-- TODO: https://github.com/Bekaboo/deadcolumn.nvim
 -- TODO: https://github.com/CKolkey/ts-node-action
 -- TODO: https://github.com/HiPhish/nvim-ts-rainbow2
 -- TODO: https://github.com/JellyApple102/easyread.nvim
@@ -3166,7 +3166,9 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/igorgue/danger
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
+-- TODO: https://github.com/lukas-reineke/virt-column.nvim
 -- TODO: https://github.com/luukvbaal/statuscol.nvim
+-- TODO: https://github.com/m4xshen/smartcolumn.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/roobert/node-type.nvim
 -- TODO: https://github.com/roobert/surround-ui.nvim
@@ -3176,7 +3178,9 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/typicode/bg.nvim
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+-- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
+-- TODO: https://github.com/willothy/flatten.nvim
 
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
