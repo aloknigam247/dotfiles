@@ -7,7 +7,6 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: format on paste [change.txt --> insert.txt], workaround use <C-R> in insert mode reddit: https://www.reddit.com/r/neovim/comments/121koty/autoindent_after_paste
 -- TODO: spell_suggest ?
 -- TODO: location list/quickfix
 -- TODO: marks
@@ -3163,6 +3162,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/dundargoc/fakedonalds.nvim
 -- TODO: https://github.com/echasnovski/mini.bracketed
 -- TODO: https://github.com/echasnovski/mini.splitjoin
+-- TODO: https://github.com/gbprod/yanky.nvim
 -- TODO: https://github.com/igorgue/danger
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
@@ -3170,6 +3170,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/roobert/node-type.nvim
 -- TODO: https://github.com/roobert/surround-ui.nvim
+-- TODO: https://github.com/sickill/vim-pasta
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
 -- TODO: https://github.com/tom-anders/telescope-vim-bookmarks.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
