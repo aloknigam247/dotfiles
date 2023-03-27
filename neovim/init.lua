@@ -440,9 +440,26 @@ AddPlugin {
     'folke/todo-comments.nvim',
     opts = {
         keywords = {
-            DOCME   = { icon = '📝',  color = 'hint' },
-            THOUGHT = { icon = '🤔', color = 'info'}
-        }
+            -- Syntax:
+            -- Keyword = {
+            --     icon = '<icon>',
+            --     color = '<name or hex>',
+            --     alt = '<list of alt keys>',
+            --     sign = '<boolean for each sign visibility>',
+            -- }
+            -- TOOD: Fix colors and icons
+            DOCME   = { icon = '📝', color = 'hint' },
+            FEAT    = { icon = 'ﯦ', color = 'hint' },
+            FIX     = { icon = '', color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
+            HACK    = { icon = '', color = "warning" },
+            NOTE    = { icon = '', color = "hint", alt = { "INFO" } },
+            PERF    = { icon = '', alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+            TEST    = { icon = '', color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+            THOUGHT = { icon = '🤔', color = 'info'},
+            TODO    = { icon = '', color = "info" },
+            WARN    = { icon = '', color = "warning", alt = { "WARNING", "XXX" } },
+        },
+        merge_keywords = false
     },
     keys = {
         { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous todo comment' },
