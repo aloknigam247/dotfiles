@@ -7,7 +7,7 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: spell_suggest ?
+-- TODO: spell_suggest set file location to use in dotfiles
 -- TODO: location list/quickfix
 -- TODO: marks
 -- TODO: use command sequence to change background of terminal to nvim background
