@@ -7,6 +7,7 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Set Goneovim
 -- TODO: spell_suggest set file location to use in dotfiles
 -- TODO: location list/quickfix
 -- TODO: marks
