@@ -7,8 +7,8 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Set Goneovim
--- TODO: spell_suggest set file location to use in dotfiles
+-- TODO: Set Goneovim  https://github.com/akiyosi/goneovim/issues/449
+-- TODO: spell_suggest use spellfile option to use dotfile location
 -- TODO: location list/quickfix
 -- TODO: marks
 -- TODO: use command sequence to change background of terminal to nvim background
@@ -3200,4 +3200,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/willothy/flatten.nvim
 
 -- <~>
+-- TODO: Doc to read change.txt
+-- TODO: Doc to read insert.txt
 -- vim: fmr=</>,<~> fdm=marker
