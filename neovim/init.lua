@@ -760,13 +760,11 @@ Dark  { 'neon',                       '_',           pre = function() vim.g.neon
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
 Dark  { 'nightfox',                   'nightfox'     }
-Dark  { 'noctis',                     '_'            }
 Dark  { 'noctis_azureus',             'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
 Light { 'noctis_lux',                 'noctis'       }
 Dark  { 'noctis_minimus',             'noctis'       }
-Dark  { 'noctis_obscuro',             'noctis'       }
 Dark  { 'noctis_sereno',              'noctis'       }
 Dark  { 'noctis_uva',                 'noctis'       }
 Dark  { 'noctis_viola',               'noctis'       }
