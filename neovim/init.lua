@@ -1442,6 +1442,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: global icons for git signs
     'lewis6991/gitsigns.nvim',
+    cmd = 'Gitsigns',
     opts = {
         signs = {
             add          = { hl = 'GitSignsAdd'   , text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
@@ -1484,7 +1485,6 @@ AddPlugin {
         },
         trouble = false
     },
-    -- event = 'CursorHold',
     keys = { '[c', ']c' }
 }
 
