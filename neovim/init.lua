@@ -3176,6 +3176,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/dundargoc/fakedonalds.nvim
 -- TODO: https://github.com/echasnovski/mini.bracketed
 -- TODO: https://github.com/echasnovski/mini.splitjoin
+-- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
 -- TODO: https://github.com/gbprod/yanky.nvim
 -- TODO: https://github.com/igorgue/danger
 -- TODO: https://github.com/lalitmee/browse.nvim
@@ -3192,9 +3193,9 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/typicode/bg.nvim
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+-- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
--- TODO: https://github.com/willothy/flatten.nvim
 
 -- <~>
 -- TODO: Doc to read change.txt
