@@ -687,7 +687,6 @@ Light { 'base2tone_morning_light',    'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
-Light { 'base2tone_space_light',      'base2tone'    }
 Dark  { 'base2tone_suburb_dark',      'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',               '_'           }
@@ -1444,6 +1443,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: global icons for git signs
     'lewis6991/gitsigns.nvim',
+    cmd = 'Gitsigns',
     opts = {
         signs = {
             add          = { hl = 'GitSignsAdd'   , text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
@@ -1486,7 +1486,6 @@ AddPlugin {
         },
         trouble = false
     },
-    -- event = 'CursorHold',
     keys = { '[c', ']c' }
 }
 
