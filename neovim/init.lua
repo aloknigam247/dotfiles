@@ -852,6 +852,7 @@ end
 AddPlugin {
     -- TODO: powershell multiline comment <# #>
     -- TODO: python multiline comment """ """
+    -- TODO: gco and gcO puts cursor in the start
     'numToStr/Comment.nvim',
     opts = {
         ignore = '^$',
@@ -2731,6 +2732,7 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
+    -- TODO: Not working
     'm-demare/hlargs.nvim',
     config = function()
         local dark   = { { fg = '#619e9d' }, { fg = '#9E6162' }, { fg = '#81A35C' }, { fg = '#7E5CA3' }, { fg = '#9E9261' }, { fg = '#616D9E' }, { fg = '#97687B' }, { fg = '#689784' }, { fg = '#999C63' }, { fg = '#66639C' } }
