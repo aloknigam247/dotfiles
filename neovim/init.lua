@@ -7,7 +7,6 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Set Goneovim  https://github.com/akiyosi/goneovim/issues/449
 -- TODO: spell_suggest use spellfile option to use dotfile location
 -- TODO: location list/quickfix
 -- TODO: marks
