@@ -2985,6 +2985,7 @@ AddPlugin {
         })
     end,
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    enabled = false,
     lazy = false
 }
 
@@ -3168,6 +3169,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- TODO: https://github.com/NTBBloodbath/sweetie.nvim
+-- TODO: https://github.com/SmiteshP/nvim-navbuddy
 -- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
 -- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- TODO: https://github.com/askfiy/visual_studio_code
