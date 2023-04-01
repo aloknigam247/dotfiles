@@ -7,11 +7,8 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use command sequence to change background of terminal to nvim background
--- TODO: context aware popup, using autocmd and position clicked
--- TODO: motion.txt
 -- TODO: ctrl arrow motion improvements, word separators
---
+
 -- Variables
 --
 -- TODO: summarise variables
@@ -3133,6 +3130,12 @@ AddPlugin {
     }
 }
 
+-- TODO: use command sequence to change background of terminal to nvim background
+-- AddPlugin {
+--     'typicode/bg.nvim',
+--     lazy = false
+-- }
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -3184,15 +3187,16 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
 -- TODO: https://github.com/tom-anders/telescope-vim-bookmarks.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
--- TODO: https://github.com/typicode/bg.nvim
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
 
 -- <~>
+-- TODO: context aware popup, using autocmd and position clicked
 -- TODO: Doc to read change.txt
 -- TODO: Doc to read insert.txt
 -- TODO: location list/quickfix
 -- TODO: marks
+-- TODO: motion.txt
 -- vim: fmr=</>,<~> fdm=marker
