@@ -52,8 +52,7 @@ function evrc {
 }
 
 function v {
-   $_ = ~\scoop\shims\goneovim.exe $args &
-   # ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args
+   ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args
 }
 
 function vpcl {
