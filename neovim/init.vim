@@ -41,6 +41,7 @@ set nofixendofline                    " Do not change end of line
 set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
 set shiftwidth=4                      " When shifting, indent using spaces
+" set spell                             " Enable spell check
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap

@@ -7,14 +7,10 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: spell_suggest use spellfile option to use dotfile location
--- TODO: location list/quickfix
--- TODO: marks
 -- TODO: use command sequence to change background of terminal to nvim background
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: motion.txt
 -- TODO: ctrl arrow motion improvements, word separators
-
 --
 -- Variables
 --
@@ -30,12 +26,6 @@ local icons = {
         warn  = '',
     }
 }
-
-local var = {
-a = 'b'
-}
-
-
 
 vim.g.loaded_clipboard_provider = 1
 vim.g.cmp_kinds = {
@@ -3203,4 +3193,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- <~>
 -- TODO: Doc to read change.txt
 -- TODO: Doc to read insert.txt
+-- TODO: location list/quickfix
+-- TODO: marks
 -- vim: fmr=</>,<~> fdm=marker
