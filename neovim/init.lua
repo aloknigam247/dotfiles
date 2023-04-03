@@ -288,7 +288,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: irregularities with ""
+-- TODO: irregularities with "", no "" in vim. "" pair does not check
 AddPlugin {
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
@@ -854,6 +854,8 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- TODO: slow completion
+    -- TODO: cmd-cmdline for windows
+    -- TODO: cmp-path for windows
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
