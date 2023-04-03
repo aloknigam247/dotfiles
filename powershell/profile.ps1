@@ -112,11 +112,11 @@ function treea {
 }
 
 function bat {
-    ~\scoop\shims\bat.exe --paging=never --style='numbers,changes' --italic-text=always $args
+    ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args
 }
 
 function which($arg) {
-    $cm = Get-Command $arg
+    $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
 
     Format-Text "[$type]" -fg "#FF0022"
