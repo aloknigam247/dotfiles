@@ -297,6 +297,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # FZF Setup
 # ``````````````
 function LoadFZF($arg) {
+    # FIXME: fix delayed loading
     # TODO: Layout selection
     # TODO: Examples https://github.com/junegunn/fzf/wiki/Examples
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
@@ -340,7 +341,7 @@ function promptGen {
             'execute' = @{
                 'sequence' = 2
                 'script' = {
-                    $script:dir_icon = ""
+                    $script:dir_icon = "" # FIX: icon overriden
                     if ($null -ne $script:git_branch) {
                         $script:dir_icon = ""
                     }

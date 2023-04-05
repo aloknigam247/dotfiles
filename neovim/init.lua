@@ -7,24 +7,10 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: ctrl arrow motion improvements, word separators
-
 -- Variables
---
--- TODO: summarise variables
-local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+-- ---------
 
-local icons = {
-    diagnostic = {
-        error = '',
-        hint  = '',
-        info  = '',
-        other = '﫠',
-        warn  = '',
-    }
-}
-
-vim.g.loaded_clipboard_provider = 1
+-- Vim Globals
 vim.g.cmp_kinds = {
     Array         = ' ',
     Boolean       = ' ',
@@ -64,119 +50,9 @@ vim.g.cmp_kinds = {
     Variable      = ' '
 }
 
-local kind_hl = {
-    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
-    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
-    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
-    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
-    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
-    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
-    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
-    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
-    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
-    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
-    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
-    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
-    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
-    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
-    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
-    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
-    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
-    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
-    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
-    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
-    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
-    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
-    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
-    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
-    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
-    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
-    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
-    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
-    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
-    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
-    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
-    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
-    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
-    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
-    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
-    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
-}
+vim.g.loaded_clipboard_provider = 1
 
-local border_shape = {
-    { '╭', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╮', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-    { '╯', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╰', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-}
-
-Plugins = {}
---
--- Functions
---
-function AddPlugin(opts)
-    table.insert(Plugins, opts)
-end
-
-function LightenDarkenColor(col, amt)
-    local num = tonumber(col, 16)
-    local r = bit.rshift(num, 16) + amt
-    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-    local g = bit.band(num, 0x0000FF) + amt
-    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-    return string.format("#%X", newColor)
-end
-
---
--- Auto Commands
---
-vim.api.nvim_create_autocmd(
-    'TextYankPost', {
-        pattern = '*',
-        desc = 'Highlight text on yank',
-        callback = function()
-            vim.highlight.on_yank { higroup="Search", timeout=300 }
-        end
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    'User', {
-        pattern='VeryLazy',
-        desc = 'Lazy load clipboard provider',
-        callback = function()
-            vim.cmd([[
-                unlet g:loaded_clipboard_provider
-                runtime autoload/provider/clipboard.vim
-            ]])
-        end
-    }
-)
-
--- TODO: group actions
-local bg_mode = vim.o.background
-for key, value in pairs(kind_hl) do
-    vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
-end
-
--- TODO: group configuration
-vim.diagnostic.config({
-    float = {
-        source = true
-    },
-    severity_sort = true,
-    virtual_text = {
-        prefix = ' ',
-        source = true
-    }
-})
-
-vim.fn.matchadd('HighlightURL', url_matcher, 1)
-
+-- Lua Globals
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -272,6 +148,125 @@ LazyConfig = {
     },
 }
 
+Plugins = {}
+
+-- Lua Locals
+local border_shape = {
+    { '╭', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╮', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+    { '╯', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╰', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+}
+
+local icons = {
+    diagnostic = {
+        error = '',
+        hint  = '',
+        info  = '',
+        other = '﫠',
+        warn  = '',
+    }
+}
+
+local kind_hl = {
+    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
+    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
+    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
+    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
+    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
+    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
+    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
+    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
+    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
+    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
+    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
+    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
+    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
+    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
+    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
+    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
+    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
+    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
+    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
+    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
+    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
+    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
+    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
+    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
+    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
+    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
+    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
+    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
+    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
+    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
+    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
+    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
+    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
+    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
+    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
+    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
+}
+
+local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+
+-- Functions
+-- ---------
+function AddPlugin(opts)
+    table.insert(Plugins, opts)
+end
+
+function LightenDarkenColor(col, amt)
+    local num = tonumber(col, 16)
+    local r = bit.rshift(num, 16) + amt
+    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+    local g = bit.band(num, 0x0000FF) + amt
+    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+    return string.format("#%X", newColor)
+end
+
+-- Auto Commands
+-- -------------
+vim.api.nvim_create_autocmd(
+    'TextYankPost', {
+        pattern = '*',
+        desc = 'Highlight text on yank',
+        callback = function()
+            vim.highlight.on_yank { higroup="Search", timeout=300 }
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    'User', {
+        pattern='VeryLazy',
+        desc = 'Lazy load clipboard provider',
+        callback = function()
+            vim.cmd([[
+                unlet g:loaded_clipboard_provider
+                runtime autoload/provider/clipboard.vim
+            ]])
+        end
+    }
+)
+
+-- Misc
+-- ----
+vim.diagnostic.config({
+    float = {
+        source = true
+    },
+    severity_sort = true,
+    virtual_text = {
+        prefix = ' ',
+        source = true
+    }
+})
+
+vim.fn.matchadd('HighlightURL', url_matcher, 1)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -397,12 +392,12 @@ AddPlugin {
         end
         vim.api.nvim_set_hl(0, "IlluminatedWordText", {
             bg = bg,
-            underline = true
+            -- underline = true
         })
         -- TODO: Fix colors
         vim.cmd[[
-           hi IlluminatedWordRead  guibg = #A5BE00 guifg = #000000
-           hi IlluminatedWordWrite guibg = #1F7A8C gui   = italic
+           hi IlluminatedWordRead  guibg = #FEDC97 guifg = #000000
+           hi IlluminatedWordWrite guibg = #FECF72 guifg = #000000 gui   = italic
        ]]
     end,
     event = 'CursorHold'
@@ -931,6 +926,11 @@ AddPlugin {
                 documentation = cmp.config.window.bordered(),
             }
         })
+
+        local bg_mode = vim.o.background
+        for key, value in pairs(kind_hl) do
+            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
+        end
     end,
     dependencies = {
         'hrsh7th/cmp-path',
@@ -1499,6 +1499,7 @@ AddPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
         override = {
+            -- TODO: fix icon for Makefile
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
