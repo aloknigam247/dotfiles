@@ -10,6 +10,9 @@
 -- Variables
 -- ---------
 
+local write = 10
+local read = write
+
 -- Vim Globals
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -283,26 +286,22 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: irregularities with "", no "" in vim. "" pair does not check
 AddPlugin {
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
-        local npairs = require("nvim-autopairs")
-        local Rule = require("nvim-autopairs.rule")
+        local pair = require('nvim-autopairs')
+        local Rule = require('nvim-autopairs.rule')
         local cond = require('nvim-autopairs.conds')
 
-        npairs.setup({
+        pair.setup({
             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
         })
-        npairs.add_rules {
+        pair.add_rules {
             -- function() | end pair for lua
-            Rule("function() ", " end", { "lua" }),
+            Rule('function() ', ' end', { 'lua' }),
             -- #include <|> pair for c and cpp
-            Rule("#include <", ">", { "c", "cpp" }),
-            -- Disable " rule for vim
-            Rule('"', '"')
-            :with_pair(cond.not_filetypes({"vim"})),
+            Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
             -- ( | ) --> ) --> ( )|
@@ -362,8 +361,8 @@ AddPlugin {
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
         local cmp = require('cmp')
         cmp.event:on(
-        'confirm_done',
-        cmp_autopairs.on_confirm_done()
+            'confirm_done',
+            cmp_autopairs.on_confirm_done()
         )
     end,
     event = 'InsertEnter'
@@ -390,14 +389,10 @@ AddPlugin {
             local bs = string.format("%X", bg)
             bg = LightenDarkenColor(bs, -40)
         end
-        vim.api.nvim_set_hl(0, "IlluminatedWordText", {
-            bg = bg,
-            -- underline = true
-        })
-        -- TODO: Fix colors
+        vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = bg })
         vim.cmd[[
-           hi IlluminatedWordRead  guibg = #FEDC97 guifg = #000000
-           hi IlluminatedWordWrite guibg = #FECF72 guifg = #000000 gui   = italic
+           hi IlluminatedWordRead  guibg = #8AC926 guifg = #FFFFFF gui = bold
+           hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
        ]]
     end,
     event = 'CursorHold'
@@ -492,6 +487,10 @@ function FixIndentBlankline()
         hl.nocombine = false
         vim.api.nvim_set_hl(0, color, hl)
     end
+end
+
+function FixLineNr(fg)
+    vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
 function FixNontext()
@@ -720,7 +719,7 @@ Dark  { 'material',                   '_',           pre = function() vim.g.mate
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end                                              } -- TODO: fix number line
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
