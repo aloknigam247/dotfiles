@@ -424,7 +424,7 @@ AddPlugin {
             --     alt = '<list of alt keys>',
             --     sign = '<boolean for each sign visibility>',
             -- }
-            -- TOOD: Fix colors and icons
+            -- TODO: Fix colors and icons
             DOCME   = { icon = '📝', color = 'hint' },
             FEAT    = { icon = 'ﯦ', color = 'hint' },
             FIX     = { icon = '', color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
@@ -829,14 +829,17 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: powershell multiline comment <# #>
-    -- TODO: python multiline comment """ """
     -- TODO: gco and gcO puts cursor in the start
     'numToStr/Comment.nvim',
-    opts = {
-        ignore = '^$',
-        extra = { eol = 'gce' },
-    },
+    config = function()
+        require('Comment').setup({
+            ignore = '^$',
+            extra = { eol = 'gce' },
+        })
+
+        require('Comment.ft').set('ps1', {'# %s', '<# %s #>'})
+        require('Comment.ft').set('python', {'# %s', '""" %s """'})
+    end,
     keys = {
         { 'gc', mode = { 'n', 'v' } },
         { 'gb', mode = { 'n', 'v' } },
