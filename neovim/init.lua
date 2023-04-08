@@ -3201,4 +3201,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: location list/quickfix
 -- TODO: marks
 -- TODO: motion.txt
+-- TODO: per file configurations
 -- vim: fmr=</>,<~> fdm=marker
