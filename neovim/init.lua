@@ -1579,15 +1579,15 @@ AddPlugin {
     'liuchengxu/vista.vim',
     config = function()
         vim.cmd[[
-        let g:vista_default_executive = 'nvim_lsp'
-        let g:vista_icon_indent = ['╰─ ', '├─ ']
-        ' TODO: use global icons
-        let g:vista#renderer#icons = {
-            \   'constant': '',
-            \   'class': '',
-            \   'function': '',
-            \   'variable': '',
-            \  }
+            let g:vista_default_executive = 'nvim_lsp'
+            let g:vista_icon_indent = ['╰─ ', '├─ ']
+            ' TODO: use global icons
+            let g:vista#renderer#icons = {
+                \   'constant': '',
+                \   'class': '',
+                \   'function': '',
+                \   'variable': '',
+                \  }
         ]]
     end,
     cmd = 'Vista'
