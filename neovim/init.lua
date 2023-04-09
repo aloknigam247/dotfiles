@@ -373,7 +373,7 @@ AddPlugin {
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
-            providers =  {
+            providers = {
                 'lsp',
                 'treesitter',
                 'regex'
@@ -416,25 +416,28 @@ AddPlugin {
 AddPlugin {
     'folke/todo-comments.nvim',
     opts = {
+        colors = {
+            default = { 'Identifier', '#7C3AED' },
+            docs    = { 'Function', '#440381' },
+            error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+            feat    = { 'Type', '#274C77' },
+            hint    = { 'DiagnosticHint', '#10B981' },
+            info    = { 'DiagnosticInfo', '#2563EB' },
+            perf    = { 'String', '#C2F970' },
+            test    = { 'Identifier', '#DDD92A' },
+            todo    = { 'Keyword', '#1B998B' },
+            warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
+        },
         keywords = {
-            -- Syntax:
-            -- Keyword = {
-            --     icon = '<icon>',
-            --     color = '<name or hex>',
-            --     alt = '<list of alt keys>',
-            --     sign = '<boolean for each sign visibility>',
-            -- }
-            -- TODO: Fix colors and icons
-            DOCME   = { icon = '📝', color = 'hint' },
-            FEAT    = { icon = 'ﯦ', color = 'hint' },
-            FIX     = { icon = '', color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
-            HACK    = { icon = '', color = "warning" },
-            NOTE    = { icon = '', color = "hint", alt = { "INFO" } },
-            PERF    = { icon = '', alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-            TEST    = { icon = '', color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-            THOUGHT = { icon = '🤔', color = 'info'},
-            TODO    = { icon = '', color = "info" },
-            WARN    = { icon = '', color = "warning", alt = { "WARNING", "XXX" } },
+            DOCME = { icon = '', color = 'docs' },
+            FEAT  = { icon = '󱩑', color = 'feat' },
+            FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+            HACK  = { icon = '', color = 'hint' },
+            NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+            PERF  = { icon = '', color = 'perf', alt = { 'PERFORMANCE', 'OPTIMIZE' } },
+            TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+            TODO  = { icon = '', color = 'todo' },
+            WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
     },
@@ -475,6 +478,13 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+function FixDiagnosticInfo()
+    if (vim.o.background == 'light') then
+        vim.cmd('hi clear DiagnosticInfo')
+        vim.cmd('hi link DiagnosticInfo DiagnosticInformation')
+    end
+end
+
 function FixIndentBlankline()
     for _, color in pairs({
         'IndentBlanklineChar',
@@ -734,7 +744,7 @@ Dark  { 'moonlight',                  'starry',      pre = function() require('s
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = FixVisual }
+Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
@@ -2426,7 +2436,7 @@ AddPlugin {
                     {
                         'diff',
                         on_click = function()
-                            vim.cmd('Telescope git_status')
+                            vim.cmd('Telescope git_status') -- BUG: fix the cwd issue
                         end
                     },
                     {
@@ -2726,9 +2736,9 @@ AddPlugin {
     'm-demare/hlargs.nvim',
     config = function()
         local dark   = { { fg = '#619e9d' }, { fg = '#9E6162' }, { fg = '#81A35C' }, { fg = '#7E5CA3' }, { fg = '#9E9261' }, { fg = '#616D9E' }, { fg = '#97687B' }, { fg = '#689784' }, { fg = '#999C63' }, { fg = '#66639C' } }
-        local bright = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
-        local colorpalette = vim.o.background == 'light' and dark or bright
-        require('hlargs').setup {
+        local light = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
+        local colorpalette = vim.o.background == 'light' and dark or light
+        require('hlargs').setup({
             use_colorpalette = true,
             colorpalette = colorpalette,
             paint_catch_blocks = {
@@ -2748,7 +2758,7 @@ AddPlugin {
                     lua = { 'self' }
                 }
             }
-        }
+        })
     end
 }
 
