@@ -7,24 +7,13 @@
  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 ]]
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: ctrl arrow motion improvements, word separators
-
 -- Variables
---
--- TODO: summarise variables
-local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+-- ---------
 
-local icons = {
-    diagnostic = {
-        error = '',
-        hint  = '',
-        info  = '',
-        other = '﫠',
-        warn  = '',
-    }
-}
+local write = 10
+local read = write
 
-vim.g.loaded_clipboard_provider = 1
+-- Vim Globals
 vim.g.cmp_kinds = {
     Array         = ' ',
     Boolean       = ' ',
@@ -64,119 +53,9 @@ vim.g.cmp_kinds = {
     Variable      = ' '
 }
 
-local kind_hl = {
-    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
-    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
-    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
-    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
-    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
-    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
-    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
-    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
-    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
-    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
-    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
-    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
-    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
-    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
-    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
-    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
-    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
-    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
-    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
-    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
-    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
-    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
-    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
-    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
-    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
-    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
-    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
-    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
-    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
-    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
-    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
-    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
-    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
-    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
-    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
-    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
-}
+vim.g.loaded_clipboard_provider = 1
 
-local border_shape = {
-    { '╭', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╮', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-    { '╯', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╰', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-}
-
-Plugins = {}
---
--- Functions
---
-function AddPlugin(opts)
-    table.insert(Plugins, opts)
-end
-
-function LightenDarkenColor(col, amt)
-    local num = tonumber(col, 16)
-    local r = bit.rshift(num, 16) + amt
-    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-    local g = bit.band(num, 0x0000FF) + amt
-    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-    return string.format("#%X", newColor)
-end
-
---
--- Auto Commands
---
-vim.api.nvim_create_autocmd(
-    'TextYankPost', {
-        pattern = '*',
-        desc = 'Highlight text on yank',
-        callback = function()
-            vim.highlight.on_yank { higroup="Search", timeout=300 }
-        end
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    'User', {
-        pattern='VeryLazy',
-        desc = 'Lazy load clipboard provider',
-        callback = function()
-            vim.cmd([[
-                unlet g:loaded_clipboard_provider
-                runtime autoload/provider/clipboard.vim
-            ]])
-        end
-    }
-)
-
--- TODO: group actions
-local bg_mode = vim.o.background
-for key, value in pairs(kind_hl) do
-    vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
-end
-
--- TODO: group configuration
-vim.diagnostic.config({
-    float = {
-        source = true
-    },
-    severity_sort = true,
-    virtual_text = {
-        prefix = ' ',
-        source = true
-    }
-})
-
-vim.fn.matchadd('HighlightURL', url_matcher, 1)
-
+-- Lua Globals
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -272,6 +151,125 @@ LazyConfig = {
     },
 }
 
+Plugins = {}
+
+-- Lua Locals
+local border_shape = {
+    { '╭', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╮', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+    { '╯', 'FloatBorder' },
+    { '─', 'FloatBorder' },
+    { '╰', 'FloatBorder' },
+    { '│', 'FloatBorder' },
+}
+
+local icons = {
+    diagnostic = {
+        error = '',
+        hint  = '',
+        info  = '',
+        other = '﫠',
+        warn  = '',
+    }
+}
+
+local kind_hl = {
+    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
+    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
+    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
+    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
+    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
+    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
+    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
+    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
+    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
+    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
+    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
+    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
+    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
+    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
+    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
+    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
+    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
+    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
+    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
+    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
+    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
+    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
+    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
+    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
+    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
+    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
+    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
+    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
+    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
+    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
+    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
+    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
+    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
+    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
+    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
+    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
+}
+
+local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+
+-- Functions
+-- ---------
+function AddPlugin(opts)
+    table.insert(Plugins, opts)
+end
+
+function LightenDarkenColor(col, amt)
+    local num = tonumber(col, 16)
+    local r = bit.rshift(num, 16) + amt
+    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+    local g = bit.band(num, 0x0000FF) + amt
+    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+    return string.format("#%X", newColor)
+end
+
+-- Auto Commands
+-- -------------
+vim.api.nvim_create_autocmd(
+    'TextYankPost', {
+        pattern = '*',
+        desc = 'Highlight text on yank',
+        callback = function()
+            vim.highlight.on_yank { higroup="Search", timeout=300 }
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    'User', {
+        pattern='VeryLazy',
+        desc = 'Lazy load clipboard provider',
+        callback = function()
+            vim.cmd([[
+                unlet g:loaded_clipboard_provider
+                runtime autoload/provider/clipboard.vim
+            ]])
+        end
+    }
+)
+
+-- Misc
+-- ----
+vim.diagnostic.config({
+    float = {
+        source = true
+    },
+    severity_sort = true,
+    virtual_text = {
+        prefix = ' ',
+        source = true
+    }
+})
+
+vim.fn.matchadd('HighlightURL', url_matcher, 1)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -288,26 +286,22 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: irregularities with ""
 AddPlugin {
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
-        local npairs = require("nvim-autopairs")
-        local Rule = require("nvim-autopairs.rule")
+        local pair = require('nvim-autopairs')
+        local Rule = require('nvim-autopairs.rule')
         local cond = require('nvim-autopairs.conds')
 
-        npairs.setup({
+        pair.setup({
             enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
         })
-        npairs.add_rules {
+        pair.add_rules {
             -- function() | end pair for lua
-            Rule("function() ", " end", { "lua" }),
+            Rule('function() ', ' end', { 'lua' }),
             -- #include <|> pair for c and cpp
-            Rule("#include <", ">", { "c", "cpp" }),
-            -- Disable " rule for vim
-            Rule('"', '"')
-            :with_pair(cond.not_filetypes({"vim"})),
+            Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
             -- ( | ) --> ) --> ( )|
@@ -367,8 +361,8 @@ AddPlugin {
         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
         local cmp = require('cmp')
         cmp.event:on(
-        'confirm_done',
-        cmp_autopairs.on_confirm_done()
+            'confirm_done',
+            cmp_autopairs.on_confirm_done()
         )
     end,
     event = 'InsertEnter'
@@ -379,7 +373,7 @@ AddPlugin {
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
-            providers =  {
+            providers = {
                 'lsp',
                 'treesitter',
                 'regex'
@@ -395,14 +389,10 @@ AddPlugin {
             local bs = string.format("%X", bg)
             bg = LightenDarkenColor(bs, -40)
         end
-        vim.api.nvim_set_hl(0, "IlluminatedWordText", {
-            bg = bg,
-            underline = true
-        })
-        -- TODO: Fix colors
+        vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = bg })
         vim.cmd[[
-           hi IlluminatedWordRead  guibg = #A5BE00 guifg = #000000
-           hi IlluminatedWordWrite guibg = #1F7A8C gui   = italic
+           hi IlluminatedWordRead  guibg = #8AC926 guifg = #FFFFFF gui = bold
+           hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
        ]]
     end,
     event = 'CursorHold'
@@ -426,25 +416,28 @@ AddPlugin {
 AddPlugin {
     'folke/todo-comments.nvim',
     opts = {
+        colors = {
+            default = { 'Identifier', '#7C3AED' },
+            docs    = { 'Function', '#440381' },
+            error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+            feat    = { 'Type', '#274C77' },
+            hint    = { 'DiagnosticHint', '#10B981' },
+            info    = { 'DiagnosticInfo', '#2563EB' },
+            perf    = { 'String', '#C2F970' },
+            test    = { 'Identifier', '#DDD92A' },
+            todo    = { 'Keyword', '#1B998B' },
+            warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
+        },
         keywords = {
-            -- Syntax:
-            -- Keyword = {
-            --     icon = '<icon>',
-            --     color = '<name or hex>',
-            --     alt = '<list of alt keys>',
-            --     sign = '<boolean for each sign visibility>',
-            -- }
-            -- TOOD: Fix colors and icons
-            DOCME   = { icon = '📝', color = 'hint' },
-            FEAT    = { icon = 'ﯦ', color = 'hint' },
-            FIX     = { icon = '', color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
-            HACK    = { icon = '', color = "warning" },
-            NOTE    = { icon = '', color = "hint", alt = { "INFO" } },
-            PERF    = { icon = '', alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-            TEST    = { icon = '', color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-            THOUGHT = { icon = '🤔', color = 'info'},
-            TODO    = { icon = '', color = "info" },
-            WARN    = { icon = '', color = "warning", alt = { "WARNING", "XXX" } },
+            DOCME = { icon = '', color = 'docs' },
+            FEAT  = { icon = '󱩑', color = 'feat' },
+            FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+            HACK  = { icon = '', color = 'hint' },
+            NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+            PERF  = { icon = '', color = 'perf', alt = { 'PERFORMANCE', 'OPTIMIZE' } },
+            TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+            TODO  = { icon = '', color = 'todo' },
+            WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
     },
@@ -485,6 +478,13 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+function FixDiagnosticInfo()
+    if (vim.o.background == 'light') then
+        vim.cmd('hi clear DiagnosticInfo')
+        vim.cmd('hi link DiagnosticInfo DiagnosticInformation')
+    end
+end
+
 function FixIndentBlankline()
     for _, color in pairs({
         'IndentBlanklineChar',
@@ -497,6 +497,10 @@ function FixIndentBlankline()
         hl.nocombine = false
         vim.api.nvim_set_hl(0, color, hl)
     end
+end
+
+function FixLineNr(fg)
+    vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
 function FixNontext()
@@ -724,7 +728,7 @@ Dark  { 'material',                   '_',           pre = function() vim.g.mate
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end                                              } -- TODO: fix number line
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
@@ -739,7 +743,7 @@ Dark  { 'moonlight',                  'starry',      pre = function() require('s
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = FixVisual }
+Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
@@ -834,14 +838,17 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: powershell multiline comment <# #>
-    -- TODO: python multiline comment """ """
     -- TODO: gco and gcO puts cursor in the start
     'numToStr/Comment.nvim',
-    opts = {
-        ignore = '^$',
-        extra = { eol = 'gce' },
-    },
+    config = function()
+        require('Comment').setup({
+            ignore = '^$',
+            extra = { eol = 'gce' },
+        })
+
+        require('Comment.ft').set('ps1', {'# %s', '<# %s #>'})
+        require('Comment.ft').set('python', {'# %s', '""" %s """'})
+    end,
     keys = {
         { 'gc', mode = { 'n', 'v' } },
         { 'gb', mode = { 'n', 'v' } },
@@ -853,6 +860,8 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- TODO: slow completion
+    -- TODO: cmd-cmdline for windows
+    -- TODO: cmp-path for windows
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -928,6 +937,11 @@ AddPlugin {
                 documentation = cmp.config.window.bordered(),
             }
         })
+
+        local bg_mode = vim.o.background
+        for key, value in pairs(kind_hl) do
+            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
+        end
     end,
     dependencies = {
         'hrsh7th/cmp-path',
@@ -1496,6 +1510,7 @@ AddPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
         override = {
+            -- TODO: fix icon for Makefile
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
@@ -1573,15 +1588,15 @@ AddPlugin {
     'liuchengxu/vista.vim',
     config = function()
         vim.cmd[[
-        let g:vista_default_executive = 'nvim_lsp'
-        let g:vista_icon_indent = ['╰─ ', '├─ ']
-        ' TODO: use global icons
-        let g:vista#renderer#icons = {
-            \   'constant': '',
-            \   'class': '',
-            \   'function': '',
-            \   'variable': '',
-            \  }
+            let g:vista_default_executive = 'nvim_lsp'
+            let g:vista_icon_indent = ['╰─ ', '├─ ']
+            ' TODO: use global icons
+            let g:vista#renderer#icons = {
+                \   'constant': '',
+                \   'class': '',
+                \   'function': '',
+                \   'variable': '',
+                \  }
         ]]
     end,
     cmd = 'Vista'
@@ -2420,7 +2435,7 @@ AddPlugin {
                     {
                         'diff',
                         on_click = function()
-                            vim.cmd('Telescope git_status')
+                            vim.cmd('Telescope git_status') -- BUG: fix the cwd issue
                         end
                     },
                     {
@@ -2720,9 +2735,9 @@ AddPlugin {
     'm-demare/hlargs.nvim',
     config = function()
         local dark   = { { fg = '#619e9d' }, { fg = '#9E6162' }, { fg = '#81A35C' }, { fg = '#7E5CA3' }, { fg = '#9E9261' }, { fg = '#616D9E' }, { fg = '#97687B' }, { fg = '#689784' }, { fg = '#999C63' }, { fg = '#66639C' } }
-        local bright = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
-        local colorpalette = vim.o.background == 'light' and dark or bright
-        require('hlargs').setup {
+        local light = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
+        local colorpalette = vim.o.background == 'light' and dark or light
+        require('hlargs').setup({
             use_colorpalette = true,
             colorpalette = colorpalette,
             paint_catch_blocks = {
@@ -2742,7 +2757,7 @@ AddPlugin {
                     lua = { 'self' }
                 }
             }
-        }
+        })
     end
 }
 
@@ -3198,4 +3213,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: location list/quickfix
 -- TODO: marks
 -- TODO: motion.txt
+-- TODO: per file configurations
 -- vim: fmr=</>,<~> fdm=marker

@@ -1,6 +1,7 @@
 $scoop_pkgs = @(
     "bat",
     "dos2unix"
+    "less"
     "ripgrep"
 )
 

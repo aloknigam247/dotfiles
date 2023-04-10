@@ -112,11 +112,11 @@ function treea {
 }
 
 function bat {
-    ~\scoop\shims\bat.exe --paging=never --style='numbers,changes' --italic-text=always $args
+    ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args
 }
 
 function which($arg) {
-    $cm = Get-Command $arg
+    $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
 
     Format-Text "[$type]" -fg "#FF0022"
@@ -297,6 +297,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # FZF Setup
 # ``````````````
 function LoadFZF($arg) {
+    # FIXME: fix delayed loading
     # TODO: Layout selection
     # TODO: Examples https://github.com/junegunn/fzf/wiki/Examples
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
@@ -340,7 +341,7 @@ function promptGen {
             'execute' = @{
                 'sequence' = 2
                 'script' = {
-                    $script:dir_icon = ""
+                    $script:dir_icon = "" # FIX: icon overriden
                     if ($null -ne $script:git_branch) {
                         $script:dir_icon = ""
                     }

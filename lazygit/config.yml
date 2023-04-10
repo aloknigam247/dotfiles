@@ -49,7 +49,7 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: ""
+    pager: delta
     useConfig: false
   commit:
     signOff: false

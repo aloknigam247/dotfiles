@@ -1,0 +1,53 @@
+[fetch]
+	prune = true
+
+[core]
+	editor = nvim
+    pager = delta
+
+[push]
+	autoSetupRemote = true
+
+[user]
+	name = Alok Nigam
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    ; blame-palette = "#FFE8D1 #568EA3 #68C3D4 #FFFFFF"
+    ; minus-emph-style = "#C31D2B #FF928B"
+    ; plus-emph-style = "#48844C #91C499"
+    blame-code-style = "syntax #4A4A48"
+    commit-decoration-style = box
+    commit-style = red
+    dark
+    file-added-label = 
+    file-copied-label = 
+    file-decoration-style = "#D19C1D bold ul"
+    file-modified-label = " "
+    file-removed-label = 󰆴
+    file-renamed-label = 
+    file-style = "#D19C1D italic"
+    hunk-header-decoration-style = "#A4C2A5 box"
+    light = false
+    line-numbers = true
+    line-numbers-left-style = "#CFD11A"
+    line-numbers-minus-style = "#FF928B reverse"
+    line-numbers-plus-style = "#91C499 reverse"
+    line-numbers-right-style = "#CFD11A"
+    line-numbers-zero-style = "#6874E8"
+    minus-emph-style = "#FF928B reverse"
+    minus-style = syntax
+    navigate = true
+    plus-emph-style = "#91C499 reverse"
+    plus-style = syntax
+    side-by-side = true
+    syntax-theme = Monokai Extended Origin
+    true-color = always
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
