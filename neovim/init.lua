@@ -839,7 +839,6 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: gco and gcO puts cursor in the start
     'numToStr/Comment.nvim',
     config = function()
         require('Comment').setup({
