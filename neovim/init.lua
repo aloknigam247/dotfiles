@@ -593,6 +593,7 @@ AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'          
 AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
+AddPlugin { 'maxmx03/dracula.nvim',             event = 'User dracula'                                                 }
 AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                    }
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                              }
 AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
@@ -617,6 +618,7 @@ AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'           
 AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                              }
 AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                                  }
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
+AddPlugin { 'Iron-E/nvim-highlite',             event = 'User highlite'                                                }
 AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 }
 AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  }
 AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             }
@@ -641,7 +643,10 @@ AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'         
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
 AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'                                                 }
 AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
+AddPlugin { 'bluz71/vim-moonfly-colors',        event = 'User moonfly'                                                 }
+AddPlugin { 'bluz71/vim-nightfly-colors',       event = 'User nightfly'                                                }
 AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
+AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                                  }
 AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
@@ -659,7 +664,6 @@ Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
-Dark  { 'base2tone_evening_dark',     'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
 Dark  { 'base2tone_forest_dark',      'base2tone'    }
 Light { 'base2tone_forest_light',     'base2tone'    }
@@ -697,6 +701,7 @@ Dark  { 'deepocean',                  'starry',      pre = function() require('s
 Light { 'delek',                      '_'            }
 Dark  { 'deus',                       '_'            }
 Dark  { 'doubletrouble',              '_'            }
+Dark  { 'dracula',                    '_'            }
 Dark  { 'dracula',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'dracula_blood',              'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'duskfox',                    'nightfox'     }
@@ -713,11 +718,12 @@ Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
 Light { 'github_light',               'github'       }
-Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
 Dark  { 'gruvbox',                    '_'            }
 Light { 'gruvbox',                    '_'            }
+Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
 Dark  { 'gruvbox-baby',               '_'            }
 Dark  { 'habamax',                    '_',           }
+Dark  { 'highlite',                   '_'            }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
@@ -739,15 +745,17 @@ Dark  { 'minimal',                    '_'            }
 Dark  { 'minimal-base16',             'minimal'      }
 Dark  { 'monokai',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'monokai',                    'vim-monokai'  }
+Dark  { 'moonfly',                    '_'            }
 Dark  { 'moonlight',                  '_'            }
 Dark  { 'moonlight',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
-Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
+Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
+Dark  { 'nightfly',                   '_'            }
 Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis_azureus',             'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
@@ -807,6 +815,8 @@ Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end                                                     }
 Dark  { 'ukraine',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vn-night',                   '_'            }
+Dark  { 'vscode',                     '_'            }
+Light { 'vscode',                     '_'            }
 Light { 'zellner',                    '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
 Dark  { 'zenwritten',                 'zenbones'     }
