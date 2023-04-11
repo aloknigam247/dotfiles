@@ -667,7 +667,6 @@ Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
-Dark  { 'base2tone_mall_dark',        'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_meadow_dark',      'base2tone'    }
 Light { 'base2tone_meadow_light',     'base2tone'    }
@@ -726,7 +725,7 @@ Dark  { 'lunaperche',                 '_'                                       
 Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -1901,7 +1900,7 @@ AddPlugin {
             collapse = '',
             preview = ' ',
             code_action = '💡',
-            diagnostic = '🐞',
+            diagnostic = '🐞', -- TODO: use global icon
             incoming = ' ',
             outgoing = ' ',
             hover = ' ',
@@ -1934,6 +1933,7 @@ AddPlugin {
     event = 'LspAttach'
 }
 
+-- TODO: use it
 -- use {
 --     'p00f/clangd_extensions.nvim',
 --     after = 'nvim-lspconfig',
@@ -3067,7 +3067,7 @@ AddPlugin {
     'kwkarlwang/bufjump.nvim',
     opts = {
         on_success = function()
-            vim.cmd([[execute 'normal! g`\'zz']])
+            vim.cmd([[execute "normal! g`\"zz"]])
         end
     },
     keys = {
