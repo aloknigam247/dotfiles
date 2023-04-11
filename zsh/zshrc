@@ -57,10 +57,10 @@ export EDITOR=$(which vim)
 # git shortcuts
 alias ga='git add . && git status -b -s'
 alias gb='git branch'
-alias gc='git commit'
+alias gc='git checkout'
 alias gcl='git clean -dfx'
 alias gdt='git difftool -y'
-alias gs='git status -b -s'
+alias gs='git status --ignore-submodules=all --short --branch --show-stash --ahead-behind'
 
 #---------------+
 # gtags aliases |
@@ -74,9 +74,9 @@ alias gr='global -r --color=auto --result=grep'
 alias gu='global -vu'
 export GTAGSFORCECPP
 
-#---------------+
+#----------------+
 # suffix aliases |
-#---------------+
+#----------------+
 alias -s {c,C,cc,h,H}=gvim
 
 setopt APPEND_HISTORY

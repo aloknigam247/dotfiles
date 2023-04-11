@@ -1,0 +1,5 @@
+﻿cmds=(
+    'sudo apt-get install -y bat'
+    'sudo apt-get install -y gdb'
+    'sudo apt-get install -y tree'
+    )
