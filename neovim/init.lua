@@ -675,7 +675,6 @@ Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_meadow_dark',      'base2tone'    }
 Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
-Light { 'base2tone_morning_light',    'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
@@ -3119,6 +3118,7 @@ AddPlugin {
 
 AddPlugin {
     -- Lua copy https://github.com/ojroques/nvim-osc52
+    -- FIXME: not working
     'ojroques/vim-oscyank',
     cond = function()
         -- Check if connection is ssh
