@@ -52,7 +52,7 @@ alias v="/mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geom
 alias vpcl='nvim -c PlugClean! -c qa'
 alias vpi='nvim -c PlugInstall -c qa'
 
-export EDITOR=$(which vim)
+export EDITOR=$(which nvim)
 
 # git shortcuts
 alias ga='git add . && git status -b -s'
