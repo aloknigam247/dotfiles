@@ -56,6 +56,13 @@ vim.g.cmp_kinds = {
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
+-- TODO: resolve colors after color scheme
+if vim.o.background == 'light' then
+    ColorPalette = { { fg = '#619e9d' }, { fg = '#9E6162' }, { fg = '#81A35C' }, { fg = '#7E5CA3' }, { fg = '#9E9261' }, { fg = '#616D9E' }, { fg = '#97687B' }, { fg = '#689784' }, { fg = '#999C63' }, { fg = '#66639C' } }
+else
+    ColorPalette = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
+end
+
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -468,8 +475,15 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: configure colors
     't9md/vim-quickhl',
+    config = function()
+        local colors = {}
+        for i,v in pairs(ColorPalette) do
+            local hi = "gui=italic,bold guifg=#000000 guibg=" .. v.fg
+            table.insert(colors, hi)
+        end
+        vim.g.quickhl_manual_colors = colors
+    end,
     keys = {
         { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
         { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x' },
@@ -781,7 +795,7 @@ Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
-Light { 'pink-panic',                 '_'            }
+Light { 'pink-panic',                 '_'            } -- FIXME: for illuminate error
 Dark  { 'poimandres',                 '_',           pre = function() require('poimandres').setup() end }
 Dark  { 'rose-pine',                  '_'            }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
@@ -2124,6 +2138,8 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
+    -- TODO: check if vim.input is possible for annotate message
+    -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function()
         vim.cmd[[
@@ -2133,7 +2149,7 @@ AddPlugin {
             let g:bookmark_location_list = 1
             let g:bookmark_no_default_key_mappings = 1
             let g:bookmark_save_per_working_dir = 1
-            let g:bookmark_sign = ''
+            let g:bookmark_sign = '' " TODO: paper clip or someother icon
             nmap ba <Plug>BookmarkAnnotate
             nmap bm <Plug>BookmarkToggle
             nmap bn <Plug>BookmarkNext
@@ -2739,34 +2755,28 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
-    -- TODO: Not working
     'm-demare/hlargs.nvim',
-    config = function()
-        local dark   = { { fg = '#619e9d' }, { fg = '#9E6162' }, { fg = '#81A35C' }, { fg = '#7E5CA3' }, { fg = '#9E9261' }, { fg = '#616D9E' }, { fg = '#97687B' }, { fg = '#689784' }, { fg = '#999C63' }, { fg = '#66639C' } }
-        local light = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
-        local colorpalette = vim.o.background == 'light' and dark or light
-        require('hlargs').setup({
-            use_colorpalette = true,
-            colorpalette = colorpalette,
-            paint_catch_blocks = {
-                declarations = true,
-                usages = true
+    opts = {
+        use_colorpalette = true,
+        colorpalette = ColorPalette,
+        paint_catch_blocks = {
+            declarations = true,
+            usages = true
+        },
+        extras = {
+            named_parameters = true,
+        },
+        excluded_argnames = {
+            declarations = {
+                python = { 'self', 'cls' },
+                lua = { 'self' }
             },
-            extras = {
-                named_parameters = true,
-            },
-            excluded_argnames = {
-                declarations = {
-                    python = { 'self', 'cls' },
-                    lua = { 'self' }
-                },
-                usages = {
-                    python = { 'self', 'cls' },
-                    lua = { 'self' }
-                }
+            usages = {
+                python = { 'self', 'cls' },
+                lua = { 'self' }
             }
-        })
-    end
+        }
+    }
 }
 
 AddPlugin {
