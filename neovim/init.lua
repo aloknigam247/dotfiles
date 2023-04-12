@@ -56,13 +56,55 @@ vim.g.cmp_kinds = {
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
--- TODO: resolve colors after color scheme
-if vim.o.background == 'light' then
-    ColorPalette = { { fg = '#619e9d' }, { fg = '#9E6162' }, { fg = '#81A35C' }, { fg = '#7E5CA3' }, { fg = '#9E9261' }, { fg = '#616D9E' }, { fg = '#97687B' }, { fg = '#689784' }, { fg = '#999C63' }, { fg = '#66639C' } }
-else
-    ColorPalette = { { fg = '#f5c0c0' }, { fg = '#f5d3c0' }, { fg = '#f5eac0' }, { fg = '#dff5c0' }, { fg = '#c0f5c8' }, { fg = '#c0f5f1' }, { fg = '#c0dbf5' }, { fg = '#ccc0f5' }, { fg = '#f2c0f5' }, { fg = '#98fc03' } }
+function ColorPalette()
+    if vim.o.background == 'light' then
+        return {
+            { fg = '#00A6ED' },
+            { fg = '#037171' },
+            { fg = '#2100F5' },
+            { fg = '#235789' },
+            { fg = '#247BA0' },
+            { fg = '#30B0A1' },
+            { fg = '#5D536B' },
+            { fg = '#61210F' },
+            { fg = '#689784' },
+            { fg = '#7E5CA3' },
+            { fg = '#7FB800' },
+            { fg = '#806443' },
+            { fg = '#81A35C' },
+            { fg = '#9C7C1C' },
+            { fg = '#A42CD6' },
+            { fg = '#CE2D4F' },
+            { fg = '#F1D302' },
+            { fg = '#F4743B' },
+            { fg = '#F6511D' },
+            { fg = '#FFB400' },
+        }
+    else
+        return {
+            { fg = '#4056F4' },
+            { fg = '#5FAD56' },
+            { fg = '#97CC04' },
+            { fg = '#98fc03' },
+            { fg = '#BDBEA9' },
+            { fg = '#CE6D8B' },
+            { fg = '#D4C2FC' },
+            { fg = '#DDA15E' },
+            { fg = '#E6E6E6' },
+            { fg = '#E9D758' },
+            { fg = '#F45D01' },
+            { fg = '#F78154' },
+            { fg = '#FFD447' },
+            { fg = '#c0dbf5' },
+            { fg = '#c0f5c8' },
+            { fg = '#c0f5f1' },
+            { fg = '#ccc0f5' },
+            { fg = '#dff5c0' },
+            { fg = '#f2c0f5' },
+            { fg = '#f5eac0' },
+        }
+    end
 end
-
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -478,8 +520,8 @@ AddPlugin {
     't9md/vim-quickhl',
     config = function()
         local colors = {}
-        for i,v in pairs(ColorPalette) do
-            local hi = "gui=italic,bold guifg=#000000 guibg=" .. v.fg
+        for i,v in pairs(ColorPalette()) do
+            local hi = "gui=italic,bold,underline guifg=#000000 guibg=" .. v.fg
             table.insert(colors, hi)
         end
         vim.g.quickhl_manual_colors = colors
@@ -2758,7 +2800,7 @@ AddPlugin {
     'm-demare/hlargs.nvim',
     opts = {
         use_colorpalette = true,
-        colorpalette = ColorPalette,
+        colorpalette = ColorPalette(),
         paint_catch_blocks = {
             declarations = true,
             usages = true
