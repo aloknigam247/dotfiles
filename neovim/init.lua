@@ -468,6 +468,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: configure colors
     't9md/vim-quickhl',
     keys = {
         { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
@@ -523,7 +524,7 @@ function FixVisual()
     if (vim.o.background ==  'dark') then
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
         bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, 60)
+        bg = LightenDarkenColor(bg, 50)
     else
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
         bg = string.format('%X', bg)
@@ -605,7 +606,6 @@ AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'           
 AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                                }
 AddPlugin { 'savq/melange',                     event = 'User melange'                                                 }
 AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
-AddPlugin { 'Yazeed1s/minimal.nvim',            event = 'User minimal'                                                 }
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
@@ -693,19 +693,19 @@ Dark  { 'codedark',                   '_'            }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
 Dark  { 'darksolar',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'dawnfox',                    'nightfox'     }
-Dark  { 'dayfox',                     'nightfox'     }
+Dark  { 'dawnfox',                    'nightfox'                                                                                                           }
+Dark  { 'dayfox',                     'nightfox'                                                                                                           }
 Dark  { 'deepocean',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Light { 'delek',                      '_'            }
-Dark  { 'deus',                       '_'            }
-Dark  { 'doubletrouble',              '_'            }
-Dark  { 'dracula',                    '_'            }
+Light { 'delek',                      '_'                                                                                                                  }
+Dark  { 'deus',                       '_',           post = FixVisual                                                                                      }
+Dark  { 'doubletrouble',              '_'                                                                                                                  }
+Dark  { 'dracula',                    '_'                                                                                                                  }
 Dark  { 'dracula',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'dracula_blood',              'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'duskfox',                    'nightfox'     }
+Dark  { 'duskfox',                    'nightfox'                                                                                                           }
 Dark  { 'earlysummer',                'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'edge',                       '_'            }
-Light { 'edge',                       '_'            }
+Dark  { 'edge',                       '_'                                                                                                                  }
+Light { 'edge',                       '_'                                                                                                                  }
 Dark  { 'emerald',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'enfocado',                   '_'            }
 Light { 'enfocado',                   '_'            }
@@ -739,8 +739,6 @@ Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
 Dark  { 'mellow',                     '_'            }
 Dark  { 'middlenight_blue',           'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'minimal',                    '_'            }
-Dark  { 'minimal-base16',             'minimal'      }
 Dark  { 'monokai',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'monokai',                    'vim-monokai'  }
 Dark  { 'moonfly',                    '_'            }
@@ -1632,7 +1630,7 @@ AddPlugin {
                 if #vim.lsp.get_active_clients({bufnr = 0}) == 0 then
                     vim.cmd('LspStart')
                 else
-                    vim.cmd('LspStop')
+                    vim.cmd('LspStop') -- create key maps to toggle again
                 end
             end,
             { nargs = 0 }
@@ -1789,7 +1787,7 @@ AddPlugin {
         vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    -- event = 'CursorHold'
+    keys = { '<F12>' }
 }
 
 AddPlugin {
@@ -1804,6 +1802,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: <M-F12> mapping for lsp_finder
     'glepnir/lspsaga.nvim',
     branch = 'main',
     cmd = 'Lspsaga',
@@ -3223,4 +3222,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: marks
 -- TODO: motion.txt
 -- TODO: per file configurations
+-- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- vim: fmr=</>,<~> fdm=marker
