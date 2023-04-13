@@ -429,14 +429,12 @@ AddPlugin {
             }
         })
         local bg
-        if (vim.o.background ==  "dark") then
+        if (vim.o.background == "dark" and not vim.g.ColoRand:find('pink-panic', 0, true)) then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-            local bs = string.format("%X", bg)
-            bg = LightenDarkenColor(bs, 40)
+            bg = LightenDarkenColor(string.format("%X", bg), 40)
         else
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-            local bs = string.format("%X", bg)
-            bg = LightenDarkenColor(bs, -40)
+            bg = LightenDarkenColor(string.format("%X", bg), -40)
         end
         vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = bg })
         vim.cmd[[
@@ -589,6 +587,7 @@ function FixVisual()
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
 end
 
+-- https://github.com/SeniorMars/dotfiles/blob/master/.config/nvim/init.lua
 function SeniorMarsTheme()
     require('gruvbox').setup({
         overrides = {
@@ -831,13 +830,13 @@ Dark  { 'onedark_dark',               'onedarkpro'   }
 Dark  { 'onedark_vivid',              'onedarkpro'   }
 Light { 'onelight',                   '_'            }
 Dark  { 'onenord',                    '_'            }
-Light { 'onenord',                    '_'            }
+Light { 'onenord',                    '_'            } -- FIXME: Fixed the background issue
 Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
-Light { 'pink-panic',                 '_'            } -- FIXME: for illuminate error
+Light { 'pink-panic',                 '_'            }
 Dark  { 'poimandres',                 '_',           pre = function() require('poimandres').setup() end }
 Dark  { 'rose-pine',                  '_'            }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
@@ -888,12 +887,12 @@ function ColoRand(ind)
     vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
-    vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
+    vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module}) -- Load colorscheme
     if (precmd) then
         precmd()
     end
     vim.cmd.colorscheme(scheme)
-    vim.cmd[[highlight clear CursorLine]]
+    -- vim.cmd[[highlight clear CursorLine]]
     if (postcmd) then
         postcmd()
     end
@@ -1843,7 +1842,7 @@ AddPlugin {
         vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    keys = { '<F12>' }
+    keys = { '<F12>', '<S-F12>' }
 }
 
 AddPlugin {
