@@ -56,55 +56,6 @@ vim.g.cmp_kinds = {
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
-function ColorPalette()
-    if vim.o.background == 'light' then
-        return {
-            { fg = '#00A6ED' },
-            { fg = '#037171' },
-            { fg = '#2100F5' },
-            { fg = '#235789' },
-            { fg = '#247BA0' },
-            { fg = '#30B0A1' },
-            { fg = '#5D536B' },
-            { fg = '#61210F' },
-            { fg = '#689784' },
-            { fg = '#7E5CA3' },
-            { fg = '#7FB800' },
-            { fg = '#806443' },
-            { fg = '#81A35C' },
-            { fg = '#9C7C1C' },
-            { fg = '#A42CD6' },
-            { fg = '#CE2D4F' },
-            { fg = '#F1D302' },
-            { fg = '#F4743B' },
-            { fg = '#F6511D' },
-            { fg = '#FFB400' },
-        }
-    else
-        return {
-            { fg = '#4056F4' },
-            { fg = '#5FAD56' },
-            { fg = '#97CC04' },
-            { fg = '#98fc03' },
-            { fg = '#BDBEA9' },
-            { fg = '#CE6D8B' },
-            { fg = '#D4C2FC' },
-            { fg = '#DDA15E' },
-            { fg = '#E6E6E6' },
-            { fg = '#E9D758' },
-            { fg = '#F45D01' },
-            { fg = '#F78154' },
-            { fg = '#FFD447' },
-            { fg = '#c0dbf5' },
-            { fg = '#c0f5c8' },
-            { fg = '#c0f5f1' },
-            { fg = '#ccc0f5' },
-            { fg = '#dff5c0' },
-            { fg = '#f2c0f5' },
-            { fg = '#f5eac0' },
-        }
-    end
-end
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -269,6 +220,56 @@ local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a
 -- ---------
 function AddPlugin(opts)
     table.insert(Plugins, opts)
+end
+
+function ColorPalette()
+    if vim.o.background == 'light' then
+        return {
+            { fg = '#00A6ED' },
+            { fg = '#037171' },
+            { fg = '#2100F5' },
+            { fg = '#235789' },
+            { fg = '#247BA0' },
+            { fg = '#30B0A1' },
+            { fg = '#5D536B' },
+            { fg = '#61210F' },
+            { fg = '#689784' },
+            { fg = '#7E5CA3' },
+            { fg = '#7FB800' },
+            { fg = '#806443' },
+            { fg = '#81A35C' },
+            { fg = '#9C7C1C' },
+            { fg = '#A42CD6' },
+            { fg = '#CE2D4F' },
+            { fg = '#F1D302' },
+            { fg = '#F4743B' },
+            { fg = '#F6511D' },
+            { fg = '#FFB400' },
+        }
+    else
+        return {
+            { fg = '#4056F4' },
+            { fg = '#5FAD56' },
+            { fg = '#97CC04' },
+            { fg = '#98fc03' },
+            { fg = '#BDBEA9' },
+            { fg = '#CE6D8B' },
+            { fg = '#D4C2FC' },
+            { fg = '#DDA15E' },
+            { fg = '#E6E6E6' },
+            { fg = '#E9D758' },
+            { fg = '#F45D01' },
+            { fg = '#F78154' },
+            { fg = '#FFD447' },
+            { fg = '#c0dbf5' },
+            { fg = '#c0f5c8' },
+            { fg = '#c0f5f1' },
+            { fg = '#ccc0f5' },
+            { fg = '#dff5c0' },
+            { fg = '#f2c0f5' },
+            { fg = '#f5eac0' },
+        }
+    end
 end
 
 function LightenDarkenColor(col, amt)
@@ -830,7 +831,7 @@ Dark  { 'onedark_dark',               'onedarkpro'   }
 Dark  { 'onedark_vivid',              'onedarkpro'   }
 Light { 'onelight',                   '_'            }
 Dark  { 'onenord',                    '_'            }
-Light { 'onenord',                    '_'            } -- FIXME: Fixed the background issue
+Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  '_'            }
@@ -892,7 +893,7 @@ function ColoRand(ind)
         precmd()
     end
     vim.cmd.colorscheme(scheme)
-    -- vim.cmd[[highlight clear CursorLine]]
+    vim.cmd[[highlight clear CursorLine]]
     if (postcmd) then
         postcmd()
     end
@@ -2463,8 +2464,10 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                -- component_separators = { left = '', right = ''},
+                -- section_separators = { left = '', right = ''},
+                component_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
         --             winbar = {},
@@ -2796,28 +2799,31 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
+    -- TODO: add underline to all params
     'm-demare/hlargs.nvim',
-    opts = {
-        use_colorpalette = true,
-        colorpalette = ColorPalette(),
-        paint_catch_blocks = {
-            declarations = true,
-            usages = true
-        },
-        extras = {
-            named_parameters = true,
-        },
-        excluded_argnames = {
-            declarations = {
-                python = { 'self', 'cls' },
-                lua = { 'self' }
+    config = function(opts)
+        require('hlargs').setup({
+            use_colorpalette = true,
+            colorpalette = ColorPalette(),
+            paint_catch_blocks = {
+                declarations = true,
+                usages = true
             },
-            usages = {
-                python = { 'self', 'cls' },
-                lua = { 'self' }
+            extras = {
+                named_parameters = true,
+            },
+            excluded_argnames = {
+                declarations = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                },
+                usages = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                }
             }
-        }
-    }
+        })
+    end
 }
 
 AddPlugin {
@@ -3228,8 +3234,10 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 
 -- TODO: https://github.com/AndrewRadev/splitjoin.vim
 -- TODO: https://github.com/Bekaboo/deadcolumn.nvim
+-- TODO: https://github.com/Bryley/neoai.nvim
 -- TODO: https://github.com/CKolkey/ts-node-action
 -- TODO: https://github.com/HiPhish/nvim-ts-rainbow2
+-- TODO: https://github.com/IndianBoy42/fuzzy_slash.nvim
 -- TODO: https://github.com/JellyApple102/easyread.nvim
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
@@ -3241,6 +3249,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/astaos/nvim-ultivisual
 -- TODO: https://github.com/axlebedev/vim-footprints
 -- TODO: https://github.com/cbochs/portal.nvim
+-- TODO: https://github.com/chrisgrieser/nvim-alt-substitute
 -- TODO: https://github.com/doums/dmap.nvim
 -- TODO: https://github.com/dundargoc/fakedonalds.nvim
 -- TODO: https://github.com/echasnovski/mini.bracketed
@@ -3248,11 +3257,14 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
 -- TODO: https://github.com/gbprod/yanky.nvim
 -- TODO: https://github.com/igorgue/danger
+-- TODO: https://github.com/james1236/backseat.nvim
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
 -- TODO: https://github.com/lukas-reineke/virt-column.nvim
 -- TODO: https://github.com/luukvbaal/statuscol.nvim
 -- TODO: https://github.com/m4xshen/smartcolumn.nvim
+-- TODO: https://github.com/madox2/vim-ai
+-- TODO: https://github.com/nosduco/remote-sshfs.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/roobert/node-type.nvim
 -- TODO: https://github.com/roobert/surround-ui.nvim
@@ -3261,6 +3273,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/tom-anders/telescope-vim-bookmarks.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+-- TODO: https://github.com/tzachar/local-highlight.nvim
 -- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
@@ -3274,4 +3287,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: motion.txt
 -- TODO: per file configurations
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
+-- TODO: indentation is not identifible
 -- vim: fmr=</>,<~> fdm=marker
