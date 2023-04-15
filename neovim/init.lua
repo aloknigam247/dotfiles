@@ -865,7 +865,6 @@ Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end                                                     }
-Dark  { 'ukraine',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vn-night',                   '_'            }
 Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
@@ -2401,6 +2400,7 @@ vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = functi
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     config = function()
