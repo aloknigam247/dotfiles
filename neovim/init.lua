@@ -649,6 +649,7 @@ AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'        
 AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
 AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'igorgue/danger',                   event = 'User danger'                                                  }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
 AddPlugin { 'maxmx03/dracula.nvim',             event = 'User dracula'                                                 }
@@ -747,6 +748,8 @@ Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
+Dark  { 'danger_dark',                'danger'       }
+Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
 Dark  { 'darksolar',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -991,7 +994,7 @@ AddPlugin {
                 },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp' },
+                { name = 'nvim_lsp' }, -- TODO: increase priority
                 { name = 'path' },
                 { name = 'snippy' },
             }),
@@ -3229,12 +3232,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-AddPlugin {
-    'IndianBoy42/fuzzy_slash.nvim',
-    dependencies = {
-        { "IndianBoy42/fuzzy.nvim", dependencies = { { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } } },
-    }
-}
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
@@ -3262,7 +3259,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/echasnovski/mini.splitjoin
 -- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
 -- TODO: https://github.com/gbprod/yanky.nvim
--- TODO: https://github.com/igorgue/danger
 -- TODO: https://github.com/james1236/backseat.nvim
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
