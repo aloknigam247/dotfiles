@@ -241,7 +241,7 @@ function ColorPalette()
             { fg = '#9C7C1C' },
             { fg = '#A42CD6' },
             { fg = '#CE2D4F' },
-            { fg = '#F1D302' },
+            { fg = '#F1D302' }, -- TODO: not good in light bg
             { fg = '#F4743B' },
             { fg = '#F6511D' },
             { fg = '#FFB400' },
