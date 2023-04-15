@@ -420,6 +420,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
@@ -1988,9 +1989,9 @@ AddPlugin {
     config = function ()
         local mnls = require('mason-null-ls')
         mnls.setup({
-            automatic_setup = true
+            automatic_setup = true,
+            handlers = {}
         })
-        mnls.setup_handlers({})
     end,
     dependencies = { 'jose-elias-alvarez/null-ls.nvim', config = true },
     event = 'LspAttach'
