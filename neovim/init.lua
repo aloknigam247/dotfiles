@@ -319,7 +319,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1)
+vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highligh not working
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -3229,6 +3229,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+AddPlugin {
+    'IndianBoy42/fuzzy_slash.nvim',
+    dependencies = {
+        { "IndianBoy42/fuzzy.nvim", dependencies = { { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } } },
+    }
+}
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
@@ -3238,7 +3244,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/Bryley/neoai.nvim
 -- TODO: https://github.com/CKolkey/ts-node-action
 -- TODO: https://github.com/HiPhish/nvim-ts-rainbow2
--- TODO: https://github.com/IndianBoy42/fuzzy_slash.nvim
 -- TODO: https://github.com/JellyApple102/easyread.nvim
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
@@ -3265,6 +3270,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/luukvbaal/statuscol.nvim
 -- TODO: https://github.com/m4xshen/smartcolumn.nvim
 -- TODO: https://github.com/madox2/vim-ai
+-- TODO: https://github.com/mhanberg/output-panel.nvim
 -- TODO: https://github.com/nosduco/remote-sshfs.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/roobert/node-type.nvim
