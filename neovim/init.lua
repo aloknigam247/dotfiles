@@ -2184,6 +2184,7 @@ AddPlugin {
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
     -- TODO: check if vim.input is possible for annotate message
+    -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function()
@@ -2728,9 +2729,14 @@ AddPlugin {
             },
         })
         telescope.load_extension('undo')
+        telescope.load_extension('vim_bookmarks')
         vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
-    dependencies = { 'debugloop/telescope-undo.nvim', 'nvim-lua/plenary.nvim' }
+    dependencies = {
+        'debugloop/telescope-undo.nvim',
+        'nvim-lua/plenary.nvim',
+        {'tom-anders/telescope-vim-bookmarks.nvim', dependencies = 'MattesGroeger/vim-bookmarks'}
+    }
 }
 
 AddPlugin {
@@ -3266,14 +3272,12 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/luukvbaal/statuscol.nvim
 -- TODO: https://github.com/m4xshen/smartcolumn.nvim
 -- TODO: https://github.com/madox2/vim-ai
--- TODO: https://github.com/mhanberg/output-panel.nvim
 -- TODO: https://github.com/nosduco/remote-sshfs.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/roobert/node-type.nvim
 -- TODO: https://github.com/roobert/surround-ui.nvim
 -- TODO: https://github.com/sickill/vim-pasta
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
--- TODO: https://github.com/tom-anders/telescope-vim-bookmarks.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/tzachar/local-highlight.nvim
