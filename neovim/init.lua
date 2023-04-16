@@ -1576,6 +1576,7 @@ AddPlugin {
     opts = {
         override = {
             -- TODO: fix icon for Makefile
+            -- TODO: better c++ icons
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
@@ -1997,13 +1998,12 @@ AddPlugin {
         })
     end,
     dependencies = { 'jose-elias-alvarez/null-ls.nvim', config = true },
-    event = 'LspAttach'
+    -- event = 'LspAttach'
 }
 
 -- TODO: use it
-use {
+AddPlugin {
     'p00f/clangd_extensions.nvim',
-    after = 'nvim-lspconfig',
     config = function()
         require('clangd_extensions').setup {
             server = {
@@ -2062,7 +2062,7 @@ use {
                         TemplateTemplateParm = '🅃',
                         TemplateParamObject = '🅃',
                     },
-                    --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
+                    -- These require codicons (https://github.com/microsoft/vscode-codicons)
                     role_icons = {
                         type = '',
                         declaration = '',
@@ -2080,22 +2080,22 @@ use {
                         TemplateTypeParm = '',
                         TemplateTemplateParm = '',
                         TemplateParamObject = '',
-                    }, ]]
+                    },
 
                     highlights = {
                         detail = 'Comment',
                     },
                 },
                 memory_usage = {
-                    border = 'none',
+                    border = 'rounded',
                 },
                 symbol_info = {
-                    border = 'none',
+                    border = 'rounded',
                 },
             },
         }
     end,
-    event = 'LspAttach'
+    -- event = 'LspAttach'
     -- ft = { 'c', 'cpp' }
 }
 
