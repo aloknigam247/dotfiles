@@ -241,7 +241,7 @@ function ColorPalette()
             { fg = '#9C7C1C' },
             { fg = '#A42CD6' },
             { fg = '#CE2D4F' },
-            { fg = '#F1D302' },
+            { fg = '#F1D302' }, -- TODO: not good in light bg
             { fg = '#F4743B' },
             { fg = '#F6511D' },
             { fg = '#FFB400' },
@@ -319,7 +319,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1)
+vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highligh not working
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -420,6 +420,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
@@ -648,6 +649,7 @@ AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'        
 AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
 AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'igorgue/danger',                   event = 'User danger'                                                  }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
 AddPlugin { 'maxmx03/dracula.nvim',             event = 'User dracula'                                                 }
@@ -745,6 +747,8 @@ Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
+Dark  { 'danger_dark',                'danger'       }
+Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
 Dark  { 'darksolar',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -864,7 +868,6 @@ Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end                                                     }
-Dark  { 'ukraine',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr =   { underline = false }}}) end }
 Dark  { 'vn-night',                   '_'            }
 Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
@@ -990,7 +993,7 @@ AddPlugin {
                 },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp' },
+                { name = 'nvim_lsp' }, -- TODO: increase priority
                 { name = 'path' },
                 { name = 'snippy' },
             }),
@@ -1572,6 +1575,7 @@ AddPlugin {
     opts = {
         override = {
             -- TODO: fix icon for Makefile
+            -- TODO: better c++ icons
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
@@ -1988,112 +1992,16 @@ AddPlugin {
     config = function ()
         local mnls = require('mason-null-ls')
         mnls.setup({
-            automatic_setup = true
+            automatic_setup = true,
+            handlers = {}
         })
-        mnls.setup_handlers({})
     end,
     dependencies = { 'jose-elias-alvarez/null-ls.nvim', config = true },
-    event = 'LspAttach'
+    -- event = 'LspAttach'
 }
 
--- TODO: use it
--- use {
---     'p00f/clangd_extensions.nvim',
---     after = 'nvim-lspconfig',
---     config = function()
---         require('clangd_extensions').setup {
---             server = {
---                 -- options to pass to nvim-lspconfig
---                 -- i.e. the arguments to require('lspconfig').clangd.setup({})
---             },
---             extensions = {
---                 -- defaults:
---                 -- Automatically set inlay hints (type hints)
---                 autoSetHints = true,
---                 -- These apply to the default ClangdSetInlayHints command
---                 inlay_hints = {
---                     -- Only show inlay hints for the current line
---                     only_current_line = false,
---                     -- Event which triggers a refersh of the inlay hints.
---                     -- You can make this 'CursorMoved' or 'CursorMoved,CursorMovedI' but
---                     -- not that this may cause  higher CPU usage.
---                     -- This option is only respected when only_current_line and
---                     -- autoSetHints both are true.
---                     only_current_line_autocmd = 'CursorHold',
---                     -- whether to show parameter hints with the inlay hints or not
---                     show_parameter_hints = true,
---                     -- prefix for parameter hints
---                     parameter_hints_prefix = '<- ',
---                     -- prefix for all the other hints (type, chaining)
---                     other_hints_prefix = '=> ',
---                     -- whether to align to the length of the longest line in the file
---                     max_len_align = false,
---                     -- padding from the left if max_len_align is true
---                     max_len_align_padding = 1,
---                     -- whether to align to the extreme right or not
---                     right_align = false,
---                     -- padding from the right if right_align is true
---                     right_align_padding = 7,
---                     -- The color of the hints
---                     highlight = 'Comment',
---                     -- The highlight group priority for extmark
---                     priority = 100,
---                 },
---                 ast = {
---                     -- These are unicode, should be available in any font
---                     role_icons = {
---                         type = '🄣',
---                         declaration = '🄓',
---                         expression = '🄔',
---                         statement = ';',
---                         specifier = '🄢',
---                         ['template argument'] = '🆃',
---                     },
---                     kind_icons = {
---                         Compound = '🄲',
---                         Recovery = '🅁',
---                         TranslationUnit = '🅄',
---                         PackExpansion = '🄿',
---                         TemplateTypeParm = '🅃',
---                         TemplateTemplateParm = '🅃',
---                         TemplateParamObject = '🅃',
---                     },
---                     --[[ These require codicons (https://github.com/microsoft/vscode-codicons)
---                     role_icons = {
---                         type = '',
---                         declaration = '',
---                         expression = '',
---                         specifier = '',
---                         statement = '',
---                         ['template argument'] = '',
---                     },
-
---                     kind_icons = {
---                         Compound = '',
---                         Recovery = '',
---                         TranslationUnit = '',
---                         PackExpansion = '',
---                         TemplateTypeParm = '',
---                         TemplateTemplateParm = '',
---                         TemplateParamObject = '',
---                     }, ]]
-
---                     highlights = {
---                         detail = 'Comment',
---                     },
---                 },
---                 memory_usage = {
---                     border = 'none',
---                 },
---                 symbol_info = {
---                     border = 'none',
---                 },
---             },
---         }
---     end,
---     event = 'LspAttach'
---     -- ft = { 'c', 'cpp' }
--- }
+-- AddPlugin { 'p00f/clangd_extensions.nvim' } -- NOTE: not much usefull until inline virtual text
+-- is supported
 
 -- use 'razzmatazz/csharp-language-server'
 
@@ -2180,6 +2088,7 @@ AddPlugin {
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
     -- TODO: check if vim.input is possible for annotate message
+    -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function()
@@ -2400,6 +2309,7 @@ vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = functi
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     config = function()
@@ -2723,9 +2633,14 @@ AddPlugin {
             },
         })
         telescope.load_extension('undo')
+        telescope.load_extension('vim_bookmarks')
         vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
-    dependencies = { 'debugloop/telescope-undo.nvim', 'nvim-lua/plenary.nvim' }
+    dependencies = {
+        'debugloop/telescope-undo.nvim',
+        'nvim-lua/plenary.nvim',
+        {'tom-anders/telescope-vim-bookmarks.nvim', dependencies = 'MattesGroeger/vim-bookmarks'}
+    }
 }
 
 AddPlugin {
@@ -3237,7 +3152,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/Bryley/neoai.nvim
 -- TODO: https://github.com/CKolkey/ts-node-action
 -- TODO: https://github.com/HiPhish/nvim-ts-rainbow2
--- TODO: https://github.com/IndianBoy42/fuzzy_slash.nvim
 -- TODO: https://github.com/JellyApple102/easyread.nvim
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
@@ -3256,7 +3170,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/echasnovski/mini.splitjoin
 -- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
 -- TODO: https://github.com/gbprod/yanky.nvim
--- TODO: https://github.com/igorgue/danger
 -- TODO: https://github.com/james1236/backseat.nvim
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
@@ -3269,8 +3182,8 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/roobert/node-type.nvim
 -- TODO: https://github.com/roobert/surround-ui.nvim
 -- TODO: https://github.com/sickill/vim-pasta
+-- TODO: https://github.com/simrat39/desktop-notify.nvim
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
--- TODO: https://github.com/tom-anders/telescope-vim-bookmarks.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/tzachar/local-highlight.nvim
