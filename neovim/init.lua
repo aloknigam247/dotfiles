@@ -319,7 +319,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highligh not working
+vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highlight not working
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -483,7 +483,7 @@ AddPlugin {
             FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
             HACK  = { icon = '', color = 'hint' },
             NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF  = { icon = '', color = 'perf', alt = { 'PERFORMANCE', 'OPTIMIZE' } },
+            PERF  = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE', 'REFACTOR' } },
             TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
             TODO  = { icon = '', color = 'todo' },
             WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
@@ -535,6 +535,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: FIx colorscheme for not having cmp match chars hl
 function FixDiagnosticInfo()
     if (vim.o.background == 'light') then
         vim.cmd('hi clear DiagnosticInfo')
@@ -786,12 +787,12 @@ Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
-Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- TODO: fix method highlight
 Dark  { 'lunaperche',                 '_'                                                                                                                  }
 Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              } -- TODO: fix Visual bg
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
