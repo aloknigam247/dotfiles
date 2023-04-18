@@ -1,6 +1,5 @@
 #TODO: install choco function
 #TODO: check for admin role
-#TODO: winget first install Y error
 #TODO: install fonts
 
 function DrawMenu {

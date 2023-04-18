@@ -10,9 +10,6 @@
 -- Variables
 -- ---------
 
-local write = 10
-local read = write
-
 -- Vim Globals
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -747,7 +744,7 @@ Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Light { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
-Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
+-- Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end } -- FIX: fix and enable
 Dark  { 'codedark',                   '_'            }
 Dark  { 'danger_dark',                'danger'       }
 Light { 'danger_light',               'danger'       }
@@ -1709,6 +1706,7 @@ AddPlugin {
         local on_attach = function(client, bufnr)
             -- local navic = require('nvim-navic')
             -- Mappings.
+            require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
@@ -1748,7 +1746,7 @@ AddPlugin {
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
-            -- navic.attach(client, bufnr)
+            -- navic.attach(client, bufnr) -- TODO: use this
         end
 
         -- LSP settings (for overriding per client)
@@ -1759,6 +1757,7 @@ AddPlugin {
             ['textDocument/signatureHelp'] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
         }
 
+        -- TODO: resolve these comments
         -- Add additional capabilities supported by nvim-cmp
         -- -- Gets a new ClientCapabilities object describing the LSP client
         -- -- capabilities.
@@ -3004,6 +3003,8 @@ AddPlugin {
     cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
 }
 
+-- https://github.com/TheSafdarAwan/find-extender.nvim
+
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
@@ -3144,10 +3145,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
-vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
-
 -- TODO: https://github.com/AndrewRadev/splitjoin.vim
 -- TODO: https://github.com/Bekaboo/deadcolumn.nvim
 -- TODO: https://github.com/Bryley/neoai.nvim
@@ -3157,8 +3154,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- TODO: https://github.com/NTBBloodbath/sweetie.nvim
--- TODO: https://github.com/SmiteshP/nvim-navbuddy
--- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
 -- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- TODO: https://github.com/askfiy/visual_studio_code
 -- TODO: https://github.com/astaos/nvim-ultivisual
@@ -3191,6 +3186,11 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
+-- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
+
+require('lazy').setup(Plugins, LazyConfig)
+ColoRand()
+vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 
 -- <~>
 -- TODO: context aware popup, using autocmd and position clicked
@@ -3202,4 +3202,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: per file configurations
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: indentation is not identifible
+-- TODO: NeovideRegisterRightClick
 -- vim: fmr=</>,<~> fdm=marker
