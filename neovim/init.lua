@@ -10,9 +10,6 @@
 -- Variables
 -- ---------
 
-local write = 10
-local read = write
-
 -- Vim Globals
 vim.g.cmp_kinds = {
     Array         = ' ',
@@ -319,7 +316,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highligh not working
+vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highlight not working
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -483,7 +480,7 @@ AddPlugin {
             FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
             HACK  = { icon = '', color = 'hint' },
             NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF  = { icon = '', color = 'perf', alt = { 'PERFORMANCE', 'OPTIMIZE' } },
+            PERF  = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE', 'REFACTOR' } },
             TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
             TODO  = { icon = '', color = 'todo' },
             WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
@@ -535,6 +532,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: FIx colorscheme for not having cmp match chars hl
 function FixDiagnosticInfo()
     if (vim.o.background == 'light') then
         vim.cmd('hi clear DiagnosticInfo')
@@ -745,7 +743,7 @@ Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Light { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
-Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
+-- Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end } -- FIX: fix and enable
 Dark  { 'codedark',                   '_'            }
 Dark  { 'danger_dark',                'danger'       }
 Light { 'danger_light',               'danger'       }
@@ -785,12 +783,12 @@ Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
-Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- TODO: fix method highlight
 Dark  { 'lunaperche',                 '_'                                                                                                                  }
 Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              } -- TODO: fix Visual bg
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -1707,6 +1705,7 @@ AddPlugin {
         local on_attach = function(client, bufnr)
             -- local navic = require('nvim-navic')
             -- Mappings.
+            require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
@@ -1746,7 +1745,7 @@ AddPlugin {
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
-            -- navic.attach(client, bufnr)
+            -- navic.attach(client, bufnr) -- TODO: use this
         end
 
         -- LSP settings (for overriding per client)
@@ -1757,6 +1756,7 @@ AddPlugin {
             ['textDocument/signatureHelp'] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
         }
 
+        -- TODO: resolve these comments
         -- Add additional capabilities supported by nvim-cmp
         -- -- Gets a new ClientCapabilities object describing the LSP client
         -- -- capabilities.
@@ -3002,6 +3002,8 @@ AddPlugin {
     cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
 }
 
+-- https://github.com/TheSafdarAwan/find-extender.nvim
+
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
     'andrewferrier/debugprint.nvim',
@@ -3143,10 +3145,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
-vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
-
 -- TODO: https://github.com/AndrewRadev/splitjoin.vim
 -- TODO: https://github.com/Bekaboo/deadcolumn.nvim
 -- TODO: https://github.com/Bryley/neoai.nvim
@@ -3156,8 +3154,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- TODO: https://github.com/NTBBloodbath/sweetie.nvim
--- TODO: https://github.com/SmiteshP/nvim-navbuddy
--- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
 -- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- TODO: https://github.com/askfiy/visual_studio_code
 -- TODO: https://github.com/astaos/nvim-ultivisual
@@ -3190,6 +3186,11 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
+-- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
+
+require('lazy').setup(Plugins, LazyConfig)
+ColoRand()
+vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 
 -- <~>
 -- TODO: context aware popup, using autocmd and position clicked
@@ -3201,4 +3202,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: per file configurations
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: indentation is not identifible
+-- TODO: NeovideRegisterRightClick
 -- vim: fmr=</>,<~> fdm=marker

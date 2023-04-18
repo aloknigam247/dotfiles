@@ -40,8 +40,10 @@ set linebreak                         " Break wrapped line at 'breakat'
 set nofixendofline                    " Do not change end of line
 set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
+set scrolloff=3                       " Set scrolloff to 3
 set shiftwidth=4                      " When shifting, indent using spaces
 " set spell                             " Enable spell check
+" set splitkeep                         " TODO: check
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
