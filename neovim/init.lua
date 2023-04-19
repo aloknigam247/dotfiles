@@ -560,7 +560,7 @@ end
 
 function FixNontext()
     local bg
-    if (vim.o.background ==  'dark') then
+    if (vim.o.background == 'dark') then
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, 60)
@@ -849,7 +849,7 @@ Light { 'rosebones',                  'zenbones'     }
 Light { 'seoulbones',                 'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
 Light { 'shine',                      '_'            }
-Dark  { 'slate',                      '_'            }
+Dark  { 'slate',                      '_'           ,post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end }
@@ -1445,18 +1445,16 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: work on it
--- use {
---     'anuvyklack/pretty-fold.nvim',
---     cond = function()
---         return vim.o.foldmethod == 'marker'
---     end,
---     config = function()
---         require('pretty-fold').setup {
---             fill_char = ' ',
---             process_comment_signs = 'delete'
---         }
---     end
--- }
+AddPlugin {
+    'anuvyklack/pretty-fold.nvim',
+    -- cond = function()
+    --     return vim.o.foldmethod == 'marker'
+    -- end,
+    config = function()
+        require('pretty-fold').setup()
+    end,
+    lazy = false
+}
 
 -- TODO: work on it
 AddPlugin {
@@ -2987,7 +2985,7 @@ vim.notify = function(msg, level, opt)
     vim.notify(msg, level, opt)
 end
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'AckslD/nvim-trevJ.lua'
 -- TODO: https://github.com/wellle/targets.vim
 
