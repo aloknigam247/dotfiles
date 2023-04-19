@@ -52,7 +52,8 @@ function evrc {
 }
 
 function v {
-   ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args
+    # FEAT: support for file:line
+    ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args
 }
 
 function vpcl {

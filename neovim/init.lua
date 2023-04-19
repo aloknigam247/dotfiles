@@ -990,7 +990,7 @@ AddPlugin {
                         end
                     }
                 },
-                { name = 'fuzzy_buffer' },
+                -- { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
                 { name = 'nvim_lsp' }, -- TODO: increase priority
@@ -1015,7 +1015,7 @@ AddPlugin {
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
-        { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
+        -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} }, -- TODO: fzy-lua-native make is not working
     }, -- TODO: check if lazy
     event = 'CmdlineEnter',
 }
@@ -1704,8 +1704,9 @@ AddPlugin {
         local on_attach = function(client, bufnr)
             -- local navic = require('nvim-navic')
             -- Mappings.
-            require("nvim-navbuddy").attach(client, bufnr)
+            -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
+            -- BUG: Mappings are not working
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
@@ -1735,6 +1736,7 @@ AddPlugin {
                 vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
             end
 
+            -- BUG: popup menu not visible now
             PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
             PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
             PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
@@ -1845,7 +1847,7 @@ AddPlugin {
         vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    keys = { '<F12>', '<S-F12>' }
+    keys = { '<F12>', '<S-F12>' } -- BUG: mapping do not get triggered in one go
 }
 
 AddPlugin {
@@ -2309,6 +2311,7 @@ vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = functi
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
+    -- BUG: Fix pah shown in notifications
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     config = function()
