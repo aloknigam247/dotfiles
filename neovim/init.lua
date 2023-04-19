@@ -560,7 +560,7 @@ end
 
 function FixNontext()
     local bg
-    if (vim.o.background ==  'dark') then
+    if (vim.o.background == 'dark') then
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, 60)
@@ -848,7 +848,7 @@ Light { 'rosebones',                  'zenbones'     }
 Light { 'seoulbones',                 'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
 Light { 'shine',                      '_'            }
-Dark  { 'slate',                      '_'            }
+Dark  { 'slate',                      '_'           ,post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end }
@@ -989,6 +989,7 @@ AddPlugin {
                         end
                     }
                 },
+                { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
                 { name = 'nvim_lsp' }, -- TODO: increase priority
@@ -1006,16 +1007,16 @@ AddPlugin {
         end
     end,
     dependencies = {
-        'hrsh7th/cmp-path',
         'chrisgrieser/cmp-nerdfont',
         'dcampos/cmp-snippy',
         'dcampos/nvim-snippy',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-path',
+        { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     }, -- TODO: check if lazy
     event = 'CmdlineEnter',
-    -- enabled = false
 }
 
 -- https://github.com/jameshiew/nvim-magic
@@ -1444,18 +1445,16 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: work on it
--- use {
---     'anuvyklack/pretty-fold.nvim',
---     cond = function()
---         return vim.o.foldmethod == 'marker'
---     end,
---     config = function()
---         require('pretty-fold').setup {
---             fill_char = ' ',
---             process_comment_signs = 'delete'
---         }
---     end
--- }
+AddPlugin {
+    'anuvyklack/pretty-fold.nvim',
+    -- cond = function()
+    --     return vim.o.foldmethod == 'marker'
+    -- end,
+    config = function()
+        require('pretty-fold').setup()
+    end,
+    lazy = false
+}
 
 -- TODO: work on it
 AddPlugin {
@@ -1491,10 +1490,9 @@ AddPlugin {
 -- use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use FZF
--- https://github.com/gfanto/fzf-lsp.nvim
--- https://github.com/ibhagwan/fzf-lua
--- https://github.com/ojroques/nvim-lspfuzzy
+-- TODO: https://github.com/gfanto/fzf-lsp.nvim
+-- TODO: https://github.com/ibhagwan/fzf-lua
+-- TODO: https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/akinsho/git-conflict.nvim
@@ -2986,7 +2984,7 @@ vim.notify = function(msg, level, opt)
     vim.notify(msg, level, opt)
 end
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Utilities   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'AckslD/nvim-trevJ.lua'
 -- TODO: https://github.com/wellle/targets.vim
 
@@ -3181,7 +3179,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/simrat39/desktop-notify.nvim
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
--- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/tzachar/local-highlight.nvim
 -- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
