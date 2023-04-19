@@ -990,6 +990,7 @@ AddPlugin {
                         end
                     }
                 },
+                { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
                 { name = 'nvim_lsp' }, -- TODO: increase priority
@@ -1007,16 +1008,16 @@ AddPlugin {
         end
     end,
     dependencies = {
-        'hrsh7th/cmp-path',
         'chrisgrieser/cmp-nerdfont',
         'dcampos/cmp-snippy',
         'dcampos/nvim-snippy',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-path',
+        { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     }, -- TODO: check if lazy
     event = 'CmdlineEnter',
-    -- enabled = false
 }
 
 -- https://github.com/jameshiew/nvim-magic
@@ -1490,10 +1491,9 @@ AddPlugin {
 -- use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use FZF
--- https://github.com/gfanto/fzf-lsp.nvim
--- https://github.com/ibhagwan/fzf-lua
--- https://github.com/ojroques/nvim-lspfuzzy
+-- TODO: https://github.com/gfanto/fzf-lsp.nvim
+-- TODO: https://github.com/ibhagwan/fzf-lua
+-- TODO: https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/akinsho/git-conflict.nvim
@@ -3179,7 +3179,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/simrat39/desktop-notify.nvim
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
--- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/tzachar/local-highlight.nvim
 -- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
