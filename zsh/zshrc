@@ -6,6 +6,7 @@
 # ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 # ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+# TODO: Powershell like key mappings
 # Updating local dofiles
 # TODO: perform this sync in background
 cd ~/dotfiles
@@ -22,6 +23,7 @@ clear
 autoload -Uz compinit
 compinit
 
+# THOUGHT: fix color for completion, may be same color ?
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8d99ae"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh-suggest

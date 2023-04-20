@@ -1599,6 +1599,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: indentation for public:/private:... for c++
 AddPlugin {
     -- TODO: does not work when indent space is 2 in file, shiftwidth is the option
     -- TODO: delay in autocmd to speed up scrolling
@@ -2339,6 +2340,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: lazy load for filetype needed
     'dcampos/nvim-snippy',
     opts = {
         mappings = {
@@ -3203,4 +3205,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: indentation is not identifible
 -- TODO: NeovideRegisterRightClick
+-- TODO: vsplit or split file opener like find command
 -- vim: fmr=</>,<~> fdm=marker
