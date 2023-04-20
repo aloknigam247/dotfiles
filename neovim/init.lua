@@ -1561,6 +1561,7 @@ AddPlugin {
     cmd = "GitMessenger"
 }
 
+-- BUG: command not working
 AddPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
