@@ -334,6 +334,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: a | b backspace removes both spaces -> a|b
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -665,7 +666,7 @@ AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'           
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               } -- TODO: Customize (italic)
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
 AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
@@ -687,7 +688,6 @@ AddPlugin { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'        
 AddPlugin { 'JoosepAlviste/palenightfall.nvim', event = 'User palenightfall'                                           }
 AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              }
 AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              }
 AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
 AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
 AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
@@ -840,8 +840,8 @@ Dark  { 'palenight',                  '_'            }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
-Dark  { 'poimandres',                 '_',           pre = function() require('poimandres').setup() end }
-Dark  { 'rose-pine',                  '_'            }
+-- Dark  { 'rose-pine',                  '_'            }
+Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
