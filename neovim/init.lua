@@ -281,6 +281,19 @@ end
 -- Auto Commands
 -- -------------
 vim.api.nvim_create_autocmd(
+    'BufWritePre', {
+        pattern = '*',
+        desc = 'Create directory if it does not exists',
+        callback = function()
+            local filedir = vim.fn.expand('%:p:h')
+            if vim.fn.isdirectory(filedir) == 0 then
+                vim.fn.mkdir(filedir, 'p')
+            end
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
     'TextYankPost', {
         pattern = '*',
         desc = 'Highlight text on yank',
@@ -334,6 +347,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: a | b backspace removes both spaces -> a|b
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -460,6 +474,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- THOUGHT: how about we cover comment also in TODO?
     'folke/todo-comments.nvim',
     opts = {
         colors = {
@@ -665,7 +680,7 @@ AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'           
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               } -- TODO: Customize (italic)
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
 AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
@@ -687,7 +702,6 @@ AddPlugin { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'        
 AddPlugin { 'JoosepAlviste/palenightfall.nvim', event = 'User palenightfall'                                           }
 AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                              }
 AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'olivercederborg/poimandres.nvim',  event = 'User poimandres'                                              }
 AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
 AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
 AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
@@ -715,7 +729,7 @@ Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
-Dark  { 'ayu-dark',                   'ayu'          }
+Dark  { 'ayu-dark',                   'ayu'          } -- TODO: Fix LineNr
 Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
@@ -840,8 +854,8 @@ Dark  { 'palenight',                  '_'            }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
-Dark  { 'poimandres',                 '_',           pre = function() require('poimandres').setup() end }
-Dark  { 'rose-pine',                  '_'            }
+-- Dark  { 'rose-pine',                  '_'            }
+Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
@@ -2502,12 +2516,13 @@ AddPlugin {
             winbar = {
                 lualine_a = {
                     {
+                        -- TODO: full file name
                         'filename',
-                        -- TODO: Fix it, how about using multiple statusbars only ?
-                        -- TODO: exclude filetypes
-                        -- cond = function()
-                        --     return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
-                        -- end
+                        cond = function()
+                            local tabpage = vim.api.nvim_get_current_tabpage()
+                            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+                            return #win_list > 2
+                        end
                     }
                 },
             --     lualine_b = {
@@ -2519,10 +2534,11 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filename',
-                        -- TODO: Fix it
-                        -- cond = function()
-                        --     return vim.fn.winnr('$') > 2
-                        -- end
+                        cond = function()
+                            local tabpage = vim.api.nvim_get_current_tabpage()
+                            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+                            return #win_list > 2
+                        end
                     }
                 },
             --     lualine_b = {
@@ -2664,16 +2680,17 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
--- https://github.com/elijahdanko/ttymux.nvim
--- https://github.com/jlesquembre/nterm.nvim
--- https://github.com/kassio/neoterm
--- https://github.com/nat-418/termitary.nvim
--- https://github.com/nikvdp/neomux
--- https://github.com/numToStr/FTerm.nvim
--- https://github.com/oberblastmeister/termwrapper.nvim
--- https://github.com/pianocomposer321/consolation.nvim
--- https://github.com/s1n7ax/nvim-terminal
--- https://github.com/voldikss/vim-floaterm
+-- TODO: https://github.com/elijahdanko/ttymux.nvim
+-- TODO: https://github.com/jlesquembre/nterm.nvim
+-- TODO: https://github.com/kassio/neoterm
+-- TODO: https://github.com/nat-418/termitary.nvim
+-- TODO: https://github.com/nikvdp/neomux
+-- TODO: https://github.com/numToStr/FTerm.nvim
+-- TODO: https://github.com/oberblastmeister/termwrapper.nvim
+-- TODO: https://github.com/pianocomposer321/consolation.nvim
+-- TODO: https://github.com/s1n7ax/nvim-terminal
+-- TODO: https://github.com/voldikss/vim-floaterm
+-- TODO: https://github.com/willothy/flatten.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3149,6 +3166,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+-- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 -- TODO: https://github.com/AndrewRadev/splitjoin.vim
 -- TODO: https://github.com/Bekaboo/deadcolumn.nvim
 -- TODO: https://github.com/Bryley/neoai.nvim
@@ -3158,6 +3176,8 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- TODO: https://github.com/NTBBloodbath/sweetie.nvim
+-- TODO: https://github.com/NvChad/base46
+-- TODO: https://github.com/NvChad/nvim-colorizer.lua
 -- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- TODO: https://github.com/askfiy/visual_studio_code
 -- TODO: https://github.com/astaos/nvim-ultivisual
@@ -3170,7 +3190,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.splitjoin
 -- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
 -- TODO: https://github.com/gbprod/yanky.nvim
+-- TODO: https://github.com/isaksamsten/better-virtual-text.nvim
 -- TODO: https://github.com/james1236/backseat.nvim
+-- TODO: https://github.com/justeph/filename-strip
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
 -- TODO: https://github.com/lukas-reineke/virt-column.nvim
@@ -3186,10 +3208,8 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/tzachar/local-highlight.nvim
--- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
--- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
@@ -3206,5 +3226,10 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: indentation is not identifible
 -- TODO: NeovideRegisterRightClick
+<<<<<<< HEAD
 -- TODO: vsplit or split file opener like find command
+=======
+-- TODO: command window of vim
+-- TODO: format on paste not good with [p ]p zp
+>>>>>>> 2e6d6b36075aec8ccdff698e908cb0f693a9e58a
 -- vim: fmr=</>,<~> fdm=marker
