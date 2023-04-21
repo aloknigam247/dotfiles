@@ -1,6 +1,11 @@
-#TODO: install choco function
-#TODO: check for admin role
-#TODO: install fonts
+# TODO: install choco function
+# TODO: check for admin role
+# TODO: install fonts
+# $fontPath = 'C:\Windows\Fonts\'
+# $files = Get-ChildItem -Path . -Filter *.ttf
+# foreach ($file in $files) {
+#   Copy-Item $file.FullName -Destination $fontPath
+# }
 
 function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)

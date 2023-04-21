@@ -729,7 +729,7 @@ Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
-Dark  { 'ayu-dark',                   'ayu'          }
+Dark  { 'ayu-dark',                   'ayu'          } -- TODO: Fix LineNr
 Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
@@ -2513,12 +2513,13 @@ AddPlugin {
             winbar = {
                 lualine_a = {
                     {
+                        -- TODO: full file name
                         'filename',
-                        -- TODO: Fix it, how about using multiple statusbars only ?
-                        -- TODO: exclude filetypes
-                        -- cond = function()
-                        --     return vim.fn.winnr('$') > 2 -- TODO: triggers on completion
-                        -- end
+                        cond = function()
+                            local tabpage = vim.api.nvim_get_current_tabpage()
+                            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+                            return #win_list > 2
+                        end
                     }
                 },
             --     lualine_b = {
@@ -2530,10 +2531,11 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filename',
-                        -- TODO: Fix it
-                        -- cond = function()
-                        --     return vim.fn.winnr('$') > 2
-                        -- end
+                        cond = function()
+                            local tabpage = vim.api.nvim_get_current_tabpage()
+                            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+                            return #win_list > 2
+                        end
                     }
                 },
             --     lualine_b = {
