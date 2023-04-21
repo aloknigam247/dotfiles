@@ -281,6 +281,19 @@ end
 -- Auto Commands
 -- -------------
 vim.api.nvim_create_autocmd(
+    'BufWritePre', {
+        pattern = '*',
+        desc = 'Create directory if it does not exists',
+        callback = function()
+            local filedir = vim.fn.expand('%:p:h')
+            if vim.fn.isdirectory(filedir) == 0 then
+                vim.fn.mkdir(filedir, 'p')
+            end
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
     'TextYankPost', {
         pattern = '*',
         desc = 'Highlight text on yank',
@@ -461,6 +474,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- THOUGHT: how about we cover comment also in TODO?
     'folke/todo-comments.nvim',
     opts = {
         colors = {
@@ -2661,16 +2675,17 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
--- https://github.com/elijahdanko/ttymux.nvim
--- https://github.com/jlesquembre/nterm.nvim
--- https://github.com/kassio/neoterm
--- https://github.com/nat-418/termitary.nvim
--- https://github.com/nikvdp/neomux
--- https://github.com/numToStr/FTerm.nvim
--- https://github.com/oberblastmeister/termwrapper.nvim
--- https://github.com/pianocomposer321/consolation.nvim
--- https://github.com/s1n7ax/nvim-terminal
--- https://github.com/voldikss/vim-floaterm
+-- TODO: https://github.com/elijahdanko/ttymux.nvim
+-- TODO: https://github.com/jlesquembre/nterm.nvim
+-- TODO: https://github.com/kassio/neoterm
+-- TODO: https://github.com/nat-418/termitary.nvim
+-- TODO: https://github.com/nikvdp/neomux
+-- TODO: https://github.com/numToStr/FTerm.nvim
+-- TODO: https://github.com/oberblastmeister/termwrapper.nvim
+-- TODO: https://github.com/pianocomposer321/consolation.nvim
+-- TODO: https://github.com/s1n7ax/nvim-terminal
+-- TODO: https://github.com/voldikss/vim-floaterm
+-- TODO: https://github.com/willothy/flatten.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3146,6 +3161,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+-- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 -- TODO: https://github.com/AndrewRadev/splitjoin.vim
 -- TODO: https://github.com/Bekaboo/deadcolumn.nvim
 -- TODO: https://github.com/Bryley/neoai.nvim
@@ -3155,6 +3171,8 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/Jxstxs/conceal.nvim
 -- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- TODO: https://github.com/NTBBloodbath/sweetie.nvim
+-- TODO: https://github.com/NvChad/base46
+-- TODO: https://github.com/NvChad/nvim-colorizer.lua
 -- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- TODO: https://github.com/askfiy/visual_studio_code
 -- TODO: https://github.com/astaos/nvim-ultivisual
@@ -3167,7 +3185,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.splitjoin
 -- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
 -- TODO: https://github.com/gbprod/yanky.nvim
+-- TODO: https://github.com/isaksamsten/better-virtual-text.nvim
 -- TODO: https://github.com/james1236/backseat.nvim
+-- TODO: https://github.com/justeph/filename-strip
 -- TODO: https://github.com/lalitmee/browse.nvim
 -- TODO: https://github.com/loctvl842/monokai-pro.nvim
 -- TODO: https://github.com/lukas-reineke/virt-column.nvim
@@ -3183,10 +3203,8 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/tamton-aquib/flirt.nvim
 -- TODO: https://github.com/tummetott/reticle.nvim
 -- TODO: https://github.com/tzachar/local-highlight.nvim
--- TODO: https://github.com/willothy/flatten.nvim
 -- TODO: https://github.com/xiyaowong/virtcolumn.nvim
 -- TODO: https://github.com/ziontee113/SelectEase
--- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
@@ -3203,4 +3221,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: indentation is not identifible
 -- TODO: NeovideRegisterRightClick
+-- TODO: command window of vim
+-- TODO: format on paste not good with [p ]p zp
 -- vim: fmr=</>,<~> fdm=marker
