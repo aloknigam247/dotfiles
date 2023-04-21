@@ -520,6 +520,7 @@ AddPlugin {
     config = true
 }
 
+-- FEAT: only visible when number of window is more that 2
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
     opts = {
@@ -730,8 +731,8 @@ Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
 Dark  { 'ayu-dark',                   'ayu'          } -- TODO: Fix LineNr
-Light { 'ayu-light',                  'ayu'          }
-Dark  { 'ayu-mirage',                 'ayu'          }
+Light { 'ayu-light',                  'ayu'          } -- TODO: Fix LineNr
+Dark  { 'ayu-mirage',                 'ayu'          } -- TODO: Fix LineNr
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
@@ -745,11 +746,9 @@ Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_meadow_dark',      'base2tone'    }
 Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
-Light { 'base2tone_morning_light',    'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
-Dark  { 'base2tone_suburb_dark',      'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',               '_'           }
 Dark  { 'calvera',                    '_'            }
@@ -975,7 +974,7 @@ AddPlugin {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
                     local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
-                    vim_item.kind = kind_symbol or vim_item.kind
+                    vim_item.kind = kind_symbol or vim_item.kind -- TODO: change appearance like NcChad
 
                     return vim_item
                 end
@@ -1806,7 +1805,7 @@ AddPlugin {
             function (server_name)
                 local lspconfig = require('lspconfig')
                 if server_name == 'powershell_es' then
-                    lspconfig.powershell_es.setup {
+                    lspconfig.powershell_es.setup { -- FIX: fix powershell
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices" -LogPath "./powershell_es.log" -SessionDetailsPath "./powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal -EnableConsoleRepl'},
@@ -1817,7 +1816,7 @@ AddPlugin {
                         handlers = handlers,
                         on_attach = on_attach
                     }
-                elseif server_name == 'omnisharp' then
+                elseif server_name == 'omnisharp' then -- FIX: Fix omnisharp for substrate
                     lspconfig.omnisharp.setup {
                         cmd = { 'dotnet', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll'},
                         capabilities = capabilities,
@@ -2516,7 +2515,7 @@ AddPlugin {
             winbar = {
                 lualine_a = {
                     {
-                        -- TODO: full file name
+                        -- FIX: Still not working as expected, try with named windows count
                         'filename',
                         cond = function()
                             local tabpage = vim.api.nvim_get_current_tabpage()
@@ -2533,6 +2532,7 @@ AddPlugin {
             inactive_winbar = {
                 lualine_a = {
                     {
+                        -- TODO: full file name
                         'filename',
                         cond = function()
                             local tabpage = vim.api.nvim_get_current_tabpage()
@@ -3224,9 +3224,11 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: motion.txt
 -- TODO: per file configurations
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
--- TODO: indentation is not identifible
+-- TODO: indentation is not identifible when 2
 -- TODO: NeovideRegisterRightClick
 -- TODO: vsplit or split file opener like find command
 -- TODO: command window of vim
 -- TODO: format on paste not good with [p ]p zp
+-- BUG: Powershell indent issue
+-- FEAT: Use of Copilot
 -- vim: fmr=</>,<~> fdm=marker

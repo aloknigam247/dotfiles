@@ -330,6 +330,7 @@ Set-PSReadLineKeyHandler -Key Alt+p -ScriptBlock { LoadFZF '%p' }
 
 # Prompt Styling
 # ``````````````
+# FEAT: Background color support
 $prompt_script = @{}
 
 function promptGen {

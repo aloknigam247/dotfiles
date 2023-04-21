@@ -6,6 +6,7 @@
 " ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 " ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+" THOUGHT: Should merge init.vim and init.lua ?
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let &titleold = getcwd()           " Set console title to path on vim exit
@@ -34,7 +35,7 @@ set breakindent                       " Every wrapped line will continue visuall
 set completeopt=menu,menuone,noselect " For nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
-" set formatoptions=tcroqwanvbl1jp      " Set auto formating options 'fo-table'
+" set formatoptions=tcroqwanvbl1jp      " Set auto formating options 'fo-table' FIX: fix it
 set history=1000                      " Increase undo limit
 set linebreak                         " Break wrapped line at 'breakat'
 set nofixendofline                    " Do not change end of line
