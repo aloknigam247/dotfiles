@@ -1018,6 +1018,7 @@ AddPlugin {
         local bg_mode = vim.o.background
         for key, value in pairs(kind_hl) do
             vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
+            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[bg_mode])
         end
     end,
     dependencies = {
@@ -1648,15 +1649,14 @@ AddPlugin {
 AddPlugin {
     -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
-    enabled = false,
-    event = 'LspAttach',
     opts = {
+        click = true,
         depth_limit = 0,
-        depth_limit_indicator = '..',
+        depth_limit_indicator = '',
         highlight = true,
         icons = vim.g.cmp_kinds,
         safe_output = true,
-        separator = '  ',
+        separator = '  ' -- TODO: better separator
     },
 }
 
@@ -1717,7 +1717,7 @@ AddPlugin {
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
         local on_attach = function(client, bufnr)
-            -- local navic = require('nvim-navic')
+            local navic = require('nvim-navic')
             -- Mappings.
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -1761,7 +1761,7 @@ AddPlugin {
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
-            -- navic.attach(client, bufnr) -- TODO: use this
+            navic.attach(client, bufnr) -- TODO: use this
         end
 
         -- LSP settings (for overriding per client)
@@ -2386,7 +2386,13 @@ AddPlugin {
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
-        -- local navic = require('nvim-navic')
+        local function NavicLocal()
+            if #vim.lsp.get_active_clients({bufnr = 0}) > 0 then
+                local navic = require('nvim-navic') -- PERF: is require slow
+                return navic.get_location()
+            end
+            return ""
+        end
         require('lualine').setup {
             options = {
                 icons_enabled = true,
@@ -2439,7 +2445,7 @@ AddPlugin {
                             vim.cmd('TroubleToggle')
                         end,
                         sources = { 'nvim_diagnostic' },
-                        symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+                        symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' }, -- TODO: Use global icons
                     }
                 },
                 lualine_c = {
@@ -2509,14 +2515,12 @@ AddPlugin {
                 lualine_y = {},
                 lualine_z = {}
             },
-            -- tabline = {
-            --     lualine_a = {'filename'},
-            -- },
             winbar = {
                 lualine_a = {
                     {
                         -- FIX: Still not working as expected, try with named windows count
                         'filename',
+                        path = 0,
                         cond = function()
                             local tabpage = vim.api.nvim_get_current_tabpage()
                             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -2524,16 +2528,15 @@ AddPlugin {
                         end
                     }
                 },
-            --     lualine_b = {
-            --         { navic.get_location, cond = navic.is_available },
-            --         -- { function () return require('lspsaga.symbolwinbar').get_symbol_node() end}
-            --     }
+                lualine_c = {
+                    { NavicLocal } -- FIX: temporary fix, find solution for it
+                }
             },
             inactive_winbar = {
                 lualine_a = {
                     {
-                        -- TODO: full file name
                         'filename',
+                        path = 3,
                         cond = function()
                             local tabpage = vim.api.nvim_get_current_tabpage()
                             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -2541,9 +2544,6 @@ AddPlugin {
                         end
                     }
                 },
-            --     lualine_b = {
-            --         { navic.get_location, cond = navic.is_available }
-            --     }
             },
             extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
         }
