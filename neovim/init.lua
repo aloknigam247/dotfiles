@@ -828,7 +828,7 @@ Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
 Dark  { 'oceanic',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'oh-lucy',                    '_'            }
+Dark  { 'oh-lucy',                    '_'            } -- FIX: FixNontext
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
 Dark  { 'one_monokai',                '_'            }
@@ -928,7 +928,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- FIX: slow completion
-    -- FEAT: cmd-cmdline for windows
     -- FEAT: cmp-path for windows
     'hrsh7th/nvim-cmp',
     config = function()
@@ -2319,7 +2318,7 @@ vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = functi
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
-    -- BUG: Fix pah shown in notifications
+    -- BUG: Fix path shown in notifications
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     config = function()
@@ -2988,7 +2987,7 @@ AddPlugin {
         })
     end,
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
-    enabled = false,
+    enabled = true,
     lazy = false
 }
 
@@ -3225,7 +3224,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: Doc to read insert.txt
 -- TODO: NeovideRegisterRightClick
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
--- TODO: changelist
 -- TODO: command window of vim
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: format on paste not good with [p ]p zp
