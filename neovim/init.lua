@@ -1,12 +1,4 @@
-﻿--[[
-  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
- ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
- ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
- ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
- ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
- ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
-]]
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+﻿--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
 
@@ -238,7 +230,7 @@ function ColorPalette()
             { fg = '#9C7C1C' },
             { fg = '#A42CD6' },
             { fg = '#CE2D4F' },
-            { fg = '#F1D302' }, -- TODO: not good in light bg
+            { fg = '#F1D302' }, -- FIX: not good in light bg
             { fg = '#F4743B' },
             { fg = '#F6511D' },
             { fg = '#FFB400' },
@@ -329,7 +321,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1) -- TODO: url matcher highlight not working
+vim.fn.matchadd('HighlightURL', url_matcher, 1) -- FIX: url matcher highlight not working
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -347,7 +339,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: a | b backspace removes both spaces -> a|b
+    -- FIX: a | b backspace removes both spaces -> a|b
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -431,7 +423,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: hlargs priority overrides vim-illuminate
+    -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
@@ -458,7 +450,7 @@ AddPlugin {
     event = 'CursorHold'
 }
 
--- TODO: Use
+-- FEAT: Use
 -- AddPlugin {
 --     'azabiong/vim-highlighter',
 --     -- cmd = 'Hi',
@@ -548,7 +540,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: FIx colorscheme for not having cmp match chars hl
+-- FIX: Fix colorscheme for not having cmp match chars hl
 function FixDiagnosticInfo()
     if (vim.o.background == 'light') then
         vim.cmd('hi clear DiagnosticInfo')
@@ -681,7 +673,7 @@ AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'           
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               } -- TODO: Customize (italic)
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               } -- FIX: Customize (italic)
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
 AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
@@ -730,9 +722,9 @@ Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
-Dark  { 'ayu-dark',                   'ayu'          } -- TODO: Fix LineNr
-Light { 'ayu-light',                  'ayu'          } -- TODO: Fix LineNr
-Dark  { 'ayu-mirage',                 'ayu'          } -- TODO: Fix LineNr
+Dark  { 'ayu-dark',                   'ayu'          } -- FIX: Fix LineNr
+Light { 'ayu-light',                  'ayu'          } -- FIX: Fix LineNr
+Dark  { 'ayu-mirage',                 'ayu'          } -- FIX: Fix LineNr
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
@@ -797,12 +789,12 @@ Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
-Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- TODO: fix method highlight
+Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- FIX: fix method highlight
 Dark  { 'lunaperche',                 '_'                                                                                                                  }
 Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              } -- TODO: fix Visual bg
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              } -- FIX: fix Visual bg
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
 Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -936,9 +928,9 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: slow completion
-    -- TODO: cmd-cmdline for windows
-    -- TODO: cmp-path for windows
+    -- FIX: slow completion
+    -- FEAT: cmd-cmdline for windows
+    -- FEAT: cmp-path for windows
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -975,13 +967,13 @@ AddPlugin {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
                     local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
-                    vim_item.kind = kind_symbol or vim_item.kind -- TODO: change appearance like NcChad
+                    vim_item.kind = kind_symbol or vim_item.kind -- FIX: change appearance like NcChad
 
                     return vim_item
                 end
             },
             mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
-            -- TODO: how about <TAB> for complete common chars and arrow+enter to select completion
+            -- THOUGHT: how about <TAB> for complete common chars and arrow+enter to select completion
                 ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
                 ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
                 ['<C-e>'] = cmp.mapping.abort(),
@@ -1000,7 +992,7 @@ AddPlugin {
                     name = 'buffer',
                     option = {
                         get_bufnrs = function()
-                            return vim.api.nvim_list_bufs() -- TODO: disable for buffers > 1000 lines
+                            return vim.api.nvim_list_bufs() -- BUG: disable for buffers > 1000 lines
                         end
                     }
                 },
@@ -1030,8 +1022,8 @@ AddPlugin {
         'hrsh7th/cmp-cmdline',
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
-        -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} }, -- TODO: fzy-lua-native make is not working
-    }, -- TODO: check if lazy
+        -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} }, -- FIX: fzy-lua-native make is not working
+    }, -- PERF: check if lazy
     event = 'CmdlineEnter',
 }
 
@@ -1173,7 +1165,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: lazy load
+    -- PERF: lazy load
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
     opts = {
@@ -1506,9 +1498,9 @@ AddPlugin {
 -- use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/gfanto/fzf-lsp.nvim
--- TODO: https://github.com/ibhagwan/fzf-lua
--- TODO: https://github.com/ojroques/nvim-lspfuzzy
+-- FEAT: https://github.com/gfanto/fzf-lsp.nvim
+-- FEAT: https://github.com/ibhagwan/fzf-lua
+-- FEAT: https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/akinsho/git-conflict.nvim
@@ -1587,8 +1579,8 @@ AddPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
         override = {
-            -- TODO: fix icon for Makefile
-            -- TODO: better c++ icons
+            -- FIX: fix icon for Makefile
+            -- FIX: better c++ icons
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
@@ -1615,10 +1607,10 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: indentation for public:/private:... for c++
+-- FIX: indentation for public:/private:... for c++
 AddPlugin {
-    -- TODO: does not work when indent space is 2 in file, shiftwidth is the option
-    -- TODO: delay in autocmd to speed up scrolling
+    -- FIX: does not work when indent space is 2 in file, shiftwidth is the option
+    -- PERF: delay in autocmd to speed up scrolling
     'lukas-reineke/indent-blankline.nvim',
     config = function()
         require("indent_blankline").setup {
@@ -1741,7 +1733,7 @@ AddPlugin {
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
-            -- TODO: better popup management
+            -- FEAT: better popup management
             vim.cmd[[
                 aunmenu PopUp
             ]]
@@ -2104,7 +2096,7 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
-    -- TODO: check if vim.input is possible for annotate message
+    -- THOUGHT: check if vim.input is possible for annotate message
     -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
@@ -2127,7 +2119,8 @@ AddPlugin {
     keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
 }
 
--- https://github.com/ThePrimeagen/harpoon --> plenary
+-- FEAT: https://github.com/ThePrimeagen/harpoon --> plenary
+-- FEAT: https://github.com/cbochs/grapple.nvim
 AddPlugin {
     'kshenoy/vim-signature',
     cmd = 'SignatureToggle'
@@ -2377,13 +2370,14 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- PERF: check for performance
+-- REFACTOR: remove unwanted comments
 AddPlugin {
-    -- https://github.com/rebelot/heirline.nvim
     'nvim-lualine/lualine.nvim',
     config = function()
         Icon_index = 0
         local function LspIcon()
-            local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'}
+            local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'} -- THOUGHT: vscode icon  ?
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
@@ -2394,6 +2388,7 @@ AddPlugin {
             end
             return ""
         end
+        vim.o.showcmdloc = 'statusline'
         require('lualine').setup {
             options = {
                 icons_enabled = true,
@@ -2406,7 +2401,7 @@ AddPlugin {
         --             statusline = {},
         --             winbar = {},
         --         },
-        --         ignore_focus = {},
+        --         ignore_focus = {}, -- TODO: for NvimTree/Outline etc
         --         always_divide_middle = true,
                 globalstatus = true,
                 refresh = {
@@ -2416,18 +2411,20 @@ AddPlugin {
                 }
             },
             sections = {
+                -- FEAT: datetime component
                 lualine_a = {
                     {
                         'mode',
                         color = { gui = 'bold,italic' },
                         fmt = function(str)
                             return str:sub(1,1)
-                        end
+                        end,
+                        separator = {right = ''}
                     }
                 },
                 lualine_b = {
                     {
-                        'branch',
+                        'branch', -- TODO: review branch options
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
                         on_click = function()
@@ -2450,6 +2447,7 @@ AddPlugin {
                     }
                 },
                 lualine_c = {
+                    -- THOUGHT: an extra  to marke seperation in case of same background color ?
                     {
                         'filetype',
                         icon_only = true,
@@ -2458,9 +2456,10 @@ AddPlugin {
                     },
                     {
                         'filename',
+                        -- THOUGHT: shorting_target ?
                         color = { gui = 'italic' },
                         file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = false,   -- Display new file status (new file means no write after created)
+                        newfile_status = false,   -- Display new file status (new file means no write after created) THOUGHT: what if true
                         on_click = function()
                             vim.cmd('NvimTreeToggle')
                         end,
@@ -2469,14 +2468,16 @@ AddPlugin {
                         symbols = {
                             modified = '●',      -- Text to show when the file is modified.
                             readonly = '',      -- Text to show when the file is non-modifiable or readonly.
-                            unnamed = '[No Name]', -- Text to show for unnamed buffers.
-                            newfile = '[New]',     -- Text to show for new created file before first writting
+                            unnamed = '[No Name]', -- Text to show for unnamed buffers. THOUGHT: Something better
+                            newfile = '[New]',     -- Text to show for new created file before first writting THOUGHT: Something better
                         }
                     }
                 },
                 lualine_x = {
-                    -- TODO: add showcmd
-                    -- https://github.com/nvim-lualine/lualine.nvim/issues/949
+                    -- 'filesize', -- THOUGHT: use conditionally ?
+                    -- 'hostname', -- THOUGHT: use conditionally on ssh ?
+                    'searchcount', -- FEAT: format it with some icon and color
+                    'selectioncount', -- FEAT: format it with some icon and color
                     {
                         LspIcon,
                         cond = function()
@@ -2488,8 +2489,9 @@ AddPlugin {
                         separator = ''
                     },
                     { 'g:session_icon', separator = '' },
-                    'fileformat',
-                    'encoding'
+                    'fileformat', -- THOUGHT: custom icons ?
+                    'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
+                    -- FEAT: utf-8 bom encoding support
                 },
                 lualine_y = {
                     {
@@ -2508,7 +2510,7 @@ AddPlugin {
                 },
                 lualine_z = {'location'}
             },
-            inactive_sections = {
+            inactive_sections = { -- TODO: re-evaluate inactive sections content
                 lualine_a = {},
                 lualine_b = {},
                 lualine_c = {'filename'},
@@ -2546,7 +2548,7 @@ AddPlugin {
                     }
                 },
             },
-            extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' }
+            extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' } -- TODO: recheck extensions
         }
     end,
     event = 'CursorHold'
@@ -2600,8 +2602,8 @@ AddPlugin {
 
 AddPlugin {
     -- TODO: padded dropdown menu
-    -- TODO: https://github.com/nvim-telescope/telescope-fzf-native.nvim
-    -- TODO: https://github.com/nvim-telescope/telescope-fzy-native.nvim
+    -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
+    -- FEAT: https://github.com/nvim-telescope/telescope-fzy-native.nvim
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     config = function()
@@ -2681,17 +2683,17 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
--- TODO: https://github.com/elijahdanko/ttymux.nvim
--- TODO: https://github.com/jlesquembre/nterm.nvim
--- TODO: https://github.com/kassio/neoterm
--- TODO: https://github.com/nat-418/termitary.nvim
--- TODO: https://github.com/nikvdp/neomux
--- TODO: https://github.com/numToStr/FTerm.nvim
--- TODO: https://github.com/oberblastmeister/termwrapper.nvim
--- TODO: https://github.com/pianocomposer321/consolation.nvim
--- TODO: https://github.com/s1n7ax/nvim-terminal
--- TODO: https://github.com/voldikss/vim-floaterm
--- TODO: https://github.com/willothy/flatten.nvim
+-- FEAT: https://github.com/elijahdanko/ttymux.nvim
+-- FEAT: https://github.com/jlesquembre/nterm.nvim
+-- FEAT: https://github.com/kassio/neoterm
+-- FEAT: https://github.com/nat-418/termitary.nvim
+-- FEAT: https://github.com/nikvdp/neomux
+-- FEAT: https://github.com/numToStr/FTerm.nvim
+-- FEAT: https://github.com/oberblastmeister/termwrapper.nvim
+-- FEAT: https://github.com/pianocomposer321/consolation.nvim
+-- FEAT: https://github.com/s1n7ax/nvim-terminal
+-- FEAT: https://github.com/voldikss/vim-floaterm
+-- FEAT: https://github.com/willothy/flatten.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3010,8 +3012,8 @@ vim.notify = function(msg, level, opt)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use 'AckslD/nvim-trevJ.lua'
--- TODO: https://github.com/wellle/targets.vim
+-- FEAT: use 'AckslD/nvim-trevJ.lua'
+-- FEAT: https://github.com/wellle/targets.vim
 
 AddPlugin {
     'AndrewRadev/inline_edit.vim',
@@ -3148,7 +3150,7 @@ AddPlugin {
     }
 }
 
--- TODO: use command sequence to change background of terminal to nvim background
+-- FEAT: use command sequence to change background of terminal to nvim background
 -- AddPlugin {
 --     'typicode/bg.nvim',
 --     lazy = false
@@ -3167,69 +3169,73 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- TODO: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
--- TODO: https://github.com/AndrewRadev/splitjoin.vim
--- TODO: https://github.com/Bekaboo/deadcolumn.nvim
--- TODO: https://github.com/Bryley/neoai.nvim
--- TODO: https://github.com/CKolkey/ts-node-action
--- TODO: https://github.com/HiPhish/nvim-ts-rainbow2
--- TODO: https://github.com/JellyApple102/easyread.nvim
--- TODO: https://github.com/Jxstxs/conceal.nvim
--- TODO: https://github.com/LeonHeidelbach/trailblazer.nvim
--- TODO: https://github.com/NTBBloodbath/sweetie.nvim
--- TODO: https://github.com/NvChad/base46
--- TODO: https://github.com/NvChad/nvim-colorizer.lua
--- TODO: https://github.com/aaronhallaert/advanced-git-search.nvim
--- TODO: https://github.com/askfiy/visual_studio_code
--- TODO: https://github.com/astaos/nvim-ultivisual
--- TODO: https://github.com/axlebedev/vim-footprints
--- TODO: https://github.com/cbochs/portal.nvim
--- TODO: https://github.com/chrisgrieser/nvim-alt-substitute
--- TODO: https://github.com/doums/dmap.nvim
--- TODO: https://github.com/dundargoc/fakedonalds.nvim
--- TODO: https://github.com/echasnovski/mini.bracketed
--- TODO: https://github.com/echasnovski/mini.splitjoin
--- TODO: https://github.com/ecthelionvi/NeoColumn.nvim
--- TODO: https://github.com/gbprod/yanky.nvim
--- TODO: https://github.com/isaksamsten/better-virtual-text.nvim
--- TODO: https://github.com/james1236/backseat.nvim
--- TODO: https://github.com/justeph/filename-strip
--- TODO: https://github.com/lalitmee/browse.nvim
--- TODO: https://github.com/loctvl842/monokai-pro.nvim
--- TODO: https://github.com/lukas-reineke/virt-column.nvim
--- TODO: https://github.com/luukvbaal/statuscol.nvim
--- TODO: https://github.com/m4xshen/smartcolumn.nvim
--- TODO: https://github.com/madox2/vim-ai
--- TODO: https://github.com/nosduco/remote-sshfs.nvim
--- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
--- TODO: https://github.com/roobert/node-type.nvim
--- TODO: https://github.com/roobert/surround-ui.nvim
--- TODO: https://github.com/sickill/vim-pasta
--- TODO: https://github.com/simrat39/desktop-notify.nvim
--- TODO: https://github.com/tamton-aquib/flirt.nvim
--- TODO: https://github.com/tummetott/reticle.nvim
--- TODO: https://github.com/tzachar/local-highlight.nvim
--- TODO: https://github.com/xiyaowong/virtcolumn.nvim
--- TODO: https://github.com/ziontee113/SelectEase
+-- FEAT: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
+-- FEAT: https://github.com/AndrewRadev/splitjoin.vim
+-- FEAT: https://github.com/Bekaboo/deadcolumn.nvim
+-- FEAT: https://github.com/Bryley/neoai.nvim
+-- FEAT: https://github.com/CKolkey/ts-node-action
+-- FEAT: https://github.com/HiPhish/nvim-ts-rainbow2
+-- FEAT: https://github.com/JellyApple102/easyread.nvim
+-- FEAT: https://github.com/Jxstxs/conceal.nvim
+-- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
+-- FEAT: https://github.com/NTBBloodbath/sweetie.nvim
+-- FEAT: https://github.com/NvChad/base46
+-- FEAT: https://github.com/NvChad/nvim-colorizer.lua
+-- FEAT: https://github.com/aaronhallaert/advanced-git-search.nvim
+-- FEAT: https://github.com/askfiy/visual_studio_code
+-- FEAT: https://github.com/astaos/nvim-ultivisual
+-- FEAT: https://github.com/axlebedev/vim-footprints
+-- FEAT: https://github.com/cbochs/portal.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
+-- FEAT: https://github.com/doums/dmap.nvim
+-- FEAT: https://github.com/dundargoc/fakedonalds.nvim
+-- FEAT: https://github.com/echasnovski/mini.bracketed
+-- FEAT: https://github.com/echasnovski/mini.splitjoin
+-- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
+-- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/gbprod/yanky.nvim
+-- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
+-- FEAT: https://github.com/james1236/backseat.nvim
+-- FEAT: https://github.com/justeph/filename-strip
+-- FEAT: https://github.com/lalitmee/browse.nvim
+-- FEAT: https://github.com/loctvl842/monokai-pro.nvim
+-- FEAT: https://github.com/lukas-reineke/virt-column.nvim
+-- FEAT: https://github.com/luukvbaal/statuscol.nvim
+-- FEAT: https://github.com/m4xshen/smartcolumn.nvim
+-- FEAT: https://github.com/madox2/vim-ai
+-- FEAT: https://github.com/nosduco/remote-sshfs.nvim
+-- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
+-- FEAT: https://github.com/roobert/node-type.nvim
+-- FEAT: https://github.com/roobert/surround-ui.nvim
+-- FEAT: https://github.com/sickill/vim-pasta
+-- FEAT: https://github.com/simrat39/desktop-notify.nvim
+-- FEAT: https://github.com/tamton-aquib/flirt.nvim
+-- FEAT: https://github.com/tummetott/reticle.nvim
+-- FEAT: https://github.com/tzachar/local-highlight.nvim
+-- FEAT: https://github.com/xiyaowong/virtcolumn.nvim
+-- FEAT: https://github.com/ziontee113/SelectEase
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 
 -- <~>
--- TODO: context aware popup, using autocmd and position clicked
+-- BUG: Powershell indent issue
+-- FEAT: Use of Copilot
 -- TODO: Doc to read change.txt
 -- TODO: Doc to read insert.txt
--- TODO: location list/quickfix
+-- TODO: NeovideRegisterRightClick
+-- TODO: auto wrap file if longest line is 200 chars long, use a defer function
+-- TODO: changelist
+-- TODO: command window of vim
+-- TODO: context aware popup, using autocmd and position clicked
+-- TODO: format on paste not good with [p ]p zp
+-- TODO: indentation is not identifible when 2
+-- TODO: jumplist
+-- TODO: location list
 -- TODO: marks
 -- TODO: motion.txt
 -- TODO: per file configurations
--- TODO: auto wrap file if longest line is 200 chars long, use a defer function
--- TODO: indentation is not identifible when 2
--- TODO: NeovideRegisterRightClick
+-- TODO: quickfix
 -- TODO: vsplit or split file opener like find command
--- TODO: command window of vim
--- TODO: format on paste not good with [p ]p zp
--- BUG: Powershell indent issue
--- FEAT: Use of Copilot
 -- vim: fmr=</>,<~> fdm=marker
