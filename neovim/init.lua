@@ -914,6 +914,7 @@ function ColoRand(ind)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- THOUGHT: can we comment commented line once ?
 AddPlugin {
     'numToStr/Comment.nvim',
     config = function()
