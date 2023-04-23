@@ -486,7 +486,7 @@ AddPlugin {
             FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
             HACK  = { icon = '', color = 'hint' },
             NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF  = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE', 'REFACTOR' } },
+            PERF  = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE', 'REFACTOR' } }, -- TODO: REFACTOR icon 󰐱 
             TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
             TODO  = { icon = '', color = 'todo' },
             WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
@@ -761,7 +761,6 @@ Light { 'delek',                      '_'                                       
 Dark  { 'deus',                       '_',           post = FixVisual                                                                                      }
 Dark  { 'doubletrouble',              '_'                                                                                                                  }
 Dark  { 'dracula',                    '_'                                                                                                                  }
-Dark  { 'dracula',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'dracula_blood',              'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'duskfox',                    'nightfox'                                                                                                           }
 Dark  { 'earlysummer',                'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -839,7 +838,7 @@ Dark  { 'onenord',                    '_'            }
 Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
-Dark  { 'palenight',                  '_'            }
+Dark  { 'palenight',                  'starry'       }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
@@ -1165,226 +1164,227 @@ AddPlugin {
     -- PERF: lazy load
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
+    -- BUG: error in loading
     opts = {
-            actions = {
-                change_dir = {
-                    enable = true,
-                    global = false,
-                    restrict_above_cwd = false,
-                },
-                expand_all = {
-                    exclude = { '.git' },
-                    max_folder_discovery = 300,
-                },
-                file_popup = {
-                    open_win_config = {
-                        border = 'rounded',
-                        col = 1,
-                        relative = 'cursor',
-                        row = 1,
-                        style = 'minimal',
-                    },
-                },
-                open_file = {
-                    quit_on_open = false,
-                    resize_window = true,
-                    window_picker = {
-                        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
-                        enable = true,
-                        exclude = {
-                            buftype = { 'nofile', 'terminal', 'help' },
-                            filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
-                        },
-                        picker = 'default',
-                    },
-                },
-                remove_file = { close_window = true },
-                use_system_clipboard = true,
+        actions = {
+            change_dir = {
+                enable = true,
+                global = false,
+                restrict_above_cwd = false,
             },
-            auto_reload_on_write = true,
-            diagnostics = {
-                debounce_delay = 50,
+            expand_all = {
+                exclude = { '.git' },
+                max_folder_discovery = 300,
+            },
+            file_popup = {
+                open_win_config = {
+                    border = 'rounded',
+                    col = 1,
+                    relative = 'cursor',
+                    row = 1,
+                    style = 'minimal',
+                },
+            },
+            open_file = {
+                quit_on_open = false,
+                resize_window = true,
+                window_picker = {
+                    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+                    enable = true,
+                    exclude = {
+                        buftype = { 'nofile', 'terminal', 'help' },
+                        filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
+                    },
+                    picker = 'default',
+                },
+            },
+            remove_file = { close_window = true },
+            use_system_clipboard = true,
+        },
+        auto_reload_on_write = true,
+        diagnostics = {
+            debounce_delay = 50,
+            enable = true,
+            icons = {
+                error   = icons.diagnostic.error,
+                hint    = icons.diagnostic.hint,
+                info    = icons.diagnostic.info,
+                warning = icons.diagnostic.warn,
+            },
+            severity = {
+                min = vim.diagnostic.severity.HINT,
+                max = vim.diagnostic.severity.ERROR,
+            },
+            show_on_dirs = true,
+            show_on_open_dirs = false,
+        },
+        disable_netrw = true,
+        filesystem_watchers = {
+            enable = true,
+            debounce_delay = 50,
+            ignore_dirs = {},
+        },
+        filters = {
+            dotfiles = false,
+            git_clean = false,
+            no_buffer = false,
+            custom = {},
+            exclude = {},
+        },
+        git = {
+            enable = true,
+            ignore = true,
+            show_on_dirs = true,
+            show_on_open_dirs = true,
+            timeout = 400,
+        },
+        hijack_cursor = false,
+        hijack_directories = {
+            auto_open = true,
+            enable = true,
+        },
+        hijack_netrw = true,
+        hijack_unnamed_buffer_when_opening = true,
+        ignore_buffer_on_setup = false,
+        ignore_ft_on_setup = {},
+        live_filter = {
+            always_show_folders = true,
+            prefix = '[FILTER]: ',
+        },
+        log = {
+            enable = false,
+            truncate = false,
+            types = {
+                all         = false,
+                config      = false,
+                copy_paste  = false,
+                dev         = false,
+                diagnostics = false,
+                git         = false,
+                profile     = false,
+                watcher     = false,
+            },
+        },
+        notify = { threshold = vim.log.levels.INFO },
+        on_attach = 'disable',
+        open_on_setup = false,
+        open_on_setup_file = false,
+        prefer_startup_root = false,
+        reload_on_bufenter = false,
+        remove_keymaps = false,
+        renderer = {
+            add_trailing = true,
+            full_name = true,
+            group_empty = false,
+            highlight_git = true,
+            highlight_opened_files = 'all',
+            highlight_modified = 'all',
+            indent_markers = {
                 enable = true,
                 icons = {
-                    error   = icons.diagnostic.error,
-                    hint    = icons.diagnostic.hint,
-                    info    = icons.diagnostic.info,
-                    warning = icons.diagnostic.warn,
+                    bottom = '─',
+                    corner = '╰',
+                    edge   = '│',
+                    item   = '│',
+                    none   = ' ',
                 },
-                severity = {
-                    min = vim.diagnostic.severity.HINT,
-                    max = vim.diagnostic.severity.ERROR,
+                inline_arrows = true,
+            },
+            indent_width = 2,
+            root_folder_label = ':~:s?$?/..?',
+            icons = {
+                git_placement = 'after',
+                glyphs = {
+                    bookmark = '',
+                    default  = '',
+                    folder = {
+                        arrow_closed = '',
+                        arrow_open   = '',
+                        default      = '',
+                        empty        = '',
+                        empty_open   = '',
+                        open         = '',
+                        symlink      = '',
+                        symlink_open = '',
+                    },
+                    git = {
+                        deleted   = '',
+                        ignored   = '',
+                        renamed   = '➜',
+                        staged    = '',
+                        unmerged  = '',
+                        unstaged  = '',
+                        untracked = '★', -- TODO: better icons
+                    },
+                    -- TODO: icons
+                    symlink = '',
                 },
-                show_on_dirs = true,
-                show_on_open_dirs = false,
+                padding = ' ',
+                show = {
+                    file = true,
+                    folder = true,
+                    folder_arrow = true,
+                    git = true,
+                },
+                symlink_arrow = ' 壟 ',
+                webdev_colors = true,
             },
-            disable_netrw = true,
-            filesystem_watchers = {
-                enable = true,
-                debounce_delay = 50,
-                ignore_dirs = {},
+            special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
+            symlink_destination = true,
+        },
+        respect_buf_cwd = false,
+        root_dirs = {},
+        select_prompts = false,
+        sort_by = 'name',
+        sync_root_with_cwd = true,
+        system_open = {
+            cmd = '',
+            args = {},
+        },
+        tab = {
+            sync = {
+                close = false,
+                ignore = {},
+                open = false,
             },
-            filters = {
-                dotfiles = false,
-                git_clean = false,
-                no_buffer = false,
-                custom = {},
-                exclude = {},
-            },
-            git = {
-                enable = true,
-                ignore = true,
-                show_on_dirs = true,
-                show_on_open_dirs = true,
-                timeout = 400,
-            },
-            hijack_cursor = false,
-            hijack_directories = {
-                auto_open = true,
-                enable = true,
-            },
-            hijack_netrw = true,
-            hijack_unnamed_buffer_when_opening = true,
-            ignore_buffer_on_setup = false,
-            ignore_ft_on_setup = {},
-            live_filter = {
-                always_show_folders = true,
-                prefix = '[FILTER]: ',
-            },
-            log = {
+        },
+        trash = {
+            cmd = 'gio trash',
+            require_confirm = true,
+        },
+        update_focused_file = {
+            debounce_delay = 15,
+            enable = true,
+            ignore_list = {},
+            update_root = true,
+        },
+        view = {
+            adaptive_size = false,
+            centralize_selection = false,
+            float = {
                 enable = false,
-                truncate = false,
-                types = {
-                    all         = false,
-                    config      = false,
-                    copy_paste  = false,
-                    dev         = false,
-                    diagnostics = false,
-                    git         = false,
-                    profile     = false,
-                    watcher     = false,
+                open_win_config = {
+                    border = 'rounded',
+                    col = 1,
+                    height = 30,
+                    relative = 'editor',
+                    row = 1,
+                    width = 30,
                 },
+                quit_on_focus_loss = true,
             },
-            notify = { threshold = vim.log.levels.INFO },
-            on_attach = 'disable',
-            open_on_setup = false,
-            open_on_setup_file = false,
-            prefer_startup_root = false,
-            reload_on_bufenter = false,
-            remove_keymaps = false,
-            renderer = {
-                add_trailing = true,
-                full_name = true,
-                group_empty = false,
-                highlight_git = true,
-                highlight_opened_files = 'all',
-                highlight_modified = 'all',
-                indent_markers = {
-                    enable = true,
-                    icons = {
-                        bottom = '─',
-                        corner = '╰',
-                        edge   = '│',
-                        item   = '│',
-                        none   = ' ',
-                    },
-                    inline_arrows = true,
-                },
-                indent_width = 2,
-                root_folder_label = ':~:s?$?/..?',
-                icons = {
-                    git_placement = 'after',
-                    glyphs = {
-                        bookmark = '',
-                        default  = '',
-                        folder = {
-                            arrow_closed = '',
-                            arrow_open   = '',
-                            default      = '',
-                            empty        = '',
-                            empty_open   = '',
-                            open         = '',
-                            symlink      = '',
-                            symlink_open = '',
-                        },
-                        git = {
-                            deleted   = '',
-                            ignored   = '',
-                            renamed   = '➜',
-                            staged    = '',
-                            unmerged  = '',
-                            unstaged  = '',
-                            untracked = '★', -- TODO: better icons
-                        },
-                        -- TODO: icons
-                        symlink = '',
-                    },
-                    padding = ' ',
-                    show = {
-                        file = true,
-                        folder = true,
-                        folder_arrow = true,
-                        git = true,
-                    },
-                    symlink_arrow = ' 壟 ',
-                    webdev_colors = true,
-                },
-                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
-                symlink_destination = true,
+            hide_root_folder = false,
+            mappings = {
+                custom_only = false,
+                list = {}, -- user mappings go here
             },
-            respect_buf_cwd = false,
-            root_dirs = {},
-            select_prompts = false,
-            sort_by = 'name',
-            sync_root_with_cwd = true,
-            system_open = {
-                cmd = '',
-                args = {},
-            },
-            tab = {
-                sync = {
-                    close = false,
-                    ignore = {},
-                    open = false,
-                },
-            },
-            trash = {
-                cmd = 'gio trash',
-                require_confirm = true,
-            },
-            update_focused_file = {
-                debounce_delay = 15,
-                enable = true,
-                ignore_list = {},
-                update_root = true,
-            },
-            view = {
-                adaptive_size = false,
-                centralize_selection = false,
-                float = {
-                    enable = false,
-                    open_win_config = {
-                        border = 'rounded',
-                        col = 1,
-                        height = 30,
-                        relative = 'editor',
-                        row = 1,
-                        width = 30,
-                    },
-                    quit_on_focus_loss = true,
-                },
-                hide_root_folder = false,
-                mappings = {
-                    custom_only = false,
-                    list = {}, -- user mappings go here
-                },
-                number = false,
-                preserve_window_proportions = false,
-                relativenumber = false,
-                side = 'left',
-                signcolumn = 'yes',
-                width = 30,
-            },
+            number = false,
+            preserve_window_proportions = false,
+            relativenumber = false,
+            side = 'left',
+            signcolumn = 'yes',
+            width = 30,
+        },
     }
 }
 -- {
@@ -1550,7 +1550,7 @@ AddPlugin {
         },
         trouble = false
     },
-    keys = { '[c', ']c' }
+    keys = { '[c', ']c' } -- BUG: Does not trigger in first time
 }
 
 AddPlugin {
@@ -2020,8 +2020,28 @@ AddPlugin {
 -- TODO: resolve usage
 AddPlugin {
     'rmagatti/goto-preview',
-    config = true,
-    event = 'LspAttach'
+    event = 'LspAttach', -- PERF: Reverse dependency
+    opts = {
+        -- TODO: review config
+        width = 120; -- Width of the floating window
+        height = 15; -- Height of the floating window
+        border = {"󱦵", "─" ,"╮", "│", "╯", "─", "╰", "│"}; -- Border characters of the floating window
+        default_mappings = false; -- Bind default mappings
+        debug = false; -- Print debug information
+        opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        resizing_mappings = false; -- Binds arrow keys to resizing the floating window.
+        post_open_hook = nil; -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        -- references = { -- Configure the telescope UI for slowing the references cycling window.
+        --     telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
+        -- };
+        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+        focus_on_open = true; -- Focus the floating window when opening it.
+        dismiss_on_move = false; -- Dismiss the floating window when moving the cursor.
+        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+        stack_floating_preview_windows = true, -- Whether to nest floating windows
+        preview_window_title = { enable = true, position = "left" }, -- Whether to set the preview window title as the filename
+    }
 }
 
 -- TODO: resolve usage
@@ -2316,6 +2336,7 @@ vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = functi
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- BUG: DeleteSession called twice gives error
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     -- BUG: Fix path shown in notifications
     'rmagatti/auto-session',
@@ -2384,6 +2405,22 @@ AddPlugin {
                 return navic.get_location()
             end
             return ""
+        end
+        function CountWin()
+            -- FEAT: Ignore NvimTree
+            local tabpage = vim.api.nvim_get_current_tabpage()
+            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+            local named_window = 0
+
+            for _, win in ipairs(win_list) do
+                local cur_buf = vim.api.nvim_win_get_buf(win)
+                local buf_name = vim.api.nvim_buf_get_name(cur_buf)
+                if buf_name ~= "" then
+                    named_window = named_window + 1
+                end
+            end
+
+            return named_window
         end
         vim.o.showcmdloc = 'statusline'
         require('lualine').setup {
@@ -2518,15 +2555,9 @@ AddPlugin {
             winbar = {
                 lualine_a = {
                     {
-                        -- FIX: Still not working as expected, try with named windows count
                         'filename',
                         path = 0,
-                        cond = function()
-                            -- FIX: disbale when navic is enabled
-                            local tabpage = vim.api.nvim_get_current_tabpage()
-                            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
-                            return #win_list > 2
-                        end
+                        cond = function () return CountWin() > 1 end
                     }
                 },
                 lualine_c = {
@@ -2538,11 +2569,7 @@ AddPlugin {
                     {
                         'filename',
                         path = 3,
-                        cond = function()
-                            local tabpage = vim.api.nvim_get_current_tabpage()
-                            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
-                            return #win_list > 2
-                        end
+                        cond = function () return CountWin() > 1 end
                     }
                 },
             },
@@ -2736,7 +2763,7 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
-    -- TODO: add underline to all params
+    -- THOUGHT: add underline to all params ?
     'm-demare/hlargs.nvim',
     config = function(opts)
         require('hlargs').setup({
