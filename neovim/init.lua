@@ -734,7 +734,6 @@ Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Dark  { 'base2tone_meadow_dark',      'base2tone'    }
 Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
@@ -2523,6 +2522,7 @@ AddPlugin {
                         'filename',
                         path = 0,
                         cond = function()
+                            -- FIX: disbale when navic is enabled
                             local tabpage = vim.api.nvim_get_current_tabpage()
                             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
                             return #win_list > 2
