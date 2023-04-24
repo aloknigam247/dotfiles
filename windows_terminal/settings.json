@@ -112,7 +112,7 @@
                 "name": "PowerShell 7",
                 "opacity": 75,
                 "source": "Windows.Terminal.PowershellCore",
-                "useAcrylic": false
+                "useAcrylic": true
             },
             {
                 "commandline": "ssh FAREAST\\aloknigam@10.171.247.75",
