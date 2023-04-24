@@ -39,7 +39,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 " set spell                             " Enable spell check
 " set splitkeep                         " TODO: check
 set tabstop=4                         " Indent using spaces
-set textwidth=80                     " Set text width to 100
+set textwidth=80                     " Set text width to 100 " FIX: What should be its value
 set wrap                              " Enable wrap
 set updatetime=500                    " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
@@ -159,8 +159,8 @@ augroup RestoreCursorShapeOnExit
 augroup END
 
 
-highlight ColorColumn ctermbg=white
-call matchadd('ColorColumn', '\%80v', 100)
+" highlight ColorColumn ctermbg=white
+" call matchadd('ColorColumn', '\%80v', 100)
 " augroup vimrc_autocmds
 "   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
 "   autocmd BufEnter * match OverLength /\%80v/

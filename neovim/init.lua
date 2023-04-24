@@ -1608,6 +1608,8 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: indentation on 'o'/'O' does not work correct in python, may be its
+-- taking indentation settings from first line, try to fix it
 -- FIX: indentation for public:/private:... for c++
 AddPlugin {
     -- FIX: does not work when indent space is 2 in file, shiftwidth is the option
@@ -3251,6 +3253,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- <~>
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
+-- PERF: profiling for auto commands
 -- TODO: Doc to read change.txt
 -- TODO: Doc to read insert.txt
 -- TODO: NeovideRegisterRightClick
@@ -3268,4 +3271,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: quickfix
 -- TODO: revisit Nerd Fonts for new fonts
 -- TODO: vsplit or split file opener like find command
+-- TODO: use <C-s> instead of <C-x> if possible for splits, locate places and mark todo
 -- vim: fmr=</>,<~> fdm=marker
