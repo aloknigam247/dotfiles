@@ -539,7 +539,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: Fix colorscheme for not having cmp match chars hl
 function FixDiagnosticInfo()
     if (vim.o.background == 'light') then
         vim.cmd('hi clear DiagnosticInfo')
@@ -816,7 +815,7 @@ Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis_azureus',             'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
-Light { 'noctis_lux',                 'noctis'       }
+Light { 'noctis_lux',                 'noctis'       } -- BUG: problem with navic
 Dark  { 'noctis_minimus',             'noctis'       }
 Dark  { 'noctis_sereno',              'noctis'       }
 Dark  { 'noctis_uva',                 'noctis'       }
@@ -1007,8 +1006,13 @@ AddPlugin {
         local bg_mode = vim.o.background
         for key, value in pairs(kind_hl) do
             vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
-            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[bg_mode])
+            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[bg_mode]) -- THOUGHT: Relocate to Navic ?
         end
+        vim.cmd([[
+            hi CmpItemAbbrDeprecated gui = strikethrough
+            hi CmpItemAbbrMatch gui = bold
+            hi CmpItemAbbrMatchFuzzy gui = underline
+        ]])
     end,
     dependencies = {
         'chrisgrieser/cmp-nerdfont',
@@ -1972,7 +1976,7 @@ AddPlugin {
             expand = '',
             collapse = '',
             preview = ' ',
-            code_action = '💡',
+            code_action = '💡', -- TODO: use nerd font
             diagnostic = '🐞', -- TODO: use global icon
             incoming = ' ',
             outgoing = ' ',
@@ -2430,7 +2434,7 @@ AddPlugin {
                 -- component_separators = { left = '', right = ''},
                 -- section_separators = { left = '', right = ''},
                 component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''}, -- BUG: separator colors are not correct base2tone_mall_light
         --         disabled_filetypes = {
         --             statusline = {},
         --             winbar = {},
@@ -3261,5 +3265,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: motion.txt
 -- TODO: per file configurations
 -- TODO: quickfix
+-- TODO: revisit Nerd Fonts for new fonts
 -- TODO: vsplit or split file opener like find command
 -- vim: fmr=</>,<~> fdm=marker
