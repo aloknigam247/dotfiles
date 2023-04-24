@@ -1,11 +1,3 @@
-﻿"
-"  █████╗ ██╗      ██████╗ ██╗  ██╗    ███╗   ██╗██╗ ██████╗  █████╗ ███╗   ███╗
-" ██╔══██╗██║     ██╔═══██╗██║ ██╔╝    ████╗  ██║██║██╔════╝ ██╔══██╗████╗ ████║
-" ███████║██║     ██║   ██║█████╔╝     ██╔██╗ ██║██║██║  ███╗███████║██╔████╔██║
-" ██╔══██║██║     ██║   ██║██╔═██╗     ██║╚██╗██║██║██║   ██║██╔══██║██║╚██╔╝██║
-" ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
-" ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
-
 " THOUGHT: Should merge init.vim and init.lua ?
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
@@ -28,6 +20,7 @@ set nobackup              " Do not create backup file
 set path+=**              " Look for all files in sub dirs
 " }}}
 
+
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Editor Settings  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 set bomb                              " Keep the BOM file marker
@@ -35,7 +28,7 @@ set breakindent                       " Every wrapped line will continue visuall
 set completeopt=menu,menuone,noselect " For nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
-" set formatoptions=tcroqwanvbl1jp      " Set auto formating options 'fo-table' FIX: fix it
+set formatoptions=/1cjlnor            " Set auto formating options 'fo-table'
 set history=1000                      " Increase undo limit
 set linebreak                         " Break wrapped line at 'breakat'
 set nofixendofline                    " Do not change end of line
@@ -46,7 +39,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 " set spell                             " Enable spell check
 " set splitkeep                         " TODO: check
 set tabstop=4                         " Indent using spaces
-set textwidth=100                     " Set text width to 100
+set textwidth=80                     " Set text width to 100
 set wrap                              " Enable wrap
 set updatetime=500                    " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
@@ -54,6 +47,7 @@ setglobal bomb                        " Keep the BOM file marker
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Filetype     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+" TODO: per filetype options
 " autocmd BufNewFile,BufRead *.csproj set filetype=csproj
 " }}}
 
@@ -165,11 +159,11 @@ augroup RestoreCursorShapeOnExit
 augroup END
 
 
-" highlight ColorColumn ctermbg=white
-" call matchadd('ColorColumn', '\%101v', 100)
+highlight ColorColumn ctermbg=white
+call matchadd('ColorColumn', '\%80v', 100)
 " augroup vimrc_autocmds
 "   autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-"   autocmd BufEnter * match OverLength /\%101v/
+"   autocmd BufEnter * match OverLength /\%80v/
 " augroup END
 
 " let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
@@ -205,4 +199,17 @@ highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
 highlight HighlightURL gui=underline cterm=underline
 lua require('init')
+
+" NOTE: important format options
+" / = do not insert comment on 'o' and 'O' when o is included and line does not start with comment
+" 1 = don't break a line a after 1 letter word, try to break before it
+" b = TODO: understand it
+" c = do auto wrapping at textwidth on comment only
+" j = join comments without commentstring
+" l = do not break line if lenght is more than textwidth when insert
+" n = keep list indentations
+" o = insert comment on 'o' and 'O'
+" p = don't break line blindly at .
+" r = insert comment on enter
+" t = do auto wrapping at textwidth
 " }}}

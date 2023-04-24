@@ -1,4 +1,4 @@
-﻿--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
 
@@ -3255,6 +3255,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: Doc to read insert.txt
 -- TODO: NeovideRegisterRightClick
 -- TODO: auto wrap file if longest line is 200 chars long, use a defer function
+-- TODO: change.txt
 -- TODO: command window of vim
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: format on paste not good with [p ]p zp
