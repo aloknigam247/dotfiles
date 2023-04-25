@@ -37,7 +37,7 @@ set nowritebackup                     " Disable intermediate backup file
 set scrolloff=3                       " Set scrolloff to 3
 set shiftwidth=4                      " When shifting, indent using spaces
 " set spell                             " Enable spell check
-" set splitkeep                         " TODO: check
+set splitkeep=screen                  " Keep screen orientation same while splitting
 set tabstop=4                         " Indent using spaces
 set textwidth=80                     " Set text width to 100 " FIX: What should be its value
 set wrap                              " Enable wrap

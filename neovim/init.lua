@@ -1320,8 +1320,7 @@ AddPlugin {
                         unstaged  = '',
                         untracked = '★', -- TODO: better icons
                     },
-                    -- TODO: icons
-                    symlink = '',
+                    symlink = '󱅷',
                 },
                 padding = ' ',
                 show = {
@@ -2722,7 +2721,6 @@ AddPlugin {
 -- FEAT: https://github.com/numToStr/FTerm.nvim
 -- FEAT: https://github.com/oberblastmeister/termwrapper.nvim
 -- FEAT: https://github.com/pianocomposer321/consolation.nvim
--- FEAT: https://github.com/s1n7ax/nvim-terminal
 -- FEAT: https://github.com/voldikss/vim-floaterm
 -- FEAT: https://github.com/willothy/flatten.nvim
 -- <~>
@@ -3202,10 +3200,8 @@ vim.opt.runtimepath:prepend(lazypath)
 
 -- FEAT: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
--- FEAT: https://github.com/Bekaboo/deadcolumn.nvim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
--- FEAT: https://github.com/HiPhish/nvim-ts-rainbow2
 -- FEAT: https://github.com/JellyApple102/easyread.nvim
 -- FEAT: https://github.com/Jxstxs/conceal.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
@@ -3232,7 +3228,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/loctvl842/monokai-pro.nvim
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
--- FEAT: https://github.com/m4xshen/smartcolumn.nvim
 -- FEAT: https://github.com/madox2/vim-ai
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
