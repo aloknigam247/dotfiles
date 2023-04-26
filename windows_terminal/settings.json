@@ -111,7 +111,8 @@
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "opacity": 75,
-                "source": "Windows.Terminal.PowershellCore"
+                "source": "Windows.Terminal.PowershellCore",
+                "useAcrylic": true
             },
             {
                 "commandline": "ssh FAREAST\\aloknigam@10.171.247.75",
@@ -436,7 +437,7 @@
             "window": 
             {
                 "applicationTheme": "dark",
-                "useMica": false
+                "useMica": true
             }
         }
     ],

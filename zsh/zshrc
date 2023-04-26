@@ -6,7 +6,9 @@
 # ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 # ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
+# TODO: Powershell like key mappings
 # Updating local dofiles
+# TODO: perform this sync in background
 cd ~/dotfiles
 git pull
 
@@ -21,6 +23,7 @@ clear
 autoload -Uz compinit
 compinit
 
+# THOUGHT: fix color for completion, may be same color ?
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8d99ae"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh-suggest
@@ -171,6 +174,7 @@ cd
 # export LESS_TERMCAP_ue=$'\E[0m'
 # export LESS_TERMCAP_us=$'\E[01;33m'
 
+# TODO: Prompt similar to Powershell
 function prompt_gen() {
     zmodload zsh/nearcolor
 

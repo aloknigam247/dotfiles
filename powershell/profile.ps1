@@ -52,7 +52,8 @@ function evrc {
 }
 
 function v {
-   ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args
+    # FEAT: support for file:line
+    ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args
 }
 
 function vpcl {
@@ -275,9 +276,7 @@ function Format-Text {
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
-# if ($Host.UI.SupportsVirtualTerminal) {
-#     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
-# }
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 
 
 # posh-git
@@ -331,6 +330,7 @@ Set-PSReadLineKeyHandler -Key Alt+p -ScriptBlock { LoadFZF '%p' }
 
 # Prompt Styling
 # ``````````````
+# FEAT: Background color support
 $prompt_script = @{}
 
 function promptGen {
