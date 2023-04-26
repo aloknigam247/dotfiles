@@ -272,6 +272,24 @@ end
 
 -- Auto Commands
 -- -------------
+-- TODO: Show wrap icon in lualine in progress
+vim.api.nvim_create_autocmd(
+    'BufReadPost', {
+        pattern = '*',
+        desc = 'Disable wrap for file with long lines',
+        callback = function()
+            local longest_line = 0
+            for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, '$')) do
+                local line_length = #line
+                if line_length > 150 then
+                    vim.opt_local.wrap = false
+                    break
+                end
+            end
+        end
+    }
+)
+
 vim.api.nvim_create_autocmd(
     'BufWritePre', {
         pattern = '*',
@@ -421,6 +439,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Coloring for docstrings
 AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
@@ -481,15 +500,16 @@ AddPlugin {
             warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
         },
         keywords = {
-            DOCME = { icon = '', color = 'docs' },
-            FEAT  = { icon = '󱩑', color = 'feat' },
-            FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
-            HACK  = { icon = '', color = 'hint' },
-            NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF  = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE', 'REFACTOR' } }, -- TODO: REFACTOR icon 󰐱 
-            TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO  = { icon = '', color = 'todo' },
-            WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
+            DOCME  = { icon = '', color = 'docs' },
+            FEAT   = { icon = '󱩑', color = 'feat' },
+            FIX    = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+            HACK   = { icon = '', color = 'hint' },
+            NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+            PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
+            RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
+            TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+            TODO   = { icon = '', color = 'todo' },
+            WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
     },
@@ -697,6 +717,7 @@ AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'          
 AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
 AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
 AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                               }
+AddPlugin { 'NTBBloodbath/sweetie.nvim',        event = 'User sweetie'                                                 }
 AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
 AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
 AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              }
@@ -857,6 +878,8 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end }
 Dark  { 'substrata',                  '_'            }
+Dark  { 'sweetie',                    '_'            }
+Light { 'sweetie',                    '_'            }
 Dark  { 'terafox',                    'nightfox'     }
 Dark  { 'toast',                      '_'            }
 Light { 'toast',                      '_'            }
@@ -1522,7 +1545,7 @@ AddPlugin {
         current_line_blame_formatter_opts = {
             relative_time = true
         },
-        current_line_blame_formatter = '  <author>  <committer_time>  <summary>',
+        current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time>  <summary>',
         on_attach = function (bufnr)
             local gs = package.loaded.gitsigns
 
@@ -2310,35 +2333,6 @@ vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
 end
 })
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Screen Saver  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin { 'tamton-aquib/duck.nvim' }
-
-Sleeper = {
-    timer = vim.loop.new_timer(),
-    last = 1,
-    sleeps = {
-        { start = function() require('duck').hatch('🐌') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🐤') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('👻') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🤖') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-        { start = function() require('duck').hatch('🦜') end,                                        stop = function() if #require('duck').ducks_list > 0 then require('duck').cook() end end },
-    }
-}
-
-function ResetSleeper()
-    Sleeper.timer:stop()
-    Sleeper.sleeps[Sleeper.last].stop()
-
-    Sleeper.timer:start(300000, 0, vim.schedule_wrap(function()
-        Sleeper.last = math.random(1, #Sleeper.sleeps)
-        Sleeper.sleeps[Sleeper.last].start()
-    end
-    ))
-end
-
-vim.api.nvim_create_autocmd({'CursorHold'} , {callback = ResetSleeper})
-vim.api.nvim_create_autocmd({'CursorMoved', 'CursorMovedI'} , {callback = function() Sleeper.sleeps[Sleeper.last].stop() end})
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- BUG: DeleteSession called twice gives error
@@ -2393,6 +2387,7 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: see Ecovim statusline https://github.com/ecosse3/nvim
 -- PERF: check for performance
 -- REFACTOR: remove unwanted comments
 AddPlugin {
@@ -2513,7 +2508,7 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
-                    -- 'filesize', -- THOUGHT: use conditionally ?
+                    'filesize', -- THOUGHT: use conditionally ?
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
@@ -2714,12 +2709,9 @@ AddPlugin {
     config = true
 }
 -- FEAT: https://github.com/elijahdanko/ttymux.nvim
--- FEAT: https://github.com/jlesquembre/nterm.nvim
 -- FEAT: https://github.com/kassio/neoterm
 -- FEAT: https://github.com/nat-418/termitary.nvim
 -- FEAT: https://github.com/nikvdp/neomux
--- FEAT: https://github.com/numToStr/FTerm.nvim
--- FEAT: https://github.com/oberblastmeister/termwrapper.nvim
 -- FEAT: https://github.com/pianocomposer321/consolation.nvim
 -- FEAT: https://github.com/voldikss/vim-floaterm
 -- FEAT: https://github.com/willothy/flatten.nvim
@@ -3164,6 +3156,11 @@ AddPlugin {
 }
 
 AddPlugin {
+    'sickill/vim-pasta',
+    lazy = false -- PERF: lazy load
+}
+
+AddPlugin {
     'tversteeg/registers.nvim',
     opts = {
         register_user_command = false,
@@ -3206,7 +3203,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/JellyApple102/easyread.nvim
 -- FEAT: https://github.com/Jxstxs/conceal.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
--- FEAT: https://github.com/NTBBloodbath/sweetie.nvim
 -- FEAT: https://github.com/NvChad/base46
 -- FEAT: https://github.com/NvChad/nvim-colorizer.lua
 -- FEAT: https://github.com/aaronhallaert/advanced-git-search.nvim
@@ -3234,18 +3230,19 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/node-type.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
--- FEAT: https://github.com/sickill/vim-pasta
 -- FEAT: https://github.com/simrat39/desktop-notify.nvim
 -- FEAT: https://github.com/tamton-aquib/flirt.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
 -- FEAT: https://github.com/tzachar/local-highlight.nvim
 -- FEAT: https://github.com/xiyaowong/virtcolumn.nvim
 -- FEAT: https://github.com/ziontee113/SelectEase
+-- TODO: https://github.com/AckslD/muren.nvim
+-- TODO: https://github.com/deifyed/naVi
+-- TODO: https://github.com/madox2/vim-ai
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
-
 -- <~>
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3253,9 +3250,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: Doc to read change.txt
 -- TODO: Doc to read insert.txt
 -- TODO: NeovideRegisterRightClick
--- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: change.txt
--- TODO: command window of vim
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: format on paste not good with [p ]p zp
 -- TODO: indentation is not identifible when 2
