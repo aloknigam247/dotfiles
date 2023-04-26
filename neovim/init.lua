@@ -272,6 +272,24 @@ end
 
 -- Auto Commands
 -- -------------
+-- TODO: Show wrap icon in lualine in progress
+vim.api.nvim_create_autocmd(
+    'BufReadPost', {
+        pattern = '*',
+        desc = 'Disable wrap for file with long lines',
+        callback = function()
+            local longest_line = 0
+            for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, '$')) do
+                local line_length = #line
+                if line_length > 100 then
+                    vim.opt_local.wrap = false
+                    break
+                end
+            end
+        end
+    }
+)
+
 vim.api.nvim_create_autocmd(
     'BufWritePre', {
         pattern = '*',
@@ -421,6 +439,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Coloring for docstrings
 AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
@@ -481,15 +500,16 @@ AddPlugin {
             warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
         },
         keywords = {
-            DOCME = { icon = '', color = 'docs' },
-            FEAT  = { icon = '󱩑', color = 'feat' },
-            FIX   = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
-            HACK  = { icon = '', color = 'hint' },
-            NOTE  = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF  = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE', 'REFACTOR' } }, -- TODO: REFACTOR icon 󰐱 
-            TEST  = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO  = { icon = '', color = 'todo' },
-            WARN  = { icon = '', color = 'warn', alt = { 'WARNING' } },
+            DOCME  = { icon = '', color = 'docs' },
+            FEAT   = { icon = '󱩑', color = 'feat' },
+            FIX    = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+            HACK   = { icon = '', color = 'hint' },
+            NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+            PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
+            RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
+            TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+            TODO   = { icon = '', color = 'todo' },
+            WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
     },
@@ -3244,7 +3264,6 @@ vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
-
 -- <~>
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3252,9 +3271,7 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: Doc to read change.txt
 -- TODO: Doc to read insert.txt
 -- TODO: NeovideRegisterRightClick
--- TODO: auto wrap file if longest line is 200 chars long, use a defer function
 -- TODO: change.txt
--- TODO: command window of vim
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: format on paste not good with [p ]p zp
 -- TODO: indentation is not identifible when 2
