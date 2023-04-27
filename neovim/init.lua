@@ -896,7 +896,6 @@ Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
 Light { 'zellner',                    '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
-Dark  { 'zenwritten',                 'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     }
 Dark  { 'zephyr',                     '_'            }
 Dark  { 'zephyrium',                  '_'            }
