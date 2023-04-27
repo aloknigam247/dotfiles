@@ -175,6 +175,8 @@ cd
 # export LESS_TERMCAP_us=$'\E[01;33m'
 
 # TODO: Prompt similar to Powershell
+# TODO: Format-Text like command from Powershell
+# TODO: Powershell like redering blocks
 function prompt_gen() {
     zmodload zsh/nearcolor
 

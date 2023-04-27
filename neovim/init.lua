@@ -896,7 +896,6 @@ Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
 Light { 'zellner',                    '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
-Dark  { 'zenwritten',                 'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     }
 Dark  { 'zephyr',                     '_'            }
 Dark  { 'zephyrium',                  '_'            }
@@ -1769,7 +1768,6 @@ AddPlugin {
                 vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
             end
 
-            -- BUG: popup menu not visible now
             PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
             PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
             PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
@@ -1779,7 +1777,7 @@ AddPlugin {
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
-            navic.attach(client, bufnr) -- TODO: use this
+            navic.attach(client, bufnr)
         end
 
         -- LSP settings (for overriding per client)
@@ -1899,6 +1897,9 @@ AddPlugin {
     'glepnir/lspsaga.nvim',
     branch = 'main',
     cmd = 'Lspsaga',
+    keys = {
+        { '<M-F12>', "<cmd>Lspsaga lsp_finder<cr>", desc = "Open Lsp Finder" }
+    },
     opts = {
         beacon = {
             enable = true,
@@ -2001,10 +2002,10 @@ AddPlugin {
             collapse = '',
             preview = ' ',
             code_action = '💡', -- TODO: use nerd font
-            diagnostic = '🐞', -- TODO: use global icon
-            incoming = ' ',
-            outgoing = ' ',
-            hover = ' ',
+            diagnostic = '',
+            incoming = ' ', -- TODO: change icon
+            outgoing = ' ', -- TODO: change icon
+            hover = ' ', -- TODO: change icon
             kind = {}, -- TODO: custom kinds from globals
         }
     }
@@ -2411,11 +2412,26 @@ AddPlugin {
             local tabpage = vim.api.nvim_get_current_tabpage()
             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
             local named_window = 0
+            local isValidBuf = function(bufnr)
+                local buf_name = vim.api.nvim_buf_get_name(bufnr)
+                if buf_name == "" then
+                    return false
+                end
+
+                local ignore_filetype = { 'NvimTree' }
+                local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+                for _,v in pairs(ignore_filetype) do
+                    if v == filetype then
+                        return false
+                    end
+                end
+
+                return true
+            end
 
             for _, win in ipairs(win_list) do
-                local cur_buf = vim.api.nvim_win_get_buf(win)
-                local buf_name = vim.api.nvim_buf_get_name(cur_buf)
-                if buf_name ~= "" then
+                local bufnr = vim.api.nvim_win_get_buf(win)
+                if isValidBuf(bufnr) then
                     named_window = named_window + 1
                 end
             end
@@ -2435,7 +2451,7 @@ AddPlugin {
         --             statusline = {},
         --             winbar = {},
         --         },
-        --         ignore_focus = {}, -- TODO: for NvimTree/Outline etc
+                ignore_focus = { 'NvimTree' },
         --         always_divide_middle = true,
                 globalstatus = true,
                 refresh = {
@@ -2523,7 +2539,7 @@ AddPlugin {
                         separator = ''
                     },
                     { 'g:session_icon', separator = '' },
-                    'fileformat', -- THOUGHT: custom icons ?
+                    'fileformat',
                     'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
                     -- FEAT: utf-8 bom encoding support
                 },
@@ -2709,7 +2725,6 @@ AddPlugin {
     config = true
 }
 -- FEAT: https://github.com/elijahdanko/ttymux.nvim
--- FEAT: https://github.com/kassio/neoterm
 -- FEAT: https://github.com/nat-418/termitary.nvim
 -- FEAT: https://github.com/nikvdp/neomux
 -- FEAT: https://github.com/pianocomposer321/consolation.nvim
@@ -3033,6 +3048,7 @@ vim.notify = function(msg, level, opt)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO relocalte utility plugins when done
 -- FEAT: use 'AckslD/nvim-trevJ.lua'
 -- FEAT: https://github.com/wellle/targets.vim
 
@@ -3042,6 +3058,8 @@ AddPlugin {
 }
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
+
+-- TODO: AddPlugin { 'Jxstxs/conceal.nvim' }
 
 AddPlugin {
     'Pocco81/true-zen.nvim',
@@ -3201,7 +3219,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/JellyApple102/easyread.nvim
--- FEAT: https://github.com/Jxstxs/conceal.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/NvChad/base46
 -- FEAT: https://github.com/NvChad/nvim-colorizer.lua
@@ -3247,8 +3264,8 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
 -- PERF: profiling for auto commands
--- TODO: Doc to read change.txt
--- TODO: Doc to read insert.txt
+-- TODO: change.txt
+-- TODO: insert.txt
 -- TODO: NeovideRegisterRightClick
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked
