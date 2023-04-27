@@ -1898,6 +1898,9 @@ AddPlugin {
     'glepnir/lspsaga.nvim',
     branch = 'main',
     cmd = 'Lspsaga',
+    keys = {
+        { '<M-F12>', "<cmd>Lspsaga lsp_finder<cr>", desc = "Open Lsp Finder" }
+    },
     opts = {
         beacon = {
             enable = true,
@@ -2001,9 +2004,9 @@ AddPlugin {
             preview = ' ',
             code_action = '💡', -- TODO: use nerd font
             diagnostic = '🐞', -- TODO: use global icon
-            incoming = ' ',
-            outgoing = ' ',
-            hover = ' ',
+            incoming = ' ', -- TODO: change icon
+            outgoing = ' ', -- TODO: change icon
+            hover = ' ', -- TODO: change icon
             kind = {}, -- TODO: custom kinds from globals
         }
     }
@@ -2522,7 +2525,7 @@ AddPlugin {
                         separator = ''
                     },
                     { 'g:session_icon', separator = '' },
-                    'fileformat', -- THOUGHT: custom icons ?
+                    'fileformat',
                     'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
                     -- FEAT: utf-8 bom encoding support
                 },
