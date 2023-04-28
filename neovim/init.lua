@@ -2543,7 +2543,7 @@ AddPlugin {
                     { 'g:session_icon', separator = '' },
                     'fileformat',
                     'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
-                    -- FEAT: utf-8 bom encoding support
+                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
                 },
                 lualine_y = {
                     {
