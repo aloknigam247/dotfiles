@@ -230,7 +230,7 @@ function ColorPalette()
             { fg = '#9C7C1C' },
             { fg = '#A42CD6' },
             { fg = '#CE2D4F' },
-            { fg = '#F1D302' }, -- FIX: not good in light bg
+            { fg = '#735290' }, -- FIX: not good in light bg
             { fg = '#F4743B' },
             { fg = '#F6511D' },
             { fg = '#FFB400' },
@@ -533,6 +533,7 @@ AddPlugin {
 
 -- FEAT: only visible when number of window is more that 2
 AddPlugin {
+    -- FIX: not working properly after update
     'nvim-zh/colorful-winsep.nvim',
     opts = {
         symbols = { '─', '│', '╭', '╮', '╰', '╯' },
@@ -748,7 +749,6 @@ Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
 Dark  { 'base2tone_forest_dark',      'base2tone'    }
-Light { 'base2tone_forest_light',     'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
@@ -1603,6 +1603,7 @@ AddPlugin {
         override = {
             -- FIX: fix icon for Makefile
             -- FIX: better c++ icons
+            -- FIX: Icon for filetype
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
@@ -2339,6 +2340,7 @@ AddPlugin {
     -- BUG: DeleteSession called twice gives error
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     -- BUG: Fix path shown in notifications
+    -- FIX: not working after update
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     config = function()
@@ -2541,7 +2543,7 @@ AddPlugin {
                     { 'g:session_icon', separator = '' },
                     'fileformat',
                     'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
-                    -- FEAT: utf-8 bom encoding support
+                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
                 },
                 lualine_y = {
                     {
@@ -3070,6 +3072,7 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
+    -- FIX: sys error in python, remove file = sys.stderror
     'andrewferrier/debugprint.nvim',
     opts = {
         create_keymaps = false,

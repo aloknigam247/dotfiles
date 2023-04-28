@@ -23,7 +23,7 @@ set path+=**              " Look for all files in sub dirs
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Editor Settings  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-set bomb                              " Keep the BOM file marker
+" set bomb                              " Keep the BOM file marker
 set breakindent                       " Every wrapped line will continue visually indented
 set completeopt=menu,menuone,noselect " For nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
@@ -43,7 +43,7 @@ set textwidth=80                     " Set text width to 100 " FIX: What should 
 set wrap                              " Enable wrap
 set updatetime=500                    " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
-setglobal bomb                        " Keep the BOM file marker
+" setglobal bomb                        " Keep the BOM file marker
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Filetype     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
