@@ -701,7 +701,6 @@ AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'           
 AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                              }
 AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                                  }
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
-AddPlugin { 'Iron-E/nvim-highlite',             event = 'User highlite'                                                }
 AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 }
 AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  }
 AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             }
@@ -748,13 +747,11 @@ Dark  { 'ayu-mirage',                 'ayu'          } -- FIX: Fix LineNr
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
-Dark  { 'base2tone_forest_dark',      'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
@@ -801,7 +798,6 @@ Light { 'gruvbox',                    '_'            }
 Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
 Dark  { 'gruvbox-baby',               '_'            }
 Dark  { 'habamax',                    '_',           }
-Dark  { 'highlite',                   '_'            }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            }
 Dark  { 'kanagawa',                   '_'            }
@@ -883,7 +879,6 @@ Light { 'sweetie',                    '_'            }
 Dark  { 'terafox',                    'nightfox'     }
 Dark  { 'toast',                      '_'            }
 Light { 'toast',                      '_'            }
-Dark  { 'tokyobones',                 'zenbones'     }
 Light { 'tokyobones',                 'zenbones'     }
 Dark  { 'tokyodark',                  '_'            }
 Light { 'tokyonight-day',             'tokyonight'   }
@@ -909,7 +904,7 @@ function ColoRand(ind)
     local module = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module -- TODO: time taken ?
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module}) -- Load colorscheme
