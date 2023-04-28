@@ -533,6 +533,7 @@ AddPlugin {
 
 -- FEAT: only visible when number of window is more that 2
 AddPlugin {
+    -- FIX: not working properly after update
     'nvim-zh/colorful-winsep.nvim',
     opts = {
         symbols = { '─', '│', '╭', '╮', '╰', '╯' },
@@ -2339,6 +2340,7 @@ AddPlugin {
     -- BUG: DeleteSession called twice gives error
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     -- BUG: Fix path shown in notifications
+    -- FIX: not working after update
     'rmagatti/auto-session',
     cmd = 'SaveSession',
     config = function()
@@ -3070,6 +3072,7 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
+    -- FIX: sys error in python, remove file = sys.stderror
     'andrewferrier/debugprint.nvim',
     opts = {
         create_keymaps = false,
