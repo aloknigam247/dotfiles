@@ -749,7 +749,6 @@ Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
 Dark  { 'base2tone_forest_dark',      'base2tone'    }
-Light { 'base2tone_forest_light',     'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
@@ -1604,6 +1603,7 @@ AddPlugin {
         override = {
             -- FIX: fix icon for Makefile
             -- FIX: better c++ icons
+            -- FIX: Icon for filetype
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },

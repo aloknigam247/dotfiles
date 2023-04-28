@@ -175,7 +175,75 @@ cd
 # export LESS_TERMCAP_us=$'\E[01;33m'
 
 # TODO: Prompt similar to Powershell
-# TODO: Format-Text like command from Powershell
+# FIX: Fix function name
+# FEAT: Use params like cygnus
+# FIX: headonly
+# FIX: noreset
+# TODO: Format code
+function format_text() {
+    local text=$1
+    local bg=$2
+    local fg=$3
+    local styles=$4
+    local headonly=$5
+    local noreset=$6
+
+    local head=""
+
+    # create background header
+    if [[ -n $bg ]]; then
+        local bg_r_hex=${bg[2,3]}
+        local bg_g_hex=${bg[4,5]}
+        local bg_b_hex=${bg[6,7]}
+        local bg_r=$((16#$bg_r_hex))
+        local bg_g=$((16#$bg_g_hex))
+        local bg_b=$((16#$bg_b_hex))
+        head="48;2;${bg_r};${bg_g};${bg_b}"
+    fi
+
+    # create foreground header
+    if [[ -n $fg ]]; then
+        if [[ -n $head ]]; then head+=";"; fi # separator
+        local fg_r_hex=${fg[2,3]}
+        local fg_g_hex=${fg[4,5]}
+        local fg_b_hex=${fg[6,7]}
+        local fg_r=$((16#$fg_r_hex))
+        local fg_g=$((16#$fg_g_hex))
+        local fg_b=$((16#$fg_b_hex))
+        head+="38;2;${fg_r};${fg_g};${fg_b}"
+        fi
+
+    # create effects header
+    for style in ${(s/,/)styles}; do
+        if [[ -n $head ]]; then head+=";"; fi # separator
+        case $style in
+            blink) head+="5" ;;
+            bold) head+="1" ;;
+            hidden) head+="8" ;;
+            italic) head+="3" ;;
+            reverse) head+="7" ;;
+            strikethrough) head+="9" ;;
+            underline) head+="4" ;;
+        esac
+    done
+
+    if [[ -n $head ]]; then
+        head="\e[${head}m"
+        if [[ $headonly == true ]]; then
+            echo $head
+            return
+        fi
+        head+=$text
+        if [[ $noreset != true ]]; then
+            head+="\e[0m"
+        fi
+    else
+        head=$text
+    fi
+
+    echo $head
+}
+
 # TODO: Powershell like redering blocks
 function prompt_gen() {
     zmodload zsh/nearcolor
