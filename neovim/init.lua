@@ -508,7 +508,7 @@ AddPlugin {
             PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
             RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
             TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO   = { icon = '', color = 'todo' },
+            TODO   = { icon = '󰄬', color = 'todo' },
             WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
@@ -864,7 +864,6 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
-Light { 'seoulbones',                 'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
 Light { 'shine',                      '_'            }
 Dark  { 'slate',                      '_'           ,post = FixNontext                                      }
@@ -1534,7 +1533,7 @@ AddPlugin {
             change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
             delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+            changedelete = { hl = 'GitSignsChange', text = '󰜥', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
         },
         current_line_blame_formatter_opts = {
             relative_time = true
@@ -1657,6 +1656,7 @@ AddPlugin {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
+-- TODO: browser for LSP symbols
 -- TODO: resolve with Lspsaga
 -- TODO: use treesitter statusline if LSP not available
 AddPlugin {
@@ -2639,6 +2639,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: mappings to open file in vsplit,split,tab
     -- TODO: padded dropdown menu
     -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     -- FEAT: https://github.com/nvim-telescope/telescope-fzy-native.nvim
