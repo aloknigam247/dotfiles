@@ -677,7 +677,6 @@ AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     depe
 AddPlugin { 'igorgue/danger',                   event = 'User danger'                                                  }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
-AddPlugin { 'maxmx03/dracula.nvim',             event = 'User dracula'                                                 }
 AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                    }
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                              }
 AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
@@ -777,7 +776,6 @@ Dark  { 'deepocean',                  'starry',      pre = function() require('s
 Light { 'delek',                      '_'                                                                                                                  }
 Dark  { 'deus',                       '_',           post = FixVisual                                                                                      }
 Dark  { 'doubletrouble',              '_'                                                                                                                  }
-Dark  { 'dracula',                    '_'                                                                                                                  }
 Dark  { 'dracula_blood',              'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'duskfox',                    'nightfox'                                                                                                           }
 Dark  { 'earlysummer',                'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -865,7 +863,7 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
-Light { 'shine',                      '_'            }
+Light { 'shine',                      '_'           ,post = FixNontext                                      }
 Dark  { 'slate',                      '_'           ,post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
