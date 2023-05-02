@@ -740,9 +740,9 @@ Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
-Dark  { 'ayu-dark',                   'ayu'          } -- FIX: Fix LineNr
-Light { 'ayu-light',                  'ayu'          } -- FIX: Fix LineNr
-Dark  { 'ayu-mirage',                 'ayu'          } -- FIX: Fix LineNr
+Dark  { 'ayu-dark',                   'ayu'          }
+Light { 'ayu-light',                  'ayu'          }
+Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
@@ -797,7 +797,7 @@ Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
 Dark  { 'gruvbox-baby',               '_'            }
 Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
-Dark  { 'juliana',                    '_'            }
+Dark  { 'juliana',                    '_'            } -- FIX: fix numberline
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
 Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- FIX: fix method highlight
