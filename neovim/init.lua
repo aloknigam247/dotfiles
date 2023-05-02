@@ -2335,10 +2335,11 @@ AddPlugin {
     -- BUG: Fix path shown in notifications
     -- FIX: not working after update
     'rmagatti/auto-session',
-    cmd = 'SaveSession',
+    cmd = 'SessionSave',
     config = function()
         vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
         require('auto-session').setup({
+            log_level = 'debug',
             post_delete_cmds = {
                 "let g:auto_session_enabled = v:false",
                 "unlet g:session_icon"
