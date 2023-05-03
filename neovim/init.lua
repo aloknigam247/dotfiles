@@ -508,7 +508,7 @@ AddPlugin {
             PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
             RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
             TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO   = { icon = '', color = 'todo' },
+            TODO   = { icon = '󰄬', color = 'todo' },
             WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
@@ -677,7 +677,6 @@ AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     depe
 AddPlugin { 'igorgue/danger',                   event = 'User danger'                                                  }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
-AddPlugin { 'maxmx03/dracula.nvim',             event = 'User dracula'                                                 }
 AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                    }
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                              }
 AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
@@ -701,7 +700,6 @@ AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'           
 AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                              }
 AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                                  }
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                    }
-AddPlugin { 'Iron-E/nvim-highlite',             event = 'User highlite'                                                }
 AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                                 }
 AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                                  }
 AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                             }
@@ -742,19 +740,17 @@ Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'            }
 Light { 'adwaita',                    '_'            }
 Dark  { 'aurora',                     '_'            }
-Dark  { 'ayu-dark',                   'ayu'          } -- FIX: Fix LineNr
-Light { 'ayu-light',                  'ayu'          } -- FIX: Fix LineNr
-Dark  { 'ayu-mirage',                 'ayu'          } -- FIX: Fix LineNr
+Dark  { 'ayu-dark',                   'ayu'          }
+Light { 'ayu-light',                  'ayu'          }
+Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Light { 'base2tone_field_light',      'base2tone'    }
-Dark  { 'base2tone_forest_dark',      'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Light { 'base2tone_meadow_light',     'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
@@ -780,7 +776,6 @@ Dark  { 'deepocean',                  'starry',      pre = function() require('s
 Light { 'delek',                      '_'                                                                                                                  }
 Dark  { 'deus',                       '_',           post = FixVisual                                                                                      }
 Dark  { 'doubletrouble',              '_'                                                                                                                  }
-Dark  { 'dracula',                    '_'                                                                                                                  }
 Dark  { 'dracula_blood',              'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
 Dark  { 'duskfox',                    'nightfox'                                                                                                           }
 Dark  { 'earlysummer',                'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
@@ -801,9 +796,8 @@ Light { 'gruvbox',                    '_'            }
 Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
 Dark  { 'gruvbox-baby',               '_'            }
 Dark  { 'habamax',                    '_',           }
-Dark  { 'highlite',                   '_'            }
 Dark  { 'horizon',                    '_'            }
-Dark  { 'juliana',                    '_'            }
+Dark  { 'juliana',                    '_'            } -- FIX: fix numberline
 Dark  { 'kanagawa',                   '_'            }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
 Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- FIX: fix method highlight
@@ -868,9 +862,8 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
-Light { 'seoulbones',                 'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
-Light { 'shine',                      '_'            }
+Light { 'shine',                      '_'           ,post = FixNontext                                      }
 Dark  { 'slate',                      '_'           ,post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
@@ -883,7 +876,6 @@ Light { 'sweetie',                    '_'            }
 Dark  { 'terafox',                    'nightfox'     }
 Dark  { 'toast',                      '_'            }
 Light { 'toast',                      '_'            }
-Dark  { 'tokyobones',                 'zenbones'     }
 Light { 'tokyobones',                 'zenbones'     }
 Dark  { 'tokyodark',                  '_'            }
 Light { 'tokyonight-day',             'tokyonight'   }
@@ -909,7 +901,7 @@ function ColoRand(ind)
     local module = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module -- TODO: time taken ?
     -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module}) -- Load colorscheme
@@ -1539,7 +1531,7 @@ AddPlugin {
             change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
             delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+            changedelete = { hl = 'GitSignsChange', text = '󰜥', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
         },
         current_line_blame_formatter_opts = {
             relative_time = true
@@ -1662,6 +1654,7 @@ AddPlugin {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
+-- TODO: browser for LSP symbols
 -- TODO: resolve with Lspsaga
 -- TODO: use treesitter statusline if LSP not available
 AddPlugin {
@@ -2342,10 +2335,11 @@ AddPlugin {
     -- BUG: Fix path shown in notifications
     -- FIX: not working after update
     'rmagatti/auto-session',
-    cmd = 'SaveSession',
+    cmd = 'SessionSave',
     config = function()
         vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
         require('auto-session').setup({
+            log_level = 'debug',
             post_delete_cmds = {
                 "let g:auto_session_enabled = v:false",
                 "unlet g:session_icon"
@@ -2644,6 +2638,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- TODO: mappings to open file in vsplit,split,tab
     -- TODO: padded dropdown menu
     -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     -- FEAT: https://github.com/nvim-telescope/telescope-fzy-native.nvim
