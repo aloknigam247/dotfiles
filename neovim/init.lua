@@ -230,7 +230,7 @@ function ColorPalette()
             { fg = '#9C7C1C' },
             { fg = '#A42CD6' },
             { fg = '#CE2D4F' },
-            { fg = '#735290' }, -- FIX: not good in light bg
+            { fg = '#735290' },
             { fg = '#F4743B' },
             { fg = '#F6511D' },
             { fg = '#FFB400' },
@@ -714,7 +714,7 @@ AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'       
 AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
 AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
-AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  }
+AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  } -- FIX: Indentline highlight
 AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                               }
 AddPlugin { 'NTBBloodbath/sweetie.nvim',        event = 'User sweetie'                                                 }
 AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
@@ -2136,13 +2136,14 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
-    -- THOUGHT: check if vim.input is possible for annotate message
+    -- THOUGHT: check if vim.input is possible for annotate message, may need
+    -- dressing
     -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function()
         vim.cmd[[
-            let g:bookmark_annotation_sign = ''
+            let g:bookmark_annotation_sign = '' " TODO: change icon
             let g:bookmark_display_annotation = 1
             let g:bookmark_highlight_lines = 1
             let g:bookmark_location_list = 1
@@ -2461,11 +2462,12 @@ AddPlugin {
                 lualine_a = {
                     {
                         'mode',
-                        color = { gui = 'bold,italic' },
+                        color = { gui = 'bold' },
                         fmt = function(str)
                             return str:sub(1,1)
                         end,
-                        separator = {right = ''}
+                        padding = { left = 0, right = 0 },
+                        separator = { left = '', right = '' }
                     }
                 },
                 lualine_b = {
@@ -2493,7 +2495,6 @@ AddPlugin {
                     }
                 },
                 lualine_c = {
-                    -- THOUGHT: an extra  to marke seperation in case of same background color ?
                     {
                         'filetype',
                         icon_only = true,
@@ -2520,6 +2521,7 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
+                    { require("node-type").statusline }, -- TODO: confirm usage
                     'filesize', -- THOUGHT: use conditionally ?
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
@@ -2812,7 +2814,8 @@ AddPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TUI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: https://github.com/stevearc/dressing.nvim
 AddPlugin {
     -- TODO: cmdline
     -- TODO: messages
@@ -3171,6 +3174,11 @@ AddPlugin {
     cmd = 'Diffthis'
 }
 
+-- TODO: Correct place for this plugin
+AddPlugin { 
+    'roobert/node-type.nvim'
+}
+
 AddPlugin {
     'sickill/vim-pasta',
     lazy = false -- PERF: lazy load
@@ -3243,7 +3251,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/madox2/vim-ai
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
--- FEAT: https://github.com/roobert/node-type.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/simrat39/desktop-notify.nvim
 -- FEAT: https://github.com/tamton-aquib/flirt.nvim
