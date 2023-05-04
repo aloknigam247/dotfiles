@@ -600,6 +600,16 @@ function FixNontext()
     vim.api.nvim_set_hl(0, 'IndentBlanklineSpaceChar', { fg = bg })
 end
 
+function FixStarry(char, context_char) 
+    require('starry').setup({
+        custom_highlights = {
+            IndentBlanklineChar = { fg = char },
+            IndentBlanklineContextChar = { fg = context_char },
+            LineNr = { underline = false },
+        },
+    })
+end
+
 function FixVisual()
     local bg
     if (vim.o.background ==  'dark') then
@@ -769,19 +779,19 @@ Dark  { 'danger_dark',                'danger'       }
 Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
-Dark  { 'darksolar',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'dawnfox',                    'nightfox'                                                                                                           }
-Dark  { 'dayfox',                     'nightfox'                                                                                                           }
-Dark  { 'deepocean',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Light { 'delek',                      '_'                                                                                                                  }
-Dark  { 'deus',                       '_',           post = FixVisual                                                                                      }
-Dark  { 'doubletrouble',              '_'                                                                                                                  }
-Dark  { 'dracula_blood',              'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'duskfox',                    'nightfox'                                                                                                           }
-Dark  { 'earlysummer',                'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'edge',                       '_'                                                                                                                  }
-Light { 'edge',                       '_'                                                                                                                  }
-Dark  { 'emerald',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
+Dark  { 'dawnfox',                    'nightfox'                                                          }
+Dark  { 'dayfox',                     'nightfox'                                                          }
+Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
+Light { 'delek',                      '_'                                                                 }
+Dark  { 'deus',                       '_',           post = FixVisual                                     }
+Dark  { 'doubletrouble',              '_'                                                                 }
+Dark  { 'dracula_blood',              'starry',      pre = function() FixStarry('#322738', '#54415e') end }
+Dark  { 'duskfox',                    'nightfox'                                                          }
+Dark  { 'earlysummer',                'starry',      pre = function() FixStarry('#3f2b4c', '#694980') end }
+Dark  { 'edge',                       '_'                                                                 }
+Light { 'edge',                       '_'                                                                 }
+Dark  { 'emerald',                    'starry',      pre = function() FixStarry('#1a391d', '#2c5f31') end }
 Dark  { 'enfocado',                   '_'            }
 Light { 'enfocado',                   '_'            }
 Dark  { 'everforest',                 '_'            }
@@ -799,25 +809,25 @@ Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            } -- FIX: fix numberline
 Dark  { 'kanagawa',                   '_'            }
-Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                      }
-Light { 'limestone',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end } -- FIX: fix method highlight
-Dark  { 'lunaperche',                 '_'                                                                                                                  }
-Dark  { 'mariana',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                              }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                              }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                              } -- FIX: fix Visual bg
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                              }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end  }
-Dark  { 'material',                   'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                     }
+Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                 }
+Dark  { 'lunaperche',                 '_'                                                                                                                 }
+Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                 }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                             }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                             } -- FIX: fix Visual bg
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                             }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end }
+Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end }
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
 Dark  { 'mellow',                     '_'            }
-Dark  { 'middlenight_blue',           'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
-Dark  { 'monokai',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'middlenight_blue',           'starry',      pre = function() FixStarry('#321c3e', '#542f68') end }
+Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end }
 Dark  { 'monokai',                    'vim-monokai'  }
 Dark  { 'moonfly',                    '_'            }
 Dark  { 'moonlight',                  '_'            }
-Dark  { 'moonlight',                  'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end }
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
@@ -839,7 +849,7 @@ Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
-Dark  { 'oceanic',                    'starry',      pre = function() require('starry').setup({custom_highlights = { LineNr = { underline = false }}}) end }
+Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
 Dark  { 'oh-lucy',                    '_'            } -- FIX: FixNontext
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
@@ -852,7 +862,7 @@ Dark  { 'onenord',                    '_'            }
 Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
-Dark  { 'palenight',                  'starry'       }
+Dark  { 'palenight',                  'starry',      pre = function() FixStarry('#3c2c46', '#644975') end }
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
@@ -2440,10 +2450,8 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                -- component_separators = { left = '', right = ''},
-                -- section_separators = { left = '', right = ''},
-                component_separators = { left = '', right = ''},
-                section_separators = { left = '', right = ''}, -- BUG: separator colors are not correct base2tone_mall_light
+                component_separators = { left = '', right = ''},
+                section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
         --             winbar = {},
@@ -2527,7 +2535,7 @@ AddPlugin {
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
                     {
-                        LspIcon,
+                        LspIcon, -- TODO: move to y
                         cond = function()
                             return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
                         end,
@@ -2536,14 +2544,20 @@ AddPlugin {
                         end,
                         separator = ''
                     },
-                    { 'g:session_icon', separator = '' },
-                    'fileformat',
+                    { 'g:session_icon', separator = '' },  -- TODO: move to y
+                    'fileformat',  -- TODO: move to y or z
                     'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
                     -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
                 },
                 lualine_y = {
+                    { -- TODO: simplify usage
+                        function() return '' end,
+                        cond = function()
+                            return vim.o.wrap
+                        end
+                    },
                     {
-                        'progress',
+                        'progress', -- TODO: think about location
                         on_click = function ()
                             local satellite = require('satellite')
                             if satellite.enabled then
@@ -2556,7 +2570,7 @@ AddPlugin {
                         end
                     }
                 },
-                lualine_z = {'location'}
+                lualine_z = {'location'} -- TODO: think about location
             },
             inactive_sections = { -- TODO: re-evaluate inactive sections content
                 lualine_a = {},
@@ -2641,7 +2655,7 @@ AddPlugin {
 
 AddPlugin {
     -- TODO: mappings to open file in vsplit,split,tab
-    -- TODO: padded dropdown menu
+    -- TODO: padded dropdown menu https://github.com/nvim-telescope/telescope.nvim/wiki/Gallery#padded-dropdown-menu-in-norcallis-blue
     -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     -- FEAT: https://github.com/nvim-telescope/telescope-fzy-native.nvim
     'nvim-telescope/telescope.nvim',
@@ -3274,7 +3288,7 @@ ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- BUG: Powershell indent issue
--- FEAT: Use of Copilot
+-- FEAT: Use of Copilot abbcbb
 -- PERF: profiling for auto commands
 -- TODO: change.txt
 -- TODO: insert.txt
