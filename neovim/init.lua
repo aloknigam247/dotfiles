@@ -2840,7 +2840,7 @@ AddPlugin {
     -- TODO: markdown
     -- TODO: smart_move
     -- TODO: showmode in lualine
-    -- TODO: @recording messages from messages
+    -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     -- TODO: cmdline and popup together
     -- TODO: classic commandline
     -- TODO: hide written messages
