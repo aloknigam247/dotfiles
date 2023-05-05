@@ -1541,7 +1541,7 @@ AddPlugin {
             change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
             delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
             topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            changedelete = { hl = 'GitSignsChange', text = '󰜥', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
         },
         current_line_blame_formatter_opts = {
             relative_time = true
@@ -1603,21 +1603,19 @@ AddPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
         override = {
-            -- FIX: fix icon for Makefile
-            -- FIX: better c++ icons
-            -- FIX: better yaml icons
-            -- FIX: Icon for filetype
-            ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
-            cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
-            cp      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cp'        },
-            cpp     = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'Cpp'       },
-            cs      = { color = '#596706', cterm_color = '58',  icon = '', name = 'Cs'        },
-            csproj  = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
-            csv     = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
-            md      = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
-            mdx     = { color = '#519ABA', cterm_color = '67',  icon = '', name = 'Mdx'       },
-            norg    = { color = '#40916C', cterm_color = '48',  icon = '', name = 'Neorg'     },
-            ps1     = { color = '#4D5A5E', cterm_color = '240', icon = '', name = 'PromptPs1' },
+            ['c++']  = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
+            cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
+            cp       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cp'        },
+            cpp      = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cpp'       },
+            cs       = { color = '#596706', cterm_color = '58',  icon = '', name = 'Cs'        },
+            csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
+            csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
+            makefile = { color = '#6d8086', cterm_color = '66',  icon = '', name = 'Makefile'  },
+            md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
+            mdx      = { color = '#519ABA', cterm_color = '67',  icon = '', name = 'Mdx'       },
+            norg     = { color = '#40916C', cterm_color = '48',  icon = '', name = 'Neorg'     },
+            ps1      = { color = '#4D5A5E', cterm_color = '240', icon = '', name = 'PromptPs1' },
+            yaml     = { color = '#f44336', cterm_color = '203', icon = '󰙅', name = 'Yaml'      },
         }
     }
 }
@@ -1744,6 +1742,7 @@ AddPlugin {
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
             -- BUG: Mappings are not working
+            -- TODO: Icons for  popup
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
@@ -1922,7 +1921,7 @@ AddPlugin {
         definition = {
             edit = 'o',
             vsplit = '<C-v>',
-            split = '<C-x>',
+            split = '<C-x>', -- TODO: change <C-s>
             tabe = '<C-t>',
             quit = 'q',
         },
@@ -1944,7 +1943,7 @@ AddPlugin {
         finder = {
             open = {'o', '<CR>'},
             vsplit = '<C-v>',
-            split = '<C-x>',
+            split = '<C-x>', -- TODO: change <C-s>
             tabe = '<C-t>',
             quit = {'q', '<ESC>'},
         },
@@ -2241,7 +2240,7 @@ AddPlugin {
             cancel = '<esc>', -- cancel the preview and get back to your last window / buffer / cursor
             refresh = 'r', -- manually refresh
             jump = {'<cr>', '<tab>'}, -- jump to the diagnostic or open / close folds
-            open_split = { '<c-x>' }, -- open buffer in new split
+            open_split = { '<c-x>' }, -- open buffer in new split -- TODO: change <C-s>
             open_vsplit = { '<c-v>' }, -- open buffer in new vsplit
             open_tab = { '<c-t>' }, -- open buffer in new tab
             jump_close = {'o'}, -- jump to the diagnostic and close the list
@@ -2283,7 +2282,7 @@ AddPlugin {
     -- | tab         | open the item in a new tab                               | t       |
     -- | tabb        | open the item in a new tab, but stay at quickfix window  | T       |
     -- | tabc        | open the item in a new tab, and close quickfix window    | <C-t>   |
-    -- | split       | open the item in vertical split                          | <C-x>   |
+    -- | split       | open the item in vertical split                          | <C-x>   | -- TODO: change <C-s>
     -- | vsplit      | open the item in horizontal split                        | <C-v>   |
     -- | prevfile    | go to previous file under the cursor in quickfix window  | <C-p>   |
     -- | nextfile    | go to next file under the cursor in quickfix window      | <C-n>   |
@@ -2531,7 +2530,7 @@ AddPlugin {
                 },
                 lualine_x = {
                     'filesize', -- THOUGHT: use conditionally ?
-                    -- 'hostname', -- THOUGHT: use conditionally on ssh ?
+                    -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
                     {
@@ -2682,7 +2681,7 @@ AddPlugin {
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<C-x>']      = actions.select_horizontal,
+                        ['<C-x>']      = actions.select_horizontal, -- TODO: change <C-s>
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
@@ -2693,7 +2692,7 @@ AddPlugin {
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<C-x>']      = actions.select_horizontal,
+                        ['<C-x>']      = actions.select_horizontal, -- TODO: change <C-s>
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
@@ -3033,7 +3032,10 @@ AddPlugin {
             },
             throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
             views = {}, ---@see section on views
-            routes = {}, --- @see section on routes
+            routes = {{
+                view = "notify",
+                filter = { event = "msg_showmode" },
+            }},
             status = {}, --- @see section on statusline components
             format = {}, --- @see section on formatting
         })
@@ -3259,7 +3261,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/gbprod/yanky.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
--- FEAT: https://github.com/justeph/filename-strip
 -- FEAT: https://github.com/lalitmee/browse.nvim
 -- FEAT: https://github.com/loctvl842/monokai-pro.nvim
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
@@ -3299,7 +3300,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: quickfix
 -- TODO: revisit Nerd Fonts for new fonts
 -- TODO: vsplit or split file opener like find command
--- TODO: use <C-s> instead of <C-x> if possible for splits, locate places and mark todo
 -- vim: fmr=</>,<~> fdm=marker
 
 
