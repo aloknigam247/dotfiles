@@ -203,7 +203,6 @@ lua require('init')
 " NOTE: important format options
 " / = do not insert comment on 'o' and 'O' when o is included and line does not start with comment
 " 1 = don't break a line a after 1 letter word, try to break before it
-" b = TODO: understand it
 " c = do auto wrapping at textwidth on comment only
 " j = join comments without commentstring
 " l = do not break line if lenght is more than textwidth when insert
@@ -213,5 +212,3 @@ lua require('init')
 " r = insert comment on enter
 " t = do auto wrapping at textwidth
 " }}}
-
-
