@@ -26,3 +26,5 @@ set skip-completed-text on
 
 # Show file type by appending a character like 'ls -F'
 set visible-stats on
+
+

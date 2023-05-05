@@ -302,3 +302,5 @@ function rprompt() {
 export RPROMPT='$(rprompt)'
 
 PATH=.:$PATH
+
+

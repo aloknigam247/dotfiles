@@ -1,7 +1,9 @@
-﻿$scoop_pkgs = @(
+$scoop_pkgs = @(
     "delta"
 )
 
 $files = @{
     ".gitconfig" = "~\.gitconfig";
 }
+
+

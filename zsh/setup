@@ -3,3 +3,5 @@ files=(
         [zshrc]=~/.zshrc
         [zsh-autosuggestions/zsh-autosuggestions.zsh]=~/.zsh-suggest
       )
+
+

@@ -25,3 +25,5 @@ alias gdb='gdb -q'
 alias ls='ls -F --color'
 alias ll='ls -lF --color'
 alias rm='rm -rf'
+
+

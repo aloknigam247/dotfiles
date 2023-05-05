@@ -2,3 +2,5 @@ files=(
         [precmd]=~/.precmd
         [tcshrc]=~/.tcshrc
       )
+
+
