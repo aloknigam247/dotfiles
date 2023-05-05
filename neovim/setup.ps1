@@ -15,3 +15,5 @@ $files = @{
     "init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";
     "en.utf-8.add" = "$env:LOCALAPPDATA\nvim\spell\en.utf-8.add"
 }
+
+

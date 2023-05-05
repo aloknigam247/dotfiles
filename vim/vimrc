@@ -469,3 +469,5 @@ autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 "  6 -> solid vertical bar
 
 " vim: fdm=marker
+
+

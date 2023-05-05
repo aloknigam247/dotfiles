@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 
 # Set up the list of menu items
 menu_items=("Item 1" "Item 2" "Item 3" "Item 4" "Item 5")
@@ -57,4 +57,6 @@ done
 
 # Print the selected item
 echo "You selected: ${menu_items[$selected_index]}"
+
+
 

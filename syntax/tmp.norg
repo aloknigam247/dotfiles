@@ -1,4 +1,4 @@
-﻿@document.meta
+@document.meta
 title: The 1.0 Norg Specification
 authors: [
     vhyrro
@@ -1823,3 +1823,5 @@ version: 1.0
    ===
 
 %| vim: set tw=100 :|%
+
+

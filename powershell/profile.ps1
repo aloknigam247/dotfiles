@@ -460,3 +460,5 @@ Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $PSNativeCommandUseErrorActionPreference = $false
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
 $env:PSModulePath += ";E:\aloknigam"
+
+

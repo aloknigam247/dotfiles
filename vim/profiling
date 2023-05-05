@@ -22,3 +22,5 @@ cd ..
 
 ${2}vim -d before/filter.csv after/filter.csv
 ${2}vim -d before/startup after/startup
+
+

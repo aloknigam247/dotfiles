@@ -143,16 +143,16 @@ LazyConfig = {
 Plugins = {}
 
 -- Lua Locals
-local border_shape = {
-    { '╭', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╮', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-    { '╯', 'FloatBorder' },
-    { '─', 'FloatBorder' },
-    { '╰', 'FloatBorder' },
-    { '│', 'FloatBorder' },
-}
+-- local border_shape = {
+--     { '╭', 'FloatBorder' },
+--     { '─', 'FloatBorder' },
+--     { '╮', 'FloatBorder' },
+--     { '│', 'FloatBorder' },
+--     { '╯', 'FloatBorder' },
+--     { '─', 'FloatBorder' },
+--     { '╰', 'FloatBorder' },
+--     { '│', 'FloatBorder' },
+-- }
 
 local icons = {
     diagnostic = {
@@ -278,7 +278,6 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Disable wrap for file with long lines',
         callback = function()
-            local longest_line = 0
             for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, '$')) do
                 local line_length = #line
                 if line_length > 150 then
@@ -377,8 +376,8 @@ AddPlugin {
             -- ( | ) --> ) --> ( )|
             Rule(' ', ' ')
             :with_pair(function (opts)
-                local pair = opts.line:sub(opts.col - 1, opts.col)
-                return vim.tbl_contains({ '()', '[]', '{}' }, pair)
+                local pair_set = opts.line:sub(opts.col - 1, opts.col)
+                return vim.tbl_contains({ '()', '[]', '{}' }, pair_set)
             end),
             Rule('( ', ' )')
             :with_pair(function() return false end)
@@ -545,7 +544,7 @@ AddPlugin {
     't9md/vim-quickhl',
     config = function()
         local colors = {}
-        for i,v in pairs(ColorPalette()) do
+        for _,v in pairs(ColorPalette()) do
             local hi = "gui=italic,bold,underline guifg=#000000 guibg=" .. v.fg
             table.insert(colors, hi)
         end
@@ -600,7 +599,7 @@ function FixNontext()
     vim.api.nvim_set_hl(0, 'IndentBlanklineSpaceChar', { fg = bg })
 end
 
-function FixStarry(char, context_char) 
+function FixStarry(char, context_char)
     require('starry').setup({
         custom_highlights = {
             IndentBlanklineChar = { fg = char },
@@ -610,16 +609,17 @@ function FixStarry(char, context_char)
     })
 end
 
-function FixVisual()
-    local bg
-    if (vim.o.background ==  'dark') then
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, 50)
-    else
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, -20)
+function FixVisual(bg)
+    if bg ~= nil then
+        if (vim.o.background ==  'dark') then
+            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+            bg = string.format('%X', bg)
+            bg = LightenDarkenColor(bg, 50)
+        else
+            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+            bg = string.format('%X', bg)
+            bg = LightenDarkenColor(bg, -20)
+        end
     end
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
 end
@@ -815,7 +815,7 @@ Dark  { 'lunaperche',                 '_'                                       
 Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                             }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                             }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end                                             } -- FIX: fix Visual bg
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#cceae7') end }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                             }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end }
 Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end }
@@ -1605,6 +1605,7 @@ AddPlugin {
         override = {
             -- FIX: fix icon for Makefile
             -- FIX: better c++ icons
+            -- FIX: better yaml icons
             -- FIX: Icon for filetype
             ['c++'] = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
             cc      = { color = '#F34B7D', cterm_color = '204', icon = '', name = 'CPlusPlus' },
@@ -2009,7 +2010,7 @@ AddPlugin {
             diagnostic = '',
             incoming = ' ', -- TODO: change icon
             outgoing = ' ', -- TODO: change icon
-            hover = ' ', -- TODO: change icon
+            hover = ' ',
             kind = {}, -- TODO: custom kinds from globals
         }
     }
@@ -2529,7 +2530,6 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
-                    { require("node-type").statusline }, -- TODO: confirm usage
                     'filesize', -- THOUGHT: use conditionally ?
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
@@ -2789,7 +2789,7 @@ AddPlugin {
     -- https://github.com/David-Kunz/markid
     -- THOUGHT: add underline to all params ?
     'm-demare/hlargs.nvim',
-    config = function(opts)
+    config = function()
         require('hlargs').setup({
             use_colorpalette = true,
             colorpalette = ColorPalette(),
@@ -3196,11 +3196,6 @@ AddPlugin {
     cmd = 'Diffthis'
 }
 
--- TODO: Correct place for this plugin
-AddPlugin { 
-    'roobert/node-type.nvim'
-}
-
 AddPlugin {
     'sickill/vim-pasta',
     lazy = false -- PERF: lazy load
@@ -3293,7 +3288,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- PERF: profiling for auto commands
 -- TODO: change.txt
 -- TODO: insert.txt
--- TODO: NeovideRegisterRightClick
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: format on paste not good with [p ]p zp
@@ -3308,3 +3302,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: vsplit or split file opener like find command
 -- TODO: use <C-s> instead of <C-x> if possible for splits, locate places and mark todo
 -- vim: fmr=</>,<~> fdm=marker
+
+

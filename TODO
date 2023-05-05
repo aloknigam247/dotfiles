@@ -1,4 +1,4 @@
-﻿FEAT: fzf preview with bat
+FEAT: fzf preview with bat
 FEAT: ripgrep preview with bat
 FIX: git diff in lazygit
 TODO: Colors for ripgrep
@@ -18,3 +18,5 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/intellicode/i
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/liveshare/
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/version-control/?view=vs-2022
 TODO: windows terminal rounded selection
+
+
