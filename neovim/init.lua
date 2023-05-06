@@ -1663,7 +1663,6 @@ AddPlugin {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
--- TODO: browser for LSP symbols
 -- TODO: resolve with Lspsaga
 -- TODO: use treesitter statusline if LSP not available
 AddPlugin {
@@ -2403,7 +2402,8 @@ AddPlugin {
     config = function()
         Icon_index = 0
         local function LspIcon()
-            local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'} -- THOUGHT: vscode icon  ?
+            -- local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'}
+            local anim = {''}
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
@@ -2521,10 +2521,10 @@ AddPlugin {
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
                         symbols = {
-                            modified = '●',      -- Text to show when the file is modified.
-                            readonly = '',      -- Text to show when the file is non-modifiable or readonly.
-                            unnamed = '[No Name]', -- Text to show for unnamed buffers. THOUGHT: Something better
-                            newfile = '[New]',     -- Text to show for new created file before first writting THOUGHT: Something better
+                            modified = '', -- Text to show when the file is modified.
+                            readonly = '', -- Text to show when the file is non-modifiable or readonly.
+                            unnamed  = '', -- Text to show for unnamed buffers.
+                            newfile  = '', -- Text to show for new created file before first writting
                         }
                     }
                 },
@@ -2554,9 +2554,11 @@ AddPlugin {
                         cond = function()
                             return vim.o.wrap
                         end
-                    },
+                    }
+                },
+                lualine_z = {
                     {
-                        'progress', -- TODO: think about location
+                        'location', -- TODO: think about location
                         on_click = function ()
                             local satellite = require('satellite')
                             if satellite.enabled then
@@ -2566,10 +2568,9 @@ AddPlugin {
                                 vim.cmd('SatelliteEnable')
                                 satellite.enabled = true
                             end
-                        end
+                        end,
                     }
-                },
-                lualine_z = {'location'} -- TODO: think about location
+                }
             },
             inactive_sections = { -- TODO: re-evaluate inactive sections content
                 lualine_a = {},
@@ -3058,6 +3059,12 @@ AddPlugin {
         vim.notify = notify
     end,
 }
+
+AddPlugin {
+    -- BUG: ctrl+arrow conflicts with vim-visual-multi
+    'tamton-aquib/flirt.nvim' -- TODO: customize and enable
+}
+
 vim.notify = function(msg, level, opt)
     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
     vim.notify(msg, level, opt)
@@ -3219,12 +3226,6 @@ AddPlugin {
     }
 }
 
--- FEAT: use command sequence to change background of terminal to nvim background
--- AddPlugin {
---     'typicode/bg.nvim',
---     lazy = false
--- }
-
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -3269,8 +3270,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
--- FEAT: https://github.com/simrat39/desktop-notify.nvim
--- FEAT: https://github.com/tamton-aquib/flirt.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
 -- FEAT: https://github.com/tzachar/local-highlight.nvim
 -- FEAT: https://github.com/xiyaowong/virtcolumn.nvim
