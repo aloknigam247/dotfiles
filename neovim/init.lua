@@ -138,6 +138,7 @@ LazyConfig = {
         files = { 'README.md' },
         skip_if_doc_exists = true,
     },
+    state = vim.fn.stdpath("state") .. "/lazy/state.json", -- state info for checker and other things
 }
 
 Plugins = {}
@@ -438,7 +439,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Coloring for docstrings
 AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
@@ -483,7 +483,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- THOUGHT: how about we cover comment also in TODO?
     'folke/todo-comments.nvim',
     opts = {
         colors = {
@@ -762,7 +761,6 @@ Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
-Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
@@ -986,7 +984,7 @@ AddPlugin {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
                     local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
-                    vim_item.kind = kind_symbol or vim_item.kind -- FIX: change appearance like NcChad
+                    vim_item.kind = kind_symbol or vim_item.kind
 
                     return vim_item
                 end
@@ -1027,10 +1025,8 @@ AddPlugin {
             }
         })
 
-        local bg_mode = vim.o.background
         for key, value in pairs(kind_hl) do
-            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
-            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[bg_mode]) -- THOUGHT: Relocate to Navic ?
+            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[vim.o.background])
         end
         vim.cmd([[
             hi CmpItemAbbrDeprecated gui = strikethrough
@@ -1663,20 +1659,35 @@ AddPlugin {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
--- TODO: resolve with Lspsaga
+-- TODO: resolve navic with Lspsaga symbols
 -- TODO: use treesitter statusline if LSP not available
+
+-- TODO: learn usage
+AddPlugin {
+    'SmiteshP/nvim-navbuddy',
+    opts = {
+        auto_attach = true
+    },
+    lazy = false
+}
+
 AddPlugin {
     -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
-    opts = {
-        click = true,
-        depth_limit = 0,
-        depth_limit_indicator = '',
-        highlight = true,
-        icons = vim.g.cmp_kinds,
-        safe_output = true,
-        separator = '  ' -- TODO: better separator
-    },
+    config = function() 
+        require('nvim-navic').setup({
+            click = true,
+            depth_limit = 0,
+            depth_limit_indicator = '',
+            highlight = true,
+            icons = vim.g.cmp_kinds,
+            safe_output = true,
+            separator = '  ' -- TODO: better separator
+        })
+        for key, value in pairs(kind_hl) do
+            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[vim.o.background])
+        end
+    end
 }
 
 -- TODO: Resolve usage
@@ -1737,6 +1748,7 @@ AddPlugin {
 
         local on_attach = function(client, bufnr)
             local navic = require('nvim-navic')
+            local navbuddy = require("nvim-navbuddy")
             -- Mappings.
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -1780,6 +1792,7 @@ AddPlugin {
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
+            navbuddy.attach(client, bufnr)
             navic.attach(client, bufnr)
         end
 
@@ -2533,8 +2546,14 @@ AddPlugin {
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
+                    { 'g:session_icon', separator = '' },  -- TODO: move to y
+                    'fileformat',  -- TODO: move to y or z
+                    'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
+                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
+                },
+                lualine_y = {
                     {
-                        LspIcon, -- TODO: move to y
+                        LspIcon,
                         cond = function()
                             return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
                         end,
@@ -2543,12 +2562,6 @@ AddPlugin {
                         end,
                         separator = ''
                     },
-                    { 'g:session_icon', separator = '' },  -- TODO: move to y
-                    'fileformat',  -- TODO: move to y or z
-                    'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
-                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
-                },
-                lualine_y = {
                     { -- TODO: simplify usage
                         function() return '' end,
                         cond = function()
@@ -3062,7 +3075,19 @@ AddPlugin {
 
 AddPlugin {
     -- BUG: ctrl+arrow conflicts with vim-visual-multi
-    'tamton-aquib/flirt.nvim' -- TODO: customize and enable
+    'tamton-aquib/flirt.nvim',
+    opts = {
+        override_open = true, -- experimental
+        close_command = 'Q',
+        default_move_mappings = true,   -- <C-arrows> to move floats
+        default_resize_mappings = true, -- <A-arrows> to resize floats
+        default_mouse_mappings = true,  -- Drag floats with mouse
+        exclude_fts = { 'notify', 'cmp_menu' },
+        custom_filter = function(buffer, _)
+            return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
+        end
+    },
+    lazy = false
 }
 
 vim.notify = function(msg, level, opt)
@@ -3239,7 +3264,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- FEAT: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
@@ -3283,7 +3307,7 @@ ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- BUG: Powershell indent issue
--- FEAT: Use of Copilot abbcbb
+-- FEAT: Use of Copilot
 -- PERF: profiling for auto commands
 -- TODO: change.txt
 -- TODO: insert.txt
