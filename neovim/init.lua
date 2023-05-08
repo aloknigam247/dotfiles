@@ -138,6 +138,7 @@ LazyConfig = {
         files = { 'README.md' },
         skip_if_doc_exists = true,
     },
+    state = vim.fn.stdpath("state") .. "/lazy/state.json", -- state info for checker and other things
 }
 
 Plugins = {}
@@ -438,7 +439,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Coloring for docstrings
 AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
@@ -483,7 +483,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- THOUGHT: how about we cover comment also in TODO?
     'folke/todo-comments.nvim',
     opts = {
         colors = {
@@ -701,7 +700,7 @@ AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'           
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               } -- FIX: Customize (italic)
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
 AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
@@ -736,7 +735,7 @@ AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'          
 AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
 AddPlugin { 'bluz71/vim-moonfly-colors',        event = 'User moonfly'                                                 }
 AddPlugin { 'bluz71/vim-nightfly-colors',       event = 'User nightfly'                                                }
-AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
+AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                } -- FIX: LineNr
 AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                                  }
 AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
@@ -762,7 +761,6 @@ Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_morning_dark',     'base2tone'    }
-Dark  { 'base2tone_sea_dark',         'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
@@ -986,7 +984,7 @@ AddPlugin {
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
                     local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
-                    vim_item.kind = kind_symbol or vim_item.kind -- FIX: change appearance like NcChad
+                    vim_item.kind = kind_symbol or vim_item.kind
 
                     return vim_item
                 end
@@ -1027,10 +1025,8 @@ AddPlugin {
             }
         })
 
-        local bg_mode = vim.o.background
         for key, value in pairs(kind_hl) do
-            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[bg_mode])
-            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[bg_mode]) -- THOUGHT: Relocate to Navic ?
+            vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[vim.o.background])
         end
         vim.cmd([[
             hi CmpItemAbbrDeprecated gui = strikethrough
@@ -1532,21 +1528,26 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
-    -- TODO: global icons for git signs
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
     opts = {
-        signs = {
-            add          = { hl = 'GitSignsAdd'   , text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
-            change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-            delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+        attach_to_untracked = true,
+        count_chars = {
+            [1]   = '',
+            [2]   = '2',
+            [3]   = '3',
+            [4]   = '4',
+            [5]   = '5',
+            [6]   = '6',
+            [7]   = '7',
+            [8]   = '8',
+            [9]   = '9',
+            ['+'] = '>',
         },
-        current_line_blame_formatter_opts = {
-            relative_time = true
+        current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time:%R>  <summary>',
+        diff_opts = {
+            internal = true
         },
-        current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time>  <summary>',
         on_attach = function (bufnr)
             local gs = package.loaded.gitsigns
 
@@ -1569,11 +1570,15 @@ AddPlugin {
                 return '<Ignore>'
             end, {expr=true})
         end,
-        diff_opts = {
-            internal = true
-        },
         preview_config = {
             border = 'rounded'
+        },
+        signs = {
+            add          = { hl = 'GitSignsAdd'   ,       text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
+            change       = { hl = 'GitSignsChange',       text = '󰇝', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
+            topdelete    = { hl = 'GitSignsDelete',       text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+            changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
         },
         trouble = false
     },
@@ -1663,21 +1668,35 @@ AddPlugin {
 -- https://github.com/lvimuser/lsp-inlayhints.nvim
 -- https://github.com/DNLHC/glance.nvim
 
--- TODO: browser for LSP symbols
--- TODO: resolve with Lspsaga
+-- TODO: resolve navic with Lspsaga symbols
 -- TODO: use treesitter statusline if LSP not available
+
+-- TODO: learn usage
+AddPlugin {
+    'SmiteshP/nvim-navbuddy',
+    opts = {
+        auto_attach = true
+    },
+    lazy = false
+}
+
 AddPlugin {
     -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
-    opts = {
-        click = true,
-        depth_limit = 0,
-        depth_limit_indicator = '',
-        highlight = true,
-        icons = vim.g.cmp_kinds,
-        safe_output = true,
-        separator = '  ' -- TODO: better separator
-    },
+    config = function() 
+        require('nvim-navic').setup({
+            click = true,
+            depth_limit = 0,
+            depth_limit_indicator = '',
+            highlight = true,
+            icons = vim.g.cmp_kinds,
+            safe_output = true,
+            separator = '  ' -- TODO: better separator
+        })
+        for key, value in pairs(kind_hl) do
+            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[vim.o.background])
+        end
+    end
 }
 
 -- TODO: Resolve usage
@@ -1738,6 +1757,7 @@ AddPlugin {
 
         local on_attach = function(client, bufnr)
             local navic = require('nvim-navic')
+            local navbuddy = require("nvim-navbuddy")
             -- Mappings.
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -1781,6 +1801,7 @@ AddPlugin {
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
 
+            navbuddy.attach(client, bufnr)
             navic.attach(client, bufnr)
         end
 
@@ -2403,7 +2424,8 @@ AddPlugin {
     config = function()
         Icon_index = 0
         local function LspIcon()
-            local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'} -- THOUGHT: vscode icon  ?
+            -- local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'}
+            local anim = {''}
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
@@ -2466,7 +2488,6 @@ AddPlugin {
                 }
             },
             sections = {
-                -- FEAT: datetime component
                 lualine_a = {
                     {
                         'mode',
@@ -2480,6 +2501,7 @@ AddPlugin {
                 },
                 lualine_b = {
                     {
+                        -- TODO: handle lazy filetype
                         'branch', -- TODO: review branch options
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
@@ -2488,12 +2510,13 @@ AddPlugin {
                         end
                     },
                     {
-                        'diff',
+                        'diff', -- TODO: change icons to global
                         on_click = function()
                             vim.cmd('Telescope git_status') -- BUG: fix the cwd issue
                         end
                     },
                     {
+                        -- TODO: handle lazy filetype
                         'diagnostics',
                         on_click = function()
                             vim.cmd('TroubleToggle')
@@ -2503,6 +2526,7 @@ AddPlugin {
                     }
                 },
                 lualine_c = {
+                    -- TODO: handle lazy filetype
                     {
                         'filetype',
                         icon_only = true,
@@ -2521,10 +2545,10 @@ AddPlugin {
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
                         symbols = {
-                            modified = '●',      -- Text to show when the file is modified.
-                            readonly = '',      -- Text to show when the file is non-modifiable or readonly.
-                            unnamed = '[No Name]', -- Text to show for unnamed buffers. THOUGHT: Something better
-                            newfile = '[New]',     -- Text to show for new created file before first writting THOUGHT: Something better
+                            modified = '', -- Text to show when the file is modified.
+                            readonly = '', -- Text to show when the file is non-modifiable or readonly.
+                            unnamed  = '', -- Text to show for unnamed buffers.
+                            newfile  = '', -- Text to show for new created file before first writting
                         }
                     }
                 },
@@ -2533,8 +2557,13 @@ AddPlugin {
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
+                    { 'g:session_icon', separator = '' },  -- TODO: move to y
+                    'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
+                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
+                },
+                lualine_y = {
                     {
-                        LspIcon, -- TODO: move to y
+                        LspIcon,
                         cond = function()
                             return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
                         end,
@@ -2543,20 +2572,20 @@ AddPlugin {
                         end,
                         separator = ''
                     },
-                    { 'g:session_icon', separator = '' },  -- TODO: move to y
-                    'fileformat',  -- TODO: move to y or z
-                    'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
-                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
-                },
-                lualine_y = {
-                    { -- TODO: simplify usage
+                    { -- TODO: click function to toggle wrap, icons for both condition
                         function() return '' end,
                         cond = function()
                             return vim.o.wrap
                         end
                     },
+                    'fileformat',
+                },
+                lualine_z = {
                     {
-                        'progress', -- TODO: think about location
+                        'location', -- TODO: think about location
+                        fmt = function(str)
+                            return str:gsub("^%s+", "")
+                        end,
                         on_click = function ()
                             local satellite = require('satellite')
                             if satellite.enabled then
@@ -2566,10 +2595,10 @@ AddPlugin {
                                 vim.cmd('SatelliteEnable')
                                 satellite.enabled = true
                             end
-                        end
+                        end,
+                        padding = { left = 0, right = 0 }
                     }
-                },
-                lualine_z = {'location'} -- TODO: think about location
+                }
             },
             inactive_sections = { -- TODO: re-evaluate inactive sections content
                 lualine_a = {},
@@ -3058,6 +3087,26 @@ AddPlugin {
         vim.notify = notify
     end,
 }
+
+AddPlugin {
+    -- BUG: ctrl+arrow conflicts with vim-visual-multi
+    -- BUG: Click + drag not working
+    -- TODO: change animation speed
+    'tamton-aquib/flirt.nvim',
+    opts = {
+        override_open = true, -- experimental
+        close_command = 'Q',
+        default_move_mappings = true,   -- <C-arrows> to move floats
+        default_resize_mappings = true, -- <A-arrows> to resize floats
+        default_mouse_mappings = true,  -- Drag floats with mouse
+        exclude_fts = { 'notify', 'cmp_menu' },
+        custom_filter = function(buffer, _)
+            return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
+        end
+    },
+    lazy = true -- TODO: enable after fixing mappings
+}
+
 vim.notify = function(msg, level, opt)
     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
     vim.notify(msg, level, opt)
@@ -3220,12 +3269,6 @@ AddPlugin {
     }
 }
 
--- FEAT: use command sequence to change background of terminal to nvim background
--- AddPlugin {
---     'typicode/bg.nvim',
---     lazy = false
--- }
-
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -3239,7 +3282,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- FEAT: AddPlugin { 'SmiteshP/nvim-navbuddy', lazy = false }
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
@@ -3270,11 +3312,8 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
--- FEAT: https://github.com/simrat39/desktop-notify.nvim
--- FEAT: https://github.com/tamton-aquib/flirt.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
 -- FEAT: https://github.com/tzachar/local-highlight.nvim
--- FEAT: https://github.com/xiyaowong/virtcolumn.nvim
 -- FEAT: https://github.com/ziontee113/SelectEase
 -- TODO: https://github.com/AckslD/muren.nvim
 -- TODO: https://github.com/deifyed/naVi
@@ -3285,13 +3324,12 @@ ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- BUG: Powershell indent issue
--- FEAT: Use of Copilot abbcbb
+-- FEAT: Use of Copilot
 -- PERF: profiling for auto commands
 -- TODO: change.txt
 -- TODO: insert.txt
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked
--- TODO: format on paste not good with [p ]p zp
 -- TODO: indentation is not identifible when 2
 -- TODO: jumplist
 -- TODO: location list
