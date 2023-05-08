@@ -735,7 +735,7 @@ AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'          
 AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
 AddPlugin { 'bluz71/vim-moonfly-colors',        event = 'User moonfly'                                                 }
 AddPlugin { 'bluz71/vim-nightfly-colors',       event = 'User nightfly'                                                }
-AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
+AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                } -- FIX: LineNr
 AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                                  }
 AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
@@ -2501,6 +2501,7 @@ AddPlugin {
                 },
                 lualine_b = {
                     {
+                        -- TODO: handle lazy filetype
                         'branch', -- TODO: review branch options
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
@@ -2515,6 +2516,7 @@ AddPlugin {
                         end
                     },
                     {
+                        -- TODO: handle lazy filetype
                         'diagnostics',
                         on_click = function()
                             vim.cmd('TroubleToggle')
@@ -2524,6 +2526,7 @@ AddPlugin {
                     }
                 },
                 lualine_c = {
+                    -- TODO: handle lazy filetype
                     {
                         'filetype',
                         icon_only = true,
@@ -2569,7 +2572,7 @@ AddPlugin {
                         end,
                         separator = ''
                     },
-                    { -- TODO: simplify usage
+                    { -- TODO: click function to toggle wrap, icons for both condition
                         function() return '' end,
                         cond = function()
                             return vim.o.wrap
@@ -3087,6 +3090,8 @@ AddPlugin {
 
 AddPlugin {
     -- BUG: ctrl+arrow conflicts with vim-visual-multi
+    -- BUG: Click + drag not working
+    -- TODO: change animation speed
     'tamton-aquib/flirt.nvim',
     opts = {
         override_open = true, -- experimental
@@ -3099,7 +3104,7 @@ AddPlugin {
             return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
         end
     },
-    lazy = false
+    lazy = true -- TODO: enable after fixing mappings
 }
 
 vim.notify = function(msg, level, opt)
