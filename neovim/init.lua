@@ -700,7 +700,7 @@ AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'           
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               } -- FIX: Customize (italic)
+AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                               }
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                     }
 AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                                }
 AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                                  }
@@ -1528,21 +1528,26 @@ AddPlugin {
 -- use 'hotwatermorning/auto-git-diff'
 -- use 'ldelossa/gh.nvim'
 AddPlugin {
-    -- TODO: global icons for git signs
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
     opts = {
-        signs = {
-            add          = { hl = 'GitSignsAdd'   , text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'    },
-            change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-            delete       = { hl = 'GitSignsDelete', text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-            changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+        attach_to_untracked = true,
+        count_chars = {
+            [1]   = '',
+            [2]   = '2',
+            [3]   = '3',
+            [4]   = '4',
+            [5]   = '5',
+            [6]   = '6',
+            [7]   = '7',
+            [8]   = '8',
+            [9]   = '9',
+            ['+'] = '>',
         },
-        current_line_blame_formatter_opts = {
-            relative_time = true
+        current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time:%R>  <summary>',
+        diff_opts = {
+            internal = true
         },
-        current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time>  <summary>',
         on_attach = function (bufnr)
             local gs = package.loaded.gitsigns
 
@@ -1565,11 +1570,15 @@ AddPlugin {
                 return '<Ignore>'
             end, {expr=true})
         end,
-        diff_opts = {
-            internal = true
-        },
         preview_config = {
             border = 'rounded'
+        },
+        signs = {
+            add          = { hl = 'GitSignsAdd'   ,       text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
+            change       = { hl = 'GitSignsChange',       text = '󰇝', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
+            topdelete    = { hl = 'GitSignsDelete',       text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+            changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
         },
         trouble = false
     },
@@ -2479,7 +2488,6 @@ AddPlugin {
                 }
             },
             sections = {
-                -- FEAT: datetime component
                 lualine_a = {
                     {
                         'mode',
@@ -2501,7 +2509,7 @@ AddPlugin {
                         end
                     },
                     {
-                        'diff',
+                        'diff', -- TODO: change icons to global
                         on_click = function()
                             vim.cmd('Telescope git_status') -- BUG: fix the cwd issue
                         end
@@ -2547,7 +2555,6 @@ AddPlugin {
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
                     { 'g:session_icon', separator = '' },  -- TODO: move to y
-                    'fileformat',  -- TODO: move to y or z
                     'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
                     -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
                 },
@@ -2567,11 +2574,15 @@ AddPlugin {
                         cond = function()
                             return vim.o.wrap
                         end
-                    }
+                    },
+                    'fileformat',
                 },
                 lualine_z = {
                     {
                         'location', -- TODO: think about location
+                        fmt = function(str)
+                            return str:gsub("^%s+", "")
+                        end,
                         on_click = function ()
                             local satellite = require('satellite')
                             if satellite.enabled then
@@ -2582,6 +2593,7 @@ AddPlugin {
                                 satellite.enabled = true
                             end
                         end,
+                        padding = { left = 0, right = 0 }
                     }
                 }
             },
@@ -3296,7 +3308,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
 -- FEAT: https://github.com/tzachar/local-highlight.nvim
--- FEAT: https://github.com/xiyaowong/virtcolumn.nvim
 -- FEAT: https://github.com/ziontee113/SelectEase
 -- TODO: https://github.com/AckslD/muren.nvim
 -- TODO: https://github.com/deifyed/naVi
@@ -3313,7 +3324,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: insert.txt
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked
--- TODO: format on paste not good with [p ]p zp
 -- TODO: indentation is not identifible when 2
 -- TODO: jumplist
 -- TODO: location list
