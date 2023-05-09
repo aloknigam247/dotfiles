@@ -2576,7 +2576,8 @@ AddPlugin {
                         function() return '' end,
                         cond = function()
                             return vim.o.wrap
-                        end
+                        end,
+                        separator = ''
                     },
                     'fileformat',
                 },
