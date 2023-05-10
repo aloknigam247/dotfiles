@@ -1015,7 +1015,7 @@ AddPlugin {
                 -- { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp' }, -- TODO: increase priority
+                { name = 'nvim_lsp', priority =  }, -- TODO: increase priority
                 { name = 'path' },
                 { name = 'snippy' },
             }),
@@ -2593,7 +2593,7 @@ AddPlugin {
                 },
                 lualine_z = {
                     {
-                        'location', -- TODO: think about location
+                        'location',
                         fmt = function(str)
                             return str:gsub("^%s+", "")
                         end,
@@ -2607,7 +2607,7 @@ AddPlugin {
                                 satellite.enabled = true
                             end
                         end,
-                        padding = { left = 0, right = 0 }
+                        padding = { left = 1, right = 0 }
                     }
                 }
             },
