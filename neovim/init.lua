@@ -155,7 +155,7 @@ Plugins = {}
 --     { '│', 'FloatBorder' },
 -- }
 
-local icons = {
+Icons = {
     diagnostic = {
         error = '',
         hint  = '',
@@ -735,7 +735,7 @@ AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'          
 AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                             }
 AddPlugin { 'bluz71/vim-moonfly-colors',        event = 'User moonfly'                                                 }
 AddPlugin { 'bluz71/vim-nightfly-colors',       event = 'User nightfly'                                                }
-AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                } -- FIX: LineNr
+AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                                }
 AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                                  }
 AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
@@ -871,8 +871,8 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
-Light { 'shine',                      '_'           ,post = FixNontext                                      }
-Dark  { 'slate',                      '_'           ,post = FixNontext                                      }
+Light { 'shine',                      '_',           post = FixNontext                                      }
+Dark  { 'slate',                      '_',           post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end }
@@ -890,8 +890,8 @@ Light { 'tokyonight-day',             'tokyonight'   }
 Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
-Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end                                                     }
-Dark  { 'vn-night',                   '_'            }
+Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end }
+Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end          }
 Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
 Light { 'zellner',                    '_'            }
@@ -924,7 +924,6 @@ function ColoRand(ind)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- THOUGHT: can we comment commented line once ?
 AddPlugin {
     'numToStr/Comment.nvim',
     config = function()
@@ -1016,7 +1015,7 @@ AddPlugin {
                 -- { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp' }, -- TODO: increase priority
+                { name = 'nvim_lsp', priority =  }, -- TODO: increase priority
                 { name = 'path' },
                 { name = 'snippy' },
             }),
@@ -1230,10 +1229,10 @@ AddPlugin {
             debounce_delay = 50,
             enable = true,
             icons = {
-                error   = icons.diagnostic.error,
-                hint    = icons.diagnostic.hint,
-                info    = icons.diagnostic.info,
-                warning = icons.diagnostic.warn,
+                error   = Icons.diagnostic.error,
+                hint    = Icons.diagnostic.hint,
+                info    = Icons.diagnostic.info,
+                warning = Icons.diagnostic.warn,
             },
             severity = {
                 min = vim.diagnostic.severity.HINT,
@@ -1309,7 +1308,7 @@ AddPlugin {
                     bottom = '─',
                     corner = '╰',
                     edge   = '│',
-                    item   = '│',
+                    item   = '├',
                     none   = ' ',
                 },
                 inline_arrows = true,
@@ -2283,11 +2282,11 @@ AddPlugin {
         auto_jump = { 'lsp_definitions' }, -- for the given modes, automatically jump if there is only a single result
         signs = {
             -- icons / text used for a diagnostic
-            error = icons.diagnostic.error,
-            warning = icons.diagnostic.warn,
-            hint = icons.diagnostic.hint,
-            information = icons.diagnostic.info,
-            other = icons.diagnostic.other
+            error = Icons.diagnostic.error,
+            warning = Icons.diagnostic.warn,
+            hint = Icons.diagnostic.hint,
+            information = Icons.diagnostic.info,
+            other = Icons.diagnostic.other
         },
         use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
     }
@@ -2522,7 +2521,12 @@ AddPlugin {
                             vim.cmd('TroubleToggle')
                         end,
                         sources = { 'nvim_diagnostic' },
-                        symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' }, -- TODO: Use global icons
+                        symbols = {
+                            error = Icons.diagnostic.error .. ' ',
+                            warn  = Icons.diagnostic.warn .. ' ',
+                            info  = Icons.diagnostic.info .. ' ',
+                            hint  = Icons.diagnostic.hint .. ' ',
+                        },
                     }
                 },
                 lualine_c = {
@@ -2553,13 +2557,19 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
-                    'filesize', -- THOUGHT: use conditionally ?
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
                     'searchcount', -- FEAT: format it with some icon and color
                     'selectioncount', -- FEAT: format it with some icon and color
                     { 'g:session_icon', separator = '' },  -- TODO: move to y
-                    'encoding' -- THOUGHT: show when not utf-8 or format it to comppress name
-                    -- FEAT: utf-8 bom encoding support set statusline+=\ %{&bomb?'BOM':''}
+                    {
+                        'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
+                        fmt = function(str)
+                            if vim.o.bomb then
+                                str = str .. '-bom'
+                            end
+                            return str
+                        end
+                    }
                 },
                 lualine_y = {
                     {
@@ -2583,7 +2593,7 @@ AddPlugin {
                 },
                 lualine_z = {
                     {
-                        'location', -- TODO: think about location
+                        'location',
                         fmt = function(str)
                             return str:gsub("^%s+", "")
                         end,
@@ -2597,7 +2607,7 @@ AddPlugin {
                                 satellite.enabled = true
                             end
                         end,
-                        padding = { left = 0, right = 0 }
+                        padding = { left = 1, right = 0 }
                     }
                 }
             },
@@ -3097,15 +3107,15 @@ AddPlugin {
     opts = {
         override_open = true, -- experimental
         close_command = 'Q',
-        default_move_mappings = true,   -- <C-arrows> to move floats
-        default_resize_mappings = true, -- <A-arrows> to resize floats
-        default_mouse_mappings = true,  -- Drag floats with mouse
+        default_move_mappings = false,   -- FIX: <C-arrows> to move floats
+        default_resize_mappings = false, -- FIX: <A-arrows> to resize floats
+        default_mouse_mappings = false,  -- FIX: Drag floats with mouse
         exclude_fts = { 'notify', 'cmp_menu' },
         custom_filter = function(buffer, _)
             return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
         end
     },
-    lazy = true -- TODO: enable after fixing mappings
+    lazy = false
 }
 
 vim.notify = function(msg, level, opt)
@@ -3292,7 +3302,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/NvChad/nvim-colorizer.lua
 -- FEAT: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- FEAT: https://github.com/askfiy/visual_studio_code
--- FEAT: https://github.com/astaos/nvim-ultivisual
 -- FEAT: https://github.com/axlebedev/vim-footprints
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
