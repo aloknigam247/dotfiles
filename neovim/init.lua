@@ -1015,7 +1015,7 @@ AddPlugin {
                 -- { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp', priority =  }, -- TODO: increase priority
+                { name = 'nvim_lsp', priority = 1 }, -- TODO: increase priority
                 { name = 'path' },
                 { name = 'snippy' },
             }),
