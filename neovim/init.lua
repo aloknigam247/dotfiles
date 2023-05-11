@@ -2886,7 +2886,7 @@ AddPlugin {
     -- TODO: hide written messages
     -- TODO: clean cmdline_popup
     -- TODO: classic bottom cmdline for search
-    -- TODO: hide search in virtual text
+    -- TODO: hide search in virtual text https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#hide-search-virtual-text
     -- TODO: lsp progress
     -- TODO: notify-send
     -- TODO: health checks
@@ -2923,7 +2923,7 @@ AddPlugin {
                 view_error = 'notify', -- view for errors
                 view_warn = 'notify', -- view for warnings
                 view_history = 'messages', -- view for :messages
-                view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
+                view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable -- BUG: not working
             },
             popupmenu = {
                 enabled = true, -- enables the Noice popupmenu UI
