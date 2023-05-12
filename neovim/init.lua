@@ -2885,7 +2885,7 @@ AddPlugin {
     -- TODO: classic commandline
     -- TODO: hide written messages
     -- TODO: clean cmdline_popup
-    -- TODO: classic bottom cmdline for search
+    -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
     -- TODO: hide search in virtual text https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#hide-search-virtual-text
     -- TODO: lsp progress
     -- TODO: notify-send
@@ -2906,10 +2906,11 @@ AddPlugin {
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
                     cmdline = { pattern = '^:', icon = '', lang = 'vim' },
-                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex' },
+                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' },
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' },
                     lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
+                    lua_equal = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' },
                     help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
                     input = {}, -- Used by input()
                     -- lua = false, -- to disable a format, set to `false`
