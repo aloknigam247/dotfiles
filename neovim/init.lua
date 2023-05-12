@@ -356,7 +356,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- FIX: a | b backspace removes both spaces -> a|b
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -374,7 +373,8 @@ AddPlugin {
             Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
-            -- ( | ) --> ) --> ( )|
+            -- ( | ) --> ) --> ( )| BUG: not working
+            -- FIX: a | b backspace removes both spaces -> a|b
             Rule(' ', ' ')
             :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
@@ -1518,7 +1518,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/gfanto/fzf-lsp.nvim
--- FEAT: https://github.com/ibhagwan/fzf-lua
 -- FEAT: https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2648,6 +2647,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- FIX: [No Name] for empty file, use same as lualine
     'akinsho/bufferline.nvim',
     config = function()
         local sym_map = { -- TODO use global icons
@@ -3323,7 +3323,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
--- FEAT: https://github.com/tzachar/local-highlight.nvim
 -- FEAT: https://github.com/ziontee113/SelectEase
 -- TODO: https://github.com/AckslD/muren.nvim
 -- TODO: https://github.com/deifyed/naVi
