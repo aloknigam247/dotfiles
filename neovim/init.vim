@@ -151,13 +151,12 @@ autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 
 " Make cursor _ for visual modes
 set guicursor=n-c-sm:block,i-ci-ve:ver25,r-cr-o-v:hor20
-" Temporary solution to neovim cursor not reset 
-" augroup RestoreCursorShapeOnExit
-" " TODO: Fix cursor shape on vim exit in zsh
-"     autocmd!
-"     autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
-" augroup END
-
+" Temporary solution to neovim cursor not reset
+augroup RestoreCursorShapeOnExit
+" TODO: Fix cursor shape on vim exit in zsh
+    autocmd!
+    autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
+augroup END
 
 " highlight ColorColumn ctermbg=white
 " call matchadd('ColorColumn', '\%80v', 100)
