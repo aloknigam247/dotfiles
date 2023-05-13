@@ -760,7 +760,6 @@ Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
@@ -773,7 +772,6 @@ Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
 -- Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end } -- FIX: fix and enable
 Dark  { 'codedark',                   '_'            }
-Dark  { 'danger_dark',                'danger'       }
 Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
@@ -2027,7 +2025,7 @@ AddPlugin {
             code_action = '💡', -- TODO: use nerd font
             diagnostic = '',
             incoming = ' ',
-            outgoing = '  ',
+            outgoing = ' ',
             hover = ' ',
             kind = {}, -- TODO: custom kinds from globals
         }
@@ -2435,7 +2433,7 @@ AddPlugin {
             return ""
         end
         function CountWin()
-            -- FEAT: Ignore NvimTree
+            -- THOUGHT: unique count
             local tabpage = vim.api.nvim_get_current_tabpage()
             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
             local named_window = 0
@@ -2557,9 +2555,8 @@ AddPlugin {
                 },
                 lualine_x = {
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
-                    'searchcount', -- FEAT: format it with some icon and color
+                    'searchcount', -- FEAT: format it with some icon and color, remove []
                     'selectioncount', -- FEAT: format it with some icon and color
-                    { 'g:session_icon', separator = '' },  -- TODO: move to y
                     {
                         'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
                         fmt = function(str)
@@ -2571,6 +2568,7 @@ AddPlugin {
                     }
                 },
                 lualine_y = {
+                    { 'g:session_icon', separator = '' },
                     {
                         LspIcon,
                         cond = function()
