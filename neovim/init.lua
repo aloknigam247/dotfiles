@@ -2026,8 +2026,8 @@ AddPlugin {
             preview = ' ',
             code_action = '💡', -- TODO: use nerd font
             diagnostic = '',
-            incoming = ' ', -- TODO: change icon
-            outgoing = ' ', -- TODO: change icon
+            incoming = ' ',
+            outgoing = '  ',
             hover = ' ',
             kind = {}, -- TODO: custom kinds from globals
         }
