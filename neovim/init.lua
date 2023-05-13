@@ -356,7 +356,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- FIX: a | b backspace removes both spaces -> a|b
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -374,7 +373,8 @@ AddPlugin {
             Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
-            -- ( | ) --> ) --> ( )|
+            -- ( | ) --> ) --> ( )| BUG: not working
+            -- FIX: a | b backspace removes both spaces -> a|b
             Rule(' ', ' ')
             :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
@@ -760,7 +760,6 @@ Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Dark  { 'base2tone_morning_dark',     'base2tone'    }
 Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
@@ -773,7 +772,6 @@ Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
 -- Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end } -- FIX: fix and enable
 Dark  { 'codedark',                   '_'            }
-Dark  { 'danger_dark',                'danger'       }
 Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
@@ -1518,7 +1516,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/gfanto/fzf-lsp.nvim
--- FEAT: https://github.com/ibhagwan/fzf-lua
 -- FEAT: https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2027,8 +2024,8 @@ AddPlugin {
             preview = ' ',
             code_action = '💡', -- TODO: use nerd font
             diagnostic = '',
-            incoming = ' ', -- TODO: change icon
-            outgoing = ' ', -- TODO: change icon
+            incoming = ' ',
+            outgoing = ' ',
             hover = ' ',
             kind = {}, -- TODO: custom kinds from globals
         }
@@ -2436,7 +2433,7 @@ AddPlugin {
             return ""
         end
         function CountWin()
-            -- FEAT: Ignore NvimTree
+            -- THOUGHT: unique count
             local tabpage = vim.api.nvim_get_current_tabpage()
             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
             local named_window = 0
@@ -2558,9 +2555,8 @@ AddPlugin {
                 },
                 lualine_x = {
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
-                    'searchcount', -- FEAT: format it with some icon and color
+                    'searchcount', -- FEAT: format it with some icon and color, remove []
                     'selectioncount', -- FEAT: format it with some icon and color
-                    { 'g:session_icon', separator = '' },  -- TODO: move to y
                     {
                         'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
                         fmt = function(str)
@@ -2572,6 +2568,7 @@ AddPlugin {
                     }
                 },
                 lualine_y = {
+                    { 'g:session_icon', separator = '' },
                     {
                         LspIcon,
                         cond = function()
@@ -2648,6 +2645,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- FIX: [No Name] for empty file, use same as lualine
     'akinsho/bufferline.nvim',
     config = function()
         local sym_map = { -- TODO use global icons
@@ -2885,7 +2883,7 @@ AddPlugin {
     -- TODO: classic commandline
     -- TODO: hide written messages
     -- TODO: clean cmdline_popup
-    -- TODO: classic bottom cmdline for search
+    -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
     -- TODO: hide search in virtual text https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#hide-search-virtual-text
     -- TODO: lsp progress
     -- TODO: notify-send
@@ -2906,10 +2904,11 @@ AddPlugin {
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
                     cmdline = { pattern = '^:', icon = '', lang = 'vim' },
-                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex' },
+                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' },
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' },
                     lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
+                    lua_equal = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' },
                     help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
                     input = {}, -- Used by input()
                     -- lua = false, -- to disable a format, set to `false`
@@ -3323,7 +3322,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
--- FEAT: https://github.com/tzachar/local-highlight.nvim
 -- FEAT: https://github.com/ziontee113/SelectEase
 -- TODO: https://github.com/AckslD/muren.nvim
 -- TODO: https://github.com/deifyed/naVi
