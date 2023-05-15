@@ -760,7 +760,6 @@ Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
 Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Light { 'base2tone_sea_light',        'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',               '_'           }
@@ -840,7 +839,6 @@ Light { 'noctis_lux',                 'noctis'       } -- BUG: problem with navi
 Dark  { 'noctis_minimus',             'noctis'       }
 Dark  { 'noctis_sereno',              'noctis'       }
 Dark  { 'noctis_uva',                 'noctis'       }
-Dark  { 'noctis_viola',               'noctis'       }
 Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
@@ -1938,7 +1936,7 @@ AddPlugin {
         definition = {
             edit = 'o',
             vsplit = '<C-v>',
-            split = '<C-x>', -- TODO: change <C-s>
+            split = '<C-s>',
             tabe = '<C-t>',
             quit = 'q',
         },
@@ -1960,7 +1958,7 @@ AddPlugin {
         finder = {
             open = {'o', '<CR>'},
             vsplit = '<C-v>',
-            split = '<C-x>', -- TODO: change <C-s>
+            split = '<C-s>',
             tabe = '<C-t>',
             quit = {'q', '<ESC>'},
         },
@@ -2125,6 +2123,8 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: https://github.com/iamcco/markdown-preview.nvim
+    -- TODO: https://github.com/toppair/peek.nvim
     'davidgranstrom/nvim-markdown-preview',
     cmd = 'MarkdownPreview'
 }
@@ -2257,7 +2257,7 @@ AddPlugin {
             cancel = '<esc>', -- cancel the preview and get back to your last window / buffer / cursor
             refresh = 'r', -- manually refresh
             jump = {'<cr>', '<tab>'}, -- jump to the diagnostic or open / close folds
-            open_split = { '<c-x>' }, -- open buffer in new split -- TODO: change <C-s>
+            open_split = { '<c-s>' }, -- open buffer in new split
             open_vsplit = { '<c-v>' }, -- open buffer in new vsplit
             open_tab = { '<c-t>' }, -- open buffer in new tab
             jump_close = {'o'}, -- jump to the diagnostic and close the list
@@ -2299,7 +2299,7 @@ AddPlugin {
     -- | tab         | open the item in a new tab                               | t       |
     -- | tabb        | open the item in a new tab, but stay at quickfix window  | T       |
     -- | tabc        | open the item in a new tab, and close quickfix window    | <C-t>   |
-    -- | split       | open the item in vertical split                          | <C-x>   | -- TODO: change <C-s>
+    -- | split       | open the item in vertical split                          | <C-s>   |
     -- | vsplit      | open the item in horizontal split                        | <C-v>   |
     -- | prevfile    | go to previous file under the cursor in quickfix window  | <C-p>   |
     -- | nextfile    | go to next file under the cursor in quickfix window      | <C-n>   |
@@ -2328,6 +2328,36 @@ AddPlugin {
             auto_resize_height = true,
             preview = {
                 border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
+            },
+            filter = {
+                fzf = {
+                    action_for = {
+                        ['ctrl-t'] = {
+                            description = [[Press ctrl-t to open up the item in a new tab]],
+                            default = 'tabedit'
+                        },
+                        ['ctrl-v'] = {
+                            description = [[Press ctrl-v to open up the item in a new vertical split]],
+                            default = 'vsplit'
+                        },
+                        ['ctrl-s'] = {
+                            description = [[Press ctrl-x to open up the item in a new horizontal split]],
+                            default = 'split'
+                        },
+                        ['ctrl-q'] = {
+                            description = [[Press ctrl-q to toggle sign for the selected items]],
+                            default = 'signtoggle'
+                        },
+                        ['ctrl-c'] = {
+                            description = [[Press ctrl-c to close quickfix window and abort fzf]],
+                            default = 'closeall'
+                        }
+                    },
+                    extra_opts = {
+                        description = 'Extra options for fzf',
+                        default = {'--bind', 'ctrl-o:toggle-all'}
+                    }
+                }
             }
         }
         vim.cmd('packadd cfilter')
@@ -2367,7 +2397,7 @@ AddPlugin {
     config = function()
         vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
         require('auto-session').setup({
-            log_level = 'debug',
+            -- log_level = 'debug',
             post_delete_cmds = {
                 "let g:auto_session_enabled = v:false",
                 "unlet g:session_icon"
@@ -2608,7 +2638,7 @@ AddPlugin {
                     }
                 }
             },
-            inactive_sections = { -- TODO: re-evaluate inactive sections content
+            inactive_sections = {
                 lualine_a = {},
                 lualine_b = {},
                 lualine_c = {'filename'},
@@ -2719,7 +2749,7 @@ AddPlugin {
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<C-x>']      = actions.select_horizontal, -- TODO: change <C-s>
+                        ['<C-s>']      = actions.select_horizontal,
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
@@ -2730,7 +2760,7 @@ AddPlugin {
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<C-x>']      = actions.select_horizontal, -- TODO: change <C-s>
+                        ['<C-s>']      = actions.select_horizontal,
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
@@ -2866,7 +2896,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/stevearc/dressing.nvim
 AddPlugin {
     -- TODO: cmdline
     -- TODO: messages
@@ -2908,7 +2937,7 @@ AddPlugin {
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' },
                     lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
-                    lua_equal = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' },
+                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' },
                     help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
                     input = {}, -- Used by input()
                     -- lua = false, -- to disable a format, set to `false`
@@ -3096,6 +3125,11 @@ AddPlugin {
         })
         vim.notify = notify
     end,
+}
+
+AddPlugin {
+    'stevearc/dressing.nvim', -- PERF: load like notify
+    lazy = false
 }
 
 AddPlugin {
@@ -3296,7 +3330,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/JellyApple102/easyread.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
--- FEAT: https://github.com/NvChad/base46
 -- FEAT: https://github.com/NvChad/nvim-colorizer.lua
 -- FEAT: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- FEAT: https://github.com/askfiy/visual_studio_code
@@ -3346,6 +3379,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: quickfix
 -- TODO: revisit Nerd Fonts for new fonts
 -- TODO: vsplit or split file opener like find command
+-- PERF: startuptime
 -- vim: fmr=</>,<~> fdm=marker
-
-
