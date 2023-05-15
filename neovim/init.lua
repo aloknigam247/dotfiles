@@ -1473,7 +1473,47 @@ AddPlugin {
     --     return vim.o.foldmethod == 'marker'
     -- end,
     config = function()
-        require('pretty-fold').setup()
+        require('pretty-fold').setup({
+            sections = {
+                left = {
+                    'content',
+                },
+                right = {
+                    ' ', 'number_of_folded_lines', ': ', 'percentage', ' ',
+                    function(config) return config.fill_char:rep(3) end
+                }
+            },
+            fill_char = '󰧟',
+
+            remove_fold_markers = true,
+
+            -- Keep the indentation of the content of the fold string.
+            keep_indentation = true,
+
+            -- Possible values:
+            -- "delete" : Delete all comment signs from the fold string.
+            -- "spaces" : Replace all comment signs with equal number of spaces.
+            -- false    : Do nothing with comment signs.
+            process_comment_signs = 'spaces',
+
+            -- Comment signs additional to the value of `&commentstring` option.
+            comment_signs = {},
+
+            -- List of patterns that will be removed from content foldtext section.
+            stop_words = {
+                '@brief%s*', -- (for C++) Remove '@brief' and all spaces after.
+            },
+
+            add_close_pattern = true, -- true, 'last_line' or false
+
+            matchup_patterns = {
+                {  '{', '}' },
+                { '%(', ')' }, -- % to escape lua pattern char
+                { '%[', ']' }, -- % to escape lua pattern char
+            },
+
+            ft_ignore = { 'neorg' },
+        })
     end,
     lazy = false
 }
@@ -2120,15 +2160,16 @@ AddPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin {
-    -- TODO: https://github.com/iamcco/markdown-preview.nvim
-    'davidgranstrom/nvim-markdown-preview',
-    cmd = 'MarkdownPreview'
-}
-
+-- TODO: https://github.com/iamcco/markdown-preview.nvim
 AddPlugin {
     'toppair/peek.nvim',
-    build = 'deno task --quiet build:fast'
+    build = 'deno task --quiet build:fast',
+    cmd = 'PeekOpen',
+    config = function() 
+        require('peek').setup()
+        vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+        vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+    end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3347,7 +3388,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/gbprod/yanky.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
--- FEAT: https://github.com/lalitmee/browse.nvim
 -- FEAT: https://github.com/loctvl842/monokai-pro.nvim
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
