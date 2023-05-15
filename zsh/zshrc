@@ -176,7 +176,7 @@ cd
 
 # TODO: Prompt similar to Powershell
 # FIX: Fix function name
-# FEAT: Use params like cygnus
+# FEAT: Use params like Powershell
 # FIX: headonly
 # FIX: noreset
 # TODO: Format code

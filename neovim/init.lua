@@ -609,7 +609,7 @@ function FixStarry(char, context_char)
 end
 
 function FixVisual(bg)
-    if bg ~= nil then
+    if bg == nil then
         if (vim.o.background ==  'dark') then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
             bg = string.format('%X', bg)
@@ -768,7 +768,7 @@ Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Light { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
--- Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end } -- FIX: fix and enable
+Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
 Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
@@ -1325,13 +1325,13 @@ AddPlugin {
                         symlink_open = '',
                     },
                     git = {
-                        deleted   = '',
-                        ignored   = '',
+                        deleted   = '󰧧',
+                        ignored   = '',
                         renamed   = '➜',
-                        staged    = '',
+                        staged    = '',
                         unmerged  = '',
-                        unstaged  = '',
-                        untracked = '★', -- TODO: better icons
+                        unstaged  = '',
+                        untracked = '',
                     },
                     symlink = '󱅷',
                 },
@@ -1614,7 +1614,7 @@ AddPlugin {
         },
         trouble = false
     },
-    keys = { '[c', ']c' } -- BUG: Does not trigger in first time
+    keys = { '[c', ']c' }
 }
 
 AddPlugin {
@@ -2433,7 +2433,6 @@ AddPlugin {
     -- BUG: DeleteSession called twice gives error
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     -- BUG: Fix path shown in notifications
-    -- FIX: not working after update
     'rmagatti/auto-session',
     cmd = 'SessionSave',
     config = function()
@@ -2505,12 +2504,11 @@ AddPlugin {
             return ""
         end
         function CountWin()
-            -- THOUGHT: unique count
             local tabpage = vim.api.nvim_get_current_tabpage()
             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
             local named_window = 0
-            local isValidBuf = function(bufnr)
-                local buf_name = vim.api.nvim_buf_get_name(bufnr)
+            local visited_window = {}
+            local isValidBuf = function(bufnr, buf_name)
                 if buf_name == "" then
                     return false
                 end
@@ -2528,8 +2526,12 @@ AddPlugin {
 
             for _, win in ipairs(win_list) do
                 local bufnr = vim.api.nvim_win_get_buf(win)
-                if isValidBuf(bufnr) then
-                    named_window = named_window + 1
+                local buf_name = vim.api.nvim_buf_get_name(bufnr)
+                if isValidBuf(bufnr, buf_name) then
+                    if not visited_window[buf_name] then
+                        visited_window[buf_name] = true
+                        named_window = named_window + 1
+                    end
                 end
             end
 
@@ -2899,9 +2901,16 @@ AddPlugin {
     -- THOUGHT: add underline to all params ?
     'm-demare/hlargs.nvim',
     config = function()
+        local colors = {}
+        for _,v in pairs(ColorPalette()) do
+            local hi = {}
+            hi.fg = v.fg
+            hi.underline = true
+            table.insert(colors, hi)
+        end
         require('hlargs').setup({
             use_colorpalette = true,
-            colorpalette = ColorPalette(),
+            colorpalette = colors,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -2955,9 +2964,7 @@ AddPlugin {
     -- TODO: hide written messages
     -- TODO: clean cmdline_popup
     -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
-    -- TODO: hide search in virtual text https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#hide-search-virtual-text
     -- TODO: lsp progress
-    -- TODO: notify-send
     -- TODO: health checks
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
@@ -2988,7 +2995,7 @@ AddPlugin {
             messages = {
                 -- NOTE: If you enable messages, then the cmdline is enabled automatically.
                 -- This is a current Neovim limitation.
-                enabled = false, -- enables the Noice messages UI
+                enabled = true, -- enables the Noice messages UI
                 view = 'notify', -- default view for messages
                 view_error = 'notify', -- view for errors
                 view_warn = 'notify', -- view for warnings

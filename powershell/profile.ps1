@@ -343,7 +343,7 @@ function promptGen {
                 'sequence' = 2
                 'script' = {
                     $script:dir_icon = "" # FIX: icon overriden
-                    if ($null -ne $script:git_branch) {
+                    if ($script:git_branch -ne "") {
                         $script:dir_icon = ""
                     }
                     if ($null -ne $env:SSH_CLIENT) {
