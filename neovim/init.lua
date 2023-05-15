@@ -838,7 +838,6 @@ Light { 'noctis_lilac',               'noctis'       }
 Light { 'noctis_lux',                 'noctis'       } -- BUG: problem with navic
 Dark  { 'noctis_minimus',             'noctis'       }
 Dark  { 'noctis_sereno',              'noctis'       }
-Dark  { 'noctis_uva',                 'noctis'       }
 Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
@@ -1591,7 +1590,6 @@ AddPlugin {
     cmd = "GitMessenger"
 }
 
--- BUG: command not working
 AddPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
@@ -2124,9 +2122,13 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- TODO: https://github.com/iamcco/markdown-preview.nvim
-    -- TODO: https://github.com/toppair/peek.nvim
     'davidgranstrom/nvim-markdown-preview',
     cmd = 'MarkdownPreview'
+}
+
+AddPlugin {
+    'toppair/peek.nvim',
+    build = 'deno task --quiet build:fast'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
