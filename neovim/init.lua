@@ -45,6 +45,10 @@ vim.g.cmp_kinds = {
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
+HlOrder = {
+    hlargs = 1
+}
+
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -2909,15 +2913,7 @@ AddPlugin {
             table.insert(colors, hi)
         end
         require('hlargs').setup({
-            use_colorpalette = true,
             colorpalette = colors,
-            paint_catch_blocks = {
-                declarations = true,
-                usages = true
-            },
-            extras = {
-                named_parameters = true,
-            },
             excluded_argnames = {
                 declarations = {
                     python = { 'self', 'cls' },
@@ -2927,7 +2923,16 @@ AddPlugin {
                     python = { 'self', 'cls' },
                     lua = { 'self' }
                 }
-            }
+            },
+            extras = {
+                named_parameters = true,
+            },
+            hl_priority = HlOrder.hlargs,
+            paint_catch_blocks = {
+                declarations = true,
+                usages = true
+            },
+            use_colorpalette = true,
         })
     end
 }
