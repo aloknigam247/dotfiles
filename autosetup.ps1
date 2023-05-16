@@ -1,5 +1,5 @@
+#Requires -RunAsAdministrator
 # TODO: install choco function
-# TODO: check for admin role
 # TODO: install fonts
 # $fontPath = 'C:\Windows\Fonts\'
 # $files = Get-ChildItem -Path . -Filter *.ttf

@@ -609,7 +609,7 @@ function FixStarry(char, context_char)
 end
 
 function FixVisual(bg)
-    if bg ~= nil then
+    if bg == nil then
         if (vim.o.background ==  'dark') then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
             bg = string.format('%X', bg)
@@ -754,7 +754,6 @@ Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
-Light { 'base2tone_field_light',      'base2tone'    }
 Light { 'base2tone_heath_light',      'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
@@ -769,7 +768,7 @@ Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Light { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
--- Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end } -- FIX: fix and enable
+Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
 Light { 'danger_light',               'danger'       }
 Dark  { 'darker',                     '_'            }
@@ -1326,13 +1325,13 @@ AddPlugin {
                         symlink_open = '',
                     },
                     git = {
-                        deleted   = '',
-                        ignored   = '',
+                        deleted   = '󰧧',
+                        ignored   = '',
                         renamed   = '➜',
-                        staged    = '',
+                        staged    = '',
                         unmerged  = '',
-                        unstaged  = '',
-                        untracked = '★', -- TODO: better icons
+                        unstaged  = '',
+                        untracked = '',
                     },
                     symlink = '󱅷',
                 },
@@ -1473,7 +1472,47 @@ AddPlugin {
     --     return vim.o.foldmethod == 'marker'
     -- end,
     config = function()
-        require('pretty-fold').setup()
+        require('pretty-fold').setup({
+            sections = {
+                left = {
+                    'content',
+                },
+                right = {
+                    ' ', 'number_of_folded_lines', ': ', 'percentage', ' ',
+                    function(config) return config.fill_char:rep(3) end
+                }
+            },
+            fill_char = '󰧟',
+
+            remove_fold_markers = true,
+
+            -- Keep the indentation of the content of the fold string.
+            keep_indentation = true,
+
+            -- Possible values:
+            -- "delete" : Delete all comment signs from the fold string.
+            -- "spaces" : Replace all comment signs with equal number of spaces.
+            -- false    : Do nothing with comment signs.
+            process_comment_signs = 'spaces',
+
+            -- Comment signs additional to the value of `&commentstring` option.
+            comment_signs = {},
+
+            -- List of patterns that will be removed from content foldtext section.
+            stop_words = {
+                '@brief%s*', -- (for C++) Remove '@brief' and all spaces after.
+            },
+
+            add_close_pattern = true, -- true, 'last_line' or false
+
+            matchup_patterns = {
+                {  '{', '}' },
+                { '%(', ')' }, -- % to escape lua pattern char
+                { '%[', ']' }, -- % to escape lua pattern char
+            },
+
+            ft_ignore = { 'neorg' },
+        })
     end,
     lazy = false
 }
@@ -1575,7 +1614,7 @@ AddPlugin {
         },
         trouble = false
     },
-    keys = { '[c', ']c' } -- BUG: Does not trigger in first time
+    keys = { '[c', ']c' }
 }
 
 AddPlugin {
@@ -2120,15 +2159,16 @@ AddPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin {
-    -- TODO: https://github.com/iamcco/markdown-preview.nvim
-    'davidgranstrom/nvim-markdown-preview',
-    cmd = 'MarkdownPreview'
-}
-
+-- TODO: https://github.com/iamcco/markdown-preview.nvim
 AddPlugin {
     'toppair/peek.nvim',
-    build = 'deno task --quiet build:fast'
+    build = 'deno task --quiet build:fast',
+    cmd = 'PeekOpen',
+    config = function() 
+        require('peek').setup()
+        vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+        vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+    end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2393,7 +2433,6 @@ AddPlugin {
     -- BUG: DeleteSession called twice gives error
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     -- BUG: Fix path shown in notifications
-    -- FIX: not working after update
     'rmagatti/auto-session',
     cmd = 'SessionSave',
     config = function()
@@ -2465,12 +2504,11 @@ AddPlugin {
             return ""
         end
         function CountWin()
-            -- THOUGHT: unique count
             local tabpage = vim.api.nvim_get_current_tabpage()
             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
             local named_window = 0
-            local isValidBuf = function(bufnr)
-                local buf_name = vim.api.nvim_buf_get_name(bufnr)
+            local visited_window = {}
+            local isValidBuf = function(bufnr, buf_name)
                 if buf_name == "" then
                     return false
                 end
@@ -2488,8 +2526,12 @@ AddPlugin {
 
             for _, win in ipairs(win_list) do
                 local bufnr = vim.api.nvim_win_get_buf(win)
-                if isValidBuf(bufnr) then
-                    named_window = named_window + 1
+                local buf_name = vim.api.nvim_buf_get_name(bufnr)
+                if isValidBuf(bufnr, buf_name) then
+                    if not visited_window[buf_name] then
+                        visited_window[buf_name] = true
+                        named_window = named_window + 1
+                    end
                 end
             end
 
@@ -2859,9 +2901,16 @@ AddPlugin {
     -- THOUGHT: add underline to all params ?
     'm-demare/hlargs.nvim',
     config = function()
+        local colors = {}
+        for _,v in pairs(ColorPalette()) do
+            local hi = {}
+            hi.fg = v.fg
+            hi.underline = true
+            table.insert(colors, hi)
+        end
         require('hlargs').setup({
             use_colorpalette = true,
-            colorpalette = ColorPalette(),
+            colorpalette = colors,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -2915,9 +2964,7 @@ AddPlugin {
     -- TODO: hide written messages
     -- TODO: clean cmdline_popup
     -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
-    -- TODO: hide search in virtual text https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#hide-search-virtual-text
     -- TODO: lsp progress
-    -- TODO: notify-send
     -- TODO: health checks
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
@@ -2948,7 +2995,7 @@ AddPlugin {
             messages = {
                 -- NOTE: If you enable messages, then the cmdline is enabled automatically.
                 -- This is a current Neovim limitation.
-                enabled = false, -- enables the Noice messages UI
+                enabled = true, -- enables the Noice messages UI
                 view = 'notify', -- default view for messages
                 view_error = 'notify', -- view for errors
                 view_warn = 'notify', -- view for warnings
@@ -3348,7 +3395,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/gbprod/yanky.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
--- FEAT: https://github.com/lalitmee/browse.nvim
 -- FEAT: https://github.com/loctvl842/monokai-pro.nvim
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
