@@ -46,7 +46,7 @@ vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
 HlOrder = {
-    hlargs = 1
+    hlargs = 1 -- TODO: fix priority with function parameter
 }
 
 LazyConfig = {
