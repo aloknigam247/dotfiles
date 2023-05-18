@@ -1559,6 +1559,32 @@ AddPlugin {
 -- FEAT: https://github.com/ojroques/nvim-lspfuzzy
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+AddPlugin {
+    -- TODO: fix this plugin
+    'aaronhallaert/advanced-git-search.nvim',
+    config = function()
+        -- optional: setup telescope before loading the extension
+        require('telescope').setup{
+            -- move this to the place where you call the telescope setup function
+            extensions = {
+                advanced_git_search = {
+                    -- fugitive or diffview
+                    diff_plugin = 'fugitive',
+                    -- customize git in previewer
+                    -- e.g. flags such as { '--no-pager' }, or { '-c', 'delta.side-by-side=false' }
+                    git_flags = {},
+                    -- customize git diff in previewer
+                    -- e.g. flags such as { '--raw' }
+                    git_diff_flags = {},
+                    -- Show builtin git pickers when executing 'show_custom_functions' or :AdvancedGitSearch
+                    show_builtin_git_pickers = false,
+                }
+            }
+        }
+
+        require('telescope').load_extension('advanced_git_search')
+    end
+}
 -- https://github.com/akinsho/git-conflict.nvim
 -- https://github.com/cynix/vim-mergetool
 -- use 'hotwatermorning/auto-git-diff'
@@ -2617,7 +2643,7 @@ AddPlugin {
                         -- THOUGHT: shorting_target ?
                         color = { gui = 'italic' },
                         file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = false,   -- Display new file status (new file means no write after created) THOUGHT: what if true
+                        newfile_status = true,   -- Display new file status (new file means no write after created)
                         on_click = function()
                             vim.cmd('NvimTreeToggle')
                         end,
@@ -3214,6 +3240,10 @@ end
 -- TODO relocalte utility plugins when done
 -- FEAT: use 'AckslD/nvim-trevJ.lua'
 -- FEAT: https://github.com/wellle/targets.vim
+AddPlugin { -- PERF: Very slow on large files
+    'AckslD/muren.nvim',
+    config = true
+}
 
 AddPlugin {
     'AndrewRadev/inline_edit.vim',
@@ -3386,7 +3416,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/JellyApple102/easyread.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/NvChad/nvim-colorizer.lua
--- FEAT: https://github.com/aaronhallaert/advanced-git-search.nvim
 -- FEAT: https://github.com/askfiy/visual_studio_code
 -- FEAT: https://github.com/axlebedev/vim-footprints
 -- FEAT: https://github.com/cbochs/portal.nvim
@@ -3409,16 +3438,31 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/tummetott/reticle.nvim
 -- FEAT: https://github.com/ziontee113/SelectEase
--- TODO: https://github.com/AckslD/muren.nvim
 -- TODO: https://github.com/deifyed/naVi
 -- TODO: https://github.com/madox2/vim-ai
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
--- <~>
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
+-- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
+-- FEAT: https://github.com/LiadOz/nvim-dap-repl-highlights
+-- FEAT: https://github.com/LunarVim/bigfile.nvim
+-- FEAT: https://github.com/Theo-Steiner/togglescope
+-- FEAT: https://github.com/aaditeynair/conduct.nvim
+-- FEAT: https://github.com/decaycs/decay.nvim
+-- FEAT: https://github.com/echasnovski/mini.hues
+-- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/embark-theme/vim
+-- FEAT: https://github.com/felipeagc/fleet-theme-nvim
+-- FEAT: https://github.com/folke/neodev.nvim
+-- FEAT: https://github.com/hrsh7th/cmp-copilot
+-- FEAT: https://github.com/imNel/monorepo.nvim
+-- FEAT: https://github.com/kndndrj/nvim-dbee
+-- FEAT: https://github.com/snelling-a/better-folds.nvim
+-- FEAT: https://github.com/zbirenbaum/copilot-cmp
+-- FEAT: https://github.com/zbirenbaum/copilot.lua
 -- PERF: profiling for auto commands
 -- TODO: change.txt
 -- TODO: insert.txt
@@ -3434,4 +3478,5 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- TODO: revisit Nerd Fonts for new fonts
 -- TODO: vsplit or split file opener like find command
 -- PERF: startuptime
+-- <~>
 -- vim: fmr=</>,<~> fdm=marker
