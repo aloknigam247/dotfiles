@@ -743,6 +743,7 @@ AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'         
 AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                                  }
 AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
+AddPlugin { 'pineapplegiant/spaceduck',         event = 'User spaceduck',                                              }
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
 
 Dark  { 'NeoSolarized',               '_'            }
@@ -876,6 +877,7 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end }
+Dark  { 'spaceduck',                  '_'            }
 Dark  { 'substrata',                  '_'            }
 Dark  { 'sweetie',                    '_'            }
 Light { 'sweetie',                    '_'            }
