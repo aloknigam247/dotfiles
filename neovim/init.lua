@@ -777,7 +777,6 @@ Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
 Light { 'danger_light',               'danger'       }
-Dark  { 'darker',                     '_'            }
 Dark  { 'darkplus',                   '_'            }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Dark  { 'dawnfox',                    'nightfox'                                                          }
