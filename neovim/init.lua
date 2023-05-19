@@ -727,12 +727,14 @@ AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'       
 AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic',  dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                                 }
 AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                                 }
+AddPlugin { 'pineapplegiant/spaceduck',         event = 'User spaceduck',                                              }
 AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                                  } -- FIX: Indentline highlight
 AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                               }
 AddPlugin { 'NTBBloodbath/sweetie.nvim',        event = 'User sweetie'                                                 }
 AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
 AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
 AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              }
+AddPlugin { 'embark-theme/vim',                 event = 'User embark'                                                  }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
 AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'                                                 }
@@ -743,7 +745,6 @@ AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'         
 AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                                  }
 AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones',    dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                                  }
-AddPlugin { 'pineapplegiant/spaceduck',         event = 'User spaceduck',                                              }
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                               }
 
 Dark  { 'NeoSolarized',               '_'            }
@@ -790,6 +791,7 @@ Dark  { 'duskfox',                    'nightfox'                                
 Dark  { 'earlysummer',                'starry',      pre = function() FixStarry('#3f2b4c', '#694980') end }
 Dark  { 'edge',                       '_'                                                                 }
 Light { 'edge',                       '_'                                                                 }
+Dark  { 'embark',                     '_'                                                                 }
 Dark  { 'emerald',                    'starry',      pre = function() FixStarry('#1a391d', '#2c5f31') end }
 Dark  { 'enfocado',                   '_'            }
 Light { 'enfocado',                   '_'            }
@@ -3455,7 +3457,6 @@ vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\laz
 -- FEAT: https://github.com/decaycs/decay.nvim
 -- FEAT: https://github.com/echasnovski/mini.hues
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
--- FEAT: https://github.com/embark-theme/vim
 -- FEAT: https://github.com/felipeagc/fleet-theme-nvim
 -- FEAT: https://github.com/folke/neodev.nvim
 -- FEAT: https://github.com/hrsh7th/cmp-copilot
