@@ -895,7 +895,7 @@ Light { 'vscode',                     '_'            }
 Light { 'zellner',                    '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     }
-Dark  { 'zephyr',                     '_'            }
+Dark  { 'zephyr',                     '_'            } -- FIX: LineNr
 Dark  { 'zephyrium',                  '_'            }
 
 function ColoRand(ind)
