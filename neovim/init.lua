@@ -685,7 +685,6 @@ AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'          
 AddPlugin { 'ray-x/aurora',                     event = 'User aurora'                                                  }
 AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                               }
 AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'yashguptaz/calvera-dark.nvim',     event = 'User calvera'                                                 }
 AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'igorgue/danger',                   event = 'User danger'                                                  }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
@@ -767,7 +766,6 @@ Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',               '_'           }
-Dark  { 'calvera',                    '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
 Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Light { 'catppuccin-latte',           'catppuccin'   }
