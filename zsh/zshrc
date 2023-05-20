@@ -179,7 +179,6 @@ cd
 # FEAT: Use params like Powershell
 # FIX: headonly
 # FIX: noreset
-# TODO: Format code
 function format_text() {
     local text=$1
     local bg=$2
