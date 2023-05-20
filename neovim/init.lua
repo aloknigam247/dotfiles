@@ -1733,7 +1733,6 @@ AddPlugin {
 -- https://github.com/DNLHC/glance.nvim
 
 -- TODO: resolve navic with Lspsaga symbols
--- TODO: use treesitter statusline if LSP not available
 
 -- TODO: learn usage
 AddPlugin {
@@ -2198,7 +2197,9 @@ AddPlugin {
     build = 'deno task --quiet build:fast',
     cmd = 'PeekOpen',
     config = function() 
-        require('peek').setup()
+        require('peek').setup({
+            theme = vim.o.background
+        })
         vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
         vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
     end
