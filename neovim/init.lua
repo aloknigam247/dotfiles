@@ -45,8 +45,8 @@ vim.g.cmp_kinds = {
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
-HlOrder = {
-    hlargs = 1 -- TODO: fix priority with function parameter
+HlOrder = { -- TODO: Understand highlight priority
+    hlargs = 10000
 }
 
 LazyConfig = {
@@ -819,7 +819,6 @@ Dark  { 'material',                   'starry',      pre = function() FixStarry(
 Dark  { 'melange',                    '_'            }
 Light { 'melange',                    '_'            }
 Dark  { 'mellow',                     '_'            }
-Dark  { 'middlenight_blue',           'starry',      pre = function() FixStarry('#321c3e', '#542f68') end }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end }
 Dark  { 'monokai',                    'vim-monokai'  }
 Dark  { 'moonfly',                    '_'            }
@@ -1266,8 +1265,6 @@ AddPlugin {
         },
         hijack_netrw = true,
         hijack_unnamed_buffer_when_opening = true,
-        ignore_buffer_on_setup = false,
-        ignore_ft_on_setup = {},
         live_filter = {
             always_show_folders = true,
             prefix = '[FILTER]: ',
@@ -1288,8 +1285,6 @@ AddPlugin {
         },
         notify = { threshold = vim.log.levels.INFO },
         on_attach = 'disable',
-        open_on_setup = false,
-        open_on_setup_file = false,
         prefer_startup_root = false,
         reload_on_bufenter = false,
         remove_keymaps = false,
@@ -1604,7 +1599,7 @@ AddPlugin {
             [7]   = '7',
             [8]   = '8',
             [9]   = '9',
-            ['+'] = '>',
+            ['+'] = '',
         },
         current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time:%R>  <summary>',
         diff_opts = {
@@ -1821,8 +1816,7 @@ AddPlugin {
             -- Mappings.
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap=true, silent=true, buffer=bufnr }
-            -- BUG: Mappings are not working
-            -- TODO: Icons for  popup
+            -- TODO: Icons for popup
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
@@ -2576,7 +2570,6 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: see Ecovim statusline https://github.com/ecosse3/nvim
 -- PERF: check for performance
 -- REFACTOR: remove unwanted comments
 AddPlugin {
@@ -2722,8 +2715,15 @@ AddPlugin {
                 },
                 lualine_x = {
                     -- 'hostname', -- THOUGHT: use conditionally on ssh ?
-                    'searchcount', -- FEAT: format it with some icon and color, remove []
-                    'selectioncount', -- FEAT: format it with some icon and color
+                    {
+                        'searchcount',
+                        color = { fg = '#23CE6B', gui = 'bold' },
+                        fmt = function(str)
+                            return string.sub(str, 2, -2)
+                        end,
+                        icon = {'󰱽', color = {fg = '#EAC435'}},
+                    },
+                    'selectioncount',
                     {
                         'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
                         fmt = function(str)
@@ -2761,7 +2761,7 @@ AddPlugin {
                     },
                     'fileformat',
                 },
-                lualine_z = {
+                lualine_z = { -- TODO: what if we switch y and z
                     {
                         'location',
                         fmt = function(str)
@@ -2777,7 +2777,8 @@ AddPlugin {
                                 satellite.enabled = true
                             end
                         end,
-                        padding = { left = 1, right = 0 }
+                        padding = { left = 1, right = 0 },
+                        separator = { left = '', right = '' }
                     }
                 }
             },
@@ -2867,7 +2868,6 @@ AddPlugin {
     -- TODO: mappings to open file in vsplit,split,tab
     -- TODO: padded dropdown menu https://github.com/nvim-telescope/telescope.nvim/wiki/Gallery#padded-dropdown-menu-in-norcallis-blue
     -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
-    -- FEAT: https://github.com/nvim-telescope/telescope-fzy-native.nvim
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     config = function()
@@ -2948,7 +2948,6 @@ AddPlugin {
     config = true
 }
 -- FEAT: https://github.com/elijahdanko/ttymux.nvim
--- FEAT: https://github.com/nat-418/termitary.nvim
 -- FEAT: https://github.com/nikvdp/neomux
 -- FEAT: https://github.com/pianocomposer321/consolation.nvim
 -- FEAT: https://github.com/voldikss/vim-floaterm
@@ -3379,6 +3378,23 @@ AddPlugin {
 -- use 'jbyuki/instant.nvim'
 -- https://github.com/jghauser/mkdir.nvim
 
+-- TODO: OPTIMIZE
+AddPlugin {
+    'gbprod/yanky.nvim',
+    opts = {
+        ring = {
+            history_length = 100,
+            storage = "memory",
+            sync_with_numbered_registers = true,
+            cancel_event = "update",
+        },
+        system_clipboard = {
+            sync_with_ring = false,
+        }
+    },
+    lazy = false
+}
+
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
     opts = {
@@ -3494,7 +3510,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
--- FEAT: https://github.com/gbprod/yanky.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
 -- FEAT: https://github.com/loctvl842/monokai-pro.nvim
