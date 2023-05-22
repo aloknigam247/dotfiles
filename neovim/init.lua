@@ -528,7 +528,7 @@ AddPlugin {
 }
 
 AddPlugin {
-    'norcalli/nvim-colorizer.lua',
+    'NvChad/nvim-colorizer.lua',
     cmd = 'ColorizerToggle',
     config = true
 }
@@ -688,10 +688,13 @@ AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco',     depe
 AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2',     dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'igorgue/danger',                   event = 'User danger'                                                  }
 AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                                }
+AddPlugin { 'decaycs/decay.nvim',               event = 'User decay'                                                   }
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                           }
 AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                    }
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                              }
+AddPlugin { 'dundargoc/fakedonalds.nvim',       event = 'User fakedonalds'                                             }
 AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                                  }
+AddPlugin { 'felipeagc/fleet-theme-nvim',       event = 'User fleet'                                                   }
 AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                                  }
 AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                            }
 AddPlugin { 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                                 }
@@ -700,6 +703,7 @@ AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'           
 AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                                }
 AddPlugin { 'savq/melange',                     event = 'User melange'                                                 }
 AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                                  }
+AddPlugin { 'loctvl842/monokai-pro.nvim',       event = 'User monokai-pro'                                             }
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                               }
 AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                                   }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                    }
@@ -733,6 +737,7 @@ AddPlugin { 'NTBBloodbath/sweetie.nvim',        event = 'User sweetie'          
 AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                                   }
 AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                               }
 AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                              }
+AddPlugin { 'askfiy/visual_studio_code',        event = 'User visual_studio_code'                                      }
 AddPlugin { 'embark-theme/vim',                 event = 'User embark'                                                  }
 AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                                }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                                }
@@ -774,10 +779,14 @@ Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
 Light { 'danger_light',               'danger'       }
+Dark  { 'dark-decay',                 'decay'                                                             }
 Dark  { 'darkplus',                   '_'            }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Dark  { 'dawnfox',                    'nightfox'                                                          }
 Dark  { 'dayfox',                     'nightfox'                                                          }
+Dark  { 'decay',                      '_'                                                                 }
+Light { 'decay',                      '_'                                                                 }
+Dark  { 'decayce',                    'decay'                                                             }
 Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
 Light { 'delek',                      '_'                                                                 }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
@@ -793,7 +802,9 @@ Dark  { 'enfocado',                   '_'            }
 Light { 'enfocado',                   '_'            }
 Dark  { 'everforest',                 '_'            }
 Light { 'everforest',                 '_'            }
+Dark  { 'fakedonalds',                '_'            }
 Dark  { 'falcon',                     '_'            }
+Dark  { 'fleet',                      '_'            }
 Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'     }
 Dark  { 'github_dark',                'github'       }
@@ -821,6 +832,12 @@ Light { 'melange',                    '_'            }
 Dark  { 'mellow',                     '_'            }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end }
 Dark  { 'monokai',                    'vim-monokai'  }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'}) end }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'machine'}) end }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'octagon'}) end }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'pro'}) end }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'}) end }
 Dark  { 'moonfly',                    '_'            }
 Dark  { 'moonlight',                  '_'            }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end }
@@ -860,7 +877,7 @@ Dark  { 'palenight',                  'starry',      pre = function() FixStarry(
 Dark  { 'palenightfall',              '_'            }
 Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
--- Dark  { 'rose-pine',                  '_'            }
+Dark  { 'rose-pine',                  '_'            }
 Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
@@ -888,6 +905,8 @@ Dark  { 'tokyonight-moon',            'tokyonight'   }
 Dark  { 'tokyonight-night',           'tokyonight'   }
 Dark  { 'tokyonight-storm',           'tokyonight'   }
 Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end }
+Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                               }
+Light { 'visual_studio_code_light',   'visual_studio_code'                                               }
 Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end          }
 Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
@@ -2221,11 +2240,17 @@ AddPlugin {
     }
 }
 
--- TODO: resolve usage
 AddPlugin {
     'smjonas/inc-rename.nvim',
     cmd = 'IncRename',
-    config = true
+    opts = {
+        cmd_name = "IncRename", -- the name of the command
+        hl_group = "Substitute", -- the highlight group used for highlighting the identifier's new name
+        preview_empty_name = false, -- whether an empty new name should be previewed; if false the command preview will be cancelled instead
+        show_message = true, -- whether to display a `Renamed m instances in n files` message after a rename operation
+        input_buffer_type = 'dressing', -- the type of the external input buffer to use (the only supported value is currently "dressing")
+        post_hook = nil, -- callback to run after renaming, receives the result table (from LSP handler) as an argument
+    }
 }
 
 -- TODO: resolve usage
@@ -2358,7 +2383,7 @@ AddPlugin {
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
--- use {
+-- use { -- TODO: use me
 --      'lukas-reineke/headlines.nvim',
 --      config = function()
 --          require('headlines').setup()
@@ -3320,6 +3345,24 @@ AddPlugin {
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
 
+AddPlugin {
+    'JellyApple102/easyread.nvim',
+    opts = {
+        hlValues = {
+            ['1'] = 1,
+            ['2'] = 1,
+            ['3'] = 2,
+            ['4'] = 2,
+            ['fallback'] = 0.4
+        },
+        hlgroupOptions = { link = 'Bold' },
+        fileTypes = { 'text' },
+        saccadeInterval = 0,
+        saccadeReset = false,
+        updateWhileInsert = true
+    }
+}
+
 -- TODO: AddPlugin { 'Jxstxs/conceal.nvim' }
 
 AddPlugin {
@@ -3465,6 +3508,11 @@ AddPlugin {
 }
 
 AddPlugin {
+    'tummetott/reticle.nvim',
+    config = true
+}
+
+AddPlugin {
     'tversteeg/registers.nvim',
     opts = {
         register_user_command = false,
@@ -3494,71 +3542,60 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+-- BUG: Powershell indent issue
+-- FEAT: Use of Copilot
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
--- FEAT: https://github.com/JellyApple102/easyread.nvim
+-- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
--- FEAT: https://github.com/NvChad/nvim-colorizer.lua
--- FEAT: https://github.com/askfiy/visual_studio_code
--- FEAT: https://github.com/axlebedev/vim-footprints
+-- FEAT: https://github.com/LiadOz/nvim-dap-repl-highlights
+-- FEAT: https://github.com/Theo-Steiner/togglescope
+-- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
 -- FEAT: https://github.com/doums/dmap.nvim
--- FEAT: https://github.com/dundargoc/fakedonalds.nvim
 -- FEAT: https://github.com/echasnovski/mini.bracketed
+-- FEAT: https://github.com/echasnovski/mini.hues
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/folke/neodev.nvim
+-- FEAT: https://github.com/hrsh7th/cmp-copilot
+-- FEAT: https://github.com/JellyApple102/flote.nvim
+-- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
--- FEAT: https://github.com/loctvl842/monokai-pro.nvim
+-- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
 -- FEAT: https://github.com/madox2/vim-ai
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
--- FEAT: https://github.com/tummetott/reticle.nvim
--- FEAT: https://github.com/ziontee113/SelectEase
--- TODO: https://github.com/deifyed/naVi
--- TODO: https://github.com/madox2/vim-ai
-
-require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
-vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
--- BUG: Powershell indent issue
--- FEAT: Use of Copilot
--- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
--- FEAT: https://github.com/LiadOz/nvim-dap-repl-highlights
--- FEAT: https://github.com/LunarVim/bigfile.nvim
--- FEAT: https://github.com/Theo-Steiner/togglescope
--- FEAT: https://github.com/aaditeynair/conduct.nvim
--- FEAT: https://github.com/decaycs/decay.nvim
--- FEAT: https://github.com/echasnovski/mini.hues
--- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
--- FEAT: https://github.com/felipeagc/fleet-theme-nvim
--- FEAT: https://github.com/folke/neodev.nvim
--- FEAT: https://github.com/hrsh7th/cmp-copilot
--- FEAT: https://github.com/imNel/monorepo.nvim
--- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/zbirenbaum/copilot-cmp
 -- FEAT: https://github.com/zbirenbaum/copilot.lua
+-- FEAT: https://github.com/ziontee113/SelectEase
 -- PERF: profiling for auto commands
+-- PERF: startuptime
 -- TODO: change.txt
--- TODO: insert.txt
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked
+-- TODO: https://github.com/deifyed/naVi
+-- TODO: https://github.com/madox2/vim-ai
 -- TODO: indentation is not identifible when 2
+-- TODO: insert.txt
 -- TODO: jumplist
 -- TODO: location list
 -- TODO: marks
 -- TODO: motion.txt
 -- TODO: per file configurations
 -- TODO: quickfix
--- TODO: revisit Nerd Fonts for new fonts
 -- TODO: vsplit or split file opener like find command
--- PERF: startuptime
+
+require('lazy').setup(Plugins, LazyConfig)
+ColoRand()
+vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
