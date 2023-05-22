@@ -133,7 +133,7 @@ LazyConfig = {
                 'tarPlugin',
                 'tohtml',
                 'tutor',
-                'zipPlugin',
+                -- 'zipPlugin',
             },
         },
     },
@@ -277,7 +277,6 @@ end
 
 -- Auto Commands
 -- -------------
--- TODO: Show wrap icon in lualine in progress
 vim.api.nvim_create_autocmd(
     'BufReadPost', {
         pattern = '*',
@@ -504,14 +503,14 @@ AddPlugin {
         keywords = {
             DOCME  = { icon = '', color = 'docs' },
             FEAT   = { icon = '󱩑', color = 'feat' },
-            FIX    = { icon = '󰃤', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+            FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
             HACK   = { icon = '', color = 'hint' },
             NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
             PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
             RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
             TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
             TODO   = { icon = '󰄬', color = 'todo' },
-            WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
+            WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
     },
@@ -766,11 +765,10 @@ Dark  { 'barstrata',                  '_'            }
 Light { 'base2tone_drawbridge_light', 'base2tone'    }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_lake_light',       'base2tone'    }
-Light { 'base2tone_lavender_light',   'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
-Light { 'bluloco-light',               '_'           }
+Light { 'bluloco-light',              '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
 Dark  { 'catppuccin-frappe',          'catppuccin'   }
 Light { 'catppuccin-latte',           'catppuccin'   }
@@ -779,7 +777,7 @@ Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'            }
 Light { 'danger_light',               'danger'       }
-Dark  { 'dark-decay',                 'decay'                                                             }
+Dark  { 'dark-decay',                 'decay'        }
 Dark  { 'darkplus',                   '_'            }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Dark  { 'dawnfox',                    'nightfox'                                                          }
@@ -2383,12 +2381,11 @@ AddPlugin {
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
--- use { -- TODO: use me
---      'lukas-reineke/headlines.nvim',
---      config = function()
---          require('headlines').setup()
---      end,
---  }
+AddPlugin { -- TODO: use me
+    'lukas-reineke/headlines.nvim',
+    config = true,
+    lazy = false
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -2733,7 +2730,7 @@ AddPlugin {
                         symbols = {
                             modified = '', -- Text to show when the file is modified.
                             readonly = '', -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = '', -- Text to show for unnamed buffers.
+                            unnamed  = '', -- Text to show for unnamed buffers.
                             newfile  = '', -- Text to show for new created file before first writting
                         }
                     }
@@ -2747,10 +2744,15 @@ AddPlugin {
                             return string.sub(str, 2, -2)
                         end,
                         icon = {'󰱽', color = {fg = '#EAC435'}},
+                        separator = ''
                     },
-                    'selectioncount',
+                    {
+                        'selectioncount',
+                        separator = ''
+                    },
                     {
                         'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
+                        color = { fg = '#0078ff' },
                         fmt = function(str)
                             if vim.o.bomb then
                                 str = str .. '-bom'
@@ -2760,7 +2762,11 @@ AddPlugin {
                     }
                 },
                 lualine_y = {
-                    { 'g:session_icon', separator = '' },
+                    {
+                        'g:session_icon',
+                        padding = { left = 1, right = 1 },
+                        separator = ''
+                    },
                     {
                         LspIcon,
                         cond = function()
@@ -2769,6 +2775,7 @@ AddPlugin {
                         on_click = function()
                             vim.cmd('LspInfo')
                         end,
+                        padding = { left = 1, right = 0 },
                         separator = ''
                     },
                     {
@@ -2782,15 +2789,19 @@ AddPlugin {
                         on_click = function()
                             vim.cmd('set wrap!')
                         end,
+                        padding = { left = 1, right = 0 },
                         separator = ''
                     },
-                    'fileformat',
+                    {
+                        'fileformat',
+                        padding = { left = 1, right = 2 },
+                    },
                 },
-                lualine_z = { -- TODO: what if we switch y and z
+                lualine_z = {
                     {
                         'location',
                         fmt = function(str)
-                            return str:gsub("^%s+", "")
+                            return str:gsub("^%s+", ""):gsub("%s+", "")
                         end,
                         on_click = function ()
                             local satellite = require('satellite')
@@ -2802,7 +2813,7 @@ AddPlugin {
                                 satellite.enabled = true
                             end
                         end,
-                        padding = { left = 1, right = 0 },
+                        padding = { left = 0, right = 0 },
                         separator = { left = '', right = '' }
                     }
                 }
