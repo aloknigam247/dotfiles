@@ -179,7 +179,6 @@ cd
 # FEAT: Use params like Powershell
 # FIX: headonly
 # FIX: noreset
-# TODO: Format code
 function format_text() {
     local text=$1
     local bg=$2
@@ -255,9 +254,9 @@ function prompt_gen() {
     local p_SEP=""
     local p_BG=""
     local prompt_str=""
-    
+
     shift
-    
+
     while [[ $# -ne 0 ]]; do
         for k v in $1; do
             case $k in
@@ -272,20 +271,20 @@ function prompt_gen() {
                     ;;
             esac
         done
-    
+
         if [[ $p_SEP ]]; then
             p_SEP="%K{$BG}%F{$p_BG}$SEP "
         fi
-    
+
         pr="$p_SEP%K{$BG}%F{$FG}$SEG "
         p_SEP="%k%F{$BG}$SEP "
         p_BG=$BG
-    
+
         prompt_str="$prompt_str$pr"
-    
+
         shift
     done
-    
+
     export PROMPT="$prompt_str$p_SEP%k%f"
 }
 
@@ -302,5 +301,3 @@ function rprompt() {
 export RPROMPT='$(rprompt)'
 
 PATH=.:$PATH
-
-
