@@ -859,7 +859,6 @@ Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
 Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
-Dark  { 'oh-lucy',                    '_'            } -- FIX: FixNontext
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
 Dark  { 'one_monokai',                '_'            }
