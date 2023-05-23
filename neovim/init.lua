@@ -859,7 +859,6 @@ Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 Dark  { 'nordic',                     '_'            }
 Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
-Dark  { 'oh-lucy',                    '_'            } -- FIX: FixNontext
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
 Dark  { 'one_monokai',                '_'            }
@@ -2315,20 +2314,18 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
-    -- THOUGHT: check if vim.input is possible for annotate message, may need
-    -- dressing
     -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function()
         vim.cmd[[
-            let g:bookmark_annotation_sign = '' " TODO: change icon
+            let g:bookmark_annotation_sign = ''
             let g:bookmark_display_annotation = 1
             let g:bookmark_highlight_lines = 1
             let g:bookmark_location_list = 1
             let g:bookmark_no_default_key_mappings = 1
             let g:bookmark_save_per_working_dir = 1
-            let g:bookmark_sign = '' " TODO: paper clip or someother icon
+            let g:bookmark_sign = ''
             nmap ba <Plug>BookmarkAnnotate
             nmap bm <Plug>BookmarkToggle
             nmap bn <Plug>BookmarkNext
@@ -3553,6 +3550,8 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 vim.opt.runtimepath:prepend(lazypath)
+-- AI Archieve
+-- https://github.com/madox2/vim-ai
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3581,7 +3580,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
--- FEAT: https://github.com/madox2/vim-ai
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
