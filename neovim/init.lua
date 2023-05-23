@@ -2319,13 +2319,13 @@ AddPlugin {
     'MattesGroeger/vim-bookmarks',
     config = function()
         vim.cmd[[
-            let g:bookmark_annotation_sign = '' " TODO: change icon
+            let g:bookmark_annotation_sign = ''
             let g:bookmark_display_annotation = 1
             let g:bookmark_highlight_lines = 1
             let g:bookmark_location_list = 1
             let g:bookmark_no_default_key_mappings = 1
             let g:bookmark_save_per_working_dir = 1
-            let g:bookmark_sign = '' " TODO: paper clip or someother icon
+            let g:bookmark_sign = ''
             nmap ba <Plug>BookmarkAnnotate
             nmap bm <Plug>BookmarkToggle
             nmap bn <Plug>BookmarkNext
