@@ -2314,8 +2314,6 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
-    -- THOUGHT: check if vim.input is possible for annotate message, may need
-    -- dressing
     -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
@@ -3551,6 +3549,8 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 vim.opt.runtimepath:prepend(lazypath)
+-- AI Archieve
+-- https://github.com/madox2/vim-ai
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3579,7 +3579,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
--- FEAT: https://github.com/madox2/vim-ai
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
