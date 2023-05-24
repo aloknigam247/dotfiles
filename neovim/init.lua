@@ -2168,7 +2168,6 @@ AddPlugin {
     }
 }
 
--- TODO: resolve usage
 AddPlugin {
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
@@ -2378,7 +2377,7 @@ AddPlugin {
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
-AddPlugin { -- TODO: use me
+AddPlugin { -- TODO: use me, needs debugging
     'lukas-reineke/headlines.nvim',
     config = true,
     lazy = false
@@ -2715,7 +2714,6 @@ AddPlugin {
                     },
                     {
                         'filename',
-                        -- THOUGHT: shorting_target ?
                         color = { gui = 'italic' },
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = true,   -- Display new file status (new file means no write after created)
@@ -3551,6 +3549,8 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 -- AI Archieve
 -- https://github.com/madox2/vim-ai
+-- https://github.com/hrsh7th/cmp-copilot
+-- https://github.com/madox2/vim-ai
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3571,7 +3571,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/folke/neodev.nvim
--- FEAT: https://github.com/hrsh7th/cmp-copilot
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
@@ -3592,7 +3591,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked
 -- TODO: https://github.com/deifyed/naVi
--- TODO: https://github.com/madox2/vim-ai
 -- TODO: indentation is not identifible when 2
 -- TODO: insert.txt
 -- TODO: jumplist
