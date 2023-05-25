@@ -1143,10 +1143,10 @@ AddPlugin {
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
--- use {
+-- AddPlugin {
 --     'jbyuki/one-small-step-for-vimkind',
 --     config = function()
---         local dap = require'dap'
+--         local dap = require('dap')
 --         dap.configurations.lua = {
 --             {
 --                 type = 'nlua',
@@ -1158,7 +1158,8 @@ AddPlugin {
 --         dap.adapters.nlua = function(callback, config)
 --             callback({ type = 'server', host = config.host or '127.0.0.1', port = config.port or 8086 })
 --         end
---     end
+--     end,
+--     lazy = true
 -- }
 -- https://github.com/nvim-telescope/telescope-vimspector.nvim
 -- https://github.com/puremourning/vimspector
@@ -1167,10 +1168,17 @@ AddPlugin {
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
--- use {
+-- AddPlugin {
+--     -- TODO: List down topics to work on
 --     'mfussenegger/nvim-dap',
 --     config = function()
---         vim.cmd[[
+--         vim.api.nvim_set_keymap('n', '<F9>', [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
+--         vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("dap").continue()<CR>]], { noremap = true })
+--         vim.api.nvim_set_keymap('n', '<F10>', [[:lua require("dap").step_over()<CR>]], { noremap = true })
+--         vim.api.nvim_set_keymap('n', '<F11>', [[:lua require("dap").step_into()<CR>]], { noremap = true })
+--         vim.api.nvim_set_keymap('n', '<F12>', [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
+--         vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
+--         --[[ vim.cmd[[
 --             nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
 --             nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
 --             nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
@@ -1181,7 +1189,8 @@ AddPlugin {
 --             nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
 --             nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
 --         ]]
---     end
+--     end,
+--     lazy = true
 -- }
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
@@ -2380,7 +2389,7 @@ AddPlugin {
 AddPlugin { -- TODO: use me, needs debugging
     'lukas-reineke/headlines.nvim',
     config = true,
-    lazy = false
+    lazy = true
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
