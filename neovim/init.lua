@@ -15,7 +15,7 @@ vim.g.cmp_kinds = {
     Event         = ' ',
     Field         = ' ',
     File          = ' ',
-    Folder        = ' ',
+    Folder        = '󰷏 ',
     Function      = ' ',
     History       = ' ',
     Interface     = ' ',
@@ -25,7 +25,7 @@ vim.g.cmp_kinds = {
     Module        = ' ',
     Namespace     = 'ﬥ ',
     Null          = ' ',
-    Number        = ' ',
+    Number        = ' ',
     Object        = ' ',
     Operator      = ' ',
     Options       = ' ',
@@ -33,12 +33,12 @@ vim.g.cmp_kinds = {
     Property      = ' ',
     Reference     = ' ',
     Snippet       = ' ',
-    String        = ' ',
+    String        = ' ',
     Struct        = ' ',
-    Text          = ' ',
+    Text          = '󱄽 ',
     TypeParameter = ' ',
     Unit          = ' ',
-    Value         = ' ',
+    Value         = ' ',
     Variable      = ' '
 }
 
@@ -1744,11 +1744,11 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use 'Decodetalkers/csharpls-extended-lsp.nvim'
--- use 'Hoffs/omnisharp-extended-lsp.nvim'
--- https://github.com/lvimuser/lsp-inlayhints.nvim
--- https://github.com/DNLHC/glance.nvim
-
+-- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
+-- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
+-- TODO: https://github.com/lvimuser/lsp-inlayhints.nvim
+-- TODO: https://github.com/DNLHC/glance.nvim
+-- TODO: https://github.com/antosha417/nvim-lsp-file-operations
 -- TODO: resolve navic with Lspsaga symbols
 
 -- TODO: learn usage
@@ -3087,6 +3087,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- FIX: checkhealth
     -- TODO: cmdline
     -- TODO: messages
     -- TODO: popupmenu
@@ -3095,7 +3096,6 @@ AddPlugin {
     -- TODO: notify
     -- TODO: lsp
     -- TODO: markdown
-    -- TODO: smart_move
     -- TODO: showmode in lualine
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     -- TODO: cmdline and popup together
@@ -3104,7 +3104,6 @@ AddPlugin {
     -- TODO: clean cmdline_popup
     -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
     -- TODO: lsp progress
-    -- TODO: health checks
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
     config = function()
@@ -3269,7 +3268,7 @@ AddPlugin {
                 },
             },
             health = {
-                checker = true, -- Disable if you don't want health checks to run
+                checker = false, -- Disable if you don't want health checks to run
             },
             smart_move = {
                 -- noice tries to move out of the way of existing floating windows.
@@ -3557,15 +3556,17 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 -- AI Archieve
--- https://github.com/madox2/vim-ai
--- https://github.com/hrsh7th/cmp-copilot
--- https://github.com/madox2/vim-ai
+-- TODO: https://github.com/madox2/vim-ai
+-- TODO: https://github.com/hrsh7th/cmp-copilot
+-- TODO: https://github.com/madox2/vim-ai
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
+-- FEAT: https://github.com/FluxxField/bionic-reading.nvim
+-- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/LiadOz/nvim-dap-repl-highlights
@@ -3575,12 +3576,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.bracketed
+-- FEAT: https://github.com/echasnovski/mini.hipatterns
 -- FEAT: https://github.com/echasnovski/mini.hues
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/folke/neodev.nvim
--- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
@@ -3593,12 +3594,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/zbirenbaum/copilot-cmp
 -- FEAT: https://github.com/zbirenbaum/copilot.lua
--- FEAT: https://github.com/ziontee113/SelectEase
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
 -- TODO: change.txt
--- TODO: context aware popup, using autocmd and position clicked
+-- TODO: context aware popup, using autocmd and position clicked, create
+-- function and stick to MenuPopup event
 -- TODO: https://github.com/deifyed/naVi
 -- TODO: indentation is not identifible when 2
 -- TODO: insert.txt

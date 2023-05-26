@@ -1,10 +1,10 @@
 FEAT: fzf preview with bat
 FEAT: ripgrep preview with bat
 FIX: git diff in lazygit
+TODO: 2022
 TODO: Colors for ripgrep
 TODO: Start on VS Code
 TODO: VS Code https://learn.microsoft.com/en-us/visualstudio/intellicode/intellicode-visual-studio-code
-TODO: Visual Studio IntelliCode Tools > Options > IntelliCode. Under Preview Features, choose Enable, Disable, or Default to configure each feature.
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/data-tools/accessing-data-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/?view=vs-2022
@@ -18,7 +18,6 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/compiling
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/encodings-and-line-breaks?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/finding-and-replacing-text?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/how-to-change-text-case-in-the-editor?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/navigating-code?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/outlining?view=vs-2022
@@ -27,10 +26,30 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/refactori
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/setting-bookmarks-in-code?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/text-spell-checker?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/using-intellisense?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/intellicode/custom-models#sharing-your-repository-associated-models
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/intellicode/intellicode-visual-studio
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/liveshare/
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/version-control/?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/adding-commands-to-toolbars?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/addressing-dpi-issues2?view=vs-2022&tabs=csharp
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/creating-a-software-development-kit?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/dotnet-compiler-platform-roslyn-extensibility?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/editor-and-language-service-extensions?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-and-customizing-tool-windows?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-menus-and-commands?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-other-parts-of-visual-studio?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-projects?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-properties-and-the-property-window?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-user-settings-and-options?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/how-to-roundtrip-vsixs?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/image-service-and-catalog?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/inside-the-visual-studio-sdk?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/language-server-protocol?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/open-folder?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/support-for-the-visual-studio-sdk?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/use-and-provide-brokered-services?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/using-and-providing-services?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/visual-cpp-project-extensibility?view=vs-2022
+TODO: https://learn.microsoft.com/en-us/visualstudio/extensibility/visual-studio-sdk-reference?view=vs-2022
 TODO: https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?source=recommendations&view=vs-2022
 TODO: https://learn.microsoft.com/en-us/visualstudio/ide/managing-references-in-a-project?source=recommendations&view=vs-2022
 TODO: https://learn.microsoft.com/en-us/visualstudio/ide/refactoring-in-visual-studio?source=recommendations&view=vs-2022
