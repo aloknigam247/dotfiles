@@ -443,6 +443,26 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/FluxxField/bionic-reading.nvim
+    'JellyApple102/easyread.nvim',
+    cmd = 'EasyreadToggle',
+    opts = {
+        hlValues = {
+            ['1'] = 1,
+            ['2'] = 1,
+            ['3'] = 2,
+            ['4'] = 2,
+            ['fallback'] = 0.4
+        },
+        hlgroupOptions = { link = 'Bold' },
+        fileTypes = {},
+        saccadeInterval = 0,
+        saccadeReset = false,
+        updateWhileInsert = true
+    }
+}
+
+AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
@@ -922,9 +942,8 @@ function ColoRand(ind)
     local module = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module -- TODO: time taken ?
-    -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
+    local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module}) -- Load colorscheme
     if (precmd) then
         precmd()
@@ -934,6 +953,7 @@ function ColoRand(ind)
     if (postcmd) then
         postcmd()
     end
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. os.clock() - start_time
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3426,25 +3446,7 @@ AddPlugin {
     cmd = 'InlineEdit'
 }
 
--- https://github.com/EtiamNullam/deferred-clipboard.nvim
-
-AddPlugin {
-    'JellyApple102/easyread.nvim',
-    opts = {
-        hlValues = {
-            ['1'] = 1,
-            ['2'] = 1,
-            ['3'] = 2,
-            ['4'] = 2,
-            ['fallback'] = 0.4
-        },
-        hlgroupOptions = { link = 'Bold' },
-        fileTypes = { 'text' },
-        saccadeInterval = 0,
-        saccadeReset = false,
-        updateWhileInsert = true
-    }
-}
+-- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 -- TODO: AddPlugin { 'Jxstxs/conceal.nvim' }
 
@@ -3636,7 +3638,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/DNLHC/glance.nvim
--- FEAT: https://github.com/FluxxField/bionic-reading.nvim
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
@@ -3660,6 +3661,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/echasnovski/mini.bracketed
 -- FEAT: https://github.com/echasnovski/mini.hipatterns
 -- FEAT: https://github.com/echasnovski/mini.hues
+-- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
@@ -3674,6 +3676,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
+-- FEAT: https://github.com/lvimuser/lsp-inlayhints.nvim
 -- FEAT: https://github.com/nat-418/boole.nvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/niuiic/cp-image.nvim
@@ -3693,9 +3696,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
--- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked, create
--- function and stick to MenuPopup event
 -- TODO: https://github.com/deifyed/naVi
 -- TODO: indentation is not identifible when 2
 -- TODO: insert.txt
@@ -3706,6 +3707,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: per file configurations
 -- TODO: quickfix
 -- TODO: vsplit or split file opener like find command
+-- function and stick to MenuPopup event
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
