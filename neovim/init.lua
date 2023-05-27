@@ -646,6 +646,19 @@ function FixVisual(bg)
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
 end
 
+function FixZellner()
+    vim.defer_fn(
+        function()
+            vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#5F875F' })
+            vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#5F87AF' })
+            vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#AF5FAF' })
+            vim.api.nvim_set_hl(0, 'lualine_b_branch_normal', { bg = '#E5E5E5', fg = '#4A4A4A' })
+            vim.api.nvim_set_hl(0, 'lualine_b_normal', { bg = '#E5E5E5', fg = '#4A4A4A' })
+        end,
+        3000
+    )
+end
+
 -- https://github.com/SeniorMars/dotfiles/blob/master/.config/nvim/init.lua
 function SeniorMarsTheme()
     require('gruvbox').setup({
@@ -862,7 +875,6 @@ Dark  { 'moonlight',                  'starry',      pre = function() FixStarry(
 Dark  { 'mosel',                      '_'            }
 Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
-Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
@@ -925,9 +937,9 @@ Dark  { 'tundra',                     '_',           pre = function() require('n
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                               }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                               }
 Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end          }
-Dark  { 'vscode',                     '_'            }
-Light { 'vscode',                     '_'            }
-Light { 'zellner',                    '_'            }
+Dark  { 'vscode',                     '_'                                                                }
+Light { 'vscode',                     '_'                                                                }
+Light { 'zellner',                    '_',           post = FixZellner                                   }
 Dark  { 'zenburned',                  'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     }
 Dark  { 'zephyr',                     '_'            } -- FIX: LineNr
