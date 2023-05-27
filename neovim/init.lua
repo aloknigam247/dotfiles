@@ -909,7 +909,7 @@ Dark  { 'vscode',                     '_'            }
 Light { 'vscode',                     '_'            }
 Light { 'zellner',                    '_'            }
 Dark  { 'zenburned',                  'zenbones'     }
-Light { 'zenwritten',                 'zenbones'     }
+Light { 'zenwritten',                 'zenbones'     } -- FIX: not good for code, may be for readme
 Dark  { 'zephyr',                     '_'            } -- FIX: LineNr
 Dark  { 'zephyrium',                  '_'            }
 
