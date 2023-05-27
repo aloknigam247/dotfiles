@@ -840,7 +840,6 @@ Dark  { 'moonfly',                    '_'            }
 Dark  { 'moonlight',                  '_'            }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end }
 Dark  { 'mosel',                      '_'            }
-Dark  { 'neobones',                   'zenbones'     }
 Light { 'neobones',                   'zenbones'     }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
