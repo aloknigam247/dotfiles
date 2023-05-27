@@ -443,6 +443,26 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/FluxxField/bionic-reading.nvim
+    'JellyApple102/easyread.nvim',
+    cmd = 'EasyreadToggle',
+    opts = {
+        hlValues = {
+            ['1'] = 1,
+            ['2'] = 1,
+            ['3'] = 2,
+            ['4'] = 2,
+            ['fallback'] = 0.4
+        },
+        hlgroupOptions = { link = 'Bold' },
+        fileTypes = {},
+        saccadeInterval = 0,
+        saccadeReset = false,
+        updateWhileInsert = true
+    }
+}
+
+AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
@@ -624,6 +644,19 @@ function FixVisual(bg)
         end
     end
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
+end
+
+function FixZellner()
+    vim.defer_fn(
+        function()
+            vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#5F875F' })
+            vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#5F87AF' })
+            vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#AF5FAF' })
+            vim.api.nvim_set_hl(0, 'lualine_b_branch_normal', { bg = '#E5E5E5', fg = '#4A4A4A' })
+            vim.api.nvim_set_hl(0, 'lualine_b_normal', { bg = '#E5E5E5', fg = '#4A4A4A' })
+        end,
+        3000
+    )
 end
 
 -- https://github.com/SeniorMars/dotfiles/blob/master/.config/nvim/init.lua
@@ -841,7 +874,6 @@ Dark  { 'moonlight',                  '_'            }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end }
 Dark  { 'mosel',                      '_'            }
 Light { 'neobones',                   'zenbones'     }
-Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'dark'    end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
@@ -904,9 +936,9 @@ Dark  { 'tundra',                     '_',           pre = function() require('n
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                               }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                               }
 Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end          }
-Dark  { 'vscode',                     '_'            }
-Light { 'vscode',                     '_'            }
-Light { 'zellner',                    '_'            }
+Dark  { 'vscode',                     '_'                                                                }
+Light { 'vscode',                     '_'                                                                }
+Light { 'zellner',                    '_',           post = FixZellner                                   }
 Dark  { 'zenburned',                  'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     } -- FIX: not good for code, may be for readme
 Dark  { 'zephyr',                     '_'            } -- FIX: LineNr
@@ -921,9 +953,8 @@ function ColoRand(ind)
     local module = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module -- TODO: time taken ?
-    -- vim.notify("Colorscheme " .. ind .. ':' .. scheme .. ':' .. bg .. ':' .. module)
     vim.o.background = bg
+    local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module}) -- Load colorscheme
     if (precmd) then
         precmd()
@@ -933,6 +964,7 @@ function ColoRand(ind)
     if (postcmd) then
         postcmd()
     end
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. os.clock() - start_time
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2385,6 +2417,75 @@ AddPlugin {
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
+-- TODO: {
+--     "lukas-reineke/headlines.nvim",
+--     ft = { "markdown", "vimwiki", "org" },
+--     setup = function() -- Specifies code to run before this plugin is loaded.
+
+--     end,
+
+--     config = function() -- Specifies code to run after this plugin is loaded
+--         --require("md-bullets").setup {
+--         --symbols = {"", "", "✸", "✿", ""}
+--         ------ or a function that receives the defaults and returns a list
+--         ----symbols = function(default_list)
+--         ----table.insert(default_list, "♥")
+--         ----return default_list
+--         ----end
+--         --}
+--         require("headlines").setup {
+--             markdown = {
+--                 source_pattern_start = "^```",
+--                 source_pattern_end = "^```$",
+--                 dash_pattern = "^---+$",
+--                 headline_pattern = "^#+",
+--                 headline_highlights = { "Headline1", "Headline2" },
+--                 codeblock_highlight = "CodeBlock",
+--                 dash_highlight = "Dash",
+--                 fat_headlines = true,
+--             },
+--             rmd = {
+--                 source_pattern_start = "^```",
+--                 source_pattern_end = "^```$",
+--                 dash_pattern = "^---+$",
+--                 headline_pattern = "^#+",
+--                 headline_highlights = { "Headline1", "Headline2" },
+--                 codeblock_sign = "CodeBlock",
+--                 dash_highlight = "Dash",
+--                 fat_headlines = true,
+--             },
+--             vimwiki = {
+--                 source_pattern_start = "^{{{%a+",
+--                 source_pattern_end = "^}}}$",
+--                 dash_pattern = "^---+$",
+--                 headline_pattern = "^=+",
+--                 headline_highlights = { "Headline1", "Headline2" },
+--                 codeblock_highlight = "CodeBlock",
+--                 dash_highlight = "Dash",
+--                 fat_headlines = true,
+--             },
+--             org = {
+--                 source_pattern_start = "#%+[bB][eE][gG][iI][nN]_[sS][rR][cC]",
+--                 source_pattern_end = "#%+[eE][nN][dD]_[sS][rR][cC]",
+--                 dash_pattern = "^-----+$",
+--                 headline_pattern = "^%*+",
+--                 headline_highlights = { "Headline1", "Headline2" },
+--                 codeblock_highlight = "CodeBlock",
+--                 dash_highlight = "Dash",
+--                 fat_headlines = true,
+--             },
+--         }
+--         vim.cmd [[highlight Headline1 guibg=#1e2718]]
+--         vim.cmd [[highlight Headline2 guibg=#21262d]]
+--         vim.cmd [[highlight CodeBlock guibg=#1c1c1c]]
+--         vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
+--         --vim.cmd("hi MdHeadlineLevel1 guifg=#7388de")
+--         --vim.cmd("hi MdHeadlineLevel2 guifg=#7388de")
+--         --vim.cmd("hi MdHeadlineLevel3 guifg=#7388de")
+--         --vim.cmd("hi MdHeadlineLevel4 guifg=#7388de")
+--         --vim.cmd("hi MdHeadlineLevel5 guifg=#a373FF")
+--     end,
+-- }
 AddPlugin { -- TODO: use me, needs debugging
     'lukas-reineke/headlines.nvim',
     config = true,
@@ -3137,7 +3238,7 @@ AddPlugin {
                 view_error = 'notify', -- view for errors
                 view_warn = 'notify', -- view for warnings
                 view_history = 'messages', -- view for :messages
-                view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable -- BUG: not working
+                view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
             },
             popupmenu = {
                 enabled = true, -- enables the Noice popupmenu UI
@@ -3356,25 +3457,7 @@ AddPlugin {
     cmd = 'InlineEdit'
 }
 
--- https://github.com/EtiamNullam/deferred-clipboard.nvim
-
-AddPlugin {
-    'JellyApple102/easyread.nvim',
-    opts = {
-        hlValues = {
-            ['1'] = 1,
-            ['2'] = 1,
-            ['3'] = 2,
-            ['4'] = 2,
-            ['fallback'] = 0.4
-        },
-        hlgroupOptions = { link = 'Bold' },
-        fileTypes = { 'text' },
-        saccadeInterval = 0,
-        saccadeReset = false,
-        updateWhileInsert = true
-    }
-}
+-- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 -- TODO: AddPlugin { 'Jxstxs/conceal.nvim' }
 
@@ -3561,44 +3644,70 @@ vim.opt.runtimepath:prepend(lazypath)
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
+-- FEAT: https://github.com/AndrewRadev/linediff.vim
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
--- FEAT: https://github.com/FluxxField/bionic-reading.nvim
+-- FEAT: https://github.com/DNLHC/glance.nvim
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/LiadOz/nvim-dap-repl-highlights
+-- FEAT: https://github.com/Pocco81/high-str.nvim
+-- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Theo-Steiner/togglescope
+-- FEAT: https://github.com/VidocqH/lsp-lens.nvim
+-- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
+-- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
+-- FEAT: https://github.com/andythigpen/nvim-coverage
+-- FEAT: https://github.com/antonk52/markdowny.nvim
+-- FEAT: https://github.com/brenoprata10/nvim-highlight-colors
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
+-- FEAT: https://github.com/chrisgrieser/nvim-spider
+-- FEAT: https://github.com/debugloop/telescope-undo.nvim
+-- FEAT: https://github.com/desdic/agrolens.nvim
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.bracketed
 -- FEAT: https://github.com/echasnovski/mini.hipatterns
 -- FEAT: https://github.com/echasnovski/mini.hues
+-- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/ekickx/clipboard-image.nvim
 -- FEAT: https://github.com/folke/neodev.nvim
+-- FEAT: https://github.com/glacambre/firenvim
+-- FEAT: https://github.com/gorbit99/codewindow.nvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
+-- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/luukvbaal/statuscol.nvim
+-- FEAT: https://github.com/lvimuser/lsp-inlayhints.nvim
+-- FEAT: https://github.com/nat-418/boole.nvim
+-- FEAT: https://github.com/nguyenvukhang/nvim-toggler
+-- FEAT: https://github.com/niuiic/cp-image.nvim
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
+-- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
+-- FEAT: https://github.com/shellRaining/hlchunk.nvim
+-- FEAT: https://github.com/shortcuts/no-neck-pain.nvim
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
+-- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
+-- FEAT: https://github.com/topaxi/gh-actions.nvim
+-- FEAT: https://github.com/utilyre/sentiment.nvim
+-- FEAT: https://github.com/yaocccc/nvim-hl-mdcodeblock.lua
 -- FEAT: https://github.com/zbirenbaum/copilot-cmp
 -- FEAT: https://github.com/zbirenbaum/copilot.lua
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
--- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked, create
--- function and stick to MenuPopup event
 -- TODO: https://github.com/deifyed/naVi
 -- TODO: indentation is not identifible when 2
 -- TODO: insert.txt
@@ -3609,6 +3718,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: per file configurations
 -- TODO: quickfix
 -- TODO: vsplit or split file opener like find command
+-- function and stick to MenuPopup event
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
