@@ -546,6 +546,10 @@ AddPlugin {
     keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
 }
 
+-- AddPlugin { TODO: enable
+--     'brenoprata10/nvim-highlight-colors',
+--     config = true
+-- }
 AddPlugin {
     'NvChad/nvim-colorizer.lua',
     cmd = 'ColorizerToggle',
@@ -3662,7 +3666,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/antonk52/markdowny.nvim
--- FEAT: https://github.com/brenoprata10/nvim-highlight-colors
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
