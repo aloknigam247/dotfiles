@@ -529,8 +529,8 @@ AddPlugin {
             PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
             RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
             TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO   = { icon = '󰄬', color = 'todo' },
-            WARN   = { icon = '', color = 'warn', alt = { 'WARNING' } },
+            TODO   = { icon = '󰸞', color = 'todo' },
+            WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
     },
@@ -546,15 +546,26 @@ AddPlugin {
     keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
 }
 
--- AddPlugin { TODO: enable
---     'brenoprata10/nvim-highlight-colors',
+AddPlugin {
+    'brenoprata10/nvim-highlight-colors',
+    init = function()
+        vim.api.nvim_create_user_command(
+            'ColorToggle',
+            function()
+                require("nvim-highlight-colors").toggle()
+            end,
+            { nargs = 0 }
+        )
+    end,
+    opts = {
+        render = 'foreground'
+    }
+}
+-- AddPlugin {
+--     'NvChad/nvim-colorizer.lua',
+--     cmd = 'ColorizerToggle',
 --     config = true
 -- }
-AddPlugin {
-    'NvChad/nvim-colorizer.lua',
-    cmd = 'ColorizerToggle',
-    config = true
-}
 
 -- FEAT: only visible when number of window is more that 2
 AddPlugin {
