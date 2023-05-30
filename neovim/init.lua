@@ -863,34 +863,34 @@ Dark  { 'habamax',                    '_',           }
 Dark  { 'horizon',                    '_'            }
 Dark  { 'juliana',                    '_'            } -- FIX: fix numberline
 Dark  { 'kanagawa',                   '_'            }
-Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                     }
-Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                 }
-Dark  { 'lunaperche',                 '_'                                                                                                                 }
-Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                 }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                             }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                             }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#cceae7') end }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                             }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end }
-Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end }
-Dark  { 'melange',                    '_'            }
-Light { 'melange',                    '_'            }
-Dark  { 'mellow',                     '_'            }
-Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end }
-Dark  { 'monokai',                    'vim-monokai'  }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'}) end }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'machine'}) end }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'octagon'}) end }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'pro'}) end }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'}) end }
-Dark  { 'moonfly',                    '_'            }
-Dark  { 'moonlight',                  '_'            }
-Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end }
-Dark  { 'mosel',                      '_'            }
-Light { 'neobones',                   'zenbones'     }
-Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual }
-Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual }
+Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
+Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                     }
+Dark  { 'lunaperche',                 '_'                                                                                                                     }
+Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                     }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#cceae7') end     }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                                 }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end     }
+Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
+Dark  { 'melange',                    '_'                                                                                                                     }
+Light { 'melange',                    '_'                                                                                                                     }
+Dark  { 'mellow',                     '_'                                                                                                                     }
+Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
+Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'machine'})   end                                }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'octagon'})   end                                }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'pro'})       end, post = FixVisual              }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end                                }
+Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'})  end                                }
+Dark  { 'moonfly',                    '_'                                                                                                                     }
+Dark  { 'moonlight',                  '_'                                                                                                                     }
+Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
+Dark  { 'mosel',                      '_'                                                                                                                     }
+Light { 'neobones',                   'zenbones'                                                                                                              }
+Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }
+Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
 Dark  { 'nightfly',                   '_'            }
 Dark  { 'nightfox',                   'nightfox'     }
@@ -918,7 +918,6 @@ Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  'starry',      pre = function() FixStarry('#3c2c46', '#644975') end }
 Dark  { 'palenightfall',              '_'            }
-Dark  { 'peachpuff',                  '_'            }
 Light { 'pink-panic',                 '_'            }
 Dark  { 'rose-pine',                  '_'            }
 Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
@@ -1622,7 +1621,14 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/gfanto/fzf-lsp.nvim
--- FEAT: https://github.com/ojroques/nvim-lspfuzzy
+AddPlugin { -- BUG: not working
+    'ojroques/nvim-lspfuzzy',
+    config = true,
+    dependencies = {
+        'junegunn/fzf',
+        'junegunn/fzf.vim'
+    }
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -1906,7 +1912,6 @@ AddPlugin {
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
-            -- FEAT: better popup management
             vim.cmd[[
                 aunmenu PopUp
             ]]
@@ -1917,6 +1922,7 @@ AddPlugin {
                 vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
             end
 
+            -- FEAT: better popup management
             PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
             PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
             PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
@@ -2503,8 +2509,68 @@ AddPlugin {
 -- }
 AddPlugin { -- TODO: use me, needs debugging
     'lukas-reineke/headlines.nvim',
-    config = true,
-    lazy = true
+    config = function() -- Specifies code to run after this plugin is loaded
+        --require("md-bullets").setup {
+            --symbols = {"", "", "✸", "✿", ""}
+            ------ or a function that receives the defaults and returns a list
+            ----symbols = function(default_list)
+                ----table.insert(default_list, "♥")
+                ----return default_list
+                ----end
+                --}
+                require("headlines").setup {
+                    markdown = {
+                        source_pattern_start = "^```",
+                        source_pattern_end = "^```$",
+                        dash_pattern = "^---+$",
+                        headline_pattern = "^#+",
+                        headline_highlights = { "Headline1", "Headline2" },
+                        codeblock_highlight = "CodeBlock",
+                        dash_highlight = "Dash",
+                        fat_headlines = true,
+                    },
+                    rmd = {
+                        source_pattern_start = "^```",
+                        source_pattern_end = "^```$",
+                        dash_pattern = "^---+$",
+                        headline_pattern = "^#+",
+                        headline_highlights = { "Headline1", "Headline2" },
+                        codeblock_sign = "CodeBlock",
+                        dash_highlight = "Dash",
+                        fat_headlines = true,
+                    },
+                    vimwiki = {
+                        source_pattern_start = "^{{{%a+",
+                        source_pattern_end = "^}}}$",
+                        dash_pattern = "^---+$",
+                        headline_pattern = "^=+",
+                        headline_highlights = { "Headline1", "Headline2" },
+                        codeblock_highlight = "CodeBlock",
+                        dash_highlight = "Dash",
+                        fat_headlines = true,
+                    },
+                    org = {
+                        source_pattern_start = "#%+[bB][eE][gG][iI][nN]_[sS][rR][cC]",
+                        source_pattern_end = "#%+[eE][nN][dD]_[sS][rR][cC]",
+                        dash_pattern = "^-----+$",
+                        headline_pattern = "^%*+",
+                        headline_highlights = { "Headline1", "Headline2" },
+                        codeblock_highlight = "CodeBlock",
+                        dash_highlight = "Dash",
+                        fat_headlines = true,
+                    },
+                }
+                vim.cmd [[highlight Headline1 guibg=#1e2718]]
+                vim.cmd [[highlight Headline2 guibg=#21262d]]
+                vim.cmd [[highlight CodeBlock guibg=#1c1c1c]]
+                vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
+                --vim.cmd("hi MdHeadlineLevel1 guifg=#7388de")
+                --vim.cmd("hi MdHeadlineLevel2 guifg=#7388de")
+                --vim.cmd("hi MdHeadlineLevel3 guifg=#7388de")
+                --vim.cmd("hi MdHeadlineLevel4 guifg=#7388de")
+                --vim.cmd("hi MdHeadlineLevel5 guifg=#a373FF")
+            end,
+    lazy = false
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2770,7 +2836,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '', right = ''}, -- TODO: | as sep ?
+                component_separators = { left = '│', right = ''}, -- TODO: |as sep ?
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
@@ -2966,7 +3032,15 @@ AddPlugin {
                     }
                 },
             },
-            extensions = { 'nvim-tree', 'quickfix', 'symbols-outline', 'toggleterm' } -- TODO: recheck extensions
+            extensions = {
+                'aerial',
+                'lazy',
+                'nvim-tree',
+                'quickfix',
+                'symbols-outline',
+                'toggleterm',
+                'trouble',
+            }
         }
     end,
     event = 'CursorHold'
@@ -3474,7 +3548,10 @@ AddPlugin {
 
 -- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
 
--- TODO: AddPlugin { 'Jxstxs/conceal.nvim' }
+AddPlugin {
+    'LiadOz/nvim-dap-repl-highlights',
+    config = true
+}
 
 AddPlugin {
     'Pocco81/true-zen.nvim',
@@ -3569,6 +3646,11 @@ AddPlugin {
         require('satellite').setup({ winblend = vim.o.winblend })
         vim.cmd('hi link ScrollView lualine_a_normal')
     end
+}
+
+AddPlugin { -- FIX: resolve usage
+    'luukvbaal/statuscol.nvim',
+    config = true
 }
 
 -- AddPlugin { 'kylechui/nvim-surround' }
@@ -3672,7 +3754,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
--- FEAT: https://github.com/LiadOz/nvim-dap-repl-highlights
 -- FEAT: https://github.com/Pocco81/high-str.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Theo-Steiner/togglescope
@@ -3705,7 +3786,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
--- FEAT: https://github.com/luukvbaal/statuscol.nvim
 -- FEAT: https://github.com/lvimuser/lsp-inlayhints.nvim
 -- FEAT: https://github.com/nat-418/boole.nvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
