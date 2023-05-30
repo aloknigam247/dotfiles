@@ -953,7 +953,7 @@ Light { 'visual_studio_code_light',   'visual_studio_code'                      
 Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end          }
 Dark  { 'vscode',                     '_'                                                                }
 Light { 'vscode',                     '_'                                                                }
-Light { 'zellner',                    '_',           post = FixZellner                                   }
+Light { 'zellner',                    '_',           post = FixZellner                                   } -- BUG: sometimes does not work
 Dark  { 'zenburned',                  'zenbones'     }
 Light { 'zenwritten',                 'zenbones'     } -- FIX: not good for code, may be for readme
 Dark  { 'zephyr',                     '_'            } -- FIX: LineNr
@@ -2320,7 +2320,7 @@ AddPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/iamcco/markdown-preview.nvim
+-- https://github.com/iamcco/markdown-preview.nvim
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -2770,7 +2770,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '', right = ''},
+                component_separators = { left = '', right = ''}, -- TODO: | as sep ?
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
@@ -3619,6 +3619,11 @@ AddPlugin {
 }
 
 AddPlugin {
+    'shortcuts/no-neck-pain.nvim',
+    cmd = 'NoNeckPain'
+}
+
+AddPlugin {
     'tummetott/reticle.nvim',
     config = true
 }
@@ -3689,7 +3694,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
--- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/ekickx/clipboard-image.nvim
 -- FEAT: https://github.com/folke/neodev.nvim
 -- FEAT: https://github.com/glacambre/firenvim
@@ -3710,14 +3715,13 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/shellRaining/hlchunk.nvim
--- FEAT: https://github.com/shortcuts/no-neck-pain.nvim
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
--- FEAT: https://github.com/topaxi/gh-actions.nvim
 -- FEAT: https://github.com/utilyre/sentiment.nvim
 -- FEAT: https://github.com/yaocccc/nvim-hl-mdcodeblock.lua
 -- FEAT: https://github.com/zbirenbaum/copilot-cmp
 -- FEAT: https://github.com/zbirenbaum/copilot.lua
+-- FEAT: https://github.com/Danielhp95/tmpclone-nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
