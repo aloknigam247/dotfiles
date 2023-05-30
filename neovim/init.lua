@@ -49,6 +49,8 @@ HlOrder = { -- TODO: Understand highlight priority
     hlargs = 10000
 }
 
+SignOrder = {} -- TODO:
+
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -3110,7 +3112,6 @@ AddPlugin {
 -- FEAT: https://github.com/nikvdp/neomux
 -- FEAT: https://github.com/pianocomposer321/consolation.nvim
 -- FEAT: https://github.com/voldikss/vim-floaterm
--- FEAT: https://github.com/willothy/flatten.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3155,7 +3156,6 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
-    -- THOUGHT: add underline to all params ?
     'm-demare/hlargs.nvim',
     config = function()
         local colors = {}
@@ -3492,7 +3492,6 @@ AddPlugin {
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
-    -- FIX: sys error in python, remove file = sys.stderror
     'andrewferrier/debugprint.nvim',
     opts = {
         create_keymaps = false,
@@ -3609,7 +3608,6 @@ AddPlugin {
 
 AddPlugin {
     -- Lua copy https://github.com/ojroques/nvim-osc52
-    -- FIXME: not working
     'ojroques/vim-oscyank',
     cond = function()
         -- Check if connection is ssh
@@ -3682,6 +3680,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/DNLHC/glance.nvim
+-- FEAT: https://github.com/Danielhp95/tmpclone-nvim
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
@@ -3706,7 +3705,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
--- https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/ekickx/clipboard-image.nvim
 -- FEAT: https://github.com/folke/neodev.nvim
 -- FEAT: https://github.com/glacambre/firenvim
@@ -3732,7 +3731,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/yaocccc/nvim-hl-mdcodeblock.lua
 -- FEAT: https://github.com/zbirenbaum/copilot-cmp
 -- FEAT: https://github.com/zbirenbaum/copilot.lua
--- FEAT: https://github.com/Danielhp95/tmpclone-nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
