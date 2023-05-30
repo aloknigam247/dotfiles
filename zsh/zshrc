@@ -6,7 +6,7 @@
 # ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 # ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
-# TODO: Powershell like key mappings
+# TODO: Powershell like key mappings, list mappings
 # Updating local dofiles
 # TODO: perform this sync in background
 cd ~/dotfiles
