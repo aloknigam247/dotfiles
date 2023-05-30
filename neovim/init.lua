@@ -2762,7 +2762,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '│', right = ''},
+                component_separators = { left = '│', right = ''},
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
@@ -2844,7 +2844,14 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
-                    'hostname', -- THOUGHT: use conditionally on ssh ?
+                    {
+                        'hostname',
+                        color = { fg = '#119DA4', gui = 'bold' },
+                        cond = function()
+                            return vim.env.SSH_CLIENT ~= nil
+                        end,
+                        icon = { '', color = { fg = '#3066BE' }},
+                    },
                     {
                         'searchcount',
                         color = { fg = '#23CE6B', gui = 'bold' },
@@ -3609,7 +3616,7 @@ AddPlugin {
         return vim.env.SSH_CLIENT ~= nil
     end,
     config = function()
-        vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif]]
+        vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif]]
     end,
     lazy = false
 }
