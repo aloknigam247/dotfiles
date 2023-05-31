@@ -575,6 +575,7 @@ AddPlugin {
 -- }
 
 -- FEAT: only visible when number of window is more that 2
+-- BUG: not working for 2 windows
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
     opts = {
@@ -3459,7 +3460,7 @@ AddPlugin {
         default_move_mappings = false,   -- FIX: <C-arrows> to move floats
         default_resize_mappings = false, -- FIX: <A-arrows> to resize floats
         default_mouse_mappings = false,  -- FIX: Drag floats with mouse
-        exclude_fts = { 'notify', 'cmp_menu' },
+        exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator' },
         custom_filter = function(buffer, _)
             return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
         end

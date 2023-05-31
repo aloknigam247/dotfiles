@@ -99,6 +99,7 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+" FIX: mapping from https://github.com/chrisgrieser/nvim-spider
 imap <C-Left> <C-\><C-O>B
 imap <C-Right> <C-\><C-O>E<C-\><C-O>a
 imap <C-a> <C-\><C-O>^
