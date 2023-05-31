@@ -2863,6 +2863,12 @@ AddPlugin {
                         cond = function()
                             return vim.env.SSH_CLIENT ~= nil
                         end,
+                        fmt = function(str)
+                            local alias = {
+                                ['ALOKNIGAM-IDC'] = "devbox"
+                            }
+                            return alias[str] or str
+                        end,
                         icon = { '', color = { fg = '#3066BE' }},
                     },
                     {
