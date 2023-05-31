@@ -1847,6 +1847,53 @@ AddPlugin {
     end,
     event = 'CursorHold'
 }
+-- AddPlugin {
+--     'shellRaining/hlchunk.nvim',
+--     event = 'CursorHold',
+--     opts = {
+--         chunk = {
+--             enable = true,
+--             use_treesitter = true,
+--             chars = {
+--                 horizontal_line = "─",
+--                 vertical_line = "│",
+--                 left_top = "╭",
+--                 left_bottom = "╰",
+--                 right_arrow = ">",
+--             },
+--             style = {
+--                 { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineContextChar")), "fg", "gui") }
+--             },
+--         },
+
+--         indent = {
+--             enable = true,
+--             use_treesitter = false,
+--             chars = {
+--                 "│",
+--             },
+--             style = {
+--                 { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineChar")), "fg", "gui") }
+--             },
+--         },
+
+--         line_num = {
+--             enable = true,
+--             use_treesitter = false,
+--             style = "#806d9c",
+--         },
+
+--         blank = {
+--             enable = true,
+--             chars = {
+--                 "․",
+--             },
+--             style = {
+--                 vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui"),
+--             },
+--         },
+--     }
+-- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
@@ -2238,8 +2285,7 @@ AddPlugin {
     -- event = 'LspAttach'
 }
 
--- AddPlugin { 'p00f/clangd_extensions.nvim' } -- NOTE: not much usefull until inline virtual text
--- is supported
+AddPlugin { 'p00f/clangd_extensions.nvim' }
 
 -- use 'razzmatazz/csharp-language-server'
 
@@ -3790,7 +3836,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
 -- FEAT: https://github.com/roobert/surround-ui.nvim
--- FEAT: https://github.com/shellRaining/hlchunk.nvim
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
 -- FEAT: https://github.com/utilyre/sentiment.nvim
