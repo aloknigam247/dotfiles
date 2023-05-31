@@ -1009,7 +1009,7 @@ Dark  { 'vscode',                     '_'                                       
 Light { 'vscode',                     '_'                                                                   }
 Light { 'zellner',                    '_',           post = FixZellner                                      } -- BUG: sometimes does not work
 Dark  { 'zenburned',                  'zenbones'                                                            }
-Light { 'zenwritten',                 'zenbones'                                                            } -- FIX: not good for code, may be for readme
+Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   } -- FIX: LineNr
 Dark  { 'zephyrium',                  '_'                                                                   }
 
@@ -2977,6 +2977,8 @@ AddPlugin {
                     },
                     {
                         'selectioncount',
+                        color = { fg = '#BA2C73' },
+                        icon = { '', color = { fg = '#963484' }},
                         separator = ''
                     },
                     {
@@ -3560,7 +3562,7 @@ AddPlugin {
         override_open = true, -- experimental
         close_command = 'Q',
         default_move_mappings = false,   -- FIX: <C-arrows> to move floats
-        default_resize_mappings = false, -- FIX: <A-arrows> to resize floats
+        default_resize_mappings = true, -- FIX: <A-arrows> to resize floats
         default_mouse_mappings = false,  -- FIX: Drag floats with mouse
         exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator' },
         custom_filter = function(buffer, _)
