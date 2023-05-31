@@ -1818,7 +1818,7 @@ AddPlugin {
 AddPlugin {
     -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
-    config = function() 
+    config = function()
         require('nvim-navic').setup({
             click = true,
             depth_limit = 0,
@@ -2328,13 +2328,20 @@ AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
     cmd = 'PeekOpen',
-    config = function() 
+    config = function()
         require('peek').setup({
             theme = vim.o.background
         })
         vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
         vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
     end
+}
+
+-- TODO: set highlight
+-- TODO: set config
+AddPlugin {
+    'yaocccc/nvim-hl-mdcodeblock.lua',
+    config = true
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2456,6 +2463,8 @@ AddPlugin { -- TODO: use me, needs debugging
                         codeblock_highlight = "CodeBlock",
                         dash_highlight = "Dash",
                         fat_headlines = true,
+                        fat_headline_upper_string = "▃",
+                        fat_headline_lower_string = "",
                     },
                     rmd = {
                         source_pattern_start = "^```",
@@ -2492,13 +2501,14 @@ AddPlugin { -- TODO: use me, needs debugging
                 vim.cmd [[highlight Headline2 guibg=#21262d]]
                 vim.cmd [[highlight CodeBlock guibg=#1c1c1c]]
                 vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
-                --vim.cmd("hi MdHeadlineLevel1 guifg=#7388de")
-                --vim.cmd("hi MdHeadlineLevel2 guifg=#7388de")
-                --vim.cmd("hi MdHeadlineLevel3 guifg=#7388de")
-                --vim.cmd("hi MdHeadlineLevel4 guifg=#7388de")
-                --vim.cmd("hi MdHeadlineLevel5 guifg=#a373FF")
+                vim.cmd("hi MdHeadlineLevel1 guifg=#7388de")
+                vim.cmd("hi MdHeadlineLevel2 guifg=#7388de")
+                vim.cmd("hi MdHeadlineLevel3 guifg=#7388de")
+                vim.cmd("hi MdHeadlineLevel4 guifg=#7388de")
+                vim.cmd("hi MdHeadlineLevel5 guifg=#a373FF")
             end,
-    lazy = false
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    lazy = true
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3728,7 +3738,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
 -- FEAT: https://github.com/utilyre/sentiment.nvim
--- FEAT: https://github.com/yaocccc/nvim-hl-mdcodeblock.lua
 -- FEAT: https://github.com/zbirenbaum/copilot-cmp
 -- FEAT: https://github.com/zbirenbaum/copilot.lua
 -- PERF: profiling for auto commands
