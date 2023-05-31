@@ -2937,6 +2937,7 @@ AddPlugin {
                         fmt = function(str)
                             return str:gsub("^%s+", ""):gsub("%s+", "")
                         end,
+                        icon = {'󰍒', align = 'right'},
                         on_click = function ()
                             local satellite = require('satellite')
                             if satellite.enabled then
