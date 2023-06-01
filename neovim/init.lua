@@ -805,10 +805,8 @@ AddPlugin { 'rebelot/kanagawa.nvim',            event = 'User kanagawa'         
 AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'                                              }
 AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                            }
 AddPlugin { 'savq/melange',                     event = 'User melange'                                             }
-AddPlugin { 'kvrohit/mellow.nvim',              event = 'User mellow'                                              }
 AddPlugin { 'loctvl842/monokai-pro.nvim',       event = 'User monokai-pro'                                         }
 AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                           }
-AddPlugin { 'Domeee/mosel.nvim',                event = 'User mosel'                                               }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                }
 AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                           }
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                 }
@@ -930,7 +928,6 @@ Dark  { 'material',                   '_',           pre = function() vim.g.mate
 Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
-Dark  { 'mellow',                     '_'                                                                                                                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
@@ -942,7 +939,6 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 Dark  { 'moonfly',                    '_'                                                                                                                     }
 Dark  { 'moonlight',                  '_'                                                                                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
-Dark  { 'mosel',                      '_'                                                                                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
@@ -1847,7 +1843,7 @@ AddPlugin {
     end,
     event = 'CursorHold'
 }
--- AddPlugin {
+-- AddPlugin { -- TODO:
 --     'shellRaining/hlchunk.nvim',
 --     event = 'CursorHold',
 --     opts = {
@@ -2538,73 +2534,48 @@ AddPlugin {
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
-AddPlugin { -- TODO: use me, needs debugging
+AddPlugin { -- TODO: use me
     'lukas-reineke/headlines.nvim',
     config = function() -- Specifies code to run after this plugin is loaded
         --require("md-bullets").setup {
-            --symbols = {"", "", "✸", "✿", ""}
-            ------ or a function that receives the defaults and returns a list
-            ----symbols = function(default_list)
-                ----table.insert(default_list, "♥")
-                ----return default_list
-                ----end
-                --}
-                require("headlines").setup {
-                    markdown = {
-                        source_pattern_start = "^```",
-                        source_pattern_end = "^```$",
-                        dash_pattern = "^---+$",
-                        headline_pattern = "^#+",
-                        headline_highlights = { "Headline1", "Headline2" },
-                        codeblock_highlight = "CodeBlock",
-                        dash_highlight = "Dash",
-                        fat_headlines = true,
-                        fat_headline_upper_string = "▃",
-                        fat_headline_lower_string = "",
-                    },
-                    rmd = {
-                        source_pattern_start = "^```",
-                        source_pattern_end = "^```$",
-                        dash_pattern = "^---+$",
-                        headline_pattern = "^#+",
-                        headline_highlights = { "Headline1", "Headline2" },
-                        codeblock_sign = "CodeBlock",
-                        dash_highlight = "Dash",
-                        fat_headlines = true,
-                    },
-                    vimwiki = {
-                        source_pattern_start = "^{{{%a+",
-                        source_pattern_end = "^}}}$",
-                        dash_pattern = "^---+$",
-                        headline_pattern = "^=+",
-                        headline_highlights = { "Headline1", "Headline2" },
-                        codeblock_highlight = "CodeBlock",
-                        dash_highlight = "Dash",
-                        fat_headlines = true,
-                    },
-                    org = {
-                        source_pattern_start = "#%+[bB][eE][gG][iI][nN]_[sS][rR][cC]",
-                        source_pattern_end = "#%+[eE][nN][dD]_[sS][rR][cC]",
-                        dash_pattern = "^-----+$",
-                        headline_pattern = "^%*+",
-                        headline_highlights = { "Headline1", "Headline2" },
-                        codeblock_highlight = "CodeBlock",
-                        dash_highlight = "Dash",
-                        fat_headlines = true,
-                    },
-                }
-                vim.cmd [[highlight Headline1 guibg=#1e2718]]
-                vim.cmd [[highlight Headline2 guibg=#21262d]]
-                vim.cmd [[highlight CodeBlock guibg=#1c1c1c]]
-                vim.cmd [[highlight Dash guibg=#D19A66 gui=bold]]
-                vim.cmd("hi MdHeadlineLevel1 guifg=#7388de")
-                vim.cmd("hi MdHeadlineLevel2 guifg=#7388de")
-                vim.cmd("hi MdHeadlineLevel3 guifg=#7388de")
-                vim.cmd("hi MdHeadlineLevel4 guifg=#7388de")
-                vim.cmd("hi MdHeadlineLevel5 guifg=#a373FF")
-            end,
+        --symbols = {"", "", "✸", "✿", ""}
+        ------ or a function that receives the defaults and returns a list
+        ----symbols = function(default_list)
+            ----table.insert(default_list, "♥")
+            ----return default_list
+            ----end
+            --}
+        require("headlines").setup {
+            markdown = {
+                headline_highlights = { "Headline1", "Headline2" },
+                codeblock_highlight = "CodeBlock",
+                dash_highlight = "Dash",
+                fat_headlines = true,
+                fat_headline_upper_string = "..",
+                fat_headline_lower_string = "━",
+            },
+            rmd = {
+                headline_highlights = { "Headline1", "Headline2" },
+                codeblock_sign = "CodeBlock",
+                dash_highlight = "Dash",
+                fat_headlines = true,
+            },
+            vimwiki = {
+                headline_highlights = { "Headline1", "Headline2" },
+                codeblock_highlight = "CodeBlock",
+                dash_highlight = "Dash",
+                fat_headlines = true,
+            },
+            org = {
+                headline_highlights = { "Headline1", "Headline2" },
+                codeblock_highlight = "CodeBlock",
+                dash_highlight = "Dash",
+                fat_headlines = true,
+            },
+        }
+    end,
     dependencies = "nvim-treesitter/nvim-treesitter",
-    lazy = true
+    ft = 'markdown',
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3564,7 +3535,7 @@ AddPlugin {
         default_move_mappings = false,   -- FIX: <C-arrows> to move floats
         default_resize_mappings = true, -- FIX: <A-arrows> to resize floats
         default_mouse_mappings = false,  -- FIX: Drag floats with mouse
-        exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator' },
+        exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator', 'lspsagafinder' },
         custom_filter = function(buffer, _)
             return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
         end
@@ -3648,12 +3619,40 @@ AddPlugin {
     cmd = 'StartupTime'
 }
 
--- https://github.com/emileferreira/nvim-strict
--- https://github.com/folke/neoconf.nvim
--- use 'jbyuki/instant.nvim'
--- https://github.com/jghauser/mkdir.nvim
+AddPlugin {
+    'folke/neodev.nvim',
+    event = 'LspAttach',
+    opts = {
+        library = {
+            enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
+            -- these settings will be used for your Neovim config directory
+            runtime = true, -- runtime path
+            types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+            plugins = true, -- installed opt or start plugins in packpath
+            -- you can also specify the list of plugins to make available as a workspace library
+            -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+        },
+        setup_jsonls = false, -- configures jsonls to provide completion for project specific .luarc.json files
+        -- for your Neovim config directory, the config.library settings will be used as is
+        -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
+        -- for any other directory, config.library.enabled will be set to false
+        override = function(root_dir, options) end,
+        -- With lspconfig, Neodev will automatically setup your lua-language-server
+        -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
+        -- in your lsp start options
+        lspconfig = true,
+        -- much faster, but needs a recent built of lua-language-server
+        -- needs lua-language-server >= 3.6.0
+        pathStrict = true,
+    }
+}
 
--- TODO: OPTIMIZE
+-- TODO: https://github.com/emileferreira/nvim-strict
+-- TODO: https://github.com/folke/neoconf.nvim
+-- TODO: use 'jbyuki/instant.nvim'
+-- TODO: https://github.com/jghauser/mkdir.nvim
+
+-- TODO: OPTIMIZE and enable
 AddPlugin {
     'gbprod/yanky.nvim',
     opts = {
@@ -3667,7 +3666,7 @@ AddPlugin {
             sync_with_ring = false,
         }
     },
-    lazy = false
+    lazy = true
 }
 
 AddPlugin {
@@ -3819,10 +3818,8 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/echasnovski/mini.hues
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
--- FEAT: https://github.com/ecthelionvi/NeoColumn.nvim
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/ekickx/clipboard-image.nvim
--- FEAT: https://github.com/folke/neodev.nvim
 -- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/gorbit99/codewindow.nvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
