@@ -1118,14 +1118,15 @@ AddPlugin {
                         get_bufnrs = function()
                             return vim.api.nvim_list_bufs() -- BUG: disable for buffers > 1000 lines
                         end
-                    }
+                    },
+                    priority = 1
                 },
                 -- { name = 'fuzzy_buffer' },
                 { name = 'neorg' },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp', priority = 1 }, -- TODO: increase priority
+                { name = 'nvim_lsp', priority = 2 },
                 { name = 'path' },
-                { name = 'snippy' },
+                { name = 'snippy', priority = 3 },
             }),
             window = {
                 documentation = cmp.config.window.bordered(),
