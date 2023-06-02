@@ -1,4 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--TODO: order plugins
+--DOCME: docs for some sections
 -- Variables
 -- ---------
 
@@ -45,6 +47,7 @@ vim.g.cmp_kinds = {
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
+--vim.highlight.priorities
 HlOrder = { -- TODO: Understand highlight priority
     hlargs = 10000
 }
@@ -498,6 +501,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/echasnovski/mini.hipatterns THOUGHT: use for links ?
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
     'JellyApple102/easyread.nvim',
@@ -650,6 +654,8 @@ AddPlugin {
         { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
     }
 }
+
+-- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 function FixDiagnosticInfo()
@@ -1301,6 +1307,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- TODO: review config help
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
     -- BUG: lazy load directory case
@@ -2492,7 +2499,7 @@ AddPlugin {
     keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
 }
 
--- FEAT: https://github.com/ThePrimeagen/harpoon --> plenary
+-- FEAT: https://github.com/ThePrimeagen/harpoon
 -- FEAT: https://github.com/cbochs/grapple.nvim
 AddPlugin {
     'kshenoy/vim-signature',
@@ -3525,7 +3532,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- BUG: ctrl+arrow conflicts with vim-visual-multi
     -- BUG: Click + drag not working
     -- TODO: change animation speed
     'tamton-aquib/flirt.nvim',
@@ -3814,7 +3820,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/desdic/agrolens.nvim
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.bracketed
--- FEAT: https://github.com/echasnovski/mini.hipatterns
 -- FEAT: https://github.com/echasnovski/mini.hues
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
@@ -3855,7 +3860,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: per file configurations
 -- TODO: quickfix
 -- TODO: vsplit or split file opener like find command
--- function and stick to MenuPopup event
+-- TODO: function and stick to MenuPopup event
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
