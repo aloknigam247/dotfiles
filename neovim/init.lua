@@ -1901,7 +1901,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
--- TODO: https://github.com/lvimuser/lsp-inlayhints.nvim
 -- TODO: https://github.com/DNLHC/glance.nvim
 -- TODO: https://github.com/antosha417/nvim-lsp-file-operations
 -- TODO: resolve navic with Lspsaga symbols
@@ -1926,12 +1925,28 @@ AddPlugin {
             highlight = true,
             icons = vim.g.cmp_kinds,
             safe_output = true,
-            separator = '  ' -- TODO: better separator
+            separator = '  ' -- TODO: better separator
         })
         for key, value in pairs(kind_hl) do
             vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[vim.o.background])
         end
     end
+}
+
+AddPlugin {
+    'VidocqH/lsp-lens.nvim',
+    event = 'LspAttach',
+    opts = {
+        enable = true,
+        include_declaration = true,      -- Reference include declaration
+        sections = {                      -- Enable / Disable specific request
+            definition = true,
+            references = true,
+            implementation = true,
+        },
+        ignore_filetype = {
+        },
+    }
 }
 
 -- TODO: Resolve usage
@@ -1951,6 +1966,13 @@ AddPlugin {
         ]]
     end,
     cmd = 'Vista'
+}
+
+AddPlugin {
+    'lvimuser/lsp-inlayhints.nvim',
+    branch = 'anticonceal',
+    event = 'LspAttach',
+    config = true
 }
 
 AddPlugin {
@@ -1996,6 +2018,7 @@ AddPlugin {
             -- Mappings.
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
+            require("lsp-inlayhints").on_attach(client, bufnr)
             -- TODO: Icons for popup
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
@@ -2848,7 +2871,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '│', right = ''},
+                component_separators = { left = '⏽', right = ''},
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
@@ -2956,7 +2979,7 @@ AddPlugin {
                     {
                         'selectioncount',
                         color = { fg = '#BA2C73' },
-                        icon = { '', color = { fg = '#963484' }},
+                        icon = { '', color = { fg = '#963484' }},
                         separator = ''
                     },
                     {
@@ -3251,15 +3274,15 @@ AddPlugin {
     -- https://github.com/David-Kunz/markid
     'm-demare/hlargs.nvim',
     config = function()
-        local colors = {}
-        for _,v in pairs(ColorPalette()) do
-            local hi = {}
-            hi.fg = v.fg
-            hi.underline = true
-            table.insert(colors, hi)
-        end
+        -- local colors = {}
+        -- for _,v in pairs(ColorPalette()) do
+        --     local hi = {}
+        --     hi.fg = v.fg
+        --     hi.underline = true
+        --     table.insert(colors, hi)
+        -- end
         require('hlargs').setup({
-            colorpalette = colors,
+            colorpalette = ColorPalette(),
             excluded_argnames = {
                 declarations = {
                     python = { 'self', 'cls' },
@@ -3656,7 +3679,6 @@ AddPlugin {
 -- TODO: https://github.com/emileferreira/nvim-strict
 -- TODO: https://github.com/folke/neoconf.nvim
 -- TODO: use 'jbyuki/instant.nvim'
--- TODO: https://github.com/jghauser/mkdir.nvim
 
 -- TODO: OPTIMIZE and enable
 AddPlugin {
@@ -3791,7 +3813,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- AI Archieve
 -- TODO: https://github.com/madox2/vim-ai
 -- TODO: https://github.com/hrsh7th/cmp-copilot
--- TODO: https://github.com/madox2/vim-ai
+-- https://github.com/madox2/vim-ai
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3799,7 +3821,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
--- FEAT: https://github.com/DNLHC/glance.nvim
 -- FEAT: https://github.com/Danielhp95/tmpclone-nvim
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
@@ -3807,7 +3828,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Pocco81/high-str.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Theo-Steiner/togglescope
--- FEAT: https://github.com/VidocqH/lsp-lens.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
@@ -3833,7 +3853,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/lukas-reineke/virt-column.nvim
--- FEAT: https://github.com/lvimuser/lsp-inlayhints.nvim
 -- FEAT: https://github.com/nat-418/boole.nvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/niuiic/cp-image.nvim
