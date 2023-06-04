@@ -401,7 +401,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1) -- FIX: url matcher highlight not working
+vim.fn.matchadd('HighlightURL', url_matcher, 1) -- FIX: set proper highlight priority
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -627,7 +627,6 @@ AddPlugin {
 --     config = true
 -- }
 
--- FEAT: only visible when number of window is more that 2
 -- BUG: not working for 2 windows
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
@@ -3323,20 +3322,16 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- FIX: checkhealth
-    -- TODO: cmdline
     -- TODO: messages
     -- TODO: popupmenu
     -- TODO: redirect
     -- TODO: commands
-    -- TODO: notify
     -- TODO: lsp
     -- TODO: markdown
     -- TODO: showmode in lualine
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     -- TODO: cmdline and popup together
-    -- TODO: classic commandline
     -- TODO: hide written messages
-    -- TODO: clean cmdline_popup
     -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
     -- TODO: lsp progress
     'folke/noice.nvim',
@@ -3354,13 +3349,13 @@ AddPlugin {
                     -- opts: any options passed to the view
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
-                    cmdline = { pattern = '^:', icon = '', lang = 'vim' },
-                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' },
-                    search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
-                    filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' },
-                    lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' },
-                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' },
-                    help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
+                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''},
+                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
+                    search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
+                    filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
+                    lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ''},
+                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ''},
+                    help = { pattern = '^:%s*he?l?p?%s+', icon = '' , title = ''},
                     input = {}, -- Used by input()
                     -- lua = false, -- to disable a format, set to `false`
                 },
@@ -3521,7 +3516,18 @@ AddPlugin {
                 lsp_doc_border = false, -- add a border to hover docs and signature help
             },
             throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
-            views = {}, ---@see section on views
+            views = {
+                -- cmdline_popup = {
+                --     border = {
+                --         style = "none",
+                --         padding = { 0, 0 },
+                --     },
+                --     filter_options = {},
+                --     win_options = {
+                --         winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
+                --     },
+                -- },
+            }, ---@see section on views
             routes = {{
                 view = "notify",
                 filter = { event = "msg_showmode" },
@@ -3555,14 +3561,13 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- BUG: Click + drag not working
     -- TODO: change animation speed
     'tamton-aquib/flirt.nvim',
     opts = {
         override_open = true, -- experimental
         close_command = 'Q',
-        default_move_mappings = false,   -- FIX: <C-arrows> to move floats
-        default_resize_mappings = true, -- FIX: <A-arrows> to resize floats
+        default_move_mappings = false,
+        default_resize_mappings = true,
         default_mouse_mappings = false,  -- FIX: Drag floats with mouse
         exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator', 'lspsagafinder' },
         custom_filter = function(buffer, _)

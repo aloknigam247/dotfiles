@@ -342,7 +342,7 @@ function promptGen {
             'execute' = @{
                 'sequence' = 2
                 'script' = {
-                    $script:dir_icon = "" # FIX: icon overriden
+                    $script:dir_icon = ""
                     if ($script:git_branch -ne "") {
                         $script:dir_icon = ""
                     }
