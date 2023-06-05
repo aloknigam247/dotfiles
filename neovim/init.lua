@@ -1010,7 +1010,7 @@ Light { 'vscode',                     '_'                                       
 Light { 'zellner',                    '_',           post = FixZellner                                      } -- BUG: sometimes does not work
 Dark  { 'zenburned',                  'zenbones'                                                            }
 Light { 'zenwritten',                 'zenbones'                                                            }
-Dark  { 'zephyr',                     '_'                                                                   } -- FIX: LineNr
+Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
 
 function ColoRand(ind)
@@ -2276,7 +2276,7 @@ AddPlugin {
             expand = '',
             collapse = '',
             preview = ' ',
-            code_action = '', -- TODO: use nerd font
+            code_action = '',
             diagnostic = '',
             incoming = ' ',
             outgoing = ' ',
@@ -2899,7 +2899,7 @@ AddPlugin {
                 },
                 lualine_b = {
                     {
-                        'branch', -- TODO: review branch options
+                        'branch',
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
                         on_click = function()
@@ -3095,7 +3095,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- FIX: [No Name] for empty file, use same as lualine
+    -- FIX: [No Name] for empty file, use same as lualine, use name_formatter
     'akinsho/bufferline.nvim',
     config = function()
         local sym_map = { -- TODO use global icons
@@ -3857,7 +3857,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/james1236/backseat.nvim
 -- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
--- FEAT: https://github.com/lukas-reineke/virt-column.nvim
 -- FEAT: https://github.com/nat-418/boole.nvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/niuiic/cp-image.nvim
