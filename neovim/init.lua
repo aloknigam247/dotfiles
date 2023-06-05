@@ -1588,6 +1588,26 @@ AddPlugin {
 --     dependencies = { 'MunifTanjim/nui.nvim', 'mrbjarksen/neo-tree-diagnostics.nvim', 'nvim-lua/plenary.nvim' }
 -- },
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
+ActionsMap = {
+    -- ['vim'] = function ()
+    --     print('I am vim')
+    -- end
+}
+vim.api.nvim_create_autocmd(
+    'FileType', {
+        pattern = '*',
+        desc = 'Run custom actions per filetype',
+        callback = function()
+            local actions = ActionsMap[vim.o.filetype]
+            if actions then
+                actions()
+            end
+        end
+    }
+)
+-- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: work on it
 AddPlugin {
@@ -2811,7 +2831,7 @@ AddPlugin {
 -- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Status Line  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: check for performance
 -- REFACTOR: remove unwanted comments
 AddPlugin {

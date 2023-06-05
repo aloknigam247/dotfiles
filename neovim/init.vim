@@ -46,11 +46,6 @@ set wrapmargin=0                      " Disable wrap margin
 " setglobal bomb                        " Keep the BOM file marker
 " }}}
 
-"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Filetype     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-" TODO: per filetype options
-" autocmd BufNewFile,BufRead *.csproj set filetype=csproj
-" }}}
-
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
