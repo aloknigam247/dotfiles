@@ -2193,6 +2193,7 @@ AddPlugin {
     event = 'LspAttach'
 }
 
+-- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 AddPlugin {
     -- TODO: <M-F12> mapping for lsp_finder
     'glepnir/lspsaga.nvim',
@@ -3009,7 +3010,7 @@ AddPlugin {
                     },
                     {
                         'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
-                        color = { fg = '#0078ff' },
+                        color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('String', true).foreground), gui ='bold' },
                         fmt = function(str)
                             if vim.o.bomb then
                                 str = str .. '-bom'
@@ -3244,6 +3245,8 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--https://github.com/voldikss/vim-floaterm
+
 AddPlugin {
     'akinsho/toggleterm.nvim',
     cmd = 'ToggleTerm',
@@ -3252,7 +3255,6 @@ AddPlugin {
 -- FEAT: https://github.com/elijahdanko/ttymux.nvim
 -- FEAT: https://github.com/nikvdp/neomux
 -- FEAT: https://github.com/pianocomposer321/consolation.nvim
--- FEAT: https://github.com/voldikss/vim-floaterm
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3348,14 +3350,11 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- FIX: checkhealth
-    -- TODO: messages
     -- TODO: popupmenu
-    -- TODO: commands
     -- TODO: lsp
     -- TODO: showmode in lualine
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     -- TODO: cmdline and popup together
-    -- TODO: hide written messages
     -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
     -- TODO: lsp progress
     'folke/noice.nvim',
@@ -3840,7 +3839,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 -- AI Archieve
--- TODO: https://github.com/madox2/vim-ai
 -- TODO: https://github.com/hrsh7th/cmp-copilot
 -- https://github.com/madox2/vim-ai
 
@@ -3852,7 +3850,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/Danielhp95/tmpclone-nvim
 -- FEAT: https://github.com/JellyApple102/flote.nvim
--- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Theo-Steiner/togglescope
@@ -3860,7 +3857,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
--- FEAT: https://github.com/antonk52/markdowny.nvim
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
@@ -3873,11 +3869,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/ekickx/clipboard-image.nvim
 -- FEAT: https://github.com/glacambre/firenvim
--- FEAT: https://github.com/gorbit99/codewindow.nvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
--- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nat-418/boole.nvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
@@ -3895,14 +3889,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- PERF: startuptime
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked, create
--- TODO: https://github.com/deifyed/naVi
 -- TODO: indentation is not identifible when 2
 -- TODO: insert.txt
 -- TODO: jumplist
 -- TODO: location list
 -- TODO: marks
 -- TODO: motion.txt
--- TODO: per file configurations
 -- TODO: quickfix
 -- TODO: vsplit or split file opener like find command
 -- TODO: function and stick to MenuPopup event
