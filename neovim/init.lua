@@ -523,6 +523,11 @@ AddPlugin {
 }
 
 AddPlugin {
+    'Pocco81/high-str.nvim',
+    cmd = 'HSHighlight'
+}
+
+AddPlugin {
     -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
@@ -1924,11 +1929,12 @@ AddPlugin {
 -- TODO: https://github.com/antosha417/nvim-lsp-file-operations
 -- TODO: resolve navic with Lspsaga symbols
 
--- TODO: learn usage
 AddPlugin {
     'SmiteshP/nvim-navbuddy',
     opts = {
-        auto_attach = true
+        lsp = {
+            auto_attach = true
+        }
     },
     lazy = false
 }
@@ -1944,7 +1950,7 @@ AddPlugin {
             highlight = true,
             icons = vim.g.cmp_kinds,
             safe_output = true,
-            separator = '  ' -- TODO: better separator
+            separator = '  '
         })
         for key, value in pairs(kind_hl) do
             vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[vim.o.background])
@@ -3344,10 +3350,8 @@ AddPlugin {
     -- FIX: checkhealth
     -- TODO: messages
     -- TODO: popupmenu
-    -- TODO: redirect
     -- TODO: commands
     -- TODO: lsp
-    -- TODO: markdown
     -- TODO: showmode in lualine
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     -- TODO: cmdline and popup together
@@ -3850,7 +3854,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/KostkaBrukowa/definition-or-references.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
--- FEAT: https://github.com/Pocco81/high-str.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Theo-Steiner/togglescope
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
@@ -3861,7 +3864,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
--- FEAT: https://github.com/debugloop/telescope-undo.nvim
 -- FEAT: https://github.com/desdic/agrolens.nvim
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.bracketed
