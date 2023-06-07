@@ -1388,16 +1388,16 @@ AddPlugin {
             show_on_open_dirs = true,
             timeout = 400,
         },
-        hijack_cursor = false,
+        hijack_cursor = true,
         hijack_directories = {
             auto_open = true,
             enable = true,
         },
         hijack_netrw = true,
-        hijack_unnamed_buffer_when_opening = true,
+        hijack_unnamed_buffer_when_opening = false,
         live_filter = {
             always_show_folders = true,
-            prefix = '[FILTER]: ',
+            prefix = '󰈲 ',
         },
         log = {
             enable = false,
@@ -1413,11 +1413,15 @@ AddPlugin {
                 watcher     = false,
             },
         },
+        modified = {
+            enable = true,
+            show_on_dirs = true,
+            show_on_open_dirs = true
+        },
         notify = { threshold = vim.log.levels.INFO },
         on_attach = 'disable',
         prefer_startup_root = false,
         reload_on_bufenter = false,
-        remove_keymaps = false,
         renderer = {
             add_trailing = true,
             full_name = true,
@@ -1439,7 +1443,7 @@ AddPlugin {
             indent_width = 2,
             root_folder_label = ':~:s?$?/..?',
             icons = {
-                git_placement = 'after',
+                git_placement = 'signcolumn',
                 glyphs = {
                     bookmark = '',
                     default  = '',
@@ -1457,19 +1461,21 @@ AddPlugin {
                         deleted   = '󰧧',
                         ignored   = '',
                         renamed   = '➜',
-                        staged    = '',
+                        staged    = '', -- FIX: icon
                         unmerged  = '',
-                        unstaged  = '',
+                        unstaged  = '', -- FIX: icon
                         untracked = '',
                     },
                     symlink = '󱅷',
                 },
+                modified_placement = 'after',
                 padding = ' ',
                 show = {
                     file = true,
                     folder = true,
                     folder_arrow = true,
                     git = true,
+                    modified = true
                 },
                 symlink_arrow = ' 壟 ',
                 webdev_colors = true,
@@ -1497,6 +1503,12 @@ AddPlugin {
             cmd = 'gio trash',
             require_confirm = true,
         },
+        ui = {
+            confirm = {
+                remove = true,
+                trash = true
+            }
+        },
         update_focused_file = {
             debounce_delay = 15,
             enable = true,
@@ -1506,6 +1518,7 @@ AddPlugin {
         view = {
             adaptive_size = false,
             centralize_selection = false,
+            cursorline = false,
             float = {
                 enable = false,
                 open_win_config = {
@@ -1521,7 +1534,9 @@ AddPlugin {
             hide_root_folder = false,
             mappings = {
                 custom_only = false,
-                list = {}, -- user mappings go here
+                list = {
+                    { key = '<C-s>', action = 'split'}
+                },
             },
             number = false,
             preserve_window_proportions = false,
@@ -1532,66 +1547,6 @@ AddPlugin {
         },
     }
 }
--- {
---     'nvim-neo-tree/neo-tree.nvim',
---     cmd = 'Neotree',
---     module = false,
---     config = function()
---         vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
---         require('neo-tree').setup({
---             default_component_configs = {
---                 git_status = {
---                     symbols = {
---                         -- Change type
---                         added     = '', -- or '✚', but this is redundant info if you use git_status_colors on the name
---                         modified  = '', -- or '', but this is redundant info if you use git_status_colors on the name
---                         deleted   = '',-- this can only be used in the git_status source
---                         renamed   = '',-- this can only be used in the git_status source
---                         -- Status type
---                         untracked = '',
---                         ignored   = '',
---                         unstaged  = '',
---                         staged    = '',
---                         conflict  = '',
---                     }
---                 },
---                 icon = {
---                     folder_closed = '',
---                     folder_open = '',
---                     folder_empty = '',
---                     default = ''
---                 },
---                 indent = {
---                     last_indent_marker = '╰'
---                 }
---             },
---             diagnostics = {
---               autopreview = true, -- Whether to automatically enable preview mode
---               autopreview_config = {}, -- Config table to pass to autopreview (for example `{ use_float = true }`)
---               autopreview_event = 'neo_tree_buffer_enter', -- The event to enable autopreview upon (for example `'neo_tree_window_after_open'`)
---               bind_to_cwd = true,
---               diag_sort_function = 'severity', -- 'severity' means diagnostic items are sorted by severity in addition to their positions.
---                                                -- 'position' means diagnostic items are sorted strictly by their positions.
---                                                -- May also be a function.
---               follow_behavior = { -- Behavior when `follow_current_file` is true
---                 always_focus_file = true, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
---                 expand_followed = true, -- Ensure the node of the followed file is expanded
---                 collapse_others = true, -- Ensure other nodes are collapsed
---               },
---             },
---             filesystem = {
---                 follow_current_file = true,
---                 hijack_netrw_behavior = 'open_current'
---             },
---             popup_border_style = 'rounded',
---             sources = {
---                 'diagnostics',
---                 'filesystem'
---             }
---         })
---     end,
---     dependencies = { 'MunifTanjim/nui.nvim', 'mrbjarksen/neo-tree-diagnostics.nvim', 'nvim-lua/plenary.nvim' }
--- },
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
@@ -2044,7 +1999,6 @@ AddPlugin {
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
             require("lsp-inlayhints").on_attach(client, bufnr)
-            -- TODO: Icons for popup
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
