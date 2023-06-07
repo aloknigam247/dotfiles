@@ -48,8 +48,9 @@ vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
 --vim.highlight.priorities
-HlOrder = { -- TODO: Understand highlight priority
-    hlargs = 10000
+HlPriority = { -- TODO: Understand highlight priority
+    hlargs = 10000,
+    url = 1
 }
 
 SignOrder = {} -- TODO:
@@ -401,7 +402,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, 1) -- FIX: set proper highlight priority
+vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -1642,7 +1643,6 @@ AddPlugin {
     end,
     dependencies = 'kevinhwang91/promise-async',
     enabled = false,
-    -- lazy = false
 }
 
 -- <~>
@@ -1804,8 +1804,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: indentation on 'o'/'O' does not work correct in python, may be its
--- taking indentation settings from first line, try to fix it
 -- FIX: indentation for public:/private:... for c++
 AddPlugin {
     -- FIX: does not work when indent space is 2 in file, shiftwidth is the option
@@ -3142,7 +3140,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: mappings to open file in vsplit,split,tab
     -- TODO: padded dropdown menu https://github.com/nvim-telescope/telescope.nvim/wiki/Gallery#padded-dropdown-menu-in-norcallis-blue
     -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     'nvim-telescope/telescope.nvim',
@@ -3219,7 +3216,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
---https://github.com/voldikss/vim-floaterm
+-- https://github.com/voldikss/vim-floaterm
 
 AddPlugin {
     'akinsho/toggleterm.nvim',
@@ -3228,7 +3225,6 @@ AddPlugin {
 }
 -- FEAT: https://github.com/elijahdanko/ttymux.nvim
 -- FEAT: https://github.com/nikvdp/neomux
--- FEAT: https://github.com/pianocomposer321/consolation.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3245,7 +3241,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: explore indent
     -- TODO: explore incremental_selection
     'nvim-treesitter/nvim-treesitter',
     config = function()
@@ -3297,7 +3292,7 @@ AddPlugin {
             extras = {
                 named_parameters = true,
             },
-            hl_priority = HlOrder.hlargs,
+            hl_priority = HlPriority.hlargs,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -3813,8 +3808,10 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 -- AI Archieve
--- TODO: https://github.com/hrsh7th/cmp-copilot
+-- https://github.com/hrsh7th/cmp-copilot
 -- https://github.com/madox2/vim-ai
+-- https://github.com/zbirenbaum/copilot-cmp
+-- https://github.com/zbirenbaum/copilot.lua
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
@@ -3826,13 +3823,11 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
--- FEAT: https://github.com/Theo-Steiner/togglescope
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/cbochs/portal.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-alt-substitute
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
 -- FEAT: https://github.com/desdic/agrolens.nvim
 -- FEAT: https://github.com/doums/dmap.nvim
@@ -3857,8 +3852,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
 -- FEAT: https://github.com/utilyre/sentiment.nvim
--- FEAT: https://github.com/zbirenbaum/copilot-cmp
--- FEAT: https://github.com/zbirenbaum/copilot.lua
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
