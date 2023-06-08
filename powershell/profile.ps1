@@ -169,7 +169,10 @@ function desktop {
 Remove-Alias -Force gc
 function gc {
     git checkout $args
-    git stash list
+    $stash = git stash list
+    if ( $stash -ne "" ) {
+        Format-Text -bg "#F97068" -fg "#FFFFFF" $stash
+    }
 }
 
 Remove-Alias -Force gl
