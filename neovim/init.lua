@@ -2441,8 +2441,14 @@ AddPlugin {
 -- TODO: set config
 AddPlugin {
     'yaocccc/nvim-hl-mdcodeblock.lua',
-    config = true
+    opts = {
+        minumum_len = 50
+    },
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    lazy = true
 }
+
+vim.cmd[[ hi MDCodeBlock guibg =#FFFFFF ]]
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
@@ -2584,6 +2590,7 @@ AddPlugin { -- TODO: use me
     end,
     dependencies = "nvim-treesitter/nvim-treesitter",
     ft = 'markdown',
+    enabled = false --  TODO: enable
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3836,7 +3843,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/Danielhp95/tmpclone-nvim
--- FEAT: https://github.com/JellyApple102/flote.nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim

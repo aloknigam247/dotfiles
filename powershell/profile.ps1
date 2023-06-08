@@ -171,7 +171,7 @@ function gc {
     git checkout $args
     $stash = git stash list
     if ( $stash -ne "" ) {
-        Format-Text -bg "#F97068" -fg "#FFFFFF" $stash
+        Format-Text -bg "#F97068" -fg "#FFFFFF" $stash # TODO: color different segments
     }
 }
 
