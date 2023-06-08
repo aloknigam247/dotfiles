@@ -330,6 +330,9 @@ function LightenDarkenColor(col, amt)
     return string.format("#%X", newColor)
 end
 
+function PopupAction()
+end
+
 function PopupMenuAdd(title, action)
     title = title:gsub(' ', '\\ ')
     vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
@@ -363,6 +366,14 @@ vim.api.nvim_create_autocmd(
                 vim.fn.mkdir(filedir, 'p')
             end
         end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    'PopupMenuAdd', {
+        pattern = '*',
+        desc = 'Create popup menu based on context',
+        callback = PopupAction
     }
 )
 
@@ -970,7 +981,6 @@ Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 Dark  { 'one-nvim',                   '_'            }
 Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
-Dark  { 'onedark_dark',               'onedarkpro'   }
 Dark  { 'onedark_vivid',              'onedarkpro'   }
 Light { 'onelight',                   '_'            }
 Dark  { 'onenord',                    '_'            }
@@ -2131,9 +2141,7 @@ AddPlugin {
         vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    keys = { 
-        { '<F12>', vim.lsp.buf.definition },
-        '<S-F12>' } -- BUG: mapping do not get triggered in one go
+    keys = { '<F12>' }
 }
 
 AddPlugin {
@@ -3232,8 +3240,6 @@ AddPlugin {
     cmd = 'ToggleTerm',
     config = true
 }
--- FEAT: https://github.com/elijahdanko/ttymux.nvim
--- FEAT: https://github.com/nikvdp/neomux
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
@@ -3856,7 +3862,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/desdic/agrolens.nvim
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.bracketed
--- FEAT: https://github.com/echasnovski/mini.hues
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
@@ -3887,7 +3892,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: motion.txt
 -- TODO: quickfix
 -- TODO: vsplit or split file opener like find command
--- TODO: function and stick to MenuPopup event
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
