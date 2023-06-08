@@ -907,34 +907,34 @@ Dark  { 'edge',                       '_'                                       
 Light { 'edge',                       '_'                                                                 }
 Dark  { 'embark',                     '_'                                                                 }
 Dark  { 'emerald',                    'starry',      pre = function() FixStarry('#1a391d', '#2c5f31') end }
-Dark  { 'enfocado',                   '_'            }
-Light { 'enfocado',                   '_'            }
-Dark  { 'everforest',                 '_'            }
-Light { 'everforest',                 '_'            }
-Dark  { 'fakedonalds',                '_'            }
-Dark  { 'falcon',                     '_'            }
-Dark  { 'fleet',                      '_'            }
+Dark  { 'enfocado',                   '_'                                      }
+Light { 'enfocado',                   '_'                                      }
+Dark  { 'everforest',                 '_'                                      }
+Light { 'everforest',                 '_'                                      }
+Dark  { 'fakedonalds',                '_'                                      }
+Dark  { 'falcon',                     '_'                                      }
+Dark  { 'fleet',                      '_'                                      }
 Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
-Dark  { 'forestbones',                'zenbones'     }
-Dark  { 'github_dark',                'github'       }
-Light { 'github_light',               'github'       }
-Dark  { 'gruvbox',                    '_'            }
-Light { 'gruvbox',                    '_'            }
+Dark  { 'forestbones',                'zenbones'                               }
+Dark  { 'github_dark',                'github'                                 }
+Light { 'github_light',               'github'                                 }
+Dark  { 'gruvbox',                    '_'                                      }
+Light { 'gruvbox',                    '_'                                      }
 Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
-Dark  { 'gruvbox-baby',               '_'            }
-Dark  { 'habamax',                    '_',           }
-Dark  { 'horizon',                    '_'            }
-Dark  { 'juliana',                    '_'            } -- FIX: fix numberline
-Dark  { 'kanagawa',                   '_'            }
+Dark  { 'gruvbox-baby',               '_'                                      }
+Dark  { 'habamax',                    '_',                                     }
+Dark  { 'horizon',                    '_'                                      }
+Dark  { 'juliana',                    '_',           post = function() FixLineNr('#999999') end                                                               }
+Dark  { 'kanagawa',                   '_'                                                                                                                     }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
 Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                     }
 Dark  { 'lunaperche',                 '_'                                                                                                                     }
 Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                     }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#cceae7') end     }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                                 }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757da4') end     }
+Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757DA4') end     }
 Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
@@ -2131,7 +2131,9 @@ AddPlugin {
         vim.cmd.LspStart()
     end,
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    keys = { '<F12>', '<S-F12>' } -- BUG: mapping do not get triggered in one go
+    keys = { 
+        { '<F12>', vim.lsp.buf.definition },
+        '<S-F12>' } -- BUG: mapping do not get triggered in one go
 }
 
 AddPlugin {
