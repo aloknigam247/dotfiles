@@ -370,7 +370,7 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
-    'PopupMenuAdd', {
+    'MenuPopup', {
         pattern = '*',
         desc = 'Create popup menu based on context',
         callback = PopupAction
