@@ -1676,7 +1676,7 @@ AddPlugin {
             extensions = {
                 advanced_git_search = {
                     -- fugitive or diffview
-                    diff_plugin = 'fugitive',
+                    diff_plugin = 'diffview',
                     -- customize git in previewer
                     -- e.g. flags such as { '--no-pager' }, or { '-c', 'delta.side-by-side=false' }
                     git_flags = {},
@@ -1684,7 +1684,7 @@ AddPlugin {
                     -- e.g. flags such as { '--raw' }
                     git_diff_flags = {},
                     -- Show builtin git pickers when executing 'show_custom_functions' or :AdvancedGitSearch
-                    show_builtin_git_pickers = false,
+                    show_builtin_git_pickers = true,
                 }
             }
         }
@@ -3746,6 +3746,22 @@ AddPlugin {
 }
 
 AddPlugin {
+    'nat-418/boole.nvim',
+    opts = {
+        mappings = {
+            increment = '<C-a>',
+            decrement = '<C-x>'
+        },
+        -- User defined loops
+        additions = {
+        },
+        allow_caps_additions = {
+        }
+    },
+    keys = { '<C-a>', '<C-x>' }
+}
+
+AddPlugin {
     -- Lua copy https://github.com/ojroques/nvim-osc52
     'ojroques/vim-oscyank',
     cond = function()
@@ -3842,7 +3858,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
--- FEAT: https://github.com/nat-418/boole.nvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/niuiic/cp-image.nvim
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
