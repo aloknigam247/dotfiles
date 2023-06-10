@@ -2816,7 +2816,7 @@ AddPlugin {
         Icon_index = 0
         local function LspIcon()
             -- local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'}
-            local anim = {''}
+            local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
@@ -2866,7 +2866,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '⏽', right = ''},
+                component_separators = { left = '⏽', right = ''},
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
