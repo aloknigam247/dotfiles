@@ -3868,7 +3868,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/ekickx/clipboard-image.nvim
 -- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
--- FEAT: https://github.com/isaksamsten/better-virtual-text.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
