@@ -3060,7 +3060,7 @@ AddPlugin {
             winbar = {
                 lualine_a = {
                     {
-                        'filename',
+                        'filename', -- TODO: file icon
                         color = { gui = 'italic' },
                         cond = function () return CountWin() > 1 end,
                         file_status = true,      -- Displays file status (readonly status, modified status)
