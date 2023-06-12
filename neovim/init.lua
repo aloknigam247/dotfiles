@@ -2333,6 +2333,7 @@ AddPlugin {
     }
 }
 
+-- TODO: resolve usage
 AddPlugin {
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
