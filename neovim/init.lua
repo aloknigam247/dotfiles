@@ -1164,14 +1164,12 @@ AddPlugin {
     end,
     dependencies = {
         'chrisgrieser/cmp-nerdfont',
-        'dcampos/cmp-snippy',
-        'dcampos/nvim-snippy',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-nvim-lsp', -- PERF: load on lsp
         'hrsh7th/cmp-path',
         -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} }, -- FIX: fzy-lua-native make is not working
-    }, -- PERF: check if lazy
+    },
     event = 'CmdlineEnter',
 }
 
@@ -1285,7 +1283,6 @@ AddPlugin {
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
 -- AddPlugin {
---     -- TODO: List down topics to work on
 --     'mfussenegger/nvim-dap',
 --     config = function()
 --         vim.api.nvim_set_keymap('n', '<F9>', [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
@@ -2786,8 +2783,14 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: lazy load for filetype needed
+    'dcampos/cmp-snippy',
+    dependencies = 'nvim-snippy',
+    event = 'InsertEnter'
+}
+
+AddPlugin {
     'dcampos/nvim-snippy',
+    dependencies = 'honza/vim-snippets',
     opts = {
         mappings = {
             is = {
@@ -2796,7 +2799,6 @@ AddPlugin {
             }
         }
     },
-    dependencies = 'honza/vim-snippets',
 }
 -- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/hrsh7th/vim-vsnip
@@ -3688,7 +3690,6 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/emileferreira/nvim-strict
 -- TODO: https://github.com/folke/neoconf.nvim
 -- TODO: use 'jbyuki/instant.nvim'
 
