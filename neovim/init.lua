@@ -2152,7 +2152,6 @@ AddPlugin {
     event = 'LspAttach'
 }
 
--- FEAT: https://github.com/jinzhongjia/LspUI.nvim
 AddPlugin {
     -- TODO: <M-F12> mapping for lsp_finder
     'glepnir/lspsaga.nvim',
@@ -2303,6 +2302,10 @@ AddPlugin { 'p00f/clangd_extensions.nvim' }
 -- TODO: resolve usage
 AddPlugin {
     'ray-x/navigator.lua',
+    config = true,
+    dependencies = {
+        { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' }
+    },
     event = 'LspAttach'
 }
 
