@@ -1885,7 +1885,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
--- TODO: https://github.com/DNLHC/glance.nvim
 -- TODO: https://github.com/antosha417/nvim-lsp-file-operations
 -- TODO: resolve navic with Lspsaga symbols
 
@@ -3851,7 +3850,6 @@ vim.opt.runtimepath:prepend(lazypath)
 
 -- BUG: Powershell indent issue
 -- FEAT: Use of Copilot
--- FEAT: https://github.com/AndrewRadev/linediff.vim
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
