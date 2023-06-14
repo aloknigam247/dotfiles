@@ -1466,9 +1466,9 @@ AddPlugin {
                         deleted   = '󰧧',
                         ignored   = '',
                         renamed   = '➜',
-                        staged    = '', -- FIX: icon
+                        staged    = '⏽',
                         unmerged  = '',
-                        unstaged  = '', -- FIX: icon
+                        unstaged  = '󰇝',
                         untracked = '',
                     },
                     symlink = '󱅷',
@@ -3346,7 +3346,6 @@ AddPlugin {
     -- TODO: showmode in lualine
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     -- TODO: cmdline and popup together
-    -- TODO: classic bottom cmdline for search https://github.com/folke/noice.nvim/wiki/Configuration-Recipes#use-a-classic-bottom-cmdline-for-search
     -- TODO: lsp progress
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
