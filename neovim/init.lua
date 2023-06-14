@@ -828,7 +828,6 @@ AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'           
 AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                            }
 AddPlugin { 'savq/melange',                     event = 'User melange'                                             }
 AddPlugin { 'loctvl842/monokai-pro.nvim',       event = 'User monokai-pro'                                         }
-AddPlugin { 'shaunsingh/moonlight.nvim',        event = 'User moonlight'                                           }
 AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                }
 AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                           }
 AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                 }
@@ -958,7 +957,6 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end                                }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'})  end                                }
 Dark  { 'moonfly',                    '_'                                                                                                                     }
-Dark  { 'moonlight',                  '_'                                                                                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }

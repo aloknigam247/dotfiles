@@ -45,14 +45,14 @@ function evrc {
 
 function v($arg) {
     # FEAT: support for file:line
-    $args = $arg.split(':')
-    if ($args.length -eq 2) {
-            $args[1] = "+" + $args[1]
+    # $args = $arg.split(':')
+    # if ($args.length -eq 2) {
+    #         $args[1] = "+" + $args[1]
         # ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args[0] $args[1] # BUG: fix this for c:/file
         ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg
-    } else {
-        ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args[0]
-    }
+    # } else {
+    #     ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args[0]
+    # }
 }
 
 function vpcl {
