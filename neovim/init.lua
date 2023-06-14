@@ -48,9 +48,9 @@ vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
 --vim.highlight.priorities
-HlPriority = { -- TODO: Understand highlight priority
-    hlargs = 10000,
-    url = 1
+HlPriority = {
+    hlargs = 126,
+    url = 202
 }
 
 SignOrder = {} -- TODO:
@@ -887,7 +887,6 @@ Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
 Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
-Dark  { 'base2tone_space_dark',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',              '_'            }
 Dark  { 'carbonfox',                  'nightfox'     }
@@ -1883,7 +1882,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
--- TODO: https://github.com/antosha417/nvim-lsp-file-operations
 -- TODO: resolve navic with Lspsaga symbols
 
 AddPlugin {
@@ -1929,6 +1927,12 @@ AddPlugin {
         ignore_filetype = {
         },
     }
+}
+
+AddPlugin {
+    'antosha417/nvim-lsp-file-operations',
+    config = true,
+    event = 'LspAttach'
 }
 
 -- TODO: Resolve usage
@@ -3606,6 +3610,11 @@ AddPlugin {
     cmd = 'InlineEdit'
 }
 
+AddPlugin {
+    'Danielhp95/tmpclone-nvim',
+    cmd = 'TmpcloneClone'
+}
+
 -- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 AddPlugin {
@@ -3738,7 +3747,10 @@ AddPlugin { -- FIX: resolve usage
     config = true
 }
 
--- AddPlugin { 'kylechui/nvim-surround' }
+AddPlugin {
+    'kylechui/nvim-surround',
+    config = true
+}
 
 AddPlugin {
     'mg979/vim-visual-multi',
@@ -3847,11 +3859,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- BUG: Powershell indent issue
--- FEAT: Use of Copilot
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
--- FEAT: https://github.com/Danielhp95/tmpclone-nvim
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
@@ -3860,9 +3870,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
--- FEAT: https://github.com/desdic/agrolens.nvim
 -- FEAT: https://github.com/doums/dmap.nvim
--- FEAT: https://github.com/echasnovski/mini.bracketed
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
@@ -3876,7 +3884,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
--- FEAT: https://github.com/roobert/surround-ui.nvim
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
 -- FEAT: https://github.com/utilyre/sentiment.nvim
@@ -3884,7 +3891,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- PERF: startuptime
 -- TODO: change.txt
 -- TODO: context aware popup, using autocmd and position clicked, create
--- TODO: indentation is not identifible when 2
 -- TODO: insert.txt
 -- TODO: jumplist
 -- TODO: location list
