@@ -2442,6 +2442,7 @@ AddPlugin {
     cmd = 'PeekOpen',
     config = function()
         require('peek').setup({
+            app = 'browser',
             theme = vim.o.background
         })
         vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
