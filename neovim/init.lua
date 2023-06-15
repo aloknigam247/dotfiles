@@ -819,7 +819,6 @@ AddPlugin { 'sainnhe/edge',                     event = 'User edge'             
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                          }
 AddPlugin { 'dundargoc/fakedonalds.nvim',       event = 'User fakedonalds'                                         }
 AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                              }
-AddPlugin { 'felipeagc/fleet-theme-nvim',       event = 'User fleet'                                               }
 AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                              }
 AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                        }
 AddPlugin { 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                             }
@@ -922,7 +921,6 @@ Dark  { 'everforest',                 '_'                                      }
 Light { 'everforest',                 '_'                                      }
 Dark  { 'fakedonalds',                '_'                                      }
 Dark  { 'falcon',                     '_'                                      }
-Dark  { 'fleet',                      '_'                                      }
 Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                               }
 Dark  { 'github_dark',                'github'                                 }
