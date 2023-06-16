@@ -842,7 +842,6 @@ AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'       
 AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                              }
 AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                }
 AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                             }
-AddPlugin { 'sam4llis/nvim-tundra',             event = 'User tundra'                                              }
 AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                         }
 AddPlugin { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                             }
 AddPlugin { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                            }
@@ -897,10 +896,9 @@ Light { 'catppuccin-latte',           'catppuccin'   }
 Dark  { 'catppuccin-macchiato',       'catppuccin'   }
 Dark  { 'catppuccin-mocha',           'catppuccin'   }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
-Dark  { 'codedark',                   '_'            }
-Light { 'danger_light',               'danger'       }
-Dark  { 'dark-decay',                 'decay'        }
-Dark  { 'darkplus',                   '_'            }
+Dark  { 'codedark',                   '_'                                                                 }
+Light { 'danger_light',               'danger',      post = FixNontext                                    }
+Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Dark  { 'dawnfox',                    'nightfox'                                                          }
 Dark  { 'dayfox',                     'nightfox'                                                          }
@@ -918,21 +916,21 @@ Dark  { 'edge',                       '_'                                       
 Light { 'edge',                       '_'                                                                 }
 Dark  { 'embark',                     '_'                                                                 }
 Dark  { 'emerald',                    'starry',      pre = function() FixStarry('#1a391d', '#2c5f31') end }
-Dark  { 'enfocado',                   '_'                                      }
-Light { 'enfocado',                   '_'                                      }
-Dark  { 'everforest',                 '_'                                      }
-Light { 'everforest',                 '_'                                      }
-Dark  { 'falcon',                     '_'                                      }
-Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
-Dark  { 'forestbones',                'zenbones'                               }
-Dark  { 'github_dark',                'github'                                 }
-Light { 'github_light',               'github'                                 }
-Dark  { 'gruvbox',                    '_'                                      }
-Light { 'gruvbox',                    '_'                                      }
-Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme    }
-Dark  { 'gruvbox-baby',               '_'                                      }
-Dark  { 'habamax',                    '_',                                     }
-Dark  { 'horizon',                    '_'                                      }
+Dark  { 'enfocado',                   '_'                                                                 }
+Light { 'enfocado',                   '_'                                                                 }
+Dark  { 'everforest',                 '_'                                                                 }
+Light { 'everforest',                 '_'                                                                 }
+Dark  { 'falcon',                     '_'                                                                 }
+Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline                            }
+Dark  { 'forestbones',                'zenbones'                                                          }
+Dark  { 'github_dark',                'github'                                                            }
+Light { 'github_light',               'github'                                                            }
+Dark  { 'gruvbox',                    '_'                                                                 }
+Light { 'gruvbox',                    '_'                                                                 }
+Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme                               }
+Dark  { 'gruvbox-baby',               '_'                                                                 }
+Dark  { 'habamax',                    '_',                                                                }
+Dark  { 'horizon',                    '_'                                                                 }
 Dark  { 'juliana',                    '_',           post = function() FixLineNr('#999999') end                                                               }
 Dark  { 'kanagawa',                   '_'                                                                                                                     }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
@@ -1014,7 +1012,6 @@ Light { 'tokyonight-day',             'tokyonight'                              
 Dark  { 'tokyonight-moon',            'tokyonight'                                                          }
 Dark  { 'tokyonight-night',           'tokyonight'                                                          }
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
-Dark  { 'tundra',                     '_',           pre = function() require('nvim-tundra').setup() end    }
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
 Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end             }
@@ -2261,7 +2258,43 @@ AddPlugin {
             incoming = ' ',
             outgoing = ' ',
             hover = ' ',
-            kind = {}, -- TODO: custom kinds from globals
+            -- kind = {
+            --     [1]   = { 'File',          vim.g.cmp_kinds.File,          'CmpItemKindFile',         },
+            --     [2]   = { 'Module',        vim.g.cmp_kinds.Module,        'CmpItemKindModule',       },
+            --     [3]   = { 'Namespace',     vim.g.cmp_kinds.Namespace,     'CmpItemKindNamespace',    },
+            --     [4]   = { 'Package',       vim.g.cmp_kinds.Package,       'CmpItemKindPackage',      },
+            --     [5]   = { 'Class',         vim.g.cmp_kinds.Class,         'CmpItemKindClass',        },
+            --     [6]   = { 'Method',        vim.g.cmp_kinds.Method,        'CmpItemKindMethod',       },
+            --     [7]   = { 'Property',      vim.g.cmp_kinds.Property,      'CmpItemKindProperty',     },
+            --     [8]   = { 'Field',         vim.g.cmp_kinds.Field,         'CmpItemKindField',        },
+            --     [9]   = { 'Constructor',   vim.g.cmp_kinds.Constructor,   'CmpItemKindConstructor',  },
+            --     [10]  = { 'Enum',          vim.g.cmp_kinds.Enum,          'CmpItemKindEnum',         },
+            --     [11]  = { 'Interface',     vim.g.cmp_kinds.Interface,     'CmpItemKindInterface',    },
+            --     [12]  = { 'Function',      vim.g.cmp_kinds.Function,      'CmpItemKindFunction',     },
+            --     [13]  = { 'Variable',      vim.g.cmp_kinds.Variable,      'CmpItemKindVariable',     },
+            --     [14]  = { 'Constant',      vim.g.cmp_kinds.Constant,      'CmpItemKindConstant',     },
+            --     [15]  = { 'String',        vim.g.cmp_kinds.String,        'CmpItemKindString',       },
+            --     [16]  = { 'Number',        vim.g.cmp_kinds.Number,        'CmpItemKindNumber',       },
+            --     [17]  = { 'Boolean',       vim.g.cmp_kinds.Boolean,       'CmpItemKindBoolean',      },
+            --     [18]  = { 'Array',         vim.g.cmp_kinds.Array,         'CmpItemKindArray',        },
+            --     [19]  = { 'Object',        vim.g.cmp_kinds.Object,        'CmpItemKindObject',       },
+            --     [20]  = { 'Key',           vim.g.cmp_kinds.Key,           'CmpItemKindKey',          },
+            --     [21]  = { 'Null',          vim.g.cmp_kinds.Null,          'CmpItemKindNull',         },
+            --     [22]  = { 'EnumMember',    vim.g.cmp_kinds.EnumMember,    'CmpItemKindEnumMember',   },
+            --     [23]  = { 'Struct',        vim.g.cmp_kinds.Struct,        'CmpItemKindStruct',       },
+            --     [24]  = { 'Event',         vim.g.cmp_kinds.Event,         'CmpItemKindEvent',        },
+            --     [25]  = { 'Operator',      vim.g.cmp_kinds.Operator,      'CmpItemKindOperator',     },
+            --     [26]  = { 'TypeParameter', vim.g.cmp_kinds.TypeParameter, 'CmpItemKindTypeParameter',},
+            --     [252] = { 'TypeAlias',     vim.g.cmp_kinds.TypeAlias,     'CmpItemKindTypeAlias',    },
+            --     [253] = { 'Parameter',     vim.g.cmp_kinds.Parameter,     'CmpItemKindParameter',    },
+            --     [254] = { 'StaticMethod',  vim.g.cmp_kinds.StaticMethod,  'CmpItemKindStaticMethod', },
+            --     [255] = { 'Macro',         vim.g.cmp_kinds.Macro,         'CmpItemKindMacro',        },
+            --     [300] = { 'Text',          vim.g.cmp_kinds.Text,          'CmpItemKindText',         },
+            --     [301] = { 'Snippet',       vim.g.cmp_kinds.Snippet,       'CmpItemKindSnippet',      },
+            --     [302] = { 'Folder',        vim.g.cmp_kinds.Folder,        'CmpItemKindFolder',       },
+            --     [303] = { 'Unit',          vim.g.cmp_kinds.Unit,          'CmpItemKindUnit',         },
+            --     [304] = { 'Value',         vim.g.cmp_kinds.Value,         'CmpItemKindValue',        },
+            -- }, -- TODO: custom kinds from globals
         }
     }
 }
@@ -2367,35 +2400,35 @@ AddPlugin {
         },
         lsp_blacklist = {},
         symbol_blacklist = {},
-        symbols = { -- TODO: global icons
-            File = { icon = "", hl = "@text.uri" },
-            Module = { icon = "", hl = "@namespace" },
-            Namespace = { icon = "", hl = "@namespace" },
-            Package = { icon = "", hl = "@namespace" },
-            Class = { icon = "𝓒", hl = "@type" },
-            Method = { icon = "ƒ", hl = "@method" },
-            Property = { icon = "", hl = "@method" },
-            Field = { icon = "", hl = "@field" },
-            Constructor = { icon = "", hl = "@constructor" },
-            Enum = { icon = "ℰ", hl = "@type" },
-            Interface = { icon = "ﰮ", hl = "@type" },
-            Function = { icon = "", hl = "@function" },
-            Variable = { icon = "", hl = "@constant" },
-            Constant = { icon = "", hl = "@constant" },
-            String = { icon = "𝓐", hl = "@string" },
-            Number = { icon = "#", hl = "@number" },
-            Boolean = { icon = "⊨", hl = "@boolean" },
-            Array = { icon = "", hl = "@constant" },
-            Object = { icon = "⦿", hl = "@type" },
-            Key = { icon = "🔐", hl = "@type" },
-            Null = { icon = "NULL", hl = "@type" },
-            EnumMember = { icon = "", hl = "@field" },
-            Struct = { icon = "𝓢", hl = "@type" },
-            Event = { icon = "🗲", hl = "@type" },
-            Operator = { icon = "+", hl = "@operator" },
-            TypeParameter = { icon = "𝙏", hl = "@parameter" },
-            Component = { icon = "", hl = "@function" },
-            Fragment = { icon = "", hl = "@constant" },
+        symbols = {
+            Array         = { icon = vim.g.cmp_kinds.Array        , hl = 'CmpItemKindArray'         },
+            Boolean       = { icon = vim.g.cmp_kinds.Boolean      , hl = 'CmpItemKindBoolean'       },
+            Class         = { icon = vim.g.cmp_kinds.Class        , hl = 'CmpItemKindClass'         },
+            Component     = { icon = vim.g.cmp_kinds.Component    , hl = 'CmpItemKindComponent'     },
+            Constant      = { icon = vim.g.cmp_kinds.Constant     , hl = 'CmpItemKindConstant'      },
+            Constructor   = { icon = vim.g.cmp_kinds.Constructor  , hl = 'CmpItemKindConstructor'   },
+            Enum          = { icon = vim.g.cmp_kinds.Enum         , hl = 'CmpItemKindEnum'          },
+            EnumMember    = { icon = vim.g.cmp_kinds.EnumMember   , hl = 'CmpItemKindEnumMembe'     },
+            Event         = { icon = vim.g.cmp_kinds.Event        , hl = 'CmpItemKindEvent'         },
+            Field         = { icon = vim.g.cmp_kinds.Field        , hl = 'CmpItemKindField'         },
+            File          = { icon = vim.g.cmp_kinds.File         , hl = 'CmpItemKindFile'          },
+            Fragment      = { icon = vim.g.cmp_kinds.Fragment     , hl = 'CmpItemKindFragment'      },
+            Function      = { icon = vim.g.cmp_kinds.Function     , hl = 'CmpItemKindFunction'      },
+            Interface     = { icon = vim.g.cmp_kinds.Interface    , hl = 'CmpItemKindInterface'     },
+            Key           = { icon = vim.g.cmp_kinds.Key          , hl = 'CmpItemKindKey'           },
+            Method        = { icon = vim.g.cmp_kinds.Method       , hl = 'CmpItemKindMethod'        },
+            Module        = { icon = vim.g.cmp_kinds.Module       , hl = 'CmpItemKindModule'        },
+            Namespace     = { icon = vim.g.cmp_kinds.Namespace    , hl = 'CmpItemKindNamespace'     },
+            Null          = { icon = vim.g.cmp_kinds.Null         , hl = 'CmpItemKindNull'          },
+            Number        = { icon = vim.g.cmp_kinds.Number       , hl = 'CmpItemKindNumber'        },
+            Object        = { icon = vim.g.cmp_kinds.Object       , hl = 'CmpItemKindObject'        },
+            Operator      = { icon = vim.g.cmp_kinds.Operator     , hl = 'CmpItemKindOperator'      },
+            Package       = { icon = vim.g.cmp_kinds.Package      , hl = 'CmpItemKindPackage'       },
+            Property      = { icon = vim.g.cmp_kinds.Property     , hl = 'CmpItemKindProperty'      },
+            String        = { icon = vim.g.cmp_kinds.String       , hl = 'CmpItemKindString'        },
+            Struct        = { icon = vim.g.cmp_kinds.Struct       , hl = 'CmpItemKindStruct'        },
+            TypeParameter = { icon = vim.g.cmp_kinds.TypeParameter, hl = 'CmpItemKindTypeParameter' },
+            Variable      = { icon = vim.g.cmp_kinds.Variable     , hl = 'CmpItemKindVariable'      },
         }
     }
 }
@@ -3951,7 +3984,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
--- FEAT: https://github.com/cbochs/portal.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
