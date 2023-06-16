@@ -216,11 +216,12 @@ Plugins = {}
 
 Icons = {
     diagnostic = {
-        error = '',
-        hint  = '',
-        info  = '',
-        other = '﫠',
-        warn  = '',
+        error   = '',
+        hint    = '',
+        info    = '',
+        other   = '󰗡',
+        warn    = '',
+        warning = ''
     }
 }
 
@@ -822,7 +823,6 @@ AddPlugin { 'decaycs/decay.nvim',               event = 'User decay'            
 AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                       }
 AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                }
 AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                          }
-AddPlugin { 'dundargoc/fakedonalds.nvim',       event = 'User fakedonalds'                                         }
 AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                              }
 AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                              }
 AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                        }
@@ -924,7 +924,6 @@ Dark  { 'enfocado',                   '_'                                      }
 Light { 'enfocado',                   '_'                                      }
 Dark  { 'everforest',                 '_'                                      }
 Light { 'everforest',                 '_'                                      }
-Dark  { 'fakedonalds',                '_'                                      }
 Dark  { 'falcon',                     '_'                                      }
 Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                               }
@@ -2625,6 +2624,18 @@ AddPlugin { -- TODO: use me
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- | Command         | Explaination                                              |
+-- |-----------------+-----------------------------------------------------------|
+-- | cc [n]          | jump to n quickfix, if n is omitted jump to current again |
+-- | [c]cn           | jump to next quickfix, with [c] jump to next [c]          |
+-- | [c]cp           | jump to previous quickfix, with [c] jump to previous [c]  |
+-- | cf file         | read error from file into quickfix                        |
+-- | cb              | read error list from current buffer                       |
+-- | cdo cmd         | execute cmd on each quickfix                              |
+-- | Cfilter[!] patt | Filter quickfix for patt, with ! filter for unmatched     |
+-- | col [c]         | Go to previous quickfix windows, c for count              |
+-- | cnew [c]        | Go to next quickfix windows, c for count                  |
+-- | chi             | Show list of quickfix window history                      |
 AddPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle',
@@ -3137,40 +3148,50 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- FIX: [No Name] for empty file, use same as lualine, use name_formatter
     'akinsho/bufferline.nvim',
-    config = function()
-        local sym_map = { -- TODO use global icons
-            ['error']   = ' ',
-            ['hint']    = ' ',
-            ['info']    = ' ',
-            ['warning'] = ' ',
+    event = 'TabNew',
+    opts = {
+        options = {
+            always_show_bufferline = false,
+            diagnostics = 'nvim_lsp',
+            diagnostics_indicator = function(_, _, diagnostics_dict, context)
+                if context.buffer:current() then
+                    return ''
+                end
+                local res = ''
+                for k, v in pairs(diagnostics_dict) do
+                    res = res .. Icons.diagnostic[k] .. v .. ' '
+                end
+                return res
+            end,
+            get_element_icon = function(element)
+                -- element consists of {filetype: string, path: string, extension: string, directory: string}
+                local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
+                if element.path == '[No Name]' then
+                    icon = ''
+                end
+                return icon, hl
+            end,
+            hover = {
+                enabled = true,
+                delay = 200,
+                reveal = {'close'}
+            },
+            indicator = {
+                style = 'underline'
+            },
+            middle_mouse_command = 'bdelete! %d',
+            mode = 'tabs',
+            name_formatter = function (buf)
+                if buf.name == '[No Name]' then
+                    return ''
+                end
+                return buf.name
+            end,
+            right_mouse_command = nil,
+            separator_style = 'padded_slant'
         }
-        require('bufferline').setup {
-            options = {
-                always_show_bufferline = false,
-                diagnostics = 'nvim_lsp',
-                middle_mouse_command = 'bdelete! %d',
-                mode = 'tabs',
-                right_mouse_command = nil,
-                separator_style = 'thick',
-                diagnostics_indicator = function(_, _, diagnostics_dict, context)
-                    if context.buffer:current() then
-                        return ''
-                    end
-                    local res = ''
-                    for k, v in pairs(diagnostics_dict) do
-                        res = res .. sym_map[k] .. v .. ' '
-                    end
-                    return res
-                end,
-                indicator = {
-                    style = 'underline'
-                }
-            }
-        }
-    end,
-    event = 'TabNew'
+    }
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3909,10 +3930,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: context aware popup, using autocmd and position clicked, create
 -- TODO: insert.txt
 -- TODO: jumplist
--- TODO: location list
 -- TODO: marks
 -- TODO: motion.txt
--- TODO: quickfix
+-- TODO: vimgrep, grep
 -- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)

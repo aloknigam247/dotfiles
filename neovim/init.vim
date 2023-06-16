@@ -65,6 +65,7 @@ set lazyredraw               " Don't redraw screen on macros, registers and othe
 set lcs=lead:·,trail:•,multispace:·,tab:˜˜,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
+set mousemoveevent           " Enable mouse movements
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
 set pumblend=10              " pseudo-transparency effect for popup-menu
