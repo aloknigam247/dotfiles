@@ -330,6 +330,20 @@ function LightenDarkenColor(col, amt)
     return string.format("#%X", newColor)
 end
 
+function BgAdaptiveHl(lighten, darken)
+    local bg
+    if (vim.o.background == 'dark') then
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        bg = string.format('%X', bg)
+        bg = LightenDarkenColor(bg, lighten)
+    else
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        bg = string.format('%X', bg)
+        bg = LightenDarkenColor(bg, darken)
+    end
+    return bg
+end
+
 function PopupAction()
 end
 
@@ -700,16 +714,7 @@ function FixLineNr(fg)
 end
 
 function FixNontext()
-    local bg
-    if (vim.o.background == 'dark') then
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, 60)
-    else
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, -20)
-    end
+    local bg = BgAdaptiveHl(60, -20)
     vim.api.nvim_set_hl(0, 'NonText', { fg = bg })
     vim.api.nvim_set_hl(0, 'IndentBlanklineSpaceChar', { fg = bg })
 end
@@ -1888,12 +1893,10 @@ AddPlugin {
         lsp = {
             auto_attach = true
         }
-    },
-    lazy = false
+    }
 }
 
 AddPlugin {
-    -- TODO: https://github.com/utilyre/barbecue.nvim
     'SmiteshP/nvim-navic',
     config = function()
         require('nvim-navic').setup({
@@ -1902,6 +1905,9 @@ AddPlugin {
             depth_limit_indicator = '',
             highlight = true,
             icons = vim.g.cmp_kinds,
+            lsp = {
+                auto_attach = true
+            },
             safe_output = true,
             separator = '  '
         })
@@ -1969,7 +1975,6 @@ AddPlugin {
     }
 }
 
-
 AddPlugin {
     'williamboman/mason-lspconfig.nvim',
     cmd = 'LspToggle',
@@ -1997,8 +2002,6 @@ AddPlugin {
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
         local on_attach = function(client, bufnr)
-            local navic = require('nvim-navic')
-            local navbuddy = require("nvim-navbuddy")
             -- Mappings.
             -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -2034,9 +2037,6 @@ AddPlugin {
             PopupMenuAdd('References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>')
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
-
-            navbuddy.attach(client, bufnr)
-            navic.attach(client, bufnr)
         end
 
         -- LSP settings (for overriding per client)
@@ -2152,7 +2152,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: <M-F12> mapping for lsp_finder
     'glepnir/lspsaga.nvim',
     branch = 'main',
     cmd = 'Lspsaga',
@@ -2305,7 +2304,7 @@ AddPlugin {
     dependencies = {
         { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' }
     },
-    event = 'LspAttach'
+    -- event = 'LspAttach'
 }
 
 -- TODO: resolve usage
@@ -2448,18 +2447,39 @@ AddPlugin {
     end
 }
 
--- TODO: set highlight
--- TODO: set config
 AddPlugin {
     'yaocccc/nvim-hl-mdcodeblock.lua',
-    opts = {
-        minumum_len = 50
-    },
+    config = function ()
+        require('hl-mdcodeblock').setup({
+            events = {                  -- refresh event
+                "BufEnter",
+                "InsertLeave",
+                "TextChanged",
+                "TextChangedI",
+                "WinScrolled"
+            },
+            hl_group = "MDCodeBlock",   -- default highlight group
+            -- minumum_len = function () return math.max(math.floor(vim.api.nvim_win_get_width(0) * 0.8), 100) end
+            minumum_len = 10,           -- minimum len to highlight (number | function)
+            padding_right = 1,          -- always append 4 space at lineend
+            query_by_ft = {             -- special parser query by filetype
+                markdown = {            -- filetype
+                    'markdown',         -- parser
+                    '(fenced_code_block) @codeblock', -- query
+                },
+                rmd = {                 -- filetype
+                    'markdown',         -- parser
+                    '(fenced_code_block) @codeblock', -- query
+                },
+            },
+            timer_delay = 20,           -- refresh delay(ms)
+        })
+        vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = BgAdaptiveHl(10, -10) })
+    end,
     dependencies = "nvim-treesitter/nvim-treesitter",
-    lazy = true
+    ft = 'markdown'
 }
 
-vim.cmd[[ hi MDCodeBlock guibg =#FFFFFF ]]
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
@@ -3871,8 +3891,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
--- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
--- FEAT: https://github.com/ekickx/clipboard-image.nvim
 -- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
