@@ -264,7 +264,7 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
-local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+-- local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 -- Functions
 -- ---------
@@ -428,7 +428,7 @@ vim.diagnostic.config({
     }
 })
 
-vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
+-- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -463,12 +463,12 @@ AddPlugin {
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
             -- ( | ) --> ) --> ( )| BUG: not working
-            -- FIX: a | b backspace removes both spaces -> a|b
             Rule(' ', ' ')
             :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
                 return vim.tbl_contains({ '()', '[]', '{}' }, pair_set)
-            end),
+            end)
+            :with_del(cond.none()),
             Rule('( ', ' )')
             :with_pair(function() return false end)
             :with_move(function(opts)
@@ -555,7 +555,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- BUG: hlargs priority overrides vim-illuminate
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
@@ -889,7 +888,6 @@ Dark  { 'ayu-dark',                   'ayu'          }
 Light { 'ayu-light',                  'ayu'          }
 Dark  { 'ayu-mirage',                 'ayu'          }
 Dark  { 'barstrata',                  '_'            }
-Dark  { 'base2tone_lake_dark',        'base2tone'    }
 Light { 'base2tone_mall_light',       'base2tone'    }
 Dark  { 'bluloco-dark',               '_'            }
 Light { 'bluloco-light',              '_'            }
@@ -1945,13 +1943,13 @@ AddPlugin {
         vim.cmd[[
             let g:vista_default_executive = 'nvim_lsp'
             let g:vista_icon_indent = ['╰─ ', '├─ ']
-            " TODO: use global icons
-            let g:vista#renderer#icons = {
-                \   'constant': '',
-                \   'class': '',
-                \   'function': '',
-                \   'variable': '',
-                \  }
+            let g:vista#renderer#icons = g:cmp_kinds
+            " let g:vista#renderer#icons = {
+            "     \   'constant': '',
+            "     \   'class': '',
+            "     \   'function': '',
+            "     \   'variable': '',
+            "     \  }
         ]]
     end,
     cmd = 'Vista'
@@ -3381,12 +3379,7 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- FIX: checkhealth
-    -- TODO: popupmenu
-    -- TODO: lsp
-    -- TODO: showmode in lualine
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
-    -- TODO: cmdline and popup together
-    -- TODO: lsp progress
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
     config = function()
@@ -3739,7 +3732,6 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/folke/neoconf.nvim
 -- TODO: use 'jbyuki/instant.nvim'
 
 -- TODO: OPTIMIZE and enable
@@ -3783,7 +3775,53 @@ AddPlugin {
 
 AddPlugin { -- FIX: resolve usage
     'luukvbaal/statuscol.nvim',
-    config = true
+    config = function()
+        local builtin = require("statuscol.builtin")
+        local cfg = {
+            setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
+            -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
+            -- Although I recommend just using the segments field below to build your
+            -- statuscolumn to benefit from the performance optimizations in this plugin.
+            -- builtin.lnumfunc number string options
+            thousands = true,     -- or line number thousands separator string ("." / ",")
+            relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
+            -- Builtin 'statuscolumn' options
+            ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
+            bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
+            -- Default segments (fold -> sign -> line number + separator), explained below
+            segments = {
+                { text = { "%C" }, click = "v:lua.ScFa" },
+                { text = { "%s" }, click = "v:lua.ScSa" },
+                {
+                    text = { builtin.lnumfunc, " " },
+                    condition = { true, builtin.not_empty },
+                    click = "v:lua.ScLa",
+                }
+            },
+            clickmod = "a",         -- modifier used for certain actions in the builtin clickhandlers:
+            -- "a" for Alt, "c" for Ctrl and "m" for Meta.
+            clickhandlers = {       -- builtin click handlers
+            Lnum                    = builtin.lnum_click,
+            FoldClose               = builtin.foldclose_click,
+            FoldOpen                = builtin.foldopen_click,
+            FoldOther               = builtin.foldother_click,
+            DapBreakpointRejected   = builtin.toggle_breakpoint,
+            DapBreakpoint           = builtin.toggle_breakpoint,
+            DapBreakpointCondition  = builtin.toggle_breakpoint,
+            DiagnosticSignError     = builtin.diagnostic_click,
+            DiagnosticSignHint      = builtin.diagnostic_click,
+            DiagnosticSignInfo      = builtin.diagnostic_click,
+            DiagnosticSignWarn      = builtin.diagnostic_click,
+            GitSignsTopdelete       = builtin.gitsigns_click,
+            GitSignsUntracked       = builtin.gitsigns_click,
+            GitSignsAdd             = builtin.gitsigns_click,
+            GitSignsChange          = builtin.gitsigns_click,
+            GitSignsChangedelete    = builtin.gitsigns_click,
+            GitSignsDelete          = builtin.gitsigns_click,
+            gitsigns_extmark_signs_ = builtin.gitsigns_click,
+        },
+    } 
+end
 }
 
 AddPlugin {
@@ -3814,6 +3852,7 @@ AddPlugin {
 }
 
 AddPlugin {
+    -- https://github.com/RutaTang/compter.nvim
     'nat-418/boole.nvim',
     opts = {
         mappings = {
@@ -3879,6 +3918,12 @@ AddPlugin {
     }
 }
 
+AddPlugin {
+    'utilyre/sentiment.nvim',
+    config = true,
+    lazy = false
+}
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -3897,12 +3942,11 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
 
--- BUG: Powershell indent issue
+-- BUG: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
--- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
@@ -3913,7 +3957,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/glacambre/firenvim
--- FEAT: https://github.com/imNel/monorepo.nvim
 -- FEAT: https://github.com/james1236/backseat.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
@@ -3923,7 +3966,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
 -- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
--- FEAT: https://github.com/utilyre/sentiment.nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
