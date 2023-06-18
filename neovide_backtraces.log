@@ -1,0 +1,77 @@
+2023-06-18 17:03:39 - Neovide panicked with the message 'Could not parse event from neovim: invalid u64 format -1'. (File: src\error_handling.rs; Line: 5, Column: 5)
+   0: <unknown>
+   1: <unknown>
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+  11: <unknown>
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: <unknown>
+  16: <unknown>
+  17: BaseThreadInitThunk
+  18: RtlUserThreadStart
+
+2023-06-18 17:12:35 - Neovide panicked with the message 'Could not setup setting notifier for iso_layout: Error sending request 'nvim_command''. (File: src\error_handling.rs; Line: 5, Column: 5)
+   0: <unknown>
+   1: <unknown>
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+  11: <unknown>
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: BaseThreadInitThunk
+  16: RtlUserThreadStart
+
+2023-06-18 17:12:35 - Neovide panicked with the message 'called `Result::unwrap()` on an `Err` value: SendError(Parallel(FocusLost))'. (File: src\event_aggregator.rs; Line: 55, Column: 28)
+   0: <unknown>
+   1: <unknown>
+   2: <unknown>
+   3: <unknown>
+   4: <unknown>
+   5: <unknown>
+   6: <unknown>
+   7: <unknown>
+   8: <unknown>
+   9: <unknown>
+  10: <unknown>
+  11: <unknown>
+  12: <unknown>
+  13: <unknown>
+  14: <unknown>
+  15: DefSubclassProc
+  16: DefSubclassProc
+  17: DispatchMessageW
+  18: CallWindowProcW
+  19: wglSwapBuffers
+  20: DispatchMessageW
+  21: DispatchMessageW
+  22: GetClassLongW
+  23: KiUserCallbackDispatcher
+  24: NtUserGetMessage
+  25: GetMessageW
+  26: <unknown>
+  27: <unknown>
+  28: <unknown>
+  29: <unknown>
+  30: <unknown>
+  31: <unknown>
+  32: <unknown>
+  33: BaseThreadInitThunk
+  34: RtlUserThreadStart
+

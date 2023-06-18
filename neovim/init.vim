@@ -96,10 +96,14 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 " FIX: mapping from https://github.com/chrisgrieser/nvim-spider
-imap <C-Left> <C-\><C-O>B
-imap <C-Right> <C-\><C-O>E<C-\><C-O>a
-map <C-Left> B
-map <C-Right> E
+imap <C-Left> <C-\><C-O>b
+imap <C-Right> <C-\><C-O>e<C-\><C-O>a
+imap <C-S-Left> <C-\><C-O>B
+imap <C-S-Right> <C-\><C-O>E<C-\><C-O>a
+map <C-Left> b
+map <C-Right> e
+map <C-S-Left> B
+map <C-S-Right> E
 " usefull mapping
 " gq format lines
 " gw format lines with cursor remains at same place

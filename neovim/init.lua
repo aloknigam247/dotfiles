@@ -5,7 +5,7 @@
 -- ---------
 
 -- Vim Globals
-vim.g.cmp_kinds = {
+vim.g.cmp_kinds = { -- TODO: GLOBALICON
     Array         = ' ',
     Boolean       = ' ',
     Class         = ' ',
@@ -53,7 +53,48 @@ HlPriority = {
     url = 202
 }
 
-SignOrder = {} -- TODO:
+Icons = {}
+function IconGenerator(_, key)
+    local icons = {
+        cmd        = ' ',
+        config     = '',
+        error      = '',
+        event      = '',
+        ft         = '',
+        hint       = '',
+        import     = '󰋺 ',
+        info       = '',
+        init       = ' ',
+        keys       = ' ',
+        lazy       = ' ',
+        list       = { '●', '', '', '' },
+        loaded     = '',
+        not_loaded = '',
+        other      = 'o', -- TODO: new icon
+        plugin     = ' ',
+        runtime    = ' ',
+        source     = ' ',
+        start      = '',
+        task       = ' ',
+        warn       = '',
+        -- warning = 'w'
+    }
+
+    -- print("Access to", key)
+    local val = icons[key]
+    if val ==  nil then
+        print("Unknown key", key)
+    else
+        Icons[key] = val
+    end
+
+    return val
+end
+setmetatable(Icons, {__index = IconGenerator})
+
+
+ -- TODO: GLOBALMAPPINGS
+ -- TODO: GLOBALCOLORS
 
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
@@ -101,22 +142,22 @@ LazyConfig = {
         title = nil, ---@type string only works when border is not 'none'
         title_pos = 'center', ---@type 'center' | 'left' | 'right'
         icons = {
-            cmd        = ' ',
-            config     = '',
-            event      = '',
-            ft         = ' ',
-            init       = ' ',
-            import     = '󰋺 ',
-            keys       = ' ',
-            lazy       = ' ',
-            list       = { '●', '', '', '' },
-            loaded     = '',
-            not_loaded = '',
-            plugin     = ' ',
-            runtime    = ' ',
-            source     = ' ',
-            start      = '',
-            task       = ' ',
+            cmd        = Icons.cmd,
+            config     = Icons.config,
+            event      = Icons.event,
+            ft         = Icons.ft,
+            init       = Icons.init,
+            import     = Icons.import,
+            keys       = Icons.keys,
+            lazy       = Icons.lazy,
+            list       = Icons.list,
+            loaded     = Icons.loaded,
+            not_loaded = Icons.not_loaded,
+            plugin     = Icons.plugin,
+            runtime    = Icons.runtime,
+            source     = Icons.source,
+            start      = Icons.start,
+            task       = Icons.task
         },
         -- leave nil, to automatically select a browser depending on your OS.
         -- If you want to use a specific browser, you can define it here
@@ -202,6 +243,8 @@ LazyConfig = {
 
 Plugins = {}
 
+SignOrder = {} -- TODO:
+
 -- Lua Locals
 -- local border_shape = {
 --     { '╭', 'FloatBorder' },
@@ -214,18 +257,7 @@ Plugins = {}
 --     { '│', 'FloatBorder' },
 -- }
 
-Icons = {
-    diagnostic = {
-        error   = '',
-        hint    = '',
-        info    = '',
-        other   = '󰗡',
-        warn    = '',
-        warning = ''
-    }
-}
-
-local kind_hl = {
+local kind_hl = { -- TODO: GLOBALICON
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
     Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
@@ -270,6 +302,20 @@ local kind_hl = {
 -- ---------
 function AddPlugin(opts)
     table.insert(Plugins, opts)
+end
+
+function BgAdaptiveHl(lighten, darken)
+    local bg
+    if (vim.o.background == 'dark') then
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        bg = string.format('%X', bg)
+        bg = LightenDarkenColor(bg, lighten)
+    else
+        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        bg = string.format('%X', bg)
+        bg = LightenDarkenColor(bg, darken)
+    end
+    return bg
 end
 
 function ColorPalette()
@@ -329,20 +375,6 @@ function LightenDarkenColor(col, amt)
     local g = bit.band(num, 0x0000FF) + amt
     local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
     return string.format("#%X", newColor)
-end
-
-function BgAdaptiveHl(lighten, darken)
-    local bg
-    if (vim.o.background == 'dark') then
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, lighten)
-    else
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, darken)
-    end
-    return bg
 end
 
 function PopupAction(mode)
@@ -426,7 +458,7 @@ vim.diagnostic.config({
         source = true
     },
     severity_sort = true,
-    virtual_text = {
+    virtual_text = { -- TODO: GLOBALICON
         prefix = ' ',
         source = true
     }
@@ -615,7 +647,7 @@ AddPlugin {
             todo    = { 'Keyword', '#1B998B' },
             warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
         },
-        keywords = {
+        keywords = { -- TODO: GLOBALICON
             DOCME  = { icon = '', color = 'docs' },
             FEAT   = { icon = '󱩑', color = 'feat' },
             FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
@@ -666,7 +698,7 @@ AddPlugin {
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
     opts = {
-        symbols = { '─', '│', '╭', '╮', '╰', '╯' },
+        symbols = { '─', '│', '╭', '╮', '╰', '╯' }, -- TODO: GLOBALICON
     },
     event = 'WinNew'
 }
@@ -735,7 +767,7 @@ end
 
 function FixVisual(bg)
     if bg == nil then
-        if (vim.o.background ==  'dark') then
+        if (vim.o.background == 'dark') then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
             bg = string.format('%X', bg)
             bg = LightenDarkenColor(bg, 50)
@@ -1316,6 +1348,7 @@ AddPlugin {
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: fix view.mappings.list notification
 AddPlugin {
     -- TODO: review config help
     'nvim-tree/nvim-tree.lua',
@@ -1362,10 +1395,10 @@ AddPlugin {
             debounce_delay = 50,
             enable = true,
             icons = {
-                error   = Icons.diagnostic.error,
-                hint    = Icons.diagnostic.hint,
-                info    = Icons.diagnostic.info,
-                warning = Icons.diagnostic.warn,
+                error   = Icons.error,
+                hint    = Icons.hint,
+                info    = Icons.info,
+                warning = Icons.warn,
             },
             severity = {
                 min = vim.diagnostic.severity.HINT,
@@ -1403,7 +1436,7 @@ AddPlugin {
         hijack_unnamed_buffer_when_opening = false,
         live_filter = {
             always_show_folders = true,
-            prefix = '󰈲 ',
+            prefix = '󰈲 ', -- TODO: GLOBALICON
         },
         log = {
             enable = false,
@@ -1437,7 +1470,7 @@ AddPlugin {
             highlight_modified = 'all',
             indent_markers = {
                 enable = true,
-                icons = {
+                icons = { -- TODO: GLOBALICON
                     bottom = '─',
                     corner = '╰',
                     edge   = '│',
@@ -1450,10 +1483,10 @@ AddPlugin {
             root_folder_label = ':~:s?$?/..?',
             icons = {
                 git_placement = 'signcolumn',
-                glyphs = {
+                glyphs = { -- TODO: GLOBALICON
                     bookmark = '',
                     default  = '',
-                    folder = {
+                    folder = { -- TODO: GLOBALICON
                         arrow_closed = '',
                         arrow_open   = '',
                         default      = '',
@@ -1463,7 +1496,7 @@ AddPlugin {
                         symlink      = '',
                         symlink_open = '',
                     },
-                    git = {
+                    git = { -- TODO: GLOBALICON
                         deleted   = '󰧧',
                         ignored   = '',
                         renamed   = '➜',
@@ -1483,7 +1516,7 @@ AddPlugin {
                     git = true,
                     modified = true
                 },
-                symlink_arrow = ' 壟 ',
+                symlink_arrow = ' 壟 ', -- TODO: GLOBALICON
                 webdev_colors = true,
             },
             special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
@@ -1747,7 +1780,7 @@ AddPlugin {
         preview_config = {
             border = 'rounded'
         },
-        signs = {
+        signs = { -- TODO: GLOBALICON
             add          = { hl = 'GitSignsAdd'   ,       text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
             change       = { hl = 'GitSignsChange',       text = '󰇝', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
@@ -1815,7 +1848,7 @@ AddPlugin {
     -- PERF: delay in autocmd to speed up scrolling
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-        require("indent_blankline").setup {
+        require("indent_blankline").setup { -- TODO: GLOBALICON
             bufname_exclude = {},
             buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
             char = '│',
@@ -1902,7 +1935,7 @@ AddPlugin {
             depth_limit = 0,
             depth_limit_indicator = '',
             highlight = true,
-            icons = vim.g.cmp_kinds,
+            icons = vim.g.cmp_kinds, -- TODO: GLOBALICON
             lsp = {
                 auto_attach = true
             },
@@ -2245,7 +2278,7 @@ AddPlugin {
             respect_root = false,
             color_mode = true,
         },
-        ui = {
+        ui = { -- TODO: GLOBALICON
             -- Currently, only the round theme exists
             theme = 'round',
             -- This option only works in Neovim 0.9
@@ -2261,7 +2294,7 @@ AddPlugin {
             incoming = ' ',
             outgoing = ' ',
             hover = ' ',
-            -- kind = {
+            -- kind = { -- TODO: GLOBALICON
             --     [1]   = { 'File',          vim.g.cmp_kinds.File,          'CmpItemKindFile',         },
             --     [2]   = { 'Module',        vim.g.cmp_kinds.Module,        'CmpItemKindModule',       },
             --     [3]   = { 'Namespace',     vim.g.cmp_kinds.Namespace,     'CmpItemKindNamespace',    },
@@ -2302,10 +2335,11 @@ AddPlugin {
     }
 }
 
+-- TODO: fix fidget warning
 AddPlugin {
     'j-hui/fidget.nvim',
     opts = {
-        text = {
+        text = { -- TODO: GLOBALICON
             done = '陼',
             spinner = 'arc'
         }
@@ -2348,7 +2382,7 @@ AddPlugin {
         -- TODO: review config
         width = 120; -- Width of the floating window
         height = 15; -- Height of the floating window
-        border = {"󱦵", "─" ,"╮", "│", "╯", "─", "╰", "│"}; -- Border characters of the floating window
+        border = {"󱦵", "─" ,"╮", "│", "╯", "─", "╰", "│"}; -- Border characters of the floating window -- TODO: GLOBALICON
         default_mappings = false; -- Bind default mappings
         debug = false; -- Print debug information
         opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
@@ -2403,7 +2437,7 @@ AddPlugin {
         },
         lsp_blacklist = {},
         symbol_blacklist = {},
-        symbols = {
+        symbols = { -- TODO: GLOBALICON
             Array         = { icon = vim.g.cmp_kinds.Array        , hl = 'CmpItemKindArray'         },
             Boolean       = { icon = vim.g.cmp_kinds.Boolean      , hl = 'CmpItemKindBoolean'       },
             Class         = { icon = vim.g.cmp_kinds.Class        , hl = 'CmpItemKindClass'         },
@@ -2551,7 +2585,7 @@ AddPlugin {
     -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
-    config = function()
+    config = function() -- TODO: GLOBALICON
         vim.cmd[[
             let g:bookmark_annotation_sign = ''
             let g:bookmark_display_annotation = 1
@@ -2713,13 +2747,12 @@ AddPlugin {
         auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
         auto_fold = false, -- automatically fold a file trouble list at creation
         auto_jump = { 'lsp_definitions' }, -- for the given modes, automatically jump if there is only a single result
-        signs = {
-            -- icons / text used for a diagnostic
-            error = Icons.diagnostic.error,
-            warning = Icons.diagnostic.warn,
-            hint = Icons.diagnostic.hint,
-            information = Icons.diagnostic.info,
-            other = Icons.diagnostic.other
+        signs = { -- TODO: GLOBALICON
+            error = Icons.error,
+            hint = Icons.hint,
+            information = Icons.info,
+            other = Icons.other,
+            warning = Icons.warn
         },
         use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
     }
@@ -2763,7 +2796,7 @@ AddPlugin {
         require('bqf').setup {
             auto_resize_height = true,
             preview = {
-                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'}
+                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'} -- TODO: GLOBALICON
             },
             filter = {
                 fzf = {
@@ -2831,7 +2864,7 @@ AddPlugin {
     cmd = 'SessionSave',
     config = function()
         vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
-        require('auto-session').setup({
+        require('auto-session').setup({ -- TODO: GLOBALICON
             -- log_level = 'debug',
             post_delete_cmds = {
                 "let g:auto_session_enabled = v:false",
@@ -2940,7 +2973,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '⏽', right = ''},
+                component_separators = { left = '⏽', right = ''}, -- TODO: GLOBALICON
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
@@ -2964,7 +2997,7 @@ AddPlugin {
                             return str:sub(1,1)
                         end,
                         padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' }
+                        separator = { left = '', right = '' } -- TODO: GLOBALICON
                     }
                 },
                 lualine_b = {
@@ -2988,11 +3021,11 @@ AddPlugin {
                             vim.cmd('TroubleToggle')
                         end,
                         sources = { 'nvim_diagnostic' },
-                        symbols = {
-                            error = Icons.diagnostic.error .. ' ',
-                            warn  = Icons.diagnostic.warn .. ' ',
-                            info  = Icons.diagnostic.info .. ' ',
-                            hint  = Icons.diagnostic.hint .. ' ',
+                        symbols = { -- TODO: GLOBALICON
+                            error = Icons.error .. ' ',
+                            warn  = Icons.warn .. ' ',
+                            info  = Icons.info .. ' ',
+                            hint  = Icons.hint .. ' ',
                         },
                     }
                 },
@@ -3013,7 +3046,7 @@ AddPlugin {
                         end,
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = {
+                        symbols = { -- TODO: GLOBALICON
                             modified = '', -- Text to show when the file is modified.
                             readonly = '', -- Text to show when the file is non-modifiable or readonly.
                             unnamed  = '', -- Text to show for unnamed buffers.
@@ -3022,6 +3055,11 @@ AddPlugin {
                     }
                 },
                 lualine_x = {
+                    {
+                        'g:ColoRand',
+                        color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Number', true).foreground), gui ='bold' },
+                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}}
+                    },
                     {
                         'hostname',
                         color = { fg = '#119DA4', gui = 'bold' },
@@ -3034,7 +3072,7 @@ AddPlugin {
                             }
                             return alias[str] or str
                         end,
-                        icon = { '', color = { fg = '#3066BE' }},
+                        icon = { '', color = { fg = '#3066BE' }}, -- TODO: GLOBALICON
                     },
                     {
                         'searchcount',
@@ -3042,13 +3080,13 @@ AddPlugin {
                         fmt = function(str)
                             return string.sub(str, 2, -2)
                         end,
-                        icon = {'󰱽', color = {fg = '#EAC435'}},
+                        icon = {'󰱽', color = {fg = '#EAC435'}}, -- TODO: GLOBALICON
                         separator = ''
                     },
                     {
                         'selectioncount',
                         color = { fg = '#BA2C73' },
-                        icon = { '', color = { fg = '#963484' }},
+                        icon = { '', color = { fg = '#963484' }}, -- TODO: GLOBALICON
                         separator = ''
                     },
                     {
@@ -3081,7 +3119,7 @@ AddPlugin {
                     },
                     {
                         function()
-                            if vim.o.wrap then
+                            if vim.o.wrap then -- TODO: GLOBALICON
                                 return '󰖶'
                             else
                                 return '󰯟'
@@ -3116,7 +3154,7 @@ AddPlugin {
                             end
                         end,
                         padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' }
+                        separator = { left = '', right = '' } -- TODO: GLOBALICON
                     }
                 }
             },
@@ -3138,7 +3176,7 @@ AddPlugin {
                         newfile_status = true,   -- Display new file status (new file means no write after created)
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = {
+                        symbols = { -- TODO: GLOBALICON
                             modified = '', -- Text to show when the file is modified.
                             readonly = '', -- Text to show when the file is non-modifiable or readonly.
                             unnamed  = '', -- Text to show for unnamed buffers.
@@ -3160,7 +3198,7 @@ AddPlugin {
                         newfile_status = true,   -- Display new file status (new file means no write after created)
                         path = 3,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = {
+                        symbols = { -- TODO: GLOBALICON
                             modified = '', -- Text to show when the file is modified.
                             readonly = '', -- Text to show when the file is non-modifiable or readonly.
                             unnamed  = '', -- Text to show for unnamed buffers.
@@ -3197,7 +3235,7 @@ AddPlugin {
                 end
                 local res = ''
                 for k, v in pairs(diagnostics_dict) do
-                    res = res .. Icons.diagnostic[k] .. v .. ' '
+                    res = res .. Icons.diagnostic[k] .. v .. ' ' -- TODO: GLOBALICON
                 end
                 return res
             end,
@@ -3205,7 +3243,7 @@ AddPlugin {
                 -- element consists of {filetype: string, path: string, extension: string, directory: string}
                 local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
                 if element.path == '[No Name]' then
-                    icon = ''
+                    icon = '' -- TODO: GLOBALICON
                 end
                 return icon, hl
             end,
@@ -3256,7 +3294,7 @@ AddPlugin {
                 file_sorter = require('telescope.sorters').get_fuzzy_file,
                 generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
                 initial_mode = 'insert',
-                multi_icon = ' ',
+                multi_icon = ' ', -- TODO: GLOBALICON
                 prompt_prefix = '  ',
                 selection_caret = ' ',
                 timeout = 2000,
@@ -3434,7 +3472,7 @@ AddPlugin {
                     -- opts: any options passed to the view
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
-                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''},
+                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''}, -- TODO: GLOBALICON
                     search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
@@ -3459,7 +3497,7 @@ AddPlugin {
                 enabled = true, -- enables the Noice popupmenu UI
                 backend = 'cmp', -- backend to use to show regular cmdline completions
                 -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
-                kind_icons = {}, -- set to `false` to disable icons
+                kind_icons = {}, -- set to `false` to disable icons -- TODO: GLOBALICON
             },
             -- default options for require('noice').redirect
             -- see the section on Command Redirection
@@ -3991,7 +4029,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
--- FEAT: https://github.com/chrisgrieser/nvim-spider
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/glacambre/firenvim
