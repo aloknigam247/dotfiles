@@ -345,7 +345,9 @@ function BgAdaptiveHl(lighten, darken)
     return bg
 end
 
-function PopupAction()
+function PopupAction(mode)
+    local currentWindow = vim.api.nvim_get_current_win()
+    local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
 end
 
 function PopupMenuAdd(title, action)
@@ -386,9 +388,11 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
     'MenuPopup', {
-        pattern = '*',
+        pattern = 'n',
         desc = 'Create popup menu based on context',
-        callback = PopupAction
+        callback = function()
+            PopupAction('n')
+        end
     }
 )
 
@@ -2022,7 +2026,6 @@ AddPlugin {
                 aunmenu PopUp
             ]]
 
-            -- FEAT: better popup management
             PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
             PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
             PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
@@ -2655,6 +2658,7 @@ AddPlugin { -- TODO: use me
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- |-----------------+-----------------------------------------------------------|
 -- | Command         | Explaination                                              |
 -- |-----------------+-----------------------------------------------------------|
 -- | cc [n]          | jump to n quickfix, if n is omitted jump to current again |
@@ -2667,6 +2671,8 @@ AddPlugin { -- TODO: use me
 -- | col [c]         | Go to previous quickfix windows, c for count              |
 -- | cnew [c]        | Go to next quickfix windows, c for count                  |
 -- | chi             | Show list of quickfix window history                      |
+-- |-----------------+-----------------------------------------------------------|
+
 AddPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle',
@@ -3046,13 +3052,13 @@ AddPlugin {
                         separator = ''
                     },
                     {
-                        'encoding', -- THOUGHT: show when not utf-8 or format it to comppress name
+                        'encoding',
                         color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('String', true).foreground), gui ='bold' },
                         fmt = function(str)
                             if vim.o.bomb then
                                 str = str .. '-bom'
                             end
-                            return str
+                            return string.gsub(str, 'utf', 'U')
                         end
                     }
                 },
@@ -3970,14 +3976,15 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 -- AI Archieve
+-- https://github.com/Bryley/neoai.nvim
 -- https://github.com/hrsh7th/cmp-copilot
+-- https://github.com/james1236/backseat.nvim
 -- https://github.com/madox2/vim-ai
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- BUG: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
--- FEAT: https://github.com/Bryley/neoai.nvim
 -- FEAT: https://github.com/CKolkey/ts-node-action
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
@@ -3985,11 +3992,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
--- FEAT: https://github.com/doums/dmap.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/glacambre/firenvim
--- FEAT: https://github.com/james1236/backseat.nvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/niuiic/cp-image.nvim
@@ -4001,9 +4006,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
--- TODO: context aware popup, using autocmd and position clicked, create
 -- TODO: insert.txt
--- TODO: jumplist
 -- TODO: marks
 -- TODO: motion.txt
 -- TODO: vimgrep, grep

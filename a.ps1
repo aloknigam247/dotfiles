@@ -1,3 +1,4 @@
-function fun {
+function f
+{
 
     }
