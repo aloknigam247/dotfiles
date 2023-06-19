@@ -56,28 +56,78 @@ HlPriority = {
 Icons = {}
 function IconGenerator(_, key)
     local icons = {
-        cmd        = ' ',
-        config     = '',
-        error      = '',
-        event      = '',
-        ft         = '',
-        hint       = '',
-        import     = '󰋺 ',
-        info       = '',
-        init       = ' ',
-        keys       = ' ',
-        lazy       = ' ',
-        list       = { '●', '', '', '' },
-        loaded     = '',
-        not_loaded = '',
-        other      = 'o', -- TODO: new icon
-        plugin     = ' ',
-        runtime    = ' ',
-        source     = ' ',
-        start      = '',
-        task       = ' ',
-        warn       = '',
         -- warning = 'w'
+        Array         = ' ',
+        Boolean       = ' ',
+        Class         = ' ',
+        Color         = ' ',
+        Constant      = ' ',
+        Constructor   = ' ',
+        Enum          = ' ',
+        EnumMember    = ' ',
+        Event         = ' ',
+        Field         = ' ',
+        File          = ' ',
+        Folder        = '󰷏 ',
+        Function      = ' ',
+        History       = ' ',
+        Interface     = ' ',
+        Key           = ' ',
+        Keyword       = ' ',
+        Macro         = '',
+        Method        = ' ',
+        Module        = ' ',
+        Namespace     = 'ﬥ ',
+        Null          = ' ',
+        Number        = ' ',
+        Object        = ' ',
+        Operator      = ' ',
+        Options       = ' ',
+        Package       = ' ',
+        Parameter     = '',
+        Property      = ' ',
+        Reference     = ' ',
+        Snippet       = ' ',
+        StaticMethod  = '󰡱',
+        String        = ' ',
+        Struct        = ' ',
+        Text          = '󱄽 ',
+        TypeAlias     = '',
+        TypeParameter = ' ',
+        Unit          = ' ',
+        Value         = ' ',
+        Variable      = ' ',
+        cmd           = ' ',
+        config        = '',
+        error         = '',
+        event         = '',
+        ft            = '',
+        hint          = '',
+        import        = '󰋺 ',
+        info          = '',
+        init          = ' ',
+        keys          = ' ',
+        lazy          = ' ',
+        list          = { '●', '', '', '' },
+        loaded        = '',
+        not_loaded    = '',
+        other         = 'o', -- TODO: new icon
+        plugin        = ' ',
+        runtime       = ' ',
+        source        = ' ',
+        start         = '',
+        task          = ' ',
+        warn          = '',
+        expand        = '',
+        collapse      = '',
+        preview       = ' ',
+        code_action   = '',
+        diagnostic    = '',
+        incoming      = ' ',
+        outgoing      = ' ',
+        hover         = ' ',
+        symlink_arrow = ' 壟 ',
+        FidgetDone    = '󰚔',
     }
 
     -- print("Access to", key)
@@ -911,26 +961,26 @@ AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones', depende
 AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                              }
 AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                           }
 
-Dark  { 'NeoSolarized',               '_'            }
-Light { 'NeoSolarized',               '_'            }
-Dark  { 'OceanicNext',                '_'            }
+Dark  { 'NeoSolarized',               '_'                              }
+Light { 'NeoSolarized',               '_'                              }
+Dark  { 'OceanicNext',                '_'                              }
 Dark  { 'PaperColor',                 '_',           post = FixNontext }
 Light { 'PaperColor',                 '_',           post = FixNontext }
-Dark  { 'adwaita',                    '_'            }
-Light { 'adwaita',                    '_'            }
-Dark  { 'aurora',                     '_'            }
-Dark  { 'ayu-dark',                   'ayu'          }
-Light { 'ayu-light',                  'ayu'          }
-Dark  { 'ayu-mirage',                 'ayu'          }
-Dark  { 'barstrata',                  '_'            }
-Light { 'base2tone_mall_light',       'base2tone'    }
-Dark  { 'bluloco-dark',               '_'            }
-Light { 'bluloco-light',              '_'            }
-Dark  { 'carbonfox',                  'nightfox'     }
-Dark  { 'catppuccin-frappe',          'catppuccin'   }
-Light { 'catppuccin-latte',           'catppuccin'   }
-Dark  { 'catppuccin-macchiato',       'catppuccin'   }
-Dark  { 'catppuccin-mocha',           'catppuccin'   }
+Dark  { 'adwaita',                    '_'                              }
+Light { 'adwaita',                    '_'                              }
+Dark  { 'aurora',                     '_'                              }
+Dark  { 'ayu-dark',                   'ayu'                            }
+Light { 'ayu-light',                  'ayu'                            }
+Dark  { 'ayu-mirage',                 'ayu'                            }
+Dark  { 'barstrata',                  '_'                              }
+Light { 'base2tone_mall_light',       'base2tone'                      }
+Dark  { 'bluloco-dark',               '_'                              }
+Light { 'bluloco-light',              '_'                              }
+Dark  { 'carbonfox',                  'nightfox'                       }
+Dark  { 'catppuccin-frappe',          'catppuccin'                     }
+Light { 'catppuccin-latte',           'catppuccin'                     }
+Dark  { 'catppuccin-macchiato',       'catppuccin'                     }
+Dark  { 'catppuccin-mocha',           'catppuccin'                     }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
 Light { 'danger_light',               'danger',      post = FixNontext                                    }
@@ -1000,7 +1050,7 @@ Dark  { 'nightfox',                   'nightfox'     }
 Dark  { 'noctis_azureus',             'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
-Light { 'noctis_lux',                 'noctis'       } -- BUG: problem with navic
+Light { 'noctis_lux',                 'noctis'       }
 Dark  { 'noctis_minimus',             'noctis'       }
 Dark  { 'noctis_sereno',              'noctis'       }
 Dark  { 'nord',                       '_'            }
@@ -1516,7 +1566,7 @@ AddPlugin {
                     git = true,
                     modified = true
                 },
-                symlink_arrow = ' 壟 ', -- TODO: GLOBALICON
+                symlink_arrow = Icons.symlink_arrow,
                 webdev_colors = true,
             },
             special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
@@ -2077,33 +2127,6 @@ AddPlugin {
             ['textDocument/signatureHelp'] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
         }
 
-        -- TODO: resolve these comments
-        -- Add additional capabilities supported by nvim-cmp
-        -- -- Gets a new ClientCapabilities object describing the LSP client
-        -- -- capabilities.
-        -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-        -- capabilities.textDocument.completion.completionItem = {
-        --     documentationFormat = {
-        --         'markdown',
-        --         'plaintext',
-        --     },
-        --     snippetSupport = true,
-        --     preselectSupport = true,
-        --     insertReplaceSupport = true,
-        --     labelDetailsSupport = true,
-        --     deprecatedSupport = true,
-        --     commitCharactersSupport = true,
-        --     tagSupport = {
-        --         valueSet = { 1 },
-        --     },
-        --     resolveSupport = {
-        --         properties = {
-        --             'documentation',
-        --             'detail',
-        --             'additionalTextEdits',
-        --         },
-        --     },
-        -- }
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
         mason_lspconfig.setup_handlers {
@@ -2197,7 +2220,6 @@ AddPlugin {
             num_shortcut = true,
             show_server_name = true,
             keys = {
-                -- string | table type
                 quit = 'q',
                 exec = '<CR>',
             },
@@ -2278,59 +2300,56 @@ AddPlugin {
             respect_root = false,
             color_mode = true,
         },
-        ui = { -- TODO: GLOBALICON
-            -- Currently, only the round theme exists
-            theme = 'round',
-            -- This option only works in Neovim 0.9
-            title = true,
-            -- Border type can be single, double, rounded, solid, shadow.
-            border = 'rounded',
-            winblend = 20,
-            expand = '',
-            collapse = '',
-            preview = ' ',
-            code_action = '',
-            diagnostic = '',
-            incoming = ' ',
-            outgoing = ' ',
-            hover = ' ',
-            -- kind = { -- TODO: GLOBALICON
-            --     [1]   = { 'File',          vim.g.cmp_kinds.File,          'CmpItemKindFile',         },
-            --     [2]   = { 'Module',        vim.g.cmp_kinds.Module,        'CmpItemKindModule',       },
-            --     [3]   = { 'Namespace',     vim.g.cmp_kinds.Namespace,     'CmpItemKindNamespace',    },
-            --     [4]   = { 'Package',       vim.g.cmp_kinds.Package,       'CmpItemKindPackage',      },
-            --     [5]   = { 'Class',         vim.g.cmp_kinds.Class,         'CmpItemKindClass',        },
-            --     [6]   = { 'Method',        vim.g.cmp_kinds.Method,        'CmpItemKindMethod',       },
-            --     [7]   = { 'Property',      vim.g.cmp_kinds.Property,      'CmpItemKindProperty',     },
-            --     [8]   = { 'Field',         vim.g.cmp_kinds.Field,         'CmpItemKindField',        },
-            --     [9]   = { 'Constructor',   vim.g.cmp_kinds.Constructor,   'CmpItemKindConstructor',  },
-            --     [10]  = { 'Enum',          vim.g.cmp_kinds.Enum,          'CmpItemKindEnum',         },
-            --     [11]  = { 'Interface',     vim.g.cmp_kinds.Interface,     'CmpItemKindInterface',    },
-            --     [12]  = { 'Function',      vim.g.cmp_kinds.Function,      'CmpItemKindFunction',     },
-            --     [13]  = { 'Variable',      vim.g.cmp_kinds.Variable,      'CmpItemKindVariable',     },
-            --     [14]  = { 'Constant',      vim.g.cmp_kinds.Constant,      'CmpItemKindConstant',     },
-            --     [15]  = { 'String',        vim.g.cmp_kinds.String,        'CmpItemKindString',       },
-            --     [16]  = { 'Number',        vim.g.cmp_kinds.Number,        'CmpItemKindNumber',       },
-            --     [17]  = { 'Boolean',       vim.g.cmp_kinds.Boolean,       'CmpItemKindBoolean',      },
-            --     [18]  = { 'Array',         vim.g.cmp_kinds.Array,         'CmpItemKindArray',        },
-            --     [19]  = { 'Object',        vim.g.cmp_kinds.Object,        'CmpItemKindObject',       },
-            --     [20]  = { 'Key',           vim.g.cmp_kinds.Key,           'CmpItemKindKey',          },
-            --     [21]  = { 'Null',          vim.g.cmp_kinds.Null,          'CmpItemKindNull',         },
-            --     [22]  = { 'EnumMember',    vim.g.cmp_kinds.EnumMember,    'CmpItemKindEnumMember',   },
-            --     [23]  = { 'Struct',        vim.g.cmp_kinds.Struct,        'CmpItemKindStruct',       },
-            --     [24]  = { 'Event',         vim.g.cmp_kinds.Event,         'CmpItemKindEvent',        },
-            --     [25]  = { 'Operator',      vim.g.cmp_kinds.Operator,      'CmpItemKindOperator',     },
-            --     [26]  = { 'TypeParameter', vim.g.cmp_kinds.TypeParameter, 'CmpItemKindTypeParameter',},
-            --     [252] = { 'TypeAlias',     vim.g.cmp_kinds.TypeAlias,     'CmpItemKindTypeAlias',    },
-            --     [253] = { 'Parameter',     vim.g.cmp_kinds.Parameter,     'CmpItemKindParameter',    },
-            --     [254] = { 'StaticMethod',  vim.g.cmp_kinds.StaticMethod,  'CmpItemKindStaticMethod', },
-            --     [255] = { 'Macro',         vim.g.cmp_kinds.Macro,         'CmpItemKindMacro',        },
-            --     [300] = { 'Text',          vim.g.cmp_kinds.Text,          'CmpItemKindText',         },
-            --     [301] = { 'Snippet',       vim.g.cmp_kinds.Snippet,       'CmpItemKindSnippet',      },
-            --     [302] = { 'Folder',        vim.g.cmp_kinds.Folder,        'CmpItemKindFolder',       },
-            --     [303] = { 'Unit',          vim.g.cmp_kinds.Unit,          'CmpItemKindUnit',         },
-            --     [304] = { 'Value',         vim.g.cmp_kinds.Value,         'CmpItemKindValue',        },
-            -- }, -- TODO: custom kinds from globals
+        ui = {
+            border      = 'rounded',
+            code_action = Icons.code_action,
+            collapse    = Icons.collapse,
+            diagnostic  = Icons.diagnostic,
+            expand      = Icons.expand,
+            hover       = Icons.hover,
+            incoming    = Icons.incoming,
+            outgoing    = Icons.outgoing,
+            preview     = Icons.preview,
+            theme       = 'round',
+            title       = true,
+            winblend    = 20,
+            kind = {
+                Array         = { Icons.Array,         'CmpItemKindArray',        },
+                Boolean       = { Icons.Boolean,       'CmpItemKindBoolean',      },
+                Class         = { Icons.Class,         'CmpItemKindClass',        },
+                Constant      = { Icons.Constant,      'CmpItemKindConstant',     },
+                Constructor   = { Icons.Constructor,   'CmpItemKindConstructor',  },
+                Enum          = { Icons.Enum,          'CmpItemKindEnum',         },
+                EnumMember    = { Icons.EnumMember,    'CmpItemKindEnumMember',   },
+                Event         = { Icons.Event,         'CmpItemKindEvent',        },
+                Field         = { Icons.Field,         'CmpItemKindField',        },
+                File          = { Icons.File,          'CmpItemKindFile',         },
+                Folder        = { Icons.Folder,        'CmpItemKindFolder',       },
+                Function      = { Icons.Function,      'CmpItemKindFunction',     },
+                Interface     = { Icons.Interface,     'CmpItemKindInterface',    },
+                Key           = { Icons.Key,           'CmpItemKindKey',          },
+                Macro         = { Icons.Macro,         'CmpItemKindMacro',        },
+                Method        = { Icons.Method,        'CmpItemKindMethod',       },
+                Module        = { Icons.Module,        'CmpItemKindModule',       },
+                Namespace     = { Icons.Namespace,     'CmpItemKindNamespace',    },
+                Null          = { Icons.Null,          'CmpItemKindNull',         },
+                Number        = { Icons.Number,        'CmpItemKindNumber',       },
+                Object        = { Icons.Object,        'CmpItemKindObject',       },
+                Operator      = { Icons.Operator,      'CmpItemKindOperator',     },
+                Package       = { Icons.Package,       'CmpItemKindPackage',      },
+                Parameter     = { Icons.Parameter,     'CmpItemKindParameter',    },
+                Property      = { Icons.Property,      'CmpItemKindProperty',     },
+                Snippet       = { Icons.Snippet,       'CmpItemKindSnippet',      },
+                StaticMethod  = { Icons.StaticMethod,  'CmpItemKindStaticMethod', },
+                String        = { Icons.String,        'CmpItemKindString',       },
+                Struct        = { Icons.Struct,        'CmpItemKindStruct',       },
+                Text          = { Icons.Text,          'CmpItemKindText',         },
+                TypeAlias     = { Icons.TypeAlias,     'CmpItemKindTypeAlias',    },
+                TypeParameter = { Icons.TypeParameter, 'CmpItemKindTypeParameter',},
+                Unit          = { Icons.Unit,          'CmpItemKindUnit',         },
+                Value         = { Icons.Value,         'CmpItemKindValue',        },
+                Variable      = { Icons.Variable,      'CmpItemKindVariable',     },
+            },
         }
     }
 }
@@ -2339,12 +2358,13 @@ AddPlugin {
 AddPlugin {
     'j-hui/fidget.nvim',
     opts = {
-        text = { -- TODO: GLOBALICON
-            done = '陼',
+        text = {
+            done = Icons.FidgetDone,
             spinner = 'arc'
         }
     },
-    event = 'LspAttach'
+    event = 'LspAttach',
+    tag = 'legacy'
 }
 
 AddPlugin {
@@ -2582,7 +2602,6 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
-    -- TODO: Silence bookmark addition/removal
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function() -- TODO: GLOBALICON
@@ -2857,6 +2876,7 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/aaditeynair/conduct.nvim
     -- BUG: DeleteSession called twice gives error
     -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
     -- BUG: Fix path shown in notifications
@@ -2980,7 +3000,7 @@ AddPlugin {
         --             winbar = {},
         --         },
                 ignore_focus = { 'NvimTree' },
-        --         always_divide_middle = true,
+                always_divide_middle = false,
                 globalstatus = true,
                 refresh = {
                     statusline = 1000,
@@ -3010,10 +3030,15 @@ AddPlugin {
                         end
                     },
                     {
-                        'diff', -- TODO: change icons to global
+                        'diff',
                         on_click = function()
                             vim.cmd('Telescope git_status') -- BUG: fix the cwd issue
-                        end
+                        end,
+                        symbols = { -- TODO: GLOBALICON
+                            added = '+',
+                            modified = '~',
+                            removed = '-'
+                        }
                     },
                     {
                         'diagnostics',
@@ -3058,7 +3083,8 @@ AddPlugin {
                     {
                         'g:ColoRand',
                         color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Number', true).foreground), gui ='bold' },
-                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}}
+                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
+                        padding = { left = 0, right = 1 }
                     },
                     {
                         'hostname',
@@ -3073,6 +3099,7 @@ AddPlugin {
                             return alias[str] or str
                         end,
                         icon = { '', color = { fg = '#3066BE' }}, -- TODO: GLOBALICON
+                        padding = { left = 0, right = 1 }
                     },
                     {
                         'searchcount',
@@ -3081,12 +3108,14 @@ AddPlugin {
                             return string.sub(str, 2, -2)
                         end,
                         icon = {'󰱽', color = {fg = '#EAC435'}}, -- TODO: GLOBALICON
+                        padding = { left = 0, right = 1 },
                         separator = ''
                     },
                     {
                         'selectioncount',
                         color = { fg = '#BA2C73' },
                         icon = { '', color = { fg = '#963484' }}, -- TODO: GLOBALICON
+                        padding = { left = 0, right = 1 },
                         separator = ''
                     },
                     {
@@ -3097,7 +3126,8 @@ AddPlugin {
                                 str = str .. '-bom'
                             end
                             return string.gsub(str, 'utf', 'U')
-                        end
+                        end,
+                        padding = { left = 0, right = 1 }
                     }
                 },
                 lualine_y = {
@@ -3279,7 +3309,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: padded dropdown menu https://github.com/nvim-telescope/telescope.nvim/wiki/Gallery#padded-dropdown-menu-in-norcallis-blue
     -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
@@ -3684,7 +3713,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: change animation speed
     'tamton-aquib/flirt.nvim',
     opts = {
         override_open = true, -- experimental
@@ -3809,7 +3837,7 @@ AddPlugin {
     }
 }
 
--- TODO: use 'jbyuki/instant.nvim'
+-- 'jbyuki/instant.nvim'
 
 -- TODO: OPTIMIZE and enable
 AddPlugin {
@@ -4027,14 +4055,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
--- FEAT: https://github.com/aaditeynair/conduct.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
--- FEAT: https://github.com/niuiic/cp-image.nvim
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
@@ -4046,7 +4072,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: insert.txt
 -- TODO: marks
 -- TODO: motion.txt
--- TODO: vimgrep, grep
 -- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
