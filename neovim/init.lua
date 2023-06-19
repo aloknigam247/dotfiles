@@ -3399,6 +3399,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/echasnovski/mini.splitjoin
     'Wansmer/treesj',
     cmd = 'TSJToggle',
     opts = {
@@ -4057,7 +4058,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/echasnovski/mini.nvim
--- FEAT: https://github.com/echasnovski/mini.splitjoin
 -- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
