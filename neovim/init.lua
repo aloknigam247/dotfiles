@@ -128,6 +128,10 @@ function IconGenerator(_, key)
         hover         = ' ',
         symlink_arrow = ' 壟 ',
         FidgetDone    = '󰚔',
+        file_modified = '',
+        file_readonly = '',
+        file_unnamed  = '',
+        file_newfile  = '',
     }
 
     -- print("Access to", key)
@@ -697,7 +701,7 @@ AddPlugin {
             todo    = { 'Keyword', '#1B998B' },
             warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
         },
-        keywords = { -- TODO: GLOBALICON
+        keywords = {
             DOCME  = { icon = '', color = 'docs' },
             FEAT   = { icon = '󱩑', color = 'feat' },
             FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
@@ -898,7 +902,6 @@ AddPlugin { 'atelierbram/Base2Tone-nvim',       event = 'User base2tone'        
 AddPlugin { 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                             }
-AddPlugin { 'ray-x/aurora',                     event = 'User aurora'                                              }
 AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                           }
 AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
@@ -968,7 +971,6 @@ Dark  { 'PaperColor',                 '_',           post = FixNontext }
 Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'                              }
 Light { 'adwaita',                    '_'                              }
-Dark  { 'aurora',                     '_'                              }
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
@@ -995,7 +997,6 @@ Dark  { 'deepocean',                  'starry',      pre = function() FixStarry(
 Light { 'delek',                      '_'                                                                 }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
 Dark  { 'doubletrouble',              '_'                                                                 }
-Dark  { 'dracula_blood',              'starry',      pre = function() FixStarry('#322738', '#54415e') end }
 Dark  { 'duskfox',                    'nightfox'                                                          }
 Dark  { 'earlysummer',                'starry',      pre = function() FixStarry('#3f2b4c', '#694980') end }
 Dark  { 'edge',                       '_'                                                                 }
@@ -1533,10 +1534,10 @@ AddPlugin {
             root_folder_label = ':~:s?$?/..?',
             icons = {
                 git_placement = 'signcolumn',
-                glyphs = { -- TODO: GLOBALICON
+                glyphs = {
                     bookmark = '',
                     default  = '',
-                    folder = { -- TODO: GLOBALICON
+                    folder = {
                         arrow_closed = '',
                         arrow_open   = '',
                         default      = '',
@@ -1546,7 +1547,7 @@ AddPlugin {
                         symlink      = '',
                         symlink_open = '',
                     },
-                    git = { -- TODO: GLOBALICON
+                    git = {
                         deleted   = '󰧧',
                         ignored   = '',
                         renamed   = '➜',
@@ -2665,50 +2666,6 @@ AddPlugin {
 
 -- use 'nvim-orgmode/orgmode'
 -- https://github.com/ranjithshegde/orgWiki.nvim
-AddPlugin { -- TODO: use me
-    'lukas-reineke/headlines.nvim',
-    config = function() -- Specifies code to run after this plugin is loaded
-        --require("md-bullets").setup {
-        --symbols = {"", "", "✸", "✿", ""}
-        ------ or a function that receives the defaults and returns a list
-        ----symbols = function(default_list)
-            ----table.insert(default_list, "♥")
-            ----return default_list
-            ----end
-            --}
-        require("headlines").setup {
-            markdown = {
-                headline_highlights = { "Headline1", "Headline2" },
-                codeblock_highlight = "CodeBlock",
-                dash_highlight = "Dash",
-                fat_headlines = true,
-                fat_headline_upper_string = "..",
-                fat_headline_lower_string = "━",
-            },
-            rmd = {
-                headline_highlights = { "Headline1", "Headline2" },
-                codeblock_sign = "CodeBlock",
-                dash_highlight = "Dash",
-                fat_headlines = true,
-            },
-            vimwiki = {
-                headline_highlights = { "Headline1", "Headline2" },
-                codeblock_highlight = "CodeBlock",
-                dash_highlight = "Dash",
-                fat_headlines = true,
-            },
-            org = {
-                headline_highlights = { "Headline1", "Headline2" },
-                codeblock_highlight = "CodeBlock",
-                dash_highlight = "Dash",
-                fat_headlines = true,
-            },
-        }
-    end,
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    ft = 'markdown',
-    enabled = false --  TODO: enable
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- |-----------------+-----------------------------------------------------------|
@@ -2993,7 +2950,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '⏽', right = ''}, -- TODO: GLOBALICON
+                component_separators = { left = '⏽', right = ''},
                 section_separators = { left = '', right = ''},
         --         disabled_filetypes = {
         --             statusline = {},
@@ -3017,7 +2974,7 @@ AddPlugin {
                             return str:sub(1,1)
                         end,
                         padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' } -- TODO: GLOBALICON
+                        separator = { left = '', right = '' }
                     }
                 },
                 lualine_b = {
@@ -3071,11 +3028,11 @@ AddPlugin {
                         end,
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = { -- TODO: GLOBALICON
-                            modified = '', -- Text to show when the file is modified.
-                            readonly = '', -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = '', -- Text to show for unnamed buffers.
-                            newfile  = '', -- Text to show for new created file before first writting
+                        symbols = {
+                            modified = Icons.file_modified, -- Text to show when the file is modified.
+                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
+                            unnamed  = Icons.file_unnamed,  -- Text to show for unnamed buffers.
+                            newfile  = Icons.file_newfile   -- Text to show for new created file before first writting
                         }
                     }
                 },
@@ -3098,7 +3055,7 @@ AddPlugin {
                             }
                             return alias[str] or str
                         end,
-                        icon = { '', color = { fg = '#3066BE' }}, -- TODO: GLOBALICON
+                        icon = { '', color = { fg = '#3066BE' }},
                         padding = { left = 0, right = 1 }
                     },
                     {
@@ -3107,14 +3064,14 @@ AddPlugin {
                         fmt = function(str)
                             return string.sub(str, 2, -2)
                         end,
-                        icon = {'󰱽', color = {fg = '#EAC435'}}, -- TODO: GLOBALICON
+                        icon = {'󰱽', color = {fg = '#EAC435'}},
                         padding = { left = 0, right = 1 },
                         separator = ''
                     },
                     {
                         'selectioncount',
                         color = { fg = '#BA2C73' },
-                        icon = { '', color = { fg = '#963484' }}, -- TODO: GLOBALICON
+                        icon = { '', color = { fg = '#963484' }},
                         padding = { left = 0, right = 1 },
                         separator = ''
                     },
@@ -3133,7 +3090,7 @@ AddPlugin {
                 lualine_y = {
                     {
                         'g:session_icon',
-                        padding = { left = 1, right = 1 },
+                        padding = { left = 0, right = 1 },
                         separator = ''
                     },
                     {
@@ -3144,12 +3101,12 @@ AddPlugin {
                         on_click = function()
                             vim.cmd('LspInfo')
                         end,
-                        padding = { left = 1, right = 0 },
+                        padding = { left = 0, right = 1 },
                         separator = ''
                     },
                     {
                         function()
-                            if vim.o.wrap then -- TODO: GLOBALICON
+                            if vim.o.wrap then
                                 return '󰖶'
                             else
                                 return '󰯟'
@@ -3158,12 +3115,12 @@ AddPlugin {
                         on_click = function()
                             vim.cmd('set wrap!')
                         end,
-                        padding = { left = 1, right = 0 },
+                        padding = { left = 0, right = 1 },
                         separator = ''
                     },
                     {
                         'fileformat',
-                        padding = { left = 1, right = 2 },
+                        padding = { left = 0, right = 1 },
                     },
                 },
                 lualine_z = {
@@ -3207,10 +3164,10 @@ AddPlugin {
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
                         symbols = { -- TODO: GLOBALICON
-                            modified = '', -- Text to show when the file is modified.
-                            readonly = '', -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = '', -- Text to show for unnamed buffers.
-                            newfile  = '', -- Text to show for new created file before first writting
+                            modified = Icons.file_modified, -- Text to show when the file is modified.
+                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
+                            unnamed  = Icons.file_unnamed, -- Text to show for unnamed buffers.
+                            newfile  = Icons.file_newfile, -- Text to show for new created file before first writting
                         }
                     }
                 },
@@ -3273,7 +3230,7 @@ AddPlugin {
                 -- element consists of {filetype: string, path: string, extension: string, directory: string}
                 local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
                 if element.path == '[No Name]' then
-                    icon = '' -- TODO: GLOBALICON
+                    icon = Icons.file_newfile
                 end
                 return icon, hl
             end,
@@ -3399,6 +3356,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/CKolkey/ts-node-action
     -- https://github.com/echasnovski/mini.splitjoin
     'Wansmer/treesj',
     cmd = 'TSJToggle',
@@ -3485,7 +3443,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- FIX: checkhealth
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
@@ -3840,7 +3797,6 @@ AddPlugin {
 
 -- 'jbyuki/instant.nvim'
 
--- TODO: OPTIMIZE and enable
 AddPlugin {
     'gbprod/yanky.nvim',
     opts = {
@@ -3854,7 +3810,7 @@ AddPlugin {
             sync_with_ring = false,
         }
     },
-    lazy = true
+    lazy = false
 }
 
 AddPlugin {
@@ -4052,8 +4008,6 @@ vim.opt.runtimepath:prepend(lazypath)
 
 -- BUG: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
--- FEAT: https://github.com/CKolkey/ts-node-action
--- FEAT: https://github.com/LeonHeidelbach/trailblazer.nvim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/andythigpen/nvim-coverage
