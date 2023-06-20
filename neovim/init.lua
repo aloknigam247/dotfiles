@@ -518,8 +518,8 @@ vim.diagnostic.config({
         source = true
     },
     severity_sort = true,
-    virtual_text = { -- TODO: GLOBALICON
-        prefix = ' ',
+    virtual_text = {
+        prefix = ' ',
         source = true
     }
 })
@@ -1118,7 +1118,6 @@ Dark  { 'vn-night',                   '_',           post = function() FixLineNr
 Dark  { 'vscode',                     '_'                                                                   }
 Light { 'vscode',                     '_'                                                                   }
 Light { 'zellner',                    '_',           post = FixZellner                                      } -- BUG: sometimes does not work
-Dark  { 'zenburned',                  'zenbones'                                                            }
 Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
@@ -2416,7 +2415,7 @@ AddPlugin {
         -- TODO: review config
         width = 120; -- Width of the floating window
         height = 15; -- Height of the floating window
-        border = {"󱦵", "─" ,"╮", "│", "╯", "─", "╰", "│"}; -- Border characters of the floating window -- TODO: GLOBALICON
+        border = {"󱦵", Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window -- TODO: GLOBALICON
         default_mappings = false; -- Bind default mappings
         debug = false; -- Print debug information
         opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
@@ -3002,7 +3001,7 @@ AddPlugin {
                     {
                         'diff',
                         on_click = function()
-                            vim.cmd('Telescope git_status') -- BUG: fix the cwd issue
+                            vim.cmd('Telescope git_status')
                         end,
                         symbols = { -- TODO: GLOBALICON
                             added = '+',
@@ -4023,7 +4022,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
--- FEAT: https://github.com/andythigpen/nvim-coverage
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/kndndrj/nvim-dbee
