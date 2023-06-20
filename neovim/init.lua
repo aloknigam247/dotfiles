@@ -2367,7 +2367,6 @@ AddPlugin {
     }
 }
 
--- TODO: fix fidget warning
 AddPlugin {
     'j-hui/fidget.nvim',
     opts = {
