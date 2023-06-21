@@ -138,6 +138,8 @@ function IconGenerator(_, key)
         border_topright = '╮',
         border_botleft  = '╰',
         border_botright = '╯',
+        bookmark = '󰃃',
+        bookmark_annotate = ' 󰃄',
     }
 
     -- print("Access to", key)
@@ -2616,15 +2618,15 @@ AddPlugin {
 AddPlugin {
     -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
-    config = function() -- TODO: GLOBALICON
+    config = function()
         vim.cmd[[
-            let g:bookmark_annotation_sign = ''
+            let g:bookmark_annotation_sign = Icons.bookmark_annotate
             let g:bookmark_display_annotation = 1
             let g:bookmark_highlight_lines = 1
             let g:bookmark_location_list = 1
             let g:bookmark_no_default_key_mappings = 1
             let g:bookmark_save_per_working_dir = 1
-            let g:bookmark_sign = ''
+            let g:bookmark_sign = Icons.bookmark
             nmap ba <Plug>BookmarkAnnotate
             nmap bm <Plug>BookmarkToggle
             nmap bn <Plug>BookmarkNext
@@ -3196,11 +3198,11 @@ AddPlugin {
                         newfile_status = true,   -- Display new file status (new file means no write after created)
                         path = 3,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = { -- TODO: GLOBALICON
-                            modified = '', -- Text to show when the file is modified.
-                            readonly = '', -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = '', -- Text to show for unnamed buffers.
-                            newfile  = '', -- Text to show for new created file before first writting
+                        symbols = {
+                            modified = Icons.file_modified, -- Text to show when the file is modified.
+                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
+                            unnamed  = Icons.file_unnamed, -- Text to show for unnamed buffers.
+                            newfile  = Icons.file_newfile, -- Text to show for new created file before first writting
                         }
                     }
                 },
