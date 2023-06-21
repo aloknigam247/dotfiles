@@ -1017,7 +1017,6 @@ Dark  { 'earlysummer',                'starry',      pre = function() FixStarry(
 Dark  { 'edge',                       '_'                                                                 }
 Light { 'edge',                       '_'                                                                 }
 Dark  { 'embark',                     '_'                                                                 }
-Dark  { 'emerald',                    'starry',      pre = function() FixStarry('#1a391d', '#2c5f31') end }
 Dark  { 'enfocado',                   '_'                                                                 }
 Light { 'enfocado',                   '_'                                                                 }
 Dark  { 'everforest',                 '_'                                                                 }
@@ -1675,6 +1674,7 @@ vim.api.nvim_create_autocmd(
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: work on it
 AddPlugin {
+    -- https://github.com/snelling-a/better-folds.nvim
     'anuvyklack/pretty-fold.nvim',
     -- cond = function()
     --     return vim.o.foldmethod == 'marker'
@@ -4030,7 +4030,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
--- FEAT: https://github.com/snelling-a/better-folds.nvim
 -- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
