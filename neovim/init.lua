@@ -756,10 +756,15 @@ AddPlugin {
 --     config = true
 -- }
 
--- BUG: not working for 2 windows
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
     opts = {
+        create_event = function()
+            local win_n = require("colorful-winsep.utils").calculate_number_windows()
+            if win_n == 2 then
+              require("colorful-winsep").NvimSeparatorDel()
+            end
+        end,
         symbols = {
             Icons.border_hor,
             Icons.border_vert,
@@ -1412,7 +1417,6 @@ AddPlugin {
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: fix view.mappings.list notification
 AddPlugin {
     -- TODO: review config help
     'nvim-tree/nvim-tree.lua',
@@ -1522,7 +1526,14 @@ AddPlugin {
             show_on_open_dirs = true
         },
         notify = { threshold = vim.log.levels.INFO },
-        on_attach = 'disable',
+        on_attach = function(bufnr)
+            local function opts(desc)
+              return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+            end
+
+            local api = require('nvim-tree.api')
+            vim.keymap.set('n', '<C-s>', api.node.open.horizontal, opts('Open in split'))
+        end,
         prefer_startup_root = false,
         reload_on_bufenter = false,
         renderer = {
@@ -1637,9 +1648,6 @@ AddPlugin {
             hide_root_folder = false,
             mappings = {
                 custom_only = false,
-                list = {
-                    { key = '<C-s>', action = 'split'}
-                },
             },
             number = false,
             preserve_window_proportions = false,
@@ -2736,7 +2744,7 @@ AddPlugin {
         auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
         auto_fold = false, -- automatically fold a file trouble list at creation
         auto_jump = { 'lsp_definitions' }, -- for the given modes, automatically jump if there is only a single result
-        signs = { -- TODO: GLOBALICON
+        signs = {
             error = Icons.error,
             hint = Icons.hint,
             information = Icons.info,
@@ -3980,9 +3988,9 @@ AddPlugin {
     'tversteeg/registers.nvim',
     opts = {
         register_user_command = false,
-        show = "*+\"-/_=0123456789abcdefghijklmnopqrstuvwxyz",
+        show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
         show_empty = false,
-        symbols = { tab = '»' },
+        symbols = { newline = '', tab = '»' },
         trim_whitespace = false,
         window = { border = 'rounded' }
     },
@@ -4030,7 +4038,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
--- FEAT: https://github.com/tenxsoydev/karen-yank.nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: change.txt
