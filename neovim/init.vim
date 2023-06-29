@@ -103,6 +103,7 @@ map <C-Left> b
 map <C-Right> e
 map <C-S-Left> B
 map <C-S-Right> E
+map <BS> X
 " usefull mapping
 " gq format lines
 " gw format lines with cursor remains at same place
