@@ -3969,7 +3969,7 @@ AddPlugin {
     cmd = 'Diffthis'
 }
 
-AddPlugin {
+AddPlugin { -- TODO: use [p ]p mappings
     'sickill/vim-pasta',
     lazy = false -- PERF: lazy load
 }
@@ -4040,7 +4040,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
--- TODO: change.txt
 -- TODO: insert.txt
 -- TODO: marks
 -- TODO: motion.txt
