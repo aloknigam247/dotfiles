@@ -171,7 +171,7 @@ LazyConfig = {
     -- leave nil when passing the spec as the first argument to setup()
     spec = nil, ---@type LazySpec
     lockfile = vim.fn.stdpath('config') .. '/lazy-lock.json', -- lockfile generated after running update.
-    concurrency = nil, ---@type number limit the maximum amount of concurrent tasks
+    concurrency = jit.os:find("Windows") and (vim.loop.available_parallelism() * 2) or nil, ---@type number limit the maximum amount of concurrent tasks
     git = {
         -- defaults for the `Lazy log` command
         log = { '-10' }, -- show the last 10 commits
@@ -3698,7 +3698,7 @@ AddPlugin {
         close_command = 'Q',
         default_move_mappings = false,
         default_resize_mappings = true,
-        default_mouse_mappings = false,  -- FIX: Drag floats with mouse
+        default_mouse_mappings = true,
         exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator', 'lspsagafinder' },
         custom_filter = function(buffer, _)
             return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
