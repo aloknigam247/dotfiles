@@ -2645,7 +2645,6 @@ AddPlugin {
     keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
 }
 
--- FEAT: https://github.com/ThePrimeagen/harpoon
 -- FEAT: https://github.com/cbochs/grapple.nvim
 AddPlugin {
     'kshenoy/vim-signature',
