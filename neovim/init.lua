@@ -3903,7 +3903,7 @@ AddPlugin { -- FIX: resolve usage
             GitSignsDelete          = builtin.gitsigns_click,
             gitsigns_extmark_signs_ = builtin.gitsigns_click,
         },
-    } 
+    }
 end
 }
 
@@ -4041,7 +4041,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: insert.txt
--- TODO: marks
 -- TODO: motion.txt
 -- TODO: vsplit or split file opener like find command
 
