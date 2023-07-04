@@ -629,6 +629,7 @@ AddPlugin {
 -- https://github.com/echasnovski/mini.hipatterns THOUGHT: use for links ?
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
+    -- https://github.com/nullchilly/fsread.nvim
     'JellyApple102/easyread.nvim',
     cmd = 'EasyreadToggle',
     opts = {
@@ -917,72 +918,75 @@ local function Light(opts)
     opts.bg = 'light'
     table.insert(colos, opts)
 end
-
-AddPlugin { 'atelierbram/Base2Tone-nvim',       event = 'User base2tone'                                           }
-AddPlugin { 'maxmx03/FluoroMachine.nvim',       event = 'User fluoromachine'                                       }
-AddPlugin { 'Tsuzat/NeoSolarized.nvim',         event = 'User NeoSolarized'                                        }
-AddPlugin { 'Mofiqul/adwaita.nvim',             event = 'User adwaita'                                             }
-AddPlugin { 'w3barsi/barstrata.nvim',           event = 'User barstrata'                                           }
-AddPlugin { 'uloco/bluloco.nvim',               event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'lalitmee/cobalt2.nvim',            event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
-AddPlugin { 'igorgue/danger',                   event = 'User danger'                                              }
-AddPlugin { 'LunarVim/darkplus.nvim',           event = 'User darkplus'                                            }
-AddPlugin { 'decaycs/decay.nvim',               event = 'User decay'                                               }
-AddPlugin { 'muchzill4/doubletrouble',          event = 'User doubletrouble'                                       }
-AddPlugin { 'sainnhe/edge',                     event = 'User edge'                                                }
-AddPlugin { 'sainnhe/everforest',               event = 'User everforest'                                          }
-AddPlugin { 'fenetikm/falcon',                  event = 'User falcon'                                              }
-AddPlugin { 'projekt0n/github-nvim-theme',      event = 'User github'                                              }
-AddPlugin { 'luisiacc/gruvbox-baby',            event = 'User gruvbox-baby'                                        }
-AddPlugin { 'ellisonleao/gruvbox.nvim',         event = 'User gruvbox'                                             }
-AddPlugin { 'rebelot/kanagawa.nvim',            event = 'User kanagawa'                                            }
-AddPlugin { 'lmburns/kimbox',                   event = 'User kimbox'                                              }
-AddPlugin { 'marko-cerovac/material.nvim',      event = 'User material'                                            }
-AddPlugin { 'savq/melange',                     event = 'User melange'                                             }
-AddPlugin { 'loctvl842/monokai-pro.nvim',       event = 'User monokai-pro'                                         }
-AddPlugin { 'rafamadriz/neon',                  event = 'User neon'                                                }
-AddPlugin { 'rose-pine/neovim',                 event = 'User rose-pine'                                           }
-AddPlugin { 'Shatur/neovim-ayu',                event = 'User ayu'                                                 }
-AddPlugin { 'EdenEast/nightfox.nvim',           event = 'User nightfox'                                            }
-AddPlugin { 'talha-akram/noctis.nvim',          event = 'User noctis'                                              }
-AddPlugin { 'gbprod/nord.nvim',                 event = 'User nord'                                                }
-AddPlugin { 'AlexvZyl/nordic.nvim',             event = 'User nordic'                                              }
-AddPlugin { 'catppuccin/nvim',                  event = 'User catppuccin'                                          }
-AddPlugin { 'RRethy/nvim-base16',               event = 'User base16'                                              }
-AddPlugin { 'theniceboy/nvim-deus',             event = 'User deus'                                                }
-AddPlugin { 'kaiuri/nvim-juliana',              event = 'User juliana'                                             }
-AddPlugin { 'mhartington/oceanic-next',         event = 'User OceanicNext'                                         }
-AddPlugin { 'Yazeed1s/oh-lucy.nvim',            event = 'User oh-lucy'                                             }
-AddPlugin { 'Th3Whit3Wolf/one-nvim',            event = 'User one-nvim'                                            }
-AddPlugin { 'cpea2506/one_monokai.nvim',        event = 'User one_monokai'                                         }
-AddPlugin { 'olimorris/onedarkpro.nvim',        event = 'User onedarkpro'                                          }
-AddPlugin { 'rmehri01/onenord.nvim',            event = 'User onenord'                                             }
-AddPlugin { 'nyoom-engineering/oxocarbon.nvim', event = 'User oxocarbon'                                           }
-AddPlugin { 'JoosepAlviste/palenightfall.nvim', event = 'User palenightfall'                                       }
-AddPlugin { 'NLKNguyen/papercolor-theme',       event = 'User PaperColor'                                          }
-AddPlugin { 'Scysta/pink-panic.nvim',           event = 'User pink-panic', dependencies = 'rktjmp/lush.nvim'       }
-AddPlugin { 'lewpoly/sherbet.nvim',             event = 'User sherbet'                                             }
-AddPlugin { 'sainnhe/sonokai',                  event = 'User sonokai'                                             }
-AddPlugin { 'pineapplegiant/spaceduck',         event = 'User spaceduck',                                          }
-AddPlugin { 'ray-x/starry.nvim',                event = 'User starry'                                              }
-AddPlugin { 'kvrohit/substrata.nvim',           event = 'User substrata'                                           }
-AddPlugin { 'NTBBloodbath/sweetie.nvim',        event = 'User sweetie'                                             }
-AddPlugin { 'jsit/toast.vim',                   event = 'User toast'                                               }
-AddPlugin { 'tiagovla/tokyodark.nvim',          event = 'User tokyodark'                                           }
-AddPlugin { 'folke/tokyonight.nvim',            event = 'User tokyonight'                                          }
-AddPlugin { 'askfiy/visual_studio_code',        event = 'User visual_studio_code'                                  }
-AddPlugin { 'embark-theme/vim',                 event = 'User embark'                                              }
-AddPlugin { 'tomasiser/vim-code-dark',          event = 'User codedark'                                            }
-AddPlugin { 'wuelnerdotexe/vim-enfocado',       event = 'User enfocado'                                            }
-AddPlugin { 'ntk148v/vim-horizon',              event = 'User horizon'                                             }
-AddPlugin { 'sickill/vim-monokai',              event = 'User vim-monokai'                                         }
-AddPlugin { 'bluz71/vim-moonfly-colors',        event = 'User moonfly'                                             }
-AddPlugin { 'bluz71/vim-nightfly-colors',       event = 'User nightfly'                                            }
-AddPlugin { 'nxvu699134/vn-night.nvim',         event = 'User vn-night'                                            }
-AddPlugin { 'Mofiqul/vscode.nvim',              event = 'User vscode'                                              }
-AddPlugin { 'mcchrish/zenbones.nvim',           event = 'User zenbones', dependencies = 'rktjmp/lush.nvim'         }
-AddPlugin { 'glepnir/zephyr-nvim',              event = 'User zephyr'                                              }
-AddPlugin { 'titanzero/zephyrium',              event = 'User zephyrium'                                           }
+-- FEAT: Transparent variants
+AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
+AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
+AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
+AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
+AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
+AddPlugin { 'w3barsi/barstrata.nvim',                  event = 'User barstrata'                                           }
+AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'igorgue/danger',                          event = 'User danger'                                              }
+AddPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
+AddPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                            }
+AddPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                               }
+AddPlugin { 'muchzill4/doubletrouble',                 event = 'User doubletrouble'                                       }
+AddPlugin { 'sainnhe/edge',                            event = 'User edge'                                                }
+AddPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                          }
+AddPlugin { 'fenetikm/falcon',                         event = 'User falcon'                                              }
+AddPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              }
+AddPlugin { 'luisiacc/gruvbox-baby',                   event = 'User gruvbox-baby'                                        }
+AddPlugin { 'ellisonleao/gruvbox.nvim',                event = 'User gruvbox'                                             }
+AddPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                            }
+AddPlugin { 'lmburns/kimbox',                          event = 'User kimbox'                                              }
+AddPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                            }
+AddPlugin { 'savq/melange',                            event = 'User melange'                                             }
+AddPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
+AddPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
+AddPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
+AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
+AddPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                                 }
+AddPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                            }
+AddPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'                                              }
+AddPlugin { 'gbprod/nord.nvim',                        event = 'User nord'                                                }
+AddPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
+AddPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                          }
+AddPlugin { 'RRethy/nvim-base16',                      event = 'User base16'                                              }
+AddPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'                                                }
+AddPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                             }
+AddPlugin { 'mhartington/oceanic-next',                event = 'User OceanicNext'                                         }
+AddPlugin { 'Yazeed1s/oh-lucy.nvim',                   event = 'User oh-lucy'                                             }
+AddPlugin { 'Th3Whit3Wolf/one-nvim',                   event = 'User one-nvim'                                            }
+AddPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai'                                         }
+AddPlugin { 'olimorris/onedarkpro.nvim',               event = 'User onedarkpro'                                          }
+AddPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                             }
+AddPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                           }
+AddPlugin { 'JoosepAlviste/palenightfall.nvim',        event = 'User palenightfall'                                       }
+AddPlugin { 'NLKNguyen/papercolor-theme',              event = 'User PaperColor'                                          }
+AddPlugin { 'Scysta/pink-panic.nvim',                  event = 'User pink-panic', dependencies = 'rktjmp/lush.nvim'       }
+AddPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                             }
+AddPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                             }
+AddPlugin { 'pineapplegiant/spaceduck',                event = 'User spaceduck',                                          }
+AddPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                              }
+AddPlugin { 'kvrohit/substrata.nvim',                  event = 'User substrata'                                           }
+AddPlugin { 'NTBBloodbath/sweetie.nvim',               event = 'User sweetie'                                             }
+AddPlugin { 'jsit/toast.vim',                          event = 'User toast'                                               }
+AddPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                           }
+AddPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                          }
+AddPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                                  }
+AddPlugin { 'embark-theme/vim',                        event = 'User embark'                                              }
+AddPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'                                            }
+AddPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
+AddPlugin { 'ntk148v/vim-horizon',                     event = 'User horizon'                                             }
+AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
+AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             }
+AddPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
+AddPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                            }
+AddPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                              }
+AddPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', dependencies = 'rktjmp/lush.nvim'         }
+AddPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'                                              }
+AddPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
 Dark  { 'NeoSolarized',               '_'                              }
 Light { 'NeoSolarized',               '_'                              }
@@ -994,6 +998,8 @@ Light { 'adwaita',                    '_'                              }
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'vulgaris' }) end  }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'multiplex' }) end }
 Dark  { 'barstrata',                  '_'                              }
 Light { 'base2tone_mall_light',       'base2tone'                      }
 Dark  { 'bluloco-dark',               '_'                              }
@@ -1006,6 +1012,7 @@ Dark  { 'catppuccin-mocha',           'catppuccin'                     }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
 Light { 'danger_light',               'danger',      post = FixNontext                                    }
+Dark  { 'darcula-solid',              '_'                                                                 }
 Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Dark  { 'dawnfox',                    'nightfox'                                                          }
@@ -1051,6 +1058,11 @@ Dark  { 'material',                   '_',           pre = function() vim.g.mate
 Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
+Dark  { 'mellifluous',                '_'                                                                                                                     }
+Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin'}) end                                }
+Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'mountain'}) end                              }
+Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
+Light { 'mellifluous',                '_'                                                                                                                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
@@ -1766,6 +1778,7 @@ AddPlugin {
 -- use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/linrongbin16/fzfx.vim
 -- FEAT: https://github.com/gfanto/fzf-lsp.nvim
 AddPlugin { -- BUG: not working
     'ojroques/nvim-lspfuzzy',
@@ -2062,7 +2075,7 @@ AddPlugin {
     cmd = 'Vista'
 }
 
-AddPlugin {
+AddPlugin { -- TODO: resolve usage with vim.lsp.inlay_hint()
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
     event = 'LspAttach',
@@ -2194,6 +2207,9 @@ AddPlugin {
                             Lua = {
                                 diagnostics = {
                                     globals = { 'bit', 'vim' }
+                                },
+                                hint = {
+                                    enable = true
                                 },
                                 -- workspace = {
                                 --     library = vim.api.nvim_get_runtime_file('', true)
@@ -2542,6 +2558,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/iamcco/markdown-preview.nvim
+-- FEAT: https://github.com/Zeioth/markmap.nvim
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -3149,7 +3166,7 @@ AddPlugin {
                         fmt = function(str)
                             return str:gsub("^%s+", ""):gsub("%s+", "")
                         end,
-                        icon = {'󰍒', align = 'right'},
+                        icon = {'󰍒', align = 'left'},
                         on_click = function ()
                             local satellite = require('satellite')
                             if satellite.enabled then
@@ -3742,7 +3759,8 @@ AddPlugin {
     cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
 }
 
--- https://github.com/TheSafdarAwan/find-extender.nvim
+-- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
+-- TODO: https://github.com/TobinPalmer/BetterGx.nvim
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
@@ -3782,10 +3800,15 @@ AddPlugin {
     ft = 'csv'
 }
 
+-- TODO: https://github.com/delphinus/dwm.nvim
+
 AddPlugin {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime'
 }
+
+-- TODO: https://github.com/ecthelionvi/NeoComposer.nvim
+-- TODO: https://github.com/folke/edgy.nvim
 
 AddPlugin {
     'folke/neodev.nvim',
@@ -3846,6 +3869,9 @@ AddPlugin {
     }
 }
 
+-- TODO: https://github.com/lewis6991/hover.nvim
+
+-- TODO: https://github.com/dstein64/nvim-scrollview
 AddPlugin {
     'lewis6991/satellite.nvim',
     cmd = 'SatelliteEnable',
@@ -3968,6 +3994,8 @@ AddPlugin {
     cmd = 'Diffthis'
 }
 
+-- FEAT: https://github.com/ryleelyman/latex.nvim
+
 AddPlugin { -- TODO: use [p ]p mappings
     'sickill/vim-pasta',
     lazy = false -- PERF: lazy load
@@ -3977,6 +4005,8 @@ AddPlugin {
     'shortcuts/no-neck-pain.nvim',
     cmd = 'NoNeckPain'
 }
+
+-- FEAT: https://github.com/tomiis4/hypersonic.nvim
 
 AddPlugin {
     'tummetott/reticle.nvim',
