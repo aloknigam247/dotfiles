@@ -761,8 +761,14 @@ AddPlugin {
         { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
     }
 }
--- FEAT: https://github.com/tzachar/highlight-undo.nvim
--- FEAT: https://github.com/yuki-yano/highlight-undo.nvim
+
+-- 'yuki-yano/highlight-undo.nvim',
+AddPlugin {
+    'tzachar/highlight-undo.nvim',
+    config = true,
+    name = 'undo1',
+    lazy = false
+}
 
 -- 'uga-rosa/ccc.nvim'
 -- <~>
@@ -2027,25 +2033,6 @@ AddPlugin {
     event = 'LspAttach'
 }
 
--- TODO: Resolve usage
-AddPlugin {
-    'liuchengxu/vista.vim',
-    config = function()
-        vim.cmd[[
-            let g:vista_default_executive = 'nvim_lsp'
-            let g:vista_icon_indent = ['╰─ ', '├─ ']
-            let g:vista#renderer#icons = g:cmp_kinds
-            " let g:vista#renderer#icons = {
-            "     \   'constant': '',
-            "     \   'class': '',
-            "     \   'function': '',
-            "     \   'variable': '',
-            "     \  }
-        ]]
-    end,
-    cmd = 'Vista'
-}
-
 AddPlugin { -- TODO: resolve usage with vim.lsp.inlay_hint()
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
@@ -2430,7 +2417,6 @@ AddPlugin {
     }
 }
 
--- TODO: resolve usage
 AddPlugin {
     'simrat39/symbols-outline.nvim',
     cmd = 'SymbolsOutline',
@@ -2512,7 +2498,7 @@ AddPlugin {
     }
 }
 
--- TODO: resolve usage
+-- TODO: icons
 AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
@@ -3267,7 +3253,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/axkirillov/easypick.nvim
+-- https://github.com/axkirillov/easypick.nvim
 AddPlugin {
     'crispgm/telescope-heading.nvim',
     config = function()
