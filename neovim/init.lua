@@ -690,6 +690,8 @@ AddPlugin {
 --     -- keys = { '<Leader>g' }
 -- }
 
+-- FEAT: https://github.com/folke/flash.nvim
+
 AddPlugin {
     'folke/lsp-colors.nvim',
     event = 'LspAttach'
@@ -795,6 +797,8 @@ AddPlugin {
         { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
     }
 }
+-- FEAT: https://github.com/tzachar/highlight-undo.nvim
+-- FEAT: https://github.com/yuki-yano/highlight-undo.nvim
 
 -- 'uga-rosa/ccc.nvim'
 -- <~>
@@ -919,10 +923,12 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 -- FEAT: Transparent variants
+-- FEAT: https://github.com/MetriC-DT/balance-theme.nvim
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
+AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             }
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
 AddPlugin { 'w3barsi/barstrata.nvim',                  event = 'User barstrata'                                           }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
@@ -943,6 +949,7 @@ AddPlugin { 'lmburns/kimbox',                          event = 'User kimbox'    
 AddPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                            }
 AddPlugin { 'savq/melange',                            event = 'User melange'                                             }
 AddPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
+AddPlugin { 'dasupradyumna/midnight.nvim',             event = 'User midnight'                                            }
 AddPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
 AddPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
 AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
@@ -998,6 +1005,7 @@ Light { 'adwaita',                    '_'                              }
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
+Light { 'balance',                    '_'                              }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'vulgaris' }) end  }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'multiplex' }) end }
 Dark  { 'barstrata',                  '_'                              }
@@ -1063,6 +1071,7 @@ Dark  { 'mellifluous',                '_',           pre = function() require('m
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'mountain'}) end                              }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
 Light { 'mellifluous',                '_'                                                                                                                     }
+Dark  { 'midnight',                   '_'                                                                                                                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
@@ -1132,7 +1141,7 @@ Dark  { 'tokyonight-night',           'tokyonight'                              
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
-Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end             }
+Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end             } -- FIX: comment hl
 Dark  { 'vscode',                     '_'                                                                   }
 Light { 'vscode',                     '_'                                                                   }
 Light { 'zellner',                    '_',           post = FixZellner                                      } -- BUG: sometimes does not work
@@ -2559,6 +2568,9 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/iamcco/markdown-preview.nvim
 -- FEAT: https://github.com/Zeioth/markmap.nvim
+-- FEAT: https://github.com/jmbuhr/otter.nvim
+-- FEAT: https://github.com/kiran94/maim.nvim
+-- FEAT: https://github.com/quarto-dev/quarto-nvim
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -3294,6 +3306,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/axkirillov/easypick.nvim
 AddPlugin {
     'crispgm/telescope-heading.nvim',
     config = function()
@@ -3479,6 +3492,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/sainnhe/edge
 AddPlugin {
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
@@ -3759,6 +3773,7 @@ AddPlugin {
     cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
 }
 
+-- TODO: https://github.com/ThePrimeagen/refactoring.nvim
 -- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
 -- TODO: https://github.com/TobinPalmer/BetterGx.nvim
 
@@ -4067,6 +4082,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
+-- FEAT: https://github.com/Bekaboo/dropbar.nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: insert.txt
