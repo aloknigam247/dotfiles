@@ -1,6 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 --TODO: order plugins
---DOCME: docs for some sections
 -- Variables
 -- ---------
 
@@ -74,7 +73,6 @@ function IconGenerator(_, key)
         list            = { '●', '', '', '' },
         loaded          = '',
         not_loaded      = '',
-        other           = 'o', -- TODO: new icon
         plugin          = ' ',
         runtime         = ' ',
         source          = ' ',
@@ -269,18 +267,6 @@ LazyConfig = {
 Plugins = {}
 
 SignOrder = {} -- TODO:
-
--- Lua Locals
--- local border_shape = {
---     { '╭', 'FloatBorder' },
---     { '─', 'FloatBorder' },
---     { '╮', 'FloatBorder' },
---     { '│', 'FloatBorder' },
---     { '╯', 'FloatBorder' },
---     { '─', 'FloatBorder' },
---     { '╰', 'FloatBorder' },
---     { '│', 'FloatBorder' },
--- }
 
 local kind_hl = { -- TODO: GLOBALICON
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
@@ -1088,7 +1074,6 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
-Light { 'shine',                      '_',           post = FixNontext                                      }
 Dark  { 'slate',                      '_',           post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
@@ -1113,7 +1098,7 @@ Light { 'visual_studio_code_light',   'visual_studio_code'                      
 Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end             } -- FIX: comment hl
 Dark  { 'vscode',                     '_'                                                                   }
 Light { 'vscode',                     '_'                                                                   }
-Light { 'zellner',                    '_',           post = FixZellner                                      } -- BUG: sometimes does not work
+Light { 'zellner',                    '_',           post = FixZellner                                      }
 Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
@@ -1410,7 +1395,6 @@ AddPlugin {
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
-    -- BUG: lazy load directory case
     opts = {
         actions = {
             change_dir = {
@@ -1534,7 +1518,7 @@ AddPlugin {
             highlight_modified = 'all',
             indent_markers = {
                 enable = true,
-                icons = { -- TODO: GLOBALICON
+                icons = {
                     bottom = '─',
                     corner = '╰',
                     edge   = '│',
@@ -1548,8 +1532,8 @@ AddPlugin {
             icons = {
                 git_placement = 'signcolumn',
                 glyphs = {
-                    bookmark = '',
-                    default  = '',
+                    bookmark = Icons.bookmark,
+                    default  = Icons.file_unnamed,
                     folder = {
                         arrow_closed = '',
                         arrow_open   = '',
@@ -1567,7 +1551,7 @@ AddPlugin {
                         staged    = '⏽',
                         unmerged  = '',
                         unstaged  = '󰇝',
-                        untracked = '',
+                        untracked = Icons.file_unnamed,
                     },
                     symlink = '󱅷',
                 },
@@ -1757,14 +1741,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/linrongbin16/fzfx.vim
 -- FEAT: https://github.com/gfanto/fzf-lsp.nvim
-AddPlugin { -- BUG: not working
-    'ojroques/nvim-lspfuzzy',
-    config = true,
-    dependencies = {
-        'junegunn/fzf',
-        'junegunn/fzf.vim'
-    }
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -2087,6 +2063,7 @@ AddPlugin {
             vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
             vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
             vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
+            vim.keymap.set('n', 'gp', require('goto-preview').goto_preview_definition, bufopts)
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
@@ -2107,7 +2084,8 @@ AddPlugin {
             PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
             PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
             PopupMenuAdd('Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>')
-            PopupMenuAdd('LSP Finder',                 '<Cmd>Lspsaga lsp_finder<CR>')
+            PopupMenuAdd('LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>')
+            PopupMenuAdd('Peek Definition        gp',  '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>')
             PopupMenuAdd('References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>')
             PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
             PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
@@ -2390,9 +2368,9 @@ AddPlugin {
     -- event = 'LspAttach'
 }
 
--- TODO: resolve usage
 AddPlugin {
     'rmagatti/goto-preview',
+    config = true,
     event = 'LspAttach', -- PERF: Reverse dependency
     opts = {
         -- TODO: review config
@@ -2517,7 +2495,6 @@ AddPlugin {
 -- https://github.com/iamcco/markdown-preview.nvim
 -- FEAT: https://github.com/Zeioth/markmap.nvim
 -- FEAT: https://github.com/kiran94/maim.nvim
--- FEAT: https://github.com/quarto-dev/quarto-nvim
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -2600,7 +2577,6 @@ AddPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 AddPlugin {
-    -- TODO: location of bookmark files
     'MattesGroeger/vim-bookmarks',
     config = function()
         vim.cmd[[
@@ -2723,7 +2699,7 @@ AddPlugin {
             error = Icons.error,
             hint = Icons.hint,
             information = Icons.info,
-            other = Icons.other,
+            other = Icons.diagnostic,
             warning = Icons.warn
         },
         use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
@@ -2768,7 +2744,17 @@ AddPlugin {
         require('bqf').setup {
             auto_resize_height = true,
             preview = {
-                border_chars = {'│', '│', '─', '─', '╭', '╮', '╰', '╯', '█'} -- TODO: GLOBALICON
+                border_chars = {
+                    Icons.border_vert,
+                    Icons.border_vert,
+                    Icons.border_hor,
+                    Icons.border_hor,
+                    Icons.border_topright,
+                    Icons.border_topright,
+                    Icons.border_botleft,
+                    Icons.border_botright,
+                    '█',
+                }
             },
             filter = {
                 fzf = {
@@ -2889,7 +2875,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: check for performance
--- REFACTOR: remove unwanted comments
 AddPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -2948,10 +2933,6 @@ AddPlugin {
                 theme = 'auto',
                 component_separators = { left = '⏽', right = ''},
                 section_separators = { left = '', right = ''},
-        --         disabled_filetypes = {
-        --             statusline = {},
-        --             winbar = {},
-        --         },
                 ignore_focus = { 'NvimTree' },
                 always_divide_middle = false,
                 globalstatus = true,
@@ -3152,14 +3133,21 @@ AddPlugin {
             winbar = {
                 lualine_a = {
                     {
-                        'filename', -- TODO: file icon
+                        'filetype',
+                        cond = function () return CountWin() > 1 end,
+                        icon_only = true,
+                        padding = { left = 1, right = 0 },
+                        separator = ''
+                    },
+                    {
+                        'filename',
                         color = { gui = 'italic' },
                         cond = function () return CountWin() > 1 end,
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = true,   -- Display new file status (new file means no write after created)
                         path = 0,                -- 0: Just the filename
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = { -- TODO: GLOBALICON
+                        symbols = {
                             modified = Icons.file_modified, -- Text to show when the file is modified.
                             readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
                             unnamed  = Icons.file_unnamed, -- Text to show for unnamed buffers.
@@ -3173,6 +3161,12 @@ AddPlugin {
             },
             inactive_winbar = {
                 lualine_a = {
+                    {
+                        'filetype',
+                        icon_only = true,
+                        padding = { left = 1, right = 0 },
+                        separator = ''
+                    },
                     {
                         'filename',
                         color = { gui = 'italic' },
@@ -3276,7 +3270,7 @@ AddPlugin {
                 file_sorter = require('telescope.sorters').get_fuzzy_file,
                 generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
                 initial_mode = 'insert',
-                multi_icon = ' ', -- TODO: GLOBALICON
+                multi_icon = ' ',
                 prompt_prefix = '  ',
                 selection_caret = ' ',
                 timeout = 2000,
@@ -3466,7 +3460,7 @@ AddPlugin {
                     -- opts: any options passed to the view
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
-                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''}, -- TODO: GLOBALICON
+                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''},
                     search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
@@ -3716,7 +3710,7 @@ AddPlugin {
     cmd = 'TmpcloneClone'
 }
 
--- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
+-- https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 AddPlugin {
     'LiadOz/nvim-dap-repl-highlights',
@@ -3730,7 +3724,13 @@ AddPlugin {
 
 -- TODO: https://github.com/ThePrimeagen/refactoring.nvim
 -- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
--- TODO: https://github.com/TobinPalmer/BetterGx.nvim
+
+AddPlugin {
+    'TobinPalmer/BetterGx.nvim',
+    keys = {
+        { 'gx', '<CMD>lua require("better-gx").BetterGx()<CR>' },
+    }
+}
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
@@ -3777,7 +3777,6 @@ AddPlugin {
     cmd = 'StartupTime'
 }
 
--- TODO: https://github.com/ecthelionvi/NeoComposer.nvim
 -- TODO: https://github.com/folke/edgy.nvim
 
 AddPlugin {
@@ -3825,6 +3824,8 @@ AddPlugin {
     },
     lazy = false
 }
+
+-- https://github.com/glacambre/firenvim
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
@@ -4040,7 +4041,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
--- FEAT: https://github.com/glacambre/firenvim
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
