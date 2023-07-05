@@ -5,45 +5,6 @@
 -- ---------
 
 -- Vim Globals
-vim.g.cmp_kinds = { -- TODO: GLOBALICON
-    Array         = ' ',
-    Boolean       = ' ',
-    Class         = ' ',
-    Color         = ' ',
-    Constant      = ' ',
-    Constructor   = ' ',
-    Enum          = ' ',
-    EnumMember    = ' ',
-    Event         = ' ',
-    Field         = ' ',
-    File          = ' ',
-    Folder        = '󰷏 ',
-    Function      = ' ',
-    History       = ' ',
-    Interface     = ' ',
-    Key           = ' ',
-    Keyword       = ' ',
-    Method        = ' ',
-    Module        = ' ',
-    Namespace     = 'ﬥ ',
-    Null          = ' ',
-    Number        = ' ',
-    Object        = ' ',
-    Operator      = ' ',
-    Options       = ' ',
-    Package       = ' ',
-    Property      = ' ',
-    Reference     = ' ',
-    Snippet       = ' ',
-    String        = ' ',
-    Struct        = ' ',
-    Text          = '󱄽 ',
-    TypeParameter = ' ',
-    Unit          = ' ',
-    Value         = ' ',
-    Variable      = ' '
-}
-
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
@@ -534,7 +495,7 @@ AddPlugin {
     cmd = 'TableModeEnable'
 }
 
--- FEAT: use 'echasnovski/mini.align'
+-- 'echasnovski/mini.align'
 
 AddPlugin {
     'junegunn/vim-easy-align',
@@ -626,7 +587,8 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/echasnovski/mini.hipatterns THOUGHT: use for links ?
+-- TODO: https://github.com/echasnovski/mini.hipatterns use instead of
+-- treesitter solution
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
     -- https://github.com/nullchilly/fsread.nvim
@@ -923,7 +885,6 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 -- FEAT: Transparent variants
--- FEAT: https://github.com/MetriC-DT/balance-theme.nvim
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
@@ -1231,7 +1192,7 @@ AddPlugin {
                     else
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
-                    local kind_symbol = vim.g.cmp_kinds[vim_item.kind]
+                    local kind_symbol = Icons[vim_item.kind]
                     vim_item.kind = kind_symbol or vim_item.kind
 
                     return vim_item
@@ -1525,7 +1486,7 @@ AddPlugin {
         hijack_unnamed_buffer_when_opening = false,
         live_filter = {
             always_show_folders = true,
-            prefix = '󰈲 ', -- TODO: GLOBALICON
+            prefix = '󰈲 ',
         },
         log = {
             enable = false,
@@ -2505,34 +2466,34 @@ AddPlugin {
         lsp_blacklist = {},
         symbol_blacklist = {},
         symbols = { -- TODO: GLOBALICON
-            Array         = { icon = vim.g.cmp_kinds.Array        , hl = 'CmpItemKindArray'         },
-            Boolean       = { icon = vim.g.cmp_kinds.Boolean      , hl = 'CmpItemKindBoolean'       },
-            Class         = { icon = vim.g.cmp_kinds.Class        , hl = 'CmpItemKindClass'         },
-            Component     = { icon = vim.g.cmp_kinds.Component    , hl = 'CmpItemKindComponent'     },
-            Constant      = { icon = vim.g.cmp_kinds.Constant     , hl = 'CmpItemKindConstant'      },
-            Constructor   = { icon = vim.g.cmp_kinds.Constructor  , hl = 'CmpItemKindConstructor'   },
-            Enum          = { icon = vim.g.cmp_kinds.Enum         , hl = 'CmpItemKindEnum'          },
-            EnumMember    = { icon = vim.g.cmp_kinds.EnumMember   , hl = 'CmpItemKindEnumMembe'     },
-            Event         = { icon = vim.g.cmp_kinds.Event        , hl = 'CmpItemKindEvent'         },
-            Field         = { icon = vim.g.cmp_kinds.Field        , hl = 'CmpItemKindField'         },
-            File          = { icon = vim.g.cmp_kinds.File         , hl = 'CmpItemKindFile'          },
-            Fragment      = { icon = vim.g.cmp_kinds.Fragment     , hl = 'CmpItemKindFragment'      },
-            Function      = { icon = vim.g.cmp_kinds.Function     , hl = 'CmpItemKindFunction'      },
-            Interface     = { icon = vim.g.cmp_kinds.Interface    , hl = 'CmpItemKindInterface'     },
-            Key           = { icon = vim.g.cmp_kinds.Key          , hl = 'CmpItemKindKey'           },
-            Method        = { icon = vim.g.cmp_kinds.Method       , hl = 'CmpItemKindMethod'        },
-            Module        = { icon = vim.g.cmp_kinds.Module       , hl = 'CmpItemKindModule'        },
-            Namespace     = { icon = vim.g.cmp_kinds.Namespace    , hl = 'CmpItemKindNamespace'     },
-            Null          = { icon = vim.g.cmp_kinds.Null         , hl = 'CmpItemKindNull'          },
-            Number        = { icon = vim.g.cmp_kinds.Number       , hl = 'CmpItemKindNumber'        },
-            Object        = { icon = vim.g.cmp_kinds.Object       , hl = 'CmpItemKindObject'        },
-            Operator      = { icon = vim.g.cmp_kinds.Operator     , hl = 'CmpItemKindOperator'      },
-            Package       = { icon = vim.g.cmp_kinds.Package      , hl = 'CmpItemKindPackage'       },
-            Property      = { icon = vim.g.cmp_kinds.Property     , hl = 'CmpItemKindProperty'      },
-            String        = { icon = vim.g.cmp_kinds.String       , hl = 'CmpItemKindString'        },
-            Struct        = { icon = vim.g.cmp_kinds.Struct       , hl = 'CmpItemKindStruct'        },
-            TypeParameter = { icon = vim.g.cmp_kinds.TypeParameter, hl = 'CmpItemKindTypeParameter' },
-            Variable      = { icon = vim.g.cmp_kinds.Variable     , hl = 'CmpItemKindVariable'      },
+            Array         = { icon = Icons.Array        , hl = 'CmpItemKindArray'         },
+            Boolean       = { icon = Icons.Boolean      , hl = 'CmpItemKindBoolean'       },
+            Class         = { icon = Icons.Class        , hl = 'CmpItemKindClass'         },
+            Component     = { icon = Icons.Component    , hl = 'CmpItemKindComponent'     },
+            Constant      = { icon = Icons.Constant     , hl = 'CmpItemKindConstant'      },
+            Constructor   = { icon = Icons.Constructor  , hl = 'CmpItemKindConstructor'   },
+            Enum          = { icon = Icons.Enum         , hl = 'CmpItemKindEnum'          },
+            EnumMember    = { icon = Icons.EnumMember   , hl = 'CmpItemKindEnumMembe'     },
+            Event         = { icon = Icons.Event        , hl = 'CmpItemKindEvent'         },
+            Field         = { icon = Icons.Field        , hl = 'CmpItemKindField'         },
+            File          = { icon = Icons.File         , hl = 'CmpItemKindFile'          },
+            Fragment      = { icon = Icons.Fragment     , hl = 'CmpItemKindFragment'      },
+            Function      = { icon = Icons.Function     , hl = 'CmpItemKindFunction'      },
+            Interface     = { icon = Icons.Interface    , hl = 'CmpItemKindInterface'     },
+            Key           = { icon = Icons.Key          , hl = 'CmpItemKindKey'           },
+            Method        = { icon = Icons.Method       , hl = 'CmpItemKindMethod'        },
+            Module        = { icon = Icons.Module       , hl = 'CmpItemKindModule'        },
+            Namespace     = { icon = Icons.Namespace    , hl = 'CmpItemKindNamespace'     },
+            Null          = { icon = Icons.Null         , hl = 'CmpItemKindNull'          },
+            Number        = { icon = Icons.Number       , hl = 'CmpItemKindNumber'        },
+            Object        = { icon = Icons.Object       , hl = 'CmpItemKindObject'        },
+            Operator      = { icon = Icons.Operator     , hl = 'CmpItemKindOperator'      },
+            Package       = { icon = Icons.Package      , hl = 'CmpItemKindPackage'       },
+            Property      = { icon = Icons.Property     , hl = 'CmpItemKindProperty'      },
+            String        = { icon = Icons.String       , hl = 'CmpItemKindString'        },
+            Struct        = { icon = Icons.Struct       , hl = 'CmpItemKindStruct'        },
+            TypeParameter = { icon = Icons.TypeParameter, hl = 'CmpItemKindTypeParameter' },
+            Variable      = { icon = Icons.Variable     , hl = 'CmpItemKindVariable'      },
         }
     }
 }
@@ -3087,12 +3048,6 @@ AddPlugin {
                 },
                 lualine_x = {
                     {
-                        'g:ColoRand',
-                        color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Number', true).foreground), gui ='bold' },
-                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
-                        padding = { left = 0, right = 1 }
-                    },
-                    {
                         'hostname',
                         color = { fg = '#119DA4', gui = 'bold' },
                         cond = function()
@@ -3123,6 +3078,12 @@ AddPlugin {
                         icon = { '', color = { fg = '#963484' }},
                         padding = { left = 0, right = 1 },
                         separator = ''
+                    },
+                    {
+                        'g:ColoRand',
+                        color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Number', true).foreground), gui ='bold' },
+                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
+                        padding = { left = 0, right = 1 }
                     },
                     {
                         'encoding',
@@ -3190,7 +3151,7 @@ AddPlugin {
                             end
                         end,
                         padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' } -- TODO: GLOBALICON
+                        separator = { left = '', right = '' }
                     }
                 }
             },
@@ -3316,7 +3277,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- FEAT: https://github.com/nvim-telescope/telescope-fzf-native.nvim
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     config = function()
@@ -3364,11 +3324,19 @@ AddPlugin {
                 heading = {
                     treesitter = true
                 },
+                fzf = {
+                    fuzzy = true,                    -- false will only do exact matching
+                    override_generic_sorter = true,  -- override the generic sorter
+                    override_file_sorter = true,     -- override the file sorter
+                    case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                    -- the default case_mode is "smart_case"
+                },
                 undo = {
                     side_by_side = true
                 }
             },
         })
+        telescope.load_extension('fzf')
         telescope.load_extension('undo')
         telescope.load_extension('vim_bookmarks')
         vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
@@ -3376,6 +3344,7 @@ AddPlugin {
     dependencies = {
         'debugloop/telescope-undo.nvim',
         'nvim-lua/plenary.nvim',
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
         {'tom-anders/telescope-vim-bookmarks.nvim', dependencies = 'MattesGroeger/vim-bookmarks'}
     }
 }
@@ -3924,28 +3893,30 @@ AddPlugin { -- FIX: resolve usage
             clickmod = "a",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
             clickhandlers = {       -- builtin click handlers
-            Lnum                    = builtin.lnum_click,
-            FoldClose               = builtin.foldclose_click,
-            FoldOpen                = builtin.foldopen_click,
-            FoldOther               = builtin.foldother_click,
-            DapBreakpointRejected   = builtin.toggle_breakpoint,
-            DapBreakpoint           = builtin.toggle_breakpoint,
-            DapBreakpointCondition  = builtin.toggle_breakpoint,
-            DiagnosticSignError     = builtin.diagnostic_click,
-            DiagnosticSignHint      = builtin.diagnostic_click,
-            DiagnosticSignInfo      = builtin.diagnostic_click,
-            DiagnosticSignWarn      = builtin.diagnostic_click,
-            GitSignsTopdelete       = builtin.gitsigns_click,
-            GitSignsUntracked       = builtin.gitsigns_click,
-            GitSignsAdd             = builtin.gitsigns_click,
-            GitSignsChange          = builtin.gitsigns_click,
-            GitSignsChangedelete    = builtin.gitsigns_click,
-            GitSignsDelete          = builtin.gitsigns_click,
-            gitsigns_extmark_signs_ = builtin.gitsigns_click,
-        },
-    }
-end
+                Lnum                    = builtin.lnum_click,
+                FoldClose               = builtin.foldclose_click,
+                FoldOpen                = builtin.foldopen_click,
+                FoldOther               = builtin.foldother_click,
+                DapBreakpointRejected   = builtin.toggle_breakpoint,
+                DapBreakpoint           = builtin.toggle_breakpoint,
+                DapBreakpointCondition  = builtin.toggle_breakpoint,
+                DiagnosticSignError     = builtin.diagnostic_click,
+                DiagnosticSignHint      = builtin.diagnostic_click,
+                DiagnosticSignInfo      = builtin.diagnostic_click,
+                DiagnosticSignWarn      = builtin.diagnostic_click,
+                GitSignsTopdelete       = builtin.gitsigns_click,
+                GitSignsUntracked       = builtin.gitsigns_click,
+                GitSignsAdd             = builtin.gitsigns_click,
+                GitSignsChange          = builtin.gitsigns_click,
+                GitSignsChangedelete    = builtin.gitsigns_click,
+                GitSignsDelete          = builtin.gitsigns_click,
+                gitsigns_extmark_signs_ = builtin.gitsigns_click,
+            },
+        }
+    end
 }
+
+-- https://github.com/kndndrj/nvim-dbee
 
 AddPlugin {
     'kylechui/nvim-surround',
@@ -4009,7 +3980,11 @@ AddPlugin {
     cmd = 'Diffthis'
 }
 
--- FEAT: https://github.com/ryleelyman/latex.nvim
+AddPlugin {
+    'ryleelyman/latex.nvim',
+    config = true,
+    ft = 'tex'
+}
 
 AddPlugin { -- TODO: use [p ]p mappings
     'sickill/vim-pasta',
@@ -4021,7 +3996,11 @@ AddPlugin {
     cmd = 'NoNeckPain'
 }
 
--- FEAT: https://github.com/tomiis4/hypersonic.nvim
+AddPlugin {
+    'tomiis4/hypersonic.nvim',
+    cmd = 'Hypersonic',
+    config = true
+}
 
 AddPlugin {
     'tummetott/reticle.nvim',
@@ -4077,7 +4056,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
 -- FEAT: https://github.com/glacambre/firenvim
--- FEAT: https://github.com/kndndrj/nvim-dbee
 -- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
