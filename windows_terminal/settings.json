@@ -19,10 +19,6 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": "unbound",
-            "keys": "ctrl+v"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -30,6 +26,10 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+v"
         },
         {
             "command": "toggleFocusMode",
@@ -149,7 +149,7 @@
             "brightRed": "#E74856",
             "brightWhite": "#F2F2F2",
             "brightYellow": "#F9F1A5",
-            "cursorColor": "#FFFFFF",
+            "cursorColor": "#FF1248",
             "cyan": "#3A96DD",
             "foreground": "#CCCCCC",
             "green": "#13A10E",
@@ -445,4 +445,3 @@
     "useAcrylicInTabRow": true,
     "windowingBehavior": "useNew"
 }
-

@@ -22,6 +22,7 @@ function IconGenerator(_, key)
         Boolean         = ' ',
         Class           = ' ',
         Color           = ' ',
+        Component       = ' ',
         Constant        = ' ',
         Constructor     = ' ',
         Enum            = ' ',
@@ -30,6 +31,7 @@ function IconGenerator(_, key)
         Field           = ' ',
         File            = ' ',
         Folder          = '󰷏 ',
+        Fragment        = ' ',
         Function        = ' ',
         History         = ' ',
         Interface       = ' ',
@@ -712,7 +714,7 @@ AddPlugin {
         )
     end,
     opts = {
-        render = 'foreground'
+        render = 'background'
     }
 }
 -- AddPlugin {
@@ -2464,7 +2466,7 @@ AddPlugin {
         },
         lsp_blacklist = {},
         symbol_blacklist = {},
-        symbols = { -- TODO: GLOBALICON
+        symbols = {
             Array         = { icon = Icons.Array        , hl = 'CmpItemKindArray'         },
             Boolean       = { icon = Icons.Boolean      , hl = 'CmpItemKindBoolean'       },
             Class         = { icon = Icons.Class        , hl = 'CmpItemKindClass'         },
