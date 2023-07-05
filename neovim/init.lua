@@ -1400,7 +1400,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: review config help
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
     -- BUG: lazy load directory case
@@ -1836,7 +1835,7 @@ AddPlugin {
         preview_config = {
             border = 'rounded'
         },
-        signs = { -- TODO: GLOBALICON
+        signs = {
             add          = { hl = 'GitSignsAdd'   ,       text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
             change       = { hl = 'GitSignsChange',       text = '󰇝', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
@@ -2410,7 +2409,7 @@ AddPlugin {
         -- TODO: review config
         width = 120; -- Width of the floating window
         height = 15; -- Height of the floating window
-        border = {"󱦵", Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window -- TODO: GLOBALICON
+        border = {"󱦵", Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window
         default_mappings = false; -- Bind default mappings
         debug = false; -- Print debug information
         opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
@@ -2529,7 +2528,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/iamcco/markdown-preview.nvim
 -- FEAT: https://github.com/Zeioth/markmap.nvim
--- FEAT: https://github.com/jmbuhr/otter.nvim
 -- FEAT: https://github.com/kiran94/maim.nvim
 -- FEAT: https://github.com/quarto-dev/quarto-nvim
 AddPlugin {
@@ -3375,6 +3373,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/AndrewRadev/splitjoin.vim
     -- https://github.com/CKolkey/ts-node-action
     -- https://github.com/echasnovski/mini.splitjoin
     'Wansmer/treesj',
@@ -3712,8 +3711,7 @@ vim.notify = function(msg, level, opt)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO relocalte utility plugins when done
--- FEAT: use 'AckslD/nvim-trevJ.lua'
+-- 'AckslD/nvim-trevJ.lua'
 -- FEAT: https://github.com/wellle/targets.vim
 AddPlugin { -- PERF: Very slow on large files
     'AckslD/muren.nvim',
@@ -4051,7 +4049,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- BUG: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
--- FEAT: https://github.com/AndrewRadev/splitjoin.vim
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
