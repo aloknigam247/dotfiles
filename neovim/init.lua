@@ -3722,7 +3722,14 @@ AddPlugin {
     cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
 }
 
--- TODO: https://github.com/ThePrimeagen/refactoring.nvim
+AddPlugin {
+    'ThePrimeagen/refactoring.nvim', -- TODO:
+    config = true,
+    dependencies = {
+        {'nvim-lua/plenary.nvim'},
+    }
+}
+
 -- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
 
 AddPlugin {
@@ -3840,7 +3847,7 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/lewis6991/hover.nvim
+-- https://github.com/lewis6991/hover.nvim
 
 -- TODO: https://github.com/dstein64/nvim-scrollview
 AddPlugin {
