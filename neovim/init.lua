@@ -720,7 +720,7 @@ AddPlugin {
             Icons.border_topright,
             Icons.border_botleft,
             Icons.border_botright,
-        }, -- TODO: GLOBALICON
+        },
     },
     event = 'WinNew'
 }
@@ -937,7 +937,6 @@ AddPlugin { 'NTBBloodbath/sweetie.nvim',               event = 'User sweetie'   
 AddPlugin { 'jsit/toast.vim',                          event = 'User toast'                                               }
 AddPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                           }
 AddPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                          }
-AddPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                                  }
 AddPlugin { 'embark-theme/vim',                        event = 'User embark'                                              }
 AddPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'                                            }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
@@ -945,6 +944,8 @@ AddPlugin { 'ntk148v/vim-horizon',                     event = 'User horizon'   
 AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
 AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             }
 AddPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
+AddPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                                  }
+AddPlugin { '2nthony/vitesse.nvim',                    event = 'User vitesse', dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                            }
 AddPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                              }
 AddPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', dependencies = 'rktjmp/lush.nvim'         }
@@ -962,8 +963,8 @@ Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
 Light { 'balance',                    '_'                              }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'vulgaris' }) end  }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'multiplex' }) end }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'vulgaris' }) end  }
 Dark  { 'barstrata',                  '_'                              }
 Light { 'base2tone_mall_light',       'base2tone'                      }
 Dark  { 'bluloco-dark',               '_'                              }
@@ -1023,10 +1024,10 @@ Dark  { 'material',                   'starry',      pre = function() FixStarry(
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
+Light { 'mellifluous',                '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin'}) end                                }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'mountain'}) end                              }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
-Light { 'mellifluous',                '_'                                                                                                                     }
 Dark  { 'midnight',                   '_'                                                                                                                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
@@ -1060,7 +1061,7 @@ Dark  { 'one-nvim',                   '_'            }
 Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
 Dark  { 'onedark_vivid',              'onedarkpro'   }
-Light { 'onelight',                   '_'            }
+Light { 'onelight',                   '_'            } -- Gitsigns colors
 Dark  { 'onenord',                    '_'            }
 Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
@@ -1096,6 +1097,7 @@ Dark  { 'tokyonight-night',           'tokyonight'                              
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
+Dark  { 'vitesse',                    '_'                                                                   }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
 Dark  { 'vscode',                     '_'                                                                   }
 Light { 'vscode',                     '_'                                                                   }
@@ -1884,11 +1886,10 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FIX: indentation for public:/private:... for c++
 AddPlugin {
-    -- FIX: does not work when indent space is 2 in file, shiftwidth is the option
     -- PERF: delay in autocmd to speed up scrolling
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-        require("indent_blankline").setup { -- TODO: GLOBALICON
+        require("indent_blankline").setup {
             bufname_exclude = {},
             buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
             char = '│',
@@ -1905,88 +1906,69 @@ AddPlugin {
     end,
     event = 'CursorHold'
 }
--- AddPlugin { -- TODO:
---     'shellRaining/hlchunk.nvim',
---     event = 'CursorHold',
---     opts = {
---         chunk = {
---             enable = true,
---             use_treesitter = true,
---             chars = {
---                 horizontal_line = "─",
---                 vertical_line = "│",
---                 left_top = "╭",
---                 left_bottom = "╰",
---                 right_arrow = ">",
---             },
---             style = {
---                 { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineContextChar")), "fg", "gui") }
---             },
---         },
+AddPlugin {
+    'shellRaining/hlchunk.nvim',
+    event = 'CursorHold',
+    opts = {
+        context = {
+            enable = true,
+            notify = true,
+            use_treesitter = false,
+            chars = {
+                "┃", -- Box Drawings Heavy Vertical
+            },
+            style = {
+                "#806d9c",
+            },
+            exclude_filetypes = {},
+        },
+        chunk = {
+            enable = true,
+            use_treesitter = true,
+            chars = {
+                horizontal_line = "─",
+                vertical_line = "│",
+                left_top = "╭",
+                left_bottom = "╰",
+                right_arrow = ">",
+            },
+            style = {
+                { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineContextChar")), "fg", "gui") }
+            },
+        },
 
---         indent = {
---             enable = true,
---             use_treesitter = false,
---             chars = {
---                 "│",
---             },
---             style = {
---                 { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineChar")), "fg", "gui") }
---             },
---         },
+        indent = {
+            enable = true,
+            use_treesitter = false,
+            chars = {
+                "│",
+            },
+            style = {
+                { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineChar")), "fg", "gui") }
+            },
+        },
 
---         line_num = {
---             enable = true,
---             use_treesitter = false,
---             style = "#806d9c",
---         },
+        line_num = {
+            enable = true,
+            use_treesitter = false,
+            style = "#806d9c",
+        },
 
---         blank = {
---             enable = true,
---             chars = {
---                 "․",
---             },
---             style = {
---                 vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui"),
---             },
---         },
---     }
--- }
+        blank = {
+            enable = true,
+            chars = {
+                "․",
+            },
+            style = {
+                vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui"),
+            },
+        },
+    }
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
 -- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
--- TODO: resolve navic with Lspsaga symbols
-
-AddPlugin {
-    'SmiteshP/nvim-navbuddy',
-    opts = {
-        lsp = {
-            auto_attach = true
-        }
-    }
-}
-
-AddPlugin {
-    'SmiteshP/nvim-navic',
-    config = function()
-        require('nvim-navic').setup({
-            click = true,
-            depth_limit = 0,
-            depth_limit_indicator = '',
-            highlight = true,
-            icons = vim.g.cmp_kinds, -- TODO: GLOBALICON
-            lsp = {
-                auto_attach = true
-            },
-            safe_output = true,
-            separator = '  '
-        })
-        for key, value in pairs(kind_hl) do
-            vim.api.nvim_set_hl(0, 'NavicIcons' .. key, value[vim.o.background])
-        end
-    end
-}
 
 AddPlugin {
     'VidocqH/lsp-lens.nvim',
@@ -2010,7 +1992,7 @@ AddPlugin {
     event = 'LspAttach'
 }
 
-AddPlugin { -- TODO: resolve usage with vim.lsp.inlay_hint()
+AddPlugin { -- resolve usage with vim.lsp.inlay_hint()
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
     event = 'LspAttach',
@@ -2475,7 +2457,6 @@ AddPlugin {
     }
 }
 
--- TODO: icons
 AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
@@ -2886,13 +2867,6 @@ AddPlugin {
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
-        local function NavicLocal()
-            if #vim.lsp.get_active_clients({bufnr = 0}) > 0 then
-                local navic = require('nvim-navic') -- PERF: is require slow
-                return navic.get_location()
-            end
-            return ""
-        end
         function CountWin()
             local tabpage = vim.api.nvim_get_current_tabpage()
             local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -3157,7 +3131,6 @@ AddPlugin {
                     }
                 },
                 lualine_c = {
-                    { NavicLocal } -- FIX: temporary fix, find solution for it
                 }
             },
             inactive_winbar = {
@@ -3444,7 +3417,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/sainnhe/edge
 AddPlugin {
     -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
@@ -3697,10 +3669,16 @@ end
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- 'AckslD/nvim-trevJ.lua'
 -- https://github.com/wellle/targets.vim
-AddPlugin {
+AddPlugin { -- TODO: config
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
 }
+
+AddPlugin {
+    'Bekaboo/dropbar.nvim',
+    config = true
+}
+
 
 AddPlugin {
     'Danielhp95/tmpclone-nvim',
@@ -3866,14 +3844,14 @@ AddPlugin {
 AddPlugin { -- FIX: resolve usage
     'luukvbaal/statuscol.nvim',
     config = function()
-        local builtin = require("statuscol.builtin")
-        local cfg = {
+        local builtin = require('statuscol.builtin')
+        require('statuscol').setup({
             setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
             -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
             -- Although I recommend just using the segments field below to build your
             -- statuscolumn to benefit from the performance optimizations in this plugin.
             -- builtin.lnumfunc number string options
-            thousands = true,     -- or line number thousands separator string ("." / ",")
+            thousands = ',',     -- or line number thousands separator string ("." / ",")
             relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
             -- Builtin 'statuscolumn' options
             ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
@@ -3910,8 +3888,9 @@ AddPlugin { -- FIX: resolve usage
                 GitSignsDelete          = builtin.gitsigns_click,
                 gitsigns_extmark_signs_ = builtin.gitsigns_click,
             },
-        }
-    end
+        })
+    end,
+    lazy = false
 }
 
 -- https://github.com/kndndrj/nvim-dbee
@@ -3984,9 +3963,13 @@ AddPlugin {
     ft = 'tex'
 }
 
-AddPlugin { -- TODO: use [p ]p mappings
+AddPlugin {
     'sickill/vim-pasta',
-    lazy = false -- PERF: lazy load
+    config = function()
+        vim.g.pasta_paste_before_mapping = '[p'
+        vim.g.pasta_paste_after_mapping = '[P'
+    end,
+    keys = { '[p', '[P' }
 }
 
 AddPlugin {
@@ -4052,11 +4035,9 @@ vim.opt.runtimepath:prepend(lazypath)
 -- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
 -- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim
--- FEAT: https://github.com/nguyenvukhang/nvim-toggler
 -- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
 -- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
--- FEAT: https://github.com/Bekaboo/dropbar.nvim
 -- PERF: profiling for auto commands
 -- PERF: startuptime
 -- TODO: insert.txt
