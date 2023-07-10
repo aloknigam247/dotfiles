@@ -471,4 +471,5 @@ $PSNativeCommandUseErrorActionPreference = $false
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
 $env:PSModulePath += ";E:\aloknigam"
 
-
+<# Hack for BetterGx neovim #>
+$env:WSLENV=$null

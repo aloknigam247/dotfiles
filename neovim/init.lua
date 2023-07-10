@@ -100,7 +100,7 @@ function IconGenerator(_, key)
         border_botleft  = '╰',
         border_botright = '╯',
         bookmark = '󰃃',
-        bookmark_annotate = ' 󰃄',
+        bookmark_annotate = '󰃄',
     }
 
     -- print("Access to", key)
@@ -630,15 +630,10 @@ AddPlugin {
     event = 'CursorHold'
 }
 
--- FEAT: Use
--- AddPlugin {
---     'azabiong/vim-highlighter',
---     -- cmd = 'Hi',
---     config = function()
---     end,
---     lazy = false
---     -- keys = { '<Leader>g' }
--- }
+AddPlugin {
+    'azabiong/vim-highlighter',
+    keys = { 'f<CR>' }
+}
 
 -- FEAT: https://github.com/folke/flash.nvim
 
@@ -813,6 +808,12 @@ function FixVisual(bg)
         end
     end
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
+end
+
+function FixVnNight()
+    FixLineNr('#505275')
+    vim.api.nvim_set_hl(0, 'Comment', { fg = '#7F82A5', italic = true })
+    vim.api.nvim_set_hl(0, 'Folded', { bg = '#112943', fg = '#8486A4' })
 end
 
 function FixZellner()
@@ -1095,7 +1096,7 @@ Dark  { 'tokyonight-night',           'tokyonight'                              
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
-Dark  { 'vn-night',                   '_',           post = function() FixLineNr('#505275') end             } -- FIX: comment hl
+Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
 Dark  { 'vscode',                     '_'                                                                   }
 Light { 'vscode',                     '_'                                                                   }
 Light { 'zellner',                    '_',           post = FixZellner                                      }
@@ -1739,8 +1740,8 @@ AddPlugin {
 -- use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/linrongbin16/fzfx.vim
--- FEAT: https://github.com/gfanto/fzf-lsp.nvim
+-- https://github.com/linrongbin16/fzfx.vim
+-- https://github.com/gfanto/fzf-lsp.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -2358,7 +2359,6 @@ AddPlugin { 'p00f/clangd_extensions.nvim' }
 
 -- use 'razzmatazz/csharp-language-server'
 
--- TODO: resolve usage
 AddPlugin {
     'ray-x/navigator.lua',
     config = true,
@@ -2373,7 +2373,6 @@ AddPlugin {
     config = true,
     event = 'LspAttach', -- PERF: Reverse dependency
     opts = {
-        -- TODO: review config
         width = 120; -- Width of the floating window
         height = 15; -- Height of the floating window
         border = {"󱦵", Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window
@@ -2480,7 +2479,10 @@ AddPlugin {
 AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
-    config = true
+    opts = {
+        icons = Icons,
+        nerd_font = false
+    }
 }
 
 -- AddPlugin {
@@ -2579,22 +2581,21 @@ AddPlugin {
 AddPlugin {
     'MattesGroeger/vim-bookmarks',
     config = function()
-        vim.cmd[[
-            let g:bookmark_annotation_sign = Icons.bookmark_annotate
-            let g:bookmark_display_annotation = 1
-            let g:bookmark_highlight_lines = 1
-            let g:bookmark_location_list = 1
-            let g:bookmark_no_default_key_mappings = 1
-            let g:bookmark_save_per_working_dir = 1
-            let g:bookmark_sign = Icons.bookmark
-            nmap ba <Plug>BookmarkAnnotate
-            nmap bm <Plug>BookmarkToggle
-            nmap bn <Plug>BookmarkNext
-            nmap bp <Plug>BookmarkPrev
-            nmap bs <Plug>BookmarkShowAll
-        ]]
+        vim.g.bookmark_annotation_sign = Icons.bookmark_annotate
+        vim.g.bookmark_display_annotation = 1
+        vim.g.bookmark_highlight_lines = 1
+        vim.g.bookmark_location_list = 1
+        vim.g.bookmark_no_default_key_mappings = 1
+        vim.g.bookmark_save_per_working_dir = 1
+        vim.g.bookmark_sign = Icons.bookmark
     end,
-    keys = { 'ba', 'bm', 'bn', 'bp', 'bs'},
+    keys = {
+        {'ba', '<Plug>BookmarkAnnotate'},
+        {'bm', '<Plug>BookmarkToggle'},
+        {'bn', '<Plug>BookmarkNext'},
+        {'bp', '<Plug>BookmarkPrev'},
+        {'bs', '<Plug>BookmarkShowAll'}
+    }
 }
 
 -- FEAT: https://github.com/cbochs/grapple.nvim
@@ -2968,7 +2969,7 @@ AddPlugin {
                         on_click = function()
                             vim.cmd('Telescope git_status')
                         end,
-                        symbols = { -- TODO: GLOBALICON
+                        symbols = {
                             added = '+',
                             modified = '~',
                             removed = '-'
@@ -2980,7 +2981,7 @@ AddPlugin {
                             vim.cmd('TroubleToggle')
                         end,
                         sources = { 'nvim_diagnostic' },
-                        symbols = { -- TODO: GLOBALICON
+                        symbols = {
                             error = Icons.error .. ' ',
                             warn  = Icons.warn .. ' ',
                             info  = Icons.info .. ' ',
@@ -3163,6 +3164,7 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filetype',
+                        cond = function () return CountWin() > 1 end,
                         icon_only = true,
                         padding = { left = 1, right = 0 },
                         separator = ''
@@ -3694,12 +3696,7 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- 'AckslD/nvim-trevJ.lua'
--- FEAT: https://github.com/wellle/targets.vim
-AddPlugin { -- PERF: Very slow on large files
-    'AckslD/muren.nvim',
-    config = true
-}
-
+-- https://github.com/wellle/targets.vim
 AddPlugin {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
@@ -3727,6 +3724,15 @@ AddPlugin {
     config = true,
     dependencies = {
         {'nvim-lua/plenary.nvim'},
+    },
+    keys = {
+        {'<Leader>re', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], noremap = true, silent = true, expr = false},
+        {'<Leader>rf', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], noremap = true, silent = true, expr = false},
+        {'<Leader>rv', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], noremap = true, silent = true, expr = false},
+        {'<Leader>ri', [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], noremap = true, silent = true, expr = false},
+        {'<Leader>rb', [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]], noremap = true, silent = true, expr = false},
+        {'<Leader>rbf', [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]], noremap = true, silent = true, expr = false},
+        {'<Leader>ri', [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], noremap = true, silent = true, expr = false}
     }
 }
 
@@ -3783,8 +3789,6 @@ AddPlugin {
     'dstein64/vim-startuptime',
     cmd = 'StartupTime'
 }
-
--- TODO: https://github.com/folke/edgy.nvim
 
 AddPlugin {
     'folke/neodev.nvim',
