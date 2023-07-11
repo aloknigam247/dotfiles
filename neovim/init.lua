@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
---TODO: order plugins
 -- Variables
 -- ---------
 
@@ -16,7 +15,6 @@ HlPriority = {
 Icons = {}
 function IconGenerator(_, key)
     local icons = {
-        -- warning = 'w'
         Array           = ' ',
         Boolean         = ' ',
         Class           = ' ',
@@ -36,7 +34,7 @@ function IconGenerator(_, key)
         Interface       = ' ',
         Key             = ' ',
         Keyword         = ' ',
-        Macro           = '',
+        Macro           = ' ',
         Method          = ' ',
         Module          = ' ',
         Namespace       = 'ﬥ ',
@@ -46,21 +44,21 @@ function IconGenerator(_, key)
         Operator        = ' ',
         Options         = ' ',
         Package         = ' ',
-        Parameter       = '',
+        Parameter       = ' ',
         Property        = ' ',
         Reference       = ' ',
         Snippet         = ' ',
-        StaticMethod    = '󰡱',
+        StaticMethod    = '󰡱 ',
         String          = ' ',
         Struct          = ' ',
         Text            = '󱄽 ',
-        TypeAlias       = '',
+        TypeAlias       = ' ',
         TypeParameter   = ' ',
         Unit            = ' ',
         Value           = ' ',
         Variable        = ' ',
         cmd             = ' ',
-        config          = '',
+        config          = ' ',
         error           = '',
         event           = '',
         ft              = '',
@@ -103,7 +101,6 @@ function IconGenerator(_, key)
         bookmark_annotate = '󰃄',
     }
 
-    -- print("Access to", key)
     local val = icons[key]
     if val ==  nil then
         print("Unknown key", key)
@@ -115,9 +112,6 @@ function IconGenerator(_, key)
 end
 setmetatable(Icons, {__index = IconGenerator})
 
-
- -- TODO: GLOBALMAPPINGS
- -- TODO: GLOBALCOLORS
 
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
@@ -266,9 +260,8 @@ LazyConfig = {
 
 Plugins = {}
 
-SignOrder = {} -- TODO:
 
-local kind_hl = { -- TODO: GLOBALICON
+local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
     Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
@@ -509,7 +502,7 @@ AddPlugin {
             Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
-            -- ( | ) --> ) --> ( )| BUG: not working
+            -- ( | ) --> ) --> ( )|
             Rule(' ', ' ')
             :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
@@ -575,7 +568,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/echasnovski/mini.hipatterns use instead of
 -- treesitter solution
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
@@ -635,7 +627,7 @@ AddPlugin {
     keys = { 'f<CR>' }
 }
 
--- FEAT: https://github.com/folke/flash.nvim
+-- https://github.com/folke/flash.nvim
 
 AddPlugin {
     'folke/lsp-colors.nvim',
@@ -879,7 +871,8 @@ local function Light(opts)
     opts.bg = 'light'
     table.insert(colos, opts)
 end
--- FEAT: Transparent variants
+
+-- Transparent variants
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
@@ -1076,7 +1069,6 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
-Dark  { 'slate',                      '_',           post = FixNontext                                      }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end }
@@ -1151,8 +1143,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- FIX: slow completion
-    -- FEAT: cmp-path for windows
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -1213,7 +1203,7 @@ AddPlugin {
                     name = 'buffer',
                     option = {
                         get_bufnrs = function()
-                            return vim.api.nvim_list_bufs() -- BUG: disable for buffers > 1000 lines
+                            return vim.api.nvim_list_bufs()
                         end
                     },
                     priority = 1
@@ -1243,9 +1233,9 @@ AddPlugin {
         'chrisgrieser/cmp-nerdfont',
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lsp', -- PERF: load on lsp
+        'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-path',
-        -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} }, -- FIX: fzy-lua-native make is not working
+        -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
     event = 'CmdlineEnter',
 }
@@ -1260,7 +1250,6 @@ AddPlugin {
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 -- Abstract-IDE dap configs
 -- --------------------------
 -- -- telescope-dap.nvim
@@ -1656,7 +1645,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: work on it
 AddPlugin {
     -- https://github.com/snelling-a/better-folds.nvim
     'anuvyklack/pretty-fold.nvim',
@@ -1709,7 +1697,6 @@ AddPlugin {
     lazy = false
 }
 
--- TODO: work on it
 AddPlugin {
     'kevinhwang91/nvim-ufo',
     -- cond = function()
@@ -1747,7 +1734,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: fix this plugin
     'aaronhallaert/advanced-git-search.nvim',
     config = function()
         -- optional: setup telescope before loading the extension
@@ -1884,9 +1870,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: indentation for public:/private:... for c++
 AddPlugin {
-    -- PERF: delay in autocmd to speed up scrolling
     'lukas-reineke/indent-blankline.nvim',
     config = function()
         require("indent_blankline").setup {
@@ -1967,8 +1951,8 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
--- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
+-- use 'Decodetalkers/csharpls-extended-lsp.nvim'
+-- use 'Hoffs/omnisharp-extended-lsp.nvim'
 
 AddPlugin {
     'VidocqH/lsp-lens.nvim',
@@ -2088,7 +2072,7 @@ AddPlugin {
             function (server_name)
                 local lspconfig = require('lspconfig')
                 if server_name == 'powershell_es' then
-                    lspconfig.powershell_es.setup { -- FIX: fix powershell
+                    lspconfig.powershell_es.setup {
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices" -LogPath "./powershell_es.log" -SessionDetailsPath "./powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal -EnableConsoleRepl'},
@@ -2099,7 +2083,7 @@ AddPlugin {
                         handlers = handlers,
                         on_attach = on_attach
                     }
-                elseif server_name == 'omnisharp' then -- FIX: Fix omnisharp for substrate
+                elseif server_name == 'omnisharp' then
                     lspconfig.omnisharp.setup {
                         cmd = { 'dotnet', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll'},
                         capabilities = capabilities,
@@ -2353,7 +2337,7 @@ AddPlugin {
 AddPlugin {
     'rmagatti/goto-preview',
     config = true,
-    event = 'LspAttach', -- PERF: Reverse dependency
+    event = 'LspAttach',
     opts = {
         width = 120; -- Width of the floating window
         height = 15; -- Height of the floating window
@@ -2476,8 +2460,8 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/iamcco/markdown-preview.nvim
--- FEAT: https://github.com/Zeioth/markmap.nvim
--- FEAT: https://github.com/kiran94/maim.nvim
+-- https://github.com/Zeioth/markmap.nvim
+-- https://github.com/kiran94/maim.nvim
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -2579,7 +2563,7 @@ AddPlugin {
     }
 }
 
--- FEAT: https://github.com/cbochs/grapple.nvim
+-- https://github.com/cbochs/grapple.nvim
 AddPlugin {
     'kshenoy/vim-signature',
     cmd = 'SignatureToggle'
@@ -2798,14 +2782,11 @@ end
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- https://github.com/aaditeynair/conduct.nvim
-    -- BUG: DeleteSession called twice gives error
-    -- TODO: Add capabilities to save and load custom settings like lsp/git... using hooks
-    -- BUG: Fix path shown in notifications
     'rmagatti/auto-session',
     cmd = 'SessionSave',
     config = function()
         vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
-        require('auto-session').setup({ -- TODO: GLOBALICON
+        require('auto-session').setup({
             -- log_level = 'debug',
             post_delete_cmds = {
                 "let g:auto_session_enabled = v:false",
@@ -2856,7 +2837,6 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: check for performance
 AddPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -3187,7 +3167,7 @@ AddPlugin {
                 end
                 local res = ''
                 for k, v in pairs(diagnostics_dict) do
-                    res = res .. Icons.diagnostic[k] .. v .. ' ' -- TODO: GLOBALICON
+                    res = res .. Icons.diagnostic[k] .. v .. ' '
                 end
                 return res
             end,
@@ -3341,7 +3321,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    -- TODO: explore incremental_selection
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
@@ -3418,7 +3397,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
+    -- @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
     cond = function() return not vim.g.neovide end,
     config = function()
@@ -3446,7 +3425,7 @@ AddPlugin {
                 },
             },
             messages = {
-                -- NOTE: If you enable messages, then the cmdline is enabled automatically.
+                -- If you enable messages, then the cmdline is enabled automatically.
                 -- This is a current Neovim limitation.
                 enabled = true, -- enables the Noice messages UI
                 view = 'notify', -- default view for messages
@@ -3459,7 +3438,7 @@ AddPlugin {
                 enabled = true, -- enables the Noice popupmenu UI
                 backend = 'cmp', -- backend to use to show regular cmdline completions
                 -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
-                kind_icons = {}, -- set to `false` to disable icons -- TODO: GLOBALICON
+                kind_icons = {}, -- set to `false` to disable icons
             },
             -- default options for require('noice').redirect
             -- see the section on Command Redirection
@@ -3641,12 +3620,14 @@ AddPlugin {
 }
 
 AddPlugin {
-    'stevearc/dressing.nvim', -- PERF: load like notify
+    'stevearc/dressing.nvim', -- load like notify
     lazy = false
 }
 
 AddPlugin {
     'tamton-aquib/flirt.nvim',
+    enabled = false,
+    lazy = false,
     opts = {
         override_open = true, -- experimental
         close_command = 'Q',
@@ -3657,8 +3638,7 @@ AddPlugin {
         custom_filter = function(buffer, _)
             return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
         end
-    },
-    lazy = false
+    }
 }
 
 vim.notify = function(msg, level, opt)
@@ -3669,7 +3649,7 @@ end
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- 'AckslD/nvim-trevJ.lua'
 -- https://github.com/wellle/targets.vim
-AddPlugin { -- TODO: config
+AddPlugin { -- config
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
 }
@@ -3698,7 +3678,7 @@ AddPlugin {
 }
 
 AddPlugin {
-    'ThePrimeagen/refactoring.nvim', -- TODO:
+    'ThePrimeagen/refactoring.nvim',
     config = true,
     dependencies = {
         {'nvim-lua/plenary.nvim'},
@@ -3714,7 +3694,7 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
+-- https://github.com/TheSafdarAwan/find-extender.nvim
 
 AddPlugin {
     'TobinPalmer/BetterGx.nvim',
@@ -3761,7 +3741,7 @@ AddPlugin {
     ft = 'csv'
 }
 
--- TODO: https://github.com/delphinus/dwm.nvim
+-- https://github.com/delphinus/dwm.nvim
 
 AddPlugin {
     'dstein64/vim-startuptime',
@@ -3831,7 +3811,7 @@ AddPlugin {
 
 -- https://github.com/lewis6991/hover.nvim
 
--- TODO: https://github.com/dstein64/nvim-scrollview
+-- https://github.com/dstein64/nvim-scrollview
 AddPlugin {
     'lewis6991/satellite.nvim',
     cmd = 'SatelliteEnable',
@@ -3841,7 +3821,7 @@ AddPlugin {
     end
 }
 
-AddPlugin { -- FIX: resolve usage
+AddPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -4031,18 +4011,37 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
 
--- BUG: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
--- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
--- FEAT: https://github.com/XXiaoA/ns-textobject.nvim
--- FEAT: https://github.com/echasnovski/mini.nvim
--- FEAT: https://github.com/nosduco/remote-sshfs.nvim
--- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
--- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
--- PERF: profiling for auto commands
--- PERF: startuptime
--- TODO: insert.txt
--- TODO: motion.txt
--- TODO: vsplit or split file opener like find command
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-misc.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-map.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-completion.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+
+-- Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/XXiaoA/ns-textobject.nvim
+-- https://github.com/echasnovski/mini.nvim
+-- https://github.com/nosduco/remote-sshfs.nvim
+-- https://github.com/nvim-telescope/telescope-dap.nvim
+-- https://github.com/ofirgall/goto-breakpoints.nvim
+-- profiling for auto commands
+-- startuptime
+-- insert.txt
+-- motion.txt
+-- vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
