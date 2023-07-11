@@ -1,3 +1,10 @@
+-- PERF: Profile autocommands
+-- PERF: ctrl + arrow movements very slow
+-- PERF: slow visual cursor movement in mouse
+-- REFACTOR: Fix lua_ls errors
+-- PERF: Profile startup
+-- FIX: fix backspace in normal mode
+
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
@@ -15,90 +22,90 @@ HlPriority = {
 Icons = {}
 function IconGenerator(_, key)
     local icons = {
-        Array           = ' ',
-        Boolean         = ' ',
-        Class           = ' ',
-        Color           = ' ',
-        Component       = ' ',
-        Constant        = ' ',
-        Constructor     = ' ',
-        Enum            = ' ',
-        EnumMember      = ' ',
-        Event           = ' ',
-        Field           = ' ',
-        File            = ' ',
-        Folder          = '󰷏 ',
-        Fragment        = ' ',
-        Function        = ' ',
-        History         = ' ',
-        Interface       = ' ',
-        Key             = ' ',
-        Keyword         = ' ',
-        Macro           = ' ',
-        Method          = ' ',
-        Module          = ' ',
-        Namespace       = 'ﬥ ',
-        Null            = ' ',
-        Number          = ' ',
-        Object          = ' ',
-        Operator        = ' ',
-        Options         = ' ',
-        Package         = ' ',
-        Parameter       = ' ',
-        Property        = ' ',
-        Reference       = ' ',
-        Snippet         = ' ',
-        StaticMethod    = '󰡱 ',
-        String          = ' ',
-        Struct          = ' ',
-        Text            = '󱄽 ',
-        TypeAlias       = ' ',
-        TypeParameter   = ' ',
-        Unit            = ' ',
-        Value           = ' ',
-        Variable        = ' ',
-        cmd             = ' ',
-        config          = ' ',
-        error           = '',
-        event           = '',
-        ft              = '',
-        hint            = '',
-        import          = '󰋺 ',
-        info            = '',
-        init            = ' ',
-        keys            = ' ',
-        lazy            = ' ',
-        list            = { '●', '', '', '' },
-        loaded          = '',
-        not_loaded      = '',
-        plugin          = ' ',
-        runtime         = ' ',
-        source          = ' ',
-        start           = '',
-        task            = ' ',
-        warn            = '',
-        expand          = '',
-        collapse        = '',
-        preview         = ' ',
-        code_action     = '',
-        diagnostic      = '',
-        incoming        = ' ',
-        outgoing        = ' ',
-        hover           = ' ',
-        symlink_arrow   = ' 壟 ',
-        FidgetDone      = '󰚔',
-        file_modified   = '',
-        file_readonly   = '',
-        file_unnamed    = '',
-        file_newfile    = '',
-        border_hor     = '─',
-        border_vert      = '│',
-        border_topleft  = '╭',
-        border_topright = '╮',
-        border_botleft  = '╰',
-        border_botright = '╯',
-        bookmark = '󰃃',
+        Array             = ' ',
+        Boolean           = ' ',
+        Class             = ' ',
+        Color             = ' ',
+        Component         = ' ',
+        Constant          = ' ',
+        Constructor       = ' ',
+        Enum              = ' ',
+        EnumMember        = ' ',
+        Event             = ' ',
+        FidgetDone        = '󰄴 ',
+        Field             = ' ',
+        File              = ' ',
+        Folder            = '󰷏 ',
+        Fragment          = ' ',
+        Function          = ' ',
+        History           = ' ',
+        Interface         = ' ',
+        Key               = ' ',
+        Keyword           = ' ',
+        Macro             = ' ',
+        Method            = ' ',
+        Module            = ' ',
+        Namespace         = 'ﬥ ',
+        Null              = ' ',
+        Number            = ' ',
+        Object            = ' ',
+        Operator          = ' ',
+        Options           = ' ',
+        Package           = ' ',
+        Parameter         = ' ',
+        Property          = ' ',
+        Reference         = ' ',
+        Snippet           = ' ',
+        StaticMethod      = '󰡱 ',
+        String            = ' ',
+        Struct            = ' ',
+        Text              = '󱄽 ',
+        TypeAlias         = ' ',
+        TypeParameter     = ' ',
+        Unit              = ' ',
+        Value             = ' ',
+        Variable          = ' ',
+        bookmark          = '󰃃',
         bookmark_annotate = '󰃄',
+        border_botleft    = '╰',
+        border_botright   = '╯',
+        border_hor        = '─',
+        border_topleft    = '╭',
+        border_topright   = '╮',
+        border_vert       = '│',
+        cmd               = ' ',
+        code_action       = ' ',
+        collapse          = ' ',
+        config            = ' ',
+        diagnostic        = ' ',
+        error             = ' ',
+        event             = ' ',
+        expand            = ' ',
+        file_modified     = '',
+        file_newfile      = '',
+        file_readonly     = '',
+        file_unnamed      = '',
+        ft                = ' ',
+        hint              = ' ',
+        hover             = ' ',
+        import            = '󰋺 ',
+        incoming          = ' ',
+        info              = ' ',
+        init              = ' ',
+        keys              = ' ',
+        lazy              = ' ',
+        list              = { '●', '', '', '' },
+        loaded            = ' ',
+        not_loaded        = ' ',
+        outgoing          = ' ',
+        plugin            = ' ',
+        preview           = ' ',
+        runtime           = ' ',
+        source            = ' ',
+        start             = ' ',
+        symlink_arrow     = ' 壟 ', -- TODO: change arrow icon
+        task              = ' ',
+        warn              = ' ',
     }
 
     local val = icons[key]
@@ -118,48 +125,35 @@ LazyConfig = {
     defaults = {
         lazy = true, -- should plugins be lazy-loaded?
         version = nil,
-        -- default `cond` you can use to globally disable a lot of plugins
-        -- when running inside vscode for example
         cond = nil, ---@type boolean|fun(self:LazyPlugin):boolean|nil
         -- version = '*', -- enable this to try installing the latest stable versions of plugins
     },
-    -- leave nil when passing the spec as the first argument to setup()
     spec = nil, ---@type LazySpec
     lockfile = vim.fn.stdpath('config') .. '/lazy-lock.json', -- lockfile generated after running update.
     concurrency = jit.os:find("Windows") and (vim.loop.available_parallelism() * 2) or nil, ---@type number limit the maximum amount of concurrent tasks
     git = {
-        -- defaults for the `Lazy log` command
         log = { '-10' }, -- show the last 10 commits
         timeout = 12000, -- kill processes that take more than 2 minutes
         url_format = 'https://github.com/%s.git',
-        -- lazy.nvim requires git >=2.19.0. If you really want to use lazy with an older version,
-        -- then set the below to false. This should work, but is NOT supported and will
-        -- increase downloads a lot.
         filter = false,
     },
     dev = {
-        -- directory where you store your local plugin projects
         path = '~/projects',
-        ---@type string[] plugins that match these patterns will use your local versions instead of being fetched from GitHub
         patterns = {}, -- For example {'folke'}
         fallback = false, -- Fallback to git when local plugin doesn't exist
     },
     install = {
-        -- install missing plugins on startup. This doesn't increase startup time.
         missing = true,
-        -- try to load one of these colorschemes when starting an installation during startup
         colorscheme = { },
     },
     ui = {
-        -- a number <1 is a percentage., >1 is a fixed size
         size = { width = 0.8, height = 0.8 },
         wrap = true, -- wrap the lines in the ui
-        -- The border to use for the UI window. Accepts same border values as |nvim_open_win()|.
         border = 'rounded',
         title = nil, ---@type string only works when border is not 'none'
         title_pos = 'center', ---@type 'center' | 'left' | 'right'
         icons = {
-            cmd        = Icons.cmd,
+            cmd        = Icons.cmd, -- TODO: remove GlobalIcon
             config     = Icons.config,
             event      = Icons.event,
             ft         = Icons.ft,
@@ -176,22 +170,14 @@ LazyConfig = {
             start      = Icons.start,
             task       = Icons.task
         },
-        -- leave nil, to automatically select a browser depending on your OS.
-        -- If you want to use a specific browser, you can define it here
         browser = nil, ---@type string?
         throttle = 20, -- how frequently should the ui process render events
         custom_keys = {
-            -- you can define custom key maps here.
-            -- To disable one of the defaults, set it to false
-
-            -- open lazygit log
             ['<localleader>l'] = function(plugin)
                 require('lazy.util').float_term({ 'lazygit', 'log' }, {
                     cwd = plugin.dir,
                 })
             end,
-
-            -- open a terminal for the plugin dir
             ['<localleader>t'] = function(plugin)
                 require('lazy.util').float_term(nil, {
                     cwd = plugin.dir,
@@ -200,23 +186,15 @@ LazyConfig = {
         },
     },
     diff = {
-        -- diff command <d> can be one of:
-        -- * browser: opens the github compare view. Note that this is always mapped to <K> as well,
-        --   so you can have a different command for diff <d>
-        -- * git: will run git diff and open a buffer with filetype git
-        -- * terminal_git: will open a pseudo terminal with git diff
-        -- * diffview.nvim: will open Diffview to show the diff
         cmd = 'git',
     },
     checker = {
-        -- automatically check for plugin updates
         enabled = false,
         concurrency = nil, ---@type number? set to 1 to check for updates very slowly
         notify = true, -- get a notification when new updates are found
         frequency = 3600, -- check for updates every hour
     },
     change_detection = {
-        -- automatically check for config file changes and reload the ui
         enabled = true,
         notify = true, -- get a notification when changes are found
     },
@@ -227,9 +205,7 @@ LazyConfig = {
         reset_packpath = true, -- reset the package path to improve startup time
         rtp = {
             reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
-            ---@type string[]
             paths = {}, -- add any custom paths here that you want to includes in the rtp
-            ---@type string[] list any plugins you want to disable here
             disabled_plugins = {
                 'gzip',
                 -- 'health',
@@ -245,14 +221,10 @@ LazyConfig = {
             },
         },
     },
-    -- lazy can generate helptags from the headings in markdown readme files,
-    -- so :help works even for plugins that don't have vim docs.
-    -- when the readme opens with :help it will be correctly displayed as markdown
     readme = {
         enabled = true,
         root = vim.fn.stdpath('state') .. '/lazy/readme',
         files = { 'README.md', 'lua/**/README.md' },
-        -- only generate markdown helptags for plugins that dont have docs
         skip_if_doc_exists = true,
     },
     state = vim.fn.stdpath('state') .. '/lazy/state.json', -- state info for checker and other things
@@ -260,7 +232,8 @@ LazyConfig = {
 
 Plugins = {}
 
-
+-- TODO: combine with GlobalIcon
+-- TODO: resolve icon fl in GlobalIcon
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -300,6 +273,7 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
+-- TODO: remove when not needed
 -- local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 -- Functions
@@ -308,7 +282,7 @@ function AddPlugin(opts)
     table.insert(Plugins, opts)
 end
 
-function BgAdaptiveHl(lighten, darken)
+function AdaptiveBG(lighten, darken)
     local bg
     if (vim.o.background == 'dark') then
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
@@ -322,6 +296,7 @@ function BgAdaptiveHl(lighten, darken)
     return bg
 end
 
+-- TODO: Combine at GlobalIcon
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
@@ -381,6 +356,7 @@ function LightenDarkenColor(col, amt)
     return string.format("#%X", newColor)
 end
 
+-- FEAT: Render dynamic popupmenu
 function PopupAction(mode)
     local currentWindow = vim.api.nvim_get_current_win()
     local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
@@ -468,6 +444,7 @@ vim.diagnostic.config({
     }
 })
 
+-- TODO: remove when not needed
 -- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -502,7 +479,7 @@ AddPlugin {
             Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
-            -- ( | ) --> ) --> ( )|
+            -- ( | ) --> ) --> ( )| -- BUG: not working
             Rule(' ', ' ')
             :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
@@ -568,7 +545,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- treesitter solution
+-- FIX: bold not visible properly
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
     -- https://github.com/nullchilly/fsread.nvim
@@ -590,6 +567,7 @@ AddPlugin {
     }
 }
 
+-- BUG: not working properly
 AddPlugin {
     'Pocco81/high-str.nvim',
     cmd = 'HSHighlight'
@@ -605,7 +583,7 @@ AddPlugin {
                 'regex'
             }
         })
-        local bg
+        local bg -- REFACTOR: use AdaptiveBG() function
         if (vim.o.background == "dark" and not vim.g.ColoRand:find('pink-panic', 0, true)) then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
             bg = LightenDarkenColor(string.format("%X", bg), 40)
@@ -622,12 +600,12 @@ AddPlugin {
     event = 'CursorHold'
 }
 
-AddPlugin {
+AddPlugin { -- TODO: set it up
     'azabiong/vim-highlighter',
     keys = { 'f<CR>' }
 }
 
--- https://github.com/folke/flash.nvim
+-- TODO: https://github.com/folke/flash.nvim
 
 AddPlugin {
     'folke/lsp-colors.nvim',
@@ -690,11 +668,6 @@ AddPlugin {
         render = 'background'
     }
 }
--- AddPlugin {
---     'NvChad/nvim-colorizer.lua',
---     cmd = 'ColorizerToggle',
---     config = true
--- }
 
 AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
@@ -727,7 +700,7 @@ AddPlugin {
         end
         vim.g.quickhl_manual_colors = colors
     end,
-    keys = {
+    keys = { -- DOCME: Add description
         { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
         { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x' },
         { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'n' },
@@ -736,14 +709,13 @@ AddPlugin {
 }
 
 -- 'yuki-yano/highlight-undo.nvim',
-AddPlugin {
+AddPlugin { -- PERF: check if lazy via event"
     'tzachar/highlight-undo.nvim',
     config = true,
-    name = 'undo1',
     lazy = false
 }
 
--- 'uga-rosa/ccc.nvim'
+-- TODO: 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 function FixDiagnosticInfo()
@@ -772,7 +744,7 @@ function FixLineNr(fg)
 end
 
 function FixNontext()
-    local bg = BgAdaptiveHl(60, -20)
+    local bg = AdaptiveBG(60, -20)
     vim.api.nvim_set_hl(0, 'NonText', { fg = bg })
     vim.api.nvim_set_hl(0, 'IndentBlanklineSpaceChar', { fg = bg })
 end
@@ -859,7 +831,7 @@ function SeniorMarsTheme()
     })
 end
 
--- https://github.com/lifepillar/vim-colortemplate
+-- TODO: https://github.com/lifepillar/vim-colortemplate
 local colos = {}
 
 local function Dark(opts)
@@ -872,7 +844,7 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 
--- Transparent variants
+-- TODO: Transparent variants
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
@@ -1108,8 +1080,8 @@ function ColoRand(ind)
     local precmd = selection.pre
     local postcmd = selection.post
     vim.o.background = bg
-    local start_time = os.clock()
-    vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module}) -- Load colorscheme
+    local start_time = os.clock() -- FIX: fix timer
+    vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
     if (precmd) then
         precmd()
     end
@@ -1191,7 +1163,7 @@ AddPlugin {
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
             }),
             snippet = {
-                expand = function(args)
+                expand = function(args) -- Select one snippet engine
                     -- vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
                     -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                     require('snippy').expand_snippet(args.body) -- For `snippy` users.
@@ -1240,16 +1212,17 @@ AddPlugin {
     event = 'CmdlineEnter',
 }
 
--- https://github.com/jameshiew/nvim-magic
--- https://github.com/kristijanhusak/vim-dadbod-completion
--- https://github.com/lukas-reineke/cmp-rg
--- https://github.com/lukas-reineke/cmp-under-comparator
--- https://github.com/rcarriga/cmp-dap
--- https://github.com/tzachar/cmp-fuzzy-buffer
--- https://github.com/tzachar/cmp-fuzzy-path
--- https://github.com/zbirenbaum/copilot-cmp
+-- TODO: https://github.com/jameshiew/nvim-magic
+-- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
+-- TODO: https://github.com/lukas-reineke/cmp-rg
+-- TODO: https://github.com/lukas-reineke/cmp-under-comparator
+-- TODO: https://github.com/rcarriga/cmp-dap
+-- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
+-- TODO: https://github.com/tzachar/cmp-fuzzy-path
+-- TODO: https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Enable debuggers
 -- Abstract-IDE dap configs
 -- --------------------------
 -- -- telescope-dap.nvim
@@ -1380,10 +1353,11 @@ AddPlugin {
     cmd = 'Neogen',
     config = true
 }
--- https://github.com/kkoomen/vim-doge
--- https://github.com/nvim-treesitter/nvim-tree-docs
+-- TODO: https://github.com/kkoomen/vim-doge
+-- TODO: https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: directory case handling
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
@@ -1645,6 +1619,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: configure or remove
 AddPlugin {
     -- https://github.com/snelling-a/better-folds.nvim
     'anuvyklack/pretty-fold.nvim',
@@ -1697,6 +1672,7 @@ AddPlugin {
     lazy = false
 }
 
+-- TODO: configure or remove
 AddPlugin {
     'kevinhwang91/nvim-ufo',
     -- cond = function()
@@ -1721,14 +1697,16 @@ AddPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: make usable
 AddPlugin {
     'sbdchd/neoformat',
     cmd = 'Neoformat'
 }
--- use 'joechrisellis/lsp-format-modifications.nvim'
--- use 'lukas-reineke/format.nvim'
+-- TODO: use 'joechrisellis/lsp-format-modifications.nvim'
+-- TODO: use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: enable FZF
 -- https://github.com/linrongbin16/fzfx.vim
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- <~>
@@ -1758,10 +1736,10 @@ AddPlugin {
         require('telescope').load_extension('advanced_git_search')
     end
 }
--- https://github.com/akinsho/git-conflict.nvim
--- https://github.com/cynix/vim-mergetool
--- use 'hotwatermorning/auto-git-diff'
--- use 'ldelossa/gh.nvim'
+-- TODO: https://github.com/akinsho/git-conflict.nvim
+-- TODO: https://github.com/cynix/vim-mergetool
+-- TODO: use 'hotwatermorning/auto-git-diff'
+-- TODO: use 'ldelossa/gh.nvim'
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
@@ -1808,9 +1786,9 @@ AddPlugin {
         preview_config = {
             border = 'rounded'
         },
-        signs = {
+        signs = { -- ┃┇│┆󰇝
             add          = { hl = 'GitSignsAdd'   ,       text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
-            change       = { hl = 'GitSignsChange',       text = '󰇝', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            change       = { hl = 'GitSignsChange',       text = '┇', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
             topdelete    = { hl = 'GitSignsDelete',       text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
             changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
@@ -1832,6 +1810,7 @@ AddPlugin {
     cmd = "GitMessenger"
 }
 
+-- TODO: learn
 AddPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
@@ -1841,6 +1820,7 @@ AddPlugin {
 AddPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
+        -- TODO: add icon for netrw
         override = {
             ['c++']  = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
             cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
@@ -1886,10 +1866,10 @@ AddPlugin {
             show_current_context = true,
             show_current_context_start = true,
         }
-        -- vim.cmd.IndentBlanklineRefresh()
     end,
     event = 'CursorHold'
 }
+
 AddPlugin {
     'shellRaining/hlchunk.nvim',
     event = 'CursorHold',
@@ -1951,8 +1931,8 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- use 'Decodetalkers/csharpls-extended-lsp.nvim'
--- use 'Hoffs/omnisharp-extended-lsp.nvim'
+-- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
+-- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
 
 AddPlugin {
     'VidocqH/lsp-lens.nvim',
@@ -1970,13 +1950,13 @@ AddPlugin {
     }
 }
 
-AddPlugin {
+AddPlugin { -- PERF: Load on demand
     'antosha417/nvim-lsp-file-operations',
     config = true,
     event = 'LspAttach'
 }
 
-AddPlugin { -- resolve usage with vim.lsp.inlay_hint()
+AddPlugin { -- FIX: resolve usage with vim.lsp.inlay_hint()
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
     event = 'LspAttach',
@@ -1998,13 +1978,14 @@ AddPlugin {
     cmd = 'LspToggle',
     config = function()
         -- Toggle LSP
+        -- TODO:  do we need this command
         vim.api.nvim_create_user_command(
             'LspToggle',
             function()
                 if #vim.lsp.get_active_clients({bufnr = 0}) == 0 then
                     vim.cmd('LspStart')
                 else
-                    vim.cmd('LspStop') -- create key maps to toggle again
+                    vim.cmd('LspStop')
                 end
             end,
             { nargs = 0 }
@@ -2135,6 +2116,7 @@ AddPlugin {
     keys = { '<F12>' }
 }
 
+-- TODO: is it even working
 AddPlugin {
     'ray-x/lsp_signature.nvim',
     config = function()
@@ -2300,7 +2282,7 @@ AddPlugin {
     'j-hui/fidget.nvim',
     opts = {
         text = {
-            done = Icons.FidgetDone,
+            done = Icons.FidgetDone, -- TODO: remove GlobalIcon
             spinner = 'arc'
         }
     },
@@ -2318,13 +2300,14 @@ AddPlugin {
         })
     end,
     dependencies = { 'jose-elias-alvarez/null-ls.nvim', config = true },
-    -- event = 'LspAttach'
+    event = 'LspAttach'
 }
 
 AddPlugin { 'p00f/clangd_extensions.nvim' }
 
--- use 'razzmatazz/csharp-language-server'
+-- TODO: use 'razzmatazz/csharp-language-server'
 
+-- TODO: use or remove
 AddPlugin {
     'ray-x/navigator.lua',
     config = true,
@@ -2334,6 +2317,7 @@ AddPlugin {
     -- event = 'LspAttach'
 }
 
+-- TODO: use or remove
 AddPlugin {
     'rmagatti/goto-preview',
     config = true,
@@ -2428,6 +2412,7 @@ AddPlugin {
     }
 }
 
+-- TODO: use or remove
 AddPlugin {
     'smjonas/inc-rename.nvim',
     cmd = 'IncRename',
@@ -2450,6 +2435,7 @@ AddPlugin {
     }
 }
 
+-- -- TODO: use of remove
 -- AddPlugin {
 --     'weilbith/nvim-code-action-menu',
 --     config = function ()
@@ -2459,9 +2445,9 @@ AddPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/iamcco/markdown-preview.nvim
--- https://github.com/Zeioth/markmap.nvim
--- https://github.com/kiran94/maim.nvim
+-- TODO: https://github.com/iamcco/markdown-preview.nvim
+-- TODO: https://github.com/Zeioth/markmap.nvim
+-- TODO: https://github.com/kiran94/maim.nvim
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -2503,7 +2489,7 @@ AddPlugin {
             },
             timer_delay = 20,           -- refresh delay(ms)
         })
-        vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = BgAdaptiveHl(10, -10) })
+        vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = AdaptiveBG(10, -10) })
     end,
     dependencies = "nvim-treesitter/nvim-treesitter",
     ft = 'markdown'
@@ -2543,6 +2529,7 @@ AddPlugin {
 -- | ma             | set mark a at current cursor location                         |
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
+-- TODO: use or remove
 AddPlugin {
     'MattesGroeger/vim-bookmarks',
     config = function()
@@ -2563,7 +2550,8 @@ AddPlugin {
     }
 }
 
--- https://github.com/cbochs/grapple.nvim
+-- TODO: https://github.com/cbochs/grapple.nvim
+-- TODO: use or remove
 AddPlugin {
     'kshenoy/vim-signature',
     cmd = 'SignatureToggle'
@@ -2572,9 +2560,10 @@ AddPlugin {
 -- use 'crusj/bookmarks.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Orgmode     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/TravonteD/org-capture-filetype
--- https://github.com/akinsho/org-bullets.nvim
+-- TODO: https://github.com/TravonteD/org-capture-filetype
+-- TODO: https://github.com/akinsho/org-bullets.nvim
 
+-- TODO: use or remove
 AddPlugin {
     'nvim-neorg/neorg',
     config = function()
@@ -2602,8 +2591,8 @@ AddPlugin {
     ft = "norg"
 }
 
--- use 'nvim-orgmode/orgmode'
--- https://github.com/ranjithshegde/orgWiki.nvim
+-- TODO: use 'nvim-orgmode/orgmode'
+-- TODO: https://github.com/ranjithshegde/orgWiki.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- |-----------------+-----------------------------------------------------------|
@@ -2760,6 +2749,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: refine usage
 -- Command would be better for on demand
 vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
     local filepath = vim.fn.bufname('%')
@@ -2780,6 +2770,7 @@ end
 })
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: use or remove
 AddPlugin {
     -- https://github.com/aaditeynair/conduct.nvim
     'rmagatti/auto-session',
@@ -2827,14 +2818,14 @@ AddPlugin {
         }
     },
 }
--- https://github.com/ellisonleao/carbon-now.nvim
--- https://github.com/hrsh7th/vim-vsnip
--- https://github.com/norcalli/snippets.nvim
--- https://github.com/notomo/cmp-neosnippet
--- https://github.com/quangnguyen30192/cmp-nvim-ultisnips
--- https://github.com/rafamadriz/friendly-snippets
--- https://github.com/saadparwaiz1/cmp_luasnip
--- https://github.com/smjonas/snippet-converter.nvim
+-- TODO: https://github.com/ellisonleao/carbon-now.nvim
+-- TODO: https://github.com/hrsh7th/vim-vsnip
+-- TODO: https://github.com/norcalli/snippets.nvim
+-- TODO: https://github.com/notomo/cmp-neosnippet
+-- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
+-- TODO: https://github.com/rafamadriz/friendly-snippets
+-- TODO: https://github.com/saadparwaiz1/cmp_luasnip
+-- TODO: https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -2842,7 +2833,6 @@ AddPlugin {
     config = function()
         Icon_index = 0
         local function LspIcon()
-            -- local anim = {'䷀', '䷪',  '䷍', '䷈', '䷉', '䷌', '䷫'}
             local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
@@ -3202,7 +3192,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/axkirillov/easypick.nvim
+-- TODO: https://github.com/axkirillov/easypick.nvim
 AddPlugin {
     'crispgm/telescope-heading.nvim',
     config = function()
@@ -3295,7 +3285,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/voldikss/vim-floaterm
+-- TODO: https://github.com/voldikss/vim-floaterm
 
 AddPlugin {
     'akinsho/toggleterm.nvim',
@@ -3304,15 +3294,15 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/andythigpen/nvim-coverage
--- https://github.com/klen/nvim-test
--- https://github.com/nvim-neotest/neotest
+-- TODO: https://github.com/andythigpen/nvim-coverage
+-- TODO: https://github.com/klen/nvim-test
+-- TODO: https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- https://github.com/AndrewRadev/splitjoin.vim
-    -- https://github.com/CKolkey/ts-node-action
-    -- https://github.com/echasnovski/mini.splitjoin
+    -- TODO: https://github.com/AndrewRadev/splitjoin.vim
+    -- TODO: https://github.com/CKolkey/ts-node-action
+    -- TODO: https://github.com/echasnovski/mini.splitjoin
     'Wansmer/treesj',
     cmd = 'TSJToggle',
     opts = {
@@ -3349,13 +3339,6 @@ AddPlugin {
     -- https://github.com/David-Kunz/markid
     'm-demare/hlargs.nvim',
     config = function()
-        -- local colors = {}
-        -- for _,v in pairs(ColorPalette()) do
-        --     local hi = {}
-        --     hi.fg = v.fg
-        --     hi.underline = true
-        --     table.insert(colors, hi)
-        -- end
         require('hlargs').setup({
             colorpalette = ColorPalette(),
             excluded_argnames = {
@@ -3381,6 +3364,7 @@ AddPlugin {
     end
 }
 
+-- TODO: Use or remove
 AddPlugin {
     'nvim-treesitter/nvim-treesitter-context',
     cmd = 'TSContextEnable',
@@ -3620,10 +3604,11 @@ AddPlugin {
 }
 
 AddPlugin {
-    'stevearc/dressing.nvim', -- load like notify
+    'stevearc/dressing.nvim', -- PERF: load like notify
     lazy = false
 }
 
+-- TODO: use of remove
 AddPlugin {
     'tamton-aquib/flirt.nvim',
     enabled = false,
@@ -3641,14 +3626,15 @@ AddPlugin {
     }
 }
 
+-- REFACTOR: relocate
 vim.notify = function(msg, level, opt)
     require('notify') -- lazy loads nvim-notify and set vim.notify = notify
     vim.notify(msg, level, opt)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- 'AckslD/nvim-trevJ.lua'
--- https://github.com/wellle/targets.vim
+-- TODO: 'AckslD/nvim-trevJ.lua'
+-- TODO: https://github.com/wellle/targets.vim
 AddPlugin { -- config
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
@@ -3665,7 +3651,7 @@ AddPlugin {
     cmd = 'TmpcloneClone'
 }
 
--- https://github.com/EtiamNullam/deferred-clipboard.nvim
+-- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 AddPlugin {
     'LiadOz/nvim-dap-repl-highlights',
@@ -3683,7 +3669,7 @@ AddPlugin {
     dependencies = {
         {'nvim-lua/plenary.nvim'},
     },
-    keys = {
+    keys = { -- BUG: fix mappings
         {'<Leader>re', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], noremap = true, silent = true, expr = false},
         {'<Leader>rf', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], noremap = true, silent = true, expr = false},
         {'<Leader>rv', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], noremap = true, silent = true, expr = false},
@@ -3694,7 +3680,7 @@ AddPlugin {
     }
 }
 
--- https://github.com/TheSafdarAwan/find-extender.nvim
+-- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
 
 AddPlugin {
     'TobinPalmer/BetterGx.nvim',
@@ -3729,9 +3715,9 @@ AddPlugin {
     }
 }
 
--- use 'cbochs/portal.nvim'
+-- TODO: use 'cbochs/portal.nvim'
 
--- use 'chipsenkbeil/distant.nvim'
+-- TODO: use 'chipsenkbeil/distant.nvim'
 
 AddPlugin {
     'chrisbra/csv.vim',
@@ -3741,7 +3727,7 @@ AddPlugin {
     ft = 'csv'
 }
 
--- https://github.com/delphinus/dwm.nvim
+-- TODO: https://github.com/delphinus/dwm.nvim
 
 AddPlugin {
     'dstein64/vim-startuptime',
@@ -3776,7 +3762,7 @@ AddPlugin {
     }
 }
 
--- 'jbyuki/instant.nvim'
+-- TODO: 'jbyuki/instant.nvim'
 
 AddPlugin {
     'gbprod/yanky.nvim',
@@ -3794,7 +3780,7 @@ AddPlugin {
     lazy = false
 }
 
--- https://github.com/glacambre/firenvim
+-- TODO: https://github.com/glacambre/firenvim
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
@@ -3809,9 +3795,9 @@ AddPlugin {
     }
 }
 
--- https://github.com/lewis6991/hover.nvim
+-- TODO: https://github.com/lewis6991/hover.nvim
 
--- https://github.com/dstein64/nvim-scrollview
+-- TODO: https://github.com/dstein64/nvim-scrollview
 AddPlugin {
     'lewis6991/satellite.nvim',
     cmd = 'SatelliteEnable',
@@ -3821,6 +3807,7 @@ AddPlugin {
     end
 }
 
+-- TODO: configure
 AddPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
@@ -3873,7 +3860,7 @@ AddPlugin {
     lazy = false
 }
 
--- https://github.com/kndndrj/nvim-dbee
+-- TODO: https://github.com/kndndrj/nvim-dbee
 
 AddPlugin {
     'kylechui/nvim-surround',
@@ -3891,7 +3878,7 @@ AddPlugin {
     keys = { '<C-LeftMouse>', '<C-RightMouse>', '<C-Up>', '<C-Down>', '<C-N>' }
 }
 
--- https://github.com/nat-418/scamp.nvim
+-- TODO: https://github.com/nat-418/scamp.nvim
 
 AddPlugin {
     'nacro90/numb.nvim',
@@ -3952,11 +3939,13 @@ AddPlugin {
     keys = { '[p', '[P' }
 }
 
+-- TODO: use or remove
 AddPlugin {
     'shortcuts/no-neck-pain.nvim',
     cmd = 'NoNeckPain'
 }
 
+-- TODO: use or remove
 AddPlugin {
     'tomiis4/hypersonic.nvim',
     cmd = 'Hypersonic',
@@ -4011,37 +4000,37 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-misc.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-map.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-completion.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-misc.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-map.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-completion.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
+-- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 
--- Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
--- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/XXiaoA/ns-textobject.nvim
--- https://github.com/echasnovski/mini.nvim
--- https://github.com/nosduco/remote-sshfs.nvim
--- https://github.com/nvim-telescope/telescope-dap.nvim
--- https://github.com/ofirgall/goto-breakpoints.nvim
--- profiling for auto commands
--- startuptime
--- insert.txt
--- motion.txt
--- vsplit or split file opener like find command
+-- TODO: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
+-- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
+-- TODO: https://github.com/XXiaoA/ns-textobject.nvim
+-- TODO: https://github.com/echasnovski/mini.nvim
+-- TODO: https://github.com/nosduco/remote-sshfs.nvim
+-- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
+-- TODO: https://github.com/ofirgall/goto-breakpoints.nvim
+-- TODO: profiling for auto commands
+-- TODO: startuptime
+-- TODO: insert.txt
+-- TODO: motion.txt
+-- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
