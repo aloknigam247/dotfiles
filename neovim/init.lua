@@ -712,7 +712,8 @@ AddPlugin {
 AddPlugin { -- PERF: check if lazy via event"
     'tzachar/highlight-undo.nvim',
     config = true,
-    lazy = false
+    keys = { 'u' },
+    lazy = true
 }
 
 -- TODO: 'uga-rosa/ccc.nvim'
@@ -1115,6 +1116,26 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    'chrisgrieser/cmp-nerdfont',
+    event = 'InsertEnter'
+}
+
+AddPlugin {
+    'hrsh7th/cmp-cmdline',
+    event = 'CmdlineEnter'
+}
+
+AddPlugin {
+    'hrsh7th/cmp-nvim-lsp',
+    event = 'LspAttach'
+}
+
+AddPlugin {
+    'hrsh7th/cmp-path',
+    event = 'CmdlineEnter'
+}
+
+AddPlugin {
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -1202,11 +1223,7 @@ AddPlugin {
         ]])
     end,
     dependencies = {
-        'chrisgrieser/cmp-nerdfont',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-buffer'
         -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
     event = 'CmdlineEnter',
@@ -1868,66 +1885,6 @@ AddPlugin {
         }
     end,
     event = 'CursorHold'
-}
-
-AddPlugin {
-    'shellRaining/hlchunk.nvim',
-    event = 'CursorHold',
-    opts = {
-        context = {
-            enable = true,
-            notify = true,
-            use_treesitter = false,
-            chars = {
-                "┃", -- Box Drawings Heavy Vertical
-            },
-            style = {
-                "#806d9c",
-            },
-            exclude_filetypes = {},
-        },
-        chunk = {
-            enable = true,
-            use_treesitter = true,
-            chars = {
-                horizontal_line = "─",
-                vertical_line = "│",
-                left_top = "╭",
-                left_bottom = "╰",
-                right_arrow = ">",
-            },
-            style = {
-                { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineContextChar")), "fg", "gui") }
-            },
-        },
-
-        indent = {
-            enable = true,
-            use_treesitter = false,
-            chars = {
-                "│",
-            },
-            style = {
-                { fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("IndentBlanklineChar")), "fg", "gui") }
-            },
-        },
-
-        line_num = {
-            enable = true,
-            use_treesitter = false,
-            style = "#806d9c",
-        },
-
-        blank = {
-            enable = true,
-            chars = {
-                "․",
-            },
-            style = {
-                vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID("Whitespace")), "fg", "gui"),
-            },
-        },
-    }
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3600,12 +3557,11 @@ AddPlugin {
             stages = 'slide'
         })
         vim.notify = notify
-    end,
+    end
 }
 
 AddPlugin {
-    'stevearc/dressing.nvim', -- PERF: load like notify
-    lazy = false
+    'stevearc/dressing.nvim'
 }
 
 -- TODO: use of remove
@@ -3627,9 +3583,17 @@ AddPlugin {
 }
 
 -- REFACTOR: relocate
-vim.notify = function(msg, level, opt)
-    require('notify') -- lazy loads nvim-notify and set vim.notify = notify
-    vim.notify(msg, level, opt)
+vim.notify = function(...)
+    require('notify')
+    vim.notify(...)
+end
+vim.ui.select = function(...)
+    require('dressing')
+    vim.ui.select(...)
+end
+vim.ui.input = function(...)
+    require('dressing')
+    vim.ui.input(...)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3777,7 +3741,7 @@ AddPlugin {
             sync_with_ring = false,
         }
     },
-    lazy = false
+    event = 'TextYankPost'
 }
 
 -- TODO: https://github.com/glacambre/firenvim
@@ -3857,7 +3821,7 @@ AddPlugin {
             },
         })
     end,
-    lazy = false
+    event = 'VeryLazy'
 }
 
 -- TODO: https://github.com/kndndrj/nvim-dbee
@@ -4033,7 +3997,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
+ColoRand(1)
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
