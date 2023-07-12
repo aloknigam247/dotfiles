@@ -444,6 +444,21 @@ vim.diagnostic.config({
     }
 })
 
+vim.notify = function(...)
+    require('notify')
+    vim.notify(...)
+end
+
+vim.ui.select = function(...)
+    require('dressing')
+    vim.ui.select(...)
+end
+
+vim.ui.input = function(...)
+    require('dressing')
+    vim.ui.input(...)
+end
+
 -- TODO: remove when not needed
 -- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
 -- <~>
@@ -1337,29 +1352,29 @@ AddPlugin {
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
--- AddPlugin {
---     'mfussenegger/nvim-dap',
---     config = function()
---         vim.api.nvim_set_keymap('n', '<F9>', [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
---         vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("dap").continue()<CR>]], { noremap = true })
---         vim.api.nvim_set_keymap('n', '<F10>', [[:lua require("dap").step_over()<CR>]], { noremap = true })
---         vim.api.nvim_set_keymap('n', '<F11>', [[:lua require("dap").step_into()<CR>]], { noremap = true })
---         vim.api.nvim_set_keymap('n', '<F12>', [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
---         vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
---         --[[ vim.cmd[[
---             nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
---             nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
---             nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
---             nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
---             nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
---             nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
---             nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
---             nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
---             nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
---         ]]
---     end,
---     lazy = true
--- }
+AddPlugin {
+    'mfussenegger/nvim-dap',
+    config = function()
+        -- vim.api.nvim_set_keymap('n', '<F9>', [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
+        -- vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("dap").continue()<CR>]], { noremap = true })
+        -- vim.api.nvim_set_keymap('n', '<F10>', [[:lua require("dap").step_over()<CR>]], { noremap = true })
+        -- vim.api.nvim_set_keymap('n', '<F11>', [[:lua require("dap").step_into()<CR>]], { noremap = true })
+        -- vim.api.nvim_set_keymap('n', '<F12>', [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
+        -- vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
+        vim.cmd[[
+            nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
+            nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
+            nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
+            nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
+            nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
+            nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+            nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+            nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
+            nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+        ]]
+    end,
+    lazy = true
+}
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
 -- <~>
@@ -3563,7 +3578,7 @@ AddPlugin {
     'stevearc/dressing.nvim'
 }
 
--- TODO: use of remove
+-- TODO: use or remove
 AddPlugin {
     'tamton-aquib/flirt.nvim',
     enabled = false,
@@ -3580,20 +3595,6 @@ AddPlugin {
         end
     }
 }
-
--- REFACTOR: relocate
-vim.notify = function(...)
-    require('notify')
-    vim.notify(...)
-end
-vim.ui.select = function(...)
-    require('dressing')
-    vim.ui.select(...)
-end
-vim.ui.input = function(...)
-    require('dressing')
-    vim.ui.input(...)
-end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: 'AckslD/nvim-trevJ.lua'
