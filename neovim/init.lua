@@ -1049,7 +1049,6 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end }
 Dark  { 'spaceduck',                  '_'                                                                   }
 Dark  { 'substrata',                  '_'                                                                   }
-Dark  { 'sweetie',                    '_'                                                                   }
 Light { 'sweetie',                    '_'                                                                   }
 Dark  { 'terafox',                    'nightfox'                                                            }
 Dark  { 'toast',                      '_'                                                                   }
@@ -1804,8 +1803,8 @@ AddPlugin {
             border = 'rounded'
         },
         signs = { -- ┃┇│┆󰇝
-            add          = { hl = 'GitSignsAdd'   ,       text = '┃', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
-            change       = { hl = 'GitSignsChange',       text = '┇', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            add          = { hl = 'GitSignsAdd'   ,       text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
+            change       = { hl = 'GitSignsChange',       text = '┆', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
             topdelete    = { hl = 'GitSignsDelete',       text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
             changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
@@ -3997,7 +3996,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand(1)
+ColoRand()
 vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
