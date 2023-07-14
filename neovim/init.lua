@@ -1740,6 +1740,7 @@ AddPlugin {
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: https://github.com/NeogitOrg/neogit
 AddPlugin {
     'aaronhallaert/advanced-git-search.nvim',
     config = function()
