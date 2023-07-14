@@ -1,9 +1,9 @@
+-- FIX: fix backspace in normal mode
 -- PERF: Profile autocommands
+-- PERF: Profile startup
 -- PERF: ctrl + arrow movements very slow
 -- PERF: slow visual cursor movement in mouse
 -- REFACTOR: Fix lua_ls errors
--- PERF: Profile startup
--- FIX: fix backspace in normal mode
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
@@ -560,7 +560,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: bold not visible properly
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
     -- https://github.com/nullchilly/fsread.nvim
@@ -574,7 +573,7 @@ AddPlugin {
             ['4'] = 2,
             ['fallback'] = 0.4
         },
-        hlgroupOptions = { link = 'Bold' },
+        hlgroupOptions = { bold = true },
         fileTypes = {},
         saccadeInterval = 0,
         saccadeReset = false,
@@ -1650,7 +1649,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: configure or remove
 AddPlugin {
     -- https://github.com/snelling-a/better-folds.nvim
     'anuvyklack/pretty-fold.nvim',
@@ -1999,6 +1997,7 @@ AddPlugin {
                 aunmenu PopUp
             ]]
 
+            PopupMenuAdd('Code Action              ',  '<Cmd>CodeActionMenu<CR>')
             PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
             PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
             PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
@@ -2127,7 +2126,7 @@ AddPlugin {
             quit = 'q',
         },
         diagnostic = {
-            show_code_action = true,
+            show_code_action = false,
             show_source = true,
             jump_num_shortcut = true,
             --1 is max
@@ -2383,20 +2382,6 @@ AddPlugin {
     }
 }
 
--- TODO: use or remove
-AddPlugin {
-    'smjonas/inc-rename.nvim',
-    cmd = 'IncRename',
-    opts = {
-        cmd_name = "IncRename", -- the name of the command
-        hl_group = "Substitute", -- the highlight group used for highlighting the identifier's new name
-        preview_empty_name = false, -- whether an empty new name should be previewed; if false the command preview will be cancelled instead
-        show_message = true, -- whether to display a `Renamed m instances in n files` message after a rename operation
-        input_buffer_type = 'dressing', -- the type of the external input buffer to use (the only supported value is currently "dressing")
-        post_hook = nil, -- callback to run after renaming, receives the result table (from LSP handler) as an argument
-    }
-}
-
 AddPlugin {
     'stevearc/aerial.nvim',
     cmd = 'AerialToggle',
@@ -2406,18 +2391,16 @@ AddPlugin {
     }
 }
 
--- -- TODO: use of remove
--- AddPlugin {
---     'weilbith/nvim-code-action-menu',
---     config = function ()
---         vim.g.code_action_menu_window_border = 'rounded'
---     end,
---     cmd = 'CodeActionMenu'
--- }
+AddPlugin {
+    'weilbith/nvim-code-action-menu',
+    config = function ()
+        vim.g.code_action_menu_window_border = 'rounded'
+    end,
+    cmd = 'CodeActionMenu'
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: https://github.com/iamcco/markdown-preview.nvim
--- TODO: https://github.com/Zeioth/markmap.nvim
 -- TODO: https://github.com/kiran94/maim.nvim
 AddPlugin {
     'toppair/peek.nvim',
@@ -2531,7 +2514,7 @@ AddPlugin {
 -- use 'crusj/bookmarks.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Orgmode     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/TravonteD/org-capture-filetype
+-- https://github.com/TravonteD/org-capture-filetype
 -- TODO: https://github.com/akinsho/org-bullets.nvim
 
 -- TODO: use or remove
@@ -3782,7 +3765,7 @@ AddPlugin {
             -- Although I recommend just using the segments field below to build your
             -- statuscolumn to benefit from the performance optimizations in this plugin.
             -- builtin.lnumfunc number string options
-            thousands = ',',     -- or line number thousands separator string ("." / ",")
+            thousands = '.',     -- or line number thousands separator string ("." / ",")
             relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
             -- Builtin 'statuscolumn' options
             ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
@@ -3795,9 +3778,9 @@ AddPlugin {
                     text = { builtin.lnumfunc, " " },
                     condition = { true, builtin.not_empty },
                     click = "v:lua.ScLa",
-                }
+                },
             },
-            clickmod = "a",         -- modifier used for certain actions in the builtin clickhandlers:
+            clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
             clickhandlers = {       -- builtin click handlers
                 Lnum                    = builtin.lnum_click,
@@ -3846,9 +3829,9 @@ AddPlugin {
 
 AddPlugin {
     'nacro90/numb.nvim',
-    cond = function()
-        return vim.api.nvim_get_mode().mode == 'c'
-    end,
+    -- cond = function()
+    --     return vim.api.nvim_get_mode().mode == 'c'
+    -- end,
     config = true,
     event = 'CmdlineEnter',
 }
