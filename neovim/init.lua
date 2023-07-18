@@ -231,6 +231,7 @@ LazyConfig = {
 }
 
 Plugins = {}
+PopUpMenu = {}
 
 -- TODO: combine with GlobalIcon
 -- TODO: resolve icon fl in GlobalIcon
@@ -347,6 +348,10 @@ function ColorPalette()
     end
 end
 
+function IsLspAttached()
+    return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
+end
+
 function LightenDarkenColor(col, amt)
     local num = tonumber(col, 16)
     local r = bit.rshift(num, 16) + amt
@@ -356,15 +361,25 @@ function LightenDarkenColor(col, amt)
     return string.format("#%X", newColor)
 end
 
--- FEAT: Render dynamic popupmenu
 function PopupAction(mode)
     local currentWindow = vim.api.nvim_get_current_win()
     local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
+    vim.cmd('aunmenu PopUp')
+
+    for _,menu in pairs(PopUpMenu) do
+        if menu.cond() then
+            for _,opt in pairs(menu.opts) do
+                local title = opt[1]
+                local action = opt[2]
+                title = title:gsub(' ', '\\ ')
+                vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
+            end
+        end
+    end
 end
 
-function PopupMenuAdd(title, action)
-    title = title:gsub(' ', '\\ ')
-    vim.cmd.nnoremenu('PopUp.' .. title .. ' ' .. action)
+function PopupMenuAdd(menu)
+    table.insert(PopUpMenu, menu)
 end
 
 -- Auto Commands
@@ -431,6 +446,13 @@ vim.api.nvim_create_autocmd(
     }
 )
 
+-- Mappings
+-- --------
+vim.keymap.set('n', '<A-up>', '<cmd>res -1<cr>', {})
+vim.keymap.set('n', '<A-down>', '<cmd>res +1<cr>', {})
+vim.keymap.set('n', '<A-left>', '<cmd>vert res -1<cr>', {})
+vim.keymap.set('n', '<A-right>', '<cmd>vert res +1<cr>', {})
+
 -- Misc
 -- ----
 vim.diagnostic.config({
@@ -461,6 +483,25 @@ end
 
 -- TODO: remove when not needed
 -- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
+
+-- PopUps
+-- ------
+
+PopupMenuAdd({
+    cond = IsLspAttached,
+    opts = {
+        {'Code Action              ',  '<Cmd>CodeActionMenu<CR>'},
+        {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
+        {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
+        {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
+        {'Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>'},
+        {'LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>'},
+        {'Peek Definition        gp',  '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>'},
+        {'References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>'},
+        {'Rename                 F2',  '<Cmd>Lspsaga rename<CR>'},
+        {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
+    }
+})
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -1006,7 +1047,6 @@ Light { 'melange',                    '_'                                       
 Dark  { 'mellifluous',                '_'                                                                                                                     }
 Light { 'mellifluous',                '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin'}) end                                }
-Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'mountain'}) end                              }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
 Dark  { 'midnight',                   '_'                                                                                                                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
@@ -1243,7 +1283,7 @@ AddPlugin {
 }
 
 -- TODO: https://github.com/jameshiew/nvim-magic
--- TODO: https://github.com/kristijanhusak/vim-dadbod-completion
+-- https://github.com/kristijanhusak/vim-dadbod-completion
 -- TODO: https://github.com/lukas-reineke/cmp-rg
 -- TODO: https://github.com/lukas-reineke/cmp-under-comparator
 -- TODO: https://github.com/rcarriga/cmp-dap
@@ -1993,21 +2033,6 @@ AddPlugin {
             -- end, bufopts)
             -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-
-            vim.cmd[[
-                aunmenu PopUp
-            ]]
-
-            PopupMenuAdd('Code Action              ',  '<Cmd>CodeActionMenu<CR>')
-            PopupMenuAdd('Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>')
-            PopupMenuAdd('Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>')
-            PopupMenuAdd('Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>')
-            PopupMenuAdd('Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>')
-            PopupMenuAdd('LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>')
-            PopupMenuAdd('Peek Definition        gp',  '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>')
-            PopupMenuAdd('References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>')
-            PopupMenuAdd('Rename                 F2',  '<Cmd>Lspsaga rename<CR>')
-            PopupMenuAdd('Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>')
         end
 
         -- LSP settings (for overriding per client)
@@ -2972,9 +2997,7 @@ AddPlugin {
                     },
                     {
                         LspIcon,
-                        cond = function()
-                            return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
-                        end,
+                        cond = IsLspAttached,
                         on_click = function()
                             vim.cmd('LspInfo')
                         end,
@@ -3249,15 +3272,15 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/andythigpen/nvim-coverage
--- TODO: https://github.com/klen/nvim-test
--- TODO: https://github.com/nvim-neotest/neotest
+-- https://github.com/andythigpen/nvim-coverage
+-- https://github.com/klen/nvim-test
+-- https://github.com/nvim-neotest/neotest
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    -- TODO: https://github.com/AndrewRadev/splitjoin.vim
+    -- https://github.com/AndrewRadev/splitjoin.vim
     -- TODO: https://github.com/CKolkey/ts-node-action
-    -- TODO: https://github.com/echasnovski/mini.splitjoin
+    -- https://github.com/echasnovski/mini.splitjoin
     'Wansmer/treesj',
     cmd = 'TSJToggle',
     opts = {
@@ -3561,24 +3584,6 @@ AddPlugin {
 AddPlugin {
     'stevearc/dressing.nvim'
 }
-
--- TODO: use or remove
-AddPlugin {
-    'tamton-aquib/flirt.nvim',
-    enabled = false,
-    lazy = false,
-    opts = {
-        override_open = true, -- experimental
-        close_command = 'Q',
-        default_move_mappings = false,
-        default_resize_mappings = true,
-        default_mouse_mappings = true,
-        exclude_fts = { 'notify', 'cmp_menu', 'NvimSeparator', 'lspsagafinder' },
-        custom_filter = function(buffer, _)
-            return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
-        end
-    }
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: 'AckslD/nvim-trevJ.lua'
@@ -3728,7 +3733,7 @@ AddPlugin {
     event = 'TextYankPost'
 }
 
--- TODO: https://github.com/glacambre/firenvim
+-- https://github.com/glacambre/firenvim
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
@@ -3893,13 +3898,6 @@ AddPlugin {
     cmd = 'NoNeckPain'
 }
 
--- TODO: use or remove
-AddPlugin {
-    'tomiis4/hypersonic.nvim',
-    cmd = 'Hypersonic',
-    config = true
-}
-
 AddPlugin {
     'tummetott/reticle.nvim',
     config = true
@@ -3949,7 +3947,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-splitjoin.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
@@ -3962,7 +3959,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-completion.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-bracketed.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
