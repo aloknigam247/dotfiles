@@ -466,6 +466,14 @@ vim.diagnostic.config({
     }
 })
 
+vim.highlight.priorities = {
+    syntax = 50,
+    treesitter = 100,
+    semantic_tokens = 99,
+    diagnostics = 150,
+    user = 200
+}
+
 vim.notify = function(...)
     require('notify')
     vim.notify(...)
@@ -836,19 +844,6 @@ function FixVnNight()
     vim.api.nvim_set_hl(0, 'Folded', { bg = '#112943', fg = '#8486A4' })
 end
 
-function FixZellner()
-    vim.defer_fn(
-        function()
-            vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#5F875F' })
-            vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#5F87AF' })
-            vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#AF5FAF' })
-            vim.api.nvim_set_hl(0, 'lualine_b_branch_normal', { bg = '#E5E5E5', fg = '#4A4A4A' })
-            vim.api.nvim_set_hl(0, 'lualine_b_normal', { bg = '#E5E5E5', fg = '#4A4A4A' })
-        end,
-        3000
-    )
-end
-
 -- https://github.com/SeniorMars/dotfiles/blob/master/.config/nvim/init.lua
 function SeniorMarsTheme()
     require('gruvbox').setup({
@@ -1039,7 +1034,6 @@ Dark  { 'mariana',                    'starry',      pre = function() FixStarry(
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
 Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'oceanic'    end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757DA4') end     }
 Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
 Dark  { 'melange',                    '_'                                                                                                                     }
@@ -1119,7 +1113,6 @@ Dark  { 'vitesse',                    '_'                                       
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
 Dark  { 'vscode',                     '_'                                                                   }
 Light { 'vscode',                     '_'                                                                   }
-Light { 'zellner',                    '_',           post = FixZellner                                      }
 Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
@@ -2011,10 +2004,11 @@ AddPlugin {
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
         local on_attach = function(client, bufnr)
+            require('lsp-inlayhints').on_attach(client, bufnr)
+            require('lsp_signature').on_attach({ hint_enable = false, noice = false }, bufnr)
+
             -- Mappings.
-            -- require("nvim-navbuddy").attach(client, bufnr)
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
-            require("lsp-inlayhints").on_attach(client, bufnr)
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
@@ -2112,16 +2106,8 @@ AddPlugin {
     keys = { '<F12>' }
 }
 
--- TODO: is it even working
 AddPlugin {
-    'ray-x/lsp_signature.nvim',
-    config = function()
-        require 'lsp_signature'.setup({
-            hint_enable = false,
-            noice = false
-        })
-    end,
-    event = 'LspAttach'
+    'ray-x/lsp_signature.nvim'
 }
 
 AddPlugin {
@@ -3118,7 +3104,7 @@ AddPlugin {
             }
         }
     end,
-    event = 'CursorHold'
+    event = 'User VeryLazy',
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3618,18 +3604,10 @@ AddPlugin {
 
 AddPlugin {
     'ThePrimeagen/refactoring.nvim',
+    cmd = 'Refactor',
     config = true,
     dependencies = {
         {'nvim-lua/plenary.nvim'},
-    },
-    keys = { -- BUG: fix mappings
-        {'<Leader>re', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], noremap = true, silent = true, expr = false},
-        {'<Leader>rf', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], noremap = true, silent = true, expr = false},
-        {'<Leader>rv', [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], noremap = true, silent = true, expr = false},
-        {'<Leader>ri', [[ <Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], noremap = true, silent = true, expr = false},
-        {'<Leader>rb', [[ <Cmd>lua require('refactoring').refactor('Extract Block')<CR>]], noremap = true, silent = true, expr = false},
-        {'<Leader>rbf', [[ <Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]], noremap = true, silent = true, expr = false},
-        {'<Leader>ri', [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], noremap = true, silent = true, expr = false}
     }
 }
 
@@ -3687,6 +3665,24 @@ AddPlugin {
     cmd = 'StartupTime'
 }
 
+-- TODO: Resolve with Satellite
+AddPlugin {
+    'echasnovski/mini.map',
+    config = function ()
+        local minimap = require('mini.map')
+        minimap.setup({
+            integrations = {
+                minimap.gen_integration.builtin_search(),
+                minimap.gen_integration.gitsigns(),
+                minimap.gen_integration.diagnostic(),
+            },
+            symbols = {
+                encode = minimap.gen_encode_symbols.dot('4x2')
+            }
+        })
+    end
+}
+
 AddPlugin {
     'folke/neodev.nvim',
     event = 'LspAttach',
@@ -3704,7 +3700,7 @@ AddPlugin {
         -- for your Neovim config directory, the config.library settings will be used as is
         -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
         -- for any other directory, config.library.enabled will be set to false
-        override = function(root_dir, options) end,
+        override = function(_, _) end,
         -- With lspconfig, Neodev will automatically setup your lua-language-server
         -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
         -- in your lsp start options
@@ -3951,14 +3947,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-misc.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-map.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-completion.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
