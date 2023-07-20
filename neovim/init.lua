@@ -1134,8 +1134,7 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 
--- TODO: Transparent variants
-AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
+AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           } -- TODO: Transparent variants
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
@@ -2212,22 +2211,7 @@ AddPlugin {
 
 AddPlugin {
     'williamboman/mason-lspconfig.nvim',
-    cmd = 'LspToggle',
     config = function()
-        -- Toggle LSP
-        -- TODO:  do we need this command
-        vim.api.nvim_create_user_command(
-            'LspToggle',
-            function()
-                if #vim.lsp.get_active_clients({bufnr = 0}) == 0 then
-                    vim.cmd('LspStart')
-                else
-                    vim.cmd('LspStop')
-                end
-            end,
-            { nargs = 0 }
-        )
-
         local mason_lspconfig = require('mason-lspconfig')
         mason_lspconfig.setup()
         -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
