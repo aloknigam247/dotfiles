@@ -32,7 +32,6 @@ function IconGenerator(_, key)
         Enum              = ' ',
         EnumMember        = ' ',
         Event             = ' ',
-        FidgetDone        = '󰄴 ',
         Field             = ' ',
         File              = ' ',
         Folder            = '󰷏 ',
@@ -543,7 +542,7 @@ AddPlugin {
             Rule('#include <', '>', { 'c', 'cpp' }),
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
-            -- ( | ) --> ) --> ( )| -- BUG: not working
+            -- ( | ) --> ) --> ( )|
             Rule(' ', ' ')
             :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
@@ -646,15 +645,7 @@ AddPlugin {
                 'regex'
             }
         })
-        local bg -- REFACTOR: use AdaptiveBG() function
-        if (vim.o.background == "dark" and not vim.g.ColoRand:find('pink-panic', 0, true)) then
-            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-            bg = LightenDarkenColor(string.format("%X", bg), 40)
-        else
-            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-            bg = LightenDarkenColor(string.format("%X", bg), -40)
-        end
-        vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = bg })
+        vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = AdaptiveBG(40, -40) })
         vim.cmd[[
            hi IlluminatedWordRead  guibg = #8AC926 guifg = #FFFFFF gui = bold
            hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
@@ -668,7 +659,255 @@ AddPlugin { -- TODO: set it up
     keys = { 'f<CR>' }
 }
 
--- TODO: https://github.com/folke/flash.nvim
+AddPlugin {
+    'folke/flash.nvim',
+    lazy = false,
+    opts = {
+        -- labels = "abcdefghijklmnopqrstuvwxyz",
+        labels = "asdfghjklqwertyuiopzxcvbnm",
+        search = {
+            -- search/jump in all windows
+            multi_window = true,
+            -- search direction
+            forward = true,
+            -- when `false`, find only matches in the given direction
+            wrap = true,
+            ---@type Flash.Pattern.Mode
+            -- Each mode will take ignorecase and smartcase into account.
+            -- * exact: exact match
+            -- * search: regular search
+            -- * fuzzy: fuzzy search
+            -- * fun(str): custom function that returns a pattern
+            --   For example, to only match at the beginning of a word:
+            --   mode = function(str)
+            --     return "\\<" .. str
+            --   end,
+            mode = "search",
+            -- behave like `incsearch`
+            incremental = true,
+            -- Excluded filetypes and custom window filters
+            ---@type (string|fun(win:window))[]
+            exclude = {
+                "notify",
+                "cmp_menu",
+                "noice",
+                "flash_prompt",
+                function(win)
+                    -- exclude non-focusable windows
+                    return not vim.api.nvim_win_get_config(win).focusable
+                end,
+            },
+            -- Optional trigger character that needs to be typed before
+            -- a jump label can be used. It's NOT recommended to set this,
+            -- unless you know what you're doing
+            trigger = "",
+            -- max pattern length. If the pattern length is equal to this
+            -- labels will no longer be skipped. When it exceeds this length
+            -- it will either end in a jump or terminate the search
+            max_length = false, ---@type number|false
+        },
+        jump = {
+            -- save location in the jumplist
+            jumplist = true,
+            -- jump position
+            pos = "start", ---@type "start" | "end" | "range"
+            -- add pattern to search history
+            history = false,
+            -- add pattern to search register
+            register = false,
+            -- clear highlight after jump
+            nohlsearch = false,
+            -- automatically jump when there is only one match
+            autojump = false,
+            -- You can force inclusive/exclusive jumps by setting the
+            -- `inclusive` option. By default it will be automatically
+            -- set based on the mode.
+            inclusive = nil, ---@type boolean?
+            -- jump position offset. Not used for range jumps.
+            -- 0: default
+            -- 1: when pos == "end" and pos < current position
+            offset = nil, ---@type number
+        },
+        label = {
+            -- allow uppercase labels
+            uppercase = true,
+            -- add any labels with the correct case here, that you want to exclude
+            exclude = "",
+            -- add a label for the first match in the current window.
+            -- you can always jump to the first match with `<CR>`
+            current = true,
+            -- show the label after the match
+            after = true, ---@type boolean|number[]
+            -- show the label before the match
+            before = false, ---@type boolean|number[]
+            -- position of the label extmark
+            style = "overlay", ---@type "eol" | "overlay" | "right_align" | "inline"
+            -- flash tries to re-use labels that were already assigned to a position,
+            -- when typing more characters. By default only lower-case labels are re-used.
+            reuse = "lowercase", ---@type "lowercase" | "all" | "none"
+            -- for the current window, label targets closer to the cursor first
+            distance = true,
+            -- minimum pattern length to show labels
+            -- Ignored for custom labelers.
+            min_pattern_length = 0,
+            -- Enable this to use rainbow colors to highlight labels
+            -- Can be useful for visualizing Treesitter ranges.
+            rainbow = {
+                enabled = false,
+                -- number between 1 and 9
+                shade = 5,
+            },
+            -- With `format`, you can change how the label is rendered.
+            -- Should return a list of `[text, highlight]` tuples.
+            ---@class Flash.Format
+            ---@field state Flash.State
+            ---@field match Flash.Match
+            ---@field hl_group string
+            ---@field after boolean
+            ---@type fun(opts:Flash.Format): string[][]
+            format = function(opts)
+                return { { opts.match.label, opts.hl_group } }
+            end,
+        },
+        highlight = {
+            -- show a backdrop with hl FlashBackdrop
+            backdrop = true,
+            -- Highlight the search matches
+            matches = true,
+            -- extmark priority
+            priority = 5000,
+            groups = {
+                match = "FlashMatch",
+                current = "FlashCurrent",
+                backdrop = "FlashBackdrop",
+                label = "FlashLabel",
+            },
+        },
+        -- action to perform when picking a label.
+        -- defaults to the jumping logic depending on the mode.
+        action = nil,
+        -- initial pattern to use when opening flash
+        pattern = "",
+        -- When `true`, flash will try to continue the last search
+        continue = false,
+        -- Set config to a function to dynamically change the config
+        config = nil, ---@type fun(opts:Flash.Config)|nil
+        -- You can override the default options for a specific mode.
+        -- Use it with `require("flash").jump({mode = "forward"})`
+        ---@type table<string, Flash.Config>
+        modes = {
+            -- options used when flash is activated through
+            -- a regular search with `/` or `?`
+            search = {
+                -- when `true`, flash will be activated during regular search by default.
+                -- You can always toggle when searching with `require("flash").toggle()`
+                enabled = true,
+                highlight = { backdrop = false },
+                jump = { history = true, register = true, nohlsearch = true },
+                search = {
+                    -- `forward` will be automatically set to the search direction
+                    -- `mode` is always set to `search`
+                    -- `incremental` is set to `true` when `incsearch` is enabled
+                },
+            },
+            -- options used when flash is activated through
+            -- `f`, `F`, `t`, `T`, `;` and `,` motions
+            char = {
+                enabled = true,
+                -- dynamic configuration for ftFT motions
+                config = function(opts)
+                    -- autohide flash when in operator-pending mode
+                    opts.autohide = vim.fn.mode(true):find("no") and vim.v.operator == "y"
+
+                    -- disable jump labels when enabled and when using a count
+                    opts.jump_labels = opts.jump_labels and vim.v.count == 0
+
+                    -- Show jump labels only in operator-pending mode
+                    -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
+                end,
+                -- hide after jump when not using jump labels
+                autohide = false,
+                -- show jump labels
+                jump_labels = false,
+                -- set to `false` to use the current line only
+                multi_line = true,
+                -- When using jump labels, don't use these keys
+                -- This allows using those keys directly after the motion
+                label = { exclude = "hjkliardc" },
+                -- by default all keymaps are enabled, but you can disable some of them,
+                -- by removing them from the list.
+                -- If you rather use another key, you can map them
+                -- to something else, e.g., { [";"] = "L", [","] = H }
+                keys = { "f", "F", "t", "T", ";", "," },
+                ---@alias Flash.CharActions table<string, "next" | "prev" | "right" | "left">
+                -- The direction for `prev` and `next` is determined by the motion.
+                -- `left` and `right` are always left and right.
+                char_actions = function(motion)
+                    return {
+                        [";"] = "next", -- set to `right` to always go right
+                        [","] = "prev", -- set to `left` to always go left
+                        -- clever-f style
+                        [motion:lower()] = "next",
+                        [motion:upper()] = "prev",
+                        -- jump2d style: same case goes next, opposite case goes prev
+                        -- [motion] = "next",
+                        -- [motion:match("%l") and motion:upper() or motion:lower()] = "prev",
+                    }
+                end,
+                search = { wrap = false },
+                highlight = { backdrop = true },
+                jump = { register = false },
+            },
+            -- options used for treesitter selections
+            -- `require("flash").treesitter()`
+            treesitter = {
+                labels = "abcdefghijklmnopqrstuvwxyz",
+                jump = { pos = "range" },
+                search = { incremental = false },
+                label = { before = true, after = true, style = "inline" },
+                highlight = {
+                    backdrop = false,
+                    matches = false,
+                },
+            },
+            treesitter_search = {
+                jump = { pos = "range" },
+                search = { multi_window = true, wrap = true, incremental = false },
+                remote_op = { restore = true },
+                label = { before = true, after = true, style = "inline" },
+            },
+            -- options used for remote flash
+            remote = {
+                remote_op = { restore = true, motion = true },
+            },
+        },
+        -- options for the floating window that shows the prompt,
+        -- for regular jumps
+        prompt = {
+            enabled = true,
+            prefix = { { "⚡", "FlashPromptIcon" } },
+            win_config = {
+                relative = "editor",
+                width = 1, -- when <=1 it's a percentage of the editor width
+                height = 1,
+                row = -1, -- when negative it's an offset from the bottom
+                col = 0, -- when negative it's an offset from the right
+                zindex = 1000,
+            },
+        },
+        -- options for remote operator pending mode
+        remote_op = {
+            -- restore window views and cursor position
+            -- after doing a remote operation
+            restore = false,
+            -- For `jump.pos = "range"`, this setting is ignored.
+            -- `true`: always enter a new motion when doing a remote operation
+            -- `false`: use the window's cursor position and jump target
+            -- `nil`: act as `true` for remote windows, `false` for the current window
+            motion = false,
+        },
+    }
+}
 
 AddPlugin {
     'folke/lsp-colors.nvim',
@@ -1000,9 +1239,7 @@ Dark  { 'dawnfox',                    'nightfox'                                
 Dark  { 'dayfox',                     'nightfox'                                                          }
 Dark  { 'decay',                      '_'                                                                 }
 Light { 'decay',                      '_'                                                                 }
-Dark  { 'decayce',                    'decay'                                                             }
 Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
-Light { 'delek',                      '_'                                                                 }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
 Dark  { 'doubletrouble',              '_'                                                                 }
 Dark  { 'duskfox',                    'nightfox'                                                          }
@@ -1034,7 +1271,6 @@ Dark  { 'mariana',                    'starry',      pre = function() FixStarry(
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
 Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'palenight'  end, post = function() FixLineNr('#757DA4') end     }
 Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
@@ -1064,7 +1300,6 @@ Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
 Light { 'noctis_lux',                 'noctis'       }
 Dark  { 'noctis_minimus',             'noctis'       }
-Dark  { 'noctis_sereno',              'noctis'       }
 Dark  { 'nord',                       '_'            }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
@@ -1137,7 +1372,7 @@ function ColoRand(ind)
     if (postcmd) then
         postcmd()
     end
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. os.clock() - start_time
+    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. (os.clock() - start_time)*1000 .. 'ms'
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1765,7 +2000,6 @@ AddPlugin {
     cmd = 'Neoformat'
 }
 -- TODO: use 'joechrisellis/lsp-format-modifications.nvim'
--- TODO: use 'lukas-reineke/format.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: enable FZF
@@ -2264,7 +2498,7 @@ AddPlugin {
     'j-hui/fidget.nvim',
     opts = {
         text = {
-            done = Icons.FidgetDone, -- TODO: remove GlobalIcon
+            done = '󰄴',
             spinner = 'arc'
         }
     },
@@ -2527,7 +2761,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Orgmode     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/TravonteD/org-capture-filetype
--- TODO: https://github.com/akinsho/org-bullets.nvim
+-- https://github.com/akinsho/org-bullets.nvim
 
 -- TODO: use or remove
 AddPlugin {
@@ -2558,7 +2792,6 @@ AddPlugin {
 }
 
 -- TODO: use 'nvim-orgmode/orgmode'
--- TODO: https://github.com/ranjithshegde/orgWiki.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- |-----------------+-----------------------------------------------------------|
@@ -2791,7 +3024,7 @@ AddPlugin {
 -- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
 -- TODO: https://github.com/rafamadriz/friendly-snippets
 -- TODO: https://github.com/saadparwaiz1/cmp_luasnip
--- TODO: https://github.com/smjonas/snippet-converter.nvim
+-- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -3017,14 +3250,7 @@ AddPlugin {
                         end,
                         icon = {'󰍒', align = 'left'},
                         on_click = function ()
-                            local satellite = require('satellite')
-                            if satellite.enabled then
-                                vim.cmd('SatelliteDisable')
-                                satellite.enabled = false
-                            else
-                                vim.cmd('SatelliteEnable')
-                                satellite.enabled = true
-                            end
+                            require('mini.map').toggle()
                         end,
                         padding = { left = 0, right = 0 },
                         separator = { left = '', right = '' }
@@ -3326,21 +3552,6 @@ AddPlugin {
             use_colorpalette = true,
         })
     end
-}
-
--- TODO: Use or remove
-AddPlugin {
-    'nvim-treesitter/nvim-treesitter-context',
-    cmd = 'TSContextEnable',
-    opts = {
-        enable = true,
-        separator = '━',
-        patterns = {
-            lua = {
-                'field'
-            }
-        }
-    }
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3665,7 +3876,6 @@ AddPlugin {
     cmd = 'StartupTime'
 }
 
--- TODO: Resolve with Satellite
 AddPlugin {
     'echasnovski/mini.map',
     config = function ()
@@ -3711,7 +3921,7 @@ AddPlugin {
     }
 }
 
--- TODO: 'jbyuki/instant.nvim'
+-- 'jbyuki/instant.nvim'
 
 AddPlugin {
     'gbprod/yanky.nvim',
@@ -3747,14 +3957,6 @@ AddPlugin {
 -- TODO: https://github.com/lewis6991/hover.nvim
 
 -- TODO: https://github.com/dstein64/nvim-scrollview
-AddPlugin {
-    'lewis6991/satellite.nvim',
-    cmd = 'SatelliteEnable',
-    config = function()
-        require('satellite').setup({ winblend = vim.o.winblend })
-        vim.cmd('hi link ScrollView lualine_a_normal')
-    end
-}
 
 -- TODO: configure
 AddPlugin {
@@ -3775,12 +3977,12 @@ AddPlugin {
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 { text = { "%C" }, click = "v:lua.ScFa" },
-                { text = { "%s" }, click = "v:lua.ScSa" },
                 {
                     text = { builtin.lnumfunc, " " },
                     condition = { true, builtin.not_empty },
                     click = "v:lua.ScLa",
                 },
+                { text = { "%s" }, click = "v:lua.ScSa" },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
@@ -3960,7 +4162,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
 -- TODO: https://github.com/XXiaoA/ns-textobject.nvim
--- TODO: https://github.com/echasnovski/mini.nvim
 -- TODO: https://github.com/nosduco/remote-sshfs.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/ofirgall/goto-breakpoints.nvim
