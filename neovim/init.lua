@@ -102,7 +102,7 @@ function IconGenerator(_, key)
         runtime           = ' ',
         source            = ' ',
         start             = ' ',
-        symlink_arrow     = ' 壟 ', -- TODO: change arrow icon
+        symlink_arrow     = ' 壟 ',
         task              = ' ',
         warn              = ' ',
     }
@@ -1128,16 +1128,21 @@ local function Dark(opts)
     table.insert(colos, opts)
 end
 
+local function DarkT(opts)
+    opts.trans = true
+    Dark(opts)
+end
+
 local function Light(opts)
     opts.bg = 'light'
     table.insert(colos, opts)
 end
 
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
-AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       } -- TODO: Transparent & other variants
+AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
-AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             }
+AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             } -- TODO: Transparent & other variants
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
 AddPlugin { 'w3barsi/barstrata.nvim',                  event = 'User barstrata'                                           }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
@@ -1205,12 +1210,14 @@ AddPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', 
 AddPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'                                              }
 AddPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
-Dark  { 'NeoSolarized',               '_'                              }
+DarkT { 'NeoSolarized',               '_'                              }
+Dark  { 'NeoSolarized',               '_', pre = function() require('NeoSolarized').setup({transparent = false}) end}
 Light { 'NeoSolarized',               '_'                              }
 Dark  { 'OceanicNext',                '_'                              }
 Dark  { 'PaperColor',                 '_',           post = FixNontext }
 Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'                              }
+DarkT { 'adwaita',                    '_', pre = function() vim.g.adwaita_transparent = true end }
 Light { 'adwaita',                    '_'                              }
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
@@ -1250,7 +1257,10 @@ Light { 'enfocado',                   '_'                                       
 Dark  { 'everforest',                 '_'                                                                 }
 Light { 'everforest',                 '_'                                                                 }
 Dark  { 'falcon',                     '_'                                                                 }
-Dark  { 'fluoromachine',              '_',           pre = function() require('fluoromachine').setup({glow = false, transparent = 'full'}) end, post = FixIndentBlankline                            }
+DarkT { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = false, theme = 'fluoromachine', transparent = true}) end, post = FixIndentBlankline }
+DarkT { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = false, theme = 'retrowave', transparent = true}) end,     post = FixIndentBlankline }
+Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'fluoromachine', transparent = false}) end, post = FixIndentBlankline }
+Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                                                          }
 Dark  { 'github_dark',                'github'                                                            }
 Light { 'github_light',               'github'                                                            }
@@ -1359,7 +1369,9 @@ function ColoRand(ind)
     local module = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
+    local trans = selection.trans
     vim.o.background = bg
+    vim.g.neovide_transparency = trans and 0.8 or 1
     local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
     if (precmd) then
@@ -1649,7 +1661,7 @@ AddPlugin {
     config = true
 }
 -- TODO: https://github.com/kkoomen/vim-doge
--- TODO: https://github.com/nvim-treesitter/nvim-tree-docs
+-- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FIX: directory case handling
@@ -2627,8 +2639,8 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/iamcco/markdown-preview.nvim
--- TODO: https://github.com/kiran94/maim.nvim
+-- https://github.com/iamcco/markdown-preview.nvim
+
 AddPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -4126,7 +4138,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
