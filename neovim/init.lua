@@ -447,8 +447,8 @@ vim.api.nvim_create_autocmd(
 
 -- Mappings
 -- --------
-vim.keymap.set('n', '<A-up>', '<cmd>res -1<cr>', {})
-vim.keymap.set('n', '<A-down>', '<cmd>res +1<cr>', {})
+vim.keymap.set('n', '<A-up>', '<cmd>res +1<cr>', {})
+vim.keymap.set('n', '<A-down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<A-left>', '<cmd>vert res -1<cr>', {})
 vim.keymap.set('n', '<A-right>', '<cmd>vert res +1<cr>', {})
 
@@ -1002,11 +1002,10 @@ AddPlugin {
         end
         vim.g.quickhl_manual_colors = colors
     end,
-    keys = { -- DOCME: Add description
-        { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n' },
-        { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x' },
-        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'n' },
-        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'x' }
+    keys = {
+        { '<Leader>w', '<Plug>(quickhl-manual-this-whole-word)', mode = 'n', desc = 'toggle quickhl for word' },
+        { '<Leader>w', '<Plug>(quickhl-manual-this)',            mode = 'x', desc = 'toggle quickhl for selection' },
+        { '<Leader>W', '<Plug>(quickhl-manual-reset)',           mode = 'n', desc = 'remove all quickhl' }
     }
 }
 
@@ -1121,7 +1120,7 @@ function SeniorMarsTheme()
     })
 end
 
--- TODO: https://github.com/lifepillar/vim-colortemplate
+-- https://github.com/lifepillar/vim-colortemplate
 local colos = {}
 
 local function Dark(opts)
@@ -1134,8 +1133,8 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 
-AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           } -- TODO: Transparent variants
-AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
+AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
+AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       } -- TODO: Transparent & other variants
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
 AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             }
@@ -1251,7 +1250,7 @@ Light { 'enfocado',                   '_'                                       
 Dark  { 'everforest',                 '_'                                                                 }
 Light { 'everforest',                 '_'                                                                 }
 Dark  { 'falcon',                     '_'                                                                 }
-Dark  { 'fluoromachine',              '_',           post = FixIndentBlankline                            }
+Dark  { 'fluoromachine',              '_',           pre = function() require('fluoromachine').setup({glow = false, transparent = 'full'}) end, post = FixIndentBlankline                            }
 Dark  { 'forestbones',                'zenbones'                                                          }
 Dark  { 'github_dark',                'github'                                                            }
 Light { 'github_light',               'github'                                                            }
@@ -1361,7 +1360,7 @@ function ColoRand(ind)
     local precmd = selection.pre
     local postcmd = selection.post
     vim.o.background = bg
-    local start_time = os.clock() -- FIX: fix timer
+    local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
     if (precmd) then
         precmd()
@@ -1503,7 +1502,7 @@ AddPlugin {
         ]])
     end,
     dependencies = {
-        'hrsh7th/cmp-buffer'
+        'hrsh7th/cmp-buffer',
         -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
     event = 'CmdlineEnter',
@@ -1512,7 +1511,6 @@ AddPlugin {
 -- TODO: https://github.com/jameshiew/nvim-magic
 -- https://github.com/kristijanhusak/vim-dadbod-completion
 -- TODO: https://github.com/lukas-reineke/cmp-rg
--- TODO: https://github.com/lukas-reineke/cmp-under-comparator
 -- TODO: https://github.com/rcarriga/cmp-dap
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/tzachar/cmp-fuzzy-path
@@ -2517,7 +2515,6 @@ AddPlugin {
     -- event = 'LspAttach'
 }
 
--- TODO: use or remove
 AddPlugin {
     'rmagatti/goto-preview',
     config = true,
@@ -2525,22 +2522,22 @@ AddPlugin {
     opts = {
         width = 120; -- Width of the floating window
         height = 15; -- Height of the floating window
-        border = {"󱦵", Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window
+        border = {'󱦵', Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window
         default_mappings = false; -- Bind default mappings
         debug = false; -- Print debug information
         opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
         resizing_mappings = false; -- Binds arrow keys to resizing the floating window.
         post_open_hook = nil; -- A function taking two arguments, a buffer and a window to be ran as a hook.
         -- references = { -- Configure the telescope UI for slowing the references cycling window.
-        --     telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
+        --     telescope = require('telescope.themes').get_dropdown({ hide_preview = false })
         -- };
-        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off 'peak' functionality.
         focus_on_open = true; -- Focus the floating window when opening it.
-        dismiss_on_move = false; -- Dismiss the floating window when moving the cursor.
+        dismiss_on_move = true; -- Dismiss the floating window when moving the cursor.
         force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
+        bufhidden = 'wipe', -- the bufhidden option to set on the floating window. See :h bufhidden
         stack_floating_preview_windows = true, -- Whether to nest floating windows
-        preview_window_title = { enable = true, position = "left" }, -- Whether to set the preview window title as the filename
+        preview_window_title = { enable = true, position = 'left' }, -- Whether to set the preview window title as the filename
     }
 }
 
@@ -2747,7 +2744,6 @@ AddPlugin {
 -- https://github.com/TravonteD/org-capture-filetype
 -- https://github.com/akinsho/org-bullets.nvim
 
--- TODO: use or remove
 AddPlugin {
     'nvim-neorg/neorg',
     config = function()
@@ -2756,14 +2752,14 @@ AddPlugin {
                 ['core.highlights']              = {},
                 ['core.integrations.treesitter'] = { config = { install_parsers = false } },
                 ['core.neorgcmd']                = {},
-                ['core.norg.completion']         = { config = { engine = 'nvim-cmp' } },
-                ['core.norg.concealer']          = {},
-                ['core.norg.esupports.hop']      = {},
-                ['core.norg.esupports.indent']   = {},
-                ['core.norg.qol.toc']            = {},
-                ['core.norg.qol.todo_items']     = {},
+                ['core.completion']              = { config = { engine = 'nvim-cmp' } },
+                ['core.concealer']               = {},
+                ['core.esupports.hop']           = {},
+                ['core.esupports.indent']        = {},
+                ['core.qol.toc']                 = {},
+                ['core.qol.todo_items']          = {},
                 ['core.syntax']                  = {},
-                ['core.defaults'] = {},
+                ['core.defaults']                = {}
             }
         }
         vim.cmd [[
@@ -2775,7 +2771,7 @@ AddPlugin {
     ft = "norg"
 }
 
--- TODO: use 'nvim-orgmode/orgmode'
+-- use 'nvim-orgmode/orgmode'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- |-----------------+-----------------------------------------------------------|
@@ -2953,7 +2949,6 @@ end
 })
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use or remove
 AddPlugin {
     -- https://github.com/aaditeynair/conduct.nvim
     'rmagatti/auto-session',
@@ -2964,7 +2959,7 @@ AddPlugin {
             -- log_level = 'debug',
             post_delete_cmds = {
                 "let g:auto_session_enabled = v:false",
-                "unlet g:session_icon"
+                "let g:session_icon = ''"
             },
             post_restore_cmds = {
                 "let g:session_icon = ''"
@@ -3002,7 +2997,6 @@ AddPlugin {
     },
 }
 -- TODO: https://github.com/ellisonleao/carbon-now.nvim
--- TODO: https://github.com/hrsh7th/vim-vsnip
 -- TODO: https://github.com/norcalli/snippets.nvim
 -- TODO: https://github.com/notomo/cmp-neosnippet
 -- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
@@ -3366,7 +3360,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/axkirillov/easypick.nvim
+-- https://github.com/axkirillov/easypick.nvim
 AddPlugin {
     'crispgm/telescope-heading.nvim',
     config = function()
@@ -3806,8 +3800,6 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/TheSafdarAwan/find-extender.nvim
-
 AddPlugin {
     'TobinPalmer/BetterGx.nvim',
     keys = {
@@ -4132,7 +4124,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-misc.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
