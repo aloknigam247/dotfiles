@@ -1355,7 +1355,6 @@ Light { 'visual_studio_code_light',   'visual_studio_code'                      
 Dark  { 'vitesse',                    '_'                                                                   }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
 Dark  { 'vscode',                     '_'                                                                   }
-Light { 'vscode',                     '_'                                                                   }
 Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
@@ -1908,9 +1907,9 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
 ActionsMap = {
-    -- ['vim'] = function ()
-    --     print('I am vim')
-    -- end
+    ['markdown'] = function ()
+        vim.g.table_mode_corner = '|'
+    end
 }
 vim.api.nvim_create_autocmd(
     'FileType', {
@@ -2940,25 +2939,40 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: refine usage
--- Command would be better for on demand
-vim.api.nvim_create_autocmd('BufRead', { pattern = '*', callback = function()
-    local filepath = vim.fn.bufname('%')
-    if filepath:sub(1, 1) ~= '/' and filepath:sub(2, 2) ~= ':' then
-        if filepath:sub(1, 2) == '.\\' or filepath:sub(1, 2) == './' then
-            filepath = filepath:sub(3)
+vim.api.nvim_create_user_command(
+    'Cd',
+    function(opts)
+        local function getCwd()
+            return CWD or vim.fn.getcwd()
         end
-        filepath = vim.fn.getcwd() .. '/' .. filepath
-    end
-    local root = vim.fs.find({".git"}, {path = filepath, upward = true, limit = 1})
-    root = vim.fs.dirname(root[1])
-    if root then
-        local cwd = vim.fn.getcwd()
-        vim.cmd.lc(root)
-        vim.cmd.lc(cwd)
-    end
-end
-})
+
+        local function setCwd(path)
+            if path then
+                if not CWD then
+                    CWD = vim.fn.getcwd()
+                end
+                vim.cmd.lc(path)
+            end
+        end
+
+        if opts.args == "cwd" then
+            setCwd(getCwd())
+        elseif opts.args == "cwd_git" then
+            local root = vim.fs.dirname(vim.fs.find({".git"}, {path = getCwd(), upward = true, limit = 1})[1])
+            setCwd(root)
+        elseif opts.args == "file" then
+            local filepath = vim.fn.fnamemodify(vim.fn.bufname('%'), ':p:h')
+            setCwd(filepath)
+        elseif opts.args == "file_git" then
+            local root = vim.fs.dirname(vim.fs.find({".git"}, {path = vim.fn.bufname('%'), upward = true, limit = 1})[1])
+            setCwd(root)
+        end
+    end,
+    {
+        complete = function() return { 'cwd', 'cwd_git', 'file', 'file_git',} end,
+        nargs = 1,
+    }
+)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {

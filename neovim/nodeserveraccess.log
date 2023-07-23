@@ -1,2 +1,0 @@
-::1 - - [21/Jul/2023:11:25:49 +0000] "POST /?validationToken=Validation%3a+Testing+client+application+reachability+for+subscription+Request-Id%3a+92b56be0-ab44-c5d5-edf6-3061b0bf69b5 HTTP/1.1" 200 117 "-" "-"
-::1 - - [21/Jul/2023:11:26:40 +0000] "POST /?validationtoken=Njk1ODNiM2QtODg0MS00YmVmLTg3MTktYzdiZjhiN2Q2Njlk HTTP/1.1" 200 48 "-" "-"
