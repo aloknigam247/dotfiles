@@ -1521,7 +1521,6 @@ AddPlugin {
 
 -- TODO: https://github.com/jameshiew/nvim-magic
 -- https://github.com/kristijanhusak/vim-dadbod-completion
--- TODO: https://github.com/lukas-reineke/cmp-rg
 -- TODO: https://github.com/rcarriga/cmp-dap
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
 -- TODO: https://github.com/tzachar/cmp-fuzzy-path
@@ -1659,7 +1658,7 @@ AddPlugin {
     cmd = 'Neogen',
     config = true
 }
--- TODO: https://github.com/kkoomen/vim-doge
+-- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2721,7 +2720,6 @@ AddPlugin {
 -- | ma             | set mark a at current cursor location                         |
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
--- TODO: use or remove
 AddPlugin {
     'MattesGroeger/vim-bookmarks',
     config = function()
@@ -2742,8 +2740,7 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/cbochs/grapple.nvim
--- TODO: use or remove
+-- https://github.com/cbochs/grapple.nvim
 AddPlugin {
     'kshenoy/vim-signature',
     cmd = 'SignatureToggle'
@@ -3022,12 +3019,12 @@ AddPlugin {
         }
     },
 }
--- TODO: https://github.com/ellisonleao/carbon-now.nvim
--- TODO: https://github.com/notomo/cmp-neosnippet
--- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
--- TODO: https://github.com/rafamadriz/friendly-snippets
--- TODO: https://github.com/saadparwaiz1/cmp_luasnip
+-- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/norcalli/snippets.nvim
+-- https://github.com/notomo/cmp-neosnippet
+-- https://github.com/quangnguyen30192/cmp-nvim-ultisnips
+-- https://github.com/rafamadriz/friendly-snippets
+-- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4090,7 +4087,6 @@ AddPlugin {
     keys = { '[p', '[P' }
 }
 
--- TODO: use or remove
 AddPlugin {
     'shortcuts/no-neck-pain.nvim',
     cmd = 'NoNeckPain'
@@ -4145,7 +4141,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-sessions.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
