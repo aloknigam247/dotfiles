@@ -654,7 +654,7 @@ AddPlugin {
     event = 'CursorHold'
 }
 
-AddPlugin { -- TODO: set it up
+AddPlugin {
     'azabiong/vim-highlighter',
     keys = { 'f<CR>' }
 }
@@ -3009,11 +3009,11 @@ AddPlugin {
     },
 }
 -- TODO: https://github.com/ellisonleao/carbon-now.nvim
--- TODO: https://github.com/norcalli/snippets.nvim
 -- TODO: https://github.com/notomo/cmp-neosnippet
 -- TODO: https://github.com/quangnguyen30192/cmp-nvim-ultisnips
 -- TODO: https://github.com/rafamadriz/friendly-snippets
 -- TODO: https://github.com/saadparwaiz1/cmp_luasnip
+-- https://github.com/norcalli/snippets.nvim
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3856,8 +3856,6 @@ AddPlugin {
     end,
     ft = 'csv'
 }
-
--- TODO: https://github.com/delphinus/dwm.nvim
 
 AddPlugin {
     'dstein64/vim-startuptime',
