@@ -1,10 +1,4 @@
--- FIX: fix backspace in normal mode
--- PERF: Profile autocommands
--- PERF: Profile startup
 -- PERF: ctrl + arrow movements very slow
--- PERF: slow visual cursor movement in mouse
--- REFACTOR: Fix lua_ls errors
-
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
@@ -562,6 +556,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
     config = function()
@@ -2104,6 +2099,7 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'NeogitOrg/neogit',
+    cmd = 'Neogit',
     config = true
 }
 
@@ -3439,7 +3435,7 @@ AddPlugin {
                 return buf.name
             end,
             right_mouse_command = nil,
-            separator_style = 'padded_slant'
+            separator_style = 'thick'
         }
     }
 }
@@ -4210,7 +4206,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
