@@ -1,4 +1,3 @@
-" THOUGHT: Should merge init.vim and init.lua ?
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let &titleold = getcwd()           " Set console title to path on vim exit

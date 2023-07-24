@@ -233,7 +233,7 @@ Plugins = {}
 PopUpMenu = {}
 
 -- TODO: combine with GlobalIcon
--- TODO: resolve icon fl in GlobalIcon
+-- TODO: resolve icon hl in GlobalIcon
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -1175,15 +1175,20 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 
+local function LightT(opts)
+    opts.trans = true
+    Light(opts)
+end
+
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
-AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             } -- TODO: Transparent & other variants
+AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             }
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
 AddPlugin { 'w3barsi/barstrata.nvim',                  event = 'User barstrata'                                           }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
+AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' } -- TODO: Transparent & other variants
 AddPlugin { 'igorgue/danger',                          event = 'User danger'                                              }
 AddPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
 AddPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                            }
@@ -1260,11 +1265,14 @@ Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
 Light { 'balance',                    '_'                              }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'multiplex' }) end }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({ style = 'vulgaris' }) end  }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
+DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
+DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
 Dark  { 'barstrata',                  '_'                              }
 Light { 'base2tone_mall_light',       'base2tone'                      }
 Dark  { 'bluloco-dark',               '_'                              }
+DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
 Light { 'bluloco-light',              '_'                              }
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
@@ -2087,7 +2095,6 @@ AddPlugin {
     'sbdchd/neoformat',
     cmd = 'Neoformat'
 }
--- TODO: use 'joechrisellis/lsp-format-modifications.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: enable FZF
@@ -2095,7 +2102,11 @@ AddPlugin {
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/NeogitOrg/neogit
+AddPlugin {
+    'NeogitOrg/neogit',
+    config = true
+}
+
 AddPlugin {
     'aaronhallaert/advanced-git-search.nvim',
     config = function()
@@ -2122,9 +2133,12 @@ AddPlugin {
     end
 }
 -- TODO: https://github.com/akinsho/git-conflict.nvim
--- TODO: https://github.com/cynix/vim-mergetool
--- TODO: use 'hotwatermorning/auto-git-diff'
--- TODO: use 'ldelossa/gh.nvim'
+
+AddPlugin {
+    'cynix/vim-mergetool',
+    cmd = 'MergetoolStart'
+}
+
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
@@ -2205,7 +2219,6 @@ AddPlugin {
 AddPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
-        -- TODO: add icon for netrw
         override = {
             ['c++']  = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
             cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
@@ -2257,7 +2270,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
--- TODO: use 'Hoffs/omnisharp-extended-lsp.nvim'
+-- https://github.com/Hoffs/omnisharp-extended-lsp.nvim
 
 AddPlugin {
     'VidocqH/lsp-lens.nvim',
@@ -2281,7 +2294,7 @@ AddPlugin { -- PERF: Load on demand
     event = 'LspAttach'
 }
 
-AddPlugin { -- FIX: resolve usage with vim.lsp.inlay_hint()
+AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/neovim/comments/158404z/is_lspinlayhintsnvim_still_relevant/
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
     event = 'LspAttach',
@@ -3402,7 +3415,9 @@ AddPlugin {
             get_element_icon = function(element)
                 -- element consists of {filetype: string, path: string, extension: string, directory: string}
                 local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
-                if element.path == '[No Name]' then
+                if element.filetype == 'netrw' then
+                    icon = ''
+                elseif element.path == '[No Name]' then
                     icon = Icons.file_newfile
                 end
                 return icon, hl
@@ -3523,7 +3538,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/voldikss/vim-floaterm
+-- https://github.com/voldikss/vim-floaterm
 
 AddPlugin {
     'akinsho/toggleterm.nvim',
@@ -3538,6 +3553,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/AckslD/nvim-trevJ.lua
     -- https://github.com/AndrewRadev/splitjoin.vim
     -- TODO: https://github.com/CKolkey/ts-node-action
     -- https://github.com/echasnovski/mini.splitjoin
@@ -3831,7 +3847,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: 'AckslD/nvim-trevJ.lua'
 -- TODO: https://github.com/wellle/targets.vim
 AddPlugin { -- config
     'AndrewRadev/inline_edit.vim',
@@ -3849,7 +3864,7 @@ AddPlugin {
     cmd = 'TmpcloneClone'
 }
 
--- TODO: https://github.com/EtiamNullam/deferred-clipboard.nvim
+-- https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 AddPlugin {
     'LiadOz/nvim-dap-repl-highlights',
@@ -3903,9 +3918,16 @@ AddPlugin {
     }
 }
 
--- TODO: use 'cbochs/portal.nvim'
+AddPlugin {
+    'cbochs/portal.nvim',
+    cmd = 'Portal',
+    dependencies = {
+        'cbochs/grapple.nvim',
+        'ThePrimeagen/harpoon'
+    }
+}
 
--- TODO: use 'chipsenkbeil/distant.nvim'
+-- https://github.com/chipsenkbeil/distant.nvim
 
 AddPlugin {
     'chrisbra/csv.vim',
@@ -4073,7 +4095,7 @@ AddPlugin {
     keys = { '<C-LeftMouse>', '<C-RightMouse>', '<C-Up>', '<C-Down>', '<C-N>' }
 }
 
--- TODO: https://github.com/nat-418/scamp.nvim
+-- https://github.com/nat-418/scamp.nvim
 
 AddPlugin {
     'nacro90/numb.nvim',
@@ -4190,25 +4212,19 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump2d.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-animate.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 
 -- TODO: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
--- TODO: https://github.com/XXiaoA/ns-textobject.nvim
 -- TODO: https://github.com/nosduco/remote-sshfs.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/ofirgall/goto-breakpoints.nvim
 -- TODO: profiling for auto commands
 -- TODO: startuptime
--- TODO: insert.txt
--- TODO: motion.txt
 -- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
