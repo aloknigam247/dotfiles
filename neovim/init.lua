@@ -1188,7 +1188,7 @@ AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'   
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
 AddPlugin { 'w3barsi/barstrata.nvim',                  event = 'User barstrata'                                           }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
-AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' } -- TODO: Transparent & other variants
+AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'igorgue/danger',                          event = 'User danger'                                              }
 AddPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
 AddPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                            }
@@ -1197,7 +1197,7 @@ AddPlugin { 'muchzill4/doubletrouble',                 event = 'User doubletroub
 AddPlugin { 'sainnhe/edge',                            event = 'User edge'                                                }
 AddPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                          }
 AddPlugin { 'fenetikm/falcon',                         event = 'User falcon'                                              }
-AddPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              }
+AddPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              } -- TODO: Transparent & other variants
 AddPlugin { 'luisiacc/gruvbox-baby',                   event = 'User gruvbox-baby'                                        }
 AddPlugin { 'ellisonleao/gruvbox.nvim',                event = 'User gruvbox'                                             }
 AddPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                            }
