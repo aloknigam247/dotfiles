@@ -296,6 +296,43 @@ function AdaptiveBG(lighten, darken)
     return bg
 end
 
+function CountWindows(ignore)
+    local tabpage = vim.api.nvim_get_current_tabpage()
+    local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+    local named_window = 0
+    local visited_window = {}
+    local isValidBuf = function(bufnr, buf_name)
+        if buf_name == "" then
+            return false
+        end
+
+        if not ignore then return true end
+
+        local ignore_filetype = { 'NvimTree' }
+        local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+        for _,v in pairs(ignore_filetype) do
+            if v == filetype then
+                return false
+            end
+        end
+
+        return true
+    end
+
+    for _, win in ipairs(win_list) do
+        local bufnr = vim.api.nvim_win_get_buf(win)
+        local buf_name = vim.api.nvim_buf_get_name(bufnr)
+        if isValidBuf(bufnr, buf_name) then
+            if not visited_window[buf_name] then
+                visited_window[buf_name] = true
+                named_window = named_window + 1
+            end
+        end
+    end
+
+    return named_window
+end
+
 -- TODO: Combine at GlobalIcon
 function ColorPalette()
     if vim.o.background == 'light' then
@@ -975,9 +1012,9 @@ AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
     opts = {
         create_event = function()
-            local win_n = require("colorful-winsep.utils").calculate_number_windows()
-            if win_n == 2 then
-              require("colorful-winsep").NvimSeparatorDel()
+            local win_n = CountWindows()
+            if win_n < 3 then
+                require("colorful-winsep").NvimSeparatorDel()
             end
         end,
         symbols = {
@@ -1776,7 +1813,51 @@ AddPlugin {
             end
 
             local api = require('nvim-tree.api')
-            vim.keymap.set('n', '<C-s>', api.node.open.horizontal, opts('Open in split'))
+            vim.keymap.set('n', '<C-e>',          api.node.open.replace_tree_buffer,  opts('Open: In Place'))
+            vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
+            vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
+            vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
+            vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
+            vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
+            vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
+            vim.keymap.set('n', '<Tab>',          api.node.open.preview,              opts('Open Preview'))
+            vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
+            vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
+            vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
+            vim.keymap.set('n', 'a',              api.fs.create,                      opts('Create'))
+            vim.keymap.set('n', 'bd',             api.marks.bulk.delete,              opts('Delete Bookmarked'))
+            vim.keymap.set('n', 'bmv',            api.marks.bulk.move,                opts('Move Bookmarked'))
+            vim.keymap.set('n', 'c',              api.fs.copy.node,                   opts('Copy'))
+            vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
+            vim.keymap.set('n', ']c',             api.node.navigate.git.next,         opts('Next Git'))
+            vim.keymap.set('n', 'd',              api.fs.remove,                      opts('Delete'))
+            vim.keymap.set('n', 'D',              api.fs.trash,                       opts('Trash'))
+            vim.keymap.set('n', 'E',              api.tree.expand_all,                opts('Expand All'))
+            vim.keymap.set('n', ']d',             api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
+            vim.keymap.set('n', '[d',             api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
+            vim.keymap.set('n', 'F',              api.live_filter.clear,              opts('Clean Filter'))
+            vim.keymap.set('n', 'f',              api.live_filter.start,              opts('Filter'))
+            vim.keymap.set('n', 'g?',             api.tree.toggle_help,               opts('Help'))
+            vim.keymap.set('n', 'gy',             api.fs.copy.absolute_path,          opts('Copy Absolute Path'))
+            vim.keymap.set('n', 'H',              api.tree.toggle_hidden_filter,      opts('Toggle Filter: Dotfiles'))
+            vim.keymap.set('n', 'I',              api.tree.toggle_gitignore_filter,   opts('Toggle Filter: Git Ignore'))
+            vim.keymap.set('n', 'bm',             api.marks.toggle,                   opts('Toggle Bookmark'))
+            vim.keymap.set('n', 'o',              api.node.open.edit,                 opts('Open'))
+            vim.keymap.set('n', 'O',              api.node.open.no_window_picker,     opts('Open: No Window Picker'))
+            vim.keymap.set('n', 'p',              api.fs.paste,                       opts('Paste'))
+            vim.keymap.set('n', 'P',              api.node.navigate.parent,           opts('Parent Directory'))
+            vim.keymap.set('n', 'q',              api.tree.close,                     opts('Close'))
+            vim.keymap.set('n', 'r',              api.fs.rename,                      opts('Rename'))
+            vim.keymap.set('n', 'R',              api.tree.reload,                    opts('Refresh'))
+            vim.keymap.set('n', 's',              api.node.run.system,                opts('Run System'))
+            vim.keymap.set('n', 'S',              api.tree.search_node,               opts('Search'))
+            vim.keymap.set('n', 'U',              api.tree.toggle_custom_filter,      opts('Toggle Filter: Hidden'))
+            vim.keymap.set('n', 'W',              api.tree.collapse_all,              opts('Collapse'))
+            vim.keymap.set('n', 'x',              api.fs.cut,                         opts('Cut'))
+            vim.keymap.set('n', 'y',              api.fs.copy.filename,               opts('Copy Name'))
+            vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,          opts('Copy Relative Path'))
+            vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                 opts('Open'))
+            vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,       opts('CD'))
         end,
         prefer_startup_root = false,
         reload_on_bufenter = false,
@@ -3037,40 +3118,6 @@ AddPlugin {
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
-        function CountWin()
-            local tabpage = vim.api.nvim_get_current_tabpage()
-            local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
-            local named_window = 0
-            local visited_window = {}
-            local isValidBuf = function(bufnr, buf_name)
-                if buf_name == "" then
-                    return false
-                end
-
-                local ignore_filetype = { 'NvimTree' }
-                local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-                for _,v in pairs(ignore_filetype) do
-                    if v == filetype then
-                        return false
-                    end
-                end
-
-                return true
-            end
-
-            for _, win in ipairs(win_list) do
-                local bufnr = vim.api.nvim_win_get_buf(win)
-                local buf_name = vim.api.nvim_buf_get_name(bufnr)
-                if isValidBuf(bufnr, buf_name) then
-                    if not visited_window[buf_name] then
-                        visited_window[buf_name] = true
-                        named_window = named_window + 1
-                    end
-                end
-            end
-
-            return named_window
-        end
         vim.o.showcmdloc = 'statusline'
         require('lualine').setup {
             options = {
@@ -3270,7 +3317,7 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filetype',
-                        cond = function () return CountWin() > 1 end,
+                        cond = function () return CountWindows(true) > 1 end,
                         icon_only = true,
                         padding = { left = 1, right = 0 },
                         separator = ''
@@ -3278,7 +3325,7 @@ AddPlugin {
                     {
                         'filename',
                         color = { gui = 'italic' },
-                        cond = function () return CountWin() > 1 end,
+                        cond = function () return CountWindows(true) > 1 end,
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = true,   -- Display new file status (new file means no write after created)
                         path = 0,                -- 0: Just the filename
@@ -3298,7 +3345,7 @@ AddPlugin {
                 lualine_a = {
                     {
                         'filetype',
-                        cond = function () return CountWin() > 1 end,
+                        cond = function () return CountWindows(true) > 1 end,
                         icon_only = true,
                         padding = { left = 1, right = 0 },
                         separator = ''
@@ -3306,7 +3353,7 @@ AddPlugin {
                     {
                         'filename',
                         color = { gui = 'italic' },
-                        cond = function () return CountWin() > 1 end,
+                        cond = function () return CountWindows(true) > 1 end,
                         file_status = true,      -- Displays file status (readonly status, modified status)
                         newfile_status = true,   -- Display new file status (new file means no write after created)
                         path = 3,                -- 0: Just the filename
