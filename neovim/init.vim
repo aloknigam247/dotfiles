@@ -103,13 +103,13 @@ map <C-S-Left> B
 map <C-S-Right> E
 map <BS> X
 
-map <M-h> :wincmd h<CR>
-map <M-j> :wincmd j<CR>
-map <M-k> :wincmd k<CR>
-map <M-l> :wincmd l<CR>
-map <M-=> :wincmd =<CR>
-map <M--> :wincmd -<CR>
-map <M-Bslash> :vertical-resize<CR>
+nmap <M-h> :wincmd h<CR>
+nmap <M-j> :wincmd j<CR>
+nmap <M-k> :wincmd k<CR>
+nmap <M-l> :wincmd l<CR>
+nmap <M-=> :wincmd =<CR>
+nmap <M--> :wincmd -<CR>
+nmap <M-Bslash> :vertical-resize<CR>
 
 " usefull mapping
 " gq format lines

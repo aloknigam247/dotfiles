@@ -66,38 +66,22 @@ function IconGenerator(_, key)
         border_topleft    = '╭',
         border_topright   = '╮',
         border_vert       = '│',
-        cmd               = ' ',
         code_action       = ' ',
         collapse          = ' ',
-        config            = ' ',
         diagnostic        = ' ',
         error             = ' ',
-        event             = ' ',
         expand            = ' ',
         file_modified     = '',
         file_newfile      = '',
         file_readonly     = '',
         file_unnamed      = '',
-        ft                = ' ',
         hint              = ' ',
         hover             = ' ',
-        import            = '󰋺 ',
         incoming          = ' ',
         info              = ' ',
-        init              = ' ',
-        keys              = ' ',
-        lazy              = ' ',
-        list              = { '●', '', '', '' },
-        loaded            = ' ',
-        not_loaded        = ' ',
         outgoing          = ' ',
-        plugin            = ' ',
         preview           = ' ',
-        runtime           = ' ',
-        source            = ' ',
-        start             = ' ',
         symlink_arrow     = ' 壟 ',
-        task              = ' ',
         warn              = ' ',
     }
 
@@ -146,22 +130,22 @@ LazyConfig = {
         title = nil, ---@type string only works when border is not 'none'
         title_pos = 'center', ---@type 'center' | 'left' | 'right'
         icons = {
-            cmd        = Icons.cmd, -- TODO: remove GlobalIcon
-            config     = Icons.config,
-            event      = Icons.event,
-            ft         = Icons.ft,
-            init       = Icons.init,
-            import     = Icons.import,
-            keys       = Icons.keys,
-            lazy       = Icons.lazy,
-            list       = Icons.list,
-            loaded     = Icons.loaded,
-            not_loaded = Icons.not_loaded,
-            plugin     = Icons.plugin,
-            runtime    = Icons.runtime,
-            source     = Icons.source,
-            start      = Icons.start,
-            task       = Icons.task
+            cmd        = '',
+            config     = '',
+            event      = '',
+            ft         = '',
+            init       = '',
+            import     = '󰋺',
+            keys       = '',
+            lazy       = '',
+            list       = { '●', '', '', '' },
+            loaded     = '',
+            not_loaded = '',
+            plugin     = '',
+            runtime    = '',
+            source     = '',
+            start      = '',
+            task       = ''
         },
         browser = nil, ---@type string?
         throttle = 20, -- how frequently should the ui process render events
@@ -267,7 +251,6 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
--- TODO: remove when not needed
 -- local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
 -- Functions
@@ -1200,7 +1183,6 @@ AddPlugin { 'lmburns/kimbox',                          event = 'User kimbox'    
 AddPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                            }
 AddPlugin { 'savq/melange',                            event = 'User melange'                                             }
 AddPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
-AddPlugin { 'dasupradyumna/midnight.nvim',             event = 'User midnight'                                            }
 AddPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
 AddPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
 AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
@@ -1326,7 +1308,6 @@ Dark  { 'mellifluous',                '_'                                       
 Light { 'mellifluous',                '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin'}) end                                }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
-Dark  { 'midnight',                   '_'                                                                                                                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
@@ -1559,7 +1540,6 @@ AddPlugin {
     event = 'CmdlineEnter',
 }
 
--- TODO: https://github.com/jameshiew/nvim-magic
 -- https://github.com/kristijanhusak/vim-dadbod-completion
 -- TODO: https://github.com/rcarriga/cmp-dap
 -- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
@@ -2205,7 +2185,6 @@ AddPlugin {
     cmd = "GitMessenger"
 }
 
--- TODO: learn
 AddPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
@@ -2265,7 +2244,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: use 'Decodetalkers/csharpls-extended-lsp.nvim'
+-- https://github.com/Decodetalkers/csharpls-extended-lsp.nvim
 -- https://github.com/Hoffs/omnisharp-extended-lsp.nvim
 
 AddPlugin {
@@ -2603,9 +2582,6 @@ AddPlugin {
 
 AddPlugin { 'p00f/clangd_extensions.nvim' }
 
--- TODO: use 'razzmatazz/csharp-language-server'
-
--- TODO: use or remove
 AddPlugin {
     'ray-x/navigator.lua',
     config = true,
@@ -3132,7 +3108,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '⏽', right = ''},
+                component_separators = { left = '', right = ''}, -- ⏽
                 section_separators = { left = '', right = ''},
                 ignore_focus = { 'NvimTree' },
                 always_divide_middle = false,
@@ -3156,6 +3132,31 @@ AddPlugin {
                     }
                 },
                 lualine_b = {
+                    {
+                        'filetype',
+                        icon_only = true,
+                        padding = { left = 1, right = 0 },
+                        separator = ''
+                    },
+                    {
+                        'filename',
+                        color = { gui = 'italic' },
+                        file_status = true,      -- Displays file status (readonly status, modified status)
+                        newfile_status = true,   -- Display new file status (new file means no write after created)
+                        on_click = function()
+                            vim.cmd('NvimTreeToggle')
+                        end,
+                        path = 0,                -- 0: Just the filename
+                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                        symbols = {
+                            modified = Icons.file_modified, -- Text to show when the file is modified.
+                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
+                            unnamed  = Icons.file_unnamed,  -- Text to show for unnamed buffers.
+                            newfile  = Icons.file_newfile   -- Text to show for new created file before first writting
+                        }
+                    }
+                },
+                lualine_c = {
                     {
                         'branch',
                         color = { gui = 'bold' },
@@ -3187,31 +3188,6 @@ AddPlugin {
                             info  = Icons.info .. ' ',
                             hint  = Icons.hint .. ' ',
                         },
-                    }
-                },
-                lualine_c = {
-                    {
-                        'filetype',
-                        icon_only = true,
-                        padding = { left = 1, right = 0 },
-                        separator = ''
-                    },
-                    {
-                        'filename',
-                        color = { gui = 'italic' },
-                        file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = true,   -- Display new file status (new file means no write after created)
-                        on_click = function()
-                            vim.cmd('NvimTreeToggle')
-                        end,
-                        path = 0,                -- 0: Just the filename
-                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
-                        symbols = {
-                            modified = Icons.file_modified, -- Text to show when the file is modified.
-                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = Icons.file_unnamed,  -- Text to show for unnamed buffers.
-                            newfile  = Icons.file_newfile   -- Text to show for new created file before first writting
-                        }
                     }
                 },
                 lualine_x = {
@@ -3938,6 +3914,7 @@ AddPlugin {
     cmd = 'StartupTime'
 }
 
+-- https://github.com/dstein64/nvim-scrollview
 AddPlugin {
     'echasnovski/mini.map',
     config = function ()
@@ -3953,6 +3930,26 @@ AddPlugin {
             }
         })
     end
+}
+
+AddPlugin {
+    'echasnovski/mini.move',
+    keys = { "<M-Left>", "<M-Right>", "<M-Down>", "<M-Up>" },
+    opts = {
+        mappings = {
+            left = "<M-Left>",
+            right = "<M-Right>",
+            down = "<M-Down>",
+            up = "<M-Up>",
+            line_left = "H",
+            line_right = "L",
+            line_down = "J",
+            line_up = "K",
+        },
+        options = {
+            reindent_linewise = true
+        }
+    }
 }
 
 AddPlugin {
@@ -4016,11 +4013,6 @@ AddPlugin {
     }
 }
 
--- TODO: https://github.com/lewis6991/hover.nvim
-
--- TODO: https://github.com/dstein64/nvim-scrollview
-
--- TODO: configure
 AddPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
@@ -4031,7 +4023,7 @@ AddPlugin {
             -- Although I recommend just using the segments field below to build your
             -- statuscolumn to benefit from the performance optimizations in this plugin.
             -- builtin.lnumfunc number string options
-            thousands = '.',     -- or line number thousands separator string ("." / ",")
+            thousands = false,     -- or line number thousands separator string ("." / ",")
             relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
             -- Builtin 'statuscolumn' options
             ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
@@ -4039,12 +4031,12 @@ AddPlugin {
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 { text = { "%C" }, click = "v:lua.ScFa" },
+                { text = { "%s" }, click = "v:lua.ScSa" },
                 {
-                    text = { builtin.lnumfunc, " " },
-                    condition = { true, builtin.not_empty },
+                    text = { "%l" },
+                    condition = { builtin.not_empty },
                     click = "v:lua.ScLa",
                 },
-                { text = { "%s" }, click = "v:lua.ScSa" },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
@@ -4118,6 +4110,8 @@ AddPlugin {
     },
     keys = { '<C-a>', '<C-x>' }
 }
+
+-- https://github.com/nosduco/remote-sshfs.nvim
 
 AddPlugin {
     -- Lua copy https://github.com/ojroques/nvim-osc52
@@ -4206,21 +4200,16 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 
 -- TODO: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
--- TODO: https://github.com/nosduco/remote-sshfs.nvim
 -- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/ofirgall/goto-breakpoints.nvim
--- TODO: profiling for auto commands
--- TODO: startuptime
--- TODO: vsplit or split file opener like find command
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
