@@ -38,7 +38,7 @@ set shiftwidth=4                      " When shifting, indent using spaces
 " set spell                             " Enable spell check
 set splitkeep=screen                  " Keep screen orientation same while splitting
 set tabstop=4                         " Indent using spaces
-set textwidth=80                     " Set text width to 100 " FIX: What should be its value
+set textwidth=80                      " Set text width to 100 "
 set wrap                              " Enable wrap
 set updatetime=500                    " CursorHold time
 set wrapmargin=0                      " Disable wrap margin

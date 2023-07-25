@@ -1,4 +1,3 @@
--- PERF: ctrl + arrow movements very slow
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
@@ -308,7 +307,6 @@ function CountWindows(ignore)
     return named_window
 end
 
--- TODO: Combine at GlobalIcon
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
@@ -640,7 +638,6 @@ AddPlugin {
     }
 }
 
--- BUG: not working properly
 AddPlugin {
     'Pocco81/high-str.nvim',
     cmd = 'HSHighlight'
@@ -1028,7 +1025,7 @@ AddPlugin { -- PERF: check if lazy via event"
     lazy = true
 }
 
--- TODO: 'uga-rosa/ccc.nvim'
+-- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 function FixDiagnosticInfo()
@@ -1094,7 +1091,7 @@ function FixVnNight()
 end
 
 -- https://github.com/SeniorMars/dotfiles/blob/master/.config/nvim/init.lua
-function SeniorMarsTheme()
+function SeniorMarsTheme(transparent)
     require('gruvbox').setup({
         overrides = {
             CocCodeLens                = { fg = '#878787' },
@@ -1127,7 +1124,8 @@ function SeniorMarsTheme()
             ['@constant.builtin']      = { link = 'GruvboxPurple' },
             ['@storageclass.lifetime'] = { link = 'GruvboxAqua' },
             ['@text.note']             = { link = 'TODO' },
-        }
+        },
+        transparent = transparent
     })
 end
 
@@ -1171,7 +1169,7 @@ AddPlugin { 'muchzill4/doubletrouble',                 event = 'User doubletroub
 AddPlugin { 'sainnhe/edge',                            event = 'User edge'                                                }
 AddPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                          }
 AddPlugin { 'fenetikm/falcon',                         event = 'User falcon'                                              }
-AddPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              } -- TODO: Transparent & other variants
+AddPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              }
 AddPlugin { 'luisiacc/gruvbox-baby',                   event = 'User gruvbox-baby'                                        }
 AddPlugin { 'ellisonleao/gruvbox.nvim',                event = 'User gruvbox'                                             }
 AddPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                            }
@@ -1181,7 +1179,7 @@ AddPlugin { 'savq/melange',                            event = 'User melange'   
 AddPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
 AddPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
 AddPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
-AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
+AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           } -- Transparent & other variants
 AddPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                                 }
 AddPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                            }
 AddPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'                                              }
@@ -1281,15 +1279,23 @@ Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachi
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                                                          }
 Dark  { 'github_dark',                'github'                                                            }
+DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({transparent = true}) end }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
+DarkT { 'gruvbox',                    '_', pre = function() require('gruvbox').setup({transparent_mode = true}) end }
 Light { 'gruvbox',                    '_'                                                                 }
-Dark  { 'gruvbox',                    '_',           pre  = SeniorMarsTheme                               }
-Dark  { 'gruvbox-baby',               '_'                                                                 }
+Dark  { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(false) end                   }
+DarkT { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(true) end                    }
+Dark  { 'gruvbox-baby',               '_',                                                                }
+DarkT { 'gruvbox-baby',               '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end   }
 Dark  { 'habamax',                    '_',                                                                }
 Dark  { 'horizon',                    '_'                                                                 }
-Dark  { 'juliana',                    '_',           post = function() FixLineNr('#999999') end                                                               }
-Dark  { 'kanagawa',                   '_'                                                                                                                     }
+Dark  { 'juliana',                    '_', post = function() FixLineNr('#999999') end                                                                         }
+Dark  { 'kanagawa-wave',              '_'                                                                                                                     }
+DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
+Dark  { 'kanagawa-dragon',            '_'                                                                                                                     }
+DarkT { 'kanagawa-dragon',            '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
+Light { 'kanagawa-lotus',             '_'                                                                                                                     }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
 Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                     }
 Dark  { 'lunaperche',                 '_'                                                                                                                     }
@@ -1301,7 +1307,10 @@ Dark  { 'material',                   'starry',      pre = function() FixStarry(
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
+DarkT { 'mellifluous',                '_', pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end                     }
 Light { 'mellifluous',                '_'                                                                                                                     }
+DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin', transparent_background = {enabled = true}}) end }
+DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin'}) end                                }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
@@ -1315,6 +1324,8 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 Dark  { 'moonfly',                    '_'                                                                                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
+DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' vim.g.neon_transparent = true end, post = FixVisual        }
+DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    vim.g.neon_transparent = true end, post = FixVisual        }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
@@ -1544,7 +1555,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nvim-telescope/telescope-dap.nvim
--- TODO: Enable debuggers
 -- Abstract-IDE dap configs
 -- --------------------------
 -- -- telescope-dap.nvim
@@ -1679,7 +1689,7 @@ AddPlugin {
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: directory case handling
+-- directory case handling
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeToggle',
@@ -2037,7 +2047,7 @@ AddPlugin {
     lazy = false
 }
 
--- TODO: configure or remove
+-- configure or remove
 AddPlugin {
     'kevinhwang91/nvim-ufo',
     -- cond = function()
@@ -2062,14 +2072,12 @@ AddPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: make usable
 AddPlugin {
     'sbdchd/neoformat',
     cmd = 'Neoformat'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: enable FZF
 -- https://github.com/linrongbin16/fzfx.vim
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- <~>
@@ -3529,7 +3537,7 @@ AddPlugin {
 AddPlugin {
     -- https://github.com/AckslD/nvim-trevJ.lua
     -- https://github.com/AndrewRadev/splitjoin.vim
-    -- TODO: https://github.com/CKolkey/ts-node-action
+    -- https://github.com/CKolkey/ts-node-action
     -- https://github.com/echasnovski/mini.splitjoin
     'Wansmer/treesj',
     cmd = 'TSJToggle',
@@ -3821,7 +3829,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/wellle/targets.vim
+-- https://github.com/wellle/targets.vim
 AddPlugin { -- config
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
@@ -4193,23 +4201,20 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 vim.opt.runtimepath:prepend(lazypath)
--- AI Archieve
+-- Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- https://github.com/Bryley/neoai.nvim
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 -- https://github.com/hrsh7th/cmp-copilot
 -- https://github.com/james1236/backseat.nvim
 -- https://github.com/madox2/vim-ai
+-- https://github.com/ofirgall/goto-breakpoints.nvim
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
-
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
-
--- TODO: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
--- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
--- TODO: https://github.com/ofirgall/goto-breakpoints.nvim
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
