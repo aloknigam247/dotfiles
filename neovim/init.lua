@@ -210,8 +210,6 @@ LazyConfig = {
 Plugins = {}
 PopUpMenu = {}
 
--- TODO: combine with GlobalIcon
--- TODO: resolve icon hl in GlobalIcon
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -502,12 +500,10 @@ vim.ui.input = function(...)
     vim.ui.input(...)
 end
 
--- TODO: remove when not needed
 -- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
 
 -- PopUps
 -- ------
-
 PopupMenuAdd({
     cond = IsLspAttached,
     opts = {
@@ -1541,12 +1537,13 @@ AddPlugin {
 }
 
 -- https://github.com/kristijanhusak/vim-dadbod-completion
--- TODO: https://github.com/rcarriga/cmp-dap
--- TODO: https://github.com/tzachar/cmp-fuzzy-buffer
--- TODO: https://github.com/tzachar/cmp-fuzzy-path
--- TODO: https://github.com/zbirenbaum/copilot-cmp
+-- https://github.com/rcarriga/cmp-dap
+-- https://github.com/tzachar/cmp-fuzzy-buffer
+-- https://github.com/tzachar/cmp-fuzzy-path
+-- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: Enable debuggers
 -- Abstract-IDE dap configs
 -- --------------------------
@@ -2108,7 +2105,7 @@ AddPlugin {
         require('telescope').load_extension('advanced_git_search')
     end
 }
--- TODO: https://github.com/akinsho/git-conflict.nvim
+-- https://github.com/akinsho/git-conflict.nvim
 
 AddPlugin {
     'cynix/vim-mergetool',
@@ -3108,7 +3105,7 @@ AddPlugin {
             options = {
                 icons_enabled = true,
                 theme = 'auto',
-                component_separators = { left = '', right = ''}, -- ⏽
+                component_separators = { left = '', right = ''}, -- ⏽ 
                 section_separators = { left = '', right = ''},
                 ignore_focus = { 'NvimTree' },
                 always_divide_middle = false,
@@ -3163,13 +3160,16 @@ AddPlugin {
                         icon = {'', color = {fg = '#F14C28'}},
                         on_click = function()
                             vim.cmd('Telescope git_branches')
-                        end
+                        end,
+                        padding = { left = 1, right = 0 },
                     },
                     {
                         'diff',
+                        -- icon = {'󰦓', color = {fg = '#9C95DC'}},
                         on_click = function()
                             vim.cmd('Telescope git_status')
                         end,
+                        padding = { left = 1, right = 0 },
                         symbols = {
                             added = '+',
                             modified = '~',
@@ -3178,9 +3178,11 @@ AddPlugin {
                     },
                     {
                         'diagnostics',
+                        -- icon = {'', color = {fg = '#9C95DC'}},
                         on_click = function()
                             vim.cmd('TroubleToggle')
                         end,
+                        padding = { left = 1, right = 0 },
                         sources = { 'nvim_diagnostic' },
                         symbols = {
                             error = Icons.error .. ' ',
@@ -4034,7 +4036,7 @@ AddPlugin {
                 { text = { "%s" }, click = "v:lua.ScSa" },
                 {
                     text = { "%l" },
-                    condition = { builtin.not_empty },
+                    condition = { true },
                     click = "v:lua.ScLa",
                 },
             },
@@ -4065,7 +4067,7 @@ AddPlugin {
     event = 'VeryLazy'
 }
 
--- TODO: https://github.com/kndndrj/nvim-dbee
+-- https://github.com/kndndrj/nvim-dbee
 
 AddPlugin {
     'kylechui/nvim-surround',
@@ -4203,12 +4205,10 @@ vim.opt.runtimepath:prepend(lazypath)
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
 -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-files.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 
 -- TODO: Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
 -- TODO: https://github.com/Weissle/persistent-breakpoints.nvim
--- TODO: https://github.com/nvim-telescope/telescope-dap.nvim
 -- TODO: https://github.com/ofirgall/goto-breakpoints.nvim
 
 require('lazy').setup(Plugins, LazyConfig)
