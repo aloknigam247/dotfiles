@@ -456,10 +456,10 @@ vim.api.nvim_create_autocmd(
 
 -- Mappings
 -- --------
-vim.keymap.set('n', '<A-up>', '<cmd>res +1<cr>', {})
-vim.keymap.set('n', '<A-down>', '<cmd>res -1<cr>', {})
-vim.keymap.set('n', '<A-left>', '<cmd>vert res -1<cr>', {})
-vim.keymap.set('n', '<A-right>', '<cmd>vert res +1<cr>', {})
+vim.keymap.set('n', '<M-up>', '<cmd>res +1<cr>', {})
+vim.keymap.set('n', '<M-down>', '<cmd>res -1<cr>', {})
+vim.keymap.set('n', '<M-left>', '<cmd>vert res -1<cr>', {})
+vim.keymap.set('n', '<M-right>', '<cmd>vert res +1<cr>', {})
 
 -- Misc
 -- ----
@@ -473,6 +473,11 @@ vim.diagnostic.config({
         source = true
     }
 })
+
+vim.cmd('sign define DiagnosticSignError text=' .. Icons.error .. ' texthl=DiagnosticSignError linehl= numhl=')
+vim.cmd('sign define DiagnosticSignWarn  text=' .. Icons.warn  .. ' texthl=DiagnosticSignWarn  linehl= numhl=')
+vim.cmd('sign define DiagnosticSignInfo  text=' .. Icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
+vim.cmd('sign define DiagnosticSignHint  text=' .. Icons.hint  .. ' texthl=DiagnosticSignHint  linehl= numhl=')
 
 vim.highlight.priorities = {
     syntax = 50,
@@ -3569,7 +3574,7 @@ AddPlugin {
 AddPlugin {
     -- @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
-    cond = function() return not vim.g.neovide end,
+    -- cond = function() return not vim.g.neovide end,
     config = function()
         vim.o.lazyredraw = false
         require('noice').setup({

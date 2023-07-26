@@ -179,15 +179,15 @@ set shellquote= shellxquote=
 let g:startuptime_event_width = 0
 
 function! SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 function! SynT()
-  for id in synstack(line("."), col("."))
-    echo synIDattr(id, "name")
-  endfor
+    for id in synstack(line("."), col("."))
+        echo synIDattr(id, "name")
+    endfor
 endfunction
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
