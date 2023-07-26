@@ -101,12 +101,11 @@ LazyConfig = {
     defaults = {
         lazy = true, -- should plugins be lazy-loaded?
         version = nil,
-        cond = nil, ---@type boolean|fun(self:LazyPlugin):boolean|nil
+        cond = nil,
         -- version = '*', -- enable this to try installing the latest stable versions of plugins
     },
-    spec = nil, ---@type LazySpec
+    spec = nil,
     lockfile = vim.fn.stdpath('config') .. '/lazy-lock.json', -- lockfile generated after running update.
-    concurrency = jit.os:find("Windows") and (vim.loop.available_parallelism() * 2) or nil, ---@type number limit the maximum amount of concurrent tasks
     git = {
         log = { '-10' }, -- show the last 10 commits
         timeout = 12000, -- kill processes that take more than 2 minutes
@@ -680,21 +679,9 @@ AddPlugin {
             forward = true,
             -- when `false`, find only matches in the given direction
             wrap = true,
-            ---@type Flash.Pattern.Mode
-            -- Each mode will take ignorecase and smartcase into account.
-            -- * exact: exact match
-            -- * search: regular search
-            -- * fuzzy: fuzzy search
-            -- * fun(str): custom function that returns a pattern
-            --   For example, to only match at the beginning of a word:
-            --   mode = function(str)
-            --     return "\\<" .. str
-            --   end,
             mode = "search",
             -- behave like `incsearch`
             incremental = true,
-            -- Excluded filetypes and custom window filters
-            ---@type (string|fun(win:window))[]
             exclude = {
                 "notify",
                 "cmp_menu",
@@ -765,14 +752,6 @@ AddPlugin {
                 -- number between 1 and 9
                 shade = 5,
             },
-            -- With `format`, you can change how the label is rendered.
-            -- Should return a list of `[text, highlight]` tuples.
-            ---@class Flash.Format
-            ---@field state Flash.State
-            ---@field match Flash.Match
-            ---@field hl_group string
-            ---@field after boolean
-            ---@type fun(opts:Flash.Format): string[][]
             format = function(opts)
                 return { { opts.match.label, opts.hl_group } }
             end,
@@ -799,10 +778,7 @@ AddPlugin {
         -- When `true`, flash will try to continue the last search
         continue = false,
         -- Set config to a function to dynamically change the config
-        config = nil, ---@type fun(opts:Flash.Config)|nil
-        -- You can override the default options for a specific mode.
-        -- Use it with `require("flash").jump({mode = "forward"})`
-        ---@type table<string, Flash.Config>
+        config = nil,
         modes = {
             -- options used when flash is activated through
             -- a regular search with `/` or `?`
@@ -1147,18 +1123,12 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 
-local function LightT(opts)
-    opts.trans = true
-    Light(opts)
-end
-
 AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
 AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             }
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
-AddPlugin { 'w3barsi/barstrata.nvim',                  event = 'User barstrata'                                           }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'igorgue/danger',                          event = 'User danger'                                              }
@@ -1240,7 +1210,6 @@ Dark  { 'bamboo',                     '_', pre = function() require('bamboo').se
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
-Dark  { 'barstrata',                  '_'                              }
 Light { 'base2tone_mall_light',       'base2tone'                      }
 Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
@@ -2412,11 +2381,7 @@ AddPlugin {
 
 AddPlugin {
     'glepnir/lspsaga.nvim',
-    branch = 'main',
     cmd = 'Lspsaga',
-    keys = {
-        { '<M-F12>', "<cmd>Lspsaga lsp_finder<cr>", desc = "Open Lsp Finder" }
-    },
     opts = {
         beacon = {
             enable = true,
