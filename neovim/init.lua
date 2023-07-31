@@ -1285,7 +1285,6 @@ DarkT { 'mellifluous',                '_', pre = function() require('mellifluous
 Light { 'mellifluous',                '_'                                                                                                                     }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin', transparent_background = {enabled = true}}) end }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
-Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin'}) end                                }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
