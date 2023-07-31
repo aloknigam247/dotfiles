@@ -1154,12 +1154,12 @@ AddPlugin { 'savq/melange',                            event = 'User melange'   
 AddPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
 AddPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
 AddPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
-AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           } -- Transparent & other variants
+AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
 AddPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                                 }
 AddPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                            }
 AddPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'                                              }
 AddPlugin { 'gbprod/nord.nvim',                        event = 'User nord'                                                }
-AddPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
+AddPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              } -- Transparent & other variants
 AddPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                          }
 AddPlugin { 'RRethy/nvim-base16',                      event = 'User base16'                                              }
 AddPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'                                                }
@@ -1199,22 +1199,22 @@ AddPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'    
 AddPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
 DarkT { 'NeoSolarized',               '_'                              }
-Dark  { 'NeoSolarized',               '_', pre = function() require('NeoSolarized').setup({transparent = false}) end}
 Light { 'NeoSolarized',               '_'                              }
+Dark  { 'NeoSolarized',               '_', pre = function() require('NeoSolarized').setup({transparent = false}) end}
 Dark  { 'OceanicNext',                '_'                              }
 Dark  { 'PaperColor',                 '_',           post = FixNontext }
 Light { 'PaperColor',                 '_',           post = FixNontext }
 Dark  { 'adwaita',                    '_'                              }
-DarkT { 'adwaita',                    '_', pre = function() vim.g.adwaita_transparent = true end }
 Light { 'adwaita',                    '_'                              }
+DarkT { 'adwaita',                    '_', pre = function() vim.g.adwaita_transparent = true end }
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
 Light { 'balance',                    '_'                              }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
 Light { 'base2tone_mall_light',       'base2tone'                      }
 Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
@@ -1231,13 +1231,16 @@ Dark  { 'darcula-solid',              '_'                                       
 Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Dark  { 'dawnfox',                    'nightfox'                                                          }
+DarkT { 'dawnfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'dayfox',                     'nightfox'                                                          }
+DarkT { 'dayfox',                     'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'decay',                      '_'                                                                 }
 Light { 'decay',                      '_'                                                                 }
 Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
 Dark  { 'doubletrouble',              '_'                                                                 }
 Dark  { 'duskfox',                    'nightfox'                                                          }
+DarkT { 'duskfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'earlysummer',                'starry',      pre = function() FixStarry('#3f2b4c', '#694980') end }
 Dark  { 'edge',                       '_'                                                                 }
 Light { 'edge',                       '_'                                                                 }
@@ -1256,20 +1259,20 @@ Dark  { 'github_dark',                'github'                                  
 DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({transparent = true}) end }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
-DarkT { 'gruvbox',                    '_', pre = function() require('gruvbox').setup({transparent_mode = true}) end }
 Light { 'gruvbox',                    '_'                                                                 }
 Dark  { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(false) end                   }
 DarkT { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(true) end                    }
+DarkT { 'gruvbox',                    '_', pre = function() require('gruvbox').setup({transparent_mode = true}) end }
 Dark  { 'gruvbox-baby',               '_',                                                                }
 DarkT { 'gruvbox-baby',               '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end   }
 Dark  { 'habamax',                    '_',                                                                }
 Dark  { 'horizon',                    '_'                                                                 }
 Dark  { 'juliana',                    '_', post = function() FixLineNr('#999999') end                                                                         }
-Dark  { 'kanagawa-wave',              '_'                                                                                                                     }
-DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
 Dark  { 'kanagawa-dragon',            '_'                                                                                                                     }
 DarkT { 'kanagawa-dragon',            '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
 Light { 'kanagawa-lotus',             '_'                                                                                                                     }
+Dark  { 'kanagawa-wave',              '_'                                                                                                                     }
+DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
 Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                     }
 Dark  { 'lunaperche',                 '_'                                                                                                                     }
@@ -1281,11 +1284,11 @@ Dark  { 'material',                   'starry',      pre = function() FixStarry(
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
-DarkT { 'mellifluous',                '_', pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end                     }
 Light { 'mellifluous',                '_'                                                                                                                     }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin', transparent_background = {enabled = true}}) end }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
+DarkT { 'mellifluous',                '_', pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end                     }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
@@ -1297,21 +1300,24 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 Dark  { 'moonfly',                    '_'                                                                                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
-DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' vim.g.neon_transparent = true end, post = FixVisual        }
-DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    vim.g.neon_transparent = true end, post = FixVisual        }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }
+DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' vim.g.neon_transparent = true end, post = FixVisual        }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
+DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    vim.g.neon_transparent = true end, post = FixVisual        }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
 Dark  { 'nightfly',                   '_'            }
 Dark  { 'nightfox',                   'nightfox'     }
+DarkT { 'nightfox',                   'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'noctis_azureus',             'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
 Light { 'noctis_lux',                 'noctis'       }
 Dark  { 'noctis_minimus',             'noctis'       }
 Dark  { 'nord',                       '_'            }
+DarkT { 'nord',                       '_', pre = function() require('nord').setup({transparent = true}) end }
 Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
+DarkT { 'nordfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'nordic',                     '_'            }
 Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
@@ -1329,8 +1335,11 @@ Dark  { 'palenightfall',              '_'            }
 Light { 'pink-panic',                 '_'            }
 Dark  { 'rose-pine',                  '_'            }
 Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
+DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main', disable_background = true}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
+DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon', disable_background = true}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
+DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({disable_background = true}) end}
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
@@ -1343,6 +1352,7 @@ Dark  { 'spaceduck',                  '_'                                       
 Dark  { 'substrata',                  '_'                                                                   }
 Light { 'sweetie',                    '_'                                                                   }
 Dark  { 'terafox',                    'nightfox'                                                            }
+DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'toast',                      '_'                                                                   }
 Light { 'toast',                      '_'                                                                   }
 Light { 'tokyobones',                 'zenbones'                                                            }
