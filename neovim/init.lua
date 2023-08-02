@@ -1159,7 +1159,7 @@ AddPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'       
 AddPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                            }
 AddPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'                                              }
 AddPlugin { 'gbprod/nord.nvim',                        event = 'User nord'                                                }
-AddPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              } -- Transparent & other variants
+AddPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
 AddPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                          }
 AddPlugin { 'RRethy/nvim-base16',                      event = 'User base16'                                              }
 AddPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'                                                }
@@ -1188,7 +1188,7 @@ AddPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'  
 AddPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
 AddPlugin { 'ntk148v/vim-horizon',                     event = 'User horizon'                                             }
 AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
-AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             }
+AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             } -- Transparent & other variants
 AddPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
 AddPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                                  }
 AddPlugin { '2nthony/vitesse.nvim',                    event = 'User vitesse', dependencies = 'tjdevries/colorbuddy.nvim' }
@@ -1221,11 +1221,15 @@ DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').s
 Light { 'bluloco-light',              '_'                              }
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
+Dark  { 'catppuccin-frappe',          'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Light { 'catppuccin-latte',           'catppuccin'                     }
 Dark  { 'catppuccin-macchiato',       'catppuccin'                     }
+Dark  { 'catppuccin-macchiato',       'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Dark  { 'catppuccin-mocha',           'catppuccin'                     }
+Dark  { 'catppuccin-mocha',           'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
+DarkT { 'codedark',                   '_', pre = function() vim.g.codedark_transparent = 1 end            }
 Light { 'danger_light',               'danger',      post = FixNontext                                    }
 Dark  { 'darcula-solid',              '_'                                                                 }
 Dark  { 'darkplus',                   '_'                                                                 }
@@ -1319,9 +1323,12 @@ Dark  { 'nordbones',                  'zenbones'     }
 Dark  { 'nordfox',                    'nightfox'     }
 DarkT { 'nordfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'nordic',                     '_'            }
+DarkT { 'nordic',                     '_',           pre = function() require('nordic').setup({transparent_bg = true}) end }
 Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
 Dark  { 'oh-lucy-evening',            'oh-lucy'      }
+DarkT { 'oh-lucy-evening',            'oh-lucy', pre = function() vim.g.oh_lucy_transparent_background = true end }
 Dark  { 'one-nvim',                   '_'            }
+DarkT { 'one-nvim',                   '_', pre = function() vim.g.one_nvim_transparent_bg = true end }
 Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
 Dark  { 'onedark_vivid',              'onedarkpro'   }
@@ -1332,6 +1339,7 @@ Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  'starry',      pre = function() FixStarry('#3c2c46', '#644975') end }
 Dark  { 'palenightfall',              '_'            }
+DarkT { 'palenightfall',              '_', pre = function() require('palenightfall').setup({transparent = true}) end }
 Light { 'pink-panic',                 '_'            }
 Dark  { 'rose-pine',                  '_'            }
 Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
@@ -1343,24 +1351,29 @@ DarkT { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
-Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end }
-Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end }
-Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end }
-Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end }
-Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end }
-Dark  { 'spaceduck',                  '_'                                                                   }
-Dark  { 'substrata',                  '_'                                                                   }
-Light { 'sweetie',                    '_'                                                                   }
-Dark  { 'terafox',                    'nightfox'                                                            }
+Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end  }
+Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end  }
+Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end  }
+Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end  }
+Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end  }
+Dark  { 'spaceduck',                  '_'                                                                    }
+Dark  { 'substrata',                  '_'                                                                    }
+DarkT { 'substrata',                  '_',           pre = function() vim.g.substrata_transparent = true end }
+Light { 'sweetie',                    '_'                                                                    }
+Dark  { 'terafox',                    'nightfox'                                                             }
 DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'toast',                      '_'                                                                   }
 Light { 'toast',                      '_'                                                                   }
 Light { 'tokyobones',                 'zenbones'                                                            }
 Dark  { 'tokyodark',                  '_'                                                                   }
+DarkT { 'tokyodark',                  '_', pre = function() require('tokyodark').setup({transparent_background = true}) end }
 Light { 'tokyonight-day',             'tokyonight'                                                          }
 Dark  { 'tokyonight-moon',            'tokyonight'                                                          }
+DarkT { 'tokyonight-moon',            'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 Dark  { 'tokyonight-night',           'tokyonight'                                                          }
+DarkT { 'tokyonight-night',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
+DarkT { 'tokyonight-storm',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
 Dark  { 'vitesse',                    '_'                                                                   }
@@ -4019,12 +4032,12 @@ AddPlugin {
             bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
-                { text = { "%C" }, click = "v:lua.ScFa" },
-                { text = { "%s" }, click = "v:lua.ScSa" },
+                { text = { '%C' }, click = 'v:lua.ScFa' },
+                { text = { '%s' }, click = 'v:lua.ScSa' },
                 {
-                    text = { "%l" },
-                    condition = { true },
-                    click = "v:lua.ScLa",
+                    text = { '%l', ' ' },
+                    condition = { true, true },
+                    click = 'v:lua.ScLa',
                 },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
