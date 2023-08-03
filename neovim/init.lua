@@ -1188,7 +1188,7 @@ AddPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'  
 AddPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
 AddPlugin { 'ntk148v/vim-horizon',                     event = 'User horizon'                                             }
 AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
-AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             } -- Transparent & other variants
+AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             }
 AddPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
 AddPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                                  }
 AddPlugin { '2nthony/vitesse.nvim',                    event = 'User vitesse', dependencies = 'tjdevries/colorbuddy.nvim' }
@@ -1302,6 +1302,7 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end                                }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'})  end                                }
 Dark  { 'moonfly',                    '_'                                                                                                                     }
+DarkT { 'moonfly',                    '_',           pre = function() vim.g.moonflyTransparent = true end                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }
@@ -1309,9 +1310,10 @@ DarkT { 'neon',                       '_',           pre = function() vim.g.neon
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
 DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    vim.g.neon_transparent = true end, post = FixVisual        }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
-Dark  { 'nightfly',                   '_'            }
-Dark  { 'nightfox',                   'nightfox'     }
-DarkT { 'nightfox',                   'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
+Dark  { 'nightfly',                   '_'                                                                                                                     }
+DarkT { 'nightfly',                   '_',           pre = function() vim.g.nightflyTransparent = true end                                                    }
+Dark  { 'nightfox',                   'nightfox'                                                                                                              }
+DarkT { 'nightfox',                   'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end                                     }
 Dark  { 'noctis_azureus',             'noctis'       }
 Light { 'noctis_hibernus',            'noctis'       }
 Light { 'noctis_lilac',               'noctis'       }
@@ -1374,11 +1376,13 @@ Dark  { 'tokyonight-night',           'tokyonight'                              
 DarkT { 'tokyonight-night',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 DarkT { 'tokyonight-storm',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
+DarkT { 'visual_studio_code_dark',    'visual_studio_code', pre = function() require('visual_studio_code').setup({transparent = true}) end }
 Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
 Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
 Dark  { 'vitesse',                    '_'                                                                   }
+DarkT { 'vitesse',                    '_', pre = function() require('vitesse').setup({transparent_background  = true}) end }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
-Dark  { 'vscode',                     '_'                                                                   }
+DarkT { 'vscode',                     '_', pre = function() require('vscode').setup({transparent  = true}) end }
 Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
@@ -4038,7 +4042,7 @@ AddPlugin {
                     text = { '%l', ' ' },
                     condition = { true, true },
                     click = 'v:lua.ScLa',
-                },
+                }
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
