@@ -208,6 +208,8 @@ LazyConfig = {
 Plugins = {}
 PopUpMenu = {}
 
+Signs = {}
+
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -478,6 +480,19 @@ vim.cmd('sign define DiagnosticSignError text=' .. Icons.error .. ' texthl=Diagn
 vim.cmd('sign define DiagnosticSignWarn  text=' .. Icons.warn  .. ' texthl=DiagnosticSignWarn  linehl= numhl=')
 vim.cmd('sign define DiagnosticSignInfo  text=' .. Icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
 vim.cmd('sign define DiagnosticSignHint  text=' .. Icons.hint  .. ' texthl=DiagnosticSignHint  linehl= numhl=')
+
+Sign_placelist = vim.fn.sign_placelist
+vim.fn.sign_placelist = function(args)
+    for _,i in pairs(args) do
+        tab = {
+            [i.buffer] = {
+                [i.lnum] = i
+            }
+        }
+        table.insert(Signs, tab)
+    end
+    Sign_placelist(args)
+end
 
 vim.highlight.priorities = {
     syntax = 50,
@@ -4042,7 +4057,7 @@ AddPlugin {
                     text = { '%l', ' ' },
                     condition = { true, true },
                     click = 'v:lua.ScLa',
-                }
+                },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
@@ -4065,7 +4080,7 @@ AddPlugin {
                 GitSignsChangedelete    = builtin.gitsigns_click,
                 GitSignsDelete          = builtin.gitsigns_click,
                 gitsigns_extmark_signs_ = builtin.gitsigns_click,
-            },
+            }
         })
     end,
     event = 'VeryLazy'
