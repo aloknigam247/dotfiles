@@ -2205,7 +2205,7 @@ AddPlugin {
         signs = { -- ┃┇│┆󰇝
             add          = { hl = 'GitSignsAdd'   ,       text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
             change       = { hl = 'GitSignsChange',       text = '┆', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
-            delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = true  },
+            delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
             topdelete    = { hl = 'GitSignsDelete',       text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
             changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
         },
@@ -4073,27 +4073,15 @@ AddPlugin {
             bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
-                { text = { '%C' }, click = 'v:lua.ScFa' },
-                { text = { '%s' }, click = 'v:lua.ScSa' },
+                -- { text = { '%C' }, click = 'v:lua.ScFa' },
+                { sign = { name = { 'Diagnostic' }, auto = true } },
+                { sign = { name = { 'todo' } }, auto = true },
                 {
-                    -- " Right aligned relative cursor line number:
-                    -- :let &stc='%=%{v:relnum?v:relnum:v:lnum} '
                     text = { builtin.lnumfunc },
                     condition = { true },
                     -- click = 'v:lua.ScLa',
                 },
-                -- { text = {
-                --     function(args)
-                --         return GetGitsign(args.lnum)
-                --     end,
-                --     condition = { true },
-                --     sign = {
-                --         colwidth = 1,
-                --         maxwidth = 1,
-                --         fillchar = '.'
-                --     }
-                --     }
-                -- },
+                { sign = { name = { 'Git' }, colwidth = 1 } }
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
