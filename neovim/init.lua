@@ -358,6 +358,29 @@ function ColorPalette()
     end
 end
 
+function GetSign(name)
+    local sign_list = vim.fn.sign_getdefined()
+    for _, value in ipairs(sign_list) do
+        if value.name == name then
+            return value
+        end
+    end
+end
+
+function GetGitsign(lnum)
+    local sign = vim.fn.sign_getplaced('%', {group = '*', lnum = lnum})
+    local signs = sign[1].signs
+    if #signs > 0 then
+        local signdef = GetSign(signs[1].name)
+        if signdef then
+            print('DEBUGPRINT[1]: init.lua:376: signdef.text=' .. signdef.text)
+            return signdef.text
+            -- return '%#' .. signdef.texthl .. '#' .. signdef.text .. ' '
+        end
+    end
+    return ''
+end
+
 function IsLspAttached()
     return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
 end
@@ -371,9 +394,9 @@ function LightenDarkenColor(col, amt)
     return string.format("#%X", newColor)
 end
 
-function PopupAction(mode)
-    local currentWindow = vim.api.nvim_get_current_win()
-    local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
+function PopupAction()
+    -- local currentWindow = vim.api.nvim_get_current_win()
+    -- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
     vim.cmd('aunmenu PopUp')
 
     for _,menu in pairs(PopUpMenu) do
@@ -428,7 +451,7 @@ vim.api.nvim_create_autocmd(
         pattern = 'n',
         desc = 'Create popup menu based on context',
         callback = function()
-            PopupAction('n')
+            PopupAction()
         end
     }
 )
@@ -481,18 +504,16 @@ vim.cmd('sign define DiagnosticSignWarn  text=' .. Icons.warn  .. ' texthl=Diagn
 vim.cmd('sign define DiagnosticSignInfo  text=' .. Icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
 vim.cmd('sign define DiagnosticSignHint  text=' .. Icons.hint  .. ' texthl=DiagnosticSignHint  linehl= numhl=')
 
-Sign_placelist = vim.fn.sign_placelist
-vim.fn.sign_placelist = function(args)
-    for _,i in pairs(args) do
-        tab = {
-            [i.buffer] = {
-                [i.lnum] = i
-            }
-        }
-        table.insert(Signs, tab)
-    end
-    Sign_placelist(args)
-end
+-- Sign_placelist = vim.fn.sign_placelist
+-- vim.fn.sign_placelist = function(args)
+--     for _,i in pairs(args) do
+--         -- use tbl_extend or tbl_deep_extend
+--         Signs[i.buffer] = {
+--             [i.lnum] = i
+--         }
+--     end
+--     Sign_placelist(args)
+-- end
 
 vim.highlight.priorities = {
     syntax = 50,
@@ -3144,7 +3165,7 @@ AddPlugin {
                             return str:sub(1,1)
                         end,
                         padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' }
+                        separator = { left = '█', right = '' }
                     }
                 },
                 lualine_b = {
@@ -3163,6 +3184,7 @@ AddPlugin {
                             vim.cmd('NvimTreeToggle')
                         end,
                         path = 0,                -- 0: Just the filename
+                        padding = { left = 1, right = 0 },
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
                         symbols = {
                             modified = Icons.file_modified, -- Text to show when the file is modified.
@@ -3307,7 +3329,7 @@ AddPlugin {
                             require('mini.map').toggle()
                         end,
                         padding = { left = 0, right = 0 },
-                        separator = { left = '', right = '' }
+                        separator = { left = '', right = '█' }
                     }
                 }
             },
@@ -4054,10 +4076,24 @@ AddPlugin {
                 { text = { '%C' }, click = 'v:lua.ScFa' },
                 { text = { '%s' }, click = 'v:lua.ScSa' },
                 {
-                    text = { '%l', ' ' },
-                    condition = { true, true },
-                    click = 'v:lua.ScLa',
+                    -- " Right aligned relative cursor line number:
+                    -- :let &stc='%=%{v:relnum?v:relnum:v:lnum} '
+                    text = { builtin.lnumfunc },
+                    condition = { true },
+                    -- click = 'v:lua.ScLa',
                 },
+                -- { text = {
+                --     function(args)
+                --         return GetGitsign(args.lnum)
+                --     end,
+                --     condition = { true },
+                --     sign = {
+                --         colwidth = 1,
+                --         maxwidth = 1,
+                --         fillchar = '.'
+                --     }
+                --     }
+                -- },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
