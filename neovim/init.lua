@@ -3652,13 +3652,13 @@ AddPlugin {
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
                     cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''},
-                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
-                    search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
-                    lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ''},
-                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ''},
                     help = { pattern = '^:%s*he?l?p?%s+', icon = '' , title = ''},
                     input = {}, -- Used by input()
+                    lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ''},
+                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ''},
+                    search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
+                    search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
                     -- lua = false, -- to disable a format, set to `false`
                 },
             },
@@ -4074,14 +4074,14 @@ AddPlugin {
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 -- { text = { '%C' }, click = 'v:lua.ScFa' },
-                { sign = { name = { 'Diagnostic' }, auto = true } },
-                { sign = { name = { 'todo' } }, auto = true },
+                { sign = { name = { 'todo.*' } }, auto = true },
+                { condition = true, sign = { name = { 'Diagnostic' }, auto = true } },
                 {
                     text = { builtin.lnumfunc },
                     condition = { true },
                     -- click = 'v:lua.ScLa',
                 },
-                { sign = { name = { 'Git' }, colwidth = 1 } }
+                { sign = { name = { 'Git' }, colwidth = 1 } },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
