@@ -2351,7 +2351,7 @@ AddPlugin {
             vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
             vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
             vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
-            vim.keymap.set('n', 'gp', require('goto-preview').goto_preview_definition, bufopts)
+            vim.keymap.set('n', 'gp', require('goto-preview').goto_preview_definition, bufopts) -- Try Lspsaga peek_definition
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
