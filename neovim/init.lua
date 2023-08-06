@@ -551,7 +551,7 @@ PopupMenuAdd({
         {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
         {'Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>'},
         {'LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>'},
-        {'Peek Definition        gp',  '<Cmd>lua require("goto-preview").goto_preview_definition()<CR>'},
+        {'Peek Definition        gp',  '<Cmd>Lspsaga peek_definition<CR>'},
         {'References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>'},
         {'Rename                 F2',  '<Cmd>Lspsaga rename<CR>'},
         {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
@@ -941,7 +941,8 @@ AddPlugin {
 
 AddPlugin {
     'folke/todo-comments.nvim',
-    opts = {
+    config = function()
+        require('todo-comments').setup({
         colors = {
             default = { 'Identifier', '#7C3AED' },
             docs    = { 'Function', '#440381' },
@@ -967,7 +968,9 @@ AddPlugin {
             WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
         },
         merge_keywords = false
-    },
+    })
+    TODO_COMMENTS_LOADED = true
+    end,
     keys = {
         { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous todo comment' },
         { ']t', function() require('todo-comments').jump_next() end, desc = 'Next todo comment' }
@@ -2351,7 +2354,7 @@ AddPlugin {
             vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
             vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
             vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
-            vim.keymap.set('n', 'gp', require('goto-preview').goto_preview_definition, bufopts) -- Try Lspsaga peek_definition
+            vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', bufopts) -- Try Lspsaga peek_definition
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
@@ -2626,32 +2629,6 @@ AddPlugin {
         { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' }
     },
     -- event = 'LspAttach'
-}
-
-AddPlugin {
-    'rmagatti/goto-preview',
-    config = true,
-    event = 'LspAttach',
-    opts = {
-        width = 120; -- Width of the floating window
-        height = 15; -- Height of the floating window
-        border = {'󱦵', Icons.border_hor , Icons.border_topright, Icons.border_vert, Icons.border_botright, Icons.border_hor, Icons.border_topleft, Icons.border_vert}; -- Border characters of the floating window
-        default_mappings = false; -- Bind default mappings
-        debug = false; -- Print debug information
-        opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        resizing_mappings = false; -- Binds arrow keys to resizing the floating window.
-        post_open_hook = nil; -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        -- references = { -- Configure the telescope UI for slowing the references cycling window.
-        --     telescope = require('telescope.themes').get_dropdown({ hide_preview = false })
-        -- };
-        -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off 'peak' functionality.
-        focus_on_open = true; -- Focus the floating window when opening it.
-        dismiss_on_move = true; -- Dismiss the floating window when moving the cursor.
-        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-        bufhidden = 'wipe', -- the bufhidden option to set on the floating window. See :h bufhidden
-        stack_floating_preview_windows = true, -- Whether to nest floating windows
-        preview_window_title = { enable = true, position = 'left' }, -- Whether to set the preview window title as the filename
-    }
 }
 
 AddPlugin {
@@ -4074,8 +4051,8 @@ AddPlugin {
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 -- { text = { '%C' }, click = 'v:lua.ScFa' },
-                { sign = { name = { 'todo.*' } }, auto = true },
-                { condition = true, sign = { name = { 'Diagnostic' }, auto = true } },
+                { condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, sign = { name = { 'todo.*' } }, auto = true },
+                { sign = { name = { 'Diagnostic' }, auto = true } },
                 {
                     text = { builtin.lnumfunc },
                     condition = { true },
