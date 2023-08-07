@@ -391,7 +391,8 @@ function LightenDarkenColor(col, amt)
     local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
     local g = bit.band(num, 0x0000FF) + amt
     local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-    return string.format("#%X", newColor)
+    local hex_code = string.format("#%-6X", newColor)
+    return hex_code:gsub(' ', '0')
 end
 
 function PopupAction()
@@ -3439,14 +3440,6 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/axkirillov/easypick.nvim
 AddPlugin {
-    'crispgm/telescope-heading.nvim',
-    config = function()
-        require('telescope').load_extension('heading')
-    end,
-    ft = 'markdown'
-}
-
-AddPlugin {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
     config = function()
@@ -3507,11 +3500,13 @@ AddPlugin {
             },
         })
         telescope.load_extension('fzf')
+        telescope.load_extension('heading')
         telescope.load_extension('undo')
         telescope.load_extension('vim_bookmarks')
         vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
     dependencies = {
+        'crispgm/telescope-heading.nvim',
         'debugloop/telescope-undo.nvim',
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
