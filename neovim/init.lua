@@ -1226,7 +1226,6 @@ AddPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'
 AddPlugin { 'embark-theme/vim',                        event = 'User embark'                                              }
 AddPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'                                            }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
-AddPlugin { 'ntk148v/vim-horizon',                     event = 'User horizon'                                             }
 AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
 AddPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             }
 AddPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
@@ -1310,7 +1309,6 @@ DarkT { 'gruvbox',                    '_', pre = function() require('gruvbox').s
 Dark  { 'gruvbox-baby',               '_',                                                                }
 DarkT { 'gruvbox-baby',               '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end   }
 Dark  { 'habamax',                    '_',                                                                }
-Dark  { 'horizon',                    '_'                                                                 }
 Dark  { 'juliana',                    '_', post = function() FixLineNr('#999999') end                                                                         }
 Dark  { 'kanagawa-dragon',            '_'                                                                                                                     }
 DarkT { 'kanagawa-dragon',            '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
