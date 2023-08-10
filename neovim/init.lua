@@ -1,3 +1,4 @@
+-- PROGRESS
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
@@ -1192,6 +1193,7 @@ AddPlugin { 'lmburns/kimbox',                          event = 'User kimbox'    
 AddPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                            }
 AddPlugin { 'savq/melange',                            event = 'User melange'                                             }
 AddPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
+AddPlugin { 'xero/miasma.nvim',                        event = 'User miasma'                                              }
 AddPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
 AddPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
 AddPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
@@ -1330,7 +1332,8 @@ Light { 'mellifluous',                '_'                                       
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin', transparent_background = {enabled = true}}) end }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
-DarkT { 'mellifluous',                '_', pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end                     }
+DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end           }
+Dark  { 'monokai',                    '_',                                                                                                                    }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
@@ -2227,6 +2230,8 @@ AddPlugin {
     end,
     cmd = "GitMessenger"
 }
+
+-- https://github.com/ruifm/gitlinker.nvim
 
 AddPlugin {
     'sindrets/diffview.nvim',
@@ -3386,6 +3391,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/willothy/nvim-cokeline
 AddPlugin {
     'akinsho/bufferline.nvim',
     event = 'TabNew',
@@ -3570,7 +3576,7 @@ AddPlugin {
             }
         }
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } },
+    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
     event = 'User VeryLazy',
 }
 
@@ -3850,6 +3856,7 @@ AddPlugin {
 }
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
+-- https://github.com/Marskey/telescope-sg
 
 AddPlugin {
     'LiadOz/nvim-dap-repl-highlights',
@@ -3876,6 +3883,8 @@ AddPlugin {
         { 'gx', '<CMD>lua require("better-gx").BetterGx()<CR>' },
     }
 }
+
+-- https://github.com/Wiebesiek/ZeoVim
 
 AddPlugin {
     -- https://github.com/rareitems/printer.nvim
@@ -3921,6 +3930,8 @@ AddPlugin {
     end,
     ft = 'csv'
 }
+
+-- https://github.com/cshuaimin/ssr.nvim
 
 AddPlugin {
     'dstein64/vim-startuptime',
@@ -4012,6 +4023,7 @@ AddPlugin {
 }
 
 -- https://github.com/glacambre/firenvim
+--https://github.com/tomiis4/BufferTabs.nvim
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
@@ -4025,6 +4037,8 @@ AddPlugin {
         { '<C-S-O>', function() require('bufjump').backward() end }
     }
 }
+
+-- https://github.com/mrshmllow/open-handlers.nvim
 
 AddPlugin {
     'luukvbaal/statuscol.nvim',
