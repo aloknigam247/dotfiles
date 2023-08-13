@@ -207,7 +207,6 @@ LazyConfig = {
 
 Plugins = {}
 PopUpMenu = {}
-
 Signs = {}
 
 local kind_hl = {
@@ -655,6 +654,12 @@ AddPlugin {
         )
     end,
     event = 'InsertEnter'
+}
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      COC       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+AddPlugin {
+    'neoclide/coc.nvim',
+    branch = 'release'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
