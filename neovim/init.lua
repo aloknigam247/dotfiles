@@ -2089,7 +2089,7 @@ AddPlugin {
             ft_ignore = { 'neorg' },
         })
     end,
-    lazy = false
+    lazy = true
 }
 
 -- configure or remove
