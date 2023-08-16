@@ -2104,6 +2104,33 @@ AddPlugin {
         vim.o.foldlevelstart = 99
         vim.o.foldenable = true
         require('ufo').setup({
+            fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
+                local newVirtText = {}
+                local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+                local sufWidth = vim.fn.strdisplaywidth(suffix)
+                local targetWidth = width - sufWidth
+                local curWidth = 0
+                for _, chunk in ipairs(virtText) do
+                    local chunkText = chunk[1]
+                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                    if targetWidth > curWidth + chunkWidth then
+                        table.insert(newVirtText, chunk)
+                    else
+                        chunkText = truncate(chunkText, targetWidth - curWidth)
+                        local hlGroup = chunk[2]
+                        table.insert(newVirtText, {chunkText, hlGroup})
+                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                        -- str width returned from truncate() may less than 2nd argument, need padding
+                        if curWidth + chunkWidth < targetWidth then
+                            suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+                        end
+                        break
+                    end
+                    curWidth = curWidth + chunkWidth
+                end
+                table.insert(newVirtText, {suffix, 'MoreMsg'})
+                return newVirtText
+            end,
             provider_selector = function(_, _, _)
                 return {'treesitter', 'indent'}
             end
@@ -2112,7 +2139,7 @@ AddPlugin {
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
     dependencies = 'kevinhwang91/promise-async',
-    enabled = false,
+    enabled = true,
 }
 
 -- <~>
@@ -2386,6 +2413,10 @@ AddPlugin {
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        capabilities.textDocument.foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true
+        }
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
@@ -4061,7 +4092,7 @@ AddPlugin {
             bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
-                -- { text = { '%C' }, click = 'v:lua.ScFa' },
+                { text = { '%C' }, click = 'v:lua.ScFa' },
                 { condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, sign = { name = { 'todo.*' } }, auto = true },
                 { sign = { name = { 'Diagnostic' }, auto = true } },
                 {
