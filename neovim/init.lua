@@ -1409,7 +1409,6 @@ DarkT { 'substrata',                  '_',           pre = function() vim.g.subs
 Light { 'sweetie',                    '_'                                                                    }
 Dark  { 'terafox',                    'nightfox'                                                             }
 DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
-Dark  { 'toast',                      '_'                                                                   }
 Light { 'toast',                      '_'                                                                   }
 Light { 'tokyobones',                 'zenbones'                                                            }
 Dark  { 'tokyodark',                  '_'                                                                   }
@@ -2847,7 +2846,7 @@ AddPlugin {
         vim.g.bookmark_highlight_lines = 1
         vim.g.bookmark_location_list = 1
         vim.g.bookmark_no_default_key_mappings = 1
-        vim.g.bookmark_save_per_working_dir = 1
+        vim.g.bookmark_save_per_working_dir = 0
         vim.g.bookmark_sign = Icons.bookmark
     end,
     keys = {
@@ -3056,7 +3055,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 vim.api.nvim_create_user_command(
-    'Cd',
+    'Cdroot',
     function(opts)
         local function getCwd()
             return CWD or vim.fn.getcwd()
