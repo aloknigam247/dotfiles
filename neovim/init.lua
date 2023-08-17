@@ -693,6 +693,8 @@ AddPlugin {
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
+            min_count_to_highlight = 2,
+            modes_allowlist = {'i', 'n'},
             providers = {
                 'lsp',
                 'treesitter',
@@ -1332,7 +1334,6 @@ Dark  { 'material',                   'starry',      pre = function() FixStarry(
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
-Light { 'mellifluous',                '_'                                                                                                                     }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin', transparent_background = {enabled = true}}) end }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
