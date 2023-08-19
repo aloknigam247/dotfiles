@@ -1201,7 +1201,6 @@ AddPlugin { 'igorgue/danger',                          event = 'User danger'    
 AddPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
 AddPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                            }
 AddPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                               }
-AddPlugin { 'muchzill4/doubletrouble',                 event = 'User doubletrouble'                                       }
 AddPlugin { 'sainnhe/edge',                            event = 'User edge'                                                }
 AddPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                          }
 AddPlugin { 'fenetikm/falcon',                         event = 'User falcon'                                              }
@@ -1303,7 +1302,6 @@ Dark  { 'decay',                      '_'                                       
 Light { 'decay',                      '_'                                                                 }
 Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
-Dark  { 'doubletrouble',              '_'                                                                 }
 Dark  { 'duskfox',                    'nightfox'                                                          }
 DarkT { 'duskfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'earlysummer',                'starry',      pre = function() FixStarry('#3f2b4c', '#694980') end }
