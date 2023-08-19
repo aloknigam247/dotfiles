@@ -2,6 +2,8 @@
 -- Variables
 -- ---------
 
+-- Float open like sp or vsp or tabe
+
 -- Vim Globals
 vim.g.loaded_clipboard_provider = 1
 
@@ -1077,6 +1079,18 @@ function FixIndentBlankline()
     end
 end
 
+function FixLimestone(char, context_char, method, symbol)
+    require('starry').setup({
+        custom_highlights = {
+            IndentBlanklineChar = { fg = char },
+            IndentBlanklineContextChar = { fg = context_char },
+            LineNr = { underline = false },
+            ['@method'] = { fg = method, bold = true },
+            ['@symbol'] = { fg = symbol }
+        }
+    })
+end
+
 function FixLineNr(fg)
     vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
@@ -1092,8 +1106,8 @@ function FixStarry(char, context_char)
         custom_highlights = {
             IndentBlanklineChar = { fg = char },
             IndentBlanklineContextChar = { fg = context_char },
-            LineNr = { underline = false },
-        },
+            LineNr = { underline = false }
+        }
     })
 end
 
@@ -1297,7 +1311,6 @@ Dark  { 'edge',                       '_'                                       
 Light { 'edge',                       '_'                                                                 }
 Dark  { 'embark',                     '_'                                                                 }
 Dark  { 'enfocado',                   '_'                                                                 }
-Light { 'enfocado',                   '_'                                                                 }
 Dark  { 'everforest',                 '_'                                                                 }
 Light { 'everforest',                 '_'                                                                 }
 Dark  { 'falcon',                     '_'                                                                 }
@@ -1324,7 +1337,7 @@ Light { 'kanagawa-lotus',             '_'                                       
 Dark  { 'kanagawa-wave',              '_'                                                                                                                     }
 DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
-Light { 'limestone',                  'starry',      pre = function() FixStarry('#223216', '#395425') end                                                     }
+Light { 'limestone',                  'starry',      pre = function() FixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                            }
 Dark  { 'lunaperche',                 '_'                                                                                                                     }
 Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                     }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
