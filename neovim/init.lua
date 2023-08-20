@@ -1944,7 +1944,7 @@ AddPlugin {
                     },
                     git = {
                         deleted   = '󰧧',
-                        ignored   = '',
+                        ignored   = ' ',
                         renamed   = '➜',
                         staged    = '⏽',
                         unmerged  = '',
