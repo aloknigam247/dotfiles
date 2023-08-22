@@ -2,7 +2,7 @@
 -- Variables
 -- ---------
 
--- Float open like sp or vsp or tabe
+-- TODO: Float open like sp or vsp or tabe
 
 -- Vim Globals
 vim.g.loaded_clipboard_provider = 1
@@ -559,6 +559,29 @@ PopupMenuAdd({
         {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
     }
 })
+
+-- REFACTOR: reload to correct location
+vim.api.nvim_create_user_command(
+    'Preview',
+    function(args)
+        -- print('DEBUGPRINT[1]: init.lua:565: args=' .. vim.inspect(args))
+        local bufnr = vim.fn.bufadd(args.args)
+        vim.api.nvim_open_win(bufnr, true, {
+            relative = 'editor',
+            row = 3,
+            col = vim.o.columns * 0.08,
+            width = math.floor(vim.o.columns * 0.8),
+            height = vim.o.lines - 8,
+            border = 'rounded',
+            title = ' ' .. args.args .. ' ',
+            title_pos = 'center'
+        })
+    end,
+    {
+        complete = 'file',
+        nargs = 1
+    }
+)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -3103,6 +3126,7 @@ vim.api.nvim_create_user_command(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- PERF: remove Telescope dependency
     -- https://github.com/aaditeynair/conduct.nvim
     'rmagatti/auto-session',
     cmd = 'SessionSave',
@@ -3124,7 +3148,7 @@ AddPlugin {
         vim.o.sessionoptions = 'blank,buffers,curdir,help,tabpages,winsize,winpos,terminal'
     end,
     init = function()
-        if vim.fn.filereadable(vim.fn.stdpath 'data' .. '\\sessions\\' .. vim.fn.getcwd():gsub('\\', '%%'):gsub(':', '++') .. '.vim') == 1 then
+        if vim.fn.filereadable(vim.fn.stdpath('data') .. '\\sessions\\' .. vim.fn.getcwd():gsub('\\', '-'):gsub(':', '++') .. '.vim') == 1 then
             require('auto-session')
         end
     end
@@ -3223,7 +3247,7 @@ AddPlugin {
                 },
                 lualine_c = {
                     {
-                        'branch',
+                        'branch', -- BUG: Branch does not change in help file
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
                         on_click = function()
