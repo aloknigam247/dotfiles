@@ -564,7 +564,6 @@ PopupMenuAdd({
 vim.api.nvim_create_user_command(
     'Preview',
     function(args)
-        -- print('DEBUGPRINT[1]: init.lua:565: args=' .. vim.inspect(args))
         local bufnr = vim.fn.bufadd(args.args)
         vim.api.nvim_open_win(bufnr, true, {
             relative = 'editor',
@@ -1379,7 +1378,6 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'pro'})       end, post = FixVisual              }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end                                }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'})  end                                }
-Dark  { 'moonfly',                    '_'                                                                                                                     }
 DarkT { 'moonfly',                    '_',           pre = function() vim.g.moonflyTransparent = true end                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
@@ -2224,6 +2222,7 @@ AddPlugin {
     cmd = 'MergetoolStart'
 }
 
+-- TODO: load on TextChanged
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
