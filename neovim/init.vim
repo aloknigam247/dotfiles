@@ -140,7 +140,7 @@ if exists("g:neovide")
         vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = 'VictorMono_NF:h' .. Font_size end)
         vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = 'VictorMono_NF:h' .. Font_size end)
 EOF
-    map <F11> :execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
+    map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif
 " }}}
 

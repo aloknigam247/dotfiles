@@ -3472,8 +3472,9 @@ AddPlugin {
                     return ''
                 end
                 local res = ''
+                print('DEBUGPRINT[1]: init.lua:3475: diagnostics_dict=' .. vim.inspect(diagnostics_dict))
                 for k, v in pairs(diagnostics_dict) do
-                    res = res .. Icons.diagnostic[k] .. v .. ' '
+                    res = res .. Icons[k] .. v .. ' '
                 end
                 return res
             end,
@@ -4026,13 +4027,13 @@ AddPlugin {
 
 AddPlugin {
     'echasnovski/mini.move',
-    keys = { "<M-Left>", "<M-Right>", "<M-Down>", "<M-Up>" },
+    keys = { "<C-h>", "<C-l>", "<C-j>", "<C-k>" },
     opts = {
         mappings = {
-            left = "<M-Left>",
-            right = "<M-Right>",
-            down = "<M-Down>",
-            up = "<M-Up>",
+            left = "<C-h>",
+            right = "<C-l>",
+            down = "<C-j>",
+            up = "<C-k>",
             line_left = "H",
             line_right = "L",
             line_down = "J",
