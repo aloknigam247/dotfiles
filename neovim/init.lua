@@ -1317,8 +1317,7 @@ Light { 'danger_light',               'danger',      post = FixNontext          
 Dark  { 'darcula-solid',              '_'                                                                 }
 Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
-Dark  { 'dawnfox',                    'nightfox'                                                          }
-DarkT { 'dawnfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
+Light { 'dawnfox',                    'nightfox'                                                          }
 Dark  { 'dayfox',                     'nightfox'                                                          }
 DarkT { 'dayfox',                     'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'decay',                      '_'                                                                 }
@@ -1359,7 +1358,6 @@ Dark  { 'kanagawa-wave',              '_'                                       
 DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
 Light { 'limestone',                  'starry',      pre = function() FixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                            }
-Dark  { 'lunaperche',                 '_'                                                                                                                     }
 Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                     }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
