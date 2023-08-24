@@ -1419,6 +1419,7 @@ Dark  { 'palenight',                  'starry',      pre = function() FixStarry(
 Dark  { 'palenightfall',              '_'            }
 DarkT { 'palenightfall',              '_', pre = function() require('palenightfall').setup({transparent = true}) end }
 Light { 'pink-panic',                 '_'            }
+Dark  { 'retrobox',                   '_'            }
 Dark  { 'rose-pine',                  '_'            }
 Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
 DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main', disable_background = true}) end }
@@ -1763,292 +1764,292 @@ AddPlugin {
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- directory case handling
-AddPlugin {
-    'nvim-tree/nvim-tree.lua',
-    cmd = 'NvimTreeToggle',
-    opts = {
-        actions = {
-            change_dir = {
-                enable = true,
-                global = false,
-                restrict_above_cwd = false,
-            },
-            expand_all = {
-                exclude = { '.git' },
-                max_folder_discovery = 300,
-            },
-            file_popup = {
-                open_win_config = {
-                    border = 'rounded',
-                    col = 1,
-                    relative = 'cursor',
-                    row = 1,
-                    style = 'minimal',
-                },
-            },
-            open_file = {
-                quit_on_open = false,
-                resize_window = true,
-                window_picker = {
-                    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+    --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+    -- directory case handling
+    AddPlugin {
+        'nvim-tree/nvim-tree.lua',
+        cmd = 'NvimTreeToggle',
+        opts = {
+            actions = {
+                change_dir = {
                     enable = true,
-                    exclude = {
-                        buftype = { 'nofile', 'terminal', 'help' },
-                        filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
-                    },
-                    picker = 'default',
+                    global = false,
+                    restrict_above_cwd = false,
                 },
+                expand_all = {
+                    exclude = { '.git' },
+                    max_folder_discovery = 300,
+                },
+                file_popup = {
+                    open_win_config = {
+                        border = 'rounded',
+                        col = 1,
+                        relative = 'cursor',
+                        row = 1,
+                        style = 'minimal',
+                    },
+                },
+                open_file = {
+                    quit_on_open = false,
+                    resize_window = true,
+                    window_picker = {
+                        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890',
+                        enable = true,
+                        exclude = {
+                            buftype = { 'nofile', 'terminal', 'help' },
+                            filetype = { 'notify', 'packer', 'qf', 'diff', 'fugitive', 'fugitiveblame' },
+                        },
+                        picker = 'default',
+                    },
+                },
+                remove_file = { close_window = true },
+                use_system_clipboard = true,
             },
-            remove_file = { close_window = true },
-            use_system_clipboard = true,
-        },
-        auto_reload_on_write = true,
-        diagnostics = {
-            debounce_delay = 50,
-            enable = true,
-            icons = {
-                error   = Icons.error,
-                hint    = Icons.hint,
-                info    = Icons.info,
-                warning = Icons.warn,
-            },
-            severity = {
-                min = vim.diagnostic.severity.HINT,
-                max = vim.diagnostic.severity.ERROR,
-            },
-            show_on_dirs = true,
-            show_on_open_dirs = false,
-        },
-        disable_netrw = true,
-        filesystem_watchers = {
-            enable = true,
-            debounce_delay = 50,
-            ignore_dirs = {},
-        },
-        filters = {
-            dotfiles = false,
-            git_clean = false,
-            no_buffer = false,
-            custom = {},
-            exclude = {},
-        },
-        git = {
-            enable = true,
-            ignore = true,
-            show_on_dirs = true,
-            show_on_open_dirs = true,
-            timeout = 400,
-        },
-        hijack_cursor = true,
-        hijack_directories = {
-            auto_open = true,
-            enable = true,
-        },
-        hijack_netrw = true,
-        hijack_unnamed_buffer_when_opening = false,
-        live_filter = {
-            always_show_folders = true,
-            prefix = '󰈲 ',
-        },
-        log = {
-            enable = false,
-            truncate = false,
-            types = {
-                all         = false,
-                config      = false,
-                copy_paste  = false,
-                dev         = false,
-                diagnostics = false,
-                git         = false,
-                profile     = false,
-                watcher     = false,
-            },
-        },
-        modified = {
-            enable = true,
-            show_on_dirs = true,
-            show_on_open_dirs = true
-        },
-        notify = { threshold = vim.log.levels.INFO },
-        on_attach = function(bufnr)
-            local function opts(desc)
-              return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-            end
-
-            local api = require('nvim-tree.api')
-            vim.keymap.set('n', '<C-e>',          api.node.open.replace_tree_buffer,  opts('Open: In Place'))
-            vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
-            vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
-            vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
-            vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
-            vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
-            vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
-            vim.keymap.set('n', '<Tab>',          api.node.open.preview,              opts('Open Preview'))
-            vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
-            vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
-            vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
-            vim.keymap.set('n', 'a',              api.fs.create,                      opts('Create'))
-            vim.keymap.set('n', 'bd',             api.marks.bulk.delete,              opts('Delete Bookmarked'))
-            vim.keymap.set('n', 'bmv',            api.marks.bulk.move,                opts('Move Bookmarked'))
-            vim.keymap.set('n', 'c',              api.fs.copy.node,                   opts('Copy'))
-            vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
-            vim.keymap.set('n', ']c',             api.node.navigate.git.next,         opts('Next Git'))
-            vim.keymap.set('n', 'd',              api.fs.remove,                      opts('Delete'))
-            vim.keymap.set('n', 'D',              api.fs.trash,                       opts('Trash'))
-            vim.keymap.set('n', 'E',              api.tree.expand_all,                opts('Expand All'))
-            vim.keymap.set('n', ']d',             api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
-            vim.keymap.set('n', '[d',             api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
-            vim.keymap.set('n', 'F',              api.live_filter.clear,              opts('Clean Filter'))
-            vim.keymap.set('n', 'f',              api.live_filter.start,              opts('Filter'))
-            vim.keymap.set('n', 'g?',             api.tree.toggle_help,               opts('Help'))
-            vim.keymap.set('n', 'gy',             api.fs.copy.absolute_path,          opts('Copy Absolute Path'))
-            vim.keymap.set('n', 'H',              api.tree.toggle_hidden_filter,      opts('Toggle Filter: Dotfiles'))
-            vim.keymap.set('n', 'I',              api.tree.toggle_gitignore_filter,   opts('Toggle Filter: Git Ignore'))
-            vim.keymap.set('n', 'bm',             api.marks.toggle,                   opts('Toggle Bookmark'))
-            vim.keymap.set('n', 'o',              api.node.open.edit,                 opts('Open'))
-            vim.keymap.set('n', 'O',              api.node.open.no_window_picker,     opts('Open: No Window Picker'))
-            vim.keymap.set('n', 'p',              api.fs.paste,                       opts('Paste'))
-            vim.keymap.set('n', 'P',              api.node.navigate.parent,           opts('Parent Directory'))
-            vim.keymap.set('n', 'q',              api.tree.close,                     opts('Close'))
-            vim.keymap.set('n', 'r',              api.fs.rename,                      opts('Rename'))
-            vim.keymap.set('n', 'R',              api.tree.reload,                    opts('Refresh'))
-            vim.keymap.set('n', 's',              api.node.run.system,                opts('Run System'))
-            vim.keymap.set('n', 'S',              api.tree.search_node,               opts('Search'))
-            vim.keymap.set('n', 'U',              api.tree.toggle_custom_filter,      opts('Toggle Filter: Hidden'))
-            vim.keymap.set('n', 'W',              api.tree.collapse_all,              opts('Collapse'))
-            vim.keymap.set('n', 'x',              api.fs.cut,                         opts('Cut'))
-            vim.keymap.set('n', 'y',              api.fs.copy.filename,               opts('Copy Name'))
-            vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,          opts('Copy Relative Path'))
-            vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                 opts('Open'))
-            vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,       opts('CD'))
-        end,
-        prefer_startup_root = false,
-        reload_on_bufenter = false,
-        renderer = {
-            add_trailing = true,
-            full_name = true,
-            group_empty = false,
-            highlight_git = true,
-            highlight_opened_files = 'all',
-            highlight_modified = 'all',
-            indent_markers = {
+            auto_reload_on_write = true,
+            diagnostics = {
+                debounce_delay = 50,
                 enable = true,
                 icons = {
-                    bottom = '─',
-                    corner = '╰',
-                    edge   = '│',
-                    item   = '├',
-                    none   = ' ',
+                    error   = Icons.error,
+                    hint    = Icons.hint,
+                    info    = Icons.info,
+                    warning = Icons.warn,
                 },
-                inline_arrows = true,
-            },
-            indent_width = 2,
-            root_folder_label = ':~:s?$?/..?',
-            icons = {
-                git_placement = 'signcolumn',
-                glyphs = {
-                    bookmark = Icons.bookmark,
-                    default  = Icons.file_unnamed,
-                    folder = {
-                        arrow_closed = '',
-                        arrow_open   = '',
-                        default      = '',
-                        empty        = '',
-                        empty_open   = '',
-                        open         = '',
-                        symlink      = '',
-                        symlink_open = '',
-                    },
-                    git = {
-                        deleted   = '󰧧',
-                        ignored   = ' ',
-                        renamed   = '➜',
-                        staged    = '⏽',
-                        unmerged  = '',
-                        unstaged  = '󰇝',
-                        untracked = Icons.file_unnamed,
-                    },
-                    symlink = '󱅷',
+                severity = {
+                    min = vim.diagnostic.severity.HINT,
+                    max = vim.diagnostic.severity.ERROR,
                 },
-                modified_placement = 'after',
-                padding = ' ',
-                show = {
-                    file = true,
-                    folder = true,
-                    folder_arrow = true,
-                    git = true,
-                    modified = true
-                },
-                symlink_arrow = Icons.symlink_arrow,
-                webdev_colors = true,
+                show_on_dirs = true,
+                show_on_open_dirs = false,
             },
-            special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
-            symlink_destination = true,
-        },
-        respect_buf_cwd = false,
-        root_dirs = {},
-        select_prompts = false,
-        sort_by = 'name',
-        sync_root_with_cwd = true,
-        system_open = {
-            cmd = '',
-            args = {},
-        },
-        tab = {
-            sync = {
-                close = false,
-                ignore = {},
-                open = false,
+            disable_netrw = true,
+            filesystem_watchers = {
+                enable = true,
+                debounce_delay = 50,
+                ignore_dirs = {},
             },
-        },
-        trash = {
-            cmd = 'gio trash',
-            require_confirm = true,
-        },
-        ui = {
-            confirm = {
-                remove = true,
-                trash = true
-            }
-        },
-        update_focused_file = {
-            debounce_delay = 15,
-            enable = true,
-            ignore_list = {},
-            update_root = true,
-        },
-        view = {
-            adaptive_size = false,
-            centralize_selection = false,
-            cursorline = false,
-            float = {
+            filters = {
+                dotfiles = false,
+                git_clean = false,
+                no_buffer = false,
+                custom = {},
+                exclude = {},
+            },
+            git = {
+                enable = true,
+                ignore = true,
+                show_on_dirs = true,
+                show_on_open_dirs = true,
+                timeout = 400,
+            },
+            hijack_cursor = true,
+            hijack_directories = {
+                auto_open = true,
+                enable = true,
+            },
+            hijack_netrw = true,
+            hijack_unnamed_buffer_when_opening = false,
+            live_filter = {
+                always_show_folders = true,
+                prefix = '󰈲 ',
+            },
+            log = {
                 enable = false,
-                open_win_config = {
-                    border = 'rounded',
-                    col = 1,
-                    height = 30,
-                    relative = 'editor',
-                    row = 1,
-                    width = 30,
+                truncate = false,
+                types = {
+                    all         = false,
+                    config      = false,
+                    copy_paste  = false,
+                    dev         = false,
+                    diagnostics = false,
+                    git         = false,
+                    profile     = false,
+                    watcher     = false,
                 },
-                quit_on_focus_loss = true,
             },
-            hide_root_folder = false,
-            mappings = {
-                custom_only = false,
+            modified = {
+                enable = true,
+                show_on_dirs = true,
+                show_on_open_dirs = true
             },
-            number = false,
-            preserve_window_proportions = false,
-            relativenumber = false,
-            side = 'left',
-            signcolumn = 'yes',
-            width = 30,
-        },
+            notify = { threshold = vim.log.levels.INFO },
+            on_attach = function(bufnr)
+                local function opts(desc)
+                  return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+                end
+
+                local api = require('nvim-tree.api')
+                vim.keymap.set('n', '<C-e>',          api.node.open.replace_tree_buffer,  opts('Open: In Place'))
+                vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
+                vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
+                vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
+                vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
+                vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
+                vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
+                vim.keymap.set('n', '<Tab>',          api.node.open.preview,              opts('Open Preview'))
+                vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
+                vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
+                vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
+                vim.keymap.set('n', 'a',              api.fs.create,                      opts('Create'))
+                vim.keymap.set('n', 'bd',             api.marks.bulk.delete,              opts('Delete Bookmarked'))
+                vim.keymap.set('n', 'bmv',            api.marks.bulk.move,                opts('Move Bookmarked'))
+                vim.keymap.set('n', 'c',              api.fs.copy.node,                   opts('Copy'))
+                vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
+                vim.keymap.set('n', ']c',             api.node.navigate.git.next,         opts('Next Git'))
+                vim.keymap.set('n', 'd',              api.fs.remove,                      opts('Delete'))
+                vim.keymap.set('n', 'D',              api.fs.trash,                       opts('Trash'))
+                vim.keymap.set('n', 'E',              api.tree.expand_all,                opts('Expand All'))
+                vim.keymap.set('n', ']d',             api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
+                vim.keymap.set('n', '[d',             api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
+                vim.keymap.set('n', 'F',              api.live_filter.clear,              opts('Clean Filter'))
+                vim.keymap.set('n', 'f',              api.live_filter.start,              opts('Filter'))
+                vim.keymap.set('n', 'g?',             api.tree.toggle_help,               opts('Help'))
+                vim.keymap.set('n', 'gy',             api.fs.copy.absolute_path,          opts('Copy Absolute Path'))
+                vim.keymap.set('n', 'H',              api.tree.toggle_hidden_filter,      opts('Toggle Filter: Dotfiles'))
+                vim.keymap.set('n', 'I',              api.tree.toggle_gitignore_filter,   opts('Toggle Filter: Git Ignore'))
+                vim.keymap.set('n', 'bm',             api.marks.toggle,                   opts('Toggle Bookmark'))
+                vim.keymap.set('n', 'o',              api.node.open.edit,                 opts('Open'))
+                vim.keymap.set('n', 'O',              api.node.open.no_window_picker,     opts('Open: No Window Picker'))
+                vim.keymap.set('n', 'p',              api.fs.paste,                       opts('Paste'))
+                vim.keymap.set('n', 'P',              api.node.navigate.parent,           opts('Parent Directory'))
+                vim.keymap.set('n', 'q',              api.tree.close,                     opts('Close'))
+                vim.keymap.set('n', 'r',              api.fs.rename,                      opts('Rename'))
+                vim.keymap.set('n', 'R',              api.tree.reload,                    opts('Refresh'))
+                vim.keymap.set('n', 's',              api.node.run.system,                opts('Run System'))
+                vim.keymap.set('n', 'S',              api.tree.search_node,               opts('Search'))
+                vim.keymap.set('n', 'U',              api.tree.toggle_custom_filter,      opts('Toggle Filter: Hidden'))
+                vim.keymap.set('n', 'W',              api.tree.collapse_all,              opts('Collapse'))
+                vim.keymap.set('n', 'x',              api.fs.cut,                         opts('Cut'))
+                vim.keymap.set('n', 'y',              api.fs.copy.filename,               opts('Copy Name'))
+                vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,          opts('Copy Relative Path'))
+                vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                 opts('Open'))
+                vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,       opts('CD'))
+            end,
+            prefer_startup_root = false,
+            reload_on_bufenter = false,
+            renderer = {
+                add_trailing = true,
+                full_name = true,
+                group_empty = false,
+                highlight_git = true,
+                highlight_opened_files = 'all',
+                highlight_modified = 'all',
+                indent_markers = {
+                    enable = true,
+                    icons = {
+                        bottom = '─',
+                        corner = '╰',
+                        edge   = '│',
+                        item   = '├',
+                        none   = ' ',
+                    },
+                    inline_arrows = true,
+                },
+                indent_width = 2,
+                root_folder_label = ':~:s?$?/..?',
+                icons = {
+                    git_placement = 'signcolumn',
+                    glyphs = {
+                        bookmark = Icons.bookmark,
+                        default  = Icons.file_unnamed,
+                        folder = {
+                            arrow_closed = '',
+                            arrow_open   = '',
+                            default      = '',
+                            empty        = '',
+                            empty_open   = '',
+                            open         = '',
+                            symlink      = '',
+                            symlink_open = '',
+                        },
+                        git = {
+                            deleted   = '󰧧',
+                            ignored   = ' ',
+                            renamed   = '➜',
+                            staged    = '⏽',
+                            unmerged  = '',
+                            unstaged  = '󰇝',
+                            untracked = Icons.file_unnamed,
+                        },
+                        symlink = '󱅷',
+                    },
+                    modified_placement = 'after',
+                    padding = ' ',
+                    show = {
+                        file = true,
+                        folder = true,
+                        folder_arrow = true,
+                        git = true,
+                        modified = true
+                    },
+                    symlink_arrow = Icons.symlink_arrow,
+                    webdev_colors = true,
+                },
+                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
+                symlink_destination = true,
+            },
+            respect_buf_cwd = false,
+            root_dirs = {},
+            select_prompts = false,
+            sort_by = 'name',
+            sync_root_with_cwd = true,
+            system_open = {
+                cmd = '',
+                args = {},
+            },
+            tab = {
+                sync = {
+                    close = false,
+                    ignore = {},
+                    open = false,
+                },
+            },
+            trash = {
+                cmd = 'gio trash',
+                require_confirm = true,
+            },
+            ui = {
+                confirm = {
+                    remove = true,
+                    trash = true
+                }
+            },
+            update_focused_file = {
+                debounce_delay = 15,
+                enable = true,
+                ignore_list = {},
+                update_root = true,
+            },
+            view = {
+                adaptive_size = false,
+                centralize_selection = false,
+                cursorline = false,
+                float = {
+                    enable = false,
+                    open_win_config = {
+                        border = 'rounded',
+                        col = 1,
+                        height = 30,
+                        relative = 'editor',
+                        row = 1,
+                        width = 30,
+                    },
+                    quit_on_focus_loss = true,
+                },
+                hide_root_folder = false,
+                mappings = {
+                    custom_only = false,
+                },
+                number = false,
+                preserve_window_proportions = false,
+                relativenumber = false,
+                side = 'left',
+                signcolumn = 'yes',
+                width = 30,
+            },
+        }
     }
-}
--- <~>
+    -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
 ActionsMap = {
@@ -2064,6 +2065,19 @@ vim.api.nvim_create_autocmd(
             local actions = ActionsMap[vim.o.filetype]
             if actions then
                 actions()
+            end
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    { 'BufNewFile', 'BufRead' },  {
+        pattern = '*',
+        desc = 'Run for new files',
+        callback = function ()
+            local buf_name = vim.fn.expand('%:t')
+            if string.lower(buf_name) == 'todo' then
+                vim.o.filetype = 'todo'
             end
         end
     }
@@ -2226,6 +2240,8 @@ AddPlugin {
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
+    event = { 'TextChangedI' },
+    keys = { '[c', ']c' },
     opts = {
         attach_to_untracked = true,
         count_chars = {
@@ -2277,8 +2293,7 @@ AddPlugin {
             changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
         },
         trouble = false
-    },
-    keys = { '[c', ']c' }
+    }
 }
 
 AddPlugin {
