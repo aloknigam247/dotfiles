@@ -4026,7 +4026,7 @@ AddPlugin {
 
 AddPlugin {
     'echasnovski/mini.move',
-    keys = { "<C-h>", "<C-l>", "<C-j>", "<C-k>" },
+    keys = { "<C-h>", "<C-l>", "<C-j>", "<C-k>", "H", "L", "J", "K" },
     opts = {
         mappings = {
             left = "<C-h>",
