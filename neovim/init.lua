@@ -2395,7 +2395,12 @@ AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
     event = 'LspAttach',
-    config = true
+    -- config = true,
+    opts = {
+        servers = {
+            pyls = true
+        }
+    }
 }
 
 AddPlugin {
