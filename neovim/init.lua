@@ -1266,7 +1266,6 @@ AddPlugin { 'NTBBloodbath/sweetie.nvim',               event = 'User sweetie'   
 AddPlugin { 'jsit/toast.vim',                          event = 'User toast'                                               }
 AddPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                           }
 AddPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                          }
-AddPlugin { 'embark-theme/vim',                        event = 'User embark'                                              }
 AddPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'                                            }
 AddPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
 AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
@@ -1328,7 +1327,6 @@ DarkT { 'duskfox',                    'nightfox',    pre = function() require('n
 Dark  { 'earlysummer',                'starry',      pre = function() FixStarry('#3f2b4c', '#694980') end }
 Dark  { 'edge',                       '_'                                                                 }
 Light { 'edge',                       '_'                                                                 }
-Dark  { 'embark',                     '_'                                                                 }
 Dark  { 'enfocado',                   '_'                                                                 }
 Dark  { 'everforest',                 '_'                                                                 }
 Light { 'everforest',                 '_'                                                                 }
@@ -1361,7 +1359,6 @@ Dark  { 'mariana',                    'starry',      pre = function() FixStarry(
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
 Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
-Dark  { 'material',                   'starry',      pre = function() FixStarry('#35393b', '#585f63') end                                                     }
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
