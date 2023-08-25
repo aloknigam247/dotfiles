@@ -4218,6 +4218,7 @@ AddPlugin {
         },
         -- User defined loops
         additions = {
+            { 'buy', 'sell' }
         },
         allow_caps_additions = {
         }
