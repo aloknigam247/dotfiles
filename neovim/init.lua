@@ -1,8 +1,9 @@
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: highlights does not work in TODO file
+-- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
 -- ---------
-
--- TODO: Float open like sp or vsp or tabe
 
 -- Vim Globals
 vim.g.loaded_clipboard_provider = 1
@@ -1019,7 +1020,7 @@ AddPlugin {
     'brenoprata10/nvim-highlight-colors',
     init = function()
         vim.api.nvim_create_user_command(
-            'ColorToggle',
+            'ColorToggle', -- does not work in 1 time
             function()
                 require("nvim-highlight-colors").toggle()
             end,
@@ -1214,7 +1215,6 @@ end
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
-AddPlugin { 'MetriC-DT/balance-theme.nvim',            event = 'User balance'                                             }
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
@@ -1290,7 +1290,6 @@ DarkT { 'adwaita',                    '_', pre = function() vim.g.adwaita_transp
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
-Light { 'balance',                    '_'                              }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
@@ -1722,6 +1721,7 @@ AddPlugin {
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'Pocco81/dap-buddy.nvim'
+-- Start: complete setup for lua debugger
 AddPlugin {
     'mfussenegger/nvim-dap',
     config = function()
@@ -3926,7 +3926,7 @@ AddPlugin { -- config
 }
 
 AddPlugin {
-    'Bekaboo/dropbar.nvim',
+    'Bekaboo/dropbar.nvim', -- TODO: enable me
     config = true
 }
 

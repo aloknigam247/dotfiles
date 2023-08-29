@@ -8,22 +8,20 @@
 
 # TODO: Powershell like key mappings, list mappings
 # Updating local dofiles
-# TODO: perform this sync in background
-cd ~/dotfiles
-git pull
+update_dotfiles() {
+    cd ~/dotfiles
+    git pull
 
-if [[ $(git status -s) ]]; then
-    git add .
-    git commit -m "$(date +'%d-%m-%Y updates')"
-    git push
-fi
-cd -
-clear
+    if [[ $(git -C ~/dotfiles status -s) ]]; then
+        git add . && git commit -m "$(date +'%d-%m-%Y updates')" && git push
+    fi
+}
+
+update_dotfiles &  # Call the function in the background
 
 autoload -Uz compinit
 compinit
 
-# THOUGHT: fix color for completion, may be same color ?
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#8d99ae"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 source ~/.zsh-suggest
