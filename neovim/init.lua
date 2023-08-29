@@ -1423,7 +1423,6 @@ DarkT { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
 DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon', disable_background = true}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
-DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({disable_background = true}) end}
 Dark  { 'rosebones',                  'zenbones'     }
 Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
@@ -1456,7 +1455,6 @@ Dark  { 'vitesse',                    '_'                                       
 DarkT { 'vitesse',                    '_', pre = function() require('vitesse').setup({transparent_background  = true}) end }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
 DarkT { 'vscode',                     '_', pre = function() require('vscode').setup({transparent  = true}) end }
-Light { 'zenwritten',                 'zenbones'                                                            }
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
 
