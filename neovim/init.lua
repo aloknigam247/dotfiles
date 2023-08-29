@@ -562,6 +562,7 @@ PopupMenuAdd({
 })
 
 -- REFACTOR: reload to correct location
+-- FIX: adapt to screen size changes
 vim.api.nvim_create_user_command(
     'Preview',
     function(args)
@@ -4039,7 +4040,16 @@ AddPlugin {
 
 AddPlugin {
     'echasnovski/mini.move',
-    keys = { "<C-h>", "<C-l>", "<C-j>", "<C-k>", "H", "L", "J", "K" },
+    keys = {
+        { "<C-h>", mode = 'v' },
+        { "<C-l>", mode = 'v' },
+        { "<C-j>", mode = 'v' },
+        { "<C-k>", mode = 'v' },
+        { "H", mode = 'n' },
+        { "L", mode = 'n' },
+        { "J", mode = 'n' },
+        { "K", mode = 'n' },
+    },
     opts = {
         mappings = {
             left = "<C-h>",
