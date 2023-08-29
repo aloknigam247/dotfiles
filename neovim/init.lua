@@ -1211,7 +1211,6 @@ local function Light(opts)
     table.insert(colos, opts)
 end
 
-AddPlugin { 'atelierbram/Base2Tone-nvim',              event = 'User base2tone'                                           }
 AddPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
@@ -1296,7 +1295,6 @@ DarkT { 'bamboo',                     '_', pre = function() require('bamboo').se
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
-Light { 'base2tone_mall_light',       'base2tone'                      }
 Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
 Light { 'bluloco-light',              '_'                              }
