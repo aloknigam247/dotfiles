@@ -1,5 +1,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: highlights does not work in TODO file
+-- TODO: map <C-backspace> to delete word like <C-w>
+-- TODO: map <C-w> in normal mode to close buffer
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
@@ -279,6 +281,7 @@ function CountWindows(ignore)
     local named_window = 0
     local visited_window = {}
     local isValidBuf = function(bufnr, buf_name)
+        -- ignore empty buffers
         if buf_name == "" then
             return false
         end
@@ -561,21 +564,44 @@ PopupMenuAdd({
     }
 })
 
--- REFACTOR: reload to correct location
--- FIX: adapt to screen size changes
+-- Commands
+-- ------
+-- FEAT: ignore floating windows in CountWindows
 vim.api.nvim_create_user_command(
     'Preview',
     function(args)
+        -- Create buffer
         local bufnr = vim.fn.bufadd(args.args)
+
+        -- Create floating window
         vim.api.nvim_open_win(bufnr, true, {
             relative = 'editor',
             row = 3,
-            col = vim.o.columns * 0.08,
-            width = math.floor(vim.o.columns * 0.8),
+            col = math.floor(vim.o.columns * 0.08),
+            width = vim.o.columns - 20,
             height = vim.o.lines - 8,
             border = 'rounded',
             title = ' ' .. args.args .. ' ',
             title_pos = 'center'
+        })
+
+        -- Create autocommand to resize window
+        vim.api.nvim_create_autocmd(
+            'VimResized', {
+                pattern = '*',
+                desc = 'Resize preview window on vim resize',
+                callback = function()
+                    vim.api.nvim_win_set_config(0, {
+                        width = vim.o.columns - 20,
+                        height = vim.o.lines - 8
+                    })
+                end
+            }
+        )
+
+        -- Create mapping to close window
+        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<cmd>:q<CR>', {
+            nowait = true, noremap = true, silent = true
         })
     end,
     {
@@ -684,7 +710,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      COC       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'neoclide/coc.nvim',
+    'neoclide/coc.nvim', -- TODO: work for powershell
     branch = 'release'
 }
 -- <~>
@@ -1376,7 +1402,6 @@ Dark  { 'monokai-pro',                '_',           pre = function() require('m
 DarkT { 'moonfly',                    '_',           pre = function() vim.g.moonflyTransparent = true end                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
-Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' end, post = FixVisual                                      }
 DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'default' vim.g.neon_transparent = true end, post = FixVisual        }
 Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
 DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    vim.g.neon_transparent = true end, post = FixVisual        }

@@ -171,11 +171,11 @@ function gc {
     git checkout $args
     $stash = git stash list
     if ( $null -ne $stash ) {
-        if ( $stash.Gettype() -eq [String]) {
-            Format-Text -bg "#F97068" -fg "#FFFFFF" $stash # TODO: color different segments
+        if ( $stash.Gettype() -eq [String] ) {
+            Format-Text -bg "#F97068" -fg "#FFFFFF" $stash
         } elseif ( $stash.Gettype() -eq [Object[]] ) {
             foreach ( $st in $stash ) {
-                Format-Text -bg "#F97068" -fg "#FFFFFF" $st # TODO: color different segments
+                Format-Text -bg "#F97068" -fg "#FFFFFF" $st
             }
         } else {
             Write-Host $stash
