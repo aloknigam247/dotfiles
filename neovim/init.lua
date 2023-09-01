@@ -2608,9 +2608,9 @@ AddPlugin {
         lightbulb = {
             enable = true,
             enable_in_insert = true,
-            sign = true,
+            sign = false,
             sign_priority = 40,
-            virtual_text = true,
+            virtual_text = true, -- BUG: not working
         },
         outline = {
             win_position = 'right',
@@ -2701,7 +2701,7 @@ AddPlugin {
                 Unit          = { Icons.Unit,          'CmpItemKindUnit',         },
                 Value         = { Icons.Value,         'CmpItemKindValue',        },
                 Variable      = { Icons.Variable,      'CmpItemKindVariable',     },
-            },
+            }
         }
     }
 }
