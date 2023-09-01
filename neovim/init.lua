@@ -721,12 +721,6 @@ AddPlugin {
     event = 'InsertEnter'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      COC       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin {
-    'neoclide/coc.nvim', -- TODO: work for powershell
-    branch = 'release'
-}
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
