@@ -34,86 +34,20 @@ New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 
 # Functions
 # `````````
-function eprc {
-    nvim $PROFILE.AllUsersAllHosts
-}
-
-function evrc {
-    # nvim $env:LOCALAPPDATA\nvim\init.vim -O $env:LOCALAPPDATA\nvim\lua\plugins.lua
-    nvim $env:LOCALAPPDATA\nvim\lua\plugins.lua
-}
-
-function v($arg) {
-    # FEAT: support for file:line
-    # $args = $arg.split(':')
-    # if ($args.length -eq 2) {
-    #         $args[1] = "+" + $args[1]
-        # ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args[0] $args[1] # BUG: fix this for c:/file
-        ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg
-    # } else {
-    #     ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $args[0]
-    # }
-}
-
-function vpcl {
-    nvim -c "PlugClean! | only" -c qa
-}
-
-function vpi {
-    nvim -c "PlugInstall | only" -c qa
-}
-
-function pdbg {
-    code .
-    python -m debugpy --listen 5678 --wait-for-client $args
-}
-
-# Msys2 functions
-function bash {
-    C:\msys64\usr\bin\bash -c $args[0]
-}
-
-function grep {
-    C:\msys64\usr\bin\grep --color=auto -En $args
-}
-
-function fnd {
-    C:\msys64\usr\bin\find.exe $args | C:\msys64\usr\bin\sed 's|/|\\|g'
-}
-
-function la {
-    C:\msys64\usr\bin\ls.exe -AF --color=auto $args
-}
-
-function ll {
-    C:\msys64\usr\bin\ls.exe -lF --color=auto $args
-}
-
-function lla {
-    C:\msys64\usr\bin\ls.exe -AlF --color=auto $args
-}
-
-Remove-Alias ls # remove default alias for ls
-function ls {
-    C:\msys64\usr\bin\ls.exe -F --color=auto $args
-}
-
+Remove-Alias ls
 Remove-Alias rm
-function rm {
-    C:\msys64\usr\bin\rm.exe -rf $args
-}
-
-function tree {
-    C:\msys64\usr\bin\tree.exe -CF $args
-}
-
-function treea {
-    C:\msys64\usr\bin\tree.exe -aCF $args
-}
-
-function bat {
-    ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args
-}
+function bash    { C:\msys64\usr\bin\bash -c $args[0] }
+function bat     { ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args }
+function fnd     { C:\msys64\usr\bin\find.exe $args | C:\msys64\usr\bin\sed 's|/|\\|g' }
+function grep    { C:\msys64\usr\bin\grep --color=auto -En $args }
+function la      { C:\msys64\usr\bin\ls.exe -AF --color=auto $args }
+function lla     { C:\msys64\usr\bin\ls.exe -AlF --color=auto $args }
+function ls      { C:\msys64\usr\bin\ls.exe -F --color=auto $args }
+function pdbg    { code . python -m debugpy --listen 5678 --wait-for-client $args }
+function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
+function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
+function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
+function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg }
 
 function which($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
@@ -161,9 +95,7 @@ function sed {
 }
 
 # Path functions
-function desktop {
-    Set-Location $([Environment]::GetFolderPath("Desktop"))
-}
+function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 
 # Git functions
 Remove-Alias -Force gc

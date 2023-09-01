@@ -3668,7 +3668,7 @@ AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
-            auto_install = true,
+            auto_install = false,
             endwise = {
                 enable = true,
             },
