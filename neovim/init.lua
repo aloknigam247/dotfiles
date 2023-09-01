@@ -3,6 +3,7 @@
 -- TODO: map <C-backspace> to delete word like <C-w>
 -- TODO: map <C-w> in normal mode to close buffer
 -- TODO: get interesting luals settings
+-- https://luals.github.io/wiki/definition-files
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
