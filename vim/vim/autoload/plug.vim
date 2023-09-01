@@ -997,7 +997,7 @@ function! s:bang(cmd, ...)
   let batchfile = ''
   try
     let [sh, shellcmdflag, shrd] = s:chsh(a:0)
-    " FIXME: Escaping is incomplete. We could use shellescape with eval,
+    " Fixme: Escaping is incomplete. We could use shellescape with eval,
     "        but it won't work on Windows.
     let cmd = a:0 ? s:with_cd(a:cmd, a:1) : a:cmd
     if s:is_win

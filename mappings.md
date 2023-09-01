@@ -1,7 +1,8 @@
 # Mappings
 
-## Visual Studio
+## Visual Studio IDE
 
+https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?source=recommendations&view=vs-2022
 | Key       | For                 |
 |-----------|---------------------|
 | `<F8>`    | Next in reference   |

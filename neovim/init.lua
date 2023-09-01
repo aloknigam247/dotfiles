@@ -2,6 +2,7 @@
 -- TODO: highlights does not work in TODO file
 -- TODO: map <C-backspace> to delete word like <C-w>
 -- TODO: map <C-w> in normal mode to close buffer
+-- TODO: get interesting luals settings
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables
@@ -574,10 +575,10 @@ vim.api.nvim_create_user_command(
         local bufnr = vim.fn.bufadd(args.args)
 
         -- Create floating window
-        vim.api.nvim_open_win(bufnr, true, {
+        local win_id = vim.api.nvim_open_win(bufnr, true, {
             relative = 'editor',
             row = 3,
-            col = math.floor(vim.o.columns * 0.08),
+            col = 8,
             width = vim.o.columns - 20,
             height = vim.o.lines - 8,
             border = 'rounded',
@@ -586,7 +587,7 @@ vim.api.nvim_create_user_command(
         })
 
         -- Create autocommand to resize window
-        vim.api.nvim_create_autocmd(
+        local au_id = vim.api.nvim_create_autocmd(
             'VimResized', {
                 pattern = '*',
                 desc = 'Resize preview window on vim resize',
@@ -595,6 +596,17 @@ vim.api.nvim_create_user_command(
                         width = vim.o.columns - 20,
                         height = vim.o.lines - 8
                     })
+                end
+            }
+        )
+
+        vim.api.nvim_create_autocmd(
+            'WinClosed', {
+                pattern = tostring(win_id),
+                desc = 'Delete resize autocommand on Preview window close',
+                callback = function(args)
+                    vim.api.nvim_del_autocmd(au_id)
+                    vim.api.nvim_del_autocmd(args.id)
                 end
             }
         )
@@ -1423,7 +1435,6 @@ DarkT { 'nordfox',                    'nightfox',    pre = function() require('n
 Dark  { 'nordic',                     '_'            }
 DarkT { 'nordic',                     '_',           pre = function() require('nordic').setup({transparent_bg = true}) end }
 Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
-Dark  { 'oh-lucy-evening',            'oh-lucy'      }
 DarkT { 'oh-lucy-evening',            'oh-lucy', pre = function() vim.g.oh_lucy_transparent_background = true end }
 Dark  { 'one-nvim',                   '_'            }
 DarkT { 'one-nvim',                   '_', pre = function() vim.g.one_nvim_transparent_bg = true end }
@@ -1783,7 +1794,7 @@ AddPlugin {
 -- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
-    --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
     -- directory case handling
     AddPlugin {
         'nvim-tree/nvim-tree.lua',
@@ -2056,9 +2067,6 @@ AddPlugin {
                     quit_on_focus_loss = true,
                 },
                 hide_root_folder = false,
-                mappings = {
-                    custom_only = false,
-                },
                 number = false,
                 preserve_window_proportions = false,
                 relativenumber = false,
@@ -2255,7 +2263,6 @@ AddPlugin {
     cmd = 'MergetoolStart'
 }
 
--- TODO: load on TextChanged
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
@@ -2419,9 +2426,7 @@ AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/
     event = 'LspAttach',
     -- config = true,
     opts = {
-        servers = {
-            pyls = true
-        }
+        only_current_line = true,
     }
 }
 
@@ -2531,7 +2536,9 @@ AddPlugin {
                                     globals = { 'bit', 'vim' }
                                 },
                                 hint = {
-                                    enable = true
+                                    arrayIndex = "Enable",
+                                    enable = true,
+                                    setType = true
                                 },
                                 -- workspace = {
                                 --     library = vim.api.nvim_get_runtime_file('', true)

@@ -1,6 +1,5 @@
 FEAT: fzf preview with bat
 FIX: git diff in lazygit
-TODO: 2022
 TODO: Colors for ripgrep
 TODO: Start on VS Code
 TODO: VS Code https://learn.microsoft.com/en-us/visualstudio/intellicode/intellicode-visual-studio-code
@@ -11,10 +10,8 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/debu
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-enable-and-disable-edit-and-continue?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-use-the-call-stack-window?view=vs-2022#visually-trace-the-call-stack
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/navigating-through-code-with-the-debugger?view=vs-2022&tabs=csharp#run-to-a-function-breakpoint
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/using-breakpoints?view=vs-2022#breakpoint-conditions
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/using-the-debuggerdisplay-attribute?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/using-tracepoints?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/view-historical-application-state?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/watch-and-quickwatch-windows?view=vs-2022#use-expressions-in-a-watch-window
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/deployment/?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/adding-commands-to-toolbars?view=vs-2022
@@ -24,7 +21,6 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-and-customizing-tool-windows?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-other-parts-of-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-projects?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-user-settings-and-options?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/how-to-roundtrip-vsixs?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/image-service-and-catalog?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/inside-the-visual-studio-sdk?view=vs-2022
@@ -36,7 +32,6 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/adding-vi
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/code-styles-and-code-cleanup?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/common-quick-actions?view=vs-2022&tabs=csharp
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/compiling-and-building-in-visual-studio?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?source=recommendations&view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/encodings-and-line-breaks?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens?view=vs-2022
@@ -47,7 +42,6 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/refactori
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/refactoring-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/setting-bookmarks-in-code?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/using-intellisense?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/liveshare/
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/profiling/profiling-feature-tour?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/version-control/?view=vs-2022
 TODO: windows terminal rounded selection
