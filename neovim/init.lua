@@ -4176,7 +4176,7 @@ AddPlugin {
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 { text = { '%C' }, click = 'v:lua.ScFa' },
-                { condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, sign = { name = { 'todo.*' } }, auto = true },
+                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
                 { sign = { name = { 'Diagnostic' }, auto = true } },
                 {
                     text = { builtin.lnumfunc },
