@@ -3574,10 +3574,12 @@ AddPlugin {
                 mappings = {
                     i = {
                         ['<C-d>']      = false,
+                        ['<C-q>']      = actions.send_selected_to_qflist,
+                        ['<C-s>']      = actions.select_horizontal,
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<C-s>']      = actions.select_horizontal,
+                        ['<M-q>']      = actions.add_selected_to_qflist,
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
@@ -3585,10 +3587,12 @@ AddPlugin {
                     },
                     n = {
                         ['<C-d>']      = false,
+                        ['<C-q>']      = actions.send_selected_to_qflist,
+                        ['<C-s>']      = actions.select_horizontal,
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<C-s>']      = actions.select_horizontal,
+                        ['<M-q>']      = actions.add_selected_to_qflist,
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
@@ -3954,7 +3958,7 @@ AddPlugin { -- config
 }
 
 AddPlugin {
-    'Bekaboo/dropbar.nvim', -- TODO: enable me
+    'Bekaboo/dropbar.nvim', -- TODO: configure me
     config = true
 }
 

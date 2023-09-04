@@ -28,7 +28,6 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/usin
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/using-tracepoints?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/watch-and-quickwatch-windows?view=vs-2022#use-expressions-in-a-watch-window
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/deployment/?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/adding-commands-to-toolbars?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/addressing-dpi-issues2?view=vs-2022&tabs=csharp
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/dotnet-compiler-platform-roslyn-extensibility?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/editor-and-language-service-extensions?view=vs-2022
@@ -47,11 +46,12 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/default-k
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/managing-references-in-a-project?source=recommendations&view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/outlining?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/quick-actions?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/refactoring-in-visual-studio?source=recommendations&view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/refactoring-in-visual-studio?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/setting-bookmarks-in-code?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/using-intellisense?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/profiling/profiling-feature-tour?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/version-control/?view=vs-2022
-TODO: windows terminal rounded selection
+TODO: windows terminal rounded selection Sync
+TODO: windows terminal rounded selection build
+TODO: windows terminal rounded selection debug
+TODO: windows terminal rounded selection debug to Atlas entry point
