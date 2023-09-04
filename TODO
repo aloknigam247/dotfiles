@@ -1,8 +1,23 @@
 FEAT: fzf preview with bat
 FIX: git diff in lazygit
 TODO: Colors for ripgrep
-TODO: Start on VS Code
-TODO: VS Code https://learn.microsoft.com/en-us/visualstudio/intellicode/intellicode-visual-studio-code
+TODO: Visual Studio Code https://code.visualstudio.com/api
+TODO: Visual Studio Code https://code.visualstudio.com/docs/azure/extensions
+TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/whyvscode
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/introvideos
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-reference
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/keybindings#_keymap-extensions
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/settings
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/tips-and-tricks
+TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/userinterface
+TODO: Visual Studio Code https://code.visualstudio.com/docs/languages/overview
+TODO: Visual Studio Code https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
+TODO: Visual Studio Code https://code.visualstudio.com/docs/setup/setup-overview
+TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-do-i-opt-out-of-vs-code-autoupdates
+TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-crash-reporting
+TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-telemetry-reporting
+TODO: Visual Studio Code https://learn.microsoft.com/en-us/visualstudio/intellicode/intellicode-visual-studio-code
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/debugger-tips-and-tricks?view=vs-2022#edit-your-code-and-continue-debugging-c-vb-c
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/debugger-windows?view=vs-2022
@@ -29,7 +44,6 @@ TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/code-styl
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/common-quick-actions?view=vs-2022&tabs=csharp
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/compiling-and-building-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/encodings-and-line-breaks?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/managing-references-in-a-project?source=recommendations&view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/outlining?view=vs-2022
