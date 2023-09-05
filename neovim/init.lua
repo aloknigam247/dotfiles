@@ -3315,10 +3315,10 @@ AddPlugin {
                         padding = { left = 1, right = 0 },
                         sources = { 'nvim_diagnostic' },
                         symbols = {
-                            error = Icons.error .. ' ',
-                            warn  = Icons.warn .. ' ',
-                            info  = Icons.info .. ' ',
-                            hint  = Icons.hint .. ' ',
+                            error = Icons.error,
+                            warn  = Icons.warn,
+                            info  = Icons.info,
+                            hint  = Icons.hint
                         },
                     }
                 },
@@ -4348,7 +4348,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md -- FEAT: use me
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 -- https://github.com/hrsh7th/cmp-copilot

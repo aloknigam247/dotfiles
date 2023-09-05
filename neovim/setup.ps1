@@ -1,10 +1,10 @@
 $scoop_pkgs = @(
     "mingw",
+    "neovim-nightly",
     "pandoc"
 )
 
 $winget_pkgs = @(
-    "Neovim.Neovim.Nightly",
     "OpenJS.NodeJS",
     "Python.Python.3"
 )
