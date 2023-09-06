@@ -2261,7 +2261,7 @@ AddPlugin {
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
-    event = { 'TextChangedI' },
+    event = { 'TextChanged' },
     keys = { '[c', ']c' },
     opts = {
         attach_to_untracked = true,
