@@ -1,6 +1,7 @@
 #Requires -RunAsAdministrator
 # TODO: install choco function
 # TODO: install fonts
+# TODO: Update mechanism
 # $fontPath = 'C:\Windows\Fonts\'
 # $files = Get-ChildItem -Path . -Filter *.ttf
 # foreach ($file in $files) {

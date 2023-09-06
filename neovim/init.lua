@@ -1368,7 +1368,7 @@ Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachi
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                                                          }
 Dark  { 'github_dark',                'github'                                                            }
-DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({transparent = true}) end }
+DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({transparent = true}) end } -- BUG: Fix error
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
 Light { 'gruvbox',                    '_'                                                                 }
@@ -1847,7 +1847,7 @@ AddPlugin {
                 show_on_dirs = true,
                 show_on_open_dirs = false,
             },
-            disable_netrw = true,
+            disable_netrw = true, -- BUG: how to lazy when directory is opened
             filesystem_watchers = {
                 enable = true,
                 debounce_delay = 50,
