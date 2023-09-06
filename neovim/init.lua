@@ -4037,7 +4037,7 @@ AddPlugin {
 -- https://github.com/chipsenkbeil/distant.nvim
 
 AddPlugin {
-    'chrisbra/csv.vim',
+    'chrisbra/csv.vim', -- TODO: configure me
     config = function()
         vim.g.csv_default_delim = ','
     end,
