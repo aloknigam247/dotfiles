@@ -569,6 +569,7 @@ PopupMenuAdd({
 -- Commands
 -- ------
 -- FEAT: ignore floating windows in CountWindows
+-- FIX: open new Preview in same window
 vim.api.nvim_create_user_command(
     'Preview',
     function(args)
@@ -1019,7 +1020,7 @@ AddPlugin {
             info    = { 'DiagnosticInfo', '#2563EB' },
             perf    = { 'String', '#C2F970' },
             test    = { 'Identifier', '#DDD92A' },
-            todo    = { 'Keyword', '#1B998B' },
+            todo    = { 'Todo', 'Keyword', '#1B998B' },
             warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
         },
         keywords = {
@@ -1349,7 +1350,6 @@ Dark  { 'darksolar',                  'starry',      pre = function() FixStarry(
 Light { 'dawnfox',                    'nightfox'                                                          }
 Dark  { 'dayfox',                     'nightfox'                                                          }
 DarkT { 'dayfox',                     'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
-Dark  { 'decay',                      '_'                                                                 }
 Light { 'decay',                      '_'                                                                 }
 Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
@@ -4309,7 +4309,7 @@ AddPlugin {
 }
 
 AddPlugin {
-    'tversteeg/registers.nvim',
+    'tversteeg/registers.nvim', -- FIX: Insert more does not work good with new lines
     opts = {
         register_user_command = false,
         show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
