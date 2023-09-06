@@ -6,8 +6,7 @@
 -- TODO: set highlight for max length
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- Variables
--- ---------
+-- Variables</>
 
 -- Vim Globals
 vim.g.loaded_clipboard_provider = 1
@@ -256,9 +255,8 @@ local kind_hl = {
 }
 
 -- local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
-
--- Functions
--- ---------
+-- <~>
+-- Functions</>
 function AddPlugin(opts)
     table.insert(Plugins, opts)
 end
@@ -422,9 +420,8 @@ end
 function PopupMenuAdd(menu)
     table.insert(PopUpMenu, menu)
 end
-
--- Auto Commands
--- -------------
+-- <~>
+-- Auto Commands</>
 vim.api.nvim_create_autocmd(
     'BufReadPost', {
         pattern = '*',
@@ -486,16 +483,14 @@ vim.api.nvim_create_autocmd(
         end
     }
 )
-
--- Mappings
--- --------
+-- <~>
+-- Mappings</>
 vim.keymap.set('n', '<M-up>', '<cmd>res +1<cr>', {})
 vim.keymap.set('n', '<M-down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-left>', '<cmd>vert res -1<cr>', {})
 vim.keymap.set('n', '<M-right>', '<cmd>vert res +1<cr>', {})
-
--- Misc
--- ----
+-- <~>
+-- Misc</>
 vim.diagnostic.config({
     float = {
         source = true
@@ -547,9 +542,8 @@ vim.ui.input = function(...)
 end
 
 -- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
-
--- PopUps
--- ------
+-- <~>
+-- PopUps</>
 PopupMenuAdd({
     cond = IsLspAttached,
     opts = {
@@ -565,9 +559,8 @@ PopupMenuAdd({
         {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
     }
 })
-
--- Commands
--- ------
+-- <~>
+-- Commands</>
 -- FEAT: ignore floating windows in CountWindows
 -- FIX: open new Preview in same window
 vim.api.nvim_create_user_command(
@@ -622,7 +615,7 @@ vim.api.nvim_create_user_command(
         complete = 'file',
         nargs = 1
     }
-)
+)-- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -1477,9 +1470,9 @@ Dark  { 'tokyonight-night',           'tokyonight'                              
 DarkT { 'tokyonight-night',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 DarkT { 'tokyonight-storm',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
-DarkT { 'visual_studio_code_dark',    'visual_studio_code', pre = function() require('visual_studio_code').setup({transparent = true}) end }
-Dark  { 'visual_studio_code_dark',    'visual_studio_code'                                                  }
-Light { 'visual_studio_code_light',   'visual_studio_code'                                                  }
+DarkT { 'visual_studio_code',         'visual_studio_code', pre = function() require('visual_studio_code').setup({mode = 'dark', transparent = true}) end }
+Dark  { 'visual_studio_code',         'visual_studio_code', pre = function() require('visual_studio_code').setup({mode = 'dark'}) end }
+Light { 'visual_studio_code',         'visual_studio_code', pre = function() require('visual_studio_code').setup({mode = 'light'}) end }
 Dark  { 'vitesse',                    '_'                                                                   }
 DarkT { 'vitesse',                    '_', pre = function() require('vitesse').setup({transparent_background  = true}) end }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
@@ -3846,7 +3839,7 @@ AddPlugin {
                     opts = {}, -- merged with defaults from documentation
                 },
                 signature = {
-                    enabled = true,
+                    enabled = false, -- TODO: compare and enable me
                     auto_open = {
                         enabled = true,
                         trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
