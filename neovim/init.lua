@@ -9,6 +9,7 @@
 -- Variables</>
 
 -- Vim Globals
+vim.g.editorconfig = false
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
