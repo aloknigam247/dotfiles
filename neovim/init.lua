@@ -4,6 +4,7 @@
 -- TODO: map <C-w> in normal mode to close buffer
 -- TODO: get interesting luals settings
 -- TODO: set highlight for max length
+-- TODO: alternative for find command
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
