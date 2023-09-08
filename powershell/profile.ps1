@@ -43,7 +43,7 @@ function grep    { C:\msys64\usr\bin\grep --color=auto -En $args }
 function la      { C:\msys64\usr\bin\ls.exe -AF --color=auto $args }
 function lla     { C:\msys64\usr\bin\ls.exe -AlF --color=auto $args }
 function ls      { C:\msys64\usr\bin\ls.exe -F --color=auto $args }
-function pdbg    { code . python -m debugpy --listen 5678 --wait-for-client $args }
+function pdbg    { code .; python -m debugpy --listen 5678 --wait-for-client $args }
 function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
 function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
 function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
