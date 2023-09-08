@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: highlights does not work in TODO file
 -- TODO: map <C-backspace> to delete word like <C-w>
 -- TODO: map <C-w> in normal mode to close buffer
 -- TODO: get interesting luals settings
@@ -1343,8 +1342,6 @@ Dark  { 'darcula-solid',              '_'                                       
 Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Light { 'dawnfox',                    'nightfox'                                                          }
-Dark  { 'dayfox',                     'nightfox'                                                          }
-DarkT { 'dayfox',                     'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Light { 'decay',                      '_'                                                                 }
 Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
