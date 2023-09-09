@@ -216,6 +216,20 @@ Plugins = {}
 PopUpMenu = {}
 Signs = {}
 
+TodoColors = {
+    default = { 'Identifier', '#7C3AED' },
+    docs    = { 'Function', '#440381' },
+    error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+    feat    = { 'Type', '#274C77' },
+    hint    = { 'DiagnosticHint', '#10B981' },
+    info    = { 'DiagnosticInfo', '#2563EB' },
+    perf    = { 'String', '#C2F970' },
+    test    = { 'Identifier', '#DDD92A' },
+    todo    = { 'Todo', 'Keyword', '#1B998B' },
+    warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
+}
+
+-- Lua locals
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -420,6 +434,53 @@ end
 
 function PopupMenuAdd(menu)
     table.insert(PopUpMenu, menu)
+end
+
+TodoHilighterCache = {}
+function TodoHilighter(_, match)
+    local cache = TodoHilighterCache[match]
+    if cache then
+        return cache
+    end
+
+    local color_set = {}
+    if match == 'BUG:' then
+        color_set = TodoColors.error
+    elseif match == 'DOCME:' then
+        color_set = TodoColors.docs
+    elseif match == 'ERROR:' then
+        color_set = TodoColors.error
+    elseif match == 'FEAT:' then
+        color_set = TodoColors.feat
+    elseif match == 'FIX:' then
+        color_set = TodoColors.feat
+    elseif match == 'HINT:' then
+        color_set = TodoColors.hint
+    elseif match == 'INFO:' then
+        color_set = TodoColors.info
+    elseif match == 'PERF:' then
+        color_set = TodoColors.perf
+    elseif match == 'TEST:' then
+        color_set = TodoColors.test
+    elseif match == 'TODO:' then
+        color_set = TodoColors.todo
+    elseif match == 'WARN:' then
+        color_set = TodoColors.warn
+    else
+        color_set = TodoColors.default
+    end
+
+    for _, hl in pairs(color_set) do
+        if hl[1] == '#' then
+            TodoHilighterCache[match] = hl
+            return hl
+        end
+        if vim.api.nvim_get_hl(0, { name = hl }) then
+            TodoHilighterCache[match] = hl
+            return hl
+        end
+    end
+    return nil
 end
 -- <~>
 -- Auto Commands</>
@@ -739,6 +800,26 @@ AddPlugin {
 }
 
 AddPlugin {
+    'echasnovski/mini.hipatterns',
+    event = 'VeryLazy',
+    opts = {
+        highlighters = {
+            bug   = { pattern = '()BUG:()', group = TodoHilighter },
+            docs  = { pattern = '()DOCME:()', group = TodoHilighter },
+            error = { pattern = '()ERROR:()', group = TodoHilighter },
+            feat  = { pattern = '()FEAT:()', group = TodoHilighter },
+            fix   = { pattern = '()FIX:()', group = TodoHilighter },
+            hint  = { pattern = '()HINT:()', group = TodoHilighter },
+            info  = { pattern = '()INFO:()', group = TodoHilighter },
+            perf  = { pattern = '()PERF:()', group = TodoHilighter },
+            test  = { pattern = '()TEST:()', group = TodoHilighter },
+            todo  = { pattern = '()TODO:()', group = TodoHilighter },
+            warn  = { pattern = '()WARN:()', group = TodoHilighter },
+        }
+    }
+}
+
+AddPlugin {
     'Pocco81/high-str.nvim',
     cmd = 'HSHighlight'
 }
@@ -1005,18 +1086,7 @@ AddPlugin {
     'folke/todo-comments.nvim',
     config = function()
         require('todo-comments').setup({
-        colors = {
-            default = { 'Identifier', '#7C3AED' },
-            docs    = { 'Function', '#440381' },
-            error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
-            feat    = { 'Type', '#274C77' },
-            hint    = { 'DiagnosticHint', '#10B981' },
-            info    = { 'DiagnosticInfo', '#2563EB' },
-            perf    = { 'String', '#C2F970' },
-            test    = { 'Identifier', '#DDD92A' },
-            todo    = { 'Todo', 'Keyword', '#1B998B' },
-            warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
-        },
+        colors = TodoColors,
         keywords = {
             DOCME  = { icon = '', color = 'docs' },
             FEAT   = { icon = '󱩑', color = 'feat' },
@@ -1500,6 +1570,13 @@ function ColoRand(ind)
     vim.cmd[[highlight clear CursorLine]]
     if (postcmd) then
         postcmd()
+    end
+
+    local todo_hl = vim.api.nvim_get_hl(0, { name = 'Todo' })
+    if todo_hl and todo_hl.bg then
+        todo_hl.fg = todo_hl.bg
+        todo_hl.bg = nil
+        vim.api.nvim_set_hl(0, 'Todo', todo_hl)
     end
     vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. (os.clock() - start_time)*1000 .. 'ms'
 end
@@ -3665,9 +3742,6 @@ AddPlugin {
     config = function()
         require('nvim-treesitter.configs').setup {
             auto_install = false,
-            endwise = {
-                enable = true,
-            },
             highlight = {
                 additional_vim_regex_highlighting = false,
                 disable = { 'help', 'yaml' },
@@ -4340,7 +4414,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hipatterns.md -- FEAT: use me
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 -- https://github.com/hrsh7th/cmp-copilot
