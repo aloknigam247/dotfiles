@@ -1360,7 +1360,7 @@ Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachi
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                                                          }
 Dark  { 'github_dark',                'github'                                                            }
-DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({transparent = true}) end } -- BUG: Fix error
+DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({options = { transparent = true }}) end }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
 Light { 'gruvbox',                    '_'                                                                 }
