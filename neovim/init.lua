@@ -1,7 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: map <C-backspace> to delete word like <C-w>
 -- TODO: map <C-w> in normal mode to close buffer
--- TODO: get interesting luals settings
 -- TODO: set highlight for max length
 -- TODO: alternative for find command
 -- <~>
@@ -22,7 +21,7 @@ HlPriority = {
 Icons = {}
 function IconGenerator(_, key)
     local icons = {
-        Array             = ' ',
+        Array             = '󰅪 ',
         Boolean           = ' ',
         Class             = ' ',
         Color             = ' ',
@@ -45,7 +44,7 @@ function IconGenerator(_, key)
         Method            = ' ',
         Module            = ' ',
         Namespace         = 'ﬥ ',
-        Null              = ' ',
+        Null              = '󰢤 ',
         Number            = ' ',
         Object            = ' ',
         Operator          = ' ',
@@ -2274,7 +2273,7 @@ AddPlugin {
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
     dependencies = 'kevinhwang91/promise-async',
-    enabled = true,
+    enabled = false -- BUG: its buggy
 }
 
 -- <~>
@@ -4024,8 +4023,98 @@ AddPlugin { -- config
 }
 
 AddPlugin {
-    'Bekaboo/dropbar.nvim', -- TODO: configure me
-    config = true
+    'Bekaboo/dropbar.nvim',
+    opts = {
+        icons = {
+            enable = true,
+            kinds = {
+                use_devicons = true,
+                symbols = {
+                    Array = Icons.Array,
+                    Boolean = Icons.Boolean,
+                    BreakStatement = '󰙧 ',
+                    Call = '󰃷 ',
+                    CaseStatement = '󱃙 ',
+                    Class = Icons.Class,
+                    Color = Icons.Color,
+                    Constant = Icons.Constant,
+                    Constructor = Icons.Constructor,
+                    ContinueStatement = '→ ',
+                    Copilot = ' ',
+                    Declaration = '󰙠 ',
+                    Delete = '󰩺 ',
+                    DoStatement = '󰑖 ',
+                    Enum = Icons.Enum,
+                    EnumMember = Icons.EnumMember,
+                    Event = Icons.Event,
+                    Field = Icons.Field,
+                    File = Icons.File,
+                    Folder = Icons.Folder,
+                    ForStatement = '󰑖 ',
+                    Function = Icons.Function,
+                    H1Marker = '󰉫 ', -- Used by markdown treesitter parser
+                    H2Marker = '󰉬 ',
+                    H3Marker = '󰉭 ',
+                    H4Marker = '󰉮 ',
+                    H5Marker = '󰉯 ',
+                    H6Marker = '󰉰 ',
+                    Identifier = '󰀫 ',
+                    IfStatement = '󰇉 ',
+                    Interface = Icons.Interface,
+                    Keyword = Icons.Keyword,
+                    List = '󰅪 ',
+                    Log = '󰦪 ',
+                    Lsp = ' ',
+                    Macro = Icons.Macro,
+                    MarkdownH1 = '󰉫 ', -- Used by builtin markdown source
+                    MarkdownH2 = '󰉬 ',
+                    MarkdownH3 = '󰉭 ',
+                    MarkdownH4 = '󰉮 ',
+                    MarkdownH5 = '󰉯 ',
+                    MarkdownH6 = '󰉰 ',
+                    Method = Icons.Method,
+                    Module = Icons.Module,
+                    Namespace = Icons.Namespace,
+                    Null = Icons.Null,
+                    Number = Icons.Number,
+                    Object = Icons.Object,
+                    Operator = Icons.Operator,
+                    Package = Icons.Package,
+                    Pair = '󰅪 ',
+                    Property = Icons.Property,
+                    Reference = Icons.Reference,
+                    Regex = ' ',
+                    Repeat = '󰑖 ',
+                    Scope = '󰅩 ',
+                    Snippet = Icons.Snippet,
+                    Specifier = '󰦪 ',
+                    Statement = '󰅩 ',
+                    String = Icons.String,
+                    Struct = Icons.Struct,
+                    SwitchStatement = '󰺟 ',
+                    Terminal = ' ',
+                    Text = Icons.Text,
+                    Type = ' ',
+                    TypeParameter = Icons.TypeParameter,
+                    Unit = Icons.Unit,
+                    Value = Icons.Value,
+                    Variable = Icons.Variable,
+                    WhileStatement = '󰑖 ',
+                },
+            },
+            ui = {
+                bar = {
+                    separator = '  ',
+                    extends = '…',
+                },
+                menu = {
+                    separator = ' ',
+                    indicator = ' ',
+                },
+            },
+        }
+
+    }
 }
 
 

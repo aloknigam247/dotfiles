@@ -2,7 +2,7 @@ FEAT: fzf preview with bat
 FIX: git diff in lazygit
 TODO: Colors for ripgrep
 TODO: Visual Studio Code https://code.visualstudio.com/api
-TODO: Visual Studio Code https://code.visualstudio.com/docs/azure/extensions
+TODO: Visual Studio Code https://code.visualstudio.com/docs/csharp/project-management
 TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/codebasics
 TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/debugging
 TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/editingevolved
@@ -20,30 +20,22 @@ TODO: Visual Studio Code https://code.visualstudio.com/docs/setup/additional-com
 TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-crash-reporting
 TODO: Visual Studio Code https://learn.microsoft.com/en-us/visualstudio/intellicode/intellicode-visual-studio-code
 TODO: Visual Studio Code https://marketplace.visualstudio.com/items?itemName=vscodevim.vim
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/debugger-windows?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-enable-and-disable-edit-and-continue?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-use-the-call-stack-window?view=vs-2022#visually-trace-the-call-stack
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/using-the-debuggerdisplay-attribute?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/deployment/?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/addressing-dpi-issues2?view=vs-2022&tabs=csharp
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/dotnet-compiler-platform-roslyn-extensibility?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/extending-projects?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/creating-a-source-control-plug-in?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/creating-a-source-control-vspackage?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/inside-the-visual-studio-sdk?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/internals/visual-studio-shell?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/language-server-protocol?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/source-control-plug-ins?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/using-and-providing-services?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/extensibility/visual-studio-sdk-reference?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/code-styles-and-code-cleanup?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/common-quick-actions?view=vs-2022&tabs=csharp
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/compiling-and-building-in-visual-studio?view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/find-code-changes-and-other-history-with-codelens?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/managing-references-in-a-project?source=recommendations&view=vs-2022
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/outlining?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/refactoring-in-visual-studio?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/ide/using-intellisense?view=vs-2022
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/profiling/profiling-feature-tour?view=vs-2022
@@ -70,9 +62,7 @@ TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=djfoxer.
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=donut2008.ghdarkdef1
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=dracula-theme.dracula
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=drewnoakes.SideScroller
-TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=fernandoescolar.vscode-solution-explorer
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=gera2ld.markmap-vscode
-TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=grappl.grappl
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=leodevbro.blockman&ssr=false#overview
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=mintlify.document
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=mstevius.vs-nerdx-solution-explorer
