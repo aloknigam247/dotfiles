@@ -3,6 +3,7 @@
 -- TODO: map <C-w> in normal mode to close buffer
 -- TODO: set highlight for max length
 -- TODO: alternative for find command
+-- TODO: change win open method to have magin in title
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -660,9 +661,9 @@ vim.api.nvim_create_user_command(
             'WinClosed', {
                 pattern = tostring(win_id),
                 desc = 'Delete resize autocommand on Preview window close',
-                callback = function(args)
+                callback = function(arg)
                     vim.api.nvim_del_autocmd(au_id)
-                    vim.api.nvim_del_autocmd(args.id)
+                    vim.api.nvim_del_autocmd(arg.id)
                 end
             }
         )
