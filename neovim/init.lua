@@ -3,7 +3,6 @@
 -- TODO: map <C-w> in normal mode to close buffer
 -- TODO: set highlight for max length
 -- TODO: alternative for find command
--- TODO: change win open method to have magin in title
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -398,7 +397,6 @@ function GetGitsign(lnum)
     if #signs > 0 then
         local signdef = GetSign(signs[1].name)
         if signdef then
-            print('DEBUGPRINT[1]: init.lua:376: signdef.text=' .. signdef.text)
             return signdef.text
             -- return '%#' .. signdef.texthl .. '#' .. signdef.text .. ' '
         end
@@ -419,6 +417,40 @@ function LightenDarkenColor(col, amt)
     local hex_code = string.format("#%-6X", newColor)
     return hex_code:gsub(' ', '0')
 end
+
+vim.api.nvim_open_win_orig = vim.api.nvim_open_win
+function NvimOpenWinSafe(bufnr, enter, config)
+    local fixTitle = function(title)
+        if title[1] ~= ' ' then
+            title = ' ' .. title
+        end
+        if title[#title] ~= ' ' then
+            title = title .. ' '
+        end
+        return title
+    end
+
+    if config then
+        -- Add margin to title
+        if config.title then
+            local title = config.title
+            if type(title) == 'string' then
+                config.title = fixTitle(title)
+            elseif type(title) == 'table' then
+                config.title[1][1] = fixTitle(config.title[1][1])
+            end
+        end
+
+        -- Fix height
+        local bottom_border = config.row + config.height + 2
+        if bottom_border == vim.o.lines then
+            config.height = config.height - 1
+        end
+    end
+
+    return vim.api.nvim_open_win_orig(bufnr, enter, config)
+end
+vim.api.nvim_open_win = NvimOpenWinSafe
 
 function PopupAction()
     -- local currentWindow = vim.api.nvim_get_current_win()
@@ -644,7 +676,7 @@ vim.api.nvim_create_user_command(
             height = vim.o.lines - 8,
             relative = 'editor',
             row = 3,
-            title = ' ' .. args.args .. ' ',
+            title = args.args ,
             title_pos = 'center',
             width = vim.o.columns - 20
         })
@@ -3588,7 +3620,6 @@ AddPlugin {
                     return ''
                 end
                 local res = ''
-                print('DEBUGPRINT[1]: init.lua:3475: diagnostics_dict=' .. vim.inspect(diagnostics_dict))
                 for k, v in pairs(diagnostics_dict) do
                     res = res .. Icons[k] .. v .. ' '
                 end
