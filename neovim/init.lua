@@ -295,9 +295,13 @@ function CountWindows(ignore)
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
     local named_window = 0
     local visited_window = {}
-    local isValidBuf = function(bufnr, buf_name)
+    local isValidBuf = function(bufnr, buf_name, win_config)
         -- ignore empty buffers
         if buf_name == "" then
+            return false
+        end
+
+        if win_config.relative ~= nil and win_config.relative ~= "" then
             return false
         end
 
@@ -317,7 +321,8 @@ function CountWindows(ignore)
     for _, win in ipairs(win_list) do
         local bufnr = vim.api.nvim_win_get_buf(win)
         local buf_name = vim.api.nvim_buf_get_name(bufnr)
-        if isValidBuf(bufnr, buf_name) then
+        local win_config = vim.api.nvim_win_get_config(win)
+        if isValidBuf(bufnr, buf_name, win_config) then
             if not visited_window[buf_name] then
                 visited_window[buf_name] = true
                 named_window = named_window + 1
@@ -462,6 +467,8 @@ function TodoHilighter(_, match)
         color_set = TodoColors.perf
     elseif match == 'TEST:' then
         color_set = TodoColors.test
+    elseif match == 'THOUGHT:' then
+        color_set = TodoColors.info
     elseif match == 'TODO:' then
         color_set = TodoColors.todo
     elseif match == 'WARN:' then
@@ -623,7 +630,6 @@ PopupMenuAdd({
 })
 -- <~>
 -- Commands</>
--- FEAT: ignore floating windows in CountWindows
 -- FIX: open new Preview in same window
 vim.api.nvim_create_user_command(
     'Preview',
@@ -633,14 +639,14 @@ vim.api.nvim_create_user_command(
 
         -- Create floating window
         local win_id = vim.api.nvim_open_win(bufnr, true, {
+            border = 'rounded',
+            col = 8,
+            height = vim.o.lines - 8,
             relative = 'editor',
             row = 3,
-            col = 8,
-            width = vim.o.columns - 20,
-            height = vim.o.lines - 8,
-            border = 'rounded',
             title = ' ' .. args.args .. ' ',
-            title_pos = 'center'
+            title_pos = 'center',
+            width = vim.o.columns - 20
         })
 
         -- Create autocommand to resize window
@@ -804,17 +810,18 @@ AddPlugin {
     event = 'VeryLazy',
     opts = {
         highlighters = {
-            bug   = { pattern = '()BUG:()', group = TodoHilighter },
-            docs  = { pattern = '()DOCME:()', group = TodoHilighter },
-            error = { pattern = '()ERROR:()', group = TodoHilighter },
-            feat  = { pattern = '()FEAT:()', group = TodoHilighter },
-            fix   = { pattern = '()FIX:()', group = TodoHilighter },
-            hint  = { pattern = '()HINT:()', group = TodoHilighter },
-            info  = { pattern = '()INFO:()', group = TodoHilighter },
-            perf  = { pattern = '()PERF:()', group = TodoHilighter },
-            test  = { pattern = '()TEST:()', group = TodoHilighter },
-            todo  = { pattern = '()TODO:()', group = TodoHilighter },
-            warn  = { pattern = '()WARN:()', group = TodoHilighter },
+            bug     = { pattern = '()BUG:()', group = TodoHilighter },
+            docs    = { pattern = '()DOCME:()', group = TodoHilighter },
+            error   = { pattern = '()ERROR:()', group = TodoHilighter },
+            feat    = { pattern = '()FEAT:()', group = TodoHilighter },
+            fix     = { pattern = '()FIX:()', group = TodoHilighter },
+            hint    = { pattern = '()HINT:()', group = TodoHilighter },
+            info    = { pattern = '()INFO:()', group = TodoHilighter },
+            perf    = { pattern = '()PERF:()', group = TodoHilighter },
+            test    = { pattern = '()TEST:()', group = TodoHilighter },
+            todo    = { pattern = '()TODO:()', group = TodoHilighter },
+            thought = { pattern = '()THOUGHT:()', group = TodoHilighter },
+            warn    = { pattern = '()WARN:()', group = TodoHilighter },
         }
     }
 }
