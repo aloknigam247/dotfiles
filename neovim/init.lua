@@ -3333,13 +3333,24 @@ AddPlugin {
 AddPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
-        Icon_index = 0
-        local function LspIcon()
+        local function lspIcon()
             local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
+
+        local function GetFgOrFallback(hl_name, fallback)
+            local hl = vim.api.nvim_get_hl_by_name(hl_name, true)
+            if hl then
+                return string.format("#%X", hl.foreground)
+            else
+                return fallback
+            end
+        end
+
+        Icon_index = 0
         vim.o.showcmdloc = 'statusline'
+
         require('lualine').setup {
             options = {
                 icons_enabled = true,
@@ -3467,13 +3478,13 @@ AddPlugin {
                     },
                     {
                         'g:ColoRand',
-                        color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Number', true).foreground), gui ='bold' },
+                        color = { fg = GetFgOrFallback('Number', '#F2F230'), gui ='bold' },
                         icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
                         padding = { left = 0, right = 1 }
                     },
                     {
                         'encoding',
-                        color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('String', true).foreground), gui ='bold' },
+                        color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='bold' },
                         fmt = function(str)
                             if vim.o.bomb then
                                 str = str .. '-bom'
@@ -3490,7 +3501,7 @@ AddPlugin {
                         separator = ''
                     },
                     {
-                        LspIcon,
+                        lspIcon,
                         cond = IsLspAttached,
                         on_click = function()
                             vim.cmd('LspInfo')
