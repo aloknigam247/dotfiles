@@ -1,8 +1,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: map <C-backspace> to delete word like <C-w>
 -- TODO: map <C-w> in normal mode to close buffer
 -- TODO: set highlight for max length
--- TODO: alternative for find command
+-- TODO: profiling code for autocommands
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -586,10 +585,13 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 -- Mappings</>
-vim.keymap.set('n', '<M-up>', '<cmd>res +1<cr>', {})
-vim.keymap.set('n', '<M-down>', '<cmd>res -1<cr>', {})
-vim.keymap.set('n', '<M-left>', '<cmd>vert res -1<cr>', {})
-vim.keymap.set('n', '<M-right>', '<cmd>vert res +1<cr>', {})
+vim.keymap.set('i', '<C-BS>', '<C-w>', {})
+vim.keymap.set('n', '<C-S>', '<cmd>w<CR>', {})
+vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
+vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
+vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
+vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
+vim.keymap.set('n', '<M-Up>', '<cmd>res +1<cr>', {})
 -- <~>
 -- Misc</>
 vim.diagnostic.config({
@@ -2324,7 +2326,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/linrongbin16/fzfx.vim
+-- https://github.com/linrongbin16/fzfx.nvim
 -- https://github.com/gfanto/fzf-lsp.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
