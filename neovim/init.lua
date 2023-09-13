@@ -597,6 +597,7 @@ vim.api.nvim_create_autocmd(
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<C-S>', '<cmd>w<CR>', {})
 vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
+vim.keymap.set('n', '<C-W>', '<cmd>q<CR>', {})
 vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
 vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
