@@ -522,6 +522,15 @@ function TodoHilighter(_, match)
 end
 -- <~>
 -- Auto Commands</>
+-- vim.api.nvim_create_autocmd(
+--     'BufEnter', {
+--         pattern = '*',
+--         desc = '',
+--         callback = function()
+--             if vim.fn.isdirectory(vim.fn.expand('%:p')) then
+--         end
+--     }
+-- )
 vim.api.nvim_create_autocmd(
     'BufReadPost', {
         pattern = '*',
