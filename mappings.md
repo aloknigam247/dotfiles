@@ -2,16 +2,18 @@
 
 ## Visual Studio Code
 Menu under `File > Preferences > Keyboard Shortcuts`
-| Key       | Task                  |
-|-----------|-----------------------|
-| `:`       | Group symbols by type |
-| `<C-F12>` | Go to implementation  |
-| `<C-S-O>` | Go to symbols         |
-| `<C-p>`   | File Navigation       |
-| `<F12>`   | Go to definition      |
-| `<F2>`    | Rename symbol         |
-| `<M-F12>` | Peek definition       |
-| `<S-F12>` | List all references   |
+| Key       | Task                       |
+|-----------|----------------------------|
+| `:`       | Group symbols by type      |
+| `<C-F12>` | Go to implementation       |
+| `<C-S-O>` | Go to symbols              |
+| `<C-\>`   | Open current file in split |
+| `<C-p>`   | File Navigation            |
+| `<F12>`   | Go to definition           |
+| `<F2>`    | Rename symbol              |
+| `<M-F12>` | Peek definition            |
+| `<S-F12>` | List all references        |
+| `<C-CR>`  | Open to side from explorer |
 
 ## Visual Studio IDE
 
