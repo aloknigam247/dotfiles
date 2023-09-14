@@ -1506,7 +1506,6 @@ Light { 'material',                   '_',           pre = function() vim.g.mate
 Dark  { 'melange',                    '_'                                                                                                                     }
 Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
-DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'alduin', transparent_background = {enabled = true}}) end }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end           }
