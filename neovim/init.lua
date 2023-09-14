@@ -1565,7 +1565,6 @@ Dark  { 'rose-pine',                  '_',           pre = function() require('r
 DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon', disable_background = true}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
 Dark  { 'rosebones',                  'zenbones'     }
-Light { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end  }
@@ -4253,9 +4252,10 @@ AddPlugin {
 -- https://github.com/chipsenkbeil/distant.nvim
 
 AddPlugin {
-    'chrisbra/csv.vim', -- TODO: configure me
+    'chrisbra/csv.vim',
     config = function()
         vim.g.csv_default_delim = ','
+        vim.g.csv_highlight_column = 'y'
     end,
     ft = 'csv'
 }

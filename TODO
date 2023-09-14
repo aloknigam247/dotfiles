@@ -2,12 +2,9 @@ FEAT: fzf preview with bat
 FIX: git diff in lazygit
 TODO: Colors for ripgrep
 TODO: Visual Studio Code https://code.visualstudio.com/docs/csharp/project-management
-TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/codebasics
-TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/debugging
 TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/whyvscode
 TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/introvideos
 TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/settings
-TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/tips-and-tricks
 TODO: Visual Studio Code https://code.visualstudio.com/docs/languages/overview
 TODO: Visual Studio Code https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
 TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-crash-reporting
@@ -41,8 +38,6 @@ TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=Xellarix
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=adpyke.codesnap
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=azemoh.onemonokai
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=djfoxer.MakeTheSound
-TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=donut2008.ghdarkdef1
-TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=dracula-theme.dracula
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=drewnoakes.SideScroller
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=leodevbro.blockman&ssr=false#overview
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=mstevius.vs-nerdx-solution-explorer
