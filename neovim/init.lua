@@ -1407,7 +1407,6 @@ AddPlugin { 'NLKNguyen/papercolor-theme',              event = 'User PaperColor'
 AddPlugin { 'Scysta/pink-panic.nvim',                  event = 'User pink-panic', dependencies = 'rktjmp/lush.nvim'       }
 AddPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                             }
 AddPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                             }
-AddPlugin { 'pineapplegiant/spaceduck',                event = 'User spaceduck',                                          }
 AddPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                              }
 AddPlugin { 'kvrohit/substrata.nvim',                  event = 'User substrata'                                           }
 AddPlugin { 'NTBBloodbath/sweetie.nvim',               event = 'User sweetie'                                             }
@@ -1570,7 +1569,6 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end  }
-Dark  { 'spaceduck',                  '_'                                                                    }
 Dark  { 'substrata',                  '_'                                                                    }
 DarkT { 'substrata',                  '_',           pre = function() vim.g.substrata_transparent = true end }
 Light { 'sweetie',                    '_'                                                                    }
