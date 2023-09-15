@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: map <C-w> in normal mode to close buffer
 -- TODO: set highlight for max length
 -- TODO: profiling code for autocommands
 -- <~>
