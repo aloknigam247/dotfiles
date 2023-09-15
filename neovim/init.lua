@@ -3799,13 +3799,13 @@ AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup {
-            auto_install = false,
+            auto_install = true,
             highlight = {
                 additional_vim_regex_highlighting = false,
-                disable = { 'help', 'yaml' },
+                -- disable = { 'help', 'yaml' },
                 enable = true
             },
-            ignore_install = { 'help', 'norg', 'norg_meta', 'yaml' },
+            -- ignore_install = { 'help', 'norg', 'norg_meta', 'yaml' },
             rainbow = {
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
