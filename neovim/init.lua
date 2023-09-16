@@ -495,6 +495,8 @@ function TodoHilighter(_, match)
         color_set = TodoColors.info
     elseif match == 'PERF:' then
         color_set = TodoColors.perf
+    elseif match == 'REFACTOR:' then
+        color_set = TodoColors.info
     elseif match == 'TEST:' then
         color_set = TodoColors.test
     elseif match == 'THOUGHT:' then
@@ -853,18 +855,19 @@ AddPlugin {
     event = 'VeryLazy',
     opts = {
         highlighters = {
-            bug     = { pattern = '()BUG:()', group = TodoHilighter },
-            docs    = { pattern = '()DOCME:()', group = TodoHilighter },
-            error   = { pattern = '()ERROR:()', group = TodoHilighter },
-            feat    = { pattern = '()FEAT:()', group = TodoHilighter },
-            fix     = { pattern = '()FIX:()', group = TodoHilighter },
-            hint    = { pattern = '()HINT:()', group = TodoHilighter },
-            info    = { pattern = '()INFO:()', group = TodoHilighter },
-            perf    = { pattern = '()PERF:()', group = TodoHilighter },
-            test    = { pattern = '()TEST:()', group = TodoHilighter },
-            todo    = { pattern = '()TODO:()', group = TodoHilighter },
-            thought = { pattern = '()THOUGHT:()', group = TodoHilighter },
-            warn    = { pattern = '()WARN:()', group = TodoHilighter },
+            bug      = { pattern = '()BUG:()', group = TodoHilighter },
+            docs     = { pattern = '()DOCME:()', group = TodoHilighter },
+            error    = { pattern = '()ERROR:()', group = TodoHilighter },
+            feat     = { pattern = '()FEAT:()', group = TodoHilighter },
+            fix      = { pattern = '()FIX:()', group = TodoHilighter },
+            hint     = { pattern = '()HINT:()', group = TodoHilighter },
+            info     = { pattern = '()INFO:()', group = TodoHilighter },
+            perf     = { pattern = '()PERF:()', group = TodoHilighter },
+            refactor = { pattern = '()REFACTOR:()', group = TodoHilighter },
+            test     = { pattern = '()TEST:()', group = TodoHilighter },
+            thought  = { pattern = '()THOUGHT:()', group = TodoHilighter },
+            todo     = { pattern = '()TODO:()', group = TodoHilighter },
+            warn     = { pattern = '()WARN:()', group = TodoHilighter },
         }
     }
 }
@@ -1408,7 +1411,6 @@ AddPlugin { 'Scysta/pink-panic.nvim',                  event = 'User pink-panic'
 AddPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                             }
 AddPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                             }
 AddPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                              }
-AddPlugin { 'kvrohit/substrata.nvim',                  event = 'User substrata'                                           }
 AddPlugin { 'NTBBloodbath/sweetie.nvim',               event = 'User sweetie'                                             }
 AddPlugin { 'jsit/toast.vim',                          event = 'User toast'                                               }
 AddPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                           }
@@ -1569,8 +1571,6 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'default'   end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end  }
-Dark  { 'substrata',                  '_'                                                                    }
-DarkT { 'substrata',                  '_',           pre = function() vim.g.substrata_transparent = true end }
 Light { 'sweetie',                    '_'                                                                    }
 Dark  { 'terafox',                    'nightfox'                                                             }
 DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
@@ -3800,10 +3800,10 @@ AddPlugin {
             auto_install = true,
             highlight = {
                 additional_vim_regex_highlighting = false,
-                -- disable = { 'help', 'yaml' },
+                -- disable = { 'csv' },
                 enable = true
             },
-            -- ignore_install = { 'help', 'norg', 'norg_meta', 'yaml' },
+            ignore_install = { 'csv' },
             rainbow = {
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
