@@ -3796,7 +3796,7 @@ AddPlugin {
         require('nvim-treesitter.configs').setup({
             auto_install = true,
             highlight = {
-                additional_vim_regex_highlighting = true,
+                additional_vim_regex_highlighting = false,
                 -- disable = { 'csv' },
                 enable = true
             },
@@ -3805,8 +3805,7 @@ AddPlugin {
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
-            },
-            sync_install = true
+            }
         })
     end,
     dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
