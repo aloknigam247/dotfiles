@@ -1486,7 +1486,6 @@ Dark  { 'github_dark',                'github'                                  
 DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({options = { transparent = true }}) end }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
-Light { 'gruvbox',                    '_'                                                                 }
 Dark  { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(false) end                   }
 DarkT { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(true) end                    }
 DarkT { 'gruvbox',                    '_', pre = function() require('gruvbox').setup({transparent_mode = true}) end }
@@ -1496,7 +1495,6 @@ Dark  { 'habamax',                    '_',                                      
 Dark  { 'juliana',                    '_', post = function() FixLineNr('#999999') end                                                                         }
 Dark  { 'kanagawa-dragon',            '_'                                                                                                                     }
 DarkT { 'kanagawa-dragon',            '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
-Light { 'kanagawa-lotus',             '_'                                                                                                                     }
 Dark  { 'kanagawa-wave',              '_'                                                                                                                     }
 DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
@@ -2487,22 +2485,20 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'lukas-reineke/indent-blankline.nvim',
-    config = function()
-        require("indent_blankline").setup {
-            bufname_exclude = {},
-            buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
-            char = '│',
-            char_blankline = '│', -- '┆'
-            char_priority = 1,
-            context_char = '║', -- '┃'
-            context_char_blankline = '║', -- '┇'
-            context_start_priority = 1,
-            filetype_exclude = { 'NvimTree', 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
-            show_current_context = true,
-            show_current_context_start = true,
-        }
-    end,
-    event = 'CursorHold'
+    event = 'CursorHold',
+    opts = {
+        bufname_exclude = {},
+        buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
+        char = '│',
+        char_blankline = '│', -- '┆'
+        char_priority = 1,
+        context_char = '║', -- '┃'
+        context_char_blankline = '║', -- '┇'
+        context_start_priority = 1,
+        filetype_exclude = { 'NvimTree', 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
+        show_current_context = true,
+        show_current_context_start = true,
+    }
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3400,7 +3396,7 @@ AddPlugin {
                             vim.cmd('NvimTreeToggle')
                         end,
                         path = 0,                -- 0: Just the filename
-                        padding = { left = 1, right = 0 },
+                        padding = { left = 1, right = 1 },
                         shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
                         symbols = {
                             modified = Icons.file_modified, -- Text to show when the file is modified.
@@ -3797,10 +3793,10 @@ AddPlugin {
 AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
-        require('nvim-treesitter.configs').setup {
+        require('nvim-treesitter.configs').setup({
             auto_install = true,
             highlight = {
-                additional_vim_regex_highlighting = false,
+                additional_vim_regex_highlighting = true,
                 -- disable = { 'csv' },
                 enable = true
             },
@@ -3809,11 +3805,12 @@ AddPlugin {
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
-            }
-        }
+            },
+            sync_install = true
+        })
     end,
     dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
-    event = 'User VeryLazy',
+    event = 'User VeryLazy'
 }
 
 AddPlugin {
@@ -4573,6 +4570,6 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
-vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
+-- vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
