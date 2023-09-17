@@ -4569,6 +4569,5 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require('lazy').setup(Plugins, LazyConfig)
 ColoRand()
--- vim.opt.runtimepath:append('C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\lazy\\nvim-treesitter\\parser')
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
