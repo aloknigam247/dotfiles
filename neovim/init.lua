@@ -1369,6 +1369,7 @@ AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarize
 AddPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                             }
 AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                              }
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
+AddPlugin { 'projekt0n/caret.nvim',                    event = 'User caret'                                               }
 AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
 AddPlugin { 'igorgue/danger',                          event = 'User danger'                                              }
 AddPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
@@ -1407,7 +1408,6 @@ AddPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'   
 AddPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                           }
 AddPlugin { 'JoosepAlviste/palenightfall.nvim',        event = 'User palenightfall'                                       }
 AddPlugin { 'NLKNguyen/papercolor-theme',              event = 'User PaperColor'                                          }
-AddPlugin { 'Scysta/pink-panic.nvim',                  event = 'User pink-panic', dependencies = 'rktjmp/lush.nvim'       }
 AddPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                             }
 AddPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                             }
 AddPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                              }
@@ -1448,6 +1448,8 @@ Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
 Light { 'bluloco-light',              '_'                              }
 Dark  { 'carbonfox',                  'nightfox'                       }
+Dark  { 'caret',                      '_'                              }
+Light { 'caret',                      '_'                              }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
 Dark  { 'catppuccin-frappe',          'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Light { 'catppuccin-latte',           'catppuccin'                     }
@@ -1556,7 +1558,6 @@ Light { 'oxocarbon',                  '_'            }
 Dark  { 'palenight',                  'starry',      pre = function() FixStarry('#3c2c46', '#644975') end }
 Dark  { 'palenightfall',              '_'            }
 DarkT { 'palenightfall',              '_', pre = function() require('palenightfall').setup({transparent = true}) end }
-Light { 'pink-panic',                 '_'            }
 Dark  { 'retrobox',                   '_'            }
 Dark  { 'rose-pine',                  '_'            }
 Light { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
