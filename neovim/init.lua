@@ -596,6 +596,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
+vim.keymap.set('n', '<BS>', 'x', {})
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
 vim.keymap.set('n', '<C-S>', '<cmd>w<CR>', {})
 vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
@@ -1553,7 +1554,6 @@ Dark  { 'onenord',                    '_'            }
 Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
 Light { 'oxocarbon',                  '_'            }
-Dark  { 'palenight',                  'starry',      pre = function() FixStarry('#3c2c46', '#644975') end }
 Dark  { 'palenightfall',              '_'            }
 DarkT { 'palenightfall',              '_', pre = function() require('palenightfall').setup({transparent = true}) end }
 Dark  { 'retrobox',                   '_'            }
