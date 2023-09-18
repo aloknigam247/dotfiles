@@ -239,12 +239,12 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 
 # FZF Setup
 # ``````````````
-# function LoadFZF($arg) {
+function LoadFZF($arg) {
     # FIXME: fix delayed loading
     # TODO: Layout selection
     # TODO: Examples https://github.com/junegunn/fzf/wiki/Examples
     # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
-    # $key = $arg
+    $key = $arg
     Import-Module PSFzf
 
     Set-PsFzfOption `
@@ -264,11 +264,11 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 
     # $wshell = New-Object -ComObject wscript.shell
     # $wshell.SendKeys($key)
-# }
+}
 
-# Set-PSReadLineKeyHandler -Key Alt+d -ScriptBlock { LoadFZF '%d' }
-# Set-PSReadLineKeyHandler -Key Alt+h -ScriptBlock { LoadFZF '%h' }
-# Set-PSReadLineKeyHandler -Key Alt+p -ScriptBlock { LoadFZF '%p' }
+Set-PSReadLineKeyHandler -Key Alt+d -ScriptBlock { LoadFZF '%d'; Invoke-Fzf }
+Set-PSReadLineKeyHandler -Key Alt+h -ScriptBlock { LoadFZF '%h' }
+Set-PSReadLineKeyHandler -Key Alt+p -ScriptBlock { LoadFZF '%p' }
 
 # Prompt Styling
 # ``````````````
