@@ -1,10 +1,11 @@
 FEAT: fzf preview with bat
 FIX: git diff in lazygit
 TODO: Colors for ripgrep
+TODO: Visual Studio Code backup settings
+TODO: Visual Studio Code change settings
 TODO: Visual Studio Code https://code.visualstudio.com/docs/csharp/project-management
 TODO: Visual Studio Code https://code.visualstudio.com/docs/editor/whyvscode
 TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/introvideos
-TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/settings
 TODO: Visual Studio Code https://code.visualstudio.com/docs/languages/overview
 TODO: Visual Studio Code https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
 TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-crash-reporting
