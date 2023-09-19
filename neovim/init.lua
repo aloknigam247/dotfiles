@@ -489,6 +489,8 @@ function TodoHilighter(_, match)
         color_set = TodoColors.feat
     elseif match == 'FIX:' then
         color_set = TodoColors.feat
+    elseif match == 'HACK:' then
+        color_set = TodoColors.hint
     elseif match == 'HINT:' then
         color_set = TodoColors.hint
     elseif match == 'INFO:' then
@@ -861,6 +863,7 @@ AddPlugin {
             error    = { pattern = '()ERROR:()', group = TodoHilighter },
             feat     = { pattern = '()FEAT:()', group = TodoHilighter },
             fix      = { pattern = '()FIX:()', group = TodoHilighter },
+            hack     = { pattern = '()HACK:()', group = TodoHilighter },
             hint     = { pattern = '()HINT:()', group = TodoHilighter },
             info     = { pattern = '()INFO:()', group = TodoHilighter },
             perf     = { pattern = '()PERF:()', group = TodoHilighter },
@@ -4568,6 +4571,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
+ColoRand(138)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker

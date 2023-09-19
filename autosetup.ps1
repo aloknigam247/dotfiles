@@ -1,6 +1,5 @@
 #Requires -RunAsAdministrator
 # TODO: install fonts
-# TODO: Update mechanism
 # $fontPath = 'C:\Windows\Fonts\'
 # $files = Get-ChildItem -Path . -Filter *.ttf
 # foreach ($file in $files) {
@@ -8,7 +7,7 @@
 # }
 
 param(
-     [switch]$update
+     [switch]$update # TODO: Update mechanism
      )
 
 function DrawMenu {

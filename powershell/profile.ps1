@@ -392,5 +392,8 @@ $PSNativeCommandUseErrorActionPreference = $false
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
 $env:PSModulePath += ";E:\aloknigam"
 
-<# Hack for BetterGx neovim #>
+# HACK: for BetterGx neovim #
 $env:WSLENV=$null
+
+# gsudo config
+gsudo config CacheMode Auto
