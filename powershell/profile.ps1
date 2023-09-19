@@ -370,7 +370,7 @@ function prompt {
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
 }
 
-Set-PSReadLineOption -Colors @{
+Set-PSReadLineOption -Colors @{ # TODO: change background to black
     "Command" = (Format-Text -headOnly -fg "#F42C04" -styles "bold");
     "Comment" = (Format-Text -headOnly -fg "#989FCE");
     "Emphasis" = (Format-Text -headOnly -fg "#ECA400");

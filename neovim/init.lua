@@ -1173,7 +1173,7 @@ AddPlugin {
     'brenoprata10/nvim-highlight-colors',
     init = function()
         vim.api.nvim_create_user_command(
-            'ColorToggle', -- does not work in 1 time
+            'ColorToggle', -- FIX: does not work in 1 time
             function()
                 require("nvim-highlight-colors").toggle()
             end,
@@ -2722,7 +2722,7 @@ AddPlugin {
             enable_in_insert = true,
             sign = false,
             sign_priority = 40,
-            virtual_text = true, -- BUG: not working
+            virtual_text = true,
         },
         outline = {
             win_position = 'right',

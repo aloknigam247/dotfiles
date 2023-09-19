@@ -7,6 +7,10 @@
 #   Copy-Item $file.FullName -Destination $fontPath
 # }
 
+param(
+     [switch]$update
+     )
+
 function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)
     $l = $menuItems.length
@@ -214,5 +218,3 @@ foreach ($app in $app_install) {
     }
     Set-Location $root
 }
-
-
