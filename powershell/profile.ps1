@@ -394,6 +394,3 @@ $env:PSModulePath += ";E:\aloknigam"
 
 # HACK: for BetterGx neovim #
 $env:WSLENV=$null
-
-# gsudo config
-# gsudo config CacheMode Auto
