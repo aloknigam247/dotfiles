@@ -396,4 +396,4 @@ $env:PSModulePath += ";E:\aloknigam"
 $env:WSLENV=$null
 
 # gsudo config
-gsudo config CacheMode Auto
+# gsudo config CacheMode Auto
