@@ -416,7 +416,6 @@ function LightenDarkenColor(col, amt)
     return hex_code:gsub(' ', '0')
 end
 
-vim.api.nvim_open_win_orig = vim.api.nvim_open_win
 function NvimOpenWinSafe(bufnr, enter, config)
     local fixTitle = function(title)
         if title[1] ~= ' ' then
@@ -440,14 +439,17 @@ function NvimOpenWinSafe(bufnr, enter, config)
         end
 
         -- Fix height
-        local bottom_border = config.row + config.height + 2
-        if bottom_border == vim.o.lines then
-            config.height = config.height - 1
+        if config.row and config.row > 1 then
+            local bottom_border = config.row + config.height + 2
+            if bottom_border == vim.o.lines then
+                config.height = config.height - 1
+            end
         end
     end
 
     return vim.api.nvim_open_win_orig(bufnr, enter, config)
 end
+vim.api.nvim_open_win_orig = vim.api.nvim_open_win
 vim.api.nvim_open_win = NvimOpenWinSafe
 
 function PopupAction()
@@ -1587,9 +1589,9 @@ Dark  { 'tokyonight-night',           'tokyonight'                              
 DarkT { 'tokyonight-night',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 DarkT { 'tokyonight-storm',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
-DarkT { 'visual_studio_code',         'visual_studio_code', pre = function() require('visual_studio_code').setup({mode = 'dark', transparent = true}) end }
-Dark  { 'visual_studio_code',         'visual_studio_code', pre = function() require('visual_studio_code').setup({mode = 'dark'}) end }
-Light { 'visual_studio_code',         'visual_studio_code', pre = function() require('visual_studio_code').setup({mode = 'light'}) end }
+DarkT { 'visual_studio_code',         '_', pre = function() require('visual_studio_code').setup({mode = 'dark', transparent = true}) end }
+Dark  { 'visual_studio_code',         '_', pre = function() require('visual_studio_code').setup({mode = 'dark'}) end }
+Light { 'visual_studio_code',         '_', pre = function() require('visual_studio_code').setup({mode = 'light'}) end }
 Dark  { 'vitesse',                    '_'                                                                   }
 DarkT { 'vitesse',                    '_', pre = function() require('vitesse').setup({transparent_background  = true}) end }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
@@ -1910,7 +1912,8 @@ AddPlugin {
 -- directory case handling
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
-    cmd = 'NvimTreeToggle',
+    -- cmd = 'NvimTreeToggle',
+    lazy = false,
     opts = {
         actions = {
             change_dir = {
@@ -1964,7 +1967,7 @@ AddPlugin {
             show_on_dirs = true,
             show_on_open_dirs = false,
         },
-        disable_netrw = true, -- BUG: how to lazy when directory is opened
+        disable_netrw = true,
         filesystem_watchers = {
             enable = true,
             debounce_delay = 50,
@@ -2192,7 +2195,7 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
 ActionsMap = {
-    ['markdown'] = function ()
+    ['markdown'] = function()
         vim.g.table_mode_corner = '|'
     end
 }
