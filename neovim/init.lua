@@ -680,7 +680,7 @@ PopupMenuAdd({
 })
 -- <~>
 -- Commands</>
--- FIX: open new Preview in same window
+Preview_win = nil
 vim.api.nvim_create_user_command(
     'Preview',
     function(args)
@@ -688,16 +688,20 @@ vim.api.nvim_create_user_command(
         local bufnr = vim.fn.bufadd(args.args)
 
         -- Create floating window
-        local win_id = vim.api.nvim_open_win(bufnr, true, {
-            border = 'rounded',
-            col = 8,
-            height = vim.o.lines - 8,
-            relative = 'editor',
-            row = 3,
-            title = args.args ,
-            title_pos = 'center',
-            width = vim.o.columns - 20
-        })
+        if Preview_win == nil then
+            Preview_win = vim.api.nvim_open_win(bufnr, true, {
+                border = 'rounded',
+                col = 8,
+                height = vim.o.lines - 8,
+                relative = 'editor',
+                row = 3,
+                title = args.args ,
+                title_pos = 'center',
+                width = vim.o.columns - 20
+            })
+        else
+            vim.api.nvim_win_set_buf(Preview_win, bufnr)
+        end
 
         -- Create autocommand to resize window
         local au_id = vim.api.nvim_create_autocmd(
@@ -715,9 +719,10 @@ vim.api.nvim_create_user_command(
 
         vim.api.nvim_create_autocmd(
             'WinClosed', {
-                pattern = tostring(win_id),
+                pattern = tostring(Preview_win),
                 desc = 'Delete resize autocommand on Preview window close',
                 callback = function(arg)
+                    Preview_win = nil
                     vim.api.nvim_del_autocmd(au_id)
                     vim.api.nvim_del_autocmd(arg.id)
                 end
