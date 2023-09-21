@@ -1,6 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: set highlight for max length
--- TODO: profiling code for autocommands
+-- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -1462,7 +1462,6 @@ Light { 'catppuccin-latte',           'catppuccin'                     }
 Dark  { 'catppuccin-macchiato',       'catppuccin'                     }
 Dark  { 'catppuccin-macchiato',       'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Dark  { 'catppuccin-mocha',           'catppuccin'                     }
-Dark  { 'catppuccin-mocha',           'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
 DarkT { 'codedark',                   '_', pre = function() vim.g.codedark_transparent = 1 end            }

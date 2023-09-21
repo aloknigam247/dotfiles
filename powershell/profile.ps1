@@ -23,7 +23,6 @@ Start-Job {
         $balmsg.Visible = $true
         $balmsg.ShowBalloonTip(20000)
     }
-
 } | Out-Null
 
 
@@ -240,7 +239,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # FZF Setup
 # ``````````````
 # TODO: Layout selection
-# TODO: Examples https://github.com/junegunn/fzf/wiki/Examples
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
