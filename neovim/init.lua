@@ -877,7 +877,7 @@ AddPlugin {
             refactor = { pattern = '()REFACTOR:()', group = TodoHilighter },
             test     = { pattern = '()TEST:()', group = TodoHilighter },
             thought  = { pattern = '()THOUGHT:()', group = TodoHilighter },
-            todo     = { pattern = '()TODO:()', group = TodoHilighter },
+            todo     = { pattern = '()TODO:()', group = TodoHilighter }, -- FIX: fix color
             warn     = { pattern = '()WARN:()', group = TodoHilighter },
         }
     }

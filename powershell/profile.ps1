@@ -286,7 +286,6 @@ function promptGen {
             'params' = @{
                 'text' = '$(Get-Location)'
                 'fg' = '#A3BCF9'
-                'bg' = '#814562'
                 'styles' = "italic"
             }
         },
