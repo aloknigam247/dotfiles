@@ -12,5 +12,3 @@ $winget_pkgs = @(
 $files = @{
     "profile.ps1" = $PROFILE.AllUsersAllHosts;
 }
-
-

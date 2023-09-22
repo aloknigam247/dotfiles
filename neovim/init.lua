@@ -1,6 +1,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: set highlight for max length
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
+-- PERF: perform improvements on blank file, code files used, very large files, autocommands
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>

@@ -238,8 +238,9 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 
 # FZF Setup
 # ``````````````
-# TODO: Layout selection
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
+# FEAT: remove module and use directly
+<# fzf.exe --height=~70% --layout=reverse --border=rounded --border-label="(Border)" --border-label-pos=5 --info=inline --prompt=' ' --pointer='→' --preview='bat.exe --style=numbers {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' #>
 Import-Module PSFzf
 
 Set-PsFzfOption `
