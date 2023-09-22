@@ -1510,7 +1510,6 @@ DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').
 Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
 Light { 'limestone',                  'starry',      pre = function() FixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                            }
 Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                     }
-Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'darker'     end                                                 }
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
 Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
 Dark  { 'melange',                    '_'                                                                                                                     }
