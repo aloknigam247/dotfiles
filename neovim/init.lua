@@ -440,11 +440,16 @@ function NvimOpenWinSafe(bufnr, enter, config)
         end
 
         -- Fix height
-        if config.row and config.row > 0 then
-            local bottom_border = config.row + config.height + 2
-            if bottom_border >= vim.o.lines then
-                config.row = math.max(0, config.row - 1)
-                config.height = vim.o.lines - config.row - 3
+        if config.row then
+            local editor_bottom = vim.o.lines - 1
+            local window_bottom = config.row + config.height + 2
+            local shift = window_bottom - editor_bottom
+            if shift > 0 then
+                config.row = math.max(0, config.row - shift) -- shift row up
+                window_bottom = config.row + config.height + 2
+                if window_bottom > editor_bottom then
+                    config.height = vim.o.lines - 3
+                end
             end
         end
     end
@@ -2504,8 +2509,8 @@ AddPlugin {
         char = '│',
         char_blankline = '│', -- '┆'
         char_priority = 1,
-        context_char = '║', -- '┃'
-        context_char_blankline = '║', -- '┇'
+        context_char = '▏', -- '║' '┃'
+        context_char_blankline = '▏', -- '║' '┇'
         context_start_priority = 1,
         filetype_exclude = { 'NvimTree', 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
         show_current_context = true,
