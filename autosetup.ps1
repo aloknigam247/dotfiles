@@ -7,7 +7,7 @@
 # }
 
 param(
-     [switch]$update # TODO: Update mechanism
+     [switch]$update
      )
 
 function DrawMenu {
@@ -184,32 +184,39 @@ foreach ($app in $app_install) {
 
         . .\setup.ps1
 
-        Write-Output "Installing Packages"
-        choco_install $choco_pkgs
-        scoop_install $scoop_pkgs
-        winget_install $winget_pkgs
+        if ($update) { # TODO: Update mechanism
+            Write-Output "Updating Packages"
+            choco_update $choco_pkgs
+            scoop_update $scoop_pkgs
+            winget_update $winget_pkgs
+        } else {
+            Write-Output "Installing Packages"
+            choco_install $choco_pkgs
+            scoop_install $scoop_pkgs
+            winget_install $winget_pkgs
 
-        Write-Output "Installing Configs"
-        foreach ($key in $files.keys) {
-            $src = "$cwd\$key"
-            $dest = $files[$key]
-            $dir = Split-Path -Parent $dest
-            if (-not (Test-Path $dir)) {
-                mkdir $dir
-            }
-            if (Test-Path $dest) {
-                $target = Get-Item $dest | Select-Object -ExpandProperty Target
-                if ($target -eq $src) {
-                    Write-Verbose "$src already linked" -verbose
+            Write-Output "Installing Configs"
+            foreach ($key in $files.keys) {
+                $src = "$cwd\$key"
+                    $dest = $files[$key]
+                    $dir = Split-Path -Parent $dest
+                    if (-not (Test-Path $dir)) {
+                        mkdir $dir
+                    }
+                if (Test-Path $dest) {
+                    $target = Get-Item $dest | Select-Object -ExpandProperty Target
+                        if ($target -eq $src) {
+                            Write-Verbose "$src already linked" -verbose
+                        } else {
+                            Write-Output "backup $dest --> ${dest}.orig"
+                                Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                                Write-Output "Linking $src --> $dest"
+                                New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                        }
                 } else {
-                    Write-Output "backup $dest --> ${dest}.orig"
-                    Move-Item -Force -Path $dest -Destination "${dest}.orig"
                     Write-Output "Linking $src --> $dest"
-                    New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                        New-Item -ItemType SymbolicLink -Path $dest -Target $src
                 }
-            } else {
-                Write-Output "Linking $src --> $dest"
-                New-Item -ItemType SymbolicLink -Path $dest -Target $src
             }
         }
     } else {
