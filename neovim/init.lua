@@ -440,10 +440,11 @@ function NvimOpenWinSafe(bufnr, enter, config)
         end
 
         -- Fix height
-        if config.row and config.row > 1 then
+        if config.row and config.row > 0 then
             local bottom_border = config.row + config.height + 2
-            if bottom_border == vim.o.lines then
-                config.height = config.height - 1
+            if bottom_border >= vim.o.lines then
+                config.row = math.max(0, config.row - 1)
+                config.height = vim.o.lines - config.row - 3
             end
         end
     end

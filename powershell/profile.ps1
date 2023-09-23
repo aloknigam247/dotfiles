@@ -240,7 +240,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # ``````````````
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 # FEAT: remove module and use directly
-<# fzf.exe --height=~70% --layout=reverse --border=rounded --border-label="(Border)" --border-label-pos=5 --info=inline --prompt=' ' --pointer='→' --preview='bat.exe --style=numbers {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' #>
 Import-Module PSFzf
 
 Set-PsFzfOption `
@@ -252,6 +251,7 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 $env:FZF_DEFAULT_OPTS='
+    --height=~70% --layout=reverse --border=rounded --border-label="(Border)" --border-label-pos=5 --info=inline --prompt=" " --pointer="→" --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)"
     --color=fg:#ffffff,bg:-1,hl:#71b7c2
     --color=fg+:#f0a330,bg+:#873df5,hl+:#a7daeb
     --color=info:#afaf87,prompt:#d7005f,pointer:#ff59f1
