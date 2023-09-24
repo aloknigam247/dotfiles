@@ -1482,7 +1482,6 @@ Dark  { 'darkplus',                   '_'                                       
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
 Light { 'dawnfox',                    'nightfox'                                                          }
 Light { 'decay',                      '_'                                                                 }
-Dark  { 'deepocean',                  'starry',      pre = function() FixStarry('#392a48', '#5f4778') end }
 Dark  { 'deus',                       '_',           post = FixVisual                                     }
 Dark  { 'duskfox',                    'nightfox'                                                          }
 DarkT { 'duskfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
@@ -1974,7 +1973,7 @@ AddPlugin {
                 max = vim.diagnostic.severity.ERROR,
             },
             show_on_dirs = true,
-            show_on_open_dirs = false,
+            show_on_open_dirs = true,
         },
         disable_netrw = true,
         filesystem_watchers = {
@@ -2106,7 +2105,7 @@ AddPlugin {
             root_folder_label = ':~:s?$?/..?',
             icons = {
                 bookmarks_placement = 'signcolumn',
-                diagnostics_placement = 'signcolumn',
+                diagnostics_placement = 'after',
                 git_placement = 'signcolumn',
                 glyphs = {
                     bookmark = Icons.bookmark,
