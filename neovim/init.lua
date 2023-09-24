@@ -1467,7 +1467,6 @@ DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').s
 Light { 'bluloco-light',              '_'                              }
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'caret',                      '_'                              }
-Light { 'caret',                      '_'                              }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
 Dark  { 'catppuccin-frappe',          'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Light { 'catppuccin-latte',           'catppuccin'                     }
@@ -2087,8 +2086,11 @@ AddPlugin {
             full_name = true,
             group_empty = false,
             highlight_git = true,
+            highlight_diagnostics = true,
             highlight_opened_files = 'all',
             highlight_modified = 'all',
+            highlight_bookmarks = 'all',
+            highlight_clipboard = 'name',
             indent_markers = {
                 enable = true,
                 icons = {
@@ -2103,6 +2105,8 @@ AddPlugin {
             indent_width = 2,
             root_folder_label = ':~:s?$?/..?',
             icons = {
+                bookmarks_placement = 'signcolumn',
+                diagnostics_placement = 'signcolumn',
                 git_placement = 'signcolumn',
                 glyphs = {
                     bookmark = Icons.bookmark,
@@ -2139,8 +2143,18 @@ AddPlugin {
                 },
                 symlink_arrow = Icons.symlink_arrow,
                 webdev_colors = true,
+                web_devicons = {
+                    file = {
+                        enable = true,
+                        color = true,
+                    },
+                    folder = {
+                        enable = false,
+                        color = true,
+                    },
+                },
             },
-            special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
+            special_files = { 'Makefile', 'README.md', 'readme.md' },
             symlink_destination = true,
         },
         respect_buf_cwd = false,
@@ -2191,7 +2205,6 @@ AddPlugin {
                 },
                 quit_on_focus_loss = true,
             },
-            hide_root_folder = false,
             number = false,
             preserve_window_proportions = false,
             relativenumber = false,
@@ -2527,14 +2540,28 @@ AddPlugin {
     event = 'LspAttach',
     opts = {
         enable = true,
-        include_declaration = true,      -- Reference include declaration
-        sections = {                      -- Enable / Disable specific request
-            definition = true,
-            references = true,
-            implementation = true,
+        include_declaration = false, -- Reference include declaration
+        hide_zero_counts = true, -- Hide lsp sections which have no content
+        sections = {
+            definition = function(count)
+                if count == 1 then
+                    return ""
+                end
+                return "Definitions: " .. count
+            end,
+            references = function(count)
+                return "References: " .. count
+            end,
+            implements = function(count)
+                return "Implements: " .. count
+            end,
         },
-        ignore_filetype = {
-        },
+        separator = " 󰧞 ",
+        decorator = function(line)
+            line = '󰧶 ' .. line
+            return line
+        end,
+        ignore_filetype = {}
     }
 }
 
@@ -3571,6 +3598,7 @@ AddPlugin {
                 lualine_z = {}
             },
             winbar = {
+                -- FEAT: recognise nvimtree
                 lualine_a = {
                     {
                         'filetype',
