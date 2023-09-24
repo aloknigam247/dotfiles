@@ -3374,6 +3374,62 @@ AddPlugin {
 -- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+AddPlugin { -- FIX: colors
+    'luukvbaal/statuscol.nvim',
+    config = function()
+        local builtin = require('statuscol.builtin')
+        require('statuscol').setup({
+            setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
+            -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
+            -- Although I recommend just using the segments field below to build your
+            -- statuscolumn to benefit from the performance optimizations in this plugin.
+            -- builtin.lnumfunc number string options
+            thousands = false,     -- or line number thousands separator string ("." / ",")
+            relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
+            -- Builtin 'statuscolumn' options
+            ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
+            bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
+            -- Default segments (fold -> sign -> line number + separator), explained below
+            segments = {
+                { text = { '%C' }, click = 'v:lua.ScFa' },
+                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
+                { sign = { name = { 'Diagnostic' }, auto = true } },
+                {
+                    text = { builtin.lnumfunc },
+                    condition = { true },
+                    -- click = 'v:lua.ScLa',
+                },
+                { sign = { name = { 'Git' }, colwidth = 1 } },
+            },
+            clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
+            -- "a" for Alt, "c" for Ctrl and "m" for Meta.
+            clickhandlers = {       -- builtin click handlers
+                Lnum                    = builtin.lnum_click,
+                FoldClose               = builtin.foldclose_click,
+                FoldOpen                = builtin.foldopen_click,
+                FoldOther               = builtin.foldother_click,
+                DapBreakpointRejected   = builtin.toggle_breakpoint,
+                DapBreakpoint           = builtin.toggle_breakpoint,
+                DapBreakpointCondition  = builtin.toggle_breakpoint,
+                DiagnosticSignError     = builtin.diagnostic_click,
+                DiagnosticSignHint      = builtin.diagnostic_click,
+                DiagnosticSignInfo      = builtin.diagnostic_click,
+                DiagnosticSignWarn      = builtin.diagnostic_click,
+                GitSignsTopdelete       = builtin.gitsigns_click,
+                GitSignsUntracked       = builtin.gitsigns_click,
+                GitSignsAdd             = builtin.gitsigns_click,
+                GitSignsChange          = builtin.gitsigns_click,
+                GitSignsChangedelete    = builtin.gitsigns_click,
+                GitSignsDelete          = builtin.gitsigns_click,
+                gitsigns_extmark_signs_ = builtin.gitsigns_click,
+            }
+        })
+    end,
+    event = 'VeryLazy'
+}
+
+--<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     'nvim-lualine/lualine.nvim',
@@ -3819,7 +3875,7 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
 -- https://github.com/klen/nvim-test
--- https://github.com/nvim-neotest/neotest
+-- https://github.com/nvim-neotest/neotest -- FEAT: use me
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -4415,60 +4471,6 @@ AddPlugin {
 }
 
 -- https://github.com/mrshmllow/open-handlers.nvim
-
-AddPlugin {
-    'luukvbaal/statuscol.nvim',
-    config = function()
-        local builtin = require('statuscol.builtin')
-        require('statuscol').setup({
-            setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
-            -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
-            -- Although I recommend just using the segments field below to build your
-            -- statuscolumn to benefit from the performance optimizations in this plugin.
-            -- builtin.lnumfunc number string options
-            thousands = false,     -- or line number thousands separator string ("." / ",")
-            relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
-            -- Builtin 'statuscolumn' options
-            ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
-            bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
-            -- Default segments (fold -> sign -> line number + separator), explained below
-            segments = {
-                { text = { '%C' }, click = 'v:lua.ScFa' },
-                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                { sign = { name = { 'Diagnostic' }, auto = true } },
-                {
-                    text = { builtin.lnumfunc },
-                    condition = { true },
-                    -- click = 'v:lua.ScLa',
-                },
-                { sign = { name = { 'Git' }, colwidth = 1 } },
-            },
-            clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
-            -- "a" for Alt, "c" for Ctrl and "m" for Meta.
-            clickhandlers = {       -- builtin click handlers
-                Lnum                    = builtin.lnum_click,
-                FoldClose               = builtin.foldclose_click,
-                FoldOpen                = builtin.foldopen_click,
-                FoldOther               = builtin.foldother_click,
-                DapBreakpointRejected   = builtin.toggle_breakpoint,
-                DapBreakpoint           = builtin.toggle_breakpoint,
-                DapBreakpointCondition  = builtin.toggle_breakpoint,
-                DiagnosticSignError     = builtin.diagnostic_click,
-                DiagnosticSignHint      = builtin.diagnostic_click,
-                DiagnosticSignInfo      = builtin.diagnostic_click,
-                DiagnosticSignWarn      = builtin.diagnostic_click,
-                GitSignsTopdelete       = builtin.gitsigns_click,
-                GitSignsUntracked       = builtin.gitsigns_click,
-                GitSignsAdd             = builtin.gitsigns_click,
-                GitSignsChange          = builtin.gitsigns_click,
-                GitSignsChangedelete    = builtin.gitsigns_click,
-                GitSignsDelete          = builtin.gitsigns_click,
-                gitsigns_extmark_signs_ = builtin.gitsigns_click,
-            }
-        })
-    end,
-    event = 'VeryLazy'
-}
 
 -- https://github.com/kndndrj/nvim-dbee
 
