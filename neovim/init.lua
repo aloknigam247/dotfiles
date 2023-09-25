@@ -1,8 +1,11 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: set highlight for max length
--- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
+-- TODO: Max line width marker
 -- TODO: completion for SQL
+-- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
+-- TODO: rainbow headings for markdown
+-- TODO: set highlight for max length
+-- TODO: spell checks for markdown
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
