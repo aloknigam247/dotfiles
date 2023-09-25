@@ -1666,6 +1666,16 @@ AddPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/saadparwaiz1/cmp_luasnip
+-- FEAT: https://github.com/L3MON4D3/cmp-luasnip-choice
+-- FEAT: https://github.com/hrsh7th/cmp-omni
+-- FEAT: https://github.com/FelipeLema/cmp-async-path
+-- FEAT: https://github.com/dmitmel/cmp-cmdline-history
+-- FEAT: https://github.com/tzachar/cmp-fuzzy-path
+-- FEAT: https://github.com/paopaol/cmp-doxygen
+-- FEAT: https://github.com/hrsh7th/cmp-nvim-lua
+-- FEAT: https://github.com/uga-rosa/cmp-dynamic
+
 AddPlugin {
     'chrisgrieser/cmp-nerdfont',
     event = 'InsertEnter'

@@ -6,7 +6,6 @@
 # ██║  ██║███████╗╚██████╔╝██║  ██╗    ██║ ╚████║██║╚██████╔╝██║  ██║██║ ╚═╝ ██║
 # ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
 
-# TODO: Powershell like key mappings, list mappings
 # Updating local dofiles
 update_dotfiles() {
     cd ~/dotfiles
@@ -172,9 +171,6 @@ cd
 # export LESS_TERMCAP_ue=$'\E[0m'
 # export LESS_TERMCAP_us=$'\E[01;33m'
 
-# TODO: Prompt similar to Powershell
-
-# TODO: Powershell like redering blocks
 function prompt_gen() {
     zmodload zsh/nearcolor
 
