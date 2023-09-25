@@ -6,6 +6,7 @@
 -- TODO: rainbow headings for markdown
 -- TODO: set highlight for max length
 -- TODO: spell checks for markdown
+-- TODO: Preview for NvimTree
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
