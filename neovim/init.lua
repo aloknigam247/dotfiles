@@ -1194,18 +1194,8 @@ AddPlugin {
 
 AddPlugin {
     'brenoprata10/nvim-highlight-colors',
-    init = function()
-        vim.api.nvim_create_user_command(
-            'ColorToggle', -- FIX: does not work in 1 time
-            function()
-                require("nvim-highlight-colors").toggle()
-            end,
-            { nargs = 0 }
-        )
-    end,
-    opts = {
-        render = 'background'
-    }
+    cmd = 'HighlightColorsOn',
+    opts = { render = 'background' }
 }
 
 AddPlugin {
@@ -1524,7 +1514,6 @@ Dark  { 'mariana',                    'starry',      pre = function() FixStarry(
 Dark  { 'material',                   '_',           pre = function() vim.g.material_style = 'deep ocean' end                                                 }
 Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
 Dark  { 'melange',                    '_'                                                                                                                     }
-Light { 'melange',                    '_'                                                                                                                     }
 Dark  { 'mellifluous',                '_'                                                                                                                     }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
@@ -1666,15 +1655,15 @@ AddPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/saadparwaiz1/cmp_luasnip
--- FEAT: https://github.com/L3MON4D3/cmp-luasnip-choice
--- FEAT: https://github.com/hrsh7th/cmp-omni
--- FEAT: https://github.com/FelipeLema/cmp-async-path
--- FEAT: https://github.com/dmitmel/cmp-cmdline-history
--- FEAT: https://github.com/tzachar/cmp-fuzzy-path
--- FEAT: https://github.com/paopaol/cmp-doxygen
--- FEAT: https://github.com/hrsh7th/cmp-nvim-lua
--- FEAT: https://github.com/uga-rosa/cmp-dynamic
+-- https://github.com/saadparwaiz1/cmp_luasnip
+-- https://github.com/L3MON4D3/cmp-luasnip-choice
+-- https://github.com/hrsh7th/cmp-omni
+-- https://github.com/FelipeLema/cmp-async-path
+-- https://github.com/dmitmel/cmp-cmdline-history
+-- https://github.com/tzachar/cmp-fuzzy-path
+-- https://github.com/paopaol/cmp-doxygen
+-- https://github.com/hrsh7th/cmp-nvim-lua
+-- https://github.com/uga-rosa/cmp-dynamic
 
 AddPlugin {
     'chrisgrieser/cmp-nerdfont',
