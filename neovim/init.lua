@@ -423,6 +423,15 @@ function LightenDarkenColor(col, amt)
     return hex_code:gsub(' ', '0')
 end
 
+function MarkdownHeadingsHighlight()
+    local palette = ColorPalette()
+    for i=1,6 do
+        local hl = { bg = palette[i].fg, fg = '#FFFFFF', bold = true, underline = true }
+        vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
+    end
+end
+
+-- BUG: Conflicts with colorful-winsep
 function NvimOpenWinSafe(bufnr, enter, config)
     local fixTitle = function(title)
         if title[1] ~= ' ' then
@@ -874,29 +883,6 @@ AddPlugin {
 }
 
 AddPlugin {
-    'echasnovski/mini.hipatterns',
-    event = 'VeryLazy',
-    opts = {
-        highlighters = {
-            bug      = { pattern = '()BUG:()', group = TodoHilighter },
-            docs     = { pattern = '()DOCME:()', group = TodoHilighter },
-            error    = { pattern = '()ERROR:()', group = TodoHilighter },
-            feat     = { pattern = '()FEAT:()', group = TodoHilighter },
-            fix      = { pattern = '()FIX:()', group = TodoHilighter },
-            hack     = { pattern = '()HACK:()', group = TodoHilighter },
-            hint     = { pattern = '()HINT:()', group = TodoHilighter },
-            info     = { pattern = '()INFO:()', group = TodoHilighter },
-            perf     = { pattern = '()PERF:()', group = TodoHilighter },
-            refactor = { pattern = '()REFACTOR:()', group = TodoHilighter },
-            test     = { pattern = '()TEST:()', group = TodoHilighter },
-            thought  = { pattern = '()THOUGHT:()', group = TodoHilighter },
-            todo     = { pattern = '()TODO:()', group = TodoHilighter }, -- FIX: fix color
-            warn     = { pattern = '()WARN:()', group = TodoHilighter },
-        }
-    }
-}
-
-AddPlugin {
     'Pocco81/high-str.nvim',
     cmd = 'HSHighlight'
 }
@@ -925,6 +911,29 @@ AddPlugin {
 AddPlugin {
     'azabiong/vim-highlighter',
     keys = { 'f<CR>' }
+}
+
+AddPlugin {
+    'echasnovski/mini.hipatterns',
+    event = 'VeryLazy',
+    opts = {
+        highlighters = {
+            bug      = { pattern = '()BUG:()', group = TodoHilighter },
+            docs     = { pattern = '()DOCME:()', group = TodoHilighter },
+            error    = { pattern = '()ERROR:()', group = TodoHilighter },
+            feat     = { pattern = '()FEAT:()', group = TodoHilighter },
+            fix      = { pattern = '()FIX:()', group = TodoHilighter },
+            hack     = { pattern = '()HACK:()', group = TodoHilighter },
+            hint     = { pattern = '()HINT:()', group = TodoHilighter },
+            info     = { pattern = '()INFO:()', group = TodoHilighter },
+            perf     = { pattern = '()PERF:()', group = TodoHilighter },
+            refactor = { pattern = '()REFACTOR:()', group = TodoHilighter },
+            test     = { pattern = '()TEST:()', group = TodoHilighter },
+            thought  = { pattern = '()THOUGHT:()', group = TodoHilighter },
+            todo     = { pattern = '()TODO:()', group = TodoHilighter }, -- FIX: fix color
+            warn     = { pattern = '()WARN:()', group = TodoHilighter },
+        }
+    }
 }
 
 AddPlugin {
@@ -1154,6 +1163,8 @@ AddPlugin {
     }
 }
 
+-- FEAT: https://github.com/folke/paint.nvim
+
 AddPlugin {
     'folke/lsp-colors.nvim',
     event = 'LspAttach'
@@ -1301,6 +1312,7 @@ function FixStarry(char, context_char)
 end
 
 function FixVisual(bg)
+    -- FIX: what about colors schemes which have colors already
     if bg == nil then
         if (vim.o.background == 'dark') then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
@@ -2224,6 +2236,7 @@ AddPlugin {
 ActionsMap = {
     ['markdown'] = function()
         vim.g.table_mode_corner = '|'
+        -- MarkdownHeadingsHighlight()
     end
 }
 vim.api.nvim_create_autocmd(
@@ -3381,7 +3394,7 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin { -- FIX: colors
+AddPlugin { -- FIX: colors STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %*
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -3513,7 +3526,7 @@ AddPlugin {
                 },
                 lualine_c = {
                     {
-                        'branch', -- BUG: Branch does not change in help file
+                        'branch',
                         color = { gui = 'bold' },
                         icon = {'', color = {fg = '#F14C28'}},
                         on_click = function()
@@ -3659,7 +3672,6 @@ AddPlugin {
                 lualine_z = {}
             },
             winbar = {
-                -- FEAT: recognise nvimtree
                 lualine_a = {
                     {
                         'filetype',

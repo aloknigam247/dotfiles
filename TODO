@@ -4,7 +4,6 @@ TODO: Visual Studio Code https://code.visualstudio.com/docs/getstarted/introvide
 TODO: Visual Studio Code https://code.visualstudio.com/docs/nodejs/nodejs-tutorial
 TODO: Visual Studio Code https://code.visualstudio.com/docs/supporting/faq#_how-to-disable-crash-reporting
 TODO: Visual Studio Code: Complete welcome page
-TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-use-the-call-stack-window?view=vs-2022#visually-trace-the-call-stack
 TODO: Visual Studio https://learn.microsoft.com/en-us/visualstudio/modeling/map-dependencies-across-your-solutions?view=vs-2022
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=FINNSEEFLY.Darcula-Theme-For-Visual-Studio
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=JetBrains.ReSharper
@@ -16,4 +15,4 @@ TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=djfoxer.
 TODO: Visual Studio https://marketplace.visualstudio.com/items?itemName=drewnoakes.SideScroller
 Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/debugger-tips-and-tricks?view=vs-2022#edit-your-code-and-continue-debugging-c-vb-c
 Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/get-started-debugging-multithreaded-apps?view=vs-2022&tabs=csharp
-rg --colors line:fg:yellow --colors line:style:bold --colors path:fg:green --colors path:style:bold --colors match:fg:black --colors match:bg:yellow --colors match:style:nobold 
+Visual Studio https://learn.microsoft.com/en-us/visualstudio/debugger/how-to-use-the-call-stack-window?view=vs-2022#visually-trace-the-call-stack
