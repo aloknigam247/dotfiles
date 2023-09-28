@@ -2266,9 +2266,7 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Overlength text marker',
         callback = function ()
-            vim.cmd('match ColorColumn /%' .. vim.o.textwidth .. 'v/')
-            -- " TODO: move to lua and get value from textwidth
-            -- " autocmd BufEnter * match ColorColumn /\%80v/
+            vim.cmd('match ColorColumn /\\%' .. vim.o.textwidth .. 'v/')
         end
     }
 )
