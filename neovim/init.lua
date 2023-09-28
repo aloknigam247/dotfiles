@@ -387,6 +387,15 @@ function ColorPalette()
     end
 end
 
+function DebugWindows()
+    local tabpage = vim.api.nvim_get_current_tabpage()
+    local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
+    for _, win in ipairs(win_list) do
+        local win_config = vim.api.nvim_win_get_config(win)
+        print(vim.inspect(win_config))
+    end
+end
+
 function GetSign(name)
     local sign_list = vim.fn.sign_getdefined()
     for _, value in ipairs(sign_list) do
@@ -431,7 +440,6 @@ function MarkdownHeadingsHighlight()
     end
 end
 
--- BUG: Conflicts with colorful-winsep
 function NvimOpenWinSafe(bufnr, enter, config)
     local fixTitle = function(title)
         if title[1] ~= ' ' then
@@ -455,16 +463,17 @@ function NvimOpenWinSafe(bufnr, enter, config)
         end
 
         -- Fix height
-        if config.row then
+        if config.row and config.width and config.width > 1 then
             local editor_bottom = vim.o.lines - 1
             local window_bottom = config.row + config.height + 2
             local shift = window_bottom - editor_bottom
             if shift > 0 then
                 config.row = math.max(0, config.row - shift) -- shift row up
                 window_bottom = config.row + config.height + 2
-                if window_bottom > editor_bottom then
-                    config.height = vim.o.lines - 3
-                end
+                config.height = math.min(config.height, vim.o.lines - 3)
+                -- if window_bottom > editor_bottom then
+                --     config.height = vim.o.lines - 3
+                -- end
             end
         end
     end
