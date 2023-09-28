@@ -2,12 +2,9 @@
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
 -- TODO: Max line width marker
 -- TODO: Preview for NvimTree
--- TODO: completion for SQL
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
 -- TODO: rainbow headings for markdown
--- TODO: set highlight for max length
 -- TODO: spell checks for markdown
--- TODO: try mono fonts
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -2266,7 +2263,7 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Overlength text marker',
         callback = function ()
-            vim.cmd('match ColorColumn /\\%' .. vim.o.textwidth .. 'v/')
+            vim.cmd('match ColorColumn /\\%' .. vim.o.textwidth + 1 .. 'v/')
         end
     }
 )
