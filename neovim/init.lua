@@ -2262,6 +2262,18 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
+    'BufEnter', {
+        pattern = '*',
+        desc = 'Overlength text marker',
+        callback = function ()
+            vim.cmd('match ColorColumn /%' .. vim.o.textwidth .. 'v/')
+            -- " TODO: move to lua and get value from textwidth
+            -- " autocmd BufEnter * match ColorColumn /\%80v/
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
     { 'BufNewFile', 'BufRead' },  {
         pattern = '*',
         desc = 'Run for new files',
