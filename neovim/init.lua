@@ -432,8 +432,9 @@ end
 function MarkdownHeadingsHighlight()
     local palette = ColorPalette()
     for i=1,6 do
-        local hl = { bg = palette[i].fg, fg = '#FFFFFF', bold = true, underline = true }
+        local hl = { fg = palette[i].fg, bold = true, underline = false }
         vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
+        vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
     end
 end
 
@@ -2242,7 +2243,7 @@ AddPlugin {
 ActionsMap = {
     ['markdown'] = function()
         vim.g.table_mode_corner = '|'
-        -- MarkdownHeadingsHighlight()
+        MarkdownHeadingsHighlight()
     end
 }
 vim.api.nvim_create_autocmd(
