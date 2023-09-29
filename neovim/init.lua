@@ -767,7 +767,8 @@ vim.api.nvim_create_user_command(
         complete = 'file',
         nargs = 1
     }
-)-- <~>
+)
+-- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -1170,7 +1171,14 @@ AddPlugin {
     }
 }
 
--- FEAT: https://github.com/folke/paint.nvim
+-- TODO: Lazy load after treesitter on specific filetypes
+AddPlugin {
+    'folke/paint.nvim',
+    opts = {
+        highlights = { -- FEAT: Fill as needed
+        }
+    }
+}
 
 AddPlugin {
     'folke/lsp-colors.nvim',
