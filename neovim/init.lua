@@ -721,6 +721,8 @@ vim.api.nvim_create_user_command(
             Preview_win = vim.api.nvim_open_win(bufnr, true, {
                 border = 'rounded',
                 col = 8,
+                footer = ' [q] quit ',
+                footer_pos = 'right',
                 height = vim.o.lines - 8,
                 relative = 'editor',
                 row = 3,
