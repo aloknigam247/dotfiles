@@ -3,7 +3,6 @@
 -- TODO: Max line width marker
 -- TODO: Preview for NvimTree
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
--- TODO: rainbow headings for markdown
 -- TODO: spell checks for markdown
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -556,15 +555,16 @@ function TodoHilighter(_, match)
 end
 -- <~>
 -- Auto Commands</>
--- vim.api.nvim_create_autocmd(
---     'BufEnter', {
---         pattern = '*',
---         desc = '',
---         callback = function()
---             if vim.fn.isdirectory(vim.fn.expand('%:p')) then
---         end
---     }
--- )
+vim.api.nvim_create_autocmd(
+    'BufWinEnter', {
+        pattern = '*',
+        desc = 'Overlength line marker',
+        callback = function()
+            vim.cmd('match ColorColumn /\\%' .. vim.bo.textwidth + 1 .. 'v/')
+        end
+    }
+)
+
 vim.api.nvim_create_autocmd(
     'BufReadPost', {
         pattern = '*',
@@ -623,6 +623,19 @@ vim.api.nvim_create_autocmd(
                 unlet g:loaded_clipboard_provider
                 runtime autoload/provider/clipboard.vim
             ]])
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
+    { 'BufNewFile', 'BufRead' }, {
+        pattern = '*',
+        desc = 'Run for new files',
+        callback = function ()
+            local buf_name = vim.fn.expand('%:t')
+            if string.lower(buf_name) == 'todo' then
+                vim.o.filetype = 'todo'
+            end
         end
     }
 )
@@ -710,7 +723,7 @@ PopupMenuAdd({
 -- <~>
 -- Commands</>
 Preview_win = nil
-vim.api.nvim_create_user_command(
+vim.api.nvim_create_user_command( -- FEAT: mapping to open Preview win in [v]split/tab
     'Preview',
     function(args)
         -- Create buffer
@@ -2256,6 +2269,7 @@ ActionsMap = {
         MarkdownHeadingsHighlight()
     end
 }
+
 vim.api.nvim_create_autocmd(
     'FileType', {
         pattern = '*',
@@ -2264,30 +2278,6 @@ vim.api.nvim_create_autocmd(
             local actions = ActionsMap[vim.o.filetype]
             if actions then
                 actions()
-            end
-        end
-    }
-)
-
--- FIX: ignore for help files
-vim.api.nvim_create_autocmd(
-    'BufEnter', {
-        pattern = '*',
-        desc = 'Overlength text marker',
-        callback = function ()
-            vim.cmd('match ColorColumn /\\%' .. vim.o.textwidth + 1 .. 'v/')
-        end
-    }
-)
-
-vim.api.nvim_create_autocmd(
-    { 'BufNewFile', 'BufRead' },  {
-        pattern = '*',
-        desc = 'Run for new files',
-        callback = function ()
-            local buf_name = vim.fn.expand('%:t')
-            if string.lower(buf_name) == 'todo' then
-                vim.o.filetype = 'todo'
             end
         end
     }

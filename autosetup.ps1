@@ -158,6 +158,9 @@ function scoop_install {
 }
 
 function winget_install {
+    param(
+        [switch]$update
+    )
     $pkgs = $args[0]
     if ($pkgs.Length -eq 0) {
         return
@@ -168,7 +171,11 @@ function winget_install {
         if ($status[2] -eq "No installed package found matching input criteria.") {
             winget install -e --id $pkg
         } else {
-            Write-Verbose "Package $pkg already installed" -verbose
+            if ($update) {
+                winget upgrade -e --id $pkg
+            } else {
+                Write-Verbose "Package $pkg already installed" -verbose
+            }
         }
     }
 }
