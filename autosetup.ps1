@@ -100,21 +100,21 @@ function Menu {
 }
 
 
-function choco_install {
-    $pkgs = $args[0]
-    if ($pkgs.Length -eq 0) {
-        return
-    }
+# function choco_install {
+#     $pkgs = $args[0]
+#     if ($pkgs.Length -eq 0) {
+#         return
+#     }
 
-    foreach ($pkg in $pkgs) {
-        $status = choco list --localonly $pkg
-        if ($status[-1] -eq "1 packages installed.") {
-            Write-Verbose "Package $pkg already installed" -verbose
-        } else {
-            choco install $pkg -y
-        }
-    }
-}
+#     foreach ($pkg in $pkgs) {
+#         $status = choco list --localonly $pkg
+#         if ($status[-1] -eq "1 packages installed.") {
+#             Write-Verbose "Package $pkg already installed" -verbose
+#         } else {
+#             choco install $pkg -y
+#         }
+#     }
+# }
 
 $script:scoop = $false
 function ensure_scoop {
@@ -129,6 +129,9 @@ function ensure_scoop {
 }
 
 function scoop_install {
+    param(
+        [switch]$update
+    )
     echo "scoop install"
     $script:scoop
     if ($script:scoop -eq $false) {
@@ -143,7 +146,11 @@ function scoop_install {
         scoop which $pkg
         $status = $?
         if ($status -eq $true) {
-            Write-Verbose "Package $pkg already installed" -verbose
+            if ($update) {
+                scoop update $pkg
+            } else {
+                Write-Verbose "Package $pkg already installed" -verbose
+            }
         } else {
             scoop install --no-update-scoop $pkg
         }
@@ -177,21 +184,21 @@ foreach ($app in $app_install) {
     $cwd = Get-Location
     if (Test-Path setup.ps1) {
         # reset supported tags
-        $choco_pkgs = @()
+        # $choco_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
 
         . .\setup.ps1
 
-        if ($update) { # TODO: Update mechanism
+        if ($update) {
             Write-Output "Updating Packages"
-            choco_update $choco_pkgs
-            scoop_update $scoop_pkgs
-            winget_update $winget_pkgs
+            # choco_update $choco_pkgs
+            scoop_install -update $scoop_pkgs
+            # winget_update $winget_pkgs # TODO: Update mechanism
         } else {
             Write-Output "Installing Packages"
-            choco_install $choco_pkgs
+            # choco_install $choco_pkgs
             scoop_install $scoop_pkgs
             winget_install $winget_pkgs
 

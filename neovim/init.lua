@@ -2269,6 +2269,7 @@ vim.api.nvim_create_autocmd(
     }
 )
 
+-- FIX: ignore for help files
 vim.api.nvim_create_autocmd(
     'BufEnter', {
         pattern = '*',
@@ -2757,9 +2758,9 @@ AddPlugin {
     keys = { '<F12>' }
 }
 
-AddPlugin {
-    'ray-x/lsp_signature.nvim'
-}
+-- AddPlugin { -- TODO: remove when noice is stable and add as a backup plugin
+--     'ray-x/lsp_signature.nvim'
+-- }
 
 AddPlugin {
     'glepnir/lspsaga.nvim',
@@ -4110,7 +4111,7 @@ AddPlugin {
                     opts = {}, -- merged with defaults from documentation
                 },
                 signature = {
-                    enabled = false, -- TODO: compare and enable me
+                    enabled = true, -- TODO: compare and enable me
                     auto_open = {
                         enabled = true,
                         trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
@@ -4168,7 +4169,7 @@ AddPlugin {
                 command_palette = false, -- position the cmdline and popupmenu together
                 long_message_to_split = false, -- long messages will be sent to a split
                 inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = false, -- add a border to hover docs and signature help
+                lsp_doc_border = true, -- add a border to hover docs and signature help
             },
             throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
             views = {
