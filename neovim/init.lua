@@ -1,6 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
--- TODO: Max line width marker
 -- TODO: Preview for NvimTree
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
 -- TODO: spell checks for markdown
@@ -2551,18 +2550,73 @@ AddPlugin {
 AddPlugin {
     'lukas-reineke/indent-blankline.nvim',
     event = 'CursorHold',
+    main = 'ibl',
     opts = {
-        bufname_exclude = {},
-        buftype_exclude = { 'nofile', 'prompt', 'quickfix', 'terminal' },
-        char = '│',
-        char_blankline = '│', -- '┆'
-        char_priority = 1,
-        context_char = '▏', -- '║' '┃'
-        context_char_blankline = '▏', -- '║' '┇'
-        context_start_priority = 1,
-        filetype_exclude = { 'NvimTree', 'checkhealth', 'help', 'lspinfo', 'man', 'norg' },
-        show_current_context = true,
-        show_current_context_start = true,
+        enabled = true,
+        debounce = 200,
+        viewport_buffer = {
+            min = 30,
+            max = 500,
+        },
+        indent = {
+            char = '▏',
+            tab_char = nil,
+            highlight = 'IblIndent',
+            smart_indent_cap = true,
+            priority = 1,
+        },
+        whitespace = {
+            highlight = 'IblWhitespace',
+            remove_blankline_trail = true,
+        },
+        scope = {
+            enabled = true,
+            char = nil,
+            show_start = true,
+            show_end = true,
+            injected_languages = true,
+            highlight = 'IblScope',
+            priority = 1024,
+            include = {
+                node_type = {
+                    ['*'] = { '*' }
+                },
+            },
+            exclude = {
+                language = {},
+                node_type = {
+                    -- ['*'] = {
+                    --     'source_file',
+                    --     'program',
+                    -- },
+                    -- lua = {
+                    --     'chunk',
+                    -- },
+                    -- python = {
+                    --     'module',
+                    -- },
+                },
+            },
+        },
+        exclude = {
+            filetypes = {
+                'lspinfo',
+                'packer',
+                'checkhealth',
+                'help',
+                'man',
+                'gitcommit',
+                'TelescopePrompt',
+                'TelescopeResults',
+                '',
+            },
+            buftypes = {
+                'terminal',
+                'nofile',
+                'quickfix',
+                'prompt',
+            },
+        },
     }
 }
 -- <~>
