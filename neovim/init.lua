@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: dotted borders
 -- FEAT: https://github.com/9seconds/repolink.nvim
 -- FEAT: https://github.com/FabijanZulj/blame.nvim
 -- FEAT: https://github.com/SalOrak/whaler.nvim
@@ -1461,7 +1462,6 @@ AddPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'    
 AddPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
 AddPlugin { 'projekt0n/caret.nvim',                    event = 'User caret'                                               }
 AddPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
-AddPlugin { 'igorgue/danger',                          event = 'User danger'                                              }
 AddPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
 AddPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                            }
 AddPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                               }
@@ -1548,7 +1548,6 @@ Dark  { 'catppuccin-mocha',           'catppuccin'                     }
 Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
 DarkT { 'codedark',                   '_', pre = function() vim.g.codedark_transparent = 1 end            }
-Light { 'danger_light',               'danger',      post = FixNontext                                    }
 Dark  { 'darcula-solid',              '_'                                                                 }
 Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
@@ -2611,7 +2610,11 @@ AddPlugin {
             priority = 1024,
             include = {
                 node_type = {
-                    ['*'] = { 'if_statement' }
+                    ['*'] = {
+                        'else_clause',
+                        'for_statement',
+                        'if_statement',
+                    }
                 },
             },
             exclude = {
@@ -3498,7 +3501,7 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin { -- FIX: caret dark STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %*
+AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %*
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -3516,14 +3519,14 @@ AddPlugin { -- FIX: caret dark STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=3
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 { text = { '%C' }, click = 'v:lua.ScFa' },
-                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                { sign = { name = { 'Diagnostic' }, auto = true } },
+                { sign = { name = { 'todo.*' }, fillcharhl = 'LineNr' }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
+                { sign = { name = { 'Diagnostic', fillcharhl = 'LineNr' }, auto = true } },
                 {
                     text = { builtin.lnumfunc },
                     condition = { true },
                     -- click = 'v:lua.ScLa',
                 },
-                { sign = { name = { 'Git' }, colwidth = 1 } },
+                { sign = { name = { 'Git' }, colwidth = 1, fillcharhl = 'LineNr' }, hl = 'LineNr' },
             },
             clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
             -- "a" for Alt, "c" for Ctrl and "m" for Meta.
@@ -4468,6 +4471,7 @@ AddPlugin {
 -- https://github.com/chipsenkbeil/distant.nvim
 
 AddPlugin {
+    -- https://github.com/mechatroner/rainbow_csv
     'chrisbra/csv.vim',
     config = function()
         vim.g.csv_default_delim = ','
@@ -4577,8 +4581,6 @@ AddPlugin {
 }
 
 -- https://github.com/glacambre/firenvim
-
--- FEAT: https://github.com/luckasRanarison/clear-action.nvim
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
