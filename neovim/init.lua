@@ -1,4 +1,27 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/9seconds/repolink.nvim
+-- FEAT: https://github.com/FabijanZulj/blame.nvim
+-- FEAT: https://github.com/SalOrak/whaler.nvim
+-- FEAT: https://github.com/Wansmer/symbol-usage.nvim
+-- FEAT: https://github.com/Zeioth/dooku.nvim
+-- FEAT: https://github.com/altermo/ultimate-autopair.nvim
+-- FEAT: https://github.com/anuvyklack/hydra.nvim
+-- FEAT: https://github.com/cameron-wags/rainbow_csv.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-tinygit
+-- FEAT: https://github.com/cryptomilk/nightcity.nvim
+-- FEAT: https://github.com/hinell/lsp-timeout.nvim
+-- FEAT: https://github.com/iamcco/diagnostic-languageserver
+-- FEAT: https://github.com/judaew/ronny.nvim
+-- FEAT: https://github.com/lewis6991/hover.nvim
+-- FEAT: https://github.com/mattn/efm-langserver
+-- FEAT: https://github.com/mechatroner/rainbow_csv
+-- FEAT: https://github.com/mfussenegger/nvim-lint
+-- FEAT: https://github.com/miversen33/netman.nvim
+-- FEAT: https://github.com/mrshmllow/open-handlers.nvim
+-- FEAT: https://github.com/nkoporec/checkmate-lsp
+-- FEAT: https://github.com/nvim-neotest/neotest
+-- FEAT: https://github.com/polirritmico/monokai-nightasty.nvim
+-- FEAT: https://github.com/roobert/surround-ui.nvim
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
 -- TODO: Preview for NvimTree
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
@@ -176,7 +199,7 @@ LazyConfig = {
         frequency = 3600, -- check for updates every hour
     },
     change_detection = {
-        enabled = true,
+        enabled = false,
         notify = true, -- get a notification when changes are found
     },
     performance = {
@@ -431,7 +454,7 @@ function MarkdownHeadingsHighlight()
     local palette = ColorPalette()
     for i=1,6 do
         local hl = { fg = palette[i].fg, bold = true, underline = false }
-        vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
+        -- vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
         vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
     end
 end
@@ -740,7 +763,8 @@ vim.api.nvim_create_user_command( -- FEAT: mapping to open Preview win in [v]spl
                 row = 3,
                 title = args.args ,
                 title_pos = 'center',
-                width = vim.o.columns - 20
+                width = vim.o.columns - 20,
+                zindex = 1
             })
         else
             vim.api.nvim_win_set_buf(Preview_win, bufnr)
@@ -952,7 +976,7 @@ AddPlugin {
             refactor = { pattern = '()REFACTOR:()', group = TodoHilighter },
             test     = { pattern = '()TEST:()', group = TodoHilighter },
             thought  = { pattern = '()THOUGHT:()', group = TodoHilighter },
-            todo     = { pattern = '()TODO:()', group = TodoHilighter }, -- FIX: fix color
+            todo     = { pattern = '()TODO:()', group = TodoHilighter },
             warn     = { pattern = '()WARN:()', group = TodoHilighter },
         }
     }
@@ -1188,8 +1212,14 @@ AddPlugin {
 -- TODO: Lazy load after treesitter on specific filetypes
 AddPlugin {
     'folke/paint.nvim',
+    -- ft = { 'python' }, -- BUG: highlights code too
     opts = {
         highlights = { -- FEAT: Fill as needed
+            {
+                filter = { filetype = 'python' },
+                pattern = '%a+: ',
+                hl = 'Constant'
+            }
         }
     }
 }
@@ -1333,15 +1363,20 @@ end
 function FixStarry(char, context_char)
     require('starry').setup({
         custom_highlights = {
-            IndentBlanklineChar = { fg = char },
-            IndentBlanklineContextChar = { fg = context_char },
+            IblIndent = { fg = char },
+            IblScope = { fg = context_char },
             LineNr = { underline = false }
         }
     })
 end
 
+function FixToast()
+    vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#427b00' })
+    vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#b968d9' })
+    vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#d12d00' })
+end
+
 function FixVisual(bg)
-    -- FIX: what about colors schemes which have colors already
     if bg == nil then
         if (vim.o.background == 'dark') then
             bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
@@ -1622,7 +1657,7 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Light { 'sweetie',                    '_'                                                                    }
 Dark  { 'terafox',                    'nightfox'                                                             }
 DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
-Light { 'toast',                      '_'                                                                   }
+Light { 'toast',                      '_',        post = FixToast                                            }
 Light { 'tokyobones',                 'zenbones'                                                            }
 Dark  { 'tokyodark',                  '_'                                                                   }
 DarkT { 'tokyodark',                  '_', pre = function() require('tokyodark').setup({transparent_background = true}) end }
@@ -1643,10 +1678,10 @@ DarkT { 'vscode',                     '_', pre = function() require('vscode').se
 Dark  { 'zephyr',                     '_'                                                                   }
 Dark  { 'zephyrium',                  '_'                                                                   }
 
-function ColoRand(ind)
+function ColoRand(scheme_index)
     math.randomseed(os.time())
-    ind = ind or math.random(1, #colos)
-    local selection = colos[ind]
+    scheme_index = scheme_index or math.random(1, #colos)
+    local selection = colos[scheme_index]
     local scheme = selection[1]
     local bg = selection.bg
     local module = selection[2]
@@ -1666,13 +1701,8 @@ function ColoRand(ind)
         postcmd()
     end
 
-    local todo_hl = vim.api.nvim_get_hl(0, { name = 'Todo' })
-    if todo_hl and todo_hl.bg then
-        todo_hl.fg = todo_hl.bg
-        todo_hl.bg = nil
-        vim.api.nvim_set_hl(0, 'Todo', todo_hl)
-    end
-    vim.g.ColoRand = ind .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. (os.clock() - start_time)*1000 .. 'ms'
+    -- FIX: round off to 2 decimals
+    vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. (os.clock() - start_time)*1000 .. 'ms'
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1952,6 +1982,7 @@ AddPlugin {
 }
 -- use 'mfussenegger/nvim-dap-python'
 -- use 'rcarriga/nvim-dap-ui'
+-- https://github.com/jonboh/nvim-dap-rr
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
@@ -2486,7 +2517,7 @@ AddPlugin {
         },
         signs = { -- ┃┇│┆󰇝
             add          = { hl = 'GitSignsAdd'   ,       text = '│', numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
-            change       = { hl = 'GitSignsChange',       text = '┆', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            change       = { hl = 'GitSignsChange',       text = '┊', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             delete       = { hl = 'GitSignsDelete',       text = '', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
             topdelete    = { hl = 'GitSignsDelete',       text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
             changedelete = { hl = 'GitSignsChangedelete', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
@@ -2547,6 +2578,7 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/Darazaki/indent-o-matic
 AddPlugin {
     'lukas-reineke/indent-blankline.nvim',
     event = 'CursorHold',
@@ -2579,7 +2611,7 @@ AddPlugin {
             priority = 1024,
             include = {
                 node_type = {
-                    ['*'] = { '*' }
+                    ['*'] = { 'if_statement' }
                 },
             },
             exclude = {
@@ -2720,11 +2752,11 @@ AddPlugin {
         end
 
         -- LSP settings (for overriding per client)
-        local handlers =  {
+        local handlers = {
             -- ['textDocument/hover'] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
             -- ['textDocument/signatureHelp'] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
-            ['textDocument/hover'] =  vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
-            ['textDocument/signatureHelp'] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
+            ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
+            ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
         }
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -3466,7 +3498,7 @@ AddPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin { -- FIX: colors STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %*
+AddPlugin { -- FIX: caret dark STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %*
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -4155,7 +4187,7 @@ AddPlugin {
                     opts = {}, -- merged with defaults from documentation
                 },
                 signature = {
-                    enabled = true, -- TODO: compare and enable me
+                    enabled = true,
                     auto_open = {
                         enabled = true,
                         trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
@@ -4500,7 +4532,7 @@ AddPlugin {
 
 AddPlugin {
     'folke/neodev.nvim',
-    event = 'LspAttach',
+    event = 'LspAttach *.lua',
     opts = {
         library = {
             enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
@@ -4545,7 +4577,8 @@ AddPlugin {
 }
 
 -- https://github.com/glacambre/firenvim
---https://github.com/tomiis4/BufferTabs.nvim
+
+-- FEAT: https://github.com/luckasRanarison/clear-action.nvim
 
 AddPlugin {
     'kwkarlwang/bufjump.nvim',
@@ -4568,6 +4601,8 @@ AddPlugin {
     'kylechui/nvim-surround',
     config = true
 }
+
+-- https://github.com/mangelozzi/rgflow.nvim
 
 AddPlugin {
     'mg979/vim-visual-multi',
@@ -4648,6 +4683,8 @@ AddPlugin {
     'shortcuts/no-neck-pain.nvim',
     cmd = 'NoNeckPain'
 }
+
+-- https://github.com/tomiis4/BufferTabs.nvim
 
 AddPlugin {
     'tummetott/reticle.nvim',
