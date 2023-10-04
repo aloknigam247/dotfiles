@@ -1,19 +1,12 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: dotted borders
--- FEAT: https://github.com/9seconds/repolink.nvim
 -- FEAT: https://github.com/Wansmer/symbol-usage.nvim
 -- FEAT: https://github.com/Zeioth/dooku.nvim
 -- FEAT: https://github.com/altermo/ultimate-autopair.nvim
--- FEAT: https://github.com/anuvyklack/hydra.nvim
 -- FEAT: https://github.com/cameron-wags/rainbow_csv.nvim
 -- FEAT: https://github.com/iamcco/diagnostic-languageserver
--- FEAT: https://github.com/judaew/ronny.nvim
--- FEAT: https://github.com/lewis6991/hover.nvim
--- FEAT: https://github.com/mattn/efm-langserver
 -- FEAT: https://github.com/mfussenegger/nvim-lint
 -- FEAT: https://github.com/mrshmllow/open-handlers.nvim
 -- FEAT: https://github.com/nkoporec/checkmate-lsp
--- FEAT: https://github.com/roobert/surround-ui.nvim
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
 -- TODO: Preview for NvimTree
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
@@ -482,9 +475,18 @@ function NvimOpenWinSafe(bufnr, enter, config)
                 config.row = math.max(0, config.row - shift) -- shift row up
                 window_bottom = config.row + config.height + 2
                 config.height = math.min(config.height, vim.o.lines - 3)
-                -- if window_bottom > editor_bottom then
-                --     config.height = vim.o.lines - 3
-                -- end
+            end
+        end
+
+        -- Fix width
+        if config.col and config.width and config.width > 1 then
+            local editor_col = vim.o.columns
+            local window_col = config.col + config.width + 2
+            local shift = window_col - editor_col
+            if shift > 0 then
+                config.col = math.max(0, config.col - shift) -- shift row up
+                window_col = config.col + config.width + 2
+                config.width = math.min(config.width, vim.o.columns - 2)
             end
         end
     end
@@ -574,7 +576,7 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Overlength line marker',
         callback = function()
-            vim.cmd('match ColorColumn /\\%' .. vim.bo.textwidth + 2 .. 'v/')
+            vim.cmd('match ColorColumn /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- FIX: color
         end
     }
 )
@@ -1203,7 +1205,7 @@ AddPlugin {
 
 AddPlugin {
     'folke/paint.nvim',
-    -- ft = { 'python' }, -- BUG: highlights code too
+    -- ft = { 'python' }, -- highlights code too https://github.com/folke/paint.nvim/issues/8
     opts = {
         highlights = { -- FEAT: Fill as needed
             {
@@ -1698,8 +1700,8 @@ function ColoRand(scheme_index)
         postcmd()
     end
 
-    -- FIX: round off to 2 decimals
-    vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. module .. ':' .. (os.clock() - start_time)*1000 .. 'ms'
+    local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
+    vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. module .. elapsed
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2426,6 +2428,11 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    '9seconds/repolink.nvim', -- FEAT: add support for azure devops
+    cmd = 'RepoLink'
+}
+
+AddPlugin {
     'FabijanZulj/blame.nvim',
     cmd = 'ToggleBlame'
 }
@@ -2714,6 +2721,8 @@ AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/
     }
 }
 
+-- https://github.com/mattn/efm-langserver
+
 AddPlugin {
     'williamboman/mason.nvim',
     cmd = 'Mason',
@@ -2738,7 +2747,7 @@ AddPlugin {
 
         local on_attach = function(client, bufnr)
             require('lsp-inlayhints').on_attach(client, bufnr)
-            require('lsp_signature').on_attach({ hint_enable = false, noice = false }, bufnr)
+            -- require('lsp_signature').on_attach({ hint_enable = false, noice = false }, bufnr)
 
             -- Mappings.
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -2753,14 +2762,14 @@ AddPlugin {
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
-            -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-            -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-            -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-            -- vim.keymap.set('n', '<space>wl', function()
-            --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            -- end, bufopts)
-            -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-            -- vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+            vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+            vim.keymap.set('n', '<space>wl', function()
+                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, bufopts)
+            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+            vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
         end
 
         -- LSP settings (for overriding per client)
@@ -3367,17 +3376,7 @@ AddPlugin {
         require('bqf').setup {
             auto_resize_height = true,
             preview = {
-                border_chars = {
-                    Icons.border_vert,
-                    Icons.border_vert,
-                    Icons.border_hor,
-                    Icons.border_hor,
-                    Icons.border_topright,
-                    Icons.border_topright,
-                    Icons.border_botleft,
-                    Icons.border_botright,
-                    '█',
-                }
+                border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}, -- TODO: relocate to common place
             },
             filter = {
                 fzf = {
@@ -4468,6 +4467,8 @@ AddPlugin {
     }
 }
 
+-- https://github.com/anuvyklack/hydra.nvim
+
 AddPlugin {
     'cbochs/portal.nvim',
     cmd = 'Portal',
@@ -4613,6 +4614,8 @@ AddPlugin {
     config = true
 }
 
+-- https://github.com/lewis6991/hover.nvim
+
 -- https://github.com/mangelozzi/rgflow.nvim
 
 AddPlugin {
@@ -4676,6 +4679,8 @@ AddPlugin {
     'rickhowe/spotdiff.vim',
     cmd = 'Diffthis'
 }
+
+-- https://github.com/roobert/surround-ui.nvim
 
 AddPlugin {
     'ryleelyman/latex.nvim',
