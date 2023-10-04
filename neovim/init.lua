@@ -574,7 +574,7 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Overlength line marker',
         callback = function()
-            vim.cmd('match ColorColumn /\\%' .. vim.bo.textwidth + 1 .. 'v/')
+            vim.cmd('match ColorColumn /\\%' .. vim.bo.textwidth + 2 .. 'v/')
         end
     }
 )
