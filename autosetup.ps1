@@ -202,7 +202,7 @@ foreach ($app in $app_install) {
             Write-Output "Updating Packages"
             # choco_update $choco_pkgs
             scoop_install -update $scoop_pkgs
-            # winget_update $winget_pkgs # TODO: Update mechanism
+            winget_install -update $winget_pkgs
         } else {
             Write-Output "Installing Packages"
             # choco_install $choco_pkgs
