@@ -3,7 +3,7 @@
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
 let c_space_errors = 1             " Highlight trailing spaces
-" let g:markdown_folding = 1         " Enable markdown folding
+let g:markdown_folding = 1         " Enable markdown folding
 " let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
 " let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode
 " let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
@@ -56,7 +56,7 @@ set culopt=number,screenline " Highlight current line and line number of current
 set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
-set fillchars=fold:\         " No dot characters in fold
+set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\        " No dot characters in fold
 " set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.

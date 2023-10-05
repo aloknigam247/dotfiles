@@ -260,11 +260,8 @@ $env:FZF_DEFAULT_OPTS='
 
 # Prompt Styling
 # ``````````````
-# FEAT: Background color support
 $prompt_script = @{}
 
-# FEAT: git dirty status for uncommit changes
-# FEAT: git commit unpushed counts
 function promptGen {
     $blocks = @(
         @{

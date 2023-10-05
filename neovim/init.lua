@@ -1,14 +1,65 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/Zeioth/dooku.nvim
--- FEAT: https://github.com/altermo/ultimate-autopair.nvim
--- FEAT: https://github.com/cameron-wags/rainbow_csv.nvim
--- FEAT: https://github.com/iamcco/diagnostic-languageserver
--- FEAT: https://github.com/nkoporec/checkmate-lsp
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
--- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
 -- TODO: spell checks for markdown
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+AuProfileData = nil
+function AuInit(args)
+    local event = args.event
+
+    if AuProfileData then
+        local data = AuProfileData[event]
+        if data then
+            data.count = data.count + 1
+            data.start = os.clock()
+        else
+            data = {}
+            data['count'] = 1
+            data['start'] = os.clock()
+        end
+        AuProfileData[event] = data
+    end
+end
+
+function AuProfile(args)
+    local data = AuProfileData[args.event]
+    if data then
+        local elapsed = (os.clock() - data.start)
+        local total = (data.total or 0) + elapsed
+
+        data['avg'] = total / data.count
+        data['total'] = total
+
+        AuProfileData[args.event] = data
+    end
+end
+
+Event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite or BufWritePre", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
+vim.api.nvim_create_autocmd(
+    Event_list, {
+        desc = 'Autocommand profile init',
+        pattern = '*',
+        callback = AuInit
+    }
+)
+
+vim.api.nvim_create_user_command(
+    'ProfileAutocommand',
+    function()
+        AuProfileData = {}
+        vim.api.nvim_create_autocmd(
+        Event_list, {
+                desc = 'Autocommand profile record',
+                pattern = '*',
+                callback = AuProfile
+            }
+        )
+    end,
+    {
+        nargs = 0
+    }
+)
+
 -- Variables</>
 
 -- Vim Globals
@@ -492,7 +543,7 @@ end
 vim.api.nvim_open_win_orig = vim.api.nvim_open_win
 vim.api.nvim_open_win = NvimOpenWinSafe
 
-function OpenPreview(path, relativity, col_offset, row_offset, enter)
+function OpenFloat(path, relativity, col_offset, row_offset, enter)
     -- Create buffer
     local bufnr = vim.fn.bufadd(path)
 
@@ -665,12 +716,13 @@ function TodoHilighter(_, match)
 end
 -- <~>
 -- Auto Commands</>
+vim.api.nvim_set_hl(0, "Overlength", { bg = AdaptiveBG(70, -70) })
 vim.api.nvim_create_autocmd(
     'BufWinEnter', {
         pattern = '*',
         desc = 'Overlength line marker',
         callback = function()
-            vim.cmd('match ColorColumn /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- FIX: color
+            vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- FIX: color
         end
     }
 )
@@ -834,9 +886,9 @@ PopupMenuAdd({
 -- Commands</>
 Preview_win = nil
 vim.api.nvim_create_user_command(
-    'Preview',
+    'Peek',
     function(args)
-        OpenPreview(args.args, 'editor', 8, 3, true)
+        OpenFloat(args.args, 'editor', 8, 3, true)
     end,
     {
         complete = 'file',
@@ -860,6 +912,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
+    -- https://github.com/altermo/ultimate-autopair.nvim
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
     -- https://github.com/m4xshen/autoclose.nvim
     'windwp/nvim-autopairs',
@@ -1295,8 +1348,10 @@ AddPlugin {
 
 AddPlugin {
     'kevinhwang91/nvim-hlslens',
-    config = true,
-    keys = { 'n', 'N', '*', '#', 'g*', 'g#' }
+    keys = { 'n', 'N', '*', '#', 'g*', 'g#' },
+    opts = {
+        calm_down = true
+    }
 }
 
 AddPlugin {
@@ -1363,8 +1418,8 @@ end
 
 function FixIndentBlankline()
     for _, color in pairs({
-        'IndentBlanklineChar',
-        'IndentBlanklineContextChar',
+        'IblIndent',
+        'IblScope',
         'IndentBlanklineContextSpaceChar',
         'IndentBlanklineSpaceChar',
     }) do
@@ -1378,8 +1433,8 @@ end
 function FixLimestone(char, context_char, method, symbol)
     require('starry').setup({
         custom_highlights = {
-            IndentBlanklineChar = { fg = char },
-            IndentBlanklineContextChar = { fg = context_char },
+            IblIndent = { fg = char },
+            IblScope = { fg = context_char },
             LineNr = { underline = false },
             ['@method'] = { fg = method, bold = true },
             ['@symbol'] = { fg = symbol }
@@ -1414,17 +1469,7 @@ function FixToast()
 end
 
 function FixVisual(bg)
-    if bg == nil then
-        if (vim.o.background == 'dark') then
-            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
-            bg = string.format('%X', bg)
-            bg = LightenDarkenColor(bg, 50)
-        else
-            bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
-            bg = string.format('%X', bg)
-            bg = LightenDarkenColor(bg, -20)
-        end
-    end
+    bg = bg or AdaptiveBG(50, -20)
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
 end
 
@@ -2028,6 +2073,7 @@ AddPlugin {
 -- https://github.com/jonboh/nvim-dap-rr
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/Zeioth/dooku.nvim
 AddPlugin {
     'danymat/neogen',
     cmd = 'Neogen',
@@ -2165,7 +2211,7 @@ AddPlugin {
                     end
                     local config = vim.api.nvim_win_get_config(0)
                     print('DEBUGPRINT[1]: init.lua:2166: config=' .. vim.inspect(config))
-                    OpenPreview(path, 'win', 20, 3, false)
+                    OpenFloat(path, 'win', 20, 3, false)
                 end
             end
 
@@ -2468,14 +2514,14 @@ AddPlugin {
                 return newVirtText
             end,
             provider_selector = function(_, _, _)
-                return {'treesitter', 'indent'}
+                return 'treesitter'
             end
         })
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
     dependencies = 'kevinhwang91/promise-async',
-    enabled = false -- BUG: its buggy
+    keys = { 'zM' }
 }
 
 -- <~>
@@ -2775,6 +2821,8 @@ AddPlugin {
     event = 'LspAttach'
 }
 
+-- https://github.com/iamcco/diagnostic-languageserver
+
 AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/neovim/comments/158404z/is_lspinlayhintsnvim_still_relevant/
     'lvimuser/lsp-inlayhints.nvim',
     branch = 'anticonceal',
@@ -2787,6 +2835,7 @@ AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/
 
 -- https://github.com/mattn/efm-langserver
 -- https://github.com/mfussenegger/nvim-lint
+-- https://github.com/nkoporec/checkmate-lsp
 
 AddPlugin {
     'williamboman/mason.nvim',
@@ -2919,10 +2968,6 @@ AddPlugin {
     dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
     keys = { '<F12>' }
 }
-
--- AddPlugin { -- TODO: remove when noice is stable and add as a backup plugin
---     'ray-x/lsp_signature.nvim'
--- }
 
 AddPlugin {
     'glepnir/lspsaga.nvim',
@@ -4262,7 +4307,7 @@ AddPlugin {
                     view = nil, -- when nil, use defaults from documentation
                     opts = {}, -- merged with defaults from documentation
                 },
-                signature = {
+                signature = { -- 'ray-x/lsp_signature.nvim'
                     enabled = true,
                     auto_open = {
                         enabled = true,
@@ -4546,6 +4591,7 @@ AddPlugin {
 -- https://github.com/chipsenkbeil/distant.nvim
 
 AddPlugin {
+    -- https://github.com/cameron-wags/rainbow_csv.nvim
     -- https://github.com/mechatroner/rainbow_csv
     'chrisbra/csv.vim',
     config = function()
