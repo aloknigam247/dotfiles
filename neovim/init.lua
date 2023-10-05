@@ -1,14 +1,10 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/Wansmer/symbol-usage.nvim
 -- FEAT: https://github.com/Zeioth/dooku.nvim
 -- FEAT: https://github.com/altermo/ultimate-autopair.nvim
 -- FEAT: https://github.com/cameron-wags/rainbow_csv.nvim
 -- FEAT: https://github.com/iamcco/diagnostic-languageserver
--- FEAT: https://github.com/mfussenegger/nvim-lint
--- FEAT: https://github.com/mrshmllow/open-handlers.nvim
 -- FEAT: https://github.com/nkoporec/checkmate-lsp
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
--- TODO: Preview for NvimTree
 -- TODO: profiling code for autocommands -> create hooks for autocommands begin and end
 -- TODO: spell checks for markdown
 -- <~>
@@ -496,6 +492,104 @@ end
 vim.api.nvim_open_win_orig = vim.api.nvim_open_win
 vim.api.nvim_open_win = NvimOpenWinSafe
 
+function OpenPreview(path, relativity, col_offset, row_offset, enter)
+    -- Create buffer
+    local bufnr = vim.fn.bufadd(path)
+
+    -- Create floating window
+    if Preview_win == nil then
+        Preview_win = vim.api.nvim_open_win(bufnr, enter, {
+            border = 'rounded',
+            col = col_offset,
+            footer = ' [M-s] split [M-v] vsplit [M-t] tab open [q] quit ',
+            footer_pos = 'right',
+            height = vim.o.lines - 8,
+            relative = relativity,
+            row = row_offset,
+            title = path ,
+            title_pos = 'center',
+            width = vim.o.columns - 20,
+            zindex = 1
+        })
+    else
+        vim.api.nvim_win_set_buf(Preview_win, bufnr)
+    end
+
+    -- Create autocommand to resize window
+    local au_id = vim.api.nvim_create_autocmd(
+        'VimResized', {
+            pattern = '*',
+            desc = 'Resize preview window on vim resize',
+            callback = function()
+                vim.api.nvim_win_set_config(0, {
+                    width = vim.o.columns - 20,
+                    height = vim.o.lines - 8
+                })
+            end
+        }
+    )
+
+    -- Cleanup on window close
+    vim.api.nvim_create_autocmd(
+        'WinClosed', {
+            pattern = tostring(Preview_win),
+            desc = 'Delete resize autocommand on Preview window close',
+            callback = function(arg)
+                Preview_win = nil
+                vim.api.nvim_del_autocmd(au_id)
+                vim.api.nvim_del_autocmd(arg.id)
+            end
+        }
+    )
+
+    -- Create mapping to close window on q
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<cmd>:q<CR>', {
+        desc = 'Close preview window',
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+
+    -- Reopen preview in split
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-s>', '', {
+        callback = function()
+            local file_path = vim.fn.expand('%:p')
+            vim.cmd.quit()
+            vim.cmd.split(file_path)
+        end,
+        desc = 'reopen Preview window in split',
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+
+    -- Reopen preview in vsplit
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-v>', '', {
+        callback = function()
+            local file_path = vim.fn.expand('%:p')
+            vim.cmd.quit()
+            vim.cmd.vsplit(file_path)
+        end,
+        desc = 'reopen Preview window in split',
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+
+    -- Reopen preview in tab
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-t>', '', {
+        callback = function()
+            local file_path = vim.fn.expand('%:p')
+            vim.cmd.quit()
+            vim.cmd.tabedit(file_path)
+        end,
+        desc = 'reopen Preview window in split',
+        nowait = true,
+        noremap = true,
+        silent = true
+    })
+end
+
 function PopupAction()
     -- local currentWindow = vim.api.nvim_get_current_win()
     -- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
@@ -739,61 +833,10 @@ PopupMenuAdd({
 -- <~>
 -- Commands</>
 Preview_win = nil
-vim.api.nvim_create_user_command( -- FEAT: mapping to open Preview win in [v]split/tab
+vim.api.nvim_create_user_command(
     'Preview',
     function(args)
-        -- Create buffer
-        local bufnr = vim.fn.bufadd(args.args)
-
-        -- Create floating window
-        if Preview_win == nil then
-            Preview_win = vim.api.nvim_open_win(bufnr, true, {
-                border = 'rounded',
-                col = 8,
-                footer = ' [q] quit ',
-                footer_pos = 'right',
-                height = vim.o.lines - 8,
-                relative = 'editor',
-                row = 3,
-                title = args.args ,
-                title_pos = 'center',
-                width = vim.o.columns - 20,
-                zindex = 1
-            })
-        else
-            vim.api.nvim_win_set_buf(Preview_win, bufnr)
-        end
-
-        -- Create autocommand to resize window
-        local au_id = vim.api.nvim_create_autocmd(
-            'VimResized', {
-                pattern = '*',
-                desc = 'Resize preview window on vim resize',
-                callback = function()
-                    vim.api.nvim_win_set_config(0, {
-                        width = vim.o.columns - 20,
-                        height = vim.o.lines - 8
-                    })
-                end
-            }
-        )
-
-        vim.api.nvim_create_autocmd(
-            'WinClosed', {
-                pattern = tostring(Preview_win),
-                desc = 'Delete resize autocommand on Preview window close',
-                callback = function(arg)
-                    Preview_win = nil
-                    vim.api.nvim_del_autocmd(au_id)
-                    vim.api.nvim_del_autocmd(arg.id)
-                end
-            }
-        )
-
-        -- Create mapping to close window
-        vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<cmd>:q<CR>', {
-            nowait = true, noremap = true, silent = true
-        })
+        OpenPreview(args.args, 'editor', 8, 3, true)
     end,
     {
         complete = 'file',
@@ -1205,9 +1248,10 @@ AddPlugin {
 
 AddPlugin {
     'folke/paint.nvim',
+    enabled = false,
     -- ft = { 'python' }, -- highlights code too https://github.com/folke/paint.nvim/issues/8
     opts = {
-        highlights = { -- FEAT: Fill as needed
+        highlights = {
             {
                 filter = { filetype = 'python' },
                 pattern = '%a+: ',
@@ -2107,6 +2151,24 @@ AddPlugin {
               return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
             end
 
+            -- TODO: Preview for NvimTree
+            local function custom_preview()
+                local node = require("nvim-tree.lib").get_node_at_cursor()
+                if node.name == ".." then
+                    require("nvim-tree.actions.root.change-dir").fn ".."
+                elseif node.nodes then
+                    require("nvim-tree.lib").expand_or_collapse(node)
+                else
+                    local path = node.absolute_path
+                    if node.link_to and not node.nodes then
+                      path = node.link_to
+                    end
+                    local config = vim.api.nvim_win_get_config(0)
+                    print('DEBUGPRINT[1]: init.lua:2166: config=' .. vim.inspect(config))
+                    OpenPreview(path, 'win', 20, 3, false)
+                end
+            end
+
             local api = require('nvim-tree.api')
             vim.keymap.set('n', '<C-e>',          api.node.open.replace_tree_buffer,  opts('Open: In Place'))
             vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
@@ -2115,6 +2177,7 @@ AddPlugin {
             vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
             vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
             vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
+            -- vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview'))
             vim.keymap.set('n', '<Tab>',          api.node.open.preview,              opts('Open Preview'))
             vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
             vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
@@ -2671,6 +2734,7 @@ AddPlugin {
 -- https://github.com/Hoffs/omnisharp-extended-lsp.nvim
 
 AddPlugin {
+    -- https://github.com/Wansmer/symbol-usage.nvim
     'VidocqH/lsp-lens.nvim',
     event = 'LspAttach',
     opts = {
@@ -2722,6 +2786,7 @@ AddPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/
 }
 
 -- https://github.com/mattn/efm-langserver
+-- https://github.com/mfussenegger/nvim-lint
 
 AddPlugin {
     'williamboman/mason.nvim',
@@ -4630,7 +4695,7 @@ AddPlugin {
 }
 
 -- https://github.com/miversen33/netman.nvim
-
+-- https://github.com/mrshmllow/open-handlers.nvim
 -- https://github.com/nat-418/scamp.nvim
 
 AddPlugin {
@@ -4710,7 +4775,7 @@ AddPlugin {
 }
 
 AddPlugin {
-    'tversteeg/registers.nvim', -- FIX: Insert more does not work good with new lines
+    'tversteeg/registers.nvim', -- Insert more does not work good with new lines
     opts = {
         register_user_command = false,
         show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
