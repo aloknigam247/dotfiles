@@ -46,20 +46,20 @@ function pdbg    { code .; python -m debugpy --listen 5678 --wait-for-client $ar
 function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
 function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
 function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
-function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg }
+function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg } # TODO: auto select editor based on filetype
 
 function which($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "[󰊕 Function]" -fg "#FF0022"
+        Format-Text "[󰊕 $arg]" -fg "#FF0022"
         $cm.Definition
     } elseif ($type -eq "Application") {
-        Format-Text "[ Application]" -fg "#FF0022"
+        Format-Text "[ $arg]" -fg "#FF0022"
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Text "[ Alias]" -fg "#FF0022"
+        Format-Text "[ $arg]" -fg "#FF0022"
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
@@ -241,7 +241,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # FZF Setup
 # ``````````````
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
-# FEAT: remove module and use directly
 Import-Module PSFzf
 
 Set-PsFzfOption `
