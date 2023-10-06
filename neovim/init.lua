@@ -67,14 +67,14 @@ vim.g.editorconfig = false
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
---vim.highlight.priorities
-HlPriority = {
+Dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
+HlPriority = { --vim.highlight.priorities
     hlargs = 126,
     url = 202
 }
 
 Icons = {}
-function IconGenerator(_, key)
+function IconGenerator(_, key) -- TODO: remove this logic
     local icons = {
         Array             = '󰅪 ',
         Boolean           = ' ',
@@ -3486,7 +3486,7 @@ AddPlugin {
         require('bqf').setup {
             auto_resize_height = true,
             preview = {
-                border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}, -- TODO: relocate to common place
+                border = Dotted_border,
             },
             filter = {
                 fzf = {
@@ -4744,14 +4744,7 @@ AddPlugin {
 -- https://github.com/mrshmllow/open-handlers.nvim
 -- https://github.com/nat-418/scamp.nvim
 
-AddPlugin {
-    'nacro90/numb.nvim',
-    -- cond = function()
-    --     return vim.api.nvim_get_mode().mode == 'c'
-    -- end,
-    config = true,
-    event = 'CmdlineEnter',
-}
+-- AddPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineEnter' }
 
 AddPlugin {
     -- https://github.com/RutaTang/compter.nvim
