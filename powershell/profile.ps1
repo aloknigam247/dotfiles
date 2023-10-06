@@ -35,10 +35,10 @@ New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 # `````````
 Remove-Alias ls
 Remove-Alias rm
-function bash    { C:\msys64\usr\bin\bash -c $args[0] }
+function bash    { C:\msys64\usr\bin\bash.exe -c $args[0] }
 function bat     { ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args }
 function fnd     { C:\msys64\usr\bin\find.exe $args | C:\msys64\usr\bin\sed 's|/|\\|g' }
-function grep    { C:\msys64\usr\bin\grep --color=auto -En $args }
+function grep    { C:\msys64\usr\bin\grep.exe --color=auto -En $args }
 function la      { C:\msys64\usr\bin\ls.exe -AF --color=auto $args }
 function lla     { C:\msys64\usr\bin\ls.exe -AlF --color=auto $args }
 function ls      { C:\msys64\usr\bin\ls.exe -F --color=auto $args }
@@ -46,7 +46,18 @@ function pdbg    { code .; python -m debugpy --listen 5678 --wait-for-client $ar
 function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
 function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
 function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
-function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg } # TODO: auto select editor based on filetype
+function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg }
+
+function e ($arg) {
+    $code_ext = @('cs', 'ps1', 'psm1')
+
+    $ext = $arg.split('.')[-1]
+    if ( $ext -in $code_ext) {
+        code $arg
+    } else {
+        ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg
+    }
+}
 
 function which($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
