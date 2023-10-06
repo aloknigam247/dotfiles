@@ -2722,7 +2722,7 @@ AddPlugin {
         },
         scope = {
             enabled = true,
-            char = nil,
+            char = '▎',
             show_start = true,
             show_end = true,
             injected_languages = true,
