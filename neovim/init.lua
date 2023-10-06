@@ -1,8 +1,70 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
--- TODO: spell checks for markdown
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- PERF: fix me
+-- 01:54:23 PM msg_show   au CursorMoved --- Autocommands ---
+-- CursorMoved
+-- *<Lua 46: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
+-- nvim_tree_floating_node  CursorMoved
+-- NvimTree_*<Lua 379: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree/renderer/components/full-name.lua:93>
+-- <Lua 380: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree/renderer/components/full-name.lua:103>
+-- NvimTree  CursorMoved
+-- NvimTree_*<Lua 399: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree.lua:266>
+-- flash_char  CursorMoved
+-- *<Lua 448: ~/AppData/Local/nvim-data/lazy/flash.nvim/lua/flash/plugins/char.lua:143>
+-- sentiment.renderer  CursorMoved
+-- *<Lua 472: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
+-- lualine_stl_refresh  CursorMoved
+-- *call v:lua.require'lualine'.refresh({'kind': 'window', 'place': ['statusline'], 'trigger': 'autocmd'})
+-- lualine_wb_refresh  CursorMoved
+-- *call v:lua.require'lualine'.refresh({'kind': 'tabpage', 'place': ['winbar'], 'trigger': 'autocmd'})
+-- IndentBlankline  CursorMoved
+-- *<Lua 764: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:25>
+-- vim_illuminate_v2_augroup  CursorMoved
+-- *<Lua 787: ~/AppData/Local/nvim-data/lazy/vim-illuminate/lua/illuminate/engine.lua:49>
+-- CursorMoved
+-- *<Lua 848: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
+-- <Lua 1531: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
+-- <Lua 1628: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
+--
+-- 01:54:26 PM msg_show   au OptionSet --- Autocommands ---
+-- OptionSet
+-- *<Lua 76: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
+-- background<Lua 385: ~/AppData/Local/nvim-data/lazy/nvim-web-devicons/lua/nvim-web-devicons.lua:2131>
+-- lualine  OptionSet
+-- backgroundlua require'lualine'.setup()
+-- IndentBlankline  OptionSet
+-- list<Lua 774: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
+-- listchars<Lua 775: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
+-- shiftwidth<Lua 776: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
+-- tabstop<Lua 777: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
+-- vartabstop<Lua 778: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
+-- gitsigns.config.diff_opts  OptionSet
+-- diffopt<Lua 991: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/config.lua:920>
+-- gitsigns  OptionSet
+-- fileformat<Lua 934: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
+-- bomb<Lua 931: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
+-- eol<Lua 929: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
+-- OptionSet
+-- *<Lua 1658: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
+--
+-- 01:54:28 PM msg_show   au WinScrolled --- Autocommands ---
+-- WinScrolled
+-- *<Lua 125: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
+-- sentiment.renderer  WinScrolled
+-- *<Lua 470: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
+-- MiniHipatternsBuffer1  WinScrolled
+-- <buffer=1><Lua 763: vim/_editor.lua:338> [Update highlighting in view]
+-- IndentBlankline  WinScrolled
+-- *<Lua 779: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:39>
+-- WinScrolled
+-- *<Lua 846: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
+-- NvimSeparator  WinScrolled
+-- *<Lua 1498: ~/AppData/Local/nvim-data/lazy/colorful-winsep.nvim/lua/colorful-winsep/init.lua:40>
+-- WinScrolled
+-- *<Lua 1530: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
+-- <Lua 1707: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
 AuProfileData = nil
 function AuInit(args)
     local event = args.event
@@ -73,89 +135,75 @@ HlPriority = { --vim.highlight.priorities
     url = 202
 }
 
-Icons = {}
-function IconGenerator(_, key) -- TODO: remove this logic
-    local icons = {
-        Array             = '󰅪 ',
-        Boolean           = ' ',
-        Class             = ' ',
-        Color             = ' ',
-        Component         = ' ',
-        Constant          = ' ',
-        Constructor       = ' ',
-        Enum              = ' ',
-        EnumMember        = ' ',
-        Event             = ' ',
-        Field             = ' ',
-        File              = ' ',
-        Folder            = '󰷏 ',
-        Fragment          = ' ',
-        Function          = ' ',
-        History           = ' ',
-        Interface         = ' ',
-        Key               = ' ',
-        Keyword           = ' ',
-        Macro             = ' ',
-        Method            = ' ',
-        Module            = ' ',
-        Namespace         = 'ﬥ ',
-        Null              = '󰢤 ',
-        Number            = ' ',
-        Object            = ' ',
-        Operator          = ' ',
-        Options           = ' ',
-        Package           = ' ',
-        Parameter         = ' ',
-        Property          = ' ',
-        Reference         = ' ',
-        Snippet           = ' ',
-        StaticMethod      = '󰡱 ',
-        String            = ' ',
-        Struct            = ' ',
-        Text              = '󱄽 ',
-        TypeAlias         = ' ',
-        TypeParameter     = ' ',
-        Unit              = ' ',
-        Value             = ' ',
-        Variable          = ' ',
-        bookmark          = '󰃃',
-        bookmark_annotate = '󰃄',
-        border_botleft    = '╰',
-        border_botright   = '╯',
-        border_hor        = '─',
-        border_topleft    = '╭',
-        border_topright   = '╮',
-        border_vert       = '│',
-        code_action       = ' ',
-        collapse          = ' ',
-        diagnostic        = ' ',
-        error             = ' ',
-        expand            = ' ',
-        file_modified     = '',
-        file_newfile      = '',
-        file_readonly     = '',
-        file_unnamed      = '',
-        hint              = ' ',
-        hover             = ' ',
-        incoming          = ' ',
-        info              = ' ',
-        outgoing          = ' ',
-        preview           = ' ',
-        symlink_arrow     = ' 壟 ',
-        warn              = ' ',
-    }
-
-    local val = icons[key]
-    if val ==  nil then
-        print("Unknown key", key)
-    else
-        Icons[key] = val
-    end
-
-    return val
-end
-setmetatable(Icons, {__index = IconGenerator})
-
+Icons = {
+    Array             = '󰅪 ',
+    Boolean           = ' ',
+    Class             = ' ',
+    Color             = ' ',
+    Component         = ' ',
+    Constant          = ' ',
+    Constructor       = ' ',
+    Enum              = ' ',
+    EnumMember        = ' ',
+    Event             = ' ',
+    Field             = ' ',
+    File              = ' ',
+    Folder            = '󰷏 ',
+    Fragment          = ' ',
+    Function          = ' ',
+    History           = ' ',
+    Interface         = ' ',
+    Key               = ' ',
+    Keyword           = ' ',
+    Macro             = ' ',
+    Method            = ' ',
+    Module            = ' ',
+    Namespace         = 'ﬥ ',
+    Null              = '󰢤 ',
+    Number            = ' ',
+    Object            = ' ',
+    Operator          = ' ',
+    Options           = ' ',
+    Package           = ' ',
+    Parameter         = ' ',
+    Property          = ' ',
+    Reference         = ' ',
+    Snippet           = ' ',
+    StaticMethod      = '󰡱 ',
+    String            = ' ',
+    Struct            = ' ',
+    Text              = '󱄽 ',
+    TypeAlias         = ' ',
+    TypeParameter     = ' ',
+    Unit              = ' ',
+    Value             = ' ',
+    Variable          = ' ',
+    bookmark          = '󰃃',
+    bookmark_annotate = '󰃄',
+    border_botleft    = '╰',
+    border_botright   = '╯',
+    border_hor        = '─',
+    border_topleft    = '╭',
+    border_topright   = '╮',
+    border_vert       = '│',
+    code_action       = ' ',
+    collapse          = ' ',
+    diagnostic        = ' ',
+    error             = ' ',
+    expand            = ' ',
+    file_modified     = '',
+    file_newfile      = '',
+    file_readonly     = '',
+    file_unnamed      = '',
+    hint              = ' ',
+    hover             = ' ',
+    incoming          = ' ',
+    info              = ' ',
+    outgoing          = ' ',
+    preview           = ' ',
+    symlink_arrow     = ' 壟 ',
+    warn              = ' ',
+}
 
 LazyConfig = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
@@ -1521,9 +1569,13 @@ end
 -- https://github.com/lifepillar/vim-colortemplate
 local colos = {}
 
+local function ColorPlugin(opts)
+    table.insert(colos, opts)
+end
+
 local function Dark(opts)
     opts.bg = 'dark'
-    table.insert(colos, opts)
+    ColorPlugin(opts)
 end
 
 local function DarkT(opts)
@@ -1533,7 +1585,7 @@ end
 
 local function Light(opts)
     opts.bg = 'light'
-    table.insert(colos, opts)
+    ColorPlugin(opts)
 end
 
 AddPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                        }
@@ -1601,7 +1653,7 @@ AddPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', 
 AddPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'                                              }
 AddPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
--- FEAT: use cfg field to reduce line length
+-- use cfg field to reduce line length
 DarkT { 'NeoSolarized',               '_'                              }
 Light { 'NeoSolarized',               '_'                              }
 Dark  { 'NeoSolarized',               '_', pre = function() require('NeoSolarized').setup({transparent = false}) end}
@@ -2197,7 +2249,7 @@ AddPlugin {
               return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
             end
 
-            -- TODO: Preview for NvimTree
+            -- Preview for NvimTree
             local function custom_preview()
                 local node = require("nvim-tree.lib").get_node_at_cursor()
                 if node.name == ".." then
@@ -2209,9 +2261,8 @@ AddPlugin {
                     if node.link_to and not node.nodes then
                       path = node.link_to
                     end
-                    local config = vim.api.nvim_win_get_config(0)
-                    print('DEBUGPRINT[1]: init.lua:2166: config=' .. vim.inspect(config))
-                    OpenFloat(path, 'win', 20, 3, false)
+
+                    OpenFloat(path, 'win', vim.fn.winwidth(0) + 2, 3, false)
                 end
             end
 

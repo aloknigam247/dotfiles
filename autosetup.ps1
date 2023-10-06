@@ -1,5 +1,4 @@
 #Requires -RunAsAdministrator
-# TODO: install fonts
 # $fontPath = 'C:\Windows\Fonts\'
 # $files = Get-ChildItem -Path . -Filter *.ttf
 # foreach ($file in $files) {

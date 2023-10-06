@@ -52,12 +52,14 @@ function which($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
 
-    Format-Text "[$type]" -fg "#FF0022"
     if ($type -eq "Function") {
+        Format-Text "[󰊕 Function]" -fg "#FF0022"
         $cm.Definition
     } elseif ($type -eq "Application") {
+        Format-Text "[ Application]" -fg "#FF0022"
         $cm.Source
     } elseif ($type -eq "Alias") {
+        Format-Text "[ Alias]" -fg "#FF0022"
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
