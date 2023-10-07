@@ -1,5 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
+-- FIX: history
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: fix me
@@ -2587,7 +2588,8 @@ AddPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
     '9seconds/repolink.nvim', -- FEAT: add support for azure devops
-    cmd = 'RepoLink'
+    cmd = 'RepoLink',
+    opts = {}
 }
 
 AddPlugin {
