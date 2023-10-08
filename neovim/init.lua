@@ -601,7 +601,7 @@ function OpenFloat(path, relativity, col_offset, row_offset, enter)
         Preview_win = vim.api.nvim_open_win(bufnr, enter, {
             border = 'rounded',
             col = col_offset,
-            footer = ' [M-s] split [M-v] vsplit [M-t] tab open [q] quit ',
+            footer = ' [M-s] split [M-v] vsplit [M-t] tab open ',
             footer_pos = 'right',
             height = vim.o.lines - 8,
             relative = relativity,
@@ -641,14 +641,6 @@ function OpenFloat(path, relativity, col_offset, row_offset, enter)
             end
         }
     )
-
-    -- Create mapping to close window on q
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '<cmd>:q<CR>', {
-        desc = 'Close preview window',
-        nowait = true,
-        noremap = true,
-        silent = true
-    })
 
     -- Reopen preview in split
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-s>', '', {
