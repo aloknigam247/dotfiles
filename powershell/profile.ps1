@@ -51,7 +51,12 @@ function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
 
-    $ext = $arg.split('.')[-1]
+    if ($null -eq $arg) {
+        $ext = ''
+    } else {
+        $ext = $arg.split('.')[-1]
+    }
+
     if ( $ext -in $code_ext) {
         code $arg
     } else {
