@@ -1806,7 +1806,6 @@ DarkT { 'tokyonight-night',           'tokyonight', pre = function() require('to
 Dark  { 'tokyonight-storm',           'tokyonight'                                                          }
 DarkT { 'tokyonight-storm',           'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
 DarkT { 'visual_studio_code',         '_', pre = function() require('visual_studio_code').setup({mode = 'dark', transparent = true}) end }
-Light { 'visual_studio_code',         '_', pre = function() require('visual_studio_code').setup({mode = 'light'}) end }
 Dark  { 'vitesse',                    '_'                                                                   }
 DarkT { 'vitesse',                    '_', pre = function() require('vitesse').setup({transparent_background  = true}) end }
 Dark  { 'vn-night',                   '_',           post = FixVnNight                                      }
