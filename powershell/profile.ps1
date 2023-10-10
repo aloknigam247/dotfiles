@@ -69,13 +69,13 @@ function which($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "[󰊕 $arg]" -fg "#FF0022"
+        Format-Text "󰊕 $arg" -fg "#FF0022"
         $cm.Definition
     } elseif ($type -eq "Application") {
-        Format-Text "[ $arg]" -fg "#FF0022"
+        Format-Text " $arg" -fg "#EEE82C"
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Text "[ $arg]" -fg "#FF0022"
+        Format-Text " $arg" -fg "#5D2E8C"
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
