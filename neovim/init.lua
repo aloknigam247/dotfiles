@@ -3685,7 +3685,7 @@ AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             segments = {
                 { text = { '%C' }, click = 'v:lua.ScFa' },
                 { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                { sign = { name = { 'Diagnostic' }, auto = true } },
+                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, condition = { true } },
                 { sign = {
                     text = {
