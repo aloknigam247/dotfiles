@@ -34,8 +34,9 @@ alias eld='echo $LD_LIBRARY_PATH | sed "s/:/\n/g"'
 alias epath='echo $PATH | sed "s/:/\n/g"'
 alias g='gvim'
 if [[ $(alias gdb) == "" ]]; then
-alias gdb='gdb -q'
+    alias gdb='gdb -q'
 fi
+alias e="/mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40"
 alias grep='egrep --color=auto -n'
 alias jobs='jobs -l'
 alias killlast='kill -9 %%'
@@ -48,7 +49,6 @@ alias settings='vim /mnt/c/Users/alokn/AppData/Local/Packages/Microsoft.WindowsT
 alias sr='source ~/.zshrc'
 alias tree='tree -CF'
 alias treea='tree -aCF'
-alias v="/mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40"
 alias vpcl='nvim -c PlugClean! -c qa'
 alias vpi='nvim -c PlugInstall -c qa'
 
