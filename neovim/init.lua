@@ -1,6 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: perform improvements on blank file, code files used, very large files, autocommands
--- FIX: history
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: fix me
@@ -251,7 +250,7 @@ LazyConfig = {
             import     = '󰋺',
             keys       = '',
             lazy       = ' ',
-            list       = { '●', '', '', '' },
+            list       = { '󰬺', ' 󰬻', '󰬼', '󰬽', '󰬾', '󰬿', '󰭀', '󰭁', '󰭂', '󰿩' },
             loaded     = '',
             not_loaded = '',
             plugin     = '',
@@ -318,6 +317,13 @@ LazyConfig = {
         skip_if_doc_exists = true,
     },
     state = vim.fn.stdpath('state') .. '/lazy/state.json', -- state info for checker and other things
+    profiling = {
+        -- Enables extra stats on the debug tab related to the loader cache.
+        -- Additionally gathers stats about all package.loaders
+        loader = true,
+        -- Track each new require in the Lazy profiling tab
+        require = true,
+    },
 }
 
 Plugins = {}
@@ -2134,7 +2140,7 @@ AddPlugin {
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
     -- cmd = 'NvimTreeToggle',
-    lazy = false,
+    event = 'VeryLazy',
     opts = {
         actions = {
             change_dir = {
@@ -3876,7 +3882,7 @@ AddPlugin {
                         separator = ''
                     },
                     {
-                        'g:ColoRand',
+                        function() return vim.g.ColoRand end,
                         color = { fg = GetFgOrFallback('Number', '#F2F230'), gui ='bold' },
                         icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
                         padding = { left = 0, right = 1 }
@@ -3895,7 +3901,7 @@ AddPlugin {
                 },
                 lualine_y = {
                     {
-                        'g:session_icon',
+                        function() return vim.g.session_icon end,
                         padding = { left = 0, right = 1 },
                         separator = ''
                     },
@@ -4917,6 +4923,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
+ColoRand(1)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
