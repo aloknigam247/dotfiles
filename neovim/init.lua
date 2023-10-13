@@ -2140,7 +2140,7 @@ AddPlugin {
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
     -- cmd = 'NvimTreeToggle',
-    event = 'VeryLazy',
+    event = 'CursorHold',
     opts = {
         actions = {
             change_dir = {
