@@ -4211,9 +4211,11 @@ AddPlugin {
             }
         })
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
+    dependencies = { --[[ 'mrjones2014/nvim-ts-rainbow', ]] { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
     event = 'User VeryLazy'
 }
+
+AddPlugin { 'HiPhish/rainbow-delimiters.nvim' }
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
