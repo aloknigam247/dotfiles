@@ -1093,7 +1093,7 @@ AddPlugin {
            hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
        ]]
     end,
-    event = 'CursorHold'
+    event = { 'CursorMoved', 'CursorMovedI' }
 }
 
 AddPlugin {

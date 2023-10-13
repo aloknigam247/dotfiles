@@ -4,534 +4,95 @@ times in msec
  clock   self+sourced   self:  sourced script
  clock   elapsed:              other lines
 
-000.024  000.024: --- NVIM STARTING ---
-000.088  000.063: event init
-000.233  000.146: early init
-012.100  011.866: locale set
-012.154  000.054: init first window
-012.560  000.406: inits 1
-012.750  000.190: window checked
-012.760  000.010: parsing arguments
-013.881  000.261  000.261: require('vim.shared')
-014.397  000.152  000.152: require('vim.inspect')
-014.655  000.246  000.246: require('vim._options')
-014.659  000.772  000.375: require('vim._editor')
-014.663  001.143  000.110: require('vim._init_packages')
-014.679  000.776: init lua interpreter
-015.262  000.583: expanding arguments
-015.283  000.020: inits 2
-015.695  000.412: init highlight
-015.698  000.003: waiting for UI
-015.804  000.106: done waiting for UI
-015.809  000.005: clear screen
-015.862  000.043  000.043: require('vim.keymap')
-016.137  000.285: init default mappings & autocommands
-017.435  000.125  000.125: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\ftplugin.vim
-017.838  000.086  000.086: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\indent.vim
-022.647  000.019  000.019: require('vim.F')
-022.683  000.939  000.920: require('vim.diagnostic')
-023.071  000.359  000.359: require('vim.highlight')
-023.605  000.518  000.518: require('vim.ui')
-025.212  001.009  001.009: require('lazy')
-025.253  000.022  000.022: require('ffi')
-025.770  000.267  000.267: require('vim.uri')
-025.791  000.532  000.265: require('vim.loader')
-026.149  000.226  000.226: require('vim.fs')
-026.393  000.486  000.261: require('lazy.stats')
-026.733  000.186  000.186: require('lazy.core.util')
-027.036  000.295  000.295: require('lazy.core.config')
-027.500  000.166  000.166: require('lazy.core.handler')
-027.653  000.144  000.144: require('lazy.core.plugin')
-027.662  000.617  000.307: require('lazy.core.loader')
-031.229  000.288  000.288: require('lazy.core.handler.event')
-031.238  000.519  000.231: require('lazy.core.handler.ft')
-031.401  000.150  000.150: require('lazy.core.handler.keys')
-031.628  000.218  000.218: require('lazy.core.handler.cmd')
-034.516  001.446  001.446: require('vim.filetype')
-034.531  001.671  000.225: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/neorg/ftdetect/norg.lua
-035.249  000.070  000.070: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/csv.vim/ftdetect/csv.vim
-038.110  000.985  000.985: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/filetype.lua
-042.287  000.230  000.230: require('nvim-tree.notify')
-042.303  000.501  000.272: require('nvim-tree.events')
-043.165  000.323  000.323: require('nvim-tree.log')
-043.866  000.214  000.214: require('nvim-tree.iterators.node-iterator')
-044.056  000.858  000.643: require('nvim-tree.utils')
-047.551  003.488  003.488: require('nvim-tree.git.utils')
-047.818  000.257  000.257: require('nvim-tree.git.runner')
-048.039  000.212  000.212: require('nvim-tree.watcher')
-048.211  000.157  000.157: require('nvim-tree.explorer.node')
-048.221  005.729  000.432: require('nvim-tree.git')
-048.365  000.138  000.138: require('nvim-tree.explorer.watch')
-048.674  000.141  000.141: require('nvim-tree.explorer.node-builders')
-048.819  000.138  000.138: require('nvim-tree.explorer.sorters')
-049.001  000.161  000.161: require('nvim-tree.explorer.filters')
-049.356  000.220  000.220: require('nvim-tree.view')
-049.369  000.361  000.142: require('nvim-tree.live-filter')
-049.377  000.987  000.185: require('nvim-tree.explorer.explore')
-049.792  000.407  000.407: require('nvim-tree.explorer.reload')
-049.808  007.499  000.239: require('nvim-tree.explorer')
-049.826  008.319  000.318: require('nvim-tree.core')
-050.400  000.225  000.225: require('nvim-tree.modified')
-050.412  000.572  000.346: require('nvim-tree.renderer.components.modified')
-050.688  000.225  000.225: require('nvim-tree.renderer.components.padding')
-050.954  000.232  000.232: require('nvim-tree.renderer.components.icons')
-051.251  000.235  000.235: require('nvim-tree.renderer.components.full-name')
-051.677  000.225  000.225: require('nvim-tree.renderer.components.git')
-052.118  000.181  000.181: require('nvim-tree.enum')
-052.133  000.443  000.263: require('nvim-tree.renderer.components.diagnostics')
-053.008  000.302  000.302: require('nvim-tree.marks')
-053.033  000.554  000.252: require('nvim-tree.renderer.components.bookmarks')
-053.058  000.913  000.359: require('nvim-tree.renderer.builder')
-053.093  011.983  000.820: require('nvim-tree.renderer')
-053.137  012.732  000.749: require('nvim-tree.lib')
-053.424  000.265  000.265: require('nvim-tree.colors')
-054.373  000.243  000.243: require('nvim-tree.actions.finders.find-file')
-054.392  000.465  000.222: require('nvim-tree.actions.tree.open')
-054.608  000.206  000.206: require('nvim-tree.actions.tree.toggle')
-054.820  000.196  000.196: require('nvim-tree.actions.reloaders.reloaders')
-055.026  000.194  000.194: require('nvim-tree.actions.root.dir-up')
-055.266  000.228  000.228: require('nvim-tree.actions.tree.find-file')
-055.495  000.217  000.217: require('nvim-tree.actions.finders.search-node')
-055.753  000.247  000.247: require('nvim-tree.actions.tree-modifiers.collapse-all')
-055.995  000.228  000.228: require('nvim-tree.actions.tree-modifiers.expand-all')
-056.242  000.236  000.236: require('nvim-tree.actions.tree-modifiers.toggles')
-056.757  000.258  000.258: require('nvim-tree.keymap')
-056.769  000.513  000.255: require('nvim-tree.help')
-057.015  000.234  000.234: require('nvim-tree.actions.fs.create-file')
-057.229  000.203  000.203: require('nvim-tree.actions.fs.remove-file')
-057.438  000.196  000.196: require('nvim-tree.actions.fs.trash')
-057.637  000.186  000.186: require('nvim-tree.actions.fs.rename-file')
-057.877  000.222  000.222: require('nvim-tree.actions.fs.copy-paste')
-058.123  000.217  000.217: require('nvim-tree.actions.node.file-popup')
-058.338  000.191  000.191: require('nvim-tree.actions.node.run-command')
-058.567  000.209  000.209: require('nvim-tree.actions.node.system-open')
-058.810  000.233  000.233: require('nvim-tree.actions.moves.sibling')
-059.050  000.224  000.224: require('nvim-tree.actions.moves.parent')
-059.264  000.203  000.203: require('nvim-tree.actions.moves.item')
-059.494  000.200  000.200: require('nvim-tree.marks.bulk-delete')
-059.726  000.202  000.202: require('nvim-tree.marks.bulk-trash')
-059.940  000.204  000.204: require('nvim-tree.marks.bulk-move')
-060.402  000.248  000.248: require('nvim-tree.actions.node.open-file')
-060.415  000.465  000.217: require('nvim-tree.marks.navigation')
-060.428  006.758  000.640: require('nvim-tree.api')
-060.447  007.011  000.253: require('nvim-tree.commands')
-060.667  000.212  000.212: require('nvim-tree.actions.root.change-dir')
-060.929  000.251  000.251: require('nvim-tree.legacy')
-061.189  022.672  002.200: require('nvim-tree')
-062.355  000.223  000.223: require('nvim-tree.actions')
-062.763  000.173  000.173: require('nvim-tree.diagnostics')
-063.980  000.068  000.068: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/nvim-web-devicons/plugin/nvim-web-devicons.vim
-065.521  001.453  001.453: require('nvim-web-devicons')
-066.245  000.032  000.032: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/nvim-material-icon/plugin/nvim-material-icon.vim
-067.724  001.383  001.383: require('nvim-material-icon')
-069.131  003.602  002.187: require('nvim-material-icon')
-069.764  006.846  001.724: require('nvim-web-devicons')
-074.132  000.176  000.176: require('notify.util.queue')
-074.162  000.407  000.231: require('notify.util')
-074.418  000.251  000.251: require('notify.config.highlights')
-074.431  000.926  000.269: require('notify.config')
-075.040  000.250  000.250: require('notify.stages')
-075.310  000.259  000.259: require('notify.service.notification')
-076.160  000.254  000.254: require('notify.animate.spring')
-076.168  000.575  000.321: require('notify.animate')
-076.180  000.862  000.287: require('notify.windows')
-077.203  000.315  000.315: require('notify.service.buffer.highlights')
-077.218  000.682  000.367: require('notify.service.buffer')
-077.227  001.036  000.354: require('notify.service')
-077.588  000.293  000.293: require('notify.stages.util')
-077.595  003.158  000.457: require('notify.instance')
-077.601  005.205  001.121: require('notify')
-077.839  000.206  000.206: require('notify.stages.slide')
-078.459  000.195  000.195: require('noice.util.lazy')
-078.469  000.531  000.336: require('noice')
-078.835  000.144  000.144: require('noice.util.call')
-078.843  000.363  000.220: require('noice.util')
-079.293  000.243  000.243: require('vim.health')
-079.568  000.244  000.244: require('noice.config')
-079.577  000.727  000.240: require('noice.health')
-081.392  000.141  000.141: require('sentiment.config.default')
-081.401  000.296  000.155: require('sentiment.config')
-081.406  000.427  000.131: require('sentiment.config.manager')
-081.708  000.163  000.163: require('sentiment.Autocmd')
-082.137  000.127  000.127: require('sentiment.utils')
-082.144  000.290  000.163: require('sentiment.ui.Portion')
-082.271  000.122  000.122: require('sentiment.ui.Pair')
-082.278  000.562  000.150: require('sentiment.ui')
-082.283  000.874  000.149: require('sentiment.autocmds')
-082.287  002.411  001.111: require('sentiment')
-083.808  001.166  001.166: require('flash')
-084.090  000.254  000.254: require('flash.config')
-084.654  000.150  000.150: require('flash.require')
-084.665  000.349  000.199: require('flash.plugins.search')
-084.871  000.176  000.176: require('flash.plugins.char')
-085.044  000.163  000.163: require('flash.repeat')
-086.235  000.343  000.343: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/editorconfig.lua
-088.961  000.380  000.380: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\pack\dist\opt\matchit\plugin\matchit.vim
-089.052  002.420  002.039: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/matchit.vim
-089.322  000.025  000.025: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/matchparen.vim
-089.593  000.035  000.035: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/netrwPlugin.vim
-089.991  000.158  000.158: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/nvim.lua
-090.847  000.584  000.584: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/rplugin.vim
-091.180  000.092  000.092: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/shada.vim
-091.691  000.240  000.240: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/zipPlugin.vim
-123.053  009.230  009.230: require('noctis_theme')
-123.486  017.347  008.117: sourcing C:\Users\aloknigam\AppData\Local\nvim-data\lazy\noctis.nvim\colors\noctis_minimus.lua
-124.454  105.863  034.577: require('init')
-124.477  106.265  000.402: sourcing C:\Users\aloknigam\AppData\Local\nvim\init.vim
-124.521  001.908: sourcing vimrc file(s)
-125.309  000.191  000.191: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\filetype.lua
-126.356  000.133  000.133: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\synload.vim
-126.629  000.917  000.783: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\syntax.vim
-126.692  001.063: inits 3
-127.103  000.411: reading ShaDa
-127.366  000.263: opening buffers
-127.433  000.068: BufEnter autocommands
-127.438  000.004: editing files in windows
-127.762  000.224  000.224: require('noice.config.views')
-128.118  000.173  000.173: require('noice.ui.msg')
-128.129  000.356  000.184: require('noice.config.status')
-128.309  000.174  000.174: require('noice.config.format')
-128.481  000.158  000.158: require('noice.config.icons')
-128.797  000.141  000.141: require('noice.config.preset')
-129.253  000.190  000.190: require('noice.config.cmdline')
-129.442  000.179  000.179: require('noice.config.highlights')
-129.757  000.144  000.144: require('noice.config.routes')
-130.222  000.221  000.221: require('noice.lsp')
-130.527  000.268  000.268: require('noice.lsp.hover')
-131.397  000.321  000.321: require('vim.lsp.log')
-131.826  000.421  000.421: require('vim.lsp.protocol')
-132.359  000.228  000.228: require('vim.lsp._snippet')
-132.388  000.552  000.324: require('vim.lsp.util')
-132.403  001.571  000.276: require('vim.lsp.handlers')
-132.744  000.335  000.335: require('vim.lsp.rpc')
-132.954  000.197  000.197: require('vim.lsp.sync')
-133.245  000.284  000.284: require('vim.lsp.semantic_tokens')
-133.575  000.318  000.318: require('vim.lsp.buf')
-133.772  000.187  000.187: require('vim.lsp.diagnostic')
-133.965  000.186  000.186: require('vim.lsp.codelens')
-134.044  003.506  000.428: require('vim.lsp')
-134.261  000.208  000.208: require('noice.lsp.signature')
-134.425  000.142  000.142: require('noice.lsp.message')
-134.612  000.163  000.163: require('noice.lsp.progress')
-134.852  000.206  000.206: require('noice.commands')
-135.107  000.189  000.189: require('noice.message.router')
-135.560  000.217  000.217: require('nui.object')
-135.588  000.471  000.254: require('noice.view')
-135.840  000.182  000.182: require('noice.view.backend.notify')
-136.070  000.155  000.155: require('noice.view.backend.popup')
-136.376  000.300  000.300: require('noice.view.nui')
-136.811  000.227  000.227: require('nui.utils')
-136.822  000.424  000.197: require('noice.util.nui')
-138.762  000.207  000.207: require('noice.view.backend.split')
-139.262  000.225  000.225: require('nui.layout.utils')
-139.272  000.483  000.258: require('nui.split.utils')
-139.587  000.206  000.206: require('noice.view.backend.virtualtext')
-140.174  000.238  000.238: require('noice.view.backend.mini')
-140.529  000.191  000.191: require('noice.source.notify')
-140.751  000.210  000.210: require('noice.util.hacks')
-141.010  000.221  000.221: require('noice.ui')
-141.662  000.170  000.170: require('noice.text.block')
-141.976  000.210  000.210: require('noice.message.filter')
-141.985  000.692  000.312: require('noice.message')
-142.009  000.952  000.260: require('noice.ui.cmdline')
-142.220  000.205  000.205: require('noice.ui.popupmenu')
-142.351  003.999: VimEnter autocommands
-142.487  000.136: UIEnter autocommands
-144.649  002.162: before starting main loop
-145.464  000.415  000.415: require('noice.message.manager')
-145.781  000.288  000.288: require('noice.ui.state')
-146.199  000.321  000.321: require('noice.util.stats')
-146.253  000.580: first screen update
-146.257  000.004: --- NVIM STARTED ---
-
-
-times in msec
- clock   self+sourced   self:  sourced script
- clock   elapsed:              other lines
-
 000.035  000.035: --- NVIM STARTING ---
-000.135  000.100: event init
-000.239  000.104: early init
-013.433  013.194: locale set
-013.515  000.082: init first window
-014.177  000.661: inits 1
-014.502  000.325: window checked
-014.517  000.016: parsing arguments
-016.221  000.286  000.286: require('vim.shared')
-016.961  000.296  000.296: require('vim.inspect')
-017.444  000.439  000.439: require('vim._options')
-017.460  001.231  000.496: require('vim._editor')
-017.467  001.675  000.158: require('vim._init_packages')
-017.489  001.297: init lua interpreter
-023.527  006.038: expanding arguments
-023.576  000.049: inits 2
-024.315  000.739: init highlight
+000.098  000.062: event init
+000.224  000.127: early init
+013.295  013.071: locale set
+013.375  000.080: init first window
+013.951  000.576: inits 1
+014.095  000.144: window checked
+014.112  000.017: parsing arguments
+015.710  000.365  000.365: require('vim.shared')
+016.543  000.218  000.218: require('vim.inspect')
+016.926  000.366  000.366: require('vim._options')
+016.933  001.207  000.623: require('vim._editor')
+016.938  001.742  000.169: require('vim._init_packages')
+016.967  001.114: init lua interpreter
+017.851  000.884: expanding arguments
+017.884  000.032: inits 2
+018.506  000.623: init highlight
+018.511  000.004: waiting for UI
+018.684  000.174: done waiting for UI
+018.695  000.010: clear screen
+018.826  000.105  000.105: require('vim.keymap')
+019.349  000.550: init default mappings & autocommands
+020.950  000.131  000.131: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\ftplugin.vim
+021.346  000.075  000.075: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\indent.vim
+028.609  000.030  000.030: require('vim.F')
+028.688  001.547  001.517: require('vim.diagnostic')
+029.068  000.334  000.334: require('vim.highlight')
+029.402  000.323  000.323: require('vim.ui')
+031.753  001.671  001.671: require('lazy')
+031.856  000.048  000.048: require('ffi')
+032.578  000.400  000.400: require('vim.uri')
+032.630  000.765  000.365: require('vim.loader')
+033.304  000.389  000.389: require('vim.fs')
+033.776  000.908  000.519: require('lazy.stats')
+034.429  000.444  000.444: require('lazy.core.util')
+035.059  000.622  000.622: require('lazy.core.config')
+035.587  000.280  000.280: require('lazy.core.handler')
+036.170  000.571  000.571: require('lazy.core.plugin')
+036.214  001.108  000.257: require('lazy.core.loader')
+037.940  000.267  000.267: require('lazy.core.handler.keys')
+038.328  000.367  000.367: require('lazy.core.handler.event')
+038.657  000.312  000.312: require('lazy.core.handler.cmd')
+038.901  000.228  000.228: require('lazy.core.handler.ft')
+040.543  001.160  001.160: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/filetype.lua
+041.567  000.251  000.251: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/editorconfig.lua
+043.685  000.385  000.385: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\pack\dist\opt\matchit\plugin\matchit.vim
+043.782  001.869  001.484: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/matchit.vim
+044.309  000.245  000.245: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/matchparen.vim
+045.905  001.056  001.056: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/netrwPlugin.vim
+046.865  000.499  000.499: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/nvim.lua
+048.148  000.799  000.799: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/rplugin.vim
+048.733  000.173  000.173: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/shada.vim
+049.450  000.342  000.342: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/zipPlugin.vim
+049.812  027.080  011.742: require('init')
+049.840  027.987  000.907: sourcing C:\Users\aloknigam\AppData\Local\nvim\init.vim
+049.898  002.356: sourcing vimrc file(s)
+051.463  000.350  000.350: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\filetype.lua
+052.636  000.153  000.153: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\synload.vim
+052.882  000.811  000.658: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\syntax.vim
+052.969  001.909: inits 3
+053.670  000.701: reading ShaDa
+054.241  000.572: opening buffers
+054.616  000.374: BufEnter autocommands
+054.626  000.010: editing files in windows
+055.015  000.389: VimEnter autocommands
+055.190  000.175: UIEnter autocommands
+064.600  009.410: before starting main loop
+064.968  000.369: first screen update
+064.973  000.005: --- NVIM STARTED ---
 
 
 times in msec
  clock   self+sourced   self:  sourced script
  clock   elapsed:              other lines
 
-000.029  000.029: --- NVIM STARTING ---
-000.135  000.106: event init
-000.281  000.145: early init
-026.062  025.782: locale set
-026.178  000.116: init first window
-026.799  000.622: inits 1
-027.070  000.271: window checked
-027.081  000.011: parsing arguments
-029.259  000.629  000.629: require('vim.shared')
-030.545  000.289  000.289: require('vim.inspect')
-031.093  000.523  000.523: require('vim._options')
-031.101  001.829  001.016: require('vim._editor')
-031.107  002.717  000.259: require('vim._init_packages')
-031.129  001.331: init lua interpreter
-031.757  000.628: expanding arguments
-031.813  000.056: inits 2
-032.325  000.512: init highlight
-032.329  000.004: waiting for UI
-032.518  000.189: done waiting for UI
-032.524  000.005: clear screen
-032.584  000.049  000.049: require('vim.keymap')
-032.964  000.391: init default mappings & autocommands
-034.764  000.197  000.197: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\ftplugin.vim
-035.226  000.102  000.102: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\indent.vim
-042.066  000.022  000.022: require('vim.F')
-042.127  001.584  001.562: require('vim.diagnostic')
-042.729  000.546  000.546: require('vim.highlight')
-043.072  000.331  000.331: require('vim.ui')
-045.128  001.496  001.496: require('lazy')
-045.191  000.032  000.032: require('ffi')
-045.945  000.414  000.414: require('vim.uri')
-045.965  000.763  000.349: require('vim.loader')
-046.461  000.314  000.314: require('vim.fs')
-046.915  000.787  000.473: require('lazy.stats')
-047.740  000.636  000.636: require('lazy.core.util')
-048.251  000.502  000.502: require('lazy.core.config')
-049.153  000.352  000.352: require('lazy.core.handler')
-049.549  000.375  000.375: require('lazy.core.plugin')
-049.573  001.307  000.580: require('lazy.core.loader')
-056.965  000.343  000.343: require('lazy.core.handler.event')
-056.987  000.861  000.517: require('lazy.core.handler.ft')
-057.323  000.326  000.326: require('lazy.core.handler.cmd')
-057.692  000.338  000.338: require('lazy.core.handler.keys')
-061.467  000.106  000.106: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/csv.vim/ftdetect/csv.vim
-066.463  003.656  003.656: require('vim.filetype')
-066.490  004.042  000.386: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/neorg/ftdetect/norg.lua
-069.345  001.506  001.506: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/filetype.lua
-073.051  002.780  002.780: require('flash')
-073.702  000.635  000.635: require('flash.config')
-075.807  000.365  000.365: require('flash.require')
-075.829  001.036  000.671: require('flash.plugins.search')
-076.260  000.310  000.310: require('flash.plugins.char')
-076.608  000.283  000.283: require('flash.repeat')
-081.176  000.225  000.225: require('nvim-tree.notify')
-081.200  000.448  000.224: require('nvim-tree.events')
-082.098  000.252  000.252: require('nvim-tree.log')
-082.744  000.311  000.311: require('nvim-tree.iterators.node-iterator')
-082.986  000.873  000.562: require('nvim-tree.utils')
-087.777  004.721  004.721: require('nvim-tree.git.utils')
-088.248  000.420  000.420: require('nvim-tree.git.runner')
-088.540  000.282  000.282: require('nvim-tree.watcher')
-088.797  000.241  000.241: require('nvim-tree.explorer.node')
-088.812  007.287  000.498: require('nvim-tree.git')
-089.103  000.284  000.284: require('nvim-tree.explorer.watch')
-089.541  000.199  000.199: require('nvim-tree.explorer.node-builders')
-089.797  000.238  000.238: require('nvim-tree.explorer.sorters')
-090.078  000.267  000.267: require('nvim-tree.explorer.filters')
-090.861  000.447  000.447: require('nvim-tree.view')
-090.872  000.779  000.332: require('nvim-tree.live-filter')
-090.878  001.766  000.284: require('nvim-tree.explorer.explore')
-091.126  000.242  000.242: require('nvim-tree.explorer.reload')
-091.133  009.925  000.346: require('nvim-tree.explorer')
-091.140  010.675  000.301: require('nvim-tree.core')
-091.509  000.187  000.187: require('nvim-tree.modified')
-091.700  000.554  000.367: require('nvim-tree.renderer.components.modified')
-091.976  000.238  000.238: require('nvim-tree.renderer.components.padding')
-092.221  000.203  000.203: require('nvim-tree.renderer.components.icons')
-092.415  000.188  000.188: require('nvim-tree.renderer.components.full-name')
-092.705  000.280  000.280: require('nvim-tree.renderer.components.git')
-093.112  000.197  000.197: require('nvim-tree.enum')
-093.157  000.444  000.247: require('nvim-tree.renderer.components.diagnostics')
-093.728  000.180  000.180: require('nvim-tree.marks')
-093.739  000.337  000.157: require('nvim-tree.renderer.components.bookmarks')
-093.750  000.582  000.245: require('nvim-tree.renderer.builder')
-093.762  013.752  000.587: require('nvim-tree.renderer')
-093.789  014.073  000.321: require('nvim-tree.lib')
-094.030  000.228  000.228: require('nvim-tree.colors')
-094.829  000.147  000.147: require('nvim-tree.actions.finders.find-file')
-094.836  000.362  000.215: require('nvim-tree.actions.tree.open')
-094.998  000.156  000.156: require('nvim-tree.actions.tree.toggle')
-095.182  000.176  000.176: require('nvim-tree.actions.reloaders.reloaders')
-095.361  000.173  000.173: require('nvim-tree.actions.root.dir-up')
-095.569  000.199  000.199: require('nvim-tree.actions.tree.find-file')
-095.784  000.208  000.208: require('nvim-tree.actions.finders.search-node')
-095.964  000.173  000.173: require('nvim-tree.actions.tree-modifiers.collapse-all')
-096.166  000.185  000.185: require('nvim-tree.actions.tree-modifiers.expand-all')
-096.332  000.151  000.151: require('nvim-tree.actions.tree-modifiers.toggles')
-096.777  000.177  000.177: require('nvim-tree.keymap')
-096.786  000.418  000.241: require('nvim-tree.help')
-096.990  000.198  000.198: require('nvim-tree.actions.fs.create-file')
-097.170  000.172  000.172: require('nvim-tree.actions.fs.remove-file')
-097.327  000.151  000.151: require('nvim-tree.actions.fs.trash')
-097.520  000.182  000.182: require('nvim-tree.actions.fs.rename-file')
-097.737  000.202  000.202: require('nvim-tree.actions.fs.copy-paste')
-097.889  000.137  000.137: require('nvim-tree.actions.node.file-popup')
-098.056  000.158  000.158: require('nvim-tree.actions.node.run-command')
-098.195  000.130  000.130: require('nvim-tree.actions.node.system-open')
-098.337  000.135  000.135: require('nvim-tree.actions.moves.sibling')
-098.575  000.225  000.225: require('nvim-tree.actions.moves.parent')
-098.807  000.223  000.223: require('nvim-tree.actions.moves.item')
-098.978  000.153  000.153: require('nvim-tree.marks.bulk-delete')
-099.196  000.210  000.210: require('nvim-tree.marks.bulk-trash')
-099.354  000.148  000.148: require('nvim-tree.marks.bulk-move')
-099.774  000.246  000.246: require('nvim-tree.actions.node.open-file')
-099.789  000.429  000.182: require('nvim-tree.marks.navigation')
-099.796  005.556  000.506: require('nvim-tree.api')
-099.808  005.768  000.212: require('nvim-tree.commands')
-100.055  000.236  000.236: require('nvim-tree.actions.root.change-dir')
-100.236  000.169  000.169: require('nvim-tree.legacy')
-100.426  022.829  002.356: require('nvim-tree')
-102.741  000.489  000.489: require('nvim-tree.actions')
-103.382  000.350  000.350: require('nvim-tree.diagnostics')
-104.745  000.066  000.066: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/nvim-web-devicons/plugin/nvim-web-devicons.vim
-106.764  001.909  001.909: require('nvim-web-devicons')
-107.813  000.052  000.052: sourcing C:/Users/aloknigam/AppData/Local/nvim-data/lazy/nvim-material-icon/plugin/nvim-material-icon.vim
-110.536  002.594  002.594: require('nvim-material-icon')
-112.669  005.894  003.248: require('nvim-material-icon')
-113.718  010.160  002.291: require('nvim-web-devicons')
-117.220  000.207  000.207: require('sentiment.config.default')
-117.236  000.517  000.310: require('sentiment.config')
-117.249  000.839  000.322: require('sentiment.config.manager')
-117.688  000.211  000.211: require('sentiment.Autocmd')
-118.509  000.206  000.206: require('sentiment.utils')
-118.523  000.450  000.243: require('sentiment.ui.Portion')
-118.891  000.272  000.272: require('sentiment.ui.Pair')
-118.902  001.205  000.483: require('sentiment.ui')
-118.916  001.661  000.245: require('sentiment.autocmds')
-118.923  003.919  001.419: require('sentiment')
-124.564  000.262  000.262: require('notify.util.queue')
-124.579  000.725  000.463: require('notify.util')
-125.080  000.491  000.491: require('notify.config.highlights')
-125.101  001.664  000.448: require('notify.config')
-125.622  000.285  000.285: require('notify.stages')
-125.991  000.354  000.354: require('notify.service.notification')
-126.908  000.244  000.244: require('notify.animate.spring')
-126.919  000.584  000.339: require('notify.animate')
-126.992  000.988  000.404: require('notify.windows')
-127.791  000.219  000.219: require('notify.service.buffer.highlights')
-127.806  000.444  000.225: require('notify.service.buffer')
-127.815  000.803  000.359: require('notify.service')
-128.123  000.296  000.296: require('notify.stages.util')
-128.134  003.008  000.282: require('notify.instance')
-128.148  006.185  001.512: require('notify')
-128.498  000.262  000.262: require('notify.stages.slide')
-129.603  000.287  000.287: require('noice.util.lazy')
-129.628  000.928  000.640: require('noice')
-130.108  000.229  000.229: require('noice.util.call')
-130.137  000.491  000.262: require('noice.util')
-130.705  000.295  000.295: require('vim.health')
-131.027  000.280  000.280: require('noice.config')
-131.041  000.888  000.314: require('noice.health')
-132.090  000.255  000.255: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/editorconfig.lua
-135.301  000.453  000.453: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\pack\dist\opt\matchit\plugin\matchit.vim
-135.433  002.973  002.520: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/matchit.vim
-135.846  000.035  000.035: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/matchparen.vim
-136.198  000.040  000.040: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/netrwPlugin.vim
-136.691  000.190  000.190: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/nvim.lua
-137.809  000.757  000.757: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/rplugin.vim
-138.386  000.176  000.176: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/shada.vim
-138.896  000.237  000.237: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime/plugin/zipPlugin.vim
-186.553  010.909  010.909: require('adwaita.utils')
-186.634  020.959  010.050: require('adwaita.dark')
-187.464  033.339  012.380: sourcing C:\Users\aloknigam\AppData\Local\nvim-data\lazy\adwaita.nvim\colors\adwaita.lua
-188.838  152.657  047.947: require('init')
-188.876  153.222  000.565: sourcing C:\Users\aloknigam\AppData\Local\nvim\init.vim
-188.940  002.456: sourcing vimrc file(s)
-190.094  000.307  000.307: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\filetype.lua
-191.852  000.315  000.315: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\synload.vim
-192.170  001.452  001.137: sourcing C:\Users\aloknigam\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\syntax.vim
-192.278  001.578: inits 3
-193.001  000.723: reading ShaDa
-193.329  000.327: opening buffers
-193.419  000.090: BufEnter autocommands
-193.423  000.004: editing files in windows
-193.944  000.349  000.349: require('noice.config.views')
-194.550  000.235  000.235: require('noice.ui.msg')
-194.562  000.569  000.334: require('noice.config.status')
-194.801  000.226  000.226: require('noice.config.format')
-195.062  000.251  000.251: require('noice.config.icons')
-195.638  000.278  000.278: require('noice.config.preset')
-196.383  000.287  000.287: require('noice.config.cmdline')
-196.651  000.252  000.252: require('noice.config.highlights')
-196.989  000.185  000.185: require('noice.config.routes')
-197.758  000.356  000.356: require('noice.lsp')
-198.026  000.256  000.256: require('noice.lsp.hover')
-199.583  000.573  000.573: require('vim.lsp.log')
-200.361  000.763  000.763: require('vim.lsp.protocol')
-201.237  000.323  000.323: require('vim.lsp._snippet')
-201.276  000.877  000.554: require('vim.lsp.util')
-201.309  002.730  000.516: require('vim.lsp.handlers')
-201.734  000.417  000.417: require('vim.lsp.rpc')
-201.996  000.254  000.254: require('vim.lsp.sync')
-202.344  000.322  000.322: require('vim.lsp.semantic_tokens')
-202.648  000.296  000.296: require('vim.lsp.buf')
-202.990  000.324  000.324: require('vim.lsp.diagnostic')
-203.324  000.320  000.320: require('vim.lsp.codelens')
-203.517  005.481  000.819: require('vim.lsp')
-203.846  000.299  000.299: require('noice.lsp.signature')
-204.181  000.291  000.291: require('noice.lsp.message')
-204.459  000.234  000.234: require('noice.lsp.progress')
-204.804  000.291  000.291: require('noice.commands')
-205.109  000.243  000.243: require('noice.message.router')
-205.661  000.255  000.255: require('nui.object')
-205.682  000.555  000.301: require('noice.view')
-206.060  000.328  000.328: require('noice.view.backend.notify')
-206.424  000.179  000.179: require('noice.view.backend.popup')
-206.801  000.364  000.364: require('noice.view.nui')
-207.504  000.337  000.337: require('nui.utils')
-207.532  000.699  000.362: require('noice.util.nui')
-210.831  000.279  000.279: require('noice.view.backend.split')
-211.342  000.194  000.194: require('nui.layout.utils')
-211.352  000.464  000.270: require('nui.split.utils')
-211.766  000.308  000.308: require('noice.view.backend.virtualtext')
-212.357  000.259  000.259: require('noice.view.backend.mini')
-212.766  000.234  000.234: require('noice.source.notify')
-213.088  000.297  000.297: require('noice.util.hacks')
-213.464  000.324  000.324: require('noice.ui')
-213.785  000.297  000.297: require('noice.ui.popupmenu')
-214.842  000.373  000.373: require('noice.text.block')
-215.260  000.346  000.346: require('noice.message.filter')
-215.270  001.137  000.419: require('noice.message')
-215.301  001.496  000.358: require('noice.ui.cmdline')
-215.489  006.134: VimEnter autocommands
-215.621  000.132: UIEnter autocommands
-228.611  012.990: before starting main loop
-229.550  000.505  000.505: require('noice.message.manager')
-229.861  000.292  000.292: require('noice.ui.state')
-230.254  000.301  000.301: require('noice.util.stats')
-230.295  000.586: first screen update
-230.300  000.005: --- NVIM STARTED ---
-
-
-times in msec
- clock   self+sourced   self:  sourced script
- clock   elapsed:              other lines
-
-000.024  000.024: --- NVIM STARTING ---
-000.087  000.063: event init
-000.214  000.128: early init
-013.493  013.278: locale set
-013.558  000.065: init first window
-014.139  000.581: inits 1
-014.644  000.505: window checked
-014.654  000.010: parsing arguments
-015.810  000.300  000.300: require('vim.shared')
-016.329  000.153  000.153: require('vim.inspect')
-016.588  000.246  000.246: require('vim._options')
-016.595  000.778  000.379: require('vim._editor')
-016.598  001.192  000.113: require('vim._init_packages')
-016.618  000.773: init lua interpreter
-030.493  013.875: expanding arguments
-030.613  000.120: inits 2
-031.638  001.025: init highlight
+000.026  000.026: --- NVIM STARTING ---
+000.117  000.091: event init
+000.265  000.148: early init
+014.029  013.764: locale set
+014.094  000.065: init first window
+014.682  000.588: inits 1
+015.132  000.450: window checked
+015.143  000.011: parsing arguments
+016.692  000.298  000.298: require('vim.shared')
+017.304  000.171  000.171: require('vim.inspect')
+017.593  000.272  000.272: require('vim._options')
+017.601  000.874  000.431: require('vim._editor')
+017.605  001.342  000.171: require('vim._init_packages')
+017.657  001.171: init lua interpreter
+023.531  005.874: expanding arguments
+023.565  000.034: inits 2
+024.292  000.727: init highlight
