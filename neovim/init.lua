@@ -1,5 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize insert mode
+-- PERF: Optimize insert mode - rainbow delimiters
 -- PERF: Optimize --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize lua file
@@ -2404,7 +2404,7 @@ AddPlugin {
             debounce_delay = 15,
             enable = true,
             ignore_list = {},
-            update_root = true,
+            update_root = false,
         },
         view = {
             adaptive_size = false,
@@ -4185,13 +4185,13 @@ AddPlugin {
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
             }
         })
-        require('rainbow-delimiters').enable()
+        -- require('rainbow-delimiters').enable()
     end,
     dependencies = { { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
     event = 'User VeryLazy'
 }
 
-AddPlugin { 'HiPhish/rainbow-delimiters.nvim' }
+-- AddPlugin { 'HiPhish/rainbow-delimiters.nvim' }
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
