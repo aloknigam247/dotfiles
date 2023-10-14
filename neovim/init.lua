@@ -1,70 +1,28 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: perform improvements on blank file, code files used, very large files, autocommands
+-- PERF: Optimize insert mode
+-- PERF: Optimize --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
+-- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
+-- PERF: Optimize lua file
+-- PERF: Optimize python file
+-- PERF: Optimize markdown file
+-- PERF: Optimize norg file
+-- PERF: Optimize c++
+-- PERF: Optimize very large files
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: fix me
--- 01:54:23 PM msg_show   au CursorMoved --- Autocommands ---
--- CursorMoved
--- *<Lua 46: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
--- nvim_tree_floating_node  CursorMoved
--- NvimTree_*<Lua 379: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree/renderer/components/full-name.lua:93>
--- <Lua 380: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree/renderer/components/full-name.lua:103>
--- NvimTree  CursorMoved
--- NvimTree_*<Lua 399: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree.lua:266>
--- flash_char  CursorMoved
--- *<Lua 448: ~/AppData/Local/nvim-data/lazy/flash.nvim/lua/flash/plugins/char.lua:143>
--- sentiment.renderer  CursorMoved
--- *<Lua 472: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
--- lualine_stl_refresh  CursorMoved
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+
+-- CursorMovedI
+-- *<Lua 47: ~\AppData\Local\nvim/lua/init.lua:14> [Autocommand profile init]
+-- sentiment.renderer  CursorMovedI
+-- *<Lua 383: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
+-- vim_illuminate_v2_augroup  CursorMovedI
+-- *<Lua 529: ~/AppData/Local/nvim-data/lazy/vim-illuminate/lua/illuminate/engine.lua:49>
+-- lualine_stl_refresh  CursorMovedI
 -- *call v:lua.require'lualine'.refresh({'kind': 'window', 'place': ['statusline'], 'trigger': 'autocmd'})
--- lualine_wb_refresh  CursorMoved
+-- lualine_wb_refresh  CursorMovedI
 -- *call v:lua.require'lualine'.refresh({'kind': 'tabpage', 'place': ['winbar'], 'trigger': 'autocmd'})
--- IndentBlankline  CursorMoved
--- *<Lua 764: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:25>
--- vim_illuminate_v2_augroup  CursorMoved
--- *<Lua 787: ~/AppData/Local/nvim-data/lazy/vim-illuminate/lua/illuminate/engine.lua:49>
--- CursorMoved
--- *<Lua 848: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- <Lua 1531: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- <Lua 1628: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
---
--- 01:54:26 PM msg_show   au OptionSet --- Autocommands ---
--- OptionSet
--- *<Lua 76: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
--- background<Lua 385: ~/AppData/Local/nvim-data/lazy/nvim-web-devicons/lua/nvim-web-devicons.lua:2131>
--- lualine  OptionSet
--- backgroundlua require'lualine'.setup()
--- IndentBlankline  OptionSet
--- list<Lua 774: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- listchars<Lua 775: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- shiftwidth<Lua 776: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- tabstop<Lua 777: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- vartabstop<Lua 778: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- gitsigns.config.diff_opts  OptionSet
--- diffopt<Lua 991: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/config.lua:920>
--- gitsigns  OptionSet
--- fileformat<Lua 934: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
--- bomb<Lua 931: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
--- eol<Lua 929: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
--- OptionSet
--- *<Lua 1658: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
---
--- 01:54:28 PM msg_show   au WinScrolled --- Autocommands ---
--- WinScrolled
--- *<Lua 125: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
--- sentiment.renderer  WinScrolled
--- *<Lua 470: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
--- MiniHipatternsBuffer1  WinScrolled
--- <buffer=1><Lua 763: vim/_editor.lua:338> [Update highlighting in view]
--- IndentBlankline  WinScrolled
--- *<Lua 779: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:39>
--- WinScrolled
--- *<Lua 846: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- NvimSeparator  WinScrolled
--- *<Lua 1498: ~/AppData/Local/nvim-data/lazy/colorful-winsep.nvim/lua/colorful-winsep/init.lua:40>
--- WinScrolled
--- *<Lua 1530: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- <Lua 1707: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
+-- CursorMovedI
+-- *<Lua 741: ~\AppData\Local\nvim/lua/init.lua:31> [Autocommand profile record]
 AuProfileData = nil
 function AuInit(args)
     local event = args.event
@@ -84,15 +42,17 @@ function AuInit(args)
 end
 
 function AuProfile(args)
-    local data = AuProfileData[args.event]
-    if data then
-        local elapsed = (os.clock() - data.start)
-        local total = (data.total or 0) + elapsed
+    if AuProfileData then
+        local data = AuProfileData[args.event]
+        if data then
+            local elapsed = (os.clock() - data.start)
+            local total = (data.total or 0) + elapsed
 
-        data['avg'] = total / data.count
-        data['total'] = total
+            data['avg'] = total / data.count
+            data['total'] = total
 
-        AuProfileData[args.event] = data
+            AuProfileData[args.event] = data
+        end
     end
 end
 
@@ -108,6 +68,7 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_user_command(
     'ProfileAutocommand',
     function()
+        vim.notify("Profiling started, stopped by F6")
         AuProfileData = {}
         vim.api.nvim_create_autocmd(
         Event_list, {
@@ -116,12 +77,26 @@ vim.api.nvim_create_user_command(
                 callback = AuProfile
             }
         )
+        vim.api.nvim_set_keymap('n', '<F6>', '', {
+            callback = function()
+                AuProfileDataResult = AuProfileData
+                AuProfileData = nil
+                vim.cmd('profile stop')
+                vim.notify('Autocommand profiling stopped')
+            end
+        })
+        vim.cmd[[
+            profile start nvim_profile
+            profile file *
+            profile func *
+        ]]
     end,
     {
         nargs = 0
     }
 )
-
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
 
 -- Vim Globals
@@ -1879,6 +1854,12 @@ AddPlugin {
 
 AddPlugin {
     'chrisgrieser/cmp-nerdfont',
+    event = 'InsertEnter'
+}
+
+AddPlugin {
+    'dcampos/cmp-snippy',
+    dependencies = 'nvim-snippy',
     event = 'InsertEnter'
 }
 
@@ -3645,12 +3626,6 @@ AddPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-AddPlugin {
-    'dcampos/cmp-snippy',
-    dependencies = 'nvim-snippy',
-    event = 'InsertEnter'
-}
-
 AddPlugin {
     'dcampos/nvim-snippy',
     dependencies = 'honza/vim-snippets',
