@@ -4210,13 +4210,13 @@ AddPlugin {
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
             }
         })
+        require('rainbow-delimiters').enable()
     end,
     dependencies = { { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
     event = 'User VeryLazy'
 }
 
 AddPlugin { 'HiPhish/rainbow-delimiters.nvim' }
-AddPlugin { 'mrjones2014/nvim-ts-rainbow' }
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
