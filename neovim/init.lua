@@ -1648,7 +1648,7 @@ Dark  { 'ayu-mirage',                 'ayu'                            }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  } -- FIX: Overlength is not visible
 Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
 Light { 'bluloco-light',              '_'                              }
@@ -4901,6 +4901,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand(1)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
