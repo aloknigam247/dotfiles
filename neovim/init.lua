@@ -1,8 +1,8 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize insert mode
--- PERF: Optimize --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
+-- PERF: Optimize Lazy profile
 -- PERF: Optimize lua file
+-- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize python file
 -- PERF: Optimize markdown file
 -- PERF: Optimize norg file
@@ -271,17 +271,21 @@ LazyConfig = {
             reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
             paths = {}, -- add any custom paths here that you want to includes in the rtp
             disabled_plugins = {
+                'csv',
+                'editorconfig',
                 'gzip',
-                -- 'health',
                 'man',
-                -- 'matchit',
-                -- 'matchparen',
-                -- 'netrwPlugin',
+                'matchit',
+                'matchparen',
+                'netrwPlugin',
+                'norg',
+                'rplugin',
+                'shada',
                 'spellfile',
                 'tarPlugin',
                 'tohtml',
                 'tutor',
-                -- 'zipPlugin',
+                'zipPlugin',
             },
         },
     },
@@ -1101,7 +1105,7 @@ AddPlugin {
 
 AddPlugin {
     'folke/flash.nvim',
-    lazy = false,
+    lazy = true,
     opts = {
         -- labels = "abcdefghijklmnopqrstuvwxyz",
         labels = "asdfghjklqwertyuiopzxcvbnm",
@@ -4454,7 +4458,7 @@ AddPlugin {
     end,
     dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
     enabled = true,
-    lazy = false
+    event = 'CmdlineEnter'
 }
 
 AddPlugin {
@@ -4896,7 +4900,7 @@ AddPlugin {
 AddPlugin {
     'utilyre/sentiment.nvim',
     config = true,
-    lazy = false
+    event = { 'CursorMoved', 'CursorMovedI' }
 }
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
