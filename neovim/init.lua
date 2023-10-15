@@ -1,5 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize insert mode - rainbow delimiters
+-- PERF: Optimize insert mode
 -- PERF: Optimize --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize lua file
@@ -1651,7 +1651,6 @@ DarkT { 'bamboo',                     '_', pre = function() require('bamboo').se
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  } -- FIX: Overlength is not visible
 Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
-Light { 'bluloco-light',              '_'                              }
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'caret',                      '_'                              }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
@@ -1683,7 +1682,6 @@ DarkT { 'fluoromachine',              '_', pre = function() require('fluoromachi
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'fluoromachine', transparent = false}) end, post = FixIndentBlankline }
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                                                          }
-Dark  { 'github_dark',                'github'                                                            }
 DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({options = { transparent = true }}) end }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
@@ -3876,7 +3874,7 @@ AddPlugin {
                 },
                 lualine_y = {
                     {
-                        function() return vim.g.session_icon end,
+                        function() return vim.g.session_icon or '' end,
                         padding = { left = 0, right = 1 },
                         separator = ''
                     },
@@ -4185,13 +4183,40 @@ AddPlugin {
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
             }
         })
-        -- require('rainbow-delimiters').enable()
     end,
-    dependencies = { { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
+    dependencies = { { 'm-demare/hlargs.nvim' } },
     event = 'User VeryLazy'
 }
 
--- AddPlugin { 'HiPhish/rainbow-delimiters.nvim' }
+AddPlugin {
+    'HiPhish/rainbow-delimiters.nvim',
+    config = function()
+        local rainbow_delimiters = require 'rainbow-delimiters'
+
+        vim.g.rainbow_delimiters = {
+            strategy = {
+                [''] = rainbow_delimiters.strategy['global'],
+                -- vim = rainbow_delimiters.strategy['local'],
+            },
+            query = {
+                [''] = 'rainbow-delimiters',
+                -- lua = 'rainbow-delimiters',
+            },
+            highlight = {
+                'RainbowDelimiterRed',
+                'RainbowDelimiterYellow',
+                'RainbowDelimiterBlue',
+                'RainbowDelimiterOrange',
+                'RainbowDelimiterGreen',
+                'RainbowDelimiterViolet',
+                'RainbowDelimiterCyan',
+            },
+            -- blacklist = { 'lua' }
+        }
+        require('rainbow-delimiters').enable()
+    end,
+    -- event = 'CursorHold' -- FIX: slow on large files
+}
 
 AddPlugin {
     -- https://github.com/David-Kunz/markid
