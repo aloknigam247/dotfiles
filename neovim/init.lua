@@ -1,5 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize Lazy profile
+-- PERF: Optimize Lazy profile - lazy load nvim-tree, load treesitter on selected languages, refine
+-- usages of CmdlineEnter to cmdline textchanged
 -- PERF: Optimize lua file
 -- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
@@ -1354,23 +1355,24 @@ AddPlugin {
     'folke/todo-comments.nvim',
     config = function()
         require('todo-comments').setup({
-        colors = TodoColors,
-        keywords = {
-            DOCME  = { icon = '', color = 'docs' },
-            FEAT   = { icon = '󱩑', color = 'feat' },
-            FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
-            HACK   = { icon = '', color = 'hint' },
-            NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
-            RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
-            TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO   = { icon = '󰸞', color = 'todo' },
-            WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
-        },
-        merge_keywords = false
-    })
-    TODO_COMMENTS_LOADED = true
+            colors = TodoColors,
+            keywords = {
+                DOCME  = { icon = '', color = 'docs' },
+                FEAT   = { icon = '󱩑', color = 'feat' },
+                FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+                HACK   = { icon = '', color = 'hint' },
+                NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+                PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
+                RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
+                TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+                TODO   = { icon = '󰸞', color = 'todo' },
+                WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
+            },
+            merge_keywords = false
+        })
+        TODO_COMMENTS_LOADED = true
     end,
+    dependencies = { 'luukvbaal/statuscol.nvim' },
     keys = {
         { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous todo comment' },
         { ']t', function() require('todo-comments').jump_next() end, desc = 'Next todo comment' }
@@ -2624,6 +2626,7 @@ AddPlugin {
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
+    dependencies = { 'luukvbaal/statuscol.nvim' },
     event = { 'TextChangedI' },
     keys = { '[c', ']c' },
     opts = {
@@ -3001,7 +3004,7 @@ AddPlugin {
         }
         vim.cmd.LspStart()
     end,
-    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
+    dependencies = { 'luukvbaal/statuscol.nvim', 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
     keys = { '<F12>' }
 }
 
@@ -3707,7 +3710,7 @@ AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             }
         })
     end,
-    event = 'VeryLazy'
+    -- event = 'VeryLazy'
 }
 
 --<~>
@@ -4456,7 +4459,7 @@ AddPlugin {
             format = {}, --- @see section on formatting
         })
     end,
-    dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    dependencies = { 'MunifTanjim/nui.nvim' },
     enabled = true,
     event = 'CmdlineEnter'
 }
@@ -4466,7 +4469,7 @@ AddPlugin {
     config = function()
         local notify = require('notify')
         notify.setup({
-            background_colour = vim.api.nvim_get_hl_by_name('Normal', true).background and 'Normal' or '#000000',
+            -- background_colour = vim.api.nvim_get_hl_by_name('Normal', true).background and 'Normal' or '#000000',
             minimum_width = 0,
             render = 'minimal',
             stages = 'slide'
@@ -4930,6 +4933,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand(58)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
