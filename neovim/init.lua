@@ -1,8 +1,8 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize Lazy profile
 -- PERF: Optimize lua file
 -- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
+-- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize python file
 -- PERF: Optimize markdown file
 -- PERF: Optimize norg file
@@ -2624,7 +2624,7 @@ AddPlugin {
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
-    event = { 'TextChanged' },
+    event = { 'TextChangedI' },
     keys = { '[c', ']c' },
     opts = {
         attach_to_untracked = true,
@@ -3713,7 +3713,7 @@ AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'nvim-lualine/lualine.nvim',
+    'nvim-lualine/lualine.nvim', -- FEAT: recording icon on recording start events: RecordingEnter/RecordingLeave
     config = function()
         local function lspIcon()
             local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
@@ -4930,6 +4930,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, LazyConfig)
-ColoRand()
+ColoRand(58)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
