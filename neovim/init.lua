@@ -1,6 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize Lazy profile - lazy load nvim-tree, load treesitter on selected languages, refine
--- usages of CmdlineEnter to cmdline textchanged
+-- PERF: Optimize Lazy profile
 -- PERF: Optimize lua file
 -- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
@@ -92,9 +91,7 @@ vim.api.nvim_create_user_command(
             profile func *
         ]]
     end,
-    {
-        nargs = 0
-    }
+    { nargs = 0 }
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -106,7 +103,7 @@ vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
 Dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
-HlPriority = { --vim.highlight.priorities
+Hl_priority = { --vim.highlight.priorities
     hlargs = 126,
     url = 202
 }
@@ -186,7 +183,7 @@ Icons = {
     warn               = ' ',
 }
 
-LazyConfig = {
+Lazy_config = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
         lazy = true, -- should plugins be lazy-loaded?
@@ -307,10 +304,10 @@ LazyConfig = {
 }
 
 Plugins = {}
-PopUpMenu = {}
+Pop_up_menu = {}
 Signs = {}
 
-TodoColors = {
+Todo_colors = {
     default = { 'Identifier', '#7C3AED' },
     docs    = { 'Function', '#440381' },
     error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
@@ -322,6 +319,8 @@ TodoColors = {
     todo    = { 'Todo', 'Keyword', '#1B998B' },
     warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
 }
+
+Treesitter_languages = { 'lua' }
 
 -- Lua locals
 local kind_hl = {
@@ -678,7 +677,7 @@ function PopupAction()
     -- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
     vim.cmd('aunmenu PopUp')
 
-    for _,menu in pairs(PopUpMenu) do
+    for _,menu in pairs(Pop_up_menu) do
         if menu.cond() then
             for _,opt in pairs(menu.opts) do
                 local title = opt[1]
@@ -691,7 +690,7 @@ function PopupAction()
 end
 
 function PopupMenuAdd(menu)
-    table.insert(PopUpMenu, menu)
+    table.insert(Pop_up_menu, menu)
 end
 
 TodoHilighterCache = {}
@@ -703,35 +702,35 @@ function TodoHilighter(_, match)
 
     local color_set = {}
     if match == 'BUG:' then
-        color_set = TodoColors.error
+        color_set = Todo_colors.error
     elseif match == 'DOCME:' then
-        color_set = TodoColors.docs
+        color_set = Todo_colors.docs
     elseif match == 'ERROR:' then
-        color_set = TodoColors.error
+        color_set = Todo_colors.error
     elseif match == 'FEAT:' then
-        color_set = TodoColors.feat
+        color_set = Todo_colors.feat
     elseif match == 'FIX:' then
-        color_set = TodoColors.feat
+        color_set = Todo_colors.feat
     elseif match == 'HACK:' then
-        color_set = TodoColors.hint
+        color_set = Todo_colors.hint
     elseif match == 'HINT:' then
-        color_set = TodoColors.hint
+        color_set = Todo_colors.hint
     elseif match == 'INFO:' then
-        color_set = TodoColors.info
+        color_set = Todo_colors.info
     elseif match == 'PERF:' then
-        color_set = TodoColors.perf
+        color_set = Todo_colors.perf
     elseif match == 'REFACTOR:' then
-        color_set = TodoColors.info
+        color_set = Todo_colors.info
     elseif match == 'TEST:' then
-        color_set = TodoColors.test
+        color_set = Todo_colors.test
     elseif match == 'THOUGHT:' then
-        color_set = TodoColors.info
+        color_set = Todo_colors.info
     elseif match == 'TODO:' then
-        color_set = TodoColors.todo
+        color_set = Todo_colors.todo
     elseif match == 'WARN:' then
-        color_set = TodoColors.warn
+        color_set = Todo_colors.warn
     else
-        color_set = TodoColors.default
+        color_set = Todo_colors.default
     end
 
     for _, hl in pairs(color_set) do
@@ -748,6 +747,20 @@ function TodoHilighter(_, match)
 end
 -- <~>
 -- Auto Commands</>
+vim.api.nvim_create_autocmd(
+    'BufEnter', {
+        pattern = '*',
+        desc = 'Run custom actions per filetype',
+        callback = function(arg)
+            local path = vim.fn.expand('%:p')
+            if vim.fn.isdirectory(path) ~= 0 then
+                vim.api.nvim_del_autocmd(arg.id)
+                require("nvim-tree.api").tree.open({path = path})
+            end
+        end
+    }
+)
+
 vim.api.nvim_set_hl(0, "Overlength", { bg = AdaptiveBG(70, -70) })
 vim.api.nvim_create_autocmd(
     'BufWinEnter', {
@@ -1355,7 +1368,7 @@ AddPlugin {
     'folke/todo-comments.nvim',
     config = function()
         require('todo-comments').setup({
-            colors = TodoColors,
+            colors = Todo_colors,
             keywords = {
                 DOCME  = { icon = '', color = 'docs' },
                 FEAT   = { icon = '󱩑', color = 'feat' },
@@ -1551,7 +1564,6 @@ function SeniorMarsTheme(transparent)
     })
 end
 
--- https://github.com/lifepillar/vim-colortemplate
 local colos = {}
 
 local function ColorPlugin(opts)
@@ -1816,7 +1828,7 @@ function ColoRand(scheme_index)
         precmd()
     end
     vim.cmd.colorscheme(scheme)
-    vim.cmd[[highlight clear CursorLine]]
+    vim.cmd('highlight clear CursorLine')
     if (postcmd) then
         postcmd()
     end
@@ -1856,7 +1868,7 @@ AddPlugin {
 -- https://github.com/hrsh7th/cmp-nvim-lua
 -- https://github.com/uga-rosa/cmp-dynamic
 
-AddPlugin {
+AddPlugin { -- FEAT: https://github.com/2KAbhishek/nerdy.nvim
     'chrisgrieser/cmp-nerdfont',
     event = 'InsertEnter'
 }
@@ -1869,7 +1881,7 @@ AddPlugin {
 
 AddPlugin {
     'hrsh7th/cmp-cmdline',
-    event = 'CmdlineEnter'
+    event = 'CmdlineChanged'
 }
 
 AddPlugin {
@@ -1879,7 +1891,7 @@ AddPlugin {
 
 AddPlugin {
     'hrsh7th/cmp-path',
-    event = 'CmdlineEnter'
+    event = 'CmdlineChanged'
 }
 
 AddPlugin {
@@ -1973,7 +1985,7 @@ AddPlugin {
         'hrsh7th/cmp-buffer',
         -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
-    event = 'CmdlineEnter',
+    event = 'CmdlineChanged',
 }
 
 -- https://github.com/kristijanhusak/vim-dadbod-completion
@@ -2124,8 +2136,7 @@ AddPlugin {
 -- directory case handling
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
-    -- cmd = 'NvimTreeToggle',
-    event = 'CursorHold',
+    cmd = 'NvimTreeOpen',
     opts = {
         actions = {
             change_dir = {
@@ -3863,18 +3874,18 @@ AddPlugin {
                     },
                     {
                         function() return vim.g.ColoRand end,
-                        color = { fg = GetFgOrFallback('Number', '#F2F230'), gui ='bold' },
+                        color = { fg = GetFgOrFallback('Number', '#F2F230') },
                         icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
                         padding = { left = 0, right = 1 }
                     },
                     {
                         'encoding',
-                        color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='bold' },
+                        color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='italic' },
                         fmt = function(str)
                             if vim.o.bomb then
                                 str = str .. '-bom'
                             end
-                            return string.gsub(str, 'utf', 'U')
+                            return string.gsub(str, 'utf.', 'u')
                         end,
                         padding = { left = 0, right = 1 }
                     }
@@ -3896,12 +3907,26 @@ AddPlugin {
                     },
                     {
                         function()
+                            local buf = vim.api.nvim_get_current_buf()
+                            local highlighter = require('vim.treesitter.highlighter')
+                            if highlighter.active[buf] then
+                                return '󰐅'
+                            end
+                            return ''
+                        end,
+                        color = { fg = '#097969' },
+                        padding = { left = 0, right = 1 },
+                        separator = ''
+                    },
+                    {
+                        function()
                             if vim.o.wrap then
                                 return '󰖶'
                             else
                                 return '󰯟'
                             end
                         end,
+                        color = { fg = '#FFBF00' },
                         on_click = function()
                             vim.cmd('set wrap!')
                         end,
@@ -3910,6 +3935,7 @@ AddPlugin {
                     },
                     {
                         'fileformat',
+                        color = { fg = '#0096FF' },
                         padding = { left = 0, right = 1 },
                     },
                 },
@@ -3919,7 +3945,7 @@ AddPlugin {
                         fmt = function(str)
                             return str:gsub("^%s+", ""):gsub("%s+", "")
                         end,
-                        icon = {'󰍒', align = 'left'},
+                        -- icon = {'󰍒', align = 'left'},
                         on_click = function ()
                             require('mini.map').toggle()
                         end,
@@ -4177,14 +4203,20 @@ AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup({
-            auto_install = true,
+            auto_install = false,
+            ensure_installed = Treesitter_languages,
             highlight = {
                 additional_vim_regex_highlighting = false,
-                -- disable = { 'csv' },
+                disable = function(lang, buf)
+                    local max_filesize = 1000 * 1024 -- 1000 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        return true
+                    end
+                end,
                 enable = true
             },
-            ignore_install = { 'csv', 'vimdoc' },
-            rainbow = {
+            rainbow = { -- TODO: still needed
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
@@ -4192,7 +4224,8 @@ AddPlugin {
         })
     end,
     dependencies = { { 'm-demare/hlargs.nvim' } },
-    event = 'User VeryLazy'
+    event = 'CursorHold *.' .. table.concat(Treesitter_languages, ',*.'),
+    module = false
 }
 
 AddPlugin {
@@ -4244,7 +4277,7 @@ AddPlugin {
             extras = {
                 named_parameters = true,
             },
-            hl_priority = HlPriority.hlargs,
+            hl_priority = Hl_priority.hlargs,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -4814,7 +4847,7 @@ AddPlugin {
 -- https://github.com/mrshmllow/open-handlers.nvim
 -- https://github.com/nat-418/scamp.nvim
 
--- AddPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineEnter' }
+-- AddPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineChanged' }
 
 AddPlugin {
     -- https://github.com/RutaTang/compter.nvim
@@ -4932,7 +4965,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
 
-require('lazy').setup(Plugins, LazyConfig)
+require('lazy').setup(Plugins, Lazy_config)
 ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
