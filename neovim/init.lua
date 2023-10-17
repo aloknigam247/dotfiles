@@ -2723,7 +2723,6 @@ AddPlugin {
             cs       = { color = '#596706', cterm_color = '58',  icon = '', name = 'Cs'        },
             csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    }, -- TODO: remove now
             csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
-            makefile = { color = '#6d8086', cterm_color = '66',  icon = '', name = 'Makefile'  },
             md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
             mdx      = { color = '#519ABA', cterm_color = '67',  icon = '', name = 'Mdx'       },
             norg     = { color = '#40916C', cterm_color = '48',  icon = '', name = 'Neorg'     },
