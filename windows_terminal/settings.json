@@ -1,6 +1,6 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
-    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "$schema": "https://aka.ms/terminal-profiles-schema-preview",
     "actions": 
     [
         {
@@ -10,6 +10,10 @@
                 "singleLine": false
             },
             "keys": "ctrl+c"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+v"
         },
         {
             "command": "paste"
@@ -26,10 +30,6 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+v"
         },
         {
             "command": "toggleFocusMode",
@@ -106,6 +106,10 @@
                 "colorScheme": "PowerShell 7",
                 "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -nologo",
                 "elevate": false,
+                "font": 
+                {
+                    "face": "VictorMono NF"
+                },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
@@ -426,6 +430,7 @@
             "tab": 
             {
                 "background": "terminalBackground",
+                "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": "#FFFFFF00"
             },
@@ -437,6 +442,9 @@
             "window": 
             {
                 "applicationTheme": "dark",
+                "experimental.rainbowFrame": false,
+                "frame": null,
+                "unfocusedFrame": null,
                 "useMica": true
             }
         }

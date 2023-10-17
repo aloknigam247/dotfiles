@@ -1,71 +1,28 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: perform improvements on blank file, code files used, very large files, autocommands
--- FIX: history
+-- PERF: Optimize Lazy profile
+-- PERF: Optimize lua file
+-- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
+-- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
+-- PERF: Optimize python file
+-- PERF: Optimize markdown file
+-- PERF: Optimize norg file
+-- PERF: Optimize c++
+-- PERF: Optimize very large files
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: fix me
--- 01:54:23 PM msg_show   au CursorMoved --- Autocommands ---
--- CursorMoved
--- *<Lua 46: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
--- nvim_tree_floating_node  CursorMoved
--- NvimTree_*<Lua 379: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree/renderer/components/full-name.lua:93>
--- <Lua 380: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree/renderer/components/full-name.lua:103>
--- NvimTree  CursorMoved
--- NvimTree_*<Lua 399: ~/AppData/Local/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree.lua:266>
--- flash_char  CursorMoved
--- *<Lua 448: ~/AppData/Local/nvim-data/lazy/flash.nvim/lua/flash/plugins/char.lua:143>
--- sentiment.renderer  CursorMoved
--- *<Lua 472: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
--- lualine_stl_refresh  CursorMoved
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+
+-- CursorMovedI
+-- *<Lua 47: ~\AppData\Local\nvim/lua/init.lua:14> [Autocommand profile init]
+-- sentiment.renderer  CursorMovedI
+-- *<Lua 383: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
+-- vim_illuminate_v2_augroup  CursorMovedI
+-- *<Lua 529: ~/AppData/Local/nvim-data/lazy/vim-illuminate/lua/illuminate/engine.lua:49>
+-- lualine_stl_refresh  CursorMovedI
 -- *call v:lua.require'lualine'.refresh({'kind': 'window', 'place': ['statusline'], 'trigger': 'autocmd'})
--- lualine_wb_refresh  CursorMoved
+-- lualine_wb_refresh  CursorMovedI
 -- *call v:lua.require'lualine'.refresh({'kind': 'tabpage', 'place': ['winbar'], 'trigger': 'autocmd'})
--- IndentBlankline  CursorMoved
--- *<Lua 764: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:25>
--- vim_illuminate_v2_augroup  CursorMoved
--- *<Lua 787: ~/AppData/Local/nvim-data/lazy/vim-illuminate/lua/illuminate/engine.lua:49>
--- CursorMoved
--- *<Lua 848: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- <Lua 1531: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- <Lua 1628: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
---
--- 01:54:26 PM msg_show   au OptionSet --- Autocommands ---
--- OptionSet
--- *<Lua 76: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
--- background<Lua 385: ~/AppData/Local/nvim-data/lazy/nvim-web-devicons/lua/nvim-web-devicons.lua:2131>
--- lualine  OptionSet
--- backgroundlua require'lualine'.setup()
--- IndentBlankline  OptionSet
--- list<Lua 774: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- listchars<Lua 775: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- shiftwidth<Lua 776: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- tabstop<Lua 777: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- vartabstop<Lua 778: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:32>
--- gitsigns.config.diff_opts  OptionSet
--- diffopt<Lua 991: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/config.lua:920>
--- gitsigns  OptionSet
--- fileformat<Lua 934: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
--- bomb<Lua 931: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
--- eol<Lua 929: ~/AppData/Local/nvim-data/lazy/gitsigns.nvim/lua/gitsigns/attach.lua:188>
--- OptionSet
--- *<Lua 1658: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
---
--- 01:54:28 PM msg_show   au WinScrolled --- Autocommands ---
--- WinScrolled
--- *<Lua 125: ~\AppData\Local\nvim/lua/init.lua:7> [Autocommand profile init]
--- sentiment.renderer  WinScrolled
--- *<Lua 470: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
--- MiniHipatternsBuffer1  WinScrolled
--- <buffer=1><Lua 763: vim/_editor.lua:338> [Update highlighting in view]
--- IndentBlankline  WinScrolled
--- *<Lua 779: ~/AppData/Local/nvim-data/lazy/indent-blankline.nvim/lua/ibl/autocmds.lua:39>
--- WinScrolled
--- *<Lua 846: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- NvimSeparator  WinScrolled
--- *<Lua 1498: ~/AppData/Local/nvim-data/lazy/colorful-winsep.nvim/lua/colorful-winsep/init.lua:40>
--- WinScrolled
--- *<Lua 1530: ~/AppData/Local/nvim-data/lazy/noice.nvim/lua/noice/view/scrollbar.lua:43>
--- <Lua 1707: ~\AppData\Local\nvim/lua/init.lua:24> [Autocommand profile record]
+-- CursorMovedI
+-- *<Lua 741: ~\AppData\Local\nvim/lua/init.lua:31> [Autocommand profile record]
 AuProfileData = nil
 function AuInit(args)
     local event = args.event
@@ -85,15 +42,17 @@ function AuInit(args)
 end
 
 function AuProfile(args)
-    local data = AuProfileData[args.event]
-    if data then
-        local elapsed = (os.clock() - data.start)
-        local total = (data.total or 0) + elapsed
+    if AuProfileData then
+        local data = AuProfileData[args.event]
+        if data then
+            local elapsed = (os.clock() - data.start)
+            local total = (data.total or 0) + elapsed
 
-        data['avg'] = total / data.count
-        data['total'] = total
+            data['avg'] = total / data.count
+            data['total'] = total
 
-        AuProfileData[args.event] = data
+            AuProfileData[args.event] = data
+        end
     end
 end
 
@@ -109,6 +68,7 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_user_command(
     'ProfileAutocommand',
     function()
+        vim.notify("Profiling started, stopped by F6")
         AuProfileData = {}
         vim.api.nvim_create_autocmd(
         Event_list, {
@@ -117,12 +77,24 @@ vim.api.nvim_create_user_command(
                 callback = AuProfile
             }
         )
+        vim.api.nvim_set_keymap('n', '<F6>', '', {
+            callback = function()
+                AuProfileDataResult = AuProfileData
+                AuProfileData = nil
+                vim.cmd('profile stop')
+                vim.notify('Autocommand profiling stopped')
+            end
+        })
+        vim.cmd[[
+            profile start nvim_profile
+            profile file *
+            profile func *
+        ]]
     end,
-    {
-        nargs = 0
-    }
+    { nargs = 0 }
 )
-
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
 
 -- Vim Globals
@@ -131,7 +103,7 @@ vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
 Dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
-HlPriority = { --vim.highlight.priorities
+Hl_priority = { --vim.highlight.priorities
     hlargs = 126,
     url = 202
 }
@@ -211,7 +183,7 @@ Icons = {
     warn               = ' ',
 }
 
-LazyConfig = {
+Lazy_config = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
         lazy = true, -- should plugins be lazy-loaded?
@@ -251,7 +223,7 @@ LazyConfig = {
             import     = '󰋺',
             keys       = '',
             lazy       = ' ',
-            list       = { '●', '', '', '' },
+            list       = { '󰬺', ' 󰬻', '󰬼', '󰬽', '󰬾', '󰬿', '󰭀', '󰭁', '󰭂', '󰿩' },
             loaded     = '',
             not_loaded = '',
             plugin     = '',
@@ -297,17 +269,21 @@ LazyConfig = {
             reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
             paths = {}, -- add any custom paths here that you want to includes in the rtp
             disabled_plugins = {
+                'csv',
+                'editorconfig',
                 'gzip',
-                -- 'health',
                 'man',
-                -- 'matchit',
-                -- 'matchparen',
-                -- 'netrwPlugin',
+                'matchit',
+                'matchparen',
+                'netrwPlugin',
+                'norg',
+                'rplugin',
+                'shada',
                 'spellfile',
                 'tarPlugin',
                 'tohtml',
                 'tutor',
-                -- 'zipPlugin',
+                'zipPlugin',
             },
         },
     },
@@ -318,13 +294,20 @@ LazyConfig = {
         skip_if_doc_exists = true,
     },
     state = vim.fn.stdpath('state') .. '/lazy/state.json', -- state info for checker and other things
+    profiling = {
+        -- Enables extra stats on the debug tab related to the loader cache.
+        -- Additionally gathers stats about all package.loaders
+        loader = true,
+        -- Track each new require in the Lazy profiling tab
+        require = true,
+    },
 }
 
 Plugins = {}
-PopUpMenu = {}
+Pop_up_menu = {}
 Signs = {}
 
-TodoColors = {
+Todo_colors = {
     default = { 'Identifier', '#7C3AED' },
     docs    = { 'Function', '#440381' },
     error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
@@ -336,6 +319,8 @@ TodoColors = {
     todo    = { 'Todo', 'Keyword', '#1B998B' },
     warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
 }
+
+Treesitter_languages = { 'lua' }
 
 -- Lua locals
 local kind_hl = {
@@ -692,7 +677,7 @@ function PopupAction()
     -- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
     vim.cmd('aunmenu PopUp')
 
-    for _,menu in pairs(PopUpMenu) do
+    for _,menu in pairs(Pop_up_menu) do
         if menu.cond() then
             for _,opt in pairs(menu.opts) do
                 local title = opt[1]
@@ -705,7 +690,7 @@ function PopupAction()
 end
 
 function PopupMenuAdd(menu)
-    table.insert(PopUpMenu, menu)
+    table.insert(Pop_up_menu, menu)
 end
 
 TodoHilighterCache = {}
@@ -717,35 +702,35 @@ function TodoHilighter(_, match)
 
     local color_set = {}
     if match == 'BUG:' then
-        color_set = TodoColors.error
+        color_set = Todo_colors.error
     elseif match == 'DOCME:' then
-        color_set = TodoColors.docs
+        color_set = Todo_colors.docs
     elseif match == 'ERROR:' then
-        color_set = TodoColors.error
+        color_set = Todo_colors.error
     elseif match == 'FEAT:' then
-        color_set = TodoColors.feat
+        color_set = Todo_colors.feat
     elseif match == 'FIX:' then
-        color_set = TodoColors.feat
+        color_set = Todo_colors.feat
     elseif match == 'HACK:' then
-        color_set = TodoColors.hint
+        color_set = Todo_colors.hint
     elseif match == 'HINT:' then
-        color_set = TodoColors.hint
+        color_set = Todo_colors.hint
     elseif match == 'INFO:' then
-        color_set = TodoColors.info
+        color_set = Todo_colors.info
     elseif match == 'PERF:' then
-        color_set = TodoColors.perf
+        color_set = Todo_colors.perf
     elseif match == 'REFACTOR:' then
-        color_set = TodoColors.info
+        color_set = Todo_colors.info
     elseif match == 'TEST:' then
-        color_set = TodoColors.test
+        color_set = Todo_colors.test
     elseif match == 'THOUGHT:' then
-        color_set = TodoColors.info
+        color_set = Todo_colors.info
     elseif match == 'TODO:' then
-        color_set = TodoColors.todo
+        color_set = Todo_colors.todo
     elseif match == 'WARN:' then
-        color_set = TodoColors.warn
+        color_set = Todo_colors.warn
     else
-        color_set = TodoColors.default
+        color_set = Todo_colors.default
     end
 
     for _, hl in pairs(color_set) do
@@ -762,6 +747,20 @@ function TodoHilighter(_, match)
 end
 -- <~>
 -- Auto Commands</>
+vim.api.nvim_create_autocmd(
+    'BufEnter', {
+        pattern = '*',
+        desc = 'Run custom actions per filetype',
+        callback = function(arg)
+            local path = vim.fn.expand('%:p')
+            if vim.fn.isdirectory(path) ~= 0 then
+                vim.api.nvim_del_autocmd(arg.id)
+                require("nvim-tree.api").tree.open({path = path})
+            end
+        end
+    }
+)
+
 vim.api.nvim_set_hl(0, "Overlength", { bg = AdaptiveBG(70, -70) })
 vim.api.nvim_create_autocmd(
     'BufWinEnter', {
@@ -1087,7 +1086,7 @@ AddPlugin {
            hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
        ]]
     end,
-    event = 'CursorHold'
+    event = { 'CursorMoved', 'CursorMovedI' }
 }
 
 AddPlugin {
@@ -1120,7 +1119,7 @@ AddPlugin {
 
 AddPlugin {
     'folke/flash.nvim',
-    lazy = false,
+    lazy = true,
     opts = {
         -- labels = "abcdefghijklmnopqrstuvwxyz",
         labels = "asdfghjklqwertyuiopzxcvbnm",
@@ -1369,23 +1368,24 @@ AddPlugin {
     'folke/todo-comments.nvim',
     config = function()
         require('todo-comments').setup({
-        colors = TodoColors,
-        keywords = {
-            DOCME  = { icon = '', color = 'docs' },
-            FEAT   = { icon = '󱩑', color = 'feat' },
-            FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
-            HACK   = { icon = '', color = 'hint' },
-            NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-            PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
-            RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
-            TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-            TODO   = { icon = '󰸞', color = 'todo' },
-            WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
-        },
-        merge_keywords = false
-    })
-    TODO_COMMENTS_LOADED = true
+            colors = Todo_colors,
+            keywords = {
+                DOCME  = { icon = '', color = 'docs' },
+                FEAT   = { icon = '󱩑', color = 'feat' },
+                FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+                HACK   = { icon = '', color = 'hint' },
+                NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+                PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
+                RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
+                TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+                TODO   = { icon = '󰸞', color = 'todo' },
+                WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
+            },
+            merge_keywords = false
+        })
+        TODO_COMMENTS_LOADED = true
     end,
+    dependencies = { 'luukvbaal/statuscol.nvim' },
     keys = {
         { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous todo comment' },
         { ']t', function() require('todo-comments').jump_next() end, desc = 'Next todo comment' }
@@ -1564,7 +1564,6 @@ function SeniorMarsTheme(transparent)
     })
 end
 
--- https://github.com/lifepillar/vim-colortemplate
 local colos = {}
 
 local function ColorPlugin(opts)
@@ -1667,10 +1666,9 @@ Dark  { 'ayu-mirage',                 'ayu'                            }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
 Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
 DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  }
+Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  } -- FIX: Overlength is not visible
 Dark  { 'bluloco-dark',               '_'                              }
 DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
-Light { 'bluloco-light',              '_'                              }
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'caret',                      '_'                              }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
@@ -1702,7 +1700,6 @@ DarkT { 'fluoromachine',              '_', pre = function() require('fluoromachi
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'fluoromachine', transparent = false}) end, post = FixIndentBlankline }
 Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
 Dark  { 'forestbones',                'zenbones'                                                          }
-Dark  { 'github_dark',                'github'                                                            }
 DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({options = { transparent = true }}) end }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
@@ -1831,7 +1828,7 @@ function ColoRand(scheme_index)
         precmd()
     end
     vim.cmd.colorscheme(scheme)
-    vim.cmd[[highlight clear CursorLine]]
+    vim.cmd('highlight clear CursorLine')
     if (postcmd) then
         postcmd()
     end
@@ -1871,14 +1868,20 @@ AddPlugin {
 -- https://github.com/hrsh7th/cmp-nvim-lua
 -- https://github.com/uga-rosa/cmp-dynamic
 
-AddPlugin {
+AddPlugin { -- FEAT: https://github.com/2KAbhishek/nerdy.nvim
     'chrisgrieser/cmp-nerdfont',
     event = 'InsertEnter'
 }
 
 AddPlugin {
+    'dcampos/cmp-snippy',
+    dependencies = 'nvim-snippy',
+    event = 'InsertEnter'
+}
+
+AddPlugin {
     'hrsh7th/cmp-cmdline',
-    event = 'CmdlineEnter'
+    event = 'CmdlineChanged'
 }
 
 AddPlugin {
@@ -1888,7 +1891,7 @@ AddPlugin {
 
 AddPlugin {
     'hrsh7th/cmp-path',
-    event = 'CmdlineEnter'
+    event = 'CmdlineChanged'
 }
 
 AddPlugin {
@@ -1982,7 +1985,7 @@ AddPlugin {
         'hrsh7th/cmp-buffer',
         -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
-    event = 'CmdlineEnter',
+    event = 'CmdlineChanged',
 }
 
 -- https://github.com/kristijanhusak/vim-dadbod-completion
@@ -2133,8 +2136,7 @@ AddPlugin {
 -- directory case handling
 AddPlugin {
     'nvim-tree/nvim-tree.lua',
-    -- cmd = 'NvimTreeToggle',
-    lazy = false,
+    cmd = 'NvimTreeOpen',
     opts = {
         actions = {
             change_dir = {
@@ -2417,7 +2419,7 @@ AddPlugin {
             debounce_delay = 15,
             enable = true,
             ignore_list = {},
-            update_root = true,
+            update_root = false,
         },
         view = {
             adaptive_size = false,
@@ -2635,7 +2637,8 @@ AddPlugin {
 AddPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
-    event = { 'TextChanged' },
+    dependencies = { 'luukvbaal/statuscol.nvim' },
+    event = { 'TextChangedI' },
     keys = { '[c', ']c' },
     opts = {
         attach_to_untracked = true,
@@ -3011,7 +3014,7 @@ AddPlugin {
         }
         vim.cmd.LspStart()
     end,
-    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
+    dependencies = { 'luukvbaal/statuscol.nvim', 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
     keys = { '<F12>' }
 }
 
@@ -3639,12 +3642,6 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'dcampos/cmp-snippy',
-    dependencies = 'nvim-snippy',
-    event = 'InsertEnter'
-}
-
-AddPlugin {
     'dcampos/nvim-snippy',
     dependencies = 'honza/vim-snippets',
     opts = {
@@ -3684,7 +3681,7 @@ AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             segments = {
                 { text = { '%C' }, click = 'v:lua.ScFa' },
                 { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                { sign = { name = { 'Diagnostic' }, auto = true } },
+                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, condition = { true } },
                 { sign = {
                     text = {
@@ -3723,13 +3720,13 @@ AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             }
         })
     end,
-    event = 'VeryLazy'
+    -- event = 'VeryLazy'
 }
 
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'nvim-lualine/lualine.nvim',
+    'nvim-lualine/lualine.nvim', -- FEAT: recording icon on recording start events: RecordingEnter/RecordingLeave
     config = function()
         local function lspIcon()
             local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
@@ -3875,26 +3872,26 @@ AddPlugin {
                         separator = ''
                     },
                     {
-                        'g:ColoRand',
-                        color = { fg = GetFgOrFallback('Number', '#F2F230'), gui ='bold' },
+                        function() return vim.g.ColoRand end,
+                        color = { fg = GetFgOrFallback('Number', '#F2F230') },
                         icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
                         padding = { left = 0, right = 1 }
                     },
                     {
                         'encoding',
-                        color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='bold' },
+                        color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='italic' },
                         fmt = function(str)
                             if vim.o.bomb then
                                 str = str .. '-bom'
                             end
-                            return string.gsub(str, 'utf', 'U')
+                            return string.gsub(str, 'utf.', 'u')
                         end,
                         padding = { left = 0, right = 1 }
                     }
                 },
                 lualine_y = {
                     {
-                        'g:session_icon',
+                        function() return vim.g.session_icon or '' end,
                         padding = { left = 0, right = 1 },
                         separator = ''
                     },
@@ -3909,12 +3906,26 @@ AddPlugin {
                     },
                     {
                         function()
+                            local buf = vim.api.nvim_get_current_buf()
+                            local highlighter = require('vim.treesitter.highlighter')
+                            if highlighter.active[buf] then
+                                return '󰐅'
+                            end
+                            return ''
+                        end,
+                        color = { fg = '#097969' },
+                        padding = { left = 0, right = 1 },
+                        separator = ''
+                    },
+                    {
+                        function()
                             if vim.o.wrap then
                                 return '󰖶'
                             else
                                 return '󰯟'
                             end
                         end,
+                        color = { fg = '#FFBF00' },
                         on_click = function()
                             vim.cmd('set wrap!')
                         end,
@@ -3923,6 +3934,7 @@ AddPlugin {
                     },
                     {
                         'fileformat',
+                        color = { fg = '#0096FF' },
                         padding = { left = 0, right = 1 },
                     },
                 },
@@ -3932,7 +3944,7 @@ AddPlugin {
                         fmt = function(str)
                             return str:gsub("^%s+", ""):gsub("%s+", "")
                         end,
-                        icon = {'󰍒', align = 'left'},
+                        -- icon = {'󰍒', align = 'left'},
                         on_click = function ()
                             require('mini.map').toggle()
                         end,
@@ -4190,22 +4202,59 @@ AddPlugin {
     'nvim-treesitter/nvim-treesitter',
     config = function()
         require('nvim-treesitter.configs').setup({
-            auto_install = true,
+            auto_install = false,
+            ensure_installed = Treesitter_languages,
             highlight = {
                 additional_vim_regex_highlighting = false,
-                -- disable = { 'csv' },
+                disable = function(lang, buf)
+                    local max_filesize = 1000 * 1024 -- 1000 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        return true
+                    end
+                end,
                 enable = true
             },
-            ignore_install = { 'csv', 'vimdoc' },
-            rainbow = {
+            rainbow = { -- TODO: still needed
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
             }
         })
     end,
-    dependencies = { 'mrjones2014/nvim-ts-rainbow', { 'm-demare/hlargs.nvim' } }, -- https://github.com/HiPhish/rainbow-delimiters.nvim
-    event = 'User VeryLazy'
+    dependencies = { { 'm-demare/hlargs.nvim' } },
+    event = 'CursorHold *.' .. table.concat(Treesitter_languages, ',*.'),
+    module = false
+}
+
+AddPlugin {
+    'HiPhish/rainbow-delimiters.nvim',
+    config = function()
+        local rainbow_delimiters = require 'rainbow-delimiters'
+
+        vim.g.rainbow_delimiters = {
+            strategy = {
+                [''] = rainbow_delimiters.strategy['global'],
+                -- vim = rainbow_delimiters.strategy['local'],
+            },
+            query = {
+                [''] = 'rainbow-delimiters',
+                -- lua = 'rainbow-delimiters',
+            },
+            highlight = {
+                'RainbowDelimiterRed',
+                'RainbowDelimiterYellow',
+                'RainbowDelimiterBlue',
+                'RainbowDelimiterOrange',
+                'RainbowDelimiterGreen',
+                'RainbowDelimiterViolet',
+                'RainbowDelimiterCyan',
+            },
+            -- blacklist = { 'lua' }
+        }
+        require('rainbow-delimiters').enable()
+    end,
+    -- event = 'CursorHold' -- FIX: slow on large files
 }
 
 AddPlugin {
@@ -4227,7 +4276,7 @@ AddPlugin {
             extras = {
                 named_parameters = true,
             },
-            hl_priority = HlPriority.hlargs,
+            hl_priority = Hl_priority.hlargs,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -4442,9 +4491,9 @@ AddPlugin {
             format = {}, --- @see section on formatting
         })
     end,
-    dependencies = { 'MunifTanjim/nui.nvim', 'rcarriga/nvim-notify' },
+    dependencies = { 'MunifTanjim/nui.nvim' },
     enabled = true,
-    lazy = false
+    event = 'CmdlineEnter'
 }
 
 AddPlugin {
@@ -4452,7 +4501,7 @@ AddPlugin {
     config = function()
         local notify = require('notify')
         notify.setup({
-            background_colour = vim.api.nvim_get_hl_by_name('Normal', true).background and 'Normal' or '#000000',
+            -- background_colour = vim.api.nvim_get_hl_by_name('Normal', true).background and 'Normal' or '#000000',
             minimum_width = 0,
             render = 'minimal',
             stages = 'slide'
@@ -4797,7 +4846,7 @@ AddPlugin {
 -- https://github.com/mrshmllow/open-handlers.nvim
 -- https://github.com/nat-418/scamp.nvim
 
--- AddPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineEnter' }
+-- AddPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineChanged' }
 
 AddPlugin {
     -- https://github.com/RutaTang/compter.nvim
@@ -4886,7 +4935,7 @@ AddPlugin {
 AddPlugin {
     'utilyre/sentiment.nvim',
     config = true,
-    lazy = false
+    event = { 'CursorMoved', 'CursorMovedI' }
 }
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -4915,7 +4964,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot-cmp
 -- https://github.com/zbirenbaum/copilot.lua
 
-require('lazy').setup(Plugins, LazyConfig)
+require('lazy').setup(Plugins, Lazy_config)
 ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
