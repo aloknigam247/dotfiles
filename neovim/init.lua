@@ -1,13 +1,13 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize Lazy profile
--- PERF: Optimize lua file
 -- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
 -- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
+-- PERF: Optimize lua Lazy profile
 -- PERF: Optimize python file
 -- PERF: Optimize markdown file
 -- PERF: Optimize norg file
 -- PERF: Optimize c++
 -- PERF: Optimize very large files
+vim.api.nvim_set_keymap('n', '<F7>', '<cmd>Lazy<CR>', { noremap = true })
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
@@ -3815,38 +3815,8 @@ AddPlugin {
                             removed = '-'
                         }
                     },
-                    {
-                        'diagnostics',
-                        -- icon = {'', color = {fg = '#9C95DC'}},
-                        on_click = function()
-                            vim.cmd('TroubleToggle')
-                        end,
-                        padding = { left = 1, right = 0 },
-                        sources = { 'nvim_diagnostic' },
-                        symbols = {
-                            error = Icons.error,
-                            warn  = Icons.warn,
-                            info  = Icons.info,
-                            hint  = Icons.hint
-                        },
-                    }
                 },
                 lualine_x = {
-                    {
-                        'hostname',
-                        color = { fg = '#119DA4', gui = 'bold' },
-                        cond = function()
-                            return vim.env.SSH_CLIENT ~= nil
-                        end,
-                        fmt = function(str)
-                            local alias = {
-                                ['ALOKNIGAM-IDC'] = "devbox"
-                            }
-                            return alias[str] or str
-                        end,
-                        icon = { '', color = { fg = '#3066BE' }},
-                        padding = { left = 0, right = 1 }
-                    },
                     {
                         'searchcount',
                         color = { fg = '#23CE6B', gui = 'bold' },
@@ -3865,10 +3835,40 @@ AddPlugin {
                         separator = ''
                     },
                     {
+                        'diagnostics',
+                        -- icon = {'', color = {fg = '#9C95DC'}},
+                        on_click = function()
+                            vim.cmd('TroubleToggle')
+                        end,
+                        padding = { left = 1, right = 0 },
+                        sources = { 'nvim_diagnostic' },
+                        symbols = {
+                            error = Icons.error,
+                            warn  = Icons.warn,
+                            info  = Icons.info,
+                            hint  = Icons.hint
+                        },
+                    },
+                    {
+                        'hostname',
+                        color = { fg = '#119DA4', gui = 'bold' },
+                        cond = function()
+                            return vim.env.SSH_CLIENT ~= nil
+                        end,
+                        fmt = function(str)
+                            local alias = {
+                                ['ALOKNIGAM-IDC'] = "devbox"
+                            }
+                            return alias[str] or str
+                        end,
+                        icon = { '', color = { fg = '#3066BE' }},
+                        padding = { left = 0, right = 1 }
+                    },
+                    {
                         function() return vim.g.ColoRand end,
                         color = { fg = GetFgOrFallback('Number', '#F2F230') },
                         icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
-                        padding = { left = 0, right = 1 }
+                        padding = { left = 1, right = 1 }
                     },
                     {
                         'encoding',
