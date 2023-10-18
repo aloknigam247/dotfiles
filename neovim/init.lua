@@ -320,7 +320,8 @@ Todo_colors = {
     warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
 }
 
-Treesitter_languages = { 'lua' }
+Treesitter_filetypes = { 'lua', 'markdown', 'py' }
+Treesitter_languages = { 'lua', 'markdown', 'python' }
 
 -- Lua locals
 local kind_hl = {
@@ -1508,12 +1509,6 @@ function FixStarry(char, context_char)
     })
 end
 
-function FixToast()
-    vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#427b00' })
-    vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#b968d9' })
-    vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#d12d00' })
-end
-
 function FixVisual(bg)
     bg = bg or AdaptiveBG(50, -20)
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
@@ -1638,7 +1633,6 @@ AddPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'   
 AddPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                             }
 AddPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                              }
 AddPlugin { 'NTBBloodbath/sweetie.nvim',               event = 'User sweetie'                                             }
-AddPlugin { 'jsit/toast.vim',                          event = 'User toast'                                               }
 AddPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                           }
 AddPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                          }
 AddPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
@@ -1650,7 +1644,7 @@ AddPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', 
 AddPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'                                              }
 AddPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
--- use cfg field to reduce line length
+-- REFACTOR: use cfg field to reduce line length
 DarkT { 'NeoSolarized',               '_'                              }
 Light { 'NeoSolarized',               '_'                              }
 Dark  { 'NeoSolarized',               '_', pre = function() require('NeoSolarized').setup({transparent = false}) end}
@@ -1791,7 +1785,6 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Light { 'sweetie',                    '_'                                                                    }
 Dark  { 'terafox',                    'nightfox'                                                             }
 DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
-Light { 'toast',                      '_',        post = FixToast                                            }
 Light { 'tokyobones',                 'zenbones'                                                            }
 Dark  { 'tokyodark',                  '_'                                                                   }
 DarkT { 'tokyodark',                  '_', pre = function() require('tokyodark').setup({transparent_background = true}) end }
@@ -4223,7 +4216,7 @@ AddPlugin {
         })
     end,
     dependencies = { { 'm-demare/hlargs.nvim' } },
-    event = 'CursorHold *.' .. table.concat(Treesitter_languages, ',*.'),
+    event = 'CursorHold *.' .. table.concat(Treesitter_filetypes, ',*.'),
     module = false
 }
 
