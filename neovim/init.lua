@@ -1723,7 +1723,6 @@ Dark  { 'monokai',                    'vim-monokai'                             
 DarkT { 'monokai-nightasty',          '_'                                                                                                                     }
 Light { 'monokai-nightasty',          '_'                                                                                                                     }
 Dark  { 'monokai-nightasty',          '_',           pre = function() require('monokai-nightasty').setup({dark_style_background = 'transparent'}) end         }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'classic'})   end                                }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'machine'})   end                                }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'octagon'})   end                                }
 Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'pro'})       end, post = FixVisual              }
