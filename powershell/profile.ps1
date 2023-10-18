@@ -405,7 +405,7 @@ Set-PSReadLineOption -Colors @{
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $PSNativeCommandUseErrorActionPreference = $false
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
-$env:PSModulePath += ";P:\aloknigam"
+$env:PSModulePath += ";P:\aloknigam;E:\aloknigam"
 
 # HACK: for BetterGx neovim #
 $env:WSLENV=$null
