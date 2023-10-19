@@ -1,5 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize lua --startuptime: nvim --startuptime startup; nvim .\startup; rm .\startup
+-- PERF: Optimize lua --startuptime: nvim --startuptime startup a.lua; nvim .\startup; rm .\startup PERF: do not load syntax for treesitter
 -- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize lua Lazy profile
 -- PERF: Optimize python file
@@ -320,9 +320,6 @@ Todo_colors = {
     warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
 }
 
-Treesitter_filetypes = { 'lua', 'markdown', 'py' }
-Treesitter_languages = { 'lua', 'markdown', 'python' }
-
 -- Lua locals
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
@@ -506,6 +503,25 @@ function GetGitsign(lnum)
         end
     end
     return ''
+end
+
+function GetTSInstlled()
+    -- PERF: cache output
+    local filetye_map = {
+        ['python'] = 'py'
+    }
+
+    local installed_filetypes = {}
+
+    for file, _ in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath('data'), '/lazy/nvim-treesitter/parser')) do
+        if file:sub(-3) == '.so' then
+            local ftype = file:gsub('.so', '')
+            ftype = filetye_map[ftype] or ftype
+            table.insert(installed_filetypes, ftype)
+        end
+    end
+
+    return installed_filetypes
 end
 
 function IsLspAttached()
@@ -751,7 +767,7 @@ end
 vim.api.nvim_create_autocmd(
     'BufEnter', {
         pattern = '*',
-        desc = 'Run custom actions per filetype',
+        desc = 'Open directory in nvim-tree',
         callback = function(arg)
             local path = vim.fn.expand('%:p')
             if vim.fn.isdirectory(path) ~= 0 then
@@ -1716,8 +1732,6 @@ Dark  { 'melange',                    '_'                                       
 Dark  { 'mellifluous',                '_'                                                                                                                     }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
-DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({transparent_background = {enabled = true}}) end           }
-Dark  { 'monokai',                    '_',                                                                                                                    }
 Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 DarkT { 'monokai-nightasty',          '_'                                                                                                                     }
@@ -1781,7 +1795,6 @@ Dark  { 'sonokai',                    '_',           pre = function() vim.g.sono
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'maia'      end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'shusia'    end  }
 Light { 'sweetie',                    '_'                                                                    }
-Dark  { 'terafox',                    'nightfox'                                                             }
 DarkT { 'terafox',                    'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
 Light { 'tokyobones',                 'zenbones'                                                            }
 Dark  { 'tokyodark',                  '_'                                                                   }
@@ -4194,7 +4207,7 @@ AddPlugin {
     config = function()
         require('nvim-treesitter.configs').setup({
             auto_install = false,
-            ensure_installed = Treesitter_languages,
+            ensure_installed = { 'lua', 'markdown', 'python' },
             highlight = {
                 additional_vim_regex_highlighting = false,
                 disable = function(lang, buf)
@@ -4214,7 +4227,7 @@ AddPlugin {
         })
     end,
     dependencies = { { 'm-demare/hlargs.nvim' } },
-    event = 'CursorHold *.' .. table.concat(Treesitter_filetypes, ',*.'),
+    event = 'CursorHold *.' .. table.concat(GetTSInstlled(), ',*.'),
     module = false
 }
 
