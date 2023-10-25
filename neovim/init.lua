@@ -1,11 +1,12 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize lua --startuptime: nvim --startuptime startup a.lua; nvim .\startup; rm .\startup PERF: do not load syntax for treesitter
 -- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize lua Lazy profile
 -- PERF: Optimize python file
+-- PERF: Optimize --startuptime: nvim --startuptime startup a.lua; nvim .\startup; rm .\startup
 -- PERF: Optimize markdown file
 -- PERF: Optimize norg file
 -- PERF: Optimize c++
+-- PERF: Optimize vim
 -- PERF: Optimize very large files
 vim.api.nvim_set_keymap('n', '<F7>', '<cmd>Lazy<CR>', { noremap = true })
 -- <~>
@@ -2453,7 +2454,7 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
-ActionsMap = {
+FileTypeActions = {
     ['markdown'] = function()
         vim.g.table_mode_corner = '|'
         MarkdownHeadingsHighlight()
@@ -2465,10 +2466,10 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Run custom actions per filetype',
         callback = function()
-            local actions = ActionsMap[vim.o.filetype]
-            if actions then
-                actions()
-            end
+            local ftype = vim.o.filetype
+            local actions = FileTypeActions[ftype]
+            if actions then actions() end
+            if GetTSInstlled()[ftype] == nil then vim.cmd('syntax on') end
         end
     }
 )
@@ -4210,7 +4211,7 @@ AddPlugin {
             ensure_installed = { 'lua', 'markdown', 'python' },
             highlight = {
                 additional_vim_regex_highlighting = false,
-                disable = function(lang, buf)
+                disable = function(_, buf)
                     local max_filesize = 1000 * 1024 -- 1000 KB
                     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
                     if ok and stats and stats.size > max_filesize then
@@ -4969,6 +4970,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, Lazy_config)
-ColoRand()
+-- ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker

@@ -42,6 +42,7 @@ set textwidth=100                     " Set text width to 100
 set wrap                              " Enable wrap
 set updatetime=500                    " CursorHold time
 set wrapmargin=0                      " Disable wrap margin
+syntax off
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
