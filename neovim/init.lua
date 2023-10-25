@@ -1,29 +1,17 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize lua StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10
 -- PERF: Optimize lua Lazy profile
 -- PERF: Optimize python file
 -- PERF: Optimize --startuptime: nvim --startuptime startup a.lua; nvim .\startup; rm .\startup
+-- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10 -- C:\Users\aloknigam\dotfiles\neovim\init.lua
 -- PERF: Optimize markdown file
 -- PERF: Optimize norg file
 -- PERF: Optimize c++
 -- PERF: Optimize vim
 -- PERF: Optimize very large files
+-- PERF: Optimize locale time set
 vim.api.nvim_set_keymap('n', '<F7>', '<cmd>Lazy<CR>', { noremap = true })
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-
--- CursorMovedI
--- *<Lua 47: ~\AppData\Local\nvim/lua/init.lua:14> [Autocommand profile init]
--- sentiment.renderer  CursorMovedI
--- *<Lua 383: ~/AppData/Local/nvim-data/lazy/sentiment.nvim/lua/sentiment/autocmds.lua:24> [Render pair]
--- vim_illuminate_v2_augroup  CursorMovedI
--- *<Lua 529: ~/AppData/Local/nvim-data/lazy/vim-illuminate/lua/illuminate/engine.lua:49>
--- lualine_stl_refresh  CursorMovedI
--- *call v:lua.require'lualine'.refresh({'kind': 'window', 'place': ['statusline'], 'trigger': 'autocmd'})
--- lualine_wb_refresh  CursorMovedI
--- *call v:lua.require'lualine'.refresh({'kind': 'tabpage', 'place': ['winbar'], 'trigger': 'autocmd'})
--- CursorMovedI
--- *<Lua 741: ~\AppData\Local\nvim/lua/init.lua:31> [Autocommand profile record]
 AuProfileData = nil
 function AuInit(args)
     local event = args.event
@@ -88,7 +76,7 @@ vim.api.nvim_create_user_command(
         })
         vim.cmd[[
             profile start nvim_profile
-            profile file *
+            " profile file *
             profile func *
         ]]
     end,
@@ -539,6 +527,15 @@ function LightenDarkenColor(col, amt)
     return hex_code:gsub(' ', '0')
 end
 
+function TableContains(table, item)
+    for _,k in ipairs(table) do
+        if k == item then
+            return item
+        end
+    end
+    return nil
+end
+
 function MarkdownHeadingsHighlight()
     local palette = ColorPalette()
     for i=1,6 do
@@ -853,7 +850,7 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
-    { 'BufNewFile', 'BufRead' }, {
+   { 'BufNewFile', 'BufRead' }, {
         pattern = '*',
         desc = 'Run for new files',
         callback = function ()
@@ -869,7 +866,7 @@ vim.api.nvim_create_autocmd(
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<BS>', 'x', {})
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
-vim.keymap.set('n', '<C-S>', '<cmd>w<CR>', {})
+vim.keymap.set('n', '<C-S>', '<cmd>w<CR>', {}) -- BUG: conflicts
 vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
 vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
@@ -1090,6 +1087,7 @@ AddPlugin {
     'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
+            delay = 400,
             min_count_to_highlight = 2,
             modes_allowlist = {'i', 'n'},
             providers = {
@@ -1104,7 +1102,7 @@ AddPlugin {
            hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
        ]]
     end,
-    event = { 'CursorMoved', 'CursorMovedI' }
+    event = { 'CursorHold', 'CursorHoldI' }
 }
 
 AddPlugin {
@@ -2466,10 +2464,13 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Run custom actions per filetype',
         callback = function()
+            -- PERF: do not repeat for same filetype
             local ftype = vim.o.filetype
             local actions = FileTypeActions[ftype]
             if actions then actions() end
-            if GetTSInstlled()[ftype] == nil then vim.cmd('syntax on') end
+            if TableContains(GetTSInstlled(), ftype) == nil then
+                vim.cmd('syntax on')
+            end
         end
     }
 )
@@ -2758,7 +2759,7 @@ AddPlugin {
     main = 'ibl',
     opts = {
         enabled = true,
-        debounce = 200,
+        debounce = 500,
         viewport_buffer = {
             min = 30,
             max = 500,
@@ -3769,7 +3770,7 @@ AddPlugin {
             sections = {
                 lualine_a = {
                     {
-                        'mode',
+                        'mode', -- FEAT: use Neovim icon in normal mode
                         color = { gui = 'bold' },
                         fmt = function(str)
                             return str:sub(1,1)
@@ -4940,7 +4941,7 @@ AddPlugin {
 AddPlugin {
     'utilyre/sentiment.nvim',
     config = true,
-    event = { 'CursorMoved', 'CursorMovedI' }
+    event = { 'CursorHold', 'CursorHoldI' }
 }
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -4970,6 +4971,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, Lazy_config)
--- ColoRand()
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
