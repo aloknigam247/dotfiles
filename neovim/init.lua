@@ -1,9 +1,8 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize markdown file
--- PERF: Optimize --startuptime: nvim --startuptime startup a.py; nvim .\startup; rm .\startup
--- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10 -- a.py
--- PERF: Optimize Lazy profile
 -- PERF: Optimize norg file
+-- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10 -- a.md
+-- PERF: Optimize --startuptime: nvim --startuptime startup a.md; nvim .\startup; rm .\startup
+-- PERF: Optimize Lazy profile
 -- PERF: Optimize c++
 -- PERF: Optimize vim
 -- PERF: Optimize very large files
@@ -3330,7 +3329,7 @@ AddPlugin {
                 "BufEnter",
                 "InsertLeave",
                 "TextChanged",
-                "TextChangedI",
+                -- "TextChangedI",
                 "WinScrolled"
             },
             hl_group = "MDCodeBlock",   -- default highlight group
@@ -3347,12 +3346,13 @@ AddPlugin {
                     '(fenced_code_block) @codeblock', -- query
                 },
             },
-            timer_delay = 20,           -- refresh delay(ms)
+            timer_delay = 300,           -- refresh delay(ms)
         })
         vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = AdaptiveBG(10, -10) })
+        require('hl-mdcodeblock').refresh()
     end,
     dependencies = "nvim-treesitter/nvim-treesitter",
-    ft = 'markdown'
+    event = 'CursorHold *.md'
 }
 
 -- <~>
