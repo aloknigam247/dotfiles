@@ -3,6 +3,7 @@
 let &titleold = getcwd()           " Set console title to path on vim exit
 let c_curly_error = 1              " Show curly braces error
 let c_space_errors = 1             " Highlight trailing spaces
+let g:loaded_python3_provider = 1  " disable python 3
 let g:markdown_folding = 1         " Enable markdown folding
 " let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
 " let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode

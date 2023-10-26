@@ -1,9 +1,8 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize lua Lazy profile
--- PERF: Optimize python file
--- PERF: Optimize --startuptime: nvim --startuptime startup a.lua; nvim .\startup; rm .\startup
--- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10 -- C:\Users\aloknigam\dotfiles\neovim\init.lua
 -- PERF: Optimize markdown file
+-- PERF: Optimize --startuptime: nvim --startuptime startup a.py; nvim .\startup; rm .\startup
+-- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10 -- a.py
+-- PERF: Optimize Lazy profile
 -- PERF: Optimize norg file
 -- PERF: Optimize c++
 -- PERF: Optimize vim
@@ -494,7 +493,7 @@ function GetGitsign(lnum)
     return ''
 end
 
-function GetTSInstlled()
+function GetTSInstlled(use_entension)
     -- PERF: cache output
     local filetye_map = {
         ['python'] = 'py'
@@ -505,7 +504,9 @@ function GetTSInstlled()
     for file, _ in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath('data'), '/lazy/nvim-treesitter/parser')) do
         if file:sub(-3) == '.so' then
             local ftype = file:gsub('.so', '')
-            ftype = filetye_map[ftype] or ftype
+            if use_entension then
+                ftype = filetye_map[ftype] or ftype
+            end
             table.insert(installed_filetypes, ftype)
         end
     end
@@ -573,7 +574,7 @@ function NvimOpenWinSafe(bufnr, enter, config)
             local window_bottom = config.row + config.height + 2
             local shift = window_bottom - editor_bottom
             if shift > 0 then
-                config.row = math.max(0, config.row - shift) -- shift row up
+                -- config.row = math.max(0, config.row - shift) -- shift row up
                 window_bottom = config.row + config.height + 2
                 config.height = math.min(config.height, vim.o.lines - 3)
             end
@@ -585,7 +586,7 @@ function NvimOpenWinSafe(bufnr, enter, config)
             local window_col = config.col + config.width + 2
             local shift = window_col - editor_col
             if shift > 0 then
-                config.col = math.max(0, config.col - shift) -- shift row up
+                -- config.col = math.max(0, config.col - shift) -- shift row up
                 window_col = config.col + config.width + 2
                 config.width = math.min(config.width, vim.o.columns - 2)
             end
@@ -817,6 +818,19 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
+    'CursorHold', {
+        pattern = '*',
+        desc = 'Load Treesitter',
+        callback = function()
+            local ftype = vim.o.filetype
+            if TableContains(GetTSInstlled(false), ftype) then
+                vim.cmd('Lazy load nvim-treesitter')
+            end
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
     'MenuPopup', {
         pattern = 'n',
         desc = 'Create popup menu based on context',
@@ -866,7 +880,6 @@ vim.api.nvim_create_autocmd(
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<BS>', 'x', {})
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
-vim.keymap.set('n', '<C-S>', '<cmd>w<CR>', {}) -- BUG: conflicts
 vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
 vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
@@ -2463,13 +2476,14 @@ vim.api.nvim_create_autocmd(
     'FileType', {
         pattern = '*',
         desc = 'Run custom actions per filetype',
-        callback = function()
-            -- PERF: do not repeat for same filetype
+        callback = function(arg)
             local ftype = vim.o.filetype
             local actions = FileTypeActions[ftype]
             if actions then actions() end
-            if TableContains(GetTSInstlled(), ftype) == nil then
-                vim.cmd('syntax on')
+            if TableContains(GetTSInstlled(false), ftype) == nil then
+                -- vim.print('Load syntax for ' .. ftype)
+                vim.cmd('syntax on') -- PERF: loads globally so delete au once loaded
+                vim.api.nvim_del_autocmd(arg.id)
             end
         end
     }
@@ -3732,7 +3746,7 @@ AddPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AddPlugin {
-    'nvim-lualine/lualine.nvim', -- FEAT: recording icon on recording start events: RecordingEnter/RecordingLeave
+    'nvim-lualine/lualine.nvim',
     config = function()
         local function lspIcon()
             local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
@@ -3770,7 +3784,7 @@ AddPlugin {
             sections = {
                 lualine_a = {
                     {
-                        'mode', -- FEAT: use Neovim icon in normal mode
+                        'mode', -- use Neovim icon in normal mode
                         color = { gui = 'bold' },
                         fmt = function(str)
                             return str:sub(1,1)
@@ -3896,6 +3910,13 @@ AddPlugin {
                     }
                 },
                 lualine_y = {
+                    {
+                        function() return '󰑊' end,
+                        color = { fg = '#B43757' },
+                        cond = function() return vim.fn.reg_recording() ~= '' end,
+                        padding = { left = 0, right = 1 },
+                        separator = ''
+                    },
                     {
                         function() return vim.g.session_icon or '' end,
                         padding = { left = 0, right = 1 },
@@ -4221,7 +4242,7 @@ AddPlugin {
                 end,
                 enable = true
             },
-            rainbow = { -- TODO: still needed
+            rainbow = { -- TODO: still needed ?
                 enable = true,
                 extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
                 max_file_lines = nil, -- Do not enable for files with more than n lines, int
@@ -4229,7 +4250,6 @@ AddPlugin {
         })
     end,
     dependencies = { { 'm-demare/hlargs.nvim' } },
-    event = 'CursorHold *.' .. table.concat(GetTSInstlled(), ',*.'),
     module = false
 }
 
