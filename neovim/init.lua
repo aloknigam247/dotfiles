@@ -4991,6 +4991,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, Lazy_config)
-ColoRand()
+-- ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
