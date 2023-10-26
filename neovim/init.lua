@@ -481,7 +481,6 @@ function GetGitsign(lnum)
 end
 
 function GetTSInstlled(use_entension)
-    -- PERF: cache output
     local filetye_map = {
         ['python'] = 'py'
     }
@@ -1461,7 +1460,7 @@ AddPlugin {
 }
 
 -- 'yuki-yano/highlight-undo.nvim',
-AddPlugin { -- PERF: check if lazy via event"
+AddPlugin {
     'tzachar/highlight-undo.nvim',
     config = true,
     keys = { 'u' },
@@ -2468,7 +2467,7 @@ vim.api.nvim_create_autocmd(
             if actions then actions() end
             if TableContains(GetTSInstlled(false), ftype) == nil then
                 -- vim.print('Load syntax for ' .. ftype)
-                vim.cmd('syntax on') -- PERF: loads globally so delete au once loaded
+                vim.cmd('syntax on')
                 vim.api.nvim_del_autocmd(arg.id)
             end
         end
