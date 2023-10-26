@@ -1,14 +1,3 @@
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      TODO      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: Optimize norg file
--- PERF: Optimize StartupTime: StartupTime --sourced --other-events --sourcing-events --tries 10 -- a.md
--- PERF: Optimize --startuptime: nvim --startuptime startup a.md; nvim .\startup; rm .\startup
--- PERF: Optimize Lazy profile
--- PERF: Optimize c++
--- PERF: Optimize vim
--- PERF: Optimize very large files
--- PERF: Optimize locale time set
-vim.api.nvim_set_keymap('n', '<F7>', '<cmd>Lazy<CR>', { noremap = true })
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 AuProfileData = nil
 function AuInit(args)
@@ -263,7 +252,6 @@ Lazy_config = {
                 'matchit',
                 'matchparen',
                 'netrwPlugin',
-                'norg',
                 'rplugin',
                 'shada',
                 'spellfile',
@@ -1976,7 +1964,6 @@ AddPlugin {
                     priority = 1
                 },
                 -- { name = 'fuzzy_buffer' },
-                { name = 'neorg' },
                 { name = 'nerdfont' },
                 { name = 'nvim_lsp', priority = 2 },
                 { name = 'path' },
@@ -2534,8 +2521,6 @@ AddPlugin {
                 { '%(', ')' }, -- % to escape lua pattern char
                 { '%[', ']' }, -- % to escape lua pattern char
             },
-
-            ft_ignore = { 'neorg' },
         })
     end,
     lazy = true
@@ -3416,39 +3401,6 @@ AddPlugin {
 }
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Orgmode     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/TravonteD/org-capture-filetype
--- https://github.com/akinsho/org-bullets.nvim
-
-AddPlugin {
-    'nvim-neorg/neorg',
-    config = function()
-        require('neorg').setup {
-            load = {
-                ['core.highlights']              = {},
-                ['core.integrations.treesitter'] = { config = { install_parsers = false } },
-                ['core.neorgcmd']                = {},
-                ['core.completion']              = { config = { engine = 'nvim-cmp' } },
-                ['core.concealer']               = {},
-                ['core.esupports.hop']           = {},
-                ['core.esupports.indent']        = {},
-                ['core.qol.toc']                 = {},
-                ['core.qol.todo_items']          = {},
-                ['core.syntax']                  = {},
-                ['core.defaults']                = {}
-            }
-        }
-        vim.cmd [[
-            au InsertEnter *.norg :Neorg toggle-concealer
-            au InsertLeave *.norg :Neorg toggle-concealer
-        ]]
-    end,
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
-    ft = "norg"
-}
-
--- use 'nvim-orgmode/orgmode'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- |-----------------+-----------------------------------------------------------|
