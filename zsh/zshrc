@@ -36,7 +36,6 @@ alias g='gvim'
 if [[ $(alias gdb) == "" ]]; then
     alias gdb='gdb -q'
 fi
-alias e="/mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40"
 alias grep='egrep --color=auto -n'
 alias jobs='jobs -l'
 alias killlast='kill -9 %%'
@@ -158,6 +157,10 @@ compdef wh=which
 
 bk() {
     cp $1 $1.bk
+}
+
+e() {
+    /mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40 --notabs -- $@
 }
 
 alias bell='tput bel'
