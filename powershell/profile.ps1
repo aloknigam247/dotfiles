@@ -46,7 +46,7 @@ function pdbg    { code .; python -m debugpy --listen 5678 --wait-for-client $ar
 function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
 function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
 function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
-function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg }
+function v($arg) { ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 --notabs -- $arg }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
@@ -60,7 +60,7 @@ function e ($arg) {
     if ( $ext -in $code_ext) {
         code $arg
     } else {
-        ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 $arg
+        ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 --notabs -- $arg
     }
 }
 
