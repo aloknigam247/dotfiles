@@ -1730,7 +1730,6 @@ Dark  { 'melange',                    '_'                                       
 Dark  { 'mellifluous',                '_'                                                                                                                     }
 DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
 Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
-Dark  { 'monokai',                    'starry',      pre = function() FixStarry('#483a1f', '#786233') end                                                     }
 Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
 DarkT { 'monokai-nightasty',          '_'                                                                                                                     }
 Light { 'monokai-nightasty',          '_'                                                                                                                     }
@@ -1785,7 +1784,6 @@ DarkT { 'rose-pine',                  '_',           pre = function() require('r
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
 DarkT { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon', disable_background = true}) end }
 Dark  { 'rose-pine',                  '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
-Dark  { 'rosebones',                  'zenbones'     }
 Dark  { 'sherbet',                    '_'            }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'andromeda' end  }
 Dark  { 'sonokai',                    '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end  }
