@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a app_list=(bash fonts gdb neovim shell tcsh tmux ubuntu vim zsh)
+declare -a app_list=(bash clangd fonts gdb neovim shell tcsh tmux ubuntu vim zsh)
 
 echo "Applications List:"
 for i in ${!app_list[@]};do

@@ -1,0 +1,3 @@
+files=(
+        [config_linux.yaml]=~/.config/clangd/config.yaml
+      )

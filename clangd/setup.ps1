@@ -1,5 +1,5 @@
 $files = @{
-    "config.yaml" = "$env:LOCALAPPDATA\clangd\config.yaml"
+    "config_win.yaml" = "$env:LOCALAPPDATA\clangd\config.yaml"
 }
 
 
