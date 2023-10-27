@@ -160,7 +160,7 @@ bk() {
 }
 
 e() {
-    /mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40 --notabs -- $@
+    /mnt/c/Users/aloknigam/scoop/shims/neovide.exe --wsl --multigrid --geometry=110x40 --notabs -- $@ &
 }
 
 alias bell='tput bel'
