@@ -2953,7 +2953,15 @@ AddPlugin {
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
-                if server_name == 'powershell_es' then
+                if server_name == 'clangd' then
+                    lspconfig.clangd.setup {
+                        settings = {
+                            clangd = {
+                                Add = { '--std=c++20' }
+                            }
+                        }
+                    }
+                elseif server_name == 'powershell_es' then
                     lspconfig.powershell_es.setup {
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
                         -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
