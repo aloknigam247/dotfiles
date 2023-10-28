@@ -806,11 +806,12 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd(
     'CursorHold', {
         pattern = '*',
-        desc = 'Load Treesitter',
-        callback = function()
+        desc = 'Load Treesitter on CursorHold',
+        callback = function(arg)
             local ftype = vim.o.filetype
             if TableContains(GetTSInstlled(false), ftype) then
                 vim.cmd('Lazy load nvim-treesitter')
+                vim.api.nvim_del_autocmd(arg.id)
             end
         end
     }
@@ -1781,7 +1782,6 @@ Dark  { 'nordfox',                    'nightfox'     }
 DarkT { 'nordfox',                    'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
 Dark  { 'nordic',                     '_'            }
 DarkT { 'nordic',                     '_',           pre = function() require('nordic').setup({transparent_bg = true}) end }
-Dark  { 'oceanic',                    'starry',      pre = function() FixStarry('#3f2f4c', '#694e7f') end }
 DarkT { 'oh-lucy-evening',            'oh-lucy', pre = function() vim.g.oh_lucy_transparent_background = true end }
 Dark  { 'one-nvim',                   '_'            }
 DarkT { 'one-nvim',                   '_', pre = function() vim.g.one_nvim_transparent_bg = true end }
