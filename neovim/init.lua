@@ -1576,6 +1576,24 @@ end
 local colos = {}
 
 local function ColorPlugin(opts)
+    if opts.cfg then
+        local cfg = opts.cfg
+        local mod
+        if #cfg == 2 then
+            mod = cfg[1]
+            cfg = cfg[2]
+        else
+            if opts[2] == '_' then
+                mod = opts[1]
+            else
+                mod = opts[2]
+            end
+        end
+
+        opts.pre = function()
+            require(mod).setup(cfg)
+        end
+    end
     table.insert(colos, opts)
 end
 
@@ -1661,7 +1679,7 @@ AddPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- REFACTOR: use cfg field to reduce line length
 DarkT { 'NeoSolarized',               '_'                              }
 Light { 'NeoSolarized',               '_'                              }
-Dark  { 'NeoSolarized',               '_', pre = function() require('NeoSolarized').setup({transparent = false}) end}
+Dark  { 'NeoSolarized',               '_', cfg = {transparent = false} }
 Dark  { 'OceanicNext',                '_'                              }
 Dark  { 'PaperColor',                 '_',           post = FixNontext }
 Light { 'PaperColor',                 '_',           post = FixNontext }
@@ -1671,12 +1689,12 @@ DarkT { 'adwaita',                    '_', pre = function() vim.g.adwaita_transp
 Dark  { 'ayu-dark',                   'ayu'                            }
 Light { 'ayu-light',                  'ayu'                            }
 Dark  { 'ayu-mirage',                 'ayu'                            }
-DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex', transparent = true}) end }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'multiplex'}) end }
-DarkT { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris', transparent = true}) end  }
-Dark  { 'bamboo',                     '_', pre = function() require('bamboo').setup({style = 'vulgaris'}) end  } -- FIX: Overlength is not visible
+DarkT { 'bamboo',                     '_', cfg = {style = 'multiplex', transparent = true} }
+Dark  { 'bamboo',                     '_', cfg = {style = 'multiplex'}                     }
+DarkT { 'bamboo',                     '_', cfg = {style = 'vulgaris', transparent = true } }
+Dark  { 'bamboo',                     '_', cfg = {style = 'vulgaris'}                      }
 Dark  { 'bluloco-dark',               '_'                              }
-DarkT { 'bluloco-dark',               '_', pre = function() require('bluloco').setup({transparent = true}) end }
+DarkT { 'bluloco-dark',               '_', cfg = { 'bluloco', {transparent = true} } }
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'caret',                      '_'                              }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
@@ -1685,7 +1703,7 @@ Light { 'catppuccin-latte',           'catppuccin'                     }
 Dark  { 'catppuccin-macchiato',       'catppuccin'                     }
 Dark  { 'catppuccin-macchiato',       'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
 Dark  { 'catppuccin-mocha',           'catppuccin'                     }
-Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
+Dark  { 'cobalt2',                    '_',          post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
 DarkT { 'codedark',                   '_', pre = function() vim.g.codedark_transparent = 1 end            }
 Dark  { 'darcula-solid',              '_'                                                                 }
@@ -1769,7 +1787,6 @@ Dark  { 'one-nvim',                   '_'            }
 DarkT { 'one-nvim',                   '_', pre = function() vim.g.one_nvim_transparent_bg = true end }
 Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
-Dark  { 'onedark_vivid',              'onedarkpro'   }
 Light { 'onelight',                   '_'            } -- Gitsigns colors
 Dark  { 'onenord',                    '_'            }
 Light { 'onenord',                    '_'            }
@@ -1816,14 +1833,14 @@ function ColoRand(scheme_index)
     local selection = colos[scheme_index]
     local scheme = selection[1]
     local bg = selection.bg
-    local module = selection[2]
+    local event = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
     local trans = selection.trans
     vim.o.background = bg
     vim.g.neovide_transparency = trans and 0.8 or 1
     local start_time = os.clock()
-    vim.api.nvim_exec_autocmds('User', {pattern = module == '_' and scheme or module})
+    vim.api.nvim_exec_autocmds('User', {pattern = event == '_' and scheme or event})
     if (precmd) then
         precmd()
     end
@@ -1834,7 +1851,7 @@ function ColoRand(scheme_index)
     end
 
     local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
-    vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. module .. elapsed
+    vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. event .. elapsed
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
