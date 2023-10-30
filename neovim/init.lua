@@ -1699,14 +1699,14 @@ DarkT { 'bluloco-dark',               '_', cfg = { 'bluloco', {transparent = tru
 Dark  { 'carbonfox',                  'nightfox'                       }
 Dark  { 'caret',                      '_'                              }
 Dark  { 'catppuccin-frappe',          'catppuccin'                     }
-Dark  { 'catppuccin-frappe',          'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
+DarkT { 'catppuccin-frappe',          'catppuccin', cfg = {transparent_background = true} }
 Light { 'catppuccin-latte',           'catppuccin'                     }
 Dark  { 'catppuccin-macchiato',       'catppuccin'                     }
-Dark  { 'catppuccin-macchiato',       'catppuccin', pre = function() require('catppuccin').setup({transparent_background = true}) end }
+DarkT { 'catppuccin-macchiato',       'catppuccin', cfg = {transparent_background = true} }
 Dark  { 'catppuccin-mocha',           'catppuccin'                     }
-Dark  { 'cobalt2',                    '_',          post = function() require('colorbuddy').colorscheme('cobalt2') end }
+Dark  { 'cobalt2',                    '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
 Dark  { 'codedark',                   '_'                                                                 }
-DarkT { 'codedark',                   '_', pre = function() vim.g.codedark_transparent = 1 end            }
+DarkT { 'codedark',                   '_',           pre = function() vim.g.codedark_transparent = 1 end  }
 Dark  { 'darcula-solid',              '_'                                                                 }
 Dark  { 'darkplus',                   '_'                                                                 }
 Dark  { 'darksolar',                  'starry',      pre = function() FixStarry('#691f48', '#922b64') end }
@@ -1722,42 +1722,42 @@ Dark  { 'enfocado',                   '_'                                       
 Dark  { 'everforest',                 '_'                                                                 }
 Light { 'everforest',                 '_'                                                                 }
 Dark  { 'falcon',                     '_'                                                                 }
-DarkT { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = false, theme = 'fluoromachine', transparent = true}) end, post = FixIndentBlankline }
-DarkT { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = false, theme = 'retrowave', transparent = true}) end,     post = FixIndentBlankline }
-Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'fluoromachine', transparent = false}) end, post = FixIndentBlankline }
-Dark  { 'fluoromachine',              '_', pre = function() require('fluoromachine').setup({glow = true, theme = 'retrowave', transparent = false}) end,     post = FixIndentBlankline }
+DarkT { 'fluoromachine',              '_', cfg = {glow = false, theme = 'fluoromachine', transparent = true} }
+DarkT { 'fluoromachine',              '_', cfg = {glow = false, theme = 'retrowave', transparent = true}     }
+Dark  { 'fluoromachine',              '_', cfg = {glow = true, theme = 'fluoromachine', transparent = false} }
+Dark  { 'fluoromachine',              '_', cfg = {glow = true, theme = 'retrowave', transparent = false}  }
 Dark  { 'forestbones',                'zenbones'                                                          }
-DarkT { 'github_dark',                'github', pre = function() require('github-theme').setup({options = { transparent = true }}) end }
+DarkT { 'github_dark',                'github', cfg = {'github-theme', {options = {transparent = true}}}  }
 Light { 'github_light',               'github'                                                            }
 Dark  { 'gruvbox',                    '_'                                                                 }
 Dark  { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(false) end                   }
 DarkT { 'gruvbox',                    '_', pre  = function() SeniorMarsTheme(true) end                    }
-DarkT { 'gruvbox',                    '_', pre = function() require('gruvbox').setup({transparent_mode = true}) end }
+DarkT { 'gruvbox',                    '_', cfg = {transparent_mode = true}                                }
 Dark  { 'gruvbox-baby',               '_',                                                                }
 DarkT { 'gruvbox-baby',               '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end   }
 Dark  { 'habamax',                    '_',                                                                }
-Dark  { 'juliana',                    '_', post = function() FixLineNr('#999999') end                                                                         }
-Dark  { 'kanagawa-dragon',            '_'                                                                                                                     }
-DarkT { 'kanagawa-dragon',            '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
-Dark  { 'kanagawa-wave',              '_'                                                                                                                     }
-DarkT { 'kanagawa-wave',              '_', pre = function() require('kanagawa').setup({transparent = true}) end                                               }
-Dark  { 'kimbox',                     '_',           post = FixVisual                                                                                         }
-Light { 'limestone',                  'starry',      pre = function() FixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                            }
-Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                                     }
-Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter'    end, post = function() FixVisual('#CCEAE7') end     }
-Dark  { 'melange',                    '_'                                                                                                                     }
-Dark  { 'mellifluous',                '_'                                                                                                                     }
-DarkT { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender', transparent_background = {enabled = true}}) end }
-Dark  { 'mellifluous',                '_',           pre = function() require('mellifluous').setup({color_set = 'tender'}) end                                }
-Dark  { 'monokai',                    'vim-monokai'                                                                                                           }
-DarkT { 'monokai-nightasty',          '_'                                                                                                                     }
-Light { 'monokai-nightasty',          '_'                                                                                                                     }
-Dark  { 'monokai-nightasty',          '_',           pre = function() require('monokai-nightasty').setup({dark_style_background = 'transparent'}) end         }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'machine'})   end                                }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'octagon'})   end                                }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'pro'})       end, post = FixVisual              }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'ristretto'}) end                                }
-Dark  { 'monokai-pro',                '_',           pre = function() require('monokai-pro').setup({filter = 'spectrum'})  end                                }
+Dark  { 'juliana',                    '_', post = function() FixLineNr('#999999') end                     }
+Dark  { 'kanagawa-dragon',            '_'                                                                 }
+DarkT { 'kanagawa-dragon',            '_', cfg = {transparent = true}                                     }
+Dark  { 'kanagawa-wave',              '_'                                                                 }
+DarkT { 'kanagawa-wave',              '_', cfg = {transparent = true}                                     }
+Dark  { 'kimbox',                     '_',           post = FixVisual                                     }
+Light { 'limestone',                  'starry',      pre = function() FixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
+Dark  { 'mariana',                    'starry',      pre = function() FixStarry('#414346', '#6c6f75') end                                              }
+Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter' end, post = function() FixVisual('#CCEAE7') end }
+Dark  { 'melange',                    '_'                                                                                                              }
+Dark  { 'mellifluous',                '_'                                                                                                              }
+DarkT { 'mellifluous',                '_',           cfg = {color_set = 'tender', transparent_background = {enabled = true}} }
+Dark  { 'mellifluous',                '_',           cfg = {color_set = 'tender'}                                            }
+Dark  { 'monokai',                    'vim-monokai'                                                                          }
+DarkT { 'monokai-nightasty',          '_'                                                                                    }
+Light { 'monokai-nightasty',          '_'                                                                                    }
+Dark  { 'monokai-nightasty',          '_',           cfg = {dark_style_background = 'transparent'} }
+Dark  { 'monokai-pro',                '_',           cfg = {filter = 'machine'}                    }
+Dark  { 'monokai-pro',                '_',           cfg = {filter = 'octagon'}                    }
+Dark  { 'monokai-pro',                '_',           cfg = {filter = 'pro'}, post = FixVisual      }
+Dark  { 'monokai-pro',                '_',           cfg = {filter = 'ristretto'}                  }
+Dark  { 'monokai-pro',                '_',           cfg = {filter = 'spectrum'}                   }
 DarkT { 'moonfly',                    '_',           pre = function() vim.g.moonflyTransparent = true end                                                     }
 Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
