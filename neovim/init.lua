@@ -12,25 +12,19 @@ AuProfileData = nil
 
 ---Collect data at autocommand startup, called for each event
 ---@param args any Autocommand callback data
-function AuInit(args)
-    -- TODO: Review
+function AuProfileStart(args)
     local event = args.event
 
     if AuProfileData then
-        local data = AuProfileData[event]
-        if data then
-            data.count = data.count + 1
-            data.start = os.clock()
-        else
-            data = {}
-            data['count'] = 1
-            data['start'] = os.clock()
-        end
+        local data = AuProfileData[event] or {}
+        data['count'] = (data.count or 0) + 1
+        data['start'] = os.clock()
         AuProfileData[event] = data
     end
 end
 
-function AuProfile(args)
+-- TODO: Review
+function AuProfileEnd(args)
     if AuProfileData then
         local data = AuProfileData[args.event]
         if data then
@@ -50,7 +44,7 @@ vim.api.nvim_create_autocmd(
     Event_list, {
         desc = 'Autocommand profile init',
         pattern = '*',
-        callback = AuInit
+        callback = AuProfileStart
     }
 )
 
@@ -63,7 +57,7 @@ vim.api.nvim_create_user_command(
         Event_list, {
                 desc = 'Autocommand profile record',
                 pattern = '*',
-                callback = AuProfile
+                callback = AuProfileEnd
             }
         )
         vim.api.nvim_set_keymap('n', '<F6>', '', {
