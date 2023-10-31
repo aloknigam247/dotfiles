@@ -1,6 +1,19 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+---@class Profile
+---@field count integer Number of times an autocommand is invoked
+---@field start number Start time of current autocommand
+---@field avg number Avergae time taken by autocommand
+---@field total number Total time taken by autocommand
+
+---@alias ProfileData table<string, Profile>
+
+---@type ProfileData?
 AuProfileData = nil
+
+---Collect data at autocommand startup, called for each event
+---@param args any Autocommand callback data
 function AuInit(args)
+    -- TODO: Review
     local event = args.event
 
     if AuProfileData then
@@ -533,6 +546,7 @@ function MarkdownHeadingsHighlight()
 end
 
 function NvimOpenWinSafe(bufnr, enter, config)
+    -- FEAT dotted border for non focusable window
     local fixTitle = function(title)
         if title[1] ~= ' ' then
             title = ' ' .. title
