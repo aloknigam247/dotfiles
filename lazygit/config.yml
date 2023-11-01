@@ -91,12 +91,12 @@ git:
   parseEmoji: true
 os:
   copyToClipboardCmd: '' # See 'Custom Command for Copying to Clipboard' section
-  editPreset: '' # see 'Configuring File Editing' section
-  edit: 'nvim'
-  editAtLine: '{{editor}} +{{line}} -- {{filename}}'
+  editPreset: 'nvim' # see 'Configuring File Editing' section
+  edit: ''
+  editAtLine: ''
   editAtLineAndWait: ''
-  open: start "" {{filename}}
-  openLink: start "" {{link}}
+  open: ''
+  openLink: ''
 refresher:
   refreshInterval: 10 # File/submodule refresh interval in seconds. Auto-refresh can be disabled via option 'git.autoRefresh'.
   fetchInterval: 60 # Re-fetch interval in seconds. Auto-fetch can be disabled via option 'git.autoFetch'.

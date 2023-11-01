@@ -1755,8 +1755,6 @@ Dark  { 'mariana',                    'starry',      pre = function() FixStarry(
 Light { 'material',                   '_',           pre = function() vim.g.material_style = 'lighter' end, post = function() FixVisual('#CCEAE7') end }
 Dark  { 'melange',                    '_'                                                                                                              }
 Dark  { 'mellifluous',                '_'                                                                                                              }
-DarkT { 'mellifluous',                '_',           cfg = {color_set = 'tender', transparent_background = {enabled = true}} }
-Dark  { 'mellifluous',                '_',           cfg = {color_set = 'tender'}                                            }
 Dark  { 'monokai',                    'vim-monokai'                                                                          }
 DarkT { 'monokai-nightasty',          '_'                                                                                    }
 Light { 'monokai-nightasty',          '_'                                                                                    }
@@ -1767,10 +1765,7 @@ Dark  { 'monokai-pro',                '_',           cfg = {filter = 'pro'}, pos
 Dark  { 'monokai-pro',                '_',           cfg = {filter = 'ristretto'}                  }
 Dark  { 'monokai-pro',                '_',           cfg = {filter = 'spectrum'}                   }
 DarkT { 'moonfly',                    '_',           pre = function() vim.g.moonflyTransparent = true end                                                     }
-Dark  { 'moonlight',                  'starry',      pre = function() FixStarry('#363149', '#5a527a') end                                                     }
 Light { 'neobones',                   'zenbones'                                                                                                              }
-Dark  { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    end, post = FixVisual                                      }
-DarkT { 'neon',                       '_',           pre = function() vim.g.neon_style = 'doom'    vim.g.neon_transparent = true end, post = FixVisual        }
 Light { 'neon',                       '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() FixVisual() FixDiagnosticInfo() end }
 Dark  { 'nightcity',                  '_',           pre = function() require('nightcity').setup({style = 'afterlife'}) end                                   }
 Dark  { 'nightcity',                  '_',           pre = function() require('nightcity').setup({style = 'kabuki'}) end                                      }
@@ -1795,7 +1790,7 @@ Dark  { 'one-nvim',                   '_'            }
 DarkT { 'one-nvim',                   '_', pre = function() vim.g.one_nvim_transparent_bg = true end }
 Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
-Light { 'onelight',                   '_'            } -- Gitsigns colors
+Light { 'onelight',                   '_'            } -- FIX: Gitsigns colors
 Dark  { 'onenord',                    '_'            }
 Light { 'onenord',                    '_'            }
 Dark  { 'oxocarbon',                  '_'            }
