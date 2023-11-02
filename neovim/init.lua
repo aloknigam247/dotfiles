@@ -7,6 +7,7 @@
 
 ---@alias ProfileData table<string, Profile>
 
+---Constains Autocommand profiling data
 ---@type ProfileData?
 AuProfileData = nil
 
@@ -40,8 +41,10 @@ function AuProfileEnd(args)
     end
 end
 
+---List of all valid autocommands to profile
 ---@type string[]
 Event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite or BufWritePre", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
+
 vim.api.nvim_create_autocmd(
     Event_list, {
         desc = 'Autocommand profile init',
@@ -85,20 +88,29 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Review
 -- Variables</>
+------------
 
 -- Vim Globals
 vim.g.editorconfig = false
 vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
+--------------
+
+---Shapes for dotted border
+---@type string[]
 Dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
-Hl_priority = { --vim.highlight.priorities
+
+---Defines highlight priorities for vairous components
+---@type table<string, integer>
+Hl_priority = {
     hlargs = 126,
     url = 202
 }
 
+---Defines Icons for global usage
+---@type table<string, string>
 Icons = {
     Array              = '󰅪 ',
     Boolean            = ' ',
@@ -174,6 +186,7 @@ Icons = {
     warn               = ' ',
 }
 
+-- TODO: Review
 Lazy_config = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
