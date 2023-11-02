@@ -10,7 +10,7 @@
 ---@type ProfileData?
 AuProfileData = nil
 
----Collect data at autocommand startup, called for each event
+---Collect autocommand data at autocommand startup, called for each event
 ---@param args any Autocommand callback data
 function AuProfileStart(args)
     local event = args.event
@@ -23,12 +23,13 @@ function AuProfileStart(args)
     end
 end
 
--- TODO: Review
+---Collect autocommand data at autocommand startup, called for each event
+---@param args any Autocommand callback data
 function AuProfileEnd(args)
     if AuProfileData then
         local data = AuProfileData[args.event]
         if data then
-            local elapsed = (os.clock() - data.start)
+            local elapsed = os.clock() - data.start
             local total = (data.total or 0) + elapsed
 
             data['avg'] = total / data.count
@@ -39,6 +40,7 @@ function AuProfileEnd(args)
     end
 end
 
+---@type string[]
 Event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite or BufWritePre", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
 vim.api.nvim_create_autocmd(
     Event_list, {
@@ -51,15 +53,19 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_user_command(
     'ProfileAutocommand',
     function()
-        vim.notify("Profiling started, stopped by F6")
+        vim.notify("Profiling started, stop by F6")
         AuProfileData = {}
+
+        -- Autocommand to collect end data
         vim.api.nvim_create_autocmd(
-        Event_list, {
+            Event_list, {
                 desc = 'Autocommand profile record',
                 pattern = '*',
                 callback = AuProfileEnd
             }
         )
+
+        -- Mapping to stop autocommand profiling
         vim.api.nvim_set_keymap('n', '<F6>', '', {
             callback = function()
                 AuProfileDataResult = AuProfileData
@@ -68,6 +74,7 @@ vim.api.nvim_create_user_command(
                 vim.notify('Autocommand profiling stopped')
             end
         })
+
         vim.cmd[[
             profile start nvim_profile
             " profile file *
@@ -78,6 +85,7 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Review
 -- Variables</>
 
 -- Vim Globals
