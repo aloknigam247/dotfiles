@@ -186,16 +186,16 @@ Icons = {
     warn               = ' ',
 }
 
--- TODO: Review
+-- TODO: Review add lazy folder in workspace to let Spec read
 Lazy_config = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
         lazy = true, -- should plugins be lazy-loaded?
         version = nil,
-        cond = nil,
+        cond = nil, ---@type boolean|fun(self:LazyPlugin):boolean|nil
         -- version = '*', -- enable this to try installing the latest stable versions of plugins
     },
-    spec = nil,
+    spec = nil, ---@type LazySpec
     lockfile = vim.fn.stdpath('config') .. '/lazy-lock.json', -- lockfile generated after running update.
     git = {
         log = { '-10' }, -- show the last 10 commits
