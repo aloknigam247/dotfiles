@@ -4,9 +4,7 @@
 ---@field start number Start time of current autocommand
 ---@field avg number Avergae time taken by autocommand
 ---@field total number Total time taken by autocommand
-
 ---@alias ProfileData table<string, Profile>
-
 ---Constains Autocommand profiling data
 ---@type ProfileData?
 AuProfileData = nil
@@ -186,7 +184,6 @@ Icons = {
     warn               = ' ',
 }
 
--- TODO: Review add lazy folder in workspace to let Spec read
 Lazy_config = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
@@ -196,7 +193,7 @@ Lazy_config = {
         -- version = '*', -- enable this to try installing the latest stable versions of plugins
     },
     spec = nil, ---@type LazySpec
-    lockfile = vim.fn.stdpath('config') .. '/lazy-lock.json', -- lockfile generated after running update.
+    lockfile = vim.fn.stdpath('config') .. '/lazy-lock.json', -- lockfile generated after update.
     git = {
         log = { '-10' }, -- show the last 10 commits
         timeout = 12000, -- kill processes that take more than 2 minutes
@@ -205,6 +202,7 @@ Lazy_config = {
     },
     dev = {
         path = '~/projects',
+        ---@type string[] plugins that match these patterns will use your local versions instead
         patterns = {}, -- For example {'folke'}
         fallback = false, -- Fallback to git when local plugin doesn't exist
     },
@@ -218,6 +216,8 @@ Lazy_config = {
         border = 'rounded',
         title = nil, ---@type string only works when border is not 'none'
         title_pos = 'center', ---@type 'center' | 'left' | 'right'
+        -- Show pills on top of the Lazy window
+        pills = true, ---@type boolean
         icons = {
             cmd        = '',
             config     = '',
@@ -271,7 +271,9 @@ Lazy_config = {
         reset_packpath = true, -- reset the package path to improve startup time
         rtp = {
             reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+            ---@type string[]
             paths = {}, -- add any custom paths here that you want to includes in the rtp
+            ---@type string[] list any plugins you want to disable here
             disabled_plugins = {
                 'csv',
                 'editorconfig',
@@ -306,10 +308,26 @@ Lazy_config = {
     },
 }
 
+---@class Plugin
+---@type Plugin[]
 Plugins = {}
-Pop_up_menu = {}
-Signs = {}
 
+---@class PopupMenu
+---@type PopupMenu[]
+Pop_up_menu = {}
+
+---@class TodoColors
+---@field default string[] Default colors
+---@field docs string[] Docs colors
+---@field error string[] Error colors
+---@field feat string[] Feature colors
+---@field hint string[] Hint colors
+---@field info string[] Info colors
+---@field perf string[] Performance colors
+---@field test string[] Test colors
+---@field todo string[] Todo colors
+---@field warn string[] Warning colors
+---@type TodoColors Contains colors configuration for Color highlights
 Todo_colors = {
     default = { 'Identifier', '#7C3AED' },
     docs    = { 'Function', '#440381' },
@@ -323,6 +341,7 @@ Todo_colors = {
     warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
 }
 
+-- TODO: Review
 -- Lua locals
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
@@ -2891,6 +2910,9 @@ AddPlugin {
             implements = function(count)
                 return "Implements: " .. count
             end,
+            git_authors = function(latest_author, count)
+                return "󰀄 " .. latest_author .. (count - 1 == 0 and "" or (" + " .. count - 1))
+            end
         },
         separator = " 󰧞 ",
         decorator = function(line)
@@ -3039,9 +3061,9 @@ AddPlugin {
                                     enable = true,
                                     setType = true
                                 },
-                                -- workspace = {
-                                --     library = vim.api.nvim_get_runtime_file('', true)
-                                -- }
+                                workspace = {
+                                    library = { vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy' }
+                                }
                             }
                         }
                     }
