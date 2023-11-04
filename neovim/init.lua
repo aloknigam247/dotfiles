@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: Review create wrapper for autocommand create
 ---@class Profile
 ---@field count integer Number of times an autocommand is invoked
 ---@field start number Start time of current autocommand
@@ -341,8 +342,9 @@ Todo_colors = {
     warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
 }
 
--- TODO: Review
 -- Lua locals
+-------------
+
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -385,6 +387,8 @@ local kind_hl = {
 -- local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 -- <~>
 -- Functions</>
+------------
+
 function AddPlugin(opts)
     table.insert(Plugins, opts)
 end
@@ -3062,7 +3066,7 @@ AddPlugin {
                                     setType = true
                                 },
                                 workspace = {
-                                    library = { vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy' }
+                                    library = { vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua' }
                                 }
                             }
                         }
