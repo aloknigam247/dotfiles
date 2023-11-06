@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: Review create wrapper for autocommand create
 ---@class Profile
 ---@field count integer Number of times an autocommand is invoked
 ---@field start number Start time of current autocommand
@@ -85,6 +84,35 @@ vim.api.nvim_create_user_command(
     end,
     { nargs = 0 }
 )
+
+-- TODO: Review create wrapper for autocommand create
+-- ---@type ProfileData?
+-- AuCallbackProfileData = {}
+
+-- function NvimCreateAutocmdWrapper(event, opts)
+--     if opts then
+--         local cb = opts.callback
+--         if cb then
+--             opts.callback = function(arg)
+--                 local start = os.clock()
+--                 cb(arg)
+--                 local elapsed = os.clock() - start
+
+--                 local data = AuCallbackProfileData[arg.id] or {}
+--                 local total = (data.total or 0) + elapsed
+
+--                 data['count']= (data.count or 0) + 1
+--                 data['avg'] = total / data.count
+--                 data['total'] = total
+--             end
+--             opts.callback = cb
+--         end
+--     end
+--     vim.api.nvim_create_autocmd_orig(event, opts)
+-- end
+
+-- vim.api.nvim_create_autocmd_orig = vim.api.nvim_create_autocmd
+-- vim.api.nvim_create_autocmd = NvimCreateAutocmdWrapper
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -2914,9 +2942,9 @@ AddPlugin {
             implements = function(count)
                 return "Implements: " .. count
             end,
-            git_authors = function(latest_author, count)
+            git_authors = false --[[ function(latest_author, count)
                 return "󰀄 " .. latest_author .. (count - 1 == 0 and "" or (" + " .. count - 1))
-            end
+            end ]]
         },
         separator = " 󰧞 ",
         decorator = function(line)
@@ -3065,9 +3093,9 @@ AddPlugin {
                                     enable = true,
                                     setType = true
                                 },
-                                workspace = {
-                                    library = { vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua' }
-                                }
+                                -- workspace = {
+                                --     library = { vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua' }
+                                -- }
                             }
                         }
                     }
