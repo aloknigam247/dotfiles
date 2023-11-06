@@ -104,6 +104,7 @@ vim.api.nvim_create_user_command(
 --                 data['count']= (data.count or 0) + 1
 --                 data['avg'] = total / data.count
 --                 data['total'] = total
+--                 AuCallbackProfileData[arg.id] = data
 --             end
 --             opts.callback = cb
 --         end
@@ -112,7 +113,7 @@ vim.api.nvim_create_user_command(
 -- end
 
 -- vim.api.nvim_create_autocmd_orig = vim.api.nvim_create_autocmd
--- vim.api.nvim_create_autocmd = NvimCreateAutocmdWrapper
+    -- vim.api.nvim_create_autocmd = NvimCreateAutocmdWrapper
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -2962,6 +2963,7 @@ AddPlugin { -- PERF: Load on demand
 }
 
 AddPlugin {
+    -- https://github.com/Zeioth/garbage-day.nvim
     'hinell/lsp-timeout.nvim',
     event = 'LspAttach'
 }
