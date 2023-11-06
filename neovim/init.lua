@@ -7,14 +7,17 @@
 ---@alias ProfileData table<string, Profile>
 ---Constains Autocommand profiling data
 ---@type ProfileData?
-AuProfileData = nil
+AuProfileData = {}
+
+--@type bool Switch to toggle Autocommand profiling
+AuProfileEnabled = false
 
 ---Collect autocommand data at autocommand startup, called for each event
 ---@param args any Autocommand callback data
 function AuProfileStart(args)
     local event = args.event
 
-    if AuProfileData then
+    if AuProfileEnabled then
         local data = AuProfileData[event] or {}
         data['count'] = (data.count or 0) + 1
         data['start'] = os.clock()
@@ -25,7 +28,7 @@ end
 ---Collect autocommand data at autocommand startup, called for each event
 ---@param args any Autocommand callback data
 function AuProfileEnd(args)
-    if AuProfileData then
+    if AuProfileEnabled then
         local data = AuProfileData[args.event]
         if data then
             local elapsed = os.clock() - data.start
@@ -55,7 +58,9 @@ vim.api.nvim_create_user_command(
     'ProfileAutocommand',
     function()
         vim.notify("Profiling started, stop by F6")
+        AuProfileEnabled = true
         AuProfileData = {}
+        AuCallbackProfileData = {}
 
         -- Autocommand to collect end data
         vim.api.nvim_create_autocmd(
@@ -69,8 +74,7 @@ vim.api.nvim_create_user_command(
         -- Mapping to stop autocommand profiling
         vim.api.nvim_set_keymap('n', '<F6>', '', {
             callback = function()
-                AuProfileDataResult = AuProfileData
-                AuProfileData = nil
+                AuProfileEnabled = false
                 vim.cmd('profile stop')
                 vim.notify('Autocommand profiling stopped')
             end
@@ -85,8 +89,7 @@ vim.api.nvim_create_user_command(
     { nargs = 0 }
 )
 
--- TODO: Review create wrapper for autocommand create
--- ---@type ProfileData?
+---@type ProfileData?
 -- AuCallbackProfileData = {}
 
 -- function NvimCreateAutocmdWrapper(event, opts)
@@ -98,22 +101,23 @@ vim.api.nvim_create_user_command(
 --                 cb(arg)
 --                 local elapsed = os.clock() - start
 
---                 local data = AuCallbackProfileData[arg.id] or {}
---                 local total = (data.total or 0) + elapsed
+--                 if AuProfileEnabled then
+--                     local data = AuCallbackProfileData[arg.id] or {}
+--                     local total = (data.total or 0) + elapsed
 
---                 data['count']= (data.count or 0) + 1
---                 data['avg'] = total / data.count
---                 data['total'] = total
---                 AuCallbackProfileData[arg.id] = data
+--                     data['count']= (data.count or 0) + 1
+--                     data['avg'] = total / data.count
+--                     data['total'] = total
+--                     AuCallbackProfileData[arg.id] = data
+--                 end
 --             end
---             opts.callback = cb
 --         end
 --     end
 --     vim.api.nvim_create_autocmd_orig(event, opts)
 -- end
 
 -- vim.api.nvim_create_autocmd_orig = vim.api.nvim_create_autocmd
-    -- vim.api.nvim_create_autocmd = NvimCreateAutocmdWrapper
+-- vim.api.nvim_create_autocmd = NvimCreateAutocmdWrapper
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
@@ -374,6 +378,7 @@ Todo_colors = {
 -- Lua locals
 -------------
 
+-- TODO: Review
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
