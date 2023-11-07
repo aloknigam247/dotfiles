@@ -343,7 +343,8 @@ Lazy_config = {
 }
 
 ---@class Plugin
----@type Plugin[]
+---@field cmd string Lazy load on command
+---@type Plugin[] List of plugins
 Plugins = {}
 
 ---@class PopupMenu
@@ -378,7 +379,6 @@ Todo_colors = {
 -- Lua locals
 -------------
 
--- TODO: Review
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -423,10 +423,13 @@ local kind_hl = {
 -- Functions</>
 ------------
 
+--- Adds a plugin Lazy nvim config
+---@param opts Plugin Plugin config
 function AddPlugin(opts)
     table.insert(Plugins, opts)
 end
 
+-- TODO: Review
 function AdaptiveBG(lighten, darken)
     local bg
     if (vim.o.background == 'dark') then
@@ -1741,7 +1744,6 @@ AddPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'    
 AddPlugin { 'gbprod/nord.nvim',                        event = 'User nord'                                                }
 AddPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
 AddPlugin { 'Yazeed1s/oh-lucy.nvim',                   event = 'User oh-lucy'                                             }
-AddPlugin { 'Th3Whit3Wolf/one-nvim',                   event = 'User one-nvim'                                            }
 AddPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai'                                         }
 AddPlugin { 'olimorris/onedarkpro.nvim',               event = 'User onedarkpro'                                          }
 AddPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                             }
@@ -1864,8 +1866,6 @@ DarkT { 'nordfox',                    'nightfox',    pre = function() require('n
 Dark  { 'nordic',                     '_'            }
 DarkT { 'nordic',                     '_',           pre = function() require('nordic').setup({transparent_bg = true}) end }
 DarkT { 'oh-lucy-evening',            'oh-lucy', pre = function() vim.g.oh_lucy_transparent_background = true end }
-Dark  { 'one-nvim',                   '_'            }
-DarkT { 'one-nvim',                   '_', pre = function() vim.g.one_nvim_transparent_bg = true end }
 Dark  { 'one_monokai',                '_'            }
 Dark  { 'onedark',                    'onedarkpro'   }
 Light { 'onelight',                   '_'            } -- FIX: Gitsigns colors
