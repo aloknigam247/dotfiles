@@ -9,7 +9,7 @@
 ---@type ProfileData?
 AuProfileData = {}
 
---@type bool Switch to toggle Autocommand profiling
+--@type boolean Switch to toggle Autocommand profiling
 AuProfileEnabled = false
 
 ---Collect autocommand data at autocommand startup, called for each event
@@ -435,19 +435,20 @@ end
 function AdaptiveBG(lighten, darken)
     local bg
     if (vim.o.background == 'dark') then
-        -- TODO: Review
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
+        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).background or 0
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, lighten)
     else
-        bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 16777215
+        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).background or 16777215
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, darken)
     end
     return bg
 end
 
--- TODO: Review
+---Count number of windows visible
+---@param ignore boolean Enable ignoring of filetypes
+---@return integer Count Number of windows
 function CountWindows(ignore)
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -466,7 +467,7 @@ function CountWindows(ignore)
         if not ignore then return true end
 
         local ignore_filetype = { 'NvimTree' }
-        local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+        local filetype = vim.api.nvim_get_option_value( 'filetype', { buf = bufnr })
         for _,v in pairs(ignore_filetype) do
             if v == filetype then
                 return false
@@ -491,6 +492,7 @@ function CountWindows(ignore)
     return named_window
 end
 
+-- TODO: Review
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
@@ -596,6 +598,10 @@ function IsLspAttached()
     return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
 end
 
+---Light or dark color
+---@param col string Color to shade
+---@param amt integer Amount of shade
+---@return string Color Hex format
 function LightenDarkenColor(col, amt)
     local num = tonumber(col, 16)
     local r = bit.rshift(num, 16) + amt
@@ -603,7 +609,8 @@ function LightenDarkenColor(col, amt)
     local g = bit.band(num, 0x0000FF) + amt
     local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
     local hex_code = string.format("#%-6X", newColor)
-    return hex_code:gsub(' ', '0')
+    local res = hex_code:gsub(' ', '0')
+    return res
 end
 
 function TableContains(table, item)
@@ -997,7 +1004,7 @@ vim.cmd('sign define DiagnosticSignHint  text=' .. Icons.hint  .. ' texthl=Diagn
 vim.highlight.priorities = {
     syntax = 50,
     treesitter = 100,
-    semantic_tokens = 99,
+    semantic_tokens = 99, -- RECHECK
     diagnostics = 150,
     user = 200
 }
