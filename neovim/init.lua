@@ -492,57 +492,59 @@ function CountWindows(ignore)
     return named_window
 end
 
--- TODO: Review
+---Generates color palette for dark and light mode
+---@return { bg: string, fg: string }[] Palette List of _nvim_set_hl()_ supported color config
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
-            { fg = '#00A6ED' },
-            { fg = '#037171' },
-            { fg = '#2100F5' },
-            { fg = '#235789' },
-            { fg = '#247BA0' },
-            { fg = '#30B0A1' },
-            { fg = '#5D536B' },
-            { fg = '#61210F' },
-            { fg = '#689784' },
-            { fg = '#7E5CA3' },
-            { fg = '#7FB800' },
-            { fg = '#806443' },
-            { fg = '#81A35C' },
-            { fg = '#9C7C1C' },
-            { fg = '#A42CD6' },
-            { fg = '#CE2D4F' },
-            { fg = '#735290' },
-            { fg = '#F4743B' },
-            { fg = '#F6511D' },
-            { fg = '#FFB400' },
-        }
-    else
-        return {
-            { fg = '#4056F4' },
-            { fg = '#5FAD56' },
-            { fg = '#97CC04' },
-            { fg = '#98fc03' },
-            { fg = '#BDBEA9' },
-            { fg = '#CE6D8B' },
-            { fg = '#D4C2FC' },
-            { fg = '#DDA15E' },
-            { fg = '#E6E6E6' },
-            { fg = '#E9D758' },
-            { fg = '#F45D01' },
-            { fg = '#F78154' },
-            { fg = '#FFD447' },
-            { fg = '#c0dbf5' },
-            { fg = '#c0f5c8' },
-            { fg = '#c0f5f1' },
-            { fg = '#ccc0f5' },
-            { fg = '#dff5c0' },
-            { fg = '#f2c0f5' },
-            { fg = '#f5eac0' },
+            { bg = '#000000', fg = '#00A6ED' },
+            { bg = '#FFFFFF', fg = '#037171' },
+            { bg = '#FFFFFF', fg = '#2100F5' },
+            { bg = '#FFFFFF', fg = '#235789' },
+            { bg = '#FFFFFF', fg = '#247BA0' },
+            { bg = '#000000', fg = '#30B0A1' },
+            { bg = '#FFFFFF', fg = '#5D536B' },
+            { bg = '#FFFFFF', fg = '#61210F' },
+            { bg = '#000000', fg = '#689784' },
+            { bg = '#FFFFFF', fg = '#7E5CA3' },
+            { bg = '#000000', fg = '#7FB800' },
+            { bg = '#FFFFFF', fg = '#806443' },
+            { bg = '#000000', fg = '#81A35C' },
+            { bg = '#000000', fg = '#9C7C1C' },
+            { bg = '#FFFFFF', fg = '#A42CD6' },
+            { bg = '#FFFFFF', fg = '#CE2D4F' },
+            { bg = '#FFFFFF', fg = '#735290' },
+            { bg = '#000000', fg = '#F4743B' },
+            { bg = '#000000', fg = '#F6511D' },
+            { bg = '#000000', fg = '#FFB400' },
         }
     end
+    -- dark mode
+    return {
+        { bg = '#FFFFFF', fg = '#00A6ED' },
+        { bg = '#000000', fg = '#5FAD56' },
+        { bg = '#000000', fg = '#97CC04' },
+        { bg = '#000000', fg = '#98fc03' },
+        { bg = '#000000', fg = '#BDBEA9' },
+        { bg = '#000000', fg = '#CE6D8B' },
+        { bg = '#000000', fg = '#D4C2FC' },
+        { bg = '#000000', fg = '#DDA15E' },
+        { bg = '#000000', fg = '#E6E6E6' },
+        { bg = '#000000', fg = '#E9D758' },
+        { bg = '#000000', fg = '#F45D01' },
+        { bg = '#000000', fg = '#F78154' },
+        { bg = '#000000', fg = '#FFD447' },
+        { bg = '#000000', fg = '#c0dbf5' },
+        { bg = '#000000', fg = '#c0f5c8' },
+        { bg = '#000000', fg = '#c0f5f1' },
+        { bg = '#000000', fg = '#ccc0f5' },
+        { bg = '#000000', fg = '#dff5c0' },
+        { bg = '#000000', fg = '#f2c0f5' },
+        { bg = '#000000', fg = '#f5eac0' },
+    }
 end
 
+---Print config of all windows
 function DebugWindows()
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -552,15 +554,22 @@ function DebugWindows()
     end
 end
 
+---Get Sign of a named sign
+---@param name string Name of Sign
+---@return string? icon Sign icon
 function GetSign(name)
     local sign_list = vim.fn.sign_getdefined()
-    for _, value in ipairs(sign_list) do
-        if value.name == name then
-            return value
+    if sign_list then
+        for _, value in ipairs(sign_list) do
+            if value.name == name then
+                return value
+            end
         end
     end
+    return nil
 end
 
+-- TODO: Review
 function GetGitsign(lnum)
     local sign = vim.fn.sign_getplaced('%', {group = '*', lnum = lnum})
     local signs = sign[1].signs
@@ -1548,7 +1557,7 @@ AddPlugin {
     config = function()
         local colors = {}
         for _,v in pairs(ColorPalette()) do
-            local hi = "gui=italic,bold,underline guifg=#000000 guibg=" .. v.fg
+            local hi = "guifg=" .. v.bg .. " guibg=" .. v.fg
             table.insert(colors, hi)
         end
         vim.g.quickhl_manual_colors = colors
