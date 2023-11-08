@@ -378,7 +378,6 @@ Todo_colors = {
 
 -- Lua locals
 -------------
-
 local kind_hl = {
     Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
     Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
@@ -423,16 +422,20 @@ local kind_hl = {
 -- Functions</>
 ------------
 
---- Adds a plugin Lazy nvim config
+---Adds a plugin Lazy nvim config
 ---@param opts Plugin Plugin config
 function AddPlugin(opts)
     table.insert(Plugins, opts)
 end
 
--- TODO: Review
+---Create background color adaptive to editor background
+---@param lighten integer Lighter percent
+---@param darken integer Darker percent
+---@return string Color Hex format
 function AdaptiveBG(lighten, darken)
     local bg
     if (vim.o.background == 'dark') then
+        -- TODO: Review
         bg = vim.api.nvim_get_hl_by_name('Normal', true).background or 0
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, lighten)
@@ -444,6 +447,7 @@ function AdaptiveBG(lighten, darken)
     return bg
 end
 
+-- TODO: Review
 function CountWindows(ignore)
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -3100,9 +3104,12 @@ AddPlugin {
                                     enable = true,
                                     setType = true
                                 },
-                                -- workspace = {
-                                --     library = { vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua' }
-                                -- }
+                                workspace = {
+                                    library = {
+                                        vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua',
+                                        vim.fn.stdpath('data') .. '/lazy/neodev.nvim/types/nightly',
+                                    }
+                                }
                             }
                         }
                     }
