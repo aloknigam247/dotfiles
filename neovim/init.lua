@@ -351,6 +351,8 @@ Lazy_config = {
 Plugins = {}
 
 ---@class PopupMenu
+---@field cond fun() Condition to evaluate for PopUp menu
+---@field opts {title: string, action: string} Config options
 ---@type PopupMenu[]
 Pop_up_menu = {}
 
@@ -675,7 +677,12 @@ end
 vim.api.nvim_open_win_orig = vim.api.nvim_open_win
 vim.api.nvim_open_win = NvimOpenWinSafe
 
--- TODO: Review
+---Open file in floating window
+---@param path string File path
+---@param relativity string Relaive postion of window
+---@param col_offset integer Column offset
+---@param row_offset integer Row offset
+---@param enter boolean Enter into window on creation
 function OpenFloat(path, relativity, col_offset, row_offset, enter)
     -- Create buffer
     local bufnr = vim.fn.bufadd(path)
@@ -773,8 +780,9 @@ end
 function PopupAction()
     -- local currentWindow = vim.api.nvim_get_current_win()
     -- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
-    vim.cmd('aunmenu PopUp')
+    vim.cmd('aunmenu PopUp') -- Clear popup menu
 
+    -- Fill popup options
     for _,menu in pairs(Pop_up_menu) do
         if menu.cond() then
             for _,opt in pairs(menu.opts) do
@@ -787,6 +795,7 @@ function PopupAction()
     end
 end
 
+-- TODO: Review
 function PopupMenuAdd(menu)
     table.insert(Pop_up_menu, menu)
 end
