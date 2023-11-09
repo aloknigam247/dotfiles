@@ -352,7 +352,7 @@ Plugins = {}
 
 ---@class PopupMenu
 ---@field cond fun() Condition to evaluate for PopUp menu
----@field opts {title: string, action: string} Config options
+---@field opts string[] Config options
 ---@type PopupMenu[]
 Pop_up_menu = {}
 
@@ -796,6 +796,8 @@ function PopupAction()
 end
 
 -- TODO: Review
+---Add a popup menu
+---@param menu PopupMenu Popup menu
 function PopupMenuAdd(menu)
     table.insert(Pop_up_menu, menu)
 end
