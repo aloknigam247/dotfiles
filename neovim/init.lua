@@ -92,6 +92,9 @@ vim.api.nvim_create_user_command(
 ---@type ProfileData?
 -- AuCallbackProfileData = {}
 
+-- ---Create autocmd wrapper to emit perf telemtry
+-- ---@param event string Name of event
+-- ---@param opts table Autocmd config
 -- function NvimCreateAutocmdWrapper(event, opts)
 --     if opts then
 --         local cb = opts.callback
@@ -431,7 +434,7 @@ end
 ---Create background color adaptive to editor background
 ---@param lighten integer Lighter percent
 ---@param darken integer Darker percent
----@return string Color Hex format
+---@return string # Color in Hex format
 function AdaptiveBG(lighten, darken)
     local bg
     if (vim.o.background == 'dark') then
@@ -448,7 +451,7 @@ end
 
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
----@return integer Count Number of windows
+---@return integer # Number of windows
 function CountWindows(ignore)
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
@@ -493,7 +496,7 @@ function CountWindows(ignore)
 end
 
 ---Generates color palette for dark and light mode
----@return { bg: string, fg: string }[] Palette List of _nvim_set_hl()_ supported color config
+---@return { bg: string, fg: string }[] # List of _nvim_set_hl()_ supported color config
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
@@ -554,41 +557,18 @@ function DebugWindows()
     end
 end
 
----Get Sign of a named sign
----@param name string Name of Sign
----@return string? icon Sign icon
-function GetSign(name)
-    local sign_list = vim.fn.sign_getdefined()
-    if sign_list then
-        for _, value in ipairs(sign_list) do
-            if value.name == name then
-                return value
-            end
-        end
-    end
-    return nil
-end
-
--- TODO: Review
-function GetGitsign(lnum)
-    local sign = vim.fn.sign_getplaced('%', {group = '*', lnum = lnum})
-    local signs = sign[1].signs
-    if #signs > 0 then
-        local signdef = GetSign(signs[1].name)
-        if signdef then
-            return signdef.text
-            -- return '%#' .. signdef.texthl .. '#' .. signdef.text .. ' '
-        end
-    end
-    return ''
-end
-
+---Get list filetypes/extentions for Treesitter languages installed
+---@param use_entension boolean Convert filetype to extension
+---@return string[] # List of filetypes or extensions
 function GetTSInstlled(use_entension)
+    if Installed_filetypes then
+        return Installed_filetypes
+    end
+
+    Installed_filetypes = {}
     local filetye_map = {
         ['python'] = 'py'
     }
-
-    local installed_filetypes = {}
 
     for file, _ in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath('data'), '/lazy/nvim-treesitter/parser')) do
         if file:sub(-3) == '.so' then
@@ -596,13 +576,15 @@ function GetTSInstlled(use_entension)
             if use_entension then
                 ftype = filetye_map[ftype] or ftype
             end
-            table.insert(installed_filetypes, ftype)
+            table.insert(Installed_filetypes, ftype)
         end
     end
 
-    return installed_filetypes
+    return Installed_filetypes
 end
 
+---Check if LSP is attached to current buffer
+---@return boolean # true if LSP is attached
 function IsLspAttached()
     return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
 end
@@ -610,7 +592,7 @@ end
 ---Light or dark color
 ---@param col string Color to shade
 ---@param amt integer Amount of shade
----@return string Color Hex format
+---@return string # Color in hex format
 function LightenDarkenColor(col, amt)
     local num = tonumber(col, 16)
     local r = bit.rshift(num, 16) + amt
@@ -622,6 +604,10 @@ function LightenDarkenColor(col, amt)
     return res
 end
 
+---Check if table contains item
+---@param table table Loopup table
+---@param item any item to find
+---@return any? # item found or nil
 function TableContains(table, item)
     for _,k in ipairs(table) do
         if k == item then
@@ -631,15 +617,11 @@ function TableContains(table, item)
     return nil
 end
 
-function MarkdownHeadingsHighlight()
-    local palette = ColorPalette()
-    for i=1,6 do
-        local hl = { fg = palette[i].fg, bold = true, underline = false }
-        -- vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
-        vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
-    end
-end
-
+---Safe alternative to `nvim_open_win()`
+---@param bufnr integer Buffer to display, or 0 for current buffer
+---@param enter boolean Enter the window (make it the current window)
+---@param config? table `nvim_open_win()` config
+---@return integer # Window handle, or 0 on error
 function NvimOpenWinSafe(bufnr, enter, config)
     -- FEAT dotted border for non focusable window
     local fixTitle = function(title)
@@ -693,9 +675,14 @@ end
 vim.api.nvim_open_win_orig = vim.api.nvim_open_win
 vim.api.nvim_open_win = NvimOpenWinSafe
 
+-- TODO: Review
 function OpenFloat(path, relativity, col_offset, row_offset, enter)
     -- Create buffer
     local bufnr = vim.fn.bufadd(path)
+
+    if not bufnr then
+        return
+    end
 
     -- Create floating window
     if Preview_win == nil then
@@ -2566,6 +2553,16 @@ AddPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
+---Set highlight for markdown headings
+function MarkdownHeadingsHighlight()
+    local palette = ColorPalette()
+    for i=1,6 do
+        local hl = { fg = palette[i].fg, bold = true, underline = false }
+        -- vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
+        vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
+    end
+end
+
 FileTypeActions = {
     ['markdown'] = function()
         vim.g.table_mode_corner = '|'
@@ -2899,6 +2896,7 @@ AddPlugin {
             include = {
                 node_type = {
                     ['*'] = {
+                        'elif_clause',
                         'else_clause',
                         'for_statement',
                         'if_statement',
