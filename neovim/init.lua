@@ -345,14 +345,12 @@ Lazy_config = {
     },
 }
 
----@class Plugin
----@field cmd string Lazy load on command
----@type Plugin[] List of plugins
+---@type table[] List of plugins
 Plugins = {}
 
 ---@class PopupMenu
 ---@field cond fun() Condition to evaluate for PopUp menu
----@field opts string[] Config options
+---@field opts string[][] Config options
 ---@type PopupMenu[]
 Pop_up_menu = {}
 
@@ -795,15 +793,21 @@ function PopupAction()
     end
 end
 
--- TODO: Review
 ---Add a popup menu
 ---@param menu PopupMenu Popup menu
 function PopupMenuAdd(menu)
     table.insert(Pop_up_menu, menu)
 end
 
-TodoHilighterCache = {}
-function TodoHilighter(_, match)
+---Get TODO highlights
+---@param _ integer Buffer id
+---@param match string Matched text
+---@return string? # Highlight for matched string
+function GetTodoHl(_, match)
+    if not TodoHilighterCache then
+        TodoHilighterCache = {}
+    end
+
     local cache = TodoHilighterCache[match]
     if cache then
         return cache
@@ -886,7 +890,7 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Disable wrap for file with long lines',
         callback = function()
-            for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, '$')) do
+            for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 500)) do
                 local line_length = #line
                 if line_length > 150 then
                     vim.opt_local.wrap = false
@@ -928,9 +932,7 @@ vim.api.nvim_create_autocmd(
     'MenuPopup', {
         pattern = 'n',
         desc = 'Create popup menu based on context',
-        callback = function()
-            PopupAction()
-        end
+        callback = PopupAction
     }
 )
 
@@ -971,6 +973,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 -- Mappings</>
+-----------
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<BS>', 'x', {})
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
@@ -981,6 +984,7 @@ vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
 vim.keymap.set('n', '<M-Up>', '<cmd>res +1<cr>', {})
 -- <~>
 -- Misc</>
+-------
 vim.diagnostic.config({
     float = {
         source = true
@@ -997,35 +1001,27 @@ vim.cmd('sign define DiagnosticSignWarn  text=' .. Icons.warn  .. ' texthl=Diagn
 vim.cmd('sign define DiagnosticSignInfo  text=' .. Icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
 vim.cmd('sign define DiagnosticSignHint  text=' .. Icons.hint  .. ' texthl=DiagnosticSignHint  linehl= numhl=')
 
--- Sign_placelist = vim.fn.sign_placelist
--- vim.fn.sign_placelist = function(args)
---     for _,i in pairs(args) do
---         -- use tbl_extend or tbl_deep_extend
---         Signs[i.buffer] = {
---             [i.lnum] = i
---         }
---     end
---     Sign_placelist(args)
--- end
-
 vim.highlight.priorities = {
     syntax = 50,
     treesitter = 100,
-    semantic_tokens = 99, -- RECHECK
+    semantic_tokens = 125,
     diagnostics = 150,
     user = 200
 }
 
+-- Lazy load notify
 vim.notify = function(...)
     require('notify')
     vim.notify(...)
 end
 
+-- Lazy load dressing
 vim.ui.select = function(...)
     require('dressing')
     vim.ui.select(...)
 end
 
+-- Lazy load dressing
 vim.ui.input = function(...)
     require('dressing')
     vim.ui.input(...)
@@ -1034,6 +1030,7 @@ end
 -- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
 -- <~>
 -- PopUps</>
+---------
 PopupMenuAdd({
     cond = IsLspAttached,
     opts = {
@@ -1051,7 +1048,7 @@ PopupMenuAdd({
 })
 -- <~>
 -- Commands</>
-Preview_win = nil
+-----------
 vim.api.nvim_create_user_command(
     'Peek',
     function(args)
@@ -1185,10 +1182,7 @@ AddPlugin {
     }
 }
 
-AddPlugin {
-    'Pocco81/high-str.nvim',
-    cmd = 'HSHighlight'
-}
+-- AddPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
 
 AddPlugin {
     'RRethy/vim-illuminate',
@@ -1203,43 +1197,39 @@ AddPlugin {
                 'regex'
             }
         })
-        vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = AdaptiveBG(40, -40) })
-        vim.cmd[[
-           hi IlluminatedWordRead  guibg = #8AC926 guifg = #FFFFFF gui = bold
-           hi IlluminatedWordWrite guibg = #FF595E guifg = #FFFFFF gui = italic
-       ]]
+        vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = AdaptiveBG(40, -40) })
+        vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
+        vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
     end,
     event = { 'CursorHold', 'CursorHoldI' }
 }
 
-AddPlugin {
-    'azabiong/vim-highlighter',
-    keys = { 'f<CR>' }
-}
+-- AddPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
 AddPlugin {
     'echasnovski/mini.hipatterns',
     event = 'VeryLazy',
     opts = {
         highlighters = {
-            bug      = { pattern = '()BUG:()', group = TodoHilighter },
-            docs     = { pattern = '()DOCME:()', group = TodoHilighter },
-            error    = { pattern = '()ERROR:()', group = TodoHilighter },
-            feat     = { pattern = '()FEAT:()', group = TodoHilighter },
-            fix      = { pattern = '()FIX:()', group = TodoHilighter },
-            hack     = { pattern = '()HACK:()', group = TodoHilighter },
-            hint     = { pattern = '()HINT:()', group = TodoHilighter },
-            info     = { pattern = '()INFO:()', group = TodoHilighter },
-            perf     = { pattern = '()PERF:()', group = TodoHilighter },
-            refactor = { pattern = '()REFACTOR:()', group = TodoHilighter },
-            test     = { pattern = '()TEST:()', group = TodoHilighter },
-            thought  = { pattern = '()THOUGHT:()', group = TodoHilighter },
-            todo     = { pattern = '()TODO:()', group = TodoHilighter },
-            warn     = { pattern = '()WARN:()', group = TodoHilighter },
+            bug      = { pattern = '()BUG:()',      group = GetTodoHl },
+            docs     = { pattern = '()DOCME:()',    group = GetTodoHl },
+            error    = { pattern = '()ERROR:()',    group = GetTodoHl },
+            feat     = { pattern = '()FEAT:()',     group = GetTodoHl },
+            fix      = { pattern = '()FIX:()',      group = GetTodoHl },
+            hack     = { pattern = '()HACK:()',     group = GetTodoHl },
+            hint     = { pattern = '()HINT:()',     group = GetTodoHl },
+            info     = { pattern = '()INFO:()',     group = GetTodoHl },
+            perf     = { pattern = '()PERF:()',     group = GetTodoHl },
+            refactor = { pattern = '()REFACTOR:()', group = GetTodoHl },
+            test     = { pattern = '()TEST:()',     group = GetTodoHl },
+            thought  = { pattern = '()THOUGHT:()',  group = GetTodoHl },
+            todo     = { pattern = '()TODO:()',     group = GetTodoHl },
+            warn     = { pattern = '()WARN:()',     group = GetTodoHl },
         }
     }
 }
 
+-- TODO: review
 AddPlugin {
     'folke/flash.nvim',
     lazy = true,
@@ -1496,7 +1486,7 @@ AddPlugin {
                 DOCME  = { icon = '', color = 'docs' },
                 FEAT   = { icon = '󱩑', color = 'feat' },
                 FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
-                HACK   = { icon = '', color = 'hint' },
+                HACK   = { icon = '󰑶', color = 'hint' },
                 NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
                 PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
                 RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
@@ -1854,9 +1844,9 @@ Light { 'material',                   '_',           pre = function() vim.g.mate
 Dark  { 'melange',                    '_'                                                                                                              }
 Dark  { 'mellifluous',                '_'                                                                                                              }
 Dark  { 'monokai',                    'vim-monokai'                                                                          }
-DarkT { 'monokai-nightasty',          '_'                                                                                    }
+Dark  { 'monokai-nightasty',          '_'                                                                                    }
 Light { 'monokai-nightasty',          '_'                                                                                    }
-Dark  { 'monokai-nightasty',          '_',           cfg = {dark_style_background = 'transparent'} }
+DarkT { 'monokai-nightasty',          '_',           cfg = {dark_style_background = 'transparent'} }
 Dark  { 'monokai-pro',                '_',           cfg = {filter = 'machine'}                    }
 Dark  { 'monokai-pro',                '_',           cfg = {filter = 'octagon'}                    }
 Dark  { 'monokai-pro',                '_',           cfg = {filter = 'pro'}, post = FixVisual      }
@@ -2566,6 +2556,7 @@ AddPlugin {
 -- autocmd BufNewFile,BufRead *.csproj set filetype=csproj
 ---Set highlight for markdown headings
 function MarkdownHeadingsHighlight()
+    -- BUG: not working
     local palette = ColorPalette()
     for i=1,6 do
         local hl = { fg = palette[i].fg, bold = true, underline = false }
@@ -3132,7 +3123,7 @@ AddPlugin {
                                 workspace = {
                                     library = {
                                         vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua',
-                                        vim.fn.stdpath('data') .. '/lazy/neodev.nvim/types/nightly',
+                                        vim.fn.stdpath('data') .. '/lazy/neodev.nvim/types/stable',
                                     }
                                 }
                             }
