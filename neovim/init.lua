@@ -437,11 +437,11 @@ end
 function AdaptiveBG(lighten, darken)
     local bg
     if (vim.o.background == 'dark') then
-        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).background or 0
+        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).bg or 0
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, lighten)
     else
-        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).background or 16777215
+        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).bg or 16777215
         bg = string.format('%X', bg)
         bg = LightenDarkenColor(bg, darken)
     end
@@ -1248,16 +1248,15 @@ AddPlugin {
     }
 }
 
--- TODO: review
 AddPlugin {
-    'folke/todo-comments.nvim', -- FIX: todo highlight
+    'folke/todo-comments.nvim',
     config = function()
         require('todo-comments').setup({
             colors = Todo_colors,
             keywords = {
                 DOCME  = { icon = '', color = 'docs' },
                 FEAT   = { icon = '󱩑', color = 'feat' },
-                FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' } },
+                FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
                 HACK   = { icon = '󰑶', color = 'hint' },
                 NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
                 PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
@@ -1272,11 +1271,12 @@ AddPlugin {
     end,
     dependencies = { 'luukvbaal/statuscol.nvim' },
     keys = {
-        { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous todo comment' },
-        { ']t', function() require('todo-comments').jump_next() end, desc = 'Next todo comment' }
+        { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous TODO' },
+        { ']t', function() require('todo-comments').jump_next() end, desc = 'Next TODO' }
     }
 }
 
+-- TODO: review
 AddPlugin {
     'kevinhwang91/nvim-hlslens',
     keys = { 'n', 'N', '*', '#', 'g*', 'g#' },
@@ -1354,8 +1354,8 @@ function FixIndentBlankline()
         'IndentBlanklineContextSpaceChar',
         'IndentBlanklineSpaceChar',
     }) do
-        local hl = vim.api.nvim_get_hl_by_name(color, true)
-        hl.background = nil
+        local hl = vim.api.nvim_get_hl(0, { name = color, create = false})
+        hl.bg = nil
         hl.nocombine = false
         vim.api.nvim_set_hl(0, color, hl)
     end
@@ -1712,6 +1712,15 @@ function ColoRand(scheme_index)
     end
 
     local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
+
+    -- Fix Todo highlight
+    local todo_hl = vim.api.nvim_get_hl(0, { name = 'Todo', create = false })
+    if todo_hl and todo_hl.bg then
+        todo_hl.fg = todo_hl.bg
+        todo_hl.bg = nil
+        vim.api.nvim_set_hl(0, 'Todo', todo_hl)
+    end
+
     vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. event .. elapsed
 end
 -- <~>
@@ -3601,9 +3610,9 @@ AddPlugin {
         end
 
         local function GetFgOrFallback(hl_name, fallback)
-            local hl = vim.api.nvim_get_hl_by_name(hl_name, true)
+            local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
             if hl then
-                return string.format("#%X", hl.foreground)
+                return string.format("#%X", hl.fg)
             else
                 return fallback
             end
@@ -3740,7 +3749,7 @@ AddPlugin {
                     {
                         function() return vim.g.ColoRand end,
                         color = { fg = GetFgOrFallback('Number', '#F2F230') },
-                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
+                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = 'Function', create = false }).fg)}},
                         padding = { left = 1, right = 1 }
                     },
                     {
@@ -4372,7 +4381,6 @@ AddPlugin {
     config = function()
         local notify = require('notify')
         notify.setup({
-            -- background_colour = vim.api.nvim_get_hl_by_name('Normal', true).background and 'Normal' or '#000000',
             minimum_width = 0,
             render = 'minimal',
             stages = 'slide'
