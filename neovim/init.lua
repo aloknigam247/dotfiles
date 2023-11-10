@@ -420,7 +420,6 @@ local kind_hl = {
     Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
 }
 
--- local url_matcher = "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 -- <~>
 -- Functions</>
 ------------
@@ -1027,7 +1026,11 @@ vim.ui.input = function(...)
     vim.ui.input(...)
 end
 
--- vim.fn.matchadd('HighlightURL', url_matcher, HlPriority.url)
+vim.fn.matchadd(
+    'HighlightURL',
+    "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
+    Hl_priority.url
+)
 -- <~>
 -- PopUps</>
 ---------
@@ -1231,29 +1234,23 @@ AddPlugin {
 
 -- AddPlugin { 'folke/flash.nvim' }
 
--- TODO: review
 AddPlugin {
     'folke/paint.nvim',
-    enabled = false,
-    -- ft = { 'python' }, -- highlights code too https://github.com/folke/paint.nvim/issues/8
+    event = 'CursorHold *.lua,*.py',
     opts = {
         highlights = {
-            {
-                filter = { filetype = 'python' },
-                pattern = '%a+: ',
-                hl = 'Constant'
-            }
+            { filter = { filetype = 'lua' },    pattern = '━.*━', hl = "Constant", },
+            { filter = { filetype = 'lua' },    pattern = '%s*%-%-%-%s*(@%w+)', hl = "Constant", },
+            { filter = { filetype = 'python' }, pattern = '    %a+: ',          hl = 'Constant' },
+            { filter = { filetype = 'python' }, pattern = 'Args:',              hl = 'Conditional' },
+            { filter = { filetype = 'python' }, pattern = 'Returns:',           hl = 'Conditional' },
         }
     }
 }
 
+-- TODO: review
 AddPlugin {
-    'folke/lsp-colors.nvim',
-    event = 'LspAttach'
-}
-
-AddPlugin {
-    'folke/todo-comments.nvim',
+    'folke/todo-comments.nvim', -- FIX: todo highlight
     config = function()
         require('todo-comments').setup({
             colors = Todo_colors,
