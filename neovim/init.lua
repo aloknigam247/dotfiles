@@ -1243,9 +1243,21 @@ AddPlugin {
             forward = true,
             -- when `false`, find only matches in the given direction
             wrap = true,
-            mode = "search",
+            ---@type Flash.Pattern.Mode
+            -- Each mode will take ignorecase and smartcase into account.
+            -- * exact: exact match
+            -- * search: regular search
+            -- * fuzzy: fuzzy search
+            -- * fun(str): custom function that returns a pattern
+            --   For example, to only match at the beginning of a word:
+            --   mode = function(str)
+            --     return "\\<" .. str
+            --   end,
+            mode = "exact",
             -- behave like `incsearch`
-            incremental = true,
+            incremental = false,
+            -- Excluded filetypes and custom window filters
+            ---@type (string|fun(win:window))[]
             exclude = {
                 "notify",
                 "cmp_menu",
@@ -1316,9 +1328,17 @@ AddPlugin {
                 -- number between 1 and 9
                 shade = 5,
             },
+            -- With `format`, you can change how the label is rendered.
+            -- Should return a list of `[text, highlight]` tuples.
+            ---@class Flash.Format
+            ---@field state Flash.State
+            ---@field match Flash.Match
+            ---@field hl_group string
+            ---@field after boolean
+            ---@type fun(opts:Flash.Format): string[][]
             format = function(opts)
                 return { { opts.match.label, opts.hl_group } }
-            end,
+            end
         },
         highlight = {
             -- show a backdrop with hl FlashBackdrop
@@ -1332,17 +1352,21 @@ AddPlugin {
                 current = "FlashCurrent",
                 backdrop = "FlashBackdrop",
                 label = "FlashLabel",
-            },
+            }
         },
         -- action to perform when picking a label.
         -- defaults to the jumping logic depending on the mode.
+        ---@type fun(match:Flash.Match, state:Flash.State)|nil
         action = nil,
         -- initial pattern to use when opening flash
         pattern = "",
         -- When `true`, flash will try to continue the last search
         continue = false,
         -- Set config to a function to dynamically change the config
-        config = nil,
+        config = nil, ---@type fun(opts:Flash.Config)|nil
+        -- You can override the default options for a specific mode.
+        -- Use it with `require("flash").jump({mode = "forward"})`
+        ---@type table<string, Flash.Config>
         modes = {
             -- options used when flash is activated through
             -- a regular search with `/` or `?`
@@ -1365,10 +1389,14 @@ AddPlugin {
                 -- dynamic configuration for ftFT motions
                 config = function(opts)
                     -- autohide flash when in operator-pending mode
-                    opts.autohide = vim.fn.mode(true):find("no") and vim.v.operator == "y"
+                    opts.autohide = opts.autohide or (vim.fn.mode(true):find("no") and vim.v.operator == "y")
 
-                    -- disable jump labels when enabled and when using a count
-                    opts.jump_labels = opts.jump_labels and vim.v.count == 0
+                    -- disable jump labels when not enabled, when using a count,
+                    -- or when recording/executing registers
+                    opts.jump_labels = opts.jump_labels
+                    and vim.v.count == 0
+                    and vim.fn.reg_executing() == ""
+                    and vim.fn.reg_recording() == ""
 
                     -- Show jump labels only in operator-pending mode
                     -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
@@ -1453,7 +1481,7 @@ AddPlugin {
             -- `false`: use the window's cursor position and jump target
             -- `nil`: act as `true` for remote windows, `false` for the current window
             motion = false,
-        },
+        }
     }
 }
 
