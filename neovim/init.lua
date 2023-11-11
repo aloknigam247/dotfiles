@@ -1276,13 +1276,10 @@ AddPlugin {
     }
 }
 
--- TODO: review
 AddPlugin {
     'kevinhwang91/nvim-hlslens',
     keys = { 'n', 'N', '*', '#', 'g*', 'g#' },
-    opts = {
-        calm_down = true
-    }
+    opts = { calm_down = true }
 }
 
 AddPlugin {
@@ -1295,7 +1292,7 @@ AddPlugin {
     'nvim-zh/colorful-winsep.nvim',
     opts = {
         create_event = function()
-            local win_n = CountWindows()
+            local win_n = CountWindows(false)
             if win_n < 3 then
                 require("colorful-winsep").NvimSeparatorDel()
             end
@@ -1340,6 +1337,7 @@ AddPlugin {
 -- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: review
 function FixDiagnosticInfo()
     if (vim.o.background == 'light') then
         vim.cmd('hi clear DiagnosticInfo')
@@ -3749,7 +3747,7 @@ AddPlugin {
                     {
                         function() return vim.g.ColoRand end,
                         color = { fg = GetFgOrFallback('Number', '#F2F230') },
-                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = 'Function', create = false }).fg)}},
+                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = 'Function', create = false, link = false }).fg)}},
                         padding = { left = 1, right = 1 }
                     },
                     {
