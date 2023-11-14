@@ -499,7 +499,7 @@ end
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
-            { bg = '#000000', fg = '#00A6ED' },
+            { bg = '#FFFFFF', fg = '#00A6ED' },
             { bg = '#FFFFFF', fg = '#037171' },
             { bg = '#FFFFFF', fg = '#2100F5' },
             { bg = '#FFFFFF', fg = '#235789' },
@@ -1553,149 +1553,148 @@ addPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', 
 addPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'                                              }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
-darkT { 'NeoSolarized',         '_'                                }
-light { 'NeoSolarized',         '_'                                }
-dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
-dark  { 'OceanicNext',          '_'                                }
-dark  { 'PaperColor',           '_', post = fixNontext             }
-light { 'PaperColor',           '_', post = fixNontext             }
-dark  { 'adwaita',              '_'                                }
-light { 'adwaita',              '_'                                }
--- TODO: review use cfg field to reduce line length
+-- darkT { 'NeoSolarized',         '_'                                                        }
+-- dark  { 'NeoSolarized',         '_', cfg = { transparent = false }                         }
+-- dark  { 'OceanicNext',          '_'                                                        }
+-- dark  { 'PaperColor',           '_', post = fixNontext                                     }
+-- light { 'PaperColor',           '_', post = fixNontext                                     }
+light { 'adwaita',              '_'                                                        }
 darkT { 'adwaita',              '_', pre = function() vim.g.adwaita_transparent = true end }
-dark  { 'ayu-dark',             'ayu'                            }
-light { 'ayu-light',            'ayu'                            }
-dark  { 'ayu-mirage',           'ayu'                            }
-darkT { 'bamboo',               '_', cfg = {style = 'multiplex', transparent = true} }
-dark  { 'bamboo',               '_', cfg = {style = 'multiplex'}                     }
-darkT { 'bamboo',               '_', cfg = {style = 'vulgaris', transparent = true } }
-dark  { 'bamboo',               '_', cfg = {style = 'vulgaris'}                      }
-dark  { 'bluloco-dark',         '_'                              }
-darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', {transparent = true} } }
-dark  { 'carbonfox',            'nightfox'                       }
-dark  { 'caret',                '_'                              }
-dark  { 'catppuccin-frappe',    'catppuccin'                     }
-darkT { 'catppuccin-frappe',    'catppuccin', cfg = {transparent_background = true} }
-light { 'catppuccin-latte',     'catppuccin'                     }
-dark  { 'catppuccin-macchiato', 'catppuccin'                     }
-darkT { 'catppuccin-macchiato', 'catppuccin', cfg = {transparent_background = true} }
-dark  { 'catppuccin-mocha',     'catppuccin'                     }
-dark  { 'cobalt2',              '_',           post = function() require('colorbuddy').colorscheme('cobalt2') end }
-dark  { 'codedark',             '_'                                                                 }
-darkT { 'codedark',             '_',           pre = function() vim.g.codedark_transparent = 1 end  }
-dark  { 'darcula-solid',        '_'                                                                 }
-dark  { 'darkplus',             '_'                                                                 }
-dark  { 'darksolar',            'starry',      pre = function() fixStarry('#691f48', '#922b64') end }
-light { 'dawnfox',              'nightfox'                                                          }
-light { 'decay',                '_'                                                                 }
-dark  { 'deus',                 '_',           post = fixVisual                                     }
-dark  { 'duskfox',              'nightfox'                                                          }
-darkT { 'duskfox',              'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
-dark  { 'earlysummer',          'starry',      pre = function() fixStarry('#3f2b4c', '#694980') end }
-dark  { 'edge',                 '_'                                                                 }
-light { 'edge',                 '_'                                                                 }
-dark  { 'enfocado',             '_'                                                                 }
-dark  { 'everforest',           '_'                                                                 }
-light { 'everforest',           '_'                                                                 }
-dark  { 'falcon',               '_'                                                                 }
-darkT { 'fluoromachine',        '_', cfg = {glow = false, theme = 'fluoromachine', transparent = true} }
-darkT { 'fluoromachine',        '_', cfg = {glow = false, theme = 'retrowave', transparent = true}     }
-dark  { 'fluoromachine',        '_', cfg = {glow = true, theme = 'fluoromachine', transparent = false} }
-dark  { 'fluoromachine',        '_', cfg = {glow = true, theme = 'retrowave', transparent = false}  }
-dark  { 'forestbones',          'zenbones'                                                          }
-darkT { 'github_dark',          'github', cfg = {'github-theme', {options = {transparent = true}}}  }
-light { 'github_light',         'github'                                                            }
-dark  { 'gruvbox',              '_'                                                                 }
-dark  { 'gruvbox',              '_', pre  = function() seniorMarsTheme(false) end                   }
-darkT { 'gruvbox',              '_', pre  = function() seniorMarsTheme(true) end                    }
-darkT { 'gruvbox',              '_', cfg = {transparent_mode = true}                                }
-dark  { 'gruvbox-baby',         '_',                                                                }
-darkT { 'gruvbox-baby',         '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end   }
-dark  { 'habamax',              '_',                                                                }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                     }
-dark  { 'kanagawa-dragon',      '_'                                                                 }
-darkT { 'kanagawa-dragon',      '_', cfg = {transparent = true}                                     }
-dark  { 'kanagawa-wave',        '_'                                                                 }
-darkT { 'kanagawa-wave',        '_', cfg = {transparent = true}                                     }
-dark  { 'kimbox',               '_',           post = fixVisual                                     }
-light { 'limestone',            'starry',      pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
-dark  { 'mariana',              'starry',      pre = function() fixStarry('#414346', '#6c6f75') end                                              }
-light { 'material',             '_',           pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
-dark  { 'melange',              '_'                                                                                                              }
-dark  { 'mellifluous',          '_'                                                                                                              }
-dark  { 'monokai',              'vim-monokai'                                                                          }
-dark  { 'monokai-nightasty',    '_'                                                                                    }
-light { 'monokai-nightasty',    '_'                                                                                    }
-darkT { 'monokai-nightasty',    '_',           cfg = {dark_style_background = 'transparent'} }
-dark  { 'monokai-pro',          '_',           cfg = {filter = 'machine'}                    }
-dark  { 'monokai-pro',          '_',           cfg = {filter = 'octagon'}                    }
-dark  { 'monokai-pro',          '_',           cfg = {filter = 'pro'}, post = fixVisual      }
-dark  { 'monokai-pro',          '_',           cfg = {filter = 'ristretto'}                  }
-dark  { 'monokai-pro',          '_',           cfg = {filter = 'spectrum'}                   }
-darkT { 'moonfly',              '_',           pre = function() vim.g.moonflyTransparent = true end                                                     }
-light { 'neobones',             'zenbones'                                                                                                              }
-light { 'neon',                 '_',           pre = function() vim.g.neon_style = 'light'   end, post = function() fixVisual() fixDiagnosticInfo() end }
-dark  { 'nightcity',            '_',           pre = function() require('nightcity').setup({style = 'afterlife'}) end                                   }
-dark  { 'nightcity',            '_',           pre = function() require('nightcity').setup({style = 'kabuki'}) end                                      }
-dark  { 'nightfly',             '_'                                                                                                                     }
-darkT { 'nightfly',             '_',           pre = function() vim.g.nightflyTransparent = true end                                                    }
-dark  { 'nightfox',             'nightfox'                                                                                                              }
-darkT { 'nightfox',             'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end                                     }
-dark  { 'noctis_azureus',       'noctis'       }
-light { 'noctis_hibernus',      'noctis'       }
-light { 'noctis_lilac',         'noctis'       }
-light { 'noctis_lux',           'noctis'       }
-dark  { 'noctis_minimus',       'noctis'       }
-dark  { 'nord',                 '_'            }
-darkT { 'nord',                 '_', pre = function() require('nord').setup({transparent = true}) end }
-dark  { 'nordbones',            'zenbones'     }
-dark  { 'nordfox',              'nightfox'     }
-darkT { 'nordfox',              'nightfox',    pre = function() require('nightfox').setup({transparent = true}) end }
-dark  { 'nordic',               '_'            }
-darkT { 'nordic',               '_',           pre = function() require('nordic').setup({transparent_bg = true}) end }
+dark  { 'ayu-dark',             'ayu'                                                      }
+light { 'ayu-light',            'ayu'                                                      }
+dark  { 'ayu-mirage',           'ayu'                                                      }
+darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true }     }
+dark  { 'bamboo',               '_', cfg = { style = 'multiplex' }                         }
+darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }      }
+dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                          }
+dark  { 'bluloco-dark',         '_'                                                        }
+darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', {transparent = true} }             }
+dark  { 'carbonfox',            'nightfox'                                                 }
+dark  { 'caret',                '_'                                                        }
+dark  { 'catppuccin-frappe',    'catppuccin'                                               }
+darkT { 'catppuccin-frappe',    'catppuccin', cfg = {transparent_background = true}        }
+light { 'catppuccin-latte',     'catppuccin'                                               }
+dark  { 'catppuccin-macchiato', 'catppuccin'                                               }
+darkT { 'catppuccin-macchiato', 'catppuccin', cfg = {transparent_background = true}        }
+dark  { 'catppuccin-mocha',     'catppuccin'                                               }
+dark  { 'cobalt2',              '_', post = function() require('colorbuddy').colorscheme('cobalt2') end }
+dark  { 'codedark',             '_'                                                            }
+darkT { 'codedark',             '_',      pre = function() vim.g.codedark_transparent = 1 end  }
+dark  { 'darcula-solid',        '_'                                                            }
+dark  { 'darkplus',             '_'                                                            }
+dark  { 'darksolar',            'starry', pre = function() fixStarry('#691f48', '#922b64') end }
+light { 'dawnfox',              'nightfox'                                                     }
+light { 'decay',                '_'                                                            }
+dark  { 'deus',                 '_',           post = fixVisual                                }
+dark  { 'duskfox',              'nightfox'                                                     }
+darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
+dark  { 'earlysummer',          'starry', pre = function() fixStarry('#3f2b4c', '#694980') end }
+dark  { 'edge',                 '_' }
+light { 'edge',                 '_' }
+dark  { 'enfocado',             '_' }
+dark  { 'everforest',           '_' }
+light { 'everforest',           '_' }
+dark  { 'falcon',               '_' }
+darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'fluoromachine', transparent = true } }
+darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'retrowave', transparent = true }     }
+dark  { 'fluoromachine',        '_', cfg = { glow = true, theme = 'fluoromachine', transparent = false } }
+dark  { 'fluoromachine',        '_', cfg = { glow = true, theme = 'retrowave', transparent = false }     }
+dark  { 'forestbones',          'zenbones'                                                        }
+darkT { 'github_dark',          'github', cfg = {'github-theme', { options = { transparent = true }}} }
+light { 'github_light',         'github'                                                          }
+dark  { 'gruvbox',              '_'                                                               }
+dark  { 'gruvbox',              '_', pre  = function() seniorMarsTheme(false) end                 }
+darkT { 'gruvbox',              '_', pre  = function() seniorMarsTheme(true) end                  }
+darkT { 'gruvbox',              '_', cfg = { transparent_mode = true }                            }
+-- dark  { 'gruvbox-baby',         '_',                                                              }
+darkT { 'gruvbox-baby',         '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end }
+dark  { 'habamax',              '_',                                                              }
+dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
+dark  { 'kanagawa-dragon',      '_'                                                               }
+darkT { 'kanagawa-dragon',      '_', cfg = { transparent = true }                                 }
+-- dark  { 'kanagawa-wave',        '_'                                                               }
+darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
+dark  { 'kimbox',               '_', post = fixVisual                                             }
+-- light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
+dark  { 'mariana',              'starry', pre = function() fixStarry('#414346', '#6c6f75') end                                              }
+light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
+dark  { 'melange',              '_'           }
+dark  { 'mellifluous',          '_'           }
+dark  { 'monokai',              'vim-monokai' }
+dark  { 'monokai-nightasty',    '_'           }
+light { 'monokai-nightasty',    '_'           }
+darkT { 'monokai-nightasty',    '_', cfg = { dark_style_background = 'transparent' }      }
+dark  { 'monokai-pro',          '_', cfg = { filter = 'machine' }                         }
+dark  { 'monokai-pro',          '_', cfg = { filter = 'octagon' }                         }
+dark  { 'monokai-pro',          '_', cfg = { filter = 'pro' }, post = fixVisual           }
+dark  { 'monokai-pro',          '_', cfg = { filter = 'ristretto' }                       }
+dark  { 'monokai-pro',          '_', cfg = { filter = 'spectrum' }                        }
+darkT { 'moonfly',              '_', pre = function() vim.g.moonflyTransparent = true end }
+light { 'neobones',             'zenbones'                                                }
+light { 'neon',                 '_',        pre = function() vim.g.neon_style = 'light' end, post = function() fixVisual() fixDiagnosticInfo() end }
+dark  { 'nightcity',            '_',        cfg = { style = 'afterlife' } }
+dark  { 'nightcity',            '_',        cfg = { style = 'kabuki' }    }
+dark  { 'nightfly',             '_'                                       }
+darkT { 'nightfly',             '_',        pre = function() vim.g.nightflyTransparent = true end }
+dark  { 'nightfox',             'nightfox'                                }
+darkT { 'nightfox',             'nightfox', cfg = { transparent = true }  }
+dark  { 'noctis_azureus',       'noctis' }
+light { 'noctis_hibernus',      'noctis' }
+light { 'noctis_lilac',         'noctis' }
+light { 'noctis_lux',           'noctis' }
+dark  { 'noctis_minimus',       'noctis' }
+dark  { 'nord',                 '_'      }
+darkT { 'nord',                 '_', cfg = { transparent = true }        }
+dark  { 'nordbones',            'zenbones'                               }
+dark  { 'nordfox',              'nightfox'                               }
+darkT { 'nordfox',              'nightfox', cfg = { transparent = true } }
+dark  { 'nordic',               '_'                                      }
+darkT { 'nordic',               '_', cfg = { transparent_bg = true }     }
 darkT { 'oh-lucy-evening',      'oh-lucy', pre = function() vim.g.oh_lucy_transparent_background = true end }
-dark  { 'one_monokai',          '_'            }
-dark  { 'onedark',              'onedarkpro'   }
-light { 'onelight',             '_'            } -- FIX: Gitsigns colors
-dark  { 'onenord',              '_'            }
-light { 'onenord',              '_'            }
-dark  { 'oxocarbon',            '_'            }
-light { 'oxocarbon',            '_'            }
-dark  { 'palenightfall',        '_'            }
-darkT { 'palenightfall',        '_', pre = function() require('palenightfall').setup({transparent = true}) end }
-dark  { 'retrobox',             '_'            }
-dark  { 'rose-pine',            '_'            }
-light { 'rose-pine',            '_',           pre = function() require('rose-pine').setup({dark_variant = 'dawn'}) end }
-darkT { 'rose-pine',            '_',           pre = function() require('rose-pine').setup({dark_variant = 'main', disable_background = true}) end }
-dark  { 'rose-pine',            '_',           pre = function() require('rose-pine').setup({dark_variant = 'main'}) end }
-darkT { 'rose-pine',            '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon', disable_background = true}) end }
-dark  { 'rose-pine',            '_',           pre = function() require('rose-pine').setup({dark_variant = 'moon'}) end }
-dark  { 'sherbet',              '_'            }
-dark  { 'sonokai',              '_',           pre = function() vim.g.sonokai_style = 'andromeda' end  }
-dark  { 'sonokai',              '_',           pre = function() vim.g.sonokai_style = 'atlantis'  end  }
-dark  { 'sonokai',              '_',           pre = function() vim.g.sonokai_style = 'default'   end  }
-dark  { 'sonokai',              '_',           pre = function() vim.g.sonokai_style = 'maia'      end  }
-dark  { 'sonokai',              '_',           pre = function() vim.g.sonokai_style = 'shusia'    end  }
-light { 'sweetie',              '_'                                                                    }
-darkT { 'terafox',              'nightfox', pre = function() require('nightfox').setup({transparent = true}) end }
-light { 'tokyobones',           'zenbones'                                                            }
-dark  { 'tokyodark',            '_'                                                                   }
-darkT { 'tokyodark',            '_', pre = function() require('tokyodark').setup({transparent_background = true}) end }
-light { 'tokyonight-day',       'tokyonight'                                                          }
-dark  { 'tokyonight-moon',      'tokyonight'                                                          }
-darkT { 'tokyonight-moon',      'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
-dark  { 'tokyonight-night',     'tokyonight'                                                          }
-darkT { 'tokyonight-night',     'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
-dark  { 'tokyonight-storm',     'tokyonight'                                                          }
-darkT { 'tokyonight-storm',     'tokyonight', pre = function() require('tokyonight').setup({transparent = true}) end }
-darkT { 'visual_studio_code',   '_', pre = function() require('visual_studio_code').setup({mode = 'dark', transparent = true}) end }
-dark  { 'vitesse',              '_'                                                                   }
-darkT { 'vitesse',              '_', pre = function() require('vitesse').setup({transparent_background  = true}) end }
-dark  { 'vn-night',             '_',           post = fixVnNight                                      }
-darkT { 'vscode',               '_', pre = function() require('vscode').setup({transparent  = true}) end }
-dark  { 'zephyr',               '_'                                                                   }
-dark  { 'zephyrium',            '_'                                                                   }
+dark  { 'one_monokai',          '_'          }
+dark  { 'onedark',              'onedarkpro' }
+light { 'onelight',             '_'          }
+dark  { 'onenord',              '_'          }
+light { 'onenord',              '_'          }
+dark  { 'oxocarbon',            '_'          }
+light { 'oxocarbon',            '_'          }
+dark  { 'palenightfall',        '_'          }
+darkT { 'palenightfall',        '_', cfg = { transparent = true } }
+-- dark  { 'retrobox',             '_' }
+dark  { 'rose-pine',            '_' }
+light { 'rose-pine',            '_', cfg = { dark_variant = 'dawn' }                            }
+-- darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true } }
+dark  { 'rose-pine',            '_', cfg = { dark_variant = 'main' }                            }
+darkT { 'rose-pine',            '_', cfg = { dark_variant = 'moon', disable_background = true } }
+dark  { 'rose-pine',            '_', cfg = { dark_variant = 'moon' }                            }
+dark  { 'sherbet',              '_' }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'andromeda' end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'atlantis'  end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'default'   end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'maia'      end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia'    end }
+light { 'sweetie',              '_'                                          }
+darkT { 'terafox',              'nightfox', cfg = { transparent = true }     }
+light { 'tokyobones',           'zenbones'                                   }
+dark  { 'tokyodark',            '_'                                          }
+darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
+-- light { 'tokyonight-day',       'tokyonight'                                 }
+dark  { 'tokyonight-moon',      'tokyonight'                                 }
+-- darkT { 'tokyonight-moon',      'tokyonight', cfg = { transparent = true }   }
+dark  { 'tokyonight-night',     'tokyonight'                                 }
+darkT { 'tokyonight-night',     'tokyonight', cfg = { transparent = true }   }
+dark  { 'tokyonight-storm',     'tokyonight'                                 }
+darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
+darkT { 'visual_studio_code',   '_', cfg = { mode = 'dark', transparent = true } }
+dark  { 'vitesse',              '_'                                              }
+darkT { 'vitesse',              '_', cfg = { transparent_background  = true }    }
+dark  { 'vn-night',             '_', post = fixVnNight                           }
+darkT { 'vscode',               '_', cfg = { transparent  = true }               }
+dark  { 'zephyr',               '_' }
+dark  { 'zephyrium',            '_' }
 
+---Random colorscheme
+---@param scheme_index integer Index of colorscheme
 function ColoRand(scheme_index)
     math.randomseed(os.time())
     scheme_index = scheme_index or math.random(1, #colos)
@@ -1741,8 +1740,9 @@ addPlugin {
             extra = { eol = 'gce' },
         })
 
-        require('Comment.ft').set('ps1', {'# %s', '<# %s #>'})
-        require('Comment.ft').set('python', {'# %s', '""" %s """'})
+        require('Comment.ft')
+        .set('ps1', {'# %s', '<# %s #>'})
+        .set('python', {'# %s', '""" %s """'})
     end,
     keys = {
         { 'gc', mode = { 'n', 'v' } },
@@ -1753,6 +1753,7 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: review
 -- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/L3MON4D3/cmp-luasnip-choice
 -- https://github.com/hrsh7th/cmp-omni
@@ -4852,6 +4853,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, Lazy_config)
-ColoRand()
+ColoRand(1)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker
