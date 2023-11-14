@@ -873,12 +873,12 @@ vim.api.nvim_create_autocmd(
     }
 )
 
-vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 vim.api.nvim_create_autocmd(
-    'BufWinEnter', {
+    'ColorScheme', {
         pattern = '*',
         desc = 'Overlength line marker',
         callback = function()
+            vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
             vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
         end
     }
@@ -1345,6 +1345,27 @@ local function fixDiagnosticInfo()
     end
 end
 
+---Fix Gitsigns colors
+local function fixGitsign()
+    vim.api.nvim_create_autocmd(
+        'User', {
+            pattern = 'LazyLoad',
+            desc = 'Fix Gitsigns when plugins loads',
+            callback = function(arg)
+                if arg.data == 'gitsigns.nvim' then
+                    for _, hl in pairs({ 'GitSignsAdd', 'GitSignsDelete', 'GitSignsChange' }) do
+                        local new_hl = vim.api.nvim_get_hl(0, { name = hl, link = false })
+                        new_hl.fg = new_hl.bg
+                        new_hl.bg = nil
+                        vim.api.nvim_set_hl(0, hl, new_hl)
+                    end
+                    vim.api.nvim_del_autocmd(arg.id)
+                end
+            end
+        }
+    )
+end
+
 ---Fix limestone colorscheme
 ---@param char string IndentBlankline char highlight in hex
 ---@param scope_char string IndentBlankline scope highlight in hex
@@ -1500,7 +1521,6 @@ addPlugin { 'RRethy/nvim-base16',                      event = 'User base16'    
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'          }
 addPlugin { 'projekt0n/caret.nvim',                    event = 'User caret'                                               }
 addPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                          }
-addPlugin { 'lalitmee/cobalt2.nvim',                   event = 'User cobalt2', dependencies = 'tjdevries/colorbuddy.nvim' }
 addPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'                                            }
 addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim'    }
 addPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                            }
@@ -1558,42 +1578,38 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'OceanicNext',          '_'                                                        }
 -- dark  { 'PaperColor',           '_', post = fixNontext                                     }
 -- light { 'PaperColor',           '_', post = fixNontext                                     }
-light { 'adwaita',              '_'                                                        }
-darkT { 'adwaita',              '_', pre = function() vim.g.adwaita_transparent = true end }
-dark  { 'ayu-dark',             'ayu'                                                      }
-light { 'ayu-light',            'ayu'                                                      }
-dark  { 'ayu-mirage',           'ayu'                                                      }
-darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true }     }
-dark  { 'bamboo',               '_', cfg = { style = 'multiplex' }                         }
-darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }      }
-dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                          }
-dark  { 'bluloco-dark',         '_'                                                        }
-darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', {transparent = true} }             }
-dark  { 'carbonfox',            'nightfox'                                                 }
-dark  { 'caret',                '_'                                                        }
-dark  { 'catppuccin-frappe',    'catppuccin'                                               }
-darkT { 'catppuccin-frappe',    'catppuccin', cfg = {transparent_background = true}        }
-light { 'catppuccin-latte',     'catppuccin'                                               }
-dark  { 'catppuccin-macchiato', 'catppuccin'                                               }
-darkT { 'catppuccin-macchiato', 'catppuccin', cfg = {transparent_background = true}        }
-dark  { 'catppuccin-mocha',     'catppuccin'                                               }
-dark  { 'cobalt2',              '_', post = function() require('colorbuddy').colorscheme('cobalt2') end }
-dark  { 'codedark',             '_'                                                            }
-darkT { 'codedark',             '_',      pre = function() vim.g.codedark_transparent = 1 end  }
-dark  { 'darcula-solid',        '_'                                                            }
-dark  { 'darkplus',             '_'                                                            }
-dark  { 'darksolar',            'starry', pre = function() fixStarry('#691f48', '#922b64') end }
-light { 'dawnfox',              'nightfox'                                                     }
-light { 'decay',                '_'                                                            }
-dark  { 'deus',                 '_',           post = fixVisual                                }
-dark  { 'duskfox',              'nightfox'                                                     }
-darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
-dark  { 'earlysummer',          'starry', pre = function() fixStarry('#3f2b4c', '#694980') end }
-dark  { 'edge',                 '_' }
-light { 'edge',                 '_' }
-dark  { 'enfocado',             '_' }
-dark  { 'everforest',           '_' }
-light { 'everforest',           '_' }
+-- light { 'adwaita',              '_'                                                        }
+-- dark  { 'ayu-dark',             'ayu'                                                      }
+-- light { 'ayu-light',            'ayu'                                                      }
+-- dark  { 'ayu-mirage',           'ayu'                                                      }
+-- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true }     }
+-- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' }                         }
+-- darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }      }
+-- dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                          }
+-- dark  { 'bluloco-dark',         '_'                                                        }
+-- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }           }
+-- dark  { 'carbonfox',            'nightfox'                                                 }
+-- dark  { 'caret',                '_'                                                        }
+-- dark  { 'catppuccin-frappe',    'catppuccin'                                               }
+-- darkT { 'catppuccin-frappe',    'catppuccin', cfg = {transparent_background = true}        }
+-- light { 'catppuccin-latte',     'catppuccin'                                               }
+-- dark  { 'catppuccin-macchiato', 'catppuccin'                                               }
+-- darkT { 'catppuccin-macchiato', 'catppuccin', cfg = {transparent_background = true}        }
+-- dark  { 'catppuccin-mocha',     'catppuccin'                                               }
+-- dark  { 'codedark',             '_',      post = fixGitsign                                }
+-- darkT { 'codedark',             '_',      pre = function() vim.g.codedark_transparent = 1 end, post = fixGitsign }
+-- dark  { 'darcula-solid',        '_'                                                            }
+-- dark  { 'darkplus',             '_'                                                            }
+-- light { 'decay',                '_'                                                            }
+-- dark  { 'deus',                 '_',        post = fixVisual                                   }
+-- dark  { 'duskfox',              'nightfox'                                                     }
+-- darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
+-- dark  { 'earlysummer',          'starry', pre = function() fixStarry('#3f2b4c', '#694980') end }
+-- dark  { 'edge',                 '_' }
+-- light { 'edge',                 '_' }
+-- dark  { 'enfocado',             '_' }
+-- dark  { 'everforest',           '_' }
+-- light { 'everforest',           '_' }
 dark  { 'falcon',               '_' }
 darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'fluoromachine', transparent = true } }
 darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'retrowave', transparent = true }     }
@@ -1753,26 +1769,20 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: review
--- https://github.com/saadparwaiz1/cmp_luasnip
--- https://github.com/L3MON4D3/cmp-luasnip-choice
 -- https://github.com/hrsh7th/cmp-omni
--- https://github.com/FelipeLema/cmp-async-path
--- https://github.com/dmitmel/cmp-cmdline-history
 -- https://github.com/tzachar/cmp-fuzzy-path
--- https://github.com/paopaol/cmp-doxygen
--- https://github.com/hrsh7th/cmp-nvim-lua
 -- https://github.com/uga-rosa/cmp-dynamic
 
-addPlugin { -- FEAT: https://github.com/2KAbhishek/nerdy.nvim
-    'chrisgrieser/cmp-nerdfont',
-    event = 'InsertEnter'
-}
-
+-- TODO: review
 addPlugin {
     'dcampos/cmp-snippy',
     dependencies = 'nvim-snippy',
     event = 'InsertEnter'
+}
+
+addPlugin {
+    'dmitmel/cmp-cmdline-history',
+    event = 'CmdlineChanged'
 }
 
 addPlugin {
@@ -1791,6 +1801,11 @@ addPlugin {
 }
 
 addPlugin {
+    'paopaol/cmp-doxygen',
+    event = 'InsertEnter *.cc,*.cpp,*.c,*.h'
+}
+
+addPlugin {
     'hrsh7th/nvim-cmp',
     config = function()
         local cmp = require('cmp')
@@ -1799,13 +1814,15 @@ addPlugin {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
                     { name = 'cmdline' },
+                    { name = 'cmdline_history' },
                     { name = 'path' },
                 }
             }),
             cmp.setup.cmdline('/', {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
-                    { name = 'buffer' }
+                    { name = 'buffer' },
+                    { name = 'cmdline_history' },
                 }
             }),
             completion = {
@@ -1839,11 +1856,8 @@ addPlugin {
                 ['<TAB>'] = cmp.mapping.confirm({ select = true }),
             }),
             snippet = {
-                expand = function(args) -- Select one snippet engine
-                    -- vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
-                    -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-                    require('snippy').expand_snippet(args.body) -- For `snippy` users.
-                    -- vim.fn['UltiSnips#Anon'](args.body) -- For `ultisnips` users.
+                expand = function(args)
+                    require('snippy').expand_snippet(args.body)
                 end
             },
             sources = ({
@@ -1857,9 +1871,11 @@ addPlugin {
                     priority = 1
                 },
                 -- { name = 'fuzzy_buffer' },
+                { name = "doxygen" },
                 { name = 'nerdfont' },
-                { name = 'nvim_lsp', priority = 2 },
                 { name = 'path' },
+                { name = 'async_path' },
+                { name = 'nvim_lsp', priority = 2 },
                 { name = 'snippy', priority = 3 },
             }),
             window = {
@@ -1883,8 +1899,10 @@ addPlugin {
     event = 'CmdlineChanged',
 }
 
+-- https://github.com/L3MON4D3/cmp-luasnip-choice
 -- https://github.com/kristijanhusak/vim-dadbod-completion
 -- https://github.com/rcarriga/cmp-dap
+-- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/tzachar/cmp-fuzzy-buffer
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/zbirenbaum/copilot-cmp
@@ -4403,6 +4421,15 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin {
+    '2kabhishek/nerdy.nvim',
+    dependencies = {
+        'stevearc/dressing.nvim',
+        'nvim-telescope/telescope.nvim',
+    },
+    cmd = 'Nerdy',
+}
+
 -- https://github.com/wellle/targets.vim
 addPlugin { -- config
     'AndrewRadev/inline_edit.vim',
