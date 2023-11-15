@@ -1529,7 +1529,6 @@ addPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'      
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                                }
 addPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                          }
-addPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 addPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              }
 addPlugin { 'ellisonleao/gruvbox.nvim',                event = 'User gruvbox'                                             }
 addPlugin { 'luisiacc/gruvbox-baby',                   event = 'User gruvbox-baby'                                        }
@@ -1609,9 +1608,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'enfocado',             '_' }
 -- dark  { 'everforest',           '_' }
 -- light { 'everforest',           '_' }
-darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'retrowave', transparent = true }     }
-dark  { 'fluoromachine',        '_', cfg = { glow = true, theme = 'retrowave', transparent = false }     }
-dark  { 'forestbones',          'zenbones'                                                        }
+-- dark  { 'forestbones',          'zenbones'                                                        }
 darkT { 'github_dark',          'github', cfg = {'github-theme', { options = { transparent = true }}} }
 light { 'github_light',         'github'                                                          }
 dark  { 'gruvbox',              '_'                                                               }
@@ -1790,10 +1787,10 @@ addPlugin {
     event = 'CmdlineChanged'
 }
 
-addPlugin {
-    'paopaol/cmp-doxygen',
-    event = 'InsertEnter *.cc,*.cpp,*.c,*.h'
-}
+-- addPlugin {
+--     'paopaol/cmp-doxygen',
+--     event = 'InsertEnter *.cc,*.cpp,*.c,*.h'
+-- }
 
 addPlugin {
     'hrsh7th/nvim-cmp',
@@ -1857,8 +1854,8 @@ addPlugin {
                     priority = 1
                 },
                 -- TODO: review
-                -- { name = 'fuzzy_buffer' },
-                { name = "doxygen" },
+                { name = 'fuzzy_buffer' },
+                -- { name = "doxygen" },
                 { name = 'nerdfont' },
                 { name = 'path' },
                 { name = 'async_path' },
@@ -1879,7 +1876,7 @@ addPlugin {
     end,
     dependencies = {
         'hrsh7th/cmp-buffer',
-        -- { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
+        { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
     event = 'CmdlineChanged',
 }
