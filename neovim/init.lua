@@ -1185,7 +1185,7 @@ addPlugin {
     }
 }
 
--- AddPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
+-- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
 
 addPlugin {
     'RRethy/vim-illuminate',
@@ -1207,7 +1207,7 @@ addPlugin {
     event = { 'CursorHold', 'CursorHoldI' }
 }
 
--- AddPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
+-- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
 addPlugin {
     'echasnovski/mini.hipatterns',
@@ -1232,7 +1232,7 @@ addPlugin {
     }
 }
 
--- AddPlugin { 'folke/flash.nvim' }
+-- addPlugin { 'folke/flash.nvim' }
 
 addPlugin {
     'folke/paint.nvim',
@@ -1244,6 +1244,7 @@ addPlugin {
             { filter = { filetype = 'python' }, pattern = '    [%a_]+: ',       hl = 'Constant' },
             { filter = { filetype = 'python' }, pattern = 'Args:',              hl = 'Conditional' },
             { filter = { filetype = 'python' }, pattern = 'Returns:',           hl = 'Conditional' },
+            { filter = { filetype = 'python' }, pattern = 'Raises:',           hl = 'Conditional' },
         }
     }
 }
@@ -1537,7 +1538,6 @@ addPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'  
 addPlugin { 'lmburns/kimbox',                          event = 'User kimbox'                                              }
 addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                            }
 addPlugin { 'savq/melange',                            event = 'User melange'                                             }
-addPlugin { 'ramojus/mellifluous.nvim',                event = 'User mellifluous'                                         }
 addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'                                              }
 addPlugin { 'polirritmico/monokai-nightasty.nvim',     event = 'User monokai-nightasty'                                   }
 addPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
@@ -1609,30 +1609,25 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'everforest',           '_' }
 -- light { 'everforest',           '_' }
 -- dark  { 'forestbones',          'zenbones'                                                        }
-darkT { 'github_dark',          'github', cfg = {'github-theme', { options = { transparent = true }}} }
-light { 'github_light',         'github'                                                          }
-dark  { 'gruvbox',              '_'                                                               }
-dark  { 'gruvbox',              '_', pre  = function() seniorMarsTheme(false) end                 }
-darkT { 'gruvbox',              '_', pre  = function() seniorMarsTheme(true) end                  }
-darkT { 'gruvbox',              '_', cfg = { transparent_mode = true }                            }
+-- darkT { 'github_dark',          'github', cfg = {'github-theme', { options = { transparent = true }}} }
+-- light { 'github_light',         'github'                                                          }
+-- dark  { 'gruvbox',              '_'                                                               }
+-- dark  { 'gruvbox',              '_', pre  = function() seniorMarsTheme(false) end                 }
+-- darkT { 'gruvbox',              '_', pre  = function() seniorMarsTheme(true) end                  }
+-- darkT { 'gruvbox',              '_', cfg = { transparent_mode = true }                            }
 -- dark  { 'gruvbox-baby',         '_',                                                              }
-darkT { 'gruvbox-baby',         '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end }
-dark  { 'habamax',              '_',                                                              }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
-dark  { 'kanagawa-dragon',      '_'                                                               }
-darkT { 'kanagawa-dragon',      '_', cfg = { transparent = true }                                 }
+-- darkT { 'gruvbox-baby',         '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end }
+-- dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
+-- dark  { 'kanagawa-dragon',      '_'                                                               }
+-- darkT { 'kanagawa-dragon',      '_', cfg = { transparent = true }                                 }
 -- dark  { 'kanagawa-wave',        '_'                                                               }
-darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
-dark  { 'kimbox',               '_', post = fixVisual                                             }
+-- darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
+-- dark  { 'kimbox',               '_', post = fixVisual                                             }
 -- light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
-dark  { 'mariana',              'starry', pre = function() fixStarry('#414346', '#6c6f75') end                                              }
-light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
-dark  { 'melange',              '_'           }
-dark  { 'mellifluous',          '_'           }
-dark  { 'monokai',              'vim-monokai' }
-dark  { 'monokai-nightasty',    '_'           }
+-- light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
+-- dark  { 'melange',              '_'           }
+-- dark  { 'monokai',              'vim-monokai' }
 light { 'monokai-nightasty',    '_'           }
-darkT { 'monokai-nightasty',    '_', cfg = { dark_style_background = 'transparent' }      }
 dark  { 'monokai-pro',          '_', cfg = { filter = 'machine' }                         }
 dark  { 'monokai-pro',          '_', cfg = { filter = 'octagon' }                         }
 dark  { 'monokai-pro',          '_', cfg = { filter = 'pro' }, post = fixVisual           }
@@ -1843,27 +1838,33 @@ addPlugin {
                     require('snippy').expand_snippet(args.body)
                 end
             },
-            sources = ({
+            sources = {
                 {
                     name = 'buffer',
                     option = {
+                        -- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
                         get_bufnrs = function()
                             return vim.api.nvim_list_bufs()
                         end
                     },
-                    priority = 1
                 },
-                -- TODO: review
-                { name = 'fuzzy_buffer' },
-                -- { name = "doxygen" },
-                { name = 'nerdfont' },
-                { name = 'path' },
-                { name = 'async_path' },
-                { name = 'nvim_lsp', priority = 2 },
-                { name = 'snippy', priority = 3 },
-            }),
+                { name = 'path', trigger_characters = { './', '/', '.\\' } },
+                { name = 'async_path', trigger_characters = { './', '/', '.\\' } },
+                {
+                    name = 'nvim_lsp',
+                    entry_filter = function(entry, ctx)
+                        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
+                    end
+                },
+                { name = 'snippy' },
+            },
             window = {
                 documentation = cmp.config.window.bordered(),
+            },
+            view = {
+                docs = {
+                    auto_open = true
+                }
             }
         })
 
@@ -1876,7 +1877,6 @@ addPlugin {
     end,
     dependencies = {
         'hrsh7th/cmp-buffer',
-        { 'tzachar/cmp-fuzzy-buffer', dependencies = {'tzachar/fuzzy.nvim', dependencies = { 'romgrk/fzy-lua-native', build = 'make' }} },
     },
     event = 'CmdlineChanged',
 }
@@ -1890,6 +1890,7 @@ addPlugin {
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 -- https://github.com/nvim-telescope/telescope-dap.nvim
 -- Abstract-IDE dap configs
 -- --------------------------
@@ -1964,7 +1965,7 @@ addPlugin {
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
--- AddPlugin {
+-- addPlugin {
 --     'jbyuki/one-small-step-for-vimkind',
 --     config = function()
 --         local dap = require('dap')
@@ -2431,7 +2432,7 @@ addPlugin {
 }
 
 -- configure or remove
--- AddPlugin {
+-- addPlugin {
 --     'kevinhwang91/nvim-ufo',
 --     -- cond = function()
 --     --     return vim.o.foldmethod ~= 'marker'
@@ -4744,7 +4745,7 @@ addPlugin {
 -- https://github.com/mrshmllow/open-handlers.nvim
 -- https://github.com/nat-418/scamp.nvim
 
--- AddPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineChanged' }
+-- addPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineChanged' }
 
 addPlugin {
     -- https://github.com/RutaTang/compter.nvim
