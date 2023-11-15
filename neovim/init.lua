@@ -524,7 +524,7 @@ function ColorPalette()
     -- dark mode
     return {
         { bg = '#FFFFFF', fg = '#00A6ED' },
-        { bg = '#000000', fg = '#5FAD56' },
+        { bg = '#FFFFFF', fg = '#5FAD56' },
         { bg = '#000000', fg = '#97CC04' },
         { bg = '#000000', fg = '#98fc03' },
         { bg = '#000000', fg = '#BDBEA9' },
@@ -1627,12 +1627,12 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 -- dark  { 'melange',              '_'           }
 -- dark  { 'monokai',              'vim-monokai' }
-light { 'monokai-nightasty',    '_'           }
-dark  { 'monokai-pro',          '_', cfg = { filter = 'machine' }                         }
-dark  { 'monokai-pro',          '_', cfg = { filter = 'octagon' }                         }
-dark  { 'monokai-pro',          '_', cfg = { filter = 'pro' }, post = fixVisual           }
-dark  { 'monokai-pro',          '_', cfg = { filter = 'ristretto' }                       }
-dark  { 'monokai-pro',          '_', cfg = { filter = 'spectrum' }                        }
+-- light { 'monokai-nightasty',    '_'           }
+-- dark  { 'monokai-pro',          '_', cfg = { filter = 'machine' }                         }
+-- dark  { 'monokai-pro',          '_', cfg = { filter = 'octagon' }                         }
+-- dark  { 'monokai-pro',          '_', cfg = { filter = 'pro' }, post = fixVisual           }
+-- dark  { 'monokai-pro',          '_', cfg = { filter = 'ristretto' }                       }
+-- dark  { 'monokai-pro',          '_', cfg = { filter = 'spectrum' }                        }
 darkT { 'moonfly',              '_', pre = function() vim.g.moonflyTransparent = true end }
 light { 'neobones',             'zenbones'                                                }
 light { 'neon',                 '_',        pre = function() vim.g.neon_style = 'light' end, post = function() fixVisual() fixDiagnosticInfo() end }
@@ -4076,7 +4076,22 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/andythigpen/nvim-coverage
 -- https://github.com/klen/nvim-test
--- https://github.com/nvim-neotest/neotest -- FEAT: use me
+-- addPlugin {
+--     'nvim-neotest/neotest',
+--     config = function()
+--         require('neotest').setup({
+--             adapters = {
+--                 require('neotest-python')({
+--                     dap = { justMyCode = false },
+--                 })
+--             }
+--         })
+--     end,
+--     dependencies = {
+--         'nvim-lua/plenary.nvim',
+--         'nvim-neotest/neotest-python'
+--     }
+-- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -4150,10 +4165,16 @@ addPlugin {
 
 addPlugin {
     -- https://github.com/David-Kunz/markid
-    'm-demare/hlargs.nvim', -- FIX: not working
+    'm-demare/hlargs.nvim', -- FIX: not working for first buffer
     config = function()
         require('hlargs').setup({
-            colorpalette = ColorPalette(),
+            colorpalette = (function()
+                local res = {}
+                for _,v in ipairs(ColorPalette()) do
+                    table.insert(res, {fg = v.fg})
+                end
+                return res
+            end)(),
             excluded_argnames = {
                 declarations = {
                     python = { 'self', 'cls' },
