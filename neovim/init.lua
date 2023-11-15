@@ -1241,7 +1241,7 @@ addPlugin {
         highlights = {
             { filter = { filetype = 'lua' },    pattern = '━.*━', hl = "Constant", },
             { filter = { filetype = 'lua' },    pattern = '%s*%-%-%-%s*(@%w+)', hl = "Constant", },
-            { filter = { filetype = 'python' }, pattern = '    %a+: ',          hl = 'Constant' },
+            { filter = { filetype = 'python' }, pattern = '    [%a_]+: ',       hl = 'Constant' },
             { filter = { filetype = 'python' }, pattern = 'Args:',              hl = 'Conditional' },
             { filter = { filetype = 'python' }, pattern = 'Returns:',           hl = 'Conditional' },
         }
@@ -1529,7 +1529,6 @@ addPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'      
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                                }
 addPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                            }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                          }
-addPlugin { 'fenetikm/falcon',                         event = 'User falcon'                                              }
 addPlugin { 'maxmx03/FluoroMachine.nvim',              event = 'User fluoromachine'                                       }
 addPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                              }
 addPlugin { 'ellisonleao/gruvbox.nvim',                event = 'User gruvbox'                                             }
@@ -1610,10 +1609,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'enfocado',             '_' }
 -- dark  { 'everforest',           '_' }
 -- light { 'everforest',           '_' }
-dark  { 'falcon',               '_' }
-darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'fluoromachine', transparent = true } }
 darkT { 'fluoromachine',        '_', cfg = { glow = false, theme = 'retrowave', transparent = true }     }
-dark  { 'fluoromachine',        '_', cfg = { glow = true, theme = 'fluoromachine', transparent = false } }
 dark  { 'fluoromachine',        '_', cfg = { glow = true, theme = 'retrowave', transparent = false }     }
 dark  { 'forestbones',          'zenbones'                                                        }
 darkT { 'github_dark',          'github', cfg = {'github-theme', { options = { transparent = true }}} }
@@ -1773,16 +1769,10 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
 
--- TODO: review
 addPlugin {
     'dcampos/cmp-snippy',
     dependencies = 'nvim-snippy',
     event = 'InsertEnter'
-}
-
-addPlugin {
-    'dmitmel/cmp-cmdline-history',
-    event = 'CmdlineChanged'
 }
 
 addPlugin {
@@ -1814,16 +1804,12 @@ addPlugin {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
                     { name = 'cmdline' },
-                    { name = 'cmdline_history' },
                     { name = 'path' },
                 }
             }),
             cmp.setup.cmdline('/', {
                 mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = 'buffer' },
-                    { name = 'cmdline_history' },
-                }
+                sources = { { name = 'buffer' } }
             }),
             completion = {
                 keyword_length = 2
@@ -1870,6 +1856,7 @@ addPlugin {
                     },
                     priority = 1
                 },
+                -- TODO: review
                 -- { name = 'fuzzy_buffer' },
                 { name = "doxygen" },
                 { name = 'nerdfont' },
@@ -1886,11 +1873,9 @@ addPlugin {
         for key, value in pairs(kind_hl) do
             vim.api.nvim_set_hl(0, 'CmpItemKind' .. key, value[vim.o.background])
         end
-        vim.cmd([[
-            hi CmpItemAbbrDeprecated gui = strikethrough
-            hi CmpItemAbbrMatch gui = bold
-            hi CmpItemAbbrMatchFuzzy gui = underline
-        ]])
+        vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { strikethrough = true })
+        vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { bold = true })
+        vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { underline = true })
     end,
     dependencies = {
         'hrsh7th/cmp-buffer',
@@ -2710,6 +2695,7 @@ addPlugin {
                         'else_clause',
                         'for_statement',
                         'if_statement',
+                        'while_statement',
                     }
                 },
             },
@@ -3263,7 +3249,7 @@ addPlugin {
             },
             timer_delay = 300,           -- refresh delay(ms)
         })
-        vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = adaptiveBG(10, -10) })
+        vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = adaptiveBG(30, -10) })
         require('hl-mdcodeblock').refresh()
     end,
     dependencies = "nvim-treesitter/nvim-treesitter",
@@ -4166,7 +4152,7 @@ addPlugin {
 
 addPlugin {
     -- https://github.com/David-Kunz/markid
-    'm-demare/hlargs.nvim',
+    'm-demare/hlargs.nvim', -- FIX: not working
     config = function()
         require('hlargs').setup({
             colorpalette = ColorPalette(),
