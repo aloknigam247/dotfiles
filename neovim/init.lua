@@ -1566,7 +1566,6 @@ addPlugin { '2nthony/vitesse.nvim',                    event = 'User vitesse', d
 addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                            }
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                              }
 addPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', dependencies = 'rktjmp/lush.nvim'         }
-addPlugin { 'glepnir/zephyr-nvim',                     event = 'User zephyr'                                              }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                           }
 
 -- darkT { 'NeoSolarized',         '_'                                                        }
@@ -1685,8 +1684,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'vitesse',              '_'                                              }
 -- darkT { 'vitesse',              '_', cfg = { transparent_background  = true }    }
 -- dark  { 'vn-night',             '_', post = fixVnNight                           }
--- darkT { 'vscode',               '_', cfg = { transparent  = true }               }
--- dark  { 'zephyr',               '_' }
+darkT { 'vscode',               '_', cfg = { transparent  = true }               }
 dark  { 'zephyrium',            '_' }
 
 ---Random colorscheme
