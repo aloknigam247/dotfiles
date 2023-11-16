@@ -2735,7 +2735,7 @@ addPlugin {
     -- https://github.com/Wansmer/symbol-usage.nvim
     'VidocqH/lsp-lens.nvim',
     event = 'LspAttach',
-    opts = {
+    opts = { -- TODO: accomodate new changes for symbolkind
         enable = true,
         include_declaration = false, -- Reference include declaration
         hide_zero_counts = true, -- Hide lsp sections which have no content
