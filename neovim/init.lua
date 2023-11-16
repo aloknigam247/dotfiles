@@ -1633,8 +1633,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'monokai-pro',          '_', cfg = { filter = 'pro' }, post = fixVisual           }
 -- dark  { 'monokai-pro',          '_', cfg = { filter = 'ristretto' }                       }
 -- dark  { 'monokai-pro',          '_', cfg = { filter = 'spectrum' }                        }
-darkT { 'moonfly',              '_', pre = function() vim.g.moonflyTransparent = true end }
-light { 'neobones',             'zenbones'                                                }
+-- darkT { 'moonfly',              '_', pre = function() vim.g.moonflyTransparent = true end }
 light { 'neon',                 '_',        pre = function() vim.g.neon_style = 'light' end, post = function() fixVisual() fixDiagnosticInfo() end }
 dark  { 'nightcity',            '_',        cfg = { style = 'afterlife' } }
 dark  { 'nightcity',            '_',        cfg = { style = 'kabuki' }    }
