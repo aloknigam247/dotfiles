@@ -1683,8 +1683,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- darkT { 'visual_studio_code',   '_', cfg = { mode = 'dark', transparent = true } }
 -- dark  { 'vitesse',              '_'                                              }
 -- darkT { 'vitesse',              '_', cfg = { transparent_background  = true }    }
--- dark  { 'vn-night',             '_', post = fixVnNight                           }
-darkT { 'vscode',               '_', cfg = { transparent  = true }               }
+dark  { 'vn-night',             '_', post = fixVnNight                           }
 dark  { 'zephyrium',            '_' }
 
 ---Random colorscheme
