@@ -3986,12 +3986,12 @@ addPlugin {
                 mappings = {
                     i = {
                         ['<C-d>']      = false,
-                        ['<C-q>']      = actions.send_selected_to_qflist,
+                        ['<C-l>']      = actions.send_selected_to_qflist,
                         ['<C-s>']      = actions.select_horizontal,
                         ['<C-t>']      = actions.select_tab,
                         ['<C-u>']      = false,
                         ['<C-v>']      = actions.select_vertical,
-                        ['<M-q>']      = actions.add_selected_to_qflist,
+                        ['<M-l>']      = actions.add_selected_to_qflist,
                         ['<PageDown>'] = actions.preview_scrolling_down,
                         ['<PageUp>']   = actions.preview_scrolling_up,
                         ['<S-Tab>']    = false,
