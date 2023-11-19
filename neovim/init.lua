@@ -1677,11 +1677,11 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- darkT { 'tokyonight-moon',      'tokyonight', cfg = { transparent = true }   }
 -- dark  { 'tokyonight-night',     'tokyonight'                                 }
 -- darkT { 'tokyonight-night',     'tokyonight', cfg = { transparent = true }   }
--- dark  { 'tokyonight-storm',     'tokyonight'                                 }
--- darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
--- dark  { 'visual_studio_code',   '_', cfg = { mode = 'dark' }                     }
+dark  { 'tokyonight-storm',     'tokyonight'                                 }
+darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
+dark  { 'visual_studio_code',   '_', cfg = { mode = 'dark' }                     }
 darkT { 'visual_studio_code',   '_', cfg = { mode = 'dark', transparent = true } }
--- light { 'visual_studio_code',   '_', cfg = { mode = 'light' }                    }
+light { 'visual_studio_code',   '_', cfg = { mode = 'light' }                    }
 dark  { 'vn-night',             '_', post = fixVnNight                           }
 dark  { 'zephyrium',            '_' }
 
@@ -1971,13 +1971,10 @@ addPlugin {
     end,
     lazy = true
 }
--- https://github.com/nvim-telescope/telescope-vimspector.nvim
--- https://github.com/puremourning/vimspector
 -- https://github.com/sakhnik/nvim-gdb
 -- https://github.com/theHamsta/nvim-dap-virtual-text
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
--- use 'Pocco81/dap-buddy.nvim'
 -- Start: complete setup for lua debugger
 addPlugin {
     'mfussenegger/nvim-dap',
@@ -2001,17 +1998,24 @@ addPlugin {
         -- ]]
 
         vim.api.nvim_set_hl(0, 'DapBreakpointFgHl', { fg = '#D21401' })
-        vim.api.nvim_set_hl(0, 'DapBreakpointBgHl', { bg = '#D21401' })
+        vim.api.nvim_set_hl(0, 'DapBreakpointBgHl', { bg = '#D21401', fg = '#FFFFFF' })
+        vim.api.nvim_set_hl(0, 'DapStoppedFgHl', { fg = '#FFBF00' })
+        vim.api.nvim_set_hl(0, 'DapStoppedBgHl', { bg = '#FFBF00', fg = '#FFFFFF' })
         vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpointFgHl', linehl='DapBreakpointBgHl', numhl='' })
         vim.fn.sign_define('DapBreakpointCondition', { text='', texthl='DapBreakpointFgHl', linehl='', numhl='' })
         vim.fn.sign_define('DapLogPoint', { text='', texthl='', linehl='DapBreakpointFgHl', numhl='' })
         vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpointFgHl', linehl='', numhl='' })
-        vim.fn.sign_define('DapStopped', { text='', texthl='DapBreakpointFgHl', linehl='', numhl='' })
+        vim.fn.sign_define('DapStopped', { text='', texthl='DapStoppedFgHl', linehl='DapStoppedBgHl', numhl='' })
     end,
     lazy = true
 }
+
+addPlugin {
+    'rcarriga/nvim-dap-ui',
+    config = true
+}
+
 -- use 'mfussenegger/nvim-dap-python'
--- use 'rcarriga/nvim-dap-ui'
 -- https://github.com/jonboh/nvim-dap-rr
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4682,7 +4686,7 @@ addPlugin {
             -- these settings will be used for your Neovim config directory
             runtime = true, -- runtime path
             types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-            plugins = true, -- installed opt or start plugins in packpath
+            plugins = true, -- installed opt or start plugins in packpath -- FEAT: Use me
             -- you can also specify the list of plugins to make available as a workspace library
             -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
         },
