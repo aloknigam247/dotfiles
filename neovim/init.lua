@@ -1241,7 +1241,7 @@ addPlugin {
         highlights = {
             { filter = { filetype = 'lua' },    pattern = '━.*━', hl = "Constant", },
             { filter = { filetype = 'lua' },    pattern = '%s*%-%-%-%s*(@%w+)', hl = "Constant", },
-            { filter = { filetype = 'python' }, pattern = '    [%a%d_]+: ',     hl = 'Identifier' },
+            { filter = { filetype = 'python' }, pattern = '    [%a%d_]+: ',     hl = '@parameter' },
             { filter = { filetype = 'python' }, pattern = 'Args:',              hl = 'Conditional' },
             { filter = { filetype = 'python' }, pattern = 'Returns:',           hl = 'Conditional' },
             { filter = { filetype = 'python' }, pattern = 'Raises:',            hl = 'Conditional' },
@@ -1660,15 +1660,9 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'retrobox',             '_' }
 -- dark  { 'rose-pine',            '_' }
 -- light { 'rose-pine',            '_', cfg = { dark_variant = 'dawn' }                            }
--- darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true } }
--- dark  { 'rose-pine',            '_', cfg = { dark_variant = 'main' }                            }
--- darkT { 'rose-pine',            '_', cfg = { dark_variant = 'moon', disable_background = true } }
--- dark  { 'rose-pine',            '_', cfg = { dark_variant = 'moon' }                            }
--- dark  { 'sherbet',              '_' }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'andromeda' end }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'atlantis'  end }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'default'   end }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'maia'      end }
+-- darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true, disable_italics = true } }
+dark  { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_italics = true }                            }
+dark  { 'sherbet',              '_' }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia'    end }
 dark  { 'tokyodark',            '_'                                          }
 darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
