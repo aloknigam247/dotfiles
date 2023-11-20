@@ -1667,16 +1667,12 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'sherbet',              '_' }
 -- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'andromeda' end }
 -- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'atlantis'  end }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'default'   end }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'maia'      end }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia'    end }
--- dark  { 'tokyodark',            '_'                                          }
--- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
--- light { 'tokyonight-day',       'tokyonight'                                 }
--- dark  { 'tokyonight-moon',      'tokyonight'                                 }
--- darkT { 'tokyonight-moon',      'tokyonight', cfg = { transparent = true }   }
--- dark  { 'tokyonight-night',     'tokyonight'                                 }
--- darkT { 'tokyonight-night',     'tokyonight', cfg = { transparent = true }   }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'default'   end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'maia'      end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia'    end }
+dark  { 'tokyodark',            '_'                                          }
+darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
+light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 dark  { 'visual_studio_code',   '_', cfg = { mode = 'dark' }                     }
@@ -1828,6 +1824,12 @@ addPlugin {
             },
             sources = {
                 {
+                    name = 'nvim_lsp',
+                    entry_filter = function(entry, ctx)
+                        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
+                    end
+                },
+                {
                     name = 'buffer',
                     option = {
                         -- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
@@ -1838,12 +1840,6 @@ addPlugin {
                 },
                 { name = 'path', trigger_characters = { './', '/', '.\\' } },
                 { name = 'async_path', trigger_characters = { './', '/', '.\\' } },
-                {
-                    name = 'nvim_lsp',
-                    entry_filter = function(entry, ctx)
-                        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
-                    end
-                },
                 { name = 'snippy' },
             },
             window = {
