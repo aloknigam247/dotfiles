@@ -245,7 +245,7 @@ Lazy_config = {
     },
     install = {
         missing = true,
-        colorscheme = { },
+        colorscheme = { 'retrobox' },
     },
     ui = {
         size = { width = 0.8, height = 0.8 },
@@ -1553,7 +1553,6 @@ addPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai
 addPlugin { 'olimorris/onedarkpro.nvim',               event = 'User onedarkpro'                                          }
 addPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                             }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                           }
-addPlugin { 'JoosepAlviste/palenightfall.nvim',        event = 'User palenightfall'                                       }
 addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                           }
 addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                             }
 addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                             }
@@ -1654,13 +1653,9 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- light { 'onelight',             '_'          }
 -- dark  { 'onenord',              '_'          }
 -- light { 'onenord',              '_'          }
--- light { 'oxocarbon',            '_'          }
--- dark  { 'palenightfall',        '_'          }
--- darkT { 'palenightfall',        '_', cfg = { transparent = true } }
--- dark  { 'retrobox',             '_' }
--- dark  { 'rose-pine',            '_' }
--- light { 'rose-pine',            '_', cfg = { dark_variant = 'dawn' }                            }
--- darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true, disable_italics = true } }
+light { 'oxocarbon',            '_'          }
+dark  { 'retrobox',             '_' }
+darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia'    end }
@@ -4522,10 +4517,8 @@ addPlugin {
                 },
             },
         }
-
     }
 }
-
 
 addPlugin {
     'Danielhp95/tmpclone-nvim',
