@@ -1651,7 +1651,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'one_monokai',          '_'          }
 -- dark  { 'onedark',              'onedarkpro' }
 -- light { 'onelight',             '_'          }
--- dark  { 'onenord',              '_'          }
+dark  { 'onenord',              '_'          }
 light { 'onenord',              '_'          }
 light { 'oxocarbon',            '_'          }
 dark  { 'retrobox',             '_' }
