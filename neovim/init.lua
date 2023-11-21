@@ -1652,7 +1652,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'onedark',              'onedarkpro' }
 -- light { 'onelight',             '_'          }
 -- dark  { 'onenord',              '_'          }
--- light { 'onenord',              '_'          }
+light { 'onenord',              '_'          }
 light { 'oxocarbon',            '_'          }
 dark  { 'retrobox',             '_' }
 darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true, disable_italics = true } }
