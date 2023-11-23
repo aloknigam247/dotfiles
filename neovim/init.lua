@@ -1545,8 +1545,6 @@ addPlugin { 'rafamadriz/neon',                         event = 'User neon'      
 addPlugin { 'cryptomilk/nightcity.nvim',               event = 'User nightcity'                                           }
 addPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
 addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                            }
-addPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'                                              }
-addPlugin { 'gbprod/nord.nvim',                        event = 'User nord'                                                }
 addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
 addPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai'                                         }
 addPlugin { 'olimorris/onedarkpro.nvim',               event = 'User onedarkpro'                                          }
@@ -1632,20 +1630,10 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'nightcity',            '_',        cfg = { style = 'kabuki' }    }
 -- dark  { 'nightfly',             '_'                                       }
 -- dark  { 'nightfly',             '_',        pre = function() vim.g.nightflyTransparent = true end }
--- dark  { 'nightfox',             'nightfox'                                }
--- darkT { 'nightfox',             'nightfox', cfg = { transparent = true }  }
--- dark  { 'noctis_azureus',       'noctis' }
--- light { 'noctis_hibernus',      'noctis' }
--- light { 'noctis_lilac',         'noctis' }
--- light { 'noctis_lux',           'noctis' }
--- dark  { 'noctis_minimus',       'noctis' }
--- dark  { 'nord',                 '_'      }
--- darkT { 'nord',                 '_', cfg = { transparent = true }        }
--- dark  { 'nordbones',            'zenbones'                               }
--- dark  { 'nordfox',              'nightfox'                               }
--- darkT { 'nordfox',              'nightfox', cfg = { transparent = true } }
-dark  { 'nordic',               '_'                                      }
-darkT { 'nordic',               '_', cfg = { transparent_bg = true }     }
+dark  { 'nightfox',             'nightfox'                                }
+darkT { 'nightfox',             'nightfox', cfg = { transparent = true }  }
+dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
+darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true }     }
 dark  { 'one_monokai',          '_'          }
 dark  { 'onedark',              'onedarkpro' }
 light { 'onelight',             '_'          }
@@ -1944,8 +1932,6 @@ addPlugin {
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
--- directory case handling
 addPlugin {
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeOpen',
@@ -2059,6 +2045,7 @@ addPlugin {
             end
 
             -- Preview for NvimTree
+            -- TODO:
             local function custom_preview()
                 local node = require("nvim-tree.lib").get_node_at_cursor()
                 if node.name == ".." then
