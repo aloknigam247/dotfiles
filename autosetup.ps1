@@ -179,7 +179,7 @@ function winget_install {
     }
 }
 
-$app_list = @("clangd", "git", "lazygit", "neovim", "powershell", "win_pkgs", "windows_terminal")
+$app_list = @("clangd", "git", "fonts", "lazygit", "neovim", "powershell", "win_pkgs", "windows_terminal")
 Write-Output "Application List: (space to select, enter to install)"
 $app_install = Menu $app_list -Multiselect
 
