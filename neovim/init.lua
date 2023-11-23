@@ -3556,6 +3556,9 @@ addPlugin {
                         'mode', -- use Neovim icon in normal mode
                         color = { gui = 'bold' },
                         fmt = function(str)
+                            if str == 'NORMAL' then
+                                return ''
+                            end
                             return str:sub(1,1)
                         end,
                         padding = { left = 0, right = 0 },
