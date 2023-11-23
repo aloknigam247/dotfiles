@@ -200,8 +200,8 @@ Icons = {
     code_action        = ' ',
     collapse           = ' ',
     diagnostic         = ' ',
-    diff_add           = '│',
-    diff_change        = '┊',
+    diff_add           = '┃',
+    diff_change        = '║',
     diff_change_delete = '~',
     diff_delete        = '',
     diff_delete_top    = '‾',
@@ -1548,7 +1548,6 @@ addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'  
 addPlugin { 'talha-akram/noctis.nvim',                 event = 'User noctis'                                              }
 addPlugin { 'gbprod/nord.nvim',                        event = 'User nord'                                                }
 addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
-addPlugin { 'Yazeed1s/oh-lucy.nvim',                   event = 'User oh-lucy'                                             }
 addPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai'                                         }
 addPlugin { 'olimorris/onedarkpro.nvim',               event = 'User onedarkpro'                                          }
 addPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                             }
@@ -1645,11 +1644,10 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'nordbones',            'zenbones'                               }
 -- dark  { 'nordfox',              'nightfox'                               }
 -- darkT { 'nordfox',              'nightfox', cfg = { transparent = true } }
--- dark  { 'nordic',               '_'                                      }
--- darkT { 'nordic',               '_', cfg = { transparent_bg = true }     }
--- darkT { 'oh-lucy-evening',      'oh-lucy', pre = function() vim.g.oh_lucy_transparent_background = true end }
--- dark  { 'one_monokai',          '_'          }
--- dark  { 'onedark',              'onedarkpro' }
+dark  { 'nordic',               '_'                                      }
+darkT { 'nordic',               '_', cfg = { transparent_bg = true }     }
+dark  { 'one_monokai',          '_'          }
+dark  { 'onedark',              'onedarkpro' }
 light { 'onelight',             '_'          }
 dark  { 'onenord',              '_'          }
 light { 'onenord',              '_'          }
@@ -1863,81 +1861,6 @@ addPlugin {
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
--- https://github.com/nvim-telescope/telescope-dap.nvim
--- Abstract-IDE dap configs
--- --------------------------
--- -- telescope-dap.nvim
--- pcall(require'telescope'.load_extension, 'dap')
--- --------------------------
---
---
--- --------------------------
--- -- nvim-dap-ui
--- require('dapui').setup({
--- 	icons = {expanded = '▾', collapsed = '▸'},
--- 	-- Expand lines larger than the window
--- 	-- Requires >= 0.7
--- 	expand_lines = vim.fn.has('nvim-0.7'),
--- 	sidebar = {
--- 		-- You can change the order of elements in the sidebar
--- 		elements = {
--- 			-- Provide as ID strings or tables with 'id' and 'size' keys
--- 			{
--- 				id = 'scopes',
--- 				size = 0.25, -- Can be float or integer > 1
--- 			},
--- 			{id = 'breakpoints', size = 0.25},
--- 			{id = 'stacks', size = 0.25},
--- 			{id = 'watches', size = 00.25},
--- 		},
--- 		size = 40,
--- 		position = 'left', -- Can be 'left', 'right', 'top', 'bottom'
--- 	},
--- 	tray = {
--- 		elements = {'repl', 'console'},
--- 		size = 10,
--- 		position = 'bottom', -- Can be 'left', 'right', 'top', 'bottom'
--- 	},
--- 	floating = {
--- 		max_height = nil, -- These can be integers or a float between 0 and 1.
--- 		max_width = nil, -- Floats will be treated as percentage of your screen.
--- 		border = 'single', -- Border style. Can be 'single', 'double' or 'rounded'
--- 		mappings = {close = {'q', '<Esc>'}},
--- 	},
--- 	windows = {indent = 1},
--- 	render = {
--- 		max_type_length = nil, -- Can be integer or nil.
--- 	},
--- })
--- 
--- -- end nvim-dap-ui
--- --------------------------
--- 
--- --------------------------
--- -- nvim-dap-virtual-text
--- require('nvim-dap-virtual-text').setup {
--- 	enabled = true, -- enable this plugin (the default)
--- 	enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
--- 	highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
--- 	highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
--- 	show_stop_reason = true, -- show stop reason when stopped for exceptions
--- 	commented = false, -- prefix virtual text with comment string
--- 	only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
--- 	all_references = false, -- show virtual text on all all references of the variable (not only definitions)
--- 	filter_references_pattern = '<module', -- filter references (not definitions) pattern when all_references is activated (Lua gmatch pattern, default filters out Python modules)
--- 	-- experimental features:
--- 	virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
--- 	all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
--- 	virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
--- 	virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
--- 	-- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
--- }
--- -- end nvim-dap-virtual-text
--- -- end nvim-dap
--- https://github.com/PatschD/zippy.nvim
--- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/jay-babu/mason-nvim-dap.nvim
 addPlugin {
     'jbyuki/one-small-step-for-vimkind',
     config = function()
@@ -1956,11 +1879,7 @@ addPlugin {
     end,
     lazy = true
 }
--- https://github.com/sakhnik/nvim-gdb
--- https://github.com/theHamsta/nvim-dap-virtual-text
--- https://github.com/tpope/vim-scriptease
--- https://github.com/vim-scripts/Conque-GDB
--- Start: complete setup for lua debugger
+
 addPlugin {
     'mfussenegger/nvim-dap',
     config = function()
@@ -1970,6 +1889,7 @@ addPlugin {
         vim.api.nvim_set_keymap('n', '<F11>', [[:lua require("dap").step_into()<CR>]], { noremap = true })
         vim.api.nvim_set_keymap('n', '<F12>', [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
         vim.api.nvim_set_keymap('n', '<F5>', [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
+
         -- vim.cmd[[
         --     nnoremap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
         --     nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
@@ -1986,6 +1906,7 @@ addPlugin {
         vim.api.nvim_set_hl(0, 'DapBreakpointBgHl', { bg = '#D21401', fg = '#FFFFFF' })
         vim.api.nvim_set_hl(0, 'DapStoppedFgHl', { fg = '#FFBF00' })
         vim.api.nvim_set_hl(0, 'DapStoppedBgHl', { bg = '#FFBF00', fg = '#FFFFFF' })
+
         vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpointFgHl', linehl='DapBreakpointBgHl', numhl='' })
         vim.fn.sign_define('DapBreakpointCondition', { text='', texthl='DapBreakpointFgHl', linehl='', numhl='' })
         vim.fn.sign_define('DapLogPoint', { text='', texthl='', linehl='DapBreakpointFgHl', numhl='' })
@@ -2000,20 +1921,30 @@ addPlugin {
     config = true
 }
 
--- use 'mfussenegger/nvim-dap-python'
+-- https://github.com/PatschD/zippy.nvim
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- https://github.com/jonboh/nvim-dap-rr
+-- https://github.com/nvim-telescope/telescope-dap.nvim
+-- https://github.com/sakhnik/nvim-gdb
+-- https://github.com/theHamsta/nvim-dap-virtual-text
+-- https://github.com/tpope/vim-scriptease
+-- https://github.com/vim-scripts/Conque-GDB
+-- use 'mfussenegger/nvim-dap-python'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/Zeioth/dooku.nvim
 addPlugin {
     'danymat/neogen',
     cmd = 'Neogen',
-    config = true
+    opts = {
+        input_after_comment = true,
+        snippet_engine = "snippy"
+    }
 }
--- https://github.com/kkoomen/vim-doge
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 -- directory case handling
 addPlugin {
     'nvim-tree/nvim-tree.lua',
