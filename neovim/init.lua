@@ -1628,10 +1628,8 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- light { 'neon',                 '_',        pre = function() vim.g.neon_style = 'light' end, post = function() fixVisual() fixDiagnosticInfo() end }
 -- dark  { 'nightcity',            '_',        cfg = { style = 'afterlife' } }
 -- dark  { 'nightcity',            '_',        cfg = { style = 'kabuki' }    }
--- dark  { 'nightfly',             '_'                                       }
--- dark  { 'nightfly',             '_',        pre = function() vim.g.nightflyTransparent = true end }
-dark  { 'nightfox',             'nightfox'                                }
-darkT { 'nightfox',             'nightfox', cfg = { transparent = true }  }
+dark  { 'nightfly',             '_'                                       }
+dark  { 'nightfly',             '_',        pre = function() vim.g.nightflyTransparent = true end }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true }     }
 dark  { 'one_monokai',          '_'          }
@@ -3556,12 +3554,19 @@ addPlugin {
                         'mode', -- use Neovim icon in normal mode
                         color = { gui = 'bold' },
                         fmt = function(str)
-                            if str == 'NORMAL' then
+                            local first = str:sub(1,1)
+                            if first == 'N' then
                                 return ''
+                            elseif first == 'V' then
+                                return ''
+                            elseif first == 'I' then
+                                return ''
+                            elseif first == 'C' then
+                                return ''
                             end
                             return str:sub(1,1)
                         end,
-                        padding = { left = 0, right = 0 },
+                        padding = { left = 0, right = 1 },
                         separator = { left = '█', right = '' }
                     }
                 },
