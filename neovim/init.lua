@@ -1411,7 +1411,7 @@ local function fixStarry(char, scope_char)
 end
 
 ---Fix Visual highlight
----@param bg string bg color in hex
+---@param bg? string bg color in hex
 local function fixVisual(bg)
     bg = bg or adaptiveBG(50, -20)
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
@@ -1539,11 +1539,6 @@ addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'  
 addPlugin { 'savq/melange',                            event = 'User melange'                                             }
 addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'                                              }
 addPlugin { 'polirritmico/monokai-nightasty.nvim',     event = 'User monokai-nightasty'                                   }
-addPlugin { 'loctvl842/monokai-pro.nvim',              event = 'User monokai-pro'                                         }
-addPlugin { 'bluz71/vim-moonfly-colors',               event = 'User moonfly'                                             }
-addPlugin { 'rafamadriz/neon',                         event = 'User neon'                                                }
-addPlugin { 'cryptomilk/nightcity.nvim',               event = 'User nightcity'                                           }
-addPlugin { 'bluz71/vim-nightfly-colors',              event = 'User nightfly'                                            }
 addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                            }
 addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                              }
 addPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai'                                         }
@@ -1618,18 +1613,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 -- dark  { 'melange',              '_'           }
 -- dark  { 'monokai',              'vim-monokai' }
--- light { 'monokai-nightasty',    '_'           }
--- dark  { 'monokai-pro',          '_', cfg = { filter = 'machine' }                         }
--- dark  { 'monokai-pro',          '_', cfg = { filter = 'octagon' }                         }
--- dark  { 'monokai-pro',          '_', cfg = { filter = 'pro' }, post = fixVisual           }
--- dark  { 'monokai-pro',          '_', cfg = { filter = 'ristretto' }                       }
--- dark  { 'monokai-pro',          '_', cfg = { filter = 'spectrum' }                        }
--- darkT { 'moonfly',              '_', pre = function() vim.g.moonflyTransparent = true end }
--- light { 'neon',                 '_',        pre = function() vim.g.neon_style = 'light' end, post = function() fixVisual() fixDiagnosticInfo() end }
--- dark  { 'nightcity',            '_',        cfg = { style = 'afterlife' } }
--- dark  { 'nightcity',            '_',        cfg = { style = 'kabuki' }    }
-dark  { 'nightfly',             '_'                                       }
-dark  { 'nightfly',             '_',        pre = function() vim.g.nightflyTransparent = true end }
+light { 'monokai-nightasty',    '_'           }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true }     }
 dark  { 'one_monokai',          '_'          }
@@ -1669,7 +1653,7 @@ function ColoRand(scheme_index)
     vim.o.background = bg
     vim.g.neovide_transparency = trans and 0.8 or 1
     local start_time = os.clock()
-    vim.api.nvim_exec_autocmds('User', {pattern = event == '_' and scheme or event})
+    vim.api.nvim_exec_autocmds('User', { pattern = event == '_' and scheme or event })
     if (precmd) then
         precmd()
     end
