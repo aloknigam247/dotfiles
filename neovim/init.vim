@@ -132,11 +132,12 @@ if exists("g:neovide")
     let g:neovide_scroll_animation_length = 0.0
     let g:neovide_transparency=1
     " let g:neovide_underline_automatic_scaling = v:true
-    lua << EOF
+lua << EOF
+        Font_name = 'JetBrainsMono NF'
         Font_size = 15
-        vim.o.guifont = 'FiraCode Nerd Font:h' .. Font_size
-        vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = 'FiraCode Nerd Font:h' .. Font_size end)
-        vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = 'FiraCode Nerd Font:h' .. Font_size end)
+        vim.o.guifont = Font_name .. ':h' .. Font_size
+        vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
+        vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
 EOF
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif

@@ -700,7 +700,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
             row = row_offset,
             title = path ,
             title_pos = 'center',
-            width = vim.o.columns - 20,
+            width = vim.o.columns - 8 - col_offset,
             zindex = 1
         })
     else
@@ -714,8 +714,8 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
             desc = 'Resize preview window on vim resize',
             callback = function()
                 vim.api.nvim_win_set_config(0, {
-                    width = vim.o.columns - 20,
-                    height = vim.o.lines - 8
+                    height = vim.o.lines - 8,
+                    width = vim.o.columns - 8
                 })
             end
         }
@@ -1551,7 +1551,6 @@ addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'   
 addPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                              }
 addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                           }
 addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                          }
-addPlugin { 'sickill/vim-monokai',                     event = 'User vim-monokai'                                         }
 addPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                                  }
 addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                            }
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                              }
@@ -1611,8 +1610,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
 -- light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
 -- light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
--- dark  { 'melange',              '_'           }
--- dark  { 'monokai',              'vim-monokai' }
+dark  { 'melange',              '_'           }
 light { 'monokai-nightasty',    '_'           }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true }     }
@@ -2040,7 +2038,7 @@ addPlugin {
                       path = node.link_to
                     end
 
-                    openFloat(path, 'win', vim.fn.winwidth(0) + 2, 3, false)
+                    openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, false)
                 end
             end
 
