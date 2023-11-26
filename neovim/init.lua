@@ -1606,10 +1606,10 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
 -- dark  { 'kanagawa-dragon',      '_'                                                               }
 -- darkT { 'kanagawa-dragon',      '_', cfg = { transparent = true }                                 }
--- dark  { 'kanagawa-wave',        '_'                                                               }
--- darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
--- light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
--- light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
+dark  { 'kanagawa-wave',        '_'                                                               }
+darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
+light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
+light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 dark  { 'melange',              '_'           }
 light { 'monokai-nightasty',    '_'           }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
