@@ -60,7 +60,7 @@ function e ($arg) {
     if ( $ext -in $code_ext) {
         code $arg
     } else {
-        ~\scoop\shims\neovide.exe --multigrid --geometry=130x40 --notabs -- $arg
+        ~\scoop\shims\neovide.exe --multigrid --geometry=130x42 --notabs -- $arg
     }
 }
 
