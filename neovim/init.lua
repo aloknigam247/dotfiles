@@ -1103,7 +1103,7 @@ addPlugin {
             -- (|) --> space --> ( | )
             -- ( | ) --> ) --> ( )|
             Rule(' ', ' ')
-            :with_pair(function (opts)
+            :with_pair(function (opts) -- FIX: disable in markdown
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
                 return vim.tbl_contains({ '()', '[]', '{}' }, pair_set)
             end)
