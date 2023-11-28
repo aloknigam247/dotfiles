@@ -328,7 +328,7 @@ function promptGen {
                         $git_branch = ""
                     } elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
                         $branch = git describe --tags --always
-                        if ($branch[0] == 'v') {
+                        if ($branch[0] -eq "v") {
                             $git_branch = " 󰓽 $branch "
                         } else {
                             $git_branch = "  $branch "
