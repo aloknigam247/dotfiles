@@ -1530,7 +1530,6 @@ addPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'  
 addPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                            }
 addPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'                                             }
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                             }
-addPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                         }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
 addPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                           }
 addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
@@ -1589,9 +1588,8 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
 -- dark  { 'earlysummer',          'starry', pre = function() fixStarry('#3f2b4c', '#694980') end }
 -- dark  { 'edge',                 '_' }
--- light { 'edge',                 '_' }
--- dark  { 'enfocado',             '_' }
--- dark  { 'everforest',           '_' }
+light { 'edge',                 '_' }
+dark  { 'everforest',           '_' }
 light { 'everforest',           '_' }
 light { 'github_light',         'github'                                                          }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
