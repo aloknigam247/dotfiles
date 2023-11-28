@@ -1533,8 +1533,6 @@ addPlugin { 'sainnhe/edge',                            event = 'User edge'      
 addPlugin { 'wuelnerdotexe/vim-enfocado',              event = 'User enfocado'                                         }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
 addPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                           }
-addPlugin { 'ellisonleao/gruvbox.nvim',                event = 'User gruvbox'                                          }
-addPlugin { 'luisiacc/gruvbox-baby',                   event = 'User gruvbox-baby'                                     }
 addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
 addPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                         }
 addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                         }
@@ -1556,7 +1554,6 @@ addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'
 addPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                               }
 addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                         }
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
-addPlugin { 'mcchrish/zenbones.nvim',                  event = 'User zenbones', dependencies = 'rktjmp/lush.nvim'      }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
 -- darkT { 'NeoSolarized',         '_'                                                        }
@@ -1595,32 +1592,24 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- light { 'edge',                 '_' }
 -- dark  { 'enfocado',             '_' }
 -- dark  { 'everforest',           '_' }
--- light { 'everforest',           '_' }
--- dark  { 'forestbones',          'zenbones'                                                        }
--- darkT { 'github_dark',          'github', cfg = {'github-theme', { options = { transparent = true }}} }
--- light { 'github_light',         'github'                                                          }
--- dark  { 'gruvbox',              '_'                                                               }
--- dark  { 'gruvbox',              '_', pre  = function() seniorMarsTheme(false) end                 }
--- darkT { 'gruvbox',              '_', pre  = function() seniorMarsTheme(true) end                  }
--- darkT { 'gruvbox',              '_', cfg = { transparent_mode = true }                            }
--- dark  { 'gruvbox-baby',         '_',                                                              }
--- darkT { 'gruvbox-baby',         '_', pre = function() vim.g.gruvbox_baby_transparent_mode = 1 end }
+light { 'everforest',           '_' }
+light { 'github_light',         'github'                                                          }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
 dark  { 'kanagawa-wave',        '_'                                                               }
 darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
 light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
 light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
-dark  { 'melange',              '_'           }
-light { 'monokai-nightasty',    '_'           }
+dark  { 'melange',              '_'          }
+light { 'monokai-nightasty',    '_'          }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
-darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true }     }
+darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
 dark  { 'one_monokai',          '_'          }
 dark  { 'onedark',              'onedarkpro' }
 light { 'onelight',             '_'          }
 dark  { 'onenord',              '_'          }
 light { 'onenord',              '_'          }
 light { 'oxocarbon',            '_'          }
-dark  { 'retrobox',             '_' }
+dark  { 'retrobox',             '_'          }
 darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
@@ -2229,12 +2218,16 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Set highlight for markdown headings
--- TODO:
 function MarkdownHeadingsHighlight()
-    -- BUG: not working
+    local title1_hl = vim.api.nvim_get_hl(0, { name = '@text.title.1.markdown', link = false })
+    local title2_hl = vim.api.nvim_get_hl(0, { name = '@text.title.2.markdown', link = false })
+    if title1_hl and title2_hl and title1_hl.fg ~= title2_hl.fg then
+        return
+    end
+
     local palette = ColorPalette()
-    for i=1,6 do
-        local hl = { fg = palette[i].fg, bold = true, underline = false }
+    for i = 1,6 do
+        local hl = { fg = palette[i].fg, bold = true, underline = true }
         -- vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
         vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
     end
@@ -2254,7 +2247,12 @@ vim.api.nvim_create_autocmd(
         callback = function(arg)
             local ftype = vim.o.filetype
             local actions = FileTypeActions[ftype]
-            if actions then actions() end
+
+            if actions then
+                actions()
+            end
+
+            -- Load syntax for non treesitter filetypes
             if tableContains(getTSInstlled(false), ftype) == nil then
                 -- vim.print('Load syntax for ' .. ftype)
                 vim.cmd('syntax on')
@@ -2265,6 +2263,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 addPlugin {
     -- https://github.com/snelling-a/better-folds.nvim
     'anuvyklack/pretty-fold.nvim',
