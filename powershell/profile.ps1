@@ -328,7 +328,11 @@ function promptGen {
                         $git_branch = ""
                     } elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
                         $branch = git describe --tags --always
-                        $git_branch = "  $branch "
+                        if ($branch[0] == 'v') {
+                            $git_branch = "  $branch "
+                        } else {
+                            $git_branch = "  $branch "
+                        }
                     } elseif ($branch) {
                         $branch = $branch.Replace("heads/", "")
                         $branch = $branch.Replace("users/aloknigam", "~")
