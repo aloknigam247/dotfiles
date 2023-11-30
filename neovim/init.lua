@@ -1528,7 +1528,6 @@ addPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'  
 addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                         }
 addPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                            }
-addPlugin { 'theniceboy/nvim-deus',                    event = 'User deus'                                             }
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                             }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
 addPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                           }
@@ -1581,13 +1580,11 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'codedark',             '_',      post = fixGitsign                                }
 -- darkT { 'codedark',             '_',      pre = function() vim.g.codedark_transparent = 1 end, post = fixGitsign }
 -- dark  { 'darcula-solid',        '_'                                                            }
--- dark  { 'darkplus',             '_'                                                            }
--- light { 'decay',                '_'                                                            }
--- dark  { 'deus',                 '_',        post = fixVisual                                   }
--- dark  { 'duskfox',              'nightfox'                                                     }
--- darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
--- dark  { 'earlysummer',          'starry', pre = function() fixStarry('#3f2b4c', '#694980') end }
--- dark  { 'edge',                 '_' }
+dark  { 'darkplus',             '_'                                                            }
+light { 'decay',                '_'                                                            }
+dark  { 'duskfox',              'nightfox'                                                     }
+darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
+dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 light { 'everforest',           '_' }
