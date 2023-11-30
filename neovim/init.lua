@@ -498,7 +498,7 @@ end
 ---@return { bg: string, fg: string }[] # List of _nvim_set_hl()_ supported color config
 function ColorPalette()
     if vim.o.background == 'light' then
-        return {
+        return { -- FEAT: needs a revision
             { bg = '#FFFFFF', fg = '#00A6ED' },
             { bg = '#FFFFFF', fg = '#037171' },
             { bg = '#FFFFFF', fg = '#2100F5' },
@@ -1518,15 +1518,12 @@ end
 addPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                     }
 addPlugin { 'mhartington/oceanic-next',                event = 'User OceanicNext'                                      }
 addPlugin { 'NLKNguyen/papercolor-theme',              event = 'User PaperColor'                                       }
-addPlugin { 'Mofiqul/adwaita.nvim',                    event = 'User adwaita'                                          }
 addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                              }
 addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
 addPlugin { 'projekt0n/caret.nvim',                    event = 'User caret'                                            }
 addPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                       }
-addPlugin { 'tomasiser/vim-code-dark',                 event = 'User codedark'                                         }
 addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
-addPlugin { 'LunarVim/darkplus.nvim',                  event = 'User darkplus'                                         }
 addPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                            }
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                             }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
@@ -1554,48 +1551,43 @@ addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'  
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
--- darkT { 'NeoSolarized',         '_'                                                        }
--- dark  { 'NeoSolarized',         '_', cfg = { transparent = false }                         }
--- dark  { 'OceanicNext',          '_'                                                        }
--- dark  { 'PaperColor',           '_', post = fixNontext                                     }
--- light { 'PaperColor',           '_', post = fixNontext                                     }
--- light { 'adwaita',              '_'                                                        }
--- dark  { 'ayu-dark',             'ayu'                                                      }
--- light { 'ayu-light',            'ayu'                                                      }
--- dark  { 'ayu-mirage',           'ayu'                                                      }
--- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true }     }
--- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' }                         }
--- darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }      }
--- dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                          }
--- dark  { 'bluloco-dark',         '_'                                                        }
--- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }           }
--- dark  { 'carbonfox',            'nightfox'                                                 }
--- dark  { 'caret',                '_'                                                        }
--- dark  { 'catppuccin-frappe',    'catppuccin'                                               }
--- darkT { 'catppuccin-frappe',    'catppuccin', cfg = {transparent_background = true}        }
--- light { 'catppuccin-latte',     'catppuccin'                                               }
--- dark  { 'catppuccin-macchiato', 'catppuccin'                                               }
--- darkT { 'catppuccin-macchiato', 'catppuccin', cfg = {transparent_background = true}        }
--- dark  { 'catppuccin-mocha',     'catppuccin'                                               }
--- dark  { 'codedark',             '_',      post = fixGitsign                                }
--- darkT { 'codedark',             '_',      pre = function() vim.g.codedark_transparent = 1 end, post = fixGitsign }
--- dark  { 'darcula-solid',        '_'                                                            }
-dark  { 'darkplus',             '_'                                                            }
-light { 'decay',                '_'                                                            }
-dark  { 'duskfox',              'nightfox'                                                     }
-darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                         }
+dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
+darkT { 'NeoSolarized',         '_'                                }
+dark  { 'OceanicNext',          '_'                                }
+dark  { 'PaperColor',           '_', post = fixNontext             }
+light { 'PaperColor',           '_', post = fixNontext             }
+dark  { 'ayu-dark',             'ayu'                              }
+light { 'ayu-light',            'ayu'                              }
+dark  { 'ayu-mirage',           'ayu'                              }
+dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
+darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
+dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                      }
+darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
+dark  { 'bluloco-dark',         '_'                                                    }
+darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
+dark  { 'caret',                '_'                                                    }
+dark  { 'catppuccin-frappe',    'catppuccin'                                           }
+darkT { 'catppuccin-frappe',    'catppuccin', cfg = { transparent_background = true }  }
+light { 'catppuccin-latte',     'catppuccin'                                           }
+dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
+darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
+dark  { 'catppuccin-mocha',     'catppuccin'                                           }
+dark  { 'darcula-solid',        '_'                                                    }
+light { 'decay',                '_'                                                    }
+dark  { 'duskfox',              'nightfox'                                             }
+darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                 }
 dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 light { 'everforest',           '_' }
-light { 'github_light',         'github'                                                          }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end                   }
-dark  { 'kanagawa-wave',        '_'                                                               }
-darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }                                 }
-light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end                     }
-light { 'material',             '_',      pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
-dark  { 'melange',              '_'          }
-light { 'monokai-nightasty',    '_'          }
+light { 'github_light',         'github'                                        }
+dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
+dark  { 'kanagawa-wave',        '_'                                             }
+darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }               }
+light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end }
+light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
+dark  { 'melange',              '_' }
+light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
 dark  { 'one_monokai',          '_'          }
@@ -1605,20 +1597,20 @@ dark  { 'onenord',              '_'          }
 light { 'onenord',              '_'          }
 light { 'oxocarbon',            '_'          }
 dark  { 'retrobox',             '_'          }
-darkT { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_background = true, disable_italics = true } }
-dark  { 'rose-pine',            '_', cfg = { dark_variant = 'main', disable_italics = true }                            }
+dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
+darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'sherbet',              '_' }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia'    end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 dark  { 'tokyodark',            '_'                                          }
 darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
-dark  { 'visual_studio_code',   '_', cfg = { mode = 'dark' }                     }
-darkT { 'visual_studio_code',   '_', cfg = { mode = 'dark', transparent = true } }
-light { 'visual_studio_code',   '_', cfg = { mode = 'light' }                    }
-dark  { 'vn-night',             '_', post = fixVnNight                           }
-dark  { 'zephyrium',            '_' }
+dark  { 'visual_studio_code',   '_'                               }
+darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
+light { 'visual_studio_code',   '_', cfg = { mode = 'light' }     }
+dark  { 'vn-night',             '_', post = fixVnNight            }
+dark  { 'zephyrium',            '_'                               }
 
 ---Random colorscheme
 ---@param scheme_index integer Index of colorscheme
@@ -4771,6 +4763,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- https://github.com/zbirenbaum/copilot.lua
 
 require('lazy').setup(Plugins, Lazy_config)
-ColoRand(1)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120
