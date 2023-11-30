@@ -1341,35 +1341,6 @@ addPlugin {
 -- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----Fix DiagnosticInfo highlight
-local function fixDiagnosticInfo()
-    if (vim.o.background == 'light') then
-        vim.cmd('hi clear DiagnosticInfo')
-        vim.cmd('hi link DiagnosticInfo DiagnosticInformation')
-    end
-end
-
----Fix Gitsigns colors
-local function fixGitsign()
-    vim.api.nvim_create_autocmd(
-        'User', {
-            pattern = 'LazyLoad',
-            desc = 'Fix Gitsigns when plugins loads',
-            callback = function(arg)
-                if arg.data == 'gitsigns.nvim' then
-                    for _, hl in pairs({ 'GitSignsAdd', 'GitSignsDelete', 'GitSignsChange' }) do
-                        local new_hl = vim.api.nvim_get_hl(0, { name = hl, link = false })
-                        new_hl.fg = new_hl.bg
-                        new_hl.bg = nil
-                        vim.api.nvim_set_hl(0, hl, new_hl)
-                    end
-                    vim.api.nvim_del_autocmd(arg.id)
-                end
-            end
-        }
-    )
-end
-
 ---Fix limestone colorscheme
 ---@param char string IndentBlankline char highlight in hex
 ---@param scope_char string IndentBlankline scope highlight in hex
@@ -1393,26 +1364,6 @@ local function fixLineNr(fg)
     vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
----Fix NonText highlight
-local function fixNontext()
-    local bg = adaptiveBG(60, -20)
-    vim.api.nvim_set_hl(0, 'NonText', { fg = bg })
-    vim.api.nvim_set_hl(0, 'IndentBlanklineSpaceChar', { fg = bg })
-end
-
----Fix starry colorscheme
----@param char string char color in hex
----@param scope_char string scope color in hex
-local function fixStarry(char, scope_char)
-    require('starry').setup({
-        custom_highlights = {
-            IblIndent = { fg = char },
-            IblScope = { fg = scope_char },
-            LineNr = { underline = false }
-        }
-    })
-end
-
 ---Fix Visual highlight
 ---@param bg? string bg color in hex
 local function fixVisual(bg)
@@ -1425,47 +1376,6 @@ local function fixVnNight()
     fixLineNr('#505275')
     vim.api.nvim_set_hl(0, 'Comment', { fg = '#7F82A5', italic = true })
     vim.api.nvim_set_hl(0, 'Folded', { bg = '#112943', fg = '#8486A4' })
-end
-
----Modify gruvbox to SeniorMars version
----https://github.com/SeniorMars/dotfiles/blob/master/.config/nvim/init.lua
----@param transparent boolean Set transparent mode
-local function seniorMarsTheme(transparent)
-    require('gruvbox').setup({
-        overrides = {
-            CocCodeLens                = { fg = '#878787' },
-            CocInlayHint               = { fg = '#87afaf' },
-            CocWarningFloat            = { fg = '#dfaf87' },
-            Comment                    = { fg = '#fe8019', italic = true },
-            ContextVt                  = { fg = '#878787' },
-            CursorLineNr               = { fg = '#fabd2f', bg = '#0E1018' },
-            Define                     = { link = 'GruvboxPurple' },
-            DiagnosticVirtualTextWarn  = { fg = '#dfaf87' },
-            DiffAdd                    = { bold = true, reverse = false, fg = '', bg = '#2a4333' },
-            DiffChange                 = { bold = true, reverse = false, fg = '', bg = '#333841' },
-            DiffDelete                 = { bold = true, reverse = false, fg = '#442d30', bg = '#442d30' },
-            DiffText                   = { bold = true, reverse = false, fg = '', bg = '#213352' },
-            FoldColumn                 = { fg = '#fe8019', bg = '#0E1018' },
-            Folded                     = { italic = true, fg = '#fe8019', bg = '#3c3836' },
-            GruvboxAquaSign            = { fg = '#8EC07C', bg = '#0E1018' },
-            GruvboxBlueSign            = { fg = '#83a598', bg = '#0E1018' },
-            GruvboxGreenSign           = { fg = '#b8bb26', bg = '#0E1018' },
-            GruvboxOrangeSign          = { fg = '#dfaf87', bg = '#0E1018' },
-            GruvboxRedSign             = { fg = '#fb4934', bg = '#0E1018' },
-            Macro                      = { link = 'GruvboxPurple' },
-            Normal                     = { bg = '#0E1018' },
-            SignColumn                 = { bg = '' },
-            StatusLine                 = { bg = '#ffffff', fg = '#0E1018' },
-            StatusLineNC               = { bg = '#3c3836', fg = '#0E1018' },
-            VertSplit                  = { bg = '#0E1018' },
-            WilderAccent               = { fg = '#f4468f', bg = '#0E1018' },
-            WilderMenu                 = { fg = '#ebdbb2', bg = '#0E1018' },
-            ['@constant.builtin']      = { link = 'GruvboxPurple' },
-            ['@storageclass.lifetime'] = { link = 'GruvboxAqua' },
-            ['@text.note']             = { link = 'TODO' },
-        },
-        transparent = transparent
-    })
 end
 
 local colos = {}
@@ -1517,7 +1427,6 @@ end
 
 addPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                     }
 addPlugin { 'mhartington/oceanic-next',                event = 'User OceanicNext'                                      }
-addPlugin { 'NLKNguyen/papercolor-theme',              event = 'User PaperColor'                                       }
 addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                              }
 addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
@@ -1554,8 +1463,6 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
 darkT { 'NeoSolarized',         '_'                                }
 dark  { 'OceanicNext',          '_'                                }
-dark  { 'PaperColor',           '_', post = fixNontext             }
-light { 'PaperColor',           '_', post = fixNontext             }
 dark  { 'ayu-dark',             'ayu'                              }
 light { 'ayu-light',            'ayu'                              }
 dark  { 'ayu-mirage',           'ayu'                              }
@@ -2251,105 +2158,57 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO:
+-- configure or remove
 addPlugin {
-    -- https://github.com/snelling-a/better-folds.nvim
-    'anuvyklack/pretty-fold.nvim',
+    'kevinhwang91/nvim-ufo',
     -- cond = function()
-    --     return vim.o.foldmethod == 'marker'
+    --     return vim.o.foldmethod ~= 'marker'
     -- end,
     config = function()
-        require('pretty-fold').setup({
-            sections = {
-                left = {
-                    'content',
-                },
-                right = {
-                    ' ', 'number_of_folded_lines', ': ', 'percentage', ' ',
-                    function(config) return config.fill_char:rep(3) end
-                }
-            },
-            fill_char = '󰧟',
-
-            remove_fold_markers = true,
-
-            -- Keep the indentation of the content of the fold string.
-            keep_indentation = true,
-
-            -- Possible values:
-            -- "delete" : Delete all comment signs from the fold string.
-            -- "spaces" : Replace all comment signs with equal number of spaces.
-            -- false    : Do nothing with comment signs.
-            process_comment_signs = 'spaces',
-
-            -- Comment signs additional to the value of `&commentstring` option.
-            comment_signs = {},
-
-            -- List of patterns that will be removed from content foldtext section.
-            stop_words = {
-                '@brief%s*', -- (for C++) Remove '@brief' and all spaces after.
-            },
-
-            add_close_pattern = true, -- true, 'last_line' or false
-
-            matchup_patterns = {
-                { '{', '}' },
-                { '%(', ')' }, -- % to escape lua pattern char
-                { '%[', ']' }, -- % to escape lua pattern char
-            },
+        vim.o.foldcolumn = '1' -- '0' is not bad
+        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevelstart = 99
+        vim.o.foldenable = true
+        require('ufo').setup({
+            close_fold_kinds = {'imports', 'comment'},
+            fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
+                local newVirtText = {}
+                local suffix = (' 󰁂 %d '):format(endLnum - lnum)
+                local sufWidth = vim.fn.strdisplaywidth(suffix)
+                local targetWidth = width - sufWidth
+                local curWidth = 0
+                for _, chunk in ipairs(virtText) do
+                    local chunkText = chunk[1]
+                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                    if targetWidth > curWidth + chunkWidth then
+                        table.insert(newVirtText, chunk)
+                    else
+                        chunkText = truncate(chunkText, targetWidth - curWidth)
+                        local hlGroup = chunk[2]
+                        table.insert(newVirtText, {chunkText, hlGroup})
+                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                        -- str width returned from truncate() may less than 2nd argument, need padding
+                        if curWidth + chunkWidth < targetWidth then
+                            suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
+                        end
+                        break
+                    end
+                    curWidth = curWidth + chunkWidth
+                end
+                table.insert(newVirtText, {suffix, 'MoreMsg'})
+                return newVirtText
+            end,
+            provider_selector = function(_, _, _)
+                return 'treesitter'
+            end
         })
+        vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
-    lazy = true
+    dependencies = 'kevinhwang91/promise-async',
+    -- event = 'CursorHold',
+    -- keys = { 'zM' }
 }
-
--- configure or remove
--- addPlugin {
---     'kevinhwang91/nvim-ufo',
---     -- cond = function()
---     --     return vim.o.foldmethod ~= 'marker'
---     -- end,
---     config = function()
---         vim.o.foldcolumn = '1' -- '0' is not bad
---         vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
---         vim.o.foldlevelstart = 99
---         vim.o.foldenable = true
---         require('ufo').setup({
---             fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
---                 local newVirtText = {}
---                 local suffix = (' 󰁂 %d '):format(endLnum - lnum)
---                 local sufWidth = vim.fn.strdisplaywidth(suffix)
---                 local targetWidth = width - sufWidth
---                 local curWidth = 0
---                 for _, chunk in ipairs(virtText) do
---                     local chunkText = chunk[1]
---                     local chunkWidth = vim.fn.strdisplaywidth(chunkText)
---                     if targetWidth > curWidth + chunkWidth then
---                         table.insert(newVirtText, chunk)
---                     else
---                         chunkText = truncate(chunkText, targetWidth - curWidth)
---                         local hlGroup = chunk[2]
---                         table.insert(newVirtText, {chunkText, hlGroup})
---                         chunkWidth = vim.fn.strdisplaywidth(chunkText)
---                         -- str width returned from truncate() may less than 2nd argument, need padding
---                         if curWidth + chunkWidth < targetWidth then
---                             suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
---                         end
---                         break
---                     end
---                     curWidth = curWidth + chunkWidth
---                 end
---                 table.insert(newVirtText, {suffix, 'MoreMsg'})
---                 return newVirtText
---             end,
---             provider_selector = function(_, _, _)
---                 return 'treesitter'
---             end
---         })
---         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
---         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
---     end,
---     dependencies = 'kevinhwang91/promise-async',
---     keys = { 'zM' }
--- }
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
