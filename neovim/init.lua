@@ -1426,7 +1426,6 @@ local function light(opts)
 end
 
 addPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                     }
-addPlugin { 'mhartington/oceanic-next',                event = 'User OceanicNext'                                      }
 addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                              }
 addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
@@ -1462,7 +1461,6 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 
 dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
 darkT { 'NeoSolarized',         '_'                                }
-dark  { 'OceanicNext',          '_'                                }
 dark  { 'ayu-dark',             'ayu'                              }
 light { 'ayu-light',            'ayu'                              }
 dark  { 'ayu-mirage',           'ayu'                              }
@@ -2122,7 +2120,7 @@ function MarkdownHeadingsHighlight()
     local palette = ColorPalette()
     for i = 1,6 do
         local hl = { fg = palette[i].fg, bold = true, underline = true }
-        -- vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
+        vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
         vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
     end
 end
