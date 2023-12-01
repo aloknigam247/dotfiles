@@ -498,27 +498,27 @@ end
 ---@return { bg: string, fg: string }[] # List of _nvim_set_hl()_ supported color config
 function ColorPalette()
     if vim.o.background == 'light' then
-        return { -- FEAT: needs a revision
-            { bg = '#FFFFFF', fg = '#00A6ED' },
-            { bg = '#FFFFFF', fg = '#037171' },
-            { bg = '#FFFFFF', fg = '#2100F5' },
-            { bg = '#FFFFFF', fg = '#235789' },
-            { bg = '#FFFFFF', fg = '#247BA0' },
-            { bg = '#000000', fg = '#30B0A1' },
-            { bg = '#FFFFFF', fg = '#5D536B' },
-            { bg = '#FFFFFF', fg = '#61210F' },
-            { bg = '#000000', fg = '#689784' },
+        return {
+            { bg = '#000000', fg = '#00A6ED' },
+            { bg = '#000000', fg = '#05AEAE' },
+            { bg = '#FFFFFF', fg = '#654DFF' },
+            { bg = '#000000', fg = '#488ED0' },
+            { bg = '#000000', fg = '#FAA184' },
+            { bg = '#000000', fg = '#9BE4DB' },
+            { bg = '#000000', fg = '#6DBDDE' },
+            { bg = '#000000', fg = '#A49AB1' },
+            { bg = '#000000', fg = '#9DAF9C' },
+            { bg = '#000000', fg = '#FEB11B' },
             { bg = '#FFFFFF', fg = '#7E5CA3' },
             { bg = '#000000', fg = '#7FB800' },
-            { bg = '#FFFFFF', fg = '#806443' },
-            { bg = '#000000', fg = '#81A35C' },
-            { bg = '#000000', fg = '#9C7C1C' },
+            { bg = '#000000', fg = '#C2A88A' },
+            { bg = '#000000', fg = '#C0D1AE' },
+            { bg = '#000000', fg = '#E4C568' },
             { bg = '#FFFFFF', fg = '#A42CD6' },
             { bg = '#FFFFFF', fg = '#CE2D4F' },
-            { bg = '#FFFFFF', fg = '#735290' },
+            { bg = '#FFFFFF', fg = '#A78DBE' },
             { bg = '#000000', fg = '#F4743B' },
-            { bg = '#000000', fg = '#F6511D' },
-            { bg = '#000000', fg = '#FFB400' },
+            { bg = '#000000', fg = '#EE91CF' },
         }
     end
     -- dark mode
@@ -1487,8 +1487,8 @@ dark  { 'everforest',           '_' }
 light { 'everforest',           '_' }
 light { 'github_light',         'github'                                        }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
-dark  { 'kanagawa-wave',        '_'                                             }
-darkT { 'kanagawa-wave',        '_', cfg = { transparent = true }               }
+dark  { 'kanagawa-wave',        'kanagawa'                                      }
+darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 dark  { 'melange',              '_' }
