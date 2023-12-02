@@ -2167,44 +2167,81 @@ addPlugin {
         vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
         vim.o.foldlevelstart = 99
         vim.o.foldenable = true
-        require('ufo').setup({
-            close_fold_kinds = {'imports', 'comment'},
-            fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
-                local newVirtText = {}
-                local suffix = (' 󰁂 %d '):format(endLnum - lnum)
-                local sufWidth = vim.fn.strdisplaywidth(suffix)
-                local targetWidth = width - sufWidth
-                local curWidth = 0
-                for _, chunk in ipairs(virtText) do
-                    local chunkText = chunk[1]
-                    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                    if targetWidth > curWidth + chunkWidth then
-                        table.insert(newVirtText, chunk)
-                    else
-                        chunkText = truncate(chunkText, targetWidth - curWidth)
-                        local hlGroup = chunk[2]
-                        table.insert(newVirtText, {chunkText, hlGroup})
-                        chunkWidth = vim.fn.strdisplaywidth(chunkText)
-                        -- str width returned from truncate() may less than 2nd argument, need padding
-                        if curWidth + chunkWidth < targetWidth then
-                            suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-                        end
-                        break
+        vim.cmd('hi clear Folded')
+        local function ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, _)
+            local newVirtText = {}
+            local suffix = ('󰕱 %d'):format(endLnum - lnum)
+            local sufWidth = vim.fn.strdisplaywidth(suffix)
+            local targetWidth = width - sufWidth
+            local curWidth = 0
+            for _, chunk in ipairs(virtText) do
+                local chunkText = chunk[1]
+                local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                if targetWidth > curWidth + chunkWidth then
+                    table.insert(newVirtText, chunk)
+                else
+                    chunkText = truncate(chunkText, targetWidth - curWidth)
+                    local hlGroup = chunk[2]
+                    table.insert(newVirtText, {chunkText, hlGroup})
+                    chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                    -- str width returned from truncate() may less than 2nd argument, need padding
+                    if curWidth + chunkWidth < targetWidth then
+                        suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
                     end
-                    curWidth = curWidth + chunkWidth
+                    break
                 end
-                table.insert(newVirtText, {suffix, 'MoreMsg'})
-                return newVirtText
-            end,
+                curWidth = curWidth + chunkWidth
+            end
+            table.insert(newVirtText, { ' ', '' })
+            table.insert(newVirtText, { suffix, 'Comment' })
+            return newVirtText
+        end
+
+        local function ufoFoldPython(virtText, lnum, endLnum, width, truncate, ctx)
+            local function getDoc(cnum, bufnr)
+                local next_line = vim.api.nvim_buf_get_lines(bufnr, cnum, cnum+1, false)[1]
+                if next_line:find('^%s*[\'"]+$') then
+                    return getDoc(cnum, bufnr)
+                elseif next_line:find('^%s*[\'"]+') then
+                    next_line:gsub('^%s*[\'"]', ''):gsub([])
+                end
+                return nil
+            end
+
+
+            if next_line:find('^%s+"""') then
+                next_line = next_line:gsub('^%s+"""', '  ')
+                table.insert(virtText, { next_line, '@string.documentation.python' })
+            end
+            if next_line:find("^%s+'''") then
+                next_line = next_line:gsub("^%s+'''", '  ')
+                table.insert(virtText, { next_line, '@string.documentation.python' })
+            end
+            return ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, ctx)
+        end
+
+        local function ufoFoldResolve(virtText, lnum, endLnum, width, truncate, ctx)
+            local ftype = vim.api.nvim_get_option_value('filetype', { buf = ctx.bufnr })
+            if ftype == 'python' then
+                require('ufo.decorator'):setVirtTextHandler(ctx.bufnr, ufoFoldPython)
+                return ufoFoldPython(virtText, lnum, endLnum, width, truncate, ctx)
+            else
+                return ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, ctx)
+            end
+        end
+
+        require('ufo').setup({
+            close_fold_kinds = { 'imports', 'comment' },
+            fold_virt_text_handler = ufoFoldResolve,
             provider_selector = function(_, _, _)
-                return 'treesitter'
+                return { 'treesitter', 'indent' }
             end
         })
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
     dependencies = 'kevinhwang91/promise-async',
-    -- event = 'CursorHold',
+    event = 'CursorHold',
     -- keys = { 'zM' }
 }
 
