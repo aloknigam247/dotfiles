@@ -91,11 +91,12 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Mappings     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+" REFACTOR: move to init.lua
 imap <C-Left> <C-\><C-O>b
 imap <C-Right> <C-\><C-O>e<C-\><C-O>a
 imap <C-S-Left> <C-\><C-O>B
 imap <C-S-Right> <C-\><C-O>E<C-\><C-O>a
-map <C-Left> b
+map <C-Left> b " FIX: me
 map <C-Right> e
 map <C-S-Left> B
 map <C-S-Right> E

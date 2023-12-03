@@ -345,7 +345,8 @@ Lazy_config = {
     },
 }
 
----@type table[] List of plugins
+---@class Plugin
+---@type Plugin[] List of plugins
 Plugins = {}
 
 ---@class PopupMenu
@@ -425,7 +426,7 @@ local kind_hl = {
 ------------
 
 ---Adds a plugin Lazy nvim config
----@param opts table Plugin config
+---@param opts Plugin Plugin config
 local function addPlugin(opts)
     table.insert(Plugins, opts)
 end
@@ -557,9 +558,9 @@ function DebugWindows()
 end
 
 ---Get list filetypes/extentions for Treesitter languages installed
----@param use_entension boolean Convert filetype to extension
+---@param map_entension boolean Convert filetype to extension
 ---@return string[] # List of filetypes or extensions
-local function getTSInstlled(use_entension)
+local function getTSInstlled(map_entension)
     if Installed_filetypes then
         return Installed_filetypes
     end
@@ -572,7 +573,7 @@ local function getTSInstlled(use_entension)
     for file, _ in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath('data'), '/lazy/nvim-treesitter/parser')) do
         if file:sub(-3) == '.so' then
             local ftype = file:gsub('.so', '')
-            if use_entension then
+            if map_entension then
                 ftype = filetye_map[ftype] or ftype
             end
             table.insert(Installed_filetypes, ftype)
@@ -776,6 +777,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     })
 end
 
+--- Create popup menu when invoked
 local function popupAction()
     -- local currentWindow = vim.api.nvim_get_current_win()
     -- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
@@ -919,12 +921,14 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd(
     'CursorHold', {
         pattern = '*',
-        desc = 'Load Treesitter on CursorHold',
+        desc = 'Load Treesitter on CursorHold for installed languages',
         callback = function(arg)
             local ftype = vim.o.filetype
-            if tableContains(getTSInstlled(false), ftype) then
+            -- if tableContains(getTSInstlled(false), ftype) then
+            if vim.tbl_contains(getTSInstlled(false), ftype) then
                 vim.cmd('Lazy load nvim-treesitter')
                 vim.api.nvim_del_autocmd(arg.id)
+                vim.api.nvim_exec_autocmds('User', { pattern = 'TSLoaded' })
             end
         end
     }
@@ -1378,16 +1382,28 @@ local function fixVnNight()
     vim.api.nvim_set_hl(0, 'Folded', { bg = '#112943', fg = '#8486A4' })
 end
 
+---@class ColorPlugin
+---@field [1] string name of colorscheme
+---@field [2] string event name to trigger
+---@field bg? "dark"|"light" background theme of colorscheme
+---@field cfg? table config to pass setup function
+---@field post? fun():nil function to call after applying colorscheme
+---@field pre? fun():nil function to call before applying colorscheme
+---@field trans? boolean enable transparent mode
+--- List of color plugins
+---@type ColorPlugin[]
 local colos = {}
 
 ---Add a color scheme
----@param opts table Color config
+---@param opts ColorPlugin Color config
 local function colorPlugin(opts)
     if opts.cfg then
         local cfg = opts.cfg
         local mod
         if #cfg == 2 then
+            ---@diagnostic disable-next-line: need-check-nil
             mod = cfg[1]
+            ---@diagnostic disable-next-line: need-check-nil
             cfg = cfg[2]
         else
             if opts[2] == '_' then
@@ -1405,21 +1421,21 @@ local function colorPlugin(opts)
 end
 
 ---Add a dark plugin
----@param opts table Color config
+---@param opts ColorPlugin Color config
 local function dark(opts)
     opts.bg = 'dark'
     colorPlugin(opts)
 end
 
 ---Add a transparent dark plugin
----@param opts table Color config
+---@param opts ColorPlugin Color config
 local function darkT(opts)
     opts.trans = true
     dark(opts)
 end
 
 ---Add a light plugin
----@param opts table Color config
+---@param opts ColorPlugin Color config
 local function light(opts)
     opts.bg = 'light'
     colorPlugin(opts)
@@ -1513,7 +1529,6 @@ dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 dark  { 'visual_studio_code',   '_'                               }
 darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
-light { 'visual_studio_code',   '_', cfg = { mode = 'light' }     }
 dark  { 'vn-night',             '_', post = fixVnNight            }
 dark  { 'zephyrium',            '_'                               }
 
@@ -1528,9 +1543,8 @@ function ColoRand(scheme_index)
     local event = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
-    local trans = selection.trans
     vim.o.background = bg
-    vim.g.neovide_transparency = trans and 0.8 or 1
+    vim.g.neovide_transparency = selection.trans and 0.8 or 1
     local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', { pattern = event == '_' and scheme or event })
     if (precmd) then
@@ -1661,7 +1675,7 @@ addPlugin {
             sources = {
                 {
                     name = 'nvim_lsp',
-                    entry_filter = function(entry, ctx)
+                    entry_filter = function(entry, _)
                         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
                     end
                 },
@@ -2129,6 +2143,25 @@ FileTypeActions = {
     ['markdown'] = function()
         vim.g.table_mode_corner = '|'
         MarkdownHeadingsHighlight()
+    end,
+    ['python'] = function(bufnr)
+        local highlighter = require('vim.treesitter.highlighter')
+        if highlighter.active[bufnr] then
+            require('ufo').attach(bufnr)
+            require('ufo').closeFoldsWith(1) -- BUG: not working
+        else
+            vim.api.nvim_create_autocmd(
+                'User', {
+                    pattern = 'TSLoaded',
+                    desc = 'Attach nvim-ufo after loading treesitter',
+                    once = true,
+                    callback = function(arg)
+                        require('ufo').attach(arg.buf)
+                        require('ufo').closeFoldsWith(1)
+                    end
+                }
+            )
+        end
     end
 }
 
@@ -2141,12 +2174,12 @@ vim.api.nvim_create_autocmd(
             local actions = FileTypeActions[ftype]
 
             if actions then
-                actions()
+                actions(arg.buf)
             end
 
             -- Load syntax for non treesitter filetypes
-            if tableContains(getTSInstlled(false), ftype) == nil then
-                -- vim.print('Load syntax for ' .. ftype)
+            -- if tableContains(getTSInstlled(false), ftype) == nil then
+            if vim.tbl_contains(getTSInstlled(false), ftype) then
                 vim.cmd('syntax on')
                 vim.api.nvim_del_autocmd(arg.id)
             end
@@ -2156,7 +2189,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO:
--- configure or remove
 addPlugin {
     'kevinhwang91/nvim-ufo',
     -- cond = function()
@@ -2168,6 +2200,24 @@ addPlugin {
         vim.o.foldlevelstart = 99
         vim.o.foldenable = true
         vim.cmd('hi clear Folded')
+
+        ---@class UfoExtmarkVirtTextChunk
+        ---@field [1] string text
+        ---@field [2] string|number highlight
+        ---@class UfoFoldVirtTextHandlerContext
+        ---@field bufnr number buffer for closed fold
+        ---@field winid number window for closed fold
+        ---@field text string text for the first line of closed fold
+        ---@field get_fold_virt_text fun(lnum: number): UfoExtmarkVirtTextChunk[] a function to get virtual text by lnum
+
+        ---Generic fold text generator
+        ---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
+        ---@param lnum number first line number of fold
+        ---@param endLnum number last line number of fold
+        ---@param width number max width for fold text
+        ---@param truncate fun(str: string, width: number): string truncate the str to become specific width
+        ---@param _ UfoFoldVirtTextHandlerContext the context used by ufo, export to caller
+        ---@return UfoExtmarkVirtTextChunk[] # Generated fold text
         local function ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, _)
             local newVirtText = {}
             local suffix = ('󰕱 %d'):format(endLnum - lnum)
@@ -2182,7 +2232,7 @@ addPlugin {
                 else
                     chunkText = truncate(chunkText, targetWidth - curWidth)
                     local hlGroup = chunk[2]
-                    table.insert(newVirtText, {chunkText, hlGroup})
+                    table.insert(newVirtText, { chunkText, hlGroup })
                     chunkWidth = vim.fn.strdisplaywidth(chunkText)
                     -- str width returned from truncate() may less than 2nd argument, need padding
                     if curWidth + chunkWidth < targetWidth then
@@ -2197,31 +2247,74 @@ addPlugin {
             return newVirtText
         end
 
+        ---Python fold text generator
+        ---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
+        ---@param lnum number first line number of fold
+        ---@param endLnum number last line number of fold
+        ---@param width number max width for fold text
+        ---@param truncate fun(str: string, width: number): string truncate the str to become specific width
+        ---@param ctx UfoFoldVirtTextHandlerContext the context used by ufo, export to caller
+        ---@return UfoExtmarkVirtTextChunk[] # Generated fold text
         local function ufoFoldPython(virtText, lnum, endLnum, width, truncate, ctx)
             local function getDoc(cnum, bufnr)
-                local next_line = vim.api.nvim_buf_get_lines(bufnr, cnum, cnum+1, false)[1]
-                if next_line:find('^%s*[\'"]+$') then
-                    return getDoc(cnum, bufnr)
-                elseif next_line:find('^%s*[\'"]+') then
-                    next_line:gsub('^%s*[\'"]', ''):gsub([])
+                local lines = vim.api.nvim_buf_get_lines(bufnr, cnum-1, cnum+2, false)
+                local cur_line = lines[1]
+                local next_line = lines[2]
+
+                -- for
+                -- """
+                if cur_line:find('^%s*[\'"]+$') then
+                    if cur_line == next_line then
+                        return (' ' .. next_line):gsub('%s+', ' ')
+                    end
+                    next_line = next_line:gsub('"""$', ''):gsub("'''$", ''):gsub('%s+$', '')
+                    return (next_line .. cur_line):gsub('%s+', ' ')
                 end
+
+                -- for
+                -- """ docstring
+                if cur_line:find('^%s*[\'"]+') then
+                    return cur_line:gsub('[^"^\']', '')
+                end
+
+                -- for
+                -- code
+                -- """
+                -- docstring
+                if next_line:find('^%s*[\'"]+$') then
+                    next_line = lines[3]
+                    return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', '')
+                end
+
+                -- for
+                -- code
+                -- """ docstring
+                if next_line:find('^%s*[\'"]+') then
+                    return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', '')
+                end
+
                 return nil
             end
 
 
-            if next_line:find('^%s+"""') then
-                next_line = next_line:gsub('^%s+"""', '  ')
-                table.insert(virtText, { next_line, '@string.documentation.python' })
-            end
-            if next_line:find("^%s+'''") then
-                next_line = next_line:gsub("^%s+'''", '  ')
-                table.insert(virtText, { next_line, '@string.documentation.python' })
+            local doc_line = getDoc(lnum, ctx.bufnr)
+            if doc_line then
+                table.insert(virtText, { doc_line, '@string.documentation.python' })
             end
             return ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, ctx)
         end
 
+        ---Resolves fold method by filetype
+        ---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
+        ---@param lnum number first line number of fold
+        ---@param endLnum number last line number of fold
+        ---@param width number max width for fold text
+        ---@param truncate fun(str: string, width: number): string truncate the str to become specific width
+        ---@param ctx UfoFoldVirtTextHandlerContext the context used by ufo, export to caller
+        ---@return UfoExtmarkVirtTextChunk[] # Generated fold text
         local function ufoFoldResolve(virtText, lnum, endLnum, width, truncate, ctx)
             local ftype = vim.api.nvim_get_option_value('filetype', { buf = ctx.bufnr })
+
             if ftype == 'python' then
                 require('ufo.decorator'):setVirtTextHandler(ctx.bufnr, ufoFoldPython)
                 return ufoFoldPython(virtText, lnum, endLnum, width, truncate, ctx)
@@ -2231,7 +2324,6 @@ addPlugin {
         end
 
         require('ufo').setup({
-            close_fold_kinds = { 'imports', 'comment' },
             fold_virt_text_handler = ufoFoldResolve,
             provider_selector = function(_, _, _)
                 return { 'treesitter', 'indent' }
@@ -2240,9 +2332,7 @@ addPlugin {
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
-    dependencies = 'kevinhwang91/promise-async',
-    event = 'CursorHold',
-    -- keys = { 'zM' }
+    dependencies = 'kevinhwang91/promise-async'
 }
 
 -- <~>
@@ -3329,9 +3419,10 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
-                { text = { '%C' }, click = 'v:lua.ScFa' },
+                -- FEAT: add click handlers
                 { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
                 { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
+                { text = { '%C' }, click = 'v:lua.ScFa' },
                 { text = { builtin.lnumfunc }, condition = { true } },
                 { sign = {
                     text = {
@@ -3346,28 +3437,6 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
                     wrap = true,
                 }},
             },
-            clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
-            -- "a" for Alt, "c" for Ctrl and "m" for Meta.
-            clickhandlers = {       -- builtin click handlers
-                Lnum                    = builtin.lnum_click,
-                FoldClose               = builtin.foldclose_click,
-                FoldOpen                = builtin.foldopen_click,
-                FoldOther               = builtin.foldother_click,
-                DapBreakpointRejected   = builtin.toggle_breakpoint,
-                DapBreakpoint           = builtin.toggle_breakpoint,
-                DapBreakpointCondition  = builtin.toggle_breakpoint,
-                DiagnosticSignError     = builtin.diagnostic_click,
-                DiagnosticSignHint      = builtin.diagnostic_click,
-                DiagnosticSignInfo      = builtin.diagnostic_click,
-                DiagnosticSignWarn      = builtin.diagnostic_click,
-                GitSignsTopdelete       = builtin.gitsigns_click,
-                GitSignsUntracked       = builtin.gitsigns_click,
-                GitSignsAdd             = builtin.gitsigns_click,
-                GitSignsChange          = builtin.gitsigns_click,
-                GitSignsChangedelete    = builtin.gitsigns_click,
-                GitSignsDelete          = builtin.gitsigns_click,
-                gitsigns_extmark_signs_ = builtin.gitsigns_click,
-            }
         })
     end,
     -- event = 'VeryLazy'
@@ -3503,7 +3572,6 @@ addPlugin {
                     },
                     {
                         'diagnostics',
-                        -- icon = {'', color = {fg = '#9C95DC'}},
                         on_click = function()
                             vim.cmd('TroubleToggle')
                         end,
