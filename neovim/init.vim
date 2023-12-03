@@ -58,7 +58,7 @@ set culopt=number,screenline " Highlight current line and line number of current
 set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
-set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\        " No dot characters in fold
+set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\ 
 " set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.

@@ -924,7 +924,6 @@ vim.api.nvim_create_autocmd(
         desc = 'Load Treesitter on CursorHold for installed languages',
         callback = function(arg)
             local ftype = vim.o.filetype
-            -- if tableContains(getTSInstlled(false), ftype) then
             if vim.tbl_contains(getTSInstlled(false), ftype) then
                 vim.cmd('Lazy load nvim-treesitter')
                 vim.api.nvim_del_autocmd(arg.id)
@@ -1487,12 +1486,9 @@ darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = t
 dark  { 'bluloco-dark',         '_'                                                    }
 darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 dark  { 'caret',                '_'                                                    }
-dark  { 'catppuccin-frappe',    'catppuccin'                                           }
-darkT { 'catppuccin-frappe',    'catppuccin', cfg = { transparent_background = true }  }
 light { 'catppuccin-latte',     'catppuccin'                                           }
 dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
 darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
-dark  { 'catppuccin-mocha',     'catppuccin'                                           }
 dark  { 'darcula-solid',        '_'                                                    }
 light { 'decay',                '_'                                                    }
 dark  { 'duskfox',              'nightfox'                                             }
@@ -1566,7 +1562,7 @@ function ColoRand(scheme_index)
         vim.api.nvim_set_hl(0, 'Todo', todo_hl)
     end
 
-    vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. event .. elapsed
+    vim.g.ColoRand = '[' .. scheme_index .. ']' .. scheme .. elapsed
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2178,8 +2174,7 @@ vim.api.nvim_create_autocmd(
             end
 
             -- Load syntax for non treesitter filetypes
-            -- if tableContains(getTSInstlled(false), ftype) == nil then
-            if vim.tbl_contains(getTSInstlled(false), ftype) then
+            if vim.tbl_contains(getTSInstlled(false), ftype) == false then
                 vim.cmd('syntax on')
                 vim.api.nvim_del_autocmd(arg.id)
             end
@@ -2188,7 +2183,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 addPlugin {
     'kevinhwang91/nvim-ufo',
     config = function()
@@ -2334,6 +2328,7 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: how to use it
 addPlugin {
     'sbdchd/neoformat',
     cmd = 'Neoformat'
@@ -3419,7 +3414,7 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
                 -- FEAT: add click handlers
                 { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
                 { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
-                { text = { '%C' }, click = 'v:lua.ScFa' },
+                { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
                 { text = { builtin.lnumfunc }, condition = { true } },
                 { sign = {
                     text = {
