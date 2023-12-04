@@ -2253,13 +2253,13 @@ addPlugin {
                         return (' ' .. next_line):gsub('%s+', ' ')
                     end
                     next_line = next_line:gsub('"""$', ''):gsub("'''$", ''):gsub('%s+$', '')
-                    return (next_line .. cur_line):gsub('%s+', ' ')
+                    return (next_line .. cur_line):gsub('%s+', ' ') -- FEAT: use endline content
                 end
 
                 -- for
                 -- """ docstring
                 if cur_line:find('^%s*[\'"]+') then
-                    return cur_line:gsub('[^"^\']', '')
+                    return cur_line:gsub('[^"^\']', '') -- FEAT: use endline content
                 end
 
                 -- for
@@ -3406,26 +3406,26 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             -- Default segments (fold -> sign -> line number + separator), explained below
             segments = {
                 -- FEAT: add click handlers
-                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
+                -- { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
+                    { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
                 { text = { builtin.lnumfunc }, condition = { true } },
-                { sign = {
-                    text = {
-                        Icons.diff_add,
-                        Icons.diff_change,
-                        Icons.diff_delete,
-                        Icons.diff_delete_top,
-                        Icons.diff_change_delete,
-                    },
-                    colwidth = 1,
-                    fillcharhl = 'LineNr',
-                    wrap = true,
-                }},
+                -- { sign = {
+                --     text = {
+                --         Icons.diff_add,
+                --         Icons.diff_change,
+                --         Icons.diff_delete,
+                --         Icons.diff_delete_top,
+                --         Icons.diff_change_delete,
+                --     },
+                --     colwidth = 1,
+                --     fillcharhl = 'LineNr',
+                --     wrap = true,
+                -- }},
             },
         })
     end,
-    -- event = 'VeryLazy'
+    enabled = false -- BUG: fix me
 }
 
 --<~>
