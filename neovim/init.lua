@@ -2123,7 +2123,7 @@ function MarkdownHeadingsHighlight()
 
     local palette = ColorPalette()
     for i = 1,6 do
-        local hl = { fg = palette[i].fg, bold = true, underline = true }
+        local hl = { fg = palette[i].fg }
         vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.markdown', hl)
         vim.api.nvim_set_hl(0, '@text.title.' .. i .. '.marker.markdown', hl)
     end
