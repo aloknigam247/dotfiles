@@ -3367,6 +3367,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: add sinppets for markdown
 addPlugin {
     'dcampos/nvim-snippy',
     dependencies = 'honza/vim-snippets',
