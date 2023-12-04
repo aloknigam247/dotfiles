@@ -44,7 +44,7 @@ end
 
 ---List of all valid autocommands to profile
 ---@type string[]
-local event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite or BufWritePre", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
+local event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
 
 vim.api.nvim_create_autocmd(
     event_list, {
@@ -1345,18 +1345,14 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Fix limestone colorscheme
----@param char string IndentBlankline char highlight in hex
----@param scope_char string IndentBlankline scope highlight in hex
----@param method string method highlight in hex
----@param symbol string symbol highlight in hex
-local function fixLimestone(char, scope_char, method, symbol)
+local function fixLimestone()
     require('starry').setup({
         custom_highlights = {
-            IblIndent = { fg = char },
-            IblScope = { fg = scope_char },
+            IblIndent = { fg = '#223216' },
+            IblScope = { fg = '#395425' },
             LineNr = { underline = false },
-            ['@method'] = { fg = method, bold = true },
-            ['@symbol'] = { fg = symbol }
+            ['@method'] = { fg = '#4e9ba6', bold = true },
+            ['@symbol'] = { fg = '#A30000' }
         }
     })
 end
@@ -1444,7 +1440,6 @@ addPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarize
 addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                              }
 addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
-addPlugin { 'projekt0n/caret.nvim',                    event = 'User caret'                                            }
 addPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                       }
 addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                            }
@@ -1485,14 +1480,13 @@ dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }               
 darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
 dark  { 'bluloco-dark',         '_'                                                    }
 darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
-dark  { 'caret',                '_'                                                    }
 light { 'catppuccin-latte',     'catppuccin'                                           }
 dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
 darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
 dark  { 'darcula-solid',        '_'                                                    }
 light { 'decay',                '_'                                                    }
 dark  { 'duskfox',              'nightfox'                                             }
-darkT { 'duskfox',              'nightfox', cfg = {transparent = true}                 }
+darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
 dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
@@ -1501,7 +1495,7 @@ light { 'github_light',         'github'                                        
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-light { 'limestone',            'starry', pre = function() fixLimestone('#223216', '#395425', '#4e9ba6', '#A30000') end }
+light { 'limestone',            'starry', pre = fixLimestone                    }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
