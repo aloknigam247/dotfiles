@@ -623,7 +623,8 @@ end
 ---@param config? table `nvim_open_win()` config
 ---@return integer # Window handle, or 0 on error
 local function nvimOpenWinSafe(bufnr, enter, config)
-    -- FEAT dotted border for non focusable window
+    -- FEAT: add debug info window footer
+    -- FEAT: dotted border for non focusable window
     local fixTitle = function(title)
         if title[1] ~= ' ' then
             title = ' ' .. title
@@ -725,7 +726,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     )
 
     -- Cleanup on window close
-    vim.api.nvim_create_autocmd(
+        vim.api.nvim_create_autocmd(
         'WinClosed', {
             pattern = tostring(Preview_win),
             desc = 'Delete resize autocommand on Preview window close',
@@ -1105,8 +1106,8 @@ addPlugin {
             -- Add spaces in pair after parentheses
             -- (|) --> space --> ( | )
             -- ( | ) --> ) --> ( )|
-            Rule(' ', ' ')
-            :with_pair(function (opts) -- FIX: disable in markdown
+            Rule(' ', ' ', '-markdown')
+            :with_pair(function (opts)
                 local pair_set = opts.line:sub(opts.col - 1, opts.col)
                 return vim.tbl_contains({ '()', '[]', '{}' }, pair_set)
             end)
@@ -1469,58 +1470,58 @@ addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'  
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
-dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
-darkT { 'NeoSolarized',         '_'                                }
-dark  { 'ayu-dark',             'ayu'                              }
+-- dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
+-- dark  { 'ayu-dark',             'ayu'                              }
+-- dark  { 'ayu-mirage',           'ayu'                              }
+-- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
+-- dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                      }
+-- dark  { 'bluloco-dark',         '_'                                                    }
+-- dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
+-- dark  { 'darcula-solid',        '_'                                                    }
+-- dark  { 'duskfox',              'nightfox'                                             }
+-- dark  { 'edge',                 '_' }
+-- dark  { 'everforest',           '_' }
+-- dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
+-- dark  { 'kanagawa-wave',        'kanagawa'                                      }
+-- dark  { 'melange',              '_' }
+-- dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
+-- dark  { 'one_monokai',          '_'          }
+-- dark  { 'onedark',              'onedarkpro' }
+-- dark  { 'onenord',              '_'          }
+-- dark  { 'retrobox',             '_'          }
+-- dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
+-- dark  { 'sherbet',              '_' }
+-- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
+-- dark  { 'tokyodark',            '_'                                          }
+-- dark  { 'tokyonight-storm',     'tokyonight'                                 }
+-- dark  { 'visual_studio_code',   '_'                               }
+-- dark  { 'vn-night',             '_', post = fixVnNight            }
+-- dark  { 'zephyrium',            '_'                               }
+-- darkT { 'NeoSolarized',         '_'                                }
+-- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
+-- darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
+-- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
+-- darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
+-- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
+-- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
+-- darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
+-- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
+-- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
+-- darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
+-- darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
 light { 'ayu-light',            'ayu'                              }
-dark  { 'ayu-mirage',           'ayu'                              }
-dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
-darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
-dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                      }
-darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
-dark  { 'bluloco-dark',         '_'                                                    }
-darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 light { 'catppuccin-latte',     'catppuccin'                                           }
-dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
-darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
-dark  { 'darcula-solid',        '_'                                                    }
 light { 'decay',                '_'                                                    }
-dark  { 'duskfox',              'nightfox'                                             }
-darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
-dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
-dark  { 'everforest',           '_' }
 light { 'everforest',           '_' }
 light { 'github_light',         'github'                                        }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
-dark  { 'kanagawa-wave',        'kanagawa'                                      }
-darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 light { 'limestone',            'starry', pre = fixLimestone                    }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
-dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
-dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
-darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
-dark  { 'one_monokai',          '_'          }
-dark  { 'onedark',              'onedarkpro' }
 light { 'onelight',             '_'          }
-dark  { 'onenord',              '_'          }
 light { 'onenord',              '_'          }
 light { 'oxocarbon',            '_'          }
-dark  { 'retrobox',             '_'          }
-dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
-darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
-dark  { 'sherbet',              '_' }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
-dark  { 'tokyodark',            '_'                                          }
-darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 light { 'tokyonight-day',       'tokyonight'                                 }
-dark  { 'tokyonight-storm',     'tokyonight'                                 }
-darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
-dark  { 'visual_studio_code',   '_'                               }
-darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
-dark  { 'vn-night',             '_', post = fixVnNight            }
-dark  { 'zephyrium',            '_'                               }
 
 ---Random colorscheme
 ---@param scheme_index integer Index of colorscheme
@@ -1936,8 +1937,8 @@ addPlugin {
             vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
             vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
             vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
-            vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
-            vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview'))
+            vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open')) -- BUG: does not set filtype
+            vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview')) -- BUG: does not set filtype
             vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
             vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
             vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
@@ -2138,7 +2139,7 @@ FileTypeActions = {
         local highlighter = require('vim.treesitter.highlighter')
         if highlighter.active[bufnr] then
             require('ufo').attach(bufnr)
-            require('ufo').closeFoldsWith(1) -- BUG: not working
+            vim.defer_fn(function() require('ufo').closeFoldsWith(1) end, 3500) -- BUG: not working as expected
         else
             vim.api.nvim_create_autocmd(
                 'User', {
@@ -2147,7 +2148,7 @@ FileTypeActions = {
                     once = true,
                     callback = function(arg)
                         require('ufo').attach(arg.buf)
-                        require('ufo').closeFoldsWith(1)
+                        vim.defer_fn(function() require('ufo').closeFoldsWith(1) end, 3500) -- BUG: not working as expected
                     end
                 }
             )
@@ -2311,9 +2312,10 @@ addPlugin {
         require('ufo').setup({
             fold_virt_text_handler = ufoFoldResolve,
             provider_selector = function(_, _, _)
-                return { 'treesitter', 'indent' }
+                return { 'lsp', 'treesitter' }
             end
         })
+        -- FEAT: Mapping to peek folded lines
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
@@ -4247,6 +4249,16 @@ addPlugin {
             stages = 'slide'
         })
         vim.notify = notify
+
+        -- Fix Notify hl
+        for _, hl_name in ipairs({ 'NotifyINFOIcon', 'NotifyINFOTitle' }) do
+            local notify_hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false })
+            if notify_hl and notify_hl.fg == 11140968 then
+                notify_hl.fg = '#654DFF'
+                vim.api.nvim_set_hl(0, hl_name, notify_hl)
+            end
+        end
+
     end
 }
 
