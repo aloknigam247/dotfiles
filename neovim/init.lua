@@ -1462,7 +1462,6 @@ addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon' 
 addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                        }
 addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                          }
 addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                          }
-addPlugin { 'ray-x/starry.nvim',                       event = 'User starry'                                           }
 addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                        }
 addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                       }
 addPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                               }
@@ -1513,9 +1512,7 @@ light { 'ayu-light',            'ayu'                              }
 light { 'catppuccin-latte',     'catppuccin'                                           }
 light { 'decay',                '_'                                                    }
 light { 'edge',                 '_' }
-light { 'everforest',           '_' }
 light { 'github_light',         'github'                                        }
-light { 'limestone',            'starry', pre = fixLimestone                    }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 light { 'monokai-nightasty',    '_' }
 light { 'onelight',             '_'          }
@@ -2330,13 +2327,35 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 addPlugin {
-    '9seconds/repolink.nvim', -- FEAT: add support for azure devops
+    '9seconds/repolink.nvim',
     cmd = 'RepoLink',
-    opts = {}
+    opts = {
+        custom_url_parser = function(remote_url)
+            local host, user, project= string.match(remote_url, "https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)")
+            if host then
+                return host, { user = user, project = project }, false
+            end
+            return nil, nil, true
+        end,
+        url_builders = {
+            ['office.visualstudio.com'] = function(args)
+                return string.format(
+                    "https://office.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
+                    args.host_data.user,
+                    args.host_data.project,
+                    args.path:gsub('\\', '/'),
+                    args.commit_hash,
+                    args.start_line,
+                    args.end_line+1
+                )
+            end
+        },
+        use_full_commit_hash = true
+    }
 }
 
+-- TODO:
 addPlugin {
     'FabijanZulj/blame.nvim',
     cmd = 'ToggleBlame'
@@ -3755,6 +3774,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/willothy/nvim-cokeline
 addPlugin {
+    -- BUG: middle click delete not working
     'akinsho/bufferline.nvim',
     event = 'TabNew',
     opts = {
