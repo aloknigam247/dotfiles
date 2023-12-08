@@ -2324,17 +2324,13 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: how to use it
-addPlugin {
-    'sbdchd/neoformat',
-    cmd = 'Neoformat'
-}
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      FZF       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/linrongbin16/fzfx.nvim
--- https://github.com/gfanto/fzf-lsp.nvim
+-- addPlugin {
+--     'sbdchd/neoformat',
+--     cmd = 'Neoformat'
+-- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 addPlugin {
     '9seconds/repolink.nvim', -- FEAT: add support for azure devops
     cmd = 'RepoLink',
@@ -2536,6 +2532,9 @@ addPlugin {
                         'for_statement',
                         'if_statement',
                         'while_statement',
+                    },
+                    ['lua'] = {
+                        'table_constructor'
                     }
                 },
             },
