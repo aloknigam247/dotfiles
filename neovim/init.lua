@@ -1285,7 +1285,7 @@ addPlugin {
 }
 
 addPlugin {
-    'kevinhwang91/nvim-hlslens',
+    'kevinhwang91/nvim-hlslens', -- FIX: ufo loading
     keys = { 'n', 'N', '*', '#', 'g*', 'g#' },
     opts = { calm_down = true }
 }
@@ -1446,7 +1446,6 @@ addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-sol
 addPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                            }
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                             }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
-addPlugin { 'projekt0n/github-nvim-theme',             event = 'User github'                                           }
 addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
 addPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                         }
 addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                         }
@@ -1512,7 +1511,6 @@ light { 'ayu-light',            'ayu'                              }
 light { 'catppuccin-latte',     'catppuccin'                                           }
 light { 'decay',                '_'                                                    }
 light { 'edge',                 '_' }
-light { 'github_light',         'github'                                        }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 light { 'monokai-nightasty',    '_' }
 light { 'onelight',             '_'          }
@@ -1769,7 +1767,10 @@ addPlugin {
 
 addPlugin {
     'rcarriga/nvim-dap-ui',
-    config = true
+    config = function()
+        require("dapui").setup()
+        require("dapui").open()
+    end
 }
 
 -- https://github.com/PatschD/zippy.nvim
@@ -2355,13 +2356,14 @@ addPlugin {
     }
 }
 
--- TODO:
 addPlugin {
     'FabijanZulj/blame.nvim',
     cmd = 'ToggleBlame'
 }
 
+-- TODO:
 addPlugin {
+    -- https://magit.vc/
     'NeogitOrg/neogit',
     cmd = 'Neogit',
     config = true
@@ -2401,6 +2403,7 @@ addPlugin {
 }
 
 addPlugin {
+    -- FIX: git diff
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
     dependencies = { 'luukvbaal/statuscol.nvim' },
@@ -2450,7 +2453,7 @@ addPlugin {
         preview_config = {
             border = 'rounded'
         },
-        signs = { -- ┃┇│┆󰇝
+        signs = {
             add          = { hl = 'GitSignsAdd'   ,       text = Icons.diff_add, numhl           = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
             change       = { hl = 'GitSignsChange',       text = Icons.diff_change, numhl        = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             changedelete = { hl = 'GitSignsChangedelete', text = Icons.diff_change_delete, numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
@@ -3414,35 +3417,27 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
     config = function()
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
-            setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
-            -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
-            -- Although I recommend just using the segments field below to build your
-            -- statuscolumn to benefit from the performance optimizations in this plugin.
-            -- builtin.lnumfunc number string options
-            thousands = false,     -- or line number thousands separator string ("." / ",")
-            relculright = true,   -- whether to right-align the cursor line number with 'relativenumber' set
-            -- Builtin 'statuscolumn' options
-            ft_ignore = nil,       -- lua table with filetypes for which 'statuscolumn' will be unset
-            bt_ignore = nil,       -- lua table with 'buftype' values for which 'statuscolumn' will be unset
-            -- Default segments (fold -> sign -> line number + separator), explained below
+            setopt = true,
+            relculright = true,
             segments = {
                 -- FEAT: add click handlers
+                -- FEAT: add DAP
                 -- { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                    { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
-                { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
+                -- { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, condition = { true } },
-                -- { sign = {
-                --     text = {
-                --         Icons.diff_add,
-                --         Icons.diff_change,
-                --         Icons.diff_delete,
-                --         Icons.diff_delete_top,
-                --         Icons.diff_change_delete,
-                --     },
-                --     colwidth = 1,
-                --     fillcharhl = 'LineNr',
-                --     wrap = true,
-                -- }},
+                { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
+                { sign = {
+                    text = {
+                        Icons.diff_add,
+                        Icons.diff_change,
+                        Icons.diff_delete,
+                        Icons.diff_delete_top,
+                        Icons.diff_change_delete,
+                    },
+                    colwidth = 1,
+                    fillcharhl = 'LineNr',
+                    wrap = true,
+                }},
             },
         })
     end,
@@ -3774,7 +3769,6 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/willothy/nvim-cokeline
 addPlugin {
-    -- BUG: middle click delete not working
     'akinsho/bufferline.nvim',
     event = 'TabNew',
     opts = {
@@ -3809,7 +3803,7 @@ addPlugin {
             indicator = {
                 style = 'underline'
             },
-            middle_mouse_command = 'bdelete! %d',
+            middle_mouse_command = 'tabclose %d',
             mode = 'tabs',
             name_formatter = function (buf)
                 if buf.name == '[No Name]' then
@@ -3971,51 +3965,23 @@ addPlugin {
                     end
                 end,
                 enable = true
-            },
-            rainbow = { -- TODO: still needed ?
-                enable = true,
-                extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                max_file_lines = nil, -- Do not enable for files with more than n lines, int
             }
         })
     end,
-    dependencies = { { 'm-demare/hlargs.nvim' } },
     module = false
 }
 
 addPlugin {
     'HiPhish/rainbow-delimiters.nvim',
     config = function()
-        local rainbow_delimiters = require 'rainbow-delimiters'
-
-        vim.g.rainbow_delimiters = {
-            strategy = {
-                [''] = rainbow_delimiters.strategy['global'],
-                -- vim = rainbow_delimiters.strategy['local'],
-            },
-            query = {
-                [''] = 'rainbow-delimiters',
-                -- lua = 'rainbow-delimiters',
-            },
-            highlight = {
-                'RainbowDelimiterRed',
-                'RainbowDelimiterYellow',
-                'RainbowDelimiterBlue',
-                'RainbowDelimiterOrange',
-                'RainbowDelimiterGreen',
-                'RainbowDelimiterViolet',
-                'RainbowDelimiterCyan',
-            },
-            -- blacklist = { 'lua' }
-        }
         require('rainbow-delimiters').enable()
     end,
-    -- event = 'CursorHold' -- FIX: slow on large files
+    event = 'User TSLoaded'
 }
 
 addPlugin {
     -- https://github.com/David-Kunz/markid
-    'm-demare/hlargs.nvim', -- FIX: not working for first buffer
+    'm-demare/hlargs.nvim',
     config = function()
         require('hlargs').setup({
             colorpalette = (function()
@@ -4045,7 +4011,8 @@ addPlugin {
             },
             use_colorpalette = true,
         })
-    end
+    end,
+    event = 'User TSLoaded'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4544,7 +4511,7 @@ addPlugin {
             -- these settings will be used for your Neovim config directory
             runtime = true, -- runtime path
             types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-            plugins = true, -- installed opt or start plugins in packpath -- FEAT: Use me
+            plugins = true, -- installed opt or start plugins in packpath
             -- you can also specify the list of plugins to make available as a workspace library
             -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
         },
