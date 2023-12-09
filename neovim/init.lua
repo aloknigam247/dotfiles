@@ -1514,7 +1514,7 @@ light { 'monokai-nightasty',    '_' }
 light { 'onelight',             '_'          }
 light { 'onenord',              '_'          }
 light { 'oxocarbon',            '_'          }
-light { 'tokyonight-day',       'tokyonight'                                 }
+-- light { 'tokyonight-day',       'tokyonight'                                 }
 
 ---Random colorscheme
 ---@param scheme_index integer Index of colorscheme
@@ -2634,12 +2634,6 @@ addPlugin {
     }
 }
 
-addPlugin { -- PERF: Load on demand
-    'antosha417/nvim-lsp-file-operations',
-    config = true,
-    event = 'LspAttach'
-}
-
 addPlugin {
     -- https://github.com/Zeioth/garbage-day.nvim
     'hinell/lsp-timeout.nvim',
@@ -3358,9 +3352,8 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/aaditeynair/conduct.nvim
 addPlugin {
-    -- PERF: remove Telescope dependency
-    -- https://github.com/aaditeynair/conduct.nvim
     'rmagatti/auto-session',
     cmd = 'SessionSave',
     config = function()
@@ -3388,7 +3381,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: add sinppets for markdown
 addPlugin {
     'dcampos/nvim-snippy',
     dependencies = 'honza/vim-snippets',
@@ -3893,7 +3885,8 @@ addPlugin {
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
         {'tom-anders/telescope-vim-bookmarks.nvim', dependencies = 'MattesGroeger/vim-bookmarks'}
-    }
+    },
+    module = false
 }
 
 addPlugin {
