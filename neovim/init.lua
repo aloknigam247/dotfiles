@@ -3426,18 +3426,18 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
                 -- { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, condition = { true } },
                 { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
-                { sign = {
-                    text = {
-                        Icons.diff_add,
-                        Icons.diff_change,
-                        Icons.diff_delete,
-                        Icons.diff_delete_top,
-                        Icons.diff_change_delete,
-                    },
-                    colwidth = 1,
-                    fillcharhl = 'LineNr',
-                    wrap = true,
-                }},
+                -- { sign = {
+                --     text = {
+                --         Icons.diff_add,
+                --         Icons.diff_change,
+                --         Icons.diff_delete,
+                --         Icons.diff_delete_top,
+                --         Icons.diff_change_delete,
+                --     },
+                --     colwidth = 1,
+                --     fillcharhl = 'LineNr',
+                --     wrap = true,
+                -- }},
             },
         })
     end,
