@@ -623,8 +623,6 @@ end
 ---@param config? table `nvim_open_win()` config
 ---@return integer # Window handle, or 0 on error
 local function nvimOpenWinSafe(bufnr, enter, config)
-    -- FEAT: add debug info window footer
-    -- FEAT: dotted border for non focusable window
     local fixTitle = function(title)
         if title[1] ~= ' ' then
             title = ' ' .. title
