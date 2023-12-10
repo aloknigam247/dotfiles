@@ -1,15 +1,15 @@
 [fetch]
-	prune = true
+    prune = true
 
 [core]
-	editor = nvim
+    editor = nvim
     pager = delta
 
 [push]
-	autoSetupRemote = true
+    autoSetupRemote = true
 
 [user]
-	name = Alok Nigam
+    name = Alok Nigam
 
 [interactive]
     diffFilter = delta --color-only
