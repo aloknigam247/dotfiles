@@ -1919,7 +1919,7 @@ addPlugin {
                       path = node.link_to
                     end
 
-                    openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, false)
+                    openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, true)
                 end
             end
 
@@ -1930,8 +1930,8 @@ addPlugin {
             vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
             vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
             vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
-            vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open')) -- BUG: does not set filtype
-            vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview')) -- BUG: does not set filtype
+            vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
+            vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview'))
             vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
             vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
             vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
@@ -2378,14 +2378,6 @@ addPlugin {
     dependencies = { 'nvim-telescope/telescope.nvim' }
 }
 -- TODO:
--- https://github.com/akinsho/git-conflict.nvim
--- https://github.com/chrisgrieser/nvim-tinygit
-
-addPlugin {
-    'cynix/vim-mergetool',
-    cmd = 'MergetoolStart'
-}
-
 addPlugin {
     -- FIX: git diff
     'lewis6991/gitsigns.nvim',
