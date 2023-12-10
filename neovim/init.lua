@@ -500,50 +500,50 @@ end
 function ColorPalette()
     if vim.o.background == 'light' then
         return {
-            { bg = '#000000', fg = '#00A6ED' },
-            { bg = '#000000', fg = '#05AEAE' },
-            { bg = '#FFFFFF', fg = '#654DFF' },
-            { bg = '#000000', fg = '#488ED0' },
-            { bg = '#000000', fg = '#FAA184' },
-            { bg = '#000000', fg = '#9BE4DB' },
-            { bg = '#000000', fg = '#6DBDDE' },
-            { bg = '#000000', fg = '#A49AB1' },
-            { bg = '#000000', fg = '#9DAF9C' },
-            { bg = '#000000', fg = '#FEB11B' },
-            { bg = '#FFFFFF', fg = '#7E5CA3' },
-            { bg = '#000000', fg = '#7FB800' },
-            { bg = '#000000', fg = '#C2A88A' },
-            { bg = '#000000', fg = '#C0D1AE' },
-            { bg = '#000000', fg = '#E4C568' },
-            { bg = '#FFFFFF', fg = '#A42CD6' },
-            { bg = '#FFFFFF', fg = '#CE2D4F' },
-            { bg = '#FFFFFF', fg = '#A78DBE' },
-            { bg = '#000000', fg = '#F4743B' },
-            { bg = '#000000', fg = '#EE91CF' },
+            { bg = '#000000', fg = '#78b98f' },
+            { bg = '#FFFFFF', fg = '#2524f9' },
+            { bg = '#000000', fg = '#fd048f' },
+            { bg = '#FFFFFF', fg = '#0b6d33' },
+            { bg = '#000000', fg = '#5ac230' },
+            { bg = '#000000', fg = '#3d8bb7' },
+            { bg = '#FFFFFF', fg = '#710c9e' },
+            { bg = '#000000', fg = '#f38ab6' },
+            { bg = '#FFFFFF', fg = '#3a3079' },
+            { bg = '#000000', fg = '#eb67f9' },
+            { bg = '#FFFFFF', fg = '#0c4152' },
+            { bg = '#000000', fg = '#6d7ddb' },
+            { bg = '#FFFFFF', fg = '#9b1b5c' },
+            { bg = '#000000', fg = '#d4a07f' },
+            { bg = '#FFFFFF', fg = '#5f2e0d' },
+            { bg = '#000000', fg = '#fd2c3b' },
+            { bg = '#FFFFFF', fg = '#900e08' },
+            { bg = '#000000', fg = '#ea6b12' },
+            { bg = '#FFFFFF', fg = '#464a15' },
+            { bg = '#000000', fg = '#daa218' },
         }
     end
     -- dark mode
     return {
-        { bg = '#FFFFFF', fg = '#00A6ED' },
-        { bg = '#FFFFFF', fg = '#5FAD56' },
-        { bg = '#000000', fg = '#97CC04' },
-        { bg = '#000000', fg = '#98fc03' },
-        { bg = '#000000', fg = '#BDBEA9' },
-        { bg = '#000000', fg = '#CE6D8B' },
-        { bg = '#000000', fg = '#D4C2FC' },
-        { bg = '#000000', fg = '#DDA15E' },
-        { bg = '#000000', fg = '#E6E6E6' },
-        { bg = '#000000', fg = '#E9D758' },
-        { bg = '#000000', fg = '#F45D01' },
-        { bg = '#000000', fg = '#F78154' },
-        { bg = '#000000', fg = '#FFD447' },
-        { bg = '#000000', fg = '#c0dbf5' },
-        { bg = '#000000', fg = '#c0f5c8' },
-        { bg = '#000000', fg = '#c0f5f1' },
-        { bg = '#000000', fg = '#ccc0f5' },
-        { bg = '#000000', fg = '#dff5c0' },
-        { bg = '#000000', fg = '#f2c0f5' },
-        { bg = '#000000', fg = '#f5eac0' },
+        { bg = '#FFFFFF', fg = '#8138fc' },
+        { bg = '#000000', fg = '#f3d426' },
+        { bg = '#000000', fg = '#68affc' },
+        { bg = '#000000', fg = '#fda547' },
+        { bg = '#FFFFFF', fg = '#516a9c' },
+        { bg = '#000000', fg = '#47faf4' },
+        { bg = '#000000', fg = '#399283' },
+        { bg = '#000000', fg = '#a2e67c' },
+        { bg = '#000000', fg = '#598322' },
+        { bg = '#000000', fg = '#bfdad4' },
+        { bg = '#000000', fg = '#21a708' },
+        { bg = '#000000', fg = '#44f270' },
+        { bg = '#FFFFFF', fg = '#565bd9' },
+        { bg = '#000000', fg = '#fcc2fb' },
+        { bg = '#FFFFFF', fg = '#c20da6' },
+        { bg = '#000000', fg = '#bd7ab4' },
+        { bg = '#000000', fg = '#fe79ec' },
+        { bg = '#FFFFFF', fg = '#876341' },
+        { bg = '#000000', fg = '#dc3c07' },
+        { bg = '#000000', fg = '#fa557a' },
     }
 end
 
@@ -1441,7 +1441,6 @@ addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'    
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
 addPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                       }
 addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
-addPlugin { 'decaycs/decay.nvim',                      event = 'User decay'                                            }
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                             }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
 addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
@@ -1493,22 +1492,20 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'visual_studio_code',   '_'                               }
 -- dark  { 'vn-night',             '_', post = fixVnNight            }
 -- dark  { 'zephyrium',            '_'                               }
--- darkT { 'NeoSolarized',         '_'                                }
--- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
--- darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
--- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
--- darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
--- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
--- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
--- darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
--- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
--- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
--- darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
--- darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
+darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
+darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
+darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
+darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
+darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
+darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
+darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
+darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
+darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
+darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
+darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
 -- light { 'ayu-light',            'ayu'                              }
 -- light { 'catppuccin-latte',     'catppuccin'                                           }
-light { 'decay',                '_'                                                    }
-light { 'edge',                 '_' }
+-- light { 'edge',                 '_' }
 -- light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 -- light { 'monokai-nightasty',    '_' }
 -- light { 'onelight',             '_'          }
@@ -2311,6 +2308,7 @@ addPlugin {
                 return { 'lsp', 'treesitter' }
             end
         })
+
         -- FEAT: Mapping to peek folded lines
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
@@ -2359,39 +2357,27 @@ addPlugin {
     cmd = 'ToggleBlame'
 }
 
--- TODO:
-addPlugin {
-    -- https://magit.vc/
-    'NeogitOrg/neogit',
-    cmd = 'Neogit',
-    config = true
-}
-
 addPlugin {
     'aaronhallaert/advanced-git-search.nvim',
+    cmd = 'AdvancedGitSearch',
     config = function()
-        -- optional: setup telescope before loading the extension
-        require('telescope').setup{
-            -- move this to the place where you call the telescope setup function
+        local telescope = require('telescope')
+        telescope.setup({
             extensions = {
                 advanced_git_search = {
-                    -- fugitive or diffview
                     diff_plugin = 'diffview',
-                    -- customize git in previewer
-                    -- e.g. flags such as { '--no-pager' }, or { '-c', 'delta.side-by-side=false' }
                     git_flags = {},
-                    -- customize git diff in previewer
-                    -- e.g. flags such as { '--raw' }
                     git_diff_flags = {},
-                    -- Show builtin git pickers when executing 'show_custom_functions' or :AdvancedGitSearch
                     show_builtin_git_pickers = true,
                 }
             }
-        }
+        })
 
-        require('telescope').load_extension('advanced_git_search')
-    end
+        telescope.load_extension('advanced_git_search')
+    end,
+    dependencies = { 'nvim-telescope/telescope.nvim' }
 }
+-- TODO:
 -- https://github.com/akinsho/git-conflict.nvim
 -- https://github.com/chrisgrieser/nvim-tinygit
 
