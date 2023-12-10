@@ -1505,15 +1505,15 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 -- darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 -- darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
-light { 'ayu-light',            'ayu'                              }
-light { 'catppuccin-latte',     'catppuccin'                                           }
+-- light { 'ayu-light',            'ayu'                              }
+-- light { 'catppuccin-latte',     'catppuccin'                                           }
 light { 'decay',                '_'                                                    }
 light { 'edge',                 '_' }
-light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
-light { 'monokai-nightasty',    '_' }
-light { 'onelight',             '_'          }
-light { 'onenord',              '_'          }
-light { 'oxocarbon',            '_'          }
+-- light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
+-- light { 'monokai-nightasty',    '_' }
+-- light { 'onelight',             '_'          }
+-- light { 'onenord',              '_'          }
+-- light { 'oxocarbon',            '_'          }
 -- light { 'tokyonight-day',       'tokyonight'                                 }
 
 ---Random colorscheme
