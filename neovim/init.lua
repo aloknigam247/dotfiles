@@ -2380,6 +2380,7 @@ addPlugin {
 -- TODO:
 addPlugin {
     -- FIX: git diff
+    -- .\AppData\Local\nvim-data\lazy\gitsigns.nvim\lua\gitsigns\git.lua:517
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
     dependencies = { 'luukvbaal/statuscol.nvim' },
