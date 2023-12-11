@@ -2247,13 +2247,13 @@ addPlugin {
                         return (' ' .. next_line):gsub('%s+', ' ')
                     end
                     next_line = next_line:gsub('"""$', ''):gsub("'''$", ''):gsub('%s+$', '')
-                    return (next_line .. cur_line):gsub('%s+', ' ') -- FEAT: use endline content
+                    return (next_line .. cur_line):gsub('%s+', ' ')
                 end
 
                 -- for
                 -- """ docstring
                 if cur_line:find('^%s*[\'"]+') then
-                    return cur_line:gsub('[^"^\']', '') -- FEAT: use endline content
+                    return cur_line:gsub('[^"^\']', '')
                 end
 
                 -- for
