@@ -1496,9 +1496,9 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 -- dark  { 'zephyrium',            '_'                               }
 darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
 darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
-darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
+-- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
-darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
+-- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
 -- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
@@ -2442,20 +2442,6 @@ addPlugin {
 }
 
 -- TODO:
-addPlugin {
-    'rhysd/git-messenger.vim',
-    config = function()
-        vim.g.git_messenger_floating_win_opts = { ['border'] = 'rounded' }
-        -- vim.g.git_messenger_include_diff = 'current'
-        vim.g.git_messenger_max_popup_height = 20
-        vim.g.git_messenger_max_popup_width = 80
-        vim.g.git_messenger_popup_content_margins = false
-    end,
-    cmd = "GitMessenger"
-}
-
--- https://github.com/ruifm/gitlinker.nvim
-
 addPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
