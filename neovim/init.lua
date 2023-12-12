@@ -2441,7 +2441,6 @@ addPlugin {
     }
 }
 
--- TODO:
 addPlugin {
     'sindrets/diffview.nvim',
     cmd = "DiffviewOpen"
@@ -2456,14 +2455,11 @@ addPlugin {
             cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
             cp       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cp'        },
             cpp      = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cpp'       },
-            cs       = { color = '#596706', cterm_color = '58',  icon = '', name = 'Cs'        },
-            csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    }, -- TODO: remove now
-            csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
+            cs       = { color = '#C20DA6', cterm_color = '58',  icon = '', name = 'Cs'        },
+            csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
+            csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
             md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
             mdx      = { color = '#519ABA', cterm_color = '67',  icon = '', name = 'Mdx'       },
-            norg     = { color = '#40916C', cterm_color = '48',  icon = '', name = 'Neorg'     },
-            ps1      = { color = '#4D5A5E', cterm_color = '240', icon = '', name = 'PromptPs1' },
-            yaml     = { color = '#f44336', cterm_color = '203', icon = '󰙅', name = 'Yaml'      },
         }
     }
 }
@@ -2479,6 +2475,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 -- https://github.com/Darazaki/indent-o-matic
 addPlugin {
     'lukas-reineke/indent-blankline.nvim',
