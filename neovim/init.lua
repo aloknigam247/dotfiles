@@ -882,8 +882,10 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Overlength line marker',
         callback = function()
-            vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
-            vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
+            if vim.bo.textwidth > 0 then
+                vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
+                vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
+            end
         end
     }
 )
@@ -1497,10 +1499,10 @@ darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = t
 darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
-darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
+-- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
-darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
+-- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
 -- light { 'ayu-light',            'ayu'                              }
@@ -2377,7 +2379,7 @@ addPlugin {
     end,
     dependencies = { 'nvim-telescope/telescope.nvim' }
 }
--- TODO:
+
 addPlugin {
     -- https://github.com/lewis6991/gitsigns.nvim/issues/927
     'lewis6991/gitsigns.nvim',
@@ -2413,16 +2415,15 @@ addPlugin {
             end
 
             -- Navigation
-            -- show inline preview of diff on jump
             map('n', ']c', function()
                 if vim.wo.diff then return ']c' end
-                vim.schedule(function() gs.next_hunk() end)
+                vim.schedule(function() gs.next_hunk({preview = true}) end)
                 return '<Ignore>'
             end, {expr=true})
 
             map('n', '[c', function()
                 if vim.wo.diff then return '[c' end
-                vim.schedule(function() gs.prev_hunk() end)
+                vim.schedule(function() gs.prev_hunk({preview = true}) end)
                 return '<Ignore>'
             end, {expr=true})
         end,
@@ -2440,6 +2441,7 @@ addPlugin {
     }
 }
 
+-- TODO:
 addPlugin {
     'rhysd/git-messenger.vim',
     config = function()
