@@ -1251,7 +1251,7 @@ addPlugin {
             keywords = {
                 DOCME  = { icon = '', color = 'docs' },
                 FEAT   = { icon = '󱩑', color = 'feat' },
-                FIX    = { icon = '', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
+                FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
                 HACK   = { icon = '󰑶', color = 'hint' },
                 NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
                 PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
@@ -1269,12 +1269,6 @@ addPlugin {
         { '[t', function() require('todo-comments').jump_prev() end, desc = 'Previous TODO' },
         { ']t', function() require('todo-comments').jump_next() end, desc = 'Next TODO' }
     }
-}
-
-addPlugin {
-    'kevinhwang91/nvim-hlslens', -- FIX: ufo loading
-    keys = { 'n', 'N', '*', '#', 'g*', 'g#' },
-    opts = { calm_down = true }
 }
 
 addPlugin {
@@ -1488,7 +1482,7 @@ darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = t
 -- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
 -- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
-darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
+-- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 -- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
@@ -2538,7 +2532,7 @@ addPlugin {
     -- 'Wansmer/symbol-usage.nvim',
     'VidocqH/lsp-lens.nvim',
     event = 'LspAttach',
-    opts = { -- TODO: accomodate new changes for symbolkind
+    opts = {
         enable = true,
         include_declaration = false, -- Reference include declaration
         hide_zero_counts = true, -- Hide lsp sections which have no content
@@ -2573,12 +2567,12 @@ addPlugin {
     }
 }
 
--- TODO:
 addPlugin {
     'hinell/lsp-timeout.nvim',
     event = 'LspAttach'
 }
 
+-- TODO:
 -- https://github.com/iamcco/diagnostic-languageserver
 
 addPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/neovim/comments/158404z/is_lspinlayhintsnvim_still_relevant/
