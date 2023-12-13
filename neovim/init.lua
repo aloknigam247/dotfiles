@@ -1485,7 +1485,7 @@ darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E
 -- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 -- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
-darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
+-- darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
 -- light { 'ayu-light',            'ayu'                              }
 -- light { 'catppuccin-latte',     'catppuccin'                                           }
 -- light { 'edge',                 '_' }
@@ -2572,19 +2572,6 @@ addPlugin {
     event = 'LspAttach'
 }
 
--- TODO:
--- https://github.com/iamcco/diagnostic-languageserver
-
-addPlugin { -- resolve usage with vim.lsp.inlay_hint() https://www.reddit.com/r/neovim/comments/158404z/is_lspinlayhintsnvim_still_relevant/
-    'lvimuser/lsp-inlayhints.nvim',
-    branch = 'anticonceal',
-    event = 'LspAttach',
-    -- config = true,
-    opts = {
-        only_current_line = true,
-    }
-}
-
 -- https://github.com/mattn/efm-langserver
 -- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
@@ -2594,11 +2581,14 @@ addPlugin {
     cmd = 'Mason',
     opts = {
         ui = {
-            border = 'rounded'
+            border = 'rounded',
+            height = 0.8,
+            width = 0.8,
         }
     }
 }
 
+-- TODO:
 addPlugin {
     'williamboman/mason-lspconfig.nvim',
     config = function()
@@ -2612,7 +2602,7 @@ addPlugin {
         -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
         local on_attach = function(client, bufnr)
-            require('lsp-inlayhints').on_attach(client, bufnr)
+            vim.lsp.inlay_hint.enable(bufnr, true)
             -- require('lsp_signature').on_attach({ hint_enable = false, noice = false }, bufnr)
 
             -- Mappings.
