@@ -2588,23 +2588,14 @@ addPlugin {
     }
 }
 
--- TODO:
 addPlugin {
     'williamboman/mason-lspconfig.nvim',
     config = function()
         local mason_lspconfig = require('mason-lspconfig')
         mason_lspconfig.setup()
-        -- vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
-        local opts = { noremap=true, silent=true }
-        -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-        -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
         local on_attach = function(client, bufnr)
             vim.lsp.inlay_hint.enable(bufnr, true)
-            -- require('lsp_signature').on_attach({ hint_enable = false, noice = false }, bufnr)
-
+            -- TODO:
             -- Mappings.
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
             vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
@@ -2645,37 +2636,7 @@ addPlugin {
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
-                if server_name == 'powershell_es' then
-                    lspconfig.powershell_es.setup {
-                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1"},
-                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services" -LogPath "./powershell_es.log" -SessionDetailsPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal'},
-                        -- cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices/Start-EditorServices.ps1 -BundledModulesPath "C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services/PowerShellEditorServices" -LogPath "./powershell_es.log" -SessionDetailsPath "./powershell_es.session.json" -FeatureFlags @() -AdditionalModules @() -HostName "nvim" -HostProfileId 0 -HostVersion 1.0.0 -Stdio -LogLevel Normal -EnableConsoleRepl'},
-                        cmd = {'pwsh', '-NoLogo', '-NoProfile', '-Command', "Import-Module 'C:\\Users\\aloknigam\\AppData\\Local\\nvim-data\\mason\\packages\\powershell-editor-services\\PowerShellEditorServices\\PowerShellEditorServices.psd1'; Start-EditorServices -HostName 'Visual Studio Code Host' -HostProfileId 'Microsoft.VSCode' -HostVersion '2022.12.1' -AdditionalModules @('PowerShellEditorServices.VSCode') -BundledModulesPath 'c:\\Users\\aloknigam\\.vscode\\extensions\\ms-vscode.powershell-2022.12.1\\modules' -EnableConsoleRepl -LogLevel 'Normal' -LogPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\logs\\1671314645-cea5c434-0147-4205-b2be-5907f5a8b7de1671314642966\\EditorServices.log' -SessionDetailsPath 'c:\\Users\\aloknigam\\AppData\\Roaming\\Code\\User\\globalStorage\\ms-vscode.powershell\\sessions\\PSES-VSCode-39524-314832.json' -FeatureFlags @() -Stdio"},
-                        -- bundle_path = 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/powershell-editor-services',
-                        capabilities = capabilities,
-                        root_dir = function() return vim.fn.getcwd() end,
-                        handlers = handlers,
-                        on_attach = on_attach
-                    }
-                elseif server_name == 'omnisharp' then
-                    lspconfig.omnisharp.setup {
-                        cmd = { 'dotnet', 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp/OmniSharp.dll'},
-                        capabilities = capabilities,
-                        handlers = handlers,
-                        on_attach = on_attach,
-                        enable_ms_build_load_projects_on_demand = true,
-                        organize_imports_on_format = true
-                    }
-                elseif server_name == 'omnisharp_mono' then
-                    lspconfig.omnisharp_mono.setup {
-                        cmd = { 'C:/Users/aloknigam/AppData/Local/nvim-data/mason/packages/omnisharp-mono/OmniSharp.exe'},
-                        capabilities = capabilities,
-                        handlers = handlers,
-                        on_attach = on_attach,
-                        enable_ms_build_load_projects_on_demand = true,
-                        organize_imports_on_format = true
-                    }
-                elseif server_name == 'lua_ls' then
+                if server_name == 'lua_ls' then
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
                         handlers = handlers,
