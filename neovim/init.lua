@@ -198,7 +198,6 @@ Icons = {
     border_topright    = '╮',
     border_vert        = '│',
     code_action        = ' ',
-    collapse           = ' ',
     diagnostic         = ' ',
     diff_add           = '┃',
     diff_change        = '║',
@@ -206,7 +205,6 @@ Icons = {
     diff_delete        = '',
     diff_delete_top    = '‾',
     error              = ' ',
-    expand             = ' ',
     file_modified      = '',
     file_newfile       = '',
     file_readonly      = '',
@@ -1026,24 +1024,6 @@ vim.fn.matchadd(
     Hl_priority.url
 )
 -- <~>
--- PopUps</>
----------
-popupMenuAdd({
-    cond = isLspAttached,
-    opts = {
-        {'Code Action              ',  '<Cmd>CodeActionMenu<CR>'},
-        {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
-        {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
-        {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
-        {'Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>'},
-        {'LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>'},
-        {'Peek Definition        gp',  '<Cmd>Lspsaga peek_definition<CR>'},
-        {'References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>'},
-        {'Rename                 F2',  '<Cmd>Lspsaga rename<CR>'},
-        {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
-    }
-})
--- <~>
 -- Commands</>
 -----------
 vim.api.nvim_create_user_command(
@@ -1497,7 +1477,7 @@ darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 -- light { 'tokyonight-day',       'tokyonight'                                 }
 
 ---Random colorscheme
----@param scheme_index integer Index of colorscheme
+---@param scheme_index? integer Index of colorscheme
 function ColoRand(scheme_index)
     math.randomseed(os.time())
     scheme_index = scheme_index or math.random(1, #colos)
@@ -2555,7 +2535,6 @@ addPlugin {
         },
         separator = " 󰧞 ",
         target_symbol_kinds = {
-            vim.lsp.protocol.SymbolKind.Class,
             vim.lsp.protocol.SymbolKind.Function,
             vim.lsp.protocol.SymbolKind.Method,
         },
@@ -2592,47 +2571,54 @@ addPlugin {
     'williamboman/mason-lspconfig.nvim',
     config = function()
         local mason_lspconfig = require('mason-lspconfig')
-        mason_lspconfig.setup()
-        local on_attach = function(client, bufnr)
+        local on_attach = function(_, bufnr)
             vim.lsp.inlay_hint.enable(bufnr, true)
-            -- TODO:
+
             -- Mappings.
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
-            vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<F12>', '<cmd>Lspsaga goto_definition<CR>', bufopts)
             vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
+            vim.keymap.set('n', '<M-F12>', '<cmd>Lspsaga finder<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
-            vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, bufopts)
-            -- vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
+            vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
+            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
             vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
             vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
-            vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', bufopts) -- Try Lspsaga peek_definition
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', bufopts)
             vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
-            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-            vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-            vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-            vim.keymap.set('n', '<space>wl', function()
-                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, bufopts)
-            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-            vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
         end
 
-        -- LSP settings (for overriding per client)
+        popupMenuAdd({
+            cond = isLspAttached,
+            opts = {
+                {'Code Action              ',  '<Cmd>CodeActionMenu<CR>'},
+                {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
+                {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
+                {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
+                {'Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>'},
+                {'LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>'},
+                {'Peek Definition        gp',  '<Cmd>Lspsaga peek_definition<CR>'},
+                {'References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>'},
+                {'Rename                 F2',  '<Cmd>Lspsaga rename<CR>'},
+                {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
+            }
+        })
+
+        mason_lspconfig.setup()
         local handlers = {
-            -- ['textDocument/hover'] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border_shape}),
-            -- ['textDocument/signatureHelp'] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border_shape}), -- disable in favour of Noice
             ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
             ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
         }
 
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
         capabilities.textDocument.foldingRange = {
             dynamicRegistration = false,
             lineFoldingOnly = true
         }
+
         mason_lspconfig.setup_handlers {
             function (server_name)
                 local lspconfig = require('lspconfig')
@@ -2684,40 +2670,54 @@ addPlugin {
             frequency = 7,
         },
         code_action = {
-            num_shortcut = true,
-            show_server_name = true,
+            extend_gitsigns = true,
             keys = {
                 quit = 'q',
                 exec = '<CR>',
             },
+            num_shortcut = true,
+            show_server_name = true,
         },
         definition = {
             edit = 'o',
-            vsplit = '<C-v>',
+            quit = 'q',
             split = '<C-s>',
             tabe = '<C-t>',
-            quit = 'q',
+            vsplit = '<C-v>',
         },
         diagnostic = {
-            show_code_action = false,
-            show_source = true,
-            jump_num_shortcut = true,
-            max_width = 0.7,
             custom_fix = nil,
             custom_msg = nil,
-            text_hl_follow = false,
+            extend_relatedInformation = true,
+            jump_num_shortcut = true,
             keys = {
                 exec_action = 'o',
                 quit = 'q',
                 go_action = 'g'
             },
+            max_width = 0.7,
+            show_code_action = false,
+            show_source = true,
+            text_hl_follow = false,
         },
         finder = {
-            open = {'o', '<CR>'},
-            vsplit = '<C-v>',
+            default = 'tyd+ref+imp+def',
+            open = {
+                'o',
+                '<CR>',
+            },
+            quit = {
+                'q',
+                '<ESC>',
+            },
             split = '<C-s>',
             tabe = '<C-t>',
-            quit = {'q', '<ESC>'},
+            vsplit = '<C-v>',
+        },
+        implement = {
+            enable = true,
+            sign = true,
+            virtual_text = true
         },
         lightbulb = {
             enable = true,
@@ -2727,30 +2727,28 @@ addPlugin {
             virtual_text = true,
         },
         outline = {
-            win_position = 'right',
-            win_with = '',
-            win_width = 30,
-            show_detail = true,
             auto_preview = true,
             auto_refresh = true,
-            auto_close = true,
-            custom_sort = nil,
+            detail = true,
             keys = {
                 jump = 'o',
                 expand_collapse = 'u',
                 quit = 'q',
             },
+            win_position = 'right',
+            win_width = 30,
         },
         preview = {
             lines_above = 0,
             lines_below = 10,
         },
         rename = {
-            quit = '<C-c>',
-            exec = '<CR>',
-            mark = 'x',
             confirm = '<CR>',
             in_select = true,
+            keys = {
+                quit = '<C-c>',
+                exec = '<CR>',
+            }
         },
         request_timeout = 2000,
         scroll_preview = {
@@ -2759,26 +2757,17 @@ addPlugin {
         },
         symbol_in_winbar = {
             enable = false,
-            separator = ' ',
-            hide_keyword = true,
-            show_file = true,
-            folder_level = 2,
-            respect_root = false,
-            color_mode = true,
         },
         ui = {
-            border      = 'rounded',
+            actionfix = ' ',
+            border = 'rounded',
             code_action = Icons.code_action,
-            collapse    = Icons.collapse,
-            diagnostic  = Icons.diagnostic,
-            expand      = Icons.expand,
-            hover       = Icons.hover,
-            incoming    = Icons.incoming,
-            outgoing    = Icons.outgoing,
-            preview     = Icons.preview,
-            theme       = 'round',
-            title       = true,
-            winblend    = 20,
+            collapse = '',
+            devicon = true,
+            diagnostic = Icons.diagnostic,
+            expand = '',
+            hover = Icons.hover,
+            incoming = Icons.incoming,
             kind = {
                 Array         = { Icons.Array,         'CmpItemKindArray',        },
                 Boolean       = { Icons.Boolean,       'CmpItemKindBoolean',      },
@@ -2815,7 +2804,11 @@ addPlugin {
                 Unit          = { Icons.Unit,          'CmpItemKindUnit',         },
                 Value         = { Icons.Value,         'CmpItemKindValue',        },
                 Variable      = { Icons.Variable,      'CmpItemKindVariable',     },
-            }
+            },
+            lines = { '╰', '├', '│', '─', '╭' },
+            outgoing = Icons.outgoing,
+            preview = Icons.preview,
+            title  = true,
         }
     }
 }
@@ -2823,30 +2816,18 @@ addPlugin {
 addPlugin {
     'j-hui/fidget.nvim',
     opts = {
-        text = {
-            done = '󰄴',
-            spinner = 'arc'
+        progress = {
+            ignore_done_already = false,
+            ignore_empty_message = false,
+            suppress_on_insert = true,
         }
     },
-    event = 'LspAttach',
-    tag = 'legacy'
-}
-
-addPlugin {
-    'jayp0521/mason-null-ls.nvim',
-    config = function ()
-        local mnls = require('mason-null-ls')
-        mnls.setup({
-            automatic_setup = true,
-            handlers = {}
-        })
-    end,
-    dependencies = { 'jose-elias-alvarez/null-ls.nvim', config = true },
     event = 'LspAttach'
 }
 
-addPlugin { 'p00f/clangd_extensions.nvim' }
+-- addPlugin { 'p00f/clangd_extensions.nvim' }
 
+-- TODO:
 addPlugin {
     'ray-x/navigator.lua',
     config = true,
@@ -2857,7 +2838,7 @@ addPlugin {
 }
 
 addPlugin {
-        'simrat39/symbols-outline.nvim', -- check outline.nvim from TWIN for alternative
+    'simrat39/symbols-outline.nvim', -- check outline.nvim from TWIN for alternative
     cmd = 'SymbolsOutline',
     opts = {
         highlight_hovered_item = true,
@@ -2942,6 +2923,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 -- https://github.com/iamcco/markdown-preview.nvim
 
 addPlugin {
