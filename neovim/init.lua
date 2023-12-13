@@ -604,19 +604,6 @@ function LightenDarkenColor(col, amt)
     return res
 end
 
----Check if table contains item
----@param table table Loopup table
----@param item any item to find
----@return any? # item found or nil
-local function tableContains(table, item)
-    for _,k in ipairs(table) do
-        if k == item then
-            return item
-        end
-    end
-    return nil
-end
-
 ---Safe alternative to `nvim_open_win()`
 ---@param bufnr integer Buffer to display, or 0 for current buffer
 ---@param enter boolean Enter the window (make it the current window)
@@ -2475,8 +2462,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
--- https://github.com/Darazaki/indent-o-matic
 addPlugin {
     'lukas-reineke/indent-blankline.nvim',
     event = 'CursorHold',
@@ -2523,18 +2508,7 @@ addPlugin {
             },
             exclude = {
                 language = {},
-                node_type = {
-                    -- ['*'] = {
-                    --     'source_file',
-                    --     'program',
-                    -- },
-                    -- lua = {
-                    --     'chunk',
-                    -- },
-                    -- python = {
-                    --     'module',
-                    -- },
-                },
+                node_type = {},
             },
         },
         exclude = {
@@ -2560,11 +2534,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/Decodetalkers/csharpls-extended-lsp.nvim
--- https://github.com/Hoffs/omnisharp-extended-lsp.nvim
-
 addPlugin {
-    -- https://github.com/Wansmer/symbol-usage.nvim
+    -- 'Wansmer/symbol-usage.nvim',
     'VidocqH/lsp-lens.nvim',
     event = 'LspAttach',
     opts = { -- TODO: accomodate new changes for symbolkind
@@ -2589,6 +2560,11 @@ addPlugin {
             end ]]
         },
         separator = " 󰧞 ",
+        target_symbol_kinds = {
+            vim.lsp.protocol.SymbolKind.Class,
+            vim.lsp.protocol.SymbolKind.Function,
+            vim.lsp.protocol.SymbolKind.Method,
+        },
         decorator = function(line)
             line = '󰧶 ' .. line
             return line
@@ -2597,8 +2573,8 @@ addPlugin {
     }
 }
 
+-- TODO:
 addPlugin {
-    -- https://github.com/Zeioth/garbage-day.nvim
     'hinell/lsp-timeout.nvim',
     event = 'LspAttach'
 }
@@ -2781,7 +2757,6 @@ addPlugin {
             show_code_action = false,
             show_source = true,
             jump_num_shortcut = true,
-            --1 is max
             max_width = 0.7,
             custom_fix = nil,
             custom_msg = nil,
@@ -2937,7 +2912,7 @@ addPlugin {
 }
 
 addPlugin {
-    'simrat39/symbols-outline.nvim',
+        'simrat39/symbols-outline.nvim', -- check outline.nvim from TWIN for alternative
     cmd = 'SymbolsOutline',
     opts = {
         highlight_hovered_item = true,
@@ -4569,7 +4544,7 @@ addPlugin {
 
 addPlugin {
     -- Lua copy https://github.com/ojroques/nvim-osc52
-    'ojroques/vim-oscyank',
+    'ojroques/vim-oscyank', -- FIX: not needed now, check TWIN page
     cond = function()
         -- Check if connection is ssh
         return vim.env.SSH_CLIENT ~= nil
