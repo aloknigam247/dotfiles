@@ -1432,12 +1432,12 @@ dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
 dark  { 'ayu-dark',             'ayu'                              }
 dark  { 'ayu-mirage',           'ayu'                              }
 dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
-dark  { 'bluloco-dark',         '_'                                                    }
+-- dark  { 'bluloco-dark',         '_'                                                    }
 dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
 dark  { 'darcula-solid',        '_'                                                    }
 dark  { 'duskfox',              'nightfox'                                             }
 dark  { 'edge',                 '_' }
-dark  { 'everforest',           '_' }
+-- dark  { 'everforest',           '_' }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 dark  { 'melange',              '_' }
@@ -1452,7 +1452,7 @@ dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shu
 dark  { 'tokyodark',            '_'                                          }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 dark  { 'visual_studio_code',   '_'                               }
-dark  { 'vn-night',             '_', post = fixVnNight            }
+-- dark  { 'vn-night',             '_', post = fixVnNight            }
 dark  { 'zephyrium',            '_'                               }
 -- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
 -- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
@@ -2272,7 +2272,7 @@ addPlugin {
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
-    dependencies = 'kevinhwang91/promise-async'
+    dependencies = {'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim'}
 }
 
 -- <~>
@@ -2845,14 +2845,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
-addPlugin {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-}
-
+-- addPlugin { 'iamcco/markdown-preview.nvim', }
 addPlugin {
     'toppair/peek.nvim',
     build = 'deno task --quiet build:fast',
@@ -2871,28 +2864,26 @@ addPlugin {
     'yaocccc/nvim-hl-mdcodeblock.lua',
     config = function ()
         require('hl-mdcodeblock').setup({
-            events = {                  -- refresh event
+            events = {
                 "BufEnter",
                 "InsertLeave",
                 "TextChanged",
-                -- "TextChangedI",
                 "WinScrolled"
             },
-            hl_group = "MDCodeBlock",   -- default highlight group
-            -- minumum_len = function () return math.max(math.floor(vim.api.nvim_win_get_width(0) * 0.8), 100) end
-            minumum_len = 10,           -- minimum len to highlight (number | function)
-            padding_right = 1,          -- always append 4 space at lineend
-            query_by_ft = {             -- special parser query by filetype
-                markdown = {            -- filetype
-                    'markdown',         -- parser
-                    '(fenced_code_block) @codeblock', -- query
+            hl_group = "MDCodeBlock",
+            minumum_len = 10,
+            padding_right = 1,
+            query_by_ft = {
+                markdown = {
+                    'markdown',
+                    '(fenced_code_block) @codeblock',
                 },
-                rmd = {                 -- filetype
-                    'markdown',         -- parser
-                    '(fenced_code_block) @codeblock', -- query
+                rmd = {
+                    'markdown',
+                    '(fenced_code_block) @codeblock',
                 },
             },
-            timer_delay = 300,           -- refresh delay(ms)
+            timer_delay = 300,
         })
         vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = adaptiveBG(30, -10) })
         require('hl-mdcodeblock').refresh()
@@ -2900,7 +2891,6 @@ addPlugin {
     dependencies = "nvim-treesitter/nvim-treesitter",
     event = 'CursorHold *.md'
 }
-
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
@@ -2956,10 +2946,10 @@ addPlugin {
 }
 
 -- https://github.com/cbochs/grapple.nvim
-addPlugin {
-    'kshenoy/vim-signature',
-    cmd = 'SignatureToggle'
-}
+-- addPlugin {
+--     'kshenoy/vim-signature',
+--     cmd = 'SignatureToggle'
+-- }
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
@@ -2993,104 +2983,105 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- |-----------------+-----------------------------------------------------------|
--- | Command         | Explaination                                              |
--- |-----------------+-----------------------------------------------------------|
--- | cc [n]          | jump to n quickfix, if n is omitted jump to current again |
--- | [c]cn           | jump to next quickfix, with [c] jump to next [c]          |
--- | [c]cp           | jump to previous quickfix, with [c] jump to previous [c]  |
--- | cf file         | read error from file into quickfix                        |
--- | cb              | read error list from current buffer                       |
--- | cdo cmd         | execute cmd on each quickfix                              |
--- | Cfilter[!] patt | Filter quickfix for patt, with ! filter for unmatched     |
--- | col [c]         | Go to previous quickfix windows, c for count              |
--- | cnew [c]        | Go to next quickfix windows, c for count                  |
--- | chi             | Show list of quickfix window history                      |
--- |-----------------+-----------------------------------------------------------|
-
+--[[ Guide
+|-----------------+-----------------------------------------------------------|
+| Command         | Explaination                                              |
+|-----------------+-----------------------------------------------------------|
+| Cfilter[!] patt | Filter quickfix for patt, with ! filter for unmatched     |
+| [c]cn           | jump to next quickfix, with [c] jump to next [c]          |
+| [c]cp           | jump to previous quickfix, with [c] jump to previous [c]  |
+| cb              | read error list from current buffer                       |
+| cc [n]          | jump to n quickfix, if n is omitted jump to current again |
+| cdo cmd         | execute cmd on each quickfix                              |
+| cf file         | read error from file into quickfix                        |
+| chi             | Show list of quickfix window history                      |
+| cnew [c]        | Go to next quickfix windows, c for count                  |
+| col [c]         | Go to previous quickfix windows, c for count              |
+|-----------------+-----------------------------------------------------------|
+]]
 addPlugin {
     'folke/trouble.nvim',
     cmd = 'TroubleToggle',
     opts = {
-        position = 'bottom', -- position of the list can be: bottom, top, left, right
-        height = 10, -- height of the trouble list when position is top or bottom
-        width = 50, -- width of the list when position is left or right
-        icons = true, -- use devicons for filenames
-        mode = 'document_diagnostics', -- 'workspace_diagnostics', 'document_diagnostics', 'quickfix', 'lsp_references', 'loclist'
-        fold_open = '', -- icon used for open folds
-        fold_closed = '', -- icon used for closed folds
-        group = true, -- group results by file
-        padding = false, -- add an extra new line on top of the list
-        action_keys = { -- key mappings for actions in the trouble list
-            -- map to {} to remove a mapping, for example:
-            -- close = {},
-            close = 'q', -- close the list
-            cancel = '<esc>', -- cancel the preview and get back to your last window / buffer / cursor
-            refresh = 'r', -- manually refresh
-            jump = {'<cr>', '<tab>'}, -- jump to the diagnostic or open / close folds
-            open_split = { '<c-s>' }, -- open buffer in new split
-            open_vsplit = { '<c-v>' }, -- open buffer in new vsplit
-            open_tab = { '<c-t>' }, -- open buffer in new tab
-            jump_close = {'o'}, -- jump to the diagnostic and close the list
-            toggle_mode = 'm', -- toggle between 'workspace' and 'document' diagnostics mode
-            toggle_preview = 'P', -- toggle auto_preview
-            hover = 'K', -- opens a small popup with the full multiline message
-            preview = 'p', -- preview the diagnostic location
-            close_folds = {'zM', 'zm'}, -- close all folds
-            open_folds = {'zR', 'zr'}, -- open all folds
-            toggle_fold = {'zA', 'za'}, -- toggle fold of current file
-            previous = 'k', -- previous item
-            next = 'j' -- next item
+        action_keys = {
+            close = 'q',
+            cancel = '<esc>',
+            refresh = 'r',
+            jump = { '<cr>', '<tab>' },
+            open_split = { '<c-s>' },
+            open_vsplit = { '<c-v>' },
+            open_tab = { '<c-t>' },
+            jump_close = { 'o' },
+            toggle_mode = 'm',
+            toggle_preview = 'P',
+            hover = 'K',
+            preview = 'p',
+            close_folds = { 'zM', 'zm' },
+            open_folds = { 'zR', 'zr' },
+            toggle_fold = { 'zA', 'za' },
+            previous = 'k',
+            next = 'j',
         },
-        indent_lines = true, -- add an indent guide below the fold icons
-        auto_open = false, -- automatically open the list when you have diagnostics
-        auto_close = false, -- automatically close the list when you have no diagnostics
-        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-        auto_fold = false, -- automatically fold a file trouble list at creation
-        auto_jump = { 'lsp_definitions' }, -- for the given modes, automatically jump if there is only a single result
+        auto_close = false,
+        auto_fold = false,
+        auto_jump = { 'lsp_definitions' },
+        auto_open = false,
+        auto_preview = true,
+        fold_closed = '',
+        fold_open = '',
+        group = true,
+        height = 10,
+        icons = true,
+        indent_lines = true,
+        mode = 'document_diagnostics',
+        padding = false,
+        position = 'bottom',
         signs = {
             error = Icons.error,
             hint = Icons.hint,
             information = Icons.info,
             other = Icons.diagnostic,
-            warning = Icons.warn
+            warning = Icons.warn,
         },
-        use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
+        use_diagnostic_signs = true,
+        width = 50,
     }
 }
 
-    -- |-------------+----------------------------------------------------------+---------|
-    -- | Function    | Action                                                   | Def Key |
-    -- |-------------+----------------------------------------------------------+---------|
-    -- | open        | open the item under the cursor in quickfix window        | <CR>    |
-    -- | openc       | open the item, and close quickfix window                 | o       |
-    -- | drop        | use drop to open the item, and close quickfix window     | O       |
-    -- | tabdrop     | use tab drop to open the item, and close quickfix window |         |
-    -- | tab         | open the item in a new tab                               | t       |
-    -- | tabb        | open the item in a new tab, but stay at quickfix window  | T       |
-    -- | tabc        | open the item in a new tab, and close quickfix window    | <C-t>   |
-    -- | split       | open the item in vertical split                          | <C-s>   |
-    -- | vsplit      | open the item in horizontal split                        | <C-v>   |
-    -- | prevfile    | go to previous file under the cursor in quickfix window  | <C-p>   |
-    -- | nextfile    | go to next file under the cursor in quickfix window      | <C-n>   |
-    -- | prevhist    | go to previous quickfix list in quickfix window          | <       |
-    -- | nexthist    | go to next quickfix list in quickfix window              | >       |
-    -- | lastleave   | go to last leaving position in quickfix window           | '"      |
-    -- | stoggleup   | toggle sign and move cursor up                           | <S-Tab> |
-    -- | stoggledown | toggle sign and move cursor down                         | <Tab>   |
-    -- | stogglevm   | toggle multiple signs in visual mode                     | <Tab>   |
-    -- | stogglebuf  | toggle signs for same buffers under the cursor           | '<Tab>  |
-    -- | sclear      | clear the signs in current quickfix list                 | z<Tab>  |
-    -- | pscrollup   | scroll up half-page in preview window                    | <C-b>   |
-    -- | pscrolldown | scroll down half-page in preview window                  | <C-f>   |
-    -- | pscrollorig | scroll back to original position in preview window       | zo      |
-    -- | ptogglemode | toggle preview window between normal and max size        | zp      |
-    -- | ptoggleitem | toggle preview for an item of quickfix list              | p       |
-    -- | ptoggleauto | toggle auto preview when cursor moved                    | P       |
-    -- | filter      | create new list for signed items                         | zn      |
-    -- | filterr     | create new list for non-signed items                     | zN      |
-    -- | fzffilter   | enter fzf mode                                           | zf      |
-    -- |-------------+----------------------------------------------------------+---------|
+--[[ Guide
+|-------------+----------------------------------------------------------+---------|
+| Function    | Action                                                   | Def Key |
+|-------------+----------------------------------------------------------+---------|
+| drop        | use drop to open the item, and close quickfix window     | O       |
+| filter      | create new list for signed items                         | zn      |
+| filterr     | create new list for non-signed items                     | zN      |
+| fzffilter   | enter fzf mode                                           | zf      |
+| lastleave   | go to last leaving position in quickfix window           | '"      |
+| nextfile    | go to next file under the cursor in quickfix window      | <C-n>   |
+| nexthist    | go to next quickfix list in quickfix window              | >       |
+| open        | open the item under the cursor in quickfix window        | <CR>    |
+| openc       | open the item, and close quickfix window                 | o       |
+| prevfile    | go to previous file under the cursor in quickfix window  | <C-p>   |
+| prevhist    | go to previous quickfix list in quickfix window          | <       |
+| pscrolldown | scroll down half-page in preview window                  | <C-f>   |
+| pscrollorig | scroll back to original position in preview window       | zo      |
+| pscrollup   | scroll up half-page in preview window                    | <C-b>   |
+| ptoggleauto | toggle auto preview when cursor moved                    | P       |
+| ptoggleitem | toggle preview for an item of quickfix list              | p       |
+| ptogglemode | toggle preview window between normal and max size        | zp      |
+| sclear      | clear the signs in current quickfix list                 | z<Tab>  |
+| split       | open the item in vertical split                          | <C-s>   |
+| stogglebuf  | toggle signs for same buffers under the cursor           | '<Tab>  |
+| stoggledown | toggle sign and move cursor down                         | <Tab>   |
+| stoggleup   | toggle sign and move cursor up                           | <S-Tab> |
+| stogglevm   | toggle multiple signs in visual mode                     | <Tab>   |
+| tab         | open the item in a new tab                               | t       |
+| tabb        | open the item in a new tab, but stay at quickfix window  | T       |
+| tabc        | open the item in a new tab, and close quickfix window    | <C-t>   |
+| tabdrop     | use tab drop to open the item, and close quickfix window |         |
+| vsplit      | open the item in horizontal split                        | <C-v>   |
+|-------------+----------------------------------------------------------+---------|
+]]
 addPlugin {
     'kevinhwang91/nvim-bqf',
     config = function()
@@ -3102,30 +3093,11 @@ addPlugin {
             filter = {
                 fzf = {
                     action_for = {
-                        ['ctrl-t'] = {
-                            description = [[Press ctrl-t to open up the item in a new tab]],
-                            default = 'tabedit'
-                        },
-                        ['ctrl-v'] = {
-                            description = [[Press ctrl-v to open up the item in a new vertical split]],
-                            default = 'vsplit'
-                        },
-                        ['ctrl-s'] = {
-                            description = [[Press ctrl-x to open up the item in a new horizontal split]],
-                            default = 'split'
-                        },
-                        ['ctrl-q'] = {
-                            description = [[Press ctrl-q to toggle sign for the selected items]],
-                            default = 'signtoggle'
-                        },
-                        ['ctrl-c'] = {
-                            description = [[Press ctrl-c to close quickfix window and abort fzf]],
-                            default = 'closeall'
-                        }
-                    },
-                    extra_opts = {
-                        description = 'Extra options for fzf',
-                        default = {'--bind', 'ctrl-o:toggle-all'}
+                        ['ctrl-t'] = { default = 'tabedit' },
+                        ['ctrl-v'] = { default = 'vsplit' },
+                        ['ctrl-s'] = { default = 'split' },
+                        ['ctrl-q'] = { default = 'signtoggle' },
+                        ['ctrl-c'] = { default = 'closeall' }
                     }
                 }
             }
@@ -3159,9 +3131,11 @@ vim.api.nvim_create_user_command(
             local root = vim.fs.dirname(vim.fs.find({".git"}, {path = getCwd(), upward = true, limit = 1})[1])
             setCwd(root)
         elseif opts.args == "file" then
+            ---@diagnostic disable-next-line: param-type-mismatch
             local filepath = vim.fn.fnamemodify(vim.fn.bufname('%'), ':p:h')
             setCwd(filepath)
         elseif opts.args == "file_git" then
+            ---@diagnostic disable-next-line: param-type-mismatch
             local root = vim.fs.dirname(vim.fs.find({".git"}, {path = vim.fn.bufname('%'), upward = true, limit = 1})[1])
             setCwd(root)
         end
@@ -3223,7 +3197,8 @@ addPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %*
+-- TODO:
+addPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -3233,26 +3208,26 @@ addPlugin { -- STATUSCOL_OUT %@v:lua.ScFa@%C%T%#SignColumn#%*%=34%#SignColumn# %
             segments = {
                 -- FEAT: add click handlers
                 -- FEAT: add DAP
-                -- { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                -- { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
+                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
+                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, condition = { true } },
+                { sign = {
+                    text = {
+                        Icons.diff_add,
+                        Icons.diff_change,
+                        Icons.diff_delete,
+                        Icons.diff_delete_top,
+                        Icons.diff_change_delete,
+                    },
+                    colwidth = 1,
+                    fillcharhl = 'LineNr',
+                    wrap = true,
+                }},
                 { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
-                -- { sign = {
-                --     text = {
-                --         Icons.diff_add,
-                --         Icons.diff_change,
-                --         Icons.diff_delete,
-                --         Icons.diff_delete_top,
-                --         Icons.diff_change_delete,
-                --     },
-                --     colwidth = 1,
-                --     fillcharhl = 'LineNr',
-                --     wrap = true,
-                -- }},
             },
         })
     end,
-    enabled = false -- BUG: fix me
+    enabled = true
 }
 
 --<~>
