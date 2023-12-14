@@ -1,5 +1,6 @@
 # Auto Update
 # ```````````
+echo [Environment]::UserInteractive
 if ([Environment]::UserInteractive) {
     Start-Job {
         Set-Location ~/dotfiles
