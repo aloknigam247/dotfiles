@@ -1428,42 +1428,39 @@ addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'  
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
--- dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
--- dark  { 'ayu-dark',             'ayu'                              }
--- dark  { 'ayu-mirage',           'ayu'                              }
--- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
--- dark  { 'bamboo',               '_', cfg = { style = 'vulgaris' }                      }
--- dark  { 'bluloco-dark',         '_'                                                    }
--- dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
--- dark  { 'darcula-solid',        '_'                                                    }
--- dark  { 'duskfox',              'nightfox'                                             }
--- dark  { 'edge',                 '_' }
--- dark  { 'everforest',           '_' }
--- dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
--- dark  { 'kanagawa-wave',        'kanagawa'                                      }
--- dark  { 'melange',              '_' }
--- dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
--- dark  { 'one_monokai',          '_'          }
--- dark  { 'onedark',              'onedarkpro' }
--- dark  { 'onenord',              '_'          }
--- dark  { 'retrobox',             '_'          }
--- dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
--- dark  { 'sherbet',              '_' }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
--- dark  { 'tokyodark',            '_'                                          }
--- dark  { 'tokyonight-storm',     'tokyonight'                                 }
--- dark  { 'visual_studio_code',   '_'                               }
--- dark  { 'vn-night',             '_', post = fixVnNight            }
--- dark  { 'zephyrium',            '_'                               }
-darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
-darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = true }  }
+dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
+dark  { 'ayu-dark',             'ayu'                              }
+dark  { 'ayu-mirage',           'ayu'                              }
+dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
+dark  { 'bluloco-dark',         '_'                                                    }
+dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
+dark  { 'darcula-solid',        '_'                                                    }
+dark  { 'duskfox',              'nightfox'                                             }
+dark  { 'edge',                 '_' }
+dark  { 'everforest',           '_' }
+dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
+dark  { 'kanagawa-wave',        'kanagawa'                                      }
+dark  { 'melange',              '_' }
+dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
+dark  { 'one_monokai',          '_'          }
+dark  { 'onedark',              'onedarkpro' }
+dark  { 'onenord',              '_'          }
+dark  { 'retrobox',             '_'          }
+dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
+dark  { 'sherbet',              '_' }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
+dark  { 'tokyodark',            '_'                                          }
+dark  { 'tokyonight-storm',     'tokyonight'                                 }
+dark  { 'visual_studio_code',   '_'                               }
+dark  { 'vn-night',             '_', post = fixVnNight            }
+dark  { 'zephyrium',            '_'                               }
+-- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
 -- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
-darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
 -- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
 -- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 -- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 -- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
-darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
+-- darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 -- darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
 -- light { 'ayu-light',            'ayu'                              }
 -- light { 'catppuccin-latte',     'catppuccin'                                           }
