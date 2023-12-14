@@ -1461,7 +1461,6 @@ darkT { 'bamboo',               '_', cfg = { style = 'vulgaris', transparent = t
 darkT { 'catppuccin-macchiato', 'catppuccin', cfg = { transparent_background = true }  }
 -- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
 -- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-darkT { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } }, transparent_bg = true } }
 -- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 -- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
@@ -2268,7 +2267,7 @@ addPlugin {
         require('ufo').setup({
             fold_virt_text_handler = ufoFoldResolve,
             provider_selector = function(_, _, _)
-                return { 'lsp', 'treesitter' }
+                return 'treesitter'
             end
         })
 
@@ -2828,15 +2827,6 @@ addPlugin {
 -- addPlugin { 'p00f/clangd_extensions.nvim' }
 
 -- TODO:
-addPlugin {
-    'ray-x/navigator.lua',
-    config = true,
-    dependencies = {
-        { 'ray-x/guihua.lua', build = 'cd lua/fzy && make' }
-    },
-    -- event = 'LspAttach'
-}
-
 addPlugin {
     'simrat39/symbols-outline.nvim', -- check outline.nvim from TWIN for alternative
     cmd = 'SymbolsOutline',
@@ -4567,5 +4557,6 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require('lazy').setup(Plugins, Lazy_config)
 ColoRand()
+-- FIX: health
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120
