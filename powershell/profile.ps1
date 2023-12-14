@@ -1,29 +1,31 @@
 # Auto Update
 # ```````````
-Start-Job {
-    Set-Location ~/dotfiles
-    git pull
-    $git_status = git status --short
+if ([Environment]::UserInteractive) {
+    Start-Job {
+        Set-Location ~/dotfiles
+        git pull
+        $git_status = git status --short
 
-    if ($git_status) {
-        $dt = Get-Date
-        git add .
-        git commit -m "Updated at $dt"
-        Remove-Item .git\index.lock # fix lock error
-        git push
+        if ($git_status) {
+            $dt = Get-Date
+            git add .
+            git commit -m "Updated at $dt"
+            Remove-Item .git\index.lock # fix lock error
+            git push
 
-        # Send ballon notification
-        Add-Type -AssemblyName System.Windows.Forms
-        $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
-        $path = (Get-Process -id $pid).Path
-        $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
-        $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
-        $balmsg.BalloonTipText = " "
-        $balmsg.BalloonTipTitle = "dotfiles updated"
-        $balmsg.Visible = $true
-        $balmsg.ShowBalloonTip(20000)
-    }
-} | Out-Null
+            # Send ballon notification
+            Add-Type -AssemblyName System.Windows.Forms
+            $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
+            $path = (Get-Process -id $pid).Path
+            $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
+            $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
+            $balmsg.BalloonTipText = " "
+            $balmsg.BalloonTipTitle = "dotfiles updated"
+            $balmsg.Visible = $true
+            $balmsg.ShowBalloonTip(20000)
+        }
+    } | Out-Null
+}
 
 
 # Aliases
