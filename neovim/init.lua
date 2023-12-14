@@ -1,93 +1,93 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----@class Profile
----@field count integer Number of times an autocommand is invoked
----@field start number Start time of current autocommand
----@field avg number Avergae time taken by autocommand
----@field total number Total time taken by autocommand
----@alias ProfileData table<string, Profile>
----Constains Autocommand profiling data
----@type ProfileData?
-AuProfileData = {}
+-- ---@class Profile
+-- ---@field count integer Number of times an autocommand is invoked
+-- ---@field start number Start time of current autocommand
+-- ---@field avg number Avergae time taken by autocommand
+-- ---@field total number Total time taken by autocommand
+-- ---@alias ProfileData table<string, Profile>
+-- ---Constains Autocommand profiling data
+-- ---@type ProfileData?
+-- AuProfileData = {}
 
---@type boolean Switch to toggle Autocommand profiling
-AuProfileEnabled = false
+-- --@type boolean Switch to toggle Autocommand profiling
+-- AuProfileEnabled = false
 
----Collect autocommand data at autocommand startup, called for each event
----@param args any Autocommand callback data
-local function auProfileStart(args)
-    local event = args.event
+-- ---Collect autocommand data at autocommand startup, called for each event
+-- ---@param args any Autocommand callback data
+-- local function auProfileStart(args)
+--     local event = args.event
 
-    if AuProfileEnabled then
-        local data = AuProfileData[event] or {}
-        data['count'] = (data.count or 0) + 1
-        data['start'] = os.clock()
-        AuProfileData[event] = data
-    end
-end
+--     if AuProfileEnabled then
+--         local data = AuProfileData[event] or {}
+--         data['count'] = (data.count or 0) + 1
+--         data['start'] = os.clock()
+--         AuProfileData[event] = data
+--     end
+-- end
 
----Collect autocommand data at autocommand startup, called for each event
----@param args any Autocommand callback data
-local function auProfileEnd(args)
-    if AuProfileEnabled then
-        local data = AuProfileData[args.event]
-        if data then
-            local elapsed = os.clock() - data.start
-            local total = (data.total or 0) + elapsed
+-- ---Collect autocommand data at autocommand startup, called for each event
+-- ---@param args any Autocommand callback data
+-- local function auProfileEnd(args)
+--     if AuProfileEnabled then
+--         local data = AuProfileData[args.event]
+--         if data then
+--             local elapsed = os.clock() - data.start
+--             local total = (data.total or 0) + elapsed
 
-            data['avg'] = total / data.count
-            data['total'] = total
+--             data['avg'] = total / data.count
+--             data['total'] = total
 
-            AuProfileData[args.event] = data
-        end
-    end
-end
+--             AuProfileData[args.event] = data
+--         end
+--     end
+-- end
 
----List of all valid autocommands to profile
----@type string[]
-local event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
+-- ---List of all valid autocommands to profile
+-- ---@type string[]
+-- local event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
 
-vim.api.nvim_create_autocmd(
-    event_list, {
-        desc = 'Autocommand profile init',
-        pattern = '*',
-        callback = auProfileStart
-    }
-)
+-- vim.api.nvim_create_autocmd(
+--     event_list, {
+--         desc = 'Autocommand profile init',
+--         pattern = '*',
+--         callback = auProfileStart
+--     }
+-- )
 
-vim.api.nvim_create_user_command(
-    'ProfileAutocommand',
-    function()
-        vim.notify("Profiling started, stop by F6")
-        AuProfileEnabled = true
-        AuProfileData = {}
-        AuCallbackProfileData = {}
+-- vim.api.nvim_create_user_command(
+--     'ProfileAutocommand',
+--     function()
+--         vim.notify("Profiling started, stop by F6")
+--         AuProfileEnabled = true
+--         AuProfileData = {}
+--         AuCallbackProfileData = {}
 
-        -- Autocommand to collect end data
-        vim.api.nvim_create_autocmd(
-            event_list, {
-                desc = 'Autocommand profile record',
-                pattern = '*',
-                callback = auProfileEnd
-            }
-        )
+--         -- Autocommand to collect end data
+--         vim.api.nvim_create_autocmd(
+--             event_list, {
+--                 desc = 'Autocommand profile record',
+--                 pattern = '*',
+--                 callback = auProfileEnd
+--             }
+--         )
 
-        -- Mapping to stop autocommand profiling
-        vim.api.nvim_set_keymap('n', '<F6>', '', {
-            callback = function()
-                AuProfileEnabled = false
-                vim.cmd('profile stop')
-                vim.notify('Autocommand profiling stopped')
-            end
-        })
+--         -- Mapping to stop autocommand profiling
+--         vim.api.nvim_set_keymap('n', '<F6>', '', {
+--             callback = function()
+--                 AuProfileEnabled = false
+--                 vim.cmd('profile stop')
+--                 vim.notify('Autocommand profiling stopped')
+--             end
+--         })
 
-        vim.cmd[[
-            profile start nvim_profile
-            " profile file *
-            profile func *
-        ]]
-    end,
-    { nargs = 0 }
-)
+--         vim.cmd[[
+--             profile start nvim_profile
+--             " profile file *
+--             profile func *
+--         ]]
+--     end,
+--     { nargs = 0 }
+-- )
 
 ---@type ProfileData?
 -- AuCallbackProfileData = {}
@@ -2546,118 +2546,7 @@ addPlugin {
 }
 
 addPlugin {
-    'hinell/lsp-timeout.nvim',
-    event = 'LspAttach'
-}
-
--- https://github.com/mattn/efm-langserver
--- https://github.com/mfussenegger/nvim-lint
--- https://github.com/nkoporec/checkmate-lsp
-
-addPlugin {
-    'williamboman/mason.nvim',
-    cmd = 'Mason',
-    opts = {
-        ui = {
-            border = 'rounded',
-            height = 0.8,
-            width = 0.8,
-        }
-    }
-}
-
-addPlugin {
-    'williamboman/mason-lspconfig.nvim',
-    config = function()
-        local mason_lspconfig = require('mason-lspconfig')
-        local on_attach = function(_, bufnr)
-            vim.lsp.inlay_hint.enable(bufnr, true)
-
-            -- Mappings.
-            local bufopts = { noremap = true, silent = true, buffer = bufnr }
-            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-            vim.keymap.set('n', '<F12>', '<cmd>Lspsaga goto_definition<CR>', bufopts)
-            vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
-            vim.keymap.set('n', '<M-F12>', '<cmd>Lspsaga finder<CR>', bufopts)
-            vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
-            vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
-            vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-            vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
-            vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-            vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', bufopts)
-            vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
-        end
-
-        popupMenuAdd({
-            cond = isLspAttached,
-            opts = {
-                {'Code Action              ',  '<Cmd>CodeActionMenu<CR>'},
-                {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
-                {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
-                {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
-                {'Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>'},
-                {'LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>'},
-                {'Peek Definition        gp',  '<Cmd>Lspsaga peek_definition<CR>'},
-                {'References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>'},
-                {'Rename                 F2',  '<Cmd>Lspsaga rename<CR>'},
-                {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
-            }
-        })
-
-        mason_lspconfig.setup()
-        local handlers = {
-            ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
-            ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
-        }
-
-        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-        capabilities.textDocument.foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true
-        }
-
-        mason_lspconfig.setup_handlers {
-            function (server_name)
-                local lspconfig = require('lspconfig')
-                if server_name == 'lua_ls' then
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        handlers = handlers,
-                        on_attach = on_attach,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { 'bit', 'vim' }
-                                },
-                                hint = {
-                                    arrayIndex = "Enable",
-                                    enable = true,
-                                    setType = true
-                                },
-                                workspace = {
-                                    library = {
-                                        vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua',
-                                        vim.fn.stdpath('data') .. '/lazy/neodev.nvim/types/stable',
-                                    }
-                                }
-                            }
-                        }
-                    }
-                else
-                    lspconfig[server_name].setup {
-                        capabilities = capabilities,
-                        handlers = handlers,
-                        on_attach = on_attach
-                    }
-                end
-            end
-        }
-        vim.cmd.LspStart()
-    end,
-    dependencies = { 'luukvbaal/statuscol.nvim', 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-    keys = { '<F12>' }
+    'aznhe21/actions-preview.nvim',
 }
 
 addPlugin {
@@ -2719,7 +2608,7 @@ addPlugin {
             virtual_text = true
         },
         lightbulb = {
-            enable = true,
+            enable = false,
             enable_in_insert = true,
             sign = false,
             sign_priority = 40,
@@ -2813,6 +2702,11 @@ addPlugin {
 }
 
 addPlugin {
+    'hinell/lsp-timeout.nvim',
+    event = 'LspAttach'
+}
+
+addPlugin {
     'j-hui/fidget.nvim',
     opts = {
         progress = {
@@ -2824,92 +2718,133 @@ addPlugin {
     event = 'LspAttach'
 }
 
--- addPlugin { 'p00f/clangd_extensions.nvim' }
-
--- TODO:
 addPlugin {
-    'simrat39/symbols-outline.nvim', -- check outline.nvim from TWIN for alternative
-    cmd = 'SymbolsOutline',
+    'kosayoda/nvim-lightbulb',
+    event = 'LspAttach',
+    config = function()
+        vim.api.nvim_set_hl(0, 'LightBulbVirtualText', { fg = '#EEE600' })
+        require('nvim-lightbulb').setup({
+            autocmd = { enabled = true },
+            sign = { enabled = false, },
+            validate_config = 'never',
+            virtual_text = {
+                enabled = true,
+                text = '',
+                hl = 'LightBulbVirtualText',
+            }
+        })
+    end
+}
+
+-- https://github.com/mattn/efm-langserver
+-- https://github.com/mfussenegger/nvim-lint
+-- https://github.com/nkoporec/checkmate-lsp
+-- https://github.com/p00f/clangd_extensions.nvim'
+
+addPlugin {
+    'williamboman/mason.nvim',
+    cmd = 'Mason',
     opts = {
-        highlight_hovered_item = true,
-        show_guides = true,
-        auto_preview = false,
-        position = 'right',
-        relative_width = true,
-        width = 25,
-        auto_close = false,
-        show_numbers = false,
-        show_relative_numbers = false,
-        show_symbol_details = true,
-        preview_bg_highlight = 'Pmenu',
-        autofold_depth = nil,
-        auto_unfold_hover = true,
-        fold_markers = { '', '' },
-        wrap = false,
-        keymaps = { -- These keymaps can be a string or a table for multiple keys
-            close = {"<Esc>", "q"},
-            goto_location = "<Cr>",
-            focus_location = "o",
-            hover_symbol = "<C-space>",
-            toggle_preview = "K",
-            rename_symbol = "r",
-            code_actions = "a",
-            fold = "h",
-            unfold = "l",
-            fold_all = "W",
-            unfold_all = "E",
-            fold_reset = "R",
-        },
-        lsp_blacklist = {},
-        symbol_blacklist = {},
-        symbols = {
-            Array         = { icon = Icons.Array        , hl = 'CmpItemKindArray'         },
-            Boolean       = { icon = Icons.Boolean      , hl = 'CmpItemKindBoolean'       },
-            Class         = { icon = Icons.Class        , hl = 'CmpItemKindClass'         },
-            Component     = { icon = Icons.Component    , hl = 'CmpItemKindComponent'     },
-            Constant      = { icon = Icons.Constant     , hl = 'CmpItemKindConstant'      },
-            Constructor   = { icon = Icons.Constructor  , hl = 'CmpItemKindConstructor'   },
-            Enum          = { icon = Icons.Enum         , hl = 'CmpItemKindEnum'          },
-            EnumMember    = { icon = Icons.EnumMember   , hl = 'CmpItemKindEnumMembe'     },
-            Event         = { icon = Icons.Event        , hl = 'CmpItemKindEvent'         },
-            Field         = { icon = Icons.Field        , hl = 'CmpItemKindField'         },
-            File          = { icon = Icons.File         , hl = 'CmpItemKindFile'          },
-            Fragment      = { icon = Icons.Fragment     , hl = 'CmpItemKindFragment'      },
-            Function      = { icon = Icons.Function     , hl = 'CmpItemKindFunction'      },
-            Interface     = { icon = Icons.Interface    , hl = 'CmpItemKindInterface'     },
-            Key           = { icon = Icons.Key          , hl = 'CmpItemKindKey'           },
-            Method        = { icon = Icons.Method       , hl = 'CmpItemKindMethod'        },
-            Module        = { icon = Icons.Module       , hl = 'CmpItemKindModule'        },
-            Namespace     = { icon = Icons.Namespace    , hl = 'CmpItemKindNamespace'     },
-            Null          = { icon = Icons.Null         , hl = 'CmpItemKindNull'          },
-            Number        = { icon = Icons.Number       , hl = 'CmpItemKindNumber'        },
-            Object        = { icon = Icons.Object       , hl = 'CmpItemKindObject'        },
-            Operator      = { icon = Icons.Operator     , hl = 'CmpItemKindOperator'      },
-            Package       = { icon = Icons.Package      , hl = 'CmpItemKindPackage'       },
-            Property      = { icon = Icons.Property     , hl = 'CmpItemKindProperty'      },
-            String        = { icon = Icons.String       , hl = 'CmpItemKindString'        },
-            Struct        = { icon = Icons.Struct       , hl = 'CmpItemKindStruct'        },
-            TypeParameter = { icon = Icons.TypeParameter, hl = 'CmpItemKindTypeParameter' },
-            Variable      = { icon = Icons.Variable     , hl = 'CmpItemKindVariable'      },
+        ui = {
+            border = 'rounded',
+            height = 0.8,
+            width = 0.8,
         }
     }
 }
 
 addPlugin {
-    'stevearc/aerial.nvim',
-    cmd = 'AerialToggle',
-    opts = {
-        icons = Icons,
-        nerd_font = false
-    }
-}
+    'williamboman/mason-lspconfig.nvim',
+    config = function()
+        local mason_lspconfig = require('mason-lspconfig')
+        local on_attach = function(_, bufnr)
+            vim.lsp.inlay_hint.enable(bufnr, true)
 
-addPlugin {
-    'weilbith/nvim-code-action-menu',
-    config = function ()
-        vim.g.code_action_menu_window_border = 'rounded'
+            -- Mappings.
+            local bufopts = { noremap = true, silent = true, buffer = bufnr }
+            vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            vim.keymap.set('n', '<F12>', '<cmd>Lspsaga goto_definition<CR>', bufopts)
+            vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
+            vim.keymap.set('n', '<M-F12>', '<cmd>Lspsaga finder<CR>', bufopts)
+            vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
+            vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
+            vim.keymap.set('n', '<space>ca', require("actions-preview").code_actions, bufopts)
+            vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
+            vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            vim.keymap.set('n', 'gp', '<cmd>Lspsaga peek_definition<CR>', bufopts)
+            vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
+        end
+
+        popupMenuAdd({
+            cond = isLspAttached,
+            opts = {
+                {'Code Action              ',  '<Cmd>lua require("actions-preview").code_actions()<CR>'},
+                {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
+                {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
+                {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
+                {'Implementation         gi',  '<Cmd>lua vim.lsp.buf.implementation()<CR>'},
+                {'LSP Finder        Alt F12',  '<Cmd>Lspsaga lsp_finder<CR>'},
+                {'Peek Definition        gp',  '<Cmd>Lspsaga peek_definition<CR>'},
+                {'References      Shift F12',  '<Cmd>lua vim.lsp.buf.references()<CR>'},
+                {'Rename                 F2',  '<Cmd>Lspsaga rename<CR>'},
+                {'Type Definition        gt',  '<Cmd>lua vim.lsp.buf.type_definition()<CR>'}
+            }
+        })
+
+        mason_lspconfig.setup()
+        local handlers = {
+            ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
+            ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded'}), -- disable in favour of Noice
+        }
+
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        capabilities.textDocument.foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true
+        }
+
+        mason_lspconfig.setup_handlers {
+            function (server_name)
+                local lspconfig = require('lspconfig')
+                if server_name == 'lua_ls' then
+                    lspconfig.lua_ls.setup {
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach,
+                        settings = {
+                            Lua = {
+                                diagnostics = {
+                                    globals = { 'bit', 'vim' }
+                                },
+                                hint = {
+                                    arrayIndex = "Enable",
+                                    enable = true,
+                                    setType = true
+                                },
+                                workspace = {
+                                    library = {
+                                        vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy/types.lua',
+                                        vim.fn.stdpath('data') .. '/lazy/neodev.nvim/types/stable',
+                                    }
+                                }
+                            }
+                        }
+                    }
+                else
+                    lspconfig[server_name].setup {
+                        capabilities = capabilities,
+                        handlers = handlers,
+                        on_attach = on_attach
+                    }
+                end
+            end
+        }
+        vim.cmd.LspStart()
     end,
-    cmd = 'CodeActionMenu'
+    dependencies = { 'luukvbaal/statuscol.nvim', 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
+    keys = { '<F12>' }
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3025,6 +2960,35 @@ addPlugin {
 }
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Outline     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin {
+    'stevearc/aerial.nvim',
+    cmd = { 'AerialNavToggle', 'AerialToggle' },
+    opts = {
+        attach_mode = 'global',
+        autojump = false,
+        backends = { 'treesitter', 'lsp', 'markdown', 'man' },
+        disable_max_lines = 10000,
+        disable_max_size = 2000000, -- Default 2MB
+        filter_kind = { 'Class', 'Constructor', 'Enum', 'Function', 'Interface', 'Module', 'Method', 'Struct' },
+        guides = { mid_item = '├ ', last_item = '╰ ', nested_top = '│ ', whitespace = ' ', },
+        highlight_on_hover = true,
+        icons = Icons,
+        nav = {
+            keymaps = {
+                ['<Left>'] = 'actions.left',
+                ['<Right>'] = 'actions.right',
+                [''] = 'actions.close',
+            },
+            min_height = { 20, 0.2 },
+            preview = true,
+        },
+        nerd_font = false,
+        placement = 'edge',
+        show_guides = true,
+    }
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- |-----------------+-----------------------------------------------------------|
