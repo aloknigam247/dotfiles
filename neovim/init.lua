@@ -2936,6 +2936,7 @@ addPlugin {
         vim.g.bookmark_save_per_working_dir = 0
         vim.g.bookmark_sign = Icons.bookmark
     end,
+    dependencies = 'luukvbaal/statuscol.nvim',
     keys = {
         {'ba', '<Plug>BookmarkAnnotate'},
         {'bm', '<Plug>BookmarkToggle'},
@@ -3197,7 +3198,6 @@ addPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 addPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
@@ -3206,30 +3206,36 @@ addPlugin {
             setopt = true,
             relculright = true,
             segments = {
-                -- FEAT: add click handlers
-                -- FEAT: add DAP
-                { sign = { name = { 'todo.*' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true } },
-                { text = { builtin.lnumfunc }, condition = { true } },
-                { sign = {
-                    text = {
-                        Icons.diff_add,
-                        Icons.diff_change,
-                        Icons.diff_delete,
-                        Icons.diff_delete_top,
-                        Icons.diff_change_delete,
+                {
+                    sign = { name = { 'todo' } },
+                    condition = { function() return TODO_COMMENTS_LOADED ~= nil end },
+                    auto = true,
+                },
+                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
+                { sign = { name = { 'Bookmark' }, fillcharhl ='LineNr', auto = true } },
+                { sign = { name = { 'Dap' }, fillcharhl ='LineNr', auto = true } },
+                { text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
+                {
+                    sign = {
+                        text = {
+                            Icons.diff_add,
+                            Icons.diff_change,
+                            Icons.diff_delete,
+                            Icons.diff_delete_top,
+                            Icons.diff_change_delete,
+                        },
+                        colwidth = 1,
+                        fillcharhl = 'LineNr',
+                        wrap = true,
                     },
-                    colwidth = 1,
-                    fillcharhl = 'LineNr',
-                    wrap = true,
-                }},
+                    click = 'v:lua.ScSa',
+                },
                 { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
             },
         })
     end,
     enabled = true
 }
-
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -3271,7 +3277,7 @@ addPlugin {
             sections = {
                 lualine_a = {
                     {
-                        'mode', -- use Neovim icon in normal mode
+                        'mode',
                         color = { gui = 'bold' },
                         fmt = function(str)
                             local first = str:sub(1,1)
@@ -3300,19 +3306,19 @@ addPlugin {
                     {
                         'filename',
                         color = { gui = 'italic' },
-                        file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = true,   -- Display new file status (new file means no write after created)
+                        file_status = true,
+                        newfile_status = true,
                         on_click = function()
                             vim.cmd('NvimTreeToggle')
                         end,
-                        path = 0,                -- 0: Just the filename
+                        path = 0,
                         padding = { left = 1, right = 1 },
-                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                        shorting_target = 40,
                         symbols = {
-                            modified = Icons.file_modified, -- Text to show when the file is modified.
-                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = Icons.file_unnamed,  -- Text to show for unnamed buffers.
-                            newfile  = Icons.file_newfile   -- Text to show for new created file before first writting
+                            modified = Icons.file_modified,
+                            readonly = Icons.file_readonly,
+                            unnamed  = Icons.file_unnamed,
+                            newfile  = Icons.file_newfile
                         }
                     }
                 },
@@ -3328,7 +3334,6 @@ addPlugin {
                     },
                     {
                         'diff',
-                        -- icon = {'󰦓', color = {fg = '#9C95DC'}},
                         on_click = function()
                             vim.cmd('Telescope git_status')
                         end,
@@ -3467,7 +3472,6 @@ addPlugin {
                         fmt = function(str)
                             return str:gsub("^%s+", ""):gsub("%s+", "")
                         end,
-                        -- icon = {'󰍒', align = 'left'},
                         on_click = function ()
                             require('mini.map').toggle()
                         end,
@@ -3497,15 +3501,15 @@ addPlugin {
                         'filename',
                         color = { gui = 'italic' },
                         cond = function () return CountWindows(true) > 1 end,
-                        file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = true,   -- Display new file status (new file means no write after created)
-                        path = 0,                -- 0: Just the filename
-                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                        file_status = true,
+                        newfile_status = true,
+                        path = 0,
+                        shorting_target = 40,
                         symbols = {
-                            modified = Icons.file_modified, -- Text to show when the file is modified.
-                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = Icons.file_unnamed, -- Text to show for unnamed buffers.
-                            newfile  = Icons.file_newfile, -- Text to show for new created file before first writting
+                            modified = Icons.file_modified,
+                            readonly = Icons.file_readonly,
+                            unnamed  = Icons.file_unnamed,
+                            newfile  = Icons.file_newfile,
                         }
                     }
                 },
@@ -3525,15 +3529,15 @@ addPlugin {
                         'filename',
                         color = { gui = 'italic' },
                         cond = function () return CountWindows(true) > 1 end,
-                        file_status = true,      -- Displays file status (readonly status, modified status)
-                        newfile_status = true,   -- Display new file status (new file means no write after created)
-                        path = 3,                -- 0: Just the filename
-                        shorting_target = 40,    -- Shortens path to leave 40 spaces in the window
+                        file_status = true,
+                        newfile_status = true,
+                        path = 3,
+                        shorting_target = 40,
                         symbols = {
-                            modified = Icons.file_modified, -- Text to show when the file is modified.
-                            readonly = Icons.file_readonly, -- Text to show when the file is non-modifiable or readonly.
-                            unnamed  = Icons.file_unnamed, -- Text to show for unnamed buffers.
-                            newfile  = Icons.file_newfile, -- Text to show for new created file before first writting
+                            modified = Icons.file_modified,
+                            readonly = Icons.file_readonly,
+                            unnamed  = Icons.file_unnamed,
+                            newfile  = Icons.file_newfile,
                         }
                     }
                 },
@@ -3541,9 +3545,10 @@ addPlugin {
             extensions = {
                 'aerial',
                 'lazy',
+                'mason',
+                'nvim-dap-ui',
                 'nvim-tree',
                 'quickfix',
-                'symbols-outline',
                 'toggleterm',
                 'trouble',
             }
@@ -3553,7 +3558,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/willothy/nvim-cokeline
 addPlugin {
     'akinsho/bufferline.nvim',
     event = 'TabNew',
@@ -3572,7 +3576,6 @@ addPlugin {
                 return res
             end,
             get_element_icon = function(element)
-                -- element consists of {filetype: string, path: string, extension: string, directory: string}
                 local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
                 if element.filetype == 'netrw' then
                     icon = ''
@@ -3658,11 +3661,10 @@ addPlugin {
                     treesitter = true
                 },
                 fzf = {
-                    fuzzy = true,                    -- false will only do exact matching
-                    override_generic_sorter = true,  -- override the generic sorter
-                    override_file_sorter = true,     -- override the file sorter
-                    case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                    -- the default case_mode is "smart_case"
+                    fuzzy = true,
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
+                    case_mode = 'smart_case',
                 },
                 undo = {
                     side_by_side = true
@@ -3670,17 +3672,13 @@ addPlugin {
             },
         })
         telescope.load_extension('fzf')
-        telescope.load_extension('heading')
         telescope.load_extension('undo')
-        telescope.load_extension('vim_bookmarks')
         vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
     end,
     dependencies = {
-        'crispgm/telescope-heading.nvim',
         'debugloop/telescope-undo.nvim',
         'nvim-lua/plenary.nvim',
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-        {'tom-anders/telescope-vim-bookmarks.nvim', dependencies = 'MattesGroeger/vim-bookmarks'}
     },
     module = false
 }
@@ -3688,16 +3686,12 @@ addPlugin {
 addPlugin {
     'princejoogie/dir-telescope.nvim',
     cmd = { 'FileInDirectory', 'GrepInDirectory' },
-    opts = {
-        hidden = true,
-        respect_gitignore = true,
-    },
+    config = true,
     dependencies = 'nvim-telescope/telescope.nvim',
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/voldikss/vim-floaterm
-
 addPlugin {
     'akinsho/toggleterm.nvim',
     cmd = 'ToggleTerm',
@@ -3705,6 +3699,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 -- https://github.com/andythigpen/nvim-coverage
 -- https://github.com/klen/nvim-test
 -- addPlugin {
@@ -3820,12 +3815,13 @@ addPlugin {
                     -- opts: any options passed to the view
                     -- icon_hl_group: optional hl_group for the icon
                     -- title: set to anything or empty string to hide
-                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ''},
+                    cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ' cmd '},
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
-                    help = { pattern = '^:%s*he?l?p?%s+', icon = '' , title = ''},
+                    help = { pattern = '^:%s*he?l?p?%s+', icon = '' , title = ' help '},
                     input = {}, -- Used by input()
-                    lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ''},
-                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ''},
+                    lazy = { pattern = '^:%s*Lazy%s+', icon = '', lang = 'vim' , title = ' Lazy '},
+                    lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ' lua '},
+                    lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ' lua echo '},
                     search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
                     -- lua = false, -- to disable a format, set to `false`
