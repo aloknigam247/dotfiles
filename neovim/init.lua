@@ -3699,24 +3699,21 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 -- https://github.com/andythigpen/nvim-coverage
--- https://github.com/klen/nvim-test
 -- addPlugin {
 --     'nvim-neotest/neotest',
 --     config = function()
 --         require('neotest').setup({
 --             adapters = {
---                 require('neotest-python')({
---                     dap = { justMyCode = false },
---                 })
+--                 require('neotest-python')
 --             }
 --         })
 --     end,
 --     dependencies = {
 --         'nvim-lua/plenary.nvim',
 --         'nvim-neotest/neotest-python'
---     }
+--     },
+--     lazy = false
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3798,6 +3795,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 addPlugin {
     -- @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
