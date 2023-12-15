@@ -1023,6 +1023,19 @@ vim.fn.matchadd(
     "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
     Hl_priority.url
 )
+
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        'git',
+        'clone',
+        '--filter=blob:none',
+        '--single-branch',
+        'https://github.com/folke/lazy.nvim.git',
+        lazypath,
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
@@ -1430,7 +1443,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 
 dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
 dark  { 'ayu-dark',             'ayu'                              }
-dark  { 'ayu-mirage',           'ayu'                              }
+-- dark  { 'ayu-mirage',           'ayu'                              }
 dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
 -- dark  { 'bluloco-dark',         '_'                                                    }
 dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
@@ -1453,7 +1466,7 @@ dark  { 'tokyodark',            '_'                                          }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 dark  { 'visual_studio_code',   '_'                               }
 -- dark  { 'vn-night',             '_', post = fixVnNight            }
-dark  { 'zephyrium',            '_'                               }
+-- dark  { 'zephyrium',            '_'                               }
 -- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
 -- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 -- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
@@ -1665,6 +1678,36 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
+    'LiadOz/nvim-dap-repl-highlights',
+    config = true
+}
+
+addPlugin {
+    'andrewferrier/debugprint.nvim',
+    opts = {
+        create_keymaps = false,
+        create_commands = false,
+        filetypes = {
+            ['python'] = {
+                left = 'print(f"',
+                mid_var = '{',
+                right_var = '}")',
+                right = '")',
+            }
+        }
+    },
+    keys = {
+        { '<Leader>dP', function() return require('debugprint').debugprint({ above = true }) end,                  expr = true, mode = 'n' },
+        { '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'n' },
+        { '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'v' },
+        { '<Leader>dd', function() return require('debugprint').deleteprints() end,                                             mode = 'n' },
+        { '<Leader>dp', function() return require('debugprint').debugprint() end,                                  expr = true, mode = 'n' },
+        { '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'n' },
+        { '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'v' },
+    }
+}
+
+addPlugin {
     'jbyuki/one-small-step-for-vimkind',
     config = function()
         local dap = require('dap')
@@ -1719,6 +1762,8 @@ addPlugin {
     lazy = true
 }
 
+-- https://github.com/ofirgall/goto-breakpoints.nvim
+
 addPlugin {
     'rcarriga/nvim-dap-ui',
     config = function()
@@ -1750,6 +1795,8 @@ addPlugin {
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/nat-418/scamp.nvim
+-- https://github.com/nosduco/remote-sshfs.nvim
 addPlugin {
     'nvim-tree/nvim-tree.lua',
     cmd = 'NvimTreeOpen',
@@ -2268,7 +2315,6 @@ addPlugin {
             end
         })
 
-        -- FEAT: Mapping to peek folded lines
         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
     end,
@@ -2404,6 +2450,12 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin {
+    '2kabhishek/nerdy.nvim',
+    cmd = 'Nerdy',
+    dependencies = { 'stevearc/dressing.nvim', 'nvim-telescope/telescope.nvim', },
+}
+
 addPlugin {
     'DaikyXendo/nvim-material-icon',
     opts = {
@@ -2544,6 +2596,23 @@ addPlugin {
 
 addPlugin {
     'aznhe21/actions-preview.nvim',
+}
+
+addPlugin {
+    'folke/neodev.nvim',
+    event = 'LspAttach *.lua',
+    opts = {
+        library = {
+            enabled = true,
+            plugins = true,
+            runtime = true,
+            types = true,
+        },
+        lspconfig = true,
+        pathStrict = true,
+        override = function(_, _) end,
+        setup_jsonls = false,
+    }
 }
 
 addPlugin {
@@ -3605,8 +3674,10 @@ addPlugin {
         }
     }
 }
+-- https://github.com/tomiis4/BufferTabs.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/Marskey/telescope-sg
 -- https://github.com/axkirillov/easypick.nvim
 addPlugin {
     'nvim-telescope/telescope.nvim',
@@ -3795,62 +3866,46 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 addPlugin {
-    -- @recording messages from messages https://www.reddit.com/r/neovim/comments/138ahlo/recording_a_macro_with_set_cmdheight0/
     'folke/noice.nvim',
-    -- cond = function() return not vim.g.neovide end,
     config = function()
         vim.o.lazyredraw = false
         require('noice').setup({
             cmdline = {
-                enabled = true, -- enables the Noice cmdline UI
-                view = 'cmdline_popup', -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
-                opts = {}, -- global options for the cmdline. See section on views
+                enabled = true,
+                view = 'cmdline_popup',
+                opts = {},
                 format = {
-                    -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
-                    -- view: (default is cmdline view)
-                    -- opts: any options passed to the view
-                    -- icon_hl_group: optional hl_group for the icon
-                    -- title: set to anything or empty string to hide
                     cmdline = { pattern = '^:', icon = '', lang = 'vim', title = ' cmd '},
                     filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
                     help = { pattern = '^:%s*he?l?p?%s+', icon = '' , title = ' help '},
-                    input = {}, -- Used by input()
+                    input = {},
                     lazy = { pattern = '^:%s*Lazy%s+', icon = '', lang = 'vim' , title = ' Lazy '},
                     lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ' lua '},
                     lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ' lua echo '},
                     search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
                     search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' , title = ''},
-                    -- lua = false, -- to disable a format, set to `false`
                 },
             },
             messages = {
-                -- If you enable messages, then the cmdline is enabled automatically.
-                -- This is a current Neovim limitation.
-                enabled = true, -- enables the Noice messages UI
-                view = 'notify', -- default view for messages
-                view_error = 'notify', -- view for errors
-                view_warn = 'notify', -- view for warnings
-                view_history = 'messages', -- view for :messages
-                view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
+                enabled = true,
+                view = 'notify',
+                view_error = 'notify',
+                view_warn = 'notify',
+                view_history = 'messages',
+                view_search = 'virtualtext',
             },
             popupmenu = {
-                enabled = true, -- enables the Noice popupmenu UI
-                backend = 'cmp', -- backend to use to show regular cmdline completions
-                -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
-                kind_icons = {}, -- set to `false` to disable icons
+                enabled = true,
+                backend = 'cmp',
+                kind_icons = {},
             },
-            -- default options for require('noice').redirect
-            -- see the section on Command Redirection
             redirect = {
                 view = 'popup',
                 filter = { event = 'msg_show' },
             },
-            -- You can add any custom commands below that will be available with `:Noice command`
             commands = {
                 history = {
-                    -- options for the message history that you get with `:Noice`
                     view = 'split',
                     opts = { enter = true, format = 'details' },
                     filter = {
@@ -3863,7 +3918,6 @@ addPlugin {
                         },
                     },
                 },
-                -- :Noice last
                 last = {
                     view = 'popup',
                     opts = { enter = true, format = 'details' },
@@ -3878,9 +3932,7 @@ addPlugin {
                     },
                     filter_opts = { count = 1 },
                 },
-                -- :Noice errors
                 errors = {
-                    -- options for the message history that you get with `:Noice`
                     view = 'popup',
                     opts = { enter = true, format = 'details' },
                     filter = { error = true },
@@ -3888,55 +3940,43 @@ addPlugin {
                 },
             },
             notify = {
-                -- Noice can be used as `vim.notify` so you can route any notification like other messages
-                -- Notification messages have their level and other properties set.
-                -- event is always 'notify' and kind can be any log level as a string
-                -- The default routes will forward notifications to nvim-notify
-                -- Benefit of using Noice for this is the routing and consistent history view
                 enabled = true,
                 view = 'notify',
             },
             lsp = {
                 progress = {
-                    enabled = true,
-                    -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
-                    -- See the section on formatting for more details on how to customize.
+                    enabled = false,
                     format = 'lsp_progress',
                     format_done = 'lsp_progress_done',
-                    throttle = 1000 / 30, -- frequency to update lsp progress message
+                    throttle = 1000 / 30,
                     view = 'mini',
                 },
                 override = {
-                    -- override the default lsp markdown formatter with Noice
-                    ['vim.lsp.util.convert_input_to_markdown_lines'] = false,
-                    -- override the lsp markdown formatter with Noice
-                    ['vim.lsp.util.stylize_markdown'] = false,
-                    -- override cmp documentation with Noice (needs the other options to work)
-                    ['cmp.entry.get_documentation'] = false,
+                    ['cmp.entry.get_documentation'] = true,
+                    ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+                    ['vim.lsp.util.stylize_markdown'] = true,
                 },
                 hover = {
                     enabled = true,
-                    view = nil, -- when nil, use defaults from documentation
-                    opts = {}, -- merged with defaults from documentation
+                    view = nil,
+                    opts = {},
                 },
-                signature = { -- 'ray-x/lsp_signature.nvim'
+                signature = {
                     enabled = true,
                     auto_open = {
                         enabled = true,
-                        trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-                        luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-                        throttle = 50, -- Debounce lsp signature help request by 50ms
+                        trigger = true,
+                        luasnip = true,
+                        throttle = 50,
                     },
-                    view = nil, -- when nil, use defaults from documentation
-                    opts = {}, -- merged with defaults from documentation
+                    view = nil,
+                    opts = {},
                 },
                 message = {
-                    -- Messages shown by lsp servers
                     enabled = true,
                     view = 'notify',
                     opts = {},
                 },
-                -- defaults for hover and signature help
                 documentation = {
                     view = 'hover',
                     opts = {
@@ -3950,8 +3990,8 @@ addPlugin {
             },
             markdown = {
                 hover = {
-                    ['|(%S-)|'] = vim.cmd.help, -- vim help links
-                    ['%[.-%]%((%S-)%)'] = require('noice.util').open, -- markdown links
+                    ['|(%S-)|'] = vim.cmd.help,
+                    ['%[.-%]%((%S-)%)'] = require('noice.util').open,
                 },
                 highlights = {
                     ['|%S-|'] = '@text.reference',
@@ -3963,42 +4003,27 @@ addPlugin {
                 },
             },
             health = {
-                checker = false, -- Disable if you don't want health checks to run
+                checker = false,
             },
             smart_move = {
-                -- noice tries to move out of the way of existing floating windows.
-                enabled = true, -- you can disable this behaviour here
-                -- add any filetypes here, that shouldn't trigger smart move.
+                enabled = true,
                 excluded_filetypes = { 'cmp_menu', 'cmp_docs', 'notify' },
             },
             presets = {
-                -- you can enable a preset by setting it to true, or a table that will override the preset config
-                -- you can also add custom presets that you can enable/disable with enabled=true
-                bottom_search = false, -- use a classic bottom cmdline for search
-                command_palette = false, -- position the cmdline and popupmenu together
-                long_message_to_split = false, -- long messages will be sent to a split
-                inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = true, -- add a border to hover docs and signature help
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = false,
+                lsp_doc_border = true,
             },
-            throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
-            views = {
-                -- cmdline_popup = {
-                --     border = {
-                --         style = "none",
-                --         padding = { 0, 0 },
-                --     },
-                --     filter_options = {},
-                --     win_options = {
-                --         winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
-                --     },
-                -- },
-            }, ---@see section on views
+            throttle = 1000 / 30,
+            views = {},
             routes = {{
-                view = "notify",
-                filter = { event = "msg_showmode" },
+                view = 'notify',
+                filter = { event = 'msg_showmode' },
             }},
-            status = {}, --- @see section on statusline components
-            format = {}, --- @see section on formatting
+            status = {},
+            format = {},
         })
     end,
     dependencies = { 'MunifTanjim/nui.nvim' },
@@ -4035,20 +4060,235 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-    '2kabhishek/nerdy.nvim',
-    dependencies = {
-        'stevearc/dressing.nvim',
-        'nvim-telescope/telescope.nvim',
-    },
-    cmd = 'Nerdy',
-}
-
--- https://github.com/wellle/targets.vim
-addPlugin { -- config
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
 }
 
+-- https://github.com/EtiamNullam/deferred-clipboard.nvim
+
+-- addPlugin {
+--     'ThePrimeagen/refactoring.nvim',
+--     cmd = 'Refactor',
+--     config = true,
+--     dependencies = {
+--         {'nvim-lua/plenary.nvim'},
+--     }
+-- }
+
+addPlugin {
+    'TobinPalmer/BetterGx.nvim',
+    keys = {
+        { 'gx', '<CMD>lua require("better-gx").BetterGx()<CR>' },
+    }
+}
+
+-- https://github.com/anuvyklack/hydra.nvim
+
+addPlugin {
+    'cbochs/portal.nvim',
+    cmd = 'Portal',
+    dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
+}
+
+-- https://github.com/chipsenkbeil/distant.nvim
+
+addPlugin {
+    -- https://github.com/cameron-wags/rainbow_csv.nvim
+    -- https://github.com/mechatroner/rainbow_csv
+    'chrisbra/csv.vim',
+    config = function()
+        vim.g.csv_default_delim = ','
+        vim.g.csv_highlight_column = 'y'
+    end,
+    ft = 'csv'
+}
+
+-- https://github.com/cshuaimin/ssr.nvim
+
+-- addPlugin {
+--     'dstein64/vim-startuptime',
+--     cmd = 'StartupTime'
+-- }
+
+-- https://github.com/dstein64/nvim-scrollview
+addPlugin {
+    'echasnovski/mini.map',
+    config = function ()
+        local minimap = require('mini.map')
+        minimap.setup({
+            integrations = {
+                minimap.gen_integration.builtin_search(),
+                minimap.gen_integration.gitsigns(),
+                minimap.gen_integration.diagnostic(),
+            },
+            symbols = {
+                encode = minimap.gen_encode_symbols.dot('4x2')
+            }
+        })
+    end
+}
+
+addPlugin {
+    'echasnovski/mini.move',
+    keys = {
+        { '<C-h>', mode = 'v' },
+        { '<C-l>', mode = 'v' },
+        { '<C-j>', mode = 'v' },
+        { '<C-k>', mode = 'v' },
+        { 'H',     mode = 'n' },
+        { 'L',     mode = 'n' },
+        { 'J',     mode = 'n' },
+        { 'K',     mode = 'n' },
+    },
+    opts = {
+        mappings = {
+            left = '<C-h>',
+            right = '<C-l>',
+            down = '<C-j>',
+            up = '<C-k>',
+            line_left = 'H',
+            line_right = 'L',
+            line_down = 'J',
+            line_up = 'K',
+        },
+        options = {
+            reindent_linewise = true
+        }
+    }
+}
+
+-- 'jbyuki/instant.nvim'
+
+addPlugin {
+    'gbprod/yanky.nvim',
+    opts = {
+        ring = {
+            history_length = 100,
+            storage = "memory",
+            sync_with_numbered_registers = true,
+            cancel_event = "update",
+        },
+        system_clipboard = {
+            sync_with_ring = false,
+        }
+    },
+    event = 'TextYankPost'
+}
+
+addPlugin {
+    'kwkarlwang/bufjump.nvim',
+    opts = {
+        on_success = function()
+            vim.cmd([[execute "normal! g`\"zz"]])
+        end
+    },
+    keys = {
+        { '<C-S-I>', function() require('bufjump').forward() end },
+        { '<C-S-O>', function() require('bufjump').backward() end }
+    }
+}
+
+-- https://github.com/kndndrj/nvim-dbee
+
+-- addPlugin {
+--     'kylechui/nvim-surround',
+--     config = true
+-- }
+
+-- https://github.com/lewis6991/hover.nvim
+
+addPlugin {
+    'mg979/vim-visual-multi',
+    config = function()
+        vim.cmd[[
+            nmap <C-LeftMouse> <Plug>(VM-Mouse-Cursor)
+            nmap <C-RightMouse> <Plug>(VM-Mouse-Word)
+        ]]
+    end,
+    keys = { '<C-LeftMouse>', '<C-RightMouse>', '<C-Up>', '<C-Down>', '<C-N>' }
+}
+
+-- https://github.com/mrshmllow/open-handlers.nvim
+
+addPlugin {
+    'nat-418/boole.nvim',
+    opts = {
+        mappings = {
+            increment = '<C-a>',
+            decrement = '<C-x>'
+        },
+        -- User defined loops
+        additions = {
+            { 'buy', 'sell' }
+        },
+        allow_caps_additions = {
+        }
+    },
+    keys = { '<C-a>', '<C-x>' }
+}
+
+addPlugin {
+    -- Lua copy https://github.com/ojroques/nvim-osc52
+    -- :h clipboard-osc52
+    'ojroques/vim-oscyank',
+    cond = function()
+        return vim.env.SSH_CLIENT ~= nil
+    end,
+    config = function()
+        vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif]]
+    end,
+    lazy = false
+}
+
+addPlugin {
+    'rickhowe/spotdiff.vim',
+    cmd = 'Diffthis'
+}
+
+-- https://github.com/roobert/surround-ui.nvim
+
+addPlugin {
+    'sickill/vim-pasta',
+    lazy = false,
+}
+
+addPlugin {
+    'shortcuts/no-neck-pain.nvim',
+    cmd = 'NoNeckPain'
+}
+
+addPlugin {
+    'tversteeg/registers.nvim', -- Insert more does not work good with new lines
+    opts = {
+        register_user_command = false,
+        show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
+        show_empty = false,
+        symbols = { newline = '', tab = '»' },
+        trim_whitespace = false,
+        window = { border = 'rounded' }
+    },
+    keys = {
+        { '"',     mode = 'n' },
+        { '"',     mode = 'v' },
+        { '<C-R>', mode = 'i' }
+    }
+}
+
+addPlugin {
+    'utilyre/sentiment.nvim',
+    config = true,
+    event = { 'CursorHold', 'CursorHoldI' }
+}
+
+-- https://github.com/wellle/targets.vim
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
+
+-- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Winbar     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO:
 addPlugin {
     'Bekaboo/dropbar.nvim',
     opts = {
@@ -4079,7 +4319,7 @@ addPlugin {
                     Folder = Icons.Folder,
                     ForStatement = '󰑖 ',
                     Function = Icons.Function,
-                    H1Marker = '󰉫 ', -- Used by markdown treesitter parser
+                    H1Marker = '󰉫 ',
                     H2Marker = '󰉬 ',
                     H3Marker = '󰉭 ',
                     H4Marker = '󰉮 ',
@@ -4093,7 +4333,7 @@ addPlugin {
                     Log = '󰦪 ',
                     Lsp = ' ',
                     Macro = Icons.Macro,
-                    MarkdownH1 = '󰉫 ', -- Used by builtin markdown source
+                    MarkdownH1 = '󰉫 ',
                     MarkdownH2 = '󰉬 ',
                     MarkdownH3 = '󰉭 ',
                     MarkdownH4 = '󰉮 ',
@@ -4142,356 +4382,7 @@ addPlugin {
         }
     }
 }
-
-addPlugin {
-    'Danielhp95/tmpclone-nvim',
-    cmd = 'TmpcloneClone'
-}
-
--- https://github.com/EtiamNullam/deferred-clipboard.nvim
--- https://github.com/Marskey/telescope-sg
-
-addPlugin {
-    'LiadOz/nvim-dap-repl-highlights',
-    config = true
-}
-
-addPlugin {
-    'Pocco81/true-zen.nvim',
-    cmd = { 'TZAtaraxis', 'TZMinimalist', 'TZNarrow', 'TZFocus' }
-}
-
-addPlugin {
-    'ThePrimeagen/refactoring.nvim',
-    cmd = 'Refactor',
-    config = true,
-    dependencies = {
-        {'nvim-lua/plenary.nvim'},
-    }
-}
-
-addPlugin {
-    'TobinPalmer/BetterGx.nvim',
-    keys = {
-        { 'gx', '<CMD>lua require("better-gx").BetterGx()<CR>' },
-    }
-}
-
--- https://github.com/Wiebesiek/ZeoVim
-
-addPlugin {
-    -- https://github.com/rareitems/printer.nvim
-    'andrewferrier/debugprint.nvim',
-    opts = {
-        create_keymaps = false,
-        create_commands = false,
-        filetypes = {
-            ["python"] = {
-                left = 'print(f"',
-                right = '")',
-                mid_var = "{",
-                right_var = '}")',
-            }
-        }
-    },
-    keys = {
-        { '<Leader>dP', function() return require('debugprint').debugprint({ above = true }) end,                  expr = true, mode = 'n' },
-        { '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'n' },
-        { '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'v' },
-        { '<Leader>dd', function() return require('debugprint').deleteprints() end,                                             mode = 'n' },
-        { '<Leader>dp', function() return require('debugprint').debugprint() end,                                  expr = true, mode = 'n' },
-        { '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'n' },
-        { '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'v' },
-    }
-}
-
--- https://github.com/anuvyklack/hydra.nvim
-
-addPlugin {
-    'cbochs/portal.nvim',
-    cmd = 'Portal',
-    dependencies = {
-        'cbochs/grapple.nvim',
-        'ThePrimeagen/harpoon'
-    }
-}
-
--- https://github.com/chipsenkbeil/distant.nvim
-
-addPlugin {
-    -- https://github.com/cameron-wags/rainbow_csv.nvim
-    -- https://github.com/mechatroner/rainbow_csv
-    'chrisbra/csv.vim',
-    config = function()
-        vim.g.csv_default_delim = ','
-        vim.g.csv_highlight_column = 'y'
-    end,
-    ft = 'csv'
-}
-
--- https://github.com/cshuaimin/ssr.nvim
-
-addPlugin {
-    'dstein64/vim-startuptime',
-    cmd = 'StartupTime'
-}
-
--- https://github.com/dstein64/nvim-scrollview
-addPlugin {
-    'echasnovski/mini.map',
-    config = function ()
-        local minimap = require('mini.map')
-        minimap.setup({
-            integrations = {
-                minimap.gen_integration.builtin_search(),
-                minimap.gen_integration.gitsigns(),
-                minimap.gen_integration.diagnostic(),
-            },
-            symbols = {
-                encode = minimap.gen_encode_symbols.dot('4x2')
-            }
-        })
-    end
-}
-
-addPlugin {
-    'echasnovski/mini.move',
-    keys = {
-        { "<C-h>", mode = 'v' },
-        { "<C-l>", mode = 'v' },
-        { "<C-j>", mode = 'v' },
-        { "<C-k>", mode = 'v' },
-        { "H", mode = 'n' },
-        { "L", mode = 'n' },
-        { "J", mode = 'n' },
-        { "K", mode = 'n' },
-    },
-    opts = {
-        mappings = {
-            left = "<C-h>",
-            right = "<C-l>",
-            down = "<C-j>",
-            up = "<C-k>",
-            line_left = "H",
-            line_right = "L",
-            line_down = "J",
-            line_up = "K",
-        },
-        options = {
-            reindent_linewise = true
-        }
-    }
-}
-
-addPlugin {
-    'folke/neodev.nvim',
-    event = 'LspAttach *.lua',
-    opts = {
-        library = {
-            enabled = true, -- when not enabled, neodev will not change any settings to the LSP server
-            -- these settings will be used for your Neovim config directory
-            runtime = true, -- runtime path
-            types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-            plugins = true, -- installed opt or start plugins in packpath
-            -- you can also specify the list of plugins to make available as a workspace library
-            -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
-        },
-        setup_jsonls = false, -- configures jsonls to provide completion for project specific .luarc.json files
-        -- for your Neovim config directory, the config.library settings will be used as is
-        -- for plugin directories (root_dirs having a /lua directory), config.library.plugins will be disabled
-        -- for any other directory, config.library.enabled will be set to false
-        override = function(_, _) end,
-        -- With lspconfig, Neodev will automatically setup your lua-language-server
-        -- If you disable this, then you have to set {before_init=require("neodev.lsp").before_init}
-        -- in your lsp start options
-        lspconfig = true,
-        -- much faster, but needs a recent built of lua-language-server
-        -- needs lua-language-server >= 3.6.0
-        pathStrict = true,
-    }
-}
-
--- 'jbyuki/instant.nvim'
-
-addPlugin {
-    'gbprod/yanky.nvim',
-    opts = {
-        ring = {
-            history_length = 100,
-            storage = "memory",
-            sync_with_numbered_registers = true,
-            cancel_event = "update",
-        },
-        system_clipboard = {
-            sync_with_ring = false,
-        }
-    },
-    event = 'TextYankPost'
-}
-
--- https://github.com/glacambre/firenvim
-
-addPlugin {
-    'kwkarlwang/bufjump.nvim',
-    opts = {
-        on_success = function()
-            vim.cmd([[execute "normal! g`\"zz"]])
-        end
-    },
-    keys = {
-        { '<C-S-I>', function() require('bufjump').forward() end },
-        { '<C-S-O>', function() require('bufjump').backward() end }
-    }
-}
-
--- https://github.com/mrshmllow/open-handlers.nvim
-
--- https://github.com/kndndrj/nvim-dbee
-
-addPlugin {
-    'kylechui/nvim-surround',
-    config = true
-}
-
--- https://github.com/lewis6991/hover.nvim
-
--- https://github.com/mangelozzi/rgflow.nvim
-
-addPlugin {
-    'mg979/vim-visual-multi',
-    config = function()
-        vim.cmd[[
-            nmap <C-LeftMouse> <Plug>(VM-Mouse-Cursor)
-            nmap <C-RightMouse> <Plug>(VM-Mouse-Word)
-        ]]
-    end,
-    keys = { '<C-LeftMouse>', '<C-RightMouse>', '<C-Up>', '<C-Down>', '<C-N>' }
-}
-
--- https://github.com/miversen33/netman.nvim
--- https://github.com/mrshmllow/open-handlers.nvim
--- https://github.com/nat-418/scamp.nvim
-
--- addPlugin { 'nacro90/numb.nvim', config = true, event = 'CmdlineChanged' }
-
-addPlugin {
-    -- https://github.com/RutaTang/compter.nvim
-    'nat-418/boole.nvim',
-    opts = {
-        mappings = {
-            increment = '<C-a>',
-            decrement = '<C-x>'
-        },
-        -- User defined loops
-        additions = {
-            { 'buy', 'sell' }
-        },
-        allow_caps_additions = {
-        }
-    },
-    keys = { '<C-a>', '<C-x>' }
-}
-
--- https://github.com/nosduco/remote-sshfs.nvim
-
-addPlugin {
-    -- Lua copy https://github.com/ojroques/nvim-osc52
-    'ojroques/vim-oscyank', -- FIX: not needed now, check TWIN page
-    cond = function()
-        -- Check if connection is ssh
-        return vim.env.SSH_CLIENT ~= nil
-    end,
-    config = function()
-        vim.cmd[[autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankRegister "' | endif]]
-    end,
-    lazy = false
-}
-
-addPlugin {
-    'rickhowe/spotdiff.vim',
-    cmd = 'Diffthis'
-}
-
--- https://github.com/roobert/surround-ui.nvim
-
-addPlugin {
-    'ryleelyman/latex.nvim',
-    config = true,
-    ft = 'tex'
-}
-
-addPlugin {
-    'sickill/vim-pasta',
-    config = function()
-        vim.g.pasta_paste_before_mapping = '[p'
-        vim.g.pasta_paste_after_mapping = '[P'
-    end,
-    keys = { '[p', '[P' }
-}
-
-addPlugin {
-    'shortcuts/no-neck-pain.nvim',
-    cmd = 'NoNeckPain'
-}
-
--- https://github.com/tomiis4/BufferTabs.nvim
-
-addPlugin {
-    'tummetott/reticle.nvim',
-    config = true
-}
-
-addPlugin {
-    'tversteeg/registers.nvim', -- Insert more does not work good with new lines
-    opts = {
-        register_user_command = false,
-        show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
-        show_empty = false,
-        symbols = { newline = '', tab = '»' },
-        trim_whitespace = false,
-        window = { border = 'rounded' }
-    },
-    keys = {
-        { '"',     mode = 'n' },
-        { '"',     mode = 'v' },
-        { '<C-R>', mode = 'i' }
-    }
-}
-
-addPlugin {
-    'utilyre/sentiment.nvim',
-    config = true,
-    event = { 'CursorHold', 'CursorHoldI' }
-}
-
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        'git',
-        'clone',
-        '--filter=blob:none',
-        '--single-branch',
-        'https://github.com/folke/lazy.nvim.git',
-        lazypath,
-    })
-end
-vim.opt.runtimepath:prepend(lazypath)
--- Powershell indent issue autopair issue https://www.reddit.com/r/neovim/comments/14av861/powershell_indent_issue/
--- https://github.com/Bryley/neoai.nvim
--- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
--- https://github.com/hrsh7th/cmp-copilot
--- https://github.com/james1236/backseat.nvim
--- https://github.com/madox2/vim-ai
--- https://github.com/ofirgall/goto-breakpoints.nvim
--- https://github.com/zbirenbaum/copilot-cmp
--- https://github.com/zbirenbaum/copilot.lua
-
 require('lazy').setup(Plugins, Lazy_config)
 ColoRand()
--- FIX: health
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120
