@@ -1452,7 +1452,7 @@ dark  { 'duskfox',              'nightfox'                                      
 dark  { 'edge',                 '_' }
 -- dark  { 'everforest',           '_' }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
-dark  { 'kanagawa-wave',        'kanagawa'                                      }
+-- dark  { 'kanagawa-wave',        'kanagawa'                                      }
 dark  { 'melange',              '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 dark  { 'one_monokai',          '_'          }
@@ -2138,7 +2138,6 @@ FileTypeActions = {
         local highlighter = require('vim.treesitter.highlighter')
         if highlighter.active[bufnr] then
             require('ufo').attach(bufnr)
-            vim.defer_fn(function() require('ufo').closeFoldsWith(1) end, 3500) -- BUG: not working as expected
         else
             vim.api.nvim_create_autocmd(
                 'User', {
@@ -2147,7 +2146,6 @@ FileTypeActions = {
                     once = true,
                     callback = function(arg)
                         require('ufo').attach(arg.buf)
-                        vim.defer_fn(function() require('ufo').closeFoldsWith(1) end, 3500) -- BUG: not working as expected
                     end
                 }
             )
