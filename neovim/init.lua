@@ -679,7 +679,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
         Preview_win = vim.api.nvim_open_win(bufnr, enter, {
             border = 'rounded',
             col = col_offset,
-            footer = ' [M-s] split [M-v] vsplit [M-t] tab open ',
+            footer = ' [C-s] split [C-v] vsplit [C-t] tab open ',
             footer_pos = 'right',
             height = vim.o.lines - 8,
             relative = relativity,
@@ -723,7 +723,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     )
 
     -- Reopen preview in split
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-s>', '', {
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '', {
         callback = function()
             local file_path = vim.fn.expand('%:p')
             vim.cmd.quit()
@@ -736,7 +736,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     })
 
     -- Reopen preview in vsplit
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-v>', '', {
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-v>', '', {
         callback = function()
             local file_path = vim.fn.expand('%:p')
             vim.cmd.quit()
@@ -749,7 +749,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     })
 
     -- Reopen preview in tab
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-t>', '', {
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-t>', '', {
         callback = function()
             local file_path = vim.fn.expand('%:p')
             vim.cmd.quit()
@@ -1460,9 +1460,9 @@ dark  { 'one_monokai',          '_'          }
 dark  { 'onedark',              'onedarkpro' }
 dark  { 'onenord',              '_'          }
 dark  { 'retrobox',             '_'          }
-dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
+-- dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
+-- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 dark  { 'tokyodark',            '_'                                          }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 dark  { 'visual_studio_code',   '_'                               }
