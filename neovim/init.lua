@@ -217,6 +217,7 @@ Icons = {
     preview            = ' ',
     symlink_arrow      = ' 壟 ',
     warn               = ' ',
+    warning            = ' ',
 }
 
 Lazy_config = {
