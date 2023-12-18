@@ -1445,7 +1445,7 @@ addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium' 
 dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
 dark  { 'ayu-dark',             'ayu'                              }
 -- dark  { 'ayu-mirage',           'ayu'                              }
-dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
+-- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
 -- dark  { 'bluloco-dark',         '_'                                                    }
 dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
 dark  { 'darcula-solid',        '_'                                                    }
