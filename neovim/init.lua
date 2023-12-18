@@ -818,6 +818,8 @@ local function getTodoHl(_, match)
         color_set = Todo_colors.hint
     elseif match == 'INFO:' then
         color_set = Todo_colors.info
+    elseif match == 'NOTE:' then
+        color_set = Todo_colors.info
     elseif match == 'PERF:' then
         color_set = Todo_colors.perf
     elseif match == 'REFACTOR:' then
@@ -1210,6 +1212,7 @@ addPlugin {
             hack     = { pattern = '()HACK:()',     group = getTodoHl },
             hint     = { pattern = '()HINT:()',     group = getTodoHl },
             info     = { pattern = '()INFO:()',     group = getTodoHl },
+            note     = { pattern = '()NOTE:()',     group = getTodoHl },
             perf     = { pattern = '()PERF:()',     group = getTodoHl },
             refactor = { pattern = '()REFACTOR:()', group = getTodoHl },
             test     = { pattern = '()TEST:()',     group = getTodoHl },
@@ -1412,7 +1415,6 @@ local function light(opts)
     colorPlugin(opts)
 end
 
-addPlugin { 'Tsuzat/NeoSolarized.nvim',                event = 'User NeoSolarized'                                     }
 addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                              }
 addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
@@ -1442,7 +1444,6 @@ addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'  
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
-dark  { 'NeoSolarized',         '_', cfg = { transparent = false } }
 dark  { 'ayu-dark',             'ayu'                              }
 -- dark  { 'ayu-mirage',           'ayu'                              }
 -- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
@@ -2052,7 +2053,7 @@ addPlugin {
                     },
                 },
             },
-            special_files = { 'Makefile', 'README.md', 'readme.md' },
+            special_files = { 'Makefile', 'README.md', 'TODO.md', 'readme.md' },
             symlink_destination = true,
         },
         respect_buf_cwd = false,
@@ -2845,7 +2846,7 @@ addPlugin {
         popupMenuAdd({
             cond = isLspAttached,
             opts = {
-                {'Code Action              ',  '<Cmd>lua require("actions-preview").code_actions()<CR>'},
+                {'Code Action     <space>ca',  '<Cmd>lua require("actions-preview").code_actions()<CR>'},
                 {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
                 {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
                 {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
@@ -4248,7 +4249,11 @@ addPlugin {
 
 addPlugin {
     'sickill/vim-pasta',
-    lazy = false,
+    config = function()
+        vim.g.pasta_paste_before_mapping = '[P'
+        vim.g.pasta_paste_after_mapping = '[p'
+    end,
+    lazy = false
 }
 
 addPlugin {
