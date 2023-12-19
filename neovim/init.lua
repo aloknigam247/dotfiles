@@ -1430,8 +1430,6 @@ addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'    
 addPlugin { 'polirritmico/monokai-nightasty.nvim',     event = 'User monokai-nightasty'                                }
 addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                         }
 addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                           }
-addPlugin { 'cpea2506/one_monokai.nvim',               event = 'User one_monokai'                                      }
-addPlugin { 'olimorris/onedarkpro.nvim',               event = 'User onedarkpro'                                       }
 addPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                          }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                        }
 addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                        }
@@ -1439,53 +1437,47 @@ addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'   
 addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                          }
 addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                        }
 addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                       }
-addPlugin { 'askfiy/visual_studio_code',               event = 'User visual_studio_code'                               }
 addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                         }
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
-dark  { 'ayu-dark',             'ayu'                              }
--- dark  { 'ayu-mirage',           'ayu'                              }
--- dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
--- dark  { 'bluloco-dark',         '_'                                                    }
-dark  { 'catppuccin-macchiato', 'catppuccin'                                           }
-dark  { 'darcula-solid',        '_'                                                    }
-dark  { 'duskfox',              'nightfox'                                             }
+dark  { 'ayu-dark',             'ayu' }
+light { 'ayu-light',            'ayu' }
+dark  { 'ayu-mirage',           'ayu' }
+dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
+darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
+dark  { 'bluloco-dark',         '_'                                                    }
+darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
+light { 'catppuccin-latte',     'catppuccin'                             }
+dark  { 'catppuccin-macchiato', 'catppuccin'                             }
+dark  { 'darcula-solid',        '_'                                      }
+dark  { 'duskfox',              'nightfox'                               }
+darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
 dark  { 'edge',                 '_' }
--- dark  { 'everforest',           '_' }
+light { 'edge',                 '_' }
+dark  { 'everforest',           '_' }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
--- dark  { 'kanagawa-wave',        'kanagawa'                                      }
+dark  { 'kanagawa-wave',        'kanagawa'                                      }
+darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
+light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
 dark  { 'melange',              '_' }
+light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
-dark  { 'one_monokai',          '_'          }
-dark  { 'onedark',              'onedarkpro' }
-dark  { 'onenord',              '_'          }
-dark  { 'retrobox',             '_'          }
--- dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
+light { 'onelight',             '_' }
+light { 'onenord',              '_' }
+light { 'oxocarbon',            '_' }
+dark  { 'retrobox',             '_' }
+darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
+dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
--- dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 dark  { 'tokyodark',            '_'                                          }
+darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
+light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
-dark  { 'visual_studio_code',   '_'                               }
--- dark  { 'vn-night',             '_', post = fixVnNight            }
--- dark  { 'zephyrium',            '_'                               }
--- darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
--- darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
--- darkT { 'duskfox',              'nightfox', cfg = { transparent = true }               }
--- darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
--- darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
--- darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
--- darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
--- darkT { 'visual_studio_code',   '_', cfg = { transparent = true } }
--- light { 'ayu-light',            'ayu'                              }
--- light { 'catppuccin-latte',     'catppuccin'                                           }
--- light { 'edge',                 '_' }
--- light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
--- light { 'monokai-nightasty',    '_' }
--- light { 'onelight',             '_'          }
--- light { 'onenord',              '_'          }
--- light { 'oxocarbon',            '_'          }
--- light { 'tokyonight-day',       'tokyonight'                                 }
+darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
+dark  { 'vn-night',             '_', post = fixVnNight }
+dark  { 'zephyrium',            '_'                    }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
