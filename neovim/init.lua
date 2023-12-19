@@ -1463,7 +1463,6 @@ light { 'material',             '_', pre = function() vim.g.material_style = 'li
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
-light { 'onelight',             '_' }
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_' }
 dark  { 'retrobox',             '_' }
