@@ -200,7 +200,7 @@ Icons = {
     code_action        = ' ',
     diagnostic         = ' ',
     diff_add           = '┃',
-    diff_change        = '║',
+    diff_change        = '┋',
     diff_change_delete = '~',
     diff_delete        = '',
     diff_delete_top    = '‾',
@@ -1987,7 +1987,7 @@ addPlugin {
                     bottom = '─',
                     corner = '╰',
                     edge   = '│',
-                    item   = '├',
+                    item   = '⎬',
                     none   = ' ',
                 },
                 inline_arrows = true,
@@ -3025,7 +3025,7 @@ addPlugin {
         disable_max_lines = 10000,
         disable_max_size = 2000000, -- Default 2MB
         filter_kind = { 'Class', 'Constructor', 'Enum', 'Function', 'Interface', 'Module', 'Method', 'Struct' },
-        guides = { mid_item = '├ ', last_item = '╰ ', nested_top = '│ ', whitespace = ' ', },
+        guides = { mid_item = '⎬ ', last_item = '╰ ', nested_top = '│ ', whitespace = ' ', },
         highlight_on_hover = true,
         icons = Icons,
         nav = {
