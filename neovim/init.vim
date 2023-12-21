@@ -27,7 +27,7 @@ set path+=**              " Look for all files in sub dirs
 set breakindent                       " Every wrapped line will continue visually indented
 set completeopt=menu,menuone,noselect " For nvim-cmp
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
-" set expandtab                         " Convert tabs to spaces
+set expandtab                         " Convert tabs to spaces
 set formatoptions=/1cjlnor            " Set auto formating options 'fo-table'
 set history=1000                      " Increase undo limit
 set linebreak                         " Break wrapped line at 'breakat'
