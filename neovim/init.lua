@@ -1512,7 +1512,7 @@ function ColoRand(scheme_index)
         vim.api.nvim_set_hl(0, 'Todo', todo_hl)
     end
 
-    vim.g.ColoRand = '[' .. scheme_index .. ']' .. scheme .. elapsed
+    -- vim.g.ColoRand = '[' .. scheme_index .. ']' .. scheme .. elapsed
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2455,7 +2455,7 @@ addPlugin {
             cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
             cp       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cp'        },
             cpp      = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cpp'       },
-            cs       = { color = '#C20DA6', cterm_color = '58',  icon = '', name = 'Cs'        },
+            cs       = { color = '#C20DA6', cterm_color = '58',  icon = '󰌛', name = 'Cs'        },
             csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
             csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
             md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
@@ -2750,7 +2750,7 @@ addPlugin {
                 Value         = { Icons.Value,         'CmpItemKindValue',        },
                 Variable      = { Icons.Variable,      'CmpItemKindVariable',     },
             },
-            lines = { '╰', '├', '│', '─', '╭' },
+            lines = { '╰', '⎬', '│', '─', '╭' },
             outgoing = Icons.outgoing,
             preview = Icons.preview,
             title  = true,
@@ -3452,12 +3452,12 @@ addPlugin {
                         icon = { '', color = { fg = '#3066BE' }},
                         padding = { left = 0, right = 1 }
                     },
-                    {
-                        function() return vim.g.ColoRand end,
-                        color = { fg = GetFgOrFallback('Number', '#F2F230') },
-                        icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = 'Function', create = false, link = false }).fg)}},
-                        padding = { left = 1, right = 1 }
-                    },
+                    -- {
+                    --     function() return vim.g.ColoRand end,
+                    --     color = { fg = GetFgOrFallback('Number', '#F2F230') },
+                    --     icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = 'Function', create = false, link = false }).fg)}},
+                    --     padding = { left = 1, right = 1 }
+                    -- },
                     {
                         'encoding',
                         color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='italic' },
