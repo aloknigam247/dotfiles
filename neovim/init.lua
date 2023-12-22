@@ -1323,19 +1323,6 @@ addPlugin {
 -- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----Fix limestone colorscheme
-local function fixLimestone()
-    require('starry').setup({
-        custom_highlights = {
-            IblIndent = { fg = '#223216' },
-            IblScope = { fg = '#395425' },
-            LineNr = { underline = false },
-            ['@method'] = { fg = '#4e9ba6', bold = true },
-            ['@symbol'] = { fg = '#A30000' }
-        }
-    })
-end
-
 ---Fix LineNr highlight
 ---@param fg string fg color in hex
 local function fixLineNr(fg)
@@ -1491,7 +1478,7 @@ function ColoRand(scheme_index)
     local postcmd = selection.post
     vim.o.background = bg
     vim.g.neovide_transparency = selection.trans and 0.8 or 1
-    local start_time = os.clock()
+    -- local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', { pattern = event == '_' and scheme or event })
     if (precmd) then
         precmd()
@@ -1502,7 +1489,7 @@ function ColoRand(scheme_index)
         postcmd()
     end
 
-    local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
+    -- local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
 
     -- Fix Todo highlight
     local todo_hl = vim.api.nvim_get_hl(0, { name = 'Todo', create = false })
