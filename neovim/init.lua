@@ -1594,11 +1594,17 @@ addPlugin {
                     return vim_item
                 end
             },
+            matching = {
+                disallow_fuzzy_matching = true,
+                disallow_partial_matching = true,
+                disallow_fullfuzzy_matching = true,
+                disallow_prefix_unmatching = true,
+            },
             mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
                 ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
                 ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
                 ['<C-e>'] = cmp.mapping.abort(),
-                ['<TAB>'] = cmp.mapping.confirm({ select = true }),
+                ['<TAB>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
             }),
             snippet = {
                 expand = function(args)
