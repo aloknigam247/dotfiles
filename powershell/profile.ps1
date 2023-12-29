@@ -339,7 +339,7 @@ function promptGen {
                         }
                     } elseif ($branch) {
                         $branch = $branch.Replace("heads/", "")
-                        $branch = $branch.Replace("users/aloknigam", "~")
+                        $branch = $branch.Replace("users/$env:username", "~")
                         $git_branch = "  $branch "
                     }
                     $script:git_branch = $git_branch

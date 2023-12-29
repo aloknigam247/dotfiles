@@ -2120,23 +2120,23 @@ FileTypeActions = {
         vim.g.table_mode_corner = '|'
         MarkdownHeadingsHighlight()
     end,
-    ['python'] = function(bufnr)
-        local highlighter = require('vim.treesitter.highlighter')
-        if highlighter.active[bufnr] then
-            require('ufo').attach(bufnr)
-        else
-            vim.api.nvim_create_autocmd(
-                'User', {
-                    pattern = 'TSLoaded',
-                    desc = 'Attach nvim-ufo after loading treesitter',
-                    once = true,
-                    callback = function(arg)
-                        require('ufo').attach(arg.buf)
-                    end
-                }
-            )
-        end
-    end
+    -- ['python'] = function(bufnr)
+    --     local highlighter = require('vim.treesitter.highlighter')
+    --     if highlighter.active[bufnr] then
+    --         require('ufo').attach(bufnr)
+    --     else
+    --         vim.api.nvim_create_autocmd(
+    --             'User', {
+    --                 pattern = 'TSLoaded',
+    --                 desc = 'Attach nvim-ufo after loading treesitter',
+    --                 once = true,
+    --                 callback = function(arg)
+    --                     require('ufo').attach(arg.buf)
+    --                 end
+    --             }
+    --         )
+    --     end
+    -- end
 }
 
 vim.api.nvim_create_autocmd(
@@ -3438,7 +3438,7 @@ addPlugin {
                         end,
                         fmt = function(str)
                             local alias = {
-                                ['ALOKNIGAM-IDC'] = "devbox"
+                                ['ALOKNIGAM-IDC'] = 'devbox'
                             }
                             return alias[str] or str
                         end,
