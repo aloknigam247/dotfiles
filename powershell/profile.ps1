@@ -48,7 +48,7 @@ function pdbg    { code .; python -m debugpy --listen 5678 --wait-for-client $ar
 function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
 function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
 function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
-function v($arg) { ~\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $arg }
+function v($arg) { ~\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $arg & }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
