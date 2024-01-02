@@ -903,7 +903,8 @@ vim.api.nvim_create_autocmd(
             -- local dirname = vim.fs.dirname(t.match)
             -- -- Attempt to mkdir. If dir already exists, it returns nil.
             -- -- Use 755 permissions, which means rwxr.xr.x
-            -- vim.loop.fs_mkdir(dirname, tonumber("0755", 8))           local filedir = vim.fn.expand('%:p:h')
+            -- vim.loop.fs_mkdir(dirname, tonumber("0755", 8))
+            local filedir = vim.fn.expand('%:p:h')
             if vim.fn.isdirectory(filedir) == 0 then
                 vim.fn.mkdir(filedir, 'p')
             end
@@ -1409,31 +1410,32 @@ local function light(opts)
     colorPlugin(opts)
 end
 
+addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                           }
+addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                         }
+addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'                                              }
-addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
-addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
 addPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                       }
-addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
+addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                       }
+addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
+addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                          }
+addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                         }
+addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                         }
+addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                        }
+addPlugin { 'polirritmico/monokai-nightasty.nvim',     event = 'User monokai-nightasty'                                }
+addPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                         }
+addPlugin { 'ribru17/bamboo.nvim',                     event = 'User bamboo'                                           }
+addPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                          }
+addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                        }
 addPlugin { 'sainnhe/edge',                            event = 'User edge'                                             }
 addPlugin { 'sainnhe/everforest',                      event = 'User everforest'                                       }
-addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
-addPlugin { 'rebelot/kanagawa.nvim',                   event = 'User kanagawa'                                         }
-addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                         }
-addPlugin { 'savq/melange',                            event = 'User melange'                                          }
-addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'                                           }
-addPlugin { 'polirritmico/monokai-nightasty.nvim',     event = 'User monokai-nightasty'                                }
-addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                         }
-addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                           }
-addPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                          }
-addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                        }
-addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                        }
-addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                          }
 addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                          }
+addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
+addPlugin { 'savq/melange',                            event = 'User melange'                                          }
+addPlugin { 'scottmckendry/cyberdream.nvim',           event = 'User cyberdream'                                       }
 addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                        }
-addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                       }
-addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                         }
-addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
+addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
+addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'                                           }
 
 dark  { 'ayu-dark',             'ayu' }
 light { 'ayu-light',            'ayu' }
@@ -1444,6 +1446,8 @@ dark  { 'bluloco-dark',         '_'                                             
 darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 light { 'catppuccin-latte',     'catppuccin'                             }
 dark  { 'catppuccin-macchiato', 'catppuccin'                             }
+dark  { 'cyberdream',           '_'                                      }
+darkT { 'cyberdream',           '_', cfg = { transparent = true }        }
 dark  { 'darcula-solid',        '_'                                      }
 dark  { 'duskfox',              'nightfox'                               }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
@@ -1470,7 +1474,6 @@ light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 dark  { 'vn-night',             '_', post = fixVnNight }
-dark  { 'zephyrium',            '_'                    }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
