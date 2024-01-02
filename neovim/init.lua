@@ -899,7 +899,11 @@ vim.api.nvim_create_autocmd(
         pattern = '*',
         desc = 'Create directory if it does not exists',
         callback = function()
-            local filedir = vim.fn.expand('%:p:h')
+            --  -- Function gets a table that contains match key, which maps to `<amatch>` (a full filepath).
+            -- local dirname = vim.fs.dirname(t.match)
+            -- -- Attempt to mkdir. If dir already exists, it returns nil.
+            -- -- Use 755 permissions, which means rwxr.xr.x
+            -- vim.loop.fs_mkdir(dirname, tonumber("0755", 8))           local filedir = vim.fn.expand('%:p:h')
             if vim.fn.isdirectory(filedir) == 0 then
                 vim.fn.mkdir(filedir, 'p')
             end
@@ -976,6 +980,8 @@ vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
 vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
 vim.keymap.set('n', '<M-Up>', '<cmd>res +1<cr>', {})
+vim.keymap.set('n', '<X1Mouse>', '<C-i>', {})
+vim.keymap.set('n', '<X2Mouse>', '<C-o>', {})
 -- <~>
 -- Misc</>
 -------
@@ -990,6 +996,7 @@ vim.diagnostic.config({
     }
 })
 
+-- TODO: add to vim.diagnostics.config
 vim.cmd('sign define DiagnosticSignError text=' .. Icons.error .. ' texthl=DiagnosticSignError linehl= numhl=')
 vim.cmd('sign define DiagnosticSignWarn  text=' .. Icons.warn  .. ' texthl=DiagnosticSignWarn  linehl= numhl=')
 vim.cmd('sign define DiagnosticSignInfo  text=' .. Icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
