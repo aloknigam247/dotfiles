@@ -126,49 +126,6 @@
 -- Variables</>
 ------------
 
--- Vim Globals
-vim.g.editorconfig = false
-vim.g.loaded_clipboard_provider = 1
-
--- Lua Globals
---------------
----@class Plugin
----@type Plugin[] List of plugins
-Plugins = {}
-
----@class PopupMenu
----@field cond fun() Condition to evaluate for PopUp menu
----@field opts string[][] Config options
----@type PopupMenu[]
-Pop_up_menu = {}
-
----@class TodoColors
----@field default string[] Default colors
----@field docs string[] Docs colors
----@field error string[] Error colors
----@field feat string[] Feature colors
----@field hint string[] Hint colors
----@field info string[] Info colors
----@field perf string[] Performance colors
----@field test string[] Test colors
----@field todo string[] Todo colors
----@field warn string[] Warning colors
----@type TodoColors Contains colors configuration for Color highlights
-Todo_colors = {
-    default = { 'Identifier', '#7C3AED' },
-    docs    = { 'Function', '#440381' },
-    error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
-    feat    = { 'Type', '#274C77' },
-    hint    = { 'DiagnosticHint', '#10B981' },
-    info    = { 'DiagnosticInfo', '#2563EB' },
-    perf    = { 'String', '#C2F970' },
-    test    = { 'Identifier', '#DDD92A' },
-    todo    = { 'Todo', 'Keyword', '#1B998B' },
-    warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
-}
-
--- Lua locals
--------------
 ---Shapes for dotted border
 ---@type string[]
 local dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
@@ -418,6 +375,54 @@ local lazy_config = {
         require = true,
     },
 }
+
+---@class Plugin
+---@type Plugin[] List of plugins
+local plugins = {}
+
+---@class PopupMenu
+---@field cond fun() Condition to evaluate for PopUp menu
+---@field opts string[][] Config options
+---@type PopupMenu[]
+local pop_up_menu = {}
+
+---@class TodoColors
+---@field default string[] Default colors
+---@field docs string[] Docs colors
+---@field error string[] Error colors
+---@field feat string[] Feature colors
+---@field hint string[] Hint colors
+---@field info string[] Info colors
+---@field perf string[] Performance colors
+---@field test string[] Test colors
+---@field todo string[] Todo colors
+---@field warn string[] Warning colors
+---@type TodoColors Contains colors configuration for Color highlights
+local todo_colors = {
+    default = { 'Identifier', '#7C3AED' },
+    docs    = { 'Function', '#440381' },
+    error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+    feat    = { 'Type', '#274C77' },
+    hint    = { 'DiagnosticHint', '#10B981' },
+    info    = { 'DiagnosticInfo', '#2563EB' },
+    perf    = { 'String', '#C2F970' },
+    test    = { 'Identifier', '#DDD92A' },
+    todo    = { 'Todo', 'Keyword', '#1B998B' },
+    warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
+}
+
+local todo_config = {
+    DOCS   = { icon = '', color = 'docs', alt = { 'DOCME' } },
+    FEAT   = { icon = '󱩑', color = 'feat' },
+    FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
+    HACK   = { icon = '󰑶', color = 'hint' },
+    NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
+    PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
+    RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
+    TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+    TODO   = { icon = '󰸞', color = 'todo' },
+    WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
+}
 -- <~>
 -- Functions</>
 ------------
@@ -425,7 +430,7 @@ local lazy_config = {
 ---Adds a plugin Lazy nvim config
 ---@param opts Plugin Plugin config
 local function addPlugin(opts)
-    table.insert(Plugins, opts)
+    table.insert(plugins, opts)
 end
 
 ---Create background color adaptive to editor background
@@ -767,7 +772,7 @@ local function popupAction()
     vim.cmd('aunmenu PopUp') -- Clear popup menu
 
     -- Fill popup options
-    for _,menu in pairs(Pop_up_menu) do
+    for _,menu in pairs(pop_up_menu) do
         if menu.cond() then
             for _,opt in pairs(menu.opts) do
                 local title = opt[1]
@@ -782,69 +787,7 @@ end
 ---Add a popup menu
 ---@param menu PopupMenu Popup menu
 local function popupMenuAdd(menu)
-    table.insert(Pop_up_menu, menu)
-end
-
----Get TODO highlights
----@param _ integer Buffer id
----@param match string Matched text
----@return string? # Highlight for matched string
-local function getTodoHl(_, match)
-    if not TodoHilighterCache then
-        TodoHilighterCache = {}
-    end
-
-    local cache = TodoHilighterCache[match]
-    if cache then
-        return cache
-    end
-
-    local color_set = {}
-    if match == 'BUG:' then
-        color_set = Todo_colors.error
-    elseif match == 'DOCME:' then
-        color_set = Todo_colors.docs
-    elseif match == 'ERROR:' then
-        color_set = Todo_colors.error
-    elseif match == 'FEAT:' then
-        color_set = Todo_colors.feat
-    elseif match == 'FIX:' then
-        color_set = Todo_colors.feat
-    elseif match == 'HACK:' then
-        color_set = Todo_colors.hint
-    elseif match == 'HINT:' then
-        color_set = Todo_colors.hint
-    elseif match == 'INFO:' then
-        color_set = Todo_colors.info
-    elseif match == 'NOTE:' then
-        color_set = Todo_colors.info
-    elseif match == 'PERF:' then
-        color_set = Todo_colors.perf
-    elseif match == 'REFACTOR:' then
-        color_set = Todo_colors.info
-    elseif match == 'TEST:' then
-        color_set = Todo_colors.test
-    elseif match == 'THOUGHT:' then
-        color_set = Todo_colors.info
-    elseif match == 'TODO:' then
-        color_set = Todo_colors.todo
-    elseif match == 'WARN:' then
-        color_set = Todo_colors.warn
-    else
-        color_set = Todo_colors.default
-    end
-
-    for _, hl in pairs(color_set) do
-        if hl[1] == '#' then
-            TodoHilighterCache[match] = hl
-            return hl
-        end
-        if vim.api.nvim_get_hl(0, { name = hl }) then
-            TodoHilighterCache[match] = hl
-            return hl
-        end
-    end
-    return nil
+    table.insert(pop_up_menu, menu)
 end
 -- <~>
 -- Auto Commands</>
@@ -869,7 +812,7 @@ vim.api.nvim_create_autocmd(
         desc = 'Overlength line marker',
         callback = function()
             if vim.bo.textwidth > 0 then
-                vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
+                vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
                 vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
             end
         end
@@ -1209,23 +1152,40 @@ addPlugin {
     'echasnovski/mini.hipatterns',
     event = 'VeryLazy',
     opts = {
-        highlighters = { -- FEAT: Consume todo-comments config
-            bug      = { pattern = '()BUG:()',      group = getTodoHl },
-            docs     = { pattern = '()DOCME:()',    group = getTodoHl },
-            error    = { pattern = '()ERROR:()',    group = getTodoHl },
-            feat     = { pattern = '()FEAT:()',     group = getTodoHl },
-            fix      = { pattern = '()FIX:()',      group = getTodoHl },
-            hack     = { pattern = '()HACK:()',     group = getTodoHl },
-            hint     = { pattern = '()HINT:()',     group = getTodoHl },
-            info     = { pattern = '()INFO:()',     group = getTodoHl },
-            note     = { pattern = '()NOTE:()',     group = getTodoHl },
-            perf     = { pattern = '()PERF:()',     group = getTodoHl },
-            refactor = { pattern = '()REFACTOR:()', group = getTodoHl },
-            test     = { pattern = '()TEST:()',     group = getTodoHl },
-            thought  = { pattern = '()THOUGHT:()',  group = getTodoHl },
-            todo     = { pattern = '()TODO:()',     group = getTodoHl },
-            warn     = { pattern = '()WARN:()',     group = getTodoHl },
-        }
+        highlighters = (function()
+            local config = {}
+
+            ---Get TODO highlights
+            ---@param match string Matched text
+            ---@return string? # Highlight for matched string
+            local function getTodo(set)
+                local color_set = todo_colors[set] or todo_colors.default
+
+                for _, hl in pairs(color_set) do
+                    if hl:sub(1, 1) == '#' then
+                        vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl, force = true })
+                        return 'TodoHl' .. set
+                    end
+                    if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = hl })) then
+                        return hl
+                    end
+                end
+                return nil
+            end
+            for i,v in pairs(todo_config) do
+                keys = v.alt or {}
+                table.insert(keys, i)
+                for _,l in pairs(keys) do
+                    key = l:lower()
+                    cfg = {
+                        group = getTodo(v.color),
+                        pattern = '()' .. l .. ':()',
+                    }
+                    config[key] = cfg
+                end
+            end
+            return config
+        end)()
     }
 }
 
@@ -1250,19 +1210,8 @@ addPlugin {
     'folke/todo-comments.nvim',
     config = function()
         require('todo-comments').setup({
-            colors = Todo_colors,
-            keywords = {
-                DOCS   = { icon = '', color = 'docs', alt = { 'DOCME' } },
-                FEAT   = { icon = '󱩑', color = 'feat' },
-                FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
-                HACK   = { icon = '󰑶', color = 'hint' },
-                NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-                PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
-                RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
-                TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
-                TODO   = { icon = '󰸞', color = 'todo' },
-                WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
-            },
+            colors = todo_colors,
+            keywords = todo_config,
             merge_keywords = false
         })
         TODO_COMMENTS_LOADED = true
@@ -4378,7 +4327,7 @@ addPlugin {
         }
     }
 }
-require('lazy').setup(Plugins, lazy_config)
+require('lazy').setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120
