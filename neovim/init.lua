@@ -132,21 +132,57 @@ vim.g.loaded_clipboard_provider = 1
 
 -- Lua Globals
 --------------
+---@class Plugin
+---@type Plugin[] List of plugins
+Plugins = {}
 
+---@class PopupMenu
+---@field cond fun() Condition to evaluate for PopUp menu
+---@field opts string[][] Config options
+---@type PopupMenu[]
+Pop_up_menu = {}
+
+---@class TodoColors
+---@field default string[] Default colors
+---@field docs string[] Docs colors
+---@field error string[] Error colors
+---@field feat string[] Feature colors
+---@field hint string[] Hint colors
+---@field info string[] Info colors
+---@field perf string[] Performance colors
+---@field test string[] Test colors
+---@field todo string[] Todo colors
+---@field warn string[] Warning colors
+---@type TodoColors Contains colors configuration for Color highlights
+Todo_colors = {
+    default = { 'Identifier', '#7C3AED' },
+    docs    = { 'Function', '#440381' },
+    error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
+    feat    = { 'Type', '#274C77' },
+    hint    = { 'DiagnosticHint', '#10B981' },
+    info    = { 'DiagnosticInfo', '#2563EB' },
+    perf    = { 'String', '#C2F970' },
+    test    = { 'Identifier', '#DDD92A' },
+    todo    = { 'Todo', 'Keyword', '#1B998B' },
+    warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
+}
+
+-- Lua locals
+-------------
 ---Shapes for dotted border
 ---@type string[]
-Dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
+local dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
 
 ---Defines highlight priorities for vairous components
 ---@type table<string, integer>
-Hl_priority = {
+local hl_priority = {
     hlargs = 126,
     url = 202
 }
 
 ---Defines Icons for global usage
 ---@type table<string, string>
-Icons = {
+local icons = {
     Array              = '󰅪 ',
     Boolean            = ' ',
     Class              = ' ',
@@ -220,7 +256,46 @@ Icons = {
     warning            = ' ',
 }
 
-Lazy_config = {
+local kind_hl = {
+    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
+    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
+    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
+    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
+    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
+    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
+    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
+    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
+    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
+    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
+    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
+    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
+    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
+    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
+    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
+    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
+    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
+    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
+    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
+    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
+    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
+    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
+    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
+    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
+    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
+    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
+    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
+    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
+    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
+    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
+    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
+    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
+    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
+    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
+    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
+    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
+}
+
+local lazy_config = {
     root = vim.fn.stdpath('data') .. '/lazy', -- directory where plugins will be installed
     defaults = {
         lazy = true, -- should plugins be lazy-loaded?
@@ -343,83 +418,6 @@ Lazy_config = {
         require = true,
     },
 }
-
----@class Plugin
----@type Plugin[] List of plugins
-Plugins = {}
-
----@class PopupMenu
----@field cond fun() Condition to evaluate for PopUp menu
----@field opts string[][] Config options
----@type PopupMenu[]
-Pop_up_menu = {}
-
----@class TodoColors
----@field default string[] Default colors
----@field docs string[] Docs colors
----@field error string[] Error colors
----@field feat string[] Feature colors
----@field hint string[] Hint colors
----@field info string[] Info colors
----@field perf string[] Performance colors
----@field test string[] Test colors
----@field todo string[] Todo colors
----@field warn string[] Warning colors
----@type TodoColors Contains colors configuration for Color highlights
-Todo_colors = {
-    default = { 'Identifier', '#7C3AED' },
-    docs    = { 'Function', '#440381' },
-    error   = { 'DiagnosticError', 'ErrorMsg', '#DC2626' },
-    feat    = { 'Type', '#274C77' },
-    hint    = { 'DiagnosticHint', '#10B981' },
-    info    = { 'DiagnosticInfo', '#2563EB' },
-    perf    = { 'String', '#C2F970' },
-    test    = { 'Identifier', '#DDD92A' },
-    todo    = { 'Todo', 'Keyword', '#1B998B' },
-    warn    = { 'DiagnosticWarn', 'WarningMsg', '#FBBF24' }
-}
-
--- Lua locals
--------------
-local kind_hl = {
-    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
-    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
-    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
-    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
-    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
-    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
-    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
-    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
-    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
-    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
-    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
-    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
-    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
-    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
-    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
-    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
-    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
-    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
-    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
-    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
-    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
-    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
-    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
-    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
-    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
-    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
-    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
-    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
-    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
-    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
-    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
-    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
-    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
-    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
-    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
-    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
-}
-
 -- <~>
 -- Functions</>
 ------------
@@ -998,10 +996,10 @@ vim.diagnostic.config({
 })
 
 -- TODO: add to vim.diagnostics.config
-vim.cmd('sign define DiagnosticSignError text=' .. Icons.error .. ' texthl=DiagnosticSignError linehl= numhl=')
-vim.cmd('sign define DiagnosticSignWarn  text=' .. Icons.warn  .. ' texthl=DiagnosticSignWarn  linehl= numhl=')
-vim.cmd('sign define DiagnosticSignInfo  text=' .. Icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
-vim.cmd('sign define DiagnosticSignHint  text=' .. Icons.hint  .. ' texthl=DiagnosticSignHint  linehl= numhl=')
+vim.cmd('sign define DiagnosticSignError text=' .. icons.error .. ' texthl=DiagnosticSignError linehl= numhl=')
+vim.cmd('sign define DiagnosticSignWarn  text=' .. icons.warn  .. ' texthl=DiagnosticSignWarn  linehl= numhl=')
+vim.cmd('sign define DiagnosticSignInfo  text=' .. icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
+vim.cmd('sign define DiagnosticSignHint  text=' .. icons.hint  .. ' texthl=DiagnosticSignHint  linehl= numhl=')
 
 vim.highlight.priorities = {
     syntax = 50,
@@ -1032,7 +1030,7 @@ end
 vim.fn.matchadd(
     'HighlightURL',
     "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
-    Hl_priority.url
+    hl_priority.url
 )
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -1211,7 +1209,7 @@ addPlugin {
     'echasnovski/mini.hipatterns',
     event = 'VeryLazy',
     opts = {
-        highlighters = {
+        highlighters = { -- FEAT: Consume todo-comments config
             bug      = { pattern = '()BUG:()',      group = getTodoHl },
             docs     = { pattern = '()DOCME:()',    group = getTodoHl },
             error    = { pattern = '()ERROR:()',    group = getTodoHl },
@@ -1254,7 +1252,7 @@ addPlugin {
         require('todo-comments').setup({
             colors = Todo_colors,
             keywords = {
-                DOCME  = { icon = '', color = 'docs' },
+                DOCS   = { icon = '', color = 'docs', alt = { 'DOCME' } },
                 FEAT   = { icon = '󱩑', color = 'feat' },
                 FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
                 HACK   = { icon = '󰑶', color = 'hint' },
@@ -1292,12 +1290,12 @@ addPlugin {
             end
         end,
         symbols = {
-            Icons.border_hor,
-            Icons.border_vert,
-            Icons.border_topleft,
-            Icons.border_topright,
-            Icons.border_botleft,
-            Icons.border_botright,
+            icons.border_hor,
+            icons.border_vert,
+            icons.border_topleft,
+            icons.border_topright,
+            icons.border_botleft,
+            icons.border_botright,
         },
     },
     event = 'WinNew'
@@ -1598,7 +1596,7 @@ addPlugin {
                     else
                         vim_item.menu = '[' .. entry.source.name .. ']'
                     end
-                    local kind_symbol = Icons[vim_item.kind]
+                    local kind_symbol = icons[vim_item.kind]
                     vim_item.kind = kind_symbol or vim_item.kind
 
                     return vim_item
@@ -1837,10 +1835,10 @@ addPlugin {
             debounce_delay = 50,
             enable = true,
             icons = {
-                error   = Icons.error,
-                hint    = Icons.hint,
-                info    = Icons.info,
-                warning = Icons.warn,
+                error   = icons.error,
+                hint    = icons.hint,
+                info    = icons.info,
+                warning = icons.warn,
             },
             severity = {
                 min = vim.diagnostic.severity.HINT,
@@ -2002,8 +2000,8 @@ addPlugin {
                 diagnostics_placement = 'after',
                 git_placement = 'signcolumn',
                 glyphs = {
-                    bookmark = Icons.bookmark,
-                    default  = Icons.file_unnamed,
+                    bookmark = icons.bookmark,
+                    default  = icons.file_unnamed,
                     folder = {
                         arrow_closed = '',
                         arrow_open   = '',
@@ -2021,7 +2019,7 @@ addPlugin {
                         staged    = '⏽',
                         unmerged  = '',
                         unstaged  = '󰇝',
-                        untracked = Icons.file_unnamed,
+                        untracked = icons.file_unnamed,
                     },
                     symlink = '󱅷',
                 },
@@ -2034,7 +2032,7 @@ addPlugin {
                     git = true,
                     modified = true
                 },
-                symlink_arrow = Icons.symlink_arrow,
+                symlink_arrow = icons.symlink_arrow,
                 webdev_colors = true,
                 web_devicons = {
                     file = {
@@ -2428,11 +2426,11 @@ addPlugin {
             border = 'rounded'
         },
         signs = {
-            add          = { hl = 'GitSignsAdd'   ,       text = Icons.diff_add, numhl           = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
-            change       = { hl = 'GitSignsChange',       text = Icons.diff_change, numhl        = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
-            changedelete = { hl = 'GitSignsChangedelete', text = Icons.diff_change_delete, numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
-            delete       = { hl = 'GitSignsDelete',       text = Icons.diff_delete, numhl        = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
-            topdelete    = { hl = 'GitSignsDelete',       text = Icons.diff_delete_top, numhl    = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+            add          = { hl = 'GitSignsAdd'   ,       text = icons.diff_add, numhl           = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
+            change       = { hl = 'GitSignsChange',       text = icons.diff_change, numhl        = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            changedelete = { hl = 'GitSignsChangedelete', text = icons.diff_change_delete, numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            delete       = { hl = 'GitSignsDelete',       text = icons.diff_delete, numhl        = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+            topdelete    = { hl = 'GitSignsDelete',       text = icons.diff_delete_top, numhl    = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
         },
         trouble = false
     }
@@ -2709,53 +2707,53 @@ addPlugin {
         ui = {
             actionfix = ' ',
             border = 'rounded',
-            code_action = Icons.code_action,
+            code_action = icons.code_action,
             collapse = '',
             devicon = true,
-            diagnostic = Icons.diagnostic,
+            diagnostic = icons.diagnostic,
             expand = '',
-            hover = Icons.hover,
-            incoming = Icons.incoming,
+            hover = icons.hover,
+            incoming = icons.incoming,
             kind = {
-                Array         = { Icons.Array,         'CmpItemKindArray',        },
-                Boolean       = { Icons.Boolean,       'CmpItemKindBoolean',      },
-                Class         = { Icons.Class,         'CmpItemKindClass',        },
-                Constant      = { Icons.Constant,      'CmpItemKindConstant',     },
-                Constructor   = { Icons.Constructor,   'CmpItemKindConstructor',  },
-                Enum          = { Icons.Enum,          'CmpItemKindEnum',         },
-                EnumMember    = { Icons.EnumMember,    'CmpItemKindEnumMember',   },
-                Event         = { Icons.Event,         'CmpItemKindEvent',        },
-                Field         = { Icons.Field,         'CmpItemKindField',        },
-                File          = { Icons.File,          'CmpItemKindFile',         },
-                Folder        = { Icons.Folder,        'CmpItemKindFolder',       },
-                Function      = { Icons.Function,      'CmpItemKindFunction',     },
-                Interface     = { Icons.Interface,     'CmpItemKindInterface',    },
-                Key           = { Icons.Key,           'CmpItemKindKey',          },
-                Macro         = { Icons.Macro,         'CmpItemKindMacro',        },
-                Method        = { Icons.Method,        'CmpItemKindMethod',       },
-                Module        = { Icons.Module,        'CmpItemKindModule',       },
-                Namespace     = { Icons.Namespace,     'CmpItemKindNamespace',    },
-                Null          = { Icons.Null,          'CmpItemKindNull',         },
-                Number        = { Icons.Number,        'CmpItemKindNumber',       },
-                Object        = { Icons.Object,        'CmpItemKindObject',       },
-                Operator      = { Icons.Operator,      'CmpItemKindOperator',     },
-                Package       = { Icons.Package,       'CmpItemKindPackage',      },
-                Parameter     = { Icons.Parameter,     'CmpItemKindParameter',    },
-                Property      = { Icons.Property,      'CmpItemKindProperty',     },
-                Snippet       = { Icons.Snippet,       'CmpItemKindSnippet',      },
-                StaticMethod  = { Icons.StaticMethod,  'CmpItemKindStaticMethod', },
-                String        = { Icons.String,        'CmpItemKindString',       },
-                Struct        = { Icons.Struct,        'CmpItemKindStruct',       },
-                Text          = { Icons.Text,          'CmpItemKindText',         },
-                TypeAlias     = { Icons.TypeAlias,     'CmpItemKindTypeAlias',    },
-                TypeParameter = { Icons.TypeParameter, 'CmpItemKindTypeParameter',},
-                Unit          = { Icons.Unit,          'CmpItemKindUnit',         },
-                Value         = { Icons.Value,         'CmpItemKindValue',        },
-                Variable      = { Icons.Variable,      'CmpItemKindVariable',     },
+                Array         = { icons.Array,         'CmpItemKindArray',        },
+                Boolean       = { icons.Boolean,       'CmpItemKindBoolean',      },
+                Class         = { icons.Class,         'CmpItemKindClass',        },
+                Constant      = { icons.Constant,      'CmpItemKindConstant',     },
+                Constructor   = { icons.Constructor,   'CmpItemKindConstructor',  },
+                Enum          = { icons.Enum,          'CmpItemKindEnum',         },
+                EnumMember    = { icons.EnumMember,    'CmpItemKindEnumMember',   },
+                Event         = { icons.Event,         'CmpItemKindEvent',        },
+                Field         = { icons.Field,         'CmpItemKindField',        },
+                File          = { icons.File,          'CmpItemKindFile',         },
+                Folder        = { icons.Folder,        'CmpItemKindFolder',       },
+                Function      = { icons.Function,      'CmpItemKindFunction',     },
+                Interface     = { icons.Interface,     'CmpItemKindInterface',    },
+                Key           = { icons.Key,           'CmpItemKindKey',          },
+                Macro         = { icons.Macro,         'CmpItemKindMacro',        },
+                Method        = { icons.Method,        'CmpItemKindMethod',       },
+                Module        = { icons.Module,        'CmpItemKindModule',       },
+                Namespace     = { icons.Namespace,     'CmpItemKindNamespace',    },
+                Null          = { icons.Null,          'CmpItemKindNull',         },
+                Number        = { icons.Number,        'CmpItemKindNumber',       },
+                Object        = { icons.Object,        'CmpItemKindObject',       },
+                Operator      = { icons.Operator,      'CmpItemKindOperator',     },
+                Package       = { icons.Package,       'CmpItemKindPackage',      },
+                Parameter     = { icons.Parameter,     'CmpItemKindParameter',    },
+                Property      = { icons.Property,      'CmpItemKindProperty',     },
+                Snippet       = { icons.Snippet,       'CmpItemKindSnippet',      },
+                StaticMethod  = { icons.StaticMethod,  'CmpItemKindStaticMethod', },
+                String        = { icons.String,        'CmpItemKindString',       },
+                Struct        = { icons.Struct,        'CmpItemKindStruct',       },
+                Text          = { icons.Text,          'CmpItemKindText',         },
+                TypeAlias     = { icons.TypeAlias,     'CmpItemKindTypeAlias',    },
+                TypeParameter = { icons.TypeParameter, 'CmpItemKindTypeParameter',},
+                Unit          = { icons.Unit,          'CmpItemKindUnit',         },
+                Value         = { icons.Value,         'CmpItemKindValue',        },
+                Variable      = { icons.Variable,      'CmpItemKindVariable',     },
             },
             lines = { '╰', '⎬', '│', '─', '╭' },
-            outgoing = Icons.outgoing,
-            preview = Icons.preview,
+            outgoing = icons.outgoing,
+            preview = icons.preview,
             title  = true,
         }
     }
@@ -2991,13 +2989,13 @@ addPlugin {
 addPlugin {
     'MattesGroeger/vim-bookmarks',
     config = function()
-        vim.g.bookmark_annotation_sign = Icons.bookmark_annotate
+        vim.g.bookmark_annotation_sign = icons.bookmark_annotate
         vim.g.bookmark_display_annotation = 1
         vim.g.bookmark_highlight_lines = 1
         vim.g.bookmark_location_list = 1
         vim.g.bookmark_no_default_key_mappings = 1
         vim.g.bookmark_save_per_working_dir = 0
-        vim.g.bookmark_sign = Icons.bookmark
+        vim.g.bookmark_sign = icons.bookmark
     end,
     dependencies = 'luukvbaal/statuscol.nvim',
     keys = {
@@ -3030,7 +3028,7 @@ addPlugin {
         filter_kind = { 'Class', 'Constructor', 'Enum', 'Function', 'Interface', 'Module', 'Method', 'Struct' },
         guides = { mid_item = '⎬ ', last_item = '╰ ', nested_top = '│ ', whitespace = ' ', },
         highlight_on_hover = true,
-        icons = Icons,
+        icons = icons,
         nav = {
             keymaps = {
                 ['<Left>'] = 'actions.left',
@@ -3101,11 +3099,11 @@ addPlugin {
         padding = false,
         position = 'bottom',
         signs = {
-            error = Icons.error,
-            hint = Icons.hint,
-            information = Icons.info,
-            other = Icons.diagnostic,
-            warning = Icons.warn,
+            error = icons.error,
+            hint = icons.hint,
+            information = icons.info,
+            other = icons.diagnostic,
+            warning = icons.warn,
         },
         use_diagnostic_signs = true,
         width = 50,
@@ -3152,7 +3150,7 @@ addPlugin {
         require('bqf').setup {
             auto_resize_height = true,
             preview = {
-                border = Dotted_border,
+                border = dotted_border,
             },
             filter = {
                 fzf = {
@@ -3281,11 +3279,11 @@ addPlugin {
                 {
                     sign = {
                         text = {
-                            Icons.diff_add,
-                            Icons.diff_change,
-                            Icons.diff_delete,
-                            Icons.diff_delete_top,
-                            Icons.diff_change_delete,
+                            icons.diff_add,
+                            icons.diff_change,
+                            icons.diff_delete,
+                            icons.diff_delete_top,
+                            icons.diff_change_delete,
                         },
                         colwidth = 1,
                         fillcharhl = 'LineNr',
@@ -3378,10 +3376,10 @@ addPlugin {
                         padding = { left = 1, right = 1 },
                         shorting_target = 40,
                         symbols = {
-                            modified = Icons.file_modified,
-                            readonly = Icons.file_readonly,
-                            unnamed  = Icons.file_unnamed,
-                            newfile  = Icons.file_newfile
+                            modified = icons.file_modified,
+                            readonly = icons.file_readonly,
+                            unnamed  = icons.file_unnamed,
+                            newfile  = icons.file_newfile
                         }
                     }
                 },
@@ -3434,10 +3432,10 @@ addPlugin {
                         padding = { left = 1, right = 0 },
                         sources = { 'nvim_diagnostic' },
                         symbols = {
-                            error = Icons.error,
-                            warn  = Icons.warn,
-                            info  = Icons.info,
-                            hint  = Icons.hint
+                            error = icons.error,
+                            warn  = icons.warn,
+                            info  = icons.info,
+                            hint  = icons.hint
                         },
                     },
                     {
@@ -3569,10 +3567,10 @@ addPlugin {
                         path = 0,
                         shorting_target = 40,
                         symbols = {
-                            modified = Icons.file_modified,
-                            readonly = Icons.file_readonly,
-                            unnamed  = Icons.file_unnamed,
-                            newfile  = Icons.file_newfile,
+                            modified = icons.file_modified,
+                            readonly = icons.file_readonly,
+                            unnamed  = icons.file_unnamed,
+                            newfile  = icons.file_newfile,
                         }
                     }
                 },
@@ -3597,10 +3595,10 @@ addPlugin {
                         path = 3,
                         shorting_target = 40,
                         symbols = {
-                            modified = Icons.file_modified,
-                            readonly = Icons.file_readonly,
-                            unnamed  = Icons.file_unnamed,
-                            newfile  = Icons.file_newfile,
+                            modified = icons.file_modified,
+                            readonly = icons.file_readonly,
+                            unnamed  = icons.file_unnamed,
+                            newfile  = icons.file_newfile,
                         }
                     }
                 },
@@ -3634,7 +3632,7 @@ addPlugin {
                 end
                 local res = ''
                 for k, v in pairs(diagnostics_dict) do
-                    res = res .. Icons[k] .. v .. ' '
+                    res = res .. icons[k] .. v .. ' '
                 end
                 return res
             end,
@@ -3643,7 +3641,7 @@ addPlugin {
                 if element.filetype == 'netrw' then
                     icon = ''
                 elseif element.path == '[No Name]' then
-                    icon = Icons.file_newfile
+                    icon = icons.file_newfile
                 end
                 return icon, hl
             end,
@@ -3848,7 +3846,7 @@ addPlugin {
             extras = {
                 named_parameters = true,
             },
-            hl_priority = Hl_priority.hlargs,
+            hl_priority = hl_priority.hlargs,
             paint_catch_blocks = {
                 declarations = true,
                 usages = true
@@ -4295,28 +4293,28 @@ addPlugin {
             kinds = {
                 use_devicons = true,
                 symbols = {
-                    Array = Icons.Array,
-                    Boolean = Icons.Boolean,
+                    Array = icons.Array,
+                    Boolean = icons.Boolean,
                     BreakStatement = '󰙧 ',
                     Call = '󰃷 ',
                     CaseStatement = '󱃙 ',
-                    Class = Icons.Class,
-                    Color = Icons.Color,
-                    Constant = Icons.Constant,
-                    Constructor = Icons.Constructor,
+                    Class = icons.Class,
+                    Color = icons.Color,
+                    Constant = icons.Constant,
+                    Constructor = icons.Constructor,
                     ContinueStatement = '→ ',
                     Copilot = ' ',
                     Declaration = '󰙠 ',
                     Delete = '󰩺 ',
                     DoStatement = '󰑖 ',
-                    Enum = Icons.Enum,
-                    EnumMember = Icons.EnumMember,
-                    Event = Icons.Event,
-                    Field = Icons.Field,
-                    File = Icons.File,
-                    Folder = Icons.Folder,
+                    Enum = icons.Enum,
+                    EnumMember = icons.EnumMember,
+                    Event = icons.Event,
+                    Field = icons.Field,
+                    File = icons.File,
+                    Folder = icons.Folder,
                     ForStatement = '󰑖 ',
-                    Function = Icons.Function,
+                    Function = icons.Function,
                     H1Marker = '󰉫 ',
                     H2Marker = '󰉬 ',
                     H3Marker = '󰉭 ',
@@ -4325,45 +4323,45 @@ addPlugin {
                     H6Marker = '󰉰 ',
                     Identifier = '󰀫 ',
                     IfStatement = '󰇉 ',
-                    Interface = Icons.Interface,
-                    Keyword = Icons.Keyword,
+                    Interface = icons.Interface,
+                    Keyword = icons.Keyword,
                     List = '󰅪 ',
                     Log = '󰦪 ',
                     Lsp = ' ',
-                    Macro = Icons.Macro,
+                    Macro = icons.Macro,
                     MarkdownH1 = '󰉫 ',
                     MarkdownH2 = '󰉬 ',
                     MarkdownH3 = '󰉭 ',
                     MarkdownH4 = '󰉮 ',
                     MarkdownH5 = '󰉯 ',
                     MarkdownH6 = '󰉰 ',
-                    Method = Icons.Method,
-                    Module = Icons.Module,
-                    Namespace = Icons.Namespace,
-                    Null = Icons.Null,
-                    Number = Icons.Number,
-                    Object = Icons.Object,
-                    Operator = Icons.Operator,
-                    Package = Icons.Package,
+                    Method = icons.Method,
+                    Module = icons.Module,
+                    Namespace = icons.Namespace,
+                    Null = icons.Null,
+                    Number = icons.Number,
+                    Object = icons.Object,
+                    Operator = icons.Operator,
+                    Package = icons.Package,
                     Pair = '󰅪 ',
-                    Property = Icons.Property,
-                    Reference = Icons.Reference,
+                    Property = icons.Property,
+                    Reference = icons.Reference,
                     Regex = ' ',
                     Repeat = '󰑖 ',
                     Scope = '󰅩 ',
-                    Snippet = Icons.Snippet,
+                    Snippet = icons.Snippet,
                     Specifier = '󰦪 ',
                     Statement = '󰅩 ',
-                    String = Icons.String,
-                    Struct = Icons.Struct,
+                    String = icons.String,
+                    Struct = icons.Struct,
                     SwitchStatement = '󰺟 ',
                     Terminal = ' ',
-                    Text = Icons.Text,
+                    Text = icons.Text,
                     Type = ' ',
-                    TypeParameter = Icons.TypeParameter,
-                    Unit = Icons.Unit,
-                    Value = Icons.Value,
-                    Variable = Icons.Variable,
+                    TypeParameter = icons.TypeParameter,
+                    Unit = icons.Unit,
+                    Value = icons.Value,
+                    Variable = icons.Variable,
                     WhileStatement = '󰑖 ',
                 },
             },
@@ -4380,7 +4378,7 @@ addPlugin {
         }
     }
 }
-require('lazy').setup(Plugins, Lazy_config)
+require('lazy').setup(Plugins, lazy_config)
 ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120
