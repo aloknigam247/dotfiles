@@ -2766,6 +2766,14 @@ addPlugin {
         local mason_lspconfig = require('mason-lspconfig')
         local on_attach = function(_, bufnr)
             vim.lsp.inlay_hint.enable(bufnr, true)
+            vim.api.nvim_create_autocmd('LspDetach', {
+                buffer = bufnr,
+                desc = 'Disable inlay on lsp detach',
+                once = true,
+                callback = function(arg)
+                    vim.lsp.inlay_hint.enable(arg.buf, true)
+                end
+            })
 
             -- Mappings.
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
