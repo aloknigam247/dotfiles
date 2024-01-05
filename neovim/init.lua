@@ -922,8 +922,8 @@ vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
 vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
 vim.keymap.set('n', '<M-Up>', '<cmd>res +1<cr>', {})
-vim.keymap.set('n', '<X1Mouse>', '<C-i>', {})
-vim.keymap.set('n', '<X2Mouse>', '<C-o>', {})
+vim.keymap.set('n', '<X1Mouse>', '<C-o>', {})
+vim.keymap.set('n', '<X2Mouse>', '<C-i>', {})
 -- <~>
 -- Misc</>
 -------
@@ -1378,7 +1378,6 @@ addPlugin { 'sainnhe/everforest',                      event = 'User everforest'
 addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                          }
 addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-solid', dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'savq/melange',                            event = 'User melange'                                          }
-addPlugin { 'scottmckendry/cyberdream.nvim',           event = 'User cyberdream'                                       }
 addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                        }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
@@ -1393,8 +1392,6 @@ dark  { 'bluloco-dark',         '_'                                             
 darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
 light { 'catppuccin-latte',     'catppuccin'                             }
 dark  { 'catppuccin-macchiato', 'catppuccin'                             }
-dark  { 'cyberdream',           '_'                                      }
-darkT { 'cyberdream',           '_', cfg = { transparent = true }        }
 dark  { 'darcula-solid',        '_'                                      }
 dark  { 'duskfox',              'nightfox'                               }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
@@ -2424,7 +2421,7 @@ addPlugin {
     end
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Indentation  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Indent     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'lukas-reineke/indent-blankline.nvim',
     event = 'CursorHold',
@@ -2449,7 +2446,7 @@ addPlugin {
         },
         scope = {
             enabled = true,
-            char = '▎',
+            char = '▏',
             show_start = true,
             show_end = true,
             injected_languages = true,
