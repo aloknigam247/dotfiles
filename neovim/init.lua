@@ -914,6 +914,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+vim.keymap.set("x", "/", "<Esc>/\\%V")
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<BS>', 'x', {})
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
@@ -1102,6 +1103,39 @@ addPlugin {
     event = 'InsertEnter'
 }
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Code Map    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/dstein64/nvim-scrollview
+addPlugin {
+    'echasnovski/mini.map',
+    config = function()
+        local minimap = require('mini.map')
+        minimap.setup({
+            integrations = {
+                minimap.gen_integration.builtin_search(),
+                minimap.gen_integration.gitsigns(),
+                minimap.gen_integration.diagnostic(),
+            },
+            symbols = {
+                encode = minimap.gen_encode_symbols.dot('4x2')
+            },
+            window = {
+                show_integration_count = true
+            }
+        })
+    end
+}
+
+addPlugin {
+    'gorbit99/codewindow.nvim',
+    opts = {
+        exclude_filetypes = {},
+        window_border = 'single',
+        use_lsp = true,
+        use_treesitter = true,
+        use_git = true,
+    }
+}
+--<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
@@ -1173,11 +1207,11 @@ addPlugin {
                 return nil
             end
             for i,v in pairs(todo_config) do
-                keys = v.alt or {}
+                local keys = v.alt or {}
                 table.insert(keys, i)
                 for _,l in pairs(keys) do
-                    key = l:lower()
-                    cfg = {
+                    local key = l:lower()
+                    local cfg = {
                         group = getTodo(v.color),
                         pattern = '()' .. l .. ':()',
                     }
@@ -3213,7 +3247,7 @@ addPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
+addPlugin { -- DiagnosticChanged
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -3229,6 +3263,7 @@ addPlugin {
                 { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
                 { sign = { name = { 'Bookmark' }, fillcharhl ='LineNr', auto = true } },
                 { sign = { name = { 'Dap' }, fillcharhl ='LineNr', auto = true } },
+                { sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
                 {
                     sign = {
@@ -3489,6 +3524,7 @@ addPlugin {
                         end,
                         on_click = function ()
                             require('mini.map').toggle()
+                            require('codewindow').toggle_minimap()
                         end,
                         padding = { left = 0, right = 0 },
                         separator = { left = '', right = '█' }
@@ -3716,7 +3752,21 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/andythigpen/nvim-coverage
+addPlugin {
+    'andythigpen/nvim-coverage',
+    cmd = 'Coverage',
+    dependencies = { 'nvim-lua/plenary.nvim', 'luukvbaal/statuscol.nvim' },
+    opts ={
+        auto_reload = true,
+        signs = {
+            covered = { hl = 'CoverageCovered', text = '░' }, -- ░║
+            partial = { hl = 'CoveragePartial', text = '░' },
+            uncovered = { hl = 'CoverageUncovered', text = '░' },
+        },
+        sign_group = 'coverage'
+    }
+}
+
 -- addPlugin {
 --     'nvim-neotest/neotest',
 --     config = function()
@@ -4031,6 +4081,15 @@ addPlugin {
 -- https://github.com/anuvyklack/hydra.nvim
 
 addPlugin {
+  'ariel-frischer/bmessages.nvim',
+  cmd = 'Bmessages',
+  opts = {
+      split_size_split = 10,
+      split_type = 'split'
+  }
+}
+
+addPlugin {
     'cbochs/portal.nvim',
     cmd = 'Portal',
     dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
@@ -4055,24 +4114,6 @@ addPlugin {
 --     'dstein64/vim-startuptime',
 --     cmd = 'StartupTime'
 -- }
-
--- https://github.com/dstein64/nvim-scrollview
-addPlugin {
-    'echasnovski/mini.map',
-    config = function ()
-        local minimap = require('mini.map')
-        minimap.setup({
-            integrations = {
-                minimap.gen_integration.builtin_search(),
-                minimap.gen_integration.gitsigns(),
-                minimap.gen_integration.diagnostic(),
-            },
-            symbols = {
-                encode = minimap.gen_encode_symbols.dot('4x2')
-            }
-        })
-    end
-}
 
 addPlugin {
     'echasnovski/mini.move',
