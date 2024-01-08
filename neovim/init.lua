@@ -1,4 +1,4 @@
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
 -- ---@field count integer Number of times an autocommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -122,7 +122,7 @@
 -- vim.api.nvim_create_autocmd_orig = vim.api.nvim_create_autocmd
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
 ------------
 
@@ -914,6 +914,9 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- https://github.com/backdround/neowords.nvim
+-- https://github.com/chaoren/vim-wordmotion
+-- https://github.com/chrisgrieser/nvim-spider
 vim.keymap.set("x", "/", "<Esc>/\\%V")
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<BS>', 'x', {})
@@ -1004,7 +1007,7 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModeEnable'
@@ -1017,7 +1020,7 @@ addPlugin {
     cmd = 'EasyAlign'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- https://github.com/altermo/ultimate-autopair.nvim
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
@@ -1103,7 +1106,7 @@ addPlugin {
     event = 'InsertEnter'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Code Map    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/dstein64/nvim-scrollview
 addPlugin {
     'echasnovski/mini.map',
@@ -1136,7 +1139,7 @@ addPlugin {
     }
 }
 --<~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
     -- https://github.com/nullchilly/fsread.nvim
@@ -1311,7 +1314,7 @@ addPlugin {
 
 -- 'uga-rosa/ccc.nvim'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Fix LineNr highlight
 ---@param fg string fg color in hex
 local function fixLineNr(fg)
@@ -1490,7 +1493,7 @@ function ColoRand(scheme_index)
     -- vim.g.ColoRand = '[' .. scheme_index .. ']' .. scheme .. elapsed
 end
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'numToStr/Comment.nvim',
     config = function()
@@ -1511,7 +1514,7 @@ addPlugin {
 }
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/hrsh7th/cmp-omni
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
@@ -1650,7 +1653,7 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'LiadOz/nvim-dap-repl-highlights',
     config = true
@@ -1757,7 +1760,7 @@ addPlugin {
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'mfussenegger/nvim-dap-python'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'danymat/neogen',
     cmd = 'Neogen',
@@ -1768,7 +1771,7 @@ addPlugin {
 }
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
 addPlugin {
@@ -2086,7 +2089,7 @@ addPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Set highlight for markdown headings
 function MarkdownHeadingsHighlight()
     local title1_hl = vim.api.nvim_get_hl(0, { name = '@text.title.1.markdown', link = false })
@@ -2148,7 +2151,7 @@ vim.api.nvim_create_autocmd(
     }
 )
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'kevinhwang91/nvim-ufo',
     config = function()
@@ -2294,13 +2297,13 @@ addPlugin {
 }
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin {
 --     'sbdchd/neoformat',
 --     cmd = 'Neoformat'
 -- }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     '9seconds/repolink.nvim',
     cmd = 'RepoLink',
@@ -2421,7 +2424,7 @@ addPlugin {
     cmd = "DiffviewOpen"
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     '2kabhishek/nerdy.nvim',
     cmd = 'Nerdy',
@@ -2455,7 +2458,7 @@ addPlugin {
     end
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Indent     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Indent     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'lukas-reineke/indent-blankline.nvim',
     event = 'CursorHold',
@@ -2527,7 +2530,7 @@ addPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- 'Wansmer/symbol-usage.nvim',
     'VidocqH/lsp-lens.nvim',
@@ -2894,7 +2897,7 @@ addPlugin {
     keys = { '<F12>' }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { 'iamcco/markdown-preview.nvim', }
 addPlugin {
     'toppair/peek.nvim',
@@ -2942,7 +2945,7 @@ addPlugin {
     event = 'CursorHold *.md'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
 -- https://vim.fandom.com/wiki/Using_marks
 -- |----------------+---------------------------------------------------------------|
@@ -3004,7 +3007,7 @@ addPlugin {
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Outline     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'stevearc/aerial.nvim',
     cmd = { 'AerialNavToggle', 'AerialToggle' },
@@ -3033,7 +3036,7 @@ addPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Quickfix    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 --[[ Guide
 |-----------------+-----------------------------------------------------------|
 | Command         | Explaination                                              |
@@ -3159,7 +3162,7 @@ addPlugin {
     ft = 'qf'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 vim.api.nvim_create_user_command(
     'Cdroot',
     function(opts)
@@ -3197,7 +3200,7 @@ vim.api.nvim_create_user_command(
     }
 )
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/aaditeynair/conduct.nvim
 addPlugin {
     'rmagatti/auto-session',
@@ -3226,7 +3229,7 @@ addPlugin {
     end
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'dcampos/nvim-snippy',
     dependencies = 'honza/vim-snippets',
@@ -3247,7 +3250,7 @@ addPlugin {
 -- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin { -- DiagnosticChanged
     'luukvbaal/statuscol.nvim',
     config = function()
@@ -3288,7 +3291,7 @@ addPlugin { -- DiagnosticChanged
     enabled = true
 }
 --<~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -3609,7 +3612,7 @@ addPlugin {
     event = 'User VeryLazy',
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'akinsho/bufferline.nvim',
     event = 'TabNew',
@@ -3659,7 +3662,7 @@ addPlugin {
 }
 -- https://github.com/tomiis4/BufferTabs.nvim
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
 -- https://github.com/axkirillov/easypick.nvim
 addPlugin {
@@ -3744,7 +3747,7 @@ addPlugin {
     dependencies = 'nvim-telescope/telescope.nvim',
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/voldikss/vim-floaterm
 addPlugin {
     'akinsho/toggleterm.nvim',
@@ -3752,7 +3755,7 @@ addPlugin {
     config = true
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'andythigpen/nvim-coverage',
     cmd = 'Coverage',
@@ -3784,7 +3787,7 @@ addPlugin {
 --     lazy = false
 -- }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- https://github.com/AckslD/nvim-trevJ.lua
     -- https://github.com/AndrewRadev/splitjoin.vim
@@ -3862,7 +3865,7 @@ addPlugin {
     event = 'User TSLoaded'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'folke/noice.nvim',
     config = function()
@@ -4055,7 +4058,7 @@ addPlugin {
     'stevearc/dressing.nvim'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
@@ -4219,6 +4222,7 @@ addPlugin {
         },
         triggers_blacklist = {
             i = { 'j', 'k' },
+            n = { 'v' },
             v = { 'j', 'k' },
         },
         disable = {
@@ -4393,7 +4397,7 @@ addPlugin {
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Winbar     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO:
 addPlugin {
     'Bekaboo/dropbar.nvim',
