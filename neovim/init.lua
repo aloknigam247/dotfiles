@@ -2777,6 +2777,7 @@ addPlugin {
 -- https://github.com/mattn/efm-langserver
 -- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
+-- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/p00f/clangd_extensions.nvim'
 
 addPlugin {
@@ -4145,6 +4146,120 @@ addPlugin {
 }
 
 -- 'jbyuki/instant.nvim'
+
+addPlugin {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    init = function()
+        vim.o.timeout = true
+        vim.o.timeoutlen = 300
+    end,
+    opts = {
+        plugins = {
+            marks = false,
+            registers = false,
+            spelling = {
+                enabled = false,
+                suggestions = 20,
+            },
+            presets = {
+                operators = true,
+                motions = true,
+                text_objects = true,
+                windows = true,
+                nav = true,
+                z = true,
+                g = true,
+            },
+        },
+        operators = { gc = 'Comments' },
+        key_labels = { },
+        motions = {
+            count = true,
+        },
+        icons = {
+            breadcrumb = '»',
+            separator = '➜',
+            group = '+',
+        },
+        popup_mappings = {
+            scroll_down = '<c-d>',
+            scroll_up = '<c-u>',
+        },
+        window = {
+            border = dotted_border,
+            position = 'bottom',
+            margin = { 0, 0, 1, 0 },
+            padding = { 0, 0, 0, 0 },
+            winblend = 0,
+            zindex = 1000,
+        },
+        layout = {
+            height = { min = 4, max = 25 },
+            width = { min = 20, max = 50 },
+            spacing = 3,
+            align = 'left',
+        },
+        ignore_missing = false,
+        hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', '^:', '^ ', '^call ', '^lua ' },
+        show_help = true,
+        show_keys = true,
+        triggers = 'auto',
+        triggers_nowait = {
+            -- marks
+            '`',
+            "'",
+            'g`',
+            "g'",
+            -- registers
+            '"',
+            '<c-r>',
+            -- spelling
+            'z=',
+        },
+        triggers_blacklist = {
+            i = { 'j', 'k' },
+            v = { 'j', 'k' },
+        },
+        disable = {
+            buftypes = {},
+            filetypes = {},
+        },
+    }
+}
+
+addPlugin {
+    -- https://github.com/gregorias/coerce.nvim
+    'johmsalas/text-case.nvim',
+    init = function()
+        vim.api.nvim_set_keymap('n', 'wcA', '', { callback = function() require('textcase').lsp_rename('to_phrase_case') end,     desc = 'phrase_case'})
+        vim.api.nvim_set_keymap('n', 'wcC', '', { callback = function() require('textcase').lsp_rename('to_camel_case') end,      desc = 'camel_case'})
+        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dash_case') end,       desc = 'dash_case'})
+        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dot_case') end,        desc = 'dot_case'})
+        vim.api.nvim_set_keymap('n', 'wcF', '', { callback = function() require('textcase').lsp_rename('to_path_case') end,       desc = 'path_case'})
+        vim.api.nvim_set_keymap('n', 'wcL', '', { callback = function() require('textcase').lsp_rename('to_lower_case') end,      desc = 'lower_case'})
+        vim.api.nvim_set_keymap('n', 'wcN', '', { callback = function() require('textcase').lsp_rename('to_constant_case') end,   desc = 'constant_case'})
+        vim.api.nvim_set_keymap('n', 'wcP', '', { callback = function() require('textcase').lsp_rename('to_pascal_case') end,     desc = 'pascal_case'})
+        vim.api.nvim_set_keymap('n', 'wcS', '', { callback = function() require('textcase').lsp_rename('to_snake_case') end,      desc = 'snake_case'})
+        vim.api.nvim_set_keymap('n', 'wcT', '', { callback = function() require('textcase').lsp_rename('to_title_case') end,      desc = 'title_case'})
+        vim.api.nvim_set_keymap('n', 'wcU', '', { callback = function() require('textcase').lsp_rename('to_upper_case') end,      desc = 'upper_case'})
+        vim.api.nvim_set_keymap('n', 'wca', '', { callback = function() require('textcase').current_word('to_phrase_case') end,   desc = 'phrase_case'})
+        vim.api.nvim_set_keymap('n', 'wcc', '', { callback = function() require('textcase').current_word('to_camel_case') end,    desc = 'camel_case'})
+        vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dash_case') end,     desc = 'dash_case'})
+        vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dot_case') end,      desc = 'dot_case'})
+        vim.api.nvim_set_keymap('n', 'wcf', '', { callback = function() require('textcase').current_word('to_path_case') end,     desc = 'path_case'})
+        vim.api.nvim_set_keymap('n', 'wcl', '', { callback = function() require('textcase').current_word('to_lower_case') end,    desc = 'lower_case'})
+        vim.api.nvim_set_keymap('n', 'wcn', '', { callback = function() require('textcase').current_word('to_constant_case') end, desc = 'constant_case'})
+        vim.api.nvim_set_keymap('n', 'wcp', '', { callback = function() require('textcase').current_word('to_pascal_case') end,   desc = 'pascal_case'})
+        vim.api.nvim_set_keymap('n', 'wcs', '', { callback = function() require('textcase').current_word('to_snake_case') end,    desc = 'snake_case'})
+        vim.api.nvim_set_keymap('n', 'wct', '', { callback = function() require('textcase').current_word('to_title_case') end,    desc = 'title_case'})
+        vim.api.nvim_set_keymap('n', 'wcu', '', { callback = function() require('textcase').current_word('to_upper_case') end,    desc = 'upper_case'})
+    end,
+    lazy = true,
+    opts = {
+        default_keymappings_enabled = false,
+    }
+}
 
 addPlugin {
     'gbprod/yanky.nvim',
