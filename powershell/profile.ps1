@@ -59,7 +59,10 @@ function e ($arg) {
         $ext = $arg.split('.')[-1]
     }
 
-    if ( $ext -in $code_ext) {
+    if ( $null -ne $env:SSH_CLIENT ) {
+        nvim $arg
+    }
+    elseif ( $ext -in $code_ext) {
         code $arg
     } else {
         v $arg
@@ -287,7 +290,7 @@ function promptGen {
     $blocks = @(
         @{
             'params' = @{
-                'text' = '$script:dir_icon  '
+                'text' = '$script:dir_icon '
                 'fg' = '#8AC926'
             }
             'execute' = @{
@@ -298,7 +301,7 @@ function promptGen {
                         $script:dir_icon = ""
                     }
                     if ($null -ne $env:SSH_CLIENT) {
-                        $script:dir_icon = ""
+                        $script:dir_icon = "󰅟"
                     }
                 }
             }
