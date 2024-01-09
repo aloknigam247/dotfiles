@@ -3545,6 +3545,8 @@ addPlugin {
             },
             winbar = {
                 lualine_a = {
+                    -- TODO:
+                    -- '%{%v:lua.dropbar.get_dropbar_str()%}',
                     {
                         'filetype',
                         cond = function () return CountWindows(true) > 1 end,
@@ -3789,80 +3791,80 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-    -- https://github.com/AckslD/nvim-trevJ.lua
-    -- https://github.com/AndrewRadev/splitjoin.vim
-    -- https://github.com/CKolkey/ts-node-action
-    -- https://github.com/echasnovski/mini.splitjoin
-    'Wansmer/treesj',
-    cmd = 'TSJToggle',
-    opts = {
-        max_join_length = 10000
-    }
+-- https://github.com/AckslD/nvim-trevJ.lua
+-- https://github.com/AndrewRadev/splitjoin.vim
+-- https://github.com/CKolkey/ts-node-action
+-- https://github.com/echasnovski/mini.splitjoin
+'Wansmer/treesj',
+cmd = 'TSJToggle',
+opts = {
+    max_join_length = 10000
+}
 }
 
 addPlugin {
-    'nvim-treesitter/nvim-treesitter',
-    config = function()
-        require('nvim-treesitter.configs').setup({
-            auto_install = false,
-            highlight = {
-                additional_vim_regex_highlighting = false,
-                disable = function(_, buf)
-                    local max_filesize = 1000 * 1024 -- 1000 KB
-                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                    if ok and stats and stats.size > max_filesize then
-                        return true
-                    end
-                end,
-                enable = true
-            }
-        })
-    end,
-    module = false
-}
-
-addPlugin {
-    'HiPhish/rainbow-delimiters.nvim',
-    config = function()
-        require('rainbow-delimiters').enable()
-    end,
-    event = 'User TSLoaded'
-}
-
-addPlugin {
-    -- https://github.com/David-Kunz/markid
-    'm-demare/hlargs.nvim',
-    config = function()
-        require('hlargs').setup({
-            colorpalette = (function()
-                local res = {}
-                for _,v in ipairs(ColorPalette()) do
-                    table.insert(res, {fg = v.fg})
+'nvim-treesitter/nvim-treesitter',
+config = function()
+    require('nvim-treesitter.configs').setup({
+        auto_install = false,
+        highlight = {
+            additional_vim_regex_highlighting = false,
+            disable = function(_, buf)
+                local max_filesize = 1000 * 1024 -- 1000 KB
+                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                if ok and stats and stats.size > max_filesize then
+                    return true
                 end
-                return res
-            end)(),
-            excluded_argnames = {
-                declarations = {
-                    python = { 'self', 'cls' },
-                    lua = { 'self' }
-                },
-                usages = {
-                    python = { 'self', 'cls' },
-                    lua = { 'self' }
-                }
+            end,
+            enable = true
+        }
+    })
+end,
+module = false
+}
+
+addPlugin {
+'HiPhish/rainbow-delimiters.nvim',
+config = function()
+    require('rainbow-delimiters').enable()
+end,
+event = 'User TSLoaded'
+}
+
+addPlugin {
+-- https://github.com/David-Kunz/markid
+'m-demare/hlargs.nvim',
+config = function()
+    require('hlargs').setup({
+        colorpalette = (function()
+            local res = {}
+            for _,v in ipairs(ColorPalette()) do
+                table.insert(res, {fg = v.fg})
+            end
+            return res
+        end)(),
+        excluded_argnames = {
+            declarations = {
+                python = { 'self', 'cls' },
+                lua = { 'self' }
             },
-            extras = {
-                named_parameters = true,
-            },
-            hl_priority = hl_priority.hlargs,
-            paint_catch_blocks = {
-                declarations = true,
-                usages = true
-            },
-            use_colorpalette = true,
-        })
-    end,
-    event = 'User TSLoaded'
+            usages = {
+                python = { 'self', 'cls' },
+                lua = { 'self' }
+            }
+        },
+        extras = {
+            named_parameters = true,
+        },
+        hl_priority = hl_priority.hlargs,
+        paint_catch_blocks = {
+            declarations = true,
+            usages = true
+        },
+        use_colorpalette = true,
+    })
+end,
+event = 'User TSLoaded'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4236,17 +4238,17 @@ addPlugin {
     -- https://github.com/gregorias/coerce.nvim
     'johmsalas/text-case.nvim',
     init = function()
-        vim.api.nvim_set_keymap('n', 'wcA', '', { callback = function() require('textcase').lsp_rename('to_phrase_case') end,     desc = 'phrase_case'})
-        vim.api.nvim_set_keymap('n', 'wcC', '', { callback = function() require('textcase').lsp_rename('to_camel_case') end,      desc = 'camel_case'})
-        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dash_case') end,       desc = 'dash_case'})
-        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dot_case') end,        desc = 'dot_case'})
-        vim.api.nvim_set_keymap('n', 'wcF', '', { callback = function() require('textcase').lsp_rename('to_path_case') end,       desc = 'path_case'})
-        vim.api.nvim_set_keymap('n', 'wcL', '', { callback = function() require('textcase').lsp_rename('to_lower_case') end,      desc = 'lower_case'})
-        vim.api.nvim_set_keymap('n', 'wcN', '', { callback = function() require('textcase').lsp_rename('to_constant_case') end,   desc = 'constant_case'})
-        vim.api.nvim_set_keymap('n', 'wcP', '', { callback = function() require('textcase').lsp_rename('to_pascal_case') end,     desc = 'pascal_case'})
-        vim.api.nvim_set_keymap('n', 'wcS', '', { callback = function() require('textcase').lsp_rename('to_snake_case') end,      desc = 'snake_case'})
-        vim.api.nvim_set_keymap('n', 'wcT', '', { callback = function() require('textcase').lsp_rename('to_title_case') end,      desc = 'title_case'})
-        vim.api.nvim_set_keymap('n', 'wcU', '', { callback = function() require('textcase').lsp_rename('to_upper_case') end,      desc = 'upper_case'})
+        vim.api.nvim_set_keymap('n', 'wcA', '', { callback = function() require('textcase').lsp_rename('to_phrase_case') end,     desc = 'LSP phrase_case'})
+        vim.api.nvim_set_keymap('n', 'wcC', '', { callback = function() require('textcase').lsp_rename('to_camel_case') end,      desc = 'LSP camel_case'})
+        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dash_case') end,       desc = 'LSP dash_case'})
+        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dot_case') end,        desc = 'LSP dot_case'})
+        vim.api.nvim_set_keymap('n', 'wcF', '', { callback = function() require('textcase').lsp_rename('to_path_case') end,       desc = 'LSP path_case'})
+        vim.api.nvim_set_keymap('n', 'wcL', '', { callback = function() require('textcase').lsp_rename('to_lower_case') end,      desc = 'LSP lower_case'})
+        vim.api.nvim_set_keymap('n', 'wcN', '', { callback = function() require('textcase').lsp_rename('to_constant_case') end,   desc = 'LSP constant_case'})
+        vim.api.nvim_set_keymap('n', 'wcP', '', { callback = function() require('textcase').lsp_rename('to_pascal_case') end,     desc = 'LSP pascal_case'})
+        vim.api.nvim_set_keymap('n', 'wcS', '', { callback = function() require('textcase').lsp_rename('to_snake_case') end,      desc = 'LSP snake_case'})
+        vim.api.nvim_set_keymap('n', 'wcT', '', { callback = function() require('textcase').lsp_rename('to_title_case') end,      desc = 'LSP title_case'})
+        vim.api.nvim_set_keymap('n', 'wcU', '', { callback = function() require('textcase').lsp_rename('to_upper_case') end,      desc = 'LSP upper_case'})
         vim.api.nvim_set_keymap('n', 'wca', '', { callback = function() require('textcase').current_word('to_phrase_case') end,   desc = 'phrase_case'})
         vim.api.nvim_set_keymap('n', 'wcc', '', { callback = function() require('textcase').current_word('to_camel_case') end,    desc = 'camel_case'})
         vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dash_case') end,     desc = 'dash_case'})
@@ -4398,7 +4400,6 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
 addPlugin {
     'Bekaboo/dropbar.nvim',
     opts = {
@@ -4471,7 +4472,7 @@ addPlugin {
                     SwitchStatement = '󰺟 ',
                     Terminal = ' ',
                     Text = icons.Text,
-                    Type = ' ',
+                    Type = icons.TypeParameter,
                     TypeParameter = icons.TypeParameter,
                     Unit = icons.Unit,
                     Value = icons.Value,
