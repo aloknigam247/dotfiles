@@ -71,7 +71,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "VictorMono NF",
+                "face": "JetBrainsMono NF",
                 "size": 15.0
             },
             "intenseTextStyle": "all",
