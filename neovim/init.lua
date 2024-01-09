@@ -1,4 +1,4 @@
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Profiling   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
 -- ---@field count integer Number of times an autocommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -122,7 +122,7 @@
 -- vim.api.nvim_create_autocmd_orig = vim.api.nvim_create_autocmd
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Configurations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
 ------------
 
@@ -914,6 +914,10 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- https://github.com/backdround/neowords.nvim
+-- https://github.com/chaoren/vim-wordmotion
+-- https://github.com/chrisgrieser/nvim-spider
+vim.keymap.set("x", "/", "<Esc>/\\%V")
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('n', '<BS>', 'x', {})
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
@@ -1003,7 +1007,7 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Aligns     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'dhruvasagar/vim-table-mode',
     cmd = 'TableModeEnable'
@@ -1016,7 +1020,7 @@ addPlugin {
     cmd = 'EasyAlign'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Auto Pairs   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- https://github.com/altermo/ultimate-autopair.nvim
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
@@ -1102,7 +1106,40 @@ addPlugin {
     event = 'InsertEnter'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Coloring    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/dstein64/nvim-scrollview
+addPlugin {
+    'echasnovski/mini.map',
+    config = function()
+        local minimap = require('mini.map')
+        minimap.setup({
+            integrations = {
+                minimap.gen_integration.builtin_search(),
+                minimap.gen_integration.gitsigns(),
+                minimap.gen_integration.diagnostic(),
+            },
+            symbols = {
+                encode = minimap.gen_encode_symbols.dot('4x2')
+            },
+            window = {
+                show_integration_count = true
+            }
+        })
+    end
+}
+
+addPlugin {
+    'gorbit99/codewindow.nvim',
+    opts = {
+        exclude_filetypes = {},
+        window_border = 'single',
+        use_lsp = true,
+        use_treesitter = true,
+        use_git = true,
+    }
+}
+--<~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- https://github.com/FluxxField/bionic-reading.nvim
     -- https://github.com/nullchilly/fsread.nvim
@@ -1173,11 +1210,11 @@ addPlugin {
                 return nil
             end
             for i,v in pairs(todo_config) do
-                keys = v.alt or {}
+                local keys = v.alt or {}
                 table.insert(keys, i)
                 for _,l in pairs(keys) do
-                    key = l:lower()
-                    cfg = {
+                    local key = l:lower()
+                    local cfg = {
                         group = getTodo(v.color),
                         pattern = '()' .. l .. ':()',
                     }
@@ -1277,7 +1314,7 @@ addPlugin {
 
 -- 'uga-rosa/ccc.nvim'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Colorscheme   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Fix LineNr highlight
 ---@param fg string fg color in hex
 local function fixLineNr(fg)
@@ -1456,7 +1493,7 @@ function ColoRand(scheme_index)
     -- vim.g.ColoRand = '[' .. scheme_index .. ']' .. scheme .. elapsed
 end
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Comments    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'numToStr/Comment.nvim',
     config = function()
@@ -1477,7 +1514,7 @@ addPlugin {
 }
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Completion   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/hrsh7th/cmp-omni
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
@@ -1616,7 +1653,7 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Debugger    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'LiadOz/nvim-dap-repl-highlights',
     config = true
@@ -1723,7 +1760,7 @@ addPlugin {
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'mfussenegger/nvim-dap-python'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Doc Generater  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'danymat/neogen',
     cmd = 'Neogen',
@@ -1734,7 +1771,7 @@ addPlugin {
 }
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ File Explorer  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
 addPlugin {
@@ -2052,7 +2089,7 @@ addPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  File Options  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Set highlight for markdown headings
 function MarkdownHeadingsHighlight()
     local title1_hl = vim.api.nvim_get_hl(0, { name = '@text.title.1.markdown', link = false })
@@ -2114,7 +2151,7 @@ vim.api.nvim_create_autocmd(
     }
 )
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Folding     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'kevinhwang91/nvim-ufo',
     config = function()
@@ -2260,13 +2297,13 @@ addPlugin {
 }
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Formatting   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin {
 --     'sbdchd/neoformat',
 --     cmd = 'Neoformat'
 -- }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      Git       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     '9seconds/repolink.nvim',
     cmd = 'RepoLink',
@@ -2387,7 +2424,7 @@ addPlugin {
     cmd = "DiffviewOpen"
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Icons      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     '2kabhishek/nerdy.nvim',
     cmd = 'Nerdy',
@@ -2421,7 +2458,7 @@ addPlugin {
     end
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Indent     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Indent     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'lukas-reineke/indent-blankline.nvim',
     event = 'CursorHold',
@@ -2493,7 +2530,7 @@ addPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      LSP       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     -- 'Wansmer/symbol-usage.nvim',
     'VidocqH/lsp-lens.nvim',
@@ -2743,6 +2780,7 @@ addPlugin {
 -- https://github.com/mattn/efm-langserver
 -- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
+-- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/p00f/clangd_extensions.nvim'
 
 addPlugin {
@@ -2859,7 +2897,7 @@ addPlugin {
     keys = { '<F12>' }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Markdown    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { 'iamcco/markdown-preview.nvim', }
 addPlugin {
     'toppair/peek.nvim',
@@ -2907,7 +2945,7 @@ addPlugin {
     event = 'CursorHold *.md'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Marks      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
 -- https://vim.fandom.com/wiki/Using_marks
 -- |----------------+---------------------------------------------------------------|
@@ -2969,7 +3007,7 @@ addPlugin {
 -- use 'chentoast/marks.nvim'
 -- use 'crusj/bookmarks.nvim'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Outline     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'stevearc/aerial.nvim',
     cmd = { 'AerialNavToggle', 'AerialToggle' },
@@ -2998,7 +3036,7 @@ addPlugin {
     }
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Quickfix    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Quickfix    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 --[[ Guide
 |-----------------+-----------------------------------------------------------|
 | Command         | Explaination                                              |
@@ -3124,7 +3162,7 @@ addPlugin {
     ft = 'qf'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Rooter     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 vim.api.nvim_create_user_command(
     'Cdroot',
     function(opts)
@@ -3162,7 +3200,7 @@ vim.api.nvim_create_user_command(
     }
 )
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Sessions    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/aaditeynair/conduct.nvim
 addPlugin {
     'rmagatti/auto-session',
@@ -3191,7 +3229,7 @@ addPlugin {
     end
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Snippets    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'dcampos/nvim-snippy',
     dependencies = 'honza/vim-snippets',
@@ -3212,8 +3250,8 @@ addPlugin {
 -- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Status Column  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin { -- DiagnosticChanged
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
@@ -3229,6 +3267,7 @@ addPlugin {
                 { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
                 { sign = { name = { 'Bookmark' }, fillcharhl ='LineNr', auto = true } },
                 { sign = { name = { 'Dap' }, fillcharhl ='LineNr', auto = true } },
+                { sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
                 { text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
                 {
                     sign = {
@@ -3252,7 +3291,7 @@ addPlugin {
     enabled = true
 }
 --<~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  Status Line   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
@@ -3489,6 +3528,7 @@ addPlugin {
                         end,
                         on_click = function ()
                             require('mini.map').toggle()
+                            require('codewindow').toggle_minimap()
                         end,
                         padding = { left = 0, right = 0 },
                         separator = { left = '', right = '█' }
@@ -3505,6 +3545,8 @@ addPlugin {
             },
             winbar = {
                 lualine_a = {
+                    -- TODO:
+                    -- '%{%v:lua.dropbar.get_dropbar_str()%}',
                     {
                         'filetype',
                         cond = function () return CountWindows(true) > 1 end,
@@ -3572,7 +3614,7 @@ addPlugin {
     event = 'User VeryLazy',
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Tab Line    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'akinsho/bufferline.nvim',
     event = 'TabNew',
@@ -3622,7 +3664,7 @@ addPlugin {
 }
 -- https://github.com/tomiis4/BufferTabs.nvim
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Telescope   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
 -- https://github.com/axkirillov/easypick.nvim
 addPlugin {
@@ -3707,7 +3749,7 @@ addPlugin {
     dependencies = 'nvim-telescope/telescope.nvim',
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    Terminal    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/voldikss/vim-floaterm
 addPlugin {
     'akinsho/toggleterm.nvim',
@@ -3715,8 +3757,22 @@ addPlugin {
     config = true
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Tests      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/andythigpen/nvim-coverage
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin {
+    'andythigpen/nvim-coverage',
+    cmd = 'Coverage',
+    dependencies = { 'nvim-lua/plenary.nvim', 'luukvbaal/statuscol.nvim' },
+    opts ={
+        auto_reload = true,
+        signs = {
+            covered = { hl = 'CoverageCovered', text = '░' }, -- ░║
+            partial = { hl = 'CoveragePartial', text = '░' },
+            uncovered = { hl = 'CoverageUncovered', text = '░' },
+        },
+        sign_group = 'coverage'
+    }
+}
+
 -- addPlugin {
 --     'nvim-neotest/neotest',
 --     config = function()
@@ -3733,85 +3789,85 @@ addPlugin {
 --     lazy = false
 -- }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Treesitter   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-    -- https://github.com/AckslD/nvim-trevJ.lua
-    -- https://github.com/AndrewRadev/splitjoin.vim
-    -- https://github.com/CKolkey/ts-node-action
-    -- https://github.com/echasnovski/mini.splitjoin
-    'Wansmer/treesj',
-    cmd = 'TSJToggle',
-    opts = {
-        max_join_length = 10000
-    }
+-- https://github.com/AckslD/nvim-trevJ.lua
+-- https://github.com/AndrewRadev/splitjoin.vim
+-- https://github.com/CKolkey/ts-node-action
+-- https://github.com/echasnovski/mini.splitjoin
+'Wansmer/treesj',
+cmd = 'TSJToggle',
+opts = {
+    max_join_length = 10000
+}
 }
 
 addPlugin {
-    'nvim-treesitter/nvim-treesitter',
-    config = function()
-        require('nvim-treesitter.configs').setup({
-            auto_install = false,
-            highlight = {
-                additional_vim_regex_highlighting = false,
-                disable = function(_, buf)
-                    local max_filesize = 1000 * 1024 -- 1000 KB
-                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                    if ok and stats and stats.size > max_filesize then
-                        return true
-                    end
-                end,
-                enable = true
-            }
-        })
-    end,
-    module = false
-}
-
-addPlugin {
-    'HiPhish/rainbow-delimiters.nvim',
-    config = function()
-        require('rainbow-delimiters').enable()
-    end,
-    event = 'User TSLoaded'
-}
-
-addPlugin {
-    -- https://github.com/David-Kunz/markid
-    'm-demare/hlargs.nvim',
-    config = function()
-        require('hlargs').setup({
-            colorpalette = (function()
-                local res = {}
-                for _,v in ipairs(ColorPalette()) do
-                    table.insert(res, {fg = v.fg})
+'nvim-treesitter/nvim-treesitter',
+config = function()
+    require('nvim-treesitter.configs').setup({
+        auto_install = false,
+        highlight = {
+            additional_vim_regex_highlighting = false,
+            disable = function(_, buf)
+                local max_filesize = 1000 * 1024 -- 1000 KB
+                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                if ok and stats and stats.size > max_filesize then
+                    return true
                 end
-                return res
-            end)(),
-            excluded_argnames = {
-                declarations = {
-                    python = { 'self', 'cls' },
-                    lua = { 'self' }
-                },
-                usages = {
-                    python = { 'self', 'cls' },
-                    lua = { 'self' }
-                }
+            end,
+            enable = true
+        }
+    })
+end,
+module = false
+}
+
+addPlugin {
+'HiPhish/rainbow-delimiters.nvim',
+config = function()
+    require('rainbow-delimiters').enable()
+end,
+event = 'User TSLoaded'
+}
+
+addPlugin {
+-- https://github.com/David-Kunz/markid
+'m-demare/hlargs.nvim',
+config = function()
+    require('hlargs').setup({
+        colorpalette = (function()
+            local res = {}
+            for _,v in ipairs(ColorPalette()) do
+                table.insert(res, {fg = v.fg})
+            end
+            return res
+        end)(),
+        excluded_argnames = {
+            declarations = {
+                python = { 'self', 'cls' },
+                lua = { 'self' }
             },
-            extras = {
-                named_parameters = true,
-            },
-            hl_priority = hl_priority.hlargs,
-            paint_catch_blocks = {
-                declarations = true,
-                usages = true
-            },
-            use_colorpalette = true,
-        })
-    end,
-    event = 'User TSLoaded'
+            usages = {
+                python = { 'self', 'cls' },
+                lua = { 'self' }
+            }
+        },
+        extras = {
+            named_parameters = true,
+        },
+        hl_priority = hl_priority.hlargs,
+        paint_catch_blocks = {
+            declarations = true,
+            usages = true
+        },
+        use_colorpalette = true,
+    })
+end,
+event = 'User TSLoaded'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━       UI       ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'folke/noice.nvim',
     config = function()
@@ -4004,7 +4060,7 @@ addPlugin {
     'stevearc/dressing.nvim'
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   Utilities    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'AndrewRadev/inline_edit.vim',
     cmd = 'InlineEdit'
@@ -4031,6 +4087,15 @@ addPlugin {
 -- https://github.com/anuvyklack/hydra.nvim
 
 addPlugin {
+  'ariel-frischer/bmessages.nvim',
+  cmd = 'Bmessages',
+  opts = {
+      split_size_split = 10,
+      split_type = 'split'
+  }
+}
+
+addPlugin {
     'cbochs/portal.nvim',
     cmd = 'Portal',
     dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
@@ -4055,24 +4120,6 @@ addPlugin {
 --     'dstein64/vim-startuptime',
 --     cmd = 'StartupTime'
 -- }
-
--- https://github.com/dstein64/nvim-scrollview
-addPlugin {
-    'echasnovski/mini.map',
-    config = function ()
-        local minimap = require('mini.map')
-        minimap.setup({
-            integrations = {
-                minimap.gen_integration.builtin_search(),
-                minimap.gen_integration.gitsigns(),
-                minimap.gen_integration.diagnostic(),
-            },
-            symbols = {
-                encode = minimap.gen_encode_symbols.dot('4x2')
-            }
-        })
-    end
-}
 
 addPlugin {
     'echasnovski/mini.move',
@@ -4104,6 +4151,121 @@ addPlugin {
 }
 
 -- 'jbyuki/instant.nvim'
+
+addPlugin {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    init = function()
+        vim.o.timeout = true
+        vim.o.timeoutlen = 300
+    end,
+    opts = {
+        plugins = {
+            marks = false,
+            registers = false,
+            spelling = {
+                enabled = false,
+                suggestions = 20,
+            },
+            presets = {
+                operators = true,
+                motions = true,
+                text_objects = true,
+                windows = true,
+                nav = true,
+                z = true,
+                g = true,
+            },
+        },
+        operators = { gc = 'Comments' },
+        key_labels = { },
+        motions = {
+            count = true,
+        },
+        icons = {
+            breadcrumb = '»',
+            separator = '➜',
+            group = '+',
+        },
+        popup_mappings = {
+            scroll_down = '<c-d>',
+            scroll_up = '<c-u>',
+        },
+        window = {
+            border = dotted_border,
+            position = 'bottom',
+            margin = { 0, 0, 1, 0 },
+            padding = { 0, 0, 0, 0 },
+            winblend = 0,
+            zindex = 1000,
+        },
+        layout = {
+            height = { min = 4, max = 25 },
+            width = { min = 20, max = 50 },
+            spacing = 3,
+            align = 'left',
+        },
+        ignore_missing = false,
+        hidden = { '<silent>', '<cmd>', '<Cmd>', '<CR>', '^:', '^ ', '^call ', '^lua ' },
+        show_help = true,
+        show_keys = true,
+        triggers = 'auto',
+        triggers_nowait = {
+            -- marks
+            '`',
+            "'",
+            'g`',
+            "g'",
+            -- registers
+            '"',
+            '<c-r>',
+            -- spelling
+            'z=',
+        },
+        triggers_blacklist = {
+            i = { 'j', 'k' },
+            n = { 'v' },
+            v = { 'j', 'k' },
+        },
+        disable = {
+            buftypes = {},
+            filetypes = {},
+        },
+    }
+}
+
+addPlugin {
+    -- https://github.com/gregorias/coerce.nvim
+    'johmsalas/text-case.nvim',
+    init = function()
+        vim.api.nvim_set_keymap('n', 'wcA', '', { callback = function() require('textcase').lsp_rename('to_phrase_case') end,     desc = 'LSP phrase_case'})
+        vim.api.nvim_set_keymap('n', 'wcC', '', { callback = function() require('textcase').lsp_rename('to_camel_case') end,      desc = 'LSP camel_case'})
+        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dash_case') end,       desc = 'LSP dash_case'})
+        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dot_case') end,        desc = 'LSP dot_case'})
+        vim.api.nvim_set_keymap('n', 'wcF', '', { callback = function() require('textcase').lsp_rename('to_path_case') end,       desc = 'LSP path_case'})
+        vim.api.nvim_set_keymap('n', 'wcL', '', { callback = function() require('textcase').lsp_rename('to_lower_case') end,      desc = 'LSP lower_case'})
+        vim.api.nvim_set_keymap('n', 'wcN', '', { callback = function() require('textcase').lsp_rename('to_constant_case') end,   desc = 'LSP constant_case'})
+        vim.api.nvim_set_keymap('n', 'wcP', '', { callback = function() require('textcase').lsp_rename('to_pascal_case') end,     desc = 'LSP pascal_case'})
+        vim.api.nvim_set_keymap('n', 'wcS', '', { callback = function() require('textcase').lsp_rename('to_snake_case') end,      desc = 'LSP snake_case'})
+        vim.api.nvim_set_keymap('n', 'wcT', '', { callback = function() require('textcase').lsp_rename('to_title_case') end,      desc = 'LSP title_case'})
+        vim.api.nvim_set_keymap('n', 'wcU', '', { callback = function() require('textcase').lsp_rename('to_upper_case') end,      desc = 'LSP upper_case'})
+        vim.api.nvim_set_keymap('n', 'wca', '', { callback = function() require('textcase').current_word('to_phrase_case') end,   desc = 'phrase_case'})
+        vim.api.nvim_set_keymap('n', 'wcc', '', { callback = function() require('textcase').current_word('to_camel_case') end,    desc = 'camel_case'})
+        vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dash_case') end,     desc = 'dash_case'})
+        vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dot_case') end,      desc = 'dot_case'})
+        vim.api.nvim_set_keymap('n', 'wcf', '', { callback = function() require('textcase').current_word('to_path_case') end,     desc = 'path_case'})
+        vim.api.nvim_set_keymap('n', 'wcl', '', { callback = function() require('textcase').current_word('to_lower_case') end,    desc = 'lower_case'})
+        vim.api.nvim_set_keymap('n', 'wcn', '', { callback = function() require('textcase').current_word('to_constant_case') end, desc = 'constant_case'})
+        vim.api.nvim_set_keymap('n', 'wcp', '', { callback = function() require('textcase').current_word('to_pascal_case') end,   desc = 'pascal_case'})
+        vim.api.nvim_set_keymap('n', 'wcs', '', { callback = function() require('textcase').current_word('to_snake_case') end,    desc = 'snake_case'})
+        vim.api.nvim_set_keymap('n', 'wct', '', { callback = function() require('textcase').current_word('to_title_case') end,    desc = 'title_case'})
+        vim.api.nvim_set_keymap('n', 'wcu', '', { callback = function() require('textcase').current_word('to_upper_case') end,    desc = 'upper_case'})
+    end,
+    lazy = true,
+    opts = {
+        default_keymappings_enabled = false,
+    }
+}
 
 addPlugin {
     'gbprod/yanky.nvim',
@@ -4237,8 +4399,7 @@ addPlugin {
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     Winbar     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO:
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
     'Bekaboo/dropbar.nvim',
     opts = {
@@ -4311,7 +4472,7 @@ addPlugin {
                     SwitchStatement = '󰺟 ',
                     Terminal = ' ',
                     Text = icons.Text,
-                    Type = ' ',
+                    Type = icons.TypeParameter,
                     TypeParameter = icons.TypeParameter,
                     Unit = icons.Unit,
                     Value = icons.Value,

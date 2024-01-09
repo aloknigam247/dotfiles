@@ -71,7 +71,7 @@
             "experimental.retroTerminalEffect": false,
             "font": 
             {
-                "face": "VictorMono NF",
+                "face": "JetBrainsMono NF",
                 "size": 15.0
             },
             "intenseTextStyle": "all",
@@ -108,7 +108,7 @@
                 "elevate": false,
                 "font": 
                 {
-                    "face": "VictorMono NF"
+                    "face": "JetBrainsMono NF"
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,

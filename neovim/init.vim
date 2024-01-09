@@ -23,7 +23,6 @@ set nobackup              " Do not create backup file
 set path+=**              " Look for all files in sub dirs
 " }}}
 
-
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Editor Settings  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 set breakindent                       " Every wrapped line will continue visually indented
@@ -209,3 +208,4 @@ lua require('init')
 " r = insert comment on enter
 " t = do auto wrapping at textwidth
 " }}}
+" vim: fdm=marker
