@@ -214,42 +214,42 @@ local icons = {
 }
 
 local kind_hl = {
-    Array         = { icon  = ' ' , dark = { fg = '#F42272' }, light = { fg = '#0B6E4F' } },
-    Boolean       = { icon  = ' ' , dark = { fg = '#B8B8F3' }, light = { fg = '#69140E' } },
-    Class         = { icon  = ' ' , dark = { fg = '#519872' }, light = { fg = '#1D3557' } },
-    Color         = { icon  = ' ' , dark = { fg = '#A4B494' }, light = { fg = '#FA9F42' } },
-    Constant      = { icon  = ' ' , dark = { fg = '#C5E063' }, light = { fg = '#744FC6' } },
-    Constructor   = { icon  = ' ' , dark = { fg = '#4AAD52' }, light = { fg = '#755C1B' } },
-    Enum          = { icon  = ' ' , dark = { fg = '#E3B5A4' }, light = { fg = '#A167A5' } },
-    EnumMember    = { icon  = ' ' , dark = { fg = '#AF2BBF' }, light = { fg = '#B80C09' } },
-    Event         = { icon  = ' ' , dark = { fg = '#6C91BF' }, light = { fg = '#53A548' } },
-    Field         = { icon  = ' ' , dark = { fg = '#5BC8AF' }, light = { fg = '#E2DC12' } },
-    File          = { icon  = ' ' , dark = { fg = '#EF8354' }, light = { fg = '#486499' } },
-    Folder        = { icon  = ' ' , dark = { fg = '#BFC0C0' }, light = { fg = '#A74482' } },
-    Function      = { icon  = ' ' , dark = { fg = '#E56399' }, light = { fg = '#228CDB' } },
-    History       = { icon  = ' ' , dark = { fg = '#C2F8CB' }, light = { fg = '#85CB33' } },
-    Interface     = { icon  = ' ' , dark = { fg = '#8367C7' }, light = { fg = '#537A5A' } },
-    Key           = { icon  = ' ' , dark = { fg = '#D1AC00' }, light = { fg = '#645DD7' } },
-    Keyword       = { icon  = ' ' , dark = { fg = '#20A4F3' }, light = { fg = '#E36414' } },
-    Method        = { icon  = ' ' , dark = { fg = '#D7D9D7' }, light = { fg = '#197278' } },
-    Module        = { icon  = ' ' , dark = { fg = '#F2FF49' }, light = { fg = '#EC368D' } },
-    Namespace     = { icon  = 'ﬥ ' , dark = { fg = '#FF4242' }, light = { fg = '#2F9C95' } },
-    Null          = { icon  = ' ' , dark = { fg = '#C1CFDA' }, light = { fg = '#56666B' } },
-    Number        = { icon  = ' ' , dark = { fg = '#FB62F6' }, light = { fg = '#A5BE00' } },
-    Object        = { icon  = ' ' , dark = { fg = '#F18F01' }, light = { fg = '#80A1C1' } },
-    Operator      = { icon  = ' ' , dark = { fg = '#048BA8' }, light = { fg = '#F1DB4B' } },
-    Options       = { icon  = ' ' , dark = { fg = '#99C24D' }, light = { fg = '#2292A4' } },
-    Package       = { icon  = ' ' , dark = { fg = '#AFA2FF' }, light = { fg = '#B98EA7' } },
-    Property      = { icon  = ' ' , dark = { fg = '#CED097' }, light = { fg = '#3777FF' } },
-    Reference     = { icon  = ' ' , dark = { fg = '#1B2CC1' }, light = { fg = '#18A999' } },
-    Snippet       = { icon  = ' ' , dark = { fg = '#7692FF' }, light = { fg = '#BF0D4B' } },
-    String        = { icon  = ' ' , dark = { fg = '#FEEA00' }, light = { fg = '#D5573B' } },
-    Struct        = { icon  = ' ' , dark = { fg = '#D81159' }, light = { fg = '#75485E' } },
-    Text          = { icon  = ' ' , dark = { fg = '#0496FF' }, light = { fg = '#5762D5' } },
-    TypeParameter = { icon  = ' ' , dark = { fg = '#FFFFFC' }, light = { fg = '#5D2E8C' } },
-    Unit          = { icon  = ' ' , dark = { fg = '#C97B84' }, light = { fg = '#FF6666' } },
-    Value         = { icon  = ' ' , dark = { fg = '#C6DDF0' }, light = { fg = '#2EC4B6' } },
-    Variable      = { icon  = ' ' , dark = { fg = '#B7ADCF' }, light = { fg = '#548687' } }
+    Array         = { icon  = ' ' , dark = { bg = '#F42272' }, light = { bg = '#0B6E4F' } },
+    Boolean       = { icon  = ' ' , dark = { bg = '#B8B8F3' }, light = { bg = '#69140E' } },
+    Class         = { icon  = ' ' , dark = { bg = '#519872' }, light = { bg = '#1D3557' } },
+    Color         = { icon  = ' ' , dark = { bg = '#A4B494' }, light = { bg = '#FA9F42' } },
+    Constant      = { icon  = ' ' , dark = { bg = '#C5E063' }, light = { bg = '#744FC6' } },
+    Constructor   = { icon  = ' ' , dark = { bg = '#4AAD52' }, light = { bg = '#755C1B' } },
+    Enum          = { icon  = ' ' , dark = { bg = '#E3B5A4' }, light = { bg = '#A167A5' } },
+    EnumMember    = { icon  = ' ' , dark = { bg = '#AF2BBF' }, light = { bg = '#B80C09' } },
+    Event         = { icon  = ' ' , dark = { bg = '#6C91BF' }, light = { bg = '#53A548' } },
+    Field         = { icon  = ' ' , dark = { bg = '#5BC8AF' }, light = { bg = '#E2DC12' } },
+    File          = { icon  = ' ' , dark = { bg = '#EF8354' }, light = { bg = '#486499' } },
+    Folder        = { icon  = ' ' , dark = { bg = '#BFC0C0' }, light = { bg = '#A74482' } },
+    Function      = { icon  = ' ' , dark = { bg = '#E56399' }, light = { bg = '#228CDB' } },
+    History       = { icon  = ' ' , dark = { bg = '#C2F8CB' }, light = { bg = '#85CB33' } },
+    Interface     = { icon  = ' ' , dark = { bg = '#8367C7' }, light = { bg = '#537A5A' } },
+    Key           = { icon  = ' ' , dark = { bg = '#D1AC00' }, light = { bg = '#645DD7' } },
+    Keyword       = { icon  = ' ' , dark = { bg = '#20A4F3' }, light = { bg = '#E36414' } },
+    Method        = { icon  = ' ' , dark = { bg = '#D7D9D7' }, light = { bg = '#197278' } },
+    Module        = { icon  = ' ' , dark = { bg = '#F2FF49' }, light = { bg = '#EC368D' } },
+    Namespace     = { icon  = 'ﬥ ' , dark = { bg = '#FF4242' }, light = { bg = '#2F9C95' } },
+    Null          = { icon  = ' ' , dark = { bg = '#C1CFDA' }, light = { bg = '#56666B' } },
+    Number        = { icon  = ' ' , dark = { bg = '#FB62F6' }, light = { bg = '#A5BE00' } },
+    Object        = { icon  = ' ' , dark = { bg = '#F18F01' }, light = { bg = '#80A1C1' } },
+    Operator      = { icon  = ' ' , dark = { bg = '#048BA8' }, light = { bg = '#F1DB4B' } },
+    Options       = { icon  = ' ' , dark = { bg = '#99C24D' }, light = { bg = '#2292A4' } },
+    Package       = { icon  = ' ' , dark = { bg = '#AFA2FF' }, light = { bg = '#B98EA7' } },
+    Property      = { icon  = ' ' , dark = { bg = '#CED097' }, light = { bg = '#3777FF' } },
+    Reference     = { icon  = ' ' , dark = { bg = '#1B2CC1' }, light = { bg = '#18A999' } },
+    Snippet       = { icon  = ' ' , dark = { bg = '#7692FF' }, light = { bg = '#BF0D4B' } },
+    String        = { icon  = ' ' , dark = { bg = '#FEEA00' }, light = { bg = '#D5573B' } },
+    Struct        = { icon  = ' ' , dark = { bg = '#D81159' }, light = { bg = '#75485E' } },
+    Text          = { icon  = ' ' , dark = { bg = '#0496FF' }, light = { bg = '#5762D5' } },
+    TypeParameter = { icon  = ' ' , dark = { bg = '#FFFFFC' }, light = { bg = '#5D2E8C' } },
+    Unit          = { icon  = ' ' , dark = { bg = '#C97B84' }, light = { bg = '#FF6666' } },
+    Value         = { icon  = ' ' , dark = { bg = '#C6DDF0' }, light = { bg = '#2EC4B6' } },
+    Variable      = { icon  = ' ' , dark = { bg = '#B7ADCF' }, light = { bg = '#548687' } }
 }
 
 local lazy_config = {
@@ -1561,13 +1561,16 @@ addPlugin {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = { { name = 'buffer' } }
             }),
+            autocomplete = false,
             completion = {
+                completeopt = 'menu,menuone,noselect',
                 keyword_length = 2
             },
             experimental = {
                 ghost_text = true
             },
-            formatting = {
+            formatting = { -- FEAT: https://www.reddit.com/r/neovim/comments/191eg59/how_to_achieve_cmp_ui_like_nvchad/
+                expandable_indicator = true,
                 fields = { 'kind', 'abbr', 'menu' },
                 format = function(entry, vim_item)
                     if entry.source.name == 'nvim_lsp' then
@@ -1577,9 +1580,9 @@ addPlugin {
                     elseif entry.source.name == 'cmdline_history' then
                         vim_item.kind = 'History'
                     else
-                        vim_item.menu = '[' .. entry.source.name .. ']'
+                        vim_item.menu = '(' .. entry.source.name .. ')'
                     end
-                    local kind_symbol = icons[vim_item.kind]
+                    local kind_symbol = ' ' .. icons[vim_item.kind]
                     vim_item.kind = kind_symbol or vim_item.kind
 
                     return vim_item
@@ -1597,6 +1600,7 @@ addPlugin {
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<TAB>'] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
             }),
+            preselect = cmp.PreselectMode.Item,
             snippet = {
                 expand = function(args)
                     require('snippy').expand_snippet(args.body)
@@ -1623,6 +1627,9 @@ addPlugin {
                 { name = 'snippy' },
             },
             window = {
+                completion = {
+                    side_padding = 0
+                },
                 documentation = cmp.config.window.bordered(),
             },
             view = {
