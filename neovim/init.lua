@@ -3429,7 +3429,7 @@ addPlugin {
                         on_click = function()
                             vim.cmd('TroubleToggle')
                         end,
-                        padding = { left = 1, right = 0 },
+                        padding = { left = 1, right = 1 },
                         sources = { 'nvim_diagnostic' },
                         symbols = {
                             error = icons.error,
