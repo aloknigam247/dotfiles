@@ -3373,7 +3373,7 @@ addPlugin {
                             vim.cmd('NvimTreeToggle')
                         end,
                         path = 0,
-                        padding = { left = 1, right = 1 },
+                        padding = { left = 1, right = 0 },
                         shorting_target = 40,
                         symbols = {
                             modified = icons.file_modified,
