@@ -1773,7 +1773,21 @@ addPlugin {
     cmd = 'Neogen',
     opts = {
         input_after_comment = true,
-        snippet_engine = "snippy"
+        placeholders_hl = 'None',
+        placeholders_text = {
+            ['description'] = '[DOCME:description]',
+            ['tparam'] = '[DOCME:tparam]',
+            ['parameter'] = '[DOCME:parameter]',
+            ['return'] = '[DOCME:return]',
+            ['class'] = '[DOCME:class]',
+            ['throw'] = '[DOCME:throw]',
+            ['varargs'] = '[DOCME:varargs]',
+            ['type'] = '[DOCME:type]',
+            ['attribute'] = '[DOCME:attribute]',
+            ['args'] = '[DOCME:args]',
+            ['kwargs'] = '[DOCME:kwargs]',
+        },
+        snippet_engine = 'snippy'
     }
 }
 -- https://github.com/nvim-treesitter/nvim-tree-docs
