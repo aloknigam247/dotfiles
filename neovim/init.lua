@@ -2839,7 +2839,7 @@ addPlugin {
             vim.keymap.set('n', '<M-F12>', '<cmd>Lspsaga finder<CR>', bufopts)
             vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
             vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
-            vim.keymap.set('n', '<space>ca', require("actions-preview").code_actions, bufopts)
+            vim.keymap.set('n', '<C-.>', require("actions-preview").code_actions, bufopts)
             vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
             vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
             vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
@@ -2851,7 +2851,7 @@ addPlugin {
         popupMenuAdd({
             cond = isLspAttached,
             opts = {
-                {'Code Action     <space>ca',  '<Cmd>lua require("actions-preview").code_actions()<CR>'},
+                {'Code Action         <C-.>',  '<Cmd>lua require("actions-preview").code_actions()<CR>'},
                 {'Declaration            gD',  '<Cmd>lua vim.lsp.buf.declaration()<CR>'},
                 {'Definition            F12',  '<Cmd>lua vim.lsp.buf.definition()<CR>'},
                 {'Hover                  \\h', '<Cmd>Lspsaga hover_doc<CR>'},
