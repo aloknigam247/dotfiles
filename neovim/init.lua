@@ -1505,6 +1505,7 @@ addPlugin {
         require('Comment.ft')
         .set('ps1', {'# %s', '<# %s #>'})
         .set('python', {'# %s', '""" %s """'})
+        .set('requirements', {'# %s'})
     end,
     keys = {
         { 'gc', mode = { 'n', 'v' } },
