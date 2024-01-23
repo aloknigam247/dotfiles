@@ -1321,6 +1321,13 @@ local function fixLineNr(fg)
     vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
+--- Fix retrobox colorscheme
+local function FixRetro()
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#b8bb26', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#8ec07c', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#fb4934', nocombine = true })
+end
+
 ---Fix Visual highlight
 ---@param bg? string bg color in hex
 local function fixVisual(bg)
@@ -1401,6 +1408,7 @@ addPlugin { 'Shatur/neovim-ayu',                       event = 'User ayu'       
 addPlugin { 'catppuccin/nvim',                         event = 'User catppuccin'                                       }
 addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                       }
 addPlugin { 'kaiuri/nvim-juliana',                     event = 'User juliana'                                          }
+addPlugin { 'kaplanz/deku.nvim',                       event = 'User deku',          dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                          }
 addPlugin { 'marko-cerovac/material.nvim',             event = 'User material'                                         }
 addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                         }
@@ -1417,7 +1425,7 @@ addPlugin { 'santos-gabriel-dario/darcula-solid.nvim', event = 'User darcula-sol
 addPlugin { 'savq/melange',                            event = 'User melange'                                          }
 addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                        }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
-addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco', dependencies = 'rktjmp/lush.nvim'       }
+addPlugin { 'uloco/bluloco.nvim',                      event = 'User bluloco',       dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'                                           }
 
 dark  { 'ayu-dark',             'ayu' }
@@ -1427,10 +1435,11 @@ dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
 darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
 dark  { 'bluloco-dark',         '_'                                                    }
 darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
-light { 'catppuccin-latte',     'catppuccin'                             }
-dark  { 'catppuccin-macchiato', 'catppuccin'                             }
-dark  { 'darcula-solid',        '_'                                      }
-dark  { 'duskfox',              'nightfox'                               }
+light { 'catppuccin-latte',     'catppuccin' }
+dark  { 'catppuccin-macchiato', 'catppuccin' }
+dark  { 'darcula-solid',        '_'          }
+dark  { 'deku',                 '_'          }
+dark  { 'duskfox',              'nightfox'   }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
 dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
@@ -1444,7 +1453,7 @@ light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_' }
-dark  { 'retrobox',             '_' }
+dark  { 'retrobox',             '_', post = FixRetro }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
@@ -1454,7 +1463,7 @@ darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
-dark  { 'vn-night',             '_', post = fixVnNight }
+dark  { 'vn-night',             '_',          post = fixVnNight              }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -4100,6 +4109,13 @@ addPlugin {
 --         {'nvim-lua/plenary.nvim'},
 --     }
 -- }
+
+addPlugin {
+    'TheLeoP/powershell.nvim',
+    opts = {
+        bundle_path = vim.fn.stdpath "data" .. "/mason/packages/powershell-editor-services"
+    }
+}
 
 addPlugin {
     'TobinPalmer/BetterGx.nvim',
