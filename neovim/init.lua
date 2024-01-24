@@ -1233,12 +1233,12 @@ addPlugin {
     event = 'CursorHold *.lua,*.py',
     opts = {
         highlights = {
-            { filter = { filetype = 'lua' },    pattern = '━.*━', hl = "Constant", },
+            { filter = { filetype = 'lua' },    pattern = '━.*━',               hl = "Constant", },
             { filter = { filetype = 'lua' },    pattern = '%s*%-%-%-%s*(@%w+)', hl = "Constant", },
             { filter = { filetype = 'python' }, pattern = '    [%a%d_]+: ',     hl = '@parameter' },
-            { filter = { filetype = 'python' }, pattern = 'Args:',              hl = 'Conditional' },
-            { filter = { filetype = 'python' }, pattern = 'Returns:',           hl = 'Conditional' },
-            { filter = { filetype = 'python' }, pattern = 'Raises:',            hl = 'Conditional' },
+            { filter = { filetype = 'python' }, pattern = 'Args:',              hl = '@type' },
+            { filter = { filetype = 'python' }, pattern = 'Returns:',           hl = '@keyword' },
+            { filter = { filetype = 'python' }, pattern = 'Raises:',            hl = 'Statement' },
         }
     }
 }
@@ -3295,7 +3295,7 @@ addPlugin { -- DiagnosticChanged
                     condition = { function() return TODO_COMMENTS_LOADED ~= nil end },
                     auto = true,
                 },
-                { sign = { name = { 'Diagnostic' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
+                { sign = { name = { '*diagnostic*' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
                 { sign = { name = { 'Bookmark' }, fillcharhl ='LineNr', auto = true } },
                 { sign = { name = { 'Dap' }, fillcharhl ='LineNr', auto = true } },
                 { sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
