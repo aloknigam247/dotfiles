@@ -89,7 +89,7 @@
 --     { nargs = 0 }
 -- )
 
----@type ProfileData?
+-- ---@type ProfileData?
 -- AuCallbackProfileData = {}
 
 -- ---Create autocmd wrapper to emit perf telemtry
@@ -128,7 +128,7 @@
 
 ---Shapes for dotted border
 ---@type string[]
-local dotted_border = {"╭", "-", "╮", "┆", "╯", "-", "╰", "┆"}
+local dotted_border = {'╭', '󰇘', '╮', '┆', '╯', '󰇘', '╰', '┆'}
 
 ---Defines highlight priorities for vairous components
 ---@type table<string, integer>
@@ -933,12 +933,22 @@ vim.keymap.set('n', '<X2Mouse>', '<C-i>', {})
 -------
 vim.diagnostic.config({
     float = {
-        source = true
+        source = 'if_many',
     },
     severity_sort = true,
     virtual_text = {
-        prefix = ' ',
-        source = true
+        prefix = function(diag, _, _)
+            if diag.severity == vim.diagnostic.severity.ERROR then
+                return icons.error
+            elseif diag.severity == vim.diagnostic.severity.HINT then
+                return icons.hint
+            elseif diag.severity == vim.diagnostic.severity.INFO then
+                return icons.info
+            elseif diag.severity == vim.diagnostic.severity.WARN then
+                return icons.warn
+            end
+        end,
+        source = 'if_many'
     }
 })
 
@@ -1193,7 +1203,7 @@ addPlugin {
             local config = {}
 
             ---Get TODO highlights
-            ---@param match string Matched text
+            ---@param set string Matched text
             ---@return string? # Highlight for matched string
             local function getTodo(set)
                 local color_set = todo_colors[set] or todo_colors.default
@@ -1583,7 +1593,7 @@ addPlugin {
             experimental = {
                 ghost_text = true
             },
-            formatting = { -- FEAT: https://www.reddit.com/r/neovim/comments/191eg59/how_to_achieve_cmp_ui_like_nvchad/
+            formatting = {
                 expandable_indicator = true,
                 fields = { 'kind', 'abbr', 'menu' },
                 format = function(entry, vim_item)
@@ -2142,7 +2152,7 @@ function MarkdownHeadingsHighlight()
 end
 
 FileTypeActions = {
-    ['markdown'] = function()
+    ['markdown'] = function(_)
         vim.g.table_mode_corner = '|'
         MarkdownHeadingsHighlight()
     end,
@@ -2928,7 +2938,7 @@ addPlugin {
         }
         vim.cmd.LspStart()
     end,
-    dependencies = { 'luukvbaal/statuscol.nvim', 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
+    dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
     keys = { '<F12>' }
 }
 -- <~>
@@ -3299,10 +3309,11 @@ addPlugin { -- DiagnosticChanged
                     condition = { function() return TODO_COMMENTS_LOADED ~= nil end },
                     auto = true,
                 },
-                { sign = { name = { '*diagnostic*' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
+                { sign = { namespace = { '.*diagnostic.*' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
                 { sign = { name = { 'Bookmark' }, fillcharhl ='LineNr', auto = true } },
                 { sign = { name = { 'Dap' }, fillcharhl ='LineNr', auto = true } },
                 { sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
+                { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
                 { text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
                 {
                     sign = {
@@ -3319,11 +3330,10 @@ addPlugin { -- DiagnosticChanged
                     },
                     click = 'v:lua.ScSa',
                 },
-                { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
             },
         })
     end,
-    enabled = true
+    event = 'DiagnosticChanged'
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>

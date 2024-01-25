@@ -413,7 +413,7 @@ Set-PSReadLineOption -Colors @{
 }
 
 # Source rg command line completer
-. ~\scoop\apps\ripgrep\13.0.0\complete\_rg.ps1
+. ~\scoop\apps\ripgrep\current\complete\_rg.ps1
 
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
