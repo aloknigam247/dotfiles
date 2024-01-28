@@ -1272,7 +1272,7 @@ addPlugin {
 
 addPlugin {
     'brenoprata10/nvim-highlight-colors',
-    cmd = 'HighlightColorsOn',
+    cmd = 'HighlightColors',
     opts = { render = 'background' }
 }
 
@@ -2404,7 +2404,6 @@ addPlugin {
 }
 
 addPlugin {
-    -- https://github.com/lewis6991/gitsigns.nvim/issues/927
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
     dependencies = { 'luukvbaal/statuscol.nvim' },
