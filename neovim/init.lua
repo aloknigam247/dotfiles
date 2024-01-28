@@ -1325,6 +1325,13 @@ addPlugin {
 -- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--- Fix retrobox colorscheme
+local function FixMaterial()
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91b859', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#e53935', nocombine = true })
+    fixVisual('#CCEAE7')
+end
+
 ---Fix LineNr highlight
 ---@param fg string fg color in hex
 local function fixLineNr(fg)
@@ -1461,7 +1468,7 @@ darkT { 'hybrid',                 '_', cfg = { transparent = true } }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = function() fixVisual('#CCEAE7') end }
+light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = FixMaterial }
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
