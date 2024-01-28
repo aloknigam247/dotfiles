@@ -1440,7 +1440,6 @@ addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon' 
 addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                        }
 addPlugin { 'lewpoly/sherbet.nvim',                    event = 'User sherbet'                                          }
 addPlugin { 'sainnhe/sonokai',                         event = 'User sonokai'                                          }
-addPlugin { 'tiagovla/tokyodark.nvim',                 event = 'User tokyodark'                                        }
 addPlugin { 'folke/tokyonight.nvim',                   event = 'User tokyonight'                                       }
 addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'                                         }
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
@@ -1479,8 +1478,6 @@ darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
-dark  { 'tokyodark',            '_'                                          }
-darkT { 'tokyodark',            '_', cfg = { transparent_background = true } }
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
