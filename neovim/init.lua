@@ -1325,13 +1325,6 @@ addPlugin {
 -- 'uga-rosa/ccc.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
---- Fix retrobox colorscheme
-local function fixMaterial()
-    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91b859', nocombine = true })
-    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#e53935', nocombine = true })
-    fixVisual('#CCEAE7')
-end
-
 ---Fix LineNr highlight
 ---@param fg string fg color in hex
 local function fixLineNr(fg)
@@ -1350,6 +1343,13 @@ end
 local function fixVisual(bg)
     bg = bg or adaptiveBG(50, -20)
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
+end
+
+--- Fix material colorscheme
+local function fixMaterial()
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91b859', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#e53935', nocombine = true })
+    fixVisual('#CCEAE7')
 end
 
 ---Fix vn-night colorscheme
