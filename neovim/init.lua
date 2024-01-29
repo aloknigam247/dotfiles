@@ -1326,7 +1326,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 --- Fix retrobox colorscheme
-local function FixMaterial()
+local function fixMaterial()
     vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91b859', nocombine = true })
     vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#e53935', nocombine = true })
     fixVisual('#CCEAE7')
@@ -1339,7 +1339,7 @@ local function fixLineNr(fg)
 end
 
 --- Fix retrobox colorscheme
-local function FixRetro()
+local function fixRetro()
     vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#b8bb26', nocombine = true })
     vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#8ec07c', nocombine = true })
     vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#fb4934', nocombine = true })
@@ -1467,13 +1467,13 @@ darkT { 'hybrid',                 '_', cfg = { transparent = true } }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = FixMaterial }
+light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial }
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_' }
-dark  { 'retrobox',             '_', post = FixRetro }
+dark  { 'retrobox',             '_', post = fixRetro }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
