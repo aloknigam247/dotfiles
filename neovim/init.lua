@@ -1333,9 +1333,9 @@ end
 
 --- Fix retrobox colorscheme
 local function fixRetro()
-    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#b8bb26', nocombine = true })
-    vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#8ec07c', nocombine = true })
-    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#fb4934', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#B8BB26', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#8EC07C', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#FB4934', nocombine = true })
 end
 
 ---Fix Visual highlight
@@ -1345,10 +1345,16 @@ local function fixVisual(bg)
     vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
 end
 
+--- Fix ayu colorscheme
+local function fixAyu()
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#E0E7CD', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#F9EBE4', nocombine = true })
+end
+
 --- Fix material colorscheme
 local function fixMaterial()
-    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91b859', nocombine = true })
-    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#e53935', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91B859', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#E53935', nocombine = true })
     fixVisual('#CCEAE7')
 end
 
@@ -1446,7 +1452,7 @@ addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'    
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
 dark  { 'ayu-dark',             'ayu' }
-light { 'ayu-light',            'ayu' }
+light { 'ayu-light',            'ayu', post = fixAyu }
 dark  { 'ayu-mirage',           'ayu' }
 dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
 darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
@@ -1456,7 +1462,6 @@ light { 'catppuccin-latte',     'catppuccin' }
 dark  { 'catppuccin-macchiato', 'catppuccin' }
 dark  { 'darcula-solid',        '_'          }
 dark  { 'deku',                 '_'          }
-darkT { 'deku',                 '_', cfg = { transparent = true } }
 dark  { 'duskfox',              'nightfox'   }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
 dark  { 'edge',                 '_' }
