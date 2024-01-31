@@ -1331,6 +1331,13 @@ local function fixLineNr(fg)
     vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
+--- Fix oxocarbon colorscheme
+local function fixOxocarbon()
+    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#2A9D8F', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#540D6E', nocombine = true })
+    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#EE4266', nocombine = true })
+end
+
 --- Fix retrobox colorscheme
 local function fixRetro()
     vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#B8BB26', nocombine = true })
@@ -1477,8 +1484,8 @@ dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 light { 'onenord',              '_' }
-light { 'oxocarbon',            '_' }
-dark  { 'retrobox',             '_', post = fixRetro }
+light { 'oxocarbon',            '_', post = fixOxocarbon }
+dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
