@@ -952,7 +952,6 @@ vim.diagnostic.config({
     }
 })
 
--- TODO: add to vim.diagnostics.config
 vim.cmd('sign define DiagnosticSignError text=' .. icons.error .. ' texthl=DiagnosticSignError linehl= numhl=')
 vim.cmd('sign define DiagnosticSignWarn  text=' .. icons.warn  .. ' texthl=DiagnosticSignWarn  linehl= numhl=')
 vim.cmd('sign define DiagnosticSignInfo  text=' .. icons.info  .. ' texthl=DiagnosticSignInfo  linehl= numhl=')
@@ -3311,7 +3310,7 @@ addPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- DiagnosticChanged
+addPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
