@@ -413,7 +413,7 @@ local todo_colors = {
 
 local todo_config = {
     DOCS   = { icon = '', color = 'docs', alt = { 'DOCME' } },
-    FEAT   = { icon = '󱩑', color = 'feat' },
+    FEAT   = { icon = '󱩑', color = 'feat' }, -- BUG: highlight not working with mini-pattens
     FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
     HACK   = { icon = '󰑶', color = 'hint' },
     NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
@@ -2877,7 +2877,7 @@ addPlugin {
                         }
                     )
                     Lsp_timer:stop()
-                    Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+                    Lsp_timer:start(20000, 0, vim.schedule_wrap(function()
                         if isLspAttached() then
                             vim.notify('LSP hibernated')
                             vim.cmd.LspStop()
