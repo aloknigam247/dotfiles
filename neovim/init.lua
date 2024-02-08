@@ -588,7 +588,7 @@ end
 ---Check if LSP is attached to current buffer
 ---@return boolean # true if LSP is attached
 local function isLspAttached()
-    return #vim.lsp.get_active_clients({bufnr = 0}) ~= 0
+    return #vim.lsp.get_clients({bufnr = 0}) ~= 0
 end
 
 ---Light or dark color
@@ -807,6 +807,19 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
+   { 'BufNewFile', 'BufRead' }, {
+        pattern = '*',
+        desc = 'Run for new files',
+        callback = function ()
+            local buf_name = vim.fn.expand('%:t')
+            if string.lower(buf_name) == 'todo' then
+                vim.o.filetype = 'todo'
+            end
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
     'BufWinEnter', {
         pattern = '*',
         desc = 'Overlength line marker',
@@ -895,19 +908,6 @@ vim.api.nvim_create_autocmd(
                 unlet g:loaded_clipboard_provider
                 runtime autoload/provider/clipboard.vim
             ]])
-        end
-    }
-)
-
-vim.api.nvim_create_autocmd(
-   { 'BufNewFile', 'BufRead' }, {
-        pattern = '*',
-        desc = 'Run for new files',
-        callback = function ()
-            local buf_name = vim.fn.expand('%:t')
-            if string.lower(buf_name) == 'todo' then
-                vim.o.filetype = 'todo'
-            end
         end
     }
 )
@@ -1457,7 +1457,7 @@ addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'  
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
-dark  { 'ayu-dark',             'ayu' }
+dark  { 'ayu-dark',             'ayu' } -- FIX: inlay highlight
 light { 'ayu-light',            'ayu', post = fixAyu }
 dark  { 'ayu-mirage',           'ayu' }
 dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
@@ -2802,11 +2802,6 @@ addPlugin {
 }
 
 addPlugin {
-    'hinell/lsp-timeout.nvim', -- FEAT: custom implementation
-    event = 'LspAttach'
-}
-
-addPlugin {
     'j-hui/fidget.nvim',
     opts = {
         progress = {
@@ -2857,17 +2852,45 @@ addPlugin {
 addPlugin {
     'williamboman/mason-lspconfig.nvim',
     config = function()
+        -- Lsp timeout
+        Lsp_timer = vim.uv.new_timer()
+        vim.api.nvim_create_autocmd(
+            'FocusLost', {
+                pattern = '*',
+                desc = 'Stop LSP on focus lost',
+                once = false,
+                callback = function()
+                    vim.api.nvim_create_autocmd(
+                        'FocusGained', {
+                            pattern = '*',
+                            desc = 'Start LSP on focus gained',
+                            once = true,
+                            callback = function()
+                                Lsp_timer:stop()
+                                Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+                                    if not isLspAttached() then
+                                        vim.notify('LSP resumed')
+                                        vim.cmd.LspStart()
+                                    end
+                                end))
+                            end
+                        }
+                    )
+                    Lsp_timer:stop()
+                    Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+                        if isLspAttached() then
+                            vim.notify('LSP hibernated')
+                            vim.cmd.LspStop()
+                        end
+                    end))
+                end
+            }
+        )
+
         local mason_lspconfig = require('mason-lspconfig')
         local on_attach = function(_, bufnr)
+            -- enable inlay hints
             vim.lsp.inlay_hint.enable(bufnr, true)
-            vim.api.nvim_create_autocmd('LspDetach', {
-                buffer = bufnr,
-                desc = 'Disable inlay on lsp detach',
-                once = true,
-                callback = function(arg)
-                    vim.lsp.inlay_hint.enable(arg.buf, true)
-                end
-            })
 
             -- Mappings.
             local bufopts = { noremap = true, silent = true, buffer = bufnr }
