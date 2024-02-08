@@ -1483,7 +1483,7 @@ dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 light { 'onenord',              '_' }
-light { 'oxocarbon',            '_', post = fixOxocarbon }
+light { 'oxocarbon',            '_', post = fixOxocarbon } -- FEAT: remove border from cmp
 dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
