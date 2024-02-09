@@ -157,6 +157,7 @@ function scmd {
 # Get TODO from current directory
 function Get-TODO {
     param(
+        [Parameter(Position = 0)]
         [ValidateSet('All', 'Random', 'Stats')]
         [String] $type = 'All'
     )
