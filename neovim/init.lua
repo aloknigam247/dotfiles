@@ -3849,9 +3849,9 @@ addPlugin {
     opts ={
         auto_reload = true,
         signs = {
-            covered = { hl = 'CoverageCovered', text = '░' }, -- ░║
-            partial = { hl = 'CoveragePartial', text = '░' },
-            uncovered = { hl = 'CoverageUncovered', text = '░' },
+            covered = { hl = 'CoverageCovered', text = '┃' }, -- ░║
+            partial = { hl = 'CoveragePartial', text = '┃' },
+            uncovered = { hl = 'CoverageUncovered', text = '┃' },
         },
         sign_group = 'coverage'
     }
