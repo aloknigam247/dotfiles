@@ -3378,7 +3378,7 @@ addPlugin {
     'nvim-lualine/lualine.nvim',
     config = function()
         local function lspIcon()
-            local anim ={ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+            local anim ={ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
             Icon_index = (Icon_index) % #anim + 1
             return anim[Icon_index]
         end
