@@ -2421,7 +2421,7 @@ addPlugin {
 addPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
-    dependencies = { 'luukvbaal/statuscol.nvim' },
+    dependencies = { 'luukvbaal/statuscol.nvim' }, -- FEAT: use DiagnosticChanged
     event = { 'TextChangedI' },
     keys = { '[c', ']c' },
     opts = {
@@ -3338,7 +3338,7 @@ addPlugin {
     config = function()
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
-            setopt = true,
+            setopt = true, -- FIX: use %!v:lua.StatusCol() globally
             relculright = true,
             segments = {
                 {
@@ -3849,7 +3849,7 @@ addPlugin {
     opts ={
         auto_reload = true,
         signs = {
-            covered = { hl = 'CoverageCovered', text = '┃' }, -- ░║
+            covered = { hl = 'CoverageCovered', text = '┃' },
             partial = { hl = 'CoveragePartial', text = '┃' },
             uncovered = { hl = 'CoverageUncovered', text = '┃' },
         },
@@ -3858,7 +3858,7 @@ addPlugin {
 }
 
 -- addPlugin {
---     'nvim-neotest/neotest',
+--     'nvim-neotest/neotest', -- FIX: for python
 --     config = function()
 --         require('neotest').setup({
 --             adapters = {
