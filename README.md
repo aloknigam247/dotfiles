@@ -18,3 +18,5 @@ OR
 gh repo clone https://github.com/aloknigam247/dotfiles.git -- --recurse-submodules
 ```
 
+### TODO
+- [ ] FEAT: Add update mechanism
