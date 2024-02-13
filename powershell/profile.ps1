@@ -158,7 +158,7 @@ function scmd {
 function Get-TODO {
     param(
         [Parameter(Position = 0)]
-        [ValidateSet('All', 'Random', 'Stats')]
+        [ValidateSet('all', 'random', 'stats')]
         [String] $type = 'All'
     )
 

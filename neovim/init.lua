@@ -1005,6 +1005,17 @@ vim.opt.runtimepath:prepend(lazypath)
 -- Commands</>
 -----------
 vim.api.nvim_create_user_command(
+    'DropbarToggle',
+    function()
+        if DropbarEnabled == nil then
+            require('dropbar')
+        end
+        DropbarEnabled = not DropbarEnabled
+    end,
+    {}
+)
+
+vim.api.nvim_create_user_command(
     'Peek',
     function(args)
         openFloat(args.args, 'editor', 8, 3, true)
@@ -3627,11 +3638,9 @@ addPlugin {
             },
             winbar = {
                 lualine_a = {
-                    -- TODO:
-                    -- '%{%v:lua.dropbar.get_dropbar_str()%}',
                     {
                         'filetype',
-                        cond = function () return CountWindows(true) > 1 end,
+                        cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
                         icon_only = true,
                         padding = { left = 1, right = 0 },
                         separator = ''
@@ -3639,7 +3648,7 @@ addPlugin {
                     {
                         'filename',
                         color = { gui = 'italic' },
-                        cond = function () return CountWindows(true) > 1 end,
+                        cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
                         file_status = true,
                         newfile_status = true,
                         path = 0,
@@ -3650,9 +3659,18 @@ addPlugin {
                             unnamed  = icons.file_unnamed,
                             newfile  = icons.file_newfile,
                         }
-                    }
-                },
-                lualine_c = {
+                    },
+                    {
+                        function()
+                            if DropbarEnabled then
+                                return '%{%v:lua.dropbar.get_dropbar_str()%}'
+                            else
+                                return ''
+                            end
+                        end,
+                        padding = { left = 0, right = 0 },
+                        separator = { left = '', right = '' }
+                    },
                 }
             },
             inactive_winbar = {

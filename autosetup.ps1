@@ -1,9 +1,4 @@
 #Requires -RunAsAdministrator
-# $fontPath = 'C:\Windows\Fonts\'
-# $files = Get-ChildItem -Path . -Filter *.ttf
-# foreach ($file in $files) {
-#   Copy-Item $file.FullName -Destination $fontPath
-# }
 
 param(
      [switch]$update
@@ -13,7 +8,7 @@ function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)
     $l = $menuItems.length
     for ($i = 0; $i -le $l;$i++) {
-        if ($menuItems[$i] -ne $null) {
+        if ($null -ne $menuItems[$i]) {
             $item = $menuItems[$i]
             if ($Multiselect) {
                 if ($selection -contains $i) {
@@ -54,14 +49,14 @@ function Menu {
             while ($vkeycode -ne 13 -and $vkeycode -ne 27) {
                 $press = $host.ui.rawui.readkey("NoEcho,IncludeKeyDown")
                 $vkeycode = $press.virtualkeycode
-                if ($vkeycode -eq 38 -or $press.Character -eq 'k') {$pos--}
-                if ($vkeycode -eq 40 -or $press.Character -eq 'j') {$pos++}
+                if ($vkeycode -eq 38) { $pos-- }
+                if ($vkeycode -eq 40) { $pos++ }
                 if ($vkeycode -eq 36) { $pos = 0 }
                 if ($vkeycode -eq 35) { $pos = $menuItems.length - 1 }
                 if ($press.Character -eq ' ') { $selection = Toggle-Selection $pos $selection }
-                if ($pos -lt 0) {$pos = 0}
-                if ($vkeycode -eq 27) {$pos = $null }
-                if ($pos -ge $menuItems.length) {$pos = $menuItems.length -1}
+                if ($pos -lt 0) { $pos = 0 }
+                if ($vkeycode -eq 27) { $pos = $null }
+                if ($pos -ge $menuItems.length) { $pos = $menuItems.length -1 }
                 if ($vkeycode -ne 27) {
                     $startPos = [System.Console]::CursorTop - $menuItems.Length
                     [System.Console]::SetCursorPosition(0, $startPos)
@@ -78,7 +73,7 @@ function Menu {
         $pos = $null
     }
 
-    if ($ReturnIndex -eq $false -and $pos -ne $null)
+    if ($ReturnIndex -eq $false -and $null -ne $pos)
     {
         if ($Multiselect){
             return $menuItems[$selection]
@@ -98,32 +93,15 @@ function Menu {
     }
 }
 
-
-# function choco_install {
-#     $pkgs = $args[0]
-#     if ($pkgs.Length -eq 0) {
-#         return
-#     }
-
-#     foreach ($pkg in $pkgs) {
-#         $status = choco list --localonly $pkg
-#         if ($status[-1] -eq "1 packages installed.") {
-#             Write-Verbose "Package $pkg already installed" -verbose
-#         } else {
-#             choco install $pkg -y
-#         }
-#     }
-# }
-
 $script:scoop = $false
 function ensure_scoop {
     Get-Command scoop 2>&1
     if ($? -eq $false) {
-        echo "Scoop not insalled"
+        Write-Output "Scoop not insalled"
         Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
         scoop bucket add extras
     }
-    echo "Scoop insalled"
+    Write-Output "Scoop insalled"
     $script:scoop = $true
 }
 
@@ -131,7 +109,7 @@ function scoop_install {
     param(
         [switch]$update
     )
-    echo "scoop install"
+    Write-Output "scoop install"
     $script:scoop
     if ($script:scoop -eq $false) {
         ensure_scoop
