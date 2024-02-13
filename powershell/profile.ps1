@@ -180,7 +180,7 @@ function Get-TODO {
             $tag_map = @{}
             $total = 0
             foreach ($tag in $tag_list) {
-                $count = (rg "${tag}:" -cI | Measure-Object).Count
+                $count = (rg "${tag}:" -cI | Measure-Object).Sum
                 $total += $count
                 $tag_map[$tag] = $count
             }

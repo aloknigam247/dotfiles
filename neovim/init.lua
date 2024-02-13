@@ -1364,8 +1364,9 @@ end
 
 --- Fix ayu colorscheme
 local function fixAyu()
-    vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#E0E7CD', nocombine = true })
-    vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#F9EBE4', nocombine = true })
+    vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAddLn' })
+    vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'GitSignsDeleteLn' })
+    vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
 end
 
 --- Fix material colorscheme
@@ -1468,9 +1469,9 @@ addPlugin { 'nxvu699134/vn-night.nvim',                event = 'User vn-night'  
 addPlugin { 'Mofiqul/vscode.nvim',                     event = 'User vscode'                                           }
 addPlugin { 'titanzero/zephyrium',                     event = 'User zephyrium'                                        }
 
-dark  { 'ayu-dark',             'ayu' } -- FIX: inlay highlight
+dark  { 'ayu-dark',             'ayu', post = fixAyu }
 light { 'ayu-light',            'ayu', post = fixAyu }
-dark  { 'ayu-mirage',           'ayu' }
+dark  { 'ayu-mirage',           'ayu', post = fixAyu }
 dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
 darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
 dark  { 'bluloco-dark',         '_'                                                    }
@@ -2479,11 +2480,11 @@ addPlugin {
             border = 'rounded'
         },
         signs = {
-            add          = { hl = 'GitSignsAdd'   ,       text = icons.diff_add, numhl           = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
-            change       = { hl = 'GitSignsChange',       text = icons.diff_change, numhl        = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
+            add          = { hl = 'GitSignsAdd'   ,       text = icons.diff_add,           numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
+            change       = { hl = 'GitSignsChange',       text = icons.diff_change,        numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
             changedelete = { hl = 'GitSignsChangedelete', text = icons.diff_change_delete, numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
-            delete       = { hl = 'GitSignsDelete',       text = icons.diff_delete, numhl        = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
-            topdelete    = { hl = 'GitSignsDelete',       text = icons.diff_delete_top, numhl    = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+            delete       = { hl = 'GitSignsDelete',       text = icons.diff_delete,        numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+            topdelete    = { hl = 'GitSignsDelete',       text = icons.diff_delete_top,    numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
         },
         trouble = false
     }
@@ -3698,6 +3699,45 @@ addPlugin {
                         }
                     }
                 },
+                lualine_c = {
+                    {
+                        'diff',
+                        -- on_click = function()
+                        --     vim.cmd('Telescope git_status')
+                        -- end,
+                        padding = { left = 1, right = 0 },
+                        symbols = {
+                            added = '+',
+                            modified = '~',
+                            removed = '-'
+                        }
+                    },
+                },
+                lualine_z = {
+                    {
+                        lspIcon,
+                        cond = isLspAttached,
+                        on_click = function()
+                            vim.cmd('LspInfo')
+                        end,
+                        padding = { left = 0, right = 1 },
+                        separator = ''
+                    },
+                    {
+                        'diagnostics',
+                        on_click = function()
+                            vim.cmd('TroubleToggle')
+                        end,
+                        padding = { left = 1, right = 1 },
+                        sources = { 'nvim_diagnostic' },
+                        symbols = {
+                            error = icons.error,
+                            warn  = icons.warn,
+                            info  = icons.info,
+                            hint  = icons.hint
+                        },
+                    },
+                },
             },
             extensions = {
                 'aerial',
@@ -4602,6 +4642,8 @@ addPlugin {
         }
     }
 }
+-- TODO: integrate github copilot
+
 require('lazy').setup(plugins, lazy_config)
 ColoRand()
 -- <~>
