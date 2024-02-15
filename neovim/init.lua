@@ -819,18 +819,18 @@ vim.api.nvim_create_autocmd(
     }
 )
 
-vim.api.nvim_create_autocmd(
-    'BufWinEnter', {
-        pattern = '*',
-        desc = 'Overlength line marker',
-        callback = function()
-            if vim.bo.textwidth > 0 then
-                vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
-                vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
-            end
-        end
-    }
-)
+-- vim.api.nvim_create_autocmd( -- PERF: slows down in large files
+--     'BufWinEnter', {
+--         pattern = '*',
+--         desc = 'Overlength line marker',
+--         callback = function()
+--             if vim.bo.textwidth > 0 then
+--                 vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
+--                 vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
+--             end
+--         end
+--     }
+-- )
 
 vim.api.nvim_create_autocmd(
     'BufWinEnter', {
@@ -1183,68 +1183,68 @@ addPlugin {
 
 -- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
 
-addPlugin {
-    'RRethy/vim-illuminate',
-    config = function()
-        require('illuminate').configure({
-            delay = 400,
-            min_count_to_highlight = 2,
-            modes_allowlist = {'i', 'n'},
-            providers = {
-                'lsp',
-                'treesitter',
-                'regex'
-            }
-        })
-        vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = adaptiveBG(40, -40) })
-        vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
-        vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
-    end,
-    event = { 'CursorHold', 'CursorHoldI' }
-}
+-- addPlugin {
+--     'RRethy/vim-illuminate', -- PERF: slow on large files
+--     config = function()
+--         require('illuminate').configure({
+--             delay = 400,
+--             min_count_to_highlight = 2,
+--             modes_allowlist = {'i', 'n'},
+--             providers = {
+--                 'lsp',
+--                 'treesitter',
+--                 'regex'
+--             }
+--         })
+--         vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = adaptiveBG(40, -40) })
+--         vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
+--         vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
+--     end,
+--     event = { 'CursorHold', 'CursorHoldI' }
+-- }
 
 -- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
-addPlugin {
-    'echasnovski/mini.hipatterns',
-    event = 'VeryLazy',
-    opts = {
-        highlighters = (function()
-            local config = {}
+-- addPlugin { -- PERF: slows down in large files
+--     'echasnovski/mini.hipatterns',
+--     event = 'VeryLazy',
+--     opts = {
+--         highlighters = (function()
+--             local config = {}
 
-            ---Get TODO highlights
-            ---@param set string Matched text
-            ---@return string? # Highlight for matched string
-            local function getTodo(set)
-                local color_set = todo_colors[set] or todo_colors.default
+--             ---Get TODO highlights
+--             ---@param set string Matched text
+--             ---@return string? # Highlight for matched string
+--             local function getTodo(set)
+--                 local color_set = todo_colors[set] or todo_colors.default
 
-                for _, hl in pairs(color_set) do
-                    if hl:sub(1, 1) == '#' then
-                        vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl, force = true })
-                        return 'TodoHl' .. set
-                    end
-                    if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = hl })) then
-                        return hl
-                    end
-                end
-                return nil
-            end
-            for i,v in pairs(todo_config) do
-                local keys = v.alt or {}
-                table.insert(keys, i)
-                for _,l in pairs(keys) do
-                    local key = l:lower()
-                    local cfg = {
-                        group = getTodo(v.color),
-                        pattern = '()' .. l .. ':()',
-                    }
-                    config[key] = cfg
-                end
-            end
-            return config
-        end)()
-    }
-}
+--                 for _, hl in pairs(color_set) do
+--                     if hl:sub(1, 1) == '#' then
+--                         vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl, force = true })
+--                         return 'TodoHl' .. set
+--                     end
+--                     if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = hl })) then
+--                         return hl
+--                     end
+--                 end
+--                 return nil
+--             end
+--             for i,v in pairs(todo_config) do
+--                 local keys = v.alt or {}
+--                 table.insert(keys, i)
+--                 for _,l in pairs(keys) do
+--                     local key = l:lower()
+--                     local cfg = {
+--                         group = getTodo(v.color),
+--                         pattern = '()' .. l .. ':()',
+--                     }
+--                     config[key] = cfg
+--                 end
+--             end
+--             return config
+--         end)()
+--     }
+-- }
 
 -- addPlugin { 'folke/flash.nvim' }
 
