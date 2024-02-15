@@ -423,6 +423,8 @@ local todo_config = {
     TODO   = { icon = '󰸞', color = 'todo' },
     WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
 }
+
+LargeFile = {}
 -- <~>
 -- Functions</>
 ------------
@@ -454,7 +456,7 @@ end
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
 ---@return integer # Number of windows
-function CountWindows(ignore)
+function CountWindows(ignore) -- PERF: run only when needed
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
     local named_window = 0
@@ -918,7 +920,7 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
-vim.keymap.set("x", "/", "<Esc>/\\%V")
+-- DOCME: add documentation in mapping
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
 vim.keymap.set('i', '<C-Left>', '<C-\\><C-O>b', {})
 vim.keymap.set('i', '<C-Right>', '<C-\\><C-O>e<C-\\><C-O>a', {})
@@ -945,6 +947,7 @@ vim.keymap.set('n', '<M-k>', '<cmd>wincmd k<CR>', {})
 vim.keymap.set('n', '<M-l>', '<cmd>wincmd l<CR>', {})
 vim.keymap.set('n', '<X1Mouse>', '<C-o>', {})
 vim.keymap.set('n', '<X2Mouse>', '<C-i>', {})
+vim.keymap.set('x', '/', '<Esc>/\\%V')
 -- <~>
 -- Misc</>
 -------
@@ -1200,25 +1203,28 @@ addPlugin {
 
 -- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
 
--- addPlugin {
---     'RRethy/vim-illuminate', -- PERF: slow on large files
---     config = function()
---         require('illuminate').configure({
---             delay = 400,
---             min_count_to_highlight = 2,
---             modes_allowlist = {'i', 'n'},
---             providers = {
---                 'lsp',
---                 'treesitter',
---                 'regex'
---             }
---         })
---         vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = adaptiveBG(40, -40) })
---         vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
---         vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
---     end,
---     event = { 'CursorHold' }
--- }
+addPlugin {
+    'RRethy/vim-illuminate', -- PERF: slow on large files, disable on large files
+    config = function()
+        require('illuminate').configure({
+            delay = 400,
+            min_count_to_highlight = 2,
+            modes_allowlist = {'i', 'n'},
+            case_insensitive_regex = false,
+            providers = {
+                'lsp',
+                'treesitter',
+                'regex'
+            }
+        })
+        vim.keymap.set('n', ']i', require('illuminate').goto_next_reference, { desc = 'Jump to next illuminated text' })
+        vim.keymap.set('n', '[i', require('illuminate').goto_prev_reference, { desc = 'Jump to previous illuminated text' })
+        vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = adaptiveBG(40, -40) })
+        vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
+        vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
+    end,
+    event = { 'CursorHold' }
+}
 
 -- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
@@ -2218,6 +2224,19 @@ FileTypeActions = {
     --     end
     -- end
 }
+
+vim.api.nvim_create_autocmd(
+    'BufWinEnter', {
+        pattern = '*',
+        desc = 'Detect large files and disable slow plugins',
+        callback = function(arg)
+            local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
+            if fsize > 153600 then
+                LargeFile[vim.fn.bufnr('%')] = true
+            end
+        end
+    }
+)
 
 vim.api.nvim_create_autocmd(
     'FileType', {
@@ -3605,6 +3624,13 @@ addPlugin {
                         separator = ''
                     },
                     {
+                        function() return '󰩋' end,
+                        cond = function() return LargeFile[vim.fn.bufnr('%')] ~= nil end,
+                        color = { fg = '#AD2831' },
+                        padding = { left = 0, right = 1 },
+                        separator = ''
+                    },
+                    {
                         function()
                             local buf = vim.api.nvim_get_current_buf()
                             local highlighter = require('vim.treesitter.highlighter')
@@ -3726,9 +3752,7 @@ addPlugin {
                 lualine_c = {
                     {
                         'diff',
-                        -- on_click = function()
-                        --     vim.cmd('Telescope git_status')
-                        -- end,
+                        cond = function () return CountWindows(true) > 1 end,
                         padding = { left = 1, right = 0 },
                         symbols = {
                             added = '+',
@@ -3740,7 +3764,7 @@ addPlugin {
                 lualine_z = {
                     {
                         lspIcon,
-                        cond = isLspAttached,
+                        cond = function () return CountWindows(true) > 1 and isLspAttached() end,
                         on_click = function()
                             vim.cmd('LspInfo')
                         end,
@@ -3749,6 +3773,7 @@ addPlugin {
                     },
                     {
                         'diagnostics',
+                        cond = function () return CountWindows(true) > 1 end,
                         on_click = function()
                             vim.cmd('TroubleToggle')
                         end,
