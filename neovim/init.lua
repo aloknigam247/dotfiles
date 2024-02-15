@@ -917,15 +917,32 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/backdround/neowords.nvim
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
+-- vip select paragraph
 vim.keymap.set("x", "/", "<Esc>/\\%V")
 vim.keymap.set('i', '<C-BS>', '<C-w>', {})
+vim.keymap.set('i', '<C-Left>', '<C-\\><C-O>b', {})
+vim.keymap.set('i', '<C-Right>', '<C-\\><C-O>e<C-\\><C-O>a', {})
+vim.keymap.set('i', '<C-S-Left>', '<C-\\><C-O>B', {})
+vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', {})
+vim.keymap.set('n', '<BS>', 'X', {})
 vim.keymap.set('n', '<BS>', 'x', {})
+vim.keymap.set('n', '<C-Left>', 'b', {}) -- FIX: me
 vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
+vim.keymap.set('n', '<C-Right>', 'e', {})
+vim.keymap.set('n', '<C-S-Left>', 'B', {})
+vim.keymap.set('n', '<C-S-Right>', 'E', {})
 vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
+vim.keymap.set('n', '<M-->', '<cmd>wincmd -<CR>', {})
+vim.keymap.set('n', '<M-=>', '<cmd>wincmd =<CR>', {})
+vim.keymap.set('n', '<M-Bslash>', '<cmd>vertical-resize<CR>', {})
 vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
 vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
 vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
 vim.keymap.set('n', '<M-Up>', '<cmd>res +1<cr>', {})
+vim.keymap.set('n', '<M-h>', '<cmd>wincmd h<CR>', {})
+vim.keymap.set('n', '<M-j>', '<cmd>wincmd j<CR>', {})
+vim.keymap.set('n', '<M-k>', '<cmd>wincmd k<CR>', {})
+vim.keymap.set('n', '<M-l>', '<cmd>wincmd l<CR>', {})
 vim.keymap.set('n', '<X1Mouse>', '<C-o>', {})
 vim.keymap.set('n', '<X2Mouse>', '<C-i>', {})
 -- <~>
@@ -1200,7 +1217,7 @@ addPlugin {
 --         vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
 --         vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
 --     end,
---     event = { 'CursorHold', 'CursorHoldI' }
+--     event = { 'CursorHold' }
 -- }
 
 -- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
