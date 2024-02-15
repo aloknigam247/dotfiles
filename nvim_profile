@@ -1,0 +1,127 @@
+FUNCTION  <SNR>1_LoadFTPlugin()
+    Defined: ~\scoop\apps\neovim-nightly\current\share\nvim\runtime\ftplugin.vim:15
+Called 1 time
+Total time:   0.005237
+ Self time:   0.005237
+
+count  total (s)   self (s)
+    1              0.000007     if exists("b:undo_ftplugin")
+                                  exe b:undo_ftplugin
+                                  unlet! b:undo_ftplugin b:did_ftplugin
+    1              0.000001     endif
+                            
+    1              0.000005     let s = expand("<amatch>")
+    1              0.000002     if s != ""
+    1              0.000008       if &cpo =~# "S" && exists("b:did_ftplugin")
+                            	" In compatible mode options are reset to the global values, need to
+                            	" set the local values also when a plugin was already used.
+                            	unlet b:did_ftplugin
+    1              0.000000       endif
+                            
+                                  " When there is a dot it is used to separate filetype names.  Thus for
+                                  " "aaa.bbb" load "aaa" and then "bbb".
+    2              0.000008       for name in split(s, '\.')
+                                    " Load Lua ftplugins after Vim ftplugins _per directory_
+                                    " TODO(clason): use nvim__get_runtime when supports globs and modeline
+                                    " XXX: "[.]" in the first pattern makes it a wildcard on Windows
+    1              0.005187         exe $'runtime! ftplugin/{name}[.]{{vim,lua}} ftplugin/{name}_*.{{vim,lua}} ftplugin/{name}/*.{{vim,lua}}'
+    2              0.000003       endfor
+    1              0.000001     endif
+
+FUNCTION  <SNR>6_SetupPasta()
+    Defined: ~/AppData/Local/nvim-data/lazy/vim-pasta/plugin/pasta.vim:42
+Called 1 time
+Total time:   0.000037
+ Self time:   0.000037
+
+count  total (s)   self (s)
+    1              0.000002   if exists("g:pasta_enabled_filetypes")
+                                if index(g:pasta_enabled_filetypes, &ft) == -1
+                                  return
+                                endif
+    1              0.000006   elseif exists("g:pasta_disabled_filetypes") && index(g:pasta_disabled_filetypes, &ft) != -1
+                                return
+    1              0.000000   endif
+                            
+    1              0.000008   exe "nmap <buffer> " . g:pasta_paste_before_mapping . " <Plug>BeforePasta"
+    1              0.000005   exe "xmap <buffer> " . g:pasta_paste_before_mapping . " <Plug>VisualPasta"
+                            
+    1              0.000004   exe "nmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>AfterPasta"
+    1              0.000004   exe "xmap <buffer> " . g:pasta_paste_after_mapping . " <Plug>VisualPasta"
+
+FUNCTION  <SNR>12_SynSet()
+    Defined: ~\scoop\apps\neovim-nightly\current\share\nvim\runtime\syntax\synload.vim:27
+Called 1 time
+Total time:   0.002931
+ Self time:   0.002931
+
+count  total (s)   self (s)
+                              " clear syntax for :set syntax=OFF  and any syntax name that doesn't exist
+    1              0.000003   syn clear
+    1              0.000002   if exists("b:current_syntax")
+                                unlet b:current_syntax
+    1              0.000000   endif
+                            
+    1              0.000002   0verbose let s = expand("<amatch>")
+    1              0.000001   if s == "ON"
+                                " :set syntax=ON
+                                if &filetype == ""
+                                  echohl ErrorMsg
+                                  echo "filetype unknown"
+                                  echohl None
+                                endif
+                                let s = &filetype
+    1              0.000001   elseif s == "OFF"
+                                let s = ""
+    1              0.000000   endif
+                            
+    1              0.000001   if s != ""
+                                " Load the syntax file(s).  When there are several, separated by dots,
+                                " load each in sequence.  Skip empty entries.
+    2              0.000005     for name in split(s, '\.')
+    1              0.000001       if !empty(name)
+                                    " XXX: "[.]" in the first pattern makes it a wildcard on Windows
+    1              0.002900         exe $'runtime! syntax/{name}[.]{{vim,lua}} syntax/{name}/*.{{vim,lua}}'
+    1              0.000001       endif
+    2              0.000001     endfor
+    1              0.000000   endif
+
+FUNCTION  <SNR>2_LoadIndent()
+    Defined: ~\scoop\apps\neovim-nightly\current\share\nvim\runtime\indent.vim:14
+Called 1 time
+Total time:   0.001856
+ Self time:   0.001856
+
+count  total (s)   self (s)
+    1              0.000004     if exists("b:undo_indent")
+                                  exe b:undo_indent
+                                  unlet! b:undo_indent b:did_indent
+    1              0.000000     endif
+    1              0.000004     let s = expand("<amatch>")
+    1              0.000001     if s != ""
+    1              0.000001       if exists("b:did_indent")
+                            	unlet b:did_indent
+    1              0.000000       endif
+                            
+                                  " When there is a dot it is used to separate filetype names.  Thus for
+                                  " "aaa.bbb" load "indent/aaa.vim" and then "indent/bbb.vim".
+    2              0.000005       for name in split(s, '\.')
+                                    " XXX: "[.]" in the pattern makes it a wildcard on Windows
+    1              0.001829         exe $'runtime! indent/{name}[.]{{vim,lua}}'
+    2              0.000002       endfor
+    1              0.000000     endif
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+    1   0.005237             <SNR>1_LoadFTPlugin()
+    1   0.002931             <SNR>12_SynSet()
+    1   0.001856             <SNR>2_LoadIndent()
+    1   0.000037             <SNR>6_SetupPasta()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+    1              0.005237  <SNR>1_LoadFTPlugin()
+    1              0.002931  <SNR>12_SynSet()
+    1              0.001856  <SNR>2_LoadIndent()
+    1              0.000037  <SNR>6_SetupPasta()
+
