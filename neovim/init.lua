@@ -1495,7 +1495,7 @@ dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
 light { 'onenord',              '_' }
-light { 'oxocarbon',            '_', post = fixOxocarbon } -- FEAT: remove border from cmp
+light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
@@ -3345,12 +3345,19 @@ addPlugin {
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--- Default method to use until statuscol.nvim loads which then overrides it
+---@return string
+function StatusCol()
+    return '%=%{v:lnum} '
+end
+vim.o.statuscolumn = "%!v:lua.StatusCol()"
+
 addPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
-            setopt = true, -- FIX: use %!v:lua.StatusCol() globally
+            setopt = true,
             relculright = true,
             segments = {
                 {
@@ -4643,6 +4650,7 @@ addPlugin {
     }
 }
 -- TODO: integrate github copilot
+-- PERF: slow on large lines
 
 require('lazy').setup(plugins, lazy_config)
 ColoRand()
