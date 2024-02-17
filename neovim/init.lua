@@ -741,7 +741,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     })
 
     -- Reopen preview in vsplit
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-v>', '', {
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-v>', '', { -- BUG: conflicts with default mapping
         callback = function()
             local file_path = vim.fn.expand('%:p')
             vim.cmd.quit()
@@ -920,34 +920,31 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
--- DOCME: add documentation in mapping
-vim.keymap.set('i', '<C-BS>', '<C-w>', {})
-vim.keymap.set('i', '<C-Left>', '<C-\\><C-O>b', {})
-vim.keymap.set('i', '<C-Right>', '<C-\\><C-O>e<C-\\><C-O>a', {})
-vim.keymap.set('i', '<C-S-Left>', '<C-\\><C-O>B', {})
-vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', {})
-vim.keymap.set('n', '<BS>', 'X', {})
-vim.keymap.set('n', '<BS>', 'x', {})
-vim.keymap.set('n', '<C-Left>', 'b', {}) -- FIX: me
-vim.keymap.set('n', '<C-Q>', '<cmd>q<CR>', {})
-vim.keymap.set('n', '<C-Right>', 'e', {})
-vim.keymap.set('n', '<C-S-Left>', 'B', {})
-vim.keymap.set('n', '<C-S-Right>', 'E', {})
-vim.keymap.set('n', '<C-Tab>', '<cmd>tabnext<CR>', {})
-vim.keymap.set('n', '<M-->', '<cmd>wincmd -<CR>', {})
-vim.keymap.set('n', '<M-=>', '<cmd>wincmd =<CR>', {})
-vim.keymap.set('n', '<M-Bslash>', '<cmd>vertical-resize<CR>', {})
-vim.keymap.set('n', '<M-Down>', '<cmd>res -1<cr>', {})
-vim.keymap.set('n', '<M-Left>', '<cmd>vert res -1<cr>', {})
-vim.keymap.set('n', '<M-Right>', '<cmd>vert res +1<cr>', {})
-vim.keymap.set('n', '<M-Up>', '<cmd>res +1<cr>', {})
-vim.keymap.set('n', '<M-h>', '<cmd>wincmd h<CR>', {})
-vim.keymap.set('n', '<M-j>', '<cmd>wincmd j<CR>', {})
-vim.keymap.set('n', '<M-k>', '<cmd>wincmd k<CR>', {})
-vim.keymap.set('n', '<M-l>', '<cmd>wincmd l<CR>', {})
-vim.keymap.set('n', '<X1Mouse>', '<C-o>', {})
-vim.keymap.set('n', '<X2Mouse>', '<C-i>', {})
-vim.keymap.set('x', '/', '<Esc>/\\%V')
+vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'delete a word backword' })
+vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a word backword' })
+vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
+vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'move a larger word backword' })
+vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'move a larger word forward' })
+vim.keymap.set('n', '<BS>',        'x',                        { desc = 'delete a letter backword' })
+vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'move a word backword' })
+vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'close window' })
+vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'move a word forward' })
+vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'move a larger word forward' })
+vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'move a larger word backword' })
+vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'move to next tab' })
+vim.keymap.set('n', '<M-=>',       '<cmd>wincmd =<CR>',        { desc = 'realign windows to equal size' })
+vim.keymap.set('n', '<M-Bar>',     '<cmd>vertical-resize<CR>', { desc = 'make current window widest possible' })
+vim.keymap.set('n', '<M-Down>',    '<cmd>res -1<cr>',          { desc = 'reduce current window height' })
+vim.keymap.set('n', '<M-Left>',    '<cmd>vert res -1<cr>',     { desc = 'reduce current window width' })
+vim.keymap.set('n', '<M-Right>',   '<cmd>vert res +1<cr>',     { desc = 'increase current window width' })
+vim.keymap.set('n', '<M-Up>',      '<cmd>res +1<cr>',          { desc = 'increase current window height' })
+vim.keymap.set('n', '<M-h>',       '<cmd>wincmd h<CR>',        { desc = 'move to window left' })
+vim.keymap.set('n', '<M-j>',       '<cmd>wincmd j<CR>',        { desc = 'move to window down' })
+vim.keymap.set('n', '<M-k>',       '<cmd>wincmd k<CR>',        { desc = 'move to window right' })
+vim.keymap.set('n', '<M-l>',       '<cmd>wincmd l<CR>',        { desc = 'move to window above' })
+vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'jump forward' })
+vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'jump backword' })
+vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'search in select region' })
 -- <~>
 -- Misc</>
 -------
@@ -2925,7 +2922,7 @@ addPlugin {
                         }
                     )
                     Lsp_timer:stop()
-                    Lsp_timer:start(20000, 0, vim.schedule_wrap(function()
+                    Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
                         if isLspAttached() then
                             vim.notify('LSP hibernated')
                             vim.cmd.LspStop()
@@ -4436,28 +4433,33 @@ addPlugin {
     -- https://github.com/gregorias/coerce.nvim
     'johmsalas/text-case.nvim',
     init = function()
-        vim.api.nvim_set_keymap('n', 'wcA', '', { callback = function() require('textcase').lsp_rename('to_phrase_case') end,     desc = 'LSP phrase_case'})
-        vim.api.nvim_set_keymap('n', 'wcC', '', { callback = function() require('textcase').lsp_rename('to_camel_case') end,      desc = 'LSP camel_case'})
-        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dash_case') end,       desc = 'LSP dash_case'})
-        vim.api.nvim_set_keymap('n', 'wcD', '', { callback = function() require('textcase').lsp_rename('to_dot_case') end,        desc = 'LSP dot_case'})
-        vim.api.nvim_set_keymap('n', 'wcF', '', { callback = function() require('textcase').lsp_rename('to_path_case') end,       desc = 'LSP path_case'})
-        vim.api.nvim_set_keymap('n', 'wcL', '', { callback = function() require('textcase').lsp_rename('to_lower_case') end,      desc = 'LSP lower_case'})
-        vim.api.nvim_set_keymap('n', 'wcN', '', { callback = function() require('textcase').lsp_rename('to_constant_case') end,   desc = 'LSP constant_case'})
-        vim.api.nvim_set_keymap('n', 'wcP', '', { callback = function() require('textcase').lsp_rename('to_pascal_case') end,     desc = 'LSP pascal_case'})
-        vim.api.nvim_set_keymap('n', 'wcS', '', { callback = function() require('textcase').lsp_rename('to_snake_case') end,      desc = 'LSP snake_case'})
-        vim.api.nvim_set_keymap('n', 'wcT', '', { callback = function() require('textcase').lsp_rename('to_title_case') end,      desc = 'LSP title_case'})
-        vim.api.nvim_set_keymap('n', 'wcU', '', { callback = function() require('textcase').lsp_rename('to_upper_case') end,      desc = 'LSP upper_case'})
-        vim.api.nvim_set_keymap('n', 'wca', '', { callback = function() require('textcase').current_word('to_phrase_case') end,   desc = 'phrase_case'})
-        vim.api.nvim_set_keymap('n', 'wcc', '', { callback = function() require('textcase').current_word('to_camel_case') end,    desc = 'camel_case'})
-        vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dash_case') end,     desc = 'dash_case'})
-        vim.api.nvim_set_keymap('n', 'wcd', '', { callback = function() require('textcase').current_word('to_dot_case') end,      desc = 'dot_case'})
-        vim.api.nvim_set_keymap('n', 'wcf', '', { callback = function() require('textcase').current_word('to_path_case') end,     desc = 'path_case'})
-        vim.api.nvim_set_keymap('n', 'wcl', '', { callback = function() require('textcase').current_word('to_lower_case') end,    desc = 'lower_case'})
-        vim.api.nvim_set_keymap('n', 'wcn', '', { callback = function() require('textcase').current_word('to_constant_case') end, desc = 'constant_case'})
-        vim.api.nvim_set_keymap('n', 'wcp', '', { callback = function() require('textcase').current_word('to_pascal_case') end,   desc = 'pascal_case'})
-        vim.api.nvim_set_keymap('n', 'wcs', '', { callback = function() require('textcase').current_word('to_snake_case') end,    desc = 'snake_case'})
-        vim.api.nvim_set_keymap('n', 'wct', '', { callback = function() require('textcase').current_word('to_title_case') end,    desc = 'title_case'})
-        vim.api.nvim_set_keymap('n', 'wcu', '', { callback = function() require('textcase').current_word('to_upper_case') end,    desc = 'upper_case'})
+        ---set keymap for text-case
+        ---@param key string key to set
+        ---@param case string case to be used
+        ---@param desc string description of mapping
+        local setTextKey = function(key, case, desc)
+            vim.keymap.set(
+                { 'n', 'x' },
+                key,
+                function() require('textcase').current_word(case) end,
+                { desc = desc }
+            )
+        end
+
+        setTextKey('wc-', 'to_dash_case',         'dash-case'         )
+        setTextKey('wc.', 'to_dot_case',          'dot.case'          )
+        setTextKey('wc/', 'to_path_case',         'path/case'         )
+        setTextKey('wc0', 'to_constant_case',     'CONSTANT_CASE'     )
+        setTextKey('wc_', 'to_snake_case',        'snake_case'        )
+        setTextKey('wcc', 'to_camel_case',        'camelCase'         )
+        setTextKey('wch', 'to_phrase_case',       'Phrase case'       )
+        setTextKey('wcl', 'to_lower_case',        'lowercase'         )
+        setTextKey('wcL', 'to_lower_phrase_case', 'lower phrase case' )
+        setTextKey('wcp', 'to_pascal_case',       'PascalCase'        )
+        setTextKey('wct', 'to_title_case',        'Title Case'        )
+        setTextKey('wcT', 'to_title_dash_case',   'Title_Dash_Case'   )
+        setTextKey('wcu', 'to_upper_case',        'UPPERCASE'         )
+        setTextKey('wcU', 'to_upper_phrase_case', 'UPPER PHRASE CASE' )
     end,
     lazy = true,
     opts = {
