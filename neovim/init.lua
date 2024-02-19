@@ -821,18 +821,18 @@ vim.api.nvim_create_autocmd(
     }
 )
 
--- vim.api.nvim_create_autocmd( -- PERF: slows down in large files
---     'BufWinEnter', {
---         pattern = '*',
---         desc = 'Overlength line marker',
---         callback = function()
---             if vim.bo.textwidth > 0 then
---                 vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
---                 vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
---             end
---         end
---     }
--- )
+vim.api.nvim_create_autocmd( -- PERF: slows down in large files
+    'BufWinEnter', {
+        pattern = '*',
+        desc = 'Overlength line marker',
+        callback = function()
+            if vim.bo.textwidth > 0 then
+                vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
+                vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
+            end
+        end
+    }
+)
 
 vim.api.nvim_create_autocmd(
     'BufWinEnter', {
@@ -1225,46 +1225,46 @@ addPlugin {
 
 -- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
--- addPlugin { -- PERF: slows down in large files
---     'echasnovski/mini.hipatterns',
---     event = 'VeryLazy',
---     opts = {
---         highlighters = (function()
---             local config = {}
+addPlugin { -- PERF: slows down in large files
+    'echasnovski/mini.hipatterns',
+    event = 'VeryLazy',
+    opts = {
+        highlighters = (function()
+            local config = {}
 
---             ---Get TODO highlights
---             ---@param set string Matched text
---             ---@return string? # Highlight for matched string
---             local function getTodo(set)
---                 local color_set = todo_colors[set] or todo_colors.default
+            ---Get TODO highlights
+            ---@param set string Matched text
+            ---@return string? # Highlight for matched string
+            local function getTodo(set)
+                local color_set = todo_colors[set] or todo_colors.default
 
---                 for _, hl in pairs(color_set) do
---                     if hl:sub(1, 1) == '#' then
---                         vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl, force = true })
---                         return 'TodoHl' .. set
---                     end
---                     if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = hl })) then
---                         return hl
---                     end
---                 end
---                 return nil
---             end
---             for i,v in pairs(todo_config) do
---                 local keys = v.alt or {}
---                 table.insert(keys, i)
---                 for _,l in pairs(keys) do
---                     local key = l:lower()
---                     local cfg = {
---                         group = getTodo(v.color),
---                         pattern = '()' .. l .. ':()',
---                     }
---                     config[key] = cfg
---                 end
---             end
---             return config
---         end)()
---     }
--- }
+                for _, hl in pairs(color_set) do
+                    if hl:sub(1, 1) == '#' then
+                        vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl, force = true })
+                        return 'TodoHl' .. set
+                    end
+                    if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = hl })) then
+                        return hl
+                    end
+                end
+                return nil
+            end
+            for i,v in pairs(todo_config) do
+                local keys = v.alt or {}
+                table.insert(keys, i)
+                for _,l in pairs(keys) do
+                    local key = l:lower()
+                    local cfg = {
+                        group = getTodo(v.color),
+                        pattern = '()' .. l .. ':()',
+                    }
+                    config[key] = cfg
+                end
+            end
+            return config
+        end)()
+    }
+}
 
 -- addPlugin { 'folke/flash.nvim' }
 
@@ -1747,7 +1747,7 @@ addPlugin {
                 left = 'print(f"',
                 mid_var = '{',
                 right_var = '}")',
-                right = '")',
+                right = '")  # noqa',
             }
         }
     },
@@ -4694,7 +4694,6 @@ addPlugin {
     }
 }
 -- TODO: integrate github copilot
--- PERF: slow on large lines
 
 require('lazy').setup(plugins, lazy_config)
 ColoRand()
