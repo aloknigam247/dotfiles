@@ -723,6 +723,9 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
                 Preview_win = nil
                 vim.api.nvim_del_autocmd(au_id)
                 vim.api.nvim_del_autocmd(arg.id)
+                vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
+                vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
+                vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-v>')
             end
         }
     )
@@ -741,7 +744,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     })
 
     -- Reopen preview in vsplit
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-v>', '', { -- BUG: conflicts with default mapping
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-v>', '', { -- BUG: conflicts with visual block mode
         callback = function()
             local file_path = vim.fn.expand('%:p')
             vim.cmd.quit()
@@ -1225,7 +1228,7 @@ addPlugin {
 
 -- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
-addPlugin { -- PERF: slows down in large files
+addPlugin {
     'echasnovski/mini.hipatterns',
     event = 'VeryLazy',
     opts = {
@@ -1502,7 +1505,7 @@ dark  { 'darcula-solid',        '_'          }
 dark  { 'deku',                 '_'          }
 dark  { 'duskfox',              'nightfox'   }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
-dark  { 'edge',                 '_' }
+dark  { 'edge',                 '_' } -- FIX: BUG and FIX highlight
 light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 dark  { 'hybrid',                 '_'          }
@@ -1520,7 +1523,7 @@ dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end } -- FIX: BUG and FIX highlight
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
@@ -2230,6 +2233,7 @@ vim.api.nvim_create_autocmd(
             local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
             if fsize > 153600 then
                 LargeFile[vim.fn.bufnr('%')] = true
+                vim.b[arg.buf].minihipatterns_disable = true
             end
         end
     }
