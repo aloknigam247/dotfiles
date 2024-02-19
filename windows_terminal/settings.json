@@ -103,7 +103,7 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "colorScheme": "PowerShell 7",
+                "colorScheme": "Catppuccin Latte",
                 "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -nologo",
                 "elevate": false,
                 "font": 
@@ -141,29 +141,6 @@
     },
     "schemes": 
     [
-        {
-            "name": "Catppuccin Latte",
-            "cursorColor": "#DC8A78",
-            "selectionBackground": "#ACB0BE",
-            "background": "#EFF1F5",
-            "foreground": "#4C4F69",
-            "black": "#5C5F77",
-            "red": "#D20F39",
-            "green": "#40A02B",
-            "yellow": "#DF8E1D",
-            "blue": "#1E66F5",
-            "purple": "#EA76CB",
-            "cyan": "#179299",
-            "white": "#ACB0BE",
-            "brightBlack": "#ACB0BE",
-            "brightRed": "#D20F39",
-            "brightGreen": "#40A02B",
-            "brightYellow": "#DF8E1D",
-            "brightBlue": "#1E66F5",
-            "brightPurple": "#EA76CB",
-            "brightCyan": "#179299",
-            "brightWhite": "#BCC0CC"
-        },
         {
             "background": "#0C0C0C",
             "black": "#0C0C0C",
@@ -209,6 +186,29 @@
             "selectionBackground": "#FFFFFF",
             "white": "#CCCCCC",
             "yellow": "#C19C00"
+        },
+        {
+            "background": "#EFF1F5",
+            "black": "#5C5F77",
+            "blue": "#1E66F5",
+            "brightBlack": "#ACB0BE",
+            "brightBlue": "#1E66F5",
+            "brightCyan": "#179299",
+            "brightGreen": "#40A02B",
+            "brightPurple": "#EA76CB",
+            "brightRed": "#D20F39",
+            "brightWhite": "#BCC0CC",
+            "brightYellow": "#DF8E1D",
+            "cursorColor": "#DC8A78",
+            "cyan": "#179299",
+            "foreground": "#4C4F69",
+            "green": "#40A02B",
+            "name": "Catppuccin Latte",
+            "purple": "#EA76CB",
+            "red": "#D20F39",
+            "selectionBackground": "#ACB0BE",
+            "white": "#ACB0BE",
+            "yellow": "#DF8E1D"
         },
         {
             "background": "#282C34",
