@@ -429,76 +429,6 @@ LargeFile = {}
 -- Functions</>
 ------------
 
----Adds a plugin Lazy nvim config
----@param opts Plugin Plugin config
-local function addPlugin(opts)
-    table.insert(plugins, opts)
-end
-
----Create background color adaptive to editor background
----@param lighten integer Lighter percent
----@param darken integer Darker percent
----@return string # Color in Hex format
-local function adaptiveBG(lighten, darken)
-    local bg
-    if (vim.o.background == 'dark') then
-        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).bg or 0
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, lighten)
-    else
-        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).bg or 16777215
-        bg = string.format('%X', bg)
-        bg = LightenDarkenColor(bg, darken)
-    end
-    return bg
-end
-
----Count number of windows visible
----@param ignore boolean Enable ignoring of filetypes
----@return integer # Number of windows
-function CountWindows(ignore) -- PERF: run only when needed
-    local tabpage = vim.api.nvim_get_current_tabpage()
-    local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
-    local named_window = 0
-    local visited_window = {}
-    local isValidBuf = function(bufnr, buf_name, win_config)
-        -- ignore empty buffers
-        if buf_name == "" then
-            return false
-        end
-
-        if win_config.relative ~= nil and win_config.relative ~= "" then
-            return false
-        end
-
-        if not ignore then return true end
-
-        local ignore_filetype = { 'NvimTree' }
-        local filetype = vim.api.nvim_get_option_value( 'filetype', { buf = bufnr })
-        for _,v in pairs(ignore_filetype) do
-            if v == filetype then
-                return false
-            end
-        end
-
-        return true
-    end
-
-    for _, win in ipairs(win_list) do
-        local bufnr = vim.api.nvim_win_get_buf(win)
-        local buf_name = vim.api.nvim_buf_get_name(bufnr)
-        local win_config = vim.api.nvim_win_get_config(win)
-        if isValidBuf(bufnr, buf_name, win_config) then
-            if not visited_window[buf_name] then
-                visited_window[buf_name] = true
-                named_window = named_window + 1
-            end
-        end
-    end
-
-    return named_window
-end
-
 ---Generates color palette for dark and light mode
 ---@return { bg: string, fg: string }[] # List of _nvim_set_hl()_ supported color config
 function ColorPalette()
@@ -551,14 +481,89 @@ function ColorPalette()
     }
 end
 
----Print config of all windows
-function DebugWindows()
+---Count number of windows visible
+---@param ignore boolean Enable ignoring of filetypes
+---@return integer # Number of windows
+function CountWindows(ignore) -- PERF: run only when needed
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
-    for _, win in ipairs(win_list) do
-        local win_config = vim.api.nvim_win_get_config(win)
-        print(vim.inspect(win_config))
+    local named_window = 0
+    local visited_window = {}
+    local isValidBuf = function(bufnr, buf_name, win_config)
+        -- ignore empty buffers
+        if buf_name == "" then
+            return false
+        end
+
+        if win_config.relative ~= nil and win_config.relative ~= "" then
+            return false
+        end
+
+        if not ignore then return true end
+
+        local ignore_filetype = { 'NvimTree' }
+        local filetype = vim.api.nvim_get_option_value( 'filetype', { buf = bufnr })
+        for _,v in pairs(ignore_filetype) do
+            if v == filetype then
+                return false
+            end
+        end
+
+        return true
     end
+
+    for _, win in ipairs(win_list) do
+        local bufnr = vim.api.nvim_win_get_buf(win)
+        local buf_name = vim.api.nvim_buf_get_name(bufnr)
+        local win_config = vim.api.nvim_win_get_config(win)
+        if isValidBuf(bufnr, buf_name, win_config) then
+            if not visited_window[buf_name] then
+                visited_window[buf_name] = true
+                named_window = named_window + 1
+            end
+        end
+    end
+
+    return named_window
+end
+
+---Light or dark color
+---@param col string Color to shade
+---@param amt integer Amount of shade
+---@return string # Color in hex format
+function LightenDarkenColor(col, amt)
+    local num = tonumber(col, 16)
+    local r = bit.rshift(num, 16) + amt
+    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
+    local g = bit.band(num, 0x0000FF) + amt
+    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+    local hex_code = string.format("#%-6X", newColor)
+    local res = hex_code:gsub(' ', '0')
+    return res
+end
+
+---Adds a plugin Lazy nvim config
+---@param opts Plugin Plugin config
+local function addPlugin(opts)
+    table.insert(plugins, opts)
+end
+
+---Create background color adaptive to editor background
+---@param lighten integer Lighter percent
+---@param darken integer Darker percent
+---@return string # Color in Hex format
+local function adaptiveBG(lighten, darken)
+    local bg
+    if (vim.o.background == 'dark') then
+        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).bg or 0
+        bg = string.format('%X', bg)
+        bg = LightenDarkenColor(bg, lighten)
+    else
+        bg = vim.api.nvim_get_hl(0, { name = 'Normal', create = false }).bg or 16777215
+        bg = string.format('%X', bg)
+        bg = LightenDarkenColor(bg, darken)
+    end
+    return bg
 end
 
 ---Get list filetypes/extentions for Treesitter languages installed
@@ -593,19 +598,13 @@ local function isLspAttached()
     return #vim.lsp.get_clients({bufnr = 0}) ~= 0
 end
 
----Light or dark color
----@param col string Color to shade
----@param amt integer Amount of shade
----@return string # Color in hex format
-function LightenDarkenColor(col, amt)
-    local num = tonumber(col, 16)
-    local r = bit.rshift(num, 16) + amt
-    local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-    local g = bit.band(num, 0x0000FF) + amt
-    local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-    local hex_code = string.format("#%-6X", newColor)
-    local res = hex_code:gsub(' ', '0')
-    return res
+--- Check if buffer is a large file
+---@param bufId? integer buf id
+---@return boolean true if buffer is large file
+local function isLargeFile(bufId)
+    ---@diagnostic disable-next-line: param-type-mismatch
+    bufId = bufId or vim.fn.bufnr('%')
+    return LargeFile[bufId] ~= nil
 end
 
 ---Safe alternative to `nvim_open_win()`
@@ -824,12 +823,26 @@ vim.api.nvim_create_autocmd(
     }
 )
 
-vim.api.nvim_create_autocmd( -- PERF: slows down in large files
+vim.api.nvim_create_autocmd(
+    'BufWinEnter', {
+        pattern = '*',
+        desc = 'Detect large files and disable slow plugins',
+        callback = function(arg)
+            local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
+            if fsize > 153600 then
+                LargeFile[arg.buf] = true
+                vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
+            end
+        end
+    }
+)
+
+vim.api.nvim_create_autocmd(
     'BufWinEnter', {
         pattern = '*',
         desc = 'Overlength line marker',
         callback = function()
-            if vim.bo.textwidth > 0 then
+            if not isLargeFile() and vim.bo.textwidth > 0 then
                 vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
                 vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
             end
@@ -2238,21 +2251,6 @@ FileTypeActions = {
 }
 
 vim.api.nvim_create_autocmd(
-    'BufWinEnter', {
-        pattern = '*',
-        desc = 'Detect large files and disable slow plugins',
-        callback = function(arg)
-            local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
-            -- if fsize > 153600 then
-            if fsize > 200000 then
-                LargeFile[vim.fn.bufnr('%')] = true
-                vim.b[arg.buf].minihipatterns_disable = true
-            end
-        end
-    }
-)
-
-vim.api.nvim_create_autocmd(
     'FileType', {
         pattern = '*',
         desc = 'Run custom actions per filetype',
@@ -3552,10 +3550,6 @@ addPlugin {
                 },
                 lualine_x = {
                     {
-                        'filesize',
-                        color = { fg = '#AD2831' }
-                    },
-                    {
                         'searchcount',
                         color = { fg = '#23CE6B', gui = 'bold' },
                         fmt = function(str)
@@ -3577,7 +3571,7 @@ addPlugin {
                         on_click = function()
                             vim.cmd('TroubleToggle')
                         end,
-                        padding = { left = 1, right = 1 },
+                        padding = { left = 0, right = 1 },
                         sources = { 'nvim_diagnostic' },
                         symbols = {
                             error = icons.error,
@@ -3601,12 +3595,15 @@ addPlugin {
                         icon = { '', color = { fg = '#3066BE' }},
                         padding = { left = 0, right = 1 }
                     },
-                    -- {
-                    --     function() return vim.g.ColoRand end,
-                    --     color = { fg = GetFgOrFallback('Number', '#F2F230') },
-                    --     icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = 'Function', create = false, link = false }).fg)}},
-                    --     padding = { left = 1, right = 1 }
-                    -- },
+                    {
+                        'filesize',
+                        color = { fg = '#B90E0A', gui = 'bold' },
+                        cond = isLargeFile,
+                        fmt = function(str)
+                            return '[' .. str .. ']'
+                        end,
+                        padding = { left = 0, right = 1 }
+                    },
                     {
                         'encoding',
                         color = { fg = GetFgOrFallback('String', '#C2F261'), gui ='italic' },
@@ -3638,13 +3635,6 @@ addPlugin {
                         on_click = function()
                             vim.cmd('LspInfo')
                         end,
-                        padding = { left = 0, right = 1 },
-                        separator = ''
-                    },
-                    {
-                        function() return '󰩋' end,
-                        cond = function() return LargeFile[vim.fn.bufnr('%')] ~= nil end,
-                        color = { fg = '#AD2831' },
                         padding = { left = 0, right = 1 },
                         separator = ''
                     },
@@ -4714,7 +4704,8 @@ addPlugin {
         }
     }
 }
--- TODO: integrate github copilot
+
+-- FEAT: Use tabs instead of spaces
 
 require('lazy').setup(plugins, lazy_config)
 ColoRand()
