@@ -181,8 +181,10 @@ function Get-TODO {
             $total = 0
             foreach ($tag in $tag_list) {
                 $count = (rg "${tag}:" -cwI | Measure-Object -Sum).Sum
-                $total += $count
-                $tag_map[$tag] = $count
+                if ($count -gt 0) {
+                    $total += $count
+                    $tag_map[$tag] = $count
+                }
             }
             Format-Table -AutoSize -HideTableHeaders -InputObject $tag_map
             Write-Host "TOTAL    $total" -ForegroundColor Blue
