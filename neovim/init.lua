@@ -484,7 +484,7 @@ end
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
 ---@return integer # Number of windows
-function CountWindows(ignore) -- PERF: run only when needed
+function CountWindows(ignore) -- PERF: use autocmd and datastructure to not run every time.
     local tabpage = vim.api.nvim_get_current_tabpage()
     local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
     local named_window = 0
@@ -600,7 +600,7 @@ end
 
 --- Check if buffer is a large file
 ---@param bufId? integer buf id
----@return boolean true if buffer is large file
+---@return boolean # true if buffer is large file
 local function isLargeFile(bufId)
     ---@diagnostic disable-next-line: param-type-mismatch
     bufId = bufId or vim.fn.bufnr('%')
@@ -832,6 +832,7 @@ vim.api.nvim_create_autocmd(
             if fsize > 153600 then
                 LargeFile[arg.buf] = true
                 vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
+                require('illuminate').pause_buf()
             end
         end
     }
@@ -1217,7 +1218,7 @@ addPlugin {
 -- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
 
 addPlugin {
-    'RRethy/vim-illuminate', -- PERF: slow on large files, disable on large files
+    'RRethy/vim-illuminate',
     config = function()
         require('illuminate').configure({
             delay = 400,
