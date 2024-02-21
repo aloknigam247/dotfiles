@@ -413,7 +413,7 @@ local todo_colors = {
 
 local todo_config = {
     DOCS   = { icon = '', color = 'docs', alt = { 'DOCME' } },
-    FEAT   = { icon = '󱩑', color = 'feat' }, -- BUG: highlight not working with mini-pattens
+    FEAT   = { icon = '󱩑', color = 'feat' },
     FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
     HACK   = { icon = '󰑶', color = 'hint' },
     NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
@@ -684,7 +684,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
         Preview_win = vim.api.nvim_open_win(bufnr, enter, {
             border = 'rounded',
             col = col_offset,
-            footer = ' [C-s] split [C-v] vsplit [C-t] tab open ',
+            footer = ' [C-s] split [M-v] vsplit [C-t] tab open ',
             footer_pos = 'right',
             height = vim.o.lines - 8,
             relative = relativity,
@@ -725,7 +725,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
                 vim.api.nvim_del_autocmd(arg.id)
                 vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
                 vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
-                vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-v>')
+                vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<M-v>')
             end
         }
     )
@@ -744,7 +744,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
     })
 
     -- Reopen preview in vsplit
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-v>', '', { -- BUG: conflicts with visual block mode
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-v>', '', {
         callback = function()
             local file_path = vim.fn.expand('%:p')
             vim.cmd.quit()
@@ -1230,10 +1230,11 @@ addPlugin {
 
 addPlugin {
     'echasnovski/mini.hipatterns',
-    event = 'VeryLazy',
-    opts = {
+    config = function()
+        require('mini.hipatterns').setup({
         highlighters = (function()
             local config = {}
+            vim.cmd.colo()
 
             ---Get TODO highlights
             ---@param set string Matched text
@@ -1242,31 +1243,43 @@ addPlugin {
                 local color_set = todo_colors[set] or todo_colors.default
 
                 for _, hl in pairs(color_set) do
+                    -- create new highlight if its a color
                     if hl:sub(1, 1) == '#' then
                         vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl, force = true })
                         return 'TodoHl' .. set
                     end
-                    if not vim.tbl_isempty(vim.api.nvim_get_hl(0, { name = hl })) then
+
+                    local hl_config = vim.api.nvim_get_hl(0, { name = hl, link = false })
+                    if not vim.tbl_isempty(hl_config) then
+                        if hl_config.undercurl == true then
+                            vim.api.nvim_set_hl(0, 'TodoHl' .. set, { fg = hl_config.sp, force = true })
+                            return 'TodoHl' .. set
+                        end
                         return hl
                     end
                 end
+
                 return nil
             end
+
+            -- iterate for each config in todo_config
             for i,v in pairs(todo_config) do
                 local keys = v.alt or {}
-                table.insert(keys, i)
+                table.insert(keys, i) -- add alt keys as well
+
+                local hl_group = getTodo(v.color)
                 for _,l in pairs(keys) do
                     local key = l:lower()
-                    local cfg = {
-                        group = getTodo(v.color),
-                        pattern = '()' .. l .. ':()',
-                    }
+                    local cfg = { group = hl_group, pattern = '()' .. l .. ':()' }
                     config[key] = cfg
                 end
             end
+
             return config
         end)()
-    }
+    })
+    end,
+    event = 'CursorHold'
 }
 
 -- addPlugin { 'folke/flash.nvim' }
@@ -1505,7 +1518,7 @@ dark  { 'darcula-solid',        '_'          }
 dark  { 'deku',                 '_'          }
 dark  { 'duskfox',              'nightfox'   }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
-dark  { 'edge',                 '_' } -- FIX: BUG and FIX highlight
+dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 dark  { 'hybrid',                 '_'          }
@@ -1523,7 +1536,7 @@ dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
 dark  { 'sherbet',              '_' }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end } -- FIX: BUG and FIX highlight
+dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
@@ -1540,20 +1553,21 @@ function ColoRand(scheme_index)
     local event = selection[2]
     local precmd = selection.pre
     local postcmd = selection.post
+
     vim.o.background = bg
     vim.g.neovide_transparency = selection.trans and 0.8 or 1
-    -- local start_time = os.clock()
     vim.api.nvim_exec_autocmds('User', { pattern = event == '_' and scheme or event })
+
     if (precmd) then
         precmd()
     end
+
     vim.cmd.colorscheme(scheme)
     vim.cmd('highlight clear CursorLine')
+
     if (postcmd) then
         postcmd()
     end
-
-    -- local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
 
     -- Fix Todo highlight
     local todo_hl = vim.api.nvim_get_hl(0, { name = 'Todo', create = false })
@@ -1562,8 +1576,6 @@ function ColoRand(scheme_index)
         todo_hl.bg = nil
         vim.api.nvim_set_hl(0, 'Todo', todo_hl)
     end
-
-    -- vim.g.ColoRand = '[' .. scheme_index .. ']' .. scheme .. elapsed
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2231,7 +2243,8 @@ vim.api.nvim_create_autocmd(
         desc = 'Detect large files and disable slow plugins',
         callback = function(arg)
             local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
-            if fsize > 153600 then
+            -- if fsize > 153600 then
+            if fsize > 200000 then
                 LargeFile[vim.fn.bufnr('%')] = true
                 vim.b[arg.buf].minihipatterns_disable = true
             end
@@ -2470,7 +2483,7 @@ addPlugin {
 addPlugin {
     'lewis6991/gitsigns.nvim',
     cmd = 'Gitsigns',
-    dependencies = { 'luukvbaal/statuscol.nvim' }, -- FEAT: use DiagnosticChanged
+    dependencies = { 'luukvbaal/statuscol.nvim' },
     event = { 'TextChangedI' },
     keys = { '[c', ']c' },
     opts = {
@@ -3385,7 +3398,7 @@ addPlugin {
 --- Default method to use until statuscol.nvim loads which then overrides it
 ---@return string
 function StatusCol()
-    return '%=%{v:lnum} '
+    return '%=%s%{v:lnum}%C '
 end
 vim.o.statuscolumn = "%!v:lua.StatusCol()"
 
@@ -3538,6 +3551,10 @@ addPlugin {
                     },
                 },
                 lualine_x = {
+                    {
+                        'filesize',
+                        color = { fg = '#AD2831' }
+                    },
                     {
                         'searchcount',
                         color = { fg = '#23CE6B', gui = 'bold' },
