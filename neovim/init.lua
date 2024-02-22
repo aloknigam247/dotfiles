@@ -1248,7 +1248,6 @@ addPlugin {
         require('mini.hipatterns').setup({
         highlighters = (function()
             local config = {}
-            vim.cmd.colo()
 
             ---Get TODO highlights
             ---@param set string Matched text
@@ -3513,7 +3512,7 @@ addPlugin {
                         file_status = true,
                         newfile_status = true,
                         on_click = function()
-                            vim.cmd('NvimTreeToggle')
+                            vim.cmd('NvimTreeOpen')
                         end,
                         path = 0,
                         padding = { left = 1, right = 0 },
@@ -3973,98 +3972,100 @@ addPlugin {
     }
 }
 
--- addPlugin {
---     'nvim-neotest/neotest', -- FIX: for python
---     config = function()
---         require('neotest').setup({
---             adapters = {
---                 require('neotest-python')
---             }
---         })
---     end,
---     dependencies = {
---         'nvim-lua/plenary.nvim',
---         'nvim-neotest/neotest-python'
---     },
---     lazy = false
--- }
+addPlugin {
+    'nvim-neotest/neotest', -- FEAT: fix settings and mappings
+    config = function()
+        require('neotest').setup({
+            adapters = {
+                require('neotest-python')({
+                    python = vim.fn.exepath("python")
+                })
+            }
+        })
+    end,
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'nvim-neotest/neotest-python'
+    },
+    lazy = true
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
--- https://github.com/AckslD/nvim-trevJ.lua
--- https://github.com/AndrewRadev/splitjoin.vim
--- https://github.com/CKolkey/ts-node-action
--- https://github.com/echasnovski/mini.splitjoin
-'Wansmer/treesj',
-cmd = 'TSJToggle',
-opts = {
-    max_join_length = 10000
-}
-}
-
-addPlugin {
-'nvim-treesitter/nvim-treesitter',
-config = function()
-    require('nvim-treesitter.configs').setup({
-        auto_install = false,
-        highlight = {
-            additional_vim_regex_highlighting = false,
-            disable = function(_, buf)
-                local max_filesize = 1000 * 1024 -- 1000 KB
-                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                if ok and stats and stats.size > max_filesize then
-                    return true
-                end
-            end,
-            enable = true
-        }
-    })
-end,
-module = false
+    -- https://github.com/AckslD/nvim-trevJ.lua
+    -- https://github.com/AndrewRadev/splitjoin.vim
+    -- https://github.com/CKolkey/ts-node-action
+    -- https://github.com/echasnovski/mini.splitjoin
+    'Wansmer/treesj',
+    cmd = 'TSJToggle',
+    opts = {
+        max_join_length = 10000
+    }
 }
 
 addPlugin {
-'HiPhish/rainbow-delimiters.nvim',
-config = function()
-    require('rainbow-delimiters').enable()
-end,
-event = 'User TSLoaded'
-}
-
-addPlugin {
--- https://github.com/David-Kunz/markid
-'m-demare/hlargs.nvim',
-config = function()
-    require('hlargs').setup({
-        colorpalette = (function()
-            local res = {}
-            for _,v in ipairs(ColorPalette()) do
-                table.insert(res, {fg = v.fg})
-            end
-            return res
-        end)(),
-        excluded_argnames = {
-            declarations = {
-                python = { 'self', 'cls' },
-                lua = { 'self' }
-            },
-            usages = {
-                python = { 'self', 'cls' },
-                lua = { 'self' }
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+        require('nvim-treesitter.configs').setup({
+            auto_install = false,
+            highlight = {
+                additional_vim_regex_highlighting = false,
+                disable = function(_, buf)
+                    local max_filesize = 1000 * 1024 -- 1000 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        return true
+                    end
+                end,
+                enable = true
             }
-        },
-        extras = {
-            named_parameters = true,
-        },
-        hl_priority = hl_priority.hlargs,
-        paint_catch_blocks = {
-            declarations = true,
-            usages = true
-        },
-        use_colorpalette = true,
-    })
-end,
-event = 'User TSLoaded'
+        })
+    end,
+    module = false
+}
+
+addPlugin {
+    'HiPhish/rainbow-delimiters.nvim',
+    config = function()
+        require('rainbow-delimiters').enable()
+    end,
+    event = 'User TSLoaded'
+}
+
+addPlugin {
+    -- https://github.com/David-Kunz/markid
+    'm-demare/hlargs.nvim',
+    config = function()
+        require('hlargs').setup({
+            colorpalette = (function()
+                local res = {}
+                for _,v in ipairs(ColorPalette()) do
+                    table.insert(res, {fg = v.fg})
+                end
+                return res
+            end)(),
+            excluded_argnames = {
+                declarations = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                },
+                usages = {
+                    python = { 'self', 'cls' },
+                    lua = { 'self' }
+                }
+            },
+            extras = {
+                named_parameters = true,
+            },
+            hl_priority = hl_priority.hlargs,
+            paint_catch_blocks = {
+                declarations = true,
+                usages = true
+            },
+            use_colorpalette = true,
+        })
+    end,
+    event = 'User TSLoaded'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
