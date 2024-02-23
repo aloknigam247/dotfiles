@@ -942,7 +942,7 @@ vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a 
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
 vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'move a larger word backword' })
 vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'move a larger word forward' })
-vim.keymap.set('n', '<BS>',        'x',                        { desc = 'delete a letter backword' })
+vim.keymap.set('n', '<BS>',        'X',                        { desc = 'delete a letter backword' })
 vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'move a word backword' })
 vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'close window' })
 vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'move a word forward' })
@@ -4707,7 +4707,7 @@ addPlugin {
     }
 }
 
--- FEAT: Use tabs instead of spaces
+-- FEAT: Use tabs instead of spaces, read 13 in :options
 
 require('lazy').setup(plugins, lazy_config)
 ColoRand()

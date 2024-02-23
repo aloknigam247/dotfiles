@@ -27,6 +27,8 @@ set path+=**              " Look for all files in sub dirs
 " {{{
 set breakindent                       " Every wrapped line will continue visually indented
 set completeopt=menu,menuone,noselect " For nvim-cmp
+set conceallevel=0                    " Set conceal level
+set concealcursor=nc                  " Set conceal modes
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
 set formatoptions=/1cjlnor            " Set auto formating options 'fo-table'
@@ -35,14 +37,16 @@ set linebreak                         " Break wrapped line at 'breakat'
 set nofixendofline                    " Do not change end of line
 set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
-set scrolloff=3                       " Set scrolloff to 3
+set shiftround                        " Adjust shifting to shiftwidth
 set shiftwidth=4                      " When shifting, indent using spaces
+set smartindent                       " Enable smart indent
 " set spell                             " Enable spell check
 set splitkeep=screen                  " Keep screen orientation same while splitting
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
-set wrap                              " Enable wrap
 set updatetime=500                    " CursorHold time
+set virtualedit=onemore               " Allow cursor to move one more after line ends
+set wrap                              " Enable wrap
 set wrapmargin=0                      " Disable wrap margin
 syntax off
 " }}}
@@ -50,7 +54,7 @@ syntax off
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
-let g:vimsyn_embed = 'lpr'   " embededded script highlight
+let g:vimsyn_embed = 'lpr'   " Embededded script highlight
 " set background=light         " Select appropriate colors for dark or light
 set cinoptions+=l1,N-s,E-s,(0,w1
 set cmdheight=0              " Hide command line
@@ -63,15 +67,19 @@ set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\
 " set foldmethod=marker        " Set fold method to marker
 set laststatus=3             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
-set lcs=lead:·,trail:•,multispace:·,tab:␣␣,nbsp:⦸,extends:»,precedes:«
+set lcs=lead:·,trail:•,multispace:·,tab:│\ ,nbsp:⦸,extends:»,precedes:«
 set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set mousemoveevent           " Enable mouse movements
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
 set number                   " Enable line number
+set numberwidth=1            " Set minimum width of number line
 set pumblend=10              " pseudo-transparency effect for popup-menu
+set scrolloff=3              " Set vertical scroll offset
 set shortmess=FIWmno         " Short messages
+set sidescrolloff=3          " Set horizontal scroll offset
 set signcolumn=auto:9        " Set max size of signcolumn
+set smoothscroll             " Smooth scrolling when wrapped
 set splitbelow               " Place new window below on :split
 set splitright               " Place new window right on :vsplit
 set termguicolors            " Enable true colors support
