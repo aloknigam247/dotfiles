@@ -1645,7 +1645,7 @@ addPlugin {
 -- }
 
 addPlugin {
-    'hrsh7th/nvim-cmp',
+    'hrsh7th/nvim-cmp', -- FIX: windows path issues
     config = function()
         local cmp = require('cmp')
         cmp.setup({
@@ -3403,6 +3403,7 @@ vim.o.statuscolumn = "%!v:lua.StatusCol()"
 addPlugin {
     'luukvbaal/statuscol.nvim',
     config = function()
+        -- FIX: NvimTree signs support
         local builtin = require('statuscol.builtin')
         require('statuscol').setup({
             setopt = true,
