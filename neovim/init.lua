@@ -937,6 +937,8 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
+-- FEAT: new mapping for [f ]f to jump functions
+-- FEAT: new mapping for [c ]c to jump classes
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a word backword' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
@@ -1079,6 +1081,7 @@ addPlugin {
     -- https://github.com/altermo/ultimate-autopair.nvim
     -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
     -- https://github.com/m4xshen/autoclose.nvim
+    -- BUG: fix python indentation on enter
     'windwp/nvim-autopairs',
     config = function()
         local pair = require('nvim-autopairs')
@@ -1215,7 +1218,7 @@ addPlugin {
     }
 }
 
--- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' }
+-- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' } -- FEAT: work on it
 
 addPlugin {
     'RRethy/vim-illuminate',
