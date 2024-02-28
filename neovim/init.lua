@@ -4712,6 +4712,7 @@ addPlugin {
 }
 
 -- FEAT: Use tabs instead of spaces, read 13 in :options
+-- FEAT: try spell check
 
 require('lazy').setup(plugins, lazy_config)
 ColoRand()
