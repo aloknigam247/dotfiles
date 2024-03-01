@@ -25,6 +25,7 @@ set path+=**              " Look for all files in sub dirs
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Editor Settings  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+set autoindent                        " auto indent new line based on current line
 set breakindent                       " Every wrapped line will continue visually indented
 set completeopt=menu,menuone,noselect " For nvim-cmp
 set conceallevel=0                    " Set conceal level
