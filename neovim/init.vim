@@ -28,20 +28,20 @@ set path+=**              " Look for all files in sub dirs
 set autoindent                        " auto indent new line based on current line
 set breakindent                       " Every wrapped line will continue visually indented
 set completeopt=menu,menuone,noselect " For nvim-cmp
-set conceallevel=0                    " Set conceal level
 set concealcursor=nc                  " Set conceal modes
+set conceallevel=0                    " Set conceal level
 set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                         " Convert tabs to spaces
 set formatoptions=/1cjlnor            " Set auto formating options 'fo-table'
 set history=1000                      " Increase undo limit
 set linebreak                         " Break wrapped line at 'breakat'
 set nofixendofline                    " Do not change end of line
+set nospell                           " Disable spell check
 set noswapfile                        " Disable swap files
 set nowritebackup                     " Disable intermediate backup file
 set shiftround                        " Adjust shifting to shiftwidth
 set shiftwidth=4                      " When shifting, indent using spaces
 set smartindent                       " Enable smart indent
-" set spell                             " Enable spell check
 set splitkeep=screen                  " Keep screen orientation same while splitting
 set tabstop=4                         " Indent using spaces
 set textwidth=100                     " Set text width to 100
