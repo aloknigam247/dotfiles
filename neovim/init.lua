@@ -2232,6 +2232,7 @@ end
 FileTypeActions = {
 	['markdown'] = function(_)
 		vim.g.table_mode_corner = '|'
+		vim.cmd.setlocal('spell')
 		MarkdownHeadingsHighlight()
 	end,
 	['NvimTree'] = function(buf)
@@ -2271,7 +2272,6 @@ vim.api.nvim_create_autocmd(
 			-- Load syntax for non treesitter filetypes
 			if vim.tbl_contains(getTSInstlled(false), ftype) == false then
 				vim.cmd('syntax on')
-				vim.api.nvim_del_autocmd(arg.id)
 			end
 		end
 	}
@@ -4797,9 +4797,7 @@ addPlugin {
 	}
 }
 
--- FEAT: try spell check
-
 require('lazy').setup(plugins, lazy_config)
 ColoRand()
 -- <~>
--- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2
+-- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
