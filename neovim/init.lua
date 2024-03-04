@@ -4174,7 +4174,7 @@ addPlugin {
 					filter = { pattern = '^:%s*!', icon = '$', lang = 'powershell' , title = ''},
 					help = { pattern = '^:%s*he?l?p?%s+', icon = '' , title = ' help '},
 					input = {},
-					lazy = { pattern = '^:%s*Lazy%s+', icon = '', lang = 'vim' , title = ' Lazy '},
+					lazy = { pattern = '^:%s*Lazy%s+', icon = ' ', lang = 'vim' , title = ' Lazy '},
 					lua = { pattern = '^:%s*lua%s+', icon = '', lang = 'lua' , title = ' lua '},
 					lua_print = { pattern = '^:%s*lua=%s+', icon = '󰇼', lang = 'lua' , title = ' lua echo '},
 					search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex', view = 'cmdline' , title = ''},
