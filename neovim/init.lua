@@ -1235,6 +1235,7 @@ addPlugin {
 		vim.keymap.set('n', ']i', require('illuminate').goto_next_reference, { desc = 'Jump to next illuminated text' })
 		vim.keymap.set('n', '[i', require('illuminate').goto_prev_reference, { desc = 'Jump to previous illuminated text' })
 		vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = adaptiveBG(40, -40) })
+		-- TODO: these colors needs a change
 		vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
 		vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
 	end,
