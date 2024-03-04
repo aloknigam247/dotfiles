@@ -1216,7 +1216,11 @@ addPlugin {
 	}
 }
 
--- addPlugin { 'Pocco81/high-str.nvim', cmd = 'HSHighlight' } -- FEAT: work on it
+-- 'azabiong/vim-highlighter'
+addPlugin {
+	'Pocco81/high-str.nvim',
+	cmd = 'HSHighlight'
+}
 
 addPlugin {
 	'RRethy/vim-illuminate',
@@ -1241,8 +1245,6 @@ addPlugin {
 	end,
 	event = { 'CursorHold' }
 }
-
--- addPlugin { 'azabiong/vim-highlighter', keys = { 'f<CR>' } }
 
 addPlugin {
 	'echasnovski/mini.hipatterns',
