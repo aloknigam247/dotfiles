@@ -94,27 +94,38 @@ function Menu {
 }
 
 $script:scoop = $false
-function ensure_scoop {
-    Get-Command scoop 2>&1
-    if ($? -eq $false) {
-        Write-Output "Scoop not insalled"
-        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-        scoop bucket add extras
-    }
-    Write-Output "Scoop insalled"
-    $script:scoop = $true
-}
-
-function scoop_install {
+function installScoop {
     param(
         [switch]$update
     )
-    Write-Output "scoop install"
-    $script:scoop
-    if ($script:scoop -eq $false) {
-        ensure_scoop
+    Get-Command scoop 2>&1
+    if ($? -eq $false) {
+        Write-Output "Scoop not insalled. Installing"
+        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        scoop bucket add extras
+        scoop bucket add versions
+        Write-Output "Scoop insalled"
     }
-    $pkgs = $args[0]
+    if ($update){
+        scoop update
+        Write-Output "Scoop updated"
+    }
+    $script:scoop = $true
+}
+
+function scoopInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+    if ($script:scoop -eq $false) {
+        if ($update) {
+            installScoop
+        } else {
+            installScoop -update
+        }
+    }
+
     if ($pkgs.Length -eq 0) {
         return
     }
@@ -122,33 +133,37 @@ function scoop_install {
     foreach ($pkg in $pkgs) {
         scoop which $pkg
         $status = $?
+
         if ($status -eq $true) {
-            if ($update) {
+            if ($update) { # update package
+                Write-Output "Updating scoop package: $pkg"
                 scoop update $pkg
             } else {
                 Write-Verbose "Package $pkg already installed" -verbose
             }
-        } else {
+        } else { # install package
+            Write-Output "Installing scoop package: $pkg"
             scoop install --no-update-scoop $pkg
         }
     }
 }
 
-function winget_install {
+function wingetInstall {
     param(
+        [string[]]$pkgs,
         [switch]$update
     )
-    $pkgs = $args[0]
     if ($pkgs.Length -eq 0) {
         return
     }
 
     foreach ($pkg in $pkgs) {
         $status = winget list -e --id $pkg
+
         if ($status[2] -eq "No installed package found matching input criteria.") {
-            winget install -e --id $pkg
+            winget install -e --id $pkg # install package
         } else {
-            if ($update) {
+            if ($update) { # update package
                 winget upgrade -e --id $pkg
             } else {
                 Write-Verbose "Package $pkg already installed" -verbose
@@ -157,18 +172,61 @@ function winget_install {
     }
 }
 
-$app_list = @("clangd", "git", "fonts", "lazygit", "neovim", "powershell", "win_pkgs", "windows_terminal")
-Write-Output "Application List: (space to select, enter to install)"
-$app_install = Menu $app_list -Multiselect
+function installConfigs {
+    param(
+        [hashtable]$files
+    )
+    foreach ($key in $files.keys) {
+        $src = "$cwd\$key"
+        $dest = $files[$key]
+        $dir = Split-Path -Parent $dest
+        if (-not (Test-Path $dir)) {
+            mkdir $dir
+        }
+        if (Test-Path $dest) {
+            $target = Get-Item $dest | Select-Object -ExpandProperty Target
+            if ($target -eq $src) {
+                Write-Verbose "$src already linked" -verbose
+            }
+            else {
+                Write-Output "backup $dest --> ${dest}.orig"
+                Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                Write-Output "Linking $src --> $dest"
+                New-Item -ItemType SymbolicLink -Path $dest -Target $src
+            }
+        }
+        else {
+            Write-Output "Linking $src --> $dest"
+            New-Item -ItemType SymbolicLink -Path $dest -Target $src
+        }
+    }
+}
+
+function writeLog {
+    param(
+        [ValidateSet('Info')]
+        [string]$type
+    )
+}
+
+$all_pkgs = @("clangd", "git", "fonts", "lazygit", "neovim", "powershell", "win_pkgs", "windows_terminal")
+
+if ($update) {
+    Write-Output "Updating all installed packages"
+    $pkg_list = $all_pkgs
+} else {
+    Write-Output "Package List: (space to select, enter to install)"
+    $pkg_list = Menu $all_pkgs -Multiselect
+}
 
 $root = Get-Location
-foreach ($app in $app_install) {
-    Write-Output "`nInstalling: $app"
-    Set-Location $app
+foreach ($pkg in $pkg_list) {
+    Write-Output "`nPackage: $app"
+
+    Set-Location $pkg
     $cwd = Get-Location
+
     if (Test-Path setup.ps1) {
-        # reset supported tags
-        # $choco_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
@@ -177,41 +235,18 @@ foreach ($app in $app_install) {
 
         if ($update) {
             Write-Output "Updating Packages"
-            # choco_update $choco_pkgs
-            scoop_install -update $scoop_pkgs
-            winget_install -update $winget_pkgs
+            scoopInstall -update $scoop_pkgs
+            wingetInstall -update $winget_pkgs
         } else {
             Write-Output "Installing Packages"
-            # choco_install $choco_pkgs
-            scoop_install $scoop_pkgs
-            winget_install $winget_pkgs
+            scoopInstall $scoop_pkgs
+            wingetInstall $winget_pkgs
 
             Write-Output "Installing Configs"
-            foreach ($key in $files.keys) {
-                $src = "$cwd\$key"
-                    $dest = $files[$key]
-                    $dir = Split-Path -Parent $dest
-                    if (-not (Test-Path $dir)) {
-                        mkdir $dir
-                    }
-                if (Test-Path $dest) {
-                    $target = Get-Item $dest | Select-Object -ExpandProperty Target
-                        if ($target -eq $src) {
-                            Write-Verbose "$src already linked" -verbose
-                        } else {
-                            Write-Output "backup $dest --> ${dest}.orig"
-                                Move-Item -Force -Path $dest -Destination "${dest}.orig"
-                                Write-Output "Linking $src --> $dest"
-                                New-Item -ItemType SymbolicLink -Path $dest -Target $src
-                        }
-                } else {
-                    Write-Output "Linking $src --> $dest"
-                        New-Item -ItemType SymbolicLink -Path $dest -Target $src
-                }
-            }
+            installConfigs $files
         }
     } else {
-        Write-Output "No setup.ps1 found for $app"
+        Write-Error "No setup.ps1 found for $pkg"
     }
     Set-Location $root
 }
