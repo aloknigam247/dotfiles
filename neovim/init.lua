@@ -2232,13 +2232,16 @@ function MarkdownHeadingsHighlight()
 end
 
 FileTypeActions = {
+	['NvimTree'] = function(_)
+		vim.bo.statuscol = ""
+	end,
+	['neotest-summary'] = function(_)
+		vim.cmd.setlocal('wrap')
+	end,
 	['markdown'] = function(_)
 		vim.g.table_mode_corner = '|'
 		vim.cmd.setlocal('spell')
 		MarkdownHeadingsHighlight()
-	end,
-	['NvimTree'] = function(buf)
-		vim.bo.statuscol = ""
 	end,
 	-- ['python'] = function(bufnr)
 	--     local highlighter = require('vim.treesitter.highlighter')
