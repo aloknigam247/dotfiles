@@ -1,5 +1,17 @@
 #Requires -RunAsAdministrator
 
+# BUG: fix gerardog.gsudo issue in update
+# BUG: fix GitHub.cli issue in update
+# BUG: fix Google.Chrome issue in update
+# BUG: fix Microsoft.PowerShell.Preview issue in update
+# BUG: fix mingw issue in update
+# BUG: fix msys2.msys2 issue in update
+# BUG: fix neovim-nightly issue in update
+# BUG: fix OpenKS.NodeJS issue in update
+# BUG: fix PSFzf issue in update
+# BUG: fix Python.Python.3 issue in update
+# BUG: fix ripgrep issue in update
+
 param(
      [switch]$update
      )
@@ -98,17 +110,17 @@ function installScoop {
     param(
         [switch]$update
     )
-    Get-Command scoop 2>&1
+    Get-Command scoop *> Out-Null
     if ($? -eq $false) {
-        Write-Output "Scoop not insalled. Installing"
+        writeLog INFO "Scoop not insalled. Installing"
         Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
         scoop bucket add extras
         scoop bucket add versions
-        Write-Output "Scoop insalled"
+        writeLog INFO "Scoop insalled"
     }
     if ($update){
         scoop update
-        Write-Output "Scoop updated"
+        writeLog INFO "Scoop updated"
     }
     $script:scoop = $true
 }
@@ -131,18 +143,18 @@ function scoopInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        scoop which $pkg
+        scoop which $pkg 1> Out-Null
         $status = $?
 
         if ($status -eq $true) {
             if ($update) { # update package
-                Write-Output "Updating scoop package: $pkg"
+                writeLog UPDATE "Updating scoop package: $pkg"
                 scoop update $pkg
             } else {
                 Write-Verbose "Package $pkg already installed" -verbose
             }
         } else { # install package
-            Write-Output "Installing scoop package: $pkg"
+            writeLog UPDATE "Installing scoop package: $pkg"
             scoop install --no-update-scoop $pkg
         }
     }
@@ -161,9 +173,11 @@ function wingetInstall {
         $status = winget list -e --id $pkg
 
         if ($status[2] -eq "No installed package found matching input criteria.") {
+            writeLog UPDATE "Installing winget package: $pkg"
             winget install -e --id $pkg # install package
         } else {
             if ($update) { # update package
+                writeLog UPDATE "Updating winget package: $pkg"
                 winget upgrade -e --id $pkg
             } else {
                 Write-Verbose "Package $pkg already installed" -verbose
@@ -204,15 +218,29 @@ function installConfigs {
 
 function writeLog {
     param(
-        [ValidateSet('Info')]
-        [string]$type
+        [ValidateSet('INFO', 'ERROR', 'UPDATE')]
+        [Parameter(Mandatory = $true)]
+        [string]$type,
+        [Parameter(Mandatory = $true)]
+        [string]$message
     )
+
+    $color_map = @{
+        "INFO" = "Blue";
+        "ERROR" = "Red";
+        "UPDATE" = "Yellow"
+    }
+
+    $color = $color_map[$type]
+
+    Write-Host -ForegroundColor White -BackgroundColor $color -NoNewline " $type "
+    Write-Host -ForegroundColor $color " $message"
 }
 
 $all_pkgs = @("clangd", "git", "fonts", "lazygit", "neovim", "powershell", "win_pkgs", "windows_terminal")
 
 if ($update) {
-    Write-Output "Updating all installed packages"
+    writeLog INFO "Updating all installed packages"
     $pkg_list = $all_pkgs
 } else {
     Write-Output "Package List: (space to select, enter to install)"
@@ -221,7 +249,7 @@ if ($update) {
 
 $root = Get-Location
 foreach ($pkg in $pkg_list) {
-    Write-Output "`nPackage: $app"
+    writeLog UPDATE "Package: $pkg"
 
     Set-Location $pkg
     $cwd = Get-Location
@@ -234,19 +262,17 @@ foreach ($pkg in $pkg_list) {
         . .\setup.ps1
 
         if ($update) {
-            Write-Output "Updating Packages"
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
         } else {
-            Write-Output "Installing Packages"
             scoopInstall $scoop_pkgs
             wingetInstall $winget_pkgs
 
-            Write-Output "Installing Configs"
+            writeLog INFO "Installing Configs"
             installConfigs $files
         }
     } else {
-        Write-Error "No setup.ps1 found for $pkg"
+        writeLog ERROR "No setup.ps1 found for $pkg"
     }
     Set-Location $root
 }

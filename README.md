@@ -19,5 +19,4 @@ gh repo clone https://github.com/aloknigam247/dotfiles.git -- --recurse-submodul
 ```
 
 ### TODO
-- [ ] FEAT: Add update mechanism
 - [ ] TODO: Clean github stars
