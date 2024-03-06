@@ -2,7 +2,7 @@ $scoop_pkgs = @(
     "bat",
     "dos2unix"
     "less"
-    "ripgrep"
+    "ripgrep/rg"
 )
 
 $winget_pkgs = @(

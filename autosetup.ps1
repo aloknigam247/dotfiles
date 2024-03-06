@@ -2,8 +2,6 @@
 
 # BUG: fix mingw issue in update
 # BUG: fix msys2.msys2 issue in update
-# BUG: fix neovim-nightly issue in update
-# BUG: fix PSFzf issue in update
 # BUG: fix Python.Python.3 issue in update
 # BUG: fix ripgrep issue in update
 
@@ -138,15 +136,23 @@ function scoopInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        scoop which $pkg 1> Out-Null
-        $installed = $?
+        $shim = $pkg
 
-        if ($installed -eq $true -and $update) { # update package
-            writeLog UPDATE "Updating scoop package: $pkg"
-            scoop update $pkg
+        if ($pkg.Contains('/')) {
+            $splits = $pkg.Split('/')
+            $pkg = $splits[0]
+            $shim = $splits[1]
         }
 
-        if ($installed -eq $false -and -not $update) { # install package
+        scoop which $shim 1> Out-Null
+        $installed = $?
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating scoop package: $pkg   scoop update $pkg"
+            scoop update $pkg
+        } elseif ($installed -eq $false -and -not $update) {
+            # install package
             writeLog UPDATE "Installing scoop package: $pkg"
             scoop install --no-update-scoop $pkg
         }
@@ -166,15 +172,20 @@ function wingetInstall {
         $status = winget list -e --id $pkg
 
         if ($status[2] -eq "No installed package found matching input criteria.") {
-            writeLog UPDATE "Installing winget package: $pkg"
-            winget install -e --id $pkg # install package
+            $installed = $false
         } else {
-            if ($update) { # update package
-                writeLog UPDATE "Updating winget package: $pkg"
-                winget upgrade -e --id $pkg
-            } else {
-                Write-Verbose "Package $pkg already installed" -verbose
-            }
+            $installed = $true
+        }
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating winget package: $pkg"
+            winget upgrade -e --id $pkg
+        }
+        elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing winget package: $pkg"
+            winget install -e --id $pkg
         }
     }
 }

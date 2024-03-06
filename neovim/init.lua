@@ -704,7 +704,6 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
 			desc = 'Resize preview window on vim resize',
 			callback = function()
 				local cfg = vim.api.nvim_win_get_config(Preview_win)
-				print(vim.inspect(cfg.row[false]))
 				vim.api.nvim_win_set_config(Preview_win, {
 					height = vim.o.lines - 8,
 					width = vim.o.columns - 8 - cfg.col[false]
@@ -721,7 +720,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
 			callback = function(arg)
 				Preview_win = nil
 				vim.api.nvim_del_autocmd(au_id)
-				vim.api.nvim_del_autocmd(arg.id)
+				vim.api.nvim_del_autocmd(arg.id) -- FEAT: delete autocmd by return true
 				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
 				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
 				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<M-v>')
@@ -1540,7 +1539,7 @@ light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 dark  { 'hybrid',                 '_'          }
 darkT { 'hybrid',                 '_', cfg = { transparent = true } }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
+dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end } -- FEAT: try lua-block to short code
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial } -- Fix visual
@@ -4382,7 +4381,7 @@ addPlugin {
 }
 
 addPlugin {
-	'TobinPalmer/BetterGx.nvim',
+	'TobinPalmer/BetterGx.nvim', -- TODO: check if we need this with vim.ui.open()
 	keys = {
 		{ 'gx', '<CMD>lua require("better-gx").BetterGx()<CR>' },
 	}
