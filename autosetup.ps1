@@ -139,16 +139,14 @@ function scoopInstall {
 
     foreach ($pkg in $pkgs) {
         scoop which $pkg 1> Out-Null
-        $status = $?
+        $installed = $?
 
-        if ($status -eq $true) {
-            if ($update) { # update package
-                writeLog UPDATE "Updating scoop package: $pkg"
-                scoop update $pkg
-            } else {
-                Write-Verbose "Package $pkg already installed" -verbose
-            }
-        } else { # install package
+        if ($installed -eq $true -and $update) { # update package
+            writeLog UPDATE "Updating scoop package: $pkg"
+            scoop update $pkg
+        }
+
+        if ($installed -eq $false -and -not $update) { # install package
             writeLog UPDATE "Installing scoop package: $pkg"
             scoop install --no-update-scoop $pkg
         }
@@ -244,7 +242,7 @@ if ($update) {
 
 $root = Get-Location
 foreach ($pkg in $pkg_list) {
-    writeLog UPDATE "Package: $pkg"
+    writeLog INFO "Package: $pkg"
 
     Set-Location $pkg
     $cwd = Get-Location
