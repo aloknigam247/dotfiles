@@ -1287,7 +1287,7 @@ addPlugin {
 				local hl_group = getTodo(v.color)
 				for _,l in pairs(keys) do
 					local key = l:lower()
-					local cfg = { group = hl_group, pattern = '()' .. l .. ':()' }
+					local cfg = { group = hl_group, pattern = '%f[%w]' .. l .. ':%W' }
 					config[key] = cfg
 				end
 			end
