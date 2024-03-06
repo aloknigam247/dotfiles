@@ -1,9 +1,7 @@
 #Requires -RunAsAdministrator
 
-# BUG: fix mingw issue in update
 # BUG: fix msys2.msys2 issue in update
 # BUG: fix Python.Python.3 issue in update
-# BUG: fix ripgrep issue in update
 
 param(
      [switch]$update
@@ -34,7 +32,7 @@ function DrawMenu {
 function Toggle-Selection {
     param ($pos, [array]$selection)
         if ($selection -contains $pos) { 
-            $result = $selection | where {$_ -ne $pos}
+            $result = $selection | Where-Object {$_ -ne $pos}
         } else {
             $selection += $pos
                 $result = $selection
@@ -98,7 +96,7 @@ function Menu {
     }
 }
 
-$script:scoop = $false
+$script:scoop_installed = ""
 function installScoop {
     param(
         [switch]$update
@@ -115,7 +113,9 @@ function installScoop {
         scoop update
         writeLog INFO "Scoop updated"
     }
-    $script:scoop = $true
+
+    $installed = scoop list | ForEach-Object { $_.Name} | Out-Null
+    $script:scoop_installed = $installed
 }
 
 function scoopInstall {
@@ -123,7 +123,7 @@ function scoopInstall {
         [string[]]$pkgs,
         [switch]$update
     )
-    if ($script:scoop -eq $false) {
+    if ($script:scoop_installed.Length -eq 0) {
         if ($update) {
             installScoop
         } else {
@@ -136,16 +136,7 @@ function scoopInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $shim = $pkg
-
-        if ($pkg.Contains('/')) {
-            $splits = $pkg.Split('/')
-            $pkg = $splits[0]
-            $shim = $splits[1]
-        }
-
-        scoop which $shim 1> Out-Null
-        $installed = $?
+        $installed = $script:scoop_installed.Contains($pkg)
 
         if ($installed -eq $true -and $update) {
             # update package

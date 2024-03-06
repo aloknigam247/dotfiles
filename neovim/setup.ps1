@@ -1,6 +1,6 @@
 $scoop_pkgs = @(
     "mingw",
-    "neovim-nightly/nvim",
+    "neovim-nightly",
     "pandoc"
 )
 

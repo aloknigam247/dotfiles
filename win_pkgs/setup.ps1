@@ -2,7 +2,7 @@ $scoop_pkgs = @(
     "bat",
     "dos2unix"
     "less"
-    "ripgrep/rg"
+    "ripgrep"
 )
 
 $winget_pkgs = @(
@@ -10,7 +10,7 @@ $winget_pkgs = @(
     "Google.Chrome",
     "Microsoft.PowerToys",
     "Microsoft.VisualStudioCode",
-    "Python.Python.3",
+    "Python.Python.3.12",
     "msys2.msys2"
 )
 
