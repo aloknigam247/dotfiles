@@ -1,13 +1,8 @@
 #Requires -RunAsAdministrator
 
-# BUG: fix gerardog.gsudo issue in update
-# BUG: fix GitHub.cli issue in update
-# BUG: fix Google.Chrome issue in update
-# BUG: fix Microsoft.PowerShell.Preview issue in update
 # BUG: fix mingw issue in update
 # BUG: fix msys2.msys2 issue in update
 # BUG: fix neovim-nightly issue in update
-# BUG: fix OpenKS.NodeJS issue in update
 # BUG: fix PSFzf issue in update
 # BUG: fix Python.Python.3 issue in update
 # BUG: fix ripgrep issue in update
