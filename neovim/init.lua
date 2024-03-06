@@ -1543,7 +1543,7 @@ darkT { 'hybrid',                 '_', cfg = { transparent = true } }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial }
+light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial } -- Fix visual
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
@@ -2233,7 +2233,7 @@ end
 
 FileTypeActions = {
 	['NvimTree'] = function(_)
-		vim.bo.statuscol = ""
+		vim.cmd.setlocal('statuscolumn=')
 	end,
 	['neotest-summary'] = function(_)
 		vim.cmd.setlocal('wrap')
@@ -3420,9 +3420,9 @@ addPlugin {
 			relculright = true,
 			segments = {
 				{ sign = { name = { 'todo' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-				{ sign = { namespace = { '.*diagnostic.*' }, fillcharhl ='LineNr', auto = true }, click = 'v:lua.ScSa' },
-				{ sign = { name = { 'Bookmark' }, fillcharhl ='LineNr', auto = true } },
-				{ sign = { name = { 'Dap' }, fillcharhl ='LineNr', auto = true } },
+				{ sign = { namespace = { '.*diagnostic.*' }, auto = true, colwidth = 1, fillcharhl ='LineNr' }, click = 'v:lua.ScSa' },
+				{ sign = { name = { 'Bookmark' }, auto = true, fillcharhl ='LineNr' } },
+				{ sign = { name = { 'Dap' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
 				{ text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
 				{ text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
