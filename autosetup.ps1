@@ -1,8 +1,5 @@
 #Requires -RunAsAdministrator
 
-# BUG: fix msys2.msys2 issue in update
-# BUG: fix Python.Python.3 issue in update
-
 param(
      [switch]$update
      )
@@ -114,7 +111,7 @@ function installScoop {
         writeLog INFO "Scoop updated"
     }
 
-    $installed = scoop list | ForEach-Object { $_.Name} | Out-Null
+    $installed = scoop list | ForEach-Object { $_.Name}
     $script:scoop_installed = $installed
 }
 
