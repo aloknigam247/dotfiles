@@ -1539,7 +1539,7 @@ light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 dark  { 'hybrid',                 '_'          }
 darkT { 'hybrid',                 '_', cfg = { transparent = true } }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end } -- FEAT: try lua-block to short code
+dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
 light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial } -- Fix visual
