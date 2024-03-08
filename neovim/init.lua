@@ -1727,7 +1727,7 @@ addPlugin {
 					},
 				},
 				{ name = 'path', trigger_characters = { './', '/', '.\\' } },
-				{ name = 'async_path', trigger_characters = { './', '/', '.\\' } },
+				{ name = 'async_path', trigger_characters = { './', '/', '.\\' } }, -- TODO: ?
 				{ name = 'snippy' },
 			},
 			window = {
@@ -4670,8 +4670,8 @@ addPlugin {
 addPlugin {
 	'sickill/vim-pasta',
 	config = function()
-		vim.g.pasta_paste_before_mapping = '[P'
-		vim.g.pasta_paste_after_mapping = '[p'
+		vim.g.pasta_paste_before_mapping = '[p'
+		vim.g.pasta_paste_after_mapping = ']p'
 	end,
 	lazy = false
 }
@@ -4698,7 +4698,7 @@ addPlugin {
 }
 
 addPlugin {
-	'utilyre/sentiment.nvim',
+	'utilyre/sentiment.nvim', -- FIX: Load after treesitter only
 	config = true,
 	event = { 'CursorHold', 'CursorHoldI' }
 }
