@@ -6,6 +6,11 @@ let c_space_errors = 1              " Highlight trailing spaces
 let g:editorconfig = v:false        " disable editorconfig
 let g:loaded_clipboard_provider = 1 " disable clipboard provider loading
 let g:loaded_python3_provider = 1   " disable python 3
+let g:python_indent = {}            " python indentation structure
+let g:python_indent.closed_paren_align_last_line = v:false " put closing ) one less indent
+let g:python_indent.continue = 'shiftwidth() * 2' " width of open parentheses indent on continue
+let g:python_indent.nested_paren = 'shiftwidth()' " indentation for closing parentheses
+let g:python_indent.open_paren = 'shiftwidth()'   " width of open parentheses indent on <enter>
 " let g:markdown_folding = 1         " Enable markdown folding
 " let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
 " let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode
@@ -25,30 +30,31 @@ set path+=**              " Look for all files in sub dirs
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Editor Settings  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-set autoindent                        " auto indent new line based on current line
-set breakindent                       " Every wrapped line will continue visually indented
-set completeopt=menu,menuone,noselect " For nvim-cmp
-set concealcursor=nc                  " Set conceal modes
-set conceallevel=0                    " Set conceal level
-set cpoptions+=Z                      " When using w! while the 'readonly' option is set, don't reset 'readonly'
-set expandtab                         " Convert tabs to spaces
-set formatoptions=/1cjlnor            " Set auto formating options 'fo-table'
-set history=1000                      " Increase undo limit
-set linebreak                         " Break wrapped line at 'breakat'
-set nofixendofline                    " Do not change end of line
-set nospell                           " Disable spell check
-set noswapfile                        " Disable swap files
-set nowritebackup                     " Disable intermediate backup file
-set shiftround                        " Adjust shifting to shiftwidth
-set shiftwidth=4                      " When shifting, indent using spaces
-set smartindent                       " Enable smart indent
-set splitkeep=screen                  " Keep screen orientation same while splitting
-set tabstop=4                         " Indent using spaces
-set textwidth=100                     " Set text width to 100
-set updatetime=500                    " CursorHold time
-set virtualedit=onemore               " Allow cursor to move one more after line ends
-set wrap                              " Enable wrap
-set wrapmargin=0                      " Disable wrap margin
+set autoindent                              " auto indent new line based on current line
+set breakindent                             " Every wrapped line will continue visually indented
+set cinoptions=l1,g0,N-s,E-s,t0,(0,w1,W4,m1 " C style indentation options
+set completeopt=menu,menuone,noselect       " For nvim-cmp
+set concealcursor=nc                        " Set conceal modes
+set conceallevel=0                          " Set conceal level
+set cpoptions+=Z                            " When using w! while the 'readonly' option is set, don't reset 'readonly'
+set expandtab                               " Convert tabs to spaces
+set formatoptions=/1cjlnor                  " Set auto formating options 'fo-table'
+set history=1000                            " Increase undo limit
+set linebreak                               " Break wrapped line at 'breakat'
+set nofixendofline                          " Do not change end of line
+set nospell                                 " Disable spell check
+set noswapfile                              " Disable swap files
+set nowritebackup                           " Disable intermediate backup file
+set shiftround                              " Adjust shifting to shiftwidth
+set shiftwidth=4                            " When shifting, indent using spaces
+set smartindent                             " Enable smart indent
+set splitkeep=screen                        " Keep screen orientation same while splitting
+set tabstop=4                               " Indent using spaces
+set textwidth=100                           " Set text width to 100
+set updatetime=500                          " CursorHold time
+set virtualedit=onemore                     " Allow cursor to move one more after line ends
+set wrap                                    " Enable wrap
+set wrapmargin=0                            " Disable wrap margin
 syntax off
 " }}}
 
@@ -56,8 +62,6 @@ syntax off
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " Embededded script highlight
-" set background=light         " Select appropriate colors for dark or light
-set cinoptions+=l1,N-s,E-s,(0,w1
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window

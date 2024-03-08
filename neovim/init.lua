@@ -1078,7 +1078,6 @@ addPlugin {
 	-- https://github.com/altermo/ultimate-autopair.nvim
 	-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
 	-- https://github.com/m4xshen/autoclose.nvim
-	-- BUG: fix python indentation on enter
 	'windwp/nvim-autopairs',
 	config = function()
 		local pair = require('nvim-autopairs')
@@ -1238,7 +1237,6 @@ addPlugin {
 		vim.keymap.set('n', ']i', require('illuminate').goto_next_reference, { desc = 'Jump to next illuminated text' })
 		vim.keymap.set('n', '[i', require('illuminate').goto_prev_reference, { desc = 'Jump to previous illuminated text' })
 		vim.api.nvim_set_hl(0, 'IlluminatedWordText', { bg = adaptiveBG(40, -40) })
-		-- TODO: these colors needs a change
 		vim.api.nvim_set_hl(0, 'IlluminatedWordRead', { bg = '#8AC926', fg = '#FFFFFF', bold = true })
 		vim.api.nvim_set_hl(0, 'IlluminatedWordWrite', { bg = '#FF595E', fg = '#FFFFFF', italic = true })
 	end,
@@ -1405,6 +1403,7 @@ local function fixRetro()
 	vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#B8BB26', nocombine = true })
 	vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#8EC07C', nocombine = true })
 	vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#FB4934', nocombine = true })
+	vim.api.nvim_set_hl(0, 'Todo', { fg = '#8EC07C', nocombine = true })
 end
 
 ---Fix Visual highlight
@@ -1624,6 +1623,11 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 addPlugin {
+	'aloknigam247/cmp-path',
+	event = 'CmdlineChanged'
+}
+
+addPlugin {
 	'dcampos/cmp-snippy',
 	dependencies = 'nvim-snippy',
 	event = 'InsertEnter'
@@ -1639,29 +1643,34 @@ addPlugin {
 	event = 'LspAttach'
 }
 
-addPlugin {
-	'hrsh7th/cmp-path',
-	event = 'CmdlineChanged'
-}
-
 -- addPlugin {
 --     'paopaol/cmp-doxygen',
 --     event = 'InsertEnter *.cc,*.cpp,*.c,*.h'
 -- }
 
 addPlugin {
-	'hrsh7th/nvim-cmp', -- FIX: windows path issues
+	'hrsh7th/nvim-cmp',
 	config = function()
 		local cmp = require('cmp')
 		cmp.setup({
 			cmp.setup.cmdline(':', {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
-					{ name = 'cmdline' },
-					{ name = 'path' },
+					{
+						name = 'cmdline',
+						option = {
+							ignore_cmds = { 'sp' }
+						}
+					},
+					{
+						name = 'path',
+						option = {
+							trailing_slash = true
+						}
+					}
 				}
 			}),
-			cmp.setup.cmdline('/', {
+			cmp.setup.cmdline({ '/', '?' }, {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = { { name = 'buffer' } }
 			}),
@@ -1677,15 +1686,21 @@ addPlugin {
 				expandable_indicator = true,
 				fields = { 'kind', 'abbr', 'menu' },
 				format = function(entry, vim_item)
+					local source_name = entry.source.name
 					if entry.source.name == 'nvim_lsp' then
-						vim_item.menu = '{' .. entry.source.source.client.name .. '}'
+						source_name = '󰈸 ' .. entry.source.source.client.name
 					elseif entry.source.name == 'cmdline' then
 						vim_item.kind = 'Options'
+						source_name = '󰦩 options'
 					elseif entry.source.name == 'cmdline_history' then
 						vim_item.kind = 'History'
+						source_name = '󰋚 history'
+					elseif entry.source.name == 'path' then
+						source_name = ' path'
 					else
-						vim_item.menu = '(' .. entry.source.name .. ')'
+						source_name = '󱃗 ' .. entry.source.name
 					end
+					vim_item.menu = source_name
 					local kind_symbol = ' ' .. icons[vim_item.kind]
 					vim_item.kind = kind_symbol or vim_item.kind
 
@@ -1726,7 +1741,13 @@ addPlugin {
 						end
 					},
 				},
-				{ name = 'path', trigger_characters = { './', '/', '.\\' } },
+				{
+					name = 'path',
+					trigger_characters = { './', '/', '.\\' },
+					option = {
+						trailing_slash = true
+					}
+				},
 				{ name = 'async_path', trigger_characters = { './', '/', '.\\' } }, -- TODO: ?
 				{ name = 'snippy' },
 			},
@@ -3991,35 +4012,35 @@ addPlugin {
 				})
 			},
 			icons = {
-			  child_indent = '│',
-			  child_prefix = '├',
-			  collapsed = '─',
-			  expanded = '╮',
-			  failed = '',
-			  final_child_indent = ' ',
-			  final_child_prefix = '╰',
-			  non_collapsible = '─',
-			  passed = '',
-			  running = '',
-			  running_animated = { '◜', '◠', '◝', '◞', '◡', '◟' },
-			  skipped = '',
-			  unknown = '',
-			  watching = ''
+				child_indent = '│',
+				child_prefix = '├',
+				collapsed = '─',
+				expanded = '╮',
+				failed = '',
+				final_child_indent = ' ',
+				final_child_prefix = '╰',
+				non_collapsible = '─',
+				passed = '',
+				running = '',
+				running_animated = { '◜', '◠', '◝', '◞', '◡', '◟' },
+				skipped = '',
+				unknown = '',
+				watching = ''
 			},
 			output = {
-			  enabled = true,
-			  open_on_run = true
+				enabled = true,
+				open_on_run = true
 			},
 			quickfix = {
-			  enabled = true,
-			  open = false
+				enabled = true,
+				open = false
 			},
 			summary = {
-			  animated = true,
-			  enabled = true,
-			  expand_errors = true,
-			  follow = true,
-			  mappings = {
+				animated = true,
+				enabled = true,
+				expand_errors = true,
+				follow = true,
+				mappings = {
 				attach = 'a',
 				clear_marked = 'M',
 				clear_target = 'T',
@@ -4038,13 +4059,13 @@ addPlugin {
 				stop = 'u',
 				target = 't',
 				watch = 'w'
-			  },
-			  open = 'botright vsplit | vertical resize 50'
+				},
+				open = 'botright vsplit | vertical resize 50'
 			},
 			status = {
-			  enabled = true,
-			  signs = false,
-			  virtual_text = true
+				enabled = true,
+				signs = false,
+				virtual_text = true
 			},
 		})
 	end,
@@ -4086,6 +4107,7 @@ addPlugin {
 			}
 		})
 	end,
+	dependencies = { 'utilyre/sentiment.nvim' },
 	module = false
 }
 
@@ -4697,12 +4719,6 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	'utilyre/sentiment.nvim', -- FIX: Load after treesitter only
-	config = true,
-	event = { 'CursorHold', 'CursorHoldI' }
-}
-
 -- https://github.com/wellle/targets.vim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
@@ -4729,17 +4745,17 @@ addPlugin {
 					Constant = icons.Constant,
 					Constructor = icons.Constructor,
 					ContinueStatement = '→ ',
-					Copilot = ' ',
+					Copilot = ' ',
 					Declaration = '󰙠 ',
 					Delete = '󰩺 ',
-					DoStatement = '󰑖 ',
+					DoStatement = '󰑐 ',
 					Enum = icons.Enum,
 					EnumMember = icons.EnumMember,
 					Event = icons.Event,
 					Field = icons.Field,
 					File = icons.File,
 					Folder = icons.Folder,
-					ForStatement = '󰑖 ',
+					ForStatement = '󰑐 ',
 					Function = icons.Function,
 					H1Marker = '󰉫 ',
 					H2Marker = '󰉬 ',
@@ -4747,13 +4763,13 @@ addPlugin {
 					H4Marker = '󰉮 ',
 					H5Marker = '󰉯 ',
 					H6Marker = '󰉰 ',
-					Identifier = '󰀫 ',
-					IfStatement = '󰇉 ',
+					Identifier = '󰻾 ',
+					IfStatement = '󰃻 ',
 					Interface = icons.Interface,
 					Keyword = icons.Keyword,
-					List = '󰅪 ',
+					List = ' ',
 					Log = '󰦪 ',
-					Lsp = ' ',
+					Lsp = '󰈸 ',
 					Macro = icons.Macro,
 					MarkdownH1 = '󰉫 ',
 					MarkdownH2 = '󰉬 ',
@@ -4772,8 +4788,8 @@ addPlugin {
 					Pair = '󰅪 ',
 					Property = icons.Property,
 					Reference = icons.Reference,
-					Regex = ' ',
-					Repeat = '󰑖 ',
+					Regex = '󰑑 ',
+					Repeat = '󰕇 ',
 					Scope = '󰅩 ',
 					Snippet = icons.Snippet,
 					Specifier = '󰦪 ',
@@ -4788,7 +4804,7 @@ addPlugin {
 					Unit = icons.Unit,
 					Value = icons.Value,
 					Variable = icons.Variable,
-					WhileStatement = '󰑖 ',
+					WhileStatement = '󰑐 ',
 				},
 			},
 			ui = {
