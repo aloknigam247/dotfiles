@@ -1511,6 +1511,7 @@ addPlugin { 'xero/miasma.nvim',                        event = 'User miasma'    
 addPlugin { 'polirritmico/monokai-nightasty.nvim',     event = 'User monokai-nightasty'                                }
 addPlugin { 'EdenEast/nightfox.nvim',                  event = 'User nightfox'                                         }
 addPlugin { 'AlexvZyl/nordic.nvim',                    event = 'User nordic'                                           }
+addPlugin { 'fcancelinha/northern.nvim',               event = 'User northern'                                         }
 addPlugin { 'rmehri01/onenord.nvim',                   event = 'User onenord'                                          }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',        event = 'User oxocarbon'                                        }
 addPlugin { 'rose-pine/neovim',                        event = 'User rose-pine'                                        }
@@ -1546,6 +1547,7 @@ light { 'material',             '_', pre = function() vim.g.material_style = 'li
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
+dark  { 'northern',             '_' }
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
@@ -3982,7 +3984,6 @@ addPlugin {
 	'nvim-neotest/neotest',
 	cmd = 'Neotest',
 	config = function()
-		-- FEAT: use neotest.state.status_counts() in statusline
 		require('neotest').setup({
 			adapters = {
 				require('neotest-python')({
@@ -4380,13 +4381,6 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	'TobinPalmer/BetterGx.nvim', -- TODO: check if we need this with vim.ui.open()
-	keys = {
-		{ 'gx', '<CMD>lua require("better-gx").BetterGx()<CR>' },
-	}
-}
-
 -- https://github.com/anuvyklack/hydra.nvim
 
 addPlugin {
@@ -4396,6 +4390,16 @@ addPlugin {
 	  split_size_split = 10,
 	  split_type = 'split'
   }
+}
+
+addPlugin {
+	'benlubas/wrapping-paper.nvim',
+	dependencies = {
+		'MunifTanjim/nui.nvim',
+	},
+	keys = {
+		{ 'gww', function() require('wrapping-paper').wrap_line() end, desc = 'Unwrap current line' }
+	}
 }
 
 addPlugin {
