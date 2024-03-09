@@ -77,6 +77,7 @@ set list                     " Show special characters
 set mouse=a                  " Enable mouse support
 set mousemoveevent           " Enable mouse movements
 set noshowmode               " Don't show INSERT/NOMRAL/VISUAL modes
+set nowildmenu               " Disable wild menu
 set number                   " Enable line number
 set numberwidth=1            " Set minimum width of number line
 set pumblend=10              " pseudo-transparency effect for popup-menu
@@ -93,7 +94,6 @@ set visualbell               " Flash the screen instead of beeping on errors
 set whichwrap=b,s,<,>,[,]    " move cursor across lines, Normal: <,>, Insert:[,]
 set wildignore="*.exe"       " Files to ignore in wildmenu
 set wildignorecase           " Ignore case
-set wildmenu                 " Enable wild menu
 set winblend=10              " pseudo-transparency effect for float window
 " }}}
 

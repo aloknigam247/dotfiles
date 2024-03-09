@@ -1650,6 +1650,7 @@ addPlugin {
 
 addPlugin {
 	'hrsh7th/nvim-cmp',
+	-- FIX: completion
 	config = function()
 		local cmp = require('cmp')
 		cmp.setup({
@@ -1665,7 +1666,7 @@ addPlugin {
 					{
 						name = 'cmdline',
 						option = {
-							ignore_cmds = { 'sp' }
+							ignore_cmds = { 'split' }
 						}
 					}
 				}
@@ -1676,7 +1677,7 @@ addPlugin {
 			}),
 			autocomplete = false,
 			completion = {
-				completeopt = 'menu,menuone,noselect',
+				-- completeopt = 'menu,menuone,noselect',
 				keyword_length = 2
 			},
 			experimental = {
@@ -1708,10 +1709,10 @@ addPlugin {
 				end
 			},
 			matching = {
-				disallow_fuzzy_matching = true,
-				disallow_partial_matching = true,
-				disallow_fullfuzzy_matching = true,
-				disallow_prefix_unmatching = true,
+				disallow_fuzzy_matching = false,
+				disallow_partial_matching = false,
+				disallow_fullfuzzy_matching = false,
+				disallow_prefix_unmatching = false,
 			},
 			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
 				['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
