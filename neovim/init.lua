@@ -3443,7 +3443,7 @@ addPlugin {
 			relculright = true,
 			segments = {
 				{ sign = { name = { 'todo' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
-				{ sign = { namespace = { '.*diagnostic.*' }, auto = true, colwidth = 1, fillcharhl ='LineNr' }, click = 'v:lua.ScSa' },
+				{ sign = { namespace = { '.*diagnostic.*' }, auto = true, colwidth = 2, fillcharhl ='LineNr' }, click = 'v:lua.ScSa' },
 				{ sign = { name = { 'Bookmark' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'Dap' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
@@ -4305,7 +4305,7 @@ addPlugin {
 						lang = 'markdown',
 						replace = true,
 						render = 'plain',
-						format = { '{message}' },
+						format = { '{ message }' },
 						win_options = { concealcursor = 'n', conceallevel = 3 },
 					},
 				},
