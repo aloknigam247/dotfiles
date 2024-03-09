@@ -417,7 +417,7 @@ local todo_config = {
 	FIX    = { icon = '󰠭', color = 'error', alt = { 'FIXME', 'BUG', 'FIXIT', 'ISSUE' }},
 	HACK   = { icon = '󰑶', color = 'hint' },
 	NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
-	PERF   = { icon = '', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
+	PERF   = { icon = '󰅒', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
 	RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
 	TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
 	TODO   = { icon = '󰸞', color = 'todo' },
@@ -484,7 +484,7 @@ end
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
 ---@return integer # Number of windows
-function CountWindows(ignore) -- PERF: use autocmd and datastructure to not run every time.
+function CountWindows(ignore)
 	local tabpage = vim.api.nvim_get_current_tabpage()
 	local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
 	local named_window = 0
@@ -919,7 +919,7 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
 	'User', {
-		pattern='VeryLazy',
+		pattern = 'VeryLazy',
 		desc = 'Lazy load clipboard provider',
 		callback = function()
 			vim.cmd([[
@@ -1657,15 +1657,15 @@ addPlugin {
 				mapping = cmp.mapping.preset.cmdline(),
 				sources = {
 					{
-						name = 'cmdline',
-						option = {
-							ignore_cmds = { 'sp' }
-						}
-					},
-					{
 						name = 'path',
 						option = {
 							trailing_slash = true
+						}
+					},
+					{
+						name = 'cmdline',
+						option = {
+							ignore_cmds = { 'sp' }
 						}
 					}
 				}
