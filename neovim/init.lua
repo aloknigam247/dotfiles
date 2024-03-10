@@ -720,10 +720,10 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
 			callback = function(arg)
 				Preview_win = nil
 				vim.api.nvim_del_autocmd(au_id)
-				vim.api.nvim_del_autocmd(arg.id) -- FEAT: delete autocmd by return true
 				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
 				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
 				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<M-v>')
+				return true
 			end
 		}
 	)
@@ -802,8 +802,8 @@ vim.api.nvim_create_autocmd(
 		callback = function(arg)
 			local path = vim.fn.expand('%:p')
 			if vim.fn.isdirectory(path) ~= 0 then
-				vim.api.nvim_del_autocmd(arg.id)
 				require("nvim-tree.api").tree.open({path = path})
+				return true
 			end
 		end
 	}
@@ -892,8 +892,8 @@ vim.api.nvim_create_autocmd(
 			local ftype = vim.o.filetype
 			if vim.tbl_contains(getTSInstlled(false), ftype) then
 				vim.cmd('Lazy load nvim-treesitter')
-				vim.api.nvim_del_autocmd(arg.id)
 				vim.api.nvim_exec_autocmds('User', { pattern = 'TSLoaded' })
+				return true
 			end
 		end
 	}
@@ -912,7 +912,7 @@ vim.api.nvim_create_autocmd(
 		pattern = '*',
 		desc = 'Highlight text on yank',
 		callback = function()
-			vim.highlight.on_yank { higroup="Search", timeout=300 }
+			vim.highlight.on_yank({ higroup="Search", timeout=300 })
 		end
 	}
 )
@@ -926,6 +926,7 @@ vim.api.nvim_create_autocmd(
 				unlet g:loaded_clipboard_provider
 				runtime autoload/provider/clipboard.vim
 			]])
+			return true
 		end
 	}
 )
@@ -1318,6 +1319,7 @@ addPlugin {
 	config = function()
 		require('todo-comments').setup({
 			colors = todo_colors,
+			highlight = { pattern = [[(KEYWORDS):\W]] },
 			keywords = todo_config,
 			merge_keywords = false
 		})
@@ -4387,6 +4389,15 @@ addPlugin {
 }
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
+-- https://github.com/LudoPinelli/comment-box.nvim
+-- https://github.com/NStefan002/visual-surround.nvim
+
+addPlugin {
+	'TheLeoP/powershell.nvim',
+	opts = {
+		bundle_path = vim.fn.stdpath "data" .. "/mason/packages/powershell-editor-services"
+	}
+}
 
 -- addPlugin {
 --     'ThePrimeagen/refactoring.nvim',
@@ -4396,13 +4407,6 @@ addPlugin {
 --         {'nvim-lua/plenary.nvim'},
 --     }
 -- }
-
-addPlugin {
-	'TheLeoP/powershell.nvim',
-	opts = {
-		bundle_path = vim.fn.stdpath "data" .. "/mason/packages/powershell-editor-services"
-	}
-}
 
 -- https://github.com/anuvyklack/hydra.nvim
 
@@ -4673,7 +4677,7 @@ addPlugin {
 addPlugin {
 	-- Lua copy https://github.com/ojroques/nvim-osc52
 	-- :h clipboard-osc52
-	'ojroques/vim-oscyank',
+	'ojroques/vim-oscyank', -- THOUGHT: do we need this plugin now
 	cond = function()
 		return vim.env.SSH_CLIENT ~= nil
 	end,
@@ -4682,6 +4686,8 @@ addPlugin {
 	end,
 	lazy = false
 }
+
+-- https://github.com/patrickpichler/hovercraft.nvim
 
 addPlugin {
 	'rickhowe/spotdiff.vim',

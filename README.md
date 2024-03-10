@@ -17,6 +17,3 @@ OR
 ```sh
 gh repo clone https://github.com/aloknigam247/dotfiles.git -- --recurse-submodules
 ```
-
-### TODO
-- [ ] TODO: Clean github stars
