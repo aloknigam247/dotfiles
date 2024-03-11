@@ -4677,7 +4677,7 @@ addPlugin {
 addPlugin {
 	-- Lua copy https://github.com/ojroques/nvim-osc52
 	-- :h clipboard-osc52
-	'ojroques/vim-oscyank', -- THOUGHT: do we need this plugin now
+	'ojroques/vim-oscyank', -- TODO: do we need this plugin now, test on SSH
 	cond = function()
 		return vim.env.SSH_CLIENT ~= nil
 	end,
