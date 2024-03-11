@@ -1,0 +1,5 @@
+
+CommandType     Name                                               Version    Source
+-----------     ----                                               -------    ------
+ExternalScript  scoop.ps1                                                     C:\Users\aloknigam\scoop\shims\scoop.ps1
+
