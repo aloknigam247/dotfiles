@@ -2052,7 +2052,7 @@ addPlugin {
 					  path = node.link_to
 					end
 
-					openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, true)
+					openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, false)
 				end
 			end
 

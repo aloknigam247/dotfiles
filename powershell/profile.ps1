@@ -283,10 +283,8 @@ if ([Environment]::UserInteractive) {
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 }
 
-
 # posh-git
 Import-Module posh-git
-
 
 # winget tab completion
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
