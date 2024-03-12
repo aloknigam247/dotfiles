@@ -119,7 +119,7 @@
                 "useAcrylic": true
             },
             {
-                "commandline": "ssh FAREAST\\aloknigam@10.171.247.75",
+                "commandline": "ssh FAREAST\\aloknigam@10.171.173.106",
                 "guid": "{7ac9e988-059d-49bc-8b24-b3d2014480f8}",
                 "hidden": false,
                 "name": "DevBox",

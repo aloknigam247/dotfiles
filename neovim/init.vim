@@ -33,7 +33,6 @@ set path+=**              " Look for all files in sub dirs
 set autoindent                              " auto indent new line based on current line
 set breakindent                             " Every wrapped line will continue visually indented
 set cinoptions=l1,g0,N-s,E-s,t0,(0,w1,W4,m1 " C style indentation options
-set completeopt=menu,menuone,noselect       " For nvim-cmp
 set concealcursor=nc                        " Set conceal modes
 set conceallevel=0                          " Set conceal level
 set cpoptions+=Z                            " When using w! while the 'readonly' option is set, don't reset 'readonly'

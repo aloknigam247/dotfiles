@@ -937,6 +937,7 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
+-- FEAT: use keys +-|_ for window sizing
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a word backword' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
@@ -1630,7 +1631,7 @@ addPlugin {
 }
 
 addPlugin {
-	'dcampos/cmp-snippy',
+	'dcampos/cmp-snippy', -- FEAT: snippet for addPlugin
 	dependencies = 'nvim-snippy',
 	event = 'InsertEnter'
 }
@@ -1652,7 +1653,6 @@ addPlugin {
 
 addPlugin {
 	'hrsh7th/nvim-cmp',
-	-- FIX: completion
 	config = function()
 		local cmp = require('cmp')
 		cmp.setup({
@@ -1668,7 +1668,7 @@ addPlugin {
 					{
 						name = 'cmdline',
 						option = {
-							ignore_cmds = { 'split' }
+							-- ignore_cmds = { 'split' }
 						}
 					}
 				}
@@ -1751,7 +1751,6 @@ addPlugin {
 						trailing_slash = true
 					}
 				},
-				{ name = 'async_path', trigger_characters = { './', '/', '.\\' } }, -- TODO: ?
 				{ name = 'snippy' },
 			},
 			window = {
@@ -1777,7 +1776,7 @@ addPlugin {
 	dependencies = {
 		'hrsh7th/cmp-buffer',
 	},
-	event = 'CmdlineChanged',
+	event = 'VeryLazy',
 }
 
 -- https://github.com/L3MON4D3/cmp-luasnip-choice
@@ -2052,7 +2051,7 @@ addPlugin {
 					  path = node.link_to
 					end
 
-					openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, false)
+					openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, false) -- FEAT: picker for file reopen
 				end
 			end
 
@@ -3392,10 +3391,10 @@ addPlugin {
 				"let g:session_icon = ''"
 			},
 			post_restore_cmds = {
-				"let g:session_icon = ''"
+				"let g:session_icon = '󰅠'"
 			},
 			post_save_cmds = {
-				"let g:session_icon = ''"
+				"let g:session_icon = '󰅠'"
 			}
 		})
 		vim.o.sessionoptions = 'blank,buffers,curdir,help,tabpages,winsize,winpos,terminal'
@@ -4484,6 +4483,16 @@ addPlugin {
 	}
 }
 
+addPlugin {
+	'echasnovski/mini.surround',
+	config = true,
+	keys = {
+		{ 'sa', desc = 'Add surrounding' },
+		{ 'sd', desc = 'Delete surrounding' },
+		{ 'sr', desc = 'Replace surrounding' }
+	}
+}
+
 -- 'jbyuki/instant.nvim'
 
 addPlugin {
@@ -4677,7 +4686,7 @@ addPlugin {
 addPlugin {
 	-- Lua copy https://github.com/ojroques/nvim-osc52
 	-- :h clipboard-osc52
-	'ojroques/vim-oscyank', -- TODO: do we need this plugin now, test on SSH
+	'ojroques/vim-oscyank', -- do we need this plugin now, test on SSH
 	cond = function()
 		return vim.env.SSH_CLIENT ~= nil
 	end,
@@ -4711,7 +4720,7 @@ addPlugin {
 }
 
 addPlugin {
-	'tversteeg/registers.nvim', -- Insert more does not work good with new lines
+	'tversteeg/registers.nvim', -- FIX: Insert mode does not work good with new lines
 	opts = {
 		register_user_command = false,
 		show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
@@ -4730,7 +4739,6 @@ addPlugin {
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-surround.md
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
