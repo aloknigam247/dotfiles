@@ -1,7 +1,0 @@
-************************************* Invoked: Wed Mar 6 19:55:51 2024
-[0] Arguments: C:\Users\ALOKNI~1\AppData\Local\Temp\WinGet\MSYS2.MSYS2.20240113\msys2-x86_64-20240113.exe, install, --confirm-command, --root, C:\msys64
-[7] Operations sanity check succeeded.
-[13] Using metadata cache from "C:/Users/aloknigam/AppData/Local/cache\\qt-installer-framework\\d75f1c19-3379-3717-ae8d-1404b51494a9"
-[14] Found 0 cached items.
-[16] Loaded control script ":/metadata/installer-config/control_js.js"
-[17] TargetDirectoryInUse : Error : The directory you selected already exists and contains an installation. Choose a different target for installation.

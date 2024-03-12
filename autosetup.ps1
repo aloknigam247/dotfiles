@@ -98,7 +98,7 @@ function installScoop {
     param(
         [switch]$update
     )
-    Get-Command scoop *> Out-Null
+    Get-Command scoop *>&1 | Out-Null
     if ($? -eq $false) {
         writeLog INFO "Scoop not insalled. Installing"
         Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
@@ -113,6 +113,32 @@ function installScoop {
 
     $installed = scoop list | ForEach-Object { $_.Name}
     $script:scoop_installed = $installed
+}
+
+function pipInstall {
+    param (
+        [string[]]$pkgs,
+        [switch]$update
+    )
+
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $installed = $script:scoop_installed.Contains($pkg)
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating scoop package: $pkg"
+            scoop update $pkg
+        }
+        elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing scoop package: $pkg"
+            scoop install --no-update-scoop $pkg
+        }
+    }
 }
 
 function scoopInstall {
@@ -133,16 +159,16 @@ function scoopInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $installed = $script:scoop_installed.Contains($pkg)
+        $installed = pip show $pkg *>&1 | Out-Null
 
         if ($installed -eq $true -and $update) {
             # update package
-            writeLog UPDATE "Updating scoop package: $pkg"
-            scoop update $pkg
+            writeLog UPDATE "Updating pip package: $pkg"
+            pip install --upgrade $pkg
         } elseif ($installed -eq $false -and -not $update) {
             # install package
-            writeLog UPDATE "Installing scoop package: $pkg"
-            scoop install --no-update-scoop $pkg
+            writeLog UPDATE "Installing pip package: $pkg"
+            pip install $pkg
         }
     }
 }
@@ -247,6 +273,7 @@ foreach ($pkg in $pkg_list) {
     $cwd = Get-Location
 
     if (Test-Path setup.ps1) {
+        $pip_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
@@ -254,9 +281,11 @@ foreach ($pkg in $pkg_list) {
         . .\setup.ps1
 
         if ($update) {
+            pipInstall -update $pip_pkgs
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
         } else {
+            pipInstall $pip_pkgs
             scoopInstall $scoop_pkgs
             wingetInstall $winget_pkgs
 
