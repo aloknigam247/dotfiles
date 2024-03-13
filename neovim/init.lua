@@ -2258,7 +2258,7 @@ FileTypeActions = {
 		vim.cmd.setlocal('statuscolumn=')
 	end,
 	['neotest-summary'] = function(_)
-		vim.cmd.setlocal('wrap')
+		vim.cmd.setlocal('nowrap')
 	end,
 	['markdown'] = function(_)
 		vim.g.table_mode_corner = '|'
