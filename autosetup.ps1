@@ -1,7 +1,7 @@
 #Requires -RunAsAdministrator
 
 param(
-     [switch]$update
+     [switch]$update = $false
      )
 
 function DrawMenu {
@@ -126,17 +126,46 @@ function pipInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $installed = $script:scoop_installed.Contains($pkg)
+        pip show $pkg *>&1 | Out-Null
+        $installed = $?
 
         if ($installed -eq $true -and $update) {
             # update package
-            writeLog UPDATE "Updating scoop package: $pkg"
-            scoop update $pkg
+            writeLog UPDATE "Updating pip package: $pkg"
+            pip install --upgrade $pkg
         }
         elseif ($installed -eq $false -and -not $update) {
             # install package
-            writeLog UPDATE "Installing scoop package: $pkg"
-            scoop install --no-update-scoop $pkg
+            writeLog UPDATE "Installing pip package: $pkg"
+            pip install $pkg
+        }
+    }
+}
+
+function pipxInstall {
+    param (
+        [string[]]$pkgs,
+        [switch]$update
+    )
+
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        # TODO: pipx needs different commands
+        pip show $pkg *>&1 | Out-Null
+        $installed = $?
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating pipx package: $pkg"
+            pipx upgrade $pkg
+        }
+        elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing pipx package: $pkg"
+            pipx install $pkg
         }
     }
 }
@@ -148,9 +177,9 @@ function scoopInstall {
     )
     if ($script:scoop_installed.Length -eq 0) {
         if ($update) {
-            installScoop
-        } else {
             installScoop -update
+        } else {
+            installScoop
         }
     }
 
@@ -159,16 +188,17 @@ function scoopInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $installed = pip show $pkg *>&1 | Out-Null
+        $installed = $script:scoop_installed.Contains($pkg)
 
         if ($installed -eq $true -and $update) {
             # update package
-            writeLog UPDATE "Updating pip package: $pkg"
-            pip install --upgrade $pkg
-        } elseif ($installed -eq $false -and -not $update) {
+            writeLog UPDATE "Updating scoop package: $pkg"
+            scoop update $pkg
+        }
+        elseif ($installed -eq $false -and -not $update) {
             # install package
-            writeLog UPDATE "Installing pip package: $pkg"
-            pip install $pkg
+            writeLog UPDATE "Installing scoop package: $pkg"
+            scoop install --no-update-scoop $pkg
         }
     }
 }
@@ -274,6 +304,7 @@ foreach ($pkg in $pkg_list) {
 
     if (Test-Path setup.ps1) {
         $pip_pkgs = @()
+        $pipx_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
@@ -282,10 +313,12 @@ foreach ($pkg in $pkg_list) {
 
         if ($update) {
             pipInstall -update $pip_pkgs
+            pipxInstall -update $pipx_pkgs
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
         } else {
             pipInstall $pip_pkgs
+            pipxInstall $pipx_pkgs
             scoopInstall $scoop_pkgs
             wingetInstall $winget_pkgs
 

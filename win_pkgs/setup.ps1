@@ -2,7 +2,7 @@ $pip_pkgs = @(
     'pipx'
 )
 
-$pip_pkgs = @(
+$pipx_pkgs = @(
     'rich-cli'
 )
 
