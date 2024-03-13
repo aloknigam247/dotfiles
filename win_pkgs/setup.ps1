@@ -2,10 +2,6 @@ $pip_pkgs = @(
     'pipx'
 )
 
-$pipx_pkgs = @(
-    'rich-cli'
-)
-
 $scoop_pkgs = @(
     "bat"
     "dos2unix"

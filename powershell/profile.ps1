@@ -38,7 +38,7 @@ New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
 Remove-Alias ls
 Remove-Alias rm
 function bash    { C:\msys64\usr\bin\bash.exe -c $args[0] }
-function bat     { ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args } # FEAT: try rich cli
+function bat     { ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args }
 function fnd     { C:\msys64\usr\bin\find.exe $args | C:\msys64\usr\bin\sed 's|/|\\|g' }
 function grep    { C:\msys64\usr\bin\grep.exe --color=auto -En $args }
 function la      { C:\msys64\usr\bin\ls.exe -AF --color=auto $args }
@@ -459,4 +459,3 @@ $PSNativeCommandUseErrorActionPreference = $false
 $env:PSModulePath += ";P:\aloknigam;E:\aloknigam"
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
 $env:RUFF_CACHE_DIR = "$env:LOCALAPPDATA\Temp"
-$env:PATH += ";~\.local\bin"
