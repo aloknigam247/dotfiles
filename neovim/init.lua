@@ -670,7 +670,7 @@ vim.api.nvim_open_win = nvimOpenWinSafe
 ---@param col_offset integer Column offset
 ---@param row_offset integer Row offset
 ---@param enter boolean Enter into window on creation
-local function openFloat(path, relativity, col_offset, row_offset, enter)
+local function openFloat(path, relativity, col_offset, row_offset, enter, split, vsplit)
 	-- Create buffer
 	local bufnr = vim.fn.bufadd(path)
 
@@ -730,7 +730,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
 
 	-- Reopen preview in split
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '', {
-		callback = function()
+		callback = split or function()
 			local file_path = vim.fn.expand('%:p')
 			vim.cmd.quit()
 			vim.cmd.split(file_path)
@@ -743,7 +743,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter)
 
 	-- Reopen preview in vsplit
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-v>', '', {
-		callback = function()
+		callback = vsplit or function()
 			local file_path = vim.fn.expand('%:p')
 			vim.cmd.quit()
 			vim.cmd.vsplit(file_path)
@@ -2049,7 +2049,21 @@ addPlugin {
 					  path = node.link_to
 					end
 
-					openFloat(path, 'editor', vim.fn.winwidth(0) + 2, 3, false) -- FEAT: picker for file reopen
+					openFloat(
+						path,
+						'editor',
+						vim.fn.winwidth(0) + 2,
+						3,
+						false,
+						function()
+							vim.cmd.quit()
+							require('nvim-tree.api').node.open.horizontal()
+						end,
+						function()
+							vim.cmd.quit()
+							require('nvim-tree.api').node.open.vertical()
+						end
+					)
 				end
 			end
 
