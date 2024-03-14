@@ -937,7 +937,6 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
--- FEAT: use keys +-|_ for window sizing
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a word backword' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
@@ -951,7 +950,6 @@ vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'move a 
 vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'move a larger word backword' })
 vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'move to next tab' })
 vim.keymap.set('n', '<M-=>',       '<cmd>wincmd =<CR>',        { desc = 'realign windows to equal size' })
-vim.keymap.set('n', '<M-Bar>',     '<cmd>vertical-resize<CR>', { desc = 'make current window widest possible' })
 vim.keymap.set('n', '<M-Down>',    '<cmd>res -1<cr>',          { desc = 'reduce current window height' })
 vim.keymap.set('n', '<M-Left>',    '<cmd>vert res -1<cr>',     { desc = 'reduce current window width' })
 vim.keymap.set('n', '<M-Right>',   '<cmd>vert res +1<cr>',     { desc = 'increase current window width' })
@@ -962,6 +960,8 @@ vim.keymap.set('n', '<M-k>',       '<cmd>wincmd k<CR>',        { desc = 'move to
 vim.keymap.set('n', '<M-l>',       '<cmd>wincmd l<CR>',        { desc = 'move to window above' })
 vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'jump forward' })
 vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'jump backword' })
+vim.keymap.set('n', '_',           '<cmd>resize<CR>',          { desc = 'make current window height maximum' })
+vim.keymap.set('n', '|',           '<cmd>vertical-resize<CR>', { desc = 'make current window width maximum' })
 vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'search in select region' })
 -- <~>
 -- Misc</>
