@@ -1552,7 +1552,7 @@ light { 'onenord',              '_' }
 light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
-dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            }
+dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            } -- FIX: todo hl
 dark  { 'sherbet',              '_' }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 light { 'tokyonight-day',       'tokyonight'                                 }
@@ -1692,14 +1692,16 @@ addPlugin {
 						source_name = '󰈸 ' .. entry.source.source.client.name
 					elseif entry.source.name == 'cmdline' then
 						vim_item.kind = 'Options'
-						source_name = '󰦩 options'
+						source_name = '󰸶 options'
 					elseif entry.source.name == 'cmdline_history' then
 						vim_item.kind = 'History'
 						source_name = '󰋚 history'
 					elseif entry.source.name == 'path' then
 						source_name = ' path'
+					elseif entry.source.name == 'snippy' then
+						source_name = ' snippet'
 					else
-						source_name = '󱃗 ' .. entry.source.name
+						source_name = '󰙩 ' .. entry.source.name
 					end
 					vim_item.menu = source_name
 					local kind_symbol = ' ' .. icons[vim_item.kind]
@@ -2665,6 +2667,8 @@ addPlugin {
 						'while_statement',
 					},
 					['lua'] = {
+						'elseif_statement',
+						'else_statement',
 						'table_constructor'
 					}
 				},
@@ -3432,11 +3436,9 @@ addPlugin {
 	},
 }
 -- https://github.com/ellisonleao/carbon-now.nvim
--- https://github.com/norcalli/snippets.nvim
 -- https://github.com/notomo/cmp-neosnippet
 -- https://github.com/quangnguyen30192/cmp-nvim-ultisnips
 -- https://github.com/rafamadriz/friendly-snippets
--- https://github.com/saadparwaiz1/cmp_luasnip
 -- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4750,7 +4752,9 @@ addPlugin {
 -- https://github.com/wellle/targets.vim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md -- TODO: 
+-- https://github.com/rhysd/clever-f.vim
+-- https://github.com/folke/flash.nvim
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
