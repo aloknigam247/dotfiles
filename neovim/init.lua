@@ -1553,7 +1553,7 @@ light { 'onenord',              '_' }
 light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
-dark  { 'rose-pine',            '_', cfg = { disable_italics = true }                            } -- FIX: todo hl
+dark  { 'rose-pine',            '_', cfg = { disable_italics = true, highlight_groups = { Todo = { link = '@comment.todo' } } } }
 dark  { 'sherbet',              '_' }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 light { 'tokyonight-day',       'tokyonight'                                 }
@@ -4854,6 +4854,6 @@ addPlugin {
 }
 
 require('lazy').setup(plugins, lazy_config)
-ColoRand(30)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
