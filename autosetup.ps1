@@ -153,7 +153,6 @@ function pipxInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        # TODO: pipx needs different commands
         pip show $pkg *>&1 | Out-Null
         $installed = $?
 

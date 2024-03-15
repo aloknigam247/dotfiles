@@ -1299,8 +1299,6 @@ addPlugin {
 	event = 'CursorHold'
 }
 
--- addPlugin { 'folke/flash.nvim' }
-
 addPlugin {
 	'folke/paint.nvim',
 	event = 'CursorHold *.lua,*.py',
@@ -4511,6 +4509,29 @@ addPlugin {
 -- 'jbyuki/instant.nvim'
 
 addPlugin {
+	'folke/flash.nvim', -- PERF: lazy load
+	lazy = false,
+	opts = {
+		labels = 'asdfghjklqwertyuiopzxcvbnm',
+		label = {
+			rainbow = {
+				enabled = true,
+				shade = 9,
+			},
+		},
+		modes = {
+			search = {
+				enabled = false,
+			},
+			char = {
+				enabled = true,
+				label = { exclude = 'iardc' },
+			},
+		}
+	}
+}
+
+addPlugin {
 	'folke/which-key.nvim',
 	event = 'VeryLazy',
 	init = function()
@@ -4752,11 +4773,7 @@ addPlugin {
 
 -- https://github.com/wellle/targets.vim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-fuzzy.md
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-jump.md -- TODO: 
--- https://github.com/rhysd/clever-f.vim
--- https://github.com/folke/flash.nvim
-
+-- TODO: progress
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
