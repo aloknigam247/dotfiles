@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- PERF: fix ~\longlines
 -- ---@class Profile
 -- ---@field count integer Number of times an autocommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -4853,6 +4854,6 @@ addPlugin {
 }
 
 require('lazy').setup(plugins, lazy_config)
-ColoRand()
+ColoRand(30)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
