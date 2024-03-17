@@ -1534,7 +1534,6 @@ dark  { 'catppuccin-macchiato', 'catppuccin' }
 dark  { 'deku',                 '_'          }
 dark  { 'duskfox',              'nightfox'   }
 darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
-dark  { 'edge',                 '_' }
 light { 'edge',                 '_' }
 dark  { 'everforest',           '_' }
 dark  { 'hybrid',                 '_'          }
