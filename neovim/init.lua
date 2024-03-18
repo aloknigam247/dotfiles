@@ -1627,7 +1627,7 @@ addPlugin {
 }
 
 addPlugin {
-	'dcampos/cmp-snippy', -- FEAT: snippet for addPlugin
+	'dcampos/cmp-snippy',
 	dependencies = 'nvim-snippy',
 	event = 'InsertEnter'
 }
@@ -4748,31 +4748,15 @@ addPlugin {
 	end,
 	lazy = false
 }
+-- TODO: progress
 
 addPlugin {
 	'shortcuts/no-neck-pain.nvim',
 	cmd = 'NoNeckPain'
 }
 
-addPlugin {
-	'tversteeg/registers.nvim', -- FIX: Insert mode does not work good with new lines
-	opts = {
-		register_user_command = false,
-		show = "0123456789abcdefghijklmnopqrstuvwxyz*+\"-/_=",
-		show_empty = false,
-		symbols = { newline = '', tab = '»' },
-		trim_whitespace = false,
-		window = { border = 'rounded' }
-	},
-	keys = {
-		{ '"',     mode = 'n' },
-		{ '<C-R>', mode = 'i' }
-	}
-}
-
 -- https://github.com/wellle/targets.vim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
--- TODO: progress
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
