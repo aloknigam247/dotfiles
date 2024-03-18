@@ -938,6 +938,7 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
+-- FEAT: visual motion mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a word backword' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
@@ -1798,10 +1799,11 @@ addPlugin {
 		create_commands = false,
 		filetypes = {
 			['python'] = {
-				left = 'print(f"',
+				left = 'print("',
+				left_var = 'print(f"',
 				mid_var = '{',
-				right_var = '}")',
 				right = '")  # noqa',
+				right_var = '}")',
 			}
 		}
 	},
@@ -4508,8 +4510,8 @@ addPlugin {
 -- 'jbyuki/instant.nvim'
 
 addPlugin {
-	'folke/flash.nvim', -- PERF: lazy load
-	lazy = false,
+	'folke/flash.nvim',
+	keys = { 'f' },
 	opts = {
 		labels = 'asdfghjklqwertyuiopzxcvbnm',
 		label = {
@@ -4732,13 +4734,16 @@ addPlugin {
 }
 
 -- https://github.com/patrickpichler/hovercraft.nvim
+-- TODO: progress
+
+addPlugin {
+	'rickhowe/diffchar.vim', -- PERF: Load lazy
+}
 
 addPlugin {
 	'rickhowe/spotdiff.vim',
-	cmd = 'Diffthis'
+	cmd = { 'Diffthis', 'VDiffthis'}
 }
-
--- https://github.com/roobert/surround-ui.nvim
 
 addPlugin {
 	'sickill/vim-pasta',
@@ -4746,9 +4751,8 @@ addPlugin {
 		vim.g.pasta_paste_before_mapping = '[p'
 		vim.g.pasta_paste_after_mapping = ']p'
 	end,
-	lazy = false
+	keys = { '[p', ']p' }
 }
--- TODO: progress
 
 addPlugin {
 	'shortcuts/no-neck-pain.nvim',
