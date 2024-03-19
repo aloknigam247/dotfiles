@@ -5,8 +5,7 @@ $scoop_pkgs = @(
 )
 
 $winget_pkgs = @(
-    "OpenJS.NodeJS",
-    "Python.Python.3"
+    "OpenJS.NodeJS"
 )
 
 $files = @{
