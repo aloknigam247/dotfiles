@@ -3058,6 +3058,13 @@ addPlugin {
 						on_attach = on_attach,
 						settings = {
 							Lua = {
+								codeLens = {
+									enable = true
+								},
+								completion = {
+									callsnippet = 'Both',
+									keywordSnippet = 'Both'
+								},
 								diagnostics = {
 									globals = { 'bit', 'vim' }
 								},
