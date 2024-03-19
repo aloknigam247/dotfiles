@@ -4424,12 +4424,12 @@ addPlugin {
 -- https://github.com/anuvyklack/hydra.nvim
 
 addPlugin {
-  'ariel-frischer/bmessages.nvim',
-  cmd = 'Bmessages',
-  opts = {
-	  split_size_split = 10,
-	  split_type = 'split'
-  }
+	'ariel-frischer/bmessages.nvim',
+	cmd = 'Bmessages',
+	opts = {
+		split_size_split = 10,
+		split_type = 'split'
+	}
 }
 
 addPlugin {
@@ -4464,7 +4464,7 @@ addPlugin {
 -- https://github.com/cshuaimin/ssr.nvim
 
 -- addPlugin {
---     'dstein64/vim-startuptime',
+--     'dstein64483778129/vim-startuptime',
 --     cmd = 'StartupTime'
 -- }
 
@@ -4690,6 +4690,7 @@ addPlugin {
 
 -- https://github.com/lewis6991/hover.nvim
 
+-- TODO: progress
 addPlugin {
 	'mg979/vim-visual-multi',
 	config = function()
@@ -4701,23 +4702,19 @@ addPlugin {
 	keys = { '<C-LeftMouse>', '<C-RightMouse>', '<C-Up>', '<C-Down>', '<C-N>' }
 }
 
--- https://github.com/mrshmllow/open-handlers.nvim
-
 addPlugin {
 	'nat-418/boole.nvim',
+	keys = { '<C-a>', '<C-x>' },
 	opts = {
 		mappings = {
 			increment = '<C-a>',
 			decrement = '<C-x>'
 		},
-		-- User defined loops
-		additions = {
-			{ 'buy', 'sell' }
-		},
+		additions = { },
 		allow_caps_additions = {
+			{ 'buy', 'sell' }
 		}
-	},
-	keys = { '<C-a>', '<C-x>' }
+	}
 }
 
 addPlugin {
@@ -4734,7 +4731,6 @@ addPlugin {
 }
 
 -- https://github.com/patrickpichler/hovercraft.nvim
--- TODO: progress
 
 addPlugin {
 	'rickhowe/diffchar.vim', -- PERF: Load lazy
