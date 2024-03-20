@@ -3607,9 +3607,16 @@ addPlugin {
 						fmt = function(str)
 							return string.sub(str, 2, -2)
 						end,
-						icon = {'󰱽', color = {fg = '#EAC435'}},
+						icon = {'󰱽', color = { fg = '#EAC435' }},
 						padding = { left = 0, right = 1 },
 						separator = ''
+					},
+					{
+						function() return '󰳾' end,
+						color = { fg = '#009DDC' },
+						cond = function()
+							return vim.b.VM_Selection ~= nil and not vim.tbl_isempty(vim.b.VM_Selection)
+						end
 					},
 					{
 						'selectioncount',
@@ -4505,6 +4512,7 @@ addPlugin {
 }
 
 addPlugin {
+	-- https://github.com/kylechui/nvim-surround
 	'echasnovski/mini.surround',
 	config = true,
 	keys = {
@@ -4675,6 +4683,7 @@ addPlugin {
 	event = 'TextYankPost'
 }
 
+-- TODO: progress
 addPlugin {
 	'kwkarlwang/bufjump.nvim',
 	opts = {
@@ -4689,19 +4698,14 @@ addPlugin {
 }
 
 -- https://github.com/kndndrj/nvim-dbee
-
--- addPlugin {
---     'kylechui/nvim-surround',
---     config = true
--- }
-
 -- https://github.com/lewis6991/hover.nvim
+-- https://github.com/patrickpichler/hovercraft.nvim
 
--- TODO: progress
 addPlugin {
 	'mg979/vim-visual-multi',
 	config = function()
 		vim.cmd[[
+			let g:VM_set_statusline = 0
 			nmap <C-LeftMouse> <Plug>(VM-Mouse-Cursor)
 			nmap <C-RightMouse> <Plug>(VM-Mouse-Word)
 		]]
@@ -4736,8 +4740,6 @@ addPlugin {
 	end,
 	lazy = false
 }
-
--- https://github.com/patrickpichler/hovercraft.nvim
 
 addPlugin {
 	'rickhowe/diffchar.vim', -- PERF: Load lazy
