@@ -913,7 +913,7 @@ vim.api.nvim_create_autocmd(
 		pattern = '*',
 		desc = 'Highlight text on yank',
 		callback = function()
-			vim.highlight.on_yank({ higroup="Search", timeout=300 })
+			vim.highlight.on_yank({ higroup="Search", timeout=500 })
 		end
 	}
 )
@@ -4406,7 +4406,7 @@ addPlugin {
 }
 
 addPlugin {
-	'stevearc/dressing.nvim'
+	'stevearc/dressing.nvim' -- FEAT: configure
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4522,6 +4522,7 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 -- 'jbyuki/instant.nvim'
 
 addPlugin {
@@ -4531,18 +4532,19 @@ addPlugin {
 		labels = 'asdfghjklqwertyuiopzxcvbnm',
 		label = {
 			rainbow = {
-				enabled = true,
-				shade = 9,
-			},
+				enabled = false,
+				shade = 9
+			}
 		},
 		modes = {
 			search = {
-				enabled = false,
+				enabled = false
 			},
 			char = {
 				enabled = true,
-				label = { exclude = 'iardc' },
-			},
+				jump_labels = true,
+				label = { exclude = 'iardc' }
+			}
 		}
 	}
 }
@@ -4670,20 +4672,23 @@ addPlugin {
 addPlugin {
 	'gbprod/yanky.nvim',
 	opts = {
+		highlight = {
+			on_put = true,
+			on_yank = false
+		},
 		ring = {
-			history_length = 100,
+			history_length = 9,
 			storage = "memory",
 			sync_with_numbered_registers = true,
-			cancel_event = "update",
+			cancel_event = "update"
 		},
 		system_clipboard = {
-			sync_with_ring = false,
+			sync_with_ring = false
 		}
 	},
 	event = 'TextYankPost'
 }
 
--- TODO: progress
 addPlugin {
 	'kwkarlwang/bufjump.nvim',
 	opts = {
