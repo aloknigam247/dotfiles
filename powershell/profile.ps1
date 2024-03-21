@@ -449,6 +449,8 @@ Set-PSReadLineOption -Colors @{
     "String" = (Format-Text -headOnly -fg "#E4FF1A");
 }
 
+Set-PSReadLineOption -ContinuationPrompt '... '
+
 # Source rg command line completer
 . ~\scoop\apps\ripgrep\current\complete\_rg.ps1
 
