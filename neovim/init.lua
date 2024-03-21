@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: fix ~\longlines
 -- ---@class Profile
 -- ---@field count integer Number of times an autocommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -605,6 +604,7 @@ end
 local function isLargeFile(bufId)
 	---@diagnostic disable-next-line: param-type-mismatch
 	bufId = bufId or vim.fn.bufnr('%')
+	-- return true
 	return LargeFile[bufId] ~= nil
 end
 
@@ -844,6 +844,12 @@ vim.api.nvim_create_autocmd(
 		desc = 'Overlength line marker',
 		callback = function()
 			if not isLargeFile() and vim.bo.textwidth > 0 then
+				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
+					local line_length = #line
+					if line_length > 300 then
+						return
+					end
+				end
 				vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
 				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
 			end
@@ -4406,7 +4412,13 @@ addPlugin {
 }
 
 addPlugin {
-	'stevearc/dressing.nvim' -- FEAT: configure
+	'stevearc/dressing.nvim',
+	dependencies = 'telescope.nvim',
+	opts = {
+		input = {
+			title_pos = 'center'
+		}
+	}
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4482,6 +4494,7 @@ addPlugin {
 --     cmd = 'StartupTime'
 -- }
 
+-- TODO: progress
 addPlugin {
 	'echasnovski/mini.move',
 	keys = {
@@ -4522,7 +4535,6 @@ addPlugin {
 	}
 }
 
--- TODO: progress
 -- 'jbyuki/instant.nvim'
 
 addPlugin {
