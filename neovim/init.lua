@@ -1351,7 +1351,7 @@ addPlugin {
 		create_event = function()
 			local win_n = CountWindows(false)
 			if win_n < 3 then
-				require("colorful-winsep").NvimSeparatorDel()
+				require('colorful-winsep').NvimSeparatorDel()
 			end
 		end,
 		symbols = {
@@ -1371,7 +1371,7 @@ addPlugin {
 	config = function()
 		local colors = {}
 		for _,v in pairs(ColorPalette()) do
-			local hi = "guifg=" .. v.bg .. " guibg=" .. v.fg
+			local hi = 'guifg=' .. v.bg .. ' guibg=' .. v.fg
 			table.insert(colors, hi)
 		end
 		vim.g.quickhl_manual_colors = colors
@@ -4476,6 +4476,7 @@ addPlugin {
 
 -- https://github.com/chipsenkbeil/distant.nvim
 
+-- TODO: progress
 addPlugin {
 	-- https://github.com/cameron-wags/rainbow_csv.nvim
 	-- https://github.com/mechatroner/rainbow_csv
@@ -4487,14 +4488,32 @@ addPlugin {
 	ft = 'csv'
 }
 
--- https://github.com/cshuaimin/ssr.nvim
-
+addPlugin {
+	'cshuaimin/ssr.nvim',
+	keys = {
+		{ '<leader>sr', function() require('ssr').open() end, mode = { 'n', 'x' }, desc = 'Structural Search and Replace' }
+	},
+	opts = {
+		adjust_window = true,
+		border = 'rounded',
+		keymaps = {
+			close = 'q',
+			next_match = 'n',
+			prev_match = 'N',
+			replace_all = '<leader><cr>',
+			replace_confirm = '<cr>',
+		},
+		max_height = 25,
+		max_width = 120,
+		min_height = 5,
+		min_width = 50
+	}
+}
 -- addPlugin {
 --     'dstein64483778129/vim-startuptime',
 --     cmd = 'StartupTime'
 -- }
 
--- TODO: progress
 addPlugin {
 	'echasnovski/mini.move',
 	keys = {
