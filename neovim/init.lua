@@ -4529,9 +4529,9 @@ addPlugin {
 	'echasnovski/mini.surround',
 	config = true,
 	keys = {
-		{ 'sa', desc = 'Add surrounding' },
-		{ 'sd', desc = 'Delete surrounding' },
-		{ 'sr', desc = 'Replace surrounding' }
+		{ 'sa', mode = { 'n', 'x' }, desc = 'Add surrounding' },
+		{ 'sd', mode = { 'n', 'x' }, desc = 'Delete surrounding' },
+		{ 'sr', mode = { 'n', 'x' }, desc = 'Replace surrounding' }
 	}
 }
 
