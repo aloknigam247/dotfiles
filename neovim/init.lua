@@ -1518,7 +1518,6 @@ addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'        
 addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                            }
 addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                     }
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
-addPlugin { 'fcancelinha/northern.nvim',           event = 'User northern'                                     }
 addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
 addPlugin { 'rose-pine/neovim',                    event = 'User rose-pine'                                    }
@@ -1552,7 +1551,6 @@ light { 'material',             '_', pre = function() vim.g.material_style = 'li
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
-dark  { 'northern',             '_' }
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
@@ -2287,6 +2285,9 @@ FileTypeActions = {
 		vim.cmd.setlocal('spell')
 		MarkdownHeadingsHighlight()
 	end,
+	['todo'] = function(_)
+		vim.cmd('set filetype=markdown')
+	end
 	-- ['python'] = function(bufnr)
 	--     local highlighter = require('vim.treesitter.highlighter')
 	--     if highlighter.active[bufnr] then
@@ -2617,7 +2618,8 @@ addPlugin {
 			csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
 			csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
 			md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
-			mdx      = { color = '#519ABA', cterm_color = '67',  icon = '', name = 'Mdx'       },
+			mdx      = { color = '#519ABA', cterm_color = '67',  icon = '󰽛', name = 'Mdx'       },
+			todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'todo'      },
 		}
 	}
 }
@@ -3573,7 +3575,7 @@ addPlugin {
 							vim.cmd('NvimTreeOpen')
 						end,
 						path = 0,
-						padding = { left = 1, right = 0 },
+						padding = { left = 0, right = 0 },
 						shorting_target = 40,
 						symbols = {
 							modified = icons.file_modified,
@@ -4468,23 +4470,16 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 addPlugin {
 	'cbochs/portal.nvim',
 	cmd = 'Portal',
 	dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
 }
 
--- https://github.com/chipsenkbeil/distant.nvim
-
--- TODO: progress
-addPlugin {
-	-- https://github.com/cameron-wags/rainbow_csv.nvim
-	-- https://github.com/mechatroner/rainbow_csv
-	'chrisbra/csv.vim',
-	config = function()
-		vim.g.csv_default_delim = ','
-		vim.g.csv_highlight_column = 'y'
-	end,
+addPlugin { -- FIX: needs fix
+	'cameron-wags/rainbow_csv.nvim',
+	config = true,
 	ft = 'csv'
 }
 

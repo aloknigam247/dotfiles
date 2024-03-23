@@ -154,7 +154,6 @@ let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
 let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 set shellquote= shellxquote=
 
-
 let g:startuptime_event_width = 0
 
 function! SynStack()
@@ -172,13 +171,6 @@ function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
-highlight ConflictMarkerBegin guibg=#2f7366
-highlight ConflictMarkerOurs guibg=#2e5049
-highlight ConflictMarkerTheirs guibg=#344f69
-highlight ConflictMarkerEnd guibg=#2f628e
-highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
-
-highlight HighlightURL gui=underline cterm=underline
 lua require('init')
 
 " NOTE: important format options
