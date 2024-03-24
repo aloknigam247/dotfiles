@@ -1226,7 +1226,7 @@ addPlugin {
 
 -- 'azabiong/vim-highlighter'
 addPlugin {
-	'Pocco81/high-str.nvim',
+	'Pocco81/high-str.nvim', -- FEAT: mappings
 	cmd = 'HSHighlight'
 }
 
@@ -2275,7 +2275,10 @@ end
 
 FileTypeActions = {
 	['NvimTree'] = function(_)
-		vim.cmd.setlocal('statuscolumn=')
+		vim.cmd('setlocal statuscolumn=')
+	end,
+	['csv'] = function(_)
+		vim.cmd('set textwidth=0')
 	end,
 	['neotest-summary'] = function(_)
 		vim.cmd.setlocal('nowrap')
