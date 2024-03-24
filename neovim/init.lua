@@ -945,32 +945,33 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
 -- FEAT: visual motion mappings
-vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'delete a word backword' })
-vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'move a word backword' })
-vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'move a word forward' })
-vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'move a larger word backword' })
-vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'move a larger word forward' })
-vim.keymap.set('n', '<BS>',        'X',                        { desc = 'delete a letter backword' })
-vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'move a word backword' })
-vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'close window' })
-vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'move a word forward' })
-vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'move a larger word forward' })
-vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'move a larger word backword' })
-vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'move to next tab' })
-vim.keymap.set('n', '<M-=>',       '<cmd>wincmd =<CR>',        { desc = 'realign windows to equal size' })
-vim.keymap.set('n', '<M-Down>',    '<cmd>res -1<cr>',          { desc = 'reduce current window height' })
-vim.keymap.set('n', '<M-Left>',    '<cmd>vert res -1<cr>',     { desc = 'reduce current window width' })
-vim.keymap.set('n', '<M-Right>',   '<cmd>vert res +1<cr>',     { desc = 'increase current window width' })
-vim.keymap.set('n', '<M-Up>',      '<cmd>res +1<cr>',          { desc = 'increase current window height' })
-vim.keymap.set('n', '<M-h>',       '<cmd>wincmd h<CR>',        { desc = 'move to window left' })
-vim.keymap.set('n', '<M-j>',       '<cmd>wincmd j<CR>',        { desc = 'move to window down' })
-vim.keymap.set('n', '<M-k>',       '<cmd>wincmd k<CR>',        { desc = 'move to window right' })
-vim.keymap.set('n', '<M-l>',       '<cmd>wincmd l<CR>',        { desc = 'move to window above' })
-vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'jump forward' })
-vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'jump backword' })
-vim.keymap.set('n', '_',           '<cmd>resize<CR>',          { desc = 'make current window height maximum' })
-vim.keymap.set('n', '|',           '<cmd>vertical-resize<CR>', { desc = 'make current window width maximum' })
-vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'search in select region' })
+vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
+vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
+vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
+vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'Move a larger word backword' })
+vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'Move a larger word forward' })
+vim.keymap.set('n', '!!',          ':<Up><CR>',                { desc = 'Run last command' })
+vim.keymap.set('n', '<BS>',        'X',                        { desc = 'Delete a letter backword' })
+vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'Move a word backword' })
+vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'Close window' })
+vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'Move a word forward' })
+vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'Move a larger word forward' })
+vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'Move a larger word backword' })
+vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'Move to next tab' })
+vim.keymap.set('n', '<M-=>',       '<cmd>wincmd =<CR>',        { desc = 'Realign windows to equal size' })
+vim.keymap.set('n', '<M-Down>',    '<cmd>res -1<cr>',          { desc = 'Reduce current window height' })
+vim.keymap.set('n', '<M-Left>',    '<cmd>vert res -1<cr>',     { desc = 'Reduce current window width' })
+vim.keymap.set('n', '<M-Right>',   '<cmd>vert res +1<cr>',     { desc = 'Increase current window width' })
+vim.keymap.set('n', '<M-Up>',      '<cmd>res +1<cr>',          { desc = 'Increase current window height' })
+vim.keymap.set('n', '<M-h>',       '<cmd>wincmd h<CR>',        { desc = 'Move to window left' })
+vim.keymap.set('n', '<M-j>',       '<cmd>wincmd j<CR>',        { desc = 'Move to window down' })
+vim.keymap.set('n', '<M-k>',       '<cmd>wincmd k<CR>',        { desc = 'Move to window right' })
+vim.keymap.set('n', '<M-l>',       '<cmd>wincmd l<CR>',        { desc = 'Move to window above' })
+vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'Jump forward' })
+vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump backword' })
+vim.keymap.set('n', '_',           '<cmd>resize<CR>',          { desc = 'Make current window height maximum' })
+vim.keymap.set('n', '|',           '<cmd>vertical-resize<CR>', { desc = 'Make current window width maximum' })
+vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'Search in select region' })
 -- <~>
 -- Misc</>
 -------
@@ -1556,7 +1557,7 @@ light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true, highlight_groups = { Todo = { link = '@comment.todo' } } } }
-dark  { 'sherbet',              '_' }
+dark  { 'sherbet',              '_' } -- FIX: inlay hint color
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
