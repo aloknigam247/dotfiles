@@ -892,6 +892,26 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
+	'CmdlineEnter', {
+		pattern = { '/', '?' },
+		desc = 'Shift commandline for search',
+		callback = function(arg)
+			vim.cmd('set cmdheight=1')
+		end
+	}
+)
+
+vim.api.nvim_create_autocmd(
+	'CmdlineLeave', {
+		pattern = { '/', '?' },
+		desc = 'Shift commandline back for search',
+		callback = function(arg)
+			vim.cmd('set cmdheight=0')
+		end
+	}
+)
+
+vim.api.nvim_create_autocmd(
 	'CursorHold', {
 		pattern = '*',
 		desc = 'Load Treesitter on CursorHold for installed languages',
@@ -1885,7 +1905,10 @@ addPlugin {
 	config = function()
 		require("dapui").setup()
 		require("dapui").open()
-	end
+	end,
+	dependencies = {
+		'nvim-neotest/nvim-nio'
+	}
 }
 
 -- https://github.com/PatschD/zippy.nvim
@@ -4390,7 +4413,7 @@ addPlugin {
 		})
 	end,
 	dependencies = { 'MunifTanjim/nui.nvim' },
-	enabled = true,
+	disabled = false,
 	event = 'CmdlineEnter'
 }
 
@@ -4453,10 +4476,11 @@ addPlugin {
 --     }
 -- }
 
+-- TODO: progress
 -- https://github.com/anuvyklack/hydra.nvim
 
 addPlugin {
-	'ariel-frischer/bmessages.nvim',
+	'ariel-frischer/bmessages.nvim', -- FIX: conflicts with Noice
 	cmd = 'Bmessages',
 	opts = {
 		split_size_split = 10,
@@ -4474,7 +4498,6 @@ addPlugin {
 	}
 }
 
--- TODO: progress
 addPlugin {
 	'cbochs/portal.nvim',
 	cmd = 'Portal',
@@ -4557,7 +4580,7 @@ addPlugin {
 
 addPlugin {
 	'folke/flash.nvim',
-	keys = { 'f' },
+	keys = { 'f', 'F' },
 	opts = {
 		labels = 'asdfghjklqwertyuiopzxcvbnm',
 		label = {
