@@ -4460,6 +4460,7 @@ addPlugin {
 -- https://github.com/LudoPinelli/comment-box.nvim
 -- https://github.com/NStefan002/visual-surround.nvim
 
+-- TODO: progress
 addPlugin {
 	'TheLeoP/powershell.nvim',
 	opts = {
@@ -4467,16 +4468,16 @@ addPlugin {
 	}
 }
 
--- addPlugin {
---     'ThePrimeagen/refactoring.nvim',
---     cmd = 'Refactor',
---     config = true,
---     dependencies = {
---         {'nvim-lua/plenary.nvim'},
---     }
--- }
+addPlugin {
+	'ThePrimeagen/refactoring.nvim',
+	cmd = 'Refactor',
+	config = true,
+	dependencies = {
+		'nvim-lua/plenary.nvim',
+	}
+}
 
--- TODO: progress
+-- FEAT: hydra mappings for windows
 -- https://github.com/anuvyklack/hydra.nvim
 
 addPlugin {
