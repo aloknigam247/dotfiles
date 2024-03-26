@@ -4458,9 +4458,10 @@ addPlugin {
 
 -- https://github.com/EtiamNullam/deferred-clipboard.nvim
 -- https://github.com/LudoPinelli/comment-box.nvim
+-- TODO: progress
 -- https://github.com/NStefan002/visual-surround.nvim
 
--- TODO: progress
+-- BUG: debug working
 addPlugin {
 	'TheLeoP/powershell.nvim',
 	opts = {
