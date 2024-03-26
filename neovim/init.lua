@@ -1549,6 +1549,7 @@ addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'      
 addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                       }
 addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                    }
 
+-- TODO: compare colorschemes of same types
 dark  { 'ayu-dark',             'ayu', post = fixAyu }
 light { 'ayu-light',            'ayu', post = fixAyu }
 dark  { 'ayu-mirage',           'ayu', post = fixAyu }
@@ -1621,6 +1622,12 @@ function ColoRand(scheme_index)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: setup
+-- FEAT: better command
+addPlugin {
+	'LudoPinelli/comment-box.nvim'
+}
+
 addPlugin {
 	'numToStr/Comment.nvim',
 	config = function()
@@ -4456,10 +4463,8 @@ addPlugin {
 	cmd = 'InlineEdit'
 }
 
--- https://github.com/EtiamNullam/deferred-clipboard.nvim
--- https://github.com/LudoPinelli/comment-box.nvim
 -- TODO: progress
--- https://github.com/NStefan002/visual-surround.nvim
+-- https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 -- BUG: debug working
 addPlugin {
