@@ -352,7 +352,7 @@ function promptGen {
         },
         @{
             'params' = @{
-                'text' = ' ⟩'
+                'text' = ' ⟩⟩'
                 'fg' = '#8AC926'
                 'styles' = 'bold'
             }
@@ -399,7 +399,7 @@ function promptGen {
                 'sequence' = 3
                 'script' = {
                     if ($script:git_branch) {
-                        $script:git_sep = "⟩"
+                        $script:git_sep = "⟩⟩"
                     } else {
                         $script:git_sep = ""
                     }
