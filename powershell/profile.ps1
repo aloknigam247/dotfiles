@@ -74,16 +74,16 @@ function which($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg "#FF0022" -underline
+        Format-Text "󰊕 $arg" -fg "#FF0022" -styles bold, italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
-        bat -p -P $temp_file --style 'header'
+        bat -p -P $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text " $arg" -fg "#EEE82C"
+        Format-Text " $arg" -fg "#EEE82C" -styles bold, italic
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Text " $arg" -fg "#5D2E8C"
+        Format-Text " $arg" -fg "#5D2E8C" -styles bold, italic
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
