@@ -74,8 +74,11 @@ function which($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg "#FF0022"
-        $cm.Definition
+        Format-Text "󰊕 $arg" -fg "#FF0022" -underline
+        $temp_file = "$env:TEMP\tmp.ps1"
+        Write-Output $cm.Definition > $temp_file
+        bat -p -P $temp_file --style 'header'
+        Remove-Item $temp_file
     } elseif ($type -eq "Application") {
         Format-Text " $arg" -fg "#EEE82C"
         $cm.Source
