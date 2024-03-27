@@ -4424,6 +4424,7 @@ addPlugin {
 	event = 'CmdlineEnter'
 }
 
+-- TODO: progress
 addPlugin {
 	'rcarriga/nvim-notify',
 	config = function()
@@ -4435,7 +4436,6 @@ addPlugin {
 		})
 		vim.notify = notify
 
-		-- Fix Notify hl
 		for _, hl_name in ipairs({ 'NotifyINFOIcon', 'NotifyINFOTitle' }) do
 			local notify_hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false })
 			if notify_hl and notify_hl.fg == 11140968 then
@@ -4447,7 +4447,6 @@ addPlugin {
 	end
 }
 
--- TODO: progress
 addPlugin {
 	'stevearc/dressing.nvim',
 	dependencies = 'telescope.nvim',
