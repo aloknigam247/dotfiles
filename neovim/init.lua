@@ -4447,6 +4447,7 @@ addPlugin {
 	end
 }
 
+-- TODO: progress
 addPlugin {
 	'stevearc/dressing.nvim',
 	dependencies = 'telescope.nvim',
@@ -4462,9 +4463,6 @@ addPlugin {
 	'AndrewRadev/inline_edit.vim',
 	cmd = 'InlineEdit'
 }
-
--- TODO: progress
--- https://github.com/EtiamNullam/deferred-clipboard.nvim
 
 -- BUG: debug working
 addPlugin {
