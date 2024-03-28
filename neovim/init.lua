@@ -1457,6 +1457,11 @@ local function fixMaterial()
 	fixVisual('#CCEAE7')
 end
 
+--- Fix sherbet colorscheme
+local function fixSherbet()
+	vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment', force = true })
+end
+
 ---Fix vn-night colorscheme
 local function fixVnNight()
 	fixLineNr('#505275')
@@ -1569,7 +1574,7 @@ darkT { 'hybrid',                 '_', cfg = { transparent = true } }
 dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
 dark  { 'kanagawa-wave',        'kanagawa'                                      }
 darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial } -- Fix visual
+light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial } -- FIX: visual
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
@@ -1578,7 +1583,7 @@ light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
 darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true, highlight_groups = { Todo = { link = '@comment.todo' } } } }
-dark  { 'sherbet',              '_' } -- FIX: inlay hint color
+dark  { 'sherbet',              '_', pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
@@ -4925,6 +4930,6 @@ addPlugin {
 }
 
 require('lazy').setup(plugins, lazy_config)
-ColoRand()
+ColoRand(29)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
