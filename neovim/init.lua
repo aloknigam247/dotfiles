@@ -4259,6 +4259,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: progress
 addPlugin {
 	'folke/noice.nvim',
 	config = function()
@@ -4424,14 +4425,13 @@ addPlugin {
 	event = 'CmdlineEnter'
 }
 
--- TODO: progress
 addPlugin {
 	'rcarriga/nvim-notify',
 	config = function()
 		local notify = require('notify')
 		notify.setup({
 			minimum_width = 0,
-			render = 'minimal',
+			render = 'wrapped-compact',
 			stages = 'slide'
 		})
 		vim.notify = notify
