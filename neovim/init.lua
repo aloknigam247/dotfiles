@@ -4196,6 +4196,7 @@ addPlugin {
 	event = 'User TSLoaded'
 }
 
+-- TODO: progress
 addPlugin {
 	'nvim-treesitter/nvim-treesitter-textobjects',
 	keys = { '[[', '[m', ']]', ']m' },
@@ -4228,7 +4229,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- https://github.com/David-Kunz/markid
 	'm-demare/hlargs.nvim',
 	config = function()
 		require('hlargs').setup({
@@ -4264,7 +4264,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: progress
+-- BUG: sudden quit due to formatting
+-- BUG: hides last char in substitute command
 addPlugin {
 	'folke/noice.nvim',
 	config = function()
