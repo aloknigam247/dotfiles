@@ -211,6 +211,10 @@ local icons = {
 	symlink_arrow      = ' 壟 ',
 	warn               = ' ',
 	warning            = ' ',
+	fold_open          = '',
+	fold_close        = '',
+	folder_open = '',
+	folder_close = '',
 }
 
 local kind_hl = {
@@ -2189,12 +2193,12 @@ addPlugin {
 					bookmark = icons.bookmark,
 					default  = icons.file_unnamed,
 					folder = {
-						arrow_closed = '',
-						arrow_open   = '',
-						default      = '',
+						arrow_closed = icons.fold_close,
+						arrow_open   = icons.fold_open,
+						default      = icons.folder_close,
 						empty        = '',
 						empty_open   = '',
-						open         = '',
+						open         = icons.folder_open,
 						symlink      = '',
 						symlink_open = '',
 					},
@@ -2573,6 +2577,7 @@ addPlugin {
 	dependencies = { 'nvim-telescope/telescope.nvim' }
 }
 
+-- BUG: why word diff works on current buffer
 addPlugin {
 	'lewis6991/gitsigns.nvim',
 	cmd = 'Gitsigns',
@@ -3300,53 +3305,12 @@ addPlugin {
 | col [c]         | Go to previous quickfix windows, c for count              |
 |-----------------+-----------------------------------------------------------|
 ]]
+-- TODO: reconfigure
 addPlugin {
 	'folke/trouble.nvim',
-	cmd = 'TroubleToggle',
-	opts = {
-		action_keys = {
-			close = 'q',
-			cancel = '<esc>',
-			refresh = 'r',
-			jump = { '<cr>', '<tab>' },
-			open_split = { '<c-s>' },
-			open_vsplit = { '<c-v>' },
-			open_tab = { '<c-t>' },
-			jump_close = { 'o' },
-			toggle_mode = 'm',
-			toggle_preview = 'P',
-			hover = 'K',
-			preview = 'p',
-			close_folds = { 'zM', 'zm' },
-			open_folds = { 'zR', 'zr' },
-			toggle_fold = { 'zA', 'za' },
-			previous = 'k',
-			next = 'j',
-		},
-		auto_close = false,
-		auto_fold = false,
-		auto_jump = { 'lsp_definitions' },
-		auto_open = false,
-		auto_preview = true,
-		fold_closed = '',
-		fold_open = '',
-		group = true,
-		height = 10,
-		icons = true,
-		indent_lines = true,
-		mode = 'document_diagnostics',
-		padding = false,
-		position = 'bottom',
-		signs = {
-			error = icons.error,
-			hint = icons.hint,
-			information = icons.info,
-			other = icons.diagnostic,
-			warning = icons.warn,
-		},
-		use_diagnostic_signs = true,
-		width = 50,
-	}
+	branch = 'dev',
+	cmd = 'Trouble',
+	opts = {}
 }
 
 --[[ Guide
@@ -3675,7 +3639,7 @@ addPlugin {
 					{
 						'diagnostics',
 						on_click = function()
-							vim.cmd('TroubleToggle')
+							vim.cmd('Trouble diagnostics')
 						end,
 						padding = { left = 0, right = 1 },
 						sources = { 'nvim_diagnostic' },
@@ -4931,6 +4895,6 @@ addPlugin {
 }
 
 require('lazy').setup(plugins, lazy_config)
-ColoRand(29)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
