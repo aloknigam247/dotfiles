@@ -1833,29 +1833,30 @@ addPlugin {
 	config = true
 }
 
-addPlugin {
-	'andrewferrier/debugprint.nvim', -- FIX: check for mini.nvim dependencies
+addPlugin { -- FIX: new config
+	'andrewferrier/debugprint.nvim',
+	dependencies = { 'echasnovski/mini.comment' },
 	opts = {
-		create_keymaps = false,
-		create_commands = false,
-		filetypes = {
-			['python'] = {
-				left = 'print("',
-				left_var = 'print(f"',
-				mid_var = '{',
-				right = '")  # noqa',
-				right_var = '}")',
-			}
-		}
-	},
-	keys = { -- FIX: new mapping from README
-		{ '<Leader>dP', function() return require('debugprint').debugprint({ above = true }) end,                  expr = true, mode = 'n' },
-		{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'n' },
-		{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'v' },
-		{ '<Leader>dd', function() return require('debugprint').deleteprints() end,                                             mode = 'n' },
-		{ '<Leader>dp', function() return require('debugprint').debugprint() end,                                  expr = true, mode = 'n' },
-		{ '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'n' },
-		{ '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'v' },
+	-- 	create_keymaps = false,
+	-- 	create_commands = true,
+	-- 	filetypes = {
+	-- 		['python'] = {
+	-- 			left = 'print("',
+	-- 			left_var = 'print(f"',
+	-- 			mid_var = '{',
+	-- 			right = '")  # noqa',
+	-- 			right_var = '}")',
+	-- 		}
+	-- 	}
+	-- },
+	-- keys = {
+	-- 	{ '<Leader>dP', function() return require('debugprint').debugprint({ above = true }) end,                  expr = true, mode = 'n' },
+	-- 	{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'n' },
+	-- 	{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'v' },
+	-- 	{ '<Leader>dd', function() return require('debugprint').deleteprints() end,                                             mode = 'n' },
+	-- 	{ '<Leader>dp', function() return require('debugprint').debugprint() end,                                  expr = true, mode = 'n' },
+	-- 	{ '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'n' },
+	-- 	{ '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'v' },
 	}
 }
 
