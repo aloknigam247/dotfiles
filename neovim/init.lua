@@ -1834,7 +1834,7 @@ addPlugin {
 }
 
 addPlugin {
-	'andrewferrier/debugprint.nvim',
+	'andrewferrier/debugprint.nvim', -- FIX: check for mini.nvim dependencies
 	opts = {
 		create_keymaps = false,
 		create_commands = false,
@@ -1848,7 +1848,7 @@ addPlugin {
 			}
 		}
 	},
-	keys = {
+	keys = { -- FIX: new mapping from README
 		{ '<Leader>dP', function() return require('debugprint').debugprint({ above = true }) end,                  expr = true, mode = 'n' },
 		{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'n' },
 		{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'v' },
