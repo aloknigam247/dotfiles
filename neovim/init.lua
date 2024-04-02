@@ -1367,7 +1367,7 @@ addPlugin {
 addPlugin {
 	'brenoprata10/nvim-highlight-colors',
 	cmd = 'HighlightColors',
-	opts = { render = 'background' }
+	opts = { render = 'background' } -- TODO: try other modes as well
 }
 
 addPlugin {
@@ -1802,6 +1802,9 @@ addPlugin {
 			view = {
 				docs = {
 					auto_open = true
+				},
+				entries = {
+					follow_cursor = true
 				}
 			}
 		})
