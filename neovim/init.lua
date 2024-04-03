@@ -4135,6 +4135,7 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 addPlugin {
 	'nvim-treesitter/nvim-treesitter',
 	config = function()
@@ -4153,11 +4154,10 @@ addPlugin {
 			}
 		})
 	end,
-	dependencies = { 'utilyre/sentiment.nvim' },
+	dependencies = { 'utilyre/sentiment.nvim' }, -- BUG: not working
 	module = false
 }
 
--- TODO: progress
 addPlugin {
 	'HiPhish/rainbow-delimiters.nvim',
 	config = function()
@@ -4427,7 +4427,7 @@ addPlugin {
 		local notify = require('notify')
 		notify.setup({
 			minimum_width = 0,
-			render = 'compact', -- FIX: no color hl in this mode
+			render = 'compact',
 			stages = 'slide'
 		})
 		vim.notify = notify
