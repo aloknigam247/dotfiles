@@ -192,7 +192,7 @@ function scoopInstall {
         if ($installed -eq $true -and $update) {
             # update package
             writeLog UPDATE "Updating scoop package: $pkg"
-            scoop update $pkg
+            scoop update -s $pkg
         }
         elseif ($installed -eq $false -and -not $update) {
             # install package
