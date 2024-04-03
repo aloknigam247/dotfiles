@@ -1367,7 +1367,7 @@ addPlugin {
 addPlugin {
 	'brenoprata10/nvim-highlight-colors',
 	cmd = 'HighlightColors',
-	opts = { render = 'background' } -- TODO: try other modes as well
+	opts = { render = 'background' }
 }
 
 addPlugin {
@@ -2527,6 +2527,7 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: How to view commit of current line
 addPlugin {
 	'9seconds/repolink.nvim',
 	cmd = 'RepoLink',
@@ -2581,7 +2582,7 @@ addPlugin {
 	dependencies = { 'nvim-telescope/telescope.nvim' }
 }
 
--- BUG: why word diff works on current buffer
+-- BUG: why word diff works only on current buffer
 addPlugin {
 	'lewis6991/gitsigns.nvim',
 	cmd = 'Gitsigns',
@@ -3588,7 +3589,7 @@ addPlugin {
 							modified = icons.file_modified,
 							readonly = icons.file_readonly,
 							unnamed  = icons.file_unnamed,
-							newfile  = ' ' .. icons.file_newfile .. ' '
+							newfile  = icons.file_newfile .. ' '
 						}
 					}
 				},
@@ -4156,6 +4157,7 @@ addPlugin {
 	module = false
 }
 
+-- TODO: progress
 addPlugin {
 	'HiPhish/rainbow-delimiters.nvim',
 	config = function()
@@ -4164,33 +4166,53 @@ addPlugin {
 	event = 'User TSLoaded'
 }
 
--- TODO: progress
 addPlugin {
 	'nvim-treesitter/nvim-treesitter-textobjects',
-	keys = { '[[', '[m', ']]', ']m' },
+	keys = {
+		{ '<leader>sn', mode = 'n', desc = 'swap with next parameter' },
+		{ '<leader>sp', mode = 'n', desc = 'swap with previous parameter' },
+		{ '[[', mode = 'n', desc = 'jump to previous class' },
+		{ '[m', mode = 'n', desc = 'jump to previous method' },
+		{ ']]', mode = 'n', desc = 'jump to next class' },
+		{ ']m', mode = 'n', desc = 'jump to next method' },
+		{ 'am', mode = 'v', desc = 'select around method' },
+		{ 'im', mode = 'v', desc = 'select inner method' }
+	},
 	main = 'nvim-treesitter.configs',
 	opts = {
 		textobjects = {
+			lsp_interop = {
+				enable = false
+			},
 			move = {
 				enable = true,
 				set_jumps = false,
 				goto_next_start = {
-					["]m"] = "@function.outer",
-					["]]"] = "@class.outer",
+					[']m'] = '@function.outer',
+					[']]'] = '@class.outer',
 				},
 				goto_previous_start = {
-					["[m"] = "@function.outer",
-					["[["] = "@class.outer",
-				},
-			},
-			lsp_interop = {
-				enable = false
+					['[m'] = '@function.outer',
+					['[['] = '@class.outer',
+				}
 			},
 			select = {
-				enable = false
+				enable = true,
+				include_surrounding_whitespace = false,
+				keymaps = {
+					['am'] = '@function.outer',
+					['im'] = '@function.inner',
+				},
+				lookahead = false
 			},
 			swap = {
-				enable = false
+				enable = true,
+				swap_next = {
+					['<leader>sn'] = '@parameter.inner',
+				},
+				swap_previous = {
+					['<leader>sp'] = '@parameter.inner',
+				}
 			}
 		}
 	}
@@ -4405,7 +4427,7 @@ addPlugin {
 		local notify = require('notify')
 		notify.setup({
 			minimum_width = 0,
-			render = 'wrapped-compact',
+			render = 'compact', -- FIX: no color hl in this mode
 			stages = 'slide'
 		})
 		vim.notify = notify

@@ -1,4 +1,3 @@
-# TODO: merge new config
 gui:
   # stuff relating to the UI
   windowSize: 'normal' # one of 'normal' | 'half' | 'full' default is 'normal'
@@ -11,6 +10,7 @@ gui:
   sidePanelWidth: 0.3333 # number from 0 to 1
   expandFocusedSidePanel: false
   mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
+  enlargedSideViewLocation: 'top' # one of 'left' | 'top'
   language: 'auto' # one of 'auto' | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko' | 'ru'
   timeFormat: '02 Jan 06' # https://pkg.go.dev/time#Time.Format
   shortTimeFormat: '3:04PM'
@@ -51,18 +51,22 @@ gui:
   showCommandLog: true
   showIcons: true # deprecated: use nerdFontsVersion instead
   nerdFontsVersion: "3" # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
+  showFileIcons: true # for hiding file icons in the file views
   commandLogSize: 8
   splitDiff: 'auto' # one of 'auto' | 'always'
   skipRewordInEditorWarning: false # for skipping the confirmation before launching the reword editor
   border: 'rounded' # one of 'single' | 'double' | 'rounded' | 'hidden'
   animateExplosion: true # shows an explosion animation when nuking the working tree
   portraitMode: 'auto' # one of 'auto' | 'never' | 'always'
+  filterMode: 'substring' # one of 'substring' | 'fuzzy'; see 'Filtering' section below
 git:
   paging:
     colorArg: always
     useConfig: false
   commit:
     signOff: false
+    autoWrapCommitMessage: true # automatic WYSIWYG wrapping of the commit message as you type
+    autoWrapWidth: 80 # if autoWrapCommitMessage is true, the width to wrap to
   merging:
     # only applicable to unix users
     manualCommit: false
@@ -72,9 +76,13 @@ git:
     # one of date-order, author-date-order, topo-order or default.
     # topo-order makes it easier to read the git log graph, but commits may not
     # appear chronologically. See https://git-scm.com/docs/git-log#_commit_ordering
+    #
+    # Deprecated: Configure this with `Log menu -> Commit sort order` (<c-l> in the commits window by default).
     order: 'topo-order'
     # one of always, never, when-maximised
     # this determines whether the git graph is rendered in the commits panel
+    #
+    # Deprecated: Configure this with `Log menu -> Show git graph` (<c-l> in the commits window by default).
     showGraph: 'always'
     # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
     showWholeGraph: true
@@ -90,6 +98,7 @@ git:
   overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
   disableForcePushing: false
   parseEmoji: true
+  truncateCopiedCommitHashesTo: 12 # When copying commit hashes to the clipboard, truncate them to this length. Set to 40 to disable truncation.
 os:
   copyToClipboardCmd: '' # See 'Custom Command for Copying to Clipboard' section
   editPreset: 'nvim' # see 'Configuring File Editing' section
@@ -134,7 +143,7 @@ keybinding:
     jumpToBlock: ['1', '2', '3', '4', '5'] # goto the Nth block / panel
     nextMatch: 'n'
     prevMatch: 'N'
-    optionMenu: x # show help menu
+    optionMenu: <disabled> # show help menu
     optionMenu-alt1: '?' # show help menu
     select: '<space>'
     goInto: '<enter>'
@@ -171,6 +180,9 @@ keybinding:
     toggleWhitespaceInDiffView: '<c-w>'
     increaseContextInDiffView: '}'
     decreaseContextInDiffView: '{'
+    toggleRangeSelect: 'v'
+    rangeSelectUp: '<s-up>'
+    rangeSelectDown: '<s-down>'
   status:
     checkForUpdate: 'u'
     recentRepos: '<enter>'
@@ -179,6 +191,7 @@ keybinding:
     commitChangesWithoutHook: 'w' # commit changes without pre-commit hook
     amendLastCommit: 'A'
     commitChangesWithEditor: 'C'
+    findBaseCommitForFixup: '<c-f>'
     confirmDiscard: 'x'
     ignoreFile: 'i'
     refreshFiles: 'r'
@@ -215,11 +228,11 @@ keybinding:
     moveDownCommit: '<c-j>' # move commit down one
     moveUpCommit: '<c-k>' # move commit up one
     amendToCommit: 'A'
+    amendAttributeMenu: 'a'
     pickCommit: 'p' # pick commit (when mid-rebase)
     revertCommit: 't'
-    cherryPickCopy: 'c'
-    cherryPickCopyRange: 'C'
-    pasteCommits: 'v'
+    cherryPickCopy: 'C'
+    pasteCommits: 'V'
     tagCommit: 'T'
     checkoutCommit: '<space>'
     resetCherryPick: '<c-R>'
@@ -232,11 +245,15 @@ keybinding:
   commitFiles:
     checkoutCommitFile: 'c'
   main:
-    toggleDragSelect: 'v'
-    toggleDragSelect-alt: 'V'
     toggleSelectHunk: 'a'
     pickBothHunks: 'b'
   submodules:
     init: 'i'
     update: 'u'
     bulkMenu: 'b'
+  commitMessage:
+    commitMenu: '<c-o>'
+  amendAttribute:
+    addCoAuthor: 'c'
+    resetAuthor: 'a'
+    setAuthor: 'A'
