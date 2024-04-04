@@ -815,7 +815,7 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
-   { 'BufNewFile', 'BufRead' }, {
+	{ 'BufNewFile', 'BufRead' }, {
 		pattern = '*',
 		desc = 'Run for new files',
 		callback = function ()
@@ -3936,13 +3936,14 @@ addPlugin {
 -- https://github.com/tomiis4/BufferTabs.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: progress
 -- https://github.com/Marskey/telescope-sg
 -- https://github.com/axkirillov/easypick.nvim
 addPlugin {
 	'nvim-telescope/telescope.nvim',
 	cmd = 'Telescope',
 	config = function()
-		local actions = require 'telescope.actions'
+		local actions = require('telescope.actions')
 		local telescope = require('telescope')
 		telescope.setup({
 			defaults = {
@@ -4003,24 +4004,25 @@ addPlugin {
 				}
 			},
 		})
+
+		telescope.load_extension('dir')
 		telescope.load_extension('fzf')
 		telescope.load_extension('undo')
-		vim.cmd[[autocmd User TelescopePreviewerLoaded setlocal nu]]
+
+		vim.api.nvim_create_autocmd(
+			'User', {
+				pattern = 'TelescopePreviewerLoaded',
+				desc = 'Open directory in nvim-tree',
+				command = 'setlocal nu'
+			}
+		)
 	end,
 	dependencies = {
 		'debugloop/telescope-undo.nvim',
 		'nvim-lua/plenary.nvim',
-		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
 	},
 	module = false
-}
-
--- TODO: progress
-addPlugin {
-	'princejoogie/dir-telescope.nvim',
-	cmd = { 'FileInDirectory', 'GrepInDirectory' },
-	config = true,
-	dependencies = 'nvim-telescope/telescope.nvim',
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4412,7 +4414,6 @@ addPlugin {
 		})
 	end,
 	dependencies = { 'MunifTanjim/nui.nvim' },
-	disabled = false,
 	event = 'CmdlineEnter'
 }
 
