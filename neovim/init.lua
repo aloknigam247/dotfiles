@@ -4024,7 +4024,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: progress
--- https://github.com/voldikss/vim-floaterm
 addPlugin {
 	'akinsho/toggleterm.nvim',
 	cmd = 'ToggleTerm',
