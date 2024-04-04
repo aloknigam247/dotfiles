@@ -1589,7 +1589,6 @@ darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_
 dark  { 'rose-pine',            '_', cfg = { disable_italics = true, highlight_groups = { Todo = { link = '@comment.todo' } } } }
 dark  { 'sherbet',              '_', pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
-light { 'tokyonight-day',       'tokyonight'                                 }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 dark  { 'vn-night',             '_',          post = fixVnNight              }
@@ -4024,6 +4023,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: progress
 -- https://github.com/voldikss/vim-floaterm
 addPlugin {
 	'akinsho/toggleterm.nvim',
@@ -4118,24 +4118,20 @@ addPlugin {
 	dependencies = {
 		'nvim-lua/plenary.nvim',
 		'nvim-neotest/neotest-python'
-	},
-	lazy = true
+	}
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- https://github.com/AckslD/nvim-trevJ.lua
-	-- https://github.com/AndrewRadev/splitjoin.vim
-	-- https://github.com/CKolkey/ts-node-action
 	-- https://github.com/echasnovski/mini.splitjoin
 	'Wansmer/treesj',
 	cmd = 'TSJToggle',
 	opts = {
-		max_join_length = 10000
+		max_join_length = 10000,
+		use_default_keymaps = false,
 	}
 }
 
--- TODO: progress
 addPlugin {
 	'nvim-treesitter/nvim-treesitter',
 	config = function()
@@ -4921,6 +4917,6 @@ addPlugin {
 }
 
 require('lazy').setup(plugins, lazy_config)
-ColoRand(20)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
