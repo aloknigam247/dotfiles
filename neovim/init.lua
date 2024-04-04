@@ -4015,6 +4015,7 @@ addPlugin {
 	module = false
 }
 
+-- TODO: progress
 addPlugin {
 	'princejoogie/dir-telescope.nvim',
 	cmd = { 'FileInDirectory', 'GrepInDirectory' },
@@ -4023,7 +4024,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: progress
 addPlugin {
 	'akinsho/toggleterm.nvim',
 	cmd = 'ToggleTerm',
