@@ -2527,7 +2527,7 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: How to view commit of current line
+-- TODO: How to view commit of current line https://github.com/rhysd/git-messenger.vim or gitsigns ?
 addPlugin {
 	'9seconds/repolink.nvim',
 	cmd = 'RepoLink',
@@ -4921,6 +4921,6 @@ addPlugin {
 }
 
 require('lazy').setup(plugins, lazy_config)
-ColoRand()
+ColoRand(20)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
