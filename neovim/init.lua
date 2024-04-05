@@ -1550,7 +1550,6 @@ addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'      
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
 addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
-addPlugin { 'rose-pine/neovim',                    event = 'User rose-pine'                                    }
 addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
 addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                      }
 addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                   }
@@ -1585,8 +1584,6 @@ dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
-darkT { 'rose-pine',            '_', cfg = { disable_background = true, disable_italics = true } }
-dark  { 'rose-pine',            '_', cfg = { disable_italics = true, highlight_groups = { Todo = { link = '@comment.todo' } } } }
 dark  { 'sherbet',              '_', pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
@@ -3174,10 +3171,10 @@ addPlugin {
 	config = function ()
 		require('hl-mdcodeblock').setup({
 			events = {
-				"BufEnter",
-				"InsertLeave",
-				"TextChanged",
-				"WinScrolled"
+				'BufEnter',
+				'InsertLeave',
+				'TextChanged',
+				'WinScrolled'
 			},
 			hl_group = "MDCodeBlock",
 			minumum_len = 10,
@@ -3194,10 +3191,10 @@ addPlugin {
 			},
 			timer_delay = 300,
 		})
-		vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = adaptiveBG(30, -10) })
+		vim.api.nvim_set_hl(0, 'MDCodeBlock', { bg = adaptiveBG(30, -10) })
 		require('hl-mdcodeblock').refresh()
 	end,
-	dependencies = "nvim-treesitter/nvim-treesitter",
+	dependencies = 'nvim-treesitter/nvim-treesitter',
 	event = 'CursorHold *.md'
 }
 -- <~>
@@ -3264,6 +3261,7 @@ addPlugin {
 -- use 'crusj/bookmarks.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: progress
 addPlugin {
 	'stevearc/aerial.nvim',
 	cmd = { 'AerialNavToggle', 'AerialToggle' },
@@ -3373,7 +3371,7 @@ addPlugin {
 		}
 		vim.cmd('packadd cfilter')
 	end,
-	dependencies = 'junegunn/fzf',
+	dependencies = 'junegunn/fzf', -- THOUGHT: do we still need this dependency, even with FZF in system
 	ft = 'qf'
 }
 -- <~>
@@ -3416,14 +3414,13 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/aaditeynair/conduct.nvim
+-- TODO: https://github.com/aaditeynair/conduct.nvim
 addPlugin {
 	'rmagatti/auto-session',
 	cmd = 'SessionSave',
 	config = function()
 		vim.g.auto_session_suppress_dirs = { 'C:\\Users\\aloknigam', '~' }
 		require('auto-session').setup({
-			-- log_level = 'debug',
 			post_delete_cmds = {
 				"let g:auto_session_enabled = v:false",
 				"let g:session_icon = ''"
@@ -3457,6 +3454,7 @@ addPlugin {
 		}
 	},
 }
+-- TODO: remove uneccessary plugins
 -- https://github.com/ellisonleao/carbon-now.nvim
 -- https://github.com/notomo/cmp-neosnippet
 -- https://github.com/quangnguyen30192/cmp-nvim-ultisnips
@@ -3469,7 +3467,7 @@ addPlugin {
 function StatusCol()
 	return '%=%s%{v:lnum}%C '
 end
-vim.o.statuscolumn = "%!v:lua.StatusCol()"
+vim.o.statuscolumn = "%!v:lua.StatusCol()" -- BUG: repeats number in wrap
 
 addPlugin {
 	'luukvbaal/statuscol.nvim',
@@ -3484,7 +3482,7 @@ addPlugin {
 				{ sign = { name = { 'Bookmark' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'Dap' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
-				{ text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
+				{ text = { builtin.foldfunc }, click = 'v:lua.ScFa' }, -- FEAT: either merge with git signs or shift to left of num
 				{ text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
 				{
 					sign = {
@@ -3866,9 +3864,9 @@ addPlugin {
 							warn  = icons.warn,
 							info  = icons.info,
 							hint  = icons.hint
-						},
-					},
-				},
+						}
+					}
+				}
 			},
 			extensions = {
 				'aerial',
@@ -3878,11 +3876,11 @@ addPlugin {
 				'nvim-tree',
 				'quickfix',
 				'toggleterm',
-				'trouble',
+				'trouble'
 			}
 		}
 	end,
-	event = 'User VeryLazy',
+	event = 'User VeryLazy'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3928,17 +3926,22 @@ addPlugin {
 				end
 				return buf.name
 			end,
+			offsets = {
+					{
+							filetype = 'NvimTree',
+							text = 'File Explorer',
+							highlight = 'Directory',
+							separator = false
+					}
+			},
 			right_mouse_command = nil,
 			separator_style = 'thick'
 		}
 	}
 }
--- https://github.com/tomiis4/BufferTabs.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: progress
 -- https://github.com/Marskey/telescope-sg
--- https://github.com/axkirillov/easypick.nvim
 addPlugin {
 	'nvim-telescope/telescope.nvim',
 	cmd = 'Telescope',
@@ -4005,7 +4008,6 @@ addPlugin {
 			},
 		})
 
-		telescope.load_extension('dir')
 		telescope.load_extension('fzf')
 		telescope.load_extension('undo')
 
@@ -4291,41 +4293,41 @@ addPlugin {
 				view = 'popup',
 				filter = { event = 'msg_show' },
 			},
-			commands = {
-				history = {
-					view = 'split',
-					opts = { enter = true, format = 'details' },
-					filter = {
-						any = {
-							{ event = 'notify' },
-							{ error = true },
-							{ warning = true },
-							{ event = 'msg_show', kind = { '' } },
-							{ event = 'lsp', kind = 'message' },
-						},
-					},
-				},
-				last = {
-					view = 'popup',
-					opts = { enter = true, format = 'details' },
-					filter = {
-						any = {
-							{ event = 'notify' },
-							{ error = true },
-							{ warning = true },
-							{ event = 'msg_show', kind = { '' } },
-							{ event = 'lsp', kind = 'message' },
-						},
-					},
-					filter_opts = { count = 1 },
-				},
-				errors = {
-					view = 'popup',
-					opts = { enter = true, format = 'details' },
-					filter = { error = true },
-					filter_opts = { reverse = true },
-				},
-			},
+			-- commands = {
+			-- 	history = {
+			-- 		view = 'split',
+			-- 		opts = { enter = true, format = 'details' },
+			-- 		filter = {
+			-- 			any = {
+			-- 				{ event = 'notify' },
+			-- 				{ error = true },
+			-- 				{ warning = true },
+			-- 				{ event = 'msg_show', kind = { '' } },
+			-- 				{ event = 'lsp', kind = 'message' },
+			-- 			},
+			-- 		},
+			-- 	},
+			-- 	last = {
+			-- 		view = 'popup',
+			-- 		opts = { enter = true, format = 'details' },
+			-- 		filter = {
+			-- 			any = {
+			-- 				{ event = 'notify' },
+			-- 				{ error = true },
+			-- 				{ warning = true },
+			-- 				{ event = 'msg_show', kind = { '' } },
+			-- 				{ event = 'lsp', kind = 'message' },
+			-- 			},
+			-- 		},
+			-- 		filter_opts = { count = 1 },
+			-- 	},
+			-- 	errors = {
+			-- 		view = 'popup',
+			-- 		opts = { enter = true, format = 'details' },
+			-- 		filter = { error = true },
+			-- 		filter_opts = { reverse = true },
+			-- 	},
+			-- },
 			notify = {
 				enabled = true,
 				view = 'notify',
@@ -4348,47 +4350,47 @@ addPlugin {
 					view = nil,
 					opts = {},
 				},
-				signature = {
-					enabled = true,
-					auto_open = {
-						enabled = true,
-						trigger = true,
-						luasnip = true,
-						throttle = 50,
-					},
-					view = nil,
-					opts = {},
-				},
+				-- signature = {
+				-- 	enabled = true,
+				-- 	auto_open = {
+				-- 		enabled = true,
+				-- 		trigger = true,
+				-- 		luasnip = true,
+				-- 		throttle = 50,
+				-- 	},
+				-- 	view = nil,
+				-- 	opts = {},
+				-- },
 				message = {
 					enabled = true,
 					view = 'notify',
 					opts = {},
 				},
-				documentation = {
-					view = 'hover',
-					opts = {
-						lang = 'markdown',
-						replace = true,
-						render = 'plain',
-						format = { '{ message }' },
-						win_options = { concealcursor = 'n', conceallevel = 3 },
-					},
-				},
+			-- 	documentation = {
+			-- 		view = 'hover',
+			-- 		opts = {
+			-- 			lang = 'markdown',
+			-- 			replace = true,
+			-- 			render = 'plain',
+			-- 			format = { '{ message }' },
+			-- 			win_options = { concealcursor = 'n', conceallevel = 3 },
+			-- 		},
+			-- 	},
 			},
-			markdown = {
-				hover = {
-					['|(%S-)|'] = vim.cmd.help,
-					['%[.-%]%((%S-)%)'] = require('noice.util').open,
-				},
-				highlights = {
-					['|%S-|'] = '@text.reference',
-					['@%S+'] = '@parameter',
-					['^%s*(Parameters:)'] = '@text.title',
-					['^%s*(Return:)'] = '@text.title',
-					['^%s*(See also:)'] = '@text.title',
-					['{%S-}'] = '@parameter',
-				},
-			},
+			-- markdown = {
+			-- 	hover = {
+			-- 		['|(%S-)|'] = vim.cmd.help,
+			-- 		['%[.-%]%((%S-)%)'] = require('noice.util').open,
+			-- 	},
+			-- 	highlights = {
+			-- 		['|%S-|'] = '@text.reference',
+			-- 		['@%S+'] = '@parameter',
+			-- 		['^%s*(Parameters:)'] = '@text.title',
+			-- 		['^%s*(Return:)'] = '@text.title',
+			-- 		['^%s*(See also:)'] = '@text.title',
+			-- 		['{%S-}'] = '@parameter',
+			-- 	},
+			-- },
 			health = {
 				checker = false,
 			},
@@ -4403,14 +4405,10 @@ addPlugin {
 				inc_rename = false,
 				lsp_doc_border = true,
 			},
-			throttle = 1000 / 30,
-			views = {},
 			routes = {{
 				view = 'notify',
 				filter = { event = 'msg_showmode' },
-			}},
-			status = {},
-			format = {},
+			}}
 		})
 	end,
 	dependencies = { 'MunifTanjim/nui.nvim' },
