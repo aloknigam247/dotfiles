@@ -1183,6 +1183,7 @@ addPlugin {
 			:with_move(cond.none())
 			:with_del(cond.none())
 		}
+		-- FEAT: insert spaces before and after = in parameter in LSP
 		-- Insert `()` after select function or method item
 		local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 		local cmp = require('cmp')
