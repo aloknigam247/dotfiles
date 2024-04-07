@@ -1635,7 +1635,7 @@ addPlugin {
 }
 
 addPlugin {
-	'numToStr/Comment.nvim',
+	'numToStr/Comment.nvim', -- TODO: check usage of inbuilt gc 'commentstring'
 	config = function()
 		require('Comment').setup({
 			ignore = '^$',
