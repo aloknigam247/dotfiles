@@ -10,8 +10,8 @@ $winget_pkgs = @(
 )
 
 $files = @{
-    "en.utf-8.add" = "$env:LOCALAPPDATA\nvim\spell\en.utf-8.add";
-    "init.lua" = "$env:LOCALAPPDATA\nvim\lua\init.lua";
-    "init.vim" = "$env:LOCALAPPDATA\nvim\init.vim";
-    "snippets" = "$env:LOCALAPPDATA\nvim\snippets"
+    "en.utf-8.add" = "$env:XDG_CONFIG_HOME\nvim\spell\en.utf-8.add";
+    "init.lua" = "$env:XDG_CONFIG_HOME\nvim\lua\init.lua";
+    "init.vim" = "$env:XDG_CONFIG_HOME\nvim\init.vim";
+    "snippets" = "$env:XDG_CONFIG_HOME\nvim\snippets"
 }

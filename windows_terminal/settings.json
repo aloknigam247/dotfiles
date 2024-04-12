@@ -16,9 +16,6 @@
             "keys": "ctrl+v"
         },
         {
-            "command": "paste"
-        },
-        {
             "command": "find",
             "keys": "ctrl+shift+f"
         },
@@ -37,14 +34,11 @@
         }
     ],
     "alwaysShowNotificationIcon": false,
-    "alwaysShowTabs": true,
+    "autoHideWindow": false,
     "copyFormatting": "rtf",
     "copyOnSelect": true,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-    "firstWindowPreference": "defaultProfile",
-    "initialCols": 85,
-    "initialRows": 20,
-    "launchMode": "default",
+    "minimizeToNotificationArea": true,
     "newTabMenu": 
     [
         {
@@ -84,7 +78,6 @@
         "list": 
         [
             {
-                "backgroundImage": "C:\\Users\\aloknigam\\OneDrive - Microsoft\\Desktop\\wallpaper-master\\wallpaper-master\\windows.png",
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": true,
@@ -97,12 +90,7 @@
                 "name": "Command Prompt"
             },
             {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": true,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
-            },
-            {
+                "closeOnExit": "graceful",
                 "colorScheme": "PowerShell 7",
                 "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -nologo",
                 "elevate": false,
@@ -112,30 +100,17 @@
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
-                "icon": "C:\\Users\\aloknigam\\dotfiles\\powershell\\Powershell_av_colors.ico",
+                "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "opacity": 75,
                 "source": "Windows.Terminal.PowershellCore",
                 "useAcrylic": true
             },
             {
-                "commandline": "ssh FAREAST\\aloknigam@10.171.173.106",
-                "guid": "{7ac9e988-059d-49bc-8b24-b3d2014480f8}",
-                "hidden": false,
-                "name": "DevBox",
-                "opacity": 75,
-                "tabTitle": "DevBox"
-            },
-            {
-                "colorScheme": "Ubuntu-ColorScheme",
-                "commandline": "ubuntu.exe",
-                "cursorShape": "bar",
-                "guid": "{a9b28329-d653-41b2-9907-79c9d4462d58}",
-                "hidden": false,
-                "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
-                "name": "Ubuntu",
-                "opacity": 75,
-                "tabTitle": "Ubuntu"
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": true,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
             }
         ]
     },
@@ -229,7 +204,7 @@
             "name": "One Half Light",
             "purple": "#A626A4",
             "red": "#E45649",
-            "selectionBackground": "#FFFFFF",
+            "selectionBackground": "#4F525D",
             "white": "#FAFAFA",
             "yellow": "#C18301"
         },
@@ -298,7 +273,7 @@
             "name": "Solarized Light",
             "purple": "#D33682",
             "red": "#DC322F",
-            "selectionBackground": "#FFFFFF",
+            "selectionBackground": "#073642",
             "white": "#EEE8D5",
             "yellow": "#B58900"
         },
@@ -344,55 +319,9 @@
             "name": "Tango Light",
             "purple": "#75507B",
             "red": "#CC0000",
-            "selectionBackground": "#FFFFFF",
+            "selectionBackground": "#555753",
             "white": "#D3D7CF",
             "yellow": "#C4A000"
-        },
-        {
-            "background": "#300A24",
-            "black": "#171421",
-            "blue": "#0037DA",
-            "brightBlack": "#767676",
-            "brightBlue": "#08458F",
-            "brightCyan": "#2C9FB3",
-            "brightGreen": "#26A269",
-            "brightPurple": "#A347BA",
-            "brightRed": "#C01C28",
-            "brightWhite": "#F2F2F2",
-            "brightYellow": "#A2734C",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#3A96DD",
-            "foreground": "#FFFFFF",
-            "green": "#26A269",
-            "name": "Ubuntu-22.04-ColorScheme",
-            "purple": "#881798",
-            "red": "#C21A23",
-            "selectionBackground": "#FFFFFF",
-            "white": "#CCCCCC",
-            "yellow": "#A2734C"
-        },
-        {
-            "background": "#300A24",
-            "black": "#171421",
-            "blue": "#0037DA",
-            "brightBlack": "#767676",
-            "brightBlue": "#08458F",
-            "brightCyan": "#2C9FB3",
-            "brightGreen": "#26A269",
-            "brightPurple": "#A347BA",
-            "brightRed": "#C01C28",
-            "brightWhite": "#F2F2F2",
-            "brightYellow": "#A2734C",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#3A96DD",
-            "foreground": "#FFFFFF",
-            "green": "#26A269",
-            "name": "Ubuntu-ColorScheme",
-            "purple": "#881798",
-            "red": "#C21A23",
-            "selectionBackground": "#FFFFFF",
-            "white": "#CCCCCC",
-            "yellow": "#A2734C"
         },
         {
             "background": "#000000",
@@ -418,38 +347,8 @@
             "yellow": "#808000"
         }
     ],
-    "showTabsInTitlebar": true,
-    "startOnUserLogin": false,
-    "tabSwitcherMode": "inOrder",
     "tabWidthMode": "titleLength",
-    "theme": "Seamless",
-    "themes": 
-    [
-        {
-            "name": "Seamless",
-            "tab": 
-            {
-                "background": "terminalBackground",
-                "iconStyle": "default",
-                "showCloseButton": "always",
-                "unfocusedBackground": "#FFFFFF00"
-            },
-            "tabRow": 
-            {
-                "background": "terminalBackground",
-                "unfocusedBackground": "#2C2C2CFF"
-            },
-            "window": 
-            {
-                "applicationTheme": "dark",
-                "experimental.rainbowFrame": false,
-                "frame": null,
-                "unfocusedFrame": null,
-                "useMica": true
-            }
-        }
-    ],
-    "trimBlockSelection": true,
-    "useAcrylicInTabRow": true,
-    "windowingBehavior": "useNew"
+    "theme": "dark",
+    "themes": [],
+    "useAcrylicInTabRow": true
 }

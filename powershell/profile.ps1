@@ -31,24 +31,24 @@ if ([Environment]::UserInteractive) {
 # Aliases
 # ```````
 # Msys2
-New-Alias -Name pacman -Value C:\msys64\usr\bin\pacman.exe
+New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 
 # Functions
 # `````````
 Remove-Alias ls
 Remove-Alias rm
-function bash    { C:\msys64\usr\bin\bash.exe -c $args[0] }
-function bat     { ~\scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args }
-function fnd     { C:\msys64\usr\bin\find.exe $args | C:\msys64\usr\bin\sed 's|/|\\|g' }
-function grep    { C:\msys64\usr\bin\grep.exe --color=auto -En $args }
-function la      { C:\msys64\usr\bin\ls.exe -AF --color=auto $args }
-function lla     { C:\msys64\usr\bin\ls.exe -AlF --color=auto $args }
-function ls      { C:\msys64\usr\bin\ls.exe -F --color=auto $args }
+function bash    { D:\Scoop\apps\msys2\current\usr\bin\bash.exe -c $args[0] }
+function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args }
+function fnd     { D:\Scoop\apps\msys2\current\usr\bin\find.exe $args | D:\Scoop\apps\msys2\current\usr\bin\sed 's|/|\\|g' }
+function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
+function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
+function lla     { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
+function ls      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
-function rm      { C:\msys64\usr\bin\rm.exe -rf $args }
-function tree    { C:\msys64\usr\bin\tree.exe -CF $args }
-function treea   { C:\msys64\usr\bin\tree.exe -aCF $args }
-function v($arg) { Start-Job -ScriptBlock {~\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg} | ForEach-Object { "Job Id: " + $_.Id } }
+function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
+function tree    { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -CF $args }
+function treea   { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -aCF $args }
+function v($arg) { Start-Job -ScriptBlock {D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg} | ForEach-Object { "Job Id: " + $_.Id } }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
@@ -112,7 +112,7 @@ function sed {
         if($i) {
             dos2unix -b -q $file
         }
-        Invoke-Expression "C:\msys64\usr\bin\sed.exe $param_i $param_n $param_r $pattern $file"
+        Invoke-Expression "D:\Scoop\apps\msys2\current\usr\bin\sed.exe $param_i $param_n $param_r $pattern $file"
         if($i) {
             unix2dos -b -q $file
         }
@@ -455,7 +455,14 @@ Set-PSReadLineOption -Colors @{
 Set-PSReadLineOption -ContinuationPrompt '... '
 
 # Source rg command line completer
-. ~\scoop\apps\ripgrep\current\complete\_rg.ps1
+. D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
+
+# Neovim settings
+$env:XDG_CACHE_HOME  = 'D:\neovim'
+$env:XDG_CONFIG_HOME = 'D:\neovim'
+$env:XDG_DATA_HOME   = 'D:\neovim'
+$env:XDG_LOG_HOME    = 'D:\neovim'
+$env:XDG_STATE_HOME  = 'D:\neovim'
 
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D

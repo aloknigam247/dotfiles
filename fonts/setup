@@ -2,4 +2,4 @@ files=(
         [fonts]=~/.fonts
       )
 
-
+# TODO: create setup.ps1 for windows to save in Local\Microsoft\Windows\Fonts\

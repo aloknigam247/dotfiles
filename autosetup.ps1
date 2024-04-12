@@ -101,7 +101,14 @@ function installScoop {
     Get-Command scoop *>&1 | Out-Null
     if ($? -eq $false) {
         writeLog INFO "Scoop not insalled. Installing"
-        Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        Invoke-RestMethod get.scoop.sh -outfile "$env:TEMP\install.ps1"
+        if (Test-Path "D:\") {
+            & $env:TEMP\install.ps1 -RunAsAdmin -ScoopDir 'D:\Scoop'
+            New-Item -ItemType SymbolicLink -Path ~\scoop -Target D:\Scoop
+        } else {
+            & $env:TEMP\install.ps1 -RunAsAdmin
+        }
+        Remove-Item $env:TEMP\install.ps1
         scoop bucket add extras
         scoop bucket add versions
         writeLog INFO "Scoop insalled"
@@ -111,7 +118,7 @@ function installScoop {
         writeLog INFO "Scoop updated"
     }
 
-    $installed = scoop list | ForEach-Object { $_.Name}
+    $installed = scoop list | ForEach-Object { $_.Name }
     $script:scoop_installed = $installed
 }
 
@@ -174,6 +181,7 @@ function scoopInstall {
         [string[]]$pkgs,
         [switch]$update
     )
+
     if ($script:scoop_installed.Length -eq 0) {
         if ($update) {
             installScoop -update
@@ -197,7 +205,7 @@ function scoopInstall {
         elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing scoop package: $pkg"
-            scoop install --no-update-scoop $pkg
+            scoop install --no-update-scoop --skip $pkg
         }
     }
 }
@@ -214,7 +222,7 @@ function wingetInstall {
     foreach ($pkg in $pkgs) {
         $status = winget list -e --id $pkg
 
-        if ($status[2] -eq "No installed package found matching input criteria.") {
+        if ($status.Contains("No installed package found matching input criteria.")) {
             $installed = $false
         } else {
             $installed = $true
