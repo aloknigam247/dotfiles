@@ -2833,7 +2833,7 @@ addPlugin {
 }
 
 addPlugin {
-	'glepnir/lspsaga.nvim',
+	'glepnir/lspsaga.nvim', -- TODO: how to jump in finder/preview window files
 	cmd = 'Lspsaga',
 	opts = {
 		beacon = {

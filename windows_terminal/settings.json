@@ -224,8 +224,8 @@
             "yellow": "#C18301"
         },
         {
-            "background": "#35093B",
-            "black": "#0C0C0C",
+            "background": "#000000",
+            "black": "#000000",
             "blue": "#009ED1",
             "brightBlack": "#767676",
             "brightBlue": "#00A6FB",
