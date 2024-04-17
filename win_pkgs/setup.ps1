@@ -1,4 +1,5 @@
 $pip_pkgs = @(
+    'debugpy',
     'pipx'
 )
 

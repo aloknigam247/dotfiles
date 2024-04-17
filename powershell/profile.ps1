@@ -279,11 +279,14 @@ function Format-Text {
 
 # Autocompletion
 # ``````````````
-if ([Environment]::UserInteractive) {
-    Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
-    Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
-    Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
+Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
+Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
+try{
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
+} catch {
+    Write-Error "Error occured in setting PredictionSource"
+    Write-Error $_
 }
 
 # posh-git
@@ -458,11 +461,11 @@ Set-PSReadLineOption -ContinuationPrompt '... '
 . D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
 
 # Neovim settings
-$env:XDG_CACHE_HOME  = 'D:\neovim'
-$env:XDG_CONFIG_HOME = 'D:\neovim'
-$env:XDG_DATA_HOME   = 'D:\neovim'
-$env:XDG_LOG_HOME    = 'D:\neovim'
-$env:XDG_STATE_HOME  = 'D:\neovim'
+$env:XDG_CACHE_HOME  = 'D:\apps'
+$env:XDG_CONFIG_HOME = 'D:\apps'
+$env:XDG_DATA_HOME   = 'D:\apps'
+$env:XDG_LOG_HOME    = 'D:\apps'
+$env:XDG_STATE_HOME  = 'D:\apps'
 
 # Settings
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D

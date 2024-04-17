@@ -1374,9 +1374,10 @@ addPlugin {
 addPlugin {
 	'nvim-zh/colorful-winsep.nvim',
 	opts = {
+		-- FEAT: make bg same as Normal
 		create_event = function()
 			local win_n = CountWindows(false)
-			if win_n < 3 then
+			if win_n < 3 then -- BUG: not working
 				require('colorful-winsep').NvimSeparatorDel()
 			end
 		end,
@@ -1549,6 +1550,7 @@ addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'        
 addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                            }
 addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                     }
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
+addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                      }
 addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
 addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
@@ -1582,6 +1584,19 @@ light { 'material',             '_', pre = function() vim.g.material_style = 'li
 dark  { 'melange',              '_' }
 light { 'monokai-nightasty',    '_' }
 dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
+dark  { 'onedark',              '_', cfg = { style = 'cool' } }
+darkT { 'onedark',              '_', cfg = { style = 'cool', transparent = true }   }
+dark  { 'onedark',              '_', cfg = { style = 'dark' } }
+darkT { 'onedark',              '_', cfg = { style = 'dark', transparent = true }   }
+dark  { 'onedark',              '_', cfg = { style = 'darker' } }
+darkT { 'onedark',              '_', cfg = { style = 'darker', transparent = true } }
+dark  { 'onedark',              '_', cfg = { style = 'deep' } }
+darkT { 'onedark',              '_', cfg = { style = 'deep', transparent = true }   }
+light { 'onedark',              '_', cfg = { style = 'light' } }
+dark  { 'onedark',              '_', cfg = { style = 'warm' } }
+darkT { 'onedark',              '_', cfg = { style = 'warm', transparent = true }   }
+dark  { 'onedark',              '_', cfg = { style = 'warmer' } }
+darkT { 'onedark',              '_', cfg = { style = 'warmer', transparent = true } }
 light { 'onenord',              '_' }
 light { 'oxocarbon',            '_', post = fixOxocarbon }
 dark  { 'retrobox',             '_', post = fixRetro     }
@@ -1590,6 +1605,9 @@ dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shu
 dark  { 'tokyonight-storm',     'tokyonight'                                 }
 darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
 dark  { 'vn-night',             '_',          post = fixVnNight              }
+dark  { 'vscode',               '_' }
+light { 'vsocde',               '_' }
+dark  { 'zephyrium',            '_' }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2554,7 +2572,7 @@ addPlugin {
 }
 
 addPlugin {
-	'FabijanZulj/blame.nvim',
+	'FabijanZulj/blame.nvim', -- TODO: explore new options
 	cmd = 'ToggleBlame'
 }
 
@@ -3253,7 +3271,7 @@ addPlugin {
 	}
 }
 
--- https://github.com/cbochs/grapple.nvim
+-- TODO: progress
 -- addPlugin {
 --     'kshenoy/vim-signature',
 --     cmd = 'SignatureToggle'
@@ -3262,7 +3280,6 @@ addPlugin {
 -- use 'crusj/bookmarks.nvim'
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: progress
 addPlugin {
 	'stevearc/aerial.nvim',
 	cmd = { 'AerialNavToggle', 'AerialToggle' },
@@ -3273,7 +3290,7 @@ addPlugin {
 		disable_max_lines = 10000,
 		disable_max_size = 2000000, -- Default 2MB
 		filter_kind = { 'Class', 'Constructor', 'Enum', 'Function', 'Interface', 'Module', 'Method', 'Struct' },
-		guides = { mid_item = '⎬ ', last_item = '╰ ', nested_top = '│ ', whitespace = ' ', },
+		guides = { mid_item = '├ ', last_item = '╰ ', nested_top = '│ ', whitespace = ' ', },
 		highlight_on_hover = true,
 		icons = icons,
 		nav = {
@@ -4495,7 +4512,7 @@ addPlugin {
 
 addPlugin {
 	'cbochs/portal.nvim',
-	cmd = 'Portal',
+	cmd = 'Portal', -- THOUGHT: can we replace it with Telescope
 	dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
 }
 

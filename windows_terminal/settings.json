@@ -16,6 +16,14 @@
             "keys": "ctrl+v"
         },
         {
+            "command": "unbound",
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+r"
+        },
+        {
             "command": "find",
             "keys": "ctrl+shift+f"
         },
@@ -31,6 +39,13 @@
         {
             "command": "toggleFocusMode",
             "keys": "alt+f"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
+            "keys": "ctrl+t"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -61,7 +76,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Campbell",
+            "colorScheme": "Tango Light",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
@@ -102,7 +117,7 @@
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 75,
+                "opacity": 50,
                 "source": "Windows.Terminal.PowershellCore",
                 "useAcrylic": true
             },
@@ -209,7 +224,7 @@
             "yellow": "#C18301"
         },
         {
-            "background": "#000000",
+            "background": "#35093B",
             "black": "#0C0C0C",
             "blue": "#009ED1",
             "brightBlack": "#767676",
@@ -220,7 +235,7 @@
             "brightRed": "#E74856",
             "brightWhite": "#F2F2F2",
             "brightYellow": "#FFB700",
-            "cursorColor": "#7D61FF",
+            "cursorColor": "#D7F23A",
             "cyan": "#07BEB8",
             "foreground": "#CCCCCC",
             "green": "#14AD0F",
@@ -348,7 +363,32 @@
         }
     ],
     "tabWidthMode": "titleLength",
-    "theme": "dark",
-    "themes": [],
+    "theme": "Custom",
+    "themes": 
+    [
+        {
+            "name": "Custom",
+            "tab": 
+            {
+                "background": "terminalBackground",
+                "iconStyle": "default",
+                "showCloseButton": "always",
+                "unfocusedBackground": "terminalBackground"
+            },
+            "tabRow": 
+            {
+                "background": "#CFD209FF",
+                "unfocusedBackground": "#CF3636FF"
+            },
+            "window": 
+            {
+                "applicationTheme": "dark",
+                "experimental.rainbowFrame": false,
+                "frame": "accent",
+                "unfocusedFrame": "accent",
+                "useMica": false
+            }
+        }
+    ],
     "useAcrylicInTabRow": true
 }
