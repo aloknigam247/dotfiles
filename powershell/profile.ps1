@@ -2,7 +2,7 @@
 # ```````````
 if ([Environment]::UserInteractive) {
     Start-Job {
-        Set-Location ~/dotfiles
+        Set-Location D:/dotfiles
         git pull
         $git_status = git status --short
 
