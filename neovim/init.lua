@@ -1541,6 +1541,7 @@ addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'           
 addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                       }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
+addPlugin { 'zootedb0t/citruszest.nvim',           event = 'User citruszest'                                   }
 addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
 addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
@@ -1570,10 +1571,13 @@ light { 'ayu-light',                  'ayu',          post = fixAyu             
 dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
 dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
 darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
-dark  { 'bluloco-dark',               '_'                                                                                          }
-darkT { 'bluloco-dark',               '_',            cfg = { 'bluloco', { transparent = true } }                                  }
+light { 'bluloco',                    '_'                                                                                          }
+dark  { 'bluloco',                    '_'                                                                                          }
+darkT { 'bluloco',                    '_',       cfg = { transparent = true }                                                      }
 light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
+dark  { 'citruszest',                 '_'                                                                                          }
+darkT { 'citruszest',                 '_',            cfg = { option = { transparent = true } }                                    }
 darkT { 'cyberdream',                 '_'                                                                                          }
 dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
@@ -1604,7 +1608,7 @@ darkT { 'hybrid',                     '_',            cfg = { transparent = true
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
-light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    } -- FIX: visual
+light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    }
 dark  { 'melange',                    '_'                                                                                          }
 light { 'monokai-nightasty',          '_'                                                                                          }
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
