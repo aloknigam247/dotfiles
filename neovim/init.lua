@@ -833,7 +833,7 @@ vim.api.nvim_create_autocmd(
 		desc = 'Detect large files and disable slow plugins',
 		callback = function(arg)
 			local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
-			if fsize > 160000 then
+			if fsize > 170000 then
 				LargeFile[arg.buf] = true
 				vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
 				require('illuminate').pause_buf()
@@ -1541,9 +1541,11 @@ addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'           
 addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                       }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
+addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
 addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
 addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                   }
+addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                 }
 addPlugin { 'HoNamDuong/hybrid.nvim',              event = 'User hybrid'                                       }
 addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'                                      }
 addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'                                     }
@@ -1563,54 +1565,73 @@ addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'      
 addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                       }
 addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                    }
 
--- TODO: compare colorschemes of same types
-dark  { 'ayu-dark',             'ayu', post = fixAyu }
-light { 'ayu-light',            'ayu', post = fixAyu }
-dark  { 'ayu-mirage',           'ayu', post = fixAyu }
-dark  { 'bamboo',               '_', cfg = { style = 'multiplex' } }
-darkT { 'bamboo',               '_', cfg = { style = 'multiplex', transparent = true } }
-dark  { 'bluloco-dark',         '_'                                                    }
-darkT { 'bluloco-dark',         '_', cfg = { 'bluloco', { transparent = true } }       }
-light { 'catppuccin-latte',     'catppuccin' }
-dark  { 'catppuccin-macchiato', 'catppuccin' }
-dark  { 'deku',                 '_'          }
-dark  { 'duskfox',              'nightfox'   }
-darkT { 'duskfox',              'nightfox', cfg = { transparent = true } }
-light { 'edge',                 '_' }
-dark  { 'everforest',           '_' }
-dark  { 'hybrid',                 '_'          }
-darkT { 'hybrid',                 '_', cfg = { transparent = true } }
-dark  { 'juliana',              '_', post = function() fixLineNr('#999999') end }
-dark  { 'kanagawa-wave',        'kanagawa'                                      }
-darkT { 'kanagawa-wave',        'kanagawa', cfg = { transparent = true }        }
-light { 'material',             '_', pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial } -- FIX: visual
-dark  { 'melange',              '_' }
-light { 'monokai-nightasty',    '_' }
-dark  { 'nordic',               '_', cfg = { override = { IblScope = { fg = '#7E8188' } } } }
-dark  { 'onedark',              '_', cfg = { style = 'cool' } }
-darkT { 'onedark',              '_', cfg = { style = 'cool', transparent = true }   }
-dark  { 'onedark',              '_', cfg = { style = 'dark' } }
-darkT { 'onedark',              '_', cfg = { style = 'dark', transparent = true }   }
-dark  { 'onedark',              '_', cfg = { style = 'darker' } }
-darkT { 'onedark',              '_', cfg = { style = 'darker', transparent = true } }
-dark  { 'onedark',              '_', cfg = { style = 'deep' } }
-darkT { 'onedark',              '_', cfg = { style = 'deep', transparent = true }   }
-light { 'onedark',              '_', cfg = { style = 'light' } }
-dark  { 'onedark',              '_', cfg = { style = 'warm' } }
-darkT { 'onedark',              '_', cfg = { style = 'warm', transparent = true }   }
-dark  { 'onedark',              '_', cfg = { style = 'warmer' } }
-darkT { 'onedark',              '_', cfg = { style = 'warmer', transparent = true } }
-light { 'onenord',              '_' }
-light { 'oxocarbon',            '_', post = fixOxocarbon }
-dark  { 'retrobox',             '_', post = fixRetro     }
-dark  { 'sherbet',              '_', pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
-dark  { 'sonokai',              '_', pre = function() vim.g.sonokai_style = 'shusia' end }
-dark  { 'tokyonight-storm',     'tokyonight'                                 }
-darkT { 'tokyonight-storm',     'tokyonight', cfg = { transparent = true }   }
-dark  { 'vn-night',             '_',          post = fixVnNight              }
-dark  { 'vscode',               '_' }
-light { 'vsocde',               '_' }
-dark  { 'zephyrium',            '_' }
+dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
+light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
+dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
+dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
+darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
+dark  { 'bluloco-dark',               '_'                                                                                          }
+darkT { 'bluloco-dark',               '_',            cfg = { 'bluloco', { transparent = true } }                                  }
+light { 'catppuccin-latte',           'catppuccin'                                                                                 }
+dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
+darkT { 'cyberdream',                 '_'                                                                                          }
+dark  { 'deku',                       '_'                                                                                          }
+dark  { 'duskfox',                    'nightfox'                                                                                   }
+darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
+light { 'edge',                       '_'                                                                                          }
+dark  { 'everforest',                 '_'                                                                                          }
+dark  { 'github_dark',                'github-theme'                                                                               }
+darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
+dark  { 'github_dark_colorblind',     'github-theme'                                                                               }
+darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
+dark  { 'github_dark_default',        'github-theme'                                                                               }
+darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
+dark  { 'github_dark_dimmed',         'github-theme'                                                                               }
+darkT { 'github_dark_dimmed',         'github-theme', cfg = { options = { transparent = true } }                                   }
+dark  { 'github_dark_high_contrast',  'github-theme'                                                                               }
+darkT { 'github_dark_high_contrast',  'github-theme', cfg = { options = { transparent = true } }                                   }
+dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
+darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
+dark  { 'github_dimmed',              'github-theme'                                                                               }
+darkT { 'github_dimmed',              'github-theme', cfg = { options = { transparent = true } }                                   }
+light { 'github_light',               'github-theme'                                                                               }
+light { 'github_light_colorblind',    'github-theme'                                                                               }
+light { 'github_light_default',       'github-theme'                                                                               }
+light { 'github_light_high_contrast', 'github-theme'                                                                               }
+light { 'github_light_tritanopia',    'github-theme'                                                                               }
+dark  { 'hybrid',                     '_'                                                                                          }
+darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
+dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
+dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
+darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
+light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    } -- FIX: visual
+dark  { 'melange',                    '_'                                                                                          }
+light { 'monokai-nightasty',          '_'                                                                                          }
+dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
+dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
+darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
+dark  { 'onedark',                    '_',            cfg = { style = 'dark' }                                                     }
+darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
+dark  { 'onedark',                    '_',            cfg = { style = 'darker' }                                                   }
+darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
+dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
+darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
+light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
+dark  { 'onedark',                    '_',            cfg = { style = 'warm' }                                                     }
+darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
+dark  { 'onedark',                    '_',            cfg = { style = 'warmer' }                                                   }
+darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
+light { 'onenord',                    '_'                                                                                          }
+light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
+dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
+dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
+dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
+dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
+darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
+dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
+dark  { 'vscode',                     '_'                                                                                          }
+light { 'vsocde',                     '_'                                                                                          }
+dark  { 'zephyrium',                  '_'                                                                                          }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -3963,6 +3984,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
+-- FEAT: search in current file only or open buffers only
 addPlugin {
 	'nvim-telescope/telescope.nvim',
 	cmd = 'Telescope',
