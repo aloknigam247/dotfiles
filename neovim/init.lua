@@ -1252,8 +1252,11 @@ addPlugin {
 
 -- 'azabiong/vim-highlighter'
 addPlugin {
-	'Pocco81/high-str.nvim', -- FEAT: mappings
-	cmd = 'HSHighlight'
+	'Pocco81/high-str.nvim',
+	keys = {
+		{ '<Leader>l', '<Cmd>HSHighlight<CR>', mode = 'x', desc = 'add highlight' },
+		{ '<Leader>L', '<Cmd>HSRmHighlight<CR>', mode = 'n', desc = 'remove highlight' },
+	}
 }
 
 addPlugin {
