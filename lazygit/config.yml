@@ -16,7 +16,7 @@ gui:
   shortTimeFormat: '3:04PM'
   theme:
     activeBorderColor:
-      - '#0F7173'
+      - '#88AB75'
       - bold
     inactiveBorderColor:
       - '#D5AC4E'
