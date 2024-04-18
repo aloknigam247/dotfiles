@@ -329,6 +329,7 @@ $env:FZF_DEFAULT_OPTS='
 # ``````````````
 $prompt_script = @{}
 
+# FEAT: identifier for dirty git dir
 function promptGen {
     $blocks = @(
         @{
