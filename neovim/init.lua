@@ -1600,8 +1600,6 @@ dark  { 'github_dark_high_contrast',  'github-theme'                            
 darkT { 'github_dark_high_contrast',  'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
 darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
-dark  { 'github_dimmed',              'github-theme'                                                                               }
-darkT { 'github_dimmed',              'github-theme', cfg = { options = { transparent = true } }                                   }
 light { 'github_light',               'github-theme'                                                                               }
 light { 'github_light_colorblind',    'github-theme'                                                                               }
 light { 'github_light_default',       'github-theme'                                                                               }
@@ -3110,7 +3108,7 @@ addPlugin {
 		local mason_lspconfig = require('mason-lspconfig')
 		local on_attach = function(_, bufnr)
 			-- enable inlay hints
-			vim.lsp.inlay_hint.enable(bufnr, true)
+			vim.lsp.inlay_hint.enable(true)
 
 			-- Mappings.
 			local bufopts = { noremap = true, silent = true, buffer = bufnr }
