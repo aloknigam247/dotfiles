@@ -400,12 +400,20 @@ function promptGen {
             }
         },
         @{
-            'params' = @{
-                'text' = ' '
-                'fg'   = '#C21807'
+            'params'  = @{
+                'text' = '$script:git_diff'
+                'fg'   = '#FF6347'
             }
-            'cond'   = {
-                return $Script:git_branch -ne ""
+            'execute' = @{
+                'sequence' = 4
+                'script'   = {
+                    if ($script:git_branch) {
+                        $script:git_diff = "󰦓 "
+                    }
+                    else {
+                        $script:git_sep = ""
+                    }
+                }
             }
         },
         @{
@@ -414,8 +422,16 @@ function promptGen {
                 'fg'     = '#8AC926'
                 'styles' = 'bold'
             }
-            'cond'   = {
-                return $Script:git_branch -ne ""
+            'execute' = @{
+                'sequence' = 3
+                'script'   = {
+                    if ($script:git_branch) {
+                        $script:git_sep = "⟩⟩"
+                    }
+                    else {
+                        $script:git_sep = ""
+                    }
+                }
             }
         }
     )
@@ -429,7 +445,7 @@ function promptGen {
             }
         }
         $params = $block.params
-        $prompt_string += Format-Text @params 
+        $prompt_string += Format-Text @params
         if ($block.ContainsKey('execute')) {
             $execute = $block.execute
             $prompt_script[$execute.sequence] = $execute.script
