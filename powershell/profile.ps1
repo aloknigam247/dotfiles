@@ -397,6 +397,20 @@ function promptGen {
             }
         },
         @{
+            'params'  = @{
+                'text'   = ' '
+                'fg'     = '#8AC926'
+            }
+            'cond' = {
+                if ($script:git_branch) {
+                    return $true
+                }
+                else {
+                    return $false
+                }
+            }
+        },
+        @{
             'params' = @{
                 'text' = '$script:git_sep '
                 'fg' = '#8AC926'
@@ -417,11 +431,17 @@ function promptGen {
 
     $prompt_string = ""
     foreach ($block in $blocks) {
+        if ($block.ContainsKey('cond')) {
+            $cont = Invoke-Command -ScriptBlock $block.cond
+            if (-not $cont) {
+                continue
+            }
+        }
         $params = $block.params
         $prompt_string += Format-Text @params
         if ($block.ContainsKey('execute')) {
             $execute = $block.execute
-            $prompt_script[$execute['sequence']] = $execute['script']
+            $prompt_script[$execute.sequence] = $execute.script
         }
     }
 
