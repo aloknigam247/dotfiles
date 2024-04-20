@@ -333,13 +333,13 @@ $prompt_script = @{}
 function promptGen {
     $blocks = @(
         @{
-            'params' = @{
+            'params'  = @{
                 'text' = '$script:dir_icon '
-                'fg' = '#8AC926'
+                'fg'   = '#8AC926'
             }
             'execute' = @{
                 'sequence' = 2
-                'script' = {
+                'script'   = {
                     $script:dir_icon = ""
                     if ($script:git_branch -ne "") {
                         $script:dir_icon = ""
@@ -352,42 +352,45 @@ function promptGen {
         }
         @{
             'params' = @{
-                'text' = '$(Get-Location)'
-                'fg' = '#A3BCF9'
+                'text'   = '$(Get-Location)'
+                'fg'     = '#A3BCF9'
                 'styles' = "italic"
             }
         },
         @{
             'params' = @{
-                'text' = ' ⟩⟩'
-                'fg' = '#8AC926'
+                'text'   = ' ⟩⟩'
+                'fg'     = '#8AC926'
                 'styles' = 'bold'
             }
         },
         @{
-            'params' = @{
-                'text' = '$script:git_branch'
-                'fg' = '#F4B860'
+            'params'  = @{
+                'text'   = '$script:git_branch'
+                'fg'     = '#F4B860'
                 'styles' = "bold"
             }
             'execute' = @{
                 'sequence' = 1
-                'script' = {
+                'script'   = {
                     $git_branch = ""
                     $branch = git rev-parse --abbrev-ref HEAD
                     if ($null -eq $branch) {
                         $git_branch = ""
-                    } elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
+                    }
+                    elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
                         $branch = git describe --tags --always
                         if ($null -eq $branch) {
                             $git_branch = ""
                         }
                         elseif ($branch[0] -eq "v") {
                             $git_branch = " 󰓽 $branch "
-                        } else {
+                        }
+                        else {
                             $git_branch = "  $branch "
                         }
-                    } elseif ($branch) {
+                    }
+                    elseif ($branch) {
                         $branch = $branch.Replace("heads/", "")
                         $branch = $branch.Replace("users/$env:username", "~")
                         $git_branch = "  $branch "
@@ -397,34 +400,22 @@ function promptGen {
             }
         },
         @{
-            'params'  = @{
-                'text'   = ' '
-                'fg'     = '#8AC926'
+            'params' = @{
+                'text' = ' '
+                'fg'   = '#C21807'
             }
-            'cond' = {
-                if ($script:git_branch) {
-                    return $true
-                }
-                else {
-                    return $false
-                }
+            'cond'   = {
+                return $Script:git_branch -ne ""
             }
         },
         @{
             'params' = @{
-                'text' = '$script:git_sep '
-                'fg' = '#8AC926'
+                'text'   = '$script:git_sep '
+                'fg'     = '#8AC926'
                 'styles' = 'bold'
             }
-            'execute' = @{
-                'sequence' = 3
-                'script' = {
-                    if ($script:git_branch) {
-                        $script:git_sep = "⟩⟩"
-                    } else {
-                        $script:git_sep = ""
-                    }
-                }
+            'cond'   = {
+                return $Script:git_branch -ne ""
             }
         }
     )
@@ -452,7 +443,7 @@ $prompt_string = promptGen
 function prompt {
     $count = $prompt_script.Count
     $i = 0
-    while($i -le $count) {
+    while ($i -le $count) {
         $script = $prompt_script[$i]
         if ($script) {
             Invoke-Command $script
