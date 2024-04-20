@@ -438,7 +438,7 @@ function promptGen {
             }
         }
         $params = $block.params
-        $prompt_string += Format-Text @params
+        $prompt_string += Format-Text @params 
         if ($block.ContainsKey('execute')) {
             $execute = $block.execute
             $prompt_script[$execute.sequence] = $execute.script
