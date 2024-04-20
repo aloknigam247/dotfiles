@@ -411,7 +411,7 @@ function promptGen {
                         $script:git_diff = "󰦓 "
                     }
                     else {
-                        $script:git_sep = ""
+                        $script:git_diff = ""
                     }
                 }
             }
