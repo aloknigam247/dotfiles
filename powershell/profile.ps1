@@ -407,7 +407,7 @@ function promptGen {
             'execute' = @{
                 'sequence' = 4
                 'script'   = {
-                    if ($script:git_branch) {
+                    if ($script:git_branch -and (git status --porcelain)) {
                         $script:git_diff = "󰦓 "
                     }
                     else {
