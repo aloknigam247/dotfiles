@@ -1545,7 +1545,9 @@ addPlugin { 'zootedb0t/citruszest.nvim',           event = 'User citruszest'    
 addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
 addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
+addPlugin { 'eldritch-theme/eldritch.nvim',        event = 'User eldritch'                                     }
 addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                   }
+addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                   }
 addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                 }
 addPlugin { 'HoNamDuong/hybrid.nvim',              event = 'User hybrid'                                       }
 addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'                                      }
@@ -1573,7 +1575,7 @@ dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex
 darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
 light { 'bluloco',                    '_'                                                                                          }
 dark  { 'bluloco',                    '_'                                                                                          }
-darkT { 'bluloco',                    '_',       cfg = { transparent = true }                                                      }
+darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
 light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 dark  { 'citruszest',                 '_'                                                                                          }
@@ -1583,15 +1585,17 @@ dark  { 'deku',                       '_'                                       
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
 light { 'edge',                       '_'                                                                                          }
+dark  { 'eldritch',                   '_'                                                                                          }
+darkT { 'eldritch',                   '_',            cfg = { transparent = true }                                                 }
 dark  { 'everforest',                 '_'                                                                                          }
+dark  { 'evergarden',                 '_'                                                                                          }
+darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
 dark  { 'github_dark',                'github-theme'                                                                               }
 darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_colorblind',     'github-theme'                                                                               }
 darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_default',        'github-theme'                                                                               }
 darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
-dark  { 'github_dark_dimmed',         'github-theme'                                                                               }
-darkT { 'github_dark_dimmed',         'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_high_contrast',  'github-theme'                                                                               }
 darkT { 'github_dark_high_contrast',  'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
@@ -1608,7 +1612,7 @@ darkT { 'hybrid',                     '_',            cfg = { transparent = true
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
-light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    }
+light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    } -- FIX: Visual
 dark  { 'melange',                    '_'                                                                                          }
 light { 'monokai-nightasty',          '_'                                                                                          }
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
@@ -1634,7 +1638,7 @@ dark  { 'tokyonight-storm',           'tokyonight'                              
 darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
 dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
 dark  { 'vscode',                     '_'                                                                                          }
-light { 'vsocde',                     '_'                                                                                          }
+light { 'vscode',                     '_'                                                                                          }
 dark  { 'zephyrium',                  '_'                                                                                          }
 
 ---Random colorscheme
@@ -1651,6 +1655,8 @@ function ColoRand(scheme_index)
 
 	vim.o.background = bg
 	vim.g.neovide_transparency = selection.trans and 0.8 or 1
+
+	local start_time = os.clock()
 	vim.api.nvim_exec_autocmds('User', { pattern = event == '_' and scheme or event })
 
 	if (precmd) then
@@ -1663,6 +1669,9 @@ function ColoRand(scheme_index)
 	if (postcmd) then
 		postcmd()
 	end
+
+	local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
+	vim.g.ColoRand = scheme_index .. ':' .. scheme .. ':' .. bg .. ':' .. event .. elapsed
 
 	-- Fix Todo highlight
 	local todo_hl = vim.api.nvim_get_hl(0, { name = 'Todo', create = false })
@@ -3291,21 +3300,21 @@ addPlugin {
 	end,
 	dependencies = 'luukvbaal/statuscol.nvim',
 	keys = {
-		{'ba', '<Plug>BookmarkAnnotate'},
-		{'bm', '<Plug>BookmarkToggle'},
-		{'bn', '<Plug>BookmarkNext'},
-		{'bp', '<Plug>BookmarkPrev'},
-		{'bs', '<Plug>BookmarkShowAll'}
+		{ 'ba', '<Plug>BookmarkAnnotate' },
+		{ 'bm', '<Plug>BookmarkToggle' },
+		{ 'bn', '<Plug>BookmarkNext' },
+		{ 'bp', '<Plug>BookmarkPrev' },
+		{ 'bs', '<Plug>BookmarkShowAll' }
 	}
 }
 
 -- TODO: progress
--- addPlugin {
---     'kshenoy/vim-signature',
---     cmd = 'SignatureToggle'
--- }
 -- use 'chentoast/marks.nvim'
--- use 'crusj/bookmarks.nvim'
+
+addPlugin {
+	'kshenoy/vim-signature',
+	lazy = false
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -3524,6 +3533,7 @@ addPlugin {
 			relculright = true,
 			segments = {
 				{ sign = { name = { 'todo' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
+				{ sign = { name = { 'Signature_' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { namespace = { '.*diagnostic.*' }, auto = true, colwidth = 2, fillcharhl ='LineNr' }, click = 'v:lua.ScSa' },
 				{ sign = { name = { 'Bookmark' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'Dap' }, auto = true, fillcharhl ='LineNr' } },
@@ -3631,7 +3641,7 @@ addPlugin {
 						symbols = {
 							modified = icons.file_modified,
 							readonly = icons.file_readonly,
-							unnamed  = icons.file_unnamed,
+							unnamed  = ' ' .. icons.file_unnamed .. ' ',
 							newfile  = icons.file_newfile .. ' '
 						}
 					}
@@ -3683,6 +3693,12 @@ addPlugin {
 						icon = { '', color = { fg = '#963484' }},
 						padding = { left = 0, right = 1 },
 						separator = ''
+					},
+					{
+						function() return vim.g.ColoRand end,
+						color = { fg = GetFgOrFallback('Number', '#F2F230'), gui ='bold' },
+						icon = {'', color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name('Function', true).foreground)}},
+						padding = { left = 0, right = 1 }
 					},
 					{
 						'diagnostics',
