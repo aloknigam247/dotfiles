@@ -703,35 +703,31 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	end
 
 	-- Create autocommand to resize window
-	local au_id = vim.api.nvim_create_autocmd(
-		'VimResized', {
-			pattern = '*',
-			desc = 'Resize preview window on vim resize',
-			callback = function()
-				local cfg = vim.api.nvim_win_get_config(Preview_win)
-				vim.api.nvim_win_set_config(Preview_win, {
-					height = vim.o.lines - 8,
-					width = vim.o.columns - 8 - cfg.col[false]
-				})
-			end
-		}
-	)
+	local au_id = vim.api.nvim_create_autocmd('VimResized', {
+		pattern = '*',
+		desc = 'Resize preview window on vim resize',
+		callback = function()
+			local cfg = vim.api.nvim_win_get_config(Preview_win)
+			vim.api.nvim_win_set_config(Preview_win, {
+				height = vim.o.lines - 8,
+				width = vim.o.columns - 8 - cfg.col[false]
+			})
+		end
+	})
 
 	-- Cleanup on window close
-		vim.api.nvim_create_autocmd(
-		'WinClosed', {
-			pattern = tostring(Preview_win),
-			desc = 'Delete resize autocommand on Preview window close',
-			callback = function(arg)
-				Preview_win = nil
-				vim.api.nvim_del_autocmd(au_id)
-				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
-				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
-				vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<M-v>')
-				return true
-			end
-		}
-	)
+	vim.api.nvim_create_autocmd('WinClosed', {
+		pattern = tostring(Preview_win),
+		desc = 'Delete resize autocommand on Preview window close',
+		callback = function(arg)
+			Preview_win = nil
+			vim.api.nvim_del_autocmd(au_id)
+			vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
+			vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
+			vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<M-v>')
+			return true
+		end
+	})
 
 	-- Reopen preview in split
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '', {
