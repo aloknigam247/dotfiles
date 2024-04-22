@@ -1684,7 +1684,7 @@ addPlugin {
 }
 
 addPlugin {
-	'numToStr/Comment.nvim', -- TODO: check usage of inbuilt gc 'commentstring'
+	'numToStr/Comment.nvim',
 	config = function()
 		require('Comment').setup({
 			ignore = '^$',
@@ -3216,6 +3216,7 @@ addPlugin {
 	end
 }
 
+-- TODO: progress
 addPlugin {
 	'yaocccc/nvim-hl-mdcodeblock.lua',
 	config = function ()
@@ -3302,8 +3303,7 @@ addPlugin {
 	}
 }
 
--- TODO: progress
--- use 'chentoast/marks.nvim'
+-- FEAT: 'chentoast/marks.nvim'
 
 addPlugin {
 	'kshenoy/vim-signature',
@@ -3503,12 +3503,6 @@ addPlugin {
 		}
 	},
 }
--- TODO: remove uneccessary plugins
--- https://github.com/ellisonleao/carbon-now.nvim
--- https://github.com/notomo/cmp-neosnippet
--- https://github.com/quangnguyen30192/cmp-nvim-ultisnips
--- https://github.com/rafamadriz/friendly-snippets
--- https://github.com/smjonas/snippet-converter.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 --- Default method to use until statuscol.nvim loads which then overrides it
