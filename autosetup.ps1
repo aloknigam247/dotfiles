@@ -82,7 +82,7 @@ function Menu {
             return $menuItems[$pos]
         }
     }
-    else 
+    else
     {
         if ($Multiselect){
             return $selection
@@ -93,7 +93,7 @@ function Menu {
     }
 }
 
-$script:scoop_installed = ""
+$scoop_installed = ""
 function installScoop {
     param(
         [switch]$update
@@ -119,7 +119,7 @@ function installScoop {
     }
 
     $installed = scoop list | ForEach-Object { $_.Name }
-    $script:scoop_installed = $installed
+    $scoop_installed = $installed
 }
 
 function pipInstall {
@@ -182,7 +182,7 @@ function scoopInstall {
         [switch]$update
     )
 
-    if ($script:scoop_installed.Length -eq 0) {
+    if ($scoop_installed.Length -eq 0) {
         if ($update) {
             installScoop -update
         } else {
@@ -195,7 +195,7 @@ function scoopInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $installed = $script:scoop_installed.Contains($pkg)
+        $installed = $scoop_installed.Contains($pkg)
 
         if ($installed -eq $true -and $update) {
             # update package
