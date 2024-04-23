@@ -1047,7 +1047,7 @@ vim.ui.input = function(...)
 	vim.ui.input(...)
 end
 
-vim.fn.matchadd(
+vim.fn.matchadd( -- BUG: not working
 	'HighlightURL',
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
 	hl_priority.url
@@ -1537,7 +1537,6 @@ addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'           
 addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                       }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
-addPlugin { 'zootedb0t/citruszest.nvim',           event = 'User citruszest'                                   }
 addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
 addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
@@ -1574,8 +1573,6 @@ dark  { 'bluloco',                    '_'                                       
 darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
 light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
-dark  { 'citruszest',                 '_'                                                                                          }
-darkT { 'citruszest',                 '_',            cfg = { option = { transparent = true } }                                    }
 darkT { 'cyberdream',                 '_'                                                                                          }
 dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
@@ -1880,31 +1877,47 @@ addPlugin {
 	'LiadOz/nvim-dap-repl-highlights',
 	config = true
 }
-
-addPlugin { -- FIX: new config
+addPlugin {
 	'andrewferrier/debugprint.nvim',
 	dependencies = { 'echasnovski/mini.comment' },
+	lazy = false, -- BUG: lazy load https://github.com/andrewferrier/debugprint.nvim/issues/97
 	opts = {
-	-- 	create_keymaps = false,
-	-- 	create_commands = true,
-	-- 	filetypes = {
-	-- 		['python'] = {
-	-- 			left = 'print("',
-	-- 			left_var = 'print(f"',
-	-- 			mid_var = '{',
-	-- 			right = '")  # noqa',
-	-- 			right_var = '}")',
-	-- 		}
-	-- 	}
-	-- },
-	-- keys = {
-	-- 	{ '<Leader>dP', function() return require('debugprint').debugprint({ above = true }) end,                  expr = true, mode = 'n' },
-	-- 	{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'n' },
-	-- 	{ '<Leader>dV', function() return require('debugprint').debugprint({ above = true, variable = true }) end, expr = true, mode = 'v' },
-	-- 	{ '<Leader>dd', function() return require('debugprint').deleteprints() end,                                             mode = 'n' },
-	-- 	{ '<Leader>dp', function() return require('debugprint').debugprint() end,                                  expr = true, mode = 'n' },
-	-- 	{ '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'n' },
-	-- 	{ '<Leader>dv', function() return require('debugprint').debugprint({ variable = true }) end,               expr = true, mode = 'v' },
+		filetypes = {
+			['python'] = {
+				left = 'print("',
+				left_var = 'print(f"',
+				mid_var = '{',
+				right = '")  # noqa',
+				right_var = '}")',
+			}
+		},
+		keymaps = {
+			normal = {
+				plain_below = "<Leader>dp",
+				plain_above = "<Leader>dP",
+				variable_below = "<Leader>dv",
+				variable_above = "<Leader>dV",
+				variable_below_alwaysprompt = "<Leader>dw",
+				variable_above_alwaysprompt = "<Leader>dW",
+				textobj_below = nil,
+				textobj_above = nil,
+				toggle_comment_debug_prints = "<Leaader>dc",
+				delete_debug_prints = "<Leader>dd",
+			},
+			visual = {
+				variable_below = "<Leader>dv",
+				variable_above = "<Leader>dV",
+			}
+		},
+		commands = {
+			toggle_comment_debug_prints = nil,
+			delete_debug_prints = nil
+		}
+	},
+	keys = {
+	'<Leader>dc', '<Leader>dd', '<Leader>dp', '<Leader>dP', '<Leader>dw', '<Leader>dW',
+	{ '<Leader>dv', mode = { 'n', 'v' } },
+	{ '<Leader>dV', mode = { 'n', 'v' } }
 	}
 }
 
