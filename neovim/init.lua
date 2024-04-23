@@ -1588,7 +1588,6 @@ dark  { 'evergarden',                 '_'                                       
 darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
 dark  { 'github_dark',                'github-theme'                                                                               }
 darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
-dark  { 'github_dark_colorblind',     'github-theme'                                                                               }
 darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_default',        'github-theme'                                                                               }
 darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
