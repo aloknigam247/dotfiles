@@ -3057,6 +3057,7 @@ addPlugin {
 	end
 }
 
+-- TODO: progress
 -- https://github.com/mattn/efm-langserver
 -- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
@@ -3075,7 +3076,6 @@ addPlugin {
 	}
 }
 
--- TODO: progress
 addPlugin {
 	'williamboman/mason-lspconfig.nvim',
 	config = function()
