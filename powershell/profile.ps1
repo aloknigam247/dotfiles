@@ -322,8 +322,7 @@ $env:FZF_DEFAULT_OPTS='
     --color=fg:#ffffff,bg:-1,hl:#71b7c2
     --color=fg+:#f0a330,bg+:#873df5,hl+:#a7daeb
     --color=info:#afaf87,prompt:#d7005f,pointer:#ff59f1
-    --color=marker:#000000,spinner:#f0a6f5,header:#87afaf
-'
+    --color=marker:#000000,spinner:#f0a6f5,header:#87afaf'
 
 # Prompt Styling
 # ``````````````
