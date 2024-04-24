@@ -1880,7 +1880,7 @@ addPlugin {
 addPlugin {
 	'andrewferrier/debugprint.nvim',
 	dependencies = { 'echasnovski/mini.comment' },
-	lazy = false, -- BUG: lazy load https://github.com/andrewferrier/debugprint.nvim/issues/97
+	lazy = true,
 	opts = {
 		filetypes = {
 			['python'] = {
@@ -1893,20 +1893,20 @@ addPlugin {
 		},
 		keymaps = {
 			normal = {
-				plain_below = "<Leader>dp",
-				plain_above = "<Leader>dP",
-				variable_below = "<Leader>dv",
-				variable_above = "<Leader>dV",
-				variable_below_alwaysprompt = "<Leader>dw",
-				variable_above_alwaysprompt = "<Leader>dW",
+				plain_below = '<Leader>dp',
+				plain_above = '<Leader>dP',
+				variable_below = '<Leader>dv',
+				variable_above = '<Leader>dV',
+				variable_below_alwaysprompt = '<Leader>dw',
+				variable_above_alwaysprompt = '<Leader>dW',
 				textobj_below = nil,
 				textobj_above = nil,
-				toggle_comment_debug_prints = "<Leaader>dc",
-				delete_debug_prints = "<Leader>dd",
+				toggle_comment_debug_prints = '<Leaader>dc',
+				delete_debug_prints = '<Leader>dd',
 			},
 			visual = {
-				variable_below = "<Leader>dv",
-				variable_above = "<Leader>dV",
+				variable_below = '<Leader>dv',
+				variable_above = '<Leader>dV',
 			}
 		},
 		commands = {
@@ -3075,6 +3075,7 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 addPlugin {
 	'williamboman/mason-lspconfig.nvim',
 	config = function()
@@ -3228,18 +3229,18 @@ addPlugin {
 	end
 }
 
--- TODO: progress
 addPlugin {
 	'yaocccc/nvim-hl-mdcodeblock.lua',
 	config = function ()
-		require('hl-mdcodeblock').setup({
+		local code_block = require('hl-mdcodeblock')
+		code_block.setup({
 			events = {
 				'BufEnter',
 				'InsertLeave',
 				'TextChanged',
 				'WinScrolled'
 			},
-			hl_group = "MDCodeBlock",
+			hl_group = 'MDCodeBlock',
 			minumum_len = 10,
 			padding_right = 1,
 			query_by_ft = {
@@ -3255,7 +3256,7 @@ addPlugin {
 			timer_delay = 300,
 		})
 		vim.api.nvim_set_hl(0, 'MDCodeBlock', { bg = adaptiveBG(30, -10) })
-		require('hl-mdcodeblock').refresh()
+		code_block.refresh()
 	end,
 	dependencies = 'nvim-treesitter/nvim-treesitter',
 	event = 'CursorHold *.md'
