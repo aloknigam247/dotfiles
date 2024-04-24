@@ -138,6 +138,12 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022 [Preview]",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "commandline": "pwsh -Command 'if ($env:COMPUTERNAME -eq \"ALOKNIGAM-ODSP\") { D:\\ocd\\Onedrive.Storage\\init.ps1 }' -NoExit",
+                "guid": "{fe83dc9c-f1d1-4833-b2ba-fd99fdaffe98}",
+                "hidden": false,
+                "name": "ODC"
             }
         ]
     },
