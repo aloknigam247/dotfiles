@@ -140,7 +140,7 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "commandline": "& \"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -Command 'if ($env:COMPUTERNAME -eq \"ALOKNIGAM-ODSP\") { D:\\odc\\OneDrive.Storage\\init.ps1 }' -NoExit",
+                "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -Command 'if ($env:COMPUTERNAME -eq \"ALOKNIGAM-ODSP\") { D:\\odc\\OneDrive.Storage\\init.ps1 }' -NoExit",
                 "guid": "{fe83dc9c-f1d1-4833-b2ba-fd99fdaffe98}",
                 "hidden": false,
                 "name": "ODC"
