@@ -76,7 +76,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Tango Light",
+            "colorScheme": "Tango Dark",
             "experimental.retroTerminalEffect": false,
             "font": 
             {
