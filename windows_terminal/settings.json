@@ -126,24 +126,6 @@
                 "hidden": true,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
-            },
-            {
-                "guid": "{30c83e47-af1a-5fbf-a1b0-4af803c927b1}",
-                "hidden": false,
-                "name": "Developer Command Prompt for VS 2022 [Preview]",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{8ec6877f-45e8-560c-9ba9-516c619802f6}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2022 [Preview]",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -NoExit -Command 'if ($env:COMPUTERNAME -eq \"ALOKNIGAM-ODSP\") { D:\\odc\\OneDrive.Storage\\init.ps1 }'",
-                "guid": "{fe83dc9c-f1d1-4833-b2ba-fd99fdaffe98}",
-                "hidden": false,
-                "name": "ODC"
             }
         ]
     },
