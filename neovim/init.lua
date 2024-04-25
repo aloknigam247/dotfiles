@@ -1371,7 +1371,7 @@ addPlugin {
 }
 
 addPlugin {
-	'nvim-zh/colorful-winsep.nvim',
+	'nvim-zh/colorful-winsep.nvim', -- BUG: not working as expected
 	opts = {
 		-- FEAT: make bg same as Normal
 		create_event = function()
@@ -1877,6 +1877,7 @@ addPlugin {
 	'LiadOz/nvim-dap-repl-highlights',
 	config = true
 }
+
 addPlugin {
 	'andrewferrier/debugprint.nvim',
 	dependencies = { 'echasnovski/mini.comment' },
@@ -1901,7 +1902,7 @@ addPlugin {
 				variable_above_alwaysprompt = '<Leader>dW',
 				textobj_below = nil,
 				textobj_above = nil,
-				toggle_comment_debug_prints = '<Leaader>dc',
+				toggle_comment_debug_prints = '<Leader>dc',
 				delete_debug_prints = '<Leader>dd',
 			},
 			visual = {
@@ -3058,11 +3059,10 @@ addPlugin {
 }
 
 -- TODO: progress
--- https://github.com/mattn/efm-langserver
 -- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
 -- https://github.com/nvimtools/none-ls.nvim
--- https://github.com/p00f/clangd_extensions.nvim'
+-- https://github.com/p00f/clangd_extensions.nvim
 
 addPlugin {
 	'williamboman/mason.nvim',
@@ -4562,7 +4562,7 @@ addPlugin {
 	dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
 }
 
-addPlugin { -- FIX: needs fix
+addPlugin { -- FIX: needs fix for path issue
 	'cameron-wags/rainbow_csv.nvim',
 	config = true,
 	ft = 'csv'
