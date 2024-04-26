@@ -390,7 +390,7 @@ function promptGen {
                     }
                     elseif ($branch) {
                         $branch = $branch.Replace("heads/", "")
-                        $branch = $branch.Replace("users/$env:username", "~")
+                        $branch = $branch.Replace("user/$env:username", "~")
                         $git_branch = "  $branch "
                     }
                     $script:git_branch = $git_branch
@@ -406,7 +406,7 @@ function promptGen {
                 'sequence' = 4
                 'script'   = {
                     if ($script:git_branch -and (git status --porcelain)) {
-                        $script:git_diff = "󰦓 "
+                        $script:git_diff = "󰦓 "  # PERF: need to speed up
                     }
                     else {
                         $script:git_diff = ""
