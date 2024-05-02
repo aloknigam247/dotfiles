@@ -2727,7 +2727,8 @@ addPlugin {
 			csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
 			md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
 			mdx      = { color = '#519ABA', cterm_color = '67',  icon = '󰽛', name = 'Mdx'       },
-			todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'todo'      },
+			py       = { color = "#3D7BAB", cterm_color = "221", icon = '', name = 'Py'        },
+			todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Todo'      }
 		}
 	}
 }
