@@ -1550,6 +1550,7 @@ addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'      
 addPlugin { 'marko-cerovac/material.nvim',         event = 'User material'                                     }
 addPlugin { 'savq/melange',                        event = 'User melange'                                      }
 addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                       }
+addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                        }
 addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                            }
 addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                     }
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
@@ -1604,6 +1605,9 @@ dark  { 'kanagawa-wave',              'kanagawa'                                
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
 light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    } -- FIX: Visual
 dark  { 'melange',                    '_'                                                                                          }
+dark  { 'monet',                      '_'                                                                                          }
+darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
+light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
 light { 'monokai-nightasty',          '_'                                                                                          }
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
 dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
@@ -2032,6 +2036,7 @@ addPlugin {
 addPlugin {
 	'nvim-tree/nvim-tree.lua',
 	cmd = 'NvimTreeOpen',
+	dependencies = {'antosha417/nvim-lsp-file-operations', 'JMarkin/nvim-tree.lua-float-preview'},
 	opts = {
 		actions = {
 			change_dir = {
@@ -2138,6 +2143,9 @@ addPlugin {
 		notify = { threshold = vim.log.levels.INFO },
 		on_attach = function(bufnr)
 			vim.wo.statuscolumn = ''
+
+			require('float-preview').attach_nvimtree(bufnr)
+
 			--- Common optios with description
 			---@param desc string description
 			---@return table # common options with description
@@ -3522,9 +3530,9 @@ addPlugin {
 --- Default method to use until statuscol.nvim loads which then overrides it
 ---@return string
 function StatusCol()
-	return '%=%s%{v:lnum}%C '
+	return '%=%l%C '
 end
-vim.o.statuscolumn = "%!v:lua.StatusCol()" -- BUG: repeats number in wrap
+vim.o.statuscolumn = "%!v:lua.StatusCol()"
 
 addPlugin {
 	'luukvbaal/statuscol.nvim',
