@@ -1533,36 +1533,37 @@ local function light(opts)
 	colorPlugin(opts)
 end
 
-addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                          }
-addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                       }
-addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
-addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
-addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
-addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim' }
-addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
-addPlugin { 'eldritch-theme/eldritch.nvim',        event = 'User eldritch'                                     }
-addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                   }
-addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                   }
-addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                 }
-addPlugin { 'HoNamDuong/hybrid.nvim',              event = 'User hybrid'                                       }
-addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'                                      }
-addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'                                     }
-addPlugin { 'marko-cerovac/material.nvim',         event = 'User material'                                     }
-addPlugin { 'savq/melange',                        event = 'User melange'                                      }
-addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                       }
-addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                        }
-addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                            }
-addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                     }
-addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
-addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                      }
-addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
-addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
-addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
-addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                      }
-addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                   }
-addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'                                     }
-addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                       }
-addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                    }
+addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                                   }
+addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                                }
+addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim'          }
+addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                            }
+addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                            }
+addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim'          }
+addPlugin { 'sainnhe/edge',                        event = 'User edge'                                                  }
+addPlugin { 'eldritch-theme/eldritch.nvim',        event = 'User eldritch'                                              }
+addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                            }
+addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                            }
+addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                          }
+addPlugin { 'HoNamDuong/hybrid.nvim',              event = 'User hybrid'                                                }
+addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'                                               }
+addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'                                              }
+addPlugin { 'marko-cerovac/material.nvim',         event = 'User material'                                              }
+addPlugin { 'savq/melange',                        event = 'User melange'                                               }
+addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                                }
+addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                                 }
+addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                                     }
+addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                              }
+addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                                }
+addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                               }
+addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                               }
+addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                             }
+addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                               }
+addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                               }
+addPlugin { 'loganswartz/sunburn.nvim',            event = 'User sunburn', dependencies = 'loganswartz/polychrome.nvim' }
+addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                            }
+addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'                                              }
+addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                                }
+addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                             }
 
 dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
 light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
@@ -1628,11 +1629,12 @@ light { 'oxocarbon',                  '_',            post = fixOxocarbon       
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
 dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
+dark  { 'sunburn',                    '_',                                                                                         }
 dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
 darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
 dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
 dark  { 'vscode',                     '_'                                                                                          }
-light { 'vscode',                     '_'                                                                                          }
+light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
 dark  { 'zephyrium',                  '_'                                                                                          }
 
 ---Random colorscheme
@@ -2036,7 +2038,10 @@ addPlugin {
 addPlugin {
 	'nvim-tree/nvim-tree.lua',
 	cmd = 'NvimTreeOpen',
-	dependencies = {'antosha417/nvim-lsp-file-operations', 'JMarkin/nvim-tree.lua-float-preview'},
+	dependencies = {
+		'b0o/nvim-tree-preview.lua',
+		'antosha417/nvim-lsp-file-operations'
+	},
 	opts = {
 		actions = {
 			change_dir = {
@@ -2144,8 +2149,6 @@ addPlugin {
 		on_attach = function(bufnr)
 			vim.wo.statuscolumn = ''
 
-			require('float-preview').attach_nvimtree(bufnr)
-
 			--- Common optios with description
 			---@param desc string description
 			---@return table # common options with description
@@ -2185,39 +2188,41 @@ addPlugin {
 			end
 
 			local api = require('nvim-tree.api')
+			vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
+			vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
+			vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                 opts('Open'))
+			vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,       opts('CD'))
 			vim.keymap.set('n', '<C-e>',          api.node.open.replace_tree_buffer,  opts('Open: In Place'))
-			vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
-			vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
+			vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
 			vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
 			vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
-			vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
 			vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
+			vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
+			vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
 			vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview'))
 			vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
-			vim.keymap.set('n', '<',              api.node.navigate.sibling.prev,     opts('Previous Sibling'))
-			vim.keymap.set('n', '-',              api.tree.change_root_to_parent,     opts('Up'))
+			vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
+			vim.keymap.set('n', '[d',             api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
+			vim.keymap.set('n', ']c',             api.node.navigate.git.next,         opts('Next Git'))
+			vim.keymap.set('n', ']d',             api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
 			vim.keymap.set('n', 'a',              api.fs.create,                      opts('Create'))
 			vim.keymap.set('n', 'bd',             api.marks.bulk.delete,              opts('Delete Bookmarked'))
+			vim.keymap.set('n', 'bm',             api.marks.toggle,                   opts('Toggle Bookmark'))
 			vim.keymap.set('n', 'bmv',            api.marks.bulk.move,                opts('Move Bookmarked'))
 			vim.keymap.set('n', 'c',              api.fs.copy.node,                   opts('Copy'))
-			vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
-			vim.keymap.set('n', ']c',             api.node.navigate.git.next,         opts('Next Git'))
 			vim.keymap.set('n', 'd',              api.fs.remove,                      opts('Delete'))
 			vim.keymap.set('n', 'D',              api.fs.trash,                       opts('Trash'))
 			vim.keymap.set('n', 'E',              api.tree.expand_all,                opts('Expand All'))
-			vim.keymap.set('n', ']d',             api.node.navigate.diagnostics.next, opts('Next Diagnostic'))
-			vim.keymap.set('n', '[d',             api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
 			vim.keymap.set('n', 'F',              api.live_filter.clear,              opts('Clean Filter'))
 			vim.keymap.set('n', 'f',              api.live_filter.start,              opts('Filter'))
 			vim.keymap.set('n', 'g?',             api.tree.toggle_help,               opts('Help'))
 			vim.keymap.set('n', 'gy',             api.fs.copy.absolute_path,          opts('Copy Absolute Path'))
 			vim.keymap.set('n', 'H',              api.tree.toggle_hidden_filter,      opts('Toggle Filter: Dotfiles'))
 			vim.keymap.set('n', 'I',              api.tree.toggle_gitignore_filter,   opts('Toggle Filter: Git Ignore'))
-			vim.keymap.set('n', 'bm',             api.marks.toggle,                   opts('Toggle Bookmark'))
 			vim.keymap.set('n', 'o',              api.node.open.edit,                 opts('Open'))
 			vim.keymap.set('n', 'O',              api.node.open.no_window_picker,     opts('Open: No Window Picker'))
 			vim.keymap.set('n', 'p',              api.fs.paste,                       opts('Paste'))
-			vim.keymap.set('n', 'P',              api.node.navigate.parent,           opts('Parent Directory'))
+			vim.keymap.set('n', 'P',              require('nvim-tree-preview').watch, opts('Toggle Preview'))
 			vim.keymap.set('n', 'q',              api.tree.close,                     opts('Close'))
 			vim.keymap.set('n', 'r',              api.fs.rename,                      opts('Rename'))
 			vim.keymap.set('n', 'R',              api.tree.reload,                    opts('Refresh'))
@@ -2228,8 +2233,6 @@ addPlugin {
 			vim.keymap.set('n', 'x',              api.fs.cut,                         opts('Cut'))
 			vim.keymap.set('n', 'y',              api.fs.copy.filename,               opts('Copy Name'))
 			vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,          opts('Copy Relative Path'))
-			vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                 opts('Open'))
-			vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,       opts('CD'))
 		end,
 		prefer_startup_root = false,
 		reload_on_bufenter = false,
