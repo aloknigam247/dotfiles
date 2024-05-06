@@ -1,6 +1,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
--- ---@field count integer Number of times an autocommand is invoked
+-- ---@field cOunt integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
 -- ---@field avg number Avergae time taken by autocommand
 -- ---@field total number Total time taken by autocommand
@@ -1068,6 +1069,11 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
+--[[
+	FEAT: create command
+	command DiffOrig vert new | set buftype=nofile | read ++edit # | 0d_
+		\ | diffthis | wincmd p | diffthis
+--]]
 vim.api.nvim_create_user_command(
 	'DropbarToggle',
 	function()
@@ -1115,12 +1121,9 @@ addPlugin {
 		local Rule = require('nvim-autopairs.rule')
 		local cond = require('nvim-autopairs.conds')
 
-		pair.setup({
-			enable_check_bracket_line = false -- Don't add pairs if close pair is in the same line
-		})
+		pair.setup()
+		pair.add_rules(require('nvim-autopairs.rules.endwise-lua'))
 		pair.add_rules {
-			-- function() | end pair for lua
-			Rule('function() ', ' end', { 'lua' }),
 			-- #include <|> pair for c and cpp
 			Rule('#include <', '>', { 'c', 'cpp' }),
 			-- Add spaces in pair after parentheses
@@ -1179,7 +1182,6 @@ addPlugin {
 			:with_move(cond.none())
 			:with_del(cond.none())
 		}
-		-- FEAT: insert spaces before and after = in parameter in LSP
 		-- Insert `()` after select function or method item
 		local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 		local cmp = require('cmp')
@@ -1371,24 +1373,28 @@ addPlugin {
 }
 
 addPlugin {
-	'nvim-zh/colorful-winsep.nvim', -- BUG: not working as expected
-	opts = {
-		-- FEAT: make bg same as Normal
-		create_event = function()
-			local win_n = CountWindows(false)
-			if win_n < 3 then -- BUG: not working
-				require('colorful-winsep').NvimSeparatorDel()
+	'nvim-zh/colorful-winsep.nvim',
+	config = function()
+		require('colorful-winsep').setup({
+			symbols = {
+				icons.border_hor,
+				icons.border_vert,
+				icons.border_topleft,
+				icons.border_topright,
+				icons.border_botleft,
+				icons.border_botright,
+			},
+		})
+
+		local utils = require('colorful-winsep.utils')
+		utils.direction_have_orig = utils.direction_have
+		utils.direction_have = function(direction)
+			if CountWindows(false) > 2 then
+				return utils.direction_have_orig(direction)
 			end
-		end,
-		symbols = {
-			icons.border_hor,
-			icons.border_vert,
-			icons.border_topleft,
-			icons.border_topright,
-			icons.border_botleft,
-			icons.border_botright,
-		},
-	},
+			return false
+		end
+	end,
 	event = 'WinNew'
 }
 
@@ -1540,7 +1546,6 @@ addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'    
 addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                            }
 addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim'          }
 addPlugin { 'sainnhe/edge',                        event = 'User edge'                                                  }
-addPlugin { 'eldritch-theme/eldritch.nvim',        event = 'User eldritch'                                              }
 addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                            }
 addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                            }
 addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                          }
@@ -1549,11 +1554,13 @@ addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'       
 addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'                                              }
 addPlugin { 'marko-cerovac/material.nvim',         event = 'User material'                                              }
 addPlugin { 'savq/melange',                        event = 'User melange'                                               }
+addPlugin { 'mellow-theme/mellow.nvim',            event = 'User mellow'                                                }
 addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                                }
 addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                                 }
 addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                                     }
 addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                              }
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                                }
+addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'                                              }
 addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                               }
 addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                               }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                             }
@@ -1580,8 +1587,6 @@ dark  { 'deku',                       '_'                                       
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
 light { 'edge',                       '_'                                                                                          }
-dark  { 'eldritch',                   '_'                                                                                          }
-darkT { 'eldritch',                   '_',            cfg = { transparent = true }                                                 }
 dark  { 'everforest',                 '_'                                                                                          }
 dark  { 'evergarden',                 '_'                                                                                          }
 darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
@@ -1606,11 +1611,13 @@ dark  { 'kanagawa-wave',              'kanagawa'                                
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
 light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    } -- FIX: Visual
 dark  { 'melange',                    '_'                                                                                          }
+dark  { 'mellow',                     '_'                                                                                          }
 dark  { 'monet',                      '_'                                                                                          }
 darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
 light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
 light { 'monokai-nightasty',          '_'                                                                                          }
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
+dark  { 'oldworld',                   '_'                                                                                          }
 dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
 darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
 dark  { 'onedark',                    '_',            cfg = { style = 'dark' }                                                     }
@@ -4870,7 +4877,8 @@ addPlugin {
 }
 
 addPlugin {
-	'rickhowe/diffchar.vim', -- PERF: Load lazy
+	'rickhowe/diffchar.vim',
+	lazy = false
 }
 
 addPlugin {
