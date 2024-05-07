@@ -2634,8 +2634,14 @@ addPlugin {
 }
 
 addPlugin {
-	'FabijanZulj/blame.nvim', -- TODO: explore new options
-	cmd = 'ToggleBlame'
+	'FabijanZulj/blame.nvim',
+	opts = {
+		date_format = '%d/%m/%Y',
+		mappings = {
+			commit_info = '?',
+		}
+	},
+	cmd = 'BlameToggle'
 }
 
 addPlugin {
