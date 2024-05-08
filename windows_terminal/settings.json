@@ -109,10 +109,12 @@
                 "name": "Command Prompt"
             },
             {
+                "autoMarkPrompts": true,
                 "closeOnExit": "graceful",
                 "colorScheme": "PowerShell 7",
                 "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -nologo",
                 "elevate": false,
+                "experimental.rightClickContextMenu": true,
                 "font": 
                 {
                     "face": "JetBrainsMono NF"
@@ -122,6 +124,7 @@
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "opacity": 75,
+                "showMarksOnScrollbar": true,
                 "source": "Windows.Terminal.PowershellCore",
                 "useAcrylic": true
             },
@@ -133,7 +136,7 @@
             }
         ]
     },
-    "rendering.graphicsAPI": "direct2d",
+    "rendering.graphicsAPI": "direct3d11",
     "schemes": 
     [
         {
