@@ -1,3 +1,4 @@
+-- TODO: https://github.com/microsoft/terminal/issues/6987
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
