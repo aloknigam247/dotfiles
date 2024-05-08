@@ -136,7 +136,6 @@
             }
         ]
     },
-    "rendering.graphicsAPI": "direct3d11",
     "schemes": 
     [
         {
