@@ -1049,7 +1049,8 @@ vim.ui.input = function(...)
 	vim.ui.input(...)
 end
 
-vim.fn.matchadd( -- BUG: not working
+vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
+vim.fn.matchadd(
 	'HighlightURL',
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
 	hl_priority.url
@@ -4584,7 +4585,7 @@ addPlugin {
 
 addPlugin {
 	'cbochs/portal.nvim',
-	cmd = 'Portal', -- THOUGHT: can we replace it with Telescope
+	cmd = 'Portal',
 	dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
 }
 

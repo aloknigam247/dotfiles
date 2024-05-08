@@ -16,6 +16,18 @@
             "keys": "ctrl+r"
         },
         {
+            "command": "unbound",
+            "keys": "enter"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+insert"
+        },
+        {
+            "command": "unbound",
+            "keys": "shift+insert"
+        },
+        {
             "command": 
             {
                 "action": "copy",
@@ -114,7 +126,7 @@
                 "colorScheme": "PowerShell 7",
                 "commandline": "\"C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe\" -nologo",
                 "elevate": false,
-                "experimental.rightClickContextMenu": true,
+                "experimental.rightClickContextMenu": false,
                 "font": 
                 {
                     "face": "JetBrainsMono NF"
