@@ -133,6 +133,7 @@
             }
         ]
     },
+    "rendering.graphicsAPI": "direct2d",
     "schemes": 
     [
         {
