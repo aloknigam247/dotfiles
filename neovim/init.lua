@@ -968,6 +968,7 @@ vim.api.nvim_create_autocmd(
 -- vip select paragraph
 -- FEAT: visual motion mappings
 -- FEAT: [q ]q for jumping in quickfix
+-- FEAT: mapping to delete word on <C-Del>
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
@@ -2891,7 +2892,7 @@ addPlugin {
 }
 
 addPlugin {
-	'aznhe21/actions-preview.nvim',
+	'aznhe21/actions-preview.nvim', -- TODO: configure
 }
 
 addPlugin {
