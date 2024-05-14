@@ -38,7 +38,7 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 Remove-Alias ls
 Remove-Alias rm
 function bash    { D:\Scoop\apps\msys2\current\usr\bin\bash.exe -c $args[0] }
-function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always $args }
+function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always --theme 'gruvbox-dark' $args }
 function fnd     { D:\Scoop\apps\msys2\current\usr\bin\find.exe $args | D:\Scoop\apps\msys2\current\usr\bin\sed 's|/|\\|g' }
 function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
