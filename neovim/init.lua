@@ -1125,7 +1125,7 @@ addPlugin {
 		local cond = require('nvim-autopairs.conds')
 
 		pair.setup()
-		pair.add_rules(require('nvim-autopairs.rules.endwise-lua'))
+		-- pair.add_rules(require('nvim-autopairs.rules.endwise-lua'))
 		pair.add_rules {
 			-- #include <|> pair for c and cpp
 			Rule('#include <', '>', { 'c', 'cpp' }),
