@@ -129,13 +129,13 @@
                 "experimental.rightClickContextMenu": false,
                 "font": 
                 {
-                    "face": "JetBrainsMono NF"
+                    "builtinGlyphs": false
                 },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 75,
+                "opacity": 20,
                 "showMarksOnScrollbar": true,
                 "source": "Windows.Terminal.PowershellCore",
                 "useAcrylic": true

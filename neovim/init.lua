@@ -967,6 +967,7 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
 -- FEAT: visual motion mappings
+-- FEAT: [q ]q for jumping in quickfix
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
@@ -1541,6 +1542,13 @@ local function light(opts)
 	colorPlugin(opts)
 end
 
+---Add a transparent light plugin
+---@param opts ColorPlugin Color config
+local function lightT(opts)
+	opts.trans = true
+	dark(opts)
+end
+
 addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                                   }
 addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                                }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim'          }
@@ -1585,7 +1593,7 @@ darkT { 'bluloco',                    '_',            cfg = { transparent = true
 light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 darkT { 'cyberdream',                 '_'                                                                                          }
-light { 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      } -- TODO: transparent ?
+lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
@@ -1599,7 +1607,6 @@ darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transp
 dark  { 'github_dark_default',        'github-theme'                                                                               }
 darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_high_contrast',  'github-theme'                                                                               }
-darkT { 'github_dark_high_contrast',  'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
 darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
 light { 'github_light',               'github-theme'                                                                               }
@@ -3461,7 +3468,7 @@ addPlugin {
 		}
 		vim.cmd('packadd cfilter')
 	end,
-	dependencies = 'junegunn/fzf', -- THOUGHT: do we still need this dependency, even with FZF in system
+	dependencies = 'junegunn/fzf',
 	ft = 'qf'
 }
 -- <~>
