@@ -135,7 +135,7 @@
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 20,
+                "opacity": 70,
                 "showMarksOnScrollbar": true,
                 "source": "Windows.Terminal.PowershellCore",
                 "useAcrylic": true
