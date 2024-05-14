@@ -1585,6 +1585,7 @@ darkT { 'bluloco',                    '_',            cfg = { transparent = true
 light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 darkT { 'cyberdream',                 '_'                                                                                          }
+light { 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      } -- TODO: transparent ?
 dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
@@ -2207,7 +2208,7 @@ addPlugin {
 			vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
 			vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
 			vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
-			vim.keymap.set('n', '<leader>h',      api.node.show_info_popup,           opts('Info'))
+			vim.keymap.set('n', '<Leader>h',      api.node.show_info_popup,           opts('Info'))
 			vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview'))
 			vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
 			vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
@@ -3153,7 +3154,7 @@ addPlugin {
 			vim.keymap.set('n', '<F2>', '<cmd>Lspsaga rename<CR>', bufopts)
 			vim.keymap.set('n', '<M-F12>', '<cmd>Lspsaga finder<CR>', bufopts)
 			vim.keymap.set('n', '<S-F12>', vim.lsp.buf.references, bufopts)
-			vim.keymap.set('n', '<leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
+			vim.keymap.set('n', '<Leader>h', '<cmd>Lspsaga hover_doc<CR>', bufopts)
 			vim.keymap.set('n', '<C-.>', require("actions-preview").code_actions, bufopts)
 			vim.keymap.set('n', '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', bufopts)
 			vim.keymap.set('n', ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', bufopts)
@@ -4259,8 +4260,8 @@ addPlugin {
 addPlugin {
 	'nvim-treesitter/nvim-treesitter-textobjects',
 	keys = {
-		{ '<leader>sn', mode = 'n', desc = 'swap with next parameter' },
-		{ '<leader>sp', mode = 'n', desc = 'swap with previous parameter' },
+		{ '<Leader>sn', mode = 'n', desc = 'swap with next parameter' },
+		{ '<Leader>sp', mode = 'n', desc = 'swap with previous parameter' },
 		{ '[[', mode = 'n', desc = 'jump to previous class' },
 		{ '[m', mode = 'n', desc = 'jump to previous method' },
 		{ ']]', mode = 'n', desc = 'jump to next class' },
@@ -4298,10 +4299,10 @@ addPlugin {
 			swap = {
 				enable = true,
 				swap_next = {
-					['<leader>sn'] = '@parameter.inner',
+					['<Leader>sn'] = '@parameter.inner',
 				},
 				swap_previous = {
-					['<leader>sp'] = '@parameter.inner',
+					['<Leader>sp'] = '@parameter.inner',
 				}
 			}
 		}
@@ -4598,7 +4599,7 @@ addPlugin { -- FIX: needs fix for path issue
 addPlugin {
 	'cshuaimin/ssr.nvim',
 	keys = {
-		{ '<leader>sr', function() require('ssr').open() end, mode = { 'n', 'x' }, desc = 'Structural Search and Replace' }
+		{ '<Leader>sr', function() require('ssr').open() end, mode = { 'n', 'x' }, desc = 'Structural Search and Replace' }
 	},
 	opts = {
 		adjust_window = true,
@@ -4607,7 +4608,7 @@ addPlugin {
 			close = 'q',
 			next_match = 'n',
 			prev_match = 'N',
-			replace_all = '<leader><cr>',
+			replace_all = '<Leader><cr>',
 			replace_confirm = '<cr>',
 		},
 		max_height = 25,
