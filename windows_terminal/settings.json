@@ -145,6 +145,12 @@
                 "hidden": true,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
+            },
+            {
+                "commandline": "ssh azuread\\aloknigam@microsoft.com@ALOKNIGAM-ODSP",
+                "guid": "{8be8c650-0acb-44b1-bc73-37b981de72cd}",
+                "hidden": false,
+                "name": "Devbox"
             }
         ]
     },
