@@ -1,4 +1,4 @@
--- TODO: https://github.com/microsoft/terminal/issues/6987
+-- TODO: https://github.com/microsoft/terminal/issues/6987 https://www.reddit.com/r/neovim/comments/1ct8s6a/nvim_rendering_error_in_windows_ssh/
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
@@ -1055,7 +1055,7 @@ vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 vim.fn.matchadd(
 	'HighlightURL',
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
-	hl_priority.url
+	202
 )
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
@@ -3096,6 +3096,9 @@ addPlugin {
 }
 
 -- TODO: progress
+addPlugin {
+	'mfussenegger/nvim-lint'
+}
 -- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
 -- https://github.com/nvimtools/none-ls.nvim
