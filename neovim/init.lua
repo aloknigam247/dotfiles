@@ -2892,7 +2892,8 @@ addPlugin {
 }
 
 addPlugin {
-	'aznhe21/actions-preview.nvim', -- TODO: configure
+	'aznhe21/actions-preview.nvim',
+	dependencies = 'nvim-telescope/telescope.nvim'
 }
 
 addPlugin {
