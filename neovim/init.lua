@@ -1613,7 +1613,6 @@ darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transp
 light { 'github_light',               'github-theme'                                                                               }
 light { 'github_light_colorblind',    'github-theme'                                                                               }
 light { 'github_light_default',       'github-theme'                                                                               }
-light { 'github_light_high_contrast', 'github-theme'                                                                               }
 light { 'github_light_tritanopia',    'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
 darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }

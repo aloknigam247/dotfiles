@@ -1,3 +1,4 @@
+# FEAT: box comment
 # Auto Update
 # ```````````
 if ([Environment]::UserInteractive) {
@@ -157,7 +158,7 @@ function scmd {
     cmd $cmd
 }
 
-# Get TODO from current directory
+# Get TODOs from current directory
 function Get-TODO {
     param(
         [Parameter(Position = 0)]
@@ -317,6 +318,7 @@ Set-PsFzfOption `
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
+# FEAT: review colors
 $env:FZF_DEFAULT_OPTS='
     --height=~70% --layout=reverse --border=rounded --border-label=" FZF " --border-label-pos=5 --info=inline --prompt=" " --pointer="→" --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)"
     --color=fg:#ffffff,bg:-1,hl:#71b7c2
@@ -372,7 +374,7 @@ function promptGen {
                 'sequence' = 1
                 'script'   = {
                     $git_branch = ""
-                    $branch = git rev-parse --abbrev-ref HEAD
+                    $branch = git rev-parse --abbrev-ref HEAD # TODO: Use Get-GitStatus
                     if ($null -eq $branch) {
                         $git_branch = ""
                     }
@@ -405,8 +407,9 @@ function promptGen {
             'execute' = @{
                 'sequence' = 4
                 'script'   = {
+                    # FEAT: use Get-GitStatus to print ahead and behind counts
                     if ($script:git_branch -and (git status --porcelain)) {
-                        $script:git_diff = "󰦓 "  # PERF: need to speed up
+                        $script:git_diff = "󰦓 "  # TODO: Use Get-GitStatus
                     }
                     else {
                         $script:git_diff = ""
@@ -468,6 +471,7 @@ function prompt {
     $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
 }
 
+# FEAT: review colors
 Set-PSReadLineOption -Colors @{
     "Command" = (Format-Text -headOnly -fg "#F42C04" -styles "bold");
     "Comment" = (Format-Text -headOnly -fg "#989FCE");
