@@ -1,4 +1,5 @@
--- TODO: https://github.com/microsoft/terminal/issues/6987 https://www.reddit.com/r/neovim/comments/1ct8s6a/nvim_rendering_error_in_windows_ssh/
+-- BUG: https://github.com/microsoft/terminal/issues/6987 https://www.reddit.com/r/neovim/comments/1ct8s6a/nvim_rendering_error_in_windows_ssh/
+-- BUG: https://github.com/neovide/neovide/issues/2556
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
@@ -1034,10 +1035,10 @@ vim.highlight.priorities = {
 }
 
 -- Lazy load notify
-vim.notify = function(...)
+--[[vim.notify = function(...)
 	require('notify')
 	vim.notify(...)
-end
+end]]
 
 -- Lazy load dressing
 vim.ui.select = function(...)
