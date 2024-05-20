@@ -59,6 +59,18 @@ gui:
   animateExplosion: true # shows an explosion animation when nuking the working tree
   portraitMode: 'auto' # one of 'auto' | 'never' | 'always'
   filterMode: 'substring' # one of 'substring' | 'fuzzy'; see 'Filtering' section below
+  spinner:
+    # The frames of the spinner animation.
+    frames:
+      - '◜'
+      - '◠'
+      - '◝'
+      - '◞'
+      - '◡'
+      - '◟'
+
+    # The "speed" of the spinner in milliseconds.
+    rate: 50
 git:
   paging:
     colorArg: always
