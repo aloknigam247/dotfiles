@@ -49,7 +49,7 @@ function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 
 function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree    { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -CF $args }
 function treea   { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -aCF $args }
-function v($arg) { Start-Job -ScriptBlock {D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg} | ForEach-Object { "Job Id: " + $_.Id } }
+function v($arg) { Start-Job -ScriptBlock {D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs  --opengl -- $using:arg} | ForEach-Object { "Job Id: " + $_.Id } }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
