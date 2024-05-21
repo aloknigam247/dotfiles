@@ -1651,7 +1651,7 @@ dark  { 'sunburn',                    '_',                                      
 dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
 darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
 dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
-dark  { 'vscode',                     '_'                                                                                          }
+dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
 light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
 dark  { 'zephyrium',                  '_'                                                                                          }
 
@@ -3516,7 +3516,6 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: https://github.com/aaditeynair/conduct.nvim
 addPlugin {
 	'rmagatti/auto-session',
 	cmd = 'SessionSave',
