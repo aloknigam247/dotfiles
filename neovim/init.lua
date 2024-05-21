@@ -126,7 +126,7 @@
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- Variables</>
+-- Variables</> -- FEAT: box comment
 ------------
 
 ---Shapes for dotted border
@@ -220,6 +220,8 @@ local icons = {
 	folder_close = '',
 }
 
+---Defines highlight for kinds
+---@type table<string, table>
 local kind_hl = {
 	Array         = { icon  = ' ' , dark = { bg = '#F42272', fg = '#000000' }, light = { bg = '#0B6E4F', fg = '#FFFFFF' } },
 	Boolean       = { icon  = ' ' , dark = { bg = '#B8B8F3', fg = '#000000' }, light = { bg = '#69140E', fg = '#FFFFFF' } },
@@ -257,6 +259,14 @@ local kind_hl = {
 	Unit          = { icon  = ' ' , dark = { bg = '#C97B84', fg = '#000000' }, light = { bg = '#FF6666', fg = '#000000' } },
 	Value         = { icon  = ' ' , dark = { bg = '#C6DDF0', fg = '#000000' }, light = { bg = '#2EC4B6', fg = '#000000' } },
 	Variable      = { icon  = ' ' , dark = { bg = '#B7ADCF', fg = '#000000' }, light = { bg = '#548687', fg = '#FFFFFF' } }
+}
+
+---Global keymaps
+---@type table<string, string>
+local keymaps = {
+	open_split = '<C-s>',
+	open_tab = '<C-t>',
+	open_vsplit = '<C-v>',
 }
 
 local lazy_config = {
@@ -971,8 +981,8 @@ vim.api.nvim_create_autocmd(
 -- FEAT: [q ]q for jumping in quickfix
 -- FEAT: mapping to delete word on <C-Del>
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
-vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
-vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
+vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' }) -- BUG: escaping while moving create problem in LSP
+vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' }) -- BUG: escaping while moving create problem in LSP
 vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'Move a larger word backword' })
 vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'Move a larger word forward' })
 vim.keymap.set('n', '!!',          ':<Up><CR>',                { desc = 'Run last command' })
@@ -1612,7 +1622,6 @@ dark  { 'github_dark_high_contrast',  'github-theme'                            
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
 darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
 light { 'github_light',               'github-theme'                                                                               }
-light { 'github_light_colorblind',    'github-theme'                                                                               }
 light { 'github_light_default',       'github-theme'                                                                               }
 light { 'github_light_tritanopia',    'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
@@ -2914,7 +2923,7 @@ addPlugin {
 }
 
 addPlugin {
-	'glepnir/lspsaga.nvim', -- TODO: how to jump in finder/preview window files
+	'glepnir/lspsaga.nvim',
 	cmd = 'Lspsaga',
 	opts = {
 		beacon = {
@@ -2954,6 +2963,13 @@ addPlugin {
 		},
 		finder = {
 			default = 'tyd+ref+imp+def',
+			keys = {
+				shuttle = '<TAB>',
+				split = keymaps.open_split,
+				tabe = keymaps.open_tab,
+				toggle_or_open = '<CR>',
+				vsplit = keymaps.open_vsplit
+			},
 			open = {
 				'o',
 				'<CR>',
