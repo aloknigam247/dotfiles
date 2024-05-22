@@ -995,15 +995,6 @@ vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'Move a 
 vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'Move a larger word forward' })
 vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'Move a larger word backword' })
 vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'Move to next tab' })
-vim.keymap.set('n', '<M-=>',       '<cmd>wincmd =<CR>',        { desc = 'Realign windows to equal size' })
-vim.keymap.set('n', '<M-Down>',    '<cmd>res -1<cr>',          { desc = 'Reduce current window height' })
-vim.keymap.set('n', '<M-Left>',    '<cmd>vert res -1<cr>',     { desc = 'Reduce current window width' })
-vim.keymap.set('n', '<M-Right>',   '<cmd>vert res +1<cr>',     { desc = 'Increase current window width' })
-vim.keymap.set('n', '<M-Up>',      '<cmd>res +1<cr>',          { desc = 'Increase current window height' })
-vim.keymap.set('n', '<M-h>',       '<cmd>wincmd h<CR>',        { desc = 'Move to window left' })
-vim.keymap.set('n', '<M-j>',       '<cmd>wincmd j<CR>',        { desc = 'Move to window down' })
-vim.keymap.set('n', '<M-k>',       '<cmd>wincmd k<CR>',        { desc = 'Move to window right' })
-vim.keymap.set('n', '<M-l>',       '<cmd>wincmd l<CR>',        { desc = 'Move to window above' })
 vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'Jump forward' })
 vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump backword' })
 vim.keymap.set('n', '_',           '<cmd>resize<CR>',          { desc = 'Make current window height maximum' })
@@ -4609,10 +4600,17 @@ addPlugin {
 				}
 			},
 			heads = {
+				{ '<Down>', function() vim.cmd('res -1') end, { desc = 'Decrease height' } },
+				{ '<Left>', function() vim.cmd('vert res +1') end, { desc = 'Increase width' } },
+				{ '<Right>', function() vim.cmd('vert res -1') end, { desc = 'Dencrease width' } },
+				{ '<Up>', function() vim.cmd('res +1') end, { desc = 'Increase height' } },
 				{ 'h', function() vim.cmd('wincmd h') end, { desc = 'Move left' } },
 				{ 'j', function() vim.cmd('wincmd j') end, { desc = 'Move down' } },
 				{ 'k', function() vim.cmd('wincmd k') end, { desc = 'Move right' } },
 				{ 'l', function() vim.cmd('wincmd l') end, { desc = 'Move up' } },
+				{ '=', function() vim.cmd('wincmd =') end, { desc = 'Realign windows', exit = true } },
+				{ '-', function() vim.cmd('resize') end, { desc = 'Max height', exit = true } },
+				{ '|', function() vim.cmd('vertical-resize') end, { desc = 'Max width', exit = true } }
 			},
 			hint = '[Window Controls]'
 		})
