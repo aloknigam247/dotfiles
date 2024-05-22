@@ -4590,7 +4590,18 @@ addPlugin {
 }
 
 -- FEAT: hydra mappings for windows
--- https://github.com/anuvyklack/hydra.nvim
+-- addPlugin {
+-- 	'anuvyklack/hydra.nvim'
+-- 	config = function()
+-- 		local hydra = require('hydra')
+
+-- 		hydra({
+-- 			name = 'Window Control',
+-- 			mode = 'n'
+-- 			body = '<leader>w'
+-- 		})
+-- 	end
+-- }
 
 addPlugin {
 	'ariel-frischer/bmessages.nvim', -- FIX: conflicts with Noice
