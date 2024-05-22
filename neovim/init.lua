@@ -131,7 +131,7 @@
 
 ---Shapes for dotted border
 ---@type string[]
-local dotted_border = {'╭', '󰇘', '╮', '┆', '╯', '󰇘', '╰', '┆'}
+local dotted_border = { '╭', '󰇘', '╮', '┆', '╯', '󰇘', '╰', '┆' }
 
 ---Defines highlight priorities for vairous components
 ---@type table<string, integer>
@@ -980,6 +980,8 @@ vim.api.nvim_create_autocmd(
 -- FEAT: visual motion mappings
 -- FEAT: [q ]q for jumping in quickfix
 -- FEAT: mapping to delete word on <C-Del>
+-- FEAT: use <C-w> to save
+-- TODO: recheck word-motions help and reassign mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' }) -- BUG: escaping while moving create problem in LSP
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' }) -- BUG: escaping while moving create problem in LSP
@@ -4589,19 +4591,34 @@ addPlugin {
 	}
 }
 
--- FEAT: hydra mappings for windows
--- addPlugin {
--- 	'anuvyklack/hydra.nvim'
--- 	config = function()
--- 		local hydra = require('hydra')
-
--- 		hydra({
--- 			name = 'Window Control',
--- 			mode = 'n'
--- 			body = '<leader>w'
--- 		})
--- 	end
--- }
+addPlugin {
+	'anuvyklack/hydra.nvim',
+	config = function()
+		local hydra = require('hydra')
+		hydra({
+			name = 'Window Control',
+			mode = 'n',
+			body = 'W',
+			config = {
+				invoke_on_body = true,
+				desc = 'Enable window controls',
+				hint = {
+					type = 'window',
+					position = 'middle',
+					border = dotted_border
+				}
+			},
+			heads = {
+				{ 'h', function() vim.cmd('wincmd h') end, { desc = 'Move left' } },
+				{ 'j', function() vim.cmd('wincmd j') end, { desc = 'Move down' } },
+				{ 'k', function() vim.cmd('wincmd k') end, { desc = 'Move right' } },
+				{ 'l', function() vim.cmd('wincmd l') end, { desc = 'Move up' } },
+			},
+			hint = '[Window Controls]'
+		})
+	end,
+	lazy = false
+}
 
 addPlugin {
 	'ariel-frischer/bmessages.nvim', -- FIX: conflicts with Noice
