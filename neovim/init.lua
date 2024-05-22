@@ -3129,39 +3129,39 @@ addPlugin {
 	'williamboman/mason-lspconfig.nvim',
 	config = function()
 		-- Lsp timeout
-		Lsp_timer = vim.uv.new_timer()
-		vim.api.nvim_create_autocmd(
-			'FocusLost', {
-				pattern = '*',
-				desc = 'Stop LSP on focus lost',
-				once = false,
-				callback = function()
-					vim.api.nvim_create_autocmd(
-						'FocusGained', {
-							pattern = '*',
-							desc = 'Start LSP on focus gained',
-							once = true,
-							callback = function()
-								Lsp_timer:stop()
-								Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
-									if not isLspAttached() then
-										vim.notify('LSP resumed')
-										vim.cmd.LspStart()
-									end
-								end))
-							end
-						}
-					)
-					Lsp_timer:stop()
-					Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
-						if isLspAttached() then
-							vim.notify('LSP hibernated')
-							vim.cmd.LspStop()
-						end
-					end))
-				end
-			}
-		)
+		-- Lsp_timer = vim.uv.new_timer()
+		-- vim.api.nvim_create_autocmd(
+		-- 	'FocusLost', {
+		-- 		pattern = '*',
+		-- 		desc = 'Stop LSP on focus lost',
+		-- 		once = false,
+		-- 		callback = function()
+		-- 			vim.api.nvim_create_autocmd(
+		-- 				'FocusGained', {
+		-- 					pattern = '*',
+		-- 					desc = 'Start LSP on focus gained',
+		-- 					once = true,
+		-- 					callback = function()
+		-- 						Lsp_timer:stop()
+		-- 						Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+		-- 							if not isLspAttached() then
+		-- 								vim.notify('LSP resumed')
+		-- 								vim.cmd.LspStart()
+		-- 							end
+		-- 						end))
+		-- 					end
+		-- 				}
+		-- 			)
+		-- 			Lsp_timer:stop()
+		-- 			Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
+		-- 				if isLspAttached() then
+		-- 					vim.notify('LSP hibernated')
+		-- 					vim.cmd.LspStop()
+		-- 				end
+		-- 			end))
+		-- 		end
+		-- 	}
+		-- )
 
 		local mason_lspconfig = require('mason-lspconfig')
 		local on_attach = function(_, bufnr)
