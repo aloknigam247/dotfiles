@@ -1699,10 +1699,28 @@ function ColoRand(scheme_index)
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: setup
--- FEAT: better command
 addPlugin {
-	'LudoPinelli/comment-box.nvim'
+	-- FEAT: Comment box
+	-- 1. Create command CB to handle all cases of CB*
+	-- 2. Create catalogue with telescope
+	-- 3. Create tele catalogue with live text rendering
+	'LudoPinelli/comment-box.nvim',
+	cmd = 'CB',
+	config = function()
+		vim.api.nvim_create_user_command('CB',
+			function(opts)
+				print('DEBUGPRINT[1]: init.lua:1712: opts=' .. vim.inspect(opts))
+				-- Command parsing logic should be common from utils
+				-- Position of the box
+				-- Position of the text
+				-- line/box
+				-- style
+				-- completion
+			end, {
+			desc = 'Create commnent box',
+			nargs = '*'
+		})
+	end
 }
 
 addPlugin {
@@ -4462,7 +4480,7 @@ addPlugin {
 					view = nil,
 					opts = {},
 				},
-				-- signature = {
+				-- signature = { -- FEAT: enable it
 				-- 	enabled = true,
 				-- 	auto_open = {
 				-- 		enabled = true,
