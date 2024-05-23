@@ -980,7 +980,6 @@ vim.api.nvim_create_autocmd(
 -- FEAT: visual motion mappings
 -- FEAT: [q ]q for jumping in quickfix
 -- FEAT: mapping to delete word on <C-Del>
--- FEAT: use <C-w> to save
 -- TODO: recheck word-motions help and reassign mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' }) -- BUG: escaping while moving create problem in LSP
@@ -995,6 +994,7 @@ vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'Move a 
 vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'Move a larger word forward' })
 vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'Move a larger word backword' })
 vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'Move to next tab' })
+vim.keymap.set('n', '<C-w>',       '<cmd>w<CR>',               { desc = 'Save file' })
 vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'Jump forward' })
 vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump backword' })
 vim.keymap.set('n', '_',           '<cmd>resize<CR>',          { desc = 'Make current window height maximum' })
