@@ -810,9 +810,14 @@ end
 -- Classes</>
 
 -- FEAT: create class annotation
+---@class CmdOptions
+
+---@type CmdOptions
 CmdOptions = {}
 CmdOptions.__index = CmdOptions
 
+--- CmdOptions constructor
+---@return CmdOptions
 function CmdOptions:new()
 	local instance = {
 		option_config = {},
@@ -827,7 +832,7 @@ end
 ---@param possibleValues string[] option values
 ---@param def string? default value
 function CmdOptions:addOption(optionName, possibleValues, def)
-	self.option_config[optionName] = possibleValues
+	self.option_config[optionName] = possibleValues or {}
 	self.option_value[optionName] = def
 end
 
@@ -835,7 +840,8 @@ function CmdOptions:getOptions()
 	return vim.tbl_keys(self.option_config)
 end
 
-function CmdOptions:option()
+function CmdOptions:option(name)
+	return self.option_value[name]
 end
 
 ---Get possible values for an option
@@ -1499,14 +1505,14 @@ local function fixLineNr(fg)
 	vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
---- Fix oxocarbon colorscheme
+---Fix oxocarbon colorscheme
 local function fixOxocarbon()
 	vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#2A9D8F', nocombine = true })
 	vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#540D6E', nocombine = true })
 	vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#EE4266', nocombine = true })
 end
 
---- Fix retrobox colorscheme
+---Fix retrobox colorscheme
 local function fixRetro()
 	vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#B8BB26', nocombine = true })
 	vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#8EC07C', nocombine = true })
@@ -1521,21 +1527,21 @@ local function fixVisual(bg)
 	vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
 end
 
---- Fix ayu colorscheme
+---Fix ayu colorscheme
 local function fixAyu()
 	vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAddLn' })
 	vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'GitSignsDeleteLn' })
 	vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
 end
 
---- Fix material colorscheme
+---Fix material colorscheme
 local function fixMaterial()
 	vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#91B859', nocombine = true })
 	vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#E53935', nocombine = true })
 	fixVisual('#CCEAE7')
 end
 
---- Fix sherbet colorscheme
+---Fix sherbet colorscheme
 local function fixSherbet()
 	vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment', force = true })
 end
@@ -1555,7 +1561,7 @@ end
 ---@field post? fun():nil function to call after applying colorscheme
 ---@field pre? fun():nil function to call before applying colorscheme
 ---@field trans? boolean enable transparent mode
---- List of color plugins
+---List of color plugins
 ---@type ColorPlugin[]
 local colos = {}
 
@@ -1760,36 +1766,44 @@ end
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	-- FEAT: Comment box
-	-- 1. Create command CB to handle all cases of CB*
 	-- 2. Create catalogue with telescope
 	-- 3. Create telescope catalogue with live text rendering
 	'LudoPinelli/comment-box.nvim',
 	cmd = 'CB',
 	config = function()
+		local cb = require('comment-box')
 		local cb_options = CmdOptions:new()
 
-		cb_options:addOption('box', { 'center', 'left', 'right' }, 'left')
-		cb_options:addOption('line', { 'center', 'left', 'right' }, 'left')
-		cb_options:addOption('case', { 'box', 'line' }, 'line')
+		cb_options:addOption('box', { 'c', 'l', 'r' }, 'l')
+		cb_options:addOption('line', { 'c', 'l', 'r' }, 'l')
+		cb_options:addOption('type', { 'box', 'line' }, 'line')
+		cb_options:addOption('style')
 
-		vim.api.nvim_create_user_command('CB',
-			function(opts)
-				cb_options:parseOptions(opts.fargs)
-				-- Position of the box
-				-- Position of the text
-				-- line/box
-				-- Visual select
-				-- style
-			end, {
+		local function exec(opts)
+			cb_options:parseOptions(opts.fargs)
+			local func_name = cb_options:option('box') .. cb_options:option('line') .. cb_options:option('type')
+			local nvim_buf_set_lines_orig = vim.api.nvim_buf_set_lines
+			vim.api.nvim_buf_set_lines = function(_, _, _, _, text)
+				print('DEBUGPRINT[1]: init.lua:1786: text=' .. vim.inspect(text))
+			end
+			cb[func_name](cb_options:option('style'))
+			vim.api.nvim_buf_set_lines = nvim_buf_set_lines_orig
+			-- Catalogue
+			-- Visual select
+		end
+
+		local function cb_complete(lead)
+			if lead == "" then
+				return cb_options:getOptions()
+			else
+				return cb_options:getOptionValues(string.sub(lead, 1, -2))
+			end
+		end
+
+		vim.api.nvim_create_user_command('CB', exec, {
 			desc = 'Create commnent box',
 			nargs = '*',
-			complete = function(lead)
-				if lead == "" then
-					return cb_options:getOptions()
-				else
-					return cb_options:getOptionValues(string.sub(lead, 1, -2))
-				end
-			end
+			complete = cb_complete
 		})
 	end
 }
@@ -2258,14 +2272,14 @@ addPlugin {
 		on_attach = function(bufnr)
 			vim.wo.statuscolumn = ''
 
-			--- Common optios with description
+			---Common optios with description
 			---@param desc string description
 			---@return table # common options with description
 			local function opts(desc)
 			  return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
 			end
 
-			--- Preview for NvimTree
+			---Preview for NvimTree
 			local function custom_preview()
 				local node = require("nvim-tree.lib").get_node_at_cursor()
 				if node.name == ".." then
@@ -3655,7 +3669,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
---- Default method to use until statuscol.nvim loads which then overrides it
+---Default method to use until statuscol.nvim loads which then overrides it
 ---@return string
 function StatusCol()
 	return '%=%l%C '
