@@ -1765,9 +1765,6 @@ end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- FEAT: Comment box
-	-- 2. Create catalogue with telescope
-	-- 3. Create telescope catalogue with live text rendering
 	'LudoPinelli/comment-box.nvim',
 	cmd = 'CB',
 	config = function()
@@ -1780,31 +1777,21 @@ addPlugin {
 		cb_options:addOption('style')
 
 		local function exec(opts)
+			-- FEAT: Visual select
 			cb_options:parseOptions(opts.fargs)
 			local func_name = cb_options:option('box') .. cb_options:option('line') .. cb_options:option('type')
-			local nvim_buf_set_lines_orig = vim.api.nvim_buf_set_lines
-			vim.api.nvim_buf_set_lines = function(_, _, _, _, text)
-				print('DEBUGPRINT[1]: init.lua:1786: text=' .. vim.inspect(text))
-			end
 			cb[func_name](cb_options:option('style'))
-			vim.api.nvim_buf_set_lines = nvim_buf_set_lines_orig
-			-- Catalogue
-			-- Visual select
 		end
 
 		local function cb_complete(lead)
 			if lead == "" then
 				return cb_options:getOptions()
 			else
-				return cb_options:getOptionValues(string.sub(lead, 1, -2))
+				return cb_options:getOptionValues(string.sub(lead, 1, -2)) -- clip = and call
 			end
 		end
 
-		vim.api.nvim_create_user_command('CB', exec, {
-			desc = 'Create commnent box',
-			nargs = '*',
-			complete = cb_complete
-		})
+		vim.api.nvim_create_user_command('CB', exec, { desc = 'Create commnent box', nargs = '*', complete = cb_complete })
 	end
 }
 
