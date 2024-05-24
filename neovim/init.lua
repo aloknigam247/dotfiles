@@ -615,7 +615,7 @@ local function isLspAttached()
 	return #vim.lsp.get_clients({bufnr = 0}) ~= 0
 end
 
---- Check if buffer is a large file
+---Check if buffer is a large file
 ---@param bufId? integer buf id
 ---@return boolean # true if buffer is large file
 local function isLargeFile(bufId)
@@ -782,7 +782,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	})
 end
 
---- Create popup menu when invoked
+---Create popup menu when invoked
 local function popupAction()
 	-- local currentWindow = vim.api.nvim_get_current_win()
 	-- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
@@ -807,13 +807,72 @@ local function popupMenuAdd(menu)
 	table.insert(pop_up_menu, menu)
 end
 -- <~>
+-- Classes</>
+
+-- FEAT: create class annotation
+CmdOptions = {}
+CmdOptions.__index = CmdOptions
+
+function CmdOptions:new()
+	local instance = {
+		option_config = {},
+		option_value = {}
+	}
+	setmetatable(instance, CmdOptions)
+	return instance
+end
+
+---Add an option
+---@param optionName string option name
+---@param possibleValues string[] option values
+---@param def string? default value
+function CmdOptions:addOption(optionName, possibleValues, def)
+	self.option_config[optionName] = possibleValues
+	self.option_value[optionName] = def
+end
+
+function CmdOptions:getOptions()
+	return vim.tbl_keys(self.option_config)
+end
+
+function CmdOptions:option()
+end
+
+---Get possible values for an option
+---@param optionName string option name
+---@return string[] # option values
+function CmdOptions:getOptionValues(optionName)
+	return self.option_config[optionName]
+end
+
+---Parse options with format key=value, throws error on invalid options
+---@param option_list string[] list of options
+---@return boolean # true if invalid options are present
+function CmdOptions:parseOptions(option_list)
+	local error = false
+
+	for _, option in pairs(option_list) do
+		local splits = vim.split(option, '=')
+		local key = splits[1]
+		local val = splits[2]
+		if vim.list_contains(self:getOptions(), key) then
+			self.option_value[key] = val
+		else
+			error = true
+			vim.notify('Invalid option ' .. key, vim.log.levels.ERROR)
+		end
+	end
+
+	return error
+end
+-- <~>
 -- Auto Commands</>
 -- -------------
 vim.api.nvim_create_autocmd(
 	'BufEnter', {
 		pattern = '*',
 		desc = 'Open directory in nvim-tree',
-		callback = function(arg)
+		callback = function()
 			local path = vim.fn.expand('%:p')
 			if vim.fn.isdirectory(path) ~= 0 then
 				require("nvim-tree.api").tree.open({path = path})
@@ -842,7 +901,7 @@ vim.api.nvim_create_autocmd(
 		desc = 'Detect large files and disable slow plugins',
 		callback = function(arg)
 			local fsize = vim.fn.getfsize(vim.fn.expand('%:p'))
-			if fsize > 170000 then
+			if fsize > 200000 then
 				LargeFile[arg.buf] = true
 				vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
 				require('illuminate').pause_buf()
@@ -908,7 +967,7 @@ vim.api.nvim_create_autocmd(
 	'CmdlineEnter', {
 		pattern = { '/', '?' },
 		desc = 'Shift commandline for search',
-		callback = function(arg)
+		callback = function()
 			vim.cmd('set cmdheight=1')
 		end
 	}
@@ -928,7 +987,7 @@ vim.api.nvim_create_autocmd(
 	'CursorHold', {
 		pattern = '*',
 		desc = 'Load Treesitter on CursorHold for installed languages',
-		callback = function(arg)
+		callback = function()
 			local ftype = vim.o.filetype
 			if vim.tbl_contains(getTSInstlled(false), ftype) then
 				vim.cmd('Lazy load nvim-treesitter')
@@ -1056,7 +1115,7 @@ vim.ui.input = function(...)
 end
 
 vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
-vim.fn.matchadd(
+vim.fn.matchadd( -- BUG: not working
 	'HighlightURL',
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
 	202
@@ -1629,7 +1688,7 @@ dark  { 'monet',                      '_'                                       
 darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
 light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
 light { 'monokai-nightasty',          '_'                                                                                          }
-dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
+dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: Visual
 dark  { 'oldworld',                   '_'                                                                                          }
 dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
 darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
@@ -1703,22 +1762,34 @@ addPlugin {
 	-- FEAT: Comment box
 	-- 1. Create command CB to handle all cases of CB*
 	-- 2. Create catalogue with telescope
-	-- 3. Create tele catalogue with live text rendering
+	-- 3. Create telescope catalogue with live text rendering
 	'LudoPinelli/comment-box.nvim',
 	cmd = 'CB',
 	config = function()
+		local cb_options = CmdOptions:new()
+
+		cb_options:addOption('box', { 'center', 'left', 'right' }, 'left')
+		cb_options:addOption('line', { 'center', 'left', 'right' }, 'left')
+		cb_options:addOption('case', { 'box', 'line' }, 'line')
+
 		vim.api.nvim_create_user_command('CB',
 			function(opts)
-				print('DEBUGPRINT[1]: init.lua:1712: opts=' .. vim.inspect(opts))
-				-- Command parsing logic should be common from utils
+				cb_options:parseOptions(opts.fargs)
 				-- Position of the box
 				-- Position of the text
 				-- line/box
+				-- Visual select
 				-- style
-				-- completion
 			end, {
 			desc = 'Create commnent box',
-			nargs = '*'
+			nargs = '*',
+			complete = function(lead)
+				if lead == "" then
+					return cb_options:getOptions()
+				else
+					return cb_options:getOptionValues(string.sub(lead, 1, -2))
+				end
+			end
 		})
 	end
 }
