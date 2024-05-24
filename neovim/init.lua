@@ -1524,7 +1524,7 @@ end
 ---@param bg? string bg color in hex
 local function fixVisual(bg)
 	bg = bg or adaptiveBG(50, -20)
-	vim.api.nvim_set_hl(0, 'Visual', { bg = bg })
+	vim.api.nvim_set_hl(0, 'Visual', { bg = bg, force = true })
 end
 
 ---Fix ayu colorscheme
@@ -1551,6 +1551,18 @@ local function fixVnNight()
 	fixLineNr('#505275')
 	vim.api.nvim_set_hl(0, 'Comment', { fg = '#7F82A5', italic = true })
 	vim.api.nvim_set_hl(0, 'Folded', { bg = '#112943', fg = '#8486A4' })
+end
+
+---Pre command for material
+---@param style string style of theme
+---@param selection string selection color
+local function preMaterial(style, selection)
+	vim.g.material_style = style
+	require('material').setup({
+		custom_colors = function(colors)
+			colors.editor.selection = selection
+		end
+	})
 end
 
 ---@class ColorPlugin
@@ -1687,7 +1699,11 @@ darkT { 'hybrid',                     '_',            cfg = { transparent = true
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
-light { 'material',                   '_',            pre = function() vim.g.material_style = 'lighter' end, post = fixMaterial    } -- FIX: Visual
+dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'darker' end, post = fixMaterial     }
+dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'deep ocean' end, post = fixMaterial }
+dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'oceanic' end, post = fixMaterial    }
+dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'palenight' end, post = fixMaterial  }
+light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
 dark  { 'melange',                    '_'                                                                                          }
 dark  { 'mellow',                     '_'                                                                                          }
 dark  { 'monet',                      '_'                                                                                          }
