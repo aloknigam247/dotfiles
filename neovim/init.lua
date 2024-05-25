@@ -2961,6 +2961,7 @@ addPlugin {
 -- BUG: debug working
 addPlugin {
 	'TheLeoP/powershell.nvim',
+	lazy = false,
 	opts = {
 		bundle_path = vim.fn.stdpath('data') .. '\\mason\\packages\\powershell-editor-services'
 	}
@@ -2977,21 +2978,21 @@ addPlugin {
 		sections = {
 			definition = function(count)
 				if count == 1 then
-					return ""
+					return ''
 				end
-				return "Definitions: " .. count
+				return 'Definitions: ' .. count
 			end,
 			references = function(count)
-				return "References: " .. count
+				return 'References: ' .. count
 			end,
 			implements = function(count)
-				return "Implements: " .. count
+				return 'Implements: ' .. count
 			end,
 			git_authors = false --[[ function(latest_author, count)
-				return "󰀄 " .. latest_author .. (count - 1 == 0 and "" or (" + " .. count - 1))
+				return '󰀄 ' .. latest_author .. (count - 1 == 0 and '' or (' + ' .. count - 1))
 			end ]]
 		},
-		separator = " 󰧞 ",
+		separator = ' 󰧞 ',
 		target_symbol_kinds = {
 			vim.lsp.protocol.SymbolKind.Function,
 			vim.lsp.protocol.SymbolKind.Method,
