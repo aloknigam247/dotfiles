@@ -2960,6 +2960,15 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- BUG: debug working
+addPlugin {
+	'TheLeoP/powershell.nvim',
+	keys = '<F12>',
+	opts = {
+		bundle_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\powershell-editor-services'
+	}
+}
+
 addPlugin {
 	-- 'Wansmer/symbol-usage.nvim',
 	'VidocqH/lsp-lens.nvim',
@@ -3364,7 +3373,7 @@ addPlugin {
 		vim.cmd.LspStart()
 	end,
 	dependencies = { 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' },
-	keys = { '<F12>' }
+	keys = '<F12>'
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4668,15 +4677,6 @@ addPlugin {
 addPlugin {
 	'AndrewRadev/inline_edit.vim',
 	cmd = 'InlineEdit'
-}
-
--- BUG: debug working
-addPlugin {
-	'TheLeoP/powershell.nvim',
-	lazy = false,
-	opts = {
-		bundle_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\powershell-editor-services'
-	}
 }
 
 addPlugin {
