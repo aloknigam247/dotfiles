@@ -131,7 +131,7 @@
 
 ---Shapes for dotted border
 ---@type string[]
-local dotted_border = { '╭', '󰇘', '╮', '┆', '╯', '󰇘', '╰', '┆' }
+local dotted_border = { '╭', '󰇘', '╮', '┊', '╯', '󰇘', '╰', '┊' }
 
 ---Defines highlight priorities for vairous components
 ---@type table<string, integer>
@@ -1699,10 +1699,6 @@ darkT { 'hybrid',                     '_',            cfg = { transparent = true
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
-dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'darker' end, post = fixMaterial     }
-dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'deep ocean' end, post = fixMaterial }
-dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'oceanic' end, post = fixMaterial    }
-dark  { 'material',                   '_',            pre = function() vim.g.material_style = 'palenight' end, post = fixMaterial  }
 light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
 dark  { 'melange',                    '_'                                                                                          }
 dark  { 'mellow',                     '_'                                                                                          }
