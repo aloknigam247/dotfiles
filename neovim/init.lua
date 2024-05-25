@@ -1,5 +1,6 @@
 -- BUG: https://github.com/microsoft/terminal/issues/6987 https://www.reddit.com/r/neovim/comments/1ct8s6a/nvim_rendering_error_in_windows_ssh/
 -- BUG: https://github.com/neovide/neovide/issues/2556
+-- FEAT: Auto list continue for markdown for 1. i. a. * -
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
@@ -1664,75 +1665,77 @@ addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'      
 addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                                }
 addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                             }
 
+-- TODO: refine dark themes
+-- TODO: refine darkT themes
+-- TODO: refine light themes
 dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
-light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
 dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
 dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
-darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
-light { 'bluloco',                    '_'                                                                                          }
 dark  { 'bluloco',                    '_'                                                                                          }
-darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
-light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
-darkT { 'cyberdream',                 '_'                                                                                          }
-lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
-darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
-light { 'edge',                       '_'                                                                                          }
 dark  { 'everforest',                 '_'                                                                                          }
 dark  { 'evergarden',                 '_'                                                                                          }
-darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
 dark  { 'github_dark',                'github-theme'                                                                               }
-darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
-darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_default',        'github-theme'                                                                               }
-darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
 dark  { 'github_dark_high_contrast',  'github-theme'                                                                               }
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
-darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
-light { 'github_light',               'github-theme'                                                                               }
-light { 'github_light_default',       'github-theme'                                                                               }
-light { 'github_light_tritanopia',    'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
-darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
-darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
-light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
 dark  { 'melange',                    '_'                                                                                          }
 dark  { 'mellow',                     '_'                                                                                          }
 dark  { 'monet',                      '_'                                                                                          }
-darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
-light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
-light { 'monokai-nightasty',          '_'                                                                                          }
-dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: Visual
+dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
 dark  { 'oldworld',                   '_'                                                                                          }
 dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
-darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
 dark  { 'onedark',                    '_',            cfg = { style = 'dark' }                                                     }
-darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
 dark  { 'onedark',                    '_',            cfg = { style = 'darker' }                                                   }
-darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
 dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
-darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
-light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
-dark  { 'onedark',                    '_',            cfg = { style = 'warm' }                                                     }
-darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
 dark  { 'onedark',                    '_',            cfg = { style = 'warmer' }                                                   }
-darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
-light { 'onenord',                    '_'                                                                                          }
-light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
 dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
 dark  { 'sunburn',                    '_',                                                                                         }
 dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
-darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
 dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
 dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
-light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
 dark  { 'zephyrium',                  '_'                                                                                          }
+-- darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
+-- darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
+-- darkT { 'cyberdream',                 '_'                                                                                          }
+-- darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
+-- darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
+-- darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
+-- darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
+-- darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
+-- darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
+-- darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
+-- darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
+-- darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
+-- darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
+-- light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
+-- light { 'bluloco',                    '_'                                                                                          }
+-- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
+-- light { 'edge',                       '_'                                                                                          }
+-- light { 'github_light',               'github-theme'                                                                               }
+-- light { 'github_light_default',       'github-theme'                                                                               }
+-- light { 'github_light_tritanopia',    'github-theme'                                                                               }
+-- light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
+-- light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
+-- light { 'monokai-nightasty',          '_'                                                                                          }
+-- light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
+-- light { 'onenord',                    '_'                                                                                          }
+-- light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
+-- light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
+-- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
