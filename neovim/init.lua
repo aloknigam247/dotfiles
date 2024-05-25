@@ -2958,10 +2958,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- BUG: debug working
+-- FIX: working with <F12>
 addPlugin {
 	'TheLeoP/powershell.nvim',
-	lazy = false,
+	lazy = true,
 	opts = {
 		bundle_path = vim.fn.stdpath('data') .. '\\mason\\packages\\powershell-editor-services'
 	}
