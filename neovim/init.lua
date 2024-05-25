@@ -1659,7 +1659,6 @@ addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'       
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                             }
 addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                               }
 addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                               }
-addPlugin { 'loganswartz/sunburn.nvim',            event = 'User sunburn', dependencies = 'loganswartz/polychrome.nvim' }
 addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                            }
 addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'                                              }
 addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                                }
@@ -1697,7 +1696,6 @@ dark  { 'onedark',                    '_',            cfg = { style = 'warmer' }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
 dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
-dark  { 'sunburn',                    '_',                                                                                         }
 dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
 dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
 dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
@@ -2963,9 +2961,8 @@ addPlugin {
 -- BUG: debug working
 addPlugin {
 	'TheLeoP/powershell.nvim',
-	keys = '<F12>',
 	opts = {
-		bundle_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\powershell-editor-services'
+		bundle_path = vim.fn.stdpath('data') .. '\\mason\\packages\\powershell-editor-services'
 	}
 }
 
@@ -3277,6 +3274,7 @@ addPlugin {
 		-- 	}
 		-- )
 
+		require('powershell')
 		local mason_lspconfig = require('mason-lspconfig')
 		local on_attach = function(_, bufnr)
 			-- enable inlay hints
