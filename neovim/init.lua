@@ -4673,6 +4673,7 @@ addPlugin {
 -- BUG: debug working
 addPlugin {
 	'TheLeoP/powershell.nvim',
+	event = 'LspAttach',
 	opts = {
 		bundle_path = vim.fn.stdpath "data" .. "\\mason\\packages\\powershell-editor-services"
 	}
