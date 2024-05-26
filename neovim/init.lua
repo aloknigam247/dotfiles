@@ -1,5 +1,4 @@
 -- BUG: https://github.com/microsoft/terminal/issues/6987 https://www.reddit.com/r/neovim/comments/1ct8s6a/nvim_rendering_error_in_windows_ssh/
--- BUG: https://github.com/neovide/neovide/issues/2556
 -- FEAT: Auto list continue for markdown for 1. i. a. * -
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
@@ -1690,7 +1689,6 @@ dark  { 'nordic',                     '_',            cfg = { override = { IblSc
 dark  { 'oldworld',                   '_'                                                                                          }
 dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
 dark  { 'onedark',                    '_',            cfg = { style = 'dark' }                                                     }
-dark  { 'onedark',                    '_',            cfg = { style = 'darker' }                                                   }
 dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
 dark  { 'onedark',                    '_',            cfg = { style = 'warmer' }                                                   }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
@@ -1785,14 +1783,14 @@ addPlugin {
 		local cb_options = CmdOptions:new()
 
 		cb_options:addOption('box', { 'c', 'l', 'r' }, 'l')
-		cb_options:addOption('line', { 'c', 'l', 'r' }, 'l')
-		cb_options:addOption('type', { 'box', 'line' }, 'line')
+		cb_options:addOption('text', { 'a', 'c', 'l', 'r' }, 'a') -- BUG: handle line case for a
+		cb_options:addOption('type', { 'box', 'line' }, 'box')
 		cb_options:addOption('style')
 
 		local function exec(opts)
 			-- FEAT: Visual select
 			cb_options:parseOptions(opts.fargs)
-			local func_name = cb_options:option('box') .. cb_options:option('line') .. cb_options:option('type')
+			local func_name = cb_options:option('box') .. cb_options:option('text') .. cb_options:option('type')
 			cb[func_name](cb_options:option('style'))
 		end
 
@@ -3700,7 +3698,7 @@ addPlugin {
 				{ sign = { name = { 'Bookmark' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'Dap' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
-				{ text = { builtin.foldfunc }, click = 'v:lua.ScFa' }, -- FEAT: either merge with git signs or shift to left of num
+				{ text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
 				{ text = { builtin.lnumfunc }, click = 'v:lua.ScLa', condition = { true } },
 				{
 					sign = {

@@ -1,6 +1,6 @@
-# FEAT: box comment
-# Auto Update
-# ```````````
+# ╭─────────────╮
+# │ Auto Update │
+# ╰─────────────╯
 if ([Environment]::UserInteractive) {
     Start-Job {
         Set-Location D:/dotfiles
@@ -29,13 +29,15 @@ if ([Environment]::UserInteractive) {
 }
 
 
-# Aliases
-# ```````
-# Msys2
+# ╭─────────╮
+# │ Aliases │
+# ╰─────────╯
+# ─[ Msys2 ]───────────────────────────────────────────────────────────
 New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 
-# Functions
-# `````````
+# ╭───────────╮
+# │ Functions │
+# ╰───────────╯
 Remove-Alias ls
 Remove-Alias rm
 function bash    { D:\Scoop\apps\msys2\current\usr\bin\bash.exe -c $args[0] }
@@ -49,7 +51,7 @@ function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 
 function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree    { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -CF $args }
 function treea   { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -aCF $args }
-function v($arg) { Start-Job -ScriptBlock {D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs  --opengl -- $using:arg} | ForEach-Object { "Job Id: " + $_.Id } }
+function v($arg) { Start-Job -ScriptBlock { D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg } | ForEach-Object { "Job Id: " + $_.Id } }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
@@ -120,7 +122,7 @@ function sed {
     }
 }
 
-# Path functions
+# ─[ Path functions ]──────────────────────────────────────────────────
 function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 
 # Git functions
@@ -150,15 +152,7 @@ function gs {
     git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args
 }
 
-# Substrate functions
-function scmd {
-    $cmd = "/k SET INETROOT=E:\substrate& cd /d E:\substrate& E:\substrate\tools\path1st\myenv.cmd"
-    $cmd = $cmd + "& cd /d " + (Get-Location) + "& " + $args[0]
-    Write-Host -ForegroundColor Blue "Executing: " $cmd
-    cmd $cmd
-}
-
-# Get TODOs from current directory
+# ─[ Get TODOs from current directory ]────────────────────────────────
 function Get-TODO {
     param(
         [Parameter(Position = 0)]
@@ -196,7 +190,7 @@ function Get-TODO {
     }
 }
 
-# Format text for colors and formatting
+# ─[ Format text for colors and formatting ]───────────────────────────
 function Format-Text {
     param(
         [Parameter(ParameterSetName = "Complete")]
@@ -278,6 +272,7 @@ function Format-Text {
     return $head
 }
 
+# FEAT: box comment
 # Autocompletion
 # ``````````````
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
