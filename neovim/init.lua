@@ -3275,7 +3275,7 @@ addPlugin {
 		-- 	}
 		-- )
 
-		require('powershell')
+		-- require('powershell')
 		local mason_lspconfig = require('mason-lspconfig')
 		local on_attach = function(_, bufnr)
 			-- enable inlay hints
@@ -4575,17 +4575,17 @@ addPlugin {
 					view = nil,
 					opts = {},
 				},
-				-- signature = { -- FEAT: enable it
-				-- 	enabled = true,
-				-- 	auto_open = {
-				-- 		enabled = true,
-				-- 		trigger = true,
-				-- 		luasnip = true,
-				-- 		throttle = 50,
-				-- 	},
-				-- 	view = nil,
-				-- 	opts = {},
-				-- },
+				signature = { -- FIX: enable it
+					enabled = true,
+					auto_open = {
+						enabled = true,
+						trigger = true,
+						luasnip = true,
+						throttle = 50,
+					},
+					view = nil,
+					opts = {},
+				},
 				message = {
 					enabled = true,
 					view = 'notify',
