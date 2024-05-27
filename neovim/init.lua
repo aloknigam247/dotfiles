@@ -1676,7 +1676,6 @@ dark  { 'duskfox',                    'nightfox'                                
 dark  { 'everforest',                 '_'                                                                                          }
 dark  { 'evergarden',                 '_'                                                                                          }
 dark  { 'github_dark',                'github-theme'                                                                               }
-dark  { 'github_dark_default',        'github-theme'                                                                               }
 dark  { 'github_dark_high_contrast',  'github-theme'                                                                               }
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
@@ -1690,7 +1689,6 @@ dark  { 'oldworld',                   '_'                                       
 dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
 dark  { 'onedark',                    '_',            cfg = { style = 'dark' }                                                     }
 dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
-dark  { 'onedark',                    '_',            cfg = { style = 'warmer' }                                                   }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
 dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
@@ -3694,7 +3692,7 @@ addPlugin {
 			segments = {
 				{ sign = { name = { 'todo' } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
 				{ sign = { name = { 'Signature_' }, auto = true, fillcharhl ='LineNr' } },
-				{ sign = { namespace = { '.*diagnostic.*' }, auto = true, colwidth = 2, fillcharhl ='LineNr' }, click = 'v:lua.ScSa' },
+				{ sign = { namespace = { '.*diagnostic.*' }, auto = true, colwidth = 2, fillcharhl ='LineNr', maxwidth = 1 }, click = 'v:lua.ScSa' },
 				{ sign = { name = { 'Bookmark' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'Dap' }, auto = true, fillcharhl ='LineNr' } },
 				{ sign = { name = { 'coverage' }, colwidth = 1, fillcharhl ='LineNr', auto = true } },
