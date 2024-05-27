@@ -335,10 +335,9 @@ function promptGen {
             'execute' = @{
                 'sequence' = 2
                 'script'   = {
-                    Get-GitStatus
                     $script:dir_icon = ""
                     if ($script:git_branch -ne "") {
-                        $script:dir_icon = ""
+                        $script:dir_icon = "" # FEAT: Use Get-GitStatus
                     }
                     if ($null -ne $env:SSH_CLIENT) {
                         $script:dir_icon = "󰅟"
