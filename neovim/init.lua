@@ -1678,7 +1678,6 @@ dark  { 'duskfox',                    'nightfox'                                
 dark  { 'everforest',                 '_'                                                                                          }
 dark  { 'evergarden',                 '_'                                                                                          }
 dark  { 'github_dark',                'github-theme'                                                                               }
-dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }

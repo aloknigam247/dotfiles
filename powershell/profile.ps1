@@ -125,7 +125,7 @@ function sed {
 # ─[ Path functions ]──────────────────────────────────────────────────
 function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 
-# Git functions
+# ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Alias -Force gc
 function gc {
     git checkout $args
@@ -272,9 +272,9 @@ function Format-Text {
     return $head
 }
 
-# FEAT: box comment
-# Autocompletion
-# ``````````````
+# ╭────────────────╮
+# │ Autocompletion │
+# ╰────────────────╯
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
@@ -285,10 +285,10 @@ try{
     Write-Error $_
 }
 
-# posh-git
+# ─[ posh-git ]────────────────────────────────────────────────────────
 Import-Module posh-git
 
-# winget tab completion
+# ─[ winget tab completion ]───────────────────────────────────────────
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
         [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
@@ -300,8 +300,9 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 }
 
 
-# FZF Setup
-# `````````
+# ╭───────────╮
+# │ FZF Setup │
+# ╰───────────╯
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
@@ -321,8 +322,9 @@ $env:FZF_DEFAULT_OPTS='
     --color=info:#afaf87,prompt:#d7005f,pointer:#ff59f1
     --color=marker:#000000,spinner:#f0a6f5,header:#87afaf'
 
-# Prompt Styling
-# ``````````````
+# ╭────────────────╮
+# │ Prompt Styling │
+# ╰────────────────╯
 $prompt_script = @{}
 
 function promptGen {
@@ -335,12 +337,24 @@ function promptGen {
             'execute' = @{
                 'sequence' = 2
                 'script'   = {
-                    $script:dir_icon = ""
-                    if ($script:git_branch -ne "") {
-                        $script:dir_icon = "" # FEAT: Use Get-GitStatus
+                    $script:dir_icon = ''
+                    $script:git_working = ''
+                    $script:git_index = ''
+                    $script:git_status = Get-GitStatus
+                    if ($script:git_status -ne $null) {
+                        # FEAT: stash count
+                        # FEAT: ahead by count
+                        # FEAT: behind by count
+                        $script:dir_icon = ''
+                        if ($git_status.HasWorking) {
+                            $script:git_working = '󰦓 '
+                        }
+                        if ($git_status.HasIndex) {
+                            $script:git_index = '󰦓 '
+                        }
                     }
                     if ($null -ne $env:SSH_CLIENT) {
-                        $script:dir_icon = "󰅟"
+                        $script:dir_icon = '󰅟'
                     }
                 }
             }
@@ -396,20 +410,14 @@ function promptGen {
         },
         @{
             'params'  = @{
-                'text' = '$script:git_diff'
-                'fg'   = '#FF6347'
+                'text' = '$script:git_working'
+                'fg'   = '#AD2831'
             }
-            'execute' = @{
-                'sequence' = 4
-                'script'   = {
-                    # FEAT: use Get-GitStatus to print ahead and behind counts
-                    if ($script:git_branch -and (git status --porcelain)) {
-                        $script:git_diff = "󰦓 "  # TODO: Use Get-GitStatus
-                    }
-                    else {
-                        $script:git_diff = ""
-                    }
-                }
+        },
+        @{
+            'params'  = @{
+                'text' = '$script:git_index'
+                'fg'   = '#FFD60A'
             }
         },
         @{
@@ -482,17 +490,17 @@ Set-PSReadLineOption -Colors @{
 
 Set-PSReadLineOption -ContinuationPrompt '... '
 
-# Source rg command line completer
+# ─[ Source rg command line completer ]────────────────────────────────
 . D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
 
-# Neovim settings
+# ─[ Neovim settings ]─────────────────────────────────────────────────
 $env:XDG_CACHE_HOME  = 'D:\apps'
 $env:XDG_CONFIG_HOME = 'D:\apps'
 $env:XDG_DATA_HOME   = 'D:\apps'
 $env:XDG_LOG_HOME    = 'D:\apps'
 $env:XDG_STATE_HOME  = 'D:\apps'
 
-# Settings
+# ─[ Settings ]────────────────────────────────────────────────────────
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
 $PSNativeCommandUseErrorActionPreference = $false
 $env:PSModulePath += ";P:\aloknigam;E:\aloknigam"
