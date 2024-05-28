@@ -1142,11 +1142,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
---[[
-	FEAT: create command
-	command DiffOrig vert new | set buftype=nofile | read ++edit # | 0d_
-		\ | diffthis | wincmd p | diffthis
---]]
+vim.api.nvim_create_user_command(
+	'DiffUnsaved',
+	'vert new | set buftype=nofile | read # | 0d_ | diffthis | wincmd p | diffthis',
+	{ desc = 'Diff current buffer with saved file' }
+)
+
 vim.api.nvim_create_user_command(
 	'DropbarToggle',
 	function()
@@ -1155,7 +1156,7 @@ vim.api.nvim_create_user_command(
 		end
 		DropbarEnabled = not DropbarEnabled
 	end,
-	{}
+	{ desc = 'Enable dropbar' }
 )
 
 vim.api.nvim_create_user_command(
@@ -1165,6 +1166,7 @@ vim.api.nvim_create_user_command(
 	end,
 	{
 		complete = 'file',
+		desc = 'Peek file content in a floating window',
 		nargs = 1
 	}
 )
