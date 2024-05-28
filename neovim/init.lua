@@ -1676,7 +1676,6 @@ dark  { 'duskfox',                    'nightfox'                                
 dark  { 'everforest',                 '_'                                                                                          }
 dark  { 'evergarden',                 '_'                                                                                          }
 dark  { 'github_dark',                'github-theme'                                                                               }
-dark  { 'github_dark_high_contrast',  'github-theme'                                                                               }
 dark  { 'github_dark_tritanopia',     'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
@@ -4374,7 +4373,11 @@ addPlugin {
 			}
 		})
 	end,
-	dependencies = { 'utilyre/sentiment.nvim' }, -- BUG: not working
+	dependencies = {{
+		'utilyre/sentiment.nvim',
+		config = true,
+		init = function() vim.g.loaded_matchparen = 1 end,
+	}},
 	module = false
 }
 
