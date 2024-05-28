@@ -4479,7 +4479,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- BUG: sudden quit due to formatting
 -- BUG: hides last char in substitute command
 addPlugin {
 	'folke/noice.nvim',
