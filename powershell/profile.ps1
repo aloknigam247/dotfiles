@@ -417,7 +417,7 @@ function promptGen {
         @{
             'params'  = @{
                 'text' = '$script:git_working'
-                'fg'   = '#AD2831'
+                'fg'   = '#F42C04'
             }
         },
         @{

@@ -1444,7 +1444,7 @@ addPlugin {
 addPlugin {
 	'brenoprata10/nvim-highlight-colors',
 	cmd = 'HighlightColors',
-	opts = { render = 'background' }
+	opts = { render = 'virtual', virtual_symbol = '' }
 }
 
 addPlugin {
@@ -1676,7 +1676,6 @@ dark  { 'catppuccin-macchiato',       'catppuccin'                              
 dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 dark  { 'everforest',                 '_'                                                                                          }
-dark  { 'evergarden',                 '_'                                                                                          }
 dark  { 'github_dark',                'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
@@ -2851,29 +2850,22 @@ addPlugin {
 }
 
 addPlugin {
-	'DaikyXendo/nvim-material-icon',
-	opts = {
-		override = {
-			['c++']  = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
-			cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
-			cp       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cp'        },
-			cpp      = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cpp'       },
-			cs       = { color = '#C20DA6', cterm_color = '58',  icon = '󰌛', name = 'Cs'        },
-			csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
-			csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
-			md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
-			mdx      = { color = '#519ABA', cterm_color = '67',  icon = '󰽛', name = 'Mdx'       },
-			py       = { color = "#3D7BAB", cterm_color = "221", icon = '', name = 'Py'        },
-			todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Todo'      }
-		}
-	}
-}
-
-addPlugin {
 	'kyazdani42/nvim-web-devicons',
 	config = function()
 		require('nvim-web-devicons').setup({
-			override = require('nvim-material-icon').get_icons()
+			override = {
+				['c++']  = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
+				cc       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'CPlusPlus' },
+				cp       = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cp'        },
+				cpp      = { color = '#F34B7D', cterm_color = '204', icon = '󰙲', name = 'Cpp'       },
+				cs       = { color = '#C20DA6', cterm_color = '58',  icon = '󰌛', name = 'Cs'        },
+				csproj   = { color = '#854CC7', cterm_color = '98',  icon = '', name = 'Csproj'    },
+				csv      = { color = '#89E051', cterm_color = '113', icon = '', name = 'Csv'       },
+				md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
+				mdx      = { color = '#519ABA', cterm_color = '67',  icon = '󰽛', name = 'Mdx'       },
+				py       = { color = "#3D7BAB", cterm_color = "221", icon = '', name = 'Py'        },
+				todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Todo'      }
+			}
 		})
 		require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
 	end
