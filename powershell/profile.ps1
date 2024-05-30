@@ -325,6 +325,15 @@ $env:FZF_DEFAULT_OPTS='
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
+
+# ╭─( Prompt features )─────────────────────╮
+# │ FEAT: Powerline like background support │
+# │ FEAT: ahead by count                    │
+# │ FEAT: behind by count                   │
+# │ FEAT: right side prompt ?               │
+# │ FEAT: stash count                       │
+# │ FEAT: transient prompts ?               │
+# ╰─────────────────────────────────────────╯
 $prompt_script = @{}
 
 function promptGen {
@@ -342,9 +351,6 @@ function promptGen {
                     $script:git_index = ''
                     $script:git_status = Get-GitStatus
                     if ($script:git_status -ne $null) {
-                        # FEAT: stash count
-                        # FEAT: ahead by count
-                        # FEAT: behind by count
                         $script:dir_icon = ''
                         if ($git_status.HasWorking) {
                             $script:git_working = '󰦓 '
