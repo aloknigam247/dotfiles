@@ -7,8 +7,9 @@ $scoop_pkgs = @(
     "bat"
     "dos2unix"
     "less"
-    "ripgrep"
     "msys2"
+    "ripgrep"
+    "tre-command"
 )
 
 $winget_pkgs = @(
