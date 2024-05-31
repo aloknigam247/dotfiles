@@ -40,7 +40,6 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 # ╰───────────╯
 Remove-Alias ls
 Remove-Alias rm
-function bash    { D:\Scoop\apps\msys2\current\usr\bin\bash.exe -c $args[0] }
 function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always --theme 'gruvbox-dark' $args }
 function fnd     { D:\Scoop\apps\msys2\current\usr\bin\find.exe $args | D:\Scoop\apps\msys2\current\usr\bin\sed 's|/|\\|g' }
 function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
@@ -49,8 +48,7 @@ function lla     { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto 
 function ls      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
 function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
-function tree    { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -CF $args }
-function treea   { D:\Scoop\apps\msys2\current\usr\bin\tree.exe -aCF $args }
+function tree    { C:\Users\aloknigam\scoop\shims\tre.exe -CF $args }
 function v($arg) { Start-Job -ScriptBlock { D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg } | ForEach-Object { "Job Id: " + $_.Id } }
 
 function e ($arg) {
