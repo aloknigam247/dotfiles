@@ -1042,8 +1042,9 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
--- FEAT: visual motion mappings
+-- FEAT: " and <C-r> mappings for registers in telescope with different layout
 -- FEAT: mapping to delete word on <C-Del>
+-- FEAT: visual motion mappings
 -- TODO: recheck word-motions help and reassign mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' }) -- BUG: escaping while moving create problem in LSP
