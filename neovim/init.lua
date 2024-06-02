@@ -1043,7 +1043,6 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
 -- FEAT: visual motion mappings
--- FEAT: [q ]q for jumping in quickfix
 -- FEAT: mapping to delete word on <C-Del>
 -- TODO: recheck word-motions help and reassign mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
@@ -1062,8 +1061,8 @@ vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'Move to
 vim.keymap.set('n', '<C-w>',       '<cmd>w<CR>',               { desc = 'Save file' })
 vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'Jump forward' })
 vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump backword' })
-vim.keymap.set('n', '_',           '<cmd>resize<CR>',          { desc = 'Make current window height maximum' })
-vim.keymap.set('n', '|',           '<cmd>vertical-resize<CR>', { desc = 'Make current window width maximum' })
+vim.keymap.set('n', '[q',          '<cmd>cprevious<CR>',       { desc = 'Previous quickfix' })
+vim.keymap.set('n', ']q',          '<cmd>cnext<CR>',           { desc = 'Next quickfix' })
 vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'Search in select region' })
 -- <~>
 -- Misc</>
