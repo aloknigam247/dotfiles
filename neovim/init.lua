@@ -125,7 +125,7 @@
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- Variables</> -- FEAT: box comment
+-- Variables</>
 ------------
 
 ---Shapes for dotted border
@@ -1417,6 +1417,7 @@ addPlugin {
 			{ filter = { filetype = 'python' }, pattern = '    [%a%d_]+: ',     hl = '@parameter' },
 			{ filter = { filetype = 'python' }, pattern = 'Args:',              hl = '@type' },
 			{ filter = { filetype = 'python' }, pattern = 'Returns:',           hl = '@keyword' },
+			{ filter = { filetype = 'python' }, pattern = 'Yields:',            hl = '@keyword' },
 			{ filter = { filetype = 'python' }, pattern = 'Raises:',            hl = 'Statement' },
 		}
 	}
@@ -1683,7 +1684,6 @@ dark  { 'melange',                    '_'                                       
 dark  { 'mellow',                     '_'                                                                                          }
 dark  { 'monet',                      '_'                                                                                          }
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
-dark  { 'oldworld',                   '_'                                                                                          }
 dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
 dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
