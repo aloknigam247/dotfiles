@@ -64,7 +64,6 @@ let g:vimsyn_embed = 'lpr'   " Embededded script highlight
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
-set cursorline               " Highlight the line currently under cursor
 set diffopt+=vertical        " Open diff in vertical sp:set lit
 set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\ 
@@ -119,13 +118,6 @@ if exists("g:neovide")
     let g:neovide_scroll_animation_length = 0.0
     let g:neovide_transparency=1
     " let g:neovide_underline_automatic_scaling = v:true
-lua << EOF
-        Font_name = 'JetBrainsMono NF'
-        Font_size = 15
-        vim.o.guifont = Font_name .. ':h' .. Font_size
-        vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
-        vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
-EOF
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif
 " }}}
@@ -171,7 +163,6 @@ function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
-lua require('init')
 
 " NOTE: important format options
 " / = do not insert comment on 'o' and 'O' when o is included and line does not start with comment
@@ -184,5 +175,15 @@ lua require('init')
 " p = don't break line blindly at .
 " r = insert comment on enter
 " t = do auto wrapping at textwidth
+
+lua << EOF
+    require('init')
+    Font_name = 'JetBrainsMono NF'
+    Font_size = 15
+    vim.o.guifont = Font_name .. ':h' .. Font_size
+    vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
+    vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
+EOF
+
 " }}}
 " vim: fdm=marker
