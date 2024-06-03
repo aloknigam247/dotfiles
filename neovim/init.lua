@@ -1,4 +1,3 @@
--- BUG: https://github.com/microsoft/terminal/issues/6987 https://www.reddit.com/r/neovim/comments/1ct8s6a/nvim_rendering_error_in_windows_ssh/
 -- FEAT: Auto list continue for markdown for 1. i. a. * -
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
@@ -1685,8 +1684,6 @@ dark  { 'mellow',                     '_'                                       
 dark  { 'monet',                      '_'                                                                                          }
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
 dark  { 'oldworld',                   '_'                                                                                          }
-dark  { 'onedark',                    '_',            cfg = { style = 'cool' }                                                     }
-dark  { 'onedark',                    '_',            cfg = { style = 'dark' }                                                     }
 dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
 dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
@@ -1780,7 +1777,7 @@ addPlugin {
 		local cb_options = CmdOptions:new()
 
 		cb_options:addOption('box', { 'c', 'l', 'r' }, 'l')
-		cb_options:addOption('text', { 'a', 'c', 'l', 'r' }, 'a') -- BUG: handle line case for a
+		cb_options:addOption('text', { 'a', 'c', 'l', 'r' }, 'a') -- BUG: handle line case for a which exists for box only
 		cb_options:addOption('type', { 'box', 'line' }, 'box')
 		cb_options:addOption('style')
 
@@ -4154,7 +4151,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
--- FEAT: search in current file only or open buffers only
 addPlugin {
 	'nvim-telescope/telescope.nvim',
 	cmd = 'Telescope',
@@ -4171,7 +4167,7 @@ addPlugin {
 				initial_mode = 'insert',
 				multi_icon = ' ',
 				prompt_prefix = '  ',
-				selection_caret = ' ',
+				selection_caret = '  ',
 				timeout = 2000,
 				windblend = 0,
 				mappings = {
