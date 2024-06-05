@@ -345,16 +345,31 @@ function promptGen {
                 'sequence' = 2
                 'script'   = {
                     $script:dir_icon = ''
-                    $script:git_working = ''
+                    $script:git_branch = ''
                     $script:git_index = ''
+                    $script:git_working = ''
                     $script:git_status = Get-GitStatus
                     if ($script:git_status -ne $null) {
                         $script:dir_icon = ''
+
+                        # git dirty check
                         if ($git_status.HasWorking) {
                             $script:git_working = '󰦓 '
                         }
                         if ($git_status.HasIndex) {
                             $script:git_index = '󰦓 '
+                        }
+
+                        # git branch
+                        $git_branch = $script:git_status.Branch
+                        if ($git_branch.StartsWith('(') -and $git_branch.EndsWith(')')) {
+                            if ($git_branch.EndsWith('...)')) {
+                                $script:git_branch = '  ' + $git_branch.Substring(1, $git_branch.Length - 5) + ' '
+                            } else {
+                                $script:git_branch = ' 󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2) + ' '
+                            }
+                        } else {
+                            $script:git_branch = '  ' + $git_branch + ' '
                         }
                     }
                     if ($null -ne $env:SSH_CLIENT) {
@@ -382,34 +397,6 @@ function promptGen {
                 'text'   = '$script:git_branch'
                 'fg'     = '#F4B860'
                 'styles' = "bold"
-            }
-            'execute' = @{
-                'sequence' = 1
-                'script'   = {
-                    $git_branch = ""
-                    $branch = git rev-parse --abbrev-ref HEAD # TODO: Use Get-GitStatus
-                    if ($null -eq $branch) {
-                        $git_branch = ""
-                    }
-                    elseif ($branch -eq "HEAD" -Or $branch.StartsWith("heads/")) {
-                        $branch = git describe --tags --always
-                        if ($null -eq $branch) {
-                            $git_branch = ""
-                        }
-                        elseif ($branch[0] -eq "v") {
-                            $git_branch = " 󰓽 $branch "
-                        }
-                        else {
-                            $git_branch = "  $branch "
-                        }
-                    }
-                    elseif ($branch) {
-                        $branch = $branch.Replace("heads/", "")
-                        $branch = $branch.Replace("user/$env:username", "~")
-                        $git_branch = "  $branch "
-                    }
-                    $script:git_branch = $git_branch
-                }
             }
         },
         @{
