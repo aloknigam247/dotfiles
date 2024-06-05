@@ -1,5 +1,8 @@
 -- TODO: https://dotfyle.com/this-week-in-neovim/72
 -- FEAT: Auto list continue for markdown for 1. i. a. * -
+-- FIX: ! filter text from external program
+-- FIX: gq text formatting
+-- TODO: explore operatorfunc
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
@@ -1047,10 +1050,12 @@ vim.api.nvim_create_autocmd(
 -- TODO: recheck word-motions help and reassign mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
 vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' }) -- BUG: escaping while moving create problem in LSP
+vim.keymap.set('i', '<C-R>', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
 vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' }) -- BUG: escaping while moving create problem in LSP
 vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'Move a larger word backword' })
 vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'Move a larger word forward' })
 vim.keymap.set('n', '!!',          ':<Up><CR>',                { desc = 'Run last command' })
+vim.keymap.set('n', '"', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
 vim.keymap.set('n', '<BS>',        'X',                        { desc = 'Delete a letter backword' })
 vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'Move a word backword' })
 vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'Close window' })
@@ -1064,7 +1069,6 @@ vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump ba
 vim.keymap.set('n', '[q',          '<cmd>cprevious<CR>',       { desc = 'Previous quickfix' })
 vim.keymap.set('n', ']q',          '<cmd>cnext<CR>',           { desc = 'Next quickfix' })
 vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'Search in select region' })
-vim.keymap.set({'n', 'x'}, '<C-R>', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
 -- <~>
 -- Misc</>
 -------
@@ -4899,8 +4903,8 @@ addPlugin {
 			'g`',
 			"g'",
 			-- registers
-			'"',
-			'<c-r>',
+			-- '"',
+			-- '<c-r>',
 			-- spelling
 			'z=',
 		},
