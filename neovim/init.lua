@@ -1042,7 +1042,6 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
--- FEAT: " and <C-r> mappings for registers in telescope with different layout
 -- FEAT: mapping to delete word on <C-Del>
 -- FEAT: visual motion mappings
 -- TODO: recheck word-motions help and reassign mappings
@@ -1065,6 +1064,7 @@ vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump ba
 vim.keymap.set('n', '[q',          '<cmd>cprevious<CR>',       { desc = 'Previous quickfix' })
 vim.keymap.set('n', ']q',          '<cmd>cnext<CR>',           { desc = 'Next quickfix' })
 vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'Search in select region' })
+vim.keymap.set({'n', 'x'}, '<C-R>', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
 -- <~>
 -- Misc</>
 -------
@@ -1778,7 +1778,7 @@ addPlugin {
 		local cb_options = CmdOptions:new()
 
 		cb_options:addOption('box', { 'c', 'l', 'r' }, 'l')
-		cb_options:addOption('text', { 'a', 'c', 'l', 'r' }, 'a') -- BUG: handle line case for a which exists for box only
+		cb_options:addOption('text', { 'a', 'c', 'l', 'r' }, 'a')
 		cb_options:addOption('type', { 'box', 'line' }, 'box')
 		cb_options:addOption('style')
 
@@ -4234,7 +4234,7 @@ addPlugin {
 		'nvim-lua/plenary.nvim',
 		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
 	},
-	module = false
+	module = true
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
