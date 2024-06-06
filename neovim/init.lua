@@ -831,12 +831,12 @@ function CmdOptions:new()
 end
 
 ---Add an option
----@param optionName string option name
+---@param option_name string option name
 ---@param possibleValues string[] option values
 ---@param def string? default value
-function CmdOptions:addOption(optionName, possibleValues, def)
-	self.option_config[optionName] = possibleValues or {}
-	self.option_value[optionName] = def
+function CmdOptions:addOption(option_name, possibleValues, def)
+	self.option_config[option_name] = possibleValues or {}
+	self.option_value[option_name] = def
 end
 
 function CmdOptions:getOptions()
@@ -848,10 +848,10 @@ function CmdOptions:option(name)
 end
 
 ---Get possible values for an option
----@param optionName string option name
+---@param option_name string option name
 ---@return string[] # option values
-function CmdOptions:getOptionValues(optionName)
-	return self.option_config[optionName]
+function CmdOptions:getOptionValues(option_name)
+	return self.option_config[option_name]
 end
 
 ---Parse options with format key=value, throws error on invalid options
@@ -1638,37 +1638,36 @@ local function lightT(opts)
 	dark(opts)
 end
 
-addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                                   }
-addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                                }
-addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim'          }
-addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                            }
-addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                            }
-addPlugin { 'kaplanz/deku.nvim',                   event = 'User deku',      dependencies = 'rktjmp/lush.nvim'          }
-addPlugin { 'sainnhe/edge',                        event = 'User edge'                                                  }
-addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                            }
-addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                            }
-addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                          }
-addPlugin { 'HoNamDuong/hybrid.nvim',              event = 'User hybrid'                                                }
-addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'                                               }
-addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'                                              }
-addPlugin { 'marko-cerovac/material.nvim',         event = 'User material'                                              }
-addPlugin { 'savq/melange',                        event = 'User melange'                                               }
-addPlugin { 'mellow-theme/mellow.nvim',            event = 'User mellow'                                                }
-addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                                }
-addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                                 }
-addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                                     }
-addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                              }
-addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                                }
-addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'                                              }
-addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                               }
-addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                               }
-addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                             }
-addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                               }
-addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                               }
-addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                            }
-addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'                                              }
-addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                                }
-addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                             }
+addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                          }
+addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                       }
+addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
+addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
+addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
+addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
+addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                   }
+addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                   }
+addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                 }
+addPlugin { 'HoNamDuong/hybrid.nvim',              event = 'User hybrid'                                       }
+addPlugin { 'kaiuri/nvim-juliana',                 event = 'User juliana'                                      }
+addPlugin { 'rebelot/kanagawa.nvim',               event = 'User kanagawa'                                     }
+addPlugin { 'marko-cerovac/material.nvim',         event = 'User material'                                     }
+addPlugin { 'savq/melange',                        event = 'User melange'                                      }
+addPlugin { 'mellow-theme/mellow.nvim',            event = 'User mellow'                                       }
+addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                       }
+addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                        }
+addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                            }
+addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                     }
+addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
+addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'                                     }
+addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                      }
+addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
+addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
+addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
+addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                      }
+addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                   }
+addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'                                     }
+addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                       }
+addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                    }
 
 -- TODO: refine dark themes
 -- TODO: refine darkT themes
@@ -1678,7 +1677,6 @@ dark  { 'ayu-mirage',                 'ayu',          post = fixAyu             
 dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
 dark  { 'bluloco',                    '_'                                                                                          }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
-dark  { 'deku',                       '_'                                                                                          }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 dark  { 'everforest',                 '_'                                                                                          }
 dark  { 'github_dark',                'github-theme'                                                                               }
@@ -2717,7 +2715,7 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: How to view commit of current line https://github.com/rhysd/git-messenger.vim or gitsigns ?
+-- FEAT: use https://github.com/rhysd/git-messenger.vim
 addPlugin {
 	'9seconds/repolink.nvim',
 	cmd = 'RepoLink',
