@@ -342,7 +342,7 @@ function promptGen {
                 'fg'   = '#8AC926'
             }
             'execute' = @{
-                'sequence' = 2
+                'sequence' = 1
                 'script'   = {
                     $script:dir_icon = ''
                     $script:git_branch = ''
@@ -418,7 +418,7 @@ function promptGen {
                 'styles' = 'bold'
             }
             'execute' = @{
-                'sequence' = 3
+                'sequence' = 2
                 'script'   = {
                     if ($script:git_branch) {
                         $script:git_sep = "⟩⟩"
