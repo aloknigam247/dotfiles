@@ -369,7 +369,7 @@ function promptGen {
                                 $script:git_branch = ' 󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2) + ' '
                             }
                         } else {
-                            $script:git_branch = '  ' + $git_branch + ' '
+                            $script:git_branch = '  ' + $git_branch.Replace("user/$env:username", '~') + ' '
                         }
                     }
                     if ($null -ne $env:SSH_CLIENT) {
