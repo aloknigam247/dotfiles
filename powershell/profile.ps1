@@ -371,13 +371,13 @@ function promptGen {
 
                         # git dirty check
                         if ($git_status.HasWorking) {
-                            $script:git_working = '󰦓 '
+                            $script:git_working = ' 󰦓'
                         }
                         if ($git_status.HasIndex) {
-                            $script:git_index = '󰦓 '
+                            $script:git_index = ' 󰦓'
                         }
                         if ($git_status.StashCount) {
-                            $script:git_stash = '󰪶'
+                            $script:git_stash = ' 󰪶'
                         }
 
                         # git ahead and behind count
