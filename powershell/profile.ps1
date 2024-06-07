@@ -326,8 +326,6 @@ $env:FZF_DEFAULT_OPTS='
 
 # ╭─( Prompt features )─────────────────────╮
 # │ FEAT: Powerline like background support │
-# │ FEAT: ahead by count                    │
-# │ FEAT: behind by count                   │
 # │ FEAT: right side prompt ?               │
 # │ FEAT: stash count                       │
 # │ FEAT: transient prompts ?               │
@@ -347,10 +345,13 @@ function promptGen {
                     $script:dir_icon = ''
                     $script:git_branch = ''
                     $script:git_index = ''
+                    $script:git_sep = ''
+                    $script:git_sync = ''
                     $script:git_working = ''
                     $script:git_status = Get-GitStatus
                     if ($script:git_status -ne $null) {
                         $script:dir_icon = ''
+                        $script:git_sep = '⟩⟩'
 
                         # git dirty check
                         if ($git_status.HasWorking) {
@@ -371,6 +372,16 @@ function promptGen {
                         } else {
                             $script:git_branch = '  ' + $git_branch.Replace("user/$env:username", '~') + ' '
                         }
+
+                        # git ahead and behind count
+                        $git_sync = ''
+                        if ($git_status.AheadBy) {
+                            $git_sync += '' + $git_status.AheadBy
+                        }
+                        if ($git_status.BehindBy) {
+                            $git_sync += '' + $git_status.BehindBy
+                        }
+                        $script:git_sync = $git_sync
                     }
                     if ($null -ne $env:SSH_CLIENT) {
                         $script:dir_icon = '󰅟'
@@ -412,21 +423,16 @@ function promptGen {
             }
         },
         @{
+            'params'  = @{
+                'text' = '$script:git_sync'
+                'fg'   = '#A690F3'
+            }
+        },
+        @{
             'params' = @{
                 'text'   = '$script:git_sep '
                 'fg'     = '#8AC926'
                 'styles' = 'bold'
-            }
-            'execute' = @{
-                'sequence' = 2
-                'script'   = {
-                    if ($script:git_branch) {
-                        $script:git_sep = "⟩⟩"
-                    }
-                    else {
-                        $script:git_sep = ""
-                    }
-                }
             }
         }
     )
