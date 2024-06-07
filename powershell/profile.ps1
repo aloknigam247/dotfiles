@@ -343,15 +343,31 @@ function promptGen {
                 'sequence' = 1
                 'script'   = {
                     $script:dir_icon = ''
+
+                    # git status
                     $script:git_branch = ''
                     $script:git_index = ''
                     $script:git_sep = ''
+                    $script:git_stash = ''
                     $script:git_sync = ''
                     $script:git_working = ''
+
                     $script:git_status = Get-GitStatus
                     if ($script:git_status -ne $null) {
                         $script:dir_icon = ''
-                        $script:git_sep = '⟩⟩'
+                        $script:git_sep = ' ⟩⟩'
+
+                        # git branch
+                        $git_branch = $script:git_status.Branch
+                        if ($git_branch.StartsWith('(') -and $git_branch.EndsWith(')')) {
+                            if ($git_branch.EndsWith('...)')) {
+                                $script:git_branch = '  ' + $git_branch.Substring(1, $git_branch.Length - 5)
+                            } else {
+                                $script:git_branch = ' 󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2)
+                            }
+                        } else {
+                            $script:git_branch = '  ' + $git_branch.Replace("user/$env:username", '~')
+                        }
 
                         # git dirty check
                         if ($git_status.HasWorking) {
@@ -360,29 +376,21 @@ function promptGen {
                         if ($git_status.HasIndex) {
                             $script:git_index = '󰦓 '
                         }
-
-                        # git branch
-                        $git_branch = $script:git_status.Branch
-                        if ($git_branch.StartsWith('(') -and $git_branch.EndsWith(')')) {
-                            if ($git_branch.EndsWith('...)')) {
-                                $script:git_branch = '  ' + $git_branch.Substring(1, $git_branch.Length - 5) + ' '
-                            } else {
-                                $script:git_branch = ' 󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2) + ' '
-                            }
-                        } else {
-                            $script:git_branch = '  ' + $git_branch.Replace("user/$env:username", '~') + ' '
+                        if ($git_status.StashCount) {
+                            $script:git_stash = '󰪶'
                         }
 
                         # git ahead and behind count
                         $git_sync = ''
                         if ($git_status.AheadBy) {
-                            $git_sync += '' + $git_status.AheadBy
+                            $git_sync += ' 󱦲' + $git_status.AheadBy
                         }
                         if ($git_status.BehindBy) {
-                            $git_sync += '' + $git_status.BehindBy
+                            $git_sync += ' 󱦳' + $git_status.BehindBy
                         }
                         $script:git_sync = $git_sync
                     }
+
                     if ($null -ne $env:SSH_CLIENT) {
                         $script:dir_icon = '󰅟'
                     }
@@ -420,6 +428,12 @@ function promptGen {
             'params'  = @{
                 'text' = '$script:git_index'
                 'fg'   = '#FFD60A'
+            }
+        },
+        @{
+            'params'  = @{
+                'text' = '$script:git_stash'
+                'fg'   = '#81B29A'
             }
         },
         @{
