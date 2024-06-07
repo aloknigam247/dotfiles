@@ -328,7 +328,6 @@ $env:FZF_DEFAULT_OPTS='
 # ╭─( Prompt features )─────────────────────╮
 # │ FEAT: Powerline like background support │
 # │ FEAT: right side prompt ?               │
-# │ FEAT: stash count                       │
 # │ FEAT: transient prompts ?               │
 # ╰─────────────────────────────────────────╯
 $prompt_script = @{}
@@ -343,7 +342,7 @@ function promptGen {
             'execute' = @{
                 'sequence' = 1
                 'script'   = {
-                    $script:dir_icon = ''
+                    $script:dir_icon = ' '
 
                     # git status
                     $script:git_branch = ''
@@ -355,7 +354,7 @@ function promptGen {
 
                     $script:git_status = Get-GitStatus
                     if ($script:git_status -ne $null) {
-                        $script:dir_icon = ''
+                        $script:dir_icon = ' '
                         $script:git_sep = ' ⟩⟩'
 
                         # git branch
@@ -393,7 +392,7 @@ function promptGen {
                     }
 
                     if ($null -ne $env:SSH_CLIENT) {
-                        $script:dir_icon = '󰅟'
+                        $script:dir_icon = '󰅟 '
                     }
                 }
             }
