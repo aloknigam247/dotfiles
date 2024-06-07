@@ -285,6 +285,7 @@ try{
 
 # ─[ posh-git ]────────────────────────────────────────────────────────
 Import-Module posh-git
+$GitPromptSettings.EnableStashStatus = $true
 
 # ─[ winget tab completion ]───────────────────────────────────────────
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
@@ -376,7 +377,7 @@ function promptGen {
                         if ($git_status.HasIndex) {
                             $script:git_index = ' 󰦓'
                         }
-                        if ($(git stash list) -ne $null) {
+                        if ($git_status.StashCount) {
                             $script:git_stash = ' 󰪶'
                         }
 
