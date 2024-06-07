@@ -704,7 +704,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 		Preview_win = vim.api.nvim_open_win(bufnr, enter, {
 			border = 'rounded',
 			col = col_offset,
-			footer = ' [C-s] split [M-v] vsplit [C-t] tab open ',
+			footer = ' ' .. keymaps.open_split .. ' split ' .. keymaps.open_vsplit ..' vsplit ' .. keymaps.open_tab .. ' tab open ',
 			footer_pos = 'right',
 			height = vim.o.lines - 8,
 			relative = relativity,
@@ -738,15 +738,15 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 		callback = function(arg)
 			Preview_win = nil
 			vim.api.nvim_del_autocmd(au_id)
-			vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-s>')
-			vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<C-t>')
-			vim.api.nvim_buf_del_keymap(arg.buf, 'n', '<M-v>')
+			vim.api.nvim_buf_del_keymap(arg.buf, 'n', keymaps.open_split)
+			vim.api.nvim_buf_del_keymap(arg.buf, 'n', keymaps.open_tab)
+			vim.api.nvim_buf_del_keymap(arg.buf, 'n', keymaps.open_vsplit)
 			return true
 		end
 	})
 
 	-- Reopen preview in split
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', '', {
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', keymaps.open_split, '', {
 		callback = split or function()
 			local file_path = vim.fn.expand('%:p')
 			vim.cmd.quit()
@@ -759,7 +759,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	})
 
 	-- Reopen preview in vsplit
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<M-v>', '', {
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', keymaps.open_vsplit, '', {
 		callback = vsplit or function()
 			local file_path = vim.fn.expand('%:p')
 			vim.cmd.quit()
@@ -772,7 +772,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	})
 
 	-- Reopen preview in tab
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-t>', '', {
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', keymaps.open_tab, '', {
 		callback = function()
 			local file_path = vim.fn.expand('%:p')
 			vim.cmd.quit()
@@ -2311,14 +2311,23 @@ addPlugin {
 			vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,                 opts('Open'))
 			vim.keymap.set('n', '<2-RightMouse>', api.tree.change_root_to_node,       opts('CD'))
 			vim.keymap.set('n', '<C-e>',          api.node.open.replace_tree_buffer,  opts('Open: In Place'))
-			vim.keymap.set('n', '<C-s>',          api.node.open.horizontal,           opts('Open: Horizontal Split'))
-			vim.keymap.set('n', '<C-t>',          api.node.open.tab,                  opts('Open: New Tab'))
-			vim.keymap.set('n', '<C-v>',          api.node.open.vertical,             opts('Open: Vertical Split'))
 			vim.keymap.set('n', '<CR>',           api.node.open.edit,                 opts('Open'))
 			vim.keymap.set('n', '<F2>',           api.fs.rename_sub,                  opts('Rename: Omit Filename'))
 			vim.keymap.set('n', '<Leader>h',      api.node.show_info_popup,           opts('Info'))
 			vim.keymap.set('n', '<Tab>',          custom_preview,                     opts('Open Preview'))
 			vim.keymap.set('n', '>',              api.node.navigate.sibling.next,     opts('Next Sibling'))
+			vim.keymap.set('n', 'D',              api.fs.trash,                       opts('Trash'))
+			vim.keymap.set('n', 'E',              api.tree.expand_all,                opts('Expand All'))
+			vim.keymap.set('n', 'F',              api.live_filter.clear,              opts('Clean Filter'))
+			vim.keymap.set('n', 'H',              api.tree.toggle_hidden_filter,      opts('Toggle Filter: Dotfiles'))
+			vim.keymap.set('n', 'I',              api.tree.toggle_gitignore_filter,   opts('Toggle Filter: Git Ignore'))
+			vim.keymap.set('n', 'O',              api.node.open.no_window_picker,     opts('Open: No Window Picker'))
+			vim.keymap.set('n', 'P',              require('nvim-tree-preview').watch, opts('Toggle Preview'))
+			vim.keymap.set('n', 'R',              api.tree.reload,                    opts('Refresh'))
+			vim.keymap.set('n', 'S',              api.tree.search_node,               opts('Search'))
+			vim.keymap.set('n', 'U',              api.tree.toggle_custom_filter,      opts('Toggle Filter: Hidden'))
+			vim.keymap.set('n', 'W',              api.tree.collapse_all,              opts('Collapse'))
+			vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,          opts('Copy Relative Path'))
 			vim.keymap.set('n', '[c',             api.node.navigate.git.prev,         opts('Prev Git'))
 			vim.keymap.set('n', '[d',             api.node.navigate.diagnostics.prev, opts('Prev Diagnostic'))
 			vim.keymap.set('n', ']c',             api.node.navigate.git.next,         opts('Next Git'))
@@ -2329,28 +2338,19 @@ addPlugin {
 			vim.keymap.set('n', 'bmv',            api.marks.bulk.move,                opts('Move Bookmarked'))
 			vim.keymap.set('n', 'c',              api.fs.copy.node,                   opts('Copy'))
 			vim.keymap.set('n', 'd',              api.fs.remove,                      opts('Delete'))
-			vim.keymap.set('n', 'D',              api.fs.trash,                       opts('Trash'))
-			vim.keymap.set('n', 'E',              api.tree.expand_all,                opts('Expand All'))
-			vim.keymap.set('n', 'F',              api.live_filter.clear,              opts('Clean Filter'))
 			vim.keymap.set('n', 'f',              api.live_filter.start,              opts('Filter'))
 			vim.keymap.set('n', 'g?',             api.tree.toggle_help,               opts('Help'))
 			vim.keymap.set('n', 'gy',             api.fs.copy.absolute_path,          opts('Copy Absolute Path'))
-			vim.keymap.set('n', 'H',              api.tree.toggle_hidden_filter,      opts('Toggle Filter: Dotfiles'))
-			vim.keymap.set('n', 'I',              api.tree.toggle_gitignore_filter,   opts('Toggle Filter: Git Ignore'))
 			vim.keymap.set('n', 'o',              api.node.open.edit,                 opts('Open'))
-			vim.keymap.set('n', 'O',              api.node.open.no_window_picker,     opts('Open: No Window Picker'))
 			vim.keymap.set('n', 'p',              api.fs.paste,                       opts('Paste'))
-			vim.keymap.set('n', 'P',              require('nvim-tree-preview').watch, opts('Toggle Preview'))
 			vim.keymap.set('n', 'q',              api.tree.close,                     opts('Close'))
 			vim.keymap.set('n', 'r',              api.fs.rename,                      opts('Rename'))
-			vim.keymap.set('n', 'R',              api.tree.reload,                    opts('Refresh'))
 			vim.keymap.set('n', 's',              api.node.run.system,                opts('Run System'))
-			vim.keymap.set('n', 'S',              api.tree.search_node,               opts('Search'))
-			vim.keymap.set('n', 'U',              api.tree.toggle_custom_filter,      opts('Toggle Filter: Hidden'))
-			vim.keymap.set('n', 'W',              api.tree.collapse_all,              opts('Collapse'))
 			vim.keymap.set('n', 'x',              api.fs.cut,                         opts('Cut'))
 			vim.keymap.set('n', 'y',              api.fs.copy.filename,               opts('Copy Name'))
-			vim.keymap.set('n', 'Y',              api.fs.copy.relative_path,          opts('Copy Relative Path'))
+			vim.keymap.set('n', keymaps.open_split,  api.node.open.horizontal,        opts('Open: Horizontal Split'))
+			vim.keymap.set('n', keymaps.open_tab,    api.node.open.tab,               opts('Open: New Tab'))
+			vim.keymap.set('n', keymaps.open_vsplit, api.node.open.vertical,          opts('Open: Vertical Split'))
 		end,
 		prefer_startup_root = false,
 		reload_on_bufenter = false,
@@ -3035,9 +3035,9 @@ addPlugin {
 		definition = {
 			edit = 'o',
 			quit = 'q',
-			split = '<C-s>',
-			tabe = '<C-t>',
-			vsplit = '<C-v>',
+			split = keymaps.open_vsplit,
+			tabe = keymaps.open_tab,
+			vsplit = keymaps.open_vsplit,
 		},
 		diagnostic = {
 			custom_fix = nil,
@@ -3071,9 +3071,9 @@ addPlugin {
 				'q',
 				'<ESC>',
 			},
-			split = '<C-s>',
-			tabe = '<C-t>',
-			vsplit = '<C-v>',
+			split = keymaps.open_split,
+			tabe = keymaps.open_tab,
+			vsplit = keymaps.open_vsplit,
 		},
 		implement = {
 			enable = true,
@@ -4178,29 +4178,29 @@ addPlugin {
 						['<C-a>']      = actions.toggle_all,
 						['<C-d>']      = false,
 						['<C-l>']      = actions.send_selected_to_qflist,
-						['<C-s>']      = actions.select_horizontal,
-						['<C-t>']      = actions.select_tab,
 						['<C-u>']      = false,
-						['<C-v>']      = actions.select_vertical,
 						['<M-l>']      = actions.add_selected_to_qflist,
 						['<PageDown>'] = actions.preview_scrolling_down,
 						['<PageUp>']   = actions.preview_scrolling_up,
 						['<S-Tab>']    = false,
-						['<Tab>']      = actions.toggle_selection
+						['<Tab>']      = actions.toggle_selection,
+						[keymaps.open_split]  = actions.select_horizontal,
+						[keymaps.open_tab]    = actions.select_tab,
+						[keymaps.open_vsplit] = actions.select_vertical
 					},
 					n = {
 						['<C-a>']      = actions.toggle_all,
 						['<C-d>']      = false,
 						['<C-q>']      = actions.send_selected_to_qflist,
-						['<C-s>']      = actions.select_horizontal,
-						['<C-t>']      = actions.select_tab,
 						['<C-u>']      = false,
-						['<C-v>']      = actions.select_vertical,
 						['<M-q>']      = actions.add_selected_to_qflist,
 						['<PageDown>'] = actions.preview_scrolling_down,
 						['<PageUp>']   = actions.preview_scrolling_up,
 						['<S-Tab>']    = false,
-						['<Tab>']      = actions.toggle_selection
+						['<Tab>']      = actions.toggle_selection,
+						[keymaps.open_split]  = actions.select_horizontal,
+						[keymaps.open_tab]    = actions.select_tab,
+						[keymaps.open_vsplit] = actions.select_vertical
 					}
 				},
 			},
@@ -4678,7 +4678,7 @@ addPlugin {
 }
 
 addPlugin {
-	'anuvyklack/hydra.nvim',
+	'anuvyklack/hydra.nvim', -- BUG: all window changes freeze after hyder is invoked
 	config = function()
 		local hydra = require('hydra')
 		hydra({
