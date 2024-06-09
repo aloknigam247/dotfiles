@@ -325,11 +325,12 @@ $env:FZF_DEFAULT_OPTS='
 # │ Prompt Styling │
 # ╰────────────────╯
 
-# ╭─( Prompt features )─────────────────────╮
-# │ FEAT: Powerline like background support │
-# │ FEAT: right side prompt ?               │
-# │ FEAT: transient prompts ?               │
-# ╰─────────────────────────────────────────╯
+# ╭─( Prompt features )──────────────────────────────────╮
+# │ FEAT: Powerline like background support              │
+# │ FEAT: right side prompt ?                            │
+# │ FEAT: transient prompts ?                            │
+# │ FEAT: command separator using [console]::WindowWidth │
+# ╰──────────────────────────────────────────────────────╯
 $prompt_script = @{}
 
 function promptGen {
