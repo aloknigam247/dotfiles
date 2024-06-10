@@ -1662,6 +1662,7 @@ addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'      
 addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                      }
 addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
 addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
+addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
 addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                      }
 addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                   }
 addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'                                     }
@@ -1688,6 +1689,7 @@ dark  { 'monet',                      '_'                                       
 dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
 dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
 dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
+dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
 dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
 dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
