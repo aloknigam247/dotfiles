@@ -305,9 +305,10 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
+ # FEAT: history needs customization
 Set-PsFzfOption `
     -PSReadlineChordProvider 'Alt+p' `
-    -PSReadlineChordReverseHistory 'Alt+h' ` # FEAT: histoy needs customization
+    -PSReadlineChordReverseHistory 'Alt+h' `
     -PSReadlineChordSetLocation 'Alt+d' `
     -PSReadlineChordReverseHistoryArgs 'Alt+a'
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
