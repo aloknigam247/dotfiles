@@ -313,13 +313,13 @@ Set-PsFzfOption `
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
-# FEAT: review colors
+# https://minsw.github.io/fzf-color-picker/
 $env:FZF_DEFAULT_OPTS='
-    --height=~70% --layout=reverse --border=rounded --border-label=" FZF " --border-label-pos=5 --info=inline --prompt=" " --pointer="→" --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)"
+    --height=~70% --layout=reverse --border=rounded --border-label=" FZF " --border-label-pos=5 --info=inline --prompt=" " --pointer="➤ " --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)" --scheme=path --marker=""
     --color=fg:#ffffff,bg:-1,hl:#71b7c2
-    --color=fg+:#f0a330,bg+:#873df5,hl+:#a7daeb
-    --color=info:#afaf87,prompt:#d7005f,pointer:#ff59f1
-    --color=marker:#000000,spinner:#f0a6f5,header:#87afaf'
+    --color=fg+:#78c5ff,bg+:-1,hl+:#a7daeb
+    --color=info:#afaf87,prompt:#57edbb,pointer:#db2929
+    --color=marker:#f0a1a1,spinner:#f2f759,header:#8ccdcf'
 
 # ╭────────────────╮
 # │ Prompt Styling │
