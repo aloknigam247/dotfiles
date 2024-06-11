@@ -4714,15 +4714,6 @@ addPlugin {
 }
 
 addPlugin {
-	'ariel-frischer/bmessages.nvim', -- FIX: conflicts with Noice
-	cmd = 'Bmessages',
-	opts = {
-		split_size_split = 10,
-		split_type = 'split'
-	}
-}
-
-addPlugin {
 	'benlubas/wrapping-paper.nvim',
 	dependencies = {
 		'MunifTanjim/nui.nvim',

@@ -326,12 +326,11 @@ $env:FZF_DEFAULT_OPTS='
 # │ Prompt Styling │
 # ╰────────────────╯
 
-# ╭─( Prompt features )──────────────────────────────────╮
-# │ FEAT: Powerline like background support              │
-# │ FEAT: right side prompt ?                            │
-# │ FEAT: transient prompts ?                            │
-# │ FEAT: command separator using [console]::WindowWidth │
-# ╰──────────────────────────────────────────────────────╯
+# ╭─( Prompt features )─────────────────────────────────╮
+# │ FEAT: Powerline like background support             │
+# │ FEAT: transient prompts ?                           │
+# │ FEAT: prompt separator using [console]::WindowWidth │
+# ╰─────────────────────────────────────────────────────╯
 $prompt_script = @{}
 
 function promptGen {
@@ -493,8 +492,8 @@ Set-PSReadLineOption -Colors @{
     'Comment' = (Format-Text -headOnly -fg '#989FCE');
     'Emphasis' = (Format-Text -headOnly -fg '#ECBA82');
     'Keyword' = (Format-Text -headOnly -fg '#F7F4F3' -styles 'italic');
-    'ListPrediction' = (Format-Text -headOnly -fg '#BFB48F');
-    'ListPredictionSelected' = (Format-Text -headOnly -fg '#C6CA53' -styles 'bold');
+    'ListPrediction' = (Format-Text -headOnly -fg '#C1D37F');
+    'ListPredictionSelected' = (Format-Text -headOnly -bg '#3C6E71' -styles 'bold');
     'Member' = (Format-Text -headOnly -styles 'italic');
     'Number' = (Format-Text -headOnly -fg '#F24333');
     'Parameter' = (Format-Text -headOnly -fg '#9183EC');
