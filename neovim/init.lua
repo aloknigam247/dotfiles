@@ -2867,7 +2867,7 @@ addPlugin {
 				todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Todo'      }
 			}
 		})
-		require("nvim-web-devicons").set_default_icon('', '#6d8086', 66)
+		require("nvim-web-devicons").set_default_icon('', '#6d8086', 66) -- not working in azureapp filename
 	end
 }
 -- <~>
