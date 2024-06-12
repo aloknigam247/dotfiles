@@ -2776,7 +2776,6 @@ addPlugin {
 	dependencies = { 'nvim-telescope/telescope.nvim' }
 }
 
--- BUG: why word diff works only on current buffer
 addPlugin {
 	'lewis6991/gitsigns.nvim',
 	cmd = 'Gitsigns',
@@ -4469,7 +4468,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- BUG: hides last char in substitute command
 addPlugin {
 	'folke/noice.nvim',
 	config = function()
