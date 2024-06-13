@@ -328,7 +328,6 @@ $env:FZF_DEFAULT_OPTS='
 
 # ╭─( Prompt features )─────────────────────────────────╮
 # │ FEAT: Powerline like background support             │
-# │ FEAT: transient prompts ?                           │
 # │ FEAT: prompt separator using [console]::WindowWidth │
 # ╰─────────────────────────────────────────────────────╯
 $prompt_script = @{}

@@ -3203,11 +3203,9 @@ addPlugin {
 	end
 }
 
+addPlugin { 'mfussenegger/nvim-lint' } -- have windows path issues
+
 -- TODO: progress
-addPlugin {
-	'mfussenegger/nvim-lint'
-}
--- https://github.com/mfussenegger/nvim-lint
 -- https://github.com/nkoporec/checkmate-lsp
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
@@ -3587,7 +3585,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-vim.api.nvim_create_user_command(
+vim.api.nvim_create_user_command( -- FEAT: give path cd to in doc view
 	'Cdroot',
 	function(opts)
 		local function getCwd()
