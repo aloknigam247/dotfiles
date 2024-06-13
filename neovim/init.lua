@@ -1,6 +1,5 @@
 -- FEAT: Auto list continue for markdown for 1. i. a. * -
 -- FIX: ! filter text from external program
--- FIX: gq text formatting
 -- TODO: explore operatorfunc
 -- TODO: github stars
 -- TODO: https://dotfyle.com/this-week-in-neovim/72
@@ -1673,48 +1672,48 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- TODO: refine dark themes
 -- TODO: refine darkT themes
 -- TODO: refine light themes
-dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
-dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
-dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
-dark  { 'bluloco',                    '_'                                                                                          }
-dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
-dark  { 'duskfox',                    'nightfox'                                                                                   }
-dark  { 'everforest',                 '_'                                                                                          }
-dark  { 'github_dark',                'github-theme'                                                                               }
-dark  { 'hybrid',                     '_'                                                                                          }
-dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
-dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
-dark  { 'melange',                    '_'                                                                                          }
-dark  { 'mellow',                     '_'                                                                                          }
-dark  { 'monet',                      '_'                                                                                          }
-dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
-dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
-dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
-dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
-dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
-dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
-dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
-dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
-dark  { 'zephyrium',                  '_'                                                                                          }
--- darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
--- darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
--- darkT { 'cyberdream',                 '_'                                                                                          }
--- darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
--- darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
--- darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
--- darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
--- darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
--- darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
--- darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
--- darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
--- darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
--- darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
--- darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
--- darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
--- darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
--- darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
--- darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
--- darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
+-- dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
+-- dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
+-- dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
+-- dark  { 'bluloco',                    '_'                                                                                          }
+-- dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
+-- dark  { 'duskfox',                    'nightfox'                                                                                   }
+-- dark  { 'everforest',                 '_'                                                                                          }
+-- dark  { 'github_dark',                'github-theme'                                                                               }
+-- dark  { 'hybrid',                     '_'                                                                                          }
+-- dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
+-- dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
+-- dark  { 'melange',                    '_'                                                                                          }
+-- dark  { 'mellow',                     '_'                                                                                          }
+-- dark  { 'monet',                      '_'                                                                                          }
+-- dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
+-- dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
+-- dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
+-- dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
+-- dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
+-- dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
+-- dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
+-- dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
+-- dark  { 'zephyrium',                  '_'                                                                                          }
+darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
+darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
+darkT { 'cyberdream',                 '_'                                                                                          }
+darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
+darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
+darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
+darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
+darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
+darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
+darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
+darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
+darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
+darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
+darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
+darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
+darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
+darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
+darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
+darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
 -- light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
 -- light { 'bluloco',                    '_'                                                                                          }
 -- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
@@ -3586,40 +3585,48 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-vim.api.nvim_create_user_command( -- FEAT: give path cd to in doc view
+
+---Get rooter path
+---@param option string option for rooter
+---@return string # root path
+local function getRoot(option)
+	local cwd = _CWD or vim.fn.getcwd()
+	local root_path = cwd
+
+	if option == 'cwd' then
+		root_path = cwd
+	elseif option == 'cwd_git' then
+		root_path = vim.fs.dirname(vim.fs.find({ '.git' }, { path = cwd, upward = true, limit = 1 })[1])
+	elseif option == 'file' then
+		---@diagnostic disable-next-line: param-type-mismatch
+		root_path = vim.fn.fnamemodify(vim.fn.bufname('%'), ':p:h')
+	elseif option == 'file_git' then
+		---@diagnostic disable-next-line: param-type-mismatch
+		root_path = vim.fs.dirname(vim.fs.find({ '.git' }, { path = vim.fn.bufname('%'), upward = true, limit = 1 })[1])
+	end
+	return vim.fs.normalize(root_path)
+end
+
+vim.api.nvim_create_user_command(
 	'Cdroot',
 	function(opts)
-		local function getCwd()
-			return CWD or vim.fn.getcwd()
-		end
-
-		local function setCwd(path)
-			if path then
-				if not CWD then
-					CWD = vim.fn.getcwd()
-				end
-				vim.cmd.lc(path)
+		local path = getRoot(opts.args)
+		if path then
+			if not _CWD then
+				_CWD = vim.fn.getcwd()
 			end
-		end
-
-		if opts.args == "cwd" then
-			setCwd(getCwd())
-		elseif opts.args == "cwd_git" then
-			local root = vim.fs.dirname(vim.fs.find({".git"}, {path = getCwd(), upward = true, limit = 1})[1])
-			setCwd(root)
-		elseif opts.args == "file" then
-			---@diagnostic disable-next-line: param-type-mismatch
-			local filepath = vim.fn.fnamemodify(vim.fn.bufname('%'), ':p:h')
-			setCwd(filepath)
-		elseif opts.args == "file_git" then
-			---@diagnostic disable-next-line: param-type-mismatch
-			local root = vim.fs.dirname(vim.fs.find({".git"}, {path = vim.fn.bufname('%'), upward = true, limit = 1})[1])
-			setCwd(root)
+			vim.cmd.lc(path)
 		end
 	end,
 	{
-		complete = function() return { 'cwd', 'cwd_git', 'file', 'file_git',} end,
-		nargs = 1,
+		complete = function() return {
+			'cwd "' .. getRoot('cwd'),
+			'cwd_git "' .. getRoot('cwd_git'),
+			'file "' .. getRoot('file'),
+			'file_git "' .. getRoot('file_git'),
+		} end,
+		desc = 'Change directory based on current file',
+		nargs = 1
 	}
 )
 -- <~>
@@ -5031,7 +5038,7 @@ addPlugin {
 	cmd = { 'Diffthis', 'VDiffthis'}
 }
 
-addPlugin {
+addPlugin { -- TOOD: check usage again
 	'sickill/vim-pasta',
 	config = function()
 		vim.g.pasta_paste_before_mapping = '[p'
