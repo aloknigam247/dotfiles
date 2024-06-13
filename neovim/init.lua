@@ -1,8 +1,9 @@
--- TODO: https://dotfyle.com/this-week-in-neovim/72
 -- FEAT: Auto list continue for markdown for 1. i. a. * -
 -- FIX: ! filter text from external program
 -- FIX: gq text formatting
 -- TODO: explore operatorfunc
+-- TODO: github stars
+-- TODO: https://dotfyle.com/this-week-in-neovim/72
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
@@ -3203,7 +3204,7 @@ addPlugin {
 	end
 }
 
-addPlugin { 'mfussenegger/nvim-lint' } -- have windows path issues
+-- addPlugin { 'mfussenegger/nvim-lint' } -- have windows path issues
 
 -- TODO: progress
 -- https://github.com/nkoporec/checkmate-lsp
