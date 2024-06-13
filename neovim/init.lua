@@ -2715,13 +2715,25 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: use https://github.com/rhysd/git-messenger.vim
+addPlugin {
+	'rhysd/git-messenger.vim',
+	cmd = 'GitMessenger',
+	config = function()
+		vim.g.git_messenger_always_into_popup = true
+		vim.g.git_messenger_floating_win_opts = { border = 'rounded' }
+		vim.g.git_messenger_into_popup_after_show = false
+		vim.g.git_messenger_max_popup_height = 30
+		vim.g.git_messenger_max_popup_width = 80
+		vim.g.git_messenger_popup_content_margins = false
+	end
+}
+
 addPlugin {
 	'9seconds/repolink.nvim',
 	cmd = 'RepoLink',
 	opts = {
 		custom_url_parser = function(remote_url)
-			local host, user, project= string.match(remote_url, "https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)")
+			local host, user, project= string.match(remote_url, 'https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)')
 			if host then
 				return host, { user = user, project = project }, false
 			end
