@@ -3526,11 +3526,18 @@ addPlugin {
 | col [c]         | Go to previous quickfix windows, c for count              |
 |-----------------+-----------------------------------------------------------|
 ]]
--- TODO: reconfigure
 addPlugin {
 	'folke/trouble.nvim',
 	cmd = 'Trouble',
-	opts = {}
+	opts = {
+		restore = false,
+		keys = {
+			[keymaps.open_split] = 'jump_split',
+			[keymaps.open_vsplit] = 'jump_vsplit',
+			j = 'next',
+			k = 'prev'
+		}
+	}
 }
 
 --[[ Guide
