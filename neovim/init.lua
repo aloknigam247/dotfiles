@@ -1697,13 +1697,11 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- dark  { 'zephyrium',                  '_'                                                                                          }
 darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
 darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
-darkT { 'cyberdream',                 '_'                                                                                          }
 darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
 darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
 darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
 darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
 darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
-darkT { 'github_dark_tritanopia',     'github-theme', cfg = { options = { transparent = true } }                                   }
 darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
 darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
@@ -3531,7 +3529,6 @@ addPlugin {
 -- TODO: reconfigure
 addPlugin {
 	'folke/trouble.nvim',
-	branch = 'dev',
 	cmd = 'Trouble',
 	opts = {}
 }
