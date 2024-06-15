@@ -1701,11 +1701,9 @@ darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true
 darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
 darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
 darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
-darkT { 'github_dark_default',        'github-theme', cfg = { options = { transparent = true } }                                   }
 darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
 darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
 darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
-darkT { 'onedark',                    '_',            cfg = { style = 'cool', transparent = true }                                 }
 darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
 darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
 darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
