@@ -265,9 +265,9 @@ local kind_hl = {
 ---Global keymaps
 ---@type table<string, string>
 local keymaps = {
-	open_split = '<C-s>',
-	open_tab = '<C-t>',
-	open_vsplit = '<C-v>',
+	open_split = '<M-s>',
+	open_tab = '<M-t>',
+	open_vsplit = '<M-v>',
 }
 
 local lazy_config = {
@@ -452,26 +452,26 @@ LargeFile = {}
 function ColorPalette()
 	if vim.o.background == 'light' then
 		return {
-			{ bg = '#000000', fg = '#78b98f' },
-			{ bg = '#FFFFFF', fg = '#2524f9' },
-			{ bg = '#000000', fg = '#fd048f' },
-			{ bg = '#FFFFFF', fg = '#0b6d33' },
-			{ bg = '#000000', fg = '#5ac230' },
-			{ bg = '#000000', fg = '#3d8bb7' },
-			{ bg = '#FFFFFF', fg = '#710c9e' },
-			{ bg = '#000000', fg = '#f38ab6' },
-			{ bg = '#FFFFFF', fg = '#3a3079' },
-			{ bg = '#000000', fg = '#eb67f9' },
-			{ bg = '#FFFFFF', fg = '#0c4152' },
-			{ bg = '#000000', fg = '#6d7ddb' },
-			{ bg = '#FFFFFF', fg = '#9b1b5c' },
-			{ bg = '#000000', fg = '#d4a07f' },
-			{ bg = '#FFFFFF', fg = '#5f2e0d' },
-			{ bg = '#000000', fg = '#fd2c3b' },
-			{ bg = '#FFFFFF', fg = '#900e08' },
-			{ bg = '#000000', fg = '#ea6b12' },
-			{ bg = '#FFFFFF', fg = '#464a15' },
-			{ bg = '#000000', fg = '#daa218' },
+			{ bg = '#000000', fg = '#78B98F' },
+			{ bg = '#FFFFFF', fg = '#2524F9' },
+			{ bg = '#000000', fg = '#FD048F' },
+			{ bg = '#FFFFFF', fg = '#0B6D33' },
+			{ bg = '#000000', fg = '#5AC230' },
+			{ bg = '#000000', fg = '#3D8BB7' },
+			{ bg = '#FFFFFF', fg = '#710C9E' },
+			{ bg = '#000000', fg = '#F38AB6' },
+			{ bg = '#FFFFFF', fg = '#3A3079' }, -- FIX: matches with 11th
+			{ bg = '#000000', fg = '#EB67F9' },
+			{ bg = '#FFFFFF', fg = '#0C4152' },
+			{ bg = '#000000', fg = '#6D7DDB' },
+			{ bg = '#FFFFFF', fg = '#9B1B5C' },
+			{ bg = '#000000', fg = '#D4A07F' },
+			{ bg = '#FFFFFF', fg = '#5F2E0D' },
+			{ bg = '#000000', fg = '#FD2C3B' },
+			{ bg = '#FFFFFF', fg = '#900E08' },
+			{ bg = '#000000', fg = '#EA6B12' },
+			{ bg = '#FFFFFF', fg = '#464A15' },
+			{ bg = '#000000', fg = '#DAA218' },
 		}
 	end
 	-- dark mode
@@ -1448,32 +1448,6 @@ addPlugin {
 	'brenoprata10/nvim-highlight-colors',
 	cmd = 'HighlightColors',
 	opts = { render = 'virtual', virtual_symbol = '' }
-}
-
-addPlugin {
-	'nvim-zh/colorful-winsep.nvim',
-	config = function()
-		require('colorful-winsep').setup({
-			symbols = {
-				icons.border_hor,
-				icons.border_vert,
-				icons.border_topleft,
-				icons.border_topright,
-				icons.border_botleft,
-				icons.border_botright,
-			},
-		})
-
-		local utils = require('colorful-winsep.utils')
-		utils.direction_have_orig = utils.direction_have
-		utils.direction_have = function(direction)
-			if CountWindows(false) > 2 then
-				return utils.direction_have_orig(direction)
-			end
-			return false
-		end
-	end,
-	event = 'WinNew'
 }
 
 addPlugin {
@@ -3372,14 +3346,14 @@ addPlugin {
 	event = { 'TextChanged *.md', 'InsertEnter *.md'},
 	config = function()
 		require('autolist').setup()
-		vim.keymap.set('i', '<CR>', '<CR><cmd>AutolistNewBullet<cr>')
-		vim.keymap.set('n', '<<', '<<<cmd>AutolistRecalculate<cr>')
-		vim.keymap.set('n', '<TAB>', '<cmd>AutolistToggleCheckbox<cr><CR>')
-		vim.keymap.set('n', '>>', '>><cmd>AutolistRecalculate<cr>')
-		vim.keymap.set('n', 'O', 'O<cmd>AutolistNewBulletBefore<cr>')
-		vim.keymap.set('n', 'dd', 'dd<cmd>AutolistRecalculate<cr>')
-		vim.keymap.set('n', 'o', 'o<cmd>AutolistNewBullet<cr>')
-		vim.keymap.set('v', 'd', 'd<cmd>AutolistRecalculate<cr>')
+		vim.keymap.set('i', '<CR>', '<CR><Cmd>AutolistNewBullet<CR>')
+		vim.keymap.set('n', '<<', '<<<Cmd>AutolistRecalculate<CR>')
+		vim.keymap.set('n', '<TAB>', '<Cmd>AutolistToggleCheckbox<CR>')
+		vim.keymap.set('n', '>>', '>><Cmd>AutolistRecalculate<CR>')
+		vim.keymap.set('n', 'O', 'O<Cmd>AutolistNewBulletBefore<CR>')
+		vim.keymap.set('n', 'dd', 'dd<Cmd>AutolistRecalculate<CR>')
+		vim.keymap.set('n', 'o', 'o<Cmd>AutolistNewBullet<CR>')
+		vim.keymap.set('v', 'd', 'd<Cmd>AutolistRecalculate<CR>')
 	end
 }
 
