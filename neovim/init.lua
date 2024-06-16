@@ -1,4 +1,3 @@
--- FEAT: Auto list continue for markdown for 1. i. a. * -
 -- FIX: ! filter text from external program
 -- TODO: explore operatorfunc
 -- TODO: github stars
@@ -3369,6 +3368,22 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { 'iamcco/markdown-preview.nvim', }
 addPlugin {
+	'gaoDean/autolist.nvim',
+	event = { 'TextChanged *.md', 'InsertEnter *.md'},
+	config = function()
+		require('autolist').setup()
+		vim.keymap.set('i', '<CR>', '<CR><cmd>AutolistNewBullet<cr>')
+		vim.keymap.set('n', '<<', '<<<cmd>AutolistRecalculate<cr>')
+		vim.keymap.set('n', '<TAB>', '<cmd>AutolistToggleCheckbox<cr><CR>')
+		vim.keymap.set('n', '>>', '>><cmd>AutolistRecalculate<cr>')
+		vim.keymap.set('n', 'O', 'O<cmd>AutolistNewBulletBefore<cr>')
+		vim.keymap.set('n', 'dd', 'dd<cmd>AutolistRecalculate<cr>')
+		vim.keymap.set('n', 'o', 'o<cmd>AutolistNewBullet<cr>')
+		vim.keymap.set('v', 'd', 'd<cmd>AutolistRecalculate<cr>')
+	end
+}
+
+addPlugin {
 	'toppair/peek.nvim',
 	build = 'deno task --quiet build:fast',
 	cmd = 'PeekOpen',
@@ -3857,7 +3872,7 @@ addPlugin {
 					{
 						'selectioncount',
 						color = { fg = '#BA2C73' },
-						icon = { '', color = { fg = '#963484' }},
+						icon = { '󰗈', color = { fg = '#963484' }},
 						padding = { left = 0, right = 1 },
 						separator = ''
 					},
