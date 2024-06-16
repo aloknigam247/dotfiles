@@ -70,7 +70,7 @@ function e ($arg) {
     }
 }
 
-function which($arg) {
+function whatis($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
 
