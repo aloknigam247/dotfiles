@@ -104,20 +104,21 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 if exists("g:neovide")
-    " let g:neovide_cursor_animation_length=0.13
     let g:neovide_cursor_animation_length=0
-    " let g:neovide_cursor_trail_size = 0.8
-    " let g:neovide_cursor_vfx_mode = "railgun"
-    " let g:neovide_cursor_vfx_particle_density = 15.0
-    " let g:neovide_cursor_vfx_particle_lifetime=5
-    " let g:neovide_floating_blur_amount_x = 2.0
-    " let g:neovide_floating_blur_amount_y = 10.0
+    let g:neovide_cursor_animation_length=0.13
+    let g:neovide_cursor_trail_size = 0.8
+    let g:neovide_cursor_vfx_mode = "railgun"
+    let g:neovide_cursor_vfx_particle_density = 15.0
+    let g:neovide_cursor_vfx_particle_lifetime=5
+    let g:neovide_floating_blur_amount_x = 2.0
+    let g:neovide_floating_blur_amount_y = 10.0
+    let g:neovide_floating_shadow = v:false
     let g:neovide_fullscreen = v:false
-    " let g:neovide_refresh_rate = 120
+    let g:neovide_refresh_rate = 120
     let g:neovide_remember_window_size = v:false
     let g:neovide_scroll_animation_length = 0.0
     let g:neovide_transparency=1
-    " let g:neovide_underline_automatic_scaling = v:true
+    let g:neovide_underline_automatic_scaling = v:true
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif
 " }}}
