@@ -2,7 +2,6 @@
 -- FIX: ! filter text from external program
 -- TODO: explore operatorfunc
 -- TODO: github stars
--- TODO: https://dotfyle.com/this-week-in-neovim/72
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
@@ -1695,36 +1694,35 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
 -- dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
 -- dark  { 'zephyrium',                  '_'                                                                                          }
-darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
-darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
-darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
-darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
-darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
-darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
-darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
-darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
-darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
-darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
-darkT { 'onedark',                    '_',            cfg = { style = 'darker', transparent = true }                               }
-darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
-darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
-darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
-darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
--- light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
--- light { 'bluloco',                    '_'                                                                                          }
--- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
--- light { 'edge',                       '_'                                                                                          }
--- light { 'github_light',               'github-theme'                                                                               }
--- light { 'github_light_default',       'github-theme'                                                                               }
--- light { 'github_light_tritanopia',    'github-theme'                                                                               }
--- light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
--- light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
--- light { 'monokai-nightasty',          '_'                                                                                          }
--- light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
--- light { 'onenord',                    '_'                                                                                          }
--- light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
--- light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
--- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
+-- darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
+-- darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
+-- darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
+-- darkT { 'evergarden',                 '_',            cfg = { transparent_background = true }                                      }
+-- darkT { 'github_dark',                'github-theme', cfg = { options = { transparent = true } }                                   }
+-- darkT { 'github_dark_colorblind',     'github-theme', cfg = { options = { transparent = true } }                                   }
+-- darkT { 'hybrid',                     '_',            cfg = { transparent = true }                                                 }
+-- darkT { 'kanagawa-wave',              'kanagawa',     cfg = { transparent = true }                                                 }
+-- darkT { 'monet',                      '_',            cfg = { transparent_background = true }                                      }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'dark', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'deep', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
+-- darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
+-- darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
+light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
+light { 'bluloco',                    '_'                                                                                          }
+light { 'catppuccin-latte',           'catppuccin'                                                                                 }
+light { 'edge',                       '_'                                                                                          }
+light { 'github_light',               'github-theme'                                                                               }
+light { 'github_light_default',       'github-theme'                                                                               }
+light { 'github_light_tritanopia',    'github-theme'                                                                               }
+light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
+light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
+light { 'monokai-nightasty',          '_'                                                                                          }
+light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
+light { 'onenord',                    '_'                                                                                          }
+light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
+light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
+lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2008,7 +2006,7 @@ addPlugin {
 				left = 'print("',
 				left_var = 'print(f"',
 				mid_var = '{',
-				right = '")  # noqa',
+				right = '")',
 				right_var = '}")',
 			}
 		},

@@ -48,7 +48,7 @@ function lla     { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto 
 function ls      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
 function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
-function tree    { C:\Users\aloknigam\scoop\shims\tre.exe $args }
+function tree    { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function v($arg) { Start-Job -ScriptBlock { D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg } | ForEach-Object { "Job Id: " + $_.Id } }
 
 function e ($arg) {
