@@ -2,7 +2,6 @@
 -- TODO: explore operatorfunc
 -- TODO: github stars
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: slow in PAGE UP/DOWN
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -460,9 +459,9 @@ function ColorPalette()
 			{ bg = '#000000', fg = '#3D8BB7' },
 			{ bg = '#FFFFFF', fg = '#710C9E' },
 			{ bg = '#000000', fg = '#F38AB6' },
-			{ bg = '#FFFFFF', fg = '#3A3079' }, -- FIX: matches with 11th
+			{ bg = '#FFFFFF', fg = '#7EC4C8' },
 			{ bg = '#000000', fg = '#EB67F9' },
-			{ bg = '#FFFFFF', fg = '#0C4152' },
+			{ bg = '#FFFFFF', fg = '#E49E25' },
 			{ bg = '#000000', fg = '#6D7DDB' },
 			{ bg = '#FFFFFF', fg = '#9B1B5C' },
 			{ bg = '#000000', fg = '#D4A07F' },
@@ -470,7 +469,7 @@ function ColorPalette()
 			{ bg = '#000000', fg = '#FD2C3B' },
 			{ bg = '#FFFFFF', fg = '#900E08' },
 			{ bg = '#000000', fg = '#EA6B12' },
-			{ bg = '#FFFFFF', fg = '#464A15' },
+			{ bg = '#FFFFFF', fg = '#05A8AA' },
 			{ bg = '#000000', fg = '#DAA218' },
 		}
 	end
@@ -810,9 +809,7 @@ end
 -- <~>
 -- Classes</>
 
--- FEAT: create class annotation
 ---@class CmdOptions
-
 ---@type CmdOptions
 CmdOptions = {}
 CmdOptions.__index = CmdOptions
@@ -3949,7 +3946,7 @@ addPlugin {
 								return '󰯟'
 							end
 						end,
-						color = { fg = '#FFBF00' },
+						color = { fg = '#A35CFF' },
 						on_click = function()
 							vim.cmd('set wrap!')
 						end,

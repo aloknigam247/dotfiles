@@ -104,8 +104,10 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 if exists("g:neovide")
+    let g:neovide_cursor_animate_command_line = v:false
     let g:neovide_cursor_animation_length=0
     let g:neovide_cursor_animation_length=0.13
+    let g:neovide_cursor_smooth_blink = v:true
     let g:neovide_cursor_trail_size = 0.8
     let g:neovide_cursor_vfx_mode = "railgun"
     let g:neovide_cursor_vfx_particle_density = 15.0
@@ -114,11 +116,13 @@ if exists("g:neovide")
     let g:neovide_floating_blur_amount_y = 10.0
     let g:neovide_floating_shadow = v:false
     let g:neovide_fullscreen = v:false
+    let g:neovide_hide_mouse_when_typing = v:true
     let g:neovide_refresh_rate = 120
     let g:neovide_remember_window_size = v:false
-    let g:neovide_scroll_animation_length = 0.0
+    let g:neovide_scroll_animation_length = 0.3
     let g:neovide_transparency=1
     let g:neovide_underline_automatic_scaling = v:true
+    let g:neovide_underline_stroke_scale = 1.7
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif
 " }}}
@@ -182,8 +186,8 @@ lua << EOF
     Font_name = 'JetBrainsMono NF'
     Font_size = 15
     vim.o.guifont = Font_name .. ':h' .. Font_size
-    vim.keymap.set('n', '<C-ScrollWheelUp>', function() Font_size = Font_size + 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
-    vim.keymap.set('n', '<C-ScrollWheelDown>', function() Font_size = Font_size - 1; vim.o.guifont = Font_name .. ':h' .. Font_size end)
+    vim.keymap.set('n', '<C-ScrollWheelUp>', function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.05 end)
+    vim.keymap.set('n', '<C-ScrollWheelDown>', function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.05 end)
 EOF
 
 " }}}

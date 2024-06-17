@@ -354,7 +354,7 @@ function promptGen {
 
                     $script:git_status = Get-GitStatus
                     if ($script:git_status -ne $null) {
-                        $script:dir_icon = ' '
+                        $script:dir_icon = ' '
                         $script:git_sep = ' ⟩⟩'
 
                         # git branch
