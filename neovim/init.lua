@@ -1686,7 +1686,6 @@ light { 'github_light',               'github-theme'                            
 light { 'github_light_default',       'github-theme'                                                                               }
 light { 'github_light_tritanopia',    'github-theme'                                                                               }
 light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
-light { 'monet',                      '_',            cfg = { dark_mode = false }                                                  }
 light { 'monokai-nightasty',          '_'                                                                                          }
 light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
 light { 'onenord',                    '_'                                                                                          }
@@ -2475,6 +2474,8 @@ FileTypeActions = {
 	end,
 	['csv'] = function(_)
 		vim.cmd('set textwidth=0')
+		vim.cmd.setlocal('cursorline')
+		vim.api.nvim_set_hl(0, 'CursorLine', { bold = true })
 	end,
 	['neotest-summary'] = function(_)
 		vim.cmd.setlocal('nowrap')
@@ -3182,7 +3183,6 @@ addPlugin {
 -- addPlugin { 'mfussenegger/nvim-lint' } -- have windows path issues
 
 -- TODO: progress
--- https://github.com/nkoporec/checkmate-lsp
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
 
