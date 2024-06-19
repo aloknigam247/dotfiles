@@ -1748,10 +1748,9 @@ addPlugin {
 		cb_options:addOption('style')
 
 		local function exec(opts)
-			-- FEAT: Visual select
 			cb_options:parseOptions(opts.fargs)
 			local func_name = cb_options:option('box') .. cb_options:option('text') .. cb_options:option('type')
-			cb[func_name](cb_options:option('style'))
+			cb[func_name](cb_options:option('style'), opts.line1, opts.line2)
 		end
 
 		local function cb_complete(lead)
@@ -1762,7 +1761,7 @@ addPlugin {
 			end
 		end
 
-		vim.api.nvim_create_user_command('CB', exec, { desc = 'Create commnent box', nargs = '*', complete = cb_complete })
+		vim.api.nvim_create_user_command('CB', exec, { complete = cb_complete, desc = 'Create commnent box', nargs = '*', range = 2 })
 	end
 }
 
