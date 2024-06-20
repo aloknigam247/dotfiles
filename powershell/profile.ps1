@@ -414,7 +414,6 @@ function promptGen {
             'params'  = @{
                 'text'   = '$script:git_branch'
                 'fg'     = '#F4B860'
-                'styles' = 'bold'
             }
         },
         @{
