@@ -399,7 +399,7 @@ function promptGen {
         @{
             'params' = @{
                 'text'   = '$((Get-Location).ToString().Replace($HOME, "~"))'
-                'fg'     = '#79CCF6'
+                'fg'     = '#93A9EE'
                 'styles' = "italic"
             }
         },
