@@ -1119,7 +1119,6 @@ vim.ui.input = function(...)
 	vim.ui.input(...)
 end
 
-vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 vim.fn.matchadd( -- BUG: not working
 	'HighlightURL',
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
@@ -1732,6 +1731,9 @@ function ColoRand(scheme_index)
 		todo_hl.bg = nil
 		vim.api.nvim_set_hl(0, 'Todo', todo_hl)
 	end
+
+	-- override colorscheme and create highlight for url
+	vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
