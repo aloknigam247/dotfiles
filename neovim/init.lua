@@ -1,6 +1,7 @@
 -- FIX: ! filter text from external program
 -- TODO: explore operatorfunc
 -- TODO: github stars
+-- TODO: reddit save
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
