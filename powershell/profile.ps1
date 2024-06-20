@@ -399,8 +399,8 @@ function promptGen {
         @{
             'params' = @{
                 'text'   = '$((Get-Location).ToString().Replace($HOME, "~"))'
-                'fg'     = '#93A9EE'
-                'styles' = "italic"
+                'fg'     = '#00A6FB'
+                'styles' = 'italic','bold'
             }
         },
         @{
@@ -414,7 +414,7 @@ function promptGen {
             'params'  = @{
                 'text'   = '$script:git_branch'
                 'fg'     = '#F4B860'
-                'styles' = "bold"
+                'styles' = 'bold'
             }
         },
         @{
