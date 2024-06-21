@@ -2755,6 +2755,7 @@ addPlugin {
 	dependencies = { 'nvim-telescope/telescope.nvim' }
 }
 
+-- FIX: error in loading for deprecation
 addPlugin {
 	'lewis6991/gitsigns.nvim',
 	cmd = 'Gitsigns',
