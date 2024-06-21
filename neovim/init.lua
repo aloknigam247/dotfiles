@@ -1690,8 +1690,8 @@ light { 'monokai-nightasty',          '_'                                       
 light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
 light { 'onenord',                    '_'                                                                                          }
 light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
-light { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
-lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
+light { 'vscode',                     '_'                                                                                          } -- TODO: TODO hl
+lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      } -- FIX: working
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme

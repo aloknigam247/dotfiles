@@ -32,6 +32,8 @@ if ([Environment]::UserInteractive) {
 # ╭─────────╮
 # │ Aliases │
 # ╰─────────╯
+# FEAT: use / as an alias for rg or text search
+# FEAT: use // as an alias for file search
 # ─[ Msys2 ]───────────────────────────────────────────────────────────
 New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 
