@@ -1045,16 +1045,16 @@ vim.api.nvim_create_autocmd(
 -- FEAT: visual motion mappings
 -- TODO: recheck word-motions help and reassign mappings
 vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
-vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' }) -- BUG: escaping while moving create problem in LSP
+vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
 vim.keymap.set('i', '<C-R>', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
-vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' }) -- BUG: escaping while moving create problem in LSP
+vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
 vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'Move a larger word backword' })
 vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'Move a larger word forward' })
 vim.keymap.set('n', '!!',          ':<Up><CR>',                { desc = 'Run last command' })
 vim.keymap.set('n', '"', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
 vim.keymap.set('n', '<BS>',        'X',                        { desc = 'Delete a letter backword' })
 vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'Move a word backword' })
-vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'Close window' }) -- FEAT: replace with w
+vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'Close window' })
 vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'Move a word forward' })
 vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'Move a larger word forward' })
 vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'Move a larger word backword' })
@@ -1073,6 +1073,7 @@ vim.diagnostic.config({
 		source = 'if_many',
 	},
 	severity_sort = true,
+	update_in_insert = true,
 	virtual_text = {
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
@@ -1604,7 +1605,7 @@ end
 ---@param opts ColorPlugin Color config
 local function lightT(opts)
 	opts.trans = true
-	dark(opts)
+	light(opts)
 end
 
 addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                          }
@@ -1691,7 +1692,7 @@ light { 'onedark',                    '_',            cfg = { style = 'light' } 
 light { 'onenord',                    '_'                                                                                          }
 light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
 light { 'vscode',                     '_'                                                                                          } -- TODO: TODO hl
-lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      } -- FIX: working
+lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
