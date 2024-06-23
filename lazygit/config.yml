@@ -72,7 +72,7 @@ gui:
     # The "speed" of the spinner in milliseconds.
     rate: 50
 git:
-  paging:
+  paging: # FEAT: use custom git diff
     colorArg: always
     useConfig: false
   commit:
