@@ -27,7 +27,7 @@
     file-added-label = 
     file-copied-label = 
     file-decoration-style = "#D19C1D bold ul"
-    file-modified-label = " "
+    file-modified-label = " "
     file-removed-label = 󰆴
     file-renamed-label = 
     file-style = "#D19C1D italic"
@@ -44,7 +44,6 @@
     navigate = true
     plus-emph-style = "#91C499 reverse"
     plus-style = syntax
-    side-by-side = true
     syntax-theme = Monokai Extended Origin
     true-color = always
 

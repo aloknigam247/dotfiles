@@ -32,10 +32,12 @@ if ([Environment]::UserInteractive) {
 # ╭─────────╮
 # │ Aliases │
 # ╰─────────╯
-# FEAT: use / as an alias for rg or text search
 # FEAT: use // as an alias for file search
 # ─[ Msys2 ]───────────────────────────────────────────────────────────
 New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
+
+# ─[ Common ]──────────────────────────────────────────────────────────
+New-Alias -Name '/' -Value C:\Users\aloknigam\scoop\shims\rg.exe
 
 # ╭───────────╮
 # │ Functions │
@@ -51,7 +53,7 @@ function ls      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $a
 function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
 function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree    { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function v($arg) { Start-Job -ScriptBlock { D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $using:arg } | ForEach-Object { "Job Id: " + $_.Id } }
+function v($arg) { D:\scoop\shims\neovide.exe --size=2100x1254 --no-tabs -- $arg }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')

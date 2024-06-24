@@ -1121,7 +1121,7 @@ vim.ui.input = function(...)
 	vim.ui.input(...)
 end
 
-vim.fn.matchadd( -- BUG: not working
+vim.fn.matchadd(
 	'HighlightURL',
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
 	202
@@ -1679,7 +1679,6 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
 -- darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
 -- darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
-light { 'ayu-light',                  'ayu',          post = fixAyu                                                                }
 light { 'bluloco',                    '_'                                                                                          }
 light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 light { 'edge',                       '_'                                                                                          }
@@ -1691,7 +1690,6 @@ light { 'monokai-nightasty',          '_'                                       
 light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
 light { 'onenord',                    '_'                                                                                          }
 light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
-light { 'vscode',                     '_'                                                                                          } -- TODO: TODO hl
 lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 
 ---Random colorscheme
@@ -2531,6 +2529,8 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/gh-liu/fold_line.nvim?tab=readme-ov-file
+
 addPlugin {
 	'kevinhwang91/nvim-ufo',
 	config = function()
@@ -2756,7 +2756,6 @@ addPlugin {
 	dependencies = { 'nvim-telescope/telescope.nvim' }
 }
 
--- FIX: error in loading for deprecation
 addPlugin {
 	'lewis6991/gitsigns.nvim',
 	cmd = 'Gitsigns',
@@ -2765,22 +2764,7 @@ addPlugin {
 	keys = { '[c', ']c' },
 	opts = {
 		attach_to_untracked = true,
-		count_chars = {
-			[1]   = '',
-			[2]   = '2',
-			[3]   = '3',
-			[4]   = '4',
-			[5]   = '5',
-			[6]   = '6',
-			[7]   = '7',
-			[8]   = '8',
-			[9]   = '9',
-			['+'] = '',
-		},
 		current_line_blame_formatter = ' 󰀄 <author> 󰔟 <committer_time:%R>  <summary>',
-		diff_opts = {
-			internal = true
-		},
 		on_attach = function (bufnr)
 			local gs = package.loaded.gitsigns
 
@@ -2804,14 +2788,14 @@ addPlugin {
 			end, {expr=true})
 		end,
 		preview_config = {
-			border = 'rounded'
+			border = dotted_border
 		},
 		signs = {
-			add          = { hl = 'GitSignsAdd'   ,       text = icons.diff_add,           numhl = 'GitSignsAddNr'   , linehl = 'GitSignsAddLn'   , show_count = false },
-			change       = { hl = 'GitSignsChange',       text = icons.diff_change,        numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
-			changedelete = { hl = 'GitSignsChangedelete', text = icons.diff_change_delete, numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn', show_count = false },
-			delete       = { hl = 'GitSignsDelete',       text = icons.diff_delete,        numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
-			topdelete    = { hl = 'GitSignsDelete',       text = icons.diff_delete_top,    numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn', show_count = false },
+			add          = { text = icons.diff_add           },
+			change       = { text = icons.diff_change        },
+			changedelete = { text = icons.diff_change_delete },
+			delete       = { text = icons.diff_delete        },
+			topdelete    = { text = icons.diff_delete_top    },
 		},
 		trouble = false
 	}
@@ -3723,7 +3707,7 @@ addPlugin {
 	'nvim-lualine/lualine.nvim',
 	config = function()
 		local function lspIcon()
-			local anim ={ '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
+			local anim = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' }
 			Icon_index = (Icon_index) % #anim + 1
 			return anim[Icon_index]
 		end
