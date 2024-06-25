@@ -158,7 +158,7 @@ function gs {
 function Get-TODO {
     param(
         [Parameter(Position = 0)]
-        [ValidateSet('all', 'random', 'stats')] # FEAT: FZF
+        [ValidateSet('all', 'random', 'stats')]
         [String] $type = 'All'
     )
 

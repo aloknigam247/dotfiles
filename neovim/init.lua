@@ -4555,7 +4555,7 @@ addPlugin {
 					view = nil,
 					opts = {},
 				},
-				signature = { -- FIX: enable it
+				signature = {
 					enabled = true,
 					auto_open = {
 						enabled = true,
