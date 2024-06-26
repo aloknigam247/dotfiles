@@ -3317,6 +3317,30 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { 'iamcco/markdown-preview.nvim', }
+
+addPlugin {
+	'MeanderingProgrammer/markdown.nvim',
+	ft = 'markdown',
+	opts = {
+		headings = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' },
+		bullets = { '', '', '', '' },
+		checkbox = {
+			unchecked = ' ',
+			checked = ' ',
+			callout = {
+				note = ' Note',
+				tip = ' Tip',
+				important = '󰅾 Important',
+				warning = '󰀪 Warning',
+				caution = '󰒡 Caution',
+			}
+		},
+		highlights = {
+			code = '' -- FIX:
+		}
+	}
+}
+
 addPlugin {
 	'gaoDean/autolist.nvim',
 	event = { 'TextChanged *.md', 'InsertEnter *.md'},
