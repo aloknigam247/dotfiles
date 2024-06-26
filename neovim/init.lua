@@ -1482,13 +1482,6 @@ local function fixLineNr(fg)
 	vim.api.nvim_set_hl(0, 'LineNr', { fg = fg })
 end
 
----Fix oxocarbon colorscheme
-local function fixOxocarbon()
-	vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#2A9D8F', nocombine = true })
-	vim.api.nvim_set_hl(0, 'DiffChange', { fg = '#540D6E', nocombine = true })
-	vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#EE4266', nocombine = true })
-end
-
 ---Fix retrobox colorscheme
 local function fixRetro()
 	vim.api.nvim_set_hl(0, 'DiffAdd', { fg = '#B8BB26', nocombine = true })
@@ -1631,7 +1624,6 @@ addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'        
 addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'                                     }
 addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                      }
 addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
-addPlugin { 'nyoom-engineering/oxocarbon.nvim',    event = 'User oxocarbon'                                    }
 addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
 addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                      }
 addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                   }
@@ -1689,7 +1681,6 @@ light { 'material',                   '_',            pre = function() preMateri
 light { 'monokai-nightasty',          '_'                                                                                          }
 light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
 light { 'onenord',                    '_'                                                                                          }
-light { 'oxocarbon',                  '_',            post = fixOxocarbon                                                          }
 lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 
 ---Random colorscheme
@@ -3443,7 +3434,7 @@ addPlugin {
 	}
 }
 
--- FEAT: 'chentoast/marks.nvim'
+-- 'chentoast/marks.nvim'
 
 addPlugin {
 	'kshenoy/vim-signature',
