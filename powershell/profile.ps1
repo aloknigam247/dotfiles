@@ -283,8 +283,8 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocom
 try{
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 } catch {
-    Write-Error "Error occured in setting PredictionSource"
-    Write-Error $_
+    # Write-Error "Error occured in setting PredictionSource"
+    # Write-Error $_
 }
 
 # ─[ posh-git ]────────────────────────────────────────────────────────

@@ -1,4 +1,3 @@
--- FIX: ! filter text from external program
 -- TODO: explore operatorfunc
 -- TODO: github stars
 -- TODO: reddit save
@@ -1623,7 +1622,6 @@ addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'      
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
 addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'                                     }
 addPlugin { 'navarasu/onedark.nvim',               event = 'User onedark'                                      }
-addPlugin { 'rmehri01/onenord.nvim',               event = 'User onenord'                                      }
 addPlugin { 'lewpoly/sherbet.nvim',                event = 'User sherbet'                                      }
 addPlugin { 'sainnhe/sonokai',                     event = 'User sonokai'                                      }
 addPlugin { 'folke/tokyonight.nvim',               event = 'User tokyonight'                                   }
@@ -1634,29 +1632,29 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- TODO: refine dark themes
 -- TODO: refine darkT themes
 -- TODO: refine light themes
--- dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
--- dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
--- dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
--- dark  { 'bluloco',                    '_'                                                                                          }
--- dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
--- dark  { 'duskfox',                    'nightfox'                                                                                   }
--- dark  { 'everforest',                 '_'                                                                                          }
--- dark  { 'github_dark',                'github-theme'                                                                               }
--- dark  { 'hybrid',                     '_'                                                                                          }
--- dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
--- dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
--- dark  { 'melange',                    '_'                                                                                          }
--- dark  { 'mellow',                     '_'                                                                                          }
--- dark  { 'monet',                      '_'                                                                                          }
--- dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       } -- FIX: illuminate
--- dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
--- dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
--- dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
--- dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
--- dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
--- dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
--- dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
--- dark  { 'zephyrium',                  '_'                                                                                          }
+dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
+dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
+dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
+dark  { 'bluloco',                    '_'                                                                                          }
+dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
+dark  { 'duskfox',                    'nightfox'                                                                                   }
+dark  { 'everforest',                 '_'                                                                                          }
+dark  { 'github_dark',                'github-theme'                                                                               }
+dark  { 'hybrid',                     '_'                                                                                          }
+dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
+dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
+dark  { 'melange',                    '_'                                                                                          }
+dark  { 'mellow',                     '_'                                                                                          }
+dark  { 'monet',                      '_'                                                                                          }
+dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
+dark  { 'onedark',                    '_',            cfg = { style = 'deep' }                                                     }
+dark  { 'retrobox',                   '_',            post = fixRetro                                                              }
+dark  { 'sherbet',                    '_',            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
+dark  { 'sonokai',                    '_',            pre = function() vim.g.sonokai_style = 'shusia' end                          }
+dark  { 'tokyonight-storm',           'tokyonight'                                                                                 }
+dark  { 'vn-night',                   '_',            post = fixVnNight                                                            }
+dark  { 'vscode',                     '_'                                                                                          } -- TODO: fix TODO hl
+dark  { 'zephyrium',                  '_'                                                                                          }
 -- darkT { 'bamboo',                     '_',            cfg = { style = 'multiplex', transparent = true }                            }
 -- darkT { 'bluloco',                    '_',            cfg = { transparent = true }                                                 }
 -- darkT { 'duskfox',                    'nightfox',     cfg = { transparent = true }                                                 }
@@ -1671,17 +1669,16 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- darkT { 'onedark',                    '_',            cfg = { style = 'warm', transparent = true }                                 }
 -- darkT { 'onedark',                    '_',            cfg = { style = 'warmer', transparent = true }                               }
 -- darkT { 'tokyonight-storm',           'tokyonight',   cfg = { transparent = true }                                                 }
-light { 'bluloco',                    '_'                                                                                          }
-light { 'catppuccin-latte',           'catppuccin'                                                                                 }
-light { 'edge',                       '_'                                                                                          }
-light { 'github_light',               'github-theme'                                                                               }
-light { 'github_light_default',       'github-theme'                                                                               }
-light { 'github_light_tritanopia',    'github-theme'                                                                               }
-light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
-light { 'monokai-nightasty',          '_'                                                                                          }
-light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
-light { 'onenord',                    '_'                                                                                          }
-lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
+-- light { 'bluloco',                    '_'                                                                                          }
+-- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
+-- light { 'edge',                       '_'                                                                                          }
+-- light { 'github_light',               'github-theme'                                                                               }
+-- light { 'github_light_default',       'github-theme'                                                                               }
+-- light { 'github_light_tritanopia',    'github-theme'                                                                               }
+-- light { 'material',                   '_',            pre = function() preMaterial('lighter', '#CCEAE7') end, post = fixMaterial   }
+-- light { 'monokai-nightasty',          '_'                                                                                          }
+-- light { 'onedark',                    '_',            cfg = { style = 'light' }                                                    }
+-- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
