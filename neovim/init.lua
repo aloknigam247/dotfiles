@@ -1639,7 +1639,6 @@ dark  { 'bluloco',                    '_'                                       
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 dark  { 'duskfox',                    'nightfox'                                                                                   }
 dark  { 'everforest',                 '_'                                                                                          }
-dark  { 'github_dark',                'github-theme'                                                                               }
 dark  { 'hybrid',                     '_'                                                                                          }
 dark  { 'juliana',                    '_',            post = function() fixLineNr('#999999') end                                   }
 dark  { 'kanagawa-wave',              'kanagawa'                                                                                   }
@@ -3319,7 +3318,7 @@ addPlugin {
 	'MeanderingProgrammer/markdown.nvim',
 	ft = 'markdown',
 	opts = {
-		headings = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' },
+		headings = { ' ' },
 		bullets = { '', '', '', '' },
 		checkbox = {
 			unchecked = ' ',
