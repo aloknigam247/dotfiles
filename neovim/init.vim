@@ -64,10 +64,12 @@ let g:vimsyn_embed = 'lpr'   " Embededded script highlight
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
+set cursorline               " Enable highlight of cursor
+set cursorlineopt=number     " Highlight number only
 set diffopt+=vertical        " Open diff in vertical sp:set lit
-set inccommand=split         " Show effects of command in preview windows
 set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\ 
 " set foldmethod=marker        " Set fold method to marker
+set inccommand=split         " Show effects of command in preview windows
 set laststatus=3             " Disable global statusline
 set lazyredraw               " Don't redraw screen on macros, registers and other commands.
 set lcs=lead:·,trail:•,multispace:·,tab:│\ ,nbsp:⦸,extends:»,precedes:«
