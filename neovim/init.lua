@@ -1506,7 +1506,9 @@ local function fixAyu()
 	vim.api.nvim_set_hl(0, '@string.documentation.python', { link = 'Changed' })
 	vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAddLn' })
 	vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'GitSignsDeleteLn' })
+	vim.api.nvim_set_hl(0, 'LineNr', { fg = '#4F545D' })
 	vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
+	vim.api.nvim_set_hl(0, 'Visual', { bg = '#313C47' })
 end
 
 ---Fix material colorscheme
@@ -3787,6 +3789,12 @@ addPlugin {
 					{
 						'filetype',
 						icon_only = true,
+						fmt = function(str)
+							if str == '' then
+								return ' '
+							end
+							return str
+						end,
 						padding = { left = 1, right = 0 },
 						separator = ''
 					},
@@ -4741,7 +4749,7 @@ addPlugin {
 	dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
 }
 
-addPlugin { -- FIX: needs fix for path issue
+addPlugin { -- FIX: needs fix for path issue https://github.com/cameron-wags/rainbow_csv.nvim/issues/22
 	'cameron-wags/rainbow_csv.nvim',
 	config = true,
 	ft = 'csv'
