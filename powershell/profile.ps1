@@ -1,3 +1,4 @@
+# PERF: slow command not found and command completion
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
@@ -44,7 +45,7 @@ New-Alias -Name '/' -Value C:\Users\aloknigam\scoop\shims\rg.exe
 # ╰───────────╯
 Remove-Alias ls
 Remove-Alias rm
-function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always --theme 'gruvbox-dark' $args }
+function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always --theme 'Visual Studio Dark+' $args }
 function fnd     { D:\Scoop\apps\msys2\current\usr\bin\find.exe $args | D:\Scoop\apps\msys2\current\usr\bin\sed 's|/|\\|g' }
 function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
