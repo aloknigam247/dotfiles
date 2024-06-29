@@ -1040,28 +1040,34 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
--- FEAT: mapping to delete word on <C-Del>
--- TODO: recheck word-motions help and reassign mappings
-vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
-vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
-vim.keymap.set('i', '<C-R>', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
-vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
-vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'Move a larger word backword' })
-vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'Move a larger word forward' })
-vim.keymap.set('n', '!!',          ':<Up><CR>',                { desc = 'Run last command' })
-vim.keymap.set('n', '"', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
+-- word deletion
 vim.keymap.set('n', '<BS>',        'X',                        { desc = 'Delete a letter backword' })
-vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'Move a word backword' })
-vim.keymap.set('n', '<C-Q>',       '<cmd>q<CR>',               { desc = 'Close window' })
-vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'Move a word forward' })
-vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'Move a larger word forward' })
-vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'Move a larger word backword' })
-vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'Move to next tab' })
-vim.keymap.set('n', '<C-s>',       '<cmd>w<CR>',               { desc = 'Save file' })
-vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'Jump forward' })
+vim.keymap.set('i', '<C-BS>',      '<C-w>',                    { desc = 'Delete a word backword' })
+-- mouse
 vim.keymap.set('n', '<X2Mouse>',   '<C-i>',                    { desc = 'Jump backword' })
-vim.keymap.set('n', '[q',          '<cmd>cprevious<CR>',       { desc = 'Previous quickfix' })
+vim.keymap.set('n', '<X1Mouse>',   '<C-o>',                    { desc = 'Jump forward' })
+-- word motion
+-- vim.keymap.set('i', '<C-S-Left>',  '<C-\\><C-O>B',             { desc = 'Move a larger word backword' })
+-- vim.keymap.set('n', '<C-S-Right>', 'E',                        { desc = 'Move a larger word backword' })
+-- vim.keymap.set('i', '<C-S-Right>', '<C-\\><C-O>E<C-\\><C-O>a', { desc = 'Move a larger word forward' })
+-- vim.keymap.set('n', '<C-S-Left>',  'B',                        { desc = 'Move a larger word forward' })
+-- vim.keymap.set('i', '<C-Left>',    '<C-\\><C-O>b',             { desc = 'Move a word backword' })
+-- vim.keymap.set('n', '<C-Left>',    'b',                        { desc = 'Move a word backword' })
+-- vim.keymap.set('i', '<C-Right>',   '<C-\\><C-O>e<C-\\><C-O>a', { desc = 'Move a word forward' })
+-- vim.keymap.set('n', '<C-Right>',   'e',                        { desc = 'Move a word forward' })
+-- tab switch
+vim.keymap.set('n', '<C-Tab>',     '<cmd>tabnext<CR>',         { desc = 'Switch to next tab' })
+-- motion
 vim.keymap.set('n', ']q',          '<cmd>cnext<CR>',           { desc = 'Next quickfix' })
+vim.keymap.set('n', '[q',          '<cmd>cprevious<CR>',       { desc = 'Previous quickfix' })
+-- register
+vim.keymap.set('i', '<C-R>', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
+vim.keymap.set('n', '"', function() require('telescope.builtin').registers(require('telescope.themes').get_cursor()) end, { desc = 'Pick registers' })
+-- commands
+vim.keymap.set('n', '!!',          ':<Up><CR>',                { desc = 'Run last command' })
+vim.keymap.set('n', '<C-q>',       '<cmd>q<CR>',               { desc = 'Close window' })
+vim.keymap.set('n', '<C-s>',       '<cmd>w<CR>',               { desc = 'Save file' })
+-- search
 vim.keymap.set('x', '/',           '<Esc>/\\%V',               { desc = 'Search in select region' })
 -- <~>
 -- Misc</>
@@ -1071,7 +1077,7 @@ vim.diagnostic.config({
 		source = 'if_many',
 	},
 	severity_sort = true,
-	update_in_insert = true,
+	update_in_insert = false,
 	virtual_text = {
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
