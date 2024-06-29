@@ -6,6 +6,7 @@ $pip_pkgs = @(
 $scoop_pkgs = @(
     "bat"
     "dos2unix"
+    "fd"
     "less"
     "msys2"
     "ripgrep"
