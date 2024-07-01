@@ -918,20 +918,15 @@ vim.api.nvim_create_autocmd(
 		pattern = '*',
 		desc = 'Overlength line marker',
 		callback = function()
-			print('DEBUGPRINT[1]: init.lua:921: isLargeFile()=' .. vim.inspect(isLargeFile()))
-			print('DEBUGPRINT[2]: init.lua:922: vim.bo.textwidth=' .. vim.inspect(vim.bo.textwidth))
 			if not isLargeFile() and vim.bo.textwidth > 0 then
-				-- for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
-				-- 	local line_length = #line
-				-- 	if line_length > 300 then
-				-- 		print('DEBUGPRINT[3]: init.lua:927 (before return)')
-				-- 		return
-				-- 	end
-				-- end
-				vim.api.nvim_set_hl(0, 'Overlength', { fg = '#FFFFFF', bg = '#FFFFFF' })
-				-- vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
-				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
-				print('DEBUGPRINT[4]: init.lua:933 (after vim.cmd(match Overlength /% .. vim.bo.te…)')
+				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
+					local line_length = #line
+					if line_length > 300 then
+						return
+					end
+				end
+				vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
+				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- BUG: not working
 			end
 		end
 	}
@@ -1733,7 +1728,6 @@ function ColoRand(scheme_index)
 
 	-- override colorscheme and create highlight for url
 	vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
-	vim.api.nvim_set_hl(0, 'Overlength', { link = DiagnosticUnderlineError })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
