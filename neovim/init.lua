@@ -1,4 +1,3 @@
--- TODO: explore operatorfunc
 -- TODO: github stars
 -- TODO: reddit save
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -475,26 +474,26 @@ function ColorPalette()
 	end
 	-- dark mode
 	return {
-		{ bg = '#FFFFFF', fg = '#8138fc' },
-		{ bg = '#000000', fg = '#f3d426' },
-		{ bg = '#000000', fg = '#68affc' },
-		{ bg = '#000000', fg = '#fda547' },
-		{ bg = '#FFFFFF', fg = '#516a9c' },
-		{ bg = '#000000', fg = '#47faf4' },
+		{ bg = '#FFFFFF', fg = '#8138FC' },
+		{ bg = '#000000', fg = '#F3D426' },
+		{ bg = '#000000', fg = '#68AFFC' },
+		{ bg = '#000000', fg = '#FDA547' },
+		{ bg = '#FFFFFF', fg = '#516A9C' },
+		{ bg = '#000000', fg = '#47FAF4' },
 		{ bg = '#000000', fg = '#399283' },
-		{ bg = '#000000', fg = '#a2e67c' },
+		{ bg = '#000000', fg = '#A2E67C' },
 		{ bg = '#000000', fg = '#598322' },
-		{ bg = '#000000', fg = '#bfdad4' }, -- FIX: feels like white
-		{ bg = '#000000', fg = '#21a708' },
-		{ bg = '#000000', fg = '#44f270' },
-		{ bg = '#FFFFFF', fg = '#565bd9' },
-		{ bg = '#000000', fg = '#fcc2fb' },
-		{ bg = '#FFFFFF', fg = '#c20da6' },
-		{ bg = '#000000', fg = '#bd7ab4' },
-		{ bg = '#000000', fg = '#fe79ec' },
+		{ bg = '#000000', fg = '#798B87' },
+		{ bg = '#000000', fg = '#21A708' },
+		{ bg = '#000000', fg = '#44F270' },
+		{ bg = '#FFFFFF', fg = '#565BD9' },
+		{ bg = '#000000', fg = '#FCC2FB' },
+		{ bg = '#FFFFFF', fg = '#C20DA6' },
+		{ bg = '#000000', fg = '#BD7AB4' },
+		{ bg = '#000000', fg = '#FE79EC' },
 		{ bg = '#FFFFFF', fg = '#876341' },
-		{ bg = '#000000', fg = '#dc3c07' },
-		{ bg = '#000000', fg = '#fa557a' },
+		{ bg = '#000000', fg = '#DC3C07' },
+		{ bg = '#000000', fg = '#FA557A' },
 	}
 end
 
@@ -1078,7 +1077,7 @@ vim.diagnostic.config({
 	},
 	severity_sort = true,
 	update_in_insert = false,
-	virtual_text = {
+	virtual_text = { -- FEAT: customize to look like https://github.com/rachartier/tiny-inline-diagnostic.nvim
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
 				return icons.error
@@ -2524,9 +2523,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/gh-liu/fold_line.nvim?tab=readme-ov-file
-
-addPlugin {
+addPlugin { -- FIX: enable me
 	'kevinhwang91/nvim-ufo',
 	config = function()
 		vim.o.foldcolumn = '1' -- '0' is not bad
