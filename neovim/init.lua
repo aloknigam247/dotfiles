@@ -918,15 +918,20 @@ vim.api.nvim_create_autocmd(
 		pattern = '*',
 		desc = 'Overlength line marker',
 		callback = function()
+			print('DEBUGPRINT[1]: init.lua:921: isLargeFile()=' .. vim.inspect(isLargeFile()))
+			print('DEBUGPRINT[2]: init.lua:922: vim.bo.textwidth=' .. vim.inspect(vim.bo.textwidth))
 			if not isLargeFile() and vim.bo.textwidth > 0 then
-				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
-					local line_length = #line
-					if line_length > 300 then
-						return
-					end
-				end
-				vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
+				-- for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
+				-- 	local line_length = #line
+				-- 	if line_length > 300 then
+				-- 		print('DEBUGPRINT[3]: init.lua:927 (before return)')
+				-- 		return
+				-- 	end
+				-- end
+				vim.api.nvim_set_hl(0, 'Overlength', { fg = '#FFFFFF', bg = '#FFFFFF' })
+				-- vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
 				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
+				print('DEBUGPRINT[4]: init.lua:933 (after vim.cmd(match Overlength /% .. vim.bo.te…)')
 			end
 		end
 	}
@@ -1728,6 +1733,7 @@ function ColoRand(scheme_index)
 
 	-- override colorscheme and create highlight for url
 	vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
+	vim.api.nvim_set_hl(0, 'Overlength', { link = DiagnosticUnderlineError })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1954,6 +1960,23 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      CSV       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin { -- FIX: needs fix for path issue https://github.com/cameron-wags/rainbow_csv.nvim/issues/22
+	'cameron-wags/rainbow_csv.nvim',
+	config = true,
+	ft = 'csv'
+}
+
+addPlugin {
+  'emmanueltouzery/decisive.nvim',
+	cmd = 'CSVAlignVirtual',
+  config = function()
+		vim.api.nvim_create_user_command( 'CSVAlignVirtual', require('decisive').align_csv, { desc = 'Align csv' })
+		vim.api.nvim_create_user_command( 'CSVAlignVirtualClear', require('decisive').align_csv_clear, { desc = 'Clear csv align' })
+		require('decisive').setup({})
+  end
+}
+--<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	'LiadOz/nvim-dap-repl-highlights',
@@ -4746,12 +4769,6 @@ addPlugin {
 	dependencies = { 'ThePrimeagen/harpoon', 'cbochs/grapple.nvim' }
 }
 
-addPlugin { -- FIX: needs fix for path issue https://github.com/cameron-wags/rainbow_csv.nvim/issues/22
-	'cameron-wags/rainbow_csv.nvim',
-	config = true,
-	ft = 'csv'
-}
-
 addPlugin {
 	'cshuaimin/ssr.nvim',
 	keys = {
@@ -5001,6 +5018,7 @@ addPlugin {
 -- https://github.com/lewis6991/hover.nvim
 -- https://github.com/patrickpichler/hovercraft.nvim
 
+-- https://github.com/smoka7/multicursors.nvim
 addPlugin {
 	'mg979/vim-visual-multi',
 	config = function()
