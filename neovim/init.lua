@@ -926,7 +926,7 @@ vim.api.nvim_create_autocmd(
 					end
 				end
 				vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
-				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- BUG: not working
+				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- BUG: not working for first buffer
 			end
 		end
 	}
@@ -2499,24 +2499,24 @@ FileTypeActions = {
 	end,
 	['todo'] = function(_)
 		vim.cmd('set filetype=markdown')
+	end,
+	['python'] = function(bufnr)
+	    local highlighter = require('vim.treesitter.highlighter')
+	    if highlighter.active[bufnr] then
+	        require('ufo').attach(bufnr)
+	    else
+	        vim.api.nvim_create_autocmd(
+	            'User', {
+	                pattern = 'TSLoaded',
+	                desc = 'Attach nvim-ufo after loading treesitter',
+	                once = true,
+	                callback = function(arg)
+	                    require('ufo').attach(arg.buf)
+	                end
+	            }
+	        )
+	    end
 	end
-	-- ['python'] = function(bufnr)
-	--     local highlighter = require('vim.treesitter.highlighter')
-	--     if highlighter.active[bufnr] then
-	--         require('ufo').attach(bufnr)
-	--     else
-	--         vim.api.nvim_create_autocmd(
-	--             'User', {
-	--                 pattern = 'TSLoaded',
-	--                 desc = 'Attach nvim-ufo after loading treesitter',
-	--                 once = true,
-	--                 callback = function(arg)
-	--                     require('ufo').attach(arg.buf)
-	--                 end
-	--             }
-	--         )
-	--     end
-	-- end
 }
 
 vim.api.nvim_create_autocmd(
@@ -2540,11 +2540,11 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- FIX: enable me
+addPlugin {
 	'kevinhwang91/nvim-ufo',
 	config = function()
-		vim.o.foldcolumn = '1' -- '0' is not bad
-		vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+		vim.o.foldcolumn = '1'
+		vim.o.foldlevel = 1 -- FEAT: fold every new file
 		vim.o.foldlevelstart = 99
 		vim.o.foldenable = true
 		vim.cmd('hi clear Folded')
@@ -2681,7 +2681,7 @@ addPlugin { -- FIX: enable me
 		vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 		vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 	end,
-	dependencies = {'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim'}
+	dependencies = { 'kevinhwang91/promise-async', 'luukvbaal/statuscol.nvim' }
 }
 
 -- <~>
