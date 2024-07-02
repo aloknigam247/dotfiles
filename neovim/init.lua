@@ -46,7 +46,121 @@
 
 -- ---List of all valid autocommands to profile
 -- ---@type string[]
--- local event_list = { "BufAdd", "BufDelete", "BufEnter", "BufFilePost", "BufFilePre", "BufHidden", "BufLeave", "BufModifiedSet", "BufNew", "BufNewFile", "BufRead", "BufReadPre", "BufUnload", "BufWinEnter", "BufWinLeave", "BufWipeout", "BufWrite", "BufWritePost", "ChanInfo", "ChanOpen", "CmdUndefined", "CmdlineChanged", "CmdlineEnter", "CmdlineLeave", "CmdwinEnter", "CmdwinLeave", "ColorScheme", "ColorSchemePre", "CompleteChanged", "CompleteDone", "CompleteDonePre", "CursorHold", "CursorHoldI", "CursorMoved", "CursorMovedI", "DiffUpdated", "DirChanged", "DirChangedPre", "ExitPre", "FileAppendPost", "FileAppendPre", "FileChangedRO", "FileChangedShell", "FileChangedShellPost", "FileReadPost", "FileReadPre", "FileType", "FileWritePost", "FileWritePre", "FilterReadPost", "FilterReadPre", "FilterWritePost", "FilterWritePre", "FocusGained", "FocusLost", "FuncUndefined", "InsertChange", "InsertCharPre", "InsertEnter", "InsertLeave", "InsertLeavePre", "MenuPopup", "ModeChanged", "OptionSet", "QuickFixCmdPost", "QuickFixCmdPre", "QuitPre", "RecordingEnter", "RecordingLeave", "RemoteReply", "SafeState", "SearchWrapped", "SessionLoadPost", "ShellCmdPost", "ShellFilterPost", "Signal", "SourcePost", "SourcePre", "SpellFileMissing", "StdinReadPost", "StdinReadPre", "SwapExists", "Syntax", "TabClosed", "TabEnter", "TabLeave", "TabNew", "TabNewEntered", "TermClose", "TermEnter", "TermLeave", "TermOpen", "TermResponse", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT", "TextYankPost", "UIEnter", "UILeave", "User", "VimEnter", "VimLeave", "VimLeavePre", "VimResized", "VimResume", "VimSuspend", "WinClosed", "WinEnter", "WinLeave", "WinNew", "WinResized", "WinScrolled" }
+local event_list = {
+	"BufAdd",
+	"BufDelete",
+	"BufEnter",
+	"BufFilePost",
+	"BufFilePre",
+	"BufHidden",
+	"BufLeave",
+	"BufModifiedSet",
+	"BufNew",
+	"BufNewFile",
+	"BufRead",
+	"BufReadPre",
+	"BufUnload",
+	"BufWinEnter",
+	"BufWinLeave",
+	"BufWipeout",
+	"BufWrite",
+	"BufWritePost",
+	"ChanInfo",
+	"ChanOpen",
+	"CmdUndefined",
+	"CmdlineChanged",
+	"CmdlineEnter",
+	"CmdlineLeave",
+	"CmdwinEnter",
+	"CmdwinLeave",
+	"ColorScheme",
+	"ColorSchemePre",
+	"CompleteChanged",
+	"CompleteDone",
+	"CompleteDonePre",
+	"CursorHold",
+	"CursorHoldI",
+	"CursorMoved",
+	"CursorMovedI",
+	"DiffUpdated",
+	"DirChanged",
+	"DirChangedPre",
+	"ExitPre",
+	"FileAppendPost",
+	"FileAppendPre",
+	"FileChangedRO",
+	"FileChangedShell",
+	"FileChangedShellPost",
+	"FileReadPost",
+	"FileReadPre",
+	"FileType",
+	"FileWritePost",
+	"FileWritePre",
+	"FilterReadPost",
+	"FilterReadPre",
+	"FilterWritePost",
+	"FilterWritePre",
+	"FocusGained",
+	"FocusLost",
+	"FuncUndefined",
+	"InsertChange",
+	"InsertCharPre",
+	"InsertEnter",
+	"InsertLeave",
+	"InsertLeavePre",
+	"MenuPopup",
+	"ModeChanged",
+	"OptionSet",
+	"QuickFixCmdPost",
+	"QuickFixCmdPre",
+	"QuitPre",
+	"RecordingEnter",
+	"RecordingLeave",
+	"RemoteReply",
+	"SafeState",
+	"SearchWrapped",
+	"SessionLoadPost",
+	"ShellCmdPost",
+	"ShellFilterPost",
+	"Signal",
+	"SourcePost",
+	"SourcePre",
+	"SpellFileMissing",
+	"StdinReadPost",
+	"StdinReadPre",
+	"SwapExists",
+	"Syntax",
+	"TabClosed",
+	"TabEnter",
+	"TabLeave",
+	"TabNew",
+	"TabNewEntered",
+	"TermClose",
+	"TermEnter",
+	"TermLeave",
+	"TermOpen",
+	"TermResponse",
+	"TextChanged",
+	"TextChangedI",
+	"TextChangedP",
+	"TextChangedT",
+	"TextYankPost",
+	"UIEnter",
+	"UILeave",
+	"User",
+	"VimEnter",
+	"VimLeave",
+	"VimLeavePre",
+	"VimResized",
+	"VimResume",
+	"VimSuspend",
+	"WinClosed",
+	"WinEnter",
+	"WinLeave",
+	"WinNew",
+	"WinResized",
+	"WinScrolled",
+}
 
 -- vim.api.nvim_create_autocmd(
 -- 	event_list, {
@@ -925,8 +1039,7 @@ vim.api.nvim_create_autocmd(
 						return
 					end
 				end
-				vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
-				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/') -- BUG: not working for first buffer
+				vim.cmd('match Overlength /\\%' .. vim.bo.textwidth + 2 .. 'v/')
 			end
 		end
 	}
@@ -1437,6 +1550,9 @@ addPlugin {
 			merge_keywords = false
 		})
 		TODO_COMMENTS_LOADED = true
+
+		vim.api.nvim_create_user_command('TodoEnable', require('todo-comments').enable, { desc = 'Enable TODO Comments' })
+		vim.api.nvim_create_user_command('TodoDisable', require('todo-comments').disable, { desc = 'Enable TODO Comments' })
 	end,
 	dependencies = { 'luukvbaal/statuscol.nvim' },
 	keys = {
@@ -1502,7 +1618,7 @@ end
 
 ---Fix ayu colorscheme
 local function fixAyu()
-	vim.api.nvim_set_hl(0, '@string.documentation.python', { link = 'Changed' })
+	vim.api.nvim_set_hl(0, '@string.documentation.python', { fg = '#77BB92' })
 	vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAddLn' })
 	vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'GitSignsDeleteLn' })
 	vim.api.nvim_set_hl(0, 'LineNr', { fg = '#4F545D' })
@@ -1726,7 +1842,8 @@ function ColoRand(scheme_index)
 		vim.api.nvim_set_hl(0, 'Todo', todo_hl)
 	end
 
-	-- override colorscheme and create highlight for url
+	-- override colorscheme
+	vim.api.nvim_set_hl(0, 'Overlength', { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 end
 -- <~>
