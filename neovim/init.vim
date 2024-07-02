@@ -67,7 +67,7 @@ set culopt=number,screenline " Highlight current line and line number of current
 set cursorline               " Enable highlight of cursor
 set cursorlineopt=number     " Highlight number only
 set diffopt+=vertical        " Open diff in vertical sp:set lit
-set fillchars=fold:\ ,foldopen:,foldclose:,foldsep:\ 
+set fillchars=fold:\ ,foldopen:󰅀,foldclose:󰅂,foldsep:\ 
 " set foldmethod=marker        " Set fold method to marker
 set inccommand=split         " Show effects of command in preview windows
 set laststatus=3             " Disable global statusline
