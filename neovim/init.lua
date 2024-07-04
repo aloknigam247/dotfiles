@@ -1742,6 +1742,7 @@ addPlugin { 'mellow-theme/mellow.nvim',            event = 'User mellow'        
 addPlugin { 'xero/miasma.nvim',                    event = 'User miasma'                                       }
 addPlugin { 'fynnfluegge/monet.nvim',              event = 'User monet'                                        }
 addPlugin { 'polirritmico/monokai-nightasty.nvim', event = 'User monokai-nightasty'                            }
+addPlugin { 'diegoulloao/neofusion.nvim',          event = 'User neofusion'                                    }
 addPlugin { 'EdenEast/nightfox.nvim',              event = 'User nightfox'                                     }
 addPlugin { 'AlexvZyl/nordic.nvim',                event = 'User nordic'                                       }
 addPlugin { 'dgox16/oldworld.nvim',                event = 'User oldworld'                                     }
@@ -1786,6 +1787,7 @@ dark  { 'ayu-dark',                   'ayu',          post = fixAyu             
 -- dark  { 'monet',                      '_'                                                                                          }
 -- darkT { 'monet',                      '_',              cfg = { transparent_background = true }                                    }
 -- light { 'monokai-nightasty',          '_'                                                                                          }
+-- dark  { 'neofusion',                  '_',                                                                                         }
 -- dark  { 'nordic',                     '_',            cfg = { override = { IblScope = { fg = '#7E8188' } } }                       }
 -- darkT { 'onedark',                    '_',              cfg = { style = 'dark', transparent = true }                               }
 -- darkT { 'onedark',                    '_',              cfg = { style = 'deep', transparent = true }                               }
@@ -2795,7 +2797,7 @@ addPlugin {
 			end
 		})
 
-		-- require('ufo.lib.event'):on('BufAttach', function(_) vim.o.foldlevel = 1 end)
+		require('ufo.lib.event'):on('BufAttach', function(_) require('ufo').closeAllFolds(1) end) -- FIX: not working
 
 		vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 		vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
@@ -3038,6 +3040,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: integrate typos
 -- FIX: working with <F12>
 addPlugin {
 	'TheLeoP/powershell.nvim',
