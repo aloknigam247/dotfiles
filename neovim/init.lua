@@ -2661,7 +2661,7 @@ addPlugin {
 	'kevinhwang91/nvim-ufo',
 	config = function()
 		vim.o.foldcolumn = '1'
-		vim.o.foldlevel = 1
+		vim.o.foldlevel = 99
 		vim.o.foldlevelstart = 99
 		vim.o.foldenable = true
 		vim.cmd('hi clear Folded')
@@ -2795,7 +2795,7 @@ addPlugin {
 			end
 		})
 
-		require('ufo.lib.event'):on('BufAttach', function(_) vim.o.foldlevel = 1 end)
+		-- require('ufo.lib.event'):on('BufAttach', function(_) vim.o.foldlevel = 1 end)
 
 		vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 		vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
