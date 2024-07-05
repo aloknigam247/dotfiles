@@ -1618,6 +1618,8 @@ end
 
 ---Fix ayu colorscheme
 local function fixAyu()
+	-- FIX: git
+	-- FIX:	vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
 	vim.api.nvim_set_hl(0, '@string.documentation.python', { fg = '#77BB92' })
 	vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAddLn' })
 	vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'GitSignsDeleteLn' })
@@ -2605,8 +2607,7 @@ FileTypeActions = {
 	end,
 	['csv'] = function(_)
 		vim.cmd('set textwidth=0')
-		vim.cmd.setlocal('cursorline')
-		vim.api.nvim_set_hl(0, 'CursorLine', { bold = true })
+		vim.cmd('setlocal cursorlineopt=both')
 	end,
 	['neotest-summary'] = function(_)
 		vim.cmd.setlocal('nowrap')
