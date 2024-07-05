@@ -53,10 +53,7 @@
 [diff]
     colorMoved = default
 [safe]
-	directory = D:/Scoop/apps/scoop
 	directory = D:/Scoop/apps/scoop/current
-	directory = D:/Scoop/apps/scoop/main
-	directory = D:/Scoop/apps/scoop/versions
 	directory = D:/Scoop/buckets/versions
 	directory = D:/Scoop/buckets/main
 	directory = D:/Scoop/buckets/extras
