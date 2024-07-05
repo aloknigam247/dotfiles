@@ -209,7 +209,7 @@ function scoopInstall {
         elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing scoop package: $pkg"
-            scoop install --no-update-scoop --skip $pkg
+            scoop install --no-update-scoop -s $pkg
         }
     }
 }
