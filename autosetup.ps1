@@ -119,7 +119,11 @@ function installScoop {
     }
 
     $installed = scoop list | ForEach-Object { $_.Name }
-    $script:scoop_installed = $installed
+    if ($installed -eq $null) {
+        $script:scoop_installed = ""
+    } else {
+        $script:scoop_installed = $installed
+    }
 }
 
 function pipInstall {
