@@ -1618,11 +1618,9 @@ end
 
 ---Fix ayu colorscheme
 local function fixAyu()
-	-- FIX: git
-	-- FIX:	vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
+	-- FIX: vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
 	vim.api.nvim_set_hl(0, '@string.documentation.python', { fg = '#77BB92' })
-	vim.api.nvim_set_hl(0, 'GitSignsAdd', { link = 'GitSignsAddLn' })
-	vim.api.nvim_set_hl(0, 'GitSignsDelete', { link = 'GitSignsDeleteLn' })
+	vim.api.nvim_set_hl(0, 'LineNr', { fg = '#4F545D' })
 	vim.api.nvim_set_hl(0, 'LineNr', { fg = '#4F545D' })
 	vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
 	vim.api.nvim_set_hl(0, 'Visual', { bg = '#313C47' })

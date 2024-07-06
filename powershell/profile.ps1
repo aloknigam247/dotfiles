@@ -309,7 +309,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
- # FEAT: history needs customization
+ # FEAT: use mappings and script block for each mappings
 Set-PsFzfOption `
     -PSReadlineChordProvider 'Alt+p' `
     -PSReadlineChordReverseHistory 'Alt+h' `
