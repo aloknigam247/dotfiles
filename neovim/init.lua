@@ -1618,11 +1618,14 @@ end
 
 ---Fix ayu colorscheme
 local function fixAyu()
-	-- FIX: vim.api.nvim_set_hl(0, 'CursorLine', { underline = true })
 	vim.api.nvim_set_hl(0, '@string.documentation.python', { fg = '#77BB92' })
+	vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2A3B54' })
 	vim.api.nvim_set_hl(0, 'LineNr', { fg = '#4F545D' })
 	vim.api.nvim_set_hl(0, 'LineNr', { fg = '#4F545D' })
 	vim.api.nvim_set_hl(0, 'LspInlayHint', { link = 'Comment' })
+	vim.api.nvim_set_hl(0, 'CurSearch', { fg = '#FF0000', bg = '#630000'})
+	vim.api.nvim_set_hl(0, 'IncSearch', { fg = '#FF0000', underline = true })
+	vim.api.nvim_set_hl(0, 'Search', { fg = '#CCAC28', bg = '#450000' })
 	vim.api.nvim_set_hl(0, 'Visual', { bg = '#313C47' })
 end
 
@@ -3302,6 +3305,7 @@ addPlugin {
 
 -- TODO: progress
 -- https://github.com/nvimtools/none-ls.nvim
+-- https://github.com/davidmh/cspell.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
 
 addPlugin {
@@ -3457,33 +3461,33 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { 'iamcco/markdown-preview.nvim', }
 
--- addPlugin {
--- 	'OXY2DEV/markview.nvim',
--- 	config = true
--- }
-
 addPlugin {
-	'MeanderingProgrammer/markdown.nvim',
-	ft = 'markdown',
-	opts = {
-		headings = { ' ' },
-		bullets = { '', '', '', '' },
-		checkbox = {
-			unchecked = ' ',
-			checked = ' ',
-			callout = {
-				note = ' Note',
-				tip = ' Tip',
-				important = '󰅾 Important',
-				warning = '󰀪 Warning',
-				caution = '󰒡 Caution',
-			}
-		},
-		highlights = {
-			code = ''
-		}
-	}
+	'OXY2DEV/markview.nvim', -- FIX: resolve
+	ft = 'markdown'
 }
+
+-- addPlugin {
+-- 	'MeanderingProgrammer/markdown.nvim',
+-- 	ft = 'markdown',
+-- 	opts = {
+-- 		headings = { ' ' },
+-- 		bullets = { '', '', '', '' },
+-- 		checkbox = {
+-- 			unchecked = ' ',
+-- 			checked = ' ',
+-- 			callout = {
+-- 				note = ' Note',
+-- 				tip = ' Tip',
+-- 				important = '󰅾 Important',
+-- 				warning = '󰀪 Warning',
+-- 				caution = '󰒡 Caution',
+-- 			}
+-- 		},
+-- 		highlights = {
+-- 			code = ''
+-- 		}
+-- 	}
+-- }
 
 addPlugin {
 	'gaoDean/autolist.nvim',
@@ -3515,38 +3519,38 @@ addPlugin {
 	end
 }
 
-addPlugin {
-	'yaocccc/nvim-hl-mdcodeblock.lua',
-	config = function ()
-		local code_block = require('hl-mdcodeblock')
-		code_block.setup({
-			events = {
-				'BufEnter',
-				'InsertLeave',
-				'TextChanged',
-				'WinScrolled'
-			},
-			hl_group = 'MDCodeBlock',
-			minumum_len = 10,
-			padding_right = 1,
-			query_by_ft = {
-				markdown = {
-					'markdown',
-					'(fenced_code_block) @codeblock',
-				},
-				rmd = {
-					'markdown',
-					'(fenced_code_block) @codeblock',
-				},
-			},
-			timer_delay = 300,
-		})
-		vim.api.nvim_set_hl(0, 'MDCodeBlock', { bg = adaptiveBG(30, -10) })
-		code_block.refresh()
-	end,
-	dependencies = { 'nvim-treesitter/nvim-treesitter', 'MeanderingProgrammer/markdown.nvim' },
-	event = 'CursorHold *.md'
-}
+-- addPlugin {
+-- 	'yaocccc/nvim-hl-mdcodeblock.lua',
+-- 	config = function ()
+-- 		local code_block = require('hl-mdcodeblock')
+-- 		code_block.setup({
+-- 			events = {
+-- 				'BufEnter',
+-- 				'InsertLeave',
+-- 				'TextChanged',
+-- 				'WinScrolled'
+-- 			},
+-- 			hl_group = 'MDCodeBlock',
+-- 			minumum_len = 10,
+-- 			padding_right = 1,
+-- 			query_by_ft = {
+-- 				markdown = {
+-- 					'markdown',
+-- 					'(fenced_code_block) @codeblock',
+-- 				},
+-- 				rmd = {
+-- 					'markdown',
+-- 					'(fenced_code_block) @codeblock',
+-- 				},
+-- 			},
+-- 			timer_delay = 300,
+-- 		})
+-- 		vim.api.nvim_set_hl(0, 'MDCodeBlock', { bg = adaptiveBG(30, -10) })
+-- 		code_block.refresh()
+-- 	end,
+-- 	dependencies = { 'nvim-treesitter/nvim-treesitter', 'MeanderingProgrammer/markdown.nvim' },
+-- 	event = 'CursorHold *.md'
+-- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
