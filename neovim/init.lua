@@ -2623,21 +2623,21 @@ FileTypeActions = {
 		vim.cmd('set filetype=markdown')
 	end,
 	['python'] = function(bufnr)
-	    local highlighter = require('vim.treesitter.highlighter')
-	    if highlighter.active[bufnr] then
-	        require('ufo').attach(bufnr)
-	    else
-	        vim.api.nvim_create_autocmd(
-	            'User', {
-	                pattern = 'TSLoaded',
-	                desc = 'Attach nvim-ufo after loading treesitter',
-	                once = true,
-	                callback = function(arg)
-	                    require('ufo').attach(arg.buf)
-	                end
-	            }
-	        )
-	    end
+		local highlighter = require('vim.treesitter.highlighter')
+		if highlighter.active[bufnr] then
+			require('ufo').attach(bufnr)
+		else
+			vim.api.nvim_create_autocmd(
+			'User', {
+				pattern = 'TSLoaded',
+				desc = 'Attach nvim-ufo after loading treesitter',
+				once = true,
+				callback = function(arg)
+					require('ufo').attach(arg.buf)
+				end
+			}
+			)
+		end
 	end
 }
 
@@ -2800,7 +2800,9 @@ addPlugin {
 			end
 		})
 
-		require('ufo.lib.event'):on('BufAttach', function(_) require('ufo').closeAllFolds(1) end) -- FIX: not working
+		require('ufo.lib.event'):on('BufAttach', function(bufnr)
+			require('ufo').closeAllFolds(0)
+		end) -- FIX: not working
 
 		vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
 		vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)

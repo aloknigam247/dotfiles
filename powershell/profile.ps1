@@ -1,4 +1,3 @@
-# PERF: slow command not found and command completion
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
