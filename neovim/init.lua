@@ -1757,7 +1757,8 @@ addPlugin { 'nxvu699134/vn-night.nvim',            event = 'User vn-night'      
 addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'                                       }
 addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                    }
 
-dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
+-- dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
+darkT { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
 -- dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
 -- darkT { 'bamboo',                     '_',              cfg = { style = 'multiplex', transparent = true }                          }
 -- dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
@@ -3271,6 +3272,7 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 addPlugin {
 	'j-hui/fidget.nvim',
 	opts = {
@@ -3290,11 +3292,22 @@ addPlugin {
 		vim.api.nvim_set_hl(0, 'LightBulbVirtualText', { fg = '#EEE600' })
 		require('nvim-lightbulb').setup({
 			autocmd = { enabled = true },
+			action_kinds = {
+				'',
+				'quickfix',
+				'refactor',
+				'refactor.extract',
+				'refactor.inline',
+				'refactor.rewrite',
+				'source',
+				-- 'source.organizeImports',
+				-- 'source.fixAll'
+			},
 			sign = { enabled = false, },
 			validate_config = 'never',
 			virtual_text = {
 				enabled = true,
-				text = '',
+				text = '󰛨',
 				hl = 'LightBulbVirtualText',
 			}
 		})
@@ -3303,7 +3316,7 @@ addPlugin {
 
 -- addPlugin { 'mfussenegger/nvim-lint' } -- have windows path issues
 
--- TODO: progress
+-- FEAT: lsp extentions
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/davidmh/cspell.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
