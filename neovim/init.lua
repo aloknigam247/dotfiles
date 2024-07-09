@@ -1758,8 +1758,8 @@ addPlugin { 'Mofiqul/vscode.nvim',                 event = 'User vscode'        
 addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'                                    }
 
 -- dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
-darkT { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
--- dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
+-- darkT { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
+dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
 -- darkT { 'bamboo',                     '_',              cfg = { style = 'multiplex', transparent = true }                          }
 -- dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
 -- dark  { 'bluloco',                    '_'                                                                                          }
@@ -3732,7 +3732,7 @@ addPlugin {
 			},
 			filter = {
 				fzf = {
-					action_for = {
+					action_for = { -- REFACTOR: use global mappings
 						['ctrl-t'] = { default = 'tabedit' },
 						['ctrl-v'] = { default = 'vsplit' },
 						['ctrl-s'] = { default = 'split' },
