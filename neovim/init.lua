@@ -2963,7 +2963,8 @@ addPlugin {
 				md       = { color = '#42A5F5', cterm_color = '75',  icon = '', name = 'Md'        },
 				mdx      = { color = '#519ABA', cterm_color = '67',  icon = '󰽛', name = 'Mdx'       },
 				py       = { color = "#3D7BAB", cterm_color = "221", icon = '', name = 'Py'        },
-				todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Todo'      }
+				todo     = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Todo'      },
+				-- requirements = { color = '#7CB342', cterm_color = '107', icon = '', name = 'Requirements' } -- FIX: icon
 			}
 		})
 		require("nvim-web-devicons").set_default_icon('', '#6d8086', 66) -- not working in azureapp filename
