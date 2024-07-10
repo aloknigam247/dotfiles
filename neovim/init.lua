@@ -2078,7 +2078,7 @@ addPlugin {
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      CSV       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- FIX: needs fix for path issue https://github.com/cameron-wags/rainbow_csv.nvim/issues/22
+addPlugin {
 	'cameron-wags/rainbow_csv.nvim',
 	config = true,
 	ft = 'csv'
@@ -3100,7 +3100,7 @@ addPlugin {
 
 addPlugin {
 	'folke/neodev.nvim',
-	event = 'LspAttach *.lua',
+	event = 'LspAttach init.lua',
 	opts = {
 		library = {
 			enabled = true,
