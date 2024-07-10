@@ -423,7 +423,7 @@ local lazy_config = {
 			ft         = '',
 			init       = '',
 			import     = '󰋺',
-			keys       = '',
+			keys       = '󰌌',
 			lazy       = ' ',
 			list       = { '󰬺', ' 󰬻', '󰬼', '󰬽', '󰬾', '󰬿', '󰭀', '󰭁', '󰭂', '󰿩' },
 			loaded     = '',
@@ -2231,7 +2231,7 @@ addPlugin {
 		input_after_comment = true,
 		placeholders_hl = 'None',
 		placeholders_text = {
-			['description'] = '[DOCME' .. ': description]',
+			['description'] = '[DOCME' .. ': description].',
 			['tparam'] = '[DOCME' .. ': tparam]',
 			['parameter'] = '[DOCME' .. ': parameter]',
 			['return'] = '[DOCME' .. ': return]',
@@ -3732,10 +3732,10 @@ addPlugin {
 			},
 			filter = {
 				fzf = {
-					action_for = { -- REFACTOR: use global mappings
-						['ctrl-t'] = { default = 'tabedit' },
-						['ctrl-v'] = { default = 'vsplit' },
-						['ctrl-s'] = { default = 'split' },
+					action_for = {
+						[keymaps.open_tab]    = { default = 'tabedit' },
+						[keymaps.open_vsplit] = { default = 'vsplit' },
+						[keymaps.open_split]  = { default = 'split' },
 						['ctrl-q'] = { default = 'signtoggle' },
 						['ctrl-c'] = { default = 'closeall' }
 					}

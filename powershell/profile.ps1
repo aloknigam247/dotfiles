@@ -1,3 +1,4 @@
+# FEAT: copy useful scripts from https://github.com/jdhitsolutions/PSScriptTools
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
