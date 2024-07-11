@@ -5,7 +5,7 @@
     editor = nvim
     fsmonitor = true
     pager = delta
-	autocrlf = true
+    autocrlf = true
 
 [push]
     autoSetupRemote = true
@@ -53,7 +53,7 @@
 [diff]
     colorMoved = default
 [safe]
-	directory = D:/Scoop/apps/scoop/current
-	directory = D:/Scoop/buckets/versions
-	directory = D:/Scoop/buckets/main
-	directory = D:/Scoop/buckets/extras
+    directory = D:/Scoop/apps/scoop/current
+    directory = D:/Scoop/buckets/versions
+    directory = D:/Scoop/buckets/main
+    directory = D:/Scoop/buckets/extras
