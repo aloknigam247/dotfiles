@@ -3478,8 +3478,329 @@ addPlugin {
 -- addPlugin { 'iamcco/markdown-preview.nvim', }
 
 addPlugin {
-	'OXY2DEV/markview.nvim', -- FIX: resolve
-	ft = 'markdown'
+	'OXY2DEV/markview.nvim', -- FIX: colors
+	ft = 'markdown',
+	opts = {
+		restore_conceallevel = true,
+		restore_concealcursor = false,
+
+		highlight_groups = {
+			{
+				group_name = "red",
+				value = { bg = "#453244", fg = "#f38ba8" }
+			},
+			{
+				group_name = "red_fg",
+				value = { fg = "#f38ba8" }
+			},
+
+			{
+				group_name = "orange",
+				value = { bg = "#46393E", fg = "#fab387" }
+			},
+			{
+				group_name = "orange_fg",
+				value = { fg = "#fab387" }
+			},
+
+			{
+				group_name = "yellow",
+				value = { bg = "#464245", fg = "#f9e2af" }
+			},
+			{
+				group_name = "yellow_fg",
+				value = { fg = "#f9e2af" }
+			},
+
+			{
+				group_name = "green",
+				value = { bg = "#374243", fg = "#a6e3a1" }
+			},
+			{
+				group_name = "green_fg",
+				value = { fg = "#a6e3a1" }
+			},
+
+			{
+				group_name = "blue",
+				value = { bg = "#2E3D51", fg = "#74c7ec" }
+			},
+			{
+				group_name = "blue_fg",
+				value = { fg = "#74c7ec" }
+			},
+
+			{
+				group_name = "mauve",
+				value = { bg = "#393B54", fg = "#b4befe" }
+			},
+			{
+				type = "normal",
+				group_name = "mauve_fg",
+				value = { fg = "#b4befe" }
+			},
+			{
+				group_name = "grey",
+				value = { bg = "#7E839A", fg = "#313244" }
+			},
+			{
+				group_name = "grey_fg",
+				value = { fg = "#7E839A" }
+			},
+
+			{
+				group_name = "dark",
+				value = { bg = "#181825" }
+			},
+			{
+				group_name = "dark_2",
+				value = { bg = "#303030", fg = "#B4BEFE" }
+			},
+
+			{
+				group_name = "gradient_0",
+				value = { fg = "#6583b6" }
+			},
+			{
+				group_name = "gradient_1",
+				value = { fg = "#637dac" }
+			},
+			{
+				group_name = "gradient_2",
+				value = { fg = "#6177a2" }
+			},
+			{
+				group_name = "gradient_3",
+				value = { fg = "#5f7198" }
+			},
+			{
+				group_name = "gradient_4",
+				value = { fg = "#5d6c8e" }
+			},
+			{
+				group_name = "gradient_5",
+				value = { fg = "#5b6684" }
+			},
+			{
+				group_name = "gradient_6",
+				value = { fg = "#59607a" }
+			},
+		},
+		buf_ignore = { "nofile" },
+
+		modes = { "n", "c", 'V', "^V" },
+
+		headings = {
+			enable = true,
+			shift_width = 1,
+
+			heading_1 = { -- underline, bold
+				style = "icon",
+				sign = "󰌕 ", sign_hl = "markview_red_fg",
+
+				icon = " ", hl = "markview_red",
+
+			},
+			heading_2 = { -- underline, bold
+				style = "icon",
+				sign = "󰌖 ", sign_hl = "markview_orange_fg",
+
+				icon = " ", hl = "markview_orange",
+			},
+			heading_3 = { -- bold
+				style = "icon",
+
+				icon = " ", hl = "markview_yellow",
+			},
+			heading_4 = {
+				style = "icon",
+
+				icon = " ", hl = "markview_green",
+			},
+			heading_5 = { -- italic
+				style = "icon",
+
+				icon = " ", hl = "markview_blue",
+			},
+			heading_6 = {
+				style = "icon",
+
+				hl = nil,
+				line_hl = "Markview_orange",
+
+				shift_char = " ", shift_hl = nil,
+
+				corner_left = nil, corner_left_hl = nil,
+				corner_right = nil, corner_right_hl = nil,
+
+				padding_left = " ", padding_left_hl = nil,
+				padding_right = " ", padding_right_hl = nil,
+
+				icon = " ", icon_hl = "markview_orange",
+				text = nil, text_hl = "rainbow2",
+
+				sign = "> ", sign_hl = "rainbow2"
+			}
+		},
+
+		code_blocks = {
+			enable = true,
+
+			style = "language",
+			hl = "dark",
+
+			position = "inline",
+
+			min_width = 5,
+			pad_amount = 2,
+
+			language_names = {},
+
+			language_direction = 'left',
+
+			sign = true, sign_hl = nil
+		},
+
+		block_quotes = {
+			enable = true,
+
+			default = {
+				border = "▍", border_hl = { "gradient_0", "gradient_1", "gradient_2", "gradient_3", "gradient_4", "gradient_5", "gradient_6" }
+			},
+
+			callouts = {
+				{
+					match_string = "NOTE",
+					callout_preview = "󰋽 Note",
+					callout_preview_hl = "markview_blue_fg",
+
+					border = "▍", border_hl = "markview_blue_fg"
+				},
+				{
+					match_string = "TIP",
+					callout_preview = " Tip",
+					callout_preview_hl = "markview_green_fg",
+
+					border = "▍", border_hl = "markview_green_fg"
+				},
+				{
+					match_string = "IMPORTANT",
+					callout_preview = " Important",
+					callout_preview_hl = "markview_yellow_fg",
+
+					border = "▍", border_hl = "markview_yellow_fg"
+				},
+				{
+					match_string = "WARNING",
+					callout_preview = " Warning",
+					callout_preview_hl = "markview_orange_fg",
+
+					border = "▍", border_hl = "markview_orange_fg"
+				},
+				{
+					match_string = "CAUTION",
+					callout_preview = "󰳦 Caution",
+					callout_preview_hl = "rainbow1",
+
+					border = "▍", border_hl = "rainbow1"
+				}
+			}
+		},
+		horizontal_rules = {
+			enable = true,
+
+			position = "overlay",
+			parts = {
+				{
+					type = "repeating",
+					repeat_amount = vim.o.textwidth,
+
+					text = "─",
+					hl = {
+						"gradient_6", "gradient_5", "gradient_4", "gradient_3", "gradient_2", "gradient_1", "gradient_0"
+					}
+				}
+			}
+		},
+
+		hyperlinks = {
+			enable = true,
+
+			icon = "󰌷 ", icon_hl = "markdownLinkText",
+			text_hl = "markdownLinkText",
+		},
+		images = {
+			enable = true,
+
+			icon = "󰥶 ", icon_hl = "markdownLinkText",
+			text_hl = "markdownLinkText",
+		},
+
+		inline_codes = {
+			enable = true,
+			corner_left = " ",
+			corner_right = " ",
+
+			hl = "dark_2"
+		},
+
+		list_items = {
+			enable = true,
+			shift_amount = 2,
+			marker_plus = {
+				add_padding = false,
+
+				text = "",
+				hl = "rainbow2"
+			},
+			marker_minus = {
+				add_padding = false,
+
+				text = "",
+				hl = "rainbow4"
+			},
+			marker_star = {
+				add_padding = false,
+
+				text = "",
+				text_hl = "rainbow2"
+			},
+		},
+
+		checkboxes = {
+			enable = true,
+
+			checked = {
+				text = "", hl = "@markup.list.checked"
+			},
+			pending = {
+				text = "◯", hl = "@markup.raw"
+			},
+			unchecked = {
+				text = "", hl = "@markup.list.unchecked"
+			}
+		},
+
+		tables = {
+			enable = true,
+			text = {
+				"╭", "─", "╮", "┬",
+				"├", "│", "┤", "┼",
+				"╰", "─", "╯", "┴",
+
+				"╼", "╾", "╴", "╶"
+			},
+			hl = {
+				"red_fg", "red_fg", "red_fg", "red_fg",
+				"red_fg", "red_fg", "red_fg", "red_fg",
+				"red_fg", "red_fg", "red_fg", "red_fg",
+
+				"red_fg", "red_fg", "red_fg", "red_fg"
+			},
+
+			use_virt_lines = true,
+		},
+	};
 }
 
 -- addPlugin {
