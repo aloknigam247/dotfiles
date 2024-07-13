@@ -95,9 +95,9 @@ git:
     # this determines whether the git graph is rendered in the commits panel
     #
     # Deprecated: Configure this with `Log menu -> Show git graph` (<c-l> in the commits window by default).
-    showGraph: 'always'
+    showGraph: 'when-maximised'
     # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
-    showWholeGraph: true
+    showWholeGraph: false
   skipHookPrefix: WIP
   # The main branches. We colour commits green if they belong to one of these branches,
   # so that you can easily see which commits are unique to your branch (coloured in yellow)

@@ -1727,7 +1727,6 @@ local function lightT(opts)
 end
 
 addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                          }
-addPlugin { 'ribru17/bamboo.nvim',                 event = 'User bamboo'                                       }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
 addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
@@ -1759,10 +1758,7 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 
 -- dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
 -- darkT { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
--- dark  { 'ayu-mirage',                 'ayu',          post = fixAyu                                                                }
-darkT { 'bamboo',                     '_',              cfg = { style = 'multiplex', transparent = true }                          }
--- dark  { 'bamboo',                     '_',            cfg = { style = 'multiplex' }                                                }
--- dark  { 'bluloco',                    '_'                                                                                          }
+dark  { 'bluloco',                    '_'                                                                                          }
 -- light { 'bluloco',                    '_'                                                                                          }
 -- darkT { 'bluloco',                    '_',              cfg = { transparent = true }                                               }
 -- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
@@ -3588,7 +3584,7 @@ addPlugin {
 		},
 		buf_ignore = { "nofile" },
 
-		modes = { "n", "c", 'V', "^V" },
+		modes = { "n", "c" },
 
 		headings = {
 			enable = true,
@@ -3750,19 +3746,19 @@ addPlugin {
 			marker_plus = {
 				add_padding = false,
 
-				text = "",
+				text = "",
 				hl = "rainbow2"
 			},
 			marker_minus = {
 				add_padding = false,
 
-				text = "",
+				text = "",
 				hl = "rainbow4"
 			},
 			marker_star = {
 				add_padding = false,
 
-				text = "",
+				text = "",
 				text_hl = "rainbow2"
 			},
 		},
@@ -3772,9 +3768,6 @@ addPlugin {
 
 			checked = {
 				text = "", hl = "@markup.list.checked"
-			},
-			pending = {
-				text = "◯", hl = "@markup.raw"
 			},
 			unchecked = {
 				text = "", hl = "@markup.list.unchecked"
