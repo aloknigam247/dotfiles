@@ -1,5 +1,7 @@
+-- FIX: all lsp errors
 -- TODO: github stars
 -- TODO: reddit save
+
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
@@ -3335,6 +3337,7 @@ addPlugin {
 addPlugin {
 	'williamboman/mason-lspconfig.nvim',
 	config = function()
+		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
 		-- Lsp timeout
 		-- Lsp_timer = vim.uv.new_timer()
 		-- vim.api.nvim_create_autocmd(
