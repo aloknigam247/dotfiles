@@ -316,6 +316,7 @@ local icons = {
 	diff_delete        = '',
 	diff_delete_top    = '‾',
 	error              = ' ',
+	file_added         = '󰻭',
 	file_modified      = '',
 	file_newfile       = '',
 	file_readonly      = '',
@@ -2497,7 +2498,7 @@ addPlugin {
 						staged    = '⏽',
 						unmerged  = '',
 						unstaged  = '󰇝',
-						untracked = icons.file_unnamed,
+						untracked = icons.file_added,
 					},
 					symlink = '󱅷',
 				},
@@ -2660,6 +2661,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/kevinhwang91/nvim-ufo/commit/1b5f283
 addPlugin {
 	'kevinhwang91/nvim-ufo',
 	config = function()
@@ -3639,7 +3641,7 @@ addPlugin {
 				text = nil, text_hl = "rainbow2",
 
 				sign = "> ", sign_hl = "rainbow2"
-			}
+			} -- FEAT: https://github.com/OXY2DEV/markview.nvim/commit/ef92d7c
 		},
 
 		code_blocks = {
@@ -3648,12 +3650,13 @@ addPlugin {
 			style = "language",
 			hl = "dark",
 
-			position = "inline",
-
 			min_width = 5,
 			pad_amount = 2,
 
-			language_names = {},
+			language_names = {
+				{ "py", "python" }
+			},
+			name_hl = nil,
 
 			language_direction = 'left',
 
@@ -3733,7 +3736,7 @@ addPlugin {
 
 			icon = "󰥶 ", icon_hl = "markdownLinkText",
 			text_hl = "markdownLinkText",
-		},
+		}, -- FEAT: add email
 
 		inline_codes = {
 			enable = true,
@@ -3749,13 +3752,13 @@ addPlugin {
 			marker_plus = {
 				add_padding = false,
 
-				text = "",
+				text = "",
 				hl = "rainbow2"
 			},
 			marker_minus = {
 				add_padding = false,
 
-				text = "",
+				text = "",
 				hl = "rainbow4"
 			},
 			marker_star = {
@@ -3770,10 +3773,10 @@ addPlugin {
 			enable = true,
 
 			checked = {
-				text = "", hl = "@markup.list.checked"
+				text = "", hl = "@markup.list.checked"
 			},
 			unchecked = {
-				text = "", hl = "@markup.list.unchecked"
+				text = "", hl = "@markup.list.unchecked"
 			}
 		},
 
