@@ -5317,6 +5317,7 @@ addPlugin {
 }
 
 addPlugin {
+	-- FIX: new options
 	'folke/which-key.nvim',
 	event = 'VeryLazy',
 	init = function()
