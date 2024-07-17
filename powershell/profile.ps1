@@ -375,23 +375,23 @@ function promptGen {
                         }
 
                         # git dirty check
-                        if ($git_status.HasWorking) {
+                        if ($script:git_status.HasWorking) {
                             $script:git_working = ' 󰦓'
                         }
-                        if ($git_status.HasIndex) {
+                        if ($script:git_status.HasIndex) {
                             $script:git_index = ' 󰦓'
                         }
-                        if ($git_status.StashCount) {
+                        if ($script:git_status.StashCount) {
                             $script:git_stash = ' 󰪶'
                         }
 
                         # git ahead and behind count
                         $git_sync = ''
-                        if ($git_status.AheadBy) {
-                            $git_sync += ' 󱦲' + $git_status.AheadBy
+                        if ($script:git_status.AheadBy) {
+                            $git_sync += ' 󱦲' + $script:git_status.AheadBy
                         }
-                        if ($git_status.BehindBy) {
-                            $git_sync += ' 󱦳' + $git_status.BehindBy
+                        if ($script:git_status.BehindBy) {
+                            $git_sync += ' 󱦳' + $script:git_status.BehindBy
                         }
                         $script:git_sync = $git_sync
                     }

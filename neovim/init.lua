@@ -552,7 +552,7 @@ local todo_config = {
 	NOTE   = { icon = '', color = 'info', alt = { 'INFO', 'THOUGHT' } },
 	PERF   = { icon = '󰅒', color = 'perf', alt = { 'OPTIMIZE', 'PERFORMANCE' } },
 	RECODE = { icon = '', color = 'info', alt = { 'REFACTOR' } },
-	TEST   = { icon = '', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
+	TEST   = { icon = '󰙨', color = 'test', alt = { 'TESTING', 'PASSED', 'FAILED' } },
 	TODO   = { icon = '󰸞', color = 'todo' },
 	WARN   = { icon = '!', color = 'warn', alt = { 'WARNING' } },
 }
@@ -832,7 +832,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	end
 
 	-- Create autocommand to resize window
-	local au_id = vim.api.nvim_create_autocmd('VimResized', {
+	local au_id = vim.api.nvim_create_autocmd('VimResized', { -- BUG: not working
 		pattern = '*',
 		desc = 'Resize preview window on vim resize',
 		callback = function()
@@ -1761,11 +1761,11 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 
 -- dark  { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
 -- darkT { 'ayu-dark',                   'ayu',          post = fixAyu                                                                }
-dark  { 'bluloco',                    '_'                                                                                          }
--- light { 'bluloco',                    '_'                                                                                          }
+-- dark  { 'bluloco',                    '_'                                                                                          }
 -- darkT { 'bluloco',                    '_',              cfg = { transparent = true }                                               }
+-- light { 'bluloco',                    '_'                                                                                          }
 -- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
--- dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
+dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 -- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 -- dark  { 'duskfox',                    'nightfox'                                                                                   }
 -- darkT { 'duskfox',                    'nightfox',       cfg = { transparent = true }                                               }
