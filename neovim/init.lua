@@ -1764,8 +1764,8 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- dark  { 'bluloco',                    '_'                                                                                          }
 -- darkT { 'bluloco',                    '_',              cfg = { transparent = true }                                               }
 -- light { 'bluloco',                    '_'                                                                                          }
--- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
+-- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 -- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 -- dark  { 'duskfox',                    'nightfox'                                                                                   }
 -- darkT { 'duskfox',                    'nightfox',       cfg = { transparent = true }                                               }
