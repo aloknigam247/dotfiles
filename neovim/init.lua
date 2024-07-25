@@ -1767,7 +1767,7 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 -- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 -- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
-dark  { 'duskfox',                    'nightfox'                                                                                   }
+dark  { 'duskfox',                    'nightfox'                                                                                   } -- FIX: use @comment.todos
 -- darkT { 'duskfox',                    'nightfox',       cfg = { transparent = true }                                               }
 -- light { 'edge',                       '_'                                                                                          }
 -- dark  { 'everforest',                 '_'                                                                                          }

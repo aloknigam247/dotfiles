@@ -332,161 +332,160 @@ $env:FZF_DEFAULT_OPTS='
 # │ Prompt Styling │
 # ╰────────────────╯
 
-# ╭─( Prompt features )─────────────────────────────────╮
-# │ FEAT: Powerline like background support             │
-# ╰─────────────────────────────────────────────────────╯
-$prompt_script = @{}
+# ╭─( Prompt features )─────────────────────╮
+# │ FEAT: Powerline like background support │
+# ╰─────────────────────────────────────────╯
+function pgen($separator, $segments) {
+    # Initial executions
+    $script:dir_icon = ' '
+    $script:git_branch = ''
+    $script:git_index = ''
+    $script:git_stash = ''
+    $script:git_sync = ''
+    $script:git_working = ''
+    $script:git_sep = ''
 
-function promptGen {
-    $blocks = @(
-        @{
-            'params'  = @{
-                'text' = '$script:dir_icon '
-                'fg'   = '#8AC926'
+    $script:git_status = Get-GitStatus
+
+    if ($script:git_status -ne $null) {
+        $script:dir_icon = ' '
+
+        # git branch
+        $git_branch = $script:git_status.Branch
+        if ($git_branch.StartsWith('(') -and $git_branch.EndsWith(')')) {
+            if ($git_branch.EndsWith('...)')) {
+                $script:git_branch = ' ' + $git_branch.Substring(1, $git_branch.Length - 5)
+            } else {
+                $script:git_branch = '󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2)
             }
-            'execute' = @{
-                'sequence' = 1
-                'script'   = {
-                    $script:dir_icon = ' '
-
-                    # git status
-                    $script:git_branch = ''
-                    $script:git_index = ''
-                    $script:git_sep = ''
-                    $script:git_stash = ''
-                    $script:git_sync = ''
-                    $script:git_working = ''
-
-                    $script:git_status = Get-GitStatus
-                    if ($script:git_status -ne $null) {
-                        $script:dir_icon = ' '
-                        $script:git_sep = ' ⟩⟩'
-
-                        # git branch
-                        $git_branch = $script:git_status.Branch
-                        if ($git_branch.StartsWith('(') -and $git_branch.EndsWith(')')) {
-                            if ($git_branch.EndsWith('...)')) {
-                                $script:git_branch = '  ' + $git_branch.Substring(1, $git_branch.Length - 5)
-                            } else {
-                                $script:git_branch = ' 󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2)
-                            }
-                        } else {
-                            $script:git_branch = '  ' + $git_branch.Replace("user/$env:username", '~')
-                        }
-
-                        # git dirty check
-                        if ($script:git_status.HasWorking) {
-                            $script:git_working = ' 󰦓'
-                        }
-                        if ($script:git_status.HasIndex) {
-                            $script:git_index = ' 󰦓'
-                        }
-                        if ($script:git_status.StashCount) {
-                            $script:git_stash = ' 󰪶'
-                        }
-
-                        # git ahead and behind count
-                        $git_sync = ''
-                        if ($script:git_status.AheadBy) {
-                            $git_sync += ' 󱦲' + $script:git_status.AheadBy
-                        }
-                        if ($script:git_status.BehindBy) {
-                            $git_sync += ' 󱦳' + $script:git_status.BehindBy
-                        }
-                        $script:git_sync = $git_sync
-                    }
-
-                    if ($null -ne $env:SSH_CLIENT) {
-                        $script:dir_icon = '󰅟 '
-                    }
-                }
-            }
+        } else {
+            $script:git_branch = ' ' + $git_branch.Replace("user/$env:username", '~')
         }
+
+        # FIX: git synbol spacing
+        # git dirty check
+        if ($script:git_status.HasWorking) {
+            $script:git_working = '󰦓 '
+        }
+        if ($script:git_status.HasIndex) {
+            $script:git_index = '󰦓 '
+        }
+        if ($script:git_status.StashCount) {
+            $script:git_stash = '󰪶 '
+        }
+
+        # git ahead and behind count
+        $git_sync = ''
+        if ($script:git_status.AheadBy) {
+            $git_sync += '󱦲' + $script:git_status.AheadBy
+        }
+        if ($script:git_status.BehindBy) {
+            $git_sync += '󱦳' + $script:git_status.BehindBy
+        }
+        $script:git_sync = $git_sync
+
+        if ($script:git_working -ne '' -or
+            $script:git_index -ne '' -or
+            $script:git_stash -ne '' -or
+            $script:git_sync -ne '') {
+            $script:git_sep = ' '
+        }
+    }
+
+    if ($null -ne $env:SSH_CLIENT) {
+        $script:dir_icon = '󰅟 '
+    }
+
+    # Prompt rendering
+    $i = 0
+    $out = ""
+    $seg = $segments[$i]
+    $block_bg = $seg.bg
+
+    foreach ($block in $seg.blocks) {
+        $block_params = $block
+        $block_params.bg = $block_bg
+        $out += Format-Text @block_params
+    }
+    $sep_fg = $block_bg
+
+    for ($i = 1; $i -lt $segments.Count; $i++) {
+        $seg = $segments[$i]
+        $block_bg = $seg.bg
+
+        $res = Invoke-Command $seg.cond
+        if ($res -eq $false) {
+            continue
+        }
+
+        $sep_params = $separator.Clone()
+        $sep_params.bg = $block_bg
+        if ($separator.fg -eq $null) {
+            $sep_params.fg = $sep_fg
+        }
+        $out += Format-Text @sep_params
+
+        $out += Format-Text -text " " -bg $block_bg
+        foreach ($block in $seg.blocks) {
+            $block_params = $block
+            $block_params.bg = $block_bg
+            $out += Format-Text @block_params
+        }
+        $sep_fg = $block_bg
+    }
+
+    $sep_params = $separator.Clone()
+    $sep_params.bg = $null
+    if ($separator.fg -eq $null) {
+        $sep_params.fg = $sep_fg
+    }
+    $out += Format-Text @sep_params
+    $out += " "
+
+    $ExecutionContext.InvokeCommand.ExpandString($out)
+}
+
+function prompt {
+    $fg_separator = @{
+        text = " ⟩⟩"
+        fg = "#8AC926"
+    }
+
+    $fg_segments = @(
         @{
-            'params' = @{
-                'text'   = '$((Get-Location).ToString().Replace($HOME, "~"))'
-                'fg'     = '#00A6FB'
-                'styles' = 'italic','bold'
+            blocks = @{
+                text = '$script:dir_icon'
+                fg   = '#8AC926'
+            },@{
+                text   = '$((Get-Location).ToString().Replace($HOME, "~"))'
+                fg     = '#00A6FB'
+                styles = 'italic','bold'
             }
         },
         @{
-            'params' = @{
-                'text'   = ' ⟩⟩'
-                'fg'     = '#8AC926'
-                'styles' = 'bold'
+            blocks = @{
+                text = '$script:git_branch'
+                fg   = '#F4B860'
+            },@{
+                text = '$script:git_sep'
+            },@{
+                text = '$script:git_working'
+                fg   = '#F42C04'
+            },@{
+                text = '$script:git_index'
+                fg   = '#FFD60A'
+            },@{
+                text = '$script:git_stash'
+                fg   = '#81B29A'
+            },@{
+                text = '$script:git_sync'
+                fg   = '#A690F3'
             }
-        },
-        @{
-            'params'  = @{
-                'text'   = '$script:git_branch'
-                'fg'     = '#F4B860'
-            }
-        },
-        @{
-            'params'  = @{
-                'text' = '$script:git_working'
-                'fg'   = '#F42C04'
-            }
-        },
-        @{
-            'params'  = @{
-                'text' = '$script:git_index'
-                'fg'   = '#FFD60A'
-            }
-        },
-        @{
-            'params'  = @{
-                'text' = '$script:git_stash'
-                'fg'   = '#81B29A'
-            }
-        },
-        @{
-            'params'  = @{
-                'text' = '$script:git_sync'
-                'fg'   = '#A690F3'
-            }
-        },
-        @{
-            'params' = @{
-                'text'   = '$script:git_sep '
-                'fg'     = '#8AC926'
-                'styles' = 'bold'
-            }
+            cond = { return $script:git_status -ne $null }
         }
     )
 
-    $prompt_string = ""
-    foreach ($block in $blocks) {
-        if ($block.ContainsKey('cond')) {
-            $cont = Invoke-Command -ScriptBlock $block.cond
-            if (-not $cont) {
-                continue
-            }
-        }
-        $params = $block.params
-        $prompt_string += Format-Text @params
-        if ($block.ContainsKey('execute')) {
-            $execute = $block.execute
-            $prompt_script[$execute.sequence] = $execute.script
-        }
-    }
-
-    return $prompt_string + "`e[0m"
-}
-
-$prompt_string = promptGen
-function prompt {
-    $count = $prompt_script.Count
-    $i = 0
-    while ($i -le $count) {
-        $script = $prompt_script[$i]
-        if ($script) {
-            Invoke-Command $script
-        }
-        $i = $i + 1
-    }
-
-    $ExecutionContext.InvokeCommand.ExpandString($prompt_string)
+    pgen $fg_separator $fg_segments
 }
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
