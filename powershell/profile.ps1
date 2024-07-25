@@ -446,46 +446,48 @@ function promptGen($separator, $segments) {
 }
 
 function prompt {
-    $fg_separator = @{
+    $separator = @{
         text = " ⟩⟩"
         fg = "#8AC926"
     }
 
-    $fg_segments = @(
+    $segments = @(
         @{
+            bg = "#736CED"
             blocks = @{
                 text = '$script:dir_icon'
-                fg   = '#8AC926'
+                fg   = '#C5D86D'
             },@{
                 text   = '$((Get-Location).ToString().Replace($HOME, "~"))'
-                fg     = '#00A6FB'
+                fg     = '#FEF9FF'
                 styles = 'italic','bold'
             }
         },
         @{
+            bg = "#9F9FED"
             blocks = @{
                 text = '$script:git_branch'
-                fg   = '#F4B860'
+                fg   = '#F2DFD7'
             },@{
                 text = '$script:git_sep'
             },@{
                 text = '$script:git_working'
-                fg   = '#F42C04'
+                fg   = '#B72A33'
             },@{
                 text = '$script:git_index'
-                fg   = '#FFD60A'
+                fg   = '#FFD97D'
             },@{
                 text = '$script:git_stash'
-                fg   = '#81B29A'
+                fg   = '#A26769'
             },@{
                 text = '$script:git_sync'
-                fg   = '#A690F3'
+                fg   = '#4F646F'
             }
             cond = { return $script:git_status -ne $null }
         }
     )
 
-    promptGen $fg_separator $fg_segments
+    promptGen $separator $segments
 }
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
