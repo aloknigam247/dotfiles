@@ -447,8 +447,7 @@ function promptGen($separator, $segments) {
 
 function prompt {
     $separator = @{
-        text = " ⟩⟩"
-        fg = "#8AC926"
+        text = ""
     }
 
     $segments = @(
