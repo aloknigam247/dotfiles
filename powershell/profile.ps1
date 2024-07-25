@@ -335,7 +335,7 @@ $env:FZF_DEFAULT_OPTS='
 # ╭─( Prompt features )─────────────────────╮
 # │ FEAT: Powerline like background support │
 # ╰─────────────────────────────────────────╯
-function pgen($separator, $segments) {
+function promptGen($separator, $segments) {
     # Initial executions
     $script:dir_icon = ' '
     $script:git_branch = ''
@@ -485,7 +485,7 @@ function prompt {
         }
     )
 
-    pgen $fg_separator $fg_segments
+    promptGen $fg_separator $fg_segments
 }
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
