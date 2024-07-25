@@ -492,7 +492,7 @@ function prompt {
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
-    'Command' = (Format-Text -headOnly -fg '#F42C04' -styles 'bold');
+    'Command' = (Format-Text -headOnly -fg '#9183EC' -styles 'bold');
     'Comment' = (Format-Text -headOnly -fg '#989FCE');
     'Emphasis' = (Format-Text -headOnly -fg '#ECBA82');
     'Keyword' = (Format-Text -headOnly -fg '#F7F4F3' -styles 'italic');
@@ -500,7 +500,7 @@ Set-PSReadLineOption -Colors @{
     'ListPredictionSelected' = (Format-Text -headOnly -bg '#3C6E71' -styles 'bold');
     'Member' = (Format-Text -headOnly -styles 'italic');
     'Number' = (Format-Text -headOnly -fg '#F24333');
-    'Parameter' = (Format-Text -headOnly -fg '#9183EC');
+    'Parameter' = (Format-Text -headOnly -fg '#F42C04');
     'Selection' = (Format-Text -headOnly -bg '#3C6E71');
     'String' = (Format-Text -headOnly -fg '#E4FF1A');
 }
