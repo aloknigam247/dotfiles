@@ -459,28 +459,29 @@ function prompt {
             },@{
                 text   = '$((Get-Location).ToString().Replace($HOME, "~"))'
                 fg     = '#FEF9FF'
-                styles = 'italic','bold'
+                styles = 'bold'
             }
         },
         @{
             bg = "#9F9FED"
             blocks = @{
                 text = '$script:git_branch'
-                fg   = '#F2DFD7'
+                fg   = '#FFFFFF'
+                styles = 'italic'
             },@{
                 text = '$script:git_sep'
             },@{
                 text = '$script:git_working'
-                fg   = '#B72A33'
+                fg   = '#2B78CA'
             },@{
                 text = '$script:git_index'
-                fg   = '#FFD97D'
+                fg   = '#FDD649'
             },@{
                 text = '$script:git_stash'
-                fg   = '#A26769'
+                fg   = '#DF5601'
             },@{
                 text = '$script:git_sync'
-                fg   = '#4F646F'
+                fg   = '#BBFA0F'
             }
             cond = { return $script:git_status -ne $null }
         }
