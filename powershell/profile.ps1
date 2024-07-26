@@ -4,8 +4,7 @@
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
-(Get-Process -Id $PID).parent.ProcessName
-if ([Environment]::UserInteractive) {
+if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
     Start-Job {
         Set-Location D:/dotfiles
         git pull
