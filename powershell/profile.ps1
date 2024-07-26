@@ -1,5 +1,4 @@
 # FEAT: copy useful scripts from https://github.com/jdhitsolutions/PSScriptTools
-# FEAT: run git sync in terminal only, refer from Get-PSSessionInfo
 # TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
 # ╭─────────────╮
 # │ Auto Update │
