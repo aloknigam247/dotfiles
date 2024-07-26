@@ -4,6 +4,7 @@
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
+(Get-Process -Id $PID).parent.ProcessName
 if ([Environment]::UserInteractive) {
     Start-Job {
         Set-Location D:/dotfiles
@@ -331,10 +332,6 @@ $env:FZF_DEFAULT_OPTS='
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
-
-# ╭─( Prompt features )─────────────────────╮
-# │ FEAT: Powerline like background support │
-# ╰─────────────────────────────────────────╯
 function promptGen($separator, $segments) {
     # Initial executions
     $script:dir_icon = ' '
