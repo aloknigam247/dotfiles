@@ -1,6 +1,8 @@
 -- FIX: all lsp errors
 -- TODO: github stars
 -- TODO: reddit save
+-- REFACTOR: use double qoutes
+-- FIX: Clear all diagnostics
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
@@ -1733,7 +1735,6 @@ addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'           
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
 addPlugin { 'scottmckendry/cyberdream.nvim',       event = 'User cyberdream'                                   }
-addPlugin { 'sainnhe/edge',                        event = 'User edge'                                         }
 addPlugin { 'sainnhe/everforest',                  event = 'User everforest'                                   }
 addPlugin { 'comfysage/evergarden',                event = 'User evergarden'                                   }
 addPlugin { 'projekt0n/github-nvim-theme',         event = 'User github-theme'                                 }
@@ -1767,10 +1768,9 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- dark  { 'catppuccin-macchiato',       'catppuccin'                                                                                 }
 -- light { 'catppuccin-latte',           'catppuccin'                                                                                 }
 -- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
-dark  { 'duskfox',                    'nightfox'                                                                                   } -- FIX: use @comment.todos
+-- dark  { 'duskfox',                    'nightfox'                                                                                   }
 -- darkT { 'duskfox',                    'nightfox',       cfg = { transparent = true }                                               }
--- light { 'edge',                       '_'                                                                                          }
--- dark  { 'everforest',                 '_'                                                                                          }
+dark  { 'everforest',                 '_'                                                                                          }
 -- darkT { 'evergarden',                 '_',              cfg = { transparent_background = true }                                    }
 -- darkT { 'github_dark',                'github-theme',   cfg = { options = { transparent = true } }                                 }
 -- darkT { 'github_dark_colorblind',     'github-theme',   cfg = { options = { transparent = true } }                                 }
@@ -3115,6 +3115,7 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 addPlugin {
 	'glepnir/lspsaga.nvim',
 	cmd = 'Lspsaga',
@@ -3274,14 +3275,14 @@ addPlugin {
 	}
 }
 
--- TODO: progress
 addPlugin {
 	'j-hui/fidget.nvim',
 	opts = {
 		progress = {
-			ignore_done_already = false,
-			ignore_empty_message = false,
-			suppress_on_insert = true,
+			display = {
+				done_icon = " ",
+				progress_icon = { pattern = "dots", period = 1 }
+			}
 		}
 	},
 	event = 'LspAttach'
@@ -4427,7 +4428,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	'andythigpen/nvim-coverage',
-	cmd = 'Coverage',
+	cmd = 'Coverage', -- BUG: not working
 	dependencies = { 'nvim-lua/plenary.nvim', 'luukvbaal/statuscol.nvim' },
 	opts ={
 		auto_reload = true,
