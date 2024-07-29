@@ -3098,6 +3098,7 @@ addPlugin {
 	dependencies = 'nvim-telescope/telescope.nvim'
 }
 
+-- TODO: progress
 addPlugin {
 	'folke/neodev.nvim',
 	event = 'LspAttach init.lua',
@@ -3115,7 +3116,6 @@ addPlugin {
 	}
 }
 
--- TODO: progress
 addPlugin {
 	'glepnir/lspsaga.nvim',
 	cmd = 'Lspsaga',
@@ -3144,16 +3144,18 @@ addPlugin {
 			custom_fix = nil,
 			custom_msg = nil,
 			extend_relatedInformation = true,
-			jump_num_shortcut = true,
+			jump_num_shortcut = false,
 			keys = {
 				exec_action = 'o',
 				quit = 'q',
 				go_action = 'g'
 			},
+			max_height = 0.5,
 			max_width = 0.7,
 			show_code_action = false,
+			show_layout = 'float',
 			show_source = true,
-			text_hl_follow = false,
+			text_hl_follow = true,
 		},
 		finder = {
 			default = 'tyd+ref+imp+def',
