@@ -4336,6 +4336,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
 addPlugin {
+	-- FEAT: https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
 	'nvim-telescope/telescope.nvim',
 	cmd = 'Telescope',
 	config = function()
