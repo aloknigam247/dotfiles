@@ -1731,6 +1731,7 @@ local function lightT(opts)
 	light(opts)
 end
 
+addPlugin { 'ab-dx/ares.nvim',                     event = 'User ares',      dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                          }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
@@ -1771,6 +1772,7 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- dark  { 'duskfox',                    'nightfox'                                                                                   }
 -- darkT { 'duskfox',                    'nightfox',       cfg = { transparent = true }                                               }
 dark  { 'everforest',                 '_'                                                                                          }
+-- dark  { 'ares',                       '_'                                                                                          }
 -- darkT { 'evergarden',                 '_',              cfg = { transparent_background = true }                                    }
 -- darkT { 'github_dark',                'github-theme',   cfg = { options = { transparent = true } }                                 }
 -- darkT { 'github_dark_colorblind',     'github-theme',   cfg = { options = { transparent = true } }                                 }
@@ -2222,7 +2224,7 @@ addPlugin {
 -- https://github.com/vim-scripts/Conque-GDB
 -- use 'mfussenegger/nvim-dap-python'
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generater  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	'danymat/neogen',
 	cmd = 'Neogen',
@@ -3093,7 +3095,7 @@ addPlugin {
 	}
 }
 
-addPlugin {
+addPlugin { -- FEAT: alternate plugin https://github.com/rachartier/tiny-code-action.nvim
 	'aznhe21/actions-preview.nvim',
 	dependencies = 'nvim-telescope/telescope.nvim'
 }
