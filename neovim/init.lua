@@ -1731,7 +1731,6 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { 'ab-dx/ares.nvim',                     event = 'User ares',      dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'Shatur/neovim-ayu',                   event = 'User ayu'                                          }
 addPlugin { 'uloco/bluloco.nvim',                  event = 'User bluloco',   dependencies = 'rktjmp/lush.nvim' }
 addPlugin { 'catppuccin/nvim',                     event = 'User catppuccin'                                   }
@@ -1773,8 +1772,7 @@ addPlugin { 'titanzero/zephyrium',                 event = 'User zephyrium'     
 -- lightT{ 'cyberdream',                 '_',            cfg = { theme = { variant = 'light' } }                                      }
 -- dark  { 'duskfox',                    'nightfox'                                                                                   }
 -- darkT { 'duskfox',                    'nightfox',       cfg = { transparent = true }                                               }
-dark  { 'ares',                       '_'                                                                                          }
--- darkT { 'evergarden',                 '_',              cfg = { transparent_background = true }                                    }
+darkT { 'evergarden',                 '_',              cfg = { transparent_background = true }                                    }
 -- darkT { 'github_dark',                'github-theme',   cfg = { options = { transparent = true } }                                 }
 -- darkT { 'github_dark_colorblind',     'github-theme',   cfg = { options = { transparent = true } }                                 }
 -- light { 'github_light',               'github-theme'                                                                               }
@@ -4432,44 +4430,9 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- local stdout = ""
--- local stderr = ""
--- local res = vim.fn.jobstart(cmd, {
---     on_stdout = function(_, data, _)
---         print('DEBUGPRINT[2]: python.lua:56: data=' .. vim.inspect(data))
---         for _, line in ipairs(data) do
---             stdout = stdout .. line
---         end
---         print('DEBUGPRINT[5]: python.lua:53: stdout=' .. vim.inspect(stdout))
---     end,
---     on_stderr = function(_, data, _)
---         print('DEBUGPRINT[3]: python.lua:62: data=' .. vim.inspect(data))
---         for _, line in ipairs(data) do
---             stderr = stderr .. line
---         end
---         print('DEBUGPRINT[6]: python.lua:55: stderr=' .. vim.inspect(stderr))
---     end,
---     on_exit = function(_, exit_code)
---         print('DEBUGPRINT[4]: python.lua:68: exit_code=' .. vim.inspect(exit_code))
---         if exit_code ~= 0 then
---             if #stderr == 0 then
---                 stderr = "Failed to generate coverage"
---             end
---             vim.notify(stderr, vim.log.levels.ERROR)
---             return
---         elseif #stderr > 0 then
---             vim.notify(stderr, vim.log.levels.WARN)
---         end
---         if stdout == "No data to report." then
---             vim.notify(stdout, vim.log.levels.INFO)
---             return
---         end
---         util.safe_decode(stdout, callback)
---     end,
--- })
 addPlugin {
 	'andythigpen/nvim-coverage',
-	cmd = 'Coverage', -- BUG: not working
+	cmd = 'Coverage',
 	dependencies = { 'nvim-lua/plenary.nvim', 'luukvbaal/statuscol.nvim' },
 	opts ={
 		auto_reload = true,

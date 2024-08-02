@@ -148,10 +148,10 @@ augroup RestoreCursorShapeOnExit
 augroup END
 
 " let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
-let &shell = 'pwsh'
-let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
-let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+" let &shell = 'pwsh'
+" let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+" let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
+" let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 
 let g:startuptime_event_width = 0
 
@@ -176,7 +176,7 @@ endfun
 " 1 = don't break a line a after 1 letter word, try to break before it
 " c = do auto wrapping at textwidth on comment only
 " j = join comments without commentstring
-" l = do not break line if lenght is more than textwidth when insert
+" l = do not break line if length is more than textwidth when insert
 " n = keep list indentations
 " o = insert comment on 'o' and 'O'
 " p = don't break line blindly at .

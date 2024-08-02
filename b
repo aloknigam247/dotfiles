@@ -1,1 +1,0 @@
-PNB Housing Finance Limited requests eNACH mandate to be registered for EMI payment of your loan account number HOU/KAVI/0624/1268103 for Rs. 249230 (maximum limit) with your bank THE HONGKONG AND SHANGHAI. To proceed click https://tinyurl.com/22mxpj6q
