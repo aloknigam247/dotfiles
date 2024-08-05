@@ -834,14 +834,14 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	end
 
 	-- Create autocommand to resize window
-	local au_id = vim.api.nvim_create_autocmd("VimResized", { -- BUG: not working
+	local au_id = vim.api.nvim_create_autocmd("VimResized", {
 		pattern = "*",
 		desc = "Resize preview window on vim resize",
 		callback = function()
 			local cfg = vim.api.nvim_win_get_config(Preview_win)
 			vim.api.nvim_win_set_config(Preview_win, {
 				height = vim.o.lines - 8,
-				width = vim.o.columns - 8 - cfg.col[false]
+				width = vim.o.columns - 8 - cfg.col
 			})
 		end
 	})
