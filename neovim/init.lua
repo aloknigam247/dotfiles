@@ -1,3 +1,4 @@
+-- FIX: diangnostics clears in insert mode
 -- FIX: all lsp errors
 -- TODO: github stars
 -- TODO: reddit save
@@ -1760,7 +1761,7 @@ addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"        
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
 -- dark  { "everforest",                 "_"                                                                                          }
-darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
+-- darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
 
 -- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
@@ -2818,6 +2819,29 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+
+-- FEAT: git graph
+-- addPlugin {
+-- 	'isakbm/gitgraph.nvim',
+-- 	dependencies = { 'sindrets/diffview.nvim' },
+-- 	---@type I.GGConfig
+-- 	opts = {
+-- 		symbols = {
+-- 			merge_commit = 'M',
+-- 			commit = '*',
+-- 		},
+-- 		format = {
+-- 			timestamp = '%H:%M:%S %d-%m-%Y',
+-- 			fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
+-- 		},
+-- 	},
+-- 	init = function()
+-- 		vim.keymap.set('n', '<leader>gl', function()
+-- 			require('gitgraph').draw({}, { all = true, max_count = 5000 })
+-- 		end, { desc = 'new git graph' })
+-- 	end,
+-- }
+
 addPlugin {
 	"rhysd/git-messenger.vim",
 	cmd = "GitMessenger",
@@ -3092,7 +3116,7 @@ addPlugin {
 	}
 }
 
-addPlugin { -- FEAT: alternate plugin https://github.com/rachartier/tiny-code-action.nvim
+addPlugin {
 	"aznhe21/actions-preview.nvim",
 	dependencies = "nvim-telescope/telescope.nvim"
 }
