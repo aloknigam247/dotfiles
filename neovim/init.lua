@@ -1737,6 +1737,7 @@ addPlugin { "catppuccin/nvim",                     event = "User catppuccin"    
 addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"                                   }
 addPlugin { "sainnhe/everforest",                  event = "User everforest"                                   }
 addPlugin { "comfysage/evergarden",                event = "User evergarden"                                   }
+addPlugin { "0xstepit/flow.nvim",                  event = "User flow"                                         }
 addPlugin { "projekt0n/github-nvim-theme",         event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",              event = "User hybrid"                                       }
 addPlugin { "kaiuri/nvim-juliana",                 event = "User juliana"                                      }
@@ -1774,6 +1775,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
+-- dark  { "flow",                       "_"                                                                                          }
+-- darkT { "flow",                       "_",              cfg = { transparent = true }                                               }
 -- darkT { "github_dark_colorblind",     "github-theme",   cfg = { options = { transparent = true } }                                 }
 -- light { "github_light",               "github-theme"                                                                               }
 -- light { "github_light_default",       "github-theme"                                                                               }
@@ -2251,6 +2254,9 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
+-- FEAT: select preview plugin
+-- https://github.com/b0o/nvim-tree-preview.lua
+-- https://github.com/JMarkin/nvim-tree.lua-float-preview
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
@@ -3345,8 +3351,9 @@ addPlugin {
 -- addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
 
 -- FEAT: lsp extentions
--- https://github.com/nvimtools/none-ls.nvim
+-- https://github.com/antosha417/nvim-lsp-file-operations
 -- https://github.com/davidmh/cspell.nvim
+-- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
 
 addPlugin {
@@ -3502,13 +3509,9 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: select markdown plugin
-addPlugin {
-	"iamcco/markdown-preview.nvim"
-}
-
-addPlugin {
-	"OXY2DEV/markview.nvim"
-}
+-- addPlugin {
+-- 	"OXY2DEV/markview.nvim"
+-- }
 
 -- addPlugin {
 -- 	"MeanderingProgrammer/markdown.nvim",
@@ -3550,6 +3553,7 @@ addPlugin {
 }
 
 addPlugin {
+	-- "iamcco/markdown-preview.nvim"
 	"toppair/peek.nvim",
 	build = "deno task --quiet build:fast",
 	cmd = "PeekOpen",
@@ -3562,39 +3566,6 @@ addPlugin {
 		vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
 	end
 }
-
--- addPlugin {
--- 	"yaocccc/nvim-hl-mdcodeblock.lua",
--- 	config = function ()
--- 		local code_block = require("hl-mdcodeblock")
--- 		code_block.setup({
--- 			events = {
--- 				"BufEnter",
--- 				"InsertLeave",
--- 				"TextChanged",
--- 				"WinScrolled"
--- 			},
--- 			hl_group = "MDCodeBlock",
--- 			minumum_len = 10,
--- 			padding_right = 1,
--- 			query_by_ft = {
--- 				markdown = {
--- 					"markdown",
--- 					"(fenced_code_block) @codeblock",
--- 				},
--- 				rmd = {
--- 					"markdown",
--- 					"(fenced_code_block) @codeblock",
--- 				},
--- 			},
--- 			timer_delay = 300,
--- 		})
--- 		vim.api.nvim_set_hl(0, "MDCodeBlock", { bg = adaptiveBG(30, -10) })
--- 		code_block.refresh()
--- 	end,
--- 	dependencies = { "nvim-treesitter/nvim-treesitter", "MeanderingProgrammer/markdown.nvim" },
--- 	event = "CursorHold *.md"
--- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Guide:
