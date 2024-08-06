@@ -1195,7 +1195,7 @@ vim.diagnostic.config({
 	},
 	severity_sort = true,
 	update_in_insert = false,
-	virtual_text = { -- FEAT: customize to look like https://github.com/rachartier/tiny-inline-diagnostic.nvim
+	virtual_text = { -- FEAT: customize to look like https://github.com/rachartier/tiny-inline-diagnostic.nvim, https://github.com/sontungexpt/better-diagnostic-virtual-text
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
 				return icons.error
@@ -1390,6 +1390,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: resolve code maps
+-- https://github.com/Isrothy/neominimap.nvim
 -- https://github.com/dstein64/nvim-scrollview
 addPlugin {
 	"echasnovski/mini.map",
@@ -1750,12 +1752,14 @@ addPlugin { "xero/miasma.nvim",                    event = "User miasma"        
 addPlugin { "fynnfluegge/monet.nvim",              event = "User monet"                                        }
 addPlugin { "polirritmico/monokai-nightasty.nvim", event = "User monokai-nightasty"                            }
 addPlugin { "diegoulloao/neofusion.nvim",          event = "User neofusion"                                    }
+addPlugin { "2giosangmitom/nightfall.nvim",        event = "User nightfall"                                    }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "AlexvZyl/nordic.nvim",                event = "User nordic"                                       }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
 addPlugin { "navarasu/onedark.nvim",               event = "User onedark"                                      }
 addPlugin { "lewpoly/sherbet.nvim",                event = "User sherbet"                                      }
 addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
+addPlugin { "NTBBloodbath/sweetie.nvim",           event = "User sweetie"                                      }
 addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
 addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"                                     }
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
@@ -1774,13 +1778,12 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
-darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
--- dark  { "flow",                       "_"                                                                                          }
--- darkT { "flow",                       "_",              cfg = { transparent = true }                                               }
--- darkT { "github_dark_colorblind",     "github-theme",   cfg = { options = { transparent = true } }                                 }
--- light { "github_light",               "github-theme"                                                                               }
+-- darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
+light { "github_light",               "github-theme"                                                                               }
 -- light { "github_light_default",       "github-theme"                                                                               }
 -- light { "github_light_tritanopia",    "github-theme"                                                                               }
+-- dark  { "flow",                       "_"                                                                                          }
+-- darkT { "flow",                       "_",              cfg = { transparent = true }                                               }
 -- dark  { "hybrid",                     "_"                                                                                          }
 -- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
@@ -1795,6 +1798,8 @@ darkT { "github_dark",                "github-theme",   cfg = { options = { tran
 -- darkT { "monet",                      "_",              cfg = { transparent_background = true }                                    }
 -- light { "monokai-nightasty",          "_"                                                                                          }
 -- dark  { "neofusion",                  "_",                                                                                         }
+-- dark  { "maron",                      "nightfall"                                                                                  }
+-- darkT { "maron",                      "nightfall",    cfg = { transparent = true }                                                 }
 -- dark  { "nordic",                     "_",            cfg = { override = { IblScope = { fg = "#7E8188" } } }                       }
 -- darkT { "onedark",                    "_",              cfg = { style = "dark", transparent = true }                               }
 -- darkT { "onedark",                    "_",              cfg = { style = "deep", transparent = true }                               }
@@ -1804,6 +1809,8 @@ darkT { "github_dark",                "github-theme",   cfg = { options = { tran
 -- light { "onedark",                    "_",            cfg = { style = "light" }                                                    }
 -- dark  { "retrobox",                   "_",            post = fixRetro                                                              }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
+-- dark  { "sweetie",                    "_"                                                                                          }
+-- light { "sweetie",                    "_"                                                                                          }
 -- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
@@ -2217,14 +2224,15 @@ addPlugin {
 
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/Willem-J-an/nvim-dap-powershell
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- https://github.com/jonboh/nvim-dap-rr
+-- https://github.com/mfussenegger/nvim-dap-python
 -- https://github.com/nvim-telescope/telescope-dap.nvim
 -- https://github.com/sakhnik/nvim-gdb
 -- https://github.com/theHamsta/nvim-dap-virtual-text
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
--- use "mfussenegger/nvim-dap-python"
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
