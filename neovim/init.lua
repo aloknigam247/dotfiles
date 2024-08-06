@@ -1739,7 +1739,6 @@ addPlugin { "catppuccin/nvim",                     event = "User catppuccin"    
 addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"                                   }
 addPlugin { "sainnhe/everforest",                  event = "User everforest"                                   }
 addPlugin { "comfysage/evergarden",                event = "User evergarden"                                   }
-addPlugin { "0xstepit/flow.nvim",                  event = "User flow"                                         }
 addPlugin { "projekt0n/github-nvim-theme",         event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",              event = "User hybrid"                                       }
 addPlugin { "kaiuri/nvim-juliana",                 event = "User juliana"                                      }
@@ -1767,6 +1766,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 
 -- dark  { "everforest",                 "_"                                                                                          }
 -- darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
+-- darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 
 -- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
@@ -1778,13 +1778,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
--- darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
-light { "github_light",               "github-theme"                                                                               }
--- light { "github_light_default",       "github-theme"                                                                               }
--- light { "github_light_tritanopia",    "github-theme"                                                                               }
--- dark  { "flow",                       "_"                                                                                          }
--- darkT { "flow",                       "_",              cfg = { transparent = true }                                               }
--- dark  { "hybrid",                     "_"                                                                                          }
+dark  { "hybrid",                     "_"                                                                                          }
 -- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 -- dark  { "kanagawa-paper",             "kanagawa-paper"                                                                             }
