@@ -2974,6 +2974,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: progress
 addPlugin {
 	"2kabhishek/nerdy.nvim",
 	cmd = "Nerdy",
@@ -3127,24 +3128,6 @@ addPlugin {
 addPlugin {
 	"aznhe21/actions-preview.nvim",
 	dependencies = "nvim-telescope/telescope.nvim"
-}
-
--- TODO: progress
-addPlugin {
-	"folke/neodev.nvim",
-	event = "LspAttach init.lua",
-	opts = {
-		library = {
-			enabled = true,
-			plugins = true,
-			runtime = true,
-			types = true,
-		},
-		lspconfig = true,
-		pathStrict = true,
-		override = function(_, _) end,
-		setup_jsonls = false,
-	}
 }
 
 addPlugin {
