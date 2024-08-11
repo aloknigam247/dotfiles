@@ -2624,7 +2624,7 @@ FileTypeActions = {
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
-		vim.cmd.setlocal("spell")
+		vim.cmd.setlocal("spell") -- FEAT: use typos
 		MarkdownHeadingsHighlight()
 	end,
 	["todo"] = function(_)
