@@ -3,6 +3,7 @@
 -- TODO: github stars
 -- TODO: reddit save
 -- FIX: Clear all diagnostics
+-- FIX: lsp deprecated warnings
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
@@ -2262,10 +2263,6 @@ addPlugin {
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
-	dependencies = {
-		"b0o/nvim-tree-preview.lua",
-		"antosha417/nvim-lsp-file-operations"
-	},
 	opts = {
 		actions = {
 			change_dir = {
@@ -3336,7 +3333,6 @@ addPlugin {
 -- addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
 
 -- FEAT: lsp extentions
--- https://github.com/antosha417/nvim-lsp-file-operations
 -- https://github.com/davidmh/cspell.nvim
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
