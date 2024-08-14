@@ -1779,8 +1779,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
-dark  { "hybrid",                     "_"                                                                                          }
--- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
+-- dark  { "hybrid",                     "_"                                                                                          }
+darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 -- dark  { "kanagawa-paper",             "kanagawa-paper"                                                                             }
 -- darkT { "kanagawa-paper",             "kanagawa-paper", cfg = { transparent = true }                                               }
@@ -2090,13 +2090,13 @@ addPlugin {
 }
 
 addPlugin {
-  "emmanueltouzery/decisive.nvim",
+	"emmanueltouzery/decisive.nvim",
 	cmd = "CSVAlignVirtual",
-  config = function()
+	config = function()
 		vim.api.nvim_create_user_command( "CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
 		vim.api.nvim_create_user_command( "CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
 		require("decisive").setup({})
-  end
+	end
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4837,6 +4837,17 @@ addPlugin {
 	"anuvyklack/hydra.nvim", -- BUG: all window changes freeze after hyder is invoked
 	config = function()
 		local hydra = require("hydra")
+		hydra({
+			name = 'Side scroll',
+			mode = 'n',
+			body = 'z',
+			heads = {
+				{ 'h', '5zh' },
+				{ 'l', '5zl', { desc = '←/→' } },
+				{ 'H', 'zH' },
+				{ 'L', 'zL', { desc = 'half screen ←/→' } },
+			}
+		})
 		hydra({
 			name = "Window Control",
 			mode = "n",
