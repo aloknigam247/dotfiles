@@ -3518,6 +3518,11 @@ addPlugin {
 -- }
 
 addPlugin {
+	"OXY2DEV/helpview.nvim",
+	ft = "help"
+}
+
+addPlugin {
 	"gaoDean/autolist.nvim",
 	event = { "TextChanged *.md", "InsertEnter *.md"},
 	config = function()
