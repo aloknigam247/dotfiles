@@ -358,7 +358,6 @@ function promptGen($separator, $segments) {
             $script:git_branch = ' ' + $git_branch.Replace("user/$env:username", '~')
         }
 
-        # FIX: git synbol spacing
         # git dirty check
         if ($script:git_status.HasWorking) {
             $script:git_working = '󰦓 '

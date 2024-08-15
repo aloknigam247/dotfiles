@@ -3490,32 +3490,13 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: select markdown plugin
--- addPlugin {
--- 	"OXY2DEV/markview.nvim"
--- }
+addPlugin {
+	"OXY2DEV/markview.nvim"
+}
 
--- addPlugin {
--- 	"MeanderingProgrammer/markdown.nvim",
--- 	ft = "markdown",
--- 	opts = {
--- 		headings = { " " },
--- 		bullets = { "", "", "", "" },
--- 		checkbox = {
--- 			unchecked = " ",
--- 			checked = " ",
--- 			callout = {
--- 				note = " Note",
--- 				tip = " Tip",
--- 				important = "󰅾 Important",
--- 				warning = "󰀪 Warning",
--- 				caution = "󰒡 Caution",
--- 			}
--- 		},
--- 		highlights = {
--- 			code = ""
--- 		}
--- 	}
--- }
+addPlugin {
+	"MeanderingProgrammer/render-markdown.nvim",
+}
 
 addPlugin {
 	"OXY2DEV/helpview.nvim",
