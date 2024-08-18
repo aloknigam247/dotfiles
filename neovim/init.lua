@@ -1,4 +1,3 @@
--- FIX: diangnostics clears in insert mode
 -- FIX: all lsp errors
 -- TODO: github stars
 -- TODO: reddit save
@@ -1195,7 +1194,7 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	severity_sort = true,
-	update_in_insert = false,
+	update_in_insert = true,
 	virtual_text = { -- FEAT: customize to look like https://github.com/rachartier/tiny-inline-diagnostic.nvim, https://github.com/sontungexpt/better-diagnostic-virtual-text
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
@@ -2621,7 +2620,7 @@ FileTypeActions = {
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
-		vim.cmd.setlocal("spell") -- FEAT: use typos
+		-- FEAT: use typos
 		MarkdownHeadingsHighlight()
 	end,
 	["todo"] = function(_)
