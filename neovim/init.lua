@@ -1780,9 +1780,9 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 -- dark  { "hybrid",                     "_"                                                                                          }
-darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
+-- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
--- dark  { "kanagawa-paper",             "kanagawa-paper"                                                                             }
+dark  { "kanagawa-paper",             "kanagawa-paper"                                                                             }
 -- darkT { "kanagawa-paper",             "kanagawa-paper", cfg = { transparent = true }                                               }
 -- dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
@@ -3335,6 +3335,8 @@ addPlugin {
 -- FEAT: lsp extentions
 -- https://github.com/davidmh/cspell.nvim
 -- https://github.com/nvimtools/none-ls.nvim
+-- https://github.com/Zeioth/none-ls-external-sources.nvim
+-- https://github.com/Zeioth/none-ls-autoload.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
 
 addPlugin {
@@ -4848,6 +4850,7 @@ addPlugin {
 				}
 			},
 			heads = {
+				-- FEAT: window movement HJKL
 				{ "<Down>", function() vim.cmd("res -1") end, { desc = "Decrease height" } },
 				{ "<Left>", function() vim.cmd("vert res +1") end, { desc = "Increase width" } },
 				{ "<Right>", function() vim.cmd("vert res -1") end, { desc = "Dencrease width" } },
@@ -5074,6 +5077,7 @@ addPlugin {
 			)
 		end
 
+		-- BUG: not loading
 		setTextKey("wc-", "to_dash_case",         "dash-case"         )
 		setTextKey("wc.", "to_dot_case",          "dot.case"          )
 		setTextKey("wc/", "to_path_case",         "path/case"         )
