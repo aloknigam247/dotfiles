@@ -1781,11 +1781,9 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "hybrid",                     "_"                                                                                          }
 -- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
-dark  { "kanagawa-paper",             "kanagawa-paper"                                                                             }
--- darkT { "kanagawa-paper",             "kanagawa-paper", cfg = { transparent = true }                                               }
 -- dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
--- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
+light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
 -- dark  { "mellow",                     "_"                                                                                          }
 -- dark  { "monet",                      "_"                                                                                          }
@@ -2007,6 +2005,7 @@ addPlugin {
 				disallow_fullfuzzy_matching = false,
 				disallow_prefix_unmatching = false,
 			},
+			-- FEAT: use esc to exit completion menu
 			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
 				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
 				["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
