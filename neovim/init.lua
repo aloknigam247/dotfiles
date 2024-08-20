@@ -2,7 +2,6 @@
 -- TODO: github stars
 -- TODO: reddit save
 -- FIX: Clear all diagnostics
--- FIX: lsp deprecated warnings
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
