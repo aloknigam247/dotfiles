@@ -4411,6 +4411,7 @@ addPlugin {
 		require("neotest").setup({
 			adapters = {
 				require("neotest-python")({
+					args = { "--cov", "--cov-branch" },
 					python = vim.fn.exepath("python")
 				})
 			},
