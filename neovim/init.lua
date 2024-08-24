@@ -4433,7 +4433,7 @@ addPlugin {
 			},
 			output = {
 				enabled = true,
-				open_on_run = true
+				open_on_run = false
 			},
 			quickfix = {
 				enabled = true,
