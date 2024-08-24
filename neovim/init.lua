@@ -1782,8 +1782,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 -- dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
-light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
--- dark  { "melange",                    "_"                                                                                          }
+-- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
+dark  { "melange",                    "_"                                                                                          }
 -- dark  { "mellow",                     "_"                                                                                          }
 -- dark  { "monet",                      "_"                                                                                          }
 -- darkT { "monet",                      "_",              cfg = { transparent_background = true }                                    }
@@ -2255,8 +2255,17 @@ addPlugin {
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: select preview plugin
--- https://github.com/b0o/nvim-tree-preview.lua
--- https://github.com/JMarkin/nvim-tree.lua-float-preview
+addPlugin {
+	"JMarkin/nvim-tree.lua-float-preview",
+	opts = {
+		toggled_on = false
+	}
+}
+
+addPlugin {
+	"b0o/nvim-tree-preview.lua"
+}
+
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
@@ -2367,6 +2376,8 @@ addPlugin {
 		on_attach = function(bufnr)
 			vim.wo.statuscolumn = ""
 
+			require("float-preview").attach_nvimtree(bufnr)
+
 			---Common optios with description
 			---@param desc string description
 			---@return table # common options with description
@@ -2414,7 +2425,7 @@ addPlugin {
 			vim.keymap.set("n", "<CR>",           api.node.open.edit,                 opts("Open"))
 			vim.keymap.set("n", "<F2>",           api.fs.rename_sub,                  opts("Rename: Omit Filename"))
 			vim.keymap.set("n", "<Leader>h",      api.node.show_info_popup,           opts("Info"))
-			vim.keymap.set("n", "<Tab>",          custom_preview,                     opts("Open Preview"))
+			-- vim.keymap.set("n", "<Tab>",          custom_preview,                     opts("Open Preview"))
 			vim.keymap.set("n", ">",              api.node.navigate.sibling.next,     opts("Next Sibling"))
 			vim.keymap.set("n", "D",              api.fs.trash,                       opts("Trash"))
 			vim.keymap.set("n", "E",              api.tree.expand_all,                opts("Expand All"))
@@ -3762,7 +3773,7 @@ vim.api.nvim_create_user_command(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"rmagatti/auto-session",
+	"rmagatti/auto-session", -- BUG: not working as expected
 	cmd = "SessionSave",
 	config = function()
 		vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam", "~" }
@@ -3851,7 +3862,7 @@ addPlugin {
 	"nvim-lualine/lualine.nvim",
 	config = function()
 		local function lspIcon()
-			local anim = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+			local anim = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" } -- FIX: skipping
 			Icon_index = (Icon_index) % #anim + 1
 			return anim[Icon_index]
 		end
