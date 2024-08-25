@@ -1537,6 +1537,7 @@ addPlugin {
 		highlights = {
 			{ filter = { filetype = "lua" },    pattern = "━.*━",               hl = "Constant", },
 			{ filter = { filetype = "lua" },    pattern = "%s*%-%-%-%s*(@%w+)", hl = "Constant", },
+			-- FEAT: coloring for cpp
 			{ filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
 			{ filter = { filetype = "python" }, pattern = "Args:",              hl = "@type" },
 			{ filter = { filetype = "python" }, pattern = "Returns:",           hl = "@keyword" },
