@@ -1747,7 +1747,6 @@ addPlugin { "sho-87/kanagawa-paper.nvim",          event = "User kanagawa-paper"
 addPlugin { "marko-cerovac/material.nvim",         event = "User material"                                     }
 addPlugin { "savq/melange",                        event = "User melange"                                      }
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
-addPlugin { "fynnfluegge/monet.nvim",              event = "User monet"                                        }
 addPlugin { "polirritmico/monokai-nightasty.nvim", event = "User monokai-nightasty"                            }
 addPlugin { "diegoulloao/neofusion.nvim",          event = "User neofusion"                                    }
 addPlugin { "2giosangmitom/nightfall.nvim",        event = "User nightfall"                                    }
@@ -1784,9 +1783,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
-dark  { "monet",                      "_"                                                                                          }
--- darkT { "monet",                      "_",              cfg = { transparent_background = true }                                    }
--- light { "monokai-nightasty",          "_"                                                                                          }
+light { "monokai-nightasty",          "_"                                                                                          }
 -- dark  { "neofusion",                  "_",                                                                                         }
 -- dark  { "maron",                      "nightfall"                                                                                  }
 -- darkT { "maron",                      "nightfall",    cfg = { transparent = true }                                                 }
@@ -2253,14 +2250,6 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
--- FEAT: select preview plugin
-addPlugin {
-	"JMarkin/nvim-tree.lua-float-preview",
-	opts = {
-		toggled_on = false
-	}
-}
-
 addPlugin {
 	"b0o/nvim-tree-preview.lua"
 }
@@ -2375,8 +2364,6 @@ addPlugin {
 		on_attach = function(bufnr)
 			vim.wo.statuscolumn = ""
 
-			require("float-preview").attach_nvimtree(bufnr)
-
 			---Common optios with description
 			---@param desc string description
 			---@return table # common options with description
@@ -2384,38 +2371,8 @@ addPlugin {
 			  return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
 			end
 
-			---Preview for NvimTree
-			local function custom_preview()
-				local node = require("nvim-tree.lib").get_node_at_cursor()
-				if node.name == ".." then
-					require("nvim-tree.actions.root.change-dir").fn ".."
-				elseif node.nodes then
-					require("nvim-tree.lib").expand_or_collapse(node)
-				else
-					local path = node.absolute_path
-					if node.link_to and not node.nodes then
-					  path = node.link_to
-					end
-
-					openFloat(
-						path,
-						"editor",
-						vim.fn.winwidth(0) + 2,
-						3,
-						false,
-						function()
-							vim.cmd.quit()
-							require("nvim-tree.api").node.open.horizontal()
-						end,
-						function()
-							vim.cmd.quit()
-							require("nvim-tree.api").node.open.vertical()
-						end
-					)
-				end
-			end
-
 			local api = require("nvim-tree.api")
+			local preview = require("nvim-tree-preview")
 			vim.keymap.set("n", "-",              api.tree.change_root_to_parent,     opts("Up"))
 			vim.keymap.set("n", "<",              api.node.navigate.sibling.prev,     opts("Previous Sibling"))
 			vim.keymap.set("n", "<2-LeftMouse>",  api.node.open.edit,                 opts("Open"))
@@ -2424,7 +2381,7 @@ addPlugin {
 			vim.keymap.set("n", "<CR>",           api.node.open.edit,                 opts("Open"))
 			vim.keymap.set("n", "<F2>",           api.fs.rename_sub,                  opts("Rename: Omit Filename"))
 			vim.keymap.set("n", "<Leader>h",      api.node.show_info_popup,           opts("Info"))
-			-- vim.keymap.set("n", "<Tab>",          custom_preview,                     opts("Open Preview"))
+			vim.keymap.set('n', '<Tab>',          preview.node_under_cursor,          opts('Preview'))
 			vim.keymap.set("n", ">",              api.node.navigate.sibling.next,     opts("Next Sibling"))
 			vim.keymap.set("n", "D",              api.fs.trash,                       opts("Trash"))
 			vim.keymap.set("n", "E",              api.tree.expand_all,                opts("Expand All"))
@@ -2432,7 +2389,7 @@ addPlugin {
 			vim.keymap.set("n", "H",              api.tree.toggle_hidden_filter,      opts("Toggle Filter: Dotfiles"))
 			vim.keymap.set("n", "I",              api.tree.toggle_gitignore_filter,   opts("Toggle Filter: Git Ignore"))
 			vim.keymap.set("n", "O",              api.node.open.no_window_picker,     opts("Open: No Window Picker"))
-			vim.keymap.set("n", "P",              require("nvim-tree-preview").watch, opts("Toggle Preview"))
+			vim.keymap.set("n", "P",              preview.watch,                      opts("Toggle Preview"))
 			vim.keymap.set("n", "R",              api.tree.reload,                    opts("Refresh"))
 			vim.keymap.set("n", "S",              api.tree.search_node,               opts("Search"))
 			vim.keymap.set("n", "U",              api.tree.toggle_custom_filter,      opts("Toggle Filter: Hidden"))
