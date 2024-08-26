@@ -1746,7 +1746,6 @@ addPlugin { "rebelot/kanagawa.nvim",               event = "User kanagawa"      
 addPlugin { "sho-87/kanagawa-paper.nvim",          event = "User kanagawa-paper"                               }
 addPlugin { "marko-cerovac/material.nvim",         event = "User material"                                     }
 addPlugin { "savq/melange",                        event = "User melange"                                      }
-addPlugin { "mellow-theme/mellow.nvim",            event = "User mellow"                                       }
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
 addPlugin { "fynnfluegge/monet.nvim",              event = "User monet"                                        }
 addPlugin { "polirritmico/monokai-nightasty.nvim", event = "User monokai-nightasty"                            }
@@ -1784,9 +1783,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
-dark  { "melange",                    "_"                                                                                          }
--- dark  { "mellow",                     "_"                                                                                          }
--- dark  { "monet",                      "_"                                                                                          }
+-- dark  { "melange",                    "_"                                                                                          }
+dark  { "monet",                      "_"                                                                                          }
 -- darkT { "monet",                      "_",              cfg = { transparent_background = true }                                    }
 -- light { "monokai-nightasty",          "_"                                                                                          }
 -- dark  { "neofusion",                  "_",                                                                                         }
