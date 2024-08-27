@@ -1747,9 +1747,6 @@ addPlugin { "sho-87/kanagawa-paper.nvim",          event = "User kanagawa-paper"
 addPlugin { "marko-cerovac/material.nvim",         event = "User material"                                     }
 addPlugin { "savq/melange",                        event = "User melange"                                      }
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
-addPlugin { "polirritmico/monokai-nightasty.nvim", event = "User monokai-nightasty"                            }
-addPlugin { "diegoulloao/neofusion.nvim",          event = "User neofusion"                                    }
-addPlugin { "2giosangmitom/nightfall.nvim",        event = "User nightfall"                                    }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "AlexvZyl/nordic.nvim",                event = "User nordic"                                       }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
@@ -1783,11 +1780,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
-light { "monokai-nightasty",          "_"                                                                                          }
--- dark  { "neofusion",                  "_",                                                                                         }
--- dark  { "maron",                      "nightfall"                                                                                  }
--- darkT { "maron",                      "nightfall",    cfg = { transparent = true }                                                 }
--- dark  { "nordic",                     "_",            cfg = { override = { IblScope = { fg = "#7E8188" } } }                       }
+dark  { "nordic",                     "_",            cfg = { override = { IblScope = { fg = "#7E8188" } } }                       }
 -- darkT { "onedark",                    "_",              cfg = { style = "dark", transparent = true }                               }
 -- darkT { "onedark",                    "_",              cfg = { style = "deep", transparent = true }                               }
 -- darkT { "onedark",                    "_",              cfg = { style = "warm", transparent = true }                               }
