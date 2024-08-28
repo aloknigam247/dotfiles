@@ -1,4 +1,5 @@
-# FEAT: Work setup
+# FEAT: Work setup: use powershell 7 for ODC
+# FEAT: Work setup: call init command from powershell 7
 # TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
 # ╭─────────────╮
 # │ Auto Update │
@@ -310,7 +311,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
- # FEAT: use mappings and script block for each mappings
 Set-PsFzfOption `
     -PSReadlineChordProvider 'Alt+p' `
     -PSReadlineChordReverseHistory 'Alt+h' `

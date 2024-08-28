@@ -1748,7 +1748,6 @@ addPlugin { "marko-cerovac/material.nvim",         event = "User material"      
 addPlugin { "savq/melange",                        event = "User melange"                                      }
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
-addPlugin { "AlexvZyl/nordic.nvim",                event = "User nordic"                                       }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
 addPlugin { "navarasu/onedark.nvim",               event = "User onedark"                                      }
 addPlugin { "lewpoly/sherbet.nvim",                event = "User sherbet"                                      }
@@ -1780,8 +1779,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
-dark  { "nordic",                     "_",            cfg = { override = { IblScope = { fg = "#7E8188" } } }                       }
--- darkT { "onedark",                    "_",              cfg = { style = "dark", transparent = true }                               }
+darkT { "onedark",                    "_",              cfg = { style = "dark", transparent = true }                               }
 -- darkT { "onedark",                    "_",              cfg = { style = "deep", transparent = true }                               }
 -- darkT { "onedark",                    "_",              cfg = { style = "warm", transparent = true }                               }
 -- darkT { "onedark",                    "_",              cfg = { style = "warmer", transparent = true }                             }
@@ -2578,7 +2576,6 @@ FileTypeActions = {
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
-		-- FEAT: use typos
 		MarkdownHeadingsHighlight()
 	end,
 	["todo"] = function(_)
