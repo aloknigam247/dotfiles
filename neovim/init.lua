@@ -1390,28 +1390,11 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: resolve code maps
--- https://github.com/Isrothy/neominimap.nvim
--- https://github.com/dstein64/nvim-scrollview
 addPlugin {
-	"echasnovski/mini.map",
-	config = function()
-		local minimap = require("mini.map")
-		minimap.setup({
-			integrations = {
-				minimap.gen_integration.builtin_search(),
-				minimap.gen_integration.gitsigns(),
-				minimap.gen_integration.diagnostic(),
-			},
-			symbols = {
-				encode = minimap.gen_encode_symbols.dot("4x2")
-			},
-			window = {
-				show_integration_count = true
-			}
-		})
-	end
+	"Isrothy/neominimap.nvim"
 }
 
+-- https://github.com/dstein64/nvim-scrollview
 addPlugin {
 	"gorbit99/codewindow.nvim",
 	opts = {
@@ -4061,7 +4044,6 @@ addPlugin {
 							return str:gsub("^%s+", ""):gsub("%s+", "")
 						end,
 						on_click = function ()
-							require("mini.map").toggle()
 							require("codewindow").toggle_minimap()
 						end,
 						padding = { left = 0, right = 0 },
