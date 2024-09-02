@@ -1732,7 +1732,6 @@ addPlugin { "savq/melange",                        event = "User melange"       
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
-addPlugin { "navarasu/onedark.nvim",               event = "User onedark"                                      }
 addPlugin { "lewpoly/sherbet.nvim",                event = "User sherbet"                                      }
 addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
 addPlugin { "NTBBloodbath/sweetie.nvim",           event = "User sweetie"                                      }
@@ -1762,13 +1761,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
-darkT { "onedark",                    "_",              cfg = { style = "dark", transparent = true }                               }
--- darkT { "onedark",                    "_",              cfg = { style = "deep", transparent = true }                               }
--- darkT { "onedark",                    "_",              cfg = { style = "warm", transparent = true }                               }
--- darkT { "onedark",                    "_",              cfg = { style = "warmer", transparent = true }                             }
--- dark  { "onedark",                    "_",            cfg = { style = "deep" }                                                     }
--- light { "onedark",                    "_",            cfg = { style = "light" }                                                    }
--- dark  { "retrobox",                   "_",            post = fixRetro                                                              }
+dark  { "retrobox",                   "_",            post = fixRetro                                                              }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 -- dark  { "sweetie",                    "_"                                                                                          }
 -- light { "sweetie",                    "_"                                                                                          }
@@ -1974,12 +1967,18 @@ addPlugin {
 				disallow_fullfuzzy_matching = false,
 				disallow_prefix_unmatching = false,
 			},
-			-- FEAT: use esc to exit completion menu
 			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
 				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
 				["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
-				["<C-e>"] = cmp.mapping.abort(),
 				["<TAB>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+				["<ESC>"] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.abort()
+						fallback()
+					else
+						fallback()
+					end
+				end)
 			}),
 			preselect = cmp.PreselectMode.Item,
 			snippet = {
