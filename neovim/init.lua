@@ -2186,6 +2186,7 @@ addPlugin {
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/Willem-J-an/nvim-dap-powershell
+-- https://github.com/Willem-J-an/visidata.nvim
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- https://github.com/jonboh/nvim-dap-rr
 -- https://github.com/mfussenegger/nvim-dap-python
@@ -2937,6 +2938,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Indent     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: indentation highlight should be lower to diagnostics
 addPlugin {
 	"lukas-reineke/indent-blankline.nvim",
 	event = "CursorHold",
@@ -3786,6 +3788,22 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: try
+-- addPlugin {
+-- 	"b0o/incline.nvim",
+-- 	config = function()
+-- 		require("incline").setup({
+-- 			window = {
+-- 				placement = {
+-- 					vertical = "bottom"
+-- 				}
+-- 			}
+-- 		})
+-- 	end,
+-- 	-- Optional: Lazy load Incline
+-- 	event = "VeryLazy",
+-- }
+
 addPlugin {
 	"nvim-lualine/lualine.nvim",
 	config = function()
@@ -4171,7 +4189,7 @@ addPlugin {
 			}
 		}
 	end,
-	event = "User VeryLazy"
+	event = "VeryLazy"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
