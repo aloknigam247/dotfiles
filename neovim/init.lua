@@ -1515,17 +1515,19 @@ addPlugin {
 
 addPlugin {
 	"folke/paint.nvim",
-	event = "CursorHold *.lua,*.py",
+	event = "CursorHold *.cpp,*.lua,*.py",
 	opts = {
 		highlights = {
-			{ filter = { filetype = "lua" },    pattern = "━.*━",               hl = "Constant", },
-			{ filter = { filetype = "lua" },    pattern = "%s*%-%-%-%s*(@%w+)", hl = "Constant", },
-			-- FEAT: coloring for cpp
+			{ filter = { filetype = "cpp"    }, pattern = " @brief .*",         hl = "Constant"   },
+			{ filter = { filetype = "cpp"    }, pattern = " @param .*",         hl = "@variable"  },
+			{ filter = { filetype = "cpp"    }, pattern = " @return .*",        hl = "@keyword"   },
+			{ filter = { filetype = "lua"    }, pattern = "%s*%-%-%-%s*(@%w+)", hl = "Constant",  },
+			{ filter = { filetype = "lua"    }, pattern = "━.*━",               hl = "Constant",  },
 			{ filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
-			{ filter = { filetype = "python" }, pattern = "Args:",              hl = "@type" },
-			{ filter = { filetype = "python" }, pattern = "Returns:",           hl = "@keyword" },
-			{ filter = { filetype = "python" }, pattern = "Yields:",            hl = "@keyword" },
-			{ filter = { filetype = "python" }, pattern = "Raises:",            hl = "Statement" },
+			{ filter = { filetype = "python" }, pattern = "Args:",              hl = "@type"      },
+			{ filter = { filetype = "python" }, pattern = "Raises:",            hl = "Statement"  },
+			{ filter = { filetype = "python" }, pattern = "Returns:",           hl = "@keyword"   },
+			{ filter = { filetype = "python" }, pattern = "Yields:",            hl = "@keyword"   },
 		}
 	}
 }
@@ -2565,21 +2567,22 @@ FileTypeActions = {
 		vim.cmd("set filetype=markdown")
 	end,
 	["python"] = function(bufnr)
-		local highlighter = require("vim.treesitter.highlighter")
-		if highlighter.active[bufnr] then
-			require("ufo").attach(bufnr)
-		else
-			vim.api.nvim_create_autocmd(
-			"User", {
-				pattern = "TSLoaded",
-				desc = "Attach nvim-ufo after loading treesitter",
-				once = true,
-				callback = function(arg)
-					require("ufo").attach(arg.buf)
-				end
-			}
-			)
-		end
+		-- FIX: ufo
+		-- local highlighter = require("vim.treesitter.highlighter")
+		-- if highlighter.active[bufnr] then
+		-- 	require("ufo").attach(bufnr)
+		-- else
+		-- 	vim.api.nvim_create_autocmd(
+		-- 		"User", {
+		-- 			pattern = "TSLoaded",
+		-- 			desc = "Attach nvim-ufo after loading treesitter",
+		-- 			once = true,
+		-- 			callback = function(arg)
+		-- 				require("ufo").attach(arg.buf)
+		-- 			end
+		-- 		}
+		-- 	)
+		-- end
 	end
 }
 
