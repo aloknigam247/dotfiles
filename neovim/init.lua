@@ -1218,7 +1218,7 @@ vim.cmd("sign define DiagnosticSignHint  text=" .. icons.hint  .. " texthl=Diagn
 vim.highlight.priorities = {
 	syntax = 50,
 	treesitter = 100,
-	semantic_tokens = 125,
+	semantic_tokens = 99,
 	diagnostics = 150,
 	user = 200
 }
@@ -1389,21 +1389,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: resolve code maps
+-- FEAT: configure check each markers, check how marks are read and use for lazy loading marks plugins
 addPlugin {
-	"Isrothy/neominimap.nvim"
-}
-
--- https://github.com/dstein64/nvim-scrollview
-addPlugin {
-	"gorbit99/codewindow.nvim",
-	opts = {
-		exclude_filetypes = {},
-		window_border = "single",
-		use_lsp = true,
-		use_treesitter = true,
-		use_git = true,
-	}
+	"dstein64/nvim-scrollview",
+	cmd = "ScrollViewToggle "
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4064,7 +4053,7 @@ addPlugin {
 							return str:gsub("^%s+", ""):gsub("%s+", "")
 						end,
 						on_click = function ()
-							require("codewindow").toggle_minimap()
+							vim.cmd("ScrollViewToggle ")
 						end,
 						padding = { left = 0, right = 0 },
 						separator = { left = "", right = "█" }
