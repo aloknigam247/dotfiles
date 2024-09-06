@@ -235,10 +235,10 @@ local event_list = {
 -- 			end
 -- 		end
 -- 	end
--- 	vim.api.nvim_create_autocmd_orig(event, opts)
+-- 	vim.api.__nvim_create_autocmd(event, opts)
 -- end
 
--- vim.api.nvim_create_autocmd_orig = vim.api.nvim_create_autocmd
+-- vim.api.__nvim_create_autocmd = vim.api.nvim_create_autocmd
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -794,9 +794,9 @@ local function nvimOpenWinSafe(bufnr, enter, config)
 		end
 	end
 
-	return vim.api.nvim_open_win_orig(bufnr, enter, config)
+	return vim.api.__nvim_open_win(bufnr, enter, config)
 end
-vim.api.nvim_open_win_orig = vim.api.nvim_open_win
+vim.api.__nvim_open_win = vim.api.nvim_open_win
 vim.api.nvim_open_win = nvimOpenWinSafe
 
 ---Open file in floating window
@@ -2753,7 +2753,8 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-
+-- FEAT: git uncovered use cases
+-- git file history: using telescope https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
 -- FEAT: git graph
 -- addPlugin {
 -- 	'isakbm/gitgraph.nvim',
@@ -4244,7 +4245,6 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
 addPlugin {
-	-- FEAT: https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
 	config = function()
@@ -4428,6 +4428,12 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- Lazy run treesitter
+vim.treesitter.__start = vim.treesitter.start
+vim.treesitter.start = function(bufnr, lang)
+	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
+end
+
 addPlugin {
 	-- https://github.com/echasnovski/mini.splitjoin
 	"Wansmer/treesj",
