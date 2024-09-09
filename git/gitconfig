@@ -1,3 +1,4 @@
+; FEAT: better git diffs
 [fetch]
     prune = true
 
