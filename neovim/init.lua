@@ -3264,7 +3264,6 @@ addPlugin {
 -- addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
 
 -- FEAT: lsp extentions
--- https://github.com/davidmh/cspell.nvim
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/Zeioth/none-ls-external-sources.nvim
 -- https://github.com/Zeioth/none-ls-autoload.nvim
