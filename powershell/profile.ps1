@@ -390,7 +390,9 @@ function promptGen($separator, $segments) {
     }
 
     if ($null -ne $env:SSH_CLIENT) {
-        $script:dir_icon = '󰅟 '
+        $script:dir_icon = ' '
+    } elseif ($env:ODC_LOADED) {
+        $script:dir_icon = "󰅟 "
     }
 
     # Prompt rendering
