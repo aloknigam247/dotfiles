@@ -1753,8 +1753,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
-dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
--- dark  { "sweetie",                    "_"                                                                                          }
+-- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
+dark  { "sweetie",                    "_"                                                                                          }
 -- light { "sweetie",                    "_"                                                                                          }
 -- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
