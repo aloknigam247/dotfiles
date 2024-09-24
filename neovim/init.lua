@@ -1754,8 +1754,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
-dark  { "sweetie",                    "_"                                                                                          }
--- light { "sweetie",                    "_"                                                                                          }
+light { "sweetie",                    "_"                                                                                          }
 -- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
@@ -1965,7 +1964,6 @@ addPlugin {
 				["<ESC>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.abort()
-						fallback()
 					else
 						fallback()
 					end
