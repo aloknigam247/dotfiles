@@ -12,8 +12,8 @@
             "id": "User.copy.644BA8F2"
         },
         {
-            "command": "toggleFocusMode",
-            "id": "User.toggleFocusMode"
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": 
@@ -25,8 +25,8 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "find",
-            "id": "User.find"
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode"
         },
         {
             "command": 
@@ -49,6 +49,10 @@
         },
         {
             "id": null,
+            "keys": "enter"
+        },
+        {
+            "id": null,
             "keys": "ctrl+v"
         },
         {
@@ -57,19 +61,15 @@
         },
         {
             "id": null,
-            "keys": "enter"
-        },
-        {
-            "id": null,
             "keys": "ctrl+shift+t"
         },
         {
             "id": null,
-            "keys": "shift+insert"
+            "keys": "ctrl+r"
         },
         {
             "id": null,
-            "keys": "ctrl+r"
+            "keys": "shift+insert"
         },
         {
             "id": null,
@@ -181,6 +181,12 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
             }
         ]
     },
