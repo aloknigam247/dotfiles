@@ -173,19 +173,6 @@
             {
                 "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
                 "hidden": false,
-<<<<<<< HEAD
-                "name": "Git Bash",
-                "source": "Git"
-||||||| 7a43239
-                "name": "Developer Command Prompt for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{98f22f64-1b07-5831-a713-128d77af87b5}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-=======
                 "name": "Developer Command Prompt for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
@@ -200,7 +187,6 @@
                 "hidden": false,
                 "name": "Git Bash",
                 "source": "Git"
->>>>>>> 9a9fa5b97768f3b9079b980c49b4ebcae1c8029e
             }
         ]
     },
