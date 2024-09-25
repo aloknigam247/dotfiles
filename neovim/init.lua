@@ -1725,7 +1725,6 @@ addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"      
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
 addPlugin { "lewpoly/sherbet.nvim",                event = "User sherbet"                                      }
 addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
-addPlugin { "NTBBloodbath/sweetie.nvim",           event = "User sweetie"                                      }
 addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
 addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"                                     }
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
@@ -1754,8 +1753,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
-light { "sweetie",                    "_"                                                                                          }
--- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
+dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
