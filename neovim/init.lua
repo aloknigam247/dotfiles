@@ -1734,6 +1734,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
 -- darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 -- dark  { "retrobox",                   "_",            post = fixRetro                                                              }
+-- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 
 -- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
@@ -1753,8 +1754,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
-dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
--- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
+dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
 -- dark  { "vscode",                     "_"                                                                                          }
@@ -3965,19 +3965,14 @@ addPlugin {
 	config = function()
 		require("bqf").setup {
 			auto_resize_height = true,
+			func_map = {
+				open = "<CR>",
+				split = keymaps.open_split,
+				tabb = keymaps.open_tab,
+				vsplit = keymaps.open_vsplit
+			},
 			preview = {
 				border = dotted_border,
-			},
-			filter = {
-				fzf = {
-					action_for = {
-						[keymaps.open_tab]    = { default = "tabedit" },
-						[keymaps.open_vsplit] = { default = "vsplit" },
-						[keymaps.open_split]  = { default = "split" },
-						["ctrl-q"] = { default = "signtoggle" },
-						["ctrl-c"] = { default = "closeall" }
-					}
-				}
 			}
 		}
 		vim.cmd("packadd cfilter")
