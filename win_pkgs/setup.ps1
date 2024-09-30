@@ -1,3 +1,4 @@
+# FEAT: sed replacement for windows
 $pip_pkgs = @(
     'debugpy',
     'pipx'

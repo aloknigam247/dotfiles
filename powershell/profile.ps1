@@ -1,8 +1,7 @@
 # FEAT: Work setup: use powershell 7 for ODC (oned cmds)
 # FEAT: csproj and sln opener
-# FEAT: Work setup: Initialize-ODC, set icon
 # TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
-# FEAT: catch up with Windoes terminal releases
+# FEAT: look for sixel apps
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯

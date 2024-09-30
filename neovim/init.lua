@@ -49,121 +49,121 @@
 
 -- ---List of all valid autocommands to profile
 -- ---@type string[]
-local event_list = {
-	"BufAdd",
-	"BufDelete",
-	"BufEnter",
-	"BufFilePost",
-	"BufFilePre",
-	"BufHidden",
-	"BufLeave",
-	"BufModifiedSet",
-	"BufNew",
-	"BufNewFile",
-	"BufRead",
-	"BufReadPre",
-	"BufUnload",
-	"BufWinEnter",
-	"BufWinLeave",
-	"BufWipeout",
-	"BufWrite",
-	"BufWritePost",
-	"ChanInfo",
-	"ChanOpen",
-	"CmdUndefined",
-	"CmdlineChanged",
-	"CmdlineEnter",
-	"CmdlineLeave",
-	"CmdwinEnter",
-	"CmdwinLeave",
-	"ColorScheme",
-	"ColorSchemePre",
-	"CompleteChanged",
-	"CompleteDone",
-	"CompleteDonePre",
-	"CursorHold",
-	"CursorHoldI",
-	"CursorMoved",
-	"CursorMovedI",
-	"DiffUpdated",
-	"DirChanged",
-	"DirChangedPre",
-	"ExitPre",
-	"FileAppendPost",
-	"FileAppendPre",
-	"FileChangedRO",
-	"FileChangedShell",
-	"FileChangedShellPost",
-	"FileReadPost",
-	"FileReadPre",
-	"FileType",
-	"FileWritePost",
-	"FileWritePre",
-	"FilterReadPost",
-	"FilterReadPre",
-	"FilterWritePost",
-	"FilterWritePre",
-	"FocusGained",
-	"FocusLost",
-	"FuncUndefined",
-	"InsertChange",
-	"InsertCharPre",
-	"InsertEnter",
-	"InsertLeave",
-	"InsertLeavePre",
-	"MenuPopup",
-	"ModeChanged",
-	"OptionSet",
-	"QuickFixCmdPost",
-	"QuickFixCmdPre",
-	"QuitPre",
-	"RecordingEnter",
-	"RecordingLeave",
-	"RemoteReply",
-	"SafeState",
-	"SearchWrapped",
-	"SessionLoadPost",
-	"ShellCmdPost",
-	"ShellFilterPost",
-	"Signal",
-	"SourcePost",
-	"SourcePre",
-	"SpellFileMissing",
-	"StdinReadPost",
-	"StdinReadPre",
-	"SwapExists",
-	"Syntax",
-	"TabClosed",
-	"TabEnter",
-	"TabLeave",
-	"TabNew",
-	"TabNewEntered",
-	"TermClose",
-	"TermEnter",
-	"TermLeave",
-	"TermOpen",
-	"TermResponse",
-	"TextChanged",
-	"TextChangedI",
-	"TextChangedP",
-	"TextChangedT",
-	"TextYankPost",
-	"UIEnter",
-	"UILeave",
-	"User",
-	"VimEnter",
-	"VimLeave",
-	"VimLeavePre",
-	"VimResized",
-	"VimResume",
-	"VimSuspend",
-	"WinClosed",
-	"WinEnter",
-	"WinLeave",
-	"WinNew",
-	"WinResized",
-	"WinScrolled",
-}
+-- local event_list = {
+-- 	"BufAdd",
+-- 	"BufDelete",
+-- 	"BufEnter",
+-- 	"BufFilePost",
+-- 	"BufFilePre",
+-- 	"BufHidden",
+-- 	"BufLeave",
+-- 	"BufModifiedSet",
+-- 	"BufNew",
+-- 	"BufNewFile",
+-- 	"BufRead",
+-- 	"BufReadPre",
+-- 	"BufUnload",
+-- 	"BufWinEnter",
+-- 	"BufWinLeave",
+-- 	"BufWipeout",
+-- 	"BufWrite",
+-- 	"BufWritePost",
+-- 	"ChanInfo",
+-- 	"ChanOpen",
+-- 	"CmdUndefined",
+-- 	"CmdlineChanged",
+-- 	"CmdlineEnter",
+-- 	"CmdlineLeave",
+-- 	"CmdwinEnter",
+-- 	"CmdwinLeave",
+-- 	"ColorScheme",
+-- 	"ColorSchemePre",
+-- 	"CompleteChanged",
+-- 	"CompleteDone",
+-- 	"CompleteDonePre",
+-- 	"CursorHold",
+-- 	"CursorHoldI",
+-- 	"CursorMoved",
+-- 	"CursorMovedI",
+-- 	"DiffUpdated",
+-- 	"DirChanged",
+-- 	"DirChangedPre",
+-- 	"ExitPre",
+-- 	"FileAppendPost",
+-- 	"FileAppendPre",
+-- 	"FileChangedRO",
+-- 	"FileChangedShell",
+-- 	"FileChangedShellPost",
+-- 	"FileReadPost",
+-- 	"FileReadPre",
+-- 	"FileType",
+-- 	"FileWritePost",
+-- 	"FileWritePre",
+-- 	"FilterReadPost",
+-- 	"FilterReadPre",
+-- 	"FilterWritePost",
+-- 	"FilterWritePre",
+-- 	"FocusGained",
+-- 	"FocusLost",
+-- 	"FuncUndefined",
+-- 	"InsertChange",
+-- 	"InsertCharPre",
+-- 	"InsertEnter",
+-- 	"InsertLeave",
+-- 	"InsertLeavePre",
+-- 	"MenuPopup",
+-- 	"ModeChanged",
+-- 	"OptionSet",
+-- 	"QuickFixCmdPost",
+-- 	"QuickFixCmdPre",
+-- 	"QuitPre",
+-- 	"RecordingEnter",
+-- 	"RecordingLeave",
+-- 	"RemoteReply",
+-- 	"SafeState",
+-- 	"SearchWrapped",
+-- 	"SessionLoadPost",
+-- 	"ShellCmdPost",
+-- 	"ShellFilterPost",
+-- 	"Signal",
+-- 	"SourcePost",
+-- 	"SourcePre",
+-- 	"SpellFileMissing",
+-- 	"StdinReadPost",
+-- 	"StdinReadPre",
+-- 	"SwapExists",
+-- 	"Syntax",
+-- 	"TabClosed",
+-- 	"TabEnter",
+-- 	"TabLeave",
+-- 	"TabNew",
+-- 	"TabNewEntered",
+-- 	"TermClose",
+-- 	"TermEnter",
+-- 	"TermLeave",
+-- 	"TermOpen",
+-- 	"TermResponse",
+-- 	"TextChanged",
+-- 	"TextChangedI",
+-- 	"TextChangedP",
+-- 	"TextChangedT",
+-- 	"TextYankPost",
+-- 	"UIEnter",
+-- 	"UILeave",
+-- 	"User",
+-- 	"VimEnter",
+-- 	"VimLeave",
+-- 	"VimLeavePre",
+-- 	"VimResized",
+-- 	"VimResume",
+-- 	"VimSuspend",
+-- 	"WinClosed",
+-- 	"WinEnter",
+-- 	"WinLeave",
+-- 	"WinNew",
+-- 	"WinResized",
+-- 	"WinScrolled",
+-- }
 
 -- vim.api.nvim_create_autocmd(
 -- 	event_list, {
@@ -927,7 +927,8 @@ end
 -- Classes</>
 
 ---@class CmdOptions
----@type CmdOptions
+---@field option_config table<string, string[]>
+---@field option_value string
 CmdOptions = {}
 CmdOptions.__index = CmdOptions
 
@@ -944,7 +945,7 @@ end
 
 ---Add an option
 ---@param option_name string option name
----@param possibleValues string[] option values
+---@param possibleValues? string[] option values
 ---@param def string? default value
 function CmdOptions:addOption(option_name, possibleValues, def)
 	self.option_config[option_name] = possibleValues or {}
@@ -1097,7 +1098,7 @@ vim.api.nvim_create_autocmd(
 	"CmdlineLeave", {
 		pattern = { "/", "?" },
 		desc = "Shift commandline back for search",
-		callback = function(arg)
+		callback = function()
 			vim.cmd("set cmdheight=0")
 		end
 	}
@@ -1754,10 +1755,10 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
-dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
+-- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
--- dark  { "vscode",                     "_"                                                                                          }
+dark  { "vscode",                     "_"                                                                                          }
 -- dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
@@ -2731,7 +2732,7 @@ addPlugin {
 			end
 		})
 
-		require("ufo.lib.event"):on("BufAttach", function(bufnr)
+		require("ufo.lib.event"):on("BufAttach", function()
 			require("ufo").closeAllFolds(0)
 		end) -- FIX: not working
 
@@ -2891,13 +2892,13 @@ addPlugin {
 	}
 }
 
+-- TODO: progress
 addPlugin {
 	"sindrets/diffview.nvim",
 	cmd = "DiffviewOpen"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: progress
 addPlugin {
 	"2kabhishek/nerdy.nvim",
 	cmd = "Nerdy",
@@ -5265,85 +5266,44 @@ addPlugin {
 }
 
 addPlugin {
-	-- FIX: new options
 	"folke/which-key.nvim",
-	-- event = "VeryLazy",
+	event = "VeryLazy",
 	init = function()
 		vim.o.timeout = true
 		vim.o.timeoutlen = 300
 	end,
 	opts = {
+		icons = {
+			breadcrumb = "»",
+			group = "+",
+			separator = "➜"
+		},
+		keys = {
+			scroll_down = "<c-d>",
+			scroll_up = "<c-u>",
+		},
+		layout = {
+			align = "left",
+			height = { min = 4, max = 25 },
+			spacing = 3,
+			width = { min = 20, max = 50 },
+		},
 		plugins = {
 			marks = false,
 			registers = false,
 			spelling = {
-				enabled = false,
-				suggestions = 20,
-			},
-			presets = {
-				operators = true,
-				motions = true,
-				text_objects = true,
-				windows = true,
-				nav = true,
-				z = true,
-				g = true,
-			},
+				enabled = false
+			}
 		},
-		operators = { gc = "Comments" },
-		key_labels = { },
-		motions = {
-			count = true,
-		},
-		icons = {
-			breadcrumb = "»",
-			separator = "➜",
-			group = "+",
-		},
-		popup_mappings = {
-			scroll_down = "<c-d>",
-			scroll_up = "<c-u>",
-		},
-		window = {
-			border = dotted_border,
-			position = "bottom",
-			margin = { 0, 0, 1, 0 },
-			padding = { 0, 0, 0, 0 },
-			winblend = 0,
-			zindex = 1000,
-		},
-		layout = {
-			height = { min = 4, max = 25 },
-			width = { min = 20, max = 50 },
-			spacing = 3,
-			align = "left",
-		},
-		ignore_missing = false,
-		hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "^:", "^ ", "^call ", "^lua " },
+		preset = "modern",
 		show_help = true,
 		show_keys = true,
-		triggers = "auto",
-		triggers_nowait = {
-			-- marks
-			"`",
-			"'",
-			"g`",
-			"g'",
-			-- registers
-			-- """,
-			-- "<c-r>",
-			-- spelling
-			"z=",
-		},
-		triggers_blacklist = {
-			i = { "j", "k" },
-			n = { "v" },
-			v = { "j", "k" },
-		},
-		disable = {
-			buftypes = {},
-			filetypes = {},
-		},
+		win = {
+			border = dotted_border,
+			margin = { 0, 0, 1, 0 },
+			padding = { 0, 0, 0, 0 },
+			position = "bottom"
+		}
 	}
 }
 
