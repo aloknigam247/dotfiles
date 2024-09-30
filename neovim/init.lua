@@ -1736,6 +1736,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 -- dark  { "retrobox",                   "_",            post = fixRetro                                                              }
 -- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
+-- dark  { "vscode",                     "_"                                                                                          }
 
 -- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
@@ -1758,8 +1759,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
-dark  { "vscode",                     "_"                                                                                          }
--- dark  { "zephyrium",                  "_"                                                                                          }
+dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -1960,13 +1960,7 @@ addPlugin {
 				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
 				["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
 				["<TAB>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-				["<ESC>"] = cmp.mapping(function(fallback)
-					if cmp.visible() then
-						cmp.abort()
-					else
-						fallback()
-					end
-				end)
+				["<C-Space>"] = cmp.mapping.abort()
 			}),
 			preselect = cmp.PreselectMode.Item,
 			snippet = {
@@ -3424,69 +3418,41 @@ addPlugin {
 	ft = "markdown",
 	config = function()
 		require('render-markdown').setup({
-			-- FEAT: configure
-			-- Vim modes that will show a rendered view of the markdown file
-			-- All other modes will be uneffected by this plugin
 			render_modes = { 'n', 'c' },
-			-- Set to avoid seeing warnings for conflicts in health check
-			acknowledge_conflicts = false,
 			anti_conceal = {
-				-- This enables hiding any added text on the line the cursor is on
-				enabled = true,
-				-- Number of lines above cursor to show
+				enabled = false,
 				above = 0,
-				-- Number of lines below cursor to show
 				below = 0,
 			},
+			padding = {
+				highlight = 'Normal',
+			},
 			latex = {
-				-- Whether LaTeX should be rendered, mainly used for health check
-				enabled = true,
-				-- Executable used to convert latex formula to rendered unicode
+				enabled = false,
 				converter = 'latex2text',
-				-- Highlight for LaTeX blocks
 				highlight = 'RenderMarkdownMath',
-				-- Amount of empty lines above LaTeX blocks
 				top_pad = 0,
-				-- Amount of empty lines below LaTeX blocks
 				bottom_pad = 0,
 			},
+			-- FEAT: configure
 			heading = {
-				-- Turn on / off heading icon & background rendering
 				enabled = true,
-				-- Turn on / off any sign column related rendering
-				sign = true,
-				-- Determines how icons fill the available space:
-				--  inline:  underlying '#'s are concealed resulting in a left aligned icon
-				--  overlay: result is left padded with spaces to hide any additional '#'
-				position = 'overlay',
-				-- Replaces '#+' of 'atx_h._marker'
-				-- The number of '#' in the heading determines the 'level'
-				-- The 'level' is used to index into the array using a cycle
-				icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-				-- Added to the sign column if enabled
-				-- The 'level' is used to index into the array using a cycle
+				sign = false,
+				position = 'inlay',
+				-- icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+				icons = { '󰫎 ' },
 				signs = { '󰫎 ' },
-				-- Width of the heading background:
-				--  block: width of the heading text
-				--  full:  full width of the window
-				-- Can also be an array of the above values in which case the 'level' is used
-				-- to index into the array using a clamp
-				width = 'full',
-				-- Amount of padding to add to the left of headings
+				width = { 'full', 'full', 'block'},
+				left_margin = 0,
 				left_pad = 0,
-				-- Amount of padding to add to the right of headings when width is 'block'
-				right_pad = 0,
-				-- Minimum width to use for headings when width is 'block'
+				right_pad = 3,
 				min_width = 0,
-				-- Determins if a border is added above and below headings
 				border = false,
-				-- Highlight the start of the border using the foreground highlight
+				border_virtual = false,
 				border_prefix = false,
-				-- Used above heading for border
 				above = '▄',
-				-- Used below heading for border
 				below = '▀',
-				-- The 'level' is used to index into the array using a clamp
+				-- The 'level' is used to index into the list using a clamp
 				-- Highlight for the heading icon and extends through the entire line
 				backgrounds = {
 					'RenderMarkdownH1Bg',
@@ -3496,7 +3462,7 @@ addPlugin {
 					'RenderMarkdownH5Bg',
 					'RenderMarkdownH6Bg',
 				},
-				-- The 'level' is used to index into the array using a clamp
+				-- The 'level' is used to index into the list using a clamp
 				-- Highlight for the heading and sign icons
 				foregrounds = {
 					'RenderMarkdownH1',
@@ -3523,17 +3489,24 @@ addPlugin {
 				--  left:  left side of code block
 				position = 'left',
 				-- Amount of padding to add around the language
+				-- If a floating point value < 1 is provided it is treated as a percentage of the available window space
 				language_pad = 0,
-				-- An array of language names for which background highlighting will be disabled
+				-- A list of language names for which background highlighting will be disabled
 				-- Likely because that language has background highlights itself
 				disable_background = { 'diff' },
 				-- Width of the code block background:
 				--  block: width of the code block
 				--  full:  full width of the window
 				width = 'full',
+				-- Amount of margin to add to the left of code blocks
+				-- If a floating point value < 1 is provided it is treated as a percentage of the available window space
+				-- Margin available space is computed after accounting for padding
+				left_margin = 0,
 				-- Amount of padding to add to the left of code blocks
+				-- If a floating point value < 1 is provided it is treated as a percentage of the available window space
 				left_pad = 0,
 				-- Amount of padding to add to the right of code blocks when width is 'block'
+				-- If a floating point value < 1 is provided it is treated as a percentage of the available window space
 				right_pad = 0,
 				-- Minimum width to use for code blocks when width is 'block'
 				min_width = 0,
@@ -3568,7 +3541,7 @@ addPlugin {
 				enabled = true,
 				-- Replaces '-'|'+'|'*' of 'list_item'
 				-- How deeply nested the list is determines the 'level'
-				-- The 'level' is used to index into the array using a cycle
+				-- The 'level' is used to index into the list using a cycle
 				-- If the item is a 'checkbox' a conceal is used to hide the bullet instead
 				icons = { '●', '○', '◆', '◇' },
 				-- Padding to add to the left of bullet point
@@ -3641,10 +3614,11 @@ addPlugin {
 				-- Determines how individual cells of a table are rendered:
 				--  overlay: writes completely over the table, removing conceal behavior and highlights
 				--  raw:     replaces only the '|' characters in each row, leaving the cells unmodified
-				--  padded:  raw + cells are padded with inline extmarks to make up for any concealed text
+				--  padded:  raw + cells are padded to maximum visual width for each column
+				--  trimmed: padded except empty space is subtracted from visual width calculation
 				cell = 'padded',
-				-- Gets placed in delimiter row for each column, position is based on alignmnet
-				alignment_indicator = '━',
+				-- Minimum column width to use for padded or trimmed cell
+				min_width = 0,
 				-- Characters used to replace table border
 				-- Correspond to top(3), delimiter(3), bottom(3), vertical, & horizontal
 				-- stylua: ignore
@@ -3654,6 +3628,8 @@ addPlugin {
 					'└', '┴', '┘',
 					'│', '─',
 				},
+				-- Gets placed in delimiter row for each column, position is based on alignmnet
+				alignment_indicator = '━',
 				-- Highlight for table heading, delimiter, and the line above
 				head = 'RenderMarkdownTableHead',
 				-- Highlight for everything else, main table rows and the line below
@@ -3732,6 +3708,11 @@ addPlugin {
 				enabled = false,
 				-- Amount of additional padding added for each heading level
 				per_level = 2,
+				-- Heading levels <= this value will not be indented
+				-- Use 0 to begin indenting from the very first level
+				skip_level = 1,
+				-- Do not indent heading titles, only the body
+				skip_heading = false,
 			},
 			-- Window options to use that change between rendered and raw view
 			win_options = {
@@ -3753,12 +3734,15 @@ addPlugin {
 			-- More granular configuration mechanism, allows different aspects of buffers
 			-- to have their own behavior. Values default to the top level configuration
 			-- if no override is provided. Supports the following fields:
-			--   enabled, max_file_size, debounce, render_modes, anti_conceal, heading, code,
+			--   enabled, max_file_size, debounce, render_modes, anti_conceal, padding, heading, code,
 			--   dash, bullet, checkbox, quote, pipe_table, callout, link, sign, indent, win_options
 			overrides = {
 				-- Overrides for different buftypes, see :h 'buftype'
 				buftype = {
-					nofile = { sign = { enabled = false } },
+					nofile = {
+						padding = { highlight = 'NormalFloat' },
+						sign = { enabled = false },
+					},
 				},
 				-- Overrides for different filetypes, see :h 'filetype'
 				filetype = {},
