@@ -58,3 +58,7 @@
     directory = D:/Scoop/buckets/versions
     directory = D:/Scoop/buckets/main
     directory = D:/Scoop/buckets/extras
+[alias]
+	ignore = update-index --skip-worktree
+	unignore = update-index --no-skip-worktree
+	ignored = !git ls-files -v | grep \"^S\"
