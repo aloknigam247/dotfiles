@@ -1743,8 +1743,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "bluloco",                    "_"                                                                                          }
 -- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "bluloco",                    "_"                                                                                          }
--- dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
--- light { "catppuccin-latte",           "catppuccin"                                                                                 }
+dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
+light { "catppuccin-latte",           "catppuccin"                                                                                 }
 -- lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
@@ -1759,7 +1759,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
-dark  { "zephyrium",                  "_"                                                                                          }
+-- dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -3434,7 +3434,6 @@ addPlugin {
 				top_pad = 0,
 				bottom_pad = 0,
 			},
-			-- FEAT: configure
 			heading = {
 				enabled = true,
 				sign = false,
@@ -3442,7 +3441,7 @@ addPlugin {
 				-- icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
 				icons = { '󰫎 ' },
 				signs = { '󰫎 ' },
-				width = { 'full', 'full', 'block'},
+				width = { 'block', 'block', 'block'},
 				left_margin = 0,
 				left_pad = 0,
 				right_pad = 3,
@@ -3452,8 +3451,6 @@ addPlugin {
 				border_prefix = false,
 				above = '▄',
 				below = '▀',
-				-- The 'level' is used to index into the list using a clamp
-				-- Highlight for the heading icon and extends through the entire line
 				backgrounds = {
 					'RenderMarkdownH1Bg',
 					'RenderMarkdownH2Bg',
@@ -3462,8 +3459,6 @@ addPlugin {
 					'RenderMarkdownH5Bg',
 					'RenderMarkdownH6Bg',
 				},
-				-- The 'level' is used to index into the list using a clamp
-				-- Highlight for the heading and sign icons
 				foregrounds = {
 					'RenderMarkdownH1',
 					'RenderMarkdownH2',
@@ -3471,13 +3466,12 @@ addPlugin {
 					'RenderMarkdownH4',
 					'RenderMarkdownH5',
 					'RenderMarkdownH6',
-				},
+				}
 			},
+			-- FEAT: configure
 			code = {
-				-- Turn on / off code block & inline code rendering
 				enabled = true,
-				-- Turn on / off any sign column related rendering
-				sign = true,
+				sign = false,
 				-- Determines how code blocks & inline code are rendered:
 				--  none:     disables all rendering
 				--  normal:   adds highlight group to code blocks & inline code, adds padding to code blocks
@@ -3487,10 +3481,10 @@ addPlugin {
 				-- Determines where language icon is rendered:
 				--  right: right side of code block
 				--  left:  left side of code block
-				position = 'left',
+				position = 'right',
 				-- Amount of padding to add around the language
 				-- If a floating point value < 1 is provided it is treated as a percentage of the available window space
-				language_pad = 0,
+				language_pad = 0.5,
 				-- A list of language names for which background highlighting will be disabled
 				-- Likely because that language has background highlights itself
 				disable_background = { 'diff' },
