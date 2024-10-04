@@ -1739,27 +1739,27 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "vscode",                     "_"                                                                                          }
 
 -- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
--- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- dark  { "bluloco",                    "_"                                                                                          }
--- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
--- light { "bluloco",                    "_"                                                                                          }
 -- dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
--- light { "catppuccin-latte",           "catppuccin"                                                                                 }
--- lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
--- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 -- dark  { "hybrid",                     "_"                                                                                          }
--- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 -- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 -- dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
--- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
--- light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 -- dark  { "melange",                    "_"                                                                                          }
 -- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
--- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
-dark  { "zephyrium",                  "_"                                                                                          }
+-- dark  { "zephyrium",                  "_"                                                                                          }
+-- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+-- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
+-- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
+-- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
+-- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
+-- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
+light { "bluloco",                    "_"                                                                                          }
+light { "catppuccin-latte",           "catppuccin"                                                                                 }
+light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
+lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2718,17 +2718,16 @@ addPlugin {
 			end
 		end
 
+		require("ufo.lib.event"):on("BufAttach", function()
+			require("ufo").closeAllFolds(0)
+		end) -- FIX: not working
+
 		require("ufo").setup({
 			fold_virt_text_handler = ufoFoldResolve,
 			provider_selector = function(_, _, _)
 				return "treesitter"
 			end
 		})
-
-		require("ufo.lib.event"):on("BufAttach", function()
-			print('DEBUGPRINT[1]: init.lua:2729 (before require(ufo).closeAllFolds(0))')
-			require("ufo").closeAllFolds(0)
-		end) -- FIX: not working
 
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
