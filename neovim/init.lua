@@ -1743,8 +1743,8 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 -- dark  { "bluloco",                    "_"                                                                                          }
 -- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "bluloco",                    "_"                                                                                          }
-dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
-light { "catppuccin-latte",           "catppuccin"                                                                                 }
+-- dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
+-- light { "catppuccin-latte",           "catppuccin"                                                                                 }
 -- lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
@@ -1759,7 +1759,7 @@ light { "catppuccin-latte",           "catppuccin"                              
 -- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 -- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
--- dark  { "zephyrium",                  "_"                                                                                          }
+dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2547,22 +2547,21 @@ FileTypeActions = {
 		vim.cmd("set filetype=markdown")
 	end,
 	["python"] = function(bufnr)
-		-- FIX: ufo
-		-- local highlighter = require("vim.treesitter.highlighter")
-		-- if highlighter.active[bufnr] then
-		-- 	require("ufo").attach(bufnr)
-		-- else
-		-- 	vim.api.nvim_create_autocmd(
-		-- 		"User", {
-		-- 			pattern = "TSLoaded",
-		-- 			desc = "Attach nvim-ufo after loading treesitter",
-		-- 			once = true,
-		-- 			callback = function(arg)
-		-- 				require("ufo").attach(arg.buf)
-		-- 			end
-		-- 		}
-		-- 	)
-		-- end
+		local highlighter = require("vim.treesitter.highlighter")
+		if highlighter.active[bufnr] then
+			require("ufo").attach(bufnr)
+		else
+			vim.api.nvim_create_autocmd(
+				"User", {
+					pattern = "TSLoaded",
+					desc = "Attach nvim-ufo after loading treesitter",
+					once = true,
+					callback = function(arg)
+						require("ufo").attach(arg.buf)
+					end
+				}
+			)
+		end
 	end
 }
 
@@ -2727,6 +2726,7 @@ addPlugin {
 		})
 
 		require("ufo.lib.event"):on("BufAttach", function()
+			print('DEBUGPRINT[1]: init.lua:2729 (before require(ufo).closeAllFolds(0))')
 			require("ufo").closeAllFolds(0)
 		end) -- FIX: not working
 
@@ -3417,7 +3417,6 @@ addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
 	config = function()
-		-- FEAT: sort options
 		require('render-markdown').setup({
 			render_modes = { 'n', 'c' },
 			anti_conceal = {
@@ -5089,12 +5088,12 @@ addPlugin {
 		preset = "modern",
 		show_help = true,
 		show_keys = true,
-		win = {
-			border = dotted_border,
-			margin = { 0, 0, 1, 0 },
-			padding = { 0, 0, 0, 0 },
-			position = "bottom"
-		}
+		-- win = { -- BUG: resolve margin
+		-- 	border = dotted_border,
+		-- 	margin = { 0, 0, 1, 0 },
+		-- 	padding = { 0, 0, 0, 0 },
+		-- 	position = "bottom"
+		-- }
 	}
 }
 

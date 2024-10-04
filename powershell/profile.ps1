@@ -1,5 +1,4 @@
 # FEAT: Work setup: use powershell 7 for ODC (oned cmds)
-# FEAT: csproj and sln opener
 # TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
 # FEAT: look for sixel apps
 # ╭─────────────╮
@@ -56,7 +55,7 @@ function ls      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $a
 function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
 function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree    { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function v($arg) { D:\scoop\shims\neovide.exe --size=1350x1254 --no-tabs -- $arg }
+function v($arg) { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs -- $arg }
 
 function e ($arg) {
     $code_ext = @('cs', 'ps1', 'psm1')
