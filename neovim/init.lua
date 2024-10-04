@@ -3417,6 +3417,7 @@ addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
 	config = function()
+		-- FEAT: sort options
 		require('render-markdown').setup({
 			render_modes = { 'n', 'c' },
 			anti_conceal = {
@@ -3468,7 +3469,6 @@ addPlugin {
 					'RenderMarkdownH6',
 				}
 			},
-			-- FEAT: configure
 			code = {
 				enabled = true,
 				sign = false,
@@ -3520,157 +3520,42 @@ addPlugin {
 				highlight = 'RenderMarkdownQuote',
 			},
 			pipe_table = {
-				-- Turn on / off pipe table rendering
 				enabled = true,
-				-- Pre configured settings largely for setting table border easier
-				--  heavy:  use thicker border characters
-				--  double: use double line border characters
-				--  round:  use round border corners
-				--  none:   does nothing
-				preset = 'round',
-				-- Determines how the table as a whole is rendered:
-				--  none:   disables all rendering
-				--  normal: applies the 'cell' style rendering to each row of the table
-				--  full:   normal + a top & bottom line that fill out the table when lengths match
-				style = 'full',
-				-- Determines how individual cells of a table are rendered:
-				--  overlay: writes completely over the table, removing conceal behavior and highlights
-				--  raw:     replaces only the '|' characters in each row, leaving the cells unmodified
-				--  padded:  raw + cells are padded to maximum visual width for each column
-				--  trimmed: padded except empty space is subtracted from visual width calculation
-				cell = 'padded',
-				-- Minimum column width to use for padded or trimmed cell
-				min_width = 0,
-				-- Characters used to replace table border
-				-- Correspond to top(3), delimiter(3), bottom(3), vertical, & horizontal
-				-- stylua: ignore
 				border = {
 					'┌', '┬', '┐',
 					'├', '┼', '┤',
 					'└', '┴', '┘',
-					'│', '─',
+					'│', '━',
 				},
-				-- Gets placed in delimiter row for each column, position is based on alignmnet
-				alignment_indicator = '━',
-				-- Highlight for table heading, delimiter, and the line above
+				preset = 'round',
+				style = 'normal',
+				cell = 'trimmed',
+				min_width = 0,
+				alignment_indicator = '•',
 				head = 'RenderMarkdownTableHead',
-				-- Highlight for everything else, main table rows and the line below
 				row = 'RenderMarkdownTableRow',
-				-- Highlight for inline padding used to add back concealed space
 				filler = 'RenderMarkdownTableFill',
 			},
-			-- Callouts are a special instance of a 'block_quote' that start with a 'shortcut_link'
-			-- Can specify as many additional values as you like following the pattern from any below, such as 'note'
-			--   The key in this case 'note' is for healthcheck and to allow users to change its values
-			--   'raw':       Matched against the raw text of a 'shortcut_link', case insensitive
-			--   'rendered':  Replaces the 'raw' value when rendering
-			--   'highlight': Highlight for the 'rendered' text and quote markers
 			callout = {
 				note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
 				tip = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess' },
 				important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' },
 				warning = { raw = '[!WARNING]', rendered = '󰀪 Warning', highlight = 'RenderMarkdownWarn' },
 				caution = { raw = '[!CAUTION]', rendered = '󰳦 Caution', highlight = 'RenderMarkdownError' },
-				-- Obsidian: https://help.obsidian.md/Editing+and+formatting/Callouts
-				abstract = { raw = '[!ABSTRACT]', rendered = '󰨸 Abstract', highlight = 'RenderMarkdownInfo' },
-				summary = { raw = '[!SUMMARY]', rendered = '󰨸 Summary', highlight = 'RenderMarkdownInfo' },
-				tldr = { raw = '[!TLDR]', rendered = '󰨸 Tldr', highlight = 'RenderMarkdownInfo' },
-				info = { raw = '[!INFO]', rendered = '󰋽 Info', highlight = 'RenderMarkdownInfo' },
-				todo = { raw = '[!TODO]', rendered = '󰗡 Todo', highlight = 'RenderMarkdownInfo' },
-				hint = { raw = '[!HINT]', rendered = '󰌶 Hint', highlight = 'RenderMarkdownSuccess' },
-				success = { raw = '[!SUCCESS]', rendered = '󰄬 Success', highlight = 'RenderMarkdownSuccess' },
-				check = { raw = '[!CHECK]', rendered = '󰄬 Check', highlight = 'RenderMarkdownSuccess' },
-				done = { raw = '[!DONE]', rendered = '󰄬 Done', highlight = 'RenderMarkdownSuccess' },
-				question = { raw = '[!QUESTION]', rendered = '󰘥 Question', highlight = 'RenderMarkdownWarn' },
-				help = { raw = '[!HELP]', rendered = '󰘥 Help', highlight = 'RenderMarkdownWarn' },
-				faq = { raw = '[!FAQ]', rendered = '󰘥 Faq', highlight = 'RenderMarkdownWarn' },
-				attention = { raw = '[!ATTENTION]', rendered = '󰀪 Attention', highlight = 'RenderMarkdownWarn' },
-				failure = { raw = '[!FAILURE]', rendered = '󰅖 Failure', highlight = 'RenderMarkdownError' },
-				fail = { raw = '[!FAIL]', rendered = '󰅖 Fail', highlight = 'RenderMarkdownError' },
-				missing = { raw = '[!MISSING]', rendered = '󰅖 Missing', highlight = 'RenderMarkdownError' },
-				danger = { raw = '[!DANGER]', rendered = '󱐌 Danger', highlight = 'RenderMarkdownError' },
-				error = { raw = '[!ERROR]', rendered = '󱐌 Error', highlight = 'RenderMarkdownError' },
-				bug = { raw = '[!BUG]', rendered = '󰨰 Bug', highlight = 'RenderMarkdownError' },
-				example = { raw = '[!EXAMPLE]', rendered = '󰉹 Example', highlight = 'RenderMarkdownHint' },
-				quote = { raw = '[!QUOTE]', rendered = '󱆨 Quote', highlight = 'RenderMarkdownQuote' },
-				cite = { raw = '[!CITE]', rendered = '󱆨 Cite', highlight = 'RenderMarkdownQuote' },
 			},
 			link = {
-				-- Turn on / off inline link icon rendering
 				enabled = true,
-				-- Inlined with 'image' elements
 				image = '󰥶 ',
-				-- Inlined with 'email_autolink' elements
 				email = '󰀓 ',
-				-- Fallback icon for 'inline_link' elements
 				hyperlink = '󰌹 ',
-				-- Applies to the fallback inlined icon
 				highlight = 'RenderMarkdownLink',
-				-- Define custom destination patterns so icons can quickly inform you of what a link
-				-- contains. Applies to 'inline_link' and wikilink nodes.
-				-- Can specify as many additional values as you like following the 'web' pattern below
-				--   The key in this case 'web' is for healthcheck and to allow users to change its values
-				--   'pattern':   Matched against the destination text see :h lua-pattern
-				--   'icon':      Gets inlined before the link text
-				--   'highlight': Highlight for the 'icon'
 				custom = {
 					web = { pattern = '^http[s]?://', icon = '󰖟 ', highlight = 'RenderMarkdownLink' },
 				},
 			},
 			sign = {
-				-- Turn on / off sign rendering
-				enabled = true,
-				-- Applies to background of sign text
-				highlight = 'RenderMarkdownSign',
-			},
-			-- Mimic org-indent-mode behavior by indenting everything under a heading based on the
-			-- level of the heading. Indenting starts from level 2 headings onward.
-			indent = {
-				-- Turn on / off org-indent-mode
 				enabled = false,
-				-- Amount of additional padding added for each heading level
-				per_level = 2,
-				-- Heading levels <= this value will not be indented
-				-- Use 0 to begin indenting from the very first level
-				skip_level = 1,
-				-- Do not indent heading titles, only the body
-				skip_heading = false,
 			},
-			-- Window options to use that change between rendered and raw view
-			win_options = {
-				-- See :h 'conceallevel'
-				conceallevel = {
-					-- Used when not being rendered, get user setting
-					default = vim.api.nvim_get_option_value('conceallevel', {}),
-					-- Used when being rendered, concealed text is completely hidden
-					rendered = 3,
-				},
-				-- See :h 'concealcursor'
-				concealcursor = {
-					-- Used when not being rendered, get user setting
-					default = vim.api.nvim_get_option_value('concealcursor', {}),
-					-- Used when being rendered, disable concealing text in all modes
-					rendered = '',
-				},
-			},
-			-- More granular configuration mechanism, allows different aspects of buffers
-			-- to have their own behavior. Values default to the top level configuration
-			-- if no override is provided. Supports the following fields:
-			--   enabled, max_file_size, debounce, render_modes, anti_conceal, padding, heading, code,
-			--   dash, bullet, checkbox, quote, pipe_table, callout, link, sign, indent, win_options
-			overrides = {
-				-- Overrides for different buftypes, see :h 'buftype'
-				buftype = {
-					nofile = {
-						padding = { highlight = 'NormalFloat' },
-						sign = { enabled = false },
-					},
-				},
-				-- Overrides for different filetypes, see :h 'filetype'
-				filetype = {},
-			},
-			-- Mapping from treesitter language to user defined handlers
-			-- See 'Custom Handlers' document for more info
 			custom_handlers = {},
 		})
 	end
