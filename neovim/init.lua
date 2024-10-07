@@ -3415,148 +3415,146 @@ addPlugin {
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
-	config = function()
-		require('render-markdown').setup({
-			render_modes = { 'n', 'c' },
-			anti_conceal = {
-				enabled = false,
-				above = 0,
-				below = 0,
+	opts = {
+		render_modes = { 'n', 'c' },
+		anti_conceal = {
+			enabled = false,
+			above = 0,
+			below = 0,
+		},
+		padding = {
+			highlight = 'Normal',
+		},
+		latex = {
+			enabled = false,
+			converter = 'latex2text',
+			highlight = 'RenderMarkdownMath',
+			top_pad = 0,
+			bottom_pad = 0,
+		},
+		heading = {
+			enabled = true,
+			sign = false,
+			position = 'inlay',
+			-- icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+			icons = { '󰫎 ' },
+			signs = { '󰫎 ' },
+			width = { 'block', 'block', 'block'},
+			left_margin = 0,
+			left_pad = 0,
+			right_pad = 3,
+			min_width = 0,
+			border = false,
+			border_virtual = false,
+			border_prefix = false,
+			above = '▄',
+			below = '▀',
+			backgrounds = {
+				'RenderMarkdownH1Bg',
+				'RenderMarkdownH2Bg',
+				'RenderMarkdownH3Bg',
+				'RenderMarkdownH4Bg',
+				'RenderMarkdownH5Bg',
+				'RenderMarkdownH6Bg',
 			},
-			padding = {
-				highlight = 'Normal',
+			foregrounds = {
+				'RenderMarkdownH1',
+				'RenderMarkdownH2',
+				'RenderMarkdownH3',
+				'RenderMarkdownH4',
+				'RenderMarkdownH5',
+				'RenderMarkdownH6',
+			}
+		},
+		code = {
+			enabled = true,
+			sign = false,
+			style = 'normal',
+			position = 'left',
+			language_pad = 0,
+			disable_background = { '' },
+			width = 'block',
+			left_margin = 0,
+			left_pad = 0,
+			right_pad = 1,
+			min_width = 10,
+			border = 'thin',
+			above = '▄',
+			below = '▀',
+			highlight = 'RenderMarkdownCode',
+			highlight_inline = 'RenderMarkdownCodeInline',
+		},
+		dash = {
+			enabled = true,
+			icon = '─',
+			width = 'full',
+			highlight = 'RenderMarkdownDash',
+		},
+		bullet = {
+			enabled = true,
+			icons = { '●', '○', '◆', '◇' },
+			left_pad = 0,
+			right_pad = 0,
+			highlight = 'RenderMarkdownBullet',
+		},
+		checkbox = {
+			enabled = true,
+			position = 'overlay',
+			unchecked = {
+				icon = ' ',
+				highlight = 'RenderMarkdownUnchecked',
 			},
-			latex = {
-				enabled = false,
-				converter = 'latex2text',
-				highlight = 'RenderMarkdownMath',
-				top_pad = 0,
-				bottom_pad = 0,
+			checked = {
+				icon = ' ',
+				highlight = 'RenderMarkdownChecked',
 			},
-			heading = {
-				enabled = true,
-				sign = false,
-				position = 'inlay',
-				-- icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-				icons = { '󰫎 ' },
-				signs = { '󰫎 ' },
-				width = { 'block', 'block', 'block'},
-				left_margin = 0,
-				left_pad = 0,
-				right_pad = 3,
-				min_width = 0,
-				border = false,
-				border_virtual = false,
-				border_prefix = false,
-				above = '▄',
-				below = '▀',
-				backgrounds = {
-					'RenderMarkdownH1Bg',
-					'RenderMarkdownH2Bg',
-					'RenderMarkdownH3Bg',
-					'RenderMarkdownH4Bg',
-					'RenderMarkdownH5Bg',
-					'RenderMarkdownH6Bg',
-				},
-				foregrounds = {
-					'RenderMarkdownH1',
-					'RenderMarkdownH2',
-					'RenderMarkdownH3',
-					'RenderMarkdownH4',
-					'RenderMarkdownH5',
-					'RenderMarkdownH6',
-				}
+			custom = {}
+		},
+		quote = {
+			enabled = true,
+			icon = '▍',
+			repeat_linebreak = true,
+			highlight = 'RenderMarkdownQuote',
+		},
+		pipe_table = {
+			enabled = true,
+			border = {
+				'┌', '┬', '┐',
+				'├', '┼', '┤',
+				'└', '┴', '┘',
+				'│', '━',
 			},
-			code = {
-				enabled = true,
-				sign = false,
-				style = 'normal',
-				position = 'left',
-				language_pad = 0,
-				disable_background = { '' },
-				width = 'block',
-				left_margin = 0,
-				left_pad = 0,
-				right_pad = 1,
-				min_width = 10,
-				border = 'thin',
-				above = '▄',
-				below = '▀',
-				highlight = 'RenderMarkdownCode',
-				highlight_inline = 'RenderMarkdownCodeInline',
+			preset = 'round',
+			style = 'normal',
+			cell = 'trimmed',
+			min_width = 0,
+			alignment_indicator = '•',
+			head = 'RenderMarkdownTableHead',
+			row = 'RenderMarkdownTableRow',
+			filler = 'RenderMarkdownTableFill',
+		},
+		callout = {
+			note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
+			tip = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess' },
+			important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' },
+			warning = { raw = '[!WARNING]', rendered = '󰀪 Warning', highlight = 'RenderMarkdownWarn' },
+			caution = { raw = '[!CAUTION]', rendered = '󰳦 Caution', highlight = 'RenderMarkdownError' },
+		},
+		link = {
+			enabled = true,
+			image = '󰥶 ',
+			email = '󰀓 ',
+			hyperlink = '󰌹 ',
+			highlight = 'RenderMarkdownLink',
+			custom = {
+				web = { pattern = '^http[s]?://', icon = '󰖟 ', highlight = 'RenderMarkdownLink' },
 			},
-			dash = {
-				enabled = true,
-				icon = '─',
-				width = 'full',
-				highlight = 'RenderMarkdownDash',
-			},
-			bullet = {
-				enabled = true,
-				icons = { '●', '○', '◆', '◇' },
-				left_pad = 0,
-				right_pad = 0,
-				highlight = 'RenderMarkdownBullet',
-			},
-			checkbox = {
-				enabled = true,
-				position = 'overlay',
-				unchecked = {
-					icon = ' ',
-					highlight = 'RenderMarkdownUnchecked',
-				},
-				checked = {
-					icon = ' ',
-					highlight = 'RenderMarkdownChecked',
-				},
-				custom = {}
-			},
-			quote = {
-				enabled = true,
-				icon = '▍',
-				repeat_linebreak = true,
-				highlight = 'RenderMarkdownQuote',
-			},
-			pipe_table = {
-				enabled = true,
-				border = {
-					'┌', '┬', '┐',
-					'├', '┼', '┤',
-					'└', '┴', '┘',
-					'│', '━',
-				},
-				preset = 'round',
-				style = 'normal',
-				cell = 'trimmed',
-				min_width = 0,
-				alignment_indicator = '•',
-				head = 'RenderMarkdownTableHead',
-				row = 'RenderMarkdownTableRow',
-				filler = 'RenderMarkdownTableFill',
-			},
-			callout = {
-				note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
-				tip = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess' },
-				important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' },
-				warning = { raw = '[!WARNING]', rendered = '󰀪 Warning', highlight = 'RenderMarkdownWarn' },
-				caution = { raw = '[!CAUTION]', rendered = '󰳦 Caution', highlight = 'RenderMarkdownError' },
-			},
-			link = {
-				enabled = true,
-				image = '󰥶 ',
-				email = '󰀓 ',
-				hyperlink = '󰌹 ',
-				highlight = 'RenderMarkdownLink',
-				custom = {
-					web = { pattern = '^http[s]?://', icon = '󰖟 ', highlight = 'RenderMarkdownLink' },
-				},
-			},
-			sign = {
-				enabled = false,
-			},
-			custom_handlers = {},
-		})
-	end
+		},
+		sign = {
+			enabled = false,
+		},
+		custom_handlers = {},
+	}
 }
 
 addPlugin {
@@ -3904,21 +3902,29 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: try
--- addPlugin {
--- 	"b0o/incline.nvim",
--- 	config = function()
--- 		require("incline").setup({
--- 			window = {
--- 				placement = {
--- 					vertical = "bottom"
--- 				}
--- 			}
--- 		})
--- 	end,
--- 	-- Optional: Lazy load Incline
--- 	event = "VeryLazy",
--- }
+-- FEAT: replicate lualine condition, location, window components
+addPlugin {
+	"b0o/incline.nvim",
+	config = function()
+		local helpers = require 'incline.helpers'
+		local devicons = require 'nvim-web-devicons'
+		require("incline").setup({
+			window = {
+				placement = {
+					vertical = "top",
+					horizontal = "right"
+				},
+				margin = {
+					horizontal = 0,
+					vertical = 0
+				}
+			},
+			render = "basic"
+		})
+	end,
+	-- Optional: Lazy load Incline
+	event = "VeryLazy",
+}
 
 addPlugin {
 	"nvim-lualine/lualine.nvim",
@@ -4192,107 +4198,107 @@ addPlugin {
 				lualine_y = {},
 				lualine_z = {}
 			},
-			winbar = {
-				lualine_a = {
-					{
-						"filetype",
-						cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-						icon_only = true,
-						padding = { left = 1, right = 0 },
-						separator = ""
-					},
-					{
-						"filename",
-						color = { gui = "italic" },
-						cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-						file_status = true,
-						newfile_status = true,
-						path = 0,
-						shorting_target = 40,
-						symbols = {
-							modified = icons.file_modified,
-							readonly = icons.file_readonly,
-							unnamed  = icons.file_unnamed,
-							newfile  = icons.file_newfile,
-						}
-					},
-					{
-						function()
-							if DropbarEnabled then
-								return "%{%v:lua.dropbar.get_dropbar_str()%}"
-							else
-								return ""
-							end
-						end,
-						padding = { left = 0, right = 0 },
-						separator = { left = "", right = "" }
-					},
-				}
-			},
-			inactive_winbar = {
-				lualine_a = {
-					{
-						"filetype",
-						cond = function () return CountWindows(true) > 1 end,
-						icon_only = true,
-						padding = { left = 1, right = 0 },
-						separator = ""
-					},
-					{
-						"filename",
-						color = { gui = "italic" },
-						cond = function () return CountWindows(true) > 1 end,
-						file_status = true,
-						newfile_status = true,
-						path = 3,
-						shorting_target = 40,
-						symbols = {
-							modified = icons.file_modified,
-							readonly = icons.file_readonly,
-							unnamed  = icons.file_unnamed,
-							newfile  = icons.file_newfile,
-						}
-					}
-				},
-				lualine_c = {
-					{
-						"diff",
-						cond = function () return CountWindows(true) > 1 end,
-						padding = { left = 1, right = 0 },
-						symbols = {
-							added = "+",
-							modified = "~",
-							removed = "-"
-						}
-					},
-				},
-				lualine_z = {
-					{
-						lspIcon,
-						cond = function () return CountWindows(true) > 1 and isLspAttached() end,
-						on_click = function()
-							vim.cmd("LspInfo")
-						end,
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						"diagnostics",
-						cond = function () return CountWindows(true) > 1 end,
-						on_click = function()
-							vim.cmd("TroubleToggle")
-						end,
-						padding = { left = 1, right = 1 },
-						sources = { "nvim_diagnostic" },
-						symbols = {
-							error = icons.error,
-							warn  = icons.warn,
-							info  = icons.info,
-							hint  = icons.hint
-						}
-					}
-				}
-			},
+			-- winbar = {
+			-- 	lualine_a = {
+			-- 		{
+			-- 			"filetype",
+			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
+			-- 			icon_only = true,
+			-- 			padding = { left = 1, right = 0 },
+			-- 			separator = ""
+			-- 		},
+			-- 		{
+			-- 			"filename",
+			-- 			color = { gui = "italic" },
+			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
+			-- 			file_status = true,
+			-- 			newfile_status = true,
+			-- 			path = 0,
+			-- 			shorting_target = 40,
+			-- 			symbols = {
+			-- 				modified = icons.file_modified,
+			-- 				readonly = icons.file_readonly,
+			-- 				unnamed  = icons.file_unnamed,
+			-- 				newfile  = icons.file_newfile,
+			-- 			}
+			-- 		},
+			-- 		{
+			-- 			function()
+			-- 				if DropbarEnabled then
+			-- 					return "%{%v:lua.dropbar.get_dropbar_str()%}"
+			-- 				else
+			-- 					return ""
+			-- 				end
+			-- 			end,
+			-- 			padding = { left = 0, right = 0 },
+			-- 			separator = { left = "", right = "" }
+			-- 		},
+			-- 	}
+			-- },
+			-- inactive_winbar = {
+			-- 	lualine_a = {
+			-- 		{
+			-- 			"filetype",
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			icon_only = true,
+			-- 			padding = { left = 1, right = 0 },
+			-- 			separator = ""
+			-- 		},
+			-- 		{
+			-- 			"filename",
+			-- 			color = { gui = "italic" },
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			file_status = true,
+			-- 			newfile_status = true,
+			-- 			path = 3,
+			-- 			shorting_target = 40,
+			-- 			symbols = {
+			-- 				modified = icons.file_modified,
+			-- 				readonly = icons.file_readonly,
+			-- 				unnamed  = icons.file_unnamed,
+			-- 				newfile  = icons.file_newfile,
+			-- 			}
+			-- 		}
+			-- 	},
+			-- 	lualine_c = {
+			-- 		{
+			-- 			"diff",
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			padding = { left = 1, right = 0 },
+			-- 			symbols = {
+			-- 				added = "+",
+			-- 				modified = "~",
+			-- 				removed = "-"
+			-- 			}
+			-- 		},
+			-- 	},
+			-- 	lualine_z = {
+			-- 		{
+			-- 			lspIcon,
+			-- 			cond = function () return CountWindows(true) > 1 and isLspAttached() end,
+			-- 			on_click = function()
+			-- 				vim.cmd("LspInfo")
+			-- 			end,
+			-- 			padding = { left = 0, right = 1 },
+			-- 			separator = ""
+			-- 		},
+			-- 		{
+			-- 			"diagnostics",
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			on_click = function()
+			-- 				vim.cmd("TroubleToggle")
+			-- 			end,
+			-- 			padding = { left = 1, right = 1 },
+			-- 			sources = { "nvim_diagnostic" },
+			-- 			symbols = {
+			-- 				error = icons.error,
+			-- 				warn  = icons.warn,
+			-- 				info  = icons.info,
+			-- 				hint  = icons.hint
+			-- 			}
+			-- 		}
+			-- 	}
+			-- },
 			extensions = {
 				"aerial",
 				"lazy",
