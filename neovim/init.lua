@@ -3902,25 +3902,11 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: replicate lualine condition, location, window components
+-- FEAT: replicate Peek conflict lualine condition, location, window components
 addPlugin {
 	"b0o/incline.nvim",
 	config = function()
-		local helpers = require 'incline.helpers'
-		local devicons = require 'nvim-web-devicons'
-		require("incline").setup({
-			window = {
-				placement = {
-					vertical = "top",
-					horizontal = "right"
-				},
-				margin = {
-					horizontal = 0,
-					vertical = 0
-				}
-			},
-			render = "basic"
-		})
+		require("incline").setup({})
 	end,
 	-- Optional: Lazy load Incline
 	event = "VeryLazy",
