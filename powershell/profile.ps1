@@ -160,10 +160,10 @@ function gwa {
     $branch_exists = git rev-parse --verify $args
 
     if ($branch_exists){
-        git workspace add ..\$args
+        git worktree add ..\$args
         Set-Location ..\$args
     } else {
-        git workspace add ..\$args -b $args
+        git worktree add ..\$args -b $args
         Set-Location ..\$args
     }
 }
