@@ -156,6 +156,18 @@ function gs {
     git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args
 }
 
+function gwa {
+    $branch_exists = git rev-parse --verify $args
+
+    if ($branch_exists){
+        git workspace add ..\$args
+        Set-Location ..\$args
+    } else {
+        git workspace add ..\$args -b $args
+        Set-Location ..\$args
+    }
+}
+
 # ─[ Get TODOs from current directory ]────────────────────────────────
 function Get-TODO {
     param(
