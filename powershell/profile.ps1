@@ -1,3 +1,4 @@
+# FEAT: Edit-Csproj command
 # FEAT: Work setup: use powershell 7 for ODC (oned cmds)
 # FEAT: create a command to build .cs file
 # FEAT: look for sixel apps
