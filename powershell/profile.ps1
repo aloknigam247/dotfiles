@@ -1,6 +1,7 @@
 # FEAT: Work setup: use powershell 7 for ODC (oned cmds)
-# TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
+# FEAT: create a command to build .cs file
 # FEAT: look for sixel apps
+# TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
