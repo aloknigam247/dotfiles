@@ -826,7 +826,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 			title = path ,
 			title_pos = "center",
 			width = vim.o.columns - 8 - col_offset,
-			zindex = 1
+			zindex = 100
 		})
 	else
 		vim.api.nvim_win_set_buf(Preview_win, bufnr)
@@ -3902,7 +3902,7 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: replicate Peek conflict lualine condition, location, window components
+-- FEAT: replicate lualine condition, location, window components
 addPlugin {
 	"b0o/incline.nvim",
 	config = function()
