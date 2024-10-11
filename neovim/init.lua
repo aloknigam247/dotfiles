@@ -1429,6 +1429,7 @@ addPlugin {
 
 addPlugin {
 	"RRethy/vim-illuminate",
+	-- FEAT: try underlines
 	config = function()
 		require("illuminate").configure({
 			delay = 400,
