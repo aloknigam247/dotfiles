@@ -2171,6 +2171,7 @@ addPlugin {
 -- https://github.com/Willem-J-an/visidata.nvim
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- https://github.com/jonboh/nvim-dap-rr
+-- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
 -- https://github.com/mfussenegger/nvim-dap-python
 -- https://github.com/nvim-telescope/telescope-dap.nvim
 -- https://github.com/sakhnik/nvim-gdb
@@ -5105,7 +5106,6 @@ addPlugin {
 			)
 		end
 
-		-- BUG: not loading
 		setTextKey("wc-", "to_dash_case",         "dash-case"         )
 		setTextKey("wc.", "to_dot_case",          "dot.case"          )
 		setTextKey("wc/", "to_path_case",         "path/case"         )
