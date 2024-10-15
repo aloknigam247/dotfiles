@@ -1732,31 +1732,31 @@ addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"      
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
--- dark  { "everforest",                 "_"                                                                                          }
--- darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
--- darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
--- dark  { "retrobox",                   "_",            post = fixRetro                                                              }
--- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
--- dark  { "vscode",                     "_"                                                                                          }
+dark  { "everforest",                 "_"                                                                                          }
+dark  { "retrobox",                   "_",            post = fixRetro                                                              }
+dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
+dark  { "vscode",                     "_"                                                                                          }
+darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
+darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 
--- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
--- dark  { "bluloco",                    "_"                                                                                          }
--- dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
--- dark  { "duskfox",                    "nightfox"                                                                                   }
--- dark  { "hybrid",                     "_"                                                                                          }
--- dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
--- dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
--- dark  { "melange",                    "_"                                                                                          }
--- dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
--- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
--- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
--- dark  { "zephyrium",                  "_"                                                                                          }
--- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
--- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
--- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
--- darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
--- darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
--- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
+dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+dark  { "bluloco",                    "_"                                                                                          }
+dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
+dark  { "duskfox",                    "nightfox"                                                                                   }
+dark  { "hybrid",                     "_"                                                                                          }
+dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
+dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
+dark  { "melange",                    "_"                                                                                          }
+dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
+dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
+dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
+dark  { "zephyrium",                  "_"                                                                                          }
+darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
+darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
+darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
+darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
+darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 light { "bluloco",                    "_"                                                                                          }
 light { "catppuccin-latte",           "catppuccin"                                                                                 }
 light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
