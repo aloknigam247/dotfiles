@@ -2,6 +2,7 @@
 -- TODO: github stars
 -- TODO: reddit save
 -- FIX: Clear all diagnostics
+-- FEAT: do not cut while pasting in visual mode
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
