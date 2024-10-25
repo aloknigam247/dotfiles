@@ -662,6 +662,18 @@ function CountWindows(ignore)
 	return named_window
 end
 
+--- Get foreground color from highlight or fallback
+---@param hl_name highlight name
+---@param fallback fallback color
+function GetFgOrFallback(hl_name, fallback)
+	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
+	if hl then
+		return string.format("#%X", hl.fg)
+	else
+		return fallback
+	end
+end
+
 ---Light or dark color
 ---@param col string Color to shade
 ---@param amt integer Amount of shade
@@ -3277,6 +3289,18 @@ addPlugin {
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
+		-- ╭────────────────────────╮
+		-- │ LSP Running animations │
+		-- ╰────────────────────────╯
+		Lsp_anim = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+		Lsp_icon = ""
+		Lsp_icon_index = 0
+
+		vim.uv.timer_start(vim.uv.new_timer(), 700, 700, function()
+			Lsp_icon_index = (Lsp_icon_index) % #Lsp_anim + 1
+			Lsp_icon = Lsp_anim[Lsp_icon_index]
+		end)
+
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
 		-- Lsp timeout
 		-- Lsp_timer = vim.uv.new_timer()
@@ -3917,389 +3941,369 @@ addPlugin {
 
 addPlugin {
 	"nvim-lualine/lualine.nvim",
-	config = function()
-		local function lspIcon()
-			local anim = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" } -- FIX: skipping
-			Icon_index = (Icon_index) % #anim + 1
-			return anim[Icon_index]
-		end
-
-		local function GetFgOrFallback(hl_name, fallback)
-			local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
-			if hl then
-				return string.format("#%X", hl.fg)
-			else
-				return fallback
-			end
-		end
-
-		Icon_index = 0
-		vim.o.showcmdloc = "statusline"
-
-		require("lualine").setup {
-			options = {
-				icons_enabled = true,
-				theme = "auto",
-				component_separators = { left = "", right = "" }, -- ⏽ 
-				section_separators = { left = "", right = "" },
-				ignore_focus = { "NvimTree" },
-				always_divide_middle = false,
-				globalstatus = true,
-				refresh = {
-					statusline = 1000,
-					tabline = 1000,
-					winbar = 1000,
-				}
-			},
-			sections = {
-				lualine_a = {
-					{
-						"mode",
-						color = { gui = "bold" },
-						fmt = function(str)
-							local first = str:sub(1,1)
-							if first == "N" then
-								return ""
-							elseif first == "V" then
-								return ""
-							elseif first == "I" then
-								return ""
-							elseif first == "C" then
-								return ""
-							end
-							return str:sub(1,1)
-						end,
-						padding = { left = 0, right = 1 },
-						separator = { left = "█", right = "" }
-					}
-				},
-				lualine_b = {
-					{
-						"filetype",
-						icon_only = true,
-						fmt = function(str)
-							if str == "" then
-								return " "
-							end
-							return str
-						end,
-						padding = { left = 1, right = 0 },
-						separator = ""
-					},
-					{
-						"filename",
-						color = { gui = "italic" },
-						file_status = true,
-						newfile_status = true,
-						on_click = function()
-							vim.cmd("NvimTreeOpen")
-						end,
-						path = 0,
-						padding = { left = 0, right = 0 },
-						shorting_target = 40,
-						symbols = {
-							modified = icons.file_modified,
-							readonly = icons.file_readonly,
-							unnamed  = " " .. icons.file_unnamed .. " ",
-							newfile  = icons.file_newfile .. " "
-						}
-					}
-				},
-				lualine_c = {
-					{
-						"branch",
-						color = { gui = "bold" },
-						icon = {"", color = {fg = "#F14C28"}},
-						on_click = function()
-							vim.cmd("Telescope git_branches")
-						end,
-						padding = { left = 1, right = 0 },
-					},
-					{
-						"diff",
-						on_click = function()
-							vim.cmd("Telescope git_status")
-						end,
-						padding = { left = 1, right = 0 },
-						symbols = {
-							added = "+",
-							modified = "~",
-							removed = "-"
-						}
-					},
-				},
-				lualine_x = {
-					{
-						"searchcount",
-						color = { fg = "#23CE6B", gui = "bold" },
-						fmt = function(str)
-							return string.sub(str, 2, -2)
-						end,
-						icon = {"󰱽", color = { fg = "#EAC435" }},
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						function() return "󰳾" end,
-						color = { fg = "#009DDC" },
-						cond = function()
-							return vim.b.VM_Selection ~= nil and not vim.tbl_isempty(vim.b.VM_Selection)
-						end
-					},
-					{
-						"selectioncount",
-						color = { fg = "#BA2C73" },
-						icon = { "󰗈", color = { fg = "#963484" }},
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						function() return vim.g.ColoRand end,
-						color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-						icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name("Function", true).foreground)}},
-						padding = { left = 0, right = 1 }
-					},
-					{
-						"diagnostics",
-						on_click = function()
-							vim.cmd("Trouble diagnostics")
-						end,
-						padding = { left = 0, right = 1 },
-						sources = { "nvim_diagnostic" },
-						symbols = {
-							error = icons.error,
-							warn  = icons.warn,
-							info  = icons.info,
-							hint  = icons.hint
-						},
-					},
-					{
-						"hostname",
-						color = { fg = "#119DA4", gui = "bold" },
-						cond = function()
-							return vim.env.SSH_CLIENT ~= nil
-						end,
-						fmt = function(str)
-							local alias = {
-								["ALOKNIGAM-IDC"] = "devbox"
-							}
-							return alias[str] or str
-						end,
-						icon = { "", color = { fg = "#3066BE" }},
-						padding = { left = 0, right = 1 }
-					},
-					{
-						"filesize",
-						color = { fg = "#B90E0A", gui = "bold" },
-						cond = isLargeFile,
-						fmt = function(str)
-							return "[" .. str .. "]"
-						end,
-						padding = { left = 0, right = 1 }
-					},
-					{
-						"encoding",
-						color = { fg = GetFgOrFallback("String", "#C2F261"), gui ="italic" },
-						fmt = function(str)
-							if vim.o.bomb then
-								str = str .. "-bom"
-							end
-							return string.gsub(str, "utf.", "u")
-						end,
-						padding = { left = 0, right = 1 }
-					}
-				},
-				lualine_y = {
-					{
-						function() return "󰑊" end,
-						color = { fg = "#B43757" },
-						cond = function() return vim.fn.reg_recording() ~= "" end,
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						function() return vim.g.session_icon or "" end,
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						lspIcon,
-						cond = isLspAttached,
-						on_click = function()
-							vim.cmd("LspInfo")
-						end,
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						function()
-							local buf = vim.api.nvim_get_current_buf()
-							local highlighter = require("vim.treesitter.highlighter")
-							if highlighter.active[buf] then
-								return "󰐅"
-							end
-							return ""
-						end,
-						color = { fg = "#097969" },
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						function()
-							if vim.o.wrap then
-								return "󰖶"
-							else
-								return "󰯟"
-							end
-						end,
-						color = { fg = "#A35CFF" },
-						on_click = function()
-							vim.cmd("set wrap!")
-						end,
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
-					{
-						"fileformat",
-						color = { fg = "#0096FF" },
-						padding = { left = 0, right = 1 },
-					},
-				},
-				lualine_z = {
-					{
-						"location",
-						fmt = function(str)
-							return str:gsub("^%s+", ""):gsub("%s+", "")
-						end,
-						on_click = function ()
-							vim.cmd("ScrollViewToggle ")
-						end,
-						padding = { left = 0, right = 0 },
-						separator = { left = "", right = "█" }
-					}
-				}
-			},
-			inactive_sections = {
-				lualine_a = {},
-				lualine_b = {},
-				lualine_c = {"filename"},
-				lualine_x = {"location"},
-				lualine_y = {},
-				lualine_z = {}
-			},
-			-- winbar = {
-			-- 	lualine_a = {
-			-- 		{
-			-- 			"filetype",
-			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-			-- 			icon_only = true,
-			-- 			padding = { left = 1, right = 0 },
-			-- 			separator = ""
-			-- 		},
-			-- 		{
-			-- 			"filename",
-			-- 			color = { gui = "italic" },
-			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-			-- 			file_status = true,
-			-- 			newfile_status = true,
-			-- 			path = 0,
-			-- 			shorting_target = 40,
-			-- 			symbols = {
-			-- 				modified = icons.file_modified,
-			-- 				readonly = icons.file_readonly,
-			-- 				unnamed  = icons.file_unnamed,
-			-- 				newfile  = icons.file_newfile,
-			-- 			}
-			-- 		},
-			-- 		{
-			-- 			function()
-			-- 				if DropbarEnabled then
-			-- 					return "%{%v:lua.dropbar.get_dropbar_str()%}"
-			-- 				else
-			-- 					return ""
-			-- 				end
-			-- 			end,
-			-- 			padding = { left = 0, right = 0 },
-			-- 			separator = { left = "", right = "" }
-			-- 		},
-			-- 	}
-			-- },
-			-- inactive_winbar = {
-			-- 	lualine_a = {
-			-- 		{
-			-- 			"filetype",
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			icon_only = true,
-			-- 			padding = { left = 1, right = 0 },
-			-- 			separator = ""
-			-- 		},
-			-- 		{
-			-- 			"filename",
-			-- 			color = { gui = "italic" },
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			file_status = true,
-			-- 			newfile_status = true,
-			-- 			path = 3,
-			-- 			shorting_target = 40,
-			-- 			symbols = {
-			-- 				modified = icons.file_modified,
-			-- 				readonly = icons.file_readonly,
-			-- 				unnamed  = icons.file_unnamed,
-			-- 				newfile  = icons.file_newfile,
-			-- 			}
-			-- 		}
-			-- 	},
-			-- 	lualine_c = {
-			-- 		{
-			-- 			"diff",
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			padding = { left = 1, right = 0 },
-			-- 			symbols = {
-			-- 				added = "+",
-			-- 				modified = "~",
-			-- 				removed = "-"
-			-- 			}
-			-- 		},
-			-- 	},
-			-- 	lualine_z = {
-			-- 		{
-			-- 			lspIcon,
-			-- 			cond = function () return CountWindows(true) > 1 and isLspAttached() end,
-			-- 			on_click = function()
-			-- 				vim.cmd("LspInfo")
-			-- 			end,
-			-- 			padding = { left = 0, right = 1 },
-			-- 			separator = ""
-			-- 		},
-			-- 		{
-			-- 			"diagnostics",
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			on_click = function()
-			-- 				vim.cmd("TroubleToggle")
-			-- 			end,
-			-- 			padding = { left = 1, right = 1 },
-			-- 			sources = { "nvim_diagnostic" },
-			-- 			symbols = {
-			-- 				error = icons.error,
-			-- 				warn  = icons.warn,
-			-- 				info  = icons.info,
-			-- 				hint  = icons.hint
-			-- 			}
-			-- 		}
-			-- 	}
-			-- },
-			extensions = {
-				"aerial",
-				"lazy",
-				"mason",
-				"nvim-dap-ui",
-				"nvim-tree",
-				"quickfix",
-				"toggleterm",
-				"trouble"
+	opts = {
+		options = {
+			icons_enabled = true,
+			theme = "auto",
+			component_separators = { left = "", right = "" }, -- ⏽ 
+			section_separators = { left = "", right = "" },
+			ignore_focus = { "NvimTree" },
+			always_divide_middle = false,
+			globalstatus = true,
+			refresh = {
+				statusline = 1000,
+				tabline = 1000,
+				winbar = 1000,
 			}
+		},
+		sections = {
+			lualine_a = {
+				{
+					"mode",
+					color = { gui = "bold" },
+					fmt = function(str)
+						local first = str:sub(1,1)
+						if first == "N" then
+							return ""
+						elseif first == "V" then
+							return ""
+						elseif first == "I" then
+							return ""
+						elseif first == "C" then
+							return ""
+						end
+						return str:sub(1,1)
+					end,
+					padding = { left = 0, right = 1 },
+					separator = { left = "█", right = "" }
+				}
+			},
+			lualine_b = {
+				{
+					"filetype",
+					icon_only = true,
+					fmt = function(str)
+						if str == "" then
+							return " "
+						end
+						return str
+					end,
+					padding = { left = 1, right = 0 },
+					separator = ""
+				},
+				{
+					"filename",
+					color = { gui = "italic" },
+					file_status = true,
+					newfile_status = true,
+					on_click = function()
+						vim.cmd("NvimTreeOpen")
+					end,
+					path = 0,
+					padding = { left = 0, right = 0 },
+					shorting_target = 40,
+					symbols = {
+						modified = icons.file_modified,
+						readonly = icons.file_readonly,
+						unnamed  = " " .. icons.file_unnamed .. " ",
+						newfile  = icons.file_newfile .. " "
+					}
+				}
+			},
+			lualine_c = {
+				{
+					"branch",
+					color = { gui = "bold" },
+					icon = {"", color = {fg = "#F14C28"}},
+					on_click = function()
+						vim.cmd("Telescope git_branches")
+					end,
+					padding = { left = 1, right = 0 },
+				},
+				{
+					"diff",
+					on_click = function()
+						vim.cmd("Telescope git_status")
+					end,
+					padding = { left = 1, right = 0 },
+					symbols = {
+						added = "+",
+						modified = "~",
+						removed = "-"
+					}
+				},
+			},
+			lualine_x = {
+				{
+					"searchcount",
+					color = { fg = "#23CE6B", gui = "bold" },
+					fmt = function(str)
+						return string.sub(str, 2, -2)
+					end,
+					icon = {"󰱽", color = { fg = "#EAC435" }},
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					function() return "󰳾" end,
+					color = { fg = "#009DDC" },
+					cond = function()
+						return vim.b.VM_Selection ~= nil and not vim.tbl_isempty(vim.b.VM_Selection)
+					end
+				},
+				{
+					"selectioncount",
+					color = { fg = "#BA2C73" },
+					icon = { "󰗈", color = { fg = "#963484" }},
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					function() return vim.g.ColoRand end,
+					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
+					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name("Function", true).foreground)}},
+					padding = { left = 0, right = 1 }
+				},
+				{
+					"diagnostics",
+					on_click = function()
+						vim.cmd("Trouble diagnostics")
+					end,
+					padding = { left = 0, right = 1 },
+					sources = { "nvim_diagnostic" },
+					symbols = {
+						error = icons.error,
+						warn  = icons.warn,
+						info  = icons.info,
+						hint  = icons.hint
+					},
+				},
+				{
+					"hostname",
+					color = { fg = "#119DA4", gui = "bold" },
+					cond = function()
+						return vim.env.SSH_CLIENT ~= nil
+					end,
+					fmt = function(str)
+						local alias = {
+							["ALOKNIGAM-IDC"] = "devbox"
+						}
+						return alias[str] or str
+					end,
+					icon = { "", color = { fg = "#3066BE" }},
+					padding = { left = 0, right = 1 }
+				},
+				{
+					"filesize",
+					color = { fg = "#B90E0A", gui = "bold" },
+					cond = isLargeFile,
+					fmt = function(str)
+						return "[" .. str .. "]"
+					end,
+					padding = { left = 0, right = 1 }
+				},
+				{
+					"encoding",
+					color = { fg = GetFgOrFallback("String", "#C2F261"), gui ="italic" },
+					fmt = function(str)
+						if vim.o.bomb then
+							str = str .. "-bom"
+						end
+						return string.gsub(str, "utf.", "u")
+					end,
+					padding = { left = 0, right = 1 }
+				}
+			},
+			lualine_y = {
+				{
+					function() return "󰑊" end,
+					color = { fg = "#B43757" },
+					cond = function() return vim.fn.reg_recording() ~= "" end,
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					function() return vim.g.session_icon or "" end,
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					function() return Lsp_icon end,
+					cond = isLspAttached,
+					on_click = function()
+						vim.cmd("LspInfo")
+					end,
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					function()
+						local buf = vim.api.nvim_get_current_buf()
+						local highlighter = require("vim.treesitter.highlighter")
+						if highlighter.active[buf] then
+							return "󰐅"
+						end
+						return ""
+					end,
+					color = { fg = "#097969" },
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					function()
+						if vim.o.wrap then
+							return "󰖶"
+						else
+							return "󰯟"
+						end
+					end,
+					color = { fg = "#A35CFF" },
+					on_click = function()
+						vim.cmd("set wrap!")
+					end,
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
+					"fileformat",
+					color = { fg = "#0096FF" },
+					padding = { left = 0, right = 1 },
+				},
+			},
+			lualine_z = {
+				{
+					"location",
+					fmt = function(str)
+						return str:gsub("^%s+", ""):gsub("%s+", "")
+					end,
+					on_click = function ()
+						vim.cmd("ScrollViewToggle ")
+					end,
+					padding = { left = 0, right = 0 },
+					separator = { left = "", right = "█" }
+				}
+			}
+		},
+		inactive_sections = {
+			lualine_a = {},
+			lualine_b = {},
+			lualine_c = {"filename"},
+			lualine_x = {"location"},
+			lualine_y = {},
+			lualine_z = {}
+		},
+		-- winbar = {
+		-- 	lualine_a = {
+		-- 		{
+		-- 			"filetype",
+		-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
+		-- 			icon_only = true,
+		-- 			padding = { left = 1, right = 0 },
+		-- 			separator = ""
+		-- 		},
+		-- 		{
+		-- 			"filename",
+		-- 			color = { gui = "italic" },
+		-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
+		-- 			file_status = true,
+		-- 			newfile_status = true,
+		-- 			path = 0,
+		-- 			shorting_target = 40,
+		-- 			symbols = {
+		-- 				modified = icons.file_modified,
+		-- 				readonly = icons.file_readonly,
+		-- 				unnamed  = icons.file_unnamed,
+		-- 				newfile  = icons.file_newfile,
+		-- 			}
+		-- 		},
+		-- 		{
+		-- 			function()
+		-- 				if DropbarEnabled then
+		-- 					return "%{%v:lua.dropbar.get_dropbar_str()%}"
+		-- 				else
+		-- 					return ""
+		-- 				end
+		-- 			end,
+		-- 			padding = { left = 0, right = 0 },
+		-- 			separator = { left = "", right = "" }
+		-- 		},
+		-- 	}
+		-- },
+		-- inactive_winbar = {
+		-- 	lualine_a = {
+		-- 		{
+		-- 			"filetype",
+		-- 			cond = function () return CountWindows(true) > 1 end,
+		-- 			icon_only = true,
+		-- 			padding = { left = 1, right = 0 },
+		-- 			separator = ""
+		-- 		},
+		-- 		{
+		-- 			"filename",
+		-- 			color = { gui = "italic" },
+		-- 			cond = function () return CountWindows(true) > 1 end,
+		-- 			file_status = true,
+		-- 			newfile_status = true,
+		-- 			path = 3,
+		-- 			shorting_target = 40,
+		-- 			symbols = {
+		-- 				modified = icons.file_modified,
+		-- 				readonly = icons.file_readonly,
+		-- 				unnamed  = icons.file_unnamed,
+		-- 				newfile  = icons.file_newfile,
+		-- 			}
+		-- 		}
+		-- 	},
+		-- 	lualine_c = {
+		-- 		{
+		-- 			"diff",
+		-- 			cond = function () return CountWindows(true) > 1 end,
+		-- 			padding = { left = 1, right = 0 },
+		-- 			symbols = {
+		-- 				added = "+",
+		-- 				modified = "~",
+		-- 				removed = "-"
+		-- 			}
+		-- 		},
+		-- 	},
+		-- 	lualine_z = {
+		-- 		{
+		-- 			function return Lsp_icon end,
+		-- 			cond = function () return CountWindows(true) > 1 and isLspAttached() end,
+		-- 			on_click = function()
+		-- 				vim.cmd("LspInfo")
+		-- 			end,
+		-- 			padding = { left = 0, right = 1 },
+		-- 			separator = ""
+		-- 		},
+		-- 		{
+		-- 			"diagnostics",
+		-- 			cond = function () return CountWindows(true) > 1 end,
+		-- 			on_click = function()
+		-- 				vim.cmd("TroubleToggle")
+		-- 			end,
+		-- 			padding = { left = 1, right = 1 },
+		-- 			sources = { "nvim_diagnostic" },
+		-- 			symbols = {
+		-- 				error = icons.error,
+		-- 				warn  = icons.warn,
+		-- 				info  = icons.info,
+		-- 				hint  = icons.hint
+		-- 			}
+		-- 		}
+		-- 	}
+		-- },
+		extensions = {
+			"aerial",
+			"lazy",
+			"mason",
+			"nvim-dap-ui",
+			"nvim-tree",
+			"quickfix",
+			"toggleterm",
+			"trouble"
 		}
-	end,
+	},
 	event = "VeryLazy"
 }
 -- <~>
