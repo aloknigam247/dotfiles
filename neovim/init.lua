@@ -1,4 +1,3 @@
--- FIX: all lsp errors
 -- TODO: github stars
 -- TODO: reddit save
 -- FIX: Clear all diagnostics
@@ -635,8 +634,8 @@ function CountWindows(ignore)
 end
 
 --- Get foreground color from highlight or fallback
----@param hl_name highlight name
----@param fallback fallback color
+---@param hl_name string highlight name
+---@param fallback string fallback color
 function GetFgOrFallback(hl_name, fallback)
 	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
 	if hl then
