@@ -395,20 +395,7 @@ local lazy_config = {
 		cond = nil, ---@type boolean|fun(self:LazyPlugin):boolean|nil
 		-- version = "*", -- enable this to try installing the latest stable versions of plugins
 	},
-	spec = nil, ---@type LazySpec
 	lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after update.
-	git = {
-		log = { "-10" }, -- show the last 10 commits
-		timeout = 12000, -- kill processes that take more than 2 minutes
-		url_format = "https://github.com/%s.git",
-		filter = false,
-	},
-	dev = {
-		path = "~/projects",
-		---@type string[] plugins that match these patterns will use your local versions instead
-		patterns = {}, -- For example {"folke"}
-		fallback = false, -- Fallback to git when local plugin doesn"t exist
-	},
 	install = {
 		missing = true,
 		colorscheme = { "default" },
@@ -454,15 +441,6 @@ local lazy_config = {
 			end,
 		},
 	},
-	diff = {
-		cmd = "git",
-	},
-	checker = {
-		enabled = false,
-		concurrency = nil, ---@type number? set to 1 to check for updates very slowly
-		notify = true, -- get a notification when new updates are found
-		frequency = 3600, -- check for updates every hour
-	},
 	change_detection = {
 		enabled = false,
 		notify = true, -- get a notification when changes are found
@@ -494,12 +472,6 @@ local lazy_config = {
 				"zipPlugin",
 			},
 		},
-	},
-	readme = {
-		enabled = true,
-		root = vim.fn.stdpath("state") .. "/lazy/readme",
-		files = { "README.md", "lua/**/README.md" },
-		skip_if_doc_exists = true,
 	},
 	state = vim.fn.stdpath("state") .. "/lazy/state.json", -- state info for checker and other things
 	profiling = {
@@ -1597,14 +1569,6 @@ local function fixLineNr(fg)
 	vim.api.nvim_set_hl(0, "LineNr", { fg = fg })
 end
 
----Fix retrobox colorscheme
-local function fixRetro()
-	vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#B8BB26", nocombine = true })
-	vim.api.nvim_set_hl(0, "DiffChange", { fg = "#8EC07C", nocombine = true })
-	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#FB4934", nocombine = true })
-	vim.api.nvim_set_hl(0, "Todo", { fg = "#8EC07C", nocombine = true })
-end
-
 ---Fix Visual highlight
 ---@param bg? string bg color in hex
 local function fixVisual(bg)
@@ -1746,7 +1710,6 @@ addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"        
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
 dark  { "everforest",                 "_"                                                                                          }
-dark  { "retrobox",                   "_",            post = fixRetro                                                              }
 dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 dark  { "vscode",                     "_"                                                                                          }
 darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
