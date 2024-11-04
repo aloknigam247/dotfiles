@@ -321,6 +321,13 @@ local icons = {
 	file_newfile       = "",
 	file_readonly      = "",
 	file_unnamed       = "",
+	fold_close         = "",
+	fold_open          = "",
+	folder_close       = "",
+	folder_open        = "",
+	git_added          = "+",
+	git_modified       = "~",
+	git_removed        = "-",
 	hint               = " ",
 	hover              = " ",
 	incoming           = " ",
@@ -330,10 +337,6 @@ local icons = {
 	symlink_arrow      = " 壟 ",
 	warn               = " ",
 	warning            = " ",
-	fold_open          = "",
-	fold_close        = "",
-	folder_open = "",
-	folder_close = "",
 }
 
 ---Defines highlight for kinds
@@ -634,14 +637,13 @@ end
 
 --- Get foreground color from highlight or fallback
 ---@param hl_name string highlight name
----@param fallback string fallback color
+---@param fallback? string fallback color
 function GetFgOrFallback(hl_name, fallback)
 	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
-	if hl then
+	if not vim.tbl_isempty(hl) then
 		return string.format("#%X", hl.fg)
-	else
-		return fallback
 	end
+	return fallback
 end
 
 ---Light or dark color
@@ -3890,24 +3892,52 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: replicate location, window components
+-- FEAT: window components: diagnostics, lsp
 addPlugin {
 	"b0o/incline.nvim",
 	config = function()
 		require("incline").setup({
+			ignore = {
+				buftypes = function() return false end,
+				wintypes = function() return false end,
+				unlisted_buffers = false
+			},
 			render = function(props)
-				if CountWindows(true) > 1 then
-					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+				if CountWindows(true) > 0 then
+					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+					local modified = vim.bo[props.buf].modified and " " .. icons.file_modified or ""
+					local signs = require("lualine.components.diff.git_diff").get_sign_count()
+					local labels = {}
+					if signs ~= nil then
+						table.insert(labels, { " " })
+						for _, name in ipairs { "added", "modified", "removed" } do
+							if signs[name] and signs[name] > 0 then
+								table.insert(labels, { icons["git_" .. name] .. signs[name] .. " ", guifg = GetFgOrFallback("lualine_c_diff_" .. name .. "_normal") })
+							end
+						end
+					end
 					return {
-						{filename, group = "lualine_b_normal" }
+						{ ft_icon, " ", guifg = ft_color },
+						filename,
+						modified,
+						labels,
+						isLspAttached() and "󰈸" or ""
 					}
 				end
 				return nil
-			end
+			end,
+			window = {
+				margin = {
+					vertical = 0
+				},
+				placement = {
+					vertical = "bottom"
+				}
+			}
 		})
 	end,
-	-- Optional: Lazy load Incline
-	event = "VeryLazy",
+	event = "CursorHold",
 }
 
 addPlugin {
@@ -3998,9 +4028,9 @@ addPlugin {
 					end,
 					padding = { left = 1, right = 0 },
 					symbols = {
-						added = "+",
-						modified = "~",
-						removed = "-"
+						added = icons.git_added,
+						modified = icons.git_modified,
+						removed = icons.git_removed
 					}
 				},
 			},
