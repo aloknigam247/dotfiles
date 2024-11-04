@@ -1,6 +1,5 @@
 -- TODO: github stars
 -- TODO: reddit save
--- FIX: Clear all diagnostics
 -- FEAT: do not cut while pasting in visual mode
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3891,11 +3890,21 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: replicate lualine condition, location, window components
+-- FEAT: replicate location, window components
 addPlugin {
 	"b0o/incline.nvim",
 	config = function()
-		require("incline").setup({})
+		require("incline").setup({
+			render = function(props)
+				if CountWindows(true) > 1 then
+					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+					return {
+						{filename, group = "lualine_b_normal" }
+					}
+				end
+				return nil
+			end
+		})
 	end,
 	-- Optional: Lazy load Incline
 	event = "VeryLazy",
