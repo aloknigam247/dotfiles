@@ -1,6 +1,5 @@
 -- TODO: github stars
 -- TODO: reddit save
--- FEAT: do not cut while pasting in visual mode
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
@@ -1148,15 +1147,6 @@ vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete 
 -- mouse
 vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backword" })
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
--- word motion
--- vim.keymap.set("i", "<C-S-Left>",  "<C-\\><C-O>B",             { desc = "Move a larger word backword" })
--- vim.keymap.set("n", "<C-S-Right>", "E",                        { desc = "Move a larger word backword" })
--- vim.keymap.set("i", "<C-S-Right>", "<C-\\><C-O>E<C-\\><C-O>a", { desc = "Move a larger word forward" })
--- vim.keymap.set("n", "<C-S-Left>",  "B",                        { desc = "Move a larger word forward" })
--- vim.keymap.set("i", "<C-Left>",    "<C-\\><C-O>b",             { desc = "Move a word backword" })
--- vim.keymap.set("n", "<C-Left>",    "b",                        { desc = "Move a word backword" })
--- vim.keymap.set("i", "<C-Right>",   "<C-\\><C-O>e<C-\\><C-O>a", { desc = "Move a word forward" })
--- vim.keymap.set("n", "<C-Right>",   "e",                        { desc = "Move a word forward" })
 -- tab switch
 vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
 -- motion
@@ -1169,6 +1159,8 @@ vim.keymap.set("n", '"', function() require("telescope.builtin").registers(requi
 vim.keymap.set("n", "!!",          ":<Up><CR>",                { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",               { desc = "Close window" })
 vim.keymap.set("n", "<C-s>",       "<cmd>w<CR>",               { desc = "Save file" })
+-- paste
+vim.keymap.set("v", "p",           '"_dP',                     { desc = "Search in select region" })
 -- search
 vim.keymap.set("x", "/",           "<Esc>/\\%V",               { desc = "Search in select region" })
 -- <~>
@@ -1414,7 +1406,6 @@ addPlugin {
 
 addPlugin {
 	"RRethy/vim-illuminate",
-	-- FEAT: try underlines
 	config = function()
 		require("illuminate").configure({
 			delay = 400,
@@ -1429,7 +1420,8 @@ addPlugin {
 		})
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-		vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40) })
+		-- vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40) })
+		vim.api.nvim_set_hl(0, "IlluminatedWordText", { underline = true })
 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#8AC926", fg = "#FFFFFF", bold = true })
 		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#FF595E", fg = "#FFFFFF", italic = true })
 	end,
@@ -2818,6 +2810,7 @@ addPlugin {
 	dependencies = { "nvim-telescope/telescope.nvim" }
 }
 
+-- TODO: progress
 addPlugin {
 	"lewis6991/gitsigns.nvim",
 	cmd = "Gitsigns",
@@ -2863,7 +2856,7 @@ addPlugin {
 	}
 }
 
--- TODO: progress
+-- TODO: learn usage
 addPlugin {
 	"sindrets/diffview.nvim",
 	cmd = "DiffviewOpen"
@@ -3892,7 +3885,7 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: window components: diagnostics, lsp
+-- FEAT: window components: diagnostics
 addPlugin {
 	"b0o/incline.nvim",
 	config = function()
@@ -5222,7 +5215,7 @@ addPlugin {
 	cmd = { "Diffthis", "VDiffthis"}
 }
 
-addPlugin { -- TOOD: check usage again
+addPlugin { -- TODO: check usage again
 	"sickill/vim-pasta",
 	config = function()
 		vim.g.pasta_paste_before_mapping = "[p"
