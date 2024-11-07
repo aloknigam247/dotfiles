@@ -711,9 +711,11 @@ local function getTSInstlled(map_entension)
 end
 
 ---Check if LSP is attached to current buffer
+---@param bufnr? integer buffner number
 ---@return boolean # true if LSP is attached
-local function isLspAttached()
-	return #vim.lsp.get_clients({bufnr = 0}) ~= 0
+local function isLspAttached(bufnr)
+	bufnr = bufnr or 0
+	return #vim.lsp.get_clients({bufnr = bufnr}) ~= 0
 end
 
 ---Check if buffer is a large file
@@ -3899,23 +3901,19 @@ addPlugin {
 				if CountWindows(true) > 0 then
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
-					local modified = vim.bo[props.buf].modified and " " .. icons.file_modified or ""
-					local signs = require("lualine.components.diff.git_diff").get_sign_count()
+
+					local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
 					local labels = {}
-					if signs ~= nil then
-						table.insert(labels, { " " })
-						for _, name in ipairs { "added", "modified", "removed" } do
-							if signs[name] and signs[name] > 0 then
-								table.insert(labels, { icons["git_" .. name] .. signs[name] .. " ", guifg = GetFgOrFallback("lualine_c_diff_" .. name .. "_normal") })
-							end
-						end
+					if git_signs and git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
+						labels = { " 󰦓", guifg = "#F14C28" }
 					end
+
 					return {
 						{ ft_icon, " ", guifg = ft_color },
 						filename,
-						modified,
+						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
-						isLspAttached() and "󰈸" or ""
+						isLspAttached(props.buf) and { " 󰈸", guifg = "#EAC435" } or ""
 					}
 				end
 				return nil
@@ -4008,7 +4006,7 @@ addPlugin {
 				{
 					"branch",
 					color = { gui = "bold" },
-					icon = {"", color = {fg = "#F14C28"}},
+					icon = { "", color = { fg = "#F14C28" }},
 					on_click = function()
 						vim.cmd("Telescope git_branches")
 					end,
