@@ -3427,7 +3427,7 @@ addPlugin {
 			width = { 'block', 'block', 'block'},
 			left_margin = 0,
 			left_pad = 0,
-			right_pad = 3,
+			right_pad = 2,
 			min_width = 0,
 			border = false,
 			border_virtual = false,
