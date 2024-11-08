@@ -1590,11 +1590,6 @@ local function fixMaterial()
 	fixVisual("#CCEAE7")
 end
 
----Fix sherbet colorscheme
-local function fixSherbet()
-	vim.api.nvim_set_hl(0, "LspInlayHint", { link = "Comment", force = true })
-end
-
 ---Fix vn-night colorscheme
 local function fixVnNight()
 	fixLineNr("#505275")
@@ -1696,7 +1691,6 @@ addPlugin { "savq/melange",                        event = "User melange"       
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
-addPlugin { "lewpoly/sherbet.nvim",                event = "User sherbet"                                      }
 addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
 addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
 addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"                                     }
@@ -1717,7 +1711,6 @@ dark  { "hybrid",                     "_"                                       
 dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 dark  { "melange",                    "_"                                                                                          }
-dark  { "sherbet",                    "_",            pre = function() vim.g.sherbet_italic_comments = true end, post = fixSherbet }
 dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
 dark  { "zephyrium",                  "_"                                                                                          }
@@ -2690,16 +2683,16 @@ addPlugin {
 			end
 		end
 
-		require("ufo.lib.event"):on("BufAttach", function()
-			require("ufo").closeAllFolds(0)
-		end) -- FIX: not working
-
 		require("ufo").setup({
 			fold_virt_text_handler = ufoFoldResolve,
 			provider_selector = function(_, _, _)
 				return "treesitter"
 			end
 		})
+
+		require("ufo.lib.event"):on("BufAttach", function(arg)
+			require('ufo.action').closeFolds(0)
+		end) -- FIX: not working
 
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
