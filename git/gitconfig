@@ -17,17 +17,16 @@
 [interactive]
     diffFilter = delta --color-only
 
-[delta]
-    ; blame-palette = "#FFE8D1 #568EA3 #68C3D4 #FFFFFF"
-    ; minus-emph-style = "#C31D2B #FF928B"
-    ; plus-emph-style = "#48844C #91C499"
+[delta] 
     blame-code-style = "syntax #4A4A48"
+    blame-palette = "#FFE8D1 #568EA3 #68C3D4 #FFFFFF"
+    colorMoved = default
     commit-decoration-style = box
     commit-style = red
     dark
     file-added-label = 
     file-copied-label = 
-    file-decoration-style = "#D19C1D bold ul"
+    file-decoration-style = "#D19C1D"
     file-modified-label = " "
     file-removed-label = 󰆴
     file-renamed-label = 
@@ -35,16 +34,21 @@
     hunk-header-decoration-style = "#A4C2A5 box"
     light = false
     line-numbers = true
-    line-numbers-left-style = "#CFD11A"
+    line-numbers-left-format = "{nm:^1}│"
+    line-numbers-left-style = "#F0A868"
     line-numbers-minus-style = "#FF928B reverse"
     line-numbers-plus-style = "#91C499 reverse"
-    line-numbers-right-style = "#CFD11A"
-    line-numbers-zero-style = "#6874E8"
+    line-numbers-right-format = "{np:^1}┃"
+    line-numbers-right-style = "#EFBC9B"
+    line-numbers-zero-style = "#4F759B"
+    minus-emph-style = "#C31D2B #FF928B"
     minus-emph-style = "#FF928B reverse"
     minus-style = syntax
     navigate = true
+    plus-emph-style = "#48844C #91C499"
     plus-emph-style = "#91C499 reverse"
     plus-style = syntax
+    side-by-side = false
     syntax-theme = Monokai Extended Origin
     true-color = always
 
@@ -53,11 +57,13 @@
 
 [diff]
     colorMoved = default
+
 [safe]
     directory = D:/Scoop/apps/scoop/current
     directory = D:/Scoop/buckets/versions
     directory = D:/Scoop/buckets/main
     directory = D:/Scoop/buckets/extras
+
 [alias]
 	ignore = update-index --skip-worktree
 	unignore = update-index --no-skip-worktree
