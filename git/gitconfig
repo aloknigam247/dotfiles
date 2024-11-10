@@ -1,4 +1,3 @@
-; FEAT: better git diffs
 [fetch]
     prune = true
 
@@ -18,6 +17,7 @@
     diffFilter = delta --color-only
 
 [delta] 
+    ; FEAT: better git diffs
     blame-code-style = "syntax #4A4A48"
     blame-palette = "#FFE8D1 #568EA3 #68C3D4 #FFFFFF"
     colorMoved = default
@@ -26,11 +26,12 @@
     dark
     file-added-label = 
     file-copied-label = 
-    file-decoration-style = "#D19C1D"
+    file-decoration-style = ""
     file-modified-label = " "
     file-removed-label = 󰆴
     file-renamed-label = 
-    file-style = "#D19C1D italic"
+    file-style = "#91CB3E bold reverse"
+    file-transformation = "s/$/  /"
     hunk-header-decoration-style = "#A4C2A5 box"
     light = false
     line-numbers = true

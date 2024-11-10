@@ -5206,7 +5206,7 @@ addPlugin {
 	cmd = { "Diffthis", "VDiffthis"}
 }
 
-addPlugin { -- TODO: check usage again
+addPlugin {
 	"sickill/vim-pasta",
 	config = function()
 		vim.g.pasta_paste_before_mapping = "[p"
