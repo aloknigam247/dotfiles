@@ -634,6 +634,17 @@ function CountWindows(ignore)
 	return named_window
 end
 
+--- Get background color from highlight or fallback
+---@param hl_name string highlight name
+---@param fallback? string fallback color
+function GetBgOrFallback(hl_name, fallback)
+	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
+	if not vim.tbl_isempty(hl) then
+		return string.format("#%X", hl.bg)
+	end
+	return fallback
+end
+
 --- Get foreground color from highlight or fallback
 ---@param hl_name string highlight name
 ---@param fallback? string fallback color
@@ -3906,7 +3917,7 @@ addPlugin {
 						filename,
 						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
-						isLspAttached(props.buf) and { " 󰈸", guifg = "#EAC435" } or ""
+						isLspAttached(props.buf) and { " 󰈸", guifg = "#EAC435" } or "",
 					}
 				end
 				return nil
