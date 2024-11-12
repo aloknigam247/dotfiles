@@ -3408,7 +3408,7 @@ addPlugin {
 	opts = {
 		render_modes = { 'n', 'c' },
 		anti_conceal = {
-			enabled = false,
+			enabled = true,
 			above = 0,
 			below = 0,
 		},
@@ -3909,8 +3909,10 @@ addPlugin {
 
 					local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
 					local labels = {}
-					if git_signs and git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
-						labels = { " 󰦓", guifg = "#F14C28" }
+					if git_signs then
+						if git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
+							labels = { " 󰦓", guifg = "#F14C28" }
+						end
 					end
 
 					return {
