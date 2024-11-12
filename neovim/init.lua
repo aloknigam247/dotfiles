@@ -2756,6 +2756,7 @@ addPlugin {
 	end
 }
 
+-- https://github.com/folke/snacks.nvim/blob/main/docs/gitbrowse.md
 addPlugin {
 	"9seconds/repolink.nvim",
 	cmd = "RepoLink",
@@ -3866,7 +3867,6 @@ addPlugin {
 				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1 }, click = "v:lua.ScSa" },
 				{ sign = { name = { "Bookmark" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
-				{ sign = { name = { "coverage" }, colwidth = 1, fillcharhl ="LineNr", auto = true } },
 				{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
 				{ text = { builtin.lnumfunc }, click = "v:lua.ScLa", condition = { true } },
 				{
@@ -3884,6 +3884,7 @@ addPlugin {
 					},
 					click = "v:lua.ScSa",
 				},
+				{ sign = { name = { "coverage" }, colwidth = 1, fillcharhl ="LineNr", auto = true } },
 			},
 		})
 	end,
@@ -4684,7 +4685,9 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
+-- FEAT: https://github.com/NvChad/ui
+
+addPlugin { -- FIX: commented code
 	"folke/noice.nvim",
 	config = function()
 		vim.o.lazyredraw = false
@@ -5090,6 +5093,17 @@ addPlugin {
 		-- }
 	}
 }
+
+-- FEAT: https://github.com/folke/snacks.nvim
+-- https://github.com/folke/snacks.nvim/blob/main/docs/debug.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/words.md
 
 addPlugin {
 	-- https://github.com/gregorias/coerce.nvim
