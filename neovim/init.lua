@@ -3807,10 +3807,9 @@ vim.api.nvim_create_user_command(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"rmagatti/auto-session", -- BUG: not working as expected
+	"rmagatti/auto-session",
 	cmd = "SessionSave",
 	config = function()
-		vim.g.auto_session_suppress_dirs = { "C:\\Users\\aloknigam", "~" }
 		require("auto-session").setup({
 			post_delete_cmds = {
 				"let g:auto_session_enabled = v:false",
@@ -3821,12 +3820,13 @@ addPlugin {
 			},
 			post_save_cmds = {
 				"let g:session_icon = '󰅠'"
-			}
+			},
+			suppressed_dirs = { "C:\\Users\\aloknigam", "~" }
 		})
 		vim.o.sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal"
 	end,
 	init = function()
-		if vim.fn.filereadable(vim.fn.stdpath("data") .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "-"):gsub(":", "++") .. ".vim") == 1 then
+		if vim.fn.filereadable(vim.fn.stdpath("data") .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%5C"):gsub(":", "%%3A") .. ".vim") == 1 then
 			require("auto-session")
 		end
 	end
