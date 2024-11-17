@@ -3892,7 +3892,6 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: window components: diagnostics
 addPlugin {
 	"b0o/incline.nvim",
 	config = function()
@@ -3903,7 +3902,7 @@ addPlugin {
 				unlisted_buffers = false
 			},
 			render = function(props)
-				if CountWindows(true) > 0 then
+				if CountWindows(true) > 1 then
 					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 
@@ -3911,7 +3910,7 @@ addPlugin {
 					local labels = {}
 					if git_signs then
 						if git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
-							labels = { " 󰦓", guifg = "#F14C28" }
+							labels = { " 󰦓", guifg = "#85C581" }
 						end
 					end
 
@@ -3921,6 +3920,7 @@ addPlugin {
 						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
 						isLspAttached(props.buf) and { " 󰈸", guifg = "#EAC435" } or "",
+						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
 					}
 				end
 				return nil
