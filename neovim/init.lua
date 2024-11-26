@@ -487,6 +487,7 @@ local lazy_config = {
 ---@type Plugin[] List of plugins
 local plugins = {}
 
+-- FEAT: use https://github.com/nvzone/menu
 ---@class PopupMenu
 ---@field cond fun() Condition to evaluate for PopUp menu
 ---@field opts string[][] Config options
