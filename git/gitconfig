@@ -23,7 +23,6 @@
     colorMoved = default
     commit-decoration-style = box
     commit-style = red
-    dark
     file-added-label = 
     file-copied-label = 
     file-decoration-style = ""
@@ -37,7 +36,7 @@
     hunk-header-line-number-style = "#E08E45"
     hunk-header-style = "line-number syntax"
     hunk-label = "󰝵"
-    light = false
+    light = true
     line-numbers = true
     line-numbers-left-format = "{nm:^1}│"
     line-numbers-left-style = "#F0A868"
@@ -53,8 +52,8 @@
     plus-emph-style = "#48844C #91C499"
     plus-emph-style = "#91C499 reverse"
     plus-style = syntax
-    side-by-side = false
-    syntax-theme = Monokai Extended Origin
+    side-by-side = true
+    syntax-theme = Visual Studio Dark+
     true-color = always
 
 [merge]
