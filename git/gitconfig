@@ -1,4 +1,3 @@
-; FIX: ^M symbols at the end
 [fetch]
     prune = true
 
@@ -71,6 +70,6 @@
     directory = D:/Scoop/buckets/extras
 
 [alias]
-	ignore = update-index --skip-worktree
-	unignore = update-index --no-skip-worktree
-	ignored = !git ls-files -v | grep \"^S\"
+    ignore = update-index --skip-worktree
+    unignore = update-index --no-skip-worktree
+    ignored = !git ls-files -v | grep \"^S\"
