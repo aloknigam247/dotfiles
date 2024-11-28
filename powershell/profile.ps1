@@ -1,5 +1,5 @@
 # FEAT: Work setup: use powershell 7 for ODC (oned cmds)
-# FEAT: create a Build-Csproj command to build git diff .cs files
+# FEAT: fix repition in dev commands
 # FEAT: look for sixel apps
 # TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
 # ╭─────────────╮
