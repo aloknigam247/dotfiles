@@ -4688,8 +4688,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/NvChad/ui
-
 addPlugin { -- FIX: commented code
 	"folke/noice.nvim",
 	config = function()
