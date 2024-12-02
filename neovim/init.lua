@@ -5086,12 +5086,9 @@ addPlugin {
 		preset = "modern",
 		show_help = true,
 		show_keys = true,
-		-- win = { -- BUG: resolve margin
-		-- 	border = dotted_border,
-		-- 	margin = { 0, 0, 1, 0 },
-		-- 	padding = { 0, 0, 0, 0 },
-		-- 	position = "bottom"
-		-- }
+		win = {
+			border = dotted_border
+		}
 	}
 }
 
