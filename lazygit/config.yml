@@ -68,48 +68,24 @@ gui:
             - '◞'
             - '◡'
             - '◟'
-        # The "speed" of the spinner in milliseconds.
         rate: 50
 git:
     paging:
         colorArg: always
-        useConfig: false
+        useConfig: true
+        externalDiffCommand: "echo"
     commit:
         signOff: false
         autoWrapCommitMessage: true # automatic WYSIWYG wrapping of the commit message as you type
         autoWrapWidth: 80 # if autoWrapCommitMessage is true, the width to wrap to
     merging:
-        # only applicable to unix users
         manualCommit: false
-        # extra args passed to `git merge`, e.g. --no-ff
-
         args: ''
     log:
-        # one of date-order, author-date-order, topo-order or default.
-
-        # topo-order makes it easier to read the git log graph, but commits may not
-
-        # appear chronologically. See https://git-scm.com/docs/git-log#_commit_ordering
-
-        #
-
-        # Deprecated: Configure this with `Log menu -> Commit sort order` (<c-l> in the commits window by default).
         order: 'topo-order'
-        # one of always, never, when-maximised
-
-        # this determines whether the git graph is rendered in the commits panel
-
-        #
-
-        # Deprecated: Configure this with `Log menu -> Show git graph` (<c-l> in the commits window by default).
         showGraph: 'when-maximised'
-        # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
-
         showWholeGraph: false
     skipHookPrefix: WIP
-    # The main branches. We colour commits green if they belong to one of these branches,
-
-    # so that you can easily see which commits are unique to your branch (coloured in yellow)
     mainBranches: [master, main]
     autoFetch: false
     autoRefresh: true
