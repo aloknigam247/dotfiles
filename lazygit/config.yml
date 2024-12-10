@@ -73,7 +73,6 @@ git:
     paging:
         colorArg: always
         useConfig: true
-        externalDiffCommand: "echo"
     commit:
         signOff: false
         autoWrapCommitMessage: true # automatic WYSIWYG wrapping of the commit message as you type
