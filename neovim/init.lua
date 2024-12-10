@@ -1384,7 +1384,7 @@ addPlugin {
 -- FEAT: configure check each markers, check how marks are read and use for lazy loading marks plugins
 addPlugin {
 	"dstein64/nvim-scrollview",
-	cmd = "ScrollViewToggle "
+		cmd = "ScrollViewToggle "
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1566,6 +1566,7 @@ addPlugin {
 	lazy = true
 }
 
+-- FEAT: https://github.com/nvzone/minty
 -- "uga-rosa/ccc.nvim"
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1687,6 +1688,7 @@ local function lightT(opts)
 	light(opts)
 end
 
+-- FEAT: https://github.com/NLKNguyen/papercolor-theme
 addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"                                          }
 addPlugin { "uloco/bluloco.nvim",                  event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
@@ -1865,7 +1867,9 @@ addPlugin {
 --     event = "InsertEnter *.cc,*.cpp,*.c,*.h"
 -- }
 
+-- PERF: https://github.com/iguanacucumber/magazine.nvim
 addPlugin {
+	-- https://github.com/Saghen/blink.cmp
 	"hrsh7th/nvim-cmp",
 	config = function()
 		local cmp = require("cmp")
@@ -3250,6 +3254,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/netmute/ctags-lsp.nvim
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
@@ -4366,6 +4371,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
+-- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -4688,6 +4694,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: window animation https://github.com/echasnovski/mini.animate
 addPlugin { -- FIX: commented code
 	"folke/noice.nvim",
 	config = function()
