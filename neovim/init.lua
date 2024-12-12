@@ -3254,6 +3254,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/iabdelkareem/csharp.nvim
 -- FEAT: https://github.com/netmute/ctags-lsp.nvim
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
