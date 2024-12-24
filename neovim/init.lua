@@ -4372,7 +4372,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
--- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
+-- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
