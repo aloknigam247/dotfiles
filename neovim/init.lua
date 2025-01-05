@@ -1782,6 +1782,14 @@ function ColoRand(scheme_index)
 	-- override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
+
+	-- Override neovide title color
+	if vim.fn.exists("g:neovide") then
+		vim.g.neovide_title_background_color = string.format(
+			"%x",
+			vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).bg
+		)
+	end
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
