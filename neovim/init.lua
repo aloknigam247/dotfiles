@@ -4703,7 +4703,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: window animation https://github.com/echasnovski/mini.animate
 addPlugin { -- FIX: commented code
 	"folke/noice.nvim",
 	config = function()
