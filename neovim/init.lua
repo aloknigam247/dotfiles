@@ -639,8 +639,8 @@ end
 ---@param hl_name string highlight name
 ---@param fallback? string fallback color
 function GetBgOrFallback(hl_name, fallback)
-	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
-	if not vim.tbl_isempty(hl) then
+	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
+	if not vim.tbl_isempty(hl) and hl.bg then
 		return string.format("#%X", hl.bg)
 	end
 	return fallback
@@ -650,8 +650,8 @@ end
 ---@param hl_name string highlight name
 ---@param fallback? string fallback color
 function GetFgOrFallback(hl_name, fallback)
-	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false})
-	if not vim.tbl_isempty(hl) then
+	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
+	if not vim.tbl_isempty(hl) and hl.fg then
 		return string.format("#%X", hl.fg)
 	end
 	return fallback
@@ -1785,10 +1785,7 @@ function ColoRand(scheme_index)
 
 	-- Override neovide title color
 	if vim.fn.exists("g:neovide") then
-		vim.g.neovide_title_background_color = string.format(
-			"%x",
-			vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).bg
-		)
+		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", "#000000")
 	end
 end
 -- <~>

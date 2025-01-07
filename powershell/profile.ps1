@@ -1,4 +1,3 @@
-# FEAT: Work setup: use powershell 7 for ODC (oned cmds)
 # FEAT: fix repition in dev commands
 # FEAT: look for sixel apps
 # FEAT: list build status inn Build-Changes
