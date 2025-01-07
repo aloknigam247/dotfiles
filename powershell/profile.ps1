@@ -170,42 +170,6 @@ function gwa {
 }
 
 # ─[ Get TODOs from current directory ]────────────────────────────────
-function Get-TODO {
-    param(
-        [Parameter(Position = 0)]
-        [ValidateSet('all', 'random', 'stats')]
-        [String] $type = 'All'
-    )
-
-    process {
-        $tag_list = @('BUG', 'DOCME', 'FEAT', 'FIX', 'FIXME', 'HACK', 'PERF', 'REFACTOR', 'TEST', 'TODO', 'THOUGHT')
-
-        if ($type -eq 'All') {
-            # Get list of all
-            $pattern = $tag_list -join '|'
-            rg "($pattern):"  --trim --sort path -nw --color=always
-        }
-        elseif ($type -eq 'Random') {
-            # Get random tag
-            $pattern = $tag_list -join '|'
-            rg "($pattern):"  --trim --sort path -nw --color=always | Get-Random -Count 3
-        }
-        elseif ($type -eq 'Stats') {
-            # Generate count per tag
-            $tag_map = @{}
-            $total = 0
-            foreach ($tag in $tag_list) {
-                $count = (rg "${tag}:" -cwI | Measure-Object -Sum).Sum
-                if ($count -gt 0) {
-                    $total += $count
-                    $tag_map[$tag] = $count
-                }
-            }
-            Format-Table -AutoSize -HideTableHeaders -InputObject $tag_map
-            Write-Host "TOTAL    $total" -ForegroundColor Blue
-        }
-    }
-}
 
 # ─[ Format text for colors and formatting ]───────────────────────────
 function Format-Text {
@@ -333,12 +297,6 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 # https://minsw.github.io/fzf-color-picker/
-$env:FZF_DEFAULT_OPTS='
-    --height=~70% --layout=reverse --border=rounded --border-label=" FZF " --border-label-pos=5 --info=inline --prompt=" " --pointer="➤ " --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)" --scheme=path --marker=""
-    --color=fg:#ffffff,bg:-1,hl:#71b7c2
-    --color=fg+:#78c5ff,bg+:-1,hl+:#a7daeb
-    --color=info:#afaf87,prompt:#57edbb,pointer:#db2929
-    --color=marker:#f0a1a1,spinner:#f2f759,header:#8ccdcf'
 
 # ╭────────────────╮
 # │ Prompt Styling │
