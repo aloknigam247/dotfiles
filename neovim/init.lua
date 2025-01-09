@@ -2039,6 +2039,7 @@ addPlugin {
 }
 
 addPlugin {
+	-- FEAT: high DebugPrintLine
 	"andrewferrier/debugprint.nvim",
 	dependencies = { "echasnovski/mini.comment" },
 	lazy = true,
@@ -2704,16 +2705,17 @@ addPlugin {
 			end
 		end
 
+		require("ufo.lib.event"):on("BufAttach", function(arg)
+			print('closing folds: arg=' .. vim.inspect(arg))
+			require("ufo.action").closeFolds(1)
+		end) -- FIX: not working
+
 		require("ufo").setup({
 			fold_virt_text_handler = ufoFoldResolve,
 			provider_selector = function(_, _, _)
 				return "treesitter"
 			end
 		})
-
-		require("ufo.lib.event"):on("BufAttach", function(arg)
-			require('ufo.action').closeFolds(0)
-		end) -- FIX: not working
 
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
@@ -4043,6 +4045,7 @@ addPlugin {
 						removed = icons.git_removed
 					}
 				},
+				{ "buffers", mode = 3 }
 			},
 			lualine_x = {
 				{
@@ -5354,6 +5357,6 @@ addPlugin {
 }
 
 require("lazy").setup(plugins, lazy_config)
-ColoRand()
+ColoRand(12)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
