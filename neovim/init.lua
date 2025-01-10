@@ -2706,7 +2706,6 @@ addPlugin {
 		end
 
 		require("ufo.lib.event"):on("BufAttach", function(arg)
-			print('closing folds: arg=' .. vim.inspect(arg))
 			require("ufo.action").closeFolds(1)
 		end) -- FIX: not working
 
