@@ -1932,6 +1932,13 @@ addPlugin {
 					local kind_symbol = " " .. icons[vim_item.kind]
 					vim_item.kind = kind_symbol or vim_item.kind
 
+				-- setup xzbdmw/colorful-menu.nvim
+					local highlights_info = require("colorful-menu").cmp_highlights(entry)
+					if highlights_info ~= nil then
+						vim_item.abbr_hl_group = highlights_info.highlights
+						vim_item.abbr = highlights_info.text
+					end
+
 					return vim_item
 				end
 			},
@@ -2005,6 +2012,10 @@ addPlugin {
 		"hrsh7th/cmp-buffer",
 	},
 	event = "VeryLazy",
+}
+
+addPlugin {
+	"xzbdmw/colorful-menu.nvim"
 }
 
 -- https://github.com/L3MON4D3/cmp-luasnip-choice
@@ -3262,6 +3273,7 @@ addPlugin {
 
 -- FEAT: https://github.com/iabdelkareem/csharp.nvim
 -- FEAT: https://github.com/netmute/ctags-lsp.nvim
+-- https://github.com/Automattic/harper
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
@@ -4043,8 +4055,7 @@ addPlugin {
 						modified = icons.git_modified,
 						removed = icons.git_removed
 					}
-				},
-				{ "buffers", mode = 3 }
+				}
 			},
 			lualine_x = {
 				{
@@ -5356,6 +5367,6 @@ addPlugin {
 }
 
 require("lazy").setup(plugins, lazy_config)
-ColoRand(12)
+ColoRand()
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
