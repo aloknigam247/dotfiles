@@ -1731,7 +1731,6 @@ dark  { "zephyrium",                  "_"                                       
 darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
-darkT { "hybrid",                     "_",              cfg = { transparent = true }                                               }
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 light { "bluloco",                    "_"                                                                                          }
