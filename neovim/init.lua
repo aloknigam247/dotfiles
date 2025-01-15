@@ -239,7 +239,7 @@
 -- vim.api.__nvim_create_autocmd = vim.api.nvim_create_autocmd
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
 ------------
 
@@ -1857,12 +1857,16 @@ addPlugin {
 }
 
 addPlugin {
-	"hrsh7th/cmp-cmdline",
+	-- "hrsh7th/cmp-cmdline",
+	"iguanacucumber/mag-cmdline",
+	name = "cmp-cmdline",
 	event = "CmdlineChanged"
 }
 
 addPlugin {
-	"hrsh7th/cmp-nvim-lsp",
+	-- "hrsh7th/cmp-nvim-lsp",
+	"iguanacucumber/mag-nvim-lsp",
+	name = "cmp-nvim-lsp",
 	event = "LspAttach"
 }
 
@@ -1871,10 +1875,11 @@ addPlugin {
 --     event = "InsertEnter *.cc,*.cpp,*.c,*.h"
 -- }
 
--- PERF: https://github.com/iguanacucumber/magazine.nvim
 addPlugin {
 	-- https://github.com/Saghen/blink.cmp
-	"hrsh7th/nvim-cmp",
+	-- "hrsh7th/nvim-cmp",
+	"iguanacucumber/magazine.nvim",
+	name = "nvim-cmp",
 	config = function()
 		local cmp = require("cmp")
 		cmp.setup({
@@ -2008,7 +2013,8 @@ addPlugin {
 		vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { underline = true })
 	end,
 	dependencies = {
-		"hrsh7th/cmp-buffer",
+		-- "hrsh7th/cmp-buffer"
+		{ "iguanacucumber/mag-buffer", name = "cmp-buffer" }
 	},
 	event = "VeryLazy",
 }
@@ -2740,8 +2746,7 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: git uncovered use cases
--- git file history: using telescope https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
+-- FEAT: git file history: using telescope https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
 -- FEAT: git graph
 -- addPlugin {
 -- 	'isakbm/gitgraph.nvim',
@@ -2920,7 +2925,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Indent     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: indentation highlight should be lower to diagnostics
 addPlugin {
 	"lukas-reineke/indent-blankline.nvim",
 	event = "CursorHold",
@@ -4712,7 +4716,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- FIX: commented code
+addPlugin {
 	"folke/noice.nvim",
 	config = function()
 		vim.o.lazyredraw = false
@@ -4750,41 +4754,41 @@ addPlugin { -- FIX: commented code
 				view = "popup",
 				filter = { event = "msg_show" },
 			},
-			-- commands = {
-			-- 	history = {
-			-- 		view = "split",
-			-- 		opts = { enter = true, format = "details" },
-			-- 		filter = {
-			-- 			any = {
-			-- 				{ event = "notify" },
-			-- 				{ error = true },
-			-- 				{ warning = true },
-			-- 				{ event = "msg_show", kind = { "" } },
-			-- 				{ event = "lsp", kind = "message" },
-			-- 			},
-			-- 		},
-			-- 	},
-			-- 	last = {
-			-- 		view = "popup",
-			-- 		opts = { enter = true, format = "details" },
-			-- 		filter = {
-			-- 			any = {
-			-- 				{ event = "notify" },
-			-- 				{ error = true },
-			-- 				{ warning = true },
-			-- 				{ event = "msg_show", kind = { "" } },
-			-- 				{ event = "lsp", kind = "message" },
-			-- 			},
-			-- 		},
-			-- 		filter_opts = { count = 1 },
-			-- 	},
-			-- 	errors = {
-			-- 		view = "popup",
-			-- 		opts = { enter = true, format = "details" },
-			-- 		filter = { error = true },
-			-- 		filter_opts = { reverse = true },
-			-- 	},
-			-- },
+			commands = {
+				history = {
+					view = "split",
+					opts = { enter = true, format = "details" },
+					filter = {
+						any = {
+							{ event = "notify" },
+							{ error = true },
+							{ warning = true },
+							{ event = "msg_show", kind = { "" } },
+							{ event = "lsp", kind = "message" },
+						},
+					},
+				},
+				last = {
+					view = "popup",
+					opts = { enter = true, format = "details" },
+					filter = {
+						any = {
+							{ event = "notify" },
+							{ error = true },
+							{ warning = true },
+							{ event = "msg_show", kind = { "" } },
+							{ event = "lsp", kind = "message" },
+						},
+					},
+					filter_opts = { count = 1 },
+				},
+				errors = {
+					view = "popup",
+					opts = { enter = true, format = "details" },
+					filter = { error = true },
+					filter_opts = { reverse = true },
+				},
+			},
 			notify = {
 				enabled = true,
 				view = "notify",
@@ -4823,31 +4827,31 @@ addPlugin { -- FIX: commented code
 					view = "notify",
 					opts = {},
 				},
-			-- 	documentation = {
-			-- 		view = "hover",
-			-- 		opts = {
-			-- 			lang = "markdown",
-			-- 			replace = true,
-			-- 			render = "plain",
-			-- 			format = { "{ message }" },
-			-- 			win_options = { concealcursor = "n", conceallevel = 3 },
-			-- 		},
-			-- 	},
+				documentation = {
+					view = "hover",
+					opts = {
+						lang = "markdown",
+						replace = true,
+						render = "plain",
+						format = { "{ message }" },
+						win_options = { concealcursor = "n", conceallevel = 3 },
+					},
+				},
 			},
-			-- markdown = {
-			-- 	hover = {
-			-- 		["|(%S-)|"] = vim.cmd.help,
-			-- 		["%[.-%]%((%S-)%)"] = require("noice.util").open,
-			-- 	},
-			-- 	highlights = {
-			-- 		["|%S-|"] = "@text.reference",
-			-- 		["@%S+"] = "@parameter",
-			-- 		["^%s*(Parameters:)"] = "@text.title",
-			-- 		["^%s*(Return:)"] = "@text.title",
-			-- 		["^%s*(See also:)"] = "@text.title",
-			-- 		["{%S-}"] = "@parameter",
-			-- 	},
-			-- },
+			markdown = {
+				hover = {
+					["|(%S-)|"] = vim.cmd.help,
+					["%[.-%]%((%S-)%)"] = require("noice.util").open,
+				},
+				highlights = {
+					["|%S-|"] = "@text.reference",
+					["@%S+"] = "@parameter",
+					["^%s*(Parameters:)"] = "@text.title",
+					["^%s*(Return:)"] = "@text.title",
+					["^%s*(See also:)"] = "@text.title",
+					["{%S-}"] = "@parameter",
+				},
+			},
 			health = {
 				checker = false,
 			},
