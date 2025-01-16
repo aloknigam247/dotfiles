@@ -2747,27 +2747,27 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: git file history: using telescope https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
--- FEAT: git graph
--- addPlugin {
--- 	'isakbm/gitgraph.nvim',
--- 	dependencies = { 'sindrets/diffview.nvim' },
--- 	---@type I.GGConfig
--- 	opts = {
--- 		symbols = {
--- 			merge_commit = 'M',
--- 			commit = '*',
--- 		},
--- 		format = {
--- 			timestamp = '%H:%M:%S %d-%m-%Y',
--- 			fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
--- 		},
--- 	},
--- 	init = function()
--- 		vim.keymap.set('n', '<leader>gl', function()
--- 			require('gitgraph').draw({}, { all = true, max_count = 5000 })
--- 		end, { desc = 'new git graph' })
--- 	end,
--- }
+addPlugin {
+	"isakbm/gitgraph.nvim",
+	cmd = "GitGraph",
+	dependencies = { "sindrets/diffview.nvim" },
+	---@type I.GGConfig
+	opts = {
+		symbols = {
+			merge_commit = "",
+			commit = "󰜘",
+		},
+		format = {
+			timestamp = "%H:%M:%S %d-%m-%Y",
+			fields = { "hash", "timestamp", "author", "branch_name", "tag" },
+		},
+	},
+	init = function()
+		vim.api.nvim_create_user_command("GitGraph", function()
+			require('gitgraph').draw({}, { all = true, max_count = 5000 })
+		end, {})
+	end,
+}
 
 addPlugin {
 	"rhysd/git-messenger.vim",
@@ -3275,7 +3275,6 @@ addPlugin {
 }
 
 -- FEAT: https://github.com/iabdelkareem/csharp.nvim
--- FEAT: https://github.com/netmute/ctags-lsp.nvim
 -- https://github.com/Automattic/harper
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
