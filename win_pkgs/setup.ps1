@@ -1,4 +1,3 @@
-# FEAT: sed replacement for windows
 $pip_pkgs = @(
     'debugpy',
     'pipx'
@@ -11,6 +10,7 @@ $scoop_pkgs = @(
     "less"
     "msys2"
     "ripgrep"
+    "sed"
     "tre-command"
 )
 

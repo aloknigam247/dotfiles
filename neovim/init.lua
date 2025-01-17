@@ -1688,7 +1688,6 @@ local function lightT(opts)
 	light(opts)
 end
 
--- FEAT: https://github.com/NLKNguyen/papercolor-theme
 addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"                                          }
 addPlugin { "uloco/bluloco.nvim",                  event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
@@ -1705,38 +1704,40 @@ addPlugin { "savq/melange",                        event = "User melange"       
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
+addPlugin { "NLKNguyen/papercolor-theme",          event = "User PaperColor"                                   }
 addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
 addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
 addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"                                     }
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
+dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+dark  { "bluloco",                    "_"                                                                                          }
+light { "bluloco",                    "_"                                                                                          }
+darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
+light { "catppuccin-latte",           "catppuccin"                                                                                 }
+dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
+lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
+dark  { "duskfox",                    "nightfox"                                                                                   }
+darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 dark  { "everforest",                 "_"                                                                                          }
-dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
-dark  { "vscode",                     "_"                                                                                          }
 darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
-
-dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
-dark  { "bluloco",                    "_"                                                                                          }
-dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
-dark  { "duskfox",                    "nightfox"                                                                                   }
 dark  { "hybrid",                     "_"                                                                                          }
 dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
-dark  { "melange",                    "_"                                                                                          }
-dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
-dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
-dark  { "zephyrium",                  "_"                                                                                          }
-darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
-darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
-darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
-darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
-light { "bluloco",                    "_"                                                                                          }
-light { "catppuccin-latte",           "catppuccin"                                                                                 }
 light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
-lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
+dark  { "melange",                    "_"                                                                                          }
+dark  { "PaperColor",                 "_"                                                                                          }
+dark  { "PaperColor",                 "_"                                                                                          }
+dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
+dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
+darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
+dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
+dark  { "vscode",                     "_"                                                                                          }
+dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
