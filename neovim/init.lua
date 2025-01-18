@@ -1124,7 +1124,7 @@ vim.api.nvim_create_autocmd(
 				end
 			end
 
-			require("menu").open(options)
+			if #options ~= 0 then require("menu").open(options) end
 		end
 	}
 )
@@ -2730,10 +2730,6 @@ addPlugin {
 			end
 		end
 
-		require("ufo.lib.event"):on("BufAttach", function(arg)
-			require("ufo.action").closeFolds(1)
-		end) -- FIX: not working
-
 		require("ufo").setup({
 			fold_virt_text_handler = ufoFoldResolve,
 			provider_selector = function(_, _, _)
@@ -2741,8 +2737,9 @@ addPlugin {
 			end
 		})
 
-		vim.keymap.set("n", "zR", require("ufo").openAllFolds)
-		vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+		vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
+		vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
+		vim.keymap.set("n", "zz", function() require("ufo.action").closeFolds(1) end, { desc = "Fold to level 1" })
 	end,
 	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" }
 }
@@ -4074,7 +4071,8 @@ addPlugin {
 						modified = icons.git_modified,
 						removed = icons.git_removed
 					}
-				}
+				},
+				{ "buffers", mode = 3 }
 			},
 			lualine_x = {
 				{
