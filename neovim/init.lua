@@ -1381,10 +1381,14 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: configure check each markers, check how marks are read and use for lazy loading marks plugins
 addPlugin {
 	"dstein64/nvim-scrollview",
-		cmd = "ScrollViewToggle "
+	cmd = "ScrollViewToggle",
+	opts = {
+		floating_windows = true,
+		hide_on_intersect = true,
+		signs_on_startup = { "all" }
+	}
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2752,7 +2756,6 @@ addPlugin {
 	"isakbm/gitgraph.nvim",
 	cmd = "GitGraph",
 	dependencies = { "sindrets/diffview.nvim" },
-	---@type I.GGConfig
 	opts = {
 		symbols = {
 			merge_commit = "",
@@ -4204,7 +4207,7 @@ addPlugin {
 						return str:gsub("^%s+", ""):gsub("%s+", "")
 					end,
 					on_click = function ()
-						vim.cmd("ScrollViewToggle ")
+						vim.cmd("ScrollViewToggle")
 					end,
 					padding = { left = 0, right = 0 },
 					separator = { left = "", right = "█" }
