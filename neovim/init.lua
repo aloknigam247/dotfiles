@@ -1,6 +1,3 @@
--- TODO: github stars
--- TODO: reddit save
-
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
@@ -487,10 +484,14 @@ local lazy_config = {
 ---@type Plugin[] List of plugins
 local plugins = {}
 
--- FEAT: use https://github.com/nvzone/menu
+---@class PopupMenuOption
+---@field name string name of option
+---@field key? string key map for the option
+---@field exec fun() option execution function
+
 ---@class PopupMenu
----@field cond fun() Condition to evaluate for PopUp menu
----@field opts string[][] Config options
+---@field cond? fun() Condition to evaluate for PopUp menu
+---@field options PopupMenuOption[] Config options
 ---@type PopupMenu[]
 local pop_up_menu = {}
 
@@ -897,26 +898,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	})
 end
 
----Create popup menu when invoked
-local function popupAction()
-	-- local currentWindow = vim.api.nvim_get_current_win()
-	-- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
-	vim.cmd("aunmenu PopUp") -- Clear popup menu
-
-	-- Fill popup options
-	for _,menu in pairs(pop_up_menu) do
-		if menu.cond() then
-			for _,opt in pairs(menu.opts) do
-				local title = opt[1]
-				local action = opt[2]
-				title = title:gsub(" ", "\\ ")
-				vim.cmd.nnoremenu("PopUp." .. title .. " " .. action)
-			end
-		end
-	end
-end
-
----Add a popup menu
+---Adds a popup menu
 ---@param menu PopupMenu Popup menu
 local function popupMenuAdd(menu)
 	table.insert(pop_up_menu, menu)
@@ -1121,7 +1103,29 @@ vim.api.nvim_create_autocmd(
 	"MenuPopup", {
 		pattern = "n",
 		desc = "Create popup menu based on context",
-		callback = popupAction
+		callback = function()
+			-- local currentWindow = vim.api.nvim_get_current_win()
+			-- local cursorPos = vim.api.nvim_win_get_cursor(currentWindow)
+
+			-- Fill popup options
+			local options = {}
+			for _,menu in pairs(pop_up_menu) do
+				if menu.cond == nil or menu.cond() then
+					if #options ~= 0 then
+						table.insert(options, { name = "separator" })
+					end
+					for _,opt in pairs(menu.options) do
+						local option = {}
+						option["name"] = opt.name
+						option["rtxt"] = opt.key
+						option["cmd"] = opt.exec
+						table.insert(options, option)
+					end
+				end
+			end
+
+			require("menu").open(options)
+		end
 	}
 )
 
@@ -1861,7 +1865,7 @@ addPlugin {
 	event = "InsertEnter"
 }
 
-addPlugin {
+addPlugin { -- BUG: double menu
 	-- "hrsh7th/cmp-cmdline",
 	"iguanacucumber/mag-cmdline",
 	name = "cmp-cmdline",
@@ -3356,17 +3360,17 @@ addPlugin {
 
 		popupMenuAdd({
 			cond = isLspAttached,
-			opts = {
-				{"Code Action         <C-.>",  "<Cmd>lua require('actions-preview').code_actions()<CR>"},
-				{"Declaration            gD",  "<Cmd>lua vim.lsp.buf.declaration()<CR>"},
-				{"Definition            F12",  "<Cmd>lua vim.lsp.buf.definition()<CR>"},
-				{"Hover                  \\h", "<Cmd>Lspsaga hover_doc<CR>"},
-				{"Implementation         gi",  "<Cmd>lua vim.lsp.buf.implementation()<CR>"},
-				{"LSP Finder        Alt F12",  "<Cmd>Lspsaga lsp_finder<CR>"},
-				{"Peek Definition        gp",  "<Cmd>Lspsaga peek_definition<CR>"},
-				{"References      Shift F12",  "<Cmd>lua vim.lsp.buf.references()<CR>"},
-				{"Rename                 F2",  "<Cmd>Lspsaga rename<CR>"},
-				{"Type Definition        gt",  "<Cmd>lua vim.lsp.buf.type_definition()<CR>"}
+			options = {
+				{ name = " Code Action", key = "<C-.>", exec = require('actions-preview').code_actions },
+				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
+				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
+				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
+				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
+				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
+				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
+				{ name = " References", key = "Shift F12", exec = vim.lsp.buf.references },
+				{ name = "󰑕 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
+				{ name = " Type Definition", key = "gt", exec = vim.lsp.buf.type_definition }
 			}
 		})
 
@@ -3675,6 +3679,15 @@ addPlugin {
 	lazy = false
 }
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Popup Menu    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin {
+	"nvzone/menu",
+	init = function()
+		vim.cmd("aunmenu PopUp") -- Clear popup menu
+	end,
+	dependencies = "nvzone/volt"
+}
+--<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"stevearc/aerial.nvim",
@@ -4582,10 +4595,10 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Lazy run treesitter
-vim.treesitter.__start = vim.treesitter.start
-vim.treesitter.start = function(bufnr, lang)
-	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
-end
+-- vim.treesitter.__start = vim.treesitter.start
+-- vim.treesitter.start = function(bufnr, lang)
+-- 	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
+-- end
 
 addPlugin {
 	-- https://github.com/echasnovski/mini.splitjoin
@@ -5375,4 +5388,6 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
+-- TODO: github stars
+-- TODO: reddit save
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
