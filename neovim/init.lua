@@ -1574,7 +1574,6 @@ addPlugin {
 	lazy = true
 }
 
--- FEAT: https://github.com/nvzone/minty
 -- "uga-rosa/ccc.nvim"
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1700,7 +1699,6 @@ addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"           
 addPlugin { "uloco/bluloco.nvim",                  event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
 addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"                                   }
-addPlugin { "sainnhe/everforest",                  event = "User everforest"                                   }
 addPlugin { "comfysage/evergarden",                event = "User evergarden"                                   }
 addPlugin { "projekt0n/github-nvim-theme",         event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",              event = "User hybrid"                                       }
@@ -1729,7 +1727,6 @@ dark  { "catppuccin-macchiato",       "catppuccin"                              
 lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 dark  { "duskfox",                    "nightfox"                                                                                   }
 darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
-dark  { "everforest",                 "_"                                                                                          }
 darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 dark  { "hybrid",                     "_"                                                                                          }
@@ -2598,7 +2595,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/kevinhwang91/nvim-ufo/commit/1b5f283
 addPlugin {
 	"kevinhwang91/nvim-ufo",
 	config = function()
@@ -4071,8 +4067,7 @@ addPlugin {
 						modified = icons.git_modified,
 						removed = icons.git_removed
 					}
-				},
-				{ "buffers", mode = 3 }
+				}
 			},
 			lualine_x = {
 				{
