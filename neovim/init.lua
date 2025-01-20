@@ -1702,6 +1702,7 @@ addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"    
 addPlugin { "comfysage/evergarden",                event = "User evergarden"                                   }
 addPlugin { "projekt0n/github-nvim-theme",         event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",              event = "User hybrid"                                       }
+addPlugin { "nickkadutskyi/jb.nvim",               event = "User jb"                                           }
 addPlugin { "kaiuri/nvim-juliana",                 event = "User juliana"                                      }
 addPlugin { "rebelot/kanagawa.nvim",               event = "User kanagawa"                                     }
 addPlugin { "sho-87/kanagawa-paper.nvim",          event = "User kanagawa-paper"                               }
@@ -1722,7 +1723,7 @@ darkT { "ayu-dark",                   "ayu",          post = fixAyu             
 dark  { "bluloco",                    "_"                                                                                          }
 light { "bluloco",                    "_"                                                                                          }
 darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
-light { "catppuccin-latte",           "catppuccin"                                                                                 }
+-- light { "catppuccin-latte",           "catppuccin"                                                                                 }
 dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
 lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 dark  { "duskfox",                    "nightfox"                                                                                   }
@@ -1730,6 +1731,8 @@ darkT { "duskfox",                    "nightfox",       cfg = { transparent = tr
 darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 dark  { "hybrid",                     "_"                                                                                          }
+dark  { "jb",                         "_"                                                                                          }
+light { "jb",                         "_"                                                                                          }
 dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
@@ -2061,7 +2064,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: high DebugPrintLine
 	"andrewferrier/debugprint.nvim",
 	dependencies = { "echasnovski/mini.comment" },
 	lazy = true,
@@ -2748,7 +2750,6 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: git file history: using telescope https://github.com/scottmckendry/Windots/commit/afe18a0e2147260ffd0a7d7dc10626fe2d54522b
 addPlugin {
 	"isakbm/gitgraph.nvim",
 	cmd = "GitGraph",
@@ -2890,7 +2891,6 @@ addPlugin {
 	}
 }
 
--- TODO: learn usage
 addPlugin {
 	"sindrets/diffview.nvim",
 	cmd = "DiffviewOpen"
@@ -3275,7 +3275,6 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/iabdelkareem/csharp.nvim
 -- https://github.com/Automattic/harper
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
@@ -5128,17 +5127,6 @@ addPlugin {
 		}
 	}
 }
-
--- FEAT: https://github.com/folke/snacks.nvim
--- https://github.com/folke/snacks.nvim/blob/main/docs/debug.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/statuscolumn.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md
--- https://github.com/folke/snacks.nvim/blob/main/docs/words.md
 
 addPlugin {
 	-- https://github.com/gregorias/coerce.nvim
