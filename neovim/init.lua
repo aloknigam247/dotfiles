@@ -2221,6 +2221,7 @@ addPlugin {
 	"b0o/nvim-tree-preview.lua"
 }
 
+-- TODO: progress
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
@@ -2597,6 +2598,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: mapping for loading folding for a filetype only
 addPlugin {
 	"kevinhwang91/nvim-ufo",
 	config = function()
@@ -2741,9 +2743,9 @@ addPlugin {
 	end,
 	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" }
 }
-
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: code formatting
 -- addPlugin {
 --     "sbdchd/neoformat",
 --     cmd = "Neoformat"
@@ -2784,7 +2786,6 @@ addPlugin {
 	end
 }
 
--- https://github.com/folke/snacks.nvim/blob/main/docs/gitbrowse.md
 addPlugin {
 	"9seconds/repolink.nvim",
 	cmd = "RepoLink",
@@ -2797,6 +2798,7 @@ addPlugin {
 			return nil, nil, true
 		end,
 		url_builders = {
+			-- FEAT: add ssupport for onedrive repo
 			["office.visualstudio.com"] = function(args)
 				return string.format(
 					"https://office.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
@@ -2845,7 +2847,6 @@ addPlugin {
 	dependencies = { "nvim-telescope/telescope.nvim" }
 }
 
--- TODO: progress
 addPlugin {
 	"lewis6991/gitsigns.nvim",
 	cmd = "Gitsigns",
