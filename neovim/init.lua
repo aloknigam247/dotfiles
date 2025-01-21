@@ -3001,6 +3001,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: errors on loading LSP
 -- FIX: working with <F12>
 addPlugin {
 	"TheLeoP/powershell.nvim",
@@ -3429,8 +3430,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- BUG: Typos_lsp does not auto attach
 -- "OXY2DEV/markview.nvim"
 addPlugin {
+	-- FEAT: Do no conceal on cursor postion
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
 	opts = {
@@ -3582,10 +3585,10 @@ addPlugin {
 
 addPlugin {
 	"gaoDean/autolist.nvim",
-	event = { "TextChanged *.md", "InsertEnter *.md"},
+	event = "CursorHold *.md",
 	config = function()
 		require("autolist").setup()
-		vim.keymap.set("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>")
+		vim.keymap.set("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>") -- BUG: Not working
 		vim.keymap.set("n", "<<", "<<<Cmd>AutolistRecalculate<CR>")
 		vim.keymap.set("n", "<TAB>", "<Cmd>AutolistToggleCheckbox<CR>")
 		vim.keymap.set("n", ">>", ">><Cmd>AutolistRecalculate<CR>")
