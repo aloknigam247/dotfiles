@@ -1275,6 +1275,7 @@ vim.api.nvim_create_user_command(
 	{ desc = "Enable dropbar" }
 )
 
+-- Window Picker https://github.com/s1n7ax/nvim-window-picker
 vim.api.nvim_create_user_command(
 	"Peek",
 	function(args)
@@ -2161,7 +2162,7 @@ addPlugin {
 }
 
 -- https://github.com/ofirgall/goto-breakpoints.nvim
-
+-- https://github.com/igorlfs/nvim-dap-view
 addPlugin {
 	"rcarriga/nvim-dap-ui",
 	config = function()
@@ -2596,6 +2597,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: folds for init.lua
 -- FEAT: mapping for loading folding for a filetype only
 addPlugin {
 	"kevinhwang91/nvim-ufo",
@@ -2748,6 +2750,7 @@ addPlugin {
 --     "sbdchd/neoformat",
 --     cmd = "Neoformat"
 -- }
+-- https://github.com/stevearc/conform.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -3795,6 +3798,8 @@ addPlugin {
 	dependencies = "junegunn/fzf",
 	ft = "qf"
 }
+
+-- FEAT: https://github.com/stefandtw/quickfix-reflector.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
@@ -4923,6 +4928,8 @@ addPlugin {
 	cmd = "InlineEdit"
 }
 
+-- FEAT: https://github.com/MagicDuck/grug-far.nvim
+
 addPlugin {
 	"ThePrimeagen/refactoring.nvim",
 	cmd = "Refactor",
@@ -4931,6 +4938,8 @@ addPlugin {
 		"nvim-lua/plenary.nvim",
 	}
 }
+
+-- FEAT: https://github.com/andymass/vim-matchup
 
 addPlugin {
 	"anuvyklack/hydra.nvim", -- BUG: all window changes freeze after hyder is invoked
@@ -5216,6 +5225,8 @@ addPlugin {
 	end,
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
+
+-- FEAT: https://github.com/mistricky/codesnap.nvim
 
 addPlugin {
 	"nat-418/boole.nvim",
