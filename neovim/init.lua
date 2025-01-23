@@ -1707,7 +1707,6 @@ addPlugin { "kaiuri/nvim-juliana",                 event = "User juliana"       
 addPlugin { "rebelot/kanagawa.nvim",               event = "User kanagawa"                                     }
 addPlugin { "sho-87/kanagawa-paper.nvim",          event = "User kanagawa-paper"                               }
 addPlugin { "marko-cerovac/material.nvim",         event = "User material"                                     }
-addPlugin { "savq/melange",                        event = "User melange"                                      }
 addPlugin { "xero/miasma.nvim",                    event = "User miasma"                                       }
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
@@ -1737,7 +1736,6 @@ dark  { "juliana",                    "_",            post = function() fixLineN
 dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
-dark  { "melange",                    "_"                                                                                          }
 dark  { "PaperColor",                 "_"                                                                                          }
 dark  { "PaperColor",                 "_"                                                                                          }
 dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
@@ -3002,14 +3000,13 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FIX: errors on loading LSP
--- FIX: working with <F12>
-addPlugin {
-	"TheLeoP/powershell.nvim",
-	lazy = true,
-	opts = {
-		bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services"
-	}
-}
+-- addPlugin {
+-- 	"TheLeoP/powershell.nvim",
+-- 	lazy = true,
+-- 	opts = {
+-- 		bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services"
+-- 	}
+-- }
 
 addPlugin {
 	-- "Wansmer/symbol-usage.nvim",
