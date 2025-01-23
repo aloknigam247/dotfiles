@@ -1717,6 +1717,7 @@ addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"      
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
+lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 dark  { "bluloco",                    "_"                                                                                          }
@@ -1724,7 +1725,6 @@ light { "bluloco",                    "_"                                       
 darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",           "catppuccin"                                                                                 }
 dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
-lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 dark  { "duskfox",                    "nightfox"                                                                                   }
 darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
@@ -1735,8 +1735,7 @@ dark  { "juliana",                    "_",            post = function() fixLineN
 dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
-dark  { "PaperColor",                 "_"                                                                                          }
-dark  { "PaperColor",                 "_"                                                                                          }
+light { "PaperColor",                 "_"                                                                                          }
 dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
@@ -1835,7 +1834,7 @@ addPlugin {
 
 		require("Comment.ft")
 		.set("ps1", {"# %s", "<# %s #>"})
-		.set("python", {"# %s", '"" %s """'})
+		.set("python", {"# %s", '""" %s """'})
 		.set("requirements", {"# %s"})
 	end,
 	keys = {
@@ -2218,7 +2217,6 @@ addPlugin {
 	"b0o/nvim-tree-preview.lua"
 }
 
--- TODO: progress
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
