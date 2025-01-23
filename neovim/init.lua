@@ -1700,7 +1700,6 @@ addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"           
 addPlugin { "uloco/bluloco.nvim",                  event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
 addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"                                   }
-addPlugin { "comfysage/evergarden",                event = "User evergarden"                                   }
 addPlugin { "projekt0n/github-nvim-theme",         event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",              event = "User hybrid"                                       }
 addPlugin { "nickkadutskyi/jb.nvim",               event = "User jb"                                           }
@@ -1728,7 +1727,6 @@ dark  { "catppuccin-macchiato",       "catppuccin"                              
 lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 dark  { "duskfox",                    "nightfox"                                                                                   }
 darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
-darkT { "evergarden",                 "_",              cfg = { transparent_background = true }                                    }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 dark  { "hybrid",                     "_"                                                                                          }
 dark  { "jb",                         "_"                                                                                          }
@@ -1864,7 +1862,7 @@ addPlugin {
 	event = "InsertEnter"
 }
 
-addPlugin { -- BUG: double menu
+addPlugin {
 	-- "hrsh7th/cmp-cmdline",
 	"iguanacucumber/mag-cmdline",
 	name = "cmp-cmdline",
