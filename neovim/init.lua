@@ -1390,9 +1390,25 @@ addPlugin {
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
 	opts = {
+		cursor_symbol = "",
 		floating_windows = true,
 		hide_on_intersect = true,
-		signs_on_startup = { "all" }
+		signs_on_startup = { 
+			"changelist",
+			"conflicts",
+			"cursor",
+			"diagnostics",
+			"folds",
+			-- "indent",
+			"latestchange",
+			"loclist",
+			"marks",
+			"quickfix",
+			"search",
+			"spell",
+			"textwidth",
+			"trail",
+		}
 	}
 }
 --<~>
@@ -2998,7 +3014,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: errors on loading LSP
 -- addPlugin {
 -- 	"TheLeoP/powershell.nvim",
 -- 	lazy = true,

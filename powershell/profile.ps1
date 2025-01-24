@@ -1,5 +1,4 @@
 # FEAT: list build status in Build-Changes
-# TODO: understand "C:\Users\aloknigam\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\browser\media\shellIntegration.ps1"
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
