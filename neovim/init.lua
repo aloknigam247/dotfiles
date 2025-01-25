@@ -1189,8 +1189,16 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	severity_sort = true,
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = icons.error,
+			[vim.diagnostic.severity.WARN] = icons.warn,
+			[vim.diagnostic.severity.INFO] = icons.info,
+			[vim.diagnostic.severity.HINT] = icons.hint,
+		}
+	},
 	update_in_insert = true,
-	virtual_text = { -- FEAT: customize to look like https://github.com/rachartier/tiny-inline-diagnostic.nvim, https://github.com/sontungexpt/better-diagnostic-virtual-text
+	virtual_text = {
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
 				return icons.error
@@ -1393,7 +1401,7 @@ addPlugin {
 		cursor_symbol = "",
 		floating_windows = true,
 		hide_on_intersect = true,
-		signs_on_startup = { 
+		signs_on_startup = {
 			"changelist",
 			"conflicts",
 			"cursor",
@@ -2751,7 +2759,7 @@ addPlugin {
 
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
-		vim.keymap.set("n", "zz", function() require("ufo.action").closeFolds(1) end, { desc = "Fold to level 1" })
+		vim.keymap.set("n", "zz", function() require("ufo.action").closeFolds(0) end, { desc = "Fold to level 1" })
 	end,
 	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" }
 }
@@ -3060,6 +3068,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/rachartier/tiny-code-action.nvim
 addPlugin {
 	"aznhe21/actions-preview.nvim",
 	dependencies = "nvim-telescope/telescope.nvim"
@@ -3275,6 +3284,74 @@ addPlugin {
 -- https://github.com/Zeioth/none-ls-external-sources.nvim
 -- https://github.com/Zeioth/none-ls-autoload.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
+
+-- https://github.com/sontungexpt/better-diagnostic-virtual-text
+addPlugin {
+	"rachartier/tiny-inline-diagnostic.nvim",
+	config = function()
+		require("tiny-inline-diagnostic").setup({
+			disabled_ft = {},
+			preset = "modern",
+			hi = {
+				error = "DiagnosticError",
+				warn = "DiagnosticWarn",
+				info = "DiagnosticInfo",
+				hint = "DiagnosticHint",
+				arrow = "NonText",
+				background = "CursorLine",
+				mixing_color = "None",
+			},
+			options = {
+				show_source = true,
+				use_icons_from_diagnostic = true,
+				add_messages = true,
+				throttle = 20,
+				softwrap = 30,
+				multiple_diag_under_cursor = false,
+				multilines = {
+					enabled = true,
+					always_show = true,
+				},
+				show_all_diags_on_cursorline = false,
+				enable_on_insert = true,
+				enable_on_select = false,
+				overflow = {
+					mode = "wrap",
+				},
+				break_line = {
+					enabled = false,
+					after = 30,
+				},
+				format = nil,
+				virt_texts = {
+					priority = 2048,
+				},
+				severity = {
+					vim.diagnostic.severity.ERROR,
+					vim.diagnostic.severity.WARN,
+					vim.diagnostic.severity.INFO,
+					vim.diagnostic.severity.HINT,
+				},
+				overwrite_events = nil
+			},
+			signs = {
+				left = "",
+				right = "",
+				diag = "●",
+				arrow = "    ",
+				up_arrow = "    ",
+				vertical = " │",
+				vertical_end = " ╰",
+			},
+			blend = {
+				factor = 0.22,
+			},
+		})
+		vim.diagnostic.config({ virtual_text = false })
+	end,
+	-- event = "LspAttach",
+	lazy = false
+}
 
 addPlugin {
 	"williamboman/mason.nvim",
@@ -3686,7 +3763,7 @@ addPlugin {
 	lazy = false
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Popup Menu    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"nvzone/menu",
 	init = function()
