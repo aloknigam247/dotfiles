@@ -2759,7 +2759,7 @@ addPlugin {
 
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
-		vim.keymap.set("n", "zz", function() require("ufo.action").closeFolds(0) end, { desc = "Fold to level 1" })
+		vim.keymap.set("n", "zz", function() require("ufo.action").closeFolds(1) end, { desc = "Fold to level 1" })
 	end,
 	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" }
 }
