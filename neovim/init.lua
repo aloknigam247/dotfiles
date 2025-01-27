@@ -1024,7 +1024,7 @@ vim.api.nvim_create_autocmd(
 						return
 					end
 				end
-				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 2 .. "v/")
+				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
 			end
 		end
 	}
@@ -2723,11 +2723,14 @@ addPlugin {
 				return nil
 			end
 
-
-			local doc_line = getDoc(lnum, ctx.bufnr)
-			if doc_line then
-				table.insert(virtText, { doc_line, "@string.documentation.python" })
+			-- do not show docs in diff mode
+			if vim.wo[ctx.winid].diff == false then
+				local doc_line = getDoc(lnum, ctx.bufnr)
+				if doc_line then
+					table.insert(virtText, { doc_line, "@string.documentation.python" })
+				end
 			end
+
 			return ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, ctx)
 		end
 
@@ -4033,7 +4036,8 @@ addPlugin {
 			},
 			render = function(props)
 				if CountWindows(true) > 1 then
-					local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+					local full_filename = vim.api.nvim_buf_get_name(props.buf)
+					local filename = vim.fn.fnamemodify(full_filename, ":t")
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 
 					local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
@@ -4046,7 +4050,7 @@ addPlugin {
 
 					return {
 						{ ft_icon, " ", guifg = ft_color },
-						filename,
+						full_filename:find("^gitsigns:") and "gitsigns:" .. filename or filename,
 						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
 						isLspAttached(props.buf) and { " 󰈸", guifg = "#EAC435" } or "",

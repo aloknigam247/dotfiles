@@ -37,7 +37,7 @@ set concealcursor=nc                        " Set conceal modes
 set conceallevel=0                          " Set conceal level
 set cpoptions+=Z                            " When using w! while the 'readonly' option is set, don't reset 'readonly'
 set expandtab                               " Convert tabs to spaces
-set formatoptions=/1cjlnor                  " Set auto formating options 'fo-table'
+set formatoptions=/1cjlnor                  " Set auto formatting options 'fo-table'
 set history=1000                            " Increase undo limit
 set linebreak                               " Break wrapped line at 'breakat'
 set nofixendofline                          " Do not change end of line
@@ -60,7 +60,7 @@ syntax off
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   UI Settings    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
-let g:vimsyn_embed = 'lpr'   " Embededded script highlight
+let g:vimsyn_embed = 'lpr'   " Embedded script highlight
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
