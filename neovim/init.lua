@@ -1763,7 +1763,7 @@ light { "PaperColor",                 "_"                                       
 dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
 dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
-dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
+-- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
 dark  { "vscode",                     "_"                                                                                          }
 dark  { "zephyrium",                  "_"                                                                                          }
 
@@ -5020,7 +5020,10 @@ addPlugin {
 	cmd = "InlineEdit"
 }
 
--- FEAT: https://github.com/MagicDuck/grug-far.nvim
+addPlugin {
+	'MagicDuck/grug-far.nvim',
+	config = true
+}
 
 addPlugin {
 	"ThePrimeagen/refactoring.nvim",
