@@ -1744,7 +1744,7 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
 dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
-dark  { "bluloco",                    "_"                                                                                          }
+-- dark  { "bluloco",                    "_"                                                                                          }
 light { "bluloco",                    "_"                                                                                          }
 darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",           "catppuccin"                                                                                 }
