@@ -5379,13 +5379,13 @@ addPlugin {
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+
 addPlugin {
 	"Bekaboo/dropbar.nvim",
 	opts = {
 		icons = {
 			enable = true,
 			kinds = {
-				use_devicons = true,
 				symbols = {
 					Array = icons.Array,
 					Boolean = icons.Boolean,
