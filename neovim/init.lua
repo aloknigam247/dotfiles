@@ -3890,7 +3890,10 @@ addPlugin {
 	ft = "qf"
 }
 
--- FEAT: https://github.com/stefandtw/quickfix-reflector.vim
+addPlugin {
+	"stefandtw/quickfix-reflector.vim",
+	ft = "qf"
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
