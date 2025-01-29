@@ -2815,14 +2815,29 @@ addPlugin {
 	cmd = "RepoLink",
 	opts = {
 		custom_url_parser = function(remote_url)
-			local host, user, project= string.match(remote_url, "https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)")
+			local host, user, project = string.match(remote_url, "https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)")
 			if host then
+				print("host: " .. host)
+				print("user: " .. user)
+				print("project: " .. project)
 				return host, { user = user, project = project }, false
 			end
 			return nil, nil, true
 		end,
 		url_builders = {
 			-- FEAT: add ssupport for onedrive repo
+			["onedrive.visualstudio.com"] = function(args)
+				print(vim.inspect(args))
+				return string.format(
+					"https://onedrive.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
+					args.host_data.user,
+					args.host_data.project,
+					args.path:gsub("\\", "/"),
+					args.commit_hash,
+					args.start_line,
+					args.end_line+1
+				)
+			end,
 			["office.visualstudio.com"] = function(args)
 				return string.format(
 					"https://office.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
