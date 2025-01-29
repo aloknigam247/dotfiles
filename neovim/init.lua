@@ -5324,8 +5324,6 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT: https://github.com/mistricky/codesnap.nvim
-
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
@@ -5336,7 +5334,6 @@ addPlugin {
 		},
 		additions = { },
 		allow_caps_additions = {
-			{ "buy", "sell" }
 		}
 	}
 }
