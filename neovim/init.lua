@@ -5038,6 +5038,9 @@ addPlugin {
 
 addPlugin {
 	"andymass/vim-matchup",
+	init = function()
+		vim.g.matchup_mouse_enabled = false
+	end,
 	lazy = false
 }
 
