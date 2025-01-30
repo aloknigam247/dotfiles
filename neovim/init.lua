@@ -710,13 +710,25 @@ local function getTSInstlled(map_entension)
 		["python"] = "py"
 	}
 
-	for file, _ in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath("data"), "/lazy/nvim-treesitter/parser")) do
-		if file:sub(-3) == ".so" then
-			local ftype = file:gsub(".so", "")
-			if map_entension then
-				ftype = filetye_map[ftype] or ftype
+	-- Collect treesitter languages from nvim-treesitter and runtime path
+	for _, path in ipairs(vim.fn.split(
+		vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, -- combine paths
+		","
+	)) do
+		for file, _ in vim.fs.dir(vim.fs.joinpath(path, "parser")) do
+			local ftype = nil
+			if file:sub(-3) == ".so" then
+				ftype = file:gsub(".so", "")
+			elseif file:sub(-4) == ".dll" then
+				ftype = file:gsub(".dll", "")
 			end
-			table.insert(Installed_filetypes, ftype)
+
+			if ftype ~= nil then
+				if map_entension then
+					ftype = filetye_map[ftype] or ftype
+				end
+				table.insert(Installed_filetypes, ftype)
+			end
 		end
 	end
 
@@ -1749,8 +1761,8 @@ light { "bluloco",                    "_"                                       
 darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",           "catppuccin"                                                                                 }
 dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
-dark  { "duskfox",                    "nightfox"                                                                                   }
-darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
+-- dark  { "duskfox",                    "nightfox"                                                                                   }
+-- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 dark  { "hybrid",                     "_"                                                                                          }
 dark  { "jb",                         "_"                                                                                          }
@@ -2617,7 +2629,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: folds for init.lua
 -- FEAT: mapping for loading folding for a filetype only
 addPlugin {
 	"kevinhwang91/nvim-ufo",
@@ -3543,34 +3554,23 @@ addPlugin {
 -- BUG: Typos_lsp does not auto attach
 -- "OXY2DEV/markview.nvim"
 addPlugin {
-	-- FEAT: Do no conceal on cursor postion
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
 	opts = {
-		render_modes = { 'n', 'c' },
-		anti_conceal = {
-			enabled = true,
-			above = 0,
-			below = 0,
-		},
-		padding = {
-			highlight = 'Normal',
-		},
 		latex = {
 			enabled = false,
-			converter = 'latex2text',
-			highlight = 'RenderMarkdownMath',
-			top_pad = 0,
-			bottom_pad = 0,
+		},
+		anti_conceal = {
+			enabled = false
 		},
 		heading = {
 			enabled = true,
 			sign = false,
-			position = 'inlay',
-			-- icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-			icons = { '󰫎 ' },
-			signs = { '󰫎 ' },
-			width = { 'block', 'block', 'block'},
+			position = "inlay",
+			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+			icons = { "󰫎 " },
+			signs = { "󰫎 " },
+			width = { "block", "block", "block"},
 			left_margin = 0,
 			left_pad = 0,
 			right_pad = 2,
@@ -3578,113 +3578,90 @@ addPlugin {
 			border = false,
 			border_virtual = false,
 			border_prefix = false,
-			above = '▄',
-			below = '▀',
-			backgrounds = {
-				'RenderMarkdownH1Bg',
-				'RenderMarkdownH2Bg',
-				'RenderMarkdownH3Bg',
-				'RenderMarkdownH4Bg',
-				'RenderMarkdownH5Bg',
-				'RenderMarkdownH6Bg',
-			},
-			foregrounds = {
-				'RenderMarkdownH1',
-				'RenderMarkdownH2',
-				'RenderMarkdownH3',
-				'RenderMarkdownH4',
-				'RenderMarkdownH5',
-				'RenderMarkdownH6',
-			}
 		},
 		code = {
 			enabled = true,
 			sign = false,
-			style = 'normal',
-			position = 'left',
+			style = "full",
+			position = "left",
 			language_pad = 0,
-			disable_background = { '' },
-			width = 'block',
+			disable_background = { "" },
+			width = "block",
 			left_margin = 0,
 			left_pad = 0,
 			right_pad = 1,
 			min_width = 10,
-			border = 'thin',
-			above = '▄',
-			below = '▀',
-			highlight = 'RenderMarkdownCode',
-			highlight_inline = 'RenderMarkdownCodeInline',
-		},
-		dash = {
-			enabled = true,
-			icon = '─',
-			width = 'full',
-			highlight = 'RenderMarkdownDash',
+			border = "thin",
+			language_name = true
 		},
 		bullet = {
 			enabled = true,
-			icons = { '●', '○', '◆', '◇' },
-			left_pad = 0,
-			right_pad = 0,
-			highlight = 'RenderMarkdownBullet',
+			icons = { "●", "○", "◆", "◇" },
 		},
 		checkbox = {
 			enabled = true,
-			position = 'overlay',
+			position = "overlay",
 			unchecked = {
-				icon = ' ',
-				highlight = 'RenderMarkdownUnchecked',
+				icon = " ",
 			},
 			checked = {
-				icon = ' ',
-				highlight = 'RenderMarkdownChecked',
+				icon = " ",
 			},
 			custom = {}
 		},
 		quote = {
 			enabled = true,
-			icon = '▍',
+			icon = "▍",
 			repeat_linebreak = true,
-			highlight = 'RenderMarkdownQuote',
 		},
 		pipe_table = {
 			enabled = true,
 			border = {
-				'┌', '┬', '┐',
-				'├', '┼', '┤',
-				'└', '┴', '┘',
-				'│', '━',
+				"┌", "┬", "┐",
+				"├", "┼", "┤",
+				"└", "┴", "┘",
+				"│", "━",
 			},
-			preset = 'round',
-			style = 'normal',
-			cell = 'trimmed',
+			preset = "round",
+			style = "normal",
+			cell = "trimmed",
 			min_width = 0,
-			alignment_indicator = '•',
-			head = 'RenderMarkdownTableHead',
-			row = 'RenderMarkdownTableRow',
-			filler = 'RenderMarkdownTableFill',
+			alignment_indicator = "•",
 		},
 		callout = {
-			note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
-			tip = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess' },
-			important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' },
-			warning = { raw = '[!WARNING]', rendered = '󰀪 Warning', highlight = 'RenderMarkdownWarn' },
-			caution = { raw = '[!CAUTION]', rendered = '󰳦 Caution', highlight = 'RenderMarkdownError' },
+			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
 		},
 		link = {
 			enabled = true,
-			image = '󰥶 ',
-			email = '󰀓 ',
-			hyperlink = '󰌹 ',
-			highlight = 'RenderMarkdownLink',
+			image = "󰥶 ",
+			email = "󰀓 ",
+			hyperlink = "󰌹 ",
 			custom = {
-				web = { pattern = '^http[s]?://', icon = '󰖟 ', highlight = 'RenderMarkdownLink' },
+				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
+				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
+				discord = { pattern = "discord%.com", icon = "󰙯 " },
+				github = { pattern = "github%.com", icon = "󰊤 " },
+				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
+				neovim = { pattern = "neovim%.io", icon = " " },
+				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
+				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
+				web = { pattern = "^http[s]?://", icon = "󰖟 " },
+				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
 			},
 		},
 		sign = {
 			enabled = false,
 		},
-		custom_handlers = {},
+		win_options = {
+			concealcursor = {
+				default = vim.api.nvim_get_option_value("concealcursor", {}),
+				rendered = vim.api.nvim_get_option_value("concealcursor", {})
+			}
+		}
 	}
 }
 
@@ -3909,7 +3886,10 @@ addPlugin {
 	ft = "qf"
 }
 
--- FEAT: https://github.com/stefandtw/quickfix-reflector.vim
+addPlugin {
+	"stefandtw/quickfix-reflector.vim",
+	ft = "qf"
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
@@ -4704,10 +4684,10 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Lazy run treesitter
--- vim.treesitter.__start = vim.treesitter.start
--- vim.treesitter.start = function(bufnr, lang)
--- 	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
--- end
+vim.treesitter.__start = vim.treesitter.start
+vim.treesitter.start = function(bufnr, lang)
+	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
+end
 
 addPlugin {
 	-- https://github.com/echasnovski/mini.splitjoin
@@ -4734,6 +4714,9 @@ addPlugin {
 					end
 				end,
 				enable = true
+			},
+			matchup = {
+				enabled = true
 			}
 		})
 	end,
@@ -5053,7 +5036,10 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/andymass/vim-matchup
+addPlugin {
+	"andymass/vim-matchup",
+	lazy = false
+}
 
 addPlugin {
 	"anuvyklack/hydra.nvim", -- BUG: all window changes freeze after hyder is invoked
@@ -5340,8 +5326,6 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT: https://github.com/mistricky/codesnap.nvim
-
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
@@ -5352,7 +5336,6 @@ addPlugin {
 		},
 		additions = { },
 		allow_caps_additions = {
-			{ "buy", "sell" }
 		}
 	}
 }
