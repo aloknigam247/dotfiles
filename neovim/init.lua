@@ -710,13 +710,25 @@ local function getTSInstlled(map_entension)
 		["python"] = "py"
 	}
 
-	for file, _ in vim.fs.dir(vim.fs.joinpath(vim.fn.stdpath("data"), "/lazy/nvim-treesitter/parser")) do
-		if file:sub(-3) == ".so" then
-			local ftype = file:gsub(".so", "")
-			if map_entension then
-				ftype = filetye_map[ftype] or ftype
+	-- Collect treesitter languages from nvim-treesitter and runtime path
+	for _, path in ipairs(vim.fn.split(
+		vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, -- combine paths
+		","
+	)) do
+		for file, _ in vim.fs.dir(vim.fs.joinpath(path, "parser")) do
+			local ftype = nil
+			if file:sub(-3) == ".so" then
+				ftype = file:gsub(".so", "")
+			elseif file:sub(-4) == ".dll" then
+				ftype = file:gsub(".dll", "")
 			end
-			table.insert(Installed_filetypes, ftype)
+
+			if ftype ~= nil then
+				if map_entension then
+					ftype = filetye_map[ftype] or ftype
+				end
+				table.insert(Installed_filetypes, ftype)
+			end
 		end
 	end
 
@@ -1749,8 +1761,8 @@ light { "bluloco",                    "_"                                       
 darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",           "catppuccin"                                                                                 }
 dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
-dark  { "duskfox",                    "nightfox"                                                                                   }
-darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
+-- dark  { "duskfox",                    "nightfox"                                                                                   }
+-- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 dark  { "hybrid",                     "_"                                                                                          }
 dark  { "jb",                         "_"                                                                                          }
@@ -2617,7 +2629,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: folds for init.lua
 -- FEAT: mapping for loading folding for a filetype only
 addPlugin {
 	"kevinhwang91/nvim-ufo",
@@ -4688,10 +4699,10 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Lazy run treesitter
--- vim.treesitter.__start = vim.treesitter.start
--- vim.treesitter.start = function(bufnr, lang)
--- 	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
--- end
+vim.treesitter.__start = vim.treesitter.start
+vim.treesitter.start = function(bufnr, lang)
+	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
+end
 
 addPlugin {
 	-- https://github.com/echasnovski/mini.splitjoin
@@ -4718,6 +4729,9 @@ addPlugin {
 					end
 				end,
 				enable = true
+			},
+			matchup = {
+				enabled = true
 			}
 		})
 	end,
@@ -5037,7 +5051,10 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/andymass/vim-matchup
+addPlugin {
+	"andymass/vim-matchup",
+	lazy = false
+}
 
 addPlugin {
 	"anuvyklack/hydra.nvim", -- BUG: all window changes freeze after hyder is invoked
