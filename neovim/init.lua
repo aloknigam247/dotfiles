@@ -2826,11 +2826,15 @@ addPlugin {
 		end,
 		url_builders = {
 			-- FEAT: add ssupport for onedrive repo
+			-- master
+			-- current branch
+			-- commit
+			-- no line
+			-- with lines
 			["onedrive.visualstudio.com"] = function(args)
 				print(vim.inspect(args))
 				return string.format(
-					"https://onedrive.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
-					args.host_data.user,
+					"https://onedrive.visualstudio.com/DefaultCollection/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
 					args.host_data.project,
 					args.path:gsub("\\", "/"),
 					args.commit_hash,
