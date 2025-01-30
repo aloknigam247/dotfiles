@@ -3547,11 +3547,11 @@ addPlugin {
 		heading = {
 			enabled = true,
 			sign = false,
-			position = 'inlay',
-			-- icons = { '󰲡 ', '󰲣 ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-			icons = { '󰫎 ' },
-			signs = { '󰫎 ' },
-			width = { 'block', 'block', 'block'},
+			position = "inlay",
+			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+			icons = { "󰫎 " },
+			signs = { "󰫎 " },
+			width = { "block", "block", "block"},
 			left_margin = 0,
 			left_pad = 0,
 			right_pad = 2,
@@ -3563,72 +3563,75 @@ addPlugin {
 		code = {
 			enabled = true,
 			sign = false,
-			style = 'normal',
-			position = 'left',
+			style = "full",
+			position = "left",
 			language_pad = 0,
-			disable_background = { '' },
-			width = 'block',
+			disable_background = { "" },
+			width = "block",
 			left_margin = 0,
 			left_pad = 0,
 			right_pad = 1,
 			min_width = 10,
-			border = 'thin',
+			border = "thin",
+			language_name = true
 		},
 		bullet = {
 			enabled = true,
-			icons = { '●', '○', '◆', '◇' },
+			icons = { "●", "○", "◆", "◇" },
 		},
 		checkbox = {
 			enabled = true,
-			position = 'overlay',
+			position = "overlay",
 			unchecked = {
-				icon = ' ',
+				icon = " ",
 			},
 			checked = {
-				icon = ' ',
+				icon = " ",
 			},
 			custom = {}
 		},
 		quote = {
 			enabled = true,
-			icon = '▍',
+			icon = "▍",
 			repeat_linebreak = true,
 		},
 		pipe_table = {
 			enabled = true,
 			border = {
-				'┌', '┬', '┐',
-				'├', '┼', '┤',
-				'└', '┴', '┘',
-				'│', '━',
+				"┌", "┬", "┐",
+				"├", "┼", "┤",
+				"└", "┴", "┘",
+				"│", "━",
 			},
-			preset = 'round',
-			style = 'normal',
-			cell = 'trimmed',
+			preset = "round",
+			style = "normal",
+			cell = "trimmed",
 			min_width = 0,
-			alignment_indicator = '•',
+			alignment_indicator = "•",
 		},
 		callout = {
-			note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
-			tip = { raw = '[!TIP]', rendered = '󰌶 Tip', highlight = 'RenderMarkdownSuccess' },
-			important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' },
-			warning = { raw = '[!WARNING]', rendered = '󰀪 Warning', highlight = 'RenderMarkdownWarn' },
-			caution = { raw = '[!CAUTION]', rendered = '󰳦 Caution', highlight = 'RenderMarkdownError' },
+			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
 		},
 		link = {
 			enabled = true,
-			image = '󰥶 ',
-			email = '󰀓 ',
-			hyperlink = '󰌹 ',
+			image = "󰥶 ",
+			email = "󰀓 ",
+			hyperlink = "󰌹 ",
 			custom = {
-				azuredevops = { pattern = '[%a]+%.visualstudio%.com', icon = ' ' },
-				discord = { pattern = 'discord%.com', icon = '󰙯 ' },
-				github = { pattern = 'github%.com', icon = '󰊤 ' },
-				neovim = { pattern = 'neovim%.io', icon = ' ' },
-				reddit = { pattern = 'reddit%.com', icon = '󰑍 ' },
-				stackoverflow = { pattern = 'stackoverflow%.com', icon = '󰓌 ' },
-				web = { pattern = '^http[s]?://', icon = '󰖟 ' },
-				youtube = { pattern = 'youtube%.com', icon = '󰗃 ' }
+				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
+				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
+				discord = { pattern = "discord%.com", icon = "󰙯 " },
+				github = { pattern = "github%.com", icon = "󰊤 " },
+				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
+				neovim = { pattern = "neovim%.io", icon = " " },
+				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
+				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
+				web = { pattern = "^http[s]?://", icon = "󰖟 " },
+				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
 			},
 		},
 		sign = {
@@ -3636,8 +3639,8 @@ addPlugin {
 		},
 		win_options = {
 			concealcursor = {
-				default = vim.api.nvim_get_option_value('concealcursor', {}),
-				rendered = vim.api.nvim_get_option_value('concealcursor', {})
+				default = vim.api.nvim_get_option_value("concealcursor", {}),
+				rendered = vim.api.nvim_get_option_value("concealcursor", {})
 			}
 		}
 	}
