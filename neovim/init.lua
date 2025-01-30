@@ -3535,25 +3535,14 @@ addPlugin {
 -- BUG: Typos_lsp does not auto attach
 -- "OXY2DEV/markview.nvim"
 addPlugin {
-	-- FEAT: Do no conceal on cursor postion
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
 	opts = {
-		render_modes = { 'n', 'c' },
-		anti_conceal = {
-			enabled = true,
-			above = 0,
-			below = 0,
-		},
-		padding = {
-			highlight = 'Normal',
-		},
 		latex = {
 			enabled = false,
-			converter = 'latex2text',
-			highlight = 'RenderMarkdownMath',
-			top_pad = 0,
-			bottom_pad = 0,
+		},
+		anti_conceal = {
+			enabled = false
 		},
 		heading = {
 			enabled = true,
@@ -3570,24 +3559,6 @@ addPlugin {
 			border = false,
 			border_virtual = false,
 			border_prefix = false,
-			above = '▄',
-			below = '▀',
-			backgrounds = {
-				'RenderMarkdownH1Bg',
-				'RenderMarkdownH2Bg',
-				'RenderMarkdownH3Bg',
-				'RenderMarkdownH4Bg',
-				'RenderMarkdownH5Bg',
-				'RenderMarkdownH6Bg',
-			},
-			foregrounds = {
-				'RenderMarkdownH1',
-				'RenderMarkdownH2',
-				'RenderMarkdownH3',
-				'RenderMarkdownH4',
-				'RenderMarkdownH5',
-				'RenderMarkdownH6',
-			}
 		},
 		code = {
 			enabled = true,
@@ -3602,34 +3573,19 @@ addPlugin {
 			right_pad = 1,
 			min_width = 10,
 			border = 'thin',
-			above = '▄',
-			below = '▀',
-			highlight = 'RenderMarkdownCode',
-			highlight_inline = 'RenderMarkdownCodeInline',
-		},
-		dash = {
-			enabled = true,
-			icon = '─',
-			width = 'full',
-			highlight = 'RenderMarkdownDash',
 		},
 		bullet = {
 			enabled = true,
 			icons = { '●', '○', '◆', '◇' },
-			left_pad = 0,
-			right_pad = 0,
-			highlight = 'RenderMarkdownBullet',
 		},
 		checkbox = {
 			enabled = true,
 			position = 'overlay',
 			unchecked = {
 				icon = ' ',
-				highlight = 'RenderMarkdownUnchecked',
 			},
 			checked = {
 				icon = ' ',
-				highlight = 'RenderMarkdownChecked',
 			},
 			custom = {}
 		},
@@ -3637,7 +3593,6 @@ addPlugin {
 			enabled = true,
 			icon = '▍',
 			repeat_linebreak = true,
-			highlight = 'RenderMarkdownQuote',
 		},
 		pipe_table = {
 			enabled = true,
@@ -3652,9 +3607,6 @@ addPlugin {
 			cell = 'trimmed',
 			min_width = 0,
 			alignment_indicator = '•',
-			head = 'RenderMarkdownTableHead',
-			row = 'RenderMarkdownTableRow',
-			filler = 'RenderMarkdownTableFill',
 		},
 		callout = {
 			note = { raw = '[!NOTE]', rendered = '󰋽 Note', highlight = 'RenderMarkdownInfo' },
@@ -3668,15 +3620,26 @@ addPlugin {
 			image = '󰥶 ',
 			email = '󰀓 ',
 			hyperlink = '󰌹 ',
-			highlight = 'RenderMarkdownLink',
 			custom = {
-				web = { pattern = '^http[s]?://', icon = '󰖟 ', highlight = 'RenderMarkdownLink' },
+				azuredevops = { pattern = '[%a]+%.visualstudio%.com', icon = ' ' },
+				discord = { pattern = 'discord%.com', icon = '󰙯 ' },
+				github = { pattern = 'github%.com', icon = '󰊤 ' },
+				neovim = { pattern = 'neovim%.io', icon = ' ' },
+				reddit = { pattern = 'reddit%.com', icon = '󰑍 ' },
+				stackoverflow = { pattern = 'stackoverflow%.com', icon = '󰓌 ' },
+				web = { pattern = '^http[s]?://', icon = '󰖟 ' },
+				youtube = { pattern = 'youtube%.com', icon = '󰗃 ' }
 			},
 		},
 		sign = {
 			enabled = false,
 		},
-		custom_handlers = {},
+		win_options = {
+			concealcursor = {
+				default = vim.api.nvim_get_option_value('concealcursor', {}),
+				rendered = vim.api.nvim_get_option_value('concealcursor', {})
+			}
+		}
 	}
 }
 
