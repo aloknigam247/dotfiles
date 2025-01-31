@@ -2836,7 +2836,7 @@ addPlugin {
 			return nil, nil, true
 		end,
 		url_builders = {
-			-- FEAT: add ssupport for onedrive repo
+			-- FEAT: add support for onedrive repo
 			-- master
 			-- current branch
 			-- commit
@@ -3101,7 +3101,6 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/rachartier/tiny-code-action.nvim
 addPlugin {
 	"aznhe21/actions-preview.nvim",
 	dependencies = "nvim-telescope/telescope.nvim"
