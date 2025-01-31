@@ -3311,7 +3311,6 @@ addPlugin {
 
 -- addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
 
--- FEAT: lsp extentions
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/Zeioth/none-ls-external-sources.nvim
 -- https://github.com/Zeioth/none-ls-autoload.nvim
@@ -3544,6 +3543,7 @@ addPlugin {
 			end
 		}
 		vim.cmd.LspStart()
+		vim.cmd.LspStart("typos_lsp")
 	end,
 	dependencies = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
 	keys = "<F12>"
