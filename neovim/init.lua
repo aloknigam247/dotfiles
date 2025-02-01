@@ -3543,14 +3543,13 @@ addPlugin {
 			end
 		}
 		vim.cmd.LspStart()
-		vim.cmd.LspStart("typos_lsp")
+		vim.cmd.LspStart("typos_lsp") -- HACK: to attach auto typos_lsp
 	end,
 	dependencies = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
 	keys = "<F12>"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- BUG: Typos_lsp does not auto attach
 -- "OXY2DEV/markview.nvim"
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
