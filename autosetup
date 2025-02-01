@@ -19,7 +19,7 @@ for o in ${opt[@]}; do
         if [[ -f setup ]]; then
             source setup
             for src in ${!files[@]}; do
-                dest=${files[$src]} 
+                dest=${files[$src]}
                 dir=$(dirname $dest)
 
                 if [[ ! -f $dir ]]; then

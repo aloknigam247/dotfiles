@@ -1209,7 +1209,7 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.HINT] = icons.hint,
 		}
 	},
-	update_in_insert = true,
+	update_in_insert = false,
 	virtual_text = {
 		prefix = function(diag, _, _)
 			if diag.severity == vim.diagnostic.severity.ERROR then
@@ -3992,9 +3992,9 @@ addPlugin {
 			setopt = true,
 			relculright = true,
 			segments = {
-				{ sign = { name = { "todo" } }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end }, auto = true },
+				{ sign = { name = { "todo" }, auto = true, foldclosed = true }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end } },
 				{ sign = { name = { "Signature_" }, auto = true, fillcharhl ="LineNr" } },
-				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1 }, click = "v:lua.ScSa" },
+				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" },
 				{ sign = { name = { "Bookmark" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
 				{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
@@ -4010,7 +4010,7 @@ addPlugin {
 						},
 						colwidth = 1,
 						fillcharhl = "LineNr",
-						wrap = true,
+						wrap = true
 					},
 					click = "v:lua.ScSa",
 				},
