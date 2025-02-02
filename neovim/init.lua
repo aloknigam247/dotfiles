@@ -3413,7 +3413,7 @@ addPlugin {
 		end)
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		-- Lsp timeout
+		-- FEAT: Lsp timeout
 		-- Lsp_timer = vim.uv.new_timer()
 		-- vim.api.nvim_create_autocmd(
 		-- 	"FocusLost", {
