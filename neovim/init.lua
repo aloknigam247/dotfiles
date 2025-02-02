@@ -3673,7 +3673,7 @@ addPlugin {
 	event = "CursorHold *.md",
 	config = function()
 		require("autolist").setup()
-		vim.keymap.set("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>") -- BUG: Not working
+		vim.keymap.set("i", "<C-CR>", "<CR><Cmd>AutolistNewBullet<CR>")
 		vim.keymap.set("n", "<<", "<<<Cmd>AutolistRecalculate<CR>")
 		vim.keymap.set("n", "<TAB>", "<Cmd>AutolistToggleCheckbox<CR>")
 		vim.keymap.set("n", ">>", ">><Cmd>AutolistRecalculate<CR>")
