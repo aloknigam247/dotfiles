@@ -4497,6 +4497,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
+-- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -5015,6 +5016,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: try https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
