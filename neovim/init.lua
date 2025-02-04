@@ -244,7 +244,7 @@
 ---@type string[]
 local dotted_border = { "╭", "󰇘", "╮", "┊", "╯", "󰇘", "╰", "┊" }
 
----Defines highlight priorities for vairous components
+---Defines highlight priorities for various components
 ---@type table<string, integer>
 local hl_priority = {
 	hlargs = 126,
