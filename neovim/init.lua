@@ -5198,7 +5198,7 @@ addPlugin {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    quickfile = { enabled = true },
+    -- quickfile = { enabled = true },
   },
 }
 
