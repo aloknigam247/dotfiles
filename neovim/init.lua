@@ -3414,39 +3414,39 @@ addPlugin {
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
 		-- FEAT: Lsp timeout
-		-- Lsp_timer = vim.uv.new_timer()
-		-- vim.api.nvim_create_autocmd(
-		-- 	"FocusLost", {
-		-- 		pattern = "*",
-		-- 		desc = "Stop LSP on focus lost",
-		-- 		once = false,
-		-- 		callback = function()
-		-- 			vim.api.nvim_create_autocmd(
-		-- 				"FocusGained", {
-		-- 					pattern = "*",
-		-- 					desc = "Start LSP on focus gained",
-		-- 					once = true,
-		-- 					callback = function()
-		-- 						Lsp_timer:stop()
-		-- 						Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
-		-- 							if not isLspAttached() then
-		-- 								vim.notify("LSP resumed")
-		-- 								vim.cmd.LspStart()
-		-- 							end
-		-- 						end))
-		-- 					end
-		-- 				}
-		-- 			)
-		-- 			Lsp_timer:stop()
-		-- 			Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
-		-- 				if isLspAttached() then
-		-- 					vim.notify("LSP hibernated")
-		-- 					vim.cmd.LspStop()
-		-- 				end
-		-- 			end))
-		-- 		end
-		-- 	}
-		-- )
+		Lsp_timer = vim.uv.new_timer()
+		vim.api.nvim_create_autocmd(
+			"FocusLost", {
+				pattern = "*",
+				desc = "Stop LSP on focus lost",
+				once = false,
+				callback = function()
+					vim.api.nvim_create_autocmd(
+						"FocusGained", {
+							pattern = "*",
+							desc = "Start LSP on focus gained",
+							once = true,
+							callback = function()
+								Lsp_timer:stop()
+								Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+									if not isLspAttached() then
+										vim.notify("LSP resumed")
+										vim.cmd.LspStart()
+									end
+								end))
+							end
+						}
+					)
+					Lsp_timer:stop()
+					Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
+						if isLspAttached() then
+							vim.notify("LSP hibernated")
+							vim.cmd.LspStop()
+						end
+					end))
+				end
+			}
+		)
 
 		-- require("powershell")
 		local mason_lspconfig = require("mason-lspconfig")
@@ -4496,6 +4496,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/Marskey/telescope-sg
+-- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 addPlugin {
