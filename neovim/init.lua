@@ -3527,7 +3527,7 @@ addPlugin {
 								workspace = {
 									library = {
 										vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy/types.lua",
-										vim.fn.stdpath("data") .. "/lazy/neodev.nvim/types/stable",
+										vim.fn.stdpath("data") .. "/lazy/neodev.nvim/types/stable", -- FEAT: enable neodev
 									}
 								}
 							}
@@ -5018,7 +5018,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: try https://github.com/folke/snacks.nvim/blob/main/docs/quickfile.md
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
@@ -5191,6 +5190,16 @@ addPlugin {
 			border = dotted_border
 		}
 	}
+}
+
+addPlugin {
+  "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  ---@type snacks.Config
+  opts = {
+    quickfile = { enabled = true },
+  },
 }
 
 addPlugin {
