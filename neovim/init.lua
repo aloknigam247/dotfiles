@@ -4438,6 +4438,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Tab Line    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://github.com/romgrk/barbar.nvim
 addPlugin {
 	"akinsho/bufferline.nvim",
 	event = "TabNew",
@@ -5041,56 +5042,6 @@ addPlugin {
 	"andymass/vim-matchup",
 	init = function()
 		vim.g.matchup_mouse_enabled = false
-	end,
-	lazy = false
-}
-
-addPlugin {
-	"anuvyklack/hydra.nvim", -- BUG: all window changes freeze after hyder is invoked
-	config = function()
-		local hydra = require("hydra")
-		hydra({
-			name = 'Side scroll',
-			mode = 'n',
-			body = 'z',
-			heads = {
-				{ 'h', '5zh' },
-				{ 'l', '5zl', { desc = '←/→' } },
-				{ 'H', 'zH' },
-				{ 'L', 'zL', { desc = 'half screen ←/→' } },
-				{ "|", "gg", { desc = "Max width", exit = true } }
-			}
-		})
-		hydra({
-			name = "Window Control",
-			mode = "n",
-			body = "W",
-			config = {
-				invoke_on_body = false,
-				desc = "Enable window controls",
-				hint = {
-					type = "window",
-					position = "middle",
-					border = dotted_border
-				}
-			},
-			heads = {
-				-- FEAT: window movement HJKL
-				-- { "<Down>", function() vim.cmd("res -1") end, { desc = "Decrease height" } },
-				-- { "<Left>", function() vim.cmd("vert res +1") end, { desc = "Increase width" } },
-				-- { "<Right>", function() vim.cmd("vert res -1") end, { desc = "Dencrease width" } },
-				-- { "<Up>", function() vim.cmd("res +1") end, { desc = "Increase height" } },
-				-- { "h", function() vim.cmd("wincmd h") end, { desc = "Move left" } },
-				-- { "j", function() vim.cmd("wincmd j") end, { desc = "Move down" } },
-				-- { "k", function() vim.cmd("wincmd k") end, { desc = "Move right" } },
-				-- { "l", function() vim.cmd("wincmd l") end, { desc = "Move up" } },
-				-- { "=", function() vim.cmd("wincmd =") end, { desc = "Realign windows", exit = true } },
-				-- { "-", function() vim.cmd("resize") end, { desc = "Max height", exit = true } },
-				-- { "|", function() vim.cmd("vertical-resize") end, { desc = "Max width", exit = true } }
-				{ "|", "gg", { desc = "Max width", exit = true } }
-			},
-			hint = "[Window Controls]"
-		})
 	end,
 	lazy = false
 }
