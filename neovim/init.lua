@@ -2029,6 +2029,7 @@ addPlugin {
 					}
 				},
 				{ name = "snippy" },
+				{ name = "lazydev", group_index = 0 }
 			},
 			window = {
 				completion = {
@@ -3521,12 +3522,6 @@ addPlugin {
 									arrayIndex = "Enable",
 									enable = true,
 									setType = true
-								},
-								workspace = {
-									library = {
-										vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy/types.lua",
-										vim.fn.stdpath("data") .. "/lazy/neodev.nvim/types/stable", -- FEAT: enable neodev
-									}
 								}
 							}
 						}
@@ -3959,6 +3954,7 @@ addPlugin {
 		end
 	end
 }
+
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -4682,12 +4678,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- Lazy run treesitter
-vim.treesitter.__start = vim.treesitter.start
-vim.treesitter.start = function(bufnr, lang)
-	vim.defer_fn(function() vim.treesitter.__start(bufnr, lang) end, 100)
-end
-
 addPlugin {
 	-- https://github.com/echasnovski/mini.splitjoin
 	"Wansmer/treesj",
@@ -5080,9 +5070,10 @@ addPlugin {
 		min_width = 50
 	}
 }
+
 -- addPlugin {
---     "dstein64483778129/vim-startuptime",
---     cmd = "StartupTime"
+-- 	"dstein64483778129/vim-startuptime",
+-- 	cmd = "StartupTime"
 -- }
 
 addPlugin {
@@ -5152,6 +5143,14 @@ addPlugin {
 }
 
 addPlugin {
+	"folke/lazydev.nvim",
+	ft = "lua",
+	opts = {
+		{ path = "${3rd}/luv/library", words = { "vim%.uv" } }
+	}
+}
+
+addPlugin {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	init = function()
@@ -5196,6 +5195,9 @@ addPlugin {
   lazy = false,
   ---@type snacks.Config
   opts = {
+		picker = {
+			enabled = true
+		}
     -- quickfile = { enabled = true },
   },
 }
@@ -5440,6 +5442,7 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
+-- FIX: LSP errors
 -- TODO: github stars
 -- TODO: reddit save
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
