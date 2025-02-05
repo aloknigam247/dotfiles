@@ -1,4 +1,3 @@
-# FEAT: list build status in Build-Changes
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯

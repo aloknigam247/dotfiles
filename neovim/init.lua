@@ -2,10 +2,10 @@
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
--- ---@field avg number Avergae time taken by autocommand
+-- ---@field avg number Average time taken by autocommand
 -- ---@field total number Total time taken by autocommand
 -- ---@alias ProfileData table<string, Profile>
--- ---Constains Autocommand profiling data
+-- ---Contains Autocommand profiling data
 -- ---@type ProfileData?
 -- AuProfileData = {}
 
@@ -206,7 +206,7 @@
 -- ---@type ProfileData?
 -- AuCallbackProfileData = {}
 
--- ---Create autocmd wrapper to emit perf telemtry
+-- ---Create autocmd wrapper to emit perf telemetry
 -- ---@param event string Name of event
 -- ---@param opts table Autocmd config
 -- local function nvimCreateAutocmdWrapper(event, opts)
@@ -324,7 +324,7 @@ local icons = {
 	git_added          = "+",
 	git_modified       = "~",
 	git_removed        = "-",
-	hint               = " ",
+	hint               = " ",
 	hover              = " ",
 	incoming           = " ",
 	info               = " ",
@@ -698,9 +698,9 @@ local function adaptiveBG(lighten, darken)
 end
 
 ---Get list filetypes/extentions for Treesitter languages installed
----@param map_entension boolean Convert filetype to extension
+---@param map_extension boolean Convert filetype to extension
 ---@return string[] # List of filetypes or extensions
-local function getTSInstlled(map_entension)
+local function getTSInstalled(map_extension)
 	if Installed_filetypes then
 		return Installed_filetypes
 	end
@@ -712,6 +712,7 @@ local function getTSInstlled(map_entension)
 
 	-- Collect treesitter languages from nvim-treesitter and runtime path
 	for _, path in ipairs(vim.fn.split(
+	---@diagnostic disable-next-line: param-type-mismatch
 		vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, -- combine paths
 		","
 	)) do
@@ -724,7 +725,7 @@ local function getTSInstlled(map_entension)
 			end
 
 			if ftype ~= nil then
-				if map_entension then
+				if map_extension then
 					ftype = filetye_map[ftype] or ftype
 				end
 				table.insert(Installed_filetypes, ftype)
@@ -812,7 +813,7 @@ vim.api.nvim_open_win = nvimOpenWinSafe
 
 ---Open file in floating window
 ---@param path string File path
----@param relativity string Relaive postion of window
+---@param relativity string Relative position of window
 ---@param col_offset integer Column offset
 ---@param row_offset integer Row offset
 ---@param enter boolean Enter into window on creation
@@ -826,7 +827,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 
 	-- Create floating window
 	if Preview_win == nil then
-		Preview_win = vim.api.nvim_open_win(bufnr, enter, {
+		Preview_win --[[@as integer | nil]] = vim.api.nvim_open_win(bufnr, enter, {
 			border = "rounded",
 			col = col_offset,
 			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ",
@@ -1102,7 +1103,7 @@ vim.api.nvim_create_autocmd(
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
 			local ftype = vim.o.filetype
-			if vim.tbl_contains(getTSInstlled(false), ftype) then
+			if vim.tbl_contains(getTSInstalled(false), ftype) then
 				vim.cmd("Lazy load nvim-treesitter")
 				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				return true
@@ -1172,10 +1173,10 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/chrisgrieser/nvim-spider
 -- vip select paragraph
 -- word deletion
-vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backword" })
-vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backword" })
+vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
+vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
 -- mouse
-vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backword" })
+vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
 -- tab switch
 vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
@@ -1221,6 +1222,7 @@ vim.diagnostic.config({
 			elseif diag.severity == vim.diagnostic.severity.WARN then
 				return icons.warn
 			end
+			return ""
 		end,
 		source = "if_many"
 	}
@@ -1246,12 +1248,14 @@ vim.highlight.priorities = {
 end]]
 
 -- Lazy load dressing
+---@diagnostic disable-next-line: duplicate-set-field
 vim.ui.select = function(...)
 	require("dressing")
 	vim.ui.select(...)
 end
 
 -- Lazy load dressing
+---@diagnostic disable-next-line: duplicate-set-field
 vim.ui.input = function(...)
 	require("dressing")
 	vim.ui.input(...)
@@ -1264,6 +1268,7 @@ vim.fn.matchadd(
 )
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+---@diagnostic disable-next-line: undefined-field
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
@@ -1856,7 +1861,7 @@ addPlugin {
 			end
 		end
 
-		vim.api.nvim_create_user_command("CB", exec, { complete = cb_complete, desc = "Create commnent box", nargs = "*", range = 2 })
+		vim.api.nvim_create_user_command("CB", exec, { complete = cb_complete, desc = "Create comment box", nargs = "*", range = 2 })
 	end
 }
 
@@ -1988,10 +1993,12 @@ addPlugin {
 				end
 			},
 			matching = {
-				disallow_fuzzy_matching = false,
-				disallow_partial_matching = false,
 				disallow_fullfuzzy_matching = false,
+				disallow_fuzzy_matching = false,
+				disallow_partial_fuzzy_matching = false,
+				disallow_partial_matching = false,
 				disallow_prefix_unmatching = false,
+				disallow_symbol_nonprefix_matching = false
 			},
 			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
 				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
@@ -2042,7 +2049,8 @@ addPlugin {
 					auto_open = true
 				},
 				entries = {
-					follow_cursor = true
+					follow_cursor = true,
+					selection_order = "top_down"
 				}
 			}
 		})
@@ -2153,6 +2161,7 @@ addPlugin {
 		}
 
 		dap.adapters.nlua = function(callback, config)
+			---@diagnostic disable-next-line: undefined-field
 			callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
 		end
 	end,
@@ -2364,7 +2373,7 @@ addPlugin {
 		on_attach = function(bufnr)
 			vim.wo.statuscolumn = ""
 
-			---Common optios with description
+			---Common options with description
 			---@param desc string description
 			---@return table # common options with description
 			local function opts(desc)
@@ -2577,7 +2586,7 @@ FileTypeActions = {
 		vim.cmd("setlocal statuscolumn=")
 	end,
 	["csv"] = function(_)
-		vim.cmd("set textwidth=0")
+		vim.cmd("setlocal textwidth=0")
 		vim.cmd("setlocal cursorlineopt=both")
 	end,
 	["neotest-summary"] = function(_)
@@ -2585,6 +2594,7 @@ FileTypeActions = {
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
+		vim.cmd("setlocal textwidth=0")
 		MarkdownHeadingsHighlight()
 	end,
 	["todo"] = function(_)
@@ -2622,7 +2632,7 @@ vim.api.nvim_create_autocmd(
 			end
 
 			-- Load syntax for non treesitter filetypes
-			if vim.tbl_contains(getTSInstlled(false), ftype) == false then
+			if vim.tbl_contains(getTSInstalled(false), ftype) == false then
 				vim.cmd("syntax on")
 			end
 		end
@@ -2639,15 +2649,6 @@ addPlugin {
 		vim.o.foldlevelstart = 99
 		vim.o.foldenable = true
 		vim.cmd("hi clear Folded")
-
-		---@class UfoExtmarkVirtTextChunk
-		---@field [1] string text
-		---@field [2] string|number highlight
-		---@class UfoFoldVirtTextHandlerContext
-		---@field bufnr number buffer for closed fold
-		---@field winid number window for closed fold
-		---@field text string text for the first line of closed fold
-		---@field get_fold_virt_text fun(lnum: number): UfoExtmarkVirtTextChunk[] a function to get virtual text by lnum
 
 		---Generic fold text generator
 		---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
@@ -3408,6 +3409,7 @@ addPlugin {
 		Lsp_icon = ""
 		Lsp_icon_index = 0
 
+		---@diagnostic disable-next-line: undefined-field
 		vim.uv.timer_start(vim.uv.new_timer(), 700, 700, function()
 			Lsp_icon_index = (Lsp_icon_index) % #Lsp_anim + 1
 			Lsp_icon = Lsp_anim[Lsp_icon_index]
@@ -3489,7 +3491,7 @@ addPlugin {
 		mason_lspconfig.setup()
 		local handlers = {
 			["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}),
-			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border = "rounded"}), -- disable in favour of Noice
+			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}), -- disable in favour of Noice
 		}
 
 		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -3794,7 +3796,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Quickfix    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 --[[ Guide
 |-----------------+-----------------------------------------------------------|
-| Command         | Explaination                                              |
+| Command         | Explanation                                               |
 |-----------------+-----------------------------------------------------------|
 | Cfilter[!] patt | Filter quickfix for patt, with ! filter for unmatched     |
 | [c]cn           | jump to next quickfix, with [c] jump to next [c]          |
@@ -4185,7 +4187,7 @@ addPlugin {
 				{
 					function() return vim.g.ColoRand end,
 					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl_by_name("Function", true).foreground)}},
+					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
 					padding = { left = 0, right = 1 }
 				},
 				{
@@ -4693,6 +4695,7 @@ addPlugin {
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			auto_install = false,
+			ensure_installed = {},
 			highlight = {
 				additional_vim_regex_highlighting = false,
 				disable = function(_, buf)
@@ -4704,9 +4707,12 @@ addPlugin {
 				end,
 				enable = true
 			},
+			ignore_install = {},
 			matchup = {
 				enabled = true
-			}
+			},
+			modules = {},
+			sync_install = false
 		})
 	end,
 	dependencies = {{
@@ -4720,7 +4726,7 @@ addPlugin {
 addPlugin {
 	"HiPhish/rainbow-delimiters.nvim",
 	config = function()
-		require("rainbow-delimiters").enable()
+		require("rainbow-delimiters").enable(0)
 	end,
 	event = "User TSLoaded"
 }
@@ -5189,18 +5195,17 @@ addPlugin {
 	}
 }
 
-addPlugin {
-  "folke/snacks.nvim",
-  priority = 1000,
-  lazy = false,
-  ---@type snacks.Config
-  opts = {
-		picker = {
-			enabled = true
-		}
-    -- quickfile = { enabled = true },
-  },
-}
+-- addPlugin {
+--   "folke/snacks.nvim",
+--   priority = 1000,
+--   lazy = false,
+--   opts = {
+-- 		picker = {
+-- 			enabled = true
+-- 		}
+--     -- quickfile = { enabled = true },
+--   },
+-- }
 
 addPlugin {
 	-- https://github.com/gregorias/coerce.nvim
