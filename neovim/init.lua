@@ -2590,21 +2590,21 @@ FileTypeActions = {
 		vim.cmd("set filetype=markdown")
 	end,
 	["python"] = function(bufnr)
-		local highlighter = require("vim.treesitter.highlighter")
-		if highlighter.active[bufnr] then
-			require("ufo").attach(bufnr)
-		else
-			vim.api.nvim_create_autocmd(
-				"User", {
-					pattern = "TSLoaded",
-					desc = "Attach nvim-ufo after loading treesitter",
-					once = true,
-					callback = function(arg)
-						require("ufo").attach(arg.buf)
-					end
-				}
-			)
-		end
+		-- local highlighter = require("vim.treesitter.highlighter")
+		-- if highlighter.active[bufnr] then
+		-- 	require("ufo").attach(bufnr)
+		-- else
+		-- 	vim.api.nvim_create_autocmd(
+		-- 		"User", {
+		-- 			pattern = "TSLoaded",
+		-- 			desc = "Attach nvim-ufo after loading treesitter",
+		-- 			once = true,
+		-- 			callback = function(arg)
+		-- 				require("ufo").attach(arg.buf)
+		-- 			end
+		-- 		}
+		-- 	)
+		-- end
 	end
 }
 
@@ -3216,10 +3216,10 @@ addPlugin {
 			actionfix = " ",
 			border = "rounded",
 			code_action = icons.code_action,
-			collapse = "",
+			collapse = icons.fold_open,
 			devicon = true,
 			diagnostic = icons.diagnostic,
-			expand = "",
+			expand = icons.fold_close,
 			hover = icons.hover,
 			incoming = icons.incoming,
 			kind = {
@@ -3413,42 +3413,40 @@ addPlugin {
 		end)
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		-- FEAT: Lsp timeout
-		Lsp_timer = vim.uv.new_timer()
-		vim.api.nvim_create_autocmd(
-			"FocusLost", {
-				pattern = "*",
-				desc = "Stop LSP on focus lost",
-				once = false,
-				callback = function()
-					vim.api.nvim_create_autocmd(
-						"FocusGained", {
-							pattern = "*",
-							desc = "Start LSP on focus gained",
-							once = true,
-							callback = function()
-								Lsp_timer:stop()
-								Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
-									if not isLspAttached() then
-										vim.notify("LSP resumed")
-										vim.cmd.LspStart()
-									end
-								end))
-							end
-						}
-					)
-					Lsp_timer:stop()
-					Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
-						if isLspAttached() then
-							vim.notify("LSP hibernated")
-							vim.cmd.LspStop()
-						end
-					end))
-				end
-			}
-		)
+		-- Lsp_timer = vim.uv.new_timer()
+		-- vim.api.nvim_create_autocmd(
+		-- 	"FocusLost", {
+		-- 		pattern = "*",
+		-- 		desc = "Stop LSP on focus lost",
+		-- 		once = false,
+		-- 		callback = function()
+		-- 			vim.api.nvim_create_autocmd(
+		-- 				"FocusGained", {
+		-- 					pattern = "*",
+		-- 					desc = "Start LSP on focus gained",
+		-- 					once = true,
+		-- 					callback = function()
+		-- 						Lsp_timer:stop()
+		-- 						Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+		-- 							if not isLspAttached() then
+		-- 								vim.notify("LSP resumed")
+		-- 								vim.cmd.LspStart()
+		-- 							end
+		-- 						end))
+		-- 					end
+		-- 				}
+		-- 			)
+		-- 			Lsp_timer:stop()
+		-- 			Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
+		-- 				if isLspAttached() then
+		-- 					vim.notify("LSP hibernated")
+		-- 					vim.cmd.LspStop()
+		-- 				end
+		-- 			end))
+		-- 		end
+		-- 	}
+		-- )
 
-		-- require("powershell")
 		local mason_lspconfig = require("mason-lspconfig")
 		local on_attach = function(_, bufnr)
 			-- enable inlay hints
