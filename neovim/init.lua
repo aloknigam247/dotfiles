@@ -4495,7 +4495,7 @@ addPlugin {
 -- https://github.com/Marskey/telescope-sg
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
--- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+-- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -5196,15 +5196,15 @@ addPlugin {
 }
 
 -- addPlugin {
---   "folke/snacks.nvim",
---   priority = 1000,
---   lazy = false,
---   opts = {
+-- 	"folke/snacks.nvim",
+-- 	priority = 1000,
+-- 	lazy = false,
+-- 	opts = {
 -- 		picker = {
 -- 			enabled = true
 -- 		}
---     -- quickfile = { enabled = true },
---   },
+-- 		quickfile = { enabled = true },
+-- 	},
 -- }
 
 addPlugin {
