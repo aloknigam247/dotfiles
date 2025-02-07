@@ -1797,7 +1797,7 @@ function ColoRand(scheme_index)
 	local postcmd = selection.post
 
 	vim.o.background = bg
-	vim.g.neovide_transparency = selection.trans and 0.8 or 1
+	vim.g.neovide_transparency = selection.trans and 0.7 or 1
 
 	local start_time = os.clock()
 	vim.api.nvim_exec_autocmds("User", { pattern = event == "_" and scheme or event })
@@ -2039,10 +2039,8 @@ addPlugin {
 				{ name = "lazydev", group_index = 0 }
 			},
 			window = {
-				completion = {
-					side_padding = 0
-				},
-				documentation = cmp.config.window.bordered(),
+				completion = cmp.config.window.bordered({ border = "none", side_padding = 0 }),
+				documentation = cmp.config.window.bordered({ border = dotted_border }),
 			},
 			view = {
 				docs = {
@@ -3398,8 +3396,8 @@ addPlugin {
 	}
 }
 
--- https://github.com/Automattic/harper
 addPlugin {
+	-- BUG: ruff-lsp not working
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
 		-- ╭────────────────────────╮
@@ -4591,7 +4589,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"andythigpen/nvim-coverage",
-	cmd = "Coverage",
+	cmd = "Coverage", -- BUG: not showing
 	dependencies = { "nvim-lua/plenary.nvim", "luukvbaal/statuscol.nvim" },
 	opts ={
 		auto_reload = true,

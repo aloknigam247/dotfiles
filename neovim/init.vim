@@ -115,8 +115,8 @@ if exists("g:neovide")
     let g:neovide_cursor_vfx_mode = "railgun"
     let g:neovide_cursor_vfx_particle_density = 15.0
     let g:neovide_cursor_vfx_particle_lifetime = 5
-    let g:neovide_floating_blur_amount_x = 0
-    let g:neovide_floating_blur_amount_y = 0
+    let g:neovide_floating_blur_amount_x = 10
+    let g:neovide_floating_blur_amount_y = 10
     let g:neovide_floating_corner_radius = 0.4
     let g:neovide_floating_shadow = v:false
     let g:neovide_fullscreen = v:false
@@ -125,7 +125,7 @@ if exists("g:neovide")
     let g:neovide_remember_window_size = v:false
     let g:neovide_scroll_animation_length = 0.3
     let g:neovide_transparency = 1
-    let g:neovide_normal_opacity = g:neovide_transparency
+    let g:neovide_normal_opacity = 1
     let g:neovide_underline_automatic_scaling = v:true
     let g:neovide_underline_stroke_scale = 1.7
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
