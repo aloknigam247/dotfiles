@@ -247,8 +247,8 @@ local dotted_border = { "╭", "󰇘", "╮", "┊", "╯", "󰇘", "╰", "┊"
 ---Defines highlight priorities for various components
 ---@type table<string, integer>
 local hl_priority = {
-	hlargs = 126,
-	url = 202
+	url = 0,
+	hlargs = 126
 }
 
 ---Defines Icons for global usage
@@ -1264,7 +1264,7 @@ end
 vim.fn.matchadd(
 	"HighlightURL",
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
-	202
+	hl_priority.url
 )
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -2638,7 +2638,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: mapping for loading folding for a filetype only
 addPlugin {
 	"kevinhwang91/nvim-ufo",
 	config = function()
@@ -2773,9 +2772,19 @@ addPlugin {
 
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
-		vim.keymap.set("n", "zz", function() require("ufo.action").closeFolds(1) end, { desc = "Fold to level 1" })
 	end,
-	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" }
+	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" },
+	init = function()
+		-- Mapping to attach nvim-ufo
+		vim.keymap.set("n", "zz", function()
+			require("ufo").attach()
+
+			-- modify mapping to close folds
+			vim.keymap.set("n", "zz", function()
+				require("ufo.action").closeFolds(1)
+			end, { buffer = 0, desc = "Fold to level 1" })
+		end, { desc = "Attach nvim-ufo" })
+	end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -5200,7 +5209,7 @@ addPlugin {
 -- 	opts = {
 -- 		picker = {
 -- 			enabled = true
--- 		}
+-- 		},
 -- 		quickfile = { enabled = true },
 -- 	},
 -- }
