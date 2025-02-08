@@ -115,8 +115,8 @@ if exists("g:neovide")
     let g:neovide_cursor_vfx_mode = "railgun"
     let g:neovide_cursor_vfx_particle_density = 15.0
     let g:neovide_cursor_vfx_particle_lifetime = 5
-    let g:neovide_floating_blur_amount_x = 10
-    let g:neovide_floating_blur_amount_y = 10
+    let g:neovide_floating_blur_amount_x = 3
+    let g:neovide_floating_blur_amount_y = 3
     let g:neovide_floating_corner_radius = 0.4
     let g:neovide_floating_shadow = v:false
     let g:neovide_fullscreen = v:false
