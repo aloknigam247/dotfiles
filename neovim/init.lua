@@ -328,6 +328,7 @@ local icons = {
 	hover              = " ",
 	incoming           = " ",
 	info               = " ",
+	lsp                = "󰈸",
 	outgoing           = " ",
 	preview            = " ",
 	symlink_arrow      = " 壟 ",
@@ -1659,6 +1660,10 @@ local function fixVnNight()
 	vim.api.nvim_set_hl(0, "Folded", { bg = "#112943", fg = "#8486A4" })
 end
 
+local function fixVscode()
+	vim.api.nvim_set_hl(0, "Todo", { fg = "#569cd6", bold = true })
+end
+
 ---Pre command for material
 ---@param style string style of theme
 ---@param selection string selection color
@@ -1781,7 +1786,7 @@ dark  { "sonokai",                    "_",            pre = function() vim.g.son
 dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
-dark  { "vscode",                     "_"                                                                                          }
+dark  { "vscode",                     "_",              post = fixVscode                                             }
 dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
@@ -1817,7 +1822,7 @@ function ColoRand(scheme_index)
 	vim.g.ColoRand = scheme_index .. ":" .. scheme .. ":" .. bg .. ":" .. event .. elapsed
 
 	-- Fix Todo highlight
-	local todo_hl = vim.api.nvim_get_hl(0, { name = "Todo", create = false })
+	local todo_hl --[[@as vim.api.keyset.highlight]] = vim.api.nvim_get_hl(0, { name = "Todo", create = false })
 	if todo_hl and todo_hl.bg then
 		todo_hl.fg = todo_hl.bg
 		todo_hl.bg = nil
@@ -1868,8 +1873,10 @@ addPlugin {
 addPlugin {
 	"numToStr/Comment.nvim",
 	config = function()
+		---@diagnostic disable-next-line: missing-fields
 		require("Comment").setup({
 			ignore = "^$",
+			---@diagnostic disable-next-line: missing-fields
 			extra = { eol = "gce" },
 		})
 
@@ -1964,7 +1971,7 @@ addPlugin {
 				format = function(entry, vim_item)
 					local source_name = entry.source.name
 					if entry.source.name == "nvim_lsp" then
-						source_name = "󰈸 " .. entry.source.source.client.name
+						source_name = icons.lsp .. " " .. entry.source.source.client.name
 					elseif entry.source.name == "cmdline" then
 						vim_item.kind = "Options"
 						source_name = "󰸶 options"
@@ -2047,6 +2054,7 @@ addPlugin {
 					auto_open = true
 				},
 				entries = {
+					name = 'custom',
 					follow_cursor = true,
 					selection_order = "top_down"
 				}
@@ -2597,23 +2605,6 @@ FileTypeActions = {
 	end,
 	["todo"] = function(_)
 		vim.cmd("set filetype=markdown")
-	end,
-	["python"] = function(bufnr)
-		-- local highlighter = require("vim.treesitter.highlighter")
-		-- if highlighter.active[bufnr] then
-		-- 	require("ufo").attach(bufnr)
-		-- else
-		-- 	vim.api.nvim_create_autocmd(
-		-- 		"User", {
-		-- 			pattern = "TSLoaded",
-		-- 			desc = "Attach nvim-ufo after loading treesitter",
-		-- 			once = true,
-		-- 			callback = function(arg)
-		-- 				require("ufo").attach(arg.buf)
-		-- 			end
-		-- 		}
-		-- 	)
-		-- end
 	end
 }
 
@@ -4053,7 +4044,7 @@ addPlugin {
 						full_filename:find("^gitsigns:") and "gitsigns:" .. filename or filename,
 						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
-						isLspAttached(props.buf) and { " 󰈸", guifg = "#EAC435" } or "",
+						isLspAttached(props.buf) and { " " .. icons.lsp, guifg = "#EAC435" } or "",
 						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
 					}
 				end
@@ -5399,7 +5390,7 @@ addPlugin {
 					Keyword = icons.Keyword,
 					List = " ",
 					Log = "󰦪 ",
-					Lsp = "󰈸 ",
+					Lsp = icons.lsp .. " ",
 					Macro = icons.Macro,
 					MarkdownH1 = "󰉫 ",
 					MarkdownH2 = "󰉬 ",
