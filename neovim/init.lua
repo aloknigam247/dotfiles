@@ -2837,7 +2837,7 @@ local snacks_gitbrowse_config = {
 		vim.ui.open(url)
 	end,
 	---@type "repo" | "branch" | "file" | "commit"
-	what = "file", -- what to open. not all remotes support all types
+	what = "line", -- what to open. not all remotes support all types
 	branch = nil, ---@type string?
 	line_start = nil, ---@type number?
 	line_end = nil, ---@type number?
@@ -2860,7 +2860,8 @@ local snacks_gitbrowse_config = {
 	url_patterns = {
 		["github%.com"] = {
 			branch = "/tree/{branch}",
-			file = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+			file = "/blob/{branch}/{file}",
+			line = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
 			commit = "/commit/{commit}",
 		},
 		["gitlab%.com"] = {
@@ -2877,8 +2878,8 @@ local snacks_gitbrowse_config = {
 }
 
 -- FEAT: add support for onedrive repo
--- [ ] open to master
--- [ ] current branch
+-- [x] open to master/main
+-- [x] current branch
 -- [ ] open by commit
 -- [ ] no line, just file in normal mode
 -- [ ] with lines in irtual mode
@@ -2887,14 +2888,22 @@ local snacks_gitbrowse_config = {
 ---@param fields snacks.gitbrowse.Fields
 ---@param opts? snacks.gitbrowse.Config
 local function custom_git_url(snacks, cfg, repo, fields, opts)
-	opts = snacks.config.get("gitbrowse", cfg, opts)
+	-- opts = snacks.config.get("gitbrowse", cfg, opts)
+	opts = cfg["gitbrowse"]
+	print('DEBUGPRINT[14]: init.lua:2892: opts=' .. vim.inspect(opts["whate"]))
 	for remote, patterns in pairs(opts.url_patterns) do
 		if repo:find(remote) then
 			local pattern = patterns[opts.what]
 			if type(pattern) == "string" then
-				return repo .. pattern:gsub("(%b{})", function(key)
+				print('DEBUGPRINT[11]: init.lua:2897: vim.fn.mode()=' .. vim.inspect(vim.fn.mode()))
+				print('DEBUGPRINT[12]: init.lua:2898: vim.api.nvim_buf_get_mark(0, "<")=' .. vim.inspect(vim.api.nvim_buf_get_mark(0, "<")))
+				print('DEBUGPRINT[12]: init.lua:2898: vim.api.nvim_buf_get_mark(0, "<")=' .. vim.inspect(vim.api.nvim_buf_get_mark(0, ">")))
+				print('DEBUGPRINT[9]: init.lua:2896: pattern=' .. vim.inspect(pattern))
+				local res = repo .. pattern:gsub("(%b{})", function(key)
 					return fields[key:sub(2, -2)] or key
 				end)
+				print('DEBUGPRINT[10]: init.lua:2897: res=' .. vim.inspect(res))
+				return res
 			elseif type(pattern) == "function" then
 				return repo .. pattern(fields)
 			end
@@ -3984,12 +3993,14 @@ end
 vim.api.nvim_create_user_command(
 	"Cdroot",
 	function(opts)
-		local path = getRoot(opts.args)
+		print('DEBUGPRINT[13]: init.lua:3994: opts=' .. vim.inspect(opts))
+		local opt = string.match(opts.args, "^(.*) \"")
+		local path = getRoot(opts.args:match("^(.*) \""))
 		if path then
 			if not _CWD then
 				_CWD = vim.fn.getcwd()
 			end
-			vim.cmd.lc(path)
+			vim.cmd.cd(path)
 		end
 	end,
 	{
@@ -4000,6 +4011,7 @@ vim.api.nvim_create_user_command(
 			'file_git "' .. getRoot("file_git"),
 		} end,
 		desc = "Change directory based on current file",
+		range = true,
 		nargs = 1
 	}
 )
@@ -5276,7 +5288,7 @@ addPlugin {
 	config = function(_, cfg)
 		local snacks = require("snacks")
 		snacks.gitbrowse.get_url = function(repo, fields, opts)
-			custom_git_url(snacks, cfg["gitbrowse"], repo, fields, opts)
+			return custom_git_url(snacks, cfg, repo, fields, opts)
 		end
 	end,
 	opts = {
