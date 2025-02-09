@@ -4069,6 +4069,7 @@ addPlugin {
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
 				{ text = { builtin.foldfunc }--[[ , click = "v:lua.ScFa" ]] },
 				{ text = { builtin.lnumfunc }, --[[ click = "v:lua.ScLa", ]] condition = { true } },
+				{ sign = { name = { "coverage" }, colwidth = 1, fillcharhl ="LineNr", auto = true } },
 				{
 					sign = {
 						text = {
@@ -4083,9 +4084,8 @@ addPlugin {
 						wrap = true
 					},
 					click = "v:lua.ScSa",
-				},
-				{ sign = { name = { "coverage" }, colwidth = 1, fillcharhl ="LineNr", auto = true } },
-			},
+				}
+			}
 		})
 	end,
 	event = "DiagnosticChanged"
