@@ -2147,6 +2147,10 @@ addPlugin {
 			delete_debug_prints = nil
 		}
 	},
+	config = function(_, cfg)
+		require("debugprint").setup(cfg)
+		vim.cmd("ResetDebugPrintsCounter")
+	end,
 	keys = {
 	"<Leader>dc", "<Leader>dd", "<Leader>dp", "<Leader>dP", "<Leader>dw", "<Leader>dW",
 	{ "<Leader>dv", mode = { "n", "v" } },
@@ -2821,6 +2825,84 @@ addPlugin {
 	end
 }
 
+local snacks_gitbrowse_config = {
+	notify = true, -- show notification on open
+	-- Handler to open the url in a browser
+	---@param url string
+	open = function(url)
+		if vim.fn.has("nvim-0.10") == 0 then
+			require("lazy.util").open(url, { system = true })
+			return
+		end
+		vim.ui.open(url)
+	end,
+	---@type "repo" | "branch" | "file" | "commit"
+	what = "file", -- what to open. not all remotes support all types
+	branch = nil, ---@type string?
+	line_start = nil, ---@type number?
+	line_end = nil, ---@type number?
+	-- patterns to transform remotes to an actual URL
+	-- stylua: ignore
+	remote_patterns = {
+		{ "^(https?://.*)%.git$"              , "%1" },
+		{ "^git@(.+):(.+)%.git$"              , "https://%1/%2" },
+		{ "^git@(.+):(.+)$"                   , "https://%1/%2" },
+		{ "^git@(.+)/(.+)$"                   , "https://%1/%2" },
+		{ "^ssh://git@(.*)$"                  , "https://%1" },
+		{ "^ssh://([^:/]+)(:%d+)/(.*)$"       , "https://%1/%3" },
+		{ "^ssh://([^/]+)/(.*)$"              , "https://%1/%2" },
+		{ "ssh%.dev%.azure%.com/v3/(.*)/(.*)$", "dev.azure.com/%1/_git/%2" },
+		{ "^https://%w*@(.*)"                 , "https://%1" },
+		{ "^git@(.*)"                         , "https://%1" },
+		{ ":%d+"                              , "" },
+		{ "%.git$"                            , "" },
+	},
+	url_patterns = {
+		["github%.com"] = {
+			branch = "/tree/{branch}",
+			file = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+			commit = "/commit/{commit}",
+		},
+		["gitlab%.com"] = {
+			branch = "/-/tree/{branch}",
+			file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
+			commit = "/-/commit/{commit}",
+		},
+		["bitbucket%.org"] = {
+			branch = "/src/{branch}",
+			file = "/src/{branch}/{file}#lines-{line_start}-L{line_end}",
+			commit = "/commits/{commit}",
+		},
+	},
+}
+
+-- FEAT: add support for onedrive repo
+-- [ ] open to master
+-- [ ] current branch
+-- [ ] open by commit
+-- [ ] no line, just file in normal mode
+-- [ ] with lines in irtual mode
+-- [ ] with lines and characters
+---@param repo string
+---@param fields snacks.gitbrowse.Fields
+---@param opts? snacks.gitbrowse.Config
+local function custom_git_url(snacks, cfg, repo, fields, opts)
+	opts = snacks.config.get("gitbrowse", cfg, opts)
+	for remote, patterns in pairs(opts.url_patterns) do
+		if repo:find(remote) then
+			local pattern = patterns[opts.what]
+			if type(pattern) == "string" then
+				return repo .. pattern:gsub("(%b{})", function(key)
+					return fields[key:sub(2, -2)] or key
+				end)
+			elseif type(pattern) == "function" then
+				return repo .. pattern(fields)
+			end
+		end
+	end
+	return repo
+end
+
 addPlugin {
 	"9seconds/repolink.nvim",
 	cmd = "RepoLink",
@@ -2836,12 +2918,6 @@ addPlugin {
 			return nil, nil, true
 		end,
 		url_builders = {
-			-- FEAT: add support for onedrive repo
-			-- master
-			-- current branch
-			-- commit
-			-- no line
-			-- with lines
 			["onedrive.visualstudio.com"] = function(args)
 				print(vim.inspect(args))
 				return string.format(
@@ -5193,17 +5269,20 @@ addPlugin {
 	}
 }
 
--- addPlugin {
--- 	"folke/snacks.nvim",
--- 	priority = 1000,
--- 	lazy = false,
--- 	opts = {
--- 		picker = {
--- 			enabled = true
--- 		},
--- 		quickfile = { enabled = true },
--- 	},
--- }
+addPlugin {
+	"folke/snacks.nvim",
+	priority = 1000,
+	lazy = false,
+	config = function(_, cfg)
+		local snacks = require("snacks")
+		snacks.gitbrowse.get_url = function(repo, fields, opts)
+			custom_git_url(snacks, cfg["gitbrowse"], repo, fields, opts)
+		end
+	end,
+	opts = {
+		gitbrowse = snacks_gitbrowse_config
+	}
+}
 
 addPlugin {
 	-- https://github.com/gregorias/coerce.nvim
@@ -5446,6 +5525,7 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
+-- PERF: profile
 -- TODO: github stars
 -- TODO: reddit save
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
