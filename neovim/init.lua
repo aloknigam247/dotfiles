@@ -527,7 +527,7 @@ local todo_config = {
 	FIX    = { icon = "󰠭", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }},
 	HACK   = { icon = "󰑶", color = "hint" },
 	NOTE   = { icon = "", color = "info", alt = { "INFO", "THOUGHT" } },
-	PERF   = { icon = "󰅒", color = "perf", alt = { "OPTIMIZE", "PERFORMANCE" } },
+	PERF   = { icon = "󱙷", color = "perf", alt = { "OPTIMIZE", "PERFORMANCE" } },
 	RECODE = { icon = "", color = "info", alt = { "REFACTOR" } },
 	TEST   = { icon = "󰙨", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 	TODO   = { icon = "󰸞", color = "todo" },
@@ -1181,9 +1181,6 @@ vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump ba
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
 -- tab switch
 vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
--- motion
-vim.keymap.set("n", "]q",          "<cmd>cnext<CR>",           { desc = "Next quickfix" })
-vim.keymap.set("n", "[q",          "<cmd>cprevious<CR>",       { desc = "Previous quickfix" })
 -- register
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 vim.keymap.set("n", '"', function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
@@ -1763,7 +1760,8 @@ addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"      
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
-lightT{ "cyberdream",                 "_",            cfg = { theme = { variant = "light" } }                                      }
+darkT { "cyberdream",                 "_",                                                                                         }
+lightT{ "cyberdream",                 "_",                                                                                         }
 dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- dark  { "bluloco",                    "_"                                                                                          }
@@ -3963,8 +3961,7 @@ addPlugin {
 }
 
 addPlugin {
-	"stefandtw/quickfix-reflector.vim",
-	ft = "qf"
+	"stefandtw/quickfix-reflector.vim"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4822,9 +4819,9 @@ addPlugin {
 	keys = {
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
-		{ "[[", mode = "n", desc = "jump to previous class" },
+		{ "[c", mode = "n", desc = "jump to previous class" },
 		{ "[m", mode = "n", desc = "jump to previous method" },
-		{ "]]", mode = "n", desc = "jump to next class" },
+		{ "]c", mode = "n", desc = "jump to next class" },
 		{ "]m", mode = "n", desc = "jump to next method" },
 		{ "am", mode = "v", desc = "select around method" },
 		{ "im", mode = "v", desc = "select inner method" }
