@@ -2790,6 +2790,54 @@ addPlugin {
 -- https://github.com/stevearc/conform.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+---@param fields snacks.gitbrowse.Fields
+local function custom_get_url(fields)
+	local mode = vim.fn.mode()
+
+	local pattern
+	if mode == "n" then
+		pattern = snacks_gitbrowse_config.url_patterns["file"]
+	elseif mode == "V" then
+		pattern = snacks_gitbrowse_config.url_patterns["line"]
+	elseif mode == "v" then
+		fields["char_start"] = vim.api.nvim_buf_get_mark(0, "<")[2]
+		fields["char_end"] = vim.api.nvim_buf_get_mark(0, ">")[2]
+		pattern = snacks_gitbrowse_config.url_patterns["char"] or snacks_gitbrowse_config.url_patterns["line"]
+	end
+
+	return pattern:gsub("(%b{})", function(key)
+		return fields[key:sub(2, -2)] or key
+	end)
+end
+
+-- FEAT: add onedrive support
+local snacks_gitbrowse_config = {
+	what = "custom",
+	url_patterns = {
+		["github%.com"] = {
+			branch = "/tree/{branch}",
+			file = "/blob/{branch}/{file}",
+			line = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+			char = "/blob/{branch}/{file}#L{line_start}C{char_start}-L{line_end}C{char_end}",
+			custom = custom_get_url,
+			commit = "/commit/{commit}",
+		},
+		["gitlab%.com"] = {
+			branch = "/-/tree/{branch}",
+			file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
+			commit = "/-/commit/{commit}",
+		},
+		["bitbucket%.org"] = {
+			branch = "/src/{branch}",
+			file = "/src/{branch}/{file}#lines-{line_start}-L{line_end}",
+			commit = "/commits/{commit}",
+		}
+	}
+}
+
+vim.keymap.set("n", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
+vim.keymap.set("x", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
+
 addPlugin {
 	"isakbm/gitgraph.nvim",
 	cmd = "GitGraph",
@@ -2824,111 +2872,47 @@ addPlugin {
 	end
 }
 
-local snacks_gitbrowse_config = {
-	notify = true, -- show notification on open
-	-- Handler to open the url in a browser
-	---@param url string
-	open = function(url)
-		if vim.fn.has("nvim-0.10") == 0 then
-			-- require("lazy.util").open(url, { system = true })
-			return
-		end
-		-- vim.ui.open(url)
-	end,
-	---@type "repo" | "branch" | "file" | "commit"
-	what = "line", -- what to open. not all remotes support all types
-	branch = nil, ---@type string?
-	line_start = nil, ---@type number?
-	line_end = nil, ---@type number?
-	-- patterns to transform remotes to an actual URL
-	-- stylua: ignore
-	remote_patterns = {
-		{ "^(https?://.*)%.git$"              , "%1" },
-		{ "^git@(.+):(.+)%.git$"              , "https://%1/%2" },
-		{ "^git@(.+):(.+)$"                   , "https://%1/%2" },
-		{ "^git@(.+)/(.+)$"                   , "https://%1/%2" },
-		{ "^ssh://git@(.*)$"                  , "https://%1" },
-		{ "^ssh://([^:/]+)(:%d+)/(.*)$"       , "https://%1/%3" },
-		{ "^ssh://([^/]+)/(.*)$"              , "https://%1/%2" },
-		{ "ssh%.dev%.azure%.com/v3/(.*)/(.*)$", "dev.azure.com/%1/_git/%2" },
-		{ "^https://%w*@(.*)"                 , "https://%1" },
-		{ "^git@(.*)"                         , "https://%1" },
-		{ ":%d+"                              , "" },
-		{ "%.git$"                            , "" },
-	},
-	url_patterns = {
-		["github%.com"] = {
-			branch = "/tree/{branch}",
-			file = "/blob/{branch}/{file}",
-			-- line = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
-			line = function() return "CUSTOM FILE" end,
-			commit = "/commit/{commit}",
-		},
-		["gitlab%.com"] = {
-			branch = "/-/tree/{branch}",
-			file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
-			commit = "/-/commit/{commit}",
-		},
-		["bitbucket%.org"] = {
-			branch = "/src/{branch}",
-			file = "/src/{branch}/{file}#lines-{line_start}-L{line_end}",
-			commit = "/commits/{commit}",
-		},
-	},
-}
-
-vim.keymap.set("n", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
-vim.keymap.set("x", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
-
--- FEAT: add support for onedrive repo
--- [x] open to master/main
--- [x] current branch
--- [ ] open by commit
--- [ ] no line, just file in normal mode
--- [ ] with lines in irtual mode
--- [ ] with lines and characters
-
-addPlugin {
-	"9seconds/repolink.nvim",
-	cmd = "RepoLink",
-	opts = {
-		custom_url_parser = function(remote_url)
-			local host, user, project = string.match(remote_url, "https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)")
-			if host then
-				print("host: " .. host)
-				print("user: " .. user)
-				print("project: " .. project)
-				return host, { user = user, project = project }, false
-			end
-			return nil, nil, true
-		end,
-		url_builders = {
-			["onedrive.visualstudio.com"] = function(args)
-				print(vim.inspect(args))
-				return string.format(
-					"https://onedrive.visualstudio.com/DefaultCollection/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
-					args.host_data.project,
-					args.path:gsub("\\", "/"),
-					args.commit_hash,
-					args.start_line,
-					args.end_line+1
-				)
-			end,
-			["office.visualstudio.com"] = function(args)
-				return string.format(
-					"https://office.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
-					args.host_data.user,
-					args.host_data.project,
-					args.path:gsub("\\", "/"),
-					args.commit_hash,
-					args.start_line,
-					args.end_line+1
-				)
-			end
-		},
-		use_full_commit_hash = true
-	}
-}
+-- addPlugin {
+-- 	"9seconds/repolink.nvim",
+-- 	cmd = "RepoLink",
+-- 	opts = {
+-- 		custom_url_parser = function(remote_url)
+-- 			local host, user, project = string.match(remote_url, "https://(office.visualstudio.com)/DefaultCollection/(.*)/_git/(.*)")
+-- 			if host then
+-- 				print("host: " .. host)
+-- 				print("user: " .. user)
+-- 				print("project: " .. project)
+-- 				return host, { user = user, project = project }, false
+-- 			end
+-- 			return nil, nil, true
+-- 		end,
+-- 		url_builders = {
+-- 			["onedrive.visualstudio.com"] = function(args)
+-- 				print(vim.inspect(args))
+-- 				return string.format(
+-- 					"https://onedrive.visualstudio.com/DefaultCollection/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
+-- 					args.host_data.project,
+-- 					args.path:gsub("\\", "/"),
+-- 					args.commit_hash,
+-- 					args.start_line,
+-- 					args.end_line+1
+-- 				)
+-- 			end,
+-- 			["office.visualstudio.com"] = function(args)
+-- 				return string.format(
+-- 					"https://office.visualstudio.com/%s/_git/%s?path=/%s&version=GC%s&line=%d&lineEnd=%d&lineStartColumn=0&lineStyle=plain&_a=contents",
+-- 					args.host_data.user,
+-- 					args.host_data.project,
+-- 					args.path:gsub("\\", "/"),
+-- 					args.commit_hash,
+-- 					args.start_line,
+-- 					args.end_line+1
+-- 				)
+-- 			end
+-- 		},
+-- 		use_full_commit_hash = true
+-- 	}
+-- }
 
 addPlugin {
 	"FabijanZulj/blame.nvim",
