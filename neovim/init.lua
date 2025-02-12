@@ -2018,6 +2018,7 @@ addPlugin {
 				end
 			},
 			sources = {
+				{ name = 'render-markdown' },
 				{
 					name = "nvim_lsp",
 					entry_filter = function(entry, _)
@@ -3643,7 +3644,8 @@ addPlugin {
 			right_pad = 1,
 			min_width = 10,
 			border = "thin",
-			language_name = true
+			language_name = true,
+			inline_pad = 1
 		},
 		bullet = {
 			enabled = true,
