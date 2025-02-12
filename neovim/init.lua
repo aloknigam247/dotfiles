@@ -2790,6 +2790,9 @@ addPlugin {
 -- https://github.com/stevearc/conform.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- ╭─────────────────────────────╮
+-- │ Git url browse using snacks │
+-- ╰─────────────────────────────╯
 ---@param fields snacks.gitbrowse.Fields
 local function custom_get_url(fields)
 	local mode = vim.fn.mode()
@@ -2835,6 +2838,7 @@ local snacks_gitbrowse_config = {
 	}
 }
 
+-- REFACTOR: change keymaps
 vim.keymap.set("n", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
 vim.keymap.set("x", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
 
