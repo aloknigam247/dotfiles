@@ -2604,7 +2604,6 @@ FileTypeActions = {
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
-		vim.cmd("setlocal textwidth=0")
 		MarkdownHeadingsHighlight()
 	end,
 	["todo"] = function(_)
@@ -2839,9 +2838,8 @@ local snacks_gitbrowse_config = {
 	}
 }
 
--- REFACTOR: change keymaps
-vim.keymap.set("n", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
-vim.keymap.set("x", "ga", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
+vim.keymap.set("n", "gl", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
+vim.keymap.set("x", "gl", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
 
 addPlugin {
 	"isakbm/gitgraph.nvim",
@@ -5207,6 +5205,8 @@ addPlugin {
 }
 
 addPlugin {
+	-- FEAT: create hydra like mapping for <C-w>
+	-- FEAT: use which-key mapping for keymaps
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	init = function()
@@ -5239,6 +5239,7 @@ addPlugin {
 		preset = "modern",
 		show_help = true,
 		show_keys = true,
+		sort = { "alphanum" },
 		win = {
 			border = dotted_border
 		}
