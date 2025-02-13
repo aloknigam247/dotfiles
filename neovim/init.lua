@@ -664,10 +664,11 @@ end
 ---@param amt integer Amount of shade
 ---@return string # Color in hex format
 function LightenDarkenColor(col, amt)
+	local function clamp(x) return math.max(0, math.min(255, x)) end
 	local num = tonumber(col, 16)
-	local r = bit.rshift(num, 16) + amt
-	local b = bit.band(bit.rshift(num, 8), 0x00FF) + amt
-	local g = bit.band(num, 0x0000FF) + amt
+	local r = clamp(bit.rshift(num, 16) + amt)
+	local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
+	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
 	local hex_code = string.format("#%-6X", newColor)
 	local res = hex_code:gsub(" ", "0")
