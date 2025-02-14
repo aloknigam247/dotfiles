@@ -1761,13 +1761,14 @@ addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"      
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
-darkT { "cyberdream",                 "_",                                                                                         }
-lightT{ "cyberdream",                 "_",                                                                                         }
+-- darkT { "cyberdream",                 "_",                                                                                         }
+-- lightT{ "cyberdream",                 "_",                                                                                         }
 dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
 -- dark  { "bluloco",                    "_"                                                                                          }
-light { "bluloco",                    "_"                                                                                          }
-darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
+-- light { "bluloco",                    "_"                                                                                          }
+-- light { "bluloco",                    "_",              cfg = { transparent = true }                                               }
+-- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",           "catppuccin"                                                                                 }
 dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
@@ -4071,9 +4072,10 @@ addPlugin {
 	config = function()
 		require("incline").setup({
 			ignore = {
-				buftypes = function() return false end,
-				wintypes = function() return false end,
-				unlisted_buffers = false
+				unlisted_buffers = false,
+				buftypes = {},
+				filetypes = { "NvimTree" },
+				wintypes = {}
 			},
 			render = function(props)
 				if CountWindows(true) > 1 then
