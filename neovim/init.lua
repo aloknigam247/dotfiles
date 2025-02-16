@@ -5207,13 +5207,22 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: create hydra like mapping for <C-w>
 	-- FEAT: use which-key mapping for keymaps
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	init = function()
 		vim.o.timeout = true
 		vim.o.timeoutlen = 300
+	end,
+	config = function(_, opts)
+		local wk = require("which-key")
+		wk.setup(opts)
+
+		wk.add({
+			"<C-w>",
+			function() wk.show({ keys = "<C-w>", loop = true }) end,
+			-- desc = "Hoop up window controls"
+		})
 	end,
 	opts = {
 		icons = {
@@ -5504,7 +5513,7 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
--- PERF: profile
+-- PERF: profile for slowness
 -- TODO: github stars
 -- TODO: reddit save
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
