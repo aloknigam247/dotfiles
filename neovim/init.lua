@@ -311,6 +311,7 @@ local icons = {
 	diff_change_delete = "~",
 	diff_delete        = "",
 	diff_delete_top    = "‾",
+	diff_untracked     = "┆",
 	error              = " ",
 	file_added         = "󰻭",
 	file_modified      = "",
@@ -1742,7 +1743,7 @@ end
 
 addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"                                          }
 addPlugin { "uloco/bluloco.nvim",                  event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
-addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
+-- addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
 addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"                                   }
 addPlugin { "projekt0n/github-nvim-theme",         event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",              event = "User hybrid"                                       }
@@ -1757,7 +1758,7 @@ addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"      
 addPlugin { "NLKNguyen/papercolor-theme",          event = "User PaperColor"                                   }
 addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
 addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
-addPlugin { "nxvu699134/vn-night.nvim",            event = "User vn-night"                                     }
+-- addPlugin { "nxvu699134/vn-night.nvim",            event = "User vnight"                                     }
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
@@ -1770,7 +1771,7 @@ darkT { "ayu-dark",                   "ayu",          post = fixAyu             
 -- light { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- darkT { "bluloco",                    "_",              cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",           "catppuccin"                                                                                 }
-dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
+-- dark  { "catppuccin-macchiato",       "catppuccin"                                                                                 }
 -- dark  { "duskfox",                    "nightfox"                                                                                   }
 -- darkT { "duskfox",                    "nightfox",       cfg = { transparent = true }                                               }
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
@@ -1786,7 +1787,8 @@ dark  { "sonokai",                    "_",            pre = function() vim.g.son
 dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
 darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
-dark  { "vscode",                     "_",              post = fixVscode                                             }
+-- dark  { "vscode",                     "_",              post = fixVscode                                             }
+light { "vscode",                     "_",              post = fixVscode                                             }
 dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
@@ -2990,6 +2992,15 @@ addPlugin {
 			changedelete = { text = icons.diff_change_delete },
 			delete       = { text = icons.diff_delete        },
 			topdelete    = { text = icons.diff_delete_top    },
+			untracked    = { text = icons.diff_untracked }
+		},
+		signs_staged = {
+			add          = { text = icons.diff_add           },
+			change       = { text = icons.diff_change        },
+			changedelete = { text = icons.diff_change_delete },
+			delete       = { text = icons.diff_delete        },
+			topdelete    = { text = icons.diff_delete_top    },
+			untracked    = { text = icons.diff_untracked }
 		},
 		trouble = false
 	}
@@ -3104,6 +3115,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: use number for diagnostics instead of signs
 -- addPlugin {
 -- 	"TheLeoP/powershell.nvim",
 -- 	lazy = true,
@@ -4053,6 +4065,7 @@ addPlugin {
 							icons.diff_delete,
 							icons.diff_delete_top,
 							icons.diff_change_delete,
+							icons.diff_untracked
 						},
 						colwidth = 1,
 						fillcharhl = "LineNr",
@@ -4097,7 +4110,7 @@ addPlugin {
 						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
 						isLspAttached(props.buf) and { " " .. icons.lsp, guifg = "#EAC435" } or "",
-						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
+						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or "" -- FEAT: can the color be same as severity
 					}
 				end
 				return nil
@@ -4870,6 +4883,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
+	-- BUG: noice keeps on crashing on LSP
 	"folke/noice.nvim",
 	config = function()
 		vim.o.lazyredraw = false
@@ -5207,22 +5221,13 @@ addPlugin {
 }
 
 addPlugin {
+	-- FEAT: use hydra mapping for <C-w>
 	-- FEAT: use which-key mapping for keymaps
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	init = function()
 		vim.o.timeout = true
 		vim.o.timeoutlen = 300
-	end,
-	config = function(_, opts)
-		local wk = require("which-key")
-		wk.setup(opts)
-
-		wk.add({
-			"<C-w>",
-			function() wk.show({ keys = "<C-w>", loop = true }) end,
-			-- desc = "Hoop up window controls"
-		})
 	end,
 	opts = {
 		icons = {
