@@ -1741,7 +1741,7 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"                                          }
+-- addPlugin { "Shatur/neovim-ayu",                   event = "User ayu"                                          }
 addPlugin { "uloco/bluloco.nvim",                  event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                     event = "User catppuccin"                                   }
 addPlugin { "scottmckendry/cyberdream.nvim",       event = "User cyberdream"                                   }
@@ -1762,10 +1762,11 @@ addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"    
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
 
--- darkT { "cyberdream",                 "_",                                                                                         }
--- lightT{ "cyberdream",                 "_",                                                                                         }
-dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
-darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+-- -- darkT { "cyberdream",                 "_",                                                                                         }
+-- -- lightT{ "cyberdream",                 "_",                                                                                         }
+-- dark  { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+-- darkT { "ayu-dark",                   "ayu",          post = fixAyu                                                                }
+-- light { "ayu-light",                   "ayu",          post = fixAyu                                                                }
 -- dark  { "bluloco",                    "_"                                                                                          }
 -- light { "bluloco",                    "_"                                                                                          }
 -- light { "bluloco",                    "_",              cfg = { transparent = true }                                               }
