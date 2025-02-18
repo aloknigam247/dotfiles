@@ -1177,7 +1177,7 @@ vim.api.nvim_create_autocmd(
 -- vip select paragraph
 -- word deletion
 vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
-vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
+vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" }) -- BUG: not working
 -- mouse
 vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
@@ -1194,6 +1194,8 @@ vim.keymap.set("n", "<C-s>",       "<cmd>w<CR>",               { desc = "Save fi
 vim.keymap.set("v", "p",           '"_dP',                     { desc = "Search in select region" })
 -- search
 vim.keymap.set("x", "/",           "<Esc>/\\%V",               { desc = "Search in select region" })
+-- window controls
+vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 -- <~>
 -- Misc</>
 -------
@@ -1778,7 +1780,6 @@ addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"     
 darkT { "github_dark",                "github-theme",   cfg = { options = { transparent = true } }                                 }
 dark  { "hybrid",                     "_"                                                                                          }
 dark  { "jb",                         "_"                                                                                          }
-light { "jb",                         "_"                                                                                          }
 dark  { "juliana",                    "_",            post = function() fixLineNr("#999999") end                                   }
 dark  { "kanagawa-wave",              "kanagawa"                                                                                   }
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
@@ -4655,7 +4656,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"andythigpen/nvim-coverage",
-	cmd = "Coverage", -- BUG: not showing
+	cmd = "Coverage",
 	dependencies = { "nvim-lua/plenary.nvim", "luukvbaal/statuscol.nvim" },
 	opts ={
 		auto_reload = true,
@@ -5222,7 +5223,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: use hydra mapping for <C-w>
 	-- FEAT: use which-key mapping for keymaps
 	"folke/which-key.nvim",
 	event = "VeryLazy",
