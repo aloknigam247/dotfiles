@@ -5223,7 +5223,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: use which-key mapping for keymaps
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	init = function()
