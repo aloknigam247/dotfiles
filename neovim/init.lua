@@ -1790,7 +1790,6 @@ dark  { "tokyonight-storm",           "tokyonight"                              
 darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
 -- dark  { "vscode",                     "_",              post = fixVscode                                             }
-light { "vscode",                     "_",              post = fixVscode                                             }
 dark  { "zephyrium",                  "_"                                                                                          }
 
 ---Random colorscheme
@@ -1915,7 +1914,7 @@ addPlugin {
 
 addPlugin {
 	-- "hrsh7th/cmp-cmdline",
-	"iguanacucumber/mag-cmdline",
+	"iguanacucumber/mag-cmdline", -- BUG: ghost text not working
 	name = "cmp-cmdline",
 	event = "CmdlineChanged"
 }
