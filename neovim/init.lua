@@ -1177,7 +1177,7 @@ vim.api.nvim_create_autocmd(
 -- vip select paragraph
 -- word deletion
 vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
-vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" }) -- BUG: not working
+vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
 -- mouse
 vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
@@ -5263,17 +5263,7 @@ addPlugin {
 
 addPlugin {
 	"folke/snacks.nvim",
-	priority = 1000,
-	lazy = false,
-	config = function(_, cfg)
-		-- local snacks = require("snacks")
-		-- snacks.gitbrowse.get_url = function(repo, fields, opts)
-		-- 	return custom_git_url(snacks, cfg, repo, fields, opts)
-		-- end
-	end,
-	opts = {
-		gitbrowse = snacks_gitbrowse_config
-	}
+	lazy = true
 }
 
 addPlugin {
@@ -5517,7 +5507,6 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
--- PERF: profile for slowness
 -- TODO: github stars
 -- TODO: reddit save
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
