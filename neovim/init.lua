@@ -5507,6 +5507,12 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
--- TODO: github stars
 -- TODO: reddit save
+-- FEAT: https://github.com/mistweaverco/zana-client
+-- FEAT: https://github.com/Skardyy/neo-img
+-- FEAT: https://github.com/mhinz/neovim-remote
+-- FEAT: https://github.com/bassamsdata/namu.nvim
+-- FEAT: https://github.com/luiscassih/AniMotion.nvim
+-- FEAT: https://github.com/Toprun123/PicVim
+-- FEAT: https://github.com/SunnyTamang/select-undo.nvim
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
