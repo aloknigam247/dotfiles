@@ -4154,7 +4154,7 @@ addPlugin {
 					fmt = function(str)
 						local first = str:sub(1,1)
 						if first == "N" then
-							return ""
+							return ""
 						elseif first == "V" then
 							return ""
 						elseif first == "I" then
@@ -4193,7 +4193,7 @@ addPlugin {
 					padding = { left = 0, right = 0 },
 					shorting_target = 40,
 					symbols = {
-						modified = icons.file_modified,
+						modified = icons.file_modified .. " ",
 						readonly = icons.file_readonly,
 						unnamed  = " " .. icons.file_unnamed .. " ",
 						newfile  = icons.file_newfile .. " "
