@@ -1758,8 +1758,8 @@ addPlugin { "xero/miasma.nvim",                    event = "User miasma"        
 addPlugin { "EdenEast/nightfox.nvim",              event = "User nightfox"                                     }
 addPlugin { "dgox16/oldworld.nvim",                event = "User oldworld"                                     }
 addPlugin { "NLKNguyen/papercolor-theme",          event = "User PaperColor"                                   }
-addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
-addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
+-- addPlugin { "sainnhe/sonokai",                     event = "User sonokai"                                      }
+-- addPlugin { "folke/tokyonight.nvim",               event = "User tokyonight"                                   }
 -- addPlugin { "nxvu699134/vn-night.nvim",            event = "User vnight"                                     }
 addPlugin { "Mofiqul/vscode.nvim",                 event = "User vscode"                                       }
 addPlugin { "titanzero/zephyrium",                 event = "User zephyrium"                                    }
@@ -1785,9 +1785,9 @@ dark  { "kanagawa-wave",              "kanagawa"                                
 darkT { "kanagawa-wave",              "kanagawa",       cfg = { transparent = true }                                               }
 light { "material",                   "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial   }
 light { "PaperColor",                 "_"                                                                                          }
-dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
-dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
-darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
+-- dark  { "sonokai",                    "_",            pre = function() vim.g.sonokai_style = "shusia" end                          }
+-- dark  { "tokyonight-storm",           "tokyonight"                                                                                 }
+-- darkT { "tokyonight-storm",           "tokyonight",     cfg = { transparent = true }                                               }
 -- dark  { "vn-night",                   "_",            post = fixVnNight                                                            }
 -- dark  { "vscode",                     "_",              post = fixVscode                                             }
 dark  { "zephyrium",                  "_"                                                                                          }
@@ -2637,6 +2637,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
+	-- FEAT: work with manual folds
 	"kevinhwang91/nvim-ufo",
 	config = function()
 		vim.o.foldcolumn = "1"
