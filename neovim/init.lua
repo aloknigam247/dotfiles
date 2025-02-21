@@ -1789,7 +1789,7 @@ light { "ayu-light",             "ayu",         post = fixAyu                   
 light { "bluloco",              "_"                                                                                        }
 lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
-light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
+-- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
 lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
 
 ---Random colorscheme
@@ -4974,7 +4974,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- BUG: noice keeps on crashing on LSP
 	"folke/noice.nvim",
 	config = function()
 		vim.o.lazyredraw = false
@@ -5070,7 +5069,7 @@ addPlugin {
 					opts = {},
 				},
 				signature = {
-					enabled = true,
+						enabled = false, -- BUG: noice keeps on crashing on LSP for signatures
 					auto_open = {
 						enabled = true,
 						trigger = true,
