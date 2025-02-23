@@ -1743,26 +1743,26 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "Shatur/neovim-ayu",             event = "User ayu"                                          }
-addPlugin { "uloco/bluloco.nvim",            event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
-addPlugin { "catppuccin/nvim",               event = "User catppuccin"                                   }
-addPlugin { "scottmckendry/cyberdream.nvim", event = "User cyberdream"                                   }
-addPlugin { "projekt0n/github-nvim-theme",   event = "User github-theme"                                 }
-addPlugin { "HoNamDuong/hybrid.nvim",        event = "User hybrid"                                       }
-addPlugin { "nickkadutskyi/jb.nvim",         event = "User jb"                                           }
-addPlugin { "kaiuri/nvim-juliana",           event = "User juliana"                                      }
-addPlugin { "rebelot/kanagawa.nvim",         event = "User kanagawa"                                     }
-addPlugin { "sho-87/kanagawa-paper.nvim",    event = "User kanagawa-paper"                               }
-addPlugin { "marko-cerovac/material.nvim",   event = "User material"                                     }
-addPlugin { "xero/miasma.nvim",              event = "User miasma"                                       }
-addPlugin { "EdenEast/nightfox.nvim",        event = "User nightfox"                                     }
-addPlugin { "dgox16/oldworld.nvim",          event = "User oldworld"                                     }
-addPlugin { "NLKNguyen/papercolor-theme",    event = "User PaperColor"                                   }
-addPlugin { "sainnhe/sonokai",               event = "User sonokai"                                      }
-addPlugin { "folke/tokyonight.nvim",         event = "User tokyonight"                                   }
-addPlugin { "nxvu699134/vn-night.nvim",      event = "User vnight"                                       }
-addPlugin { "Mofiqul/vscode.nvim",           event = "User vscode"                                       }
-addPlugin { "titanzero/zephyrium",           event = "User zephyrium"                                    }
+addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
+addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
+addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
+addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
+addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
+addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
+addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                           }
+addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                      }
+addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                     }
+addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                               }
+addPlugin { "marko-cerovac/material.nvim",    event = "User material"                                     }
+addPlugin { "xero/miasma.nvim",               event = "User miasma"                                       }
+addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                     }
+addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                     }
+addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
+addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                      }
+addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                   }
+addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                       }
+addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                       }
+addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                    }
 
 -- dark  { "ayu-dark",             "ayu",          post = fixAyu                                                              }
 -- dark  { "bluloco",              "_"                                                                                        }
@@ -1784,7 +1784,8 @@ addPlugin { "titanzero/zephyrium",           event = "User zephyrium"           
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }                                 }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                                               }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
-light { "PaperColor",           "_"                                                                                        }
+-- dark { "PaperColorSlim",        "_"                                                                                        }
+light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
 light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
