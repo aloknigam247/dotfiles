@@ -1787,10 +1787,11 @@ addPlugin { "titanzero/zephyrium",           event = "User zephyrium"           
 light { "PaperColor",           "_"                                                                                        }
 light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 light { "bluloco",              "_"                                                                                        }
-lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
 -- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
-lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
+light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
+-- lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
+-- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -1973,6 +1974,7 @@ addPlugin {
 				fields = { "kind", "abbr", "menu" },
 				format = function(entry, vim_item)
 					local source_name = entry.source.name
+
 					if entry.source.name == "nvim_lsp" then
 						source_name = icons.lsp .. " " .. entry.source.source.client.name
 					elseif entry.source.name == "cmdline" then
@@ -1989,15 +1991,20 @@ addPlugin {
 						source_name = "󰙩 " .. entry.source.name
 					end
 					vim_item.menu = source_name
-					local kind_symbol = " " .. icons[vim_item.kind]
-					vim_item.kind = kind_symbol or vim_item.kind
 
-				-- setup xzbdmw/colorful-menu.nvim
+					-- setup xzbdmw/colorful-menu.nvim
 					local highlights_info = require("colorful-menu").cmp_highlights(entry)
 					if highlights_info ~= nil then
-						vim_item.abbr_hl_group = highlights_info.highlights
+						local highlights = highlights_info.highlights
+						highlights[1][1] = "CmpItemKindAbbr" .. vim_item.kind
+						vim_item.abbr_hl_group = highlights
 						vim_item.abbr = highlights_info.text
+					else
+						vim_item.abbr_hl_group = "CmpItemKindAbbr" .. vim_item.kind
 					end
+
+					local kind_symbol = " " .. icons[vim_item.kind]
+					vim_item.kind = kind_symbol or vim_item.kind
 
 					return vim_item
 				end
@@ -2067,6 +2074,7 @@ addPlugin {
 
 		for key, value in pairs(kind_hl) do
 			vim.api.nvim_set_hl(0, "CmpItemKind" .. key, value[vim.o.background])
+			vim.api.nvim_set_hl(0, "CmpItemKindAbbr" .. key, {fg = value[vim.o.background].bg })
 		end
 		vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { strikethrough = true })
 		vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bold = true })
@@ -3946,7 +3954,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-
 ---Get rooter path
 ---@param option string option for rooter
 ---@return string # root path
@@ -4807,19 +4814,19 @@ addPlugin {
 		-- 				if ltree:lang() ~= 'comment' and ltree:lang() ~= 'markdown' then
 		-- 					for _, node in error_query:iter_captures(tree:root(), args.buf) do
 		-- 						local lnum, col, end_lnum, end_col = node:range()
-		--  
+
 		-- 						-- collapse nested syntax errors that occur at the exact same position
 		-- 						local parent = node:parent()
 		-- 						if parent and parent:type() == 'ERROR' and parent:range() == node:range() then
 		-- 							goto continue
 		-- 						end
-		--  
+
 		-- 						-- clamp large syntax error ranges to just the line to reduce noise
 		-- 						if end_lnum > lnum then
 		-- 							end_lnum = lnum + 1
 		-- 							end_col = 0
 		-- 						end
-		--  
+
 		-- 						--- @type vim.Diagnostic
 		-- 						local diagnostic = {
 		-- 							source = 'treesitter',
@@ -4838,18 +4845,18 @@ addPlugin {
 		-- 						else
 		-- 							diagnostic.message = 'error'
 		-- 						end
-		--  
+
 		-- 						-- add context to the error using sibling and parent nodes
 		-- 						local previous = node:prev_sibling()
 		-- 						if previous and previous:type() ~= 'ERROR' then
 		-- 							local previous_type = previous:named() and previous:type() or string.format('`%s`', previous:type())
 		-- 							diagnostic.message = diagnostic.message .. ' after ' .. previous_type
 		-- 						end
-		--  
+
 		-- 						if parent and parent:type() ~= 'ERROR' and (previous == nil or previous:type() ~= parent:type()) then
 		-- 							diagnostic.message = diagnostic.message .. ' in ' .. parent:type()
 		-- 						end
-		--  
+
 		-- 						table.insert(diagnostics, diagnostic)
 		-- 						::continue::
 		-- 					end
@@ -4859,8 +4866,7 @@ addPlugin {
 		-- 		vim.diagnostic.set(namespace, args.buf, diagnostics)
 		-- 	end
 		-- end
-		--  
-		--  
+
 		-- local autocmd_group = vim.api.nvim_create_augroup('editor.treesitter', { clear = true })
 		--  
 		-- vim.api.nvim_create_autocmd({ 'FileType', 'TextChanged', 'InsertLeave' }, {
