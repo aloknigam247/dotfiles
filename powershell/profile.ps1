@@ -1,3 +1,15 @@
+#          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+#          ┃                       Color Pallete                       ┃
+#          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+$pallete = @{
+    prompt = @{
+        segment1 = @{
+            bg = "#DCDCDC"
+            fg = ""
+        }
+    }
+}
+
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
@@ -36,15 +48,15 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
 New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 
 # ─[ Common ]──────────────────────────────────────────────────────────
-New-Alias -Name '/' -Value C:\Users\aloknigam\scoop\shims\rg.exe
-New-Alias -Name '//' -Value C:\Users\aloknigam\scoop\shims\fd.exe
+New-Alias -Name "/" -Value C:\Users\aloknigam\scoop\shims\rg.exe
+New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 
 # ╭───────────╮
 # │ Functions │
 # ╰───────────╯
 Remove-Alias ls
 Remove-Alias rm
-function bat     { D:\Scoop\shims\bat.exe --style='numbers,changes' --italic-text=always --theme 'Visual Studio Dark+' $args }
+function bat     { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme "Visual Studio Dark+" $args }
 function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
 function lla     { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
@@ -55,12 +67,12 @@ function tree    { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function v($arg) { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs -- $arg }
 
 function e ($arg) {
-    $code_ext = @('cs', 'ps1', 'psm1')
+    $code_ext = @("cs", "ps1", "psm1")
 
     if ($null -eq $arg) {
-        $ext = ''
+        $ext = ""
     } else {
-        $ext = $arg.split('.')[-1]
+        $ext = $arg.split(".")[-1]
     }
 
     if ( $null -ne $env:SSH_CLIENT ) {
@@ -140,24 +152,24 @@ function gwa {
 function Get-TODO {
     param(
         [Parameter(Position = 0)]
-        [ValidateSet('all', 'random', 'stats')]
-        [String] $type = 'All'
+        [ValidateSet("all", "random", "stats")]
+        [String] $type = "All"
     )
 
     process {
-        $tag_list = @('BUG', 'DOCME', 'FEAT', 'FIX', 'FIXME', 'PERF', 'REFACTOR', 'TEST', 'TODO', 'THOUGHT')
+        $tag_list = @("BUG", "DOCME", "FEAT", "FIX", "FIXME", "PERF", "REFACTOR", "TEST", "TODO", "THOUGHT")
 
-        if ($type -eq 'All') {
+        if ($type -eq "All") {
             # Get list of all
-            $pattern = $tag_list -join '|'
+            $pattern = $tag_list -join "|"
             rg "($pattern):"  --trim --sort path -nw --color=always
         }
-        elseif ($type -eq 'Random') {
+        elseif ($type -eq "Random") {
             # Get random tag
-            $pattern = $tag_list -join '|'
+            $pattern = $tag_list -join "|"
             rg "($pattern):"  --trim --sort path -nw --color=always | Get-Random -Count 3
         }
-        elseif ($type -eq 'Stats') {
+        elseif ($type -eq "Stats") {
             # Generate count per tag
             $tag_map = @{}
             $total = 0
@@ -280,7 +292,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
         $Local:word = $wordToComplete.Replace('"', '""')
         $Local:ast = $commandAst.ToString().Replace('"', '""')
         winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
-            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+            [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
         }
 }
 
@@ -292,10 +304,10 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 Import-Module PSFzf
 
 Set-PsFzfOption `
-    -PSReadlineChordProvider 'Alt+p' `
-    -PSReadlineChordReverseHistory 'Alt+h' `
-    -PSReadlineChordSetLocation 'Alt+d' `
-    -PSReadlineChordReverseHistoryArgs 'Alt+a'
+    -PSReadlineChordProvider "Alt+p" `
+    -PSReadlineChordReverseHistory "Alt+h" `
+    -PSReadlineChordSetLocation "Alt+d" `
+    -PSReadlineChordReverseHistoryArgs "Alt+a"
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
@@ -312,62 +324,62 @@ $env:FZF_DEFAULT_OPTS='
 # ╰────────────────╯
 function promptGen($separator, $segments) {
     # Initial executions
-    $script:dir_icon = ' '
-    $script:git_branch = ''
-    $script:git_index = ''
-    $script:git_stash = ''
-    $script:git_sync = ''
-    $script:git_working = ''
-    $script:git_sep = ''
+    $script:dir_icon = " "
+    $script:git_branch = ""
+    $script:git_index = ""
+    $script:git_stash = ""
+    $script:git_sync = ""
+    $script:git_working = ""
+    $script:git_sep = ""
 
     $script:git_status = Get-GitStatus
 
     if ($script:git_status -ne $null) {
-        $script:dir_icon = ' '
+        $script:dir_icon = " "
 
         # git branch
         $git_branch = $script:git_status.Branch
-        if ($git_branch.StartsWith('(') -and $git_branch.EndsWith(')')) {
-            if ($git_branch.EndsWith('...)')) {
-                $script:git_branch = ' ' + $git_branch.Substring(1, $git_branch.Length - 5)
+        if ($git_branch.StartsWith("(") -and $git_branch.EndsWith(")")) {
+            if ($git_branch.EndsWith("...)")) {
+                $script:git_branch = " " + $git_branch.Substring(1, $git_branch.Length - 5)
             } else {
-                $script:git_branch = '󰓽 ' + $git_branch.Substring(1, $git_branch.Length - 2)
+                $script:git_branch = "󰓽 " + $git_branch.Substring(1, $git_branch.Length - 2)
             }
         } else {
-            $script:git_branch = ' ' + $git_branch.Replace("user/$env:username", '~')
+            $script:git_branch = " " + $git_branch.Replace("user/$env:username", "~")
         }
 
         # git dirty check
         if ($script:git_status.HasWorking) {
-            $script:git_working = '󰦓 '
+            $script:git_working = "󰦓 "
         }
         if ($script:git_status.HasIndex) {
-            $script:git_index = '󰦓 '
+            $script:git_index = "󰦓 "
         }
         if ($script:git_status.StashCount) {
-            $script:git_stash = '󰪶 '
+            $script:git_stash = "󰪶 "
         }
 
         # git ahead and behind count
-        $git_sync = ''
+        $git_sync = ""
         if ($script:git_status.AheadBy) {
-            $git_sync += '󱦲' + $script:git_status.AheadBy
+            $git_sync += "󱦲" + $script:git_status.AheadBy
         }
         if ($script:git_status.BehindBy) {
-            $git_sync += '󱦳' + $script:git_status.BehindBy
+            $git_sync += "󱦳" + $script:git_status.BehindBy
         }
         $script:git_sync = $git_sync
 
-        if ($script:git_working -ne '' -or
-            $script:git_index -ne '' -or
-            $script:git_stash -ne '' -or
-            $script:git_sync -ne '') {
-            $script:git_sep = ' '
+        if ($script:git_working -ne "" -or
+            $script:git_index -ne "" -or
+            $script:git_stash -ne "" -or
+            $script:git_sync -ne "") {
+            $script:git_sep = " "
         }
     }
 
     if ($null -ne $env:SSH_CLIENT) {
-        $script:dir_icon = ' '
+        $script:dir_icon = " "
     } elseif ($env:ODC_LOADED) {
         $script:dir_icon = "󰅟 "
     }
@@ -428,36 +440,36 @@ function prompt {
 
     $segments = @(
         @{
-            bg = "#736CED"
+            bg = $pallete.prompt.segment1.bg
             blocks = @{
-                text = '$script:dir_icon'
-                fg   = '#C5D86D'
+                text = "$script:dir_icon"
+                fg   = "#C5D86D"
             },@{
-                text   = '$((Get-Location).ToString().Replace($HOME, "~"))'
-                fg     = '#FEF9FF'
-                styles = 'bold'
+                text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
+                fg     = "#FEF9FF"
+                styles = "bold"
             }
         },
         @{
             bg = "#9F9FED"
             blocks = @{
-                text = '$script:git_branch'
-                fg   = '#FFFFFF'
-                styles = 'italic'
+                text = "$script:git_branch"
+                fg   = "#FFFFFF"
+                styles = "italic"
             },@{
-                text = '$script:git_sep'
+                text = "$script:git_sep"
             },@{
-                text = '$script:git_working'
-                fg   = '#2B78CA'
+                text = "$script:git_working"
+                fg   = "#2B78CA"
             },@{
-                text = '$script:git_index'
-                fg   = '#FDD649'
+                text = "$script:git_index"
+                fg   = "#FDD649"
             },@{
-                text = '$script:git_stash'
-                fg   = '#DF5601'
+                text = "$script:git_stash"
+                fg   = "#DF5601"
             },@{
-                text = '$script:git_sync'
-                fg   = '#BBFA0F'
+                text = "$script:git_sync"
+                fg   = "#BBFA0F"
             }
             cond = { return $script:git_status -ne $null }
         }
@@ -468,30 +480,30 @@ function prompt {
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
-    'Command' = (Format-Text -headOnly -fg '#9183EC' -styles 'bold');
-    'Comment' = (Format-Text -headOnly -fg '#989FCE');
-    'Emphasis' = (Format-Text -headOnly -fg '#ECBA82');
-    'Keyword' = (Format-Text -headOnly -fg '#F7F4F3' -styles 'italic');
-    'ListPrediction' = (Format-Text -headOnly -fg '#C1D37F');
-    'ListPredictionSelected' = (Format-Text -headOnly -bg '#3C6E71' -styles 'bold');
-    'Member' = (Format-Text -headOnly -styles 'italic');
-    'Number' = (Format-Text -headOnly -fg '#F24333');
-    'Parameter' = (Format-Text -headOnly -fg '#F42C04');
-    'Selection' = (Format-Text -headOnly -bg '#3C6E71');
-    'String' = (Format-Text -headOnly -fg '#E4FF1A');
+    "Command" = (Format-Text -headOnly -fg "#9183EC" -styles "bold");
+    "Comment" = (Format-Text -headOnly -fg "#989FCE");
+    "Emphasis" = (Format-Text -headOnly -fg "#ECBA82");
+    "Keyword" = (Format-Text -headOnly -fg "#F7F4F3" -styles "italic");
+    "ListPrediction" = (Format-Text -headOnly -fg "#C1D37F");
+    "ListPredictionSelected" = (Format-Text -headOnly -bg "#3C6E71" -styles "bold");
+    "Member" = (Format-Text -headOnly -styles "italic");
+    "Number" = (Format-Text -headOnly -fg "#F24333");
+    "Parameter" = (Format-Text -headOnly -fg "#F42C04");
+    "Selection" = (Format-Text -headOnly -bg "#3C6E71");
+    "String" = (Format-Text -headOnly -fg "#E4FF1A");
 }
 
-Set-PSReadLineOption -ContinuationPrompt '... ' -TerminateOrphanedConsoleApps
+Set-PSReadLineOption -ContinuationPrompt "... " -TerminateOrphanedConsoleApps
 
 # ─[ Source rg command line completer ]────────────────────────────────
 . D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
 
 # ─[ Neovim settings ]─────────────────────────────────────────────────
-$env:XDG_CACHE_HOME  = 'D:\apps'
-$env:XDG_CONFIG_HOME = 'D:\apps'
-$env:XDG_DATA_HOME   = 'D:\apps'
-$env:XDG_LOG_HOME    = 'D:\apps'
-$env:XDG_STATE_HOME  = 'D:\apps'
+$env:XDG_CACHE_HOME  = "D:\apps"
+$env:XDG_CONFIG_HOME = "D:\apps"
+$env:XDG_DATA_HOME   = "D:\apps"
+$env:XDG_LOG_HOME    = "D:\apps"
+$env:XDG_STATE_HOME  = "D:\apps"
 
 # ─[ Settings ]────────────────────────────────────────────────────────
 Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
@@ -499,7 +511,7 @@ $PSNativeCommandUseErrorActionPreference = $false
 $env:PSModulePath += ";D:\Dev.aloknigam"
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
 $env:RUFF_CACHE_DIR = "$env:LOCALAPPDATA\Temp"
-$env:LESSUTFCHARDEF='23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0a3:p,e0b0-e0b3:p,e0b4-e0c8:p,e0ca:p,e0cc-e0d4:p,e200-e2a9:p,e300-e3e3:p,e5fa-e6a6:p,e700-e7c5:p,ea60-ebeb:p,f000-f2e0:p,f300-f32f:p,f400-f532:p,f500-fd46:p,f0001-f1af0:p' # fix less nerd fond rendering
+$env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0a3:p,e0b0-e0b3:p,e0b4-e0c8:p,e0ca:p,e0cc-e0d4:p,e200-e2a9:p,e300-e3e3:p,e5fa-e6a6:p,e700-e7c5:p,ea60-ebeb:p,f000-f2e0:p,f300-f32f:p,f400-f532:p,f500-fd46:p,f0001-f1af0:p" # fix less nerd fond rendering
 
 # ╭───────────╮
 # │ Utilities │
@@ -604,7 +616,7 @@ Set-PSReadLineKeyHandler -Key '"',"'" `
 }
 
 # ─[ Autocomplete brackets ]───────────────────────────────────────────
-Set-PSReadLineKeyHandler -Key '(','{','[' `
+Set-PSReadLineKeyHandler -Key "(","{","[" `
                          -BriefDescription InsertPairedBraces `
                          -LongDescription "Insert matching braces" `
                          -ScriptBlock {
@@ -612,9 +624,9 @@ Set-PSReadLineKeyHandler -Key '(','{','[' `
 
     $closeChar = switch ($key.KeyChar)
     {
-        <#case#> '(' { [char]')'; break }
-        <#case#> '{' { [char]'}'; break }
-        <#case#> '[' { [char]']'; break }
+        <#case#> "(" { [char]")"; break }
+        <#case#> "{" { [char]"}"; break }
+        <#case#> "[" { [char]"]"; break }
     }
 
     $selectionStart = $null
@@ -637,7 +649,7 @@ Set-PSReadLineKeyHandler -Key '(','{','[' `
     }
 }
 
-Set-PSReadLineKeyHandler -Key ')',']','}' `
+Set-PSReadLineKeyHandler -Key ")","]","}" `
                          -BriefDescription SmartCloseBraces `
                          -LongDescription "Insert closing brace or skip" `
                          -ScriptBlock {
@@ -658,7 +670,7 @@ Set-PSReadLineKeyHandler -Key ')',']','}' `
 }
 
 # ─[ Surround by () on selected text or entire line ]──────────────────
-Set-PSReadLineKeyHandler -Key 'Alt+(' `
+Set-PSReadLineKeyHandler -Key "Alt+(" `
                          -BriefDescription ParenthesizeSelection `
                          -LongDescription "Put parenthesis around the selection or entire line and move the cursor to after the closing parenthesis" `
                          -ScriptBlock {
@@ -673,12 +685,12 @@ Set-PSReadLineKeyHandler -Key 'Alt+(' `
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
     if ($selectionStart -ne -1)
     {
-        [Microsoft.PowerShell.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, '(' + $line.SubString($selectionStart, $selectionLength) + ')')
+        [Microsoft.PowerShell.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, "(" + $line.SubString($selectionStart, $selectionLength) + ")")
         [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($selectionStart + $selectionLength + 2)
     }
     else
     {
-        [Microsoft.PowerShell.PSConsoleReadLine]::Replace(0, $line.Length, '(' + $line + ')')
+        [Microsoft.PowerShell.PSConsoleReadLine]::Replace(0, $line.Length, "(" + $line + ")")
         [Microsoft.PowerShell.PSConsoleReadLine]::EndOfLine()
     }
 }
