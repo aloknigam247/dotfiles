@@ -22,14 +22,16 @@ $pallete = @{
     cmdline = @{
         command = "#9183EC"
         comment = "#989FCE"
+        defaultToken = "#495057"
         emphasis = "#56b5c1"
-        keyword = "#495057"
+        keyword = "#6A994E"
         listPrediction = "#DF6C75"
         listPredictionSelected = "#E7ECEF"
         number = "#F24333"
         parameter = "#F42C04"
-        selection = "#3C6E71"
+        selection = "#95AFA4"
         string = "#CA6702"
+        variable = "#f77f00"
     }
 }
 
@@ -538,6 +540,8 @@ function prompt {
 Set-PSReadLineOption -Colors @{
     "Command" = (Format-Text -headOnly -fg $pallete.cmdline.command -styles "bold");
     "Comment" = (Format-Text -headOnly -fg $pallete.cmdline.comment);
+    "ContinuationPrompt" = (Format-Text -headOnly -fg $pallete.cmdline.defaultToken);
+    "Default" = (Format-Text -headOnly -fg $pallete.cmdline.defaultToken);
     "Emphasis" = (Format-Text -headOnly -fg $pallete.cmdline.emphasis);
     "Keyword" = (Format-Text -headOnly -fg $pallete.cmdline.keyword -styles "italic");
     "ListPrediction" = (Format-Text -headOnly -fg $pallete.cmdline.listPrediction);
@@ -547,6 +551,7 @@ Set-PSReadLineOption -Colors @{
     "Parameter" = (Format-Text -headOnly -fg $pallete.cmdline.parameter);
     "Selection" = (Format-Text -headOnly -bg $pallete.cmdline.selection);
     "String" = (Format-Text -headOnly -fg $pallete.cmdline.string);
+    "Variable" = (Format-Text -headOnly -fg $pallete.cmdline.variable);
 }
 
 Set-PSReadLineOption -ContinuationPrompt "... " -TerminateOrphanedConsoleApps
