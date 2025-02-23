@@ -5602,6 +5602,7 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
+-- FEAT: follow https://github.com/neovide/neovide/pull/3021
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/Skardyy/neo-img
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
