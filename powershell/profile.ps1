@@ -1,14 +1,69 @@
 #          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 #          ┃                       Color Pallete                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+# Light theme
 $pallete = @{
     prompt = @{
-        segment1 = @{
-            bg = "#DCDCDC"
-            fg = ""
+        dir_icon = @{
+            bg = "#DDDDDD"
+            fg = "#8467D7"
+        }
+        dir_path = "#956A71"
+        git = @{
+            bg = "#BDBDBD"
+            branch = "#FFFFFF"
+            index = "#FDD649"
+            sep = "#FFFFFF"
+            stash = "#DF5601"
+            sync = "#BBFA0F"
+            working = "#2B78CA"
         }
     }
+    cmdline = @{
+        command = "#9183EC"
+        comment = "#989FCE"
+        emphasis = "#56b5c1"
+        keyword = "#495057"
+        listPrediction = "#DF6C75"
+        listPredictionSelected = "#E7ECEF"
+        number = "#F24333"
+        parameter = "#F42C04"
+        selection = "#3C6E71"
+        string = "#CA6702"
+    }
 }
+
+# Dark theme
+# $pallete = @{
+#     prompt = @{
+#         dir_icon = @{
+#             bg = "#736CED"
+#             fg = "#C5D86D"
+#         }
+#         dir_path = "#FEF9FF"
+#         git = @{
+#             bg = "#BDBDBD"
+#             branch = "#FFFFFF"
+#             index = "#FDD649"
+#             sep = "#FFFFFF"
+#             stash = "#DF5601"
+#             sync = "#BBFA0F"
+#             working = "#2B78CA"
+#         }
+#     }
+#    cmdline = @{
+#        command = "#9183EC"
+#        comment = "#989FCE"
+#        emphasis = "#ECBA82"
+#        keyword = "#F7F4F3"
+#        listPrediction = "#C1D37F"
+#        listPredictionSelected = "#3C6E71"
+#        number = "#F24333"
+#        parameter = "#F42C04"
+#        selection = "#3C6E71"
+#        string = "#E4FF1A"
+#    }
+# }
 
 # ╭─────────────╮
 # │ Auto Update │
@@ -314,10 +369,10 @@ Set-PsFzfOption -TabExpansion
 # https://minsw.github.io/fzf-color-picker/
 $env:FZF_DEFAULT_OPTS='
     --height=~70% --layout=reverse --border=rounded --border-label=" FZF " --border-label-pos=5 --info=inline --prompt=" " --pointer="➤ " --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)" --scheme=path --marker=""
-    --color=fg:#ffffff,bg:-1,hl:#71b7c2
-    --color=fg+:#78c5ff,bg+:-1,hl+:#a7daeb
-    --color=info:#afaf87,prompt:#57edbb,pointer:#db2929
-    --color=marker:#f0a1a1,spinner:#f2f759,header:#8ccdcf'
+    --color=fg:#FFFFFF,bg:-1,hl:#71B7C2
+    --color=fg+:#78C5FF,bg+:-1,hl+:#A7DAEB
+    --color=info:#AFAF87,prompt:#57EDBB,pointer:#DB2929
+    --color=marker:#F0A1A1,spinner:#F2F759,header:#8CCDCF'
 
 # ╭────────────────╮
 # │ Prompt Styling │
@@ -440,36 +495,37 @@ function prompt {
 
     $segments = @(
         @{
-            bg = $pallete.prompt.segment1.bg
+            bg = $pallete.prompt.dir_icon.bg
             blocks = @{
                 text = "$script:dir_icon"
-                fg   = "#C5D86D"
+                fg   = $pallete.prompt.dir_icon.fg
             },@{
                 text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
-                fg     = "#FEF9FF"
+                fg     = $pallete.prompt.dir_path
                 styles = "bold"
             }
         },
         @{
-            bg = "#9F9FED"
+            bg = $pallete.prompt.git.bg
             blocks = @{
                 text = "$script:git_branch"
-                fg   = "#FFFFFF"
+                fg   = $pallete.prompt.git.branch
                 styles = "italic"
             },@{
                 text = "$script:git_sep"
+                fg   = $pallete.prompt.git.sep
             },@{
                 text = "$script:git_working"
-                fg   = "#2B78CA"
+                fg   = $pallete.prompt.git.working
             },@{
                 text = "$script:git_index"
-                fg   = "#FDD649"
+                fg   = $pallete.prompt.git.index
             },@{
                 text = "$script:git_stash"
-                fg   = "#DF5601"
+                fg   = $pallete.prompt.git.stash
             },@{
                 text = "$script:git_sync"
-                fg   = "#BBFA0F"
+                fg   = $pallete.prompt.git.sync
             }
             cond = { return $script:git_status -ne $null }
         }
@@ -480,17 +536,17 @@ function prompt {
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
-    "Command" = (Format-Text -headOnly -fg "#9183EC" -styles "bold");
-    "Comment" = (Format-Text -headOnly -fg "#989FCE");
-    "Emphasis" = (Format-Text -headOnly -fg "#ECBA82");
-    "Keyword" = (Format-Text -headOnly -fg "#F7F4F3" -styles "italic");
-    "ListPrediction" = (Format-Text -headOnly -fg "#C1D37F");
-    "ListPredictionSelected" = (Format-Text -headOnly -bg "#3C6E71" -styles "bold");
+    "Command" = (Format-Text -headOnly -fg $pallete.cmdline.command -styles "bold");
+    "Comment" = (Format-Text -headOnly -fg $pallete.cmdline.comment);
+    "Emphasis" = (Format-Text -headOnly -fg $pallete.cmdline.emphasis);
+    "Keyword" = (Format-Text -headOnly -fg $pallete.cmdline.keyword -styles "italic");
+    "ListPrediction" = (Format-Text -headOnly -fg $pallete.cmdline.listPrediction);
+    "ListPredictionSelected" = (Format-Text -headOnly -bg $pallete.cmdline.listPredictionSelected -styles "bold");
     "Member" = (Format-Text -headOnly -styles "italic");
-    "Number" = (Format-Text -headOnly -fg "#F24333");
-    "Parameter" = (Format-Text -headOnly -fg "#F42C04");
-    "Selection" = (Format-Text -headOnly -bg "#3C6E71");
-    "String" = (Format-Text -headOnly -fg "#E4FF1A");
+    "Number" = (Format-Text -headOnly -fg $pallete.cmdline.number);
+    "Parameter" = (Format-Text -headOnly -fg $pallete.cmdline.parameter);
+    "Selection" = (Format-Text -headOnly -bg $pallete.cmdline.selection);
+    "String" = (Format-Text -headOnly -fg $pallete.cmdline.string);
 }
 
 Set-PSReadLineOption -ContinuationPrompt "... " -TerminateOrphanedConsoleApps
