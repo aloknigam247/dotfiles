@@ -5605,17 +5605,16 @@ ColoRand()
 -- FIX: LSP errors
 -- FEAT: follow https://github.com/neovide/neovide/pull/3021
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
--- FEAT: https://github.com/Skardyy/neo-img
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
--- FEAT: https://github.com/Toprun123/PicVim
 -- FEAT: https://github.com/bassamsdata/namu.nvim
 -- FEAT: https://github.com/luiscassih/AniMotion.nvim
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/mistweaverco/zana-client
--- FEAT: https://www.reddit.com/r/neovim/comments/16n5v6i/i_was_invited_to_a_live_session_by_the_net_team/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1hex7fz/easydotnetnvim_effortless_cf_development_in_neovim/
 -- FEAT: https://www.reddit.com/r/neovim/comments/wq4jr4/inject_syntax_highlighting_from_a_different/
+-- FEAT: https://www.youtube.com/watch?v=KpudmVmMWx4&t=722s
+
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
