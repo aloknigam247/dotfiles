@@ -379,6 +379,7 @@ $env:FZF_DEFAULT_OPTS='
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
+# BUG: prompt for git dirs does not show git status at first
 function promptGen($separator, $segments) {
     # Initial executions
     $script:dir_icon = " "

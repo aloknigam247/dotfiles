@@ -5616,7 +5616,6 @@ ColoRand()
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
--- FEAT: https://www.reddit.com/r/neovim/comments/1gekomd/new_awesome_findexpr_option/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1hex7fz/easydotnetnvim_effortless_cf_development_in_neovim/
 -- FEAT: https://www.reddit.com/r/neovim/comments/wq4jr4/inject_syntax_highlighting_from_a_different/
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
