@@ -1787,7 +1787,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark { "PaperColorSlim",        "_"                                                                                        }
 light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
 -- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
-light { "bluloco",              "_"                                                                                        }
+-- light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
 -- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
 light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
