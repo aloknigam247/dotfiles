@@ -113,6 +113,7 @@ New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 # ╰───────────╯
 Remove-Alias ls
 Remove-Alias rm
+# FIX: bat colorscheme for light and dark
 function bat     { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme "Visual Studio Dark+" $args }
 function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
@@ -379,8 +380,7 @@ $env:FZF_DEFAULT_OPTS='
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
-# BUG: prompt for git dirs does not show git status at first
-function promptGen($separator, $segments) {
+function populatePrompt {
     # Initial executions
     $script:dir_icon = " "
     $script:git_branch = ""
@@ -441,7 +441,9 @@ function promptGen($separator, $segments) {
     } elseif ($env:ODC_LOADED) {
         $script:dir_icon = "󰅟 "
     }
+}
 
+function promptGen($separator, $segments) {
     # Prompt rendering
     $i = 0
     $out = ""
@@ -459,9 +461,11 @@ function promptGen($separator, $segments) {
         $seg = $segments[$i]
         $block_bg = $seg.bg
 
-        $res = Invoke-Command $seg.cond
-        if ($res -eq $false) {
-            continue
+        if ($seg.cond -ne $null) {
+            $res = Invoke-Command $seg.cond
+            if ($res -eq $false) {
+                continue
+            }
         }
 
         $sep_params = $separator.Clone()
@@ -492,6 +496,9 @@ function promptGen($separator, $segments) {
 }
 
 function prompt {
+    # Populate $script values
+    populatePrompt
+
     $separator = @{
         text = ""
     }
@@ -502,7 +509,7 @@ function prompt {
             blocks = @{
                 text = "$script:dir_icon"
                 fg   = $pallete.prompt.dir_icon.fg
-            },@{
+            }, @{
                 text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
                 fg     = $pallete.prompt.dir_path
                 styles = "bold"
@@ -514,19 +521,19 @@ function prompt {
                 text = "$script:git_branch"
                 fg   = $pallete.prompt.git.branch
                 styles = "italic"
-            },@{
+            }, @{
                 text = "$script:git_sep"
                 fg   = $pallete.prompt.git.sep
-            },@{
+            }, @{
                 text = "$script:git_working"
                 fg   = $pallete.prompt.git.working
-            },@{
+            }, @{
                 text = "$script:git_index"
                 fg   = $pallete.prompt.git.index
-            },@{
+            }, @{
                 text = "$script:git_stash"
                 fg   = $pallete.prompt.git.stash
-            },@{
+            }, @{
                 text = "$script:git_sync"
                 fg   = $pallete.prompt.git.sync
             }
