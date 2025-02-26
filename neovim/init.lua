@@ -1785,14 +1785,14 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                                               }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
 -- dark { "PaperColorSlim",        "_"                                                                                        }
-light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
+	-- light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
 -- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 -- light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
 -- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
-light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
+	-- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
--- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
+lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
