@@ -14,29 +14,27 @@ gui:
     language: 'auto' # one of 'auto' | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko' | 'ru'
     timeFormat: '02 Jan 06' # https://pkg.go.dev/time#Time.Format
     shortTimeFormat: '3:04PM'
+    # FEAT: pick theme from other config for light and dark
     theme:
         activeBorderColor:
-            - '#88AB75'
+            - '#d20f39'
             - bold
         inactiveBorderColor:
-            - '#D5AC4E'
-        searchingActiveBorderColor:
-            - cyan
-            - bold
+            - '#6c6f85'
         optionsTextColor:
-            - '#9D8DF1'
+            - '#1e66f5'
         selectedLineBgColor:
-            - '#008BF8' # set to `default` to have no background colour
-        selectedRangeBgColor:
-            - '#008BF8'
+            - '#ccd0da'
         cherryPickedCommitBgColor:
-            - '#DC0073'
+            - '#bcc0cc'
         cherryPickedCommitFgColor:
-            - '#008BF8'
+            - '#d20f39'
         unstagedChangesColor:
-            - '#F05D5E'
+            - '#d20f39'
         defaultFgColor:
-            - default
+            - '#4c4f69'
+        searchingActiveBorderColor:
+            - '#df8e1d'
     commitLength:
         show: true
     mouseEvents: true
