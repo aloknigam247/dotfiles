@@ -1786,7 +1786,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
 -- dark { "PaperColorSlim",        "_"                                                                                        }
 light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
-light { "ayu-light",             "ayu",         post = fixAyu                                                              }
+-- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
 -- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
