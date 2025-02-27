@@ -340,42 +340,42 @@ local icons = {
 ---Defines highlight for kinds
 ---@type table<string, table>
 local kind_hl = {
-	Array         = { icon  = " " , dark = { bg = "#F42272", fg = "#000000" }, light = { bg = "#0B6E4F", fg = "#FFFFFF" } },
-	Boolean       = { icon  = " " , dark = { bg = "#B8B8F3", fg = "#000000" }, light = { bg = "#69140E", fg = "#FFFFFF" } },
-	Class         = { icon  = " " , dark = { bg = "#519872", fg = "#000000" }, light = { bg = "#1D3557", fg = "#FFFFFF" } },
-	Color         = { icon  = " " , dark = { bg = "#A4B494", fg = "#000000" }, light = { bg = "#FA9F42", fg = "#000000" } },
-	Constant      = { icon  = " " , dark = { bg = "#C5E063", fg = "#000000" }, light = { bg = "#744FC6", fg = "#FFFFFF" } },
-	Constructor   = { icon  = " " , dark = { bg = "#4AAD52", fg = "#000000" }, light = { bg = "#755C1B", fg = "#FFFFFF" } },
-	Enum          = { icon  = " " , dark = { bg = "#E3B5A4", fg = "#000000" }, light = { bg = "#A167A5", fg = "#000000" } },
-	EnumMember    = { icon  = " " , dark = { bg = "#AF2BBF", fg = "#FFFFFF" }, light = { bg = "#B80C09", fg = "#FFFFFF" } },
-	Event         = { icon  = " " , dark = { bg = "#6C91BF", fg = "#000000" }, light = { bg = "#53A548", fg = "#000000" } },
-	Field         = { icon  = " " , dark = { bg = "#5BC8AF", fg = "#000000" }, light = { bg = "#E2DC12", fg = "#000000" } },
-	File          = { icon  = " " , dark = { bg = "#EF8354", fg = "#000000" }, light = { bg = "#486499", fg = "#FFFFFF" } },
-	Folder        = { icon  = " " , dark = { bg = "#BFC0C0", fg = "#000000" }, light = { bg = "#A74482", fg = "#FFFFFF" } },
-	Function      = { icon  = " " , dark = { bg = "#E56399", fg = "#000000" }, light = { bg = "#228CDB", fg = "#000000" } },
-	History       = { icon  = " " , dark = { bg = "#C2F8CB", fg = "#000000" }, light = { bg = "#85CB33", fg = "#000000" } },
-	Interface     = { icon  = " " , dark = { bg = "#8367C7", fg = "#000000" }, light = { bg = "#537A5A", fg = "#FFFFFF" } },
-	Key           = { icon  = " " , dark = { bg = "#D1AC00", fg = "#000000" }, light = { bg = "#645DD7", fg = "#FFFFFF" } },
-	Keyword       = { icon  = " " , dark = { bg = "#20A4F3", fg = "#000000" }, light = { bg = "#E36414", fg = "#000000" } },
-	Method        = { icon  = " " , dark = { bg = "#D7D9D7", fg = "#000000" }, light = { bg = "#197278", fg = "#FFFFFF" } },
-	Module        = { icon  = " " , dark = { bg = "#F2FF49", fg = "#000000" }, light = { bg = "#EC368D", fg = "#000000" } },
-	Namespace     = { icon  = "ﬥ " , dark = { bg = "#FF4242", fg = "#000000" }, light = { bg = "#2F9C95", fg = "#000000" } },
-	Null          = { icon  = " " , dark = { bg = "#C1CFDA", fg = "#000000" }, light = { bg = "#56666B", fg = "#FFFFFF" } },
-	Number        = { icon  = " " , dark = { bg = "#FB62F6", fg = "#000000" }, light = { bg = "#A5BE00", fg = "#000000" } },
-	Object        = { icon  = " " , dark = { bg = "#F18F01", fg = "#000000" }, light = { bg = "#80A1C1", fg = "#000000" } },
-	Operator      = { icon  = " " , dark = { bg = "#048BA8", fg = "#000000" }, light = { bg = "#F1DB4B", fg = "#000000" } },
-	Options       = { icon  = " " , dark = { bg = "#99C24D", fg = "#000000" }, light = { bg = "#2292A4", fg = "#FFFFFF" } },
-	Package       = { icon  = " " , dark = { bg = "#AFA2FF", fg = "#000000" }, light = { bg = "#B98EA7", fg = "#000000" } },
-	Property      = { icon  = " " , dark = { bg = "#CED097", fg = "#000000" }, light = { bg = "#3777FF", fg = "#000000" } },
-	Reference     = { icon  = " " , dark = { bg = "#1B2CC1", fg = "#FFFFFF" }, light = { bg = "#18A999", fg = "#000000" } },
-	Snippet       = { icon  = " " , dark = { bg = "#7692FF", fg = "#000000" }, light = { bg = "#BF0D4B", fg = "#FFFFFF" } },
-	String        = { icon  = " " , dark = { bg = "#FEEA00", fg = "#000000" }, light = { bg = "#D5573B", fg = "#000000" } },
-	Struct        = { icon  = " " , dark = { bg = "#D81159", fg = "#FFFFFF" }, light = { bg = "#75485E", fg = "#FFFFFF" } },
-	Text          = { icon  = " " , dark = { bg = "#0496FF", fg = "#000000" }, light = { bg = "#5762D5", fg = "#FFFFFF" } },
-	TypeParameter = { icon  = " " , dark = { bg = "#FFFFFC", fg = "#000000" }, light = { bg = "#5D2E8C", fg = "#FFFFFF" } },
-	Unit          = { icon  = " " , dark = { bg = "#C97B84", fg = "#000000" }, light = { bg = "#FF6666", fg = "#000000" } },
-	Value         = { icon  = " " , dark = { bg = "#C6DDF0", fg = "#000000" }, light = { bg = "#2EC4B6", fg = "#000000" } },
-	Variable      = { icon  = " " , dark = { bg = "#B7ADCF", fg = "#000000" }, light = { bg = "#548687", fg = "#FFFFFF" } }
+	Array         = { icon = " ", dark = { bg = "#F42272", fg = "#000000" }, light = { bg = "#0B6E4F", fg = "#FFFFFF" }},
+	Boolean       = { icon = " ", dark = { bg = "#B8B8F3", fg = "#000000" }, light = { bg = "#69140E", fg = "#FFFFFF" }},
+	Class         = { icon = " ", dark = { bg = "#519872", fg = "#000000" }, light = { bg = "#1D3557", fg = "#FFFFFF" }},
+	Color         = { icon = " ", dark = { bg = "#A4B494", fg = "#000000" }, light = { bg = "#FA9F42", fg = "#000000" }},
+	Constant      = { icon = " ", dark = { bg = "#C5E063", fg = "#000000" }, light = { bg = "#744FC6", fg = "#FFFFFF" }},
+	Constructor   = { icon = " ", dark = { bg = "#4AAD52", fg = "#000000" }, light = { bg = "#755C1B", fg = "#FFFFFF" }},
+	Enum          = { icon = " ", dark = { bg = "#E3B5A4", fg = "#000000" }, light = { bg = "#A167A5", fg = "#000000" }},
+	EnumMember    = { icon = " ", dark = { bg = "#AF2BBF", fg = "#FFFFFF" }, light = { bg = "#B80C09", fg = "#FFFFFF" }},
+	Event         = { icon = " ", dark = { bg = "#6C91BF", fg = "#000000" }, light = { bg = "#53A548", fg = "#000000" }},
+	Field         = { icon = " ", dark = { bg = "#5BC8AF", fg = "#000000" }, light = { bg = "#E2DC12", fg = "#000000" }},
+	File          = { icon = " ", dark = { bg = "#EF8354", fg = "#000000" }, light = { bg = "#486499", fg = "#FFFFFF" }},
+	Folder        = { icon = " ", dark = { bg = "#BFC0C0", fg = "#000000" }, light = { bg = "#A74482", fg = "#FFFFFF" }},
+	Function      = { icon = " ", dark = { bg = "#E56399", fg = "#000000" }, light = { bg = "#228CDB", fg = "#000000" }},
+	History       = { icon = " ", dark = { bg = "#C2F8CB", fg = "#000000" }, light = { bg = "#85CB33", fg = "#000000" }},
+	Interface     = { icon = " ", dark = { bg = "#8367C7", fg = "#000000" }, light = { bg = "#537A5A", fg = "#FFFFFF" }},
+	Key           = { icon = " ", dark = { bg = "#D1AC00", fg = "#000000" }, light = { bg = "#645DD7", fg = "#FFFFFF" }},
+	Keyword       = { icon = " ", dark = { bg = "#20A4F3", fg = "#000000" }, light = { bg = "#E36414", fg = "#000000" }},
+	Method        = { icon = " ", dark = { bg = "#D7D9D7", fg = "#000000" }, light = { bg = "#197278", fg = "#FFFFFF" }},
+	Module        = { icon = " ", dark = { bg = "#F2FF49", fg = "#000000" }, light = { bg = "#EC368D", fg = "#000000" }},
+	Namespace     = { icon = "ﬥ ", dark = { bg = "#FF4242", fg = "#000000" }, light = { bg = "#2F9C95", fg = "#000000" }},
+	Null          = { icon = " ", dark = { bg = "#C1CFDA", fg = "#000000" }, light = { bg = "#56666B", fg = "#FFFFFF" }},
+	Number        = { icon = " ", dark = { bg = "#FB62F6", fg = "#000000" }, light = { bg = "#A5BE00", fg = "#000000" }},
+	Object        = { icon = " ", dark = { bg = "#F18F01", fg = "#000000" }, light = { bg = "#80A1C1", fg = "#000000" }},
+	Operator      = { icon = " ", dark = { bg = "#048BA8", fg = "#000000" }, light = { bg = "#F1DB4B", fg = "#000000" }},
+	Options       = { icon = " ", dark = { bg = "#99C24D", fg = "#000000" }, light = { bg = "#2292A4", fg = "#FFFFFF" }},
+	Package       = { icon = " ", dark = { bg = "#AFA2FF", fg = "#000000" }, light = { bg = "#B98EA7", fg = "#000000" }},
+	Property      = { icon = " ", dark = { bg = "#CED097", fg = "#000000" }, light = { bg = "#3777FF", fg = "#000000" }},
+	Reference     = { icon = " ", dark = { bg = "#1B2CC1", fg = "#FFFFFF" }, light = { bg = "#18A999", fg = "#000000" }},
+	Snippet       = { icon = " ", dark = { bg = "#7692FF", fg = "#000000" }, light = { bg = "#BF0D4B", fg = "#FFFFFF" }},
+	String        = { icon = " ", dark = { bg = "#FEEA00", fg = "#000000" }, light = { bg = "#D5573B", fg = "#000000" }},
+	Struct        = { icon = " ", dark = { bg = "#D81159", fg = "#FFFFFF" }, light = { bg = "#75485E", fg = "#FFFFFF" }},
+	Text          = { icon = " ", dark = { bg = "#0496FF", fg = "#000000" }, light = { bg = "#5762D5", fg = "#FFFFFF" }},
+	TypeParameter = { icon = " ", dark = { bg = "#FFFFFC", fg = "#000000" }, light = { bg = "#5D2E8C", fg = "#FFFFFF" }},
+	Unit          = { icon = " ", dark = { bg = "#C97B84", fg = "#000000" }, light = { bg = "#FF6666", fg = "#000000" }},
+	Value         = { icon = " ", dark = { bg = "#C6DDF0", fg = "#000000" }, light = { bg = "#2EC4B6", fg = "#000000" }},
+	Variable      = { icon = " ", dark = { bg = "#B7ADCF", fg = "#000000" }, light = { bg = "#548687", fg = "#FFFFFF" }}
 }
 
 ---Global keymaps
@@ -1743,10 +1743,12 @@ local function lightT(opts)
 	light(opts)
 end
 
+addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
 addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
 addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
 addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
+addPlugin { "alexxGmZ/e-ink.nvim",            event = "User e-ink"                                        }
 addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
 addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
 addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                           }
@@ -1757,7 +1759,6 @@ addPlugin { "marko-cerovac/material.nvim",    event = "User material"           
 addPlugin { "xero/miasma.nvim",               event = "User miasma"                                       }
 addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                     }
 addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                     }
-addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
 addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                      }
 addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                   }
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                       }
@@ -1768,6 +1769,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "bluloco",              "_"                                                                                        }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                                               }
 -- dark  { "duskfox",              "nightfox"                                                                                 }
+-- dark  { "e-ink",                "_"                                                                                        }
 -- dark  { "hybrid",               "_"                                                                                        }
 -- dark  { "jb",                   "_"                                                                                        }
 -- dark  { "juliana",              "_",            post = function() fixLineNr("#999999") end                                 }
@@ -1785,6 +1787,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                                               }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
 -- dark { "PaperColorSlim",        "_"                                                                                        }
+light { "e-ink",                      "_"                                                                                  }
 light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
 -- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 -- light { "bluloco",              "_"                                                                                        }
@@ -3387,6 +3390,7 @@ addPlugin {
 -- https://github.com/Zeioth/none-ls-external-sources.nvim
 -- https://github.com/Zeioth/none-ls-autoload.nvim
 -- https://github.com/p00f/clangd_extensions.nvim
+-- https://github.com/netmute/ctags-lsp
 
 -- https://github.com/sontungexpt/better-diagnostic-virtual-text
 addPlugin {
