@@ -1205,7 +1205,7 @@ vim.diagnostic.config({
 	},
 	severity_sort = true,
 	signs = {
-		text = {
+		numhl = {
 			[vim.diagnostic.severity.ERROR] = icons.error,
 			[vim.diagnostic.severity.WARN] = icons.warn,
 			[vim.diagnostic.severity.INFO] = icons.info,
@@ -1788,7 +1788,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
 -- dark { "PaperColorSlim",        "_"                                                                                        }
 light { "e-ink",                      "_"                                                                                  }
-light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
+-- light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
 -- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 -- light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
@@ -1905,6 +1905,8 @@ addPlugin {
 -- https://github.com/hrsh7th/cmp-omni
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
+
+-- FEAT: bink.cmp migration
 
 addPlugin {
 	"aloknigam247/cmp-path",
@@ -3129,7 +3131,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: use number for diagnostics instead of signs
 -- addPlugin {
 -- 	"TheLeoP/powershell.nvim",
 -- 	lazy = true,
@@ -3490,7 +3491,7 @@ addPlugin {
 		end)
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		-- Lsp_timer = vim.uv.new_timer()
+		-- FEAT: Lsp_timer = vim.uv.new_timer()
 		-- vim.api.nvim_create_autocmd(
 		-- 	"FocusLost", {
 		-- 		pattern = "*",
@@ -3557,7 +3558,7 @@ addPlugin {
 				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
 				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
 				{ name = " References", key = "Shift F12", exec = vim.lsp.buf.references },
-				{ name = "󰑕 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
+				{ name = "󰏫 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
 				{ name = " Type Definition", key = "gt", exec = vim.lsp.buf.type_definition }
 			}
 		})
