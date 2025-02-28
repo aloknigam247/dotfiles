@@ -1744,26 +1744,25 @@ local function lightT(opts)
 end
 
 addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
-addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
-addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
-addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
-addPlugin { "alexxGmZ/e-ink.nvim",            event = "User e-ink"                                        }
-addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
-addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
-addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                           }
-addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                      }
-addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                     }
-addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                               }
-addPlugin { "marko-cerovac/material.nvim",    event = "User material"                                     }
-addPlugin { "xero/miasma.nvim",               event = "User miasma"                                       }
-addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                     }
-addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                     }
-addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                      }
-addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                   }
-addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                       }
-addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                       }
-addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                    }
+-- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
+-- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
+-- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
+-- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
+-- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
+-- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
+-- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                           }
+-- addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                      }
+-- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                     }
+-- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                               }
+-- addPlugin { "marko-cerovac/material.nvim",    event = "User material"                                     }
+-- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                       }
+-- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                     }
+-- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                     }
+-- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                      }
+-- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                   }
+-- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                       }
+-- addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                       }
+-- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                    }
 
 -- dark  { "ayu-dark",             "ayu",          post = fixAyu                                                              }
 -- dark  { "bluloco",              "_"                                                                                        }
@@ -1774,6 +1773,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "jb",                   "_"                                                                                        }
 -- dark  { "juliana",              "_",            post = function() fixLineNr("#999999") end                                 }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                                                 }
+-- dark  { "PaperColorSlim",        "_"                                                                                        }
 -- dark  { "sonokai",              "_",            pre = function() vim.g.sonokai_style = "shusia" end                        }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                                               }
 -- dark  { "vn-night",             "_",            post = fixVnNight                                                          }
@@ -1786,14 +1786,12 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }                                 }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                                               }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
--- dark { "PaperColorSlim",        "_"                                                                                        }
-light { "e-ink",                      "_"                                                                                  }
--- light { "PaperColorSlimLight",        "PaperColorSlim"                                                                     }
 -- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
 -- light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
--- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
+-- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
+light { "PaperColorSlimLight",  "PaperColorSlim"                                                                           }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
 
@@ -1907,6 +1905,26 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: bink.cmp migration
+-- * cmdline
+-- ** keymaps
+-- ** icons
+-- ** color menu like cmp
+-- * buffer
+addPlugin {
+	"saghen/blink.cmp",
+	event = { "CmdlineEnter" },
+	opts = {
+		cmdline = {
+			enabled = true,
+		completion = {
+			menu = { auto_show = true }
+		}
+		},
+		completion = {
+			menu = { auto_show = false }
+		}
+	},
+}
 
 addPlugin {
 	"aloknigam247/cmp-path",
@@ -1946,27 +1964,27 @@ addPlugin {
 	config = function()
 		local cmp = require("cmp")
 		cmp.setup({
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{
-						name = "path",
-						option = {
-							trailing_slash = true
-						}
-					},
-					{
-						name = "cmdline",
-						option = {
-							-- ignore_cmds = { "split" }
-						}
-					}
-				}
-			}),
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = { { name = "buffer" } }
-			}),
+			-- cmp.setup.cmdline(":", {
+			-- 	mapping = cmp.mapping.preset.cmdline(),
+			-- 	sources = {
+			-- 		{
+			-- 			name = "path",
+			-- 			option = {
+			-- 				trailing_slash = true
+			-- 			}
+			-- 		},
+			-- 		{
+			-- 			name = "cmdline",
+			-- 			option = {
+			-- 				-- ignore_cmds = { "split" }
+			-- 			}
+			-- 		}
+			-- 	}
+			-- }),
+			-- cmp.setup.cmdline({ "/", "?" }, {
+			-- 	mapping = cmp.mapping.preset.cmdline(),
+			-- 	sources = { { name = "buffer" } }
+			-- }),
 			autocomplete = false,
 			completion = {
 				-- completeopt = "menu,menuone,noselect",
@@ -4262,12 +4280,12 @@ addPlugin {
 					padding = { left = 0, right = 1 },
 					separator = ""
 				},
-				{
-					function() return vim.g.ColoRand end,
-					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
-					padding = { left = 0, right = 1 }
-				},
+				-- {
+				-- 	function() return vim.g.ColoRand end,
+				-- 	color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
+				-- 	icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
+				-- 	padding = { left = 0, right = 1 }
+				-- },
 				{
 					"diagnostics",
 					on_click = function()
@@ -5608,7 +5626,6 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
--- FEAT: follow https://github.com/neovide/neovide/pull/3021
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
 -- FEAT: https://github.com/bassamsdata/namu.nvim
@@ -5620,6 +5637,7 @@ ColoRand()
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1hex7fz/easydotnetnvim_effortless_cf_development_in_neovim/
 -- FEAT: https://www.reddit.com/r/neovim/comments/wq4jr4/inject_syntax_highlighting_from_a_different/
+-- FEAT: https://www.youtube.com/watch?v=47UGK4NgvC8
 -- FEAT: https://www.youtube.com/watch?v=KpudmVmMWx4&t=722s
 
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
