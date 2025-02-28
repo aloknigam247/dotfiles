@@ -1205,7 +1205,7 @@ vim.diagnostic.config({
 	},
 	severity_sort = true,
 	signs = {
-		numhl = {
+		text = {
 			[vim.diagnostic.severity.ERROR] = icons.error,
 			[vim.diagnostic.severity.WARN] = icons.warn,
 			[vim.diagnostic.severity.INFO] = icons.info,
@@ -1793,7 +1793,7 @@ light { "e-ink",                      "_"                                       
 -- light { "bluloco",              "_"                                                                                        }
 -- light { "catppuccin-latte",     "catppuccin"                                                                               }
 -- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
-light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
+-- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
 
