@@ -1,8 +1,9 @@
 #          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 #          ┃                       Color Pallete                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
 # Light theme
-$pallete = @{
+$light_pallete = @{
     prompt = @{
         dir_icon = @{
             bg = "#DDDDDD"
@@ -36,36 +37,49 @@ $pallete = @{
 }
 
 # Dark theme
-# $pallete = @{
-#     prompt = @{
-#         dir_icon = @{
-#             bg = "#736CED"
-#             fg = "#C5D86D"
-#         }
-#         dir_path = "#FEF9FF"
-#         git = @{
-#             bg = "#BDBDBD"
-#             branch = "#FFFFFF"
-#             index = "#FDD649"
-#             sep = "#FFFFFF"
-#             stash = "#DF5601"
-#             sync = "#BBFA0F"
-#             working = "#2B78CA"
-#         }
-#     }
-#    cmdline = @{
-#        command = "#9183EC"
-#        comment = "#989FCE"
-#        emphasis = "#ECBA82"
-#        keyword = "#F7F4F3"
-#        listPrediction = "#C1D37F"
-#        listPredictionSelected = "#3C6E71"
-#        number = "#F24333"
-#        parameter = "#F42C04"
-#        selection = "#3C6E71"
-#        string = "#E4FF1A"
-#    }
-# }
+$dark_pallete = @{
+    prompt = @{
+        dir_icon = @{
+            bg = "#736CED"
+            fg = "#C5D86D"
+        }
+        dir_path = "#FEF9FF"
+        git = @{
+            bg = "#BDBDBD"
+            branch = "#FFFFFF"
+            index = "#FDD649"
+            sep = "#FFFFFF"
+            stash = "#DF5601"
+            sync = "#BBFA0F"
+            working = "#2B78CA"
+        }
+    }
+   cmdline = @{
+       command = "#9183EC"
+       comment = "#989FCE"
+       emphasis = "#ECBA82"
+       keyword = "#F7F4F3"
+       listPrediction = "#C1D37F"
+       listPredictionSelected = "#3C6E71"
+       number = "#F24333"
+       parameter = "#F42C04"
+       selection = "#3C6E71"
+       string = "#E4FF1A"
+   }
+}
+
+# ╭─────────────────╮
+# │ Themes Settings │
+# ╰─────────────────╯
+$theme = "Light"
+
+if ($theme -eq "Light") {
+    $pallete = $light_pallete
+    $bat_theme = "OneHalfLight"
+} else {
+    $pallete = $dark_pallete
+    $bat_theme = "Visual Studio Dark+"
+}
 
 # ╭─────────────╮
 # │ Auto Update │
@@ -114,7 +128,7 @@ New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 Remove-Alias ls
 Remove-Alias rm
 # FIX: bat colorscheme for light and dark
-function bat     { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme "Visual Studio Dark+" $args }
+function bat     { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
 function lla     { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }

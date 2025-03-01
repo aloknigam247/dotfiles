@@ -5629,6 +5629,7 @@ ColoRand()
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
 -- FEAT: https://github.com/bassamsdata/namu.nvim
+-- FEAT: https://github.com/lafarr/hierarchy.nvim
 -- FEAT: https://github.com/luiscassih/AniMotion.nvim
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/mistweaverco/zana-client
