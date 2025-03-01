@@ -1,9 +1,9 @@
 #          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-#          ┃                       Color Pallete                       ┃
+#          ┃                       Color palette                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
 # Light theme
-$light_pallete = @{
+$light_palette = @{
     prompt = @{
         dir_icon = @{
             bg = "#DDDDDD"
@@ -37,7 +37,7 @@ $light_pallete = @{
 }
 
 # Dark theme
-$dark_pallete = @{
+$dark_palette = @{
     prompt = @{
         dir_icon = @{
             bg = "#736CED"
@@ -74,10 +74,10 @@ $dark_pallete = @{
 $theme = "Light"
 
 if ($theme -eq "Light") {
-    $pallete = $light_pallete
+    $palette = $light_palette
     $bat_theme = "OneHalfLight"
 } else {
-    $pallete = $dark_pallete
+    $palette = $dark_palette
     $bat_theme = "Visual Studio Dark+"
 }
 
@@ -298,9 +298,9 @@ function Format-Text {
         $head = "48;2;$bg_r;$bg_g;$bg_b"
     }
 
-    # create forground header
+    # create foreground header
     if ($fg -ne "") {
-        if ($head -ne "") { $head += ";" } # seperator
+        if ($head -ne "") { $head += ";" } # separator
         $fg_r_hex = "0x$($fg.Substring(1, 2))"
         $fg_g_hex = "0x$($fg.Substring(3, 2))"
         $fg_b_hex = "0x$($fg.Substring(5, 2))"
@@ -312,7 +312,7 @@ function Format-Text {
 
     # create effects header
     foreach ($style in $styles) {
-        if ($head -ne "") { $head += ";" } # seperator
+        if ($head -ne "") { $head += ";" } # separator
         switch ($style) {
             "blink"         { $head += "5" }
             "bold"          { $head += "1" }
@@ -349,7 +349,7 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocom
 try{
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 } catch {
-    # Write-Error "Error occured in setting PredictionSource"
+    # Write-Error "Error occurred in setting PredictionSource"
     # Write-Error $_
 }
 
@@ -519,37 +519,37 @@ function prompt {
 
     $segments = @(
         @{
-            bg = $pallete.prompt.dir_icon.bg
+            bg = $palette.prompt.dir_icon.bg
             blocks = @{
                 text = "$script:dir_icon"
-                fg   = $pallete.prompt.dir_icon.fg
+                fg   = $palette.prompt.dir_icon.fg
             }, @{
                 text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
-                fg     = $pallete.prompt.dir_path
+                fg     = $palette.prompt.dir_path
                 styles = "bold"
             }
         },
         @{
-            bg = $pallete.prompt.git.bg
+            bg = $palette.prompt.git.bg
             blocks = @{
                 text = "$script:git_branch"
-                fg   = $pallete.prompt.git.branch
+                fg   = $palette.prompt.git.branch
                 styles = "italic"
             }, @{
                 text = "$script:git_sep"
-                fg   = $pallete.prompt.git.sep
+                fg   = $palette.prompt.git.sep
             }, @{
                 text = "$script:git_working"
-                fg   = $pallete.prompt.git.working
+                fg   = $palette.prompt.git.working
             }, @{
                 text = "$script:git_index"
-                fg   = $pallete.prompt.git.index
+                fg   = $palette.prompt.git.index
             }, @{
                 text = "$script:git_stash"
-                fg   = $pallete.prompt.git.stash
+                fg   = $palette.prompt.git.stash
             }, @{
                 text = "$script:git_sync"
-                fg   = $pallete.prompt.git.sync
+                fg   = $palette.prompt.git.sync
             }
             cond = { return $script:git_status -ne $null }
         }
@@ -560,20 +560,20 @@ function prompt {
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
-    "Command" = (Format-Text -headOnly -fg $pallete.cmdline.command -styles "bold");
-    "Comment" = (Format-Text -headOnly -fg $pallete.cmdline.comment);
-    "ContinuationPrompt" = (Format-Text -headOnly -fg $pallete.cmdline.defaultToken);
-    "Default" = (Format-Text -headOnly -fg $pallete.cmdline.defaultToken);
-    "Emphasis" = (Format-Text -headOnly -fg $pallete.cmdline.emphasis);
-    "Keyword" = (Format-Text -headOnly -fg $pallete.cmdline.keyword -styles "italic");
-    "ListPrediction" = (Format-Text -headOnly -fg $pallete.cmdline.listPrediction);
-    "ListPredictionSelected" = (Format-Text -headOnly -bg $pallete.cmdline.listPredictionSelected -styles "bold");
+    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command -styles "bold");
+    "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment);
+    "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
+    "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
+    "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
+    "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
+    "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
+    "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
     "Member" = (Format-Text -headOnly -styles "italic");
-    "Number" = (Format-Text -headOnly -fg $pallete.cmdline.number);
-    "Parameter" = (Format-Text -headOnly -fg $pallete.cmdline.parameter);
-    "Selection" = (Format-Text -headOnly -bg $pallete.cmdline.selection);
-    "String" = (Format-Text -headOnly -fg $pallete.cmdline.string);
-    "Variable" = (Format-Text -headOnly -fg $pallete.cmdline.variable);
+    "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
+    "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
+    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
+    "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
+    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
 
 Set-PSReadLineOption -ContinuationPrompt "... " -TerminateOrphanedConsoleApps

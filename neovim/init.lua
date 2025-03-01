@@ -3149,13 +3149,13 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin {
--- 	"TheLeoP/powershell.nvim",
--- 	lazy = true,
--- 	opts = {
--- 		bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services"
--- 	}
--- }
+addPlugin {
+	"TheLeoP/powershell.nvim",
+	lazy = true,
+	opts = {
+		bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services"
+	}
+}
 
 addPlugin {
 	-- "Wansmer/symbol-usage.nvim",
