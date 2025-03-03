@@ -1958,6 +1958,7 @@ addPlugin {
 -- FEAT: bink.cmp migration
 -- * cmdline
 -- ** keymaps
+-- ** auto menu on /
 -- ** icons
 -- ** color menu like cmp
 -- * buffer
@@ -1967,9 +1968,14 @@ addPlugin {
 	opts = {
 		cmdline = {
 			enabled = true,
-		completion = {
-			menu = { auto_show = true }
-		}
+			completion = {
+				menu = {
+					auto_show = true,
+				}
+			},
+			keymap = {
+				["<TAB>"] = { "select_next" }
+			}
 		},
 		completion = {
 			menu = { auto_show = false }
@@ -5525,7 +5531,6 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT: https://github.com/monaqa/dial.nvim
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
