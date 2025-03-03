@@ -1,0 +1,7 @@
+{
+    "diagnostics.globals": [
+        "bit",
+        "vim",
+        "materialPre"
+    ]
+}

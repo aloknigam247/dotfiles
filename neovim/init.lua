@@ -661,19 +661,18 @@ function GetFgOrFallback(hl_name, fallback)
 end
 
 ---Light or dark color
----@param col string Color to shade
+---@param col hex string Color to shade
 ---@param amt integer Amount of shade
 ---@return string # Color in hex format
 function LightenDarkenColor(col, amt)
 	local function clamp(x) return math.max(0, math.min(255, x)) end
-	local num = tonumber(col, 16)
+	local num = tonumber(col:sub(2), 16)
 	local r = clamp(bit.rshift(num, 16) + amt)
 	local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
 	local hex_code = string.format("#%-6X", newColor)
-	local res = hex_code:gsub(" ", "0")
-	return res
+	return hex_code:gsub(" ", "0")
 end
 
 ---Adds a plugin Lazy nvim config
@@ -1634,8 +1633,8 @@ local function fixVisual(bg)
 	vim.api.nvim_set_hl(0, "Visual", { bg = bg, force = true })
 end
 
----Fix ayu colorscheme
-local function fixAyu()
+---@diagnostic disable-next-line: lowercase-global
+function ayuPost()
 	vim.api.nvim_set_hl(0, "@string.documentation.python", { fg = "#77BB92" })
 	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2A3B54" })
 	vim.api.nvim_set_hl(0, "LineNr", { fg = "#4F545D" })
@@ -1647,34 +1646,55 @@ local function fixAyu()
 	vim.api.nvim_set_hl(0, "Visual", { bg = "#313C47" })
 end
 
----Fix material colorscheme
-local function fixMaterial()
-	vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#91B859", nocombine = true })
-	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#E53935", nocombine = true })
-	fixVisual("#CCEAE7")
-end
-
----Fix vn-night colorscheme
-local function fixVnNight()
-	fixLineNr("#505275")
-	vim.api.nvim_set_hl(0, "Comment", { fg = "#7F82A5", italic = true })
-	vim.api.nvim_set_hl(0, "Folded", { bg = "#112943", fg = "#8486A4" })
-end
-
-local function fixVscode()
-	vim.api.nvim_set_hl(0, "Todo", { fg = "#569cd6", bold = true })
+---@diagnostic disable-next-line: lowercase-global
+function julianaPost()
+	fixLineNr("#999999")
 end
 
 ---Pre command for material
----@param style string style of theme
----@param selection string selection color
-local function preMaterial(style, selection)
+---@diagnostic disable-next-line: lowercase-global
+function materialPre()
+	local style = "lighter"
+	local selection = "#CCEAE7"
 	vim.g.material_style = style
 	require("material").setup({
 		custom_colors = function(colors)
 			colors.editor.selection = selection
 		end
 	})
+end
+
+---@diagnostic disable-next-line: lowercase-global
+function materialPost()
+	vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#91B859", nocombine = true })
+	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#E53935", nocombine = true })
+	fixVisual("#CCEAE7")
+end
+
+function PaperColorSlimPost()
+	for _, hl_name in pairs({ "DiffAdd", "DiffChange", "DiffDelete" }) do
+		vim.api.nvim_set_hl(0, hl_name:gsub("Diff", "GitSigns"), {
+			fg = LightenDarkenColor(string.format("#%-6X", vim.api.nvim_get_hl(0, { name = hl_name, create = false }).bg), -50),
+			nocombine = true,
+		})
+	end
+end
+
+---@diagnostic disable-next-line: lowercase-global
+function sonokaiPre()
+	vim.g.sonokai_style = "shusia"
+end
+
+---@diagnostic disable-next-line: lowercase-global
+function vnnightPost()
+	fixLineNr("#505275")
+	vim.api.nvim_set_hl(0, "Comment", { fg = "#7F82A5", italic = true })
+	vim.api.nvim_set_hl(0, "Folded", { bg = "#112943", fg = "#8486A4" })
+end
+
+---@diagnostic disable-next-line: lowercase-global
+function vscodePost()
+	vim.api.nvim_set_hl(0, "Todo", { fg = "#569cd6", bold = true })
 end
 
 ---@class ColorPlugin
@@ -1764,62 +1784,93 @@ addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"     
 -- addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                       }
 -- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                    }
 
--- dark  { "ayu-dark",             "ayu",          post = fixAyu                                                              }
--- dark  { "bluloco",              "_"                                                                                        }
--- dark  { "catppuccin-macchiato", "catppuccin"                                                                               }
--- dark  { "duskfox",              "nightfox"                                                                                 }
--- dark  { "e-ink",                "_"                                                                                        }
--- dark  { "hybrid",               "_"                                                                                        }
--- dark  { "jb",                   "_"                                                                                        }
--- dark  { "juliana",              "_",            post = function() fixLineNr("#999999") end                                 }
--- dark  { "kanagawa-wave",        "kanagawa"                                                                                 }
--- dark  { "PaperColorSlim",        "_"                                                                                        }
--- dark  { "sonokai",              "_",            pre = function() vim.g.sonokai_style = "shusia" end                        }
--- dark  { "tokyonight-storm",     "tokyonight"                                                                               }
--- dark  { "vn-night",             "_",            post = fixVnNight                                                          }
--- dark  { "vscode",               "_",            post = fixVscode                                                           }
--- dark  { "zephyrium",            "_"                                                                                        }
--- darkT { "ayu-dark",             "ayu",          post = fixAyu                                                              }
--- darkT { "bluloco",              "_",            cfg = { transparent = true }                                               }
--- darkT { "cyberdream",           "_",                                                                                       }
--- darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                                               }
--- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }                                 }
--- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                                               }
--- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                                               }
--- light { "ayu-light",             "ayu",         post = fixAyu                                                              }
--- light { "bluloco",              "_"                                                                                        }
--- light { "catppuccin-latte",     "catppuccin"                                                                               }
--- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false }                           }
--- light { "material",             "_",            pre = function() preMaterial("lighter", "#CCEAE7") end, post = fixMaterial }
-light { "PaperColorSlimLight",  "PaperColorSlim"                                                                           }
--- lightT{ "bluloco",              "_",            cfg = { transparent = true }                                               }
--- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }                            }
+-- dark  { "ayu-dark",             "ayu",                                                           }
+-- dark  { "bluloco",              "_"                                                              }
+-- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+-- dark  { "duskfox",              "nightfox"                                                       }
+-- dark  { "e-ink",                "_"                                                              }
+-- dark  { "hybrid",               "_"                                                              }
+-- dark  { "jb",                   "_"                                                              }
+-- dark  { "juliana",              "_",                                                             }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
+-- dark  { "PaperColorSlim",        "_"                                                             }
+-- dark  { "sonokai",              "_",                                                             }
+-- dark  { "tokyonight-storm",     "tokyonight"                                                     }
+-- dark  { "vn-night",             "_",                                                             }
+-- dark  { "vscode",               "_",                                                             }
+-- dark  { "zephyrium",            "_"                                                              }
+-- darkT { "ayu-dark",             "ayu",                                                           }
+-- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
+-- darkT { "cyberdream",           "_",                                                             }
+-- darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                     }
+-- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
+-- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
+-- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
+-- light { "ayu-light",             "ayu",                                                          }
+-- light { "bluloco",              "_"                                                              }
+-- light { "catppuccin-latte",     "catppuccin"                                                     }
+-- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+-- light { "material",             "_",                                                             }
+light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
+-- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+-- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
 function ColoRand(scheme_index)
+	-- get random color scheme
 	math.randomseed(os.time())
 	scheme_index = scheme_index or math.random(1, #colos)
 	local selection = colos[scheme_index]
 	local scheme = selection[1]
 	local bg = selection.bg
 	local event = selection[2]
-	local precmd = selection.pre
-	local postcmd = selection.post
+	-- local precmd = selection.pre
+	-- local postcmd = selection.post
 
+	-- set backgrounds
 	vim.o.background = bg
 	vim.g.neovide_transparency = selection.trans and 0.7 or 1
 
 	local start_time = os.clock()
+
+	-- load colorscheme
 	vim.api.nvim_exec_autocmds("User", { pattern = event == "_" and scheme or event })
 
+	-- configure colorscheme
+	if selection.cfg then
+		local cfg = selection.cfg
+		local mod
+		if #cfg == 2 then
+			---@diagnostic disable-next-line: need-check-nil
+			mod = cfg[1]
+			---@diagnostic disable-next-line: need-check-nil
+			cfg = cfg[2]
+		else
+			if event == "_" then
+				mod = scheme
+			else
+				mod = event
+			end
+		end
+
+		require(mod).setup(cfg)
+	end
+
+	-- run pre colorscheme
+	local root = event == "_" and scheme or event
+	root = root:gsub("-", "")
+	local precmd = _G[root .. "Pre"]
 	if (precmd) then
 		precmd()
 	end
 
+	-- apply colorscheme
 	vim.cmd.colorscheme(scheme)
 	vim.cmd("highlight clear CursorLine")
 
+	-- run post colorscheme
+	local postcmd = _G[root .. "Post"]
 	if (postcmd) then
 		postcmd()
 	end
@@ -1827,7 +1878,7 @@ function ColoRand(scheme_index)
 	local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
 	vim.g.ColoRand = scheme_index .. ":" .. scheme .. ":" .. bg .. ":" .. event .. elapsed
 
-	-- Fix Todo highlight
+	-- fix Todo highlight
 	local todo_hl --[[@as vim.api.keyset.highlight]] = vim.api.nvim_get_hl(0, { name = "Todo", create = false })
 	if todo_hl and todo_hl.bg then
 		todo_hl.fg = todo_hl.bg
@@ -1835,11 +1886,11 @@ function ColoRand(scheme_index)
 		vim.api.nvim_set_hl(0, "Todo", todo_hl)
 	end
 
-	-- override colorscheme
+	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
 
-	-- Override neovide title color
+	-- override neovide title color
 	if vim.fn.exists("g:neovide") then
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", "#000000")
 	end
@@ -1922,8 +1973,9 @@ addPlugin {
 		},
 		completion = {
 			menu = { auto_show = false }
-		}
-	},
+		},
+		fuzzy = { implementation = "lua" }
+	}
 }
 
 addPlugin {
@@ -5473,6 +5525,7 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
+-- FEAT: https://github.com/monaqa/dial.nvim
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
@@ -5629,6 +5682,8 @@ ColoRand()
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
 -- FEAT: https://github.com/bassamsdata/namu.nvim
+-- FEAT: https://github.com/gbprod/substitute.nvim
+-- FEAT: https://github.com/kevinhwang91/nvim-fundo
 -- FEAT: https://github.com/lafarr/hierarchy.nvim
 -- FEAT: https://github.com/luiscassih/AniMotion.nvim
 -- FEAT: https://github.com/mhinz/neovim-remote
