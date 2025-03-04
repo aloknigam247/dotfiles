@@ -1973,9 +1973,6 @@ addPlugin {
 					auto_show = true,
 				}
 			},
-			keymap = {
-				["<TAB>"] = { "select_next" }
-			}
 		},
 		completion = {
 			menu = { auto_show = false }
