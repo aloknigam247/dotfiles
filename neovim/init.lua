@@ -1962,17 +1962,20 @@ addPlugin {
 -- ** icons
 -- ** color menu like cmp
 -- * buffer
+-- * use all sources from nvim-cmp
 addPlugin {
 	"saghen/blink.cmp",
 	event = { "CmdlineEnter" },
+	--- @type blink.cmp.Config
 	opts = {
 		cmdline = {
-			enabled = true,
 			completion = {
 				menu = {
 					auto_show = true,
 				}
 			},
+			keymap = {
+			}
 		},
 		completion = {
 			menu = { auto_show = false }
@@ -5391,7 +5394,9 @@ addPlugin {
 	"folke/lazydev.nvim",
 	ft = "lua",
 	opts = {
-		{ path = "${3rd}/luv/library", words = { "vim%.uv" } }
+		library = {
+			"D:\\apps\\nvim-data\\lazy\\blink.cmp\\lua"
+		}
 	}
 }
 
