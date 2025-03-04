@@ -12,8 +12,8 @@
             "id": "User.copy.644BA8F2"
         },
         {
-            "command": "toggleFocusMode",
-            "id": "User.toggleFocusMode"
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": 
@@ -25,8 +25,8 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "find",
-            "id": "User.find"
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode"
         },
         {
             "command": 
@@ -48,10 +48,6 @@
             "keys": "ctrl+c"
         },
         {
-            "id": null,
-            "keys": "enter"
-        },
-        {
             "id": "User.find",
             "keys": "ctrl+shift+f"
         },
@@ -61,15 +57,19 @@
         },
         {
             "id": null,
+            "keys": "enter"
+        },
+        {
+            "id": null,
             "keys": "ctrl+shift+t"
         },
         {
             "id": null,
-            "keys": "ctrl+r"
+            "keys": "shift+insert"
         },
         {
             "id": null,
-            "keys": "shift+insert"
+            "keys": "ctrl+r"
         },
         {
             "id": null,
@@ -161,6 +161,12 @@
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
                 "name": "PowerShell 7 Preview",
+                "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell",
                 "source": "Windows.Terminal.PowershellCore"
             }
         ]
