@@ -3551,6 +3551,7 @@ addPlugin {
 
 addPlugin {
 	-- BUG: ruff-lsp not working
+	-- last update ruff not present in lua= require("lspconfig.util").available_servers()
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
 		-- ╭────────────────────────╮

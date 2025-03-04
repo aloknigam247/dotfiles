@@ -128,32 +128,32 @@ New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 Remove-Alias ls
 Remove-Alias rm
 # FIX: bat colorscheme for light and dark
-function bat     { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
-function grep    { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
-function la      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
-function lla     { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
-function ls      { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
-function pdbg    { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
-function rm      { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
-function tree    { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function v($arg) { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cursor-icon "i-beam" -- $arg }
+function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
+function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
+function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
+function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
+function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
+function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
+function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
+function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
+function v    { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
 
-function e ($arg) {
+function e() {
     $code_ext = @("cs", "ps1", "psm1")
 
-    if ($null -eq $arg) {
+    if ($null -eq $args) {
         $ext = ""
     } else {
-        $ext = $arg.split(".")[-1]
+        $ext = $args.split(".")[-1]
     }
 
     if ( $null -ne $env:SSH_CLIENT ) {
-        nvim $arg
+        nvim @args
     }
     elseif ( $ext -in $code_ext) {
-        code $arg
+        code @args
     } else {
-        v $arg
+        v @args
     }
 }
 
