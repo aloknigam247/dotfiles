@@ -1963,6 +1963,7 @@ addPlugin {
 -- ** color menu like cmp
 -- * buffer
 -- * use all sources from nvim-cmp
+-- * signatures help
 addPlugin {
 	"saghen/blink.cmp",
 	event = { "CmdlineEnter" },
@@ -1975,6 +1976,7 @@ addPlugin {
 				}
 			},
 			keymap = {
+				-- ["<TAB>"] = { "select_and_accept" }
 			}
 		},
 		completion = {
@@ -2325,6 +2327,7 @@ addPlugin {
 -- https://github.com/Weissle/persistent-breakpoints.nvim
 -- https://github.com/Willem-J-an/nvim-dap-powershell
 -- https://github.com/Willem-J-an/visidata.nvim
+-- https://github.com/igorlfs/nvim-dap-view
 -- https://github.com/jay-babu/mason-nvim-dap.nvim
 -- https://github.com/jonboh/nvim-dap-rr
 -- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
@@ -3207,6 +3210,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: Csharp lsp
+-- FEAT: powershell lsp
 addPlugin {
 	"TheLeoP/powershell.nvim",
 	lazy = true,
@@ -5158,7 +5163,7 @@ addPlugin {
 					opts = {},
 				},
 				signature = {
-						enabled = false, -- BUG: noice keeps on crashing on LSP for signatures
+					enabled = false,
 					auto_open = {
 						enabled = true,
 						trigger = true,
@@ -5585,8 +5590,9 @@ addPlugin {
 	cmd = "NoNeckPain"
 }
 
--- https://github.com/wellle/targets.vim
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- https://github.com/mhinz/neovim-remote
+-- https://github.com/wellle/targets.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 
@@ -5689,12 +5695,10 @@ ColoRand()
 -- FIX: LSP errors
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
--- FEAT: https://github.com/bassamsdata/namu.nvim
 -- FEAT: https://github.com/gbprod/substitute.nvim
 -- FEAT: https://github.com/kevinhwang91/nvim-fundo
 -- FEAT: https://github.com/lafarr/hierarchy.nvim
 -- FEAT: https://github.com/luiscassih/AniMotion.nvim
--- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/mistweaverco/zana-client
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/

@@ -127,7 +127,6 @@ New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 # ╰───────────╯
 Remove-Alias ls
 Remove-Alias rm
-# FIX: bat colorscheme for light and dark
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
@@ -373,6 +372,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # │ FZF Setup │
 # ╰───────────╯
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
+# FEAT: light and dark colorscheme
 Import-Module PSFzf
 
 Set-PsFzfOption `
