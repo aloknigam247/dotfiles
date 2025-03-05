@@ -1372,7 +1372,7 @@ addPlugin {
 			end)
 			:use_key("]"),
 			-- Auto add space on =
-			Rule("=", "")
+			Rule("=", "", "-xml")
 			:with_pair(cond.not_inside_quote())
 			:with_pair(function(opts)
 				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
