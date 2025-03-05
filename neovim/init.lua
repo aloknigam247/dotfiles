@@ -3555,8 +3555,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- BUG: ruff-lsp not working
-	-- last update ruff not present in lua= require("lspconfig.util").available_servers()
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
 		-- ╭────────────────────────╮
@@ -3607,7 +3605,35 @@ addPlugin {
 		-- 	}
 		-- )
 
+		popupMenuAdd({
+			cond = isLspAttached,
+			options = {
+				{ name = " Code Action", key = "<C-.>", exec = require('actions-preview').code_actions },
+				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
+				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
+				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
+				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
+				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
+				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
+				{ name = " References", key = "Shift F12", exec = vim.lsp.buf.references },
+				{ name = "󰏫 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
+				{ name = " Type Definition", key = "gt", exec = vim.lsp.buf.type_definition }
+			}
+		})
+
 		local mason_lspconfig = require("mason-lspconfig")
+		mason_lspconfig.setup()
+		local handlers = {
+			["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}),
+			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}), -- disable in favour of Noice
+		}
+
+		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+		capabilities.textDocument.foldingRange = {
+			dynamicRegistration = false,
+			lineFoldingOnly = true
+		}
+
 		local on_attach = function(_, bufnr)
 			-- enable inlay hints
 			vim.lsp.inlay_hint.enable(true)
@@ -3628,34 +3654,6 @@ addPlugin {
 			vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", bufopts)
 			vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
 		end
-
-		popupMenuAdd({
-			cond = isLspAttached,
-			options = {
-				{ name = " Code Action", key = "<C-.>", exec = require('actions-preview').code_actions },
-				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
-				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
-				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
-				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
-				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
-				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
-				{ name = " References", key = "Shift F12", exec = vim.lsp.buf.references },
-				{ name = "󰏫 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
-				{ name = " Type Definition", key = "gt", exec = vim.lsp.buf.type_definition }
-			}
-		})
-
-		mason_lspconfig.setup()
-		local handlers = {
-			["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}),
-			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}), -- disable in favour of Noice
-		}
-
-		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-		capabilities.textDocument.foldingRange = {
-			dynamicRegistration = false,
-			lineFoldingOnly = true
-		}
 
 		mason_lspconfig.setup_handlers {
 			function (server_name)
