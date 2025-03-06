@@ -138,12 +138,11 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function v    { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
 
 function e() {
+    $ext = ""
     $code_ext = @("cs", "ps1", "psm1")
 
-    if ($null -eq $args) {
-        $ext = ""
-    } else {
-        $ext = $args.split(".")[-1]
+    if ($null -eq $args.Count -gt 0) {
+        $ext = $args[0].split(".")[-1]
     }
 
     if ( $null -ne $env:SSH_CLIENT ) {

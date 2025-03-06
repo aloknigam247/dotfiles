@@ -2730,7 +2730,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- FEAT: work with manual folds
 	"kevinhwang91/nvim-ufo",
 	config = function()
 		vim.o.foldcolumn = "1"
@@ -5692,7 +5691,6 @@ ColoRand()
 -- <~>
 -- FIX: LSP errors
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
--- FEAT: https://github.com/SunnyTamang/select-undo.nvim
 -- FEAT: https://github.com/kevinhwang91/nvim-fundo
 -- FEAT: https://github.com/luiscassih/AniMotion.nvim
 -- FEAT: https://github.com/mistweaverco/zana-client
