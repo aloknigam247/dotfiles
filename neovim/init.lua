@@ -661,7 +661,7 @@ function GetFgOrFallback(hl_name, fallback)
 end
 
 ---Light or dark color
----@param col hex string Color to shade
+---@param col string hex Color to shade
 ---@param amt integer Amount of shade
 ---@return string # Color in hex format
 function LightenDarkenColor(col, amt)
@@ -3292,7 +3292,7 @@ addPlugin {
 			extend_relatedInformation = true,
 			jump_num_shortcut = false,
 			keys = {
-				exec_action = "o",
+				exec_action = "<CR>",
 				quit = "q",
 				go_action = "g"
 			},
@@ -3441,6 +3441,7 @@ addPlugin {
 	event = "LspAttach",
 	config = function()
 		vim.api.nvim_set_hl(0, "LightBulbVirtualText", { fg = "#EEE600" })
+		---@diagnostic disable-next-line: missing-fields
 		require("nvim-lightbulb").setup({
 			autocmd = { enabled = true },
 			action_kinds = {
@@ -3624,7 +3625,7 @@ addPlugin {
 		mason_lspconfig.setup()
 		local handlers = {
 			["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}),
-			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}), -- disable in favour of Noice
+			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}),
 		}
 
 		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -4016,6 +4017,7 @@ addPlugin {
 addPlugin {
 	"kevinhwang91/nvim-bqf",
 	config = function()
+		---@diagnostic disable-next-line: missing-fields
 		require("bqf").setup {
 			auto_resize_height = true,
 			func_map = {
@@ -4063,7 +4065,6 @@ end
 vim.api.nvim_create_user_command(
 	"Cdroot",
 	function(opts)
-		local opt = string.match(opts.args, "^(.*) \"")
 		local path = getRoot(opts.args:match("^(.*) \""))
 		if path then
 			if not _CWD then
@@ -4765,6 +4766,7 @@ addPlugin {
 	"nvim-neotest/neotest",
 	cmd = "Neotest",
 	config = function()
+		---@diagnostic disable-next-line: missing-fields
 		require("neotest").setup({
 			adapters = {
 				require("neotest-python")({
