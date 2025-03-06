@@ -1774,7 +1774,7 @@ addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"     
 -- addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                      }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                     }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                               }
--- addPlugin { "marko-cerovac/material.nvim",    event = "User material"                                     }
+addPlugin { "marko-cerovac/material.nvim",    event = "User material"                                     }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                       }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                     }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                     }
@@ -1810,8 +1810,8 @@ addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"     
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "material",             "_",                                                             }
-light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
+light { "material",             "_",                                                             }
+-- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
@@ -5693,9 +5693,7 @@ ColoRand()
 -- FIX: LSP errors
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/SunnyTamang/select-undo.nvim
--- FEAT: https://github.com/gbprod/substitute.nvim
 -- FEAT: https://github.com/kevinhwang91/nvim-fundo
--- FEAT: https://github.com/lafarr/hierarchy.nvim
 -- FEAT: https://github.com/luiscassih/AniMotion.nvim
 -- FEAT: https://github.com/mistweaverco/zana-client
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
