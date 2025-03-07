@@ -5705,7 +5705,6 @@ ColoRand()
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1hex7fz/easydotnetnvim_effortless_cf_development_in_neovim/
--- FEAT: https://www.youtube.com/watch?v=47UGK4NgvC8
 -- FEAT: https://www.youtube.com/watch?v=KpudmVmMWx4&t=722s
 
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2

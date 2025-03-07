@@ -138,21 +138,25 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function v    { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
 
 function e() {
-    $ext = ""
-    $code_ext = @("cs", "ps1", "psm1")
+    $code_patterns = @(".*\.cs", ".*\.ps1", ".*\.psm1", "CMakeLists.txt")
 
-    if ($null -eq $args.Count -gt 0) {
-        $ext = $args[0].split(".")[-1]
-    }
-
+    # use nvim for SSH
     if ( $null -ne $env:SSH_CLIENT ) {
         nvim @args
+        return
     }
-    elseif ( $ext -in $code_ext) {
-        code @args
-    } else {
-        v @args
+
+    # check for vscode
+    $first_arg = $args[0]
+    foreach ( $pattern in $code_patterns ) {
+        if ($first_arg -match $pattern) {
+            code @args
+            return
+        }
     }
+
+    # default is nvim GUI
+    v @args
 }
 
 function whatis($arg) {
