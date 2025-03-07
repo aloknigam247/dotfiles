@@ -1811,7 +1811,7 @@ addPlugin { "marko-cerovac/material.nvim",    event = "User material"           
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 light { "material",             "_",                                                             }
--- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
+light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
@@ -5522,6 +5522,13 @@ addPlugin {
 }
 
 -- https://github.com/kndndrj/nvim-dbee
+
+-- FEAT: configure
+addPlugin {
+	"luiscassih/AniMotion.nvim",
+	config = true
+}
+
 -- https://github.com/lewis6991/hover.nvim
 -- https://github.com/patrickpichler/hovercraft.nvim
 
@@ -5694,13 +5701,10 @@ ColoRand()
 -- FIX: LSP errors
 -- FEAT: https://github.com/OXY2DEV/patterns.nvim
 -- FEAT: https://github.com/kevinhwang91/nvim-fundo
--- FEAT: https://github.com/luiscassih/AniMotion.nvim
--- FEAT: https://github.com/mistweaverco/zana-client
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1hex7fz/easydotnetnvim_effortless_cf_development_in_neovim/
--- FEAT: https://www.reddit.com/r/neovim/comments/wq4jr4/inject_syntax_highlighting_from_a_different/
 -- FEAT: https://www.youtube.com/watch?v=47UGK4NgvC8
 -- FEAT: https://www.youtube.com/watch?v=KpudmVmMWx4&t=722s
 
