@@ -1999,7 +1999,7 @@ addPlugin {
 
 addPlugin {
 	-- "hrsh7th/cmp-cmdline",
-	"iguanacucumber/mag-cmdline", -- BUG: ghost text not working
+	"iguanacucumber/mag-cmdline",
 	name = "cmp-cmdline",
 	event = "CmdlineChanged"
 }
@@ -3209,16 +3209,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: Csharp lsp
--- FEAT: powershell lsp
-addPlugin {
-	"TheLeoP/powershell.nvim",
-	lazy = true,
-	opts = {
-		bundle_path = vim.fn.stdpath("data") .. "\\mason\\packages\\powershell-editor-services"
-	}
-}
-
 addPlugin {
 	-- "Wansmer/symbol-usage.nvim",
 	"VidocqH/lsp-lens.nvim",
@@ -5704,7 +5694,6 @@ ColoRand()
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
--- FEAT: https://www.reddit.com/r/neovim/comments/1hex7fz/easydotnetnvim_effortless_cf_development_in_neovim/
 -- FEAT: https://www.youtube.com/watch?v=KpudmVmMWx4&t=722s
 
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
