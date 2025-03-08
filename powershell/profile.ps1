@@ -4,6 +4,23 @@
 
 # Light theme
 $light_palette = @{
+    cmdline = @{
+        command = "#9183EC"
+        comment = "#989FCE"
+        defaultToken = "#495057"
+        emphasis = "#36A1AC"
+        keyword = "#6A994E"
+        listPrediction = "#DF6C75"
+        listPredictionSelected = "#E7ECEF"
+        number = "#F24333"
+        parameter = "#F42C04"
+        selection = "#95AFA4"
+        string = "#CA6702"
+        variable = "#f77f00"
+    }
+    fzf = @{
+        text_fg = $light_palette.cmdline.defaultToken
+    }
     prompt = @{
         dir_icon = @{
             bg = "#DDDDDD"
@@ -20,24 +37,25 @@ $light_palette = @{
             working = "#2B78CA"
         }
     }
-    cmdline = @{
-        command = "#9183EC"
-        comment = "#989FCE"
-        defaultToken = "#495057"
-        emphasis = "#36A1AC"
-        keyword = "#6A994E"
-        listPrediction = "#DF6C75"
-        listPredictionSelected = "#E7ECEF"
-        number = "#F24333"
-        parameter = "#F42C04"
-        selection = "#95AFA4"
-        string = "#CA6702"
-        variable = "#f77f00"
-    }
 }
 
 # Dark theme
 $dark_palette = @{
+    cmdline = @{
+       command = "#9183EC"
+       comment = "#989FCE"
+       emphasis = "#ECBA82"
+       keyword = "#F7F4F3"
+       listPrediction = "#C1D37F"
+       listPredictionSelected = "#3C6E71"
+       number = "#F24333"
+       parameter = "#F42C04"
+       selection = "#3C6E71"
+       string = "#E4FF1A"
+    }
+    fzf = @{
+        text_fg = "#FFFFFF"
+    }
     prompt = @{
         dir_icon = @{
             bg = "#736CED"
@@ -54,18 +72,6 @@ $dark_palette = @{
             working = "#2B78CA"
         }
     }
-   cmdline = @{
-       command = "#9183EC"
-       comment = "#989FCE"
-       emphasis = "#ECBA82"
-       keyword = "#F7F4F3"
-       listPrediction = "#C1D37F"
-       listPredictionSelected = "#3C6E71"
-       number = "#F24333"
-       parameter = "#F42C04"
-       selection = "#3C6E71"
-       string = "#E4FF1A"
-   }
 }
 
 # ╭─────────────────╮
@@ -388,12 +394,13 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 # https://minsw.github.io/fzf-color-picker/
-$env:FZF_DEFAULT_OPTS='
-    --height=~70% --layout=reverse --border=rounded --border-label=" FZF " --border-label-pos=5 --info=inline --prompt=" " --pointer="➤ " --preview="bat.exe --style=numbers {}" --preview-window="right,70%,border-rounded" --preview-label="(Preview)" --scheme=path --marker=""
-    --color=fg:#FFFFFF,bg:-1,hl:#71B7C2
+$env:FZF_DEFAULT_OPTS="
+    --height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=''
+        --color=fg:$($prompt.fzf.text_fg),bg:-1,hl:#71B7C2
     --color=fg+:#78C5FF,bg+:-1,hl+:#A7DAEB
     --color=info:#AFAF87,prompt:#57EDBB,pointer:#DB2929
-    --color=marker:#F0A1A1,spinner:#F2F759,header:#8CCDCF'
+    --color=marker:#F0A1A1,spinner:#F2F759,header:#8CCDCF
+"
 
 # ╭────────────────╮
 # │ Prompt Styling │
