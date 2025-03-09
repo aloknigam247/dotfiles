@@ -4951,6 +4951,17 @@ addPlugin {
 		-- 	group = autocmd_group,
 		-- 	callback = vim.schedule_wrap(diagnose),
 		-- })
+
+		-- add lua_patterns source
+		local parser_configs = require("nvim-treesitter.parsers").get_parser_configs();
+
+		parser_configs.lua_patterns = {
+			install_info = {
+				url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",
+				files = { "src/parser.c" },
+				branch = "main",
+			},
+		}
 	end,
 	dependencies = {{
 		"utilyre/sentiment.nvim",
@@ -5257,6 +5268,12 @@ addPlugin {
 addPlugin {
 	'MagicDuck/grug-far.nvim',
 	config = true
+}
+
+addPlugin {
+	"OXY2DEV/patterns.nvim",
+	cmd = "Patterns",
+	cofnig = true
 }
 
 addPlugin {
@@ -5689,11 +5706,9 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
 -- FIX: LSP errors
--- FEAT: https://github.com/OXY2DEV/patterns.nvim
--- FEAT: https://github.com/kevinhwang91/nvim-fundo
+
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
--- FEAT: https://www.youtube.com/watch?v=KpudmVmMWx4&t=722s
 
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
