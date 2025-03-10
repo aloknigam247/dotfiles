@@ -16,7 +16,8 @@
 [interactive]
     diffFilter = delta --color-only
 
-[delta] 
+; FIX: Color scheme for light and dark
+[delta]
     blame-code-style = "syntax #4A4A48"
     blame-palette = "#FFE8D1 #568EA3 #68C3D4 #FFFFFF"
     colorMoved = default

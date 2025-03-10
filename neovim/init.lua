@@ -5533,7 +5533,25 @@ addPlugin {
 -- FEAT: configure
 addPlugin {
 	"luiscassih/AniMotion.nvim",
-	config = true
+	config = function()
+		local utils = require("Animotion.Utils")
+		require("AniMotion").setup({
+			mode = "animotion", -- "nvim" or "helix"
+			word_keys = {
+				[utils.Targets.NextWordStart] = "w",
+				[utils.Targets.NextWordEnd] = "e",
+				[utils.Targets.PrevWordStart] = "b",
+				[utils.Targets.NextLongWordStart] = "W",
+				[utils.Targets.NextLongWordEnd] = "E",
+				[utils.Targets.PrevLongWordStart] = "B",
+			}, -- you can get the targets by local Utils = require("Animotion.Utils")
+			edit_keys = { "c", "d", "s", "r", "y" }, -- you can add "p" if you want.
+			clear_keys = { "<Esc>" }, -- used when you want to deselect/exit from SEL mode.
+			marks = {"y", "z"}, -- Is a mark used internally in this plugin, when we do a visual select when changing or deleting the highlighted word.
+			map_visual = true, -- When true, we capture "v" and pressing it will enter visual mode with the plugin selection as part of the visual selection. When false, pressing "v" will exit SEL mode and the selection will be lost. You want to set to false if you have trouble with other mappings associated to "v". I recommend to try in true first.
+			color = { bg = "#673AB7" } -- put color = "Visual" to use the default visual mode color. You can also customize via vim.api.nvim_set_hl(0, "@AniMotion", hl_color)
+		})
+	end
 }
 
 -- https://github.com/lewis6991/hover.nvim

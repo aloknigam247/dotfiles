@@ -61,6 +61,7 @@ syntax off
 " {{{
 let g:netrw_banner = 0       " Turn off banner in netrw
 let g:vimsyn_embed = 'lpr'   " Embedded script highlight
+set background=light         " Default background
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
