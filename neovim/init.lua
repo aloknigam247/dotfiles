@@ -3812,6 +3812,7 @@ addPlugin {
 	ft = "help"
 }
 
+-- FEAT: add support to auto add > for qoutes on <S-CR>
 addPlugin {
 	"gaoDean/autolist.nvim",
 	event = "CursorHold *.md",
