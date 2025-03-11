@@ -1190,7 +1190,9 @@ vim.keymap.set("n", "!!",          ":<Up><CR>",                { desc = "Run las
 vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",               { desc = "Close window" })
 vim.keymap.set("n", "<C-s>",       "<cmd>w<CR>",               { desc = "Save file" })
 -- paste
-vim.keymap.set("v", "p",           '"_dP',                     { desc = "Search in select region" })
+vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" })
+vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
+vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
 -- search
 vim.keymap.set("x", "/",           "<Esc>/\\%V",               { desc = "Search in select region" })
 -- window controls
@@ -1460,11 +1462,12 @@ addPlugin {
 	}
 }
 
+-- FEAT: create right click menu for highlighter
 -- "azabiong/vim-highlighter"
 addPlugin {
 	"Pocco81/high-str.nvim",
 	keys = {
-		{ "<Leader>l", "<Cmd>HSHighlight<CR>", mode = "x", desc = "add highlight" },
+		{ "<Leader>l", "<Cmd>HSHighlight<CR>", mode = "x", desc = "add highlight" },
 		{ "<Leader>L", "<Cmd>HSRmHighlight<CR>", mode = "n", desc = "remove highlight" },
 	}
 }
@@ -3873,6 +3876,7 @@ addPlugin {
 -- | ma             | set mark a at current cursor location                         |
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
+-- FEAT: https://github.com/LintaoAmons/bookmarks.nvim
 addPlugin {
 	"MattesGroeger/vim-bookmarks",
 	config = function()
@@ -5607,14 +5611,15 @@ addPlugin {
 	cmd = { "Diffthis", "VDiffthis"}
 }
 
-addPlugin {
-	"sickill/vim-pasta",
-	config = function()
-		vim.g.pasta_paste_before_mapping = "[p"
-		vim.g.pasta_paste_after_mapping = "]p"
-	end,
-	keys = { "[p", "]p" }
-}
+-- BUG: remove me
+-- addPlugin {
+-- 	"sickill/vim-pasta",
+-- 	config = function()
+-- 		vim.g.pasta_paste_before_mapping = "[p"
+-- 		vim.g.pasta_paste_after_mapping = "]p"
+-- 	end,
+-- 	keys = { "[p", "]p" }
+-- }
 
 addPlugin {
 	"shortcuts/no-neck-pain.nvim",
@@ -5726,7 +5731,6 @@ ColoRand()
 -- FIX: LSP errors
 
 -- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
--- FEAT: https://www.reddit.com/r/neovim/comments/1dou534/powershell_in_neovim_2024/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
 
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
