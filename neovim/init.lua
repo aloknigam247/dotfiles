@@ -1770,7 +1770,7 @@ addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"     
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
--- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
+addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                           }
@@ -1812,8 +1812,8 @@ addPlugin { "marko-cerovac/material.nvim",    event = "User material"           
 -- light { "ayu-light",             "ayu",                                                          }
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
--- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
-light { "material",             "_",                                                             }
+light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+-- light { "material",             "_",                                                             }
 light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }

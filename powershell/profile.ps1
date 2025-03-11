@@ -12,14 +12,11 @@ $light_palette = @{
         keyword = "#6A994E"
         listPrediction = "#DF6C75"
         listPredictionSelected = "#E7ECEF"
-        number = "#F24333"
+        number = "#78C5FF"
         parameter = "#F42C04"
         selection = "#95AFA4"
         string = "#CA6702"
         variable = "#f77f00"
-    }
-    fzf = @{
-        text_fg = $light_palette.cmdline.defaultToken
     }
     prompt = @{
         dir_icon = @{
@@ -53,9 +50,6 @@ $dark_palette = @{
        selection = "#3C6E71"
        string = "#E4FF1A"
     }
-    fzf = @{
-        text_fg = "#FFFFFF"
-    }
     prompt = @{
         dir_icon = @{
             bg = "#736CED"
@@ -86,6 +80,16 @@ if ($theme -eq "Light") {
     $palette = $dark_palette
     $bat_theme = "Visual Studio Dark+"
 }
+
+$palette.fzf = @{
+    header = $palette.cmdline.header
+    info = $palette.cmdline.comment
+    marker = $palette.cmdline.emphasis
+    pointer = $palette.cmdline.parameter
+    prompt = $palette.cmdline.command
+    text_fg = $palette.cmdline.defaultToken
+}
+
 
 # ╭─────────────╮
 # │ Auto Update │
@@ -397,10 +401,10 @@ Set-PsFzfOption -TabExpansion
 # https://minsw.github.io/fzf-color-picker/
 $env:FZF_DEFAULT_OPTS="
     --height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=''
-        --color=fg:$($prompt.fzf.text_fg),bg:-1,hl:#71B7C2
-    --color=fg+:#78C5FF,bg+:-1,hl+:#A7DAEB
-    --color=info:#AFAF87,prompt:#57EDBB,pointer:#DB2929
-    --color=marker:#F0A1A1,spinner:#F2F759,header:#8CCDCF
+    --color=fg:$($palette.fzf.text_fg),bg:-1,hl:#71B7C2
+    --color=fg+:$($palette.fzf.pointer),bg+:-1,hl+:#A7DAEB
+    --color=info:$($palette.fzf.info),prompt:$($palette.fzf.prompt),pointer:$($palette.fzf.pointer)
+    --color=marker:$($palette.fzf.marker),spinner:#F2F759,header:$($palette.fzf.header)
 "
 
 # ╭────────────────╮
