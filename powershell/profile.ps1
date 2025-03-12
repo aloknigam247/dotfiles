@@ -193,6 +193,7 @@ function whatis($arg) {
 
 # ─[ Path functions ]──────────────────────────────────────────────────
 function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
+function docs { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work" | Set-Location }
 
 # ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Alias -Force gc
@@ -574,6 +575,7 @@ function prompt {
     promptGen $separator $segments
 }
 
+# FIX: type color
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
     "Command" = (Format-Text -headOnly -fg $palette.cmdline.command -styles "bold");
