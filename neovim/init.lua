@@ -2369,6 +2369,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
+-- FEAT: Configure and increase preview window size
 addPlugin {
 	"b0o/nvim-tree-preview.lua"
 }
