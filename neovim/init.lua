@@ -2883,12 +2883,20 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: code formatting
--- addPlugin {
---     "sbdchd/neoformat",
---     cmd = "Neoformat"
--- }
--- https://github.com/stevearc/conform.nvim
+-- addPlugin { "sbdchd/neoformat", cmd = "Neoformat" }
+
+-- TODO: configure
+-- TODO: try with python
+-- TODO: try with cpp
+-- TODO: try with lua
+-- TODO: try with markdown
+-- TODO: try with json
+-- TODO: try with xml
+-- TODO: try with yaml
+addPlugin {
+	"stevearc/conform.nvim",
+	opts = {}
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ╭─────────────────────────────╮
