@@ -3473,7 +3473,7 @@ addPlugin {
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/Zeioth/none-ls-external-sources.nvim
 -- https://github.com/Zeioth/none-ls-autoload.nvim
--- https://github.com/p00f/clangd_extensions.nvim
+-- https://github.com/p00f/clangd_extensions.nvim -- FEAT: configure
 -- https://github.com/netmute/ctags-lsp
 
 -- https://github.com/sontungexpt/better-diagnostic-virtual-text
@@ -3886,7 +3886,7 @@ addPlugin {
 -- | ma             | set mark a at current cursor location                         |
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
--- FEAT: https://github.com/LintaoAmons/bookmarks.nvim
+-- https://github.com/LintaoAmons/bookmarks.nvim
 addPlugin {
 	"MattesGroeger/vim-bookmarks",
 	config = function()
@@ -5542,6 +5542,7 @@ addPlugin {
 	}
 }
 
+-- https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- https://github.com/kndndrj/nvim-dbee
 
 -- FEAT: configure
@@ -5740,7 +5741,6 @@ ColoRand()
 -- <~>
 -- FIX: LSP errors
 
--- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
 
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2

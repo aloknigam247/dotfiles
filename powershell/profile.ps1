@@ -16,6 +16,7 @@ $light_palette = @{
         parameter = "#F42C04"
         selection = "#95AFA4"
         string = "#CA6702"
+        type = "#2B78CA"
         variable = "#f77f00"
     }
     prompt = @{
@@ -575,7 +576,6 @@ function prompt {
     promptGen $separator $segments
 }
 
-# FIX: type color
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
     "Command" = (Format-Text -headOnly -fg $palette.cmdline.command -styles "bold");
@@ -591,6 +591,7 @@ Set-PSReadLineOption -Colors @{
     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
     "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
+    "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
 
