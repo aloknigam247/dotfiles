@@ -3490,8 +3490,12 @@ addPlugin {
 -- https://github.com/nvimtools/none-ls.nvim
 -- https://github.com/Zeioth/none-ls-external-sources.nvim
 -- https://github.com/Zeioth/none-ls-autoload.nvim
--- https://github.com/p00f/clangd_extensions.nvim -- FEAT: configure
 -- https://github.com/netmute/ctags-lsp
+
+addPlugin {
+	"p00f/clangd_extensions.nvim",
+	event = "LspAttach *.cpp"
+}
 
 -- https://github.com/sontungexpt/better-diagnostic-virtual-text
 addPlugin {
@@ -4226,7 +4230,7 @@ addPlugin {
 						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
 						labels,
 						isLspAttached(props.buf) and { " " .. icons.lsp, guifg = "#EAC435" } or "",
-						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or "" -- FEAT: can the color be same as severity
+						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
 					}
 				end
 				return nil
