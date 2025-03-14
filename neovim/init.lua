@@ -1767,9 +1767,9 @@ local function lightT(opts)
 end
 
 addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
--- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
--- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
--- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
+addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
+addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
+addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
 addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
@@ -1809,11 +1809,11 @@ addPlugin { "marko-cerovac/material.nvim",    event = "User material"           
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
--- light { "ayu-light",             "ayu",                                                          }
--- light { "bluloco",              "_"                                                              }
--- light { "catppuccin-latte",     "catppuccin"                                                     }
+light { "ayu-light",             "ayu",                                                          }
+light { "bluloco",              "_"                                                              }
+light { "catppuccin-latte",     "catppuccin"                                                     }
 light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "material",             "_",                                                             }
+light { "material",             "_",                                                             }
 light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
@@ -2885,17 +2885,34 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { "sbdchd/neoformat", cmd = "Neoformat" }
 
--- TODO: configure
--- TODO: try with python
 -- TODO: try with cpp
+-- TODO: try with json
 -- TODO: try with lua
 -- TODO: try with markdown
--- TODO: try with json
+-- TODO: try with python
 -- TODO: try with xml
 -- TODO: try with yaml
 addPlugin {
 	"stevearc/conform.nvim",
-	opts = {}
+	cmd = "Format",
+	init = function()
+		vim.api.nvim_create_user_command("Format", function(args)
+			local range = nil
+			if args.count ~= -1 then
+				local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+				range = {
+					start = { args.line1, 0 },
+					["end"] = { args.line2, end_line:len() },
+				}
+			end
+			require("conform").format({ async = true, lsp_format = "fallback", range = range })
+		end, { range = true })
+	end,
+	opts = {
+		format_after_save = nil,
+		formatters_by_ft = {
+		}
+	}
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4346,12 +4363,12 @@ addPlugin {
 					padding = { left = 0, right = 1 },
 					separator = ""
 				},
-				-- {
-				-- 	function() return vim.g.ColoRand end,
-				-- 	color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-				-- 	icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
-				-- 	padding = { left = 0, right = 1 }
-				-- },
+				{
+					function() return vim.g.ColoRand end,
+					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
+					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
+					padding = { left = 0, right = 1 }
+				},
 				{
 					"diagnostics",
 					on_click = function()
@@ -5621,16 +5638,6 @@ addPlugin {
 	"rickhowe/spotdiff.vim",
 	cmd = { "Diffthis", "VDiffthis"}
 }
-
--- BUG: remove me
--- addPlugin {
--- 	"sickill/vim-pasta",
--- 	config = function()
--- 		vim.g.pasta_paste_before_mapping = "[p"
--- 		vim.g.pasta_paste_after_mapping = "]p"
--- 	end,
--- 	keys = { "[p", "]p" }
--- }
 
 addPlugin {
 	"shortcuts/no-neck-pain.nvim",
