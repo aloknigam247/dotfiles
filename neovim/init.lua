@@ -5748,6 +5748,4 @@ ColoRand()
 -- <~>
 -- FIX: LSP errors
 
--- FEAT: https://www.reddit.com/r/neovim/comments/1fejs17/13_neovim_tips_and_life_hacks_that_significantly/
-
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
