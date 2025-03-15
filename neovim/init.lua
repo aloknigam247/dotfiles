@@ -1027,23 +1027,24 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
-vim.api.nvim_create_autocmd(
-	"BufWinEnter", {
-		pattern = "*",
-		desc = "Overlength line marker",
-		callback = function()
-			if not isLargeFile() and vim.bo.textwidth > 0 then
-				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
-					local line_length = #line
-					if line_length > 300 then
-						return
-					end
-				end
-				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
-			end
-		end
-	}
-)
+-- FIX: enable for specific filetypes
+-- vim.api.nvim_create_autocmd(
+-- 	"BufWinEnter", {
+-- 		pattern = "*",
+-- 		desc = "Overlength line marker",
+-- 		callback = function()
+-- 			if not isLargeFile() and vim.bo.textwidth > 0 then
+-- 				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
+-- 					local line_length = #line
+-- 					if line_length > 300 then
+-- 						return
+-- 					end
+-- 				end
+-- 				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
+-- 			end
+-- 		end
+-- 	}
+-- )
 
 vim.api.nvim_create_autocmd(
 	"BufWinEnter", {
@@ -2883,18 +2884,14 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin { "sbdchd/neoformat", cmd = "Neoformat" }
-
 -- TODO: try with cpp
 -- TODO: try with json
 -- TODO: try with lua
 -- TODO: try with markdown
--- TODO: try with python
 -- TODO: try with xml
 -- TODO: try with yaml
 addPlugin {
 	"stevearc/conform.nvim",
-	cmd = "Format",
 	init = function()
 		vim.api.nvim_create_user_command("Format", function(args)
 			local range = nil
@@ -2905,12 +2902,13 @@ addPlugin {
 					["end"] = { args.line2, end_line:len() },
 				}
 			end
-			require("conform").format({ async = true, lsp_format = "fallback", range = range })
+			require("conform").format({ async = true, range = range })
 		end, { range = true })
 	end,
 	opts = {
 		format_after_save = nil,
 		formatters_by_ft = {
+			python = { "ruff_format", "ruff_organize_imports" }
 		}
 	}
 }
