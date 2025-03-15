@@ -2889,7 +2889,6 @@ addPlugin {
 -- TODO: try with lua
 -- TODO: try with markdown
 -- TODO: try with xml
--- TODO: try with yaml
 addPlugin {
 	"stevearc/conform.nvim",
 	init = function()
@@ -2908,7 +2907,8 @@ addPlugin {
 	opts = {
 		format_after_save = nil,
 		formatters_by_ft = {
-			python = { "ruff_format", "ruff_organize_imports" }
+			python = { "ruff_format", "ruff_organize_imports" },
+			yaml = { "prettier" }
 		}
 	}
 }
@@ -3566,11 +3566,17 @@ addPlugin {
 addPlugin {
 	"williamboman/mason.nvim",
 	cmd = "Mason",
+	init = function()
+		local path_sep = vim.fn.has("win64") and ";" or ":"
+		vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin") .. path_sep .. vim.env.PATH
+	end,
 	opts = {
+		install_root_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "mason"),
+		PATH = "skip",
 		ui = {
 			border = "rounded",
 			height = 0.8,
-			width = 0.8,
+			width = 0.6,
 		}
 	}
 }
