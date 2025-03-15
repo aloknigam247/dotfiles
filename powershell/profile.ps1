@@ -19,6 +19,16 @@ $light_palette = @{
         type = "#2B78CA"
         variable = "#f77f00"
     }
+    git = @{
+        commit = "#04A5E5"
+        commit_icon = "#1E66F5"
+        contact_bracket = "#DC8A78"
+        head = "#FE640B"
+        message = "#40A02B"
+        timestamp = "#179299"
+        user_email = "#DD7878"
+        user_name = "#D20F39"
+    }
     prompt = @{
         dir_icon = @{
             bg = "#DDDDDD"
@@ -216,8 +226,7 @@ function gc {
 
 Remove-Alias -Force gl
 function gl {
-    # FEAT: dark and light themes
-    git log --color=always --pretty="%C(#B4AD2D) %C(#DBD56E)%h %Creset- %C(#88AB75) %s %C(#216E82)󰔟 %ar on %ah %C(#7D7C84)<%C(#ACABB0)%an %C(#7D7C84) %ae>%C(#DE8F6E)%d" $args
+    git log --color=always --pretty="%C($($palette.git.commit_icon)) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message)) %s %C($($palette.git.timestamp))󰔟 %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email)) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }
 
 function gs {
