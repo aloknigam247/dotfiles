@@ -482,6 +482,14 @@ local lazy_config = {
 	},
 }
 
+---@type string[] List of filetypes to enable Overlength marker
+local overlength_filetypes = {
+	"cpp",
+	"lua",
+	"markdown",
+	"python"
+}
+
 ---@class Plugin
 ---@type Plugin[] List of plugins
 local plugins = {}
@@ -1027,24 +1035,23 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
--- FIX: enable for specific filetypes
--- vim.api.nvim_create_autocmd(
--- 	"BufWinEnter", {
--- 		pattern = "*",
--- 		desc = "Overlength line marker",
--- 		callback = function()
--- 			if not isLargeFile() and vim.bo.textwidth > 0 then
--- 				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
--- 					local line_length = #line
--- 					if line_length > 300 then
--- 						return
--- 					end
--- 				end
--- 				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
--- 			end
--- 		end
--- 	}
--- )
+vim.api.nvim_create_autocmd(
+	"BufWinEnter", {
+		pattern = "*",
+		desc = "Overlength line marker",
+		callback = function()
+			if vim.tbl_contains(overlength_filetypes, vim.bo.filetype) and not isLargeFile() and vim.bo.textwidth > 0 then
+				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
+					local line_length = #line
+					if line_length > 300 then
+						return
+					end
+				end
+				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
+			end
+		end
+	}
+)
 
 vim.api.nvim_create_autocmd(
 	"BufWinEnter", {
@@ -2372,7 +2379,11 @@ addPlugin {
 -- https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: Configure and increase preview window size
 addPlugin {
-	"b0o/nvim-tree-preview.lua"
+	"b0o/nvim-tree-preview.lua",
+	opts = {
+		max_height = 100,
+		max_width = 100,
+	}
 }
 
 addPlugin {
@@ -2698,7 +2709,6 @@ FileTypeActions = {
 		vim.cmd("setlocal statuscolumn=")
 	end,
 	["csv"] = function(_)
-		vim.cmd("setlocal textwidth=0")
 		vim.cmd("setlocal cursorlineopt=both")
 	end,
 	["neotest-summary"] = function(_)

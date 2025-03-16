@@ -1,3 +1,4 @@
 CompileFlags:
-  Add: [ "-target", "x86_64-pc-windows-gnu" , "-std=c++20" ]
-
+  Add:
+    - -target
+    - x86_64-pc-windows-gnu
