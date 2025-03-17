@@ -87,9 +87,11 @@ $theme = "Light"
 if ($theme -eq "Light") {
     $palette = $light_palette
     $bat_theme = "OneHalfLight"
+    $lazygit_theme = "light.yml"
 } else {
     $palette = $dark_palette
     $bat_theme = "Visual Studio Dark+"
+    $lazygit_theme = "dark.yml"
 }
 
 $palette.fzf = @{
@@ -143,9 +145,9 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
 New-Alias -Name "/" -Value C:\Users\aloknigam\scoop\shims\rg.exe
 New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 
-# ╭───────────╮
-# │ Functions │
-# ╰───────────╯
+# ╭───────────────────╮
+# │ Generic Functions │
+# ╰───────────────────╯
 Remove-Alias ls
 Remove-Alias rm
 # FIX: bat theme https://github.com/catppuccin/bat
@@ -158,6 +160,7 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function v    { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
+function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\$($lazygit_theme)" }
 
 function e() {
     $code_patterns = @(".*\.cs", ".*\.ps1", ".*\.psm1", "CMakeLists.txt")
@@ -181,6 +184,7 @@ function e() {
     v @args
 }
 
+# FIX: light and dark colors
 function whatis($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
