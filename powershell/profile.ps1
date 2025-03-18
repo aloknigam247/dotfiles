@@ -402,7 +402,8 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # │ FZF Setup │
 # ╰───────────╯
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
-# FEAT: light and dark colorscheme
+# FEAT: ripgrep integration https://junegunn.github.io/fzf/tips/ripgrep-integration/#the-two-pillars-of-fzf
+# FEAT: ghost = TEXT option
 Import-Module PSFzf
 
 Set-PsFzfOption `
