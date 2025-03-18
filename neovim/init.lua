@@ -1968,11 +1968,12 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- * cmdline
--- ** keymaps
+-- ** path issue
 -- ** auto menu on /
 -- ** icons
 -- ** color menu like cmp
--- * buffer
+-- ** enable for /, ?
+-- * buffer completion
 -- * use all sources from nvim-cmp
 -- * signatures help
 addPlugin {
@@ -1982,12 +1983,14 @@ addPlugin {
 	opts = {
 		cmdline = {
 			completion = {
+				list = {
+					selection = {
+						preselect = false
+					}
+				},
 				menu = {
-					auto_show = true,
+					auto_show = function(ctx) return vim.fn.getcmdtype() == ':' end,
 				}
-			},
-			keymap = {
-				-- ["<TAB>"] = { "select_and_accept" }
 			}
 		},
 		completion = {
@@ -2052,10 +2055,10 @@ addPlugin {
 			-- 		}
 			-- 	}
 			-- }),
-			-- cmp.setup.cmdline({ "/", "?" }, {
-			-- 	mapping = cmp.mapping.preset.cmdline(),
-			-- 	sources = { { name = "buffer" } }
-			-- }),
+			cmp.setup.cmdline({ "/", "?" }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = { { name = "buffer" } }
+			}),
 			autocomplete = false,
 			completion = {
 				-- completeopt = "menu,menuone,noselect",
@@ -2377,12 +2380,11 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/nat-418/scamp.nvim
 -- https://github.com/nosduco/remote-sshfs.nvim
--- FEAT: Configure and increase preview window size
 addPlugin {
 	"b0o/nvim-tree-preview.lua",
 	opts = {
-		max_height = 100,
-		max_width = 100,
+		max_height = 500,
+		max_width = 500,
 	}
 }
 
@@ -3506,6 +3508,7 @@ addPlugin {
 }
 
 -- https://github.com/sontungexpt/better-diagnostic-virtual-text
+-- FIX: highlight
 addPlugin {
 	"rachartier/tiny-inline-diagnostic.nvim",
 	config = function()
