@@ -40,7 +40,7 @@
     "autoHideWindow": false,
     "copyFormatting": "rtf",
     "copyOnSelect": true,
-    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "defaultProfile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
     "keybindings": 
     [
         {
@@ -157,11 +157,11 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
+                "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe",
                 "colorScheme": "PowerShell 7 Light",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
-                "name": "PowerShell 7 Preview",
-                "source": "Windows.Terminal.PowershellCore"
+                "name": "PowerShell 7 Preview"
             }
         ]
     },
