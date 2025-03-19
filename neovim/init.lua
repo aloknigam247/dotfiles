@@ -3767,6 +3767,7 @@ addPlugin {
 			border_virtual = false,
 			border_prefix = false,
 		},
+		-- FIX: do not hide lines in code block
 		code = {
 			enabled = true,
 			sign = false,
