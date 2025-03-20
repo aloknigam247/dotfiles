@@ -2896,7 +2896,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: try with lua
 -- TODO: try with cpp
 -- TODO: try with json
 -- TODO: try with markdown
