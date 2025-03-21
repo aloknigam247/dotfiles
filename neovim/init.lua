@@ -2895,8 +2895,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: try with cpp
--- TODO: try with markdown
--- TODO: try with xml
 addPlugin {
 	"stevearc/conform.nvim",
 	init = function()
@@ -2925,8 +2923,10 @@ addPlugin {
 		format_after_save = nil,
 		formatters_by_ft = {
 			json = { "prettier" },
+			markdown = { "prettier" },
 			python = { "ruff_format", "ruff_organize_imports" },
-			yaml = { "prettier" }
+			yaml = { "prettier" },
+			xml = { "prettier" }
 		}
 	}
 }
