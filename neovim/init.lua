@@ -1968,8 +1968,6 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- * cmdline
--- ** path issue
--- ** auto menu on /
 -- ** icons
 -- ** color menu like cmp
 -- ** enable for /, ?
