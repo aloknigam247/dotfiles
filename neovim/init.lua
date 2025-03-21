@@ -2897,7 +2897,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: try with cpp
--- TODO: try with json
 -- TODO: try with markdown
 -- TODO: try with xml
 addPlugin {
@@ -2905,6 +2904,7 @@ addPlugin {
 	init = function()
 		vim.api.nvim_create_user_command("Format", function(args)
 			local range = nil
+			local filename = vim.fn.expand("%:t")
 			if args.count ~= -1 then
 				local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
 				range = {
@@ -2912,12 +2912,21 @@ addPlugin {
 					["end"] = { args.line2, end_line:len() },
 				}
 			end
-			require("conform").format({ async = true, range = range })
+			vim.notify("Formatting " .. filename, vim.log.levels.INFO)
+			vim.g.formatting = " " .. filename
+			require("conform").format(
+				{ async = true, range = range },
+				function()
+					vim.notify("Completed " .. filename, vim.log.levels.INFO)
+					vim.g.formatting = nil
+				end
+			)
 		end, { range = true })
 	end,
 	opts = {
 		format_after_save = nil,
 		formatters_by_ft = {
+			json = { "prettier" },
 			python = { "ruff_format", "ruff_organize_imports" },
 			yaml = { "prettier" }
 		}
@@ -4337,6 +4346,12 @@ addPlugin {
 			},
 			lualine_x = {
 				{
+					function() return vim.g.formatting or "" end,
+					color = "Boolean",
+					padding = { left = 0, right = 1 },
+					separator = ""
+				},
+				{
 					"searchcount",
 					color = { fg = "#23CE6B", gui = "bold" },
 					fmt = function(str)
@@ -4356,7 +4371,7 @@ addPlugin {
 				{
 					"selectioncount",
 					color = { fg = "#BA2C73" },
-					icon = { "󰗈", color = { fg = "#963484" }},
+					icon = { "󰴑", color = { fg = "#963484" }},
 					padding = { left = 0, right = 1 },
 					separator = ""
 				},
