@@ -3718,119 +3718,119 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- "OXY2DEV/markview.nvim"
-addPlugin {
-	"MeanderingProgrammer/render-markdown.nvim",
-	ft = "markdown",
-	opts = {
-		latex = {
-			enabled = false,
-		},
-		anti_conceal = {
-			enabled = false
-		},
-		heading = {
-			enabled = true,
-			sign = false,
-			position = "inlay",
-			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
-			icons = { "󰫎 " },
-			signs = { "󰫎 " },
-			width = { "block", "block", "block"},
-			left_margin = 0,
-			left_pad = 0,
-			right_pad = 2,
-			min_width = 0,
-			border = false,
-			border_virtual = false,
-			border_prefix = false,
-		},
-		-- FIX: do not hide lines in code block
-		code = {
-			enabled = true,
-			sign = false,
-			style = "full",
-			position = "left",
-			language_pad = 0,
-			disable_background = { "" },
-			width = "block",
-			left_margin = 0,
-			left_pad = 0,
-			right_pad = 1,
-			min_width = 10,
-			border = "thin",
-			language_name = true,
-			inline_pad = 1
-		},
-		bullet = {
-			enabled = true,
-			icons = { "●", "○", "◆", "◇" },
-		},
-		checkbox = {
-			enabled = true,
-			position = "overlay",
-			unchecked = {
-				icon = " ",
-			},
-			checked = {
-				icon = " ",
-			},
-			custom = {}
-		},
-		quote = {
-			enabled = true,
-			icon = "▍",
-			repeat_linebreak = true,
-		},
-		pipe_table = {
-			enabled = true,
-			border = {
-				"┌", "┬", "┐",
-				"├", "┼", "┤",
-				"└", "┴", "┘",
-				"│", "━",
-			},
-			preset = "round",
-			style = "normal",
-			cell = "trimmed",
-			min_width = 0,
-			alignment_indicator = "•",
-		},
-		callout = {
-			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
-			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
-			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
-			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
-			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
-		},
-		link = {
-			enabled = true,
-			image = "󰥶 ",
-			email = "󰀓 ",
-			hyperlink = "󰌹 ",
-			custom = {
-				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
-				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
-				discord = { pattern = "discord%.com", icon = "󰙯 " },
-				github = { pattern = "github%.com", icon = "󰊤 " },
-				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
-				neovim = { pattern = "neovim%.io", icon = " " },
-				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
-				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
-				web = { pattern = "^http[s]?://", icon = "󰖟 " },
-				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
-			},
-		},
-		sign = {
-			enabled = false,
-		},
-		win_options = {
-			concealcursor = {
-				default = vim.api.nvim_get_option_value("concealcursor", {}),
-				rendered = vim.api.nvim_get_option_value("concealcursor", {})
-			}
-		}
-	}
-}
+-- addPlugin {
+-- 	"MeanderingProgrammer/render-markdown.nvim",
+-- 	ft = "markdown",
+-- 	opts = {
+-- 		latex = {
+-- 			enabled = false,
+-- 		},
+-- 		anti_conceal = {
+-- 			enabled = false
+-- 		},
+-- 		heading = {
+-- 			enabled = true,
+-- 			sign = false,
+-- 			position = "inlay",
+-- 			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+-- 			icons = { "󰫎 " },
+-- 			signs = { "󰫎 " },
+-- 			width = { "block", "block", "block"},
+-- 			left_margin = 0,
+-- 			left_pad = 0,
+-- 			right_pad = 2,
+-- 			min_width = 0,
+-- 			border = false,
+-- 			border_virtual = false,
+-- 			border_prefix = false,
+-- 		},
+-- 		-- FIX: do not hide lines in code block
+-- 		code = {
+-- 			enabled = false,
+-- 			sign = false,
+-- 			style = "full",
+-- 			position = "left",
+-- 			language_pad = 0,
+-- 			disable_background = { "" },
+-- 			width = "full",
+-- 			left_margin = 0,
+-- 			left_pad = 0,
+-- 			right_pad = 1,
+-- 			min_width = 10,
+-- 			border = "thick",
+-- 			language_name = true,
+-- 			inline_pad = 1
+-- 		},
+-- 		bullet = {
+-- 			enabled = true,
+-- 			icons = { "●", "○", "◆", "◇" },
+-- 		},
+-- 		checkbox = {
+-- 			enabled = true,
+-- 			position = "overlay",
+-- 			unchecked = {
+-- 				icon = " ",
+-- 			},
+-- 			checked = {
+-- 				icon = " ",
+-- 			},
+-- 			custom = {}
+-- 		},
+-- 		quote = {
+-- 			enabled = true,
+-- 			icon = "▍",
+-- 			repeat_linebreak = true,
+-- 		},
+-- 		pipe_table = {
+-- 			enabled = true,
+-- 			border = {
+-- 				"┌", "┬", "┐",
+-- 				"├", "┼", "┤",
+-- 				"└", "┴", "┘",
+-- 				"│", "─",
+-- 			},
+-- 			preset = "round",
+-- 			style = "normal",
+-- 			cell = "trimmed",
+-- 			min_width = 0,
+-- 			alignment_indicator = "•",
+-- 		},
+-- 		callout = {
+-- 			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+-- 			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+-- 			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+-- 			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+-- 			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
+-- 		},
+-- 		link = {
+-- 			enabled = true,
+-- 			image = "󰥶 ",
+-- 			email = "󰀓 ",
+-- 			hyperlink = "󰌹 ",
+-- 			custom = {
+-- 				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
+-- 				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
+-- 				discord = { pattern = "discord%.com", icon = "󰙯 " },
+-- 				github = { pattern = "github%.com", icon = "󰊤 " },
+-- 				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
+-- 				neovim = { pattern = "neovim%.io", icon = " " },
+-- 				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
+-- 				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
+-- 				web = { pattern = "^http[s]?://", icon = "󰖟 " },
+-- 				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
+-- 			},
+-- 		},
+-- 		sign = {
+-- 			enabled = false,
+-- 		},
+-- 		win_options = {
+-- 			concealcursor = {
+-- 				default = vim.api.nvim_get_option_value("concealcursor", {}),
+-- 				rendered = vim.api.nvim_get_option_value("concealcursor", {})
+-- 			}
+-- 		}
+-- 	}
+-- }
 
 addPlugin {
 	"OXY2DEV/helpview.nvim",
