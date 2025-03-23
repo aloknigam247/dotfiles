@@ -1774,11 +1774,11 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
-addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
-addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
-addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
+-- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                               }
+-- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                          }
+-- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco",   dependencies = "rktjmp/lush.nvim" }
+-- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                   }
+-- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                   }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                                 }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                       }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                           }
@@ -1821,8 +1821,8 @@ addPlugin { "marko-cerovac/material.nvim",    event = "User material"           
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "material",             "_",                                                             }
-light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
+light { "material",             "_",                                                             }
+-- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
@@ -5484,28 +5484,28 @@ addPlugin {
 -- https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
 -- https://github.com/kndndrj/nvim-dbee
 
--- FEAT: configure
 addPlugin {
 	"luiscassih/AniMotion.nvim",
 	config = function()
-		local utils = require("Animotion.Utils")
+		local utils = require("AniMotion.Utils")
 		require("AniMotion").setup({
-			mode = "animotion", -- "nvim" or "helix"
+			mode = "animotion",
 			word_keys = {
-				[utils.Targets.NextWordStart] = "w",
+				[utils.Targets.NextWordStart] = "<C-Right>",
 				[utils.Targets.NextWordEnd] = "e",
-				[utils.Targets.PrevWordStart] = "b",
-				[utils.Targets.NextLongWordStart] = "W",
+				[utils.Targets.PrevWordStart] = "<C-Left>",
+				[utils.Targets.NextLongWordStart] = "<S-Right>",
 				[utils.Targets.NextLongWordEnd] = "E",
-				[utils.Targets.PrevLongWordStart] = "B",
-			}, -- you can get the targets by local Utils = require("Animotion.Utils")
-			edit_keys = { "c", "d", "s", "r", "y" }, -- you can add "p" if you want.
-			clear_keys = { "<Esc>" }, -- used when you want to deselect/exit from SEL mode.
-			marks = {"y", "z"}, -- Is a mark used internally in this plugin, when we do a visual select when changing or deleting the highlighted word.
-			map_visual = true, -- When true, we capture "v" and pressing it will enter visual mode with the plugin selection as part of the visual selection. When false, pressing "v" will exit SEL mode and the selection will be lost. You want to set to false if you have trouble with other mappings associated to "v". I recommend to try in true first.
-			color = { bg = "#673AB7" } -- put color = "Visual" to use the default visual mode color. You can also customize via vim.api.nvim_set_hl(0, "@AniMotion", hl_color)
+				[utils.Targets.PrevLongWordStart] = "<S-Left>",
+			},
+			edit_keys = { "c", "d", "s", "r", "y" },
+			clear_keys = { "<Esc>" },
+			marks = {"y", "z"},
+			map_visual = false,
+			color = "Visual"
 		})
-	end
+	end,
+	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
 -- https://github.com/lewis6991/hover.nvim
