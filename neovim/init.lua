@@ -1967,13 +1967,17 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: bink.cmp migration
--- * cmdline
--- ** icons
--- ** color menu like cmp
--- ** enable for /, ?
--- * buffer completion
--- * use all sources from nvim-cmp
--- * signatures help
+-- FEAT: * cmdline
+-- FEAT: ** icons
+-- FEAT: ** color menu like cmp
+-- FEAT: ** enable for /, ?
+-- FEAT: * buffer completion
+-- FEAT: ** icons
+-- FEAT: ** structure
+-- FEAT: ** colors
+-- FEAT: ** autopairs
+-- FEAT: * use all sources from nvim-cmp
+-- FEAT: * signatures help
 addPlugin {
 	"saghen/blink.cmp",
 	event = { "CmdlineEnter" },
@@ -1987,7 +1991,14 @@ addPlugin {
 					}
 				},
 				menu = {
-					auto_show = function(ctx) return vim.fn.getcmdtype() == ':' end,
+					auto_show = function(_) return vim.fn.getcmdtype() == ':' end,
+					draw = {
+						columns = {
+							{"kind_icon"},
+							{"label", "label_description"},
+							{"source_name"},
+						}
+					}
 				}
 			}
 		},
