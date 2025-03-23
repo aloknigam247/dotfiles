@@ -163,7 +163,7 @@ function v    { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cu
 function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\$($lazygit_theme)" }
 
 function e() {
-    $code_patterns = @(".*\.cs", ".*\.ps1", ".*\.psm1", "CMakeLists.txt")
+    $code_patterns = @(".*\.cs$", ".*\.ps1$", ".*\.psm1$", "^CMakeLists.txt$")
 
     # use nvim for SSH
     if ( $null -ne $env:SSH_CLIENT ) {
