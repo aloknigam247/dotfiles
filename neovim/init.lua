@@ -3636,6 +3636,36 @@ addPlugin {
 		-- 		end
 		-- 	}
 		-- )
+		--
+		-- FEAT: close lsp client after last buffer closes
+		-- vim.api.nvim_create_autocmd("LspDetach", {
+		-- 	callback = function(args)
+		-- 		local client_id = args.data.client_id
+		-- 		local client = vim.lsp.get_client_by_id(client_id)
+		-- 		local current_buf = args.buf
+
+		-- 		if client then
+		-- 			local clients = vim.lsp.get_clients({ id = client_id })
+		-- 			local count = 0
+
+		-- 			if clients and #clients > 0 then
+		-- 				local remaining_client = clients[1]
+
+		-- 				if remaining_client.attached_buffers then
+		-- 					for buf_id in pairs(remaining_client.attached_buffers) do
+		-- 						if buf_id ~= current_buf then
+		-- 							count = count + 1
+		-- 						end
+		-- 					end
+		-- 				end
+		-- 			end
+
+		-- 			if count == 0 then
+		-- 				client:stop()
+		-- 			end
+		-- 		end
+		-- 	end
+		-- })
 
 		popupMenuAdd({
 			cond = isLspAttached,
