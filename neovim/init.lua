@@ -284,6 +284,7 @@ local icons = {
 	Options            = " ",
 	Package            = " ",
 	Parameter          = " ",
+	Path               = " ",
 	Property           = " ",
 	Reference          = " ",
 	Snippet            = " ",
@@ -1662,26 +1663,6 @@ function julianaPost()
 	fixLineNr("#999999")
 end
 
----Pre command for material
----@diagnostic disable-next-line: lowercase-global
-function materialPre()
-	local style = "lighter"
-	local selection = "#CCEAE7"
-	vim.g.material_style = style
-	require("material").setup({
-		custom_colors = function(colors)
-			colors.editor.selection = selection
-		end
-	})
-end
-
----@diagnostic disable-next-line: lowercase-global
-function materialPost()
-	vim.api.nvim_set_hl(0, "DiffAdd", { fg = "#91B859", nocombine = true })
-	vim.api.nvim_set_hl(0, "DiffDelete", { fg = "#E53935", nocombine = true })
-	fixVisual("#CCEAE7")
-end
-
 function PaperColorSlimPost()
 	for _, hl_name in pairs({ "DiffAdd", "DiffChange", "DiffDelete" }) do
 		vim.api.nvim_set_hl(0, hl_name:gsub("Diff", "GitSigns"), {
@@ -1966,8 +1947,10 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: * cmdline
--- FEAT: ** icons
--- FEAT: ** color menu like cmp
+-- FEAT: ** color menu like cmp, for options, file, path
+-- FEAT: ** per filetype icons?
+-- FEAT: ** fix multiple \\\\
+-- FEAT: ** preview for paths
 -- FEAT: ** enable for /, ?
 -- FEAT: * buffer completion
 -- FEAT: ** icons
@@ -1993,15 +1976,38 @@ addPlugin {
 					draw = {
 						columns = {
 							{"kind_icon"},
-							{"label", "label_description"},
-							{"source_name"},
+							{"label", "label_description"}
 						}
 					}
 				}
 			}
 		},
 		completion = {
-			menu = { auto_show = false }
+			menu = {
+				auto_show = false,
+				draw = {
+					components = {
+						kind_icon = {
+							text = function(ctx)
+								local stat = vim.loop.fs_stat(ctx.label)
+								if stat then
+									if stat.type == "file" then
+										return icons["File"]
+									elseif stat.type == "directory" then
+										return icons["Path"]
+									end
+								end
+
+								if ctx.source_name == "Cmdline" then
+									return icons["Options"]
+								end
+
+								return icons[ctx.kind]
+							end,
+						}
+					}
+				}
+			}
 		},
 		fuzzy = { implementation = "lua" }
 	}
