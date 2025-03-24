@@ -367,7 +367,8 @@ local kind_hl = {
 	Operator      = { icon = " ", dark = { bg = "#048BA8", fg = "#000000" }, light = { bg = "#F1DB4B", fg = "#000000" }},
 	Options       = { icon = " ", dark = { bg = "#99C24D", fg = "#000000" }, light = { bg = "#2292A4", fg = "#FFFFFF" }},
 	Package       = { icon = " ", dark = { bg = "#AFA2FF", fg = "#000000" }, light = { bg = "#B98EA7", fg = "#000000" }},
-	Property      = { icon = " ", dark = { bg = "#CED097", fg = "#000000" }, light = { bg = "#3777FF", fg = "#000000" }},
+	Path          = { icon = " ", dark = { bg = "#EFC6BD", fg = "#000000" }, light = { bg = "#ECBEB4", fg = "#000000" }},
+	Property      = { icon = " ", dark = { bg = "#CED097", fg = "#000000" }, light = { bg = "#3777FF", fg = "#FFFFFF" }},
 	Reference     = { icon = " ", dark = { bg = "#1B2CC1", fg = "#FFFFFF" }, light = { bg = "#18A999", fg = "#000000" }},
 	Snippet       = { icon = " ", dark = { bg = "#7692FF", fg = "#000000" }, light = { bg = "#BF0D4B", fg = "#FFFFFF" }},
 	String        = { icon = " ", dark = { bg = "#FEEA00", fg = "#000000" }, light = { bg = "#D5573B", fg = "#000000" }},
@@ -1947,6 +1948,7 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: * cmdline
+-- FEAT: ** no margin on left for cmdline options
 -- FEAT: ** color menu like cmp, for options, file, path
 -- FEAT: ** per filetype icons?
 -- FEAT: ** fix multiple \\\\
@@ -1961,6 +1963,12 @@ addPlugin {
 -- FEAT: * signatures help
 addPlugin {
 	"saghen/blink.cmp",
+	config = function(_, cfg)
+		for key, value in pairs(kind_hl) do
+			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, { fg = value[vim.o.background].bg })
+		end
+		require("blink.cmp").setup(cfg)
+	end,
 	event = { "CmdlineEnter" },
 	--- @type blink.cmp.Config
 	opts = {
@@ -1992,18 +2000,24 @@ addPlugin {
 								local stat = vim.loop.fs_stat(ctx.label)
 								if stat then
 									if stat.type == "file" then
-										return icons["File"]
+										ctx._kind = "File"
+										return icons[ctx._kind]
 									elseif stat.type == "directory" then
-										return icons["Path"]
+										ctx._kind = "Path"
+										return icons[ctx._kind]
 									end
 								end
 
 								if ctx.source_name == "Cmdline" then
-									return icons["Options"]
+									ctx._kind = "Options"
+									return icons[ctx._kind]
 								end
 
 								return icons[ctx.kind]
 							end,
+							highlight = function(ctx)
+								return ctx._kind and "BlinkCmpKind" .. ctx._kind or ctx.kind_hl
+							end
 						}
 					}
 				}
