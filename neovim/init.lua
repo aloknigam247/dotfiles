@@ -1948,7 +1948,6 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: * cmdline
--- FEAT: ** no margin on left for cmdline options
 -- FEAT: ** color menu like cmp, for options, file, path
 -- FEAT: ** per filetype icons?
 -- FEAT: ** fix multiple \\\\
@@ -2019,7 +2018,8 @@ addPlugin {
 								return ctx._kind and "BlinkCmpKind" .. ctx._kind or ctx.kind_hl
 							end
 						}
-					}
+					},
+					padding = 0
 				}
 			}
 		},
@@ -3617,39 +3617,41 @@ addPlugin {
 		end)
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		-- FEAT: Lsp_timer = vim.uv.new_timer()
-		-- vim.api.nvim_create_autocmd(
-		-- 	"FocusLost", {
-		-- 		pattern = "*",
-		-- 		desc = "Stop LSP on focus lost",
-		-- 		once = false,
-		-- 		callback = function()
-		-- 			vim.api.nvim_create_autocmd(
-		-- 				"FocusGained", {
-		-- 					pattern = "*",
-		-- 					desc = "Start LSP on focus gained",
-		-- 					once = true,
-		-- 					callback = function()
-		-- 						Lsp_timer:stop()
-		-- 						Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
-		-- 							if not isLspAttached() then
-		-- 								vim.notify("LSP resumed")
-		-- 								vim.cmd.LspStart()
-		-- 							end
-		-- 						end))
-		-- 					end
-		-- 				}
-		-- 			)
-		-- 			Lsp_timer:stop()
-		-- 			Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
-		-- 				if isLspAttached() then
-		-- 					vim.notify("LSP hibernated")
-		-- 					vim.cmd.LspStop()
-		-- 				end
-		-- 			end))
-		-- 		end
-		-- 	}
-		-- )
+		Lsp_timer = vim.uv.new_timer()
+		vim.api.nvim_create_autocmd(
+			"FocusLost", {
+				pattern = "*",
+				desc = "Stop LSP on focus lost",
+				once = false,
+				callback = function()
+					vim.api.nvim_create_autocmd(
+						"FocusGained", {
+							pattern = "*",
+							desc = "Start LSP on focus gained",
+							once = true,
+							callback = function()
+								Lsp_timer:stop()
+								-- reattach LSP
+								Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
+									if true or not isLspAttached() then -- BUG: typos does not detach
+										vim.notify("LSP resumed")
+										vim.cmd.LspStart()
+									end
+								end))
+							end
+						}
+					)
+					Lsp_timer:stop()
+					-- stop LSP
+					Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
+						if isLspAttached() then
+							vim.notify("LSP hibernated")
+							vim.cmd.LspStop()
+						end
+					end))
+				end
+			}
+		)
 		--
 		-- FEAT: close lsp client after last buffer closes
 		-- vim.api.nvim_create_autocmd("LspDetach", {
@@ -4432,12 +4434,12 @@ addPlugin {
 					padding = { left = 0, right = 1 },
 					separator = ""
 				},
-				{
-					function() return vim.g.ColoRand end,
-					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
-					padding = { left = 0, right = 1 }
-				},
+				-- {
+				-- 	function() return vim.g.ColoRand end,
+				-- 	color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
+				-- 	icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
+				-- 	padding = { left = 0, right = 1 }
+				-- },
 				{
 					"diagnostics",
 					on_click = function()
