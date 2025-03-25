@@ -1499,9 +1499,9 @@ addPlugin {
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
 		-- vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40) })
-		vim.api.nvim_set_hl(0, "IlluminatedWordText", { underline = true })
-		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#8AC926", fg = "#FFFFFF", bold = true })
-		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#FF595E", fg = "#FFFFFF", italic = true })
+		vim.api.nvim_set_hl(0, "IlluminatedWordText", { underline = true }) -- FIX: better highlight
+		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#8AC926", fg = "#FFFFFF", bold = true }) -- FIX: better highlight
+		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#FF595E", fg = "#FFFFFF", italic = true }) -- FIX: better highlight
 	end,
 	event = { "CursorHold" }
 }
@@ -1948,7 +1948,6 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: * cmdline
--- FEAT: ** color menu like cmp, for options, file, path
 -- FEAT: ** per filetype icons?
 -- FEAT: ** fix multiple \\\\
 -- FEAT: ** preview for paths
@@ -3617,7 +3616,11 @@ addPlugin {
 		end)
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		Lsp_timer = vim.uv.new_timer()
+		Lsp_timer = {
+			timer = vim.uv.new_timer(),
+			auto_stopped = false
+		}
+
 		vim.api.nvim_create_autocmd(
 			"FocusLost", {
 				pattern = "*",
@@ -3630,10 +3633,10 @@ addPlugin {
 							desc = "Start LSP on focus gained",
 							once = true,
 							callback = function()
-								Lsp_timer:stop()
+								Lsp_timer.timer:stop()
 								-- reattach LSP
-								Lsp_timer:start(10000, 0, vim.schedule_wrap(function()
-									if true or not isLspAttached() then -- BUG: typos does not detach
+								Lsp_timer.timer:start(10000, 0, vim.schedule_wrap(function()
+									if Lsp_timer.auto_stopped and true or not isLspAttached() then -- BUG: typos does not detach
 										vim.notify("LSP resumed")
 										vim.cmd.LspStart()
 									end
@@ -3641,12 +3644,13 @@ addPlugin {
 							end
 						}
 					)
-					Lsp_timer:stop()
+					Lsp_timer.timer:stop()
 					-- stop LSP
-					Lsp_timer:start(60000, 0, vim.schedule_wrap(function()
+					Lsp_timer.timer:start(60000, 0, vim.schedule_wrap(function()
 						if isLspAttached() then
 							vim.notify("LSP hibernated")
 							vim.cmd.LspStop()
+							Lsp_timer.auto_stopped = true
 						end
 					end))
 				end
