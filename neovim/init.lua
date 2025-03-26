@@ -1950,6 +1950,7 @@ addPlugin {
 -- FEAT: cmdline
 -- FEAT: ** fix multiple \\\\
 -- FEAT: ** preview for paths
+-- FEAT: ** bracket completion
 -- FEAT: ** enable for /, ?
 -- FEAT: buffer completion
 -- FEAT: ** icons
