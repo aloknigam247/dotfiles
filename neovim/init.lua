@@ -1947,18 +1947,17 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: bink.cmp migration
--- FEAT: * cmdline
--- FEAT: ** per filetype icons?
+-- FEAT: cmdline
 -- FEAT: ** fix multiple \\\\
 -- FEAT: ** preview for paths
 -- FEAT: ** enable for /, ?
--- FEAT: * buffer completion
+-- FEAT: buffer completion
 -- FEAT: ** icons
 -- FEAT: ** structure
 -- FEAT: ** colors
 -- FEAT: ** autopairs
--- FEAT: * use all sources from nvim-cmp
--- FEAT: * signatures help
+-- FEAT: use all sources from nvim-cmp
+-- FEAT: signatures help
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -1986,7 +1985,11 @@ addPlugin {
 						}
 					}
 				}
-			}
+			},
+			keymap = {
+				["<Left>"] = {},
+				["<Right>"] = {}
+			},
 		},
 		completion = {
 			menu = {
@@ -1998,7 +2001,13 @@ addPlugin {
 								local stat = vim.loop.fs_stat(ctx.label)
 								if stat then
 									if stat.type == "file" then
+										local ext = ctx.label:match(".[^.]+$"):gsub("%.", "")
 										ctx._kind = "File"
+										local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
+										if icon then
+											ctx._icon_hl = "DevIcon" .. icon.name
+											return icon.icon
+										end
 										return icons[ctx._kind]
 									elseif stat.type == "directory" then
 										ctx._kind = "Path"
@@ -2014,7 +2023,13 @@ addPlugin {
 								return icons[ctx.kind]
 							end,
 							highlight = function(ctx)
-								return ctx._kind and "BlinkCmpKind" .. ctx._kind or ctx.kind_hl
+								if ctx._icon_hl then
+									return ctx._icon_hl
+								elseif ctx._kind then
+									return "BlinkCmpKind" .. ctx._kind
+								else
+									return ctx.kind_hl
+								end
 							end
 						}
 					},
