@@ -1948,7 +1948,6 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: cmdline
--- FEAT: ** fix multiple \\\\
 -- FEAT: ** preview for paths
 -- FEAT: ** bracket completion
 -- FEAT: ** enable for /, ?
@@ -1982,7 +1981,7 @@ addPlugin {
 					draw = {
 						columns = {
 							{"kind_icon"},
-							{"label", "label_description"}, { "source_name"}
+							{"label", "label_description"}
 						}
 					}
 				}
@@ -1991,7 +1990,7 @@ addPlugin {
 				["<Left>"] = {},
 				["<Right>"] = {}
 			},
-			sources = { "path", "cmdline" }
+			sources = { "cmdline" } -- FEAT: scope for path
 		},
 		completion = {
 			menu = {
