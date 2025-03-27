@@ -1948,7 +1948,6 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: cmdline
--- FEAT: ** preview for paths
 -- FEAT: ** bracket completion
 -- FEAT: ** enable for /, ?
 -- FEAT: buffer completion
@@ -1990,7 +1989,7 @@ addPlugin {
 				["<Left>"] = {},
 				["<Right>"] = {}
 			},
-			sources = { "cmdline" } -- FEAT: scope for path
+			sources = { "path", "cmdline" } -- FEAT: scope for path
 		},
 		completion = {
 			menu = {
