@@ -1982,7 +1982,7 @@ addPlugin {
 					draw = {
 						columns = {
 							{"kind_icon"},
-							{"label", "label_description"}
+							{"label", "label_description"}, { "source_name"}
 						}
 					}
 				}
@@ -1991,6 +1991,7 @@ addPlugin {
 				["<Left>"] = {},
 				["<Right>"] = {}
 			},
+			sources = { "path", "cmdline" }
 		},
 		completion = {
 			menu = {
