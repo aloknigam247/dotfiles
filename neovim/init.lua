@@ -1126,7 +1126,7 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
 	"MenuPopup", {
-		pattern = "n",
+		pattern = "*",
 		desc = "Create popup menu based on context",
 		callback = function()
 			-- local currentWindow = vim.api.nvim_get_current_win()
@@ -1149,7 +1149,7 @@ vim.api.nvim_create_autocmd(
 				end
 			end
 
-			if #options ~= 0 then require("menu").open(options) end
+			if #options ~= 0 then require("menu").open(options, { border = false }) end
 		end
 	}
 )
@@ -1476,9 +1476,19 @@ addPlugin {
 -- "azabiong/vim-highlighter"
 addPlugin {
 	"Pocco81/high-str.nvim",
+	cmd = "HSHighlight",
+	init = function()
+		vim.api.nvim_set_hl(0, "ExBlack2Bg", { bg = "#F8F03F" })
+		popupMenuAdd({
+			options = {
+				{ name = "Highlight", exec = function() vim.cmd("HSHighlight") end },
+				{ name = "Clear Highlight", exec = function() vim.cmd("HSRmHighlight rm_all") end }
+			}
+		})
+	end,
 	keys = {
 		{ "<Leader>l", "<Cmd>HSHighlight<CR>", mode = "x", desc = "add highlight" },
-		{ "<Leader>L", "<Cmd>HSRmHighlight<CR>", mode = "n", desc = "remove highlight" },
+		{ "<Leader>L", "<Cmd>HSRmHighlight rm_all<CR>", mode = "n", desc = "remove highlight" },
 	}
 }
 
@@ -1948,7 +1958,6 @@ addPlugin {
 
 -- FEAT: bink.cmp migration
 -- FEAT: cmdline
--- FEAT: ** bracket completion
 -- FEAT: ** enable for /, ?
 -- FEAT: buffer completion
 -- FEAT: ** icons
@@ -2033,7 +2042,7 @@ addPlugin {
 							end
 						}
 					},
-					padding = 0
+					padding = 1
 				}
 			}
 		},
@@ -2249,8 +2258,8 @@ addPlugin {
 	"emmanueltouzery/decisive.nvim",
 	cmd = "CSVAlignVirtual",
 	config = function()
-		vim.api.nvim_create_user_command( "CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
-		vim.api.nvim_create_user_command( "CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
+		vim.api.nvim_create_user_command("CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
+		vim.api.nvim_create_user_command("CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
 		require("decisive").setup({})
 	end
 }
