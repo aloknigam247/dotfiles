@@ -1769,8 +1769,8 @@ end
 -- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
--- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
-addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
+addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
+-- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
@@ -1810,8 +1810,8 @@ addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"         
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "ayu-light",             "ayu",                                                          }
 -- light { "bluloco",              "_"                                                              }
--- light { "catppuccin-latte",     "catppuccin"                                                     }
-light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+light { "catppuccin-latte",     "catppuccin"                                                     }
+-- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
@@ -1957,8 +1957,6 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: bink.cmp migration
--- FEAT: cmdline
--- FEAT: ** enable for /, ?
 -- FEAT: buffer completion
 -- FEAT: ** icons
 -- FEAT: ** structure
@@ -1970,7 +1968,7 @@ addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
 		for key, value in pairs(kind_hl) do
-			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, { fg = value[vim.o.background].bg })
+			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background])
 		end
 		require("blink.cmp").setup(cfg)
 	end,
@@ -1985,7 +1983,7 @@ addPlugin {
 					}
 				},
 				menu = {
-					auto_show = function(_) return vim.fn.getcmdtype() == ':' end,
+					auto_show = function(_) return --[[ vim.fn.getcmdtype() == ':' ]] true end,
 					draw = {
 						columns = {
 							{"kind_icon"},
@@ -1998,7 +1996,13 @@ addPlugin {
 				["<Left>"] = {},
 				["<Right>"] = {}
 			},
-			sources = { "path", "cmdline" } -- FEAT: scope for path
+			sources = function()
+				if vim.fn.getcmdtype() == ":" then
+					return { "path", "cmdline" } -- FEAT: scope for path
+				else
+					return { "buffer" }
+				end
+			end
 		},
 		completion = {
 			menu = {
@@ -2007,29 +2011,45 @@ addPlugin {
 					components = {
 						kind_icon = {
 							text = function(ctx)
-								local stat = vim.loop.fs_stat(ctx.label)
-								if stat then
-									if stat.type == "file" then
-										local ext = ctx.label:match(".[^.]+$"):gsub("%.", "")
-										ctx._kind = "File"
-										local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
-										if icon then
-											ctx._icon_hl = "DevIcon" .. icon.name
-											return icon.icon
+								local function getIcon(ctx)
+									local stat = vim.loop.fs_stat(ctx.label)
+									if stat then
+										-- file/path icons
+										if stat.type == "file" then
+											local ext = ctx.label:match(".[^.]+$"):gsub("%.", "")
+											ctx._kind = "File"
+											local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
+											-- create highlight for extension
+											if icon then
+												local devicon_hl = "DevIcon" .. icon.name
+												vim.api.nvim_set_hl(
+													0,
+													devicon_hl .. "Reverse",
+													{
+														default = true,
+														bg = vim.api.nvim_get_hl(0, { name = devicon_hl }).fg,
+														fg = "#FFFFFF"
+													}
+												)
+												ctx._icon_hl = devicon_hl .. "Reverse"
+												return icon.icon
+											end
+											return icons[ctx._kind]
+										elseif stat.type == "directory" then
+											ctx._kind = "Path"
+											return icons[ctx._kind]
 										end
-										return icons[ctx._kind]
-									elseif stat.type == "directory" then
-										ctx._kind = "Path"
+									end
+
+									if ctx.source_name == "Cmdline" then
+										ctx._kind = "Options"
 										return icons[ctx._kind]
 									end
+
+									return icons[ctx.kind]
 								end
 
-								if ctx.source_name == "Cmdline" then
-									ctx._kind = "Options"
-									return icons[ctx._kind]
-								end
-
-								return icons[ctx.kind]
+								return " " .. getIcon(ctx)
 							end,
 							highlight = function(ctx)
 								if ctx._icon_hl then
@@ -2042,7 +2062,7 @@ addPlugin {
 							end
 						}
 					},
-					padding = 1
+					padding = 0
 				}
 			}
 		},
@@ -2105,10 +2125,10 @@ addPlugin {
 			-- 		}
 			-- 	}
 			-- }),
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = { { name = "buffer" } }
-			}),
+			-- cmp.setup.cmdline({ "/", "?" }, {
+			-- 	mapping = cmp.mapping.preset.cmdline(),
+			-- 	sources = { { name = "buffer" } }
+			-- }),
 			autocomplete = false,
 			completion = {
 				-- completeopt = "menu,menuone,noselect",
