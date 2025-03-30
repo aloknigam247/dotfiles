@@ -150,7 +150,6 @@ New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 # ╰───────────────────╯
 Remove-Alias ls
 Remove-Alias rm
-# FIX: bat theme https://github.com/catppuccin/bat
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
