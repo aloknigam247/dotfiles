@@ -365,7 +365,7 @@ local kind_hl = {
 	Number        = { icon = " ", dark = { bg = "#FB62F6", fg = "#000000" }, light = { bg = "#A5BE00", fg = "#000000" }},
 	Object        = { icon = " ", dark = { bg = "#F18F01", fg = "#000000" }, light = { bg = "#80A1C1", fg = "#000000" }},
 	Operator      = { icon = " ", dark = { bg = "#048BA8", fg = "#000000" }, light = { bg = "#F1DB4B", fg = "#000000" }},
-	Options       = { icon = " ", dark = { bg = "#99C24D", fg = "#000000" }, light = { bg = "#2292A4", fg = "#FFFFFF" }},
+	Options       = { icon = " ", dark = { bg = "#99C24D", fg = "#000000" }, light = { bg = "#99C24D", fg = "#FFFFFF" }},
 	Package       = { icon = " ", dark = { bg = "#AFA2FF", fg = "#000000" }, light = { bg = "#B98EA7", fg = "#000000" }},
 	Path          = { icon = " ", dark = { bg = "#EFC6BD", fg = "#000000" }, light = { bg = "#ECBEB4", fg = "#000000" }},
 	Property      = { icon = " ", dark = { bg = "#CED097", fg = "#000000" }, light = { bg = "#3777FF", fg = "#FFFFFF" }},
@@ -1315,7 +1315,7 @@ vim.api.nvim_create_user_command(
 
 -- Window Picker https://github.com/s1n7ax/nvim-window-picker
 vim.api.nvim_create_user_command(
-	"Peek",
+	"Peek", -- FIX: zindex lower than notifications
 	function(args)
 		openFloat(args.args, "editor", 8, 3, true)
 	end,
@@ -1663,6 +1663,11 @@ function ayuPost()
 end
 
 ---@diagnostic disable-next-line: lowercase-global
+function blulocoPost()
+	vim.api.nvim_set_hl(0, "String", { fg = "#FF8585" })
+end
+
+---@diagnostic disable-next-line: lowercase-global
 function julianaPost()
 	fixLineNr("#999999")
 end
@@ -1950,13 +1955,13 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: bink.cmp migration
+-- FEAT: signatures help
 -- FEAT: buffer completion
 -- FEAT: ** icons
 -- FEAT: ** structure
 -- FEAT: ** colors
 -- FEAT: ** autopairs
 -- FEAT: use all sources from nvim-cmp
--- FEAT: signatures help
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -3045,6 +3050,7 @@ local snacks_gitbrowse_config = {
 	}
 }
 
+-- FIX: working
 vim.keymap.set("n", "gl", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
 vim.keymap.set("x", "gl", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
 
@@ -3636,6 +3642,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: do not lsp for all filetypes by default
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
@@ -3653,47 +3660,49 @@ addPlugin {
 		end)
 
 		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		Lsp_timer = {
-			timer = vim.uv.new_timer(),
-			auto_stopped = false
-		}
+		-- BUG: code action does not work after restart
+		-- Lsp_timer = {
+		-- 	---@diagnostic disable-next-line: undefined-field
+		-- 	timer = vim.uv.new_timer(),
+		-- 	auto_stopped = false
+		-- }
 
-		vim.api.nvim_create_autocmd(
-			"FocusLost", {
-				pattern = "*",
-				desc = "Stop LSP on focus lost",
-				once = false,
-				callback = function()
-					vim.api.nvim_create_autocmd(
-						"FocusGained", {
-							pattern = "*",
-							desc = "Start LSP on focus gained",
-							once = true,
-							callback = function()
-								Lsp_timer.timer:stop()
-								-- reattach LSP
-								Lsp_timer.timer:start(10000, 0, vim.schedule_wrap(function()
-									if Lsp_timer.auto_stopped and true or not isLspAttached() then -- BUG: typos does not detach
-										vim.notify("LSP resumed")
-										vim.cmd.LspStart()
-									end
-								end))
-							end
-						}
-					)
-					Lsp_timer.timer:stop()
-					-- stop LSP
-					Lsp_timer.timer:start(60000, 0, vim.schedule_wrap(function()
-						if isLspAttached() then
-							vim.notify("LSP hibernated")
-							vim.cmd.LspStop()
-							Lsp_timer.auto_stopped = true
-						end
-					end))
-				end
-			}
-		)
-		--
+		-- vim.api.nvim_create_autocmd(
+		-- 	"FocusLost", {
+		-- 		pattern = "*",
+		-- 		desc = "Stop LSP on focus lost",
+		-- 		once = false,
+		-- 		callback = function()
+		-- 			vim.api.nvim_create_autocmd(
+		-- 				"FocusGained", {
+		-- 					pattern = "*",
+		-- 					desc = "Start LSP on focus gained",
+		-- 					once = true,
+		-- 					callback = function()
+		-- 						Lsp_timer.timer:stop()
+		-- 						-- reattach LSP
+		-- 						Lsp_timer.timer:start(10000, 0, vim.schedule_wrap(function()
+		-- 							if Lsp_timer.auto_stopped and true or not isLspAttached() then -- BUG: typos does not detach
+		-- 								vim.notify("LSP resumed")
+		-- 								vim.cmd.LspStart()
+		-- 							end
+		-- 						end))
+		-- 					end
+		-- 				}
+		-- 			)
+		-- 			Lsp_timer.timer:stop()
+		-- 			-- stop LSP
+		-- 			Lsp_timer.timer:start(60000, 0, vim.schedule_wrap(function()
+		-- 				if isLspAttached() then
+		-- 					vim.notify("LSP hibernated")
+		-- 					vim.cmd.LspStop()
+		-- 					Lsp_timer.auto_stopped = true
+		-- 				end
+		-- 			end))
+		-- 		end
+		-- 	}
+		-- )
+
 		-- FEAT: close lsp client after last buffer closes
 		-- vim.api.nvim_create_autocmd("LspDetach", {
 		-- 	callback = function(args)
@@ -3730,7 +3739,7 @@ addPlugin {
 				{ name = " Code Action", key = "<C-.>", exec = require('actions-preview').code_actions },
 				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
 				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
-				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
+				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end }, -- THOUGHT: consider replacing it with default mapping
 				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
 				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
 				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
@@ -4242,6 +4251,7 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: create snippet for pytests
 addPlugin {
 	"dcampos/nvim-snippy",
 	dependencies = "honza/vim-snippets",
