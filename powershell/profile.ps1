@@ -86,7 +86,7 @@ $theme = "Light"
 
 if ($theme -eq "Light") {
     $palette = $light_palette
-    $bat_theme = "OneHalfLight"
+    $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
 } else {
     $palette = $dark_palette

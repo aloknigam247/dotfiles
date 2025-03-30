@@ -4,6 +4,10 @@ param(
      [switch]$update = $false
      )
 
+# Variables
+$SCOOP_DIR = "D:\Scoop"
+$SCOOP_APPS = "$SCOOP_DIR\apps"
+
 function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)
     $l = $menuItems.length
@@ -103,7 +107,7 @@ function installScoop {
         writeLog INFO "Scoop not insalled. Installing"
         Invoke-RestMethod get.scoop.sh -outfile "$env:TEMP\install.ps1"
         if (Test-Path "D:\") {
-            & $env:TEMP\install.ps1 -RunAsAdmin -ScoopDir 'D:\Scoop'
+            & $env:TEMP\install.ps1 -RunAsAdmin -ScoopDir $SCOOP_DIR
             New-Item -ItemType SymbolicLink -Path ~\scoop -Target D:\Scoop
         } else {
             & $env:TEMP\install.ps1 -RunAsAdmin
@@ -296,7 +300,7 @@ function writeLog {
     Write-Host -ForegroundColor $color " $message"
 }
 
-$all_pkgs = @("clangd", "git", "fonts", "lazygit", "neovim", "powershell", "win_pkgs", "windows_terminal")
+$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | % { $_.Directory.BaseName }
 
 if ($update) {
     writeLog INFO "Updating all installed packages"
