@@ -682,7 +682,7 @@ function LightenDarkenColor(col, amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
 	local hex_code = string.format("#%-6X", newColor)
-	return hex_code:gsub(" ", "0")
+	return hex_code:gsub(" ", "0")[0]
 end
 
 ---Adds a plugin Lazy nvim config
@@ -1647,13 +1647,6 @@ addPlugin {
 ---@param fg string fg color in hex
 local function fixLineNr(fg)
 	vim.api.nvim_set_hl(0, "LineNr", { fg = fg })
-end
-
----Fix Visual highlight
----@param bg? string bg color in hex
-local function fixVisual(bg)
-	bg = bg or adaptiveBG(50, -20)
-	vim.api.nvim_set_hl(0, "Visual", { bg = bg, force = true })
 end
 
 ---@diagnostic disable-next-line: lowercase-global
