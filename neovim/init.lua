@@ -1955,7 +1955,6 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: bink.cmp migration
--- FEAT: signatures help
 -- FEAT: buffer completion
 -- FEAT: ** icons
 -- FEAT: ** structure
@@ -1970,7 +1969,7 @@ addPlugin {
 		end
 		require("blink.cmp").setup(cfg)
 	end,
-	event = { "CmdlineEnter" },
+	event = { "CmdlineEnter", "InsertEnter" },
 	--- @type blink.cmp.Config
 	opts = {
 		cmdline = {
@@ -2004,6 +2003,7 @@ addPlugin {
 		},
 		completion = {
 			menu = {
+				enabled = true,
 				auto_show = false,
 				draw = {
 					components = {
@@ -2064,7 +2064,18 @@ addPlugin {
 				}
 			}
 		},
-		fuzzy = { implementation = "lua" }
+		fuzzy = { implementation = "lua" },
+		signature = {
+			enabled = true,
+			trigger = {
+				show_on_keyword = true
+			},
+			window = {
+				max_width = 50,
+				show_documentation = true,
+				winblend = 70
+			}
+		}
 	}
 }
 
