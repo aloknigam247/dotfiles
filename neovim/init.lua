@@ -4240,7 +4240,7 @@ addPlugin {
 			},
 			suppressed_dirs = { "C:\\Users\\aloknigam", "~" }
 		})
-		vim.o.sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal"
+		vim.o.sessionoptions = "blank,buffers,curdir,folds,help,localoptions,tabpages,winsize,winpos,terminal"
 	end,
 	init = function()
 		if vim.fn.filereadable(vim.fn.stdpath("data") .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%5C"):gsub(":", "%%3A") .. ".vim") == 1 then
