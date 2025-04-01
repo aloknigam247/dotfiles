@@ -1766,7 +1766,7 @@ end
 
 -- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+-- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
@@ -1782,7 +1782,7 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 -- addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                     }
--- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
+addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
@@ -1798,7 +1798,7 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "vscode",               "_",                                                             }
--- dark  { "zephyrium",            "_"                                                              }
+dark  { "zephyrium",            "_"                                                              }
 -- darkT { "ayu-dark",             "ayu",                                                           }
 -- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
 -- darkT { "cyberdream",           "_",                                                             }
@@ -1806,8 +1806,7 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
--- light { "ayu-light",             "ayu",                                                          }
-light { "bluloco",              "_"                                                              }
+-- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
@@ -2050,6 +2049,7 @@ addPlugin {
 								return " " .. getIcon(ctx)
 							end,
 							highlight = function(ctx)
+								-- return { { 0, 1, group = "Normal" }, { 1, 2, group = "Visual" } } -- FIX: Icon padding using ▐
 								if ctx._icon_hl then
 									return ctx._icon_hl
 								elseif ctx._kind then
