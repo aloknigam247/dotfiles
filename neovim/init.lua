@@ -4262,7 +4262,6 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: create snippet for pytests
 addPlugin {
 	"dcampos/nvim-snippy",
 	dependencies = "honza/vim-snippets",
