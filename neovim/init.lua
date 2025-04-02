@@ -1955,10 +1955,11 @@ addPlugin {
 
 -- FEAT: buffer completion
 -- FEAT: ** enable
+-- FEAT: keymaps
+-- FEAT: ** autopairs
 -- FEAT: ** icons
 -- FEAT: ** structure
 -- FEAT: ** colors
--- FEAT: ** autopairs
 -- FEAT: use all sources from nvim-cmp
 addPlugin {
 	"saghen/blink.cmp",
