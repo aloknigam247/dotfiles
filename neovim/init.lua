@@ -1413,12 +1413,12 @@ addPlugin {
 			:with_del(cond.none())
 		}
 		-- Insert `()` after select function or method item
-		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-		local cmp = require("cmp")
-		cmp.event:on(
-			"confirm_done",
-			cmp_autopairs.on_confirm_done()
-		)
+		-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+		-- local cmp = require("cmp")
+		-- cmp.event:on(
+		-- 	"confirm_done",
+		-- 	cmp_autopairs.on_confirm_done()
+		-- )
 	end,
 	event = "InsertEnter"
 }
@@ -1954,12 +1954,10 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FEAT: buffer completion
--- FEAT: ** enable
--- FEAT: keymaps
--- FEAT: ** autopairs
--- FEAT: ** icons
 -- FEAT: ** structure
+-- FEAT: ** icons
 -- FEAT: ** colors
+-- FEAT: ** show ghost_text while typing
 -- FEAT: use all sources from nvim-cmp
 addPlugin {
 	"saghen/blink.cmp",
@@ -1972,6 +1970,9 @@ addPlugin {
 	event = { "CmdlineEnter", "InsertEnter" },
 	--- @type blink.cmp.Config
 	opts = {
+		appearance = {
+			use_nvim_cmp_as_default = true
+		},
 		cmdline = {
 			completion = {
 				list = {
@@ -1980,11 +1981,11 @@ addPlugin {
 					}
 				},
 				menu = {
-					auto_show = function(_) return --[[ vim.fn.getcmdtype() == ':' ]] true end,
+					auto_show = true,
 					draw = {
 						columns = {
-							{"kind_icon"},
-							{"label", "label_description"}
+							{ "kind_icon" },
+							{ "label", "label_description" }
 						}
 					}
 				}
@@ -2002,9 +2003,24 @@ addPlugin {
 			end
 		},
 		completion = {
+			documentation = {
+				auto_show = true,
+				window = {
+					border = dotted_border
+				}
+			},
+			ghost_text = {
+				enabled = true
+			},
+			list = {
+				selection = {
+					auto_insert = false,
+					preselect = false
+				}
+			},
 			menu = {
 				enabled = true,
-				auto_show = false,
+				auto_show = tue,
 				draw = {
 					components = {
 						kind_icon = {
@@ -2066,6 +2082,20 @@ addPlugin {
 			}
 		},
 		fuzzy = { implementation = "lua" },
+		keymap = {
+			["<C-Down>"] = { "select_next", "fallback" },
+			["<C-Up>"] = { "select_prev", "fallback" },
+			["<Down>"] = {},
+			["<Left>"] = {},
+			["<Right>"] = {},
+			['<Tab>'] = {
+				function(cmp)
+					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then return cmp.accept() end
+				end,
+				'fallback',
+			},
+			["<Up>"] = {}
+		},
 		signature = {
 			enabled = true,
 			trigger = {
@@ -2080,190 +2110,190 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	"aloknigam247/cmp-path",
-	event = "CmdlineChanged"
-}
-
-addPlugin {
-	"dcampos/cmp-snippy",
-	dependencies = "nvim-snippy",
-	event = "InsertEnter"
-}
-
-addPlugin {
-	-- "hrsh7th/cmp-cmdline",
-	"iguanacucumber/mag-cmdline",
-	name = "cmp-cmdline",
-	event = "CmdlineChanged"
-}
-
-addPlugin {
-	-- "hrsh7th/cmp-nvim-lsp",
-	"iguanacucumber/mag-nvim-lsp",
-	name = "cmp-nvim-lsp",
-	event = "LspAttach"
-}
-
 -- addPlugin {
---     "paopaol/cmp-doxygen",
---     event = "InsertEnter *.cc,*.cpp,*.c,*.h"
+-- 	"aloknigam247/cmp-path",
+-- 	event = "CmdlineChanged"
 -- }
 
-addPlugin {
-	-- https://github.com/Saghen/blink.cmp
-	-- "hrsh7th/nvim-cmp",
-	"iguanacucumber/magazine.nvim",
-	name = "nvim-cmp",
-	config = function()
-		local cmp = require("cmp")
-		cmp.setup({
-			-- cmp.setup.cmdline(":", {
-			-- 	mapping = cmp.mapping.preset.cmdline(),
-			-- 	sources = {
-			-- 		{
-			-- 			name = "path",
-			-- 			option = {
-			-- 				trailing_slash = true
-			-- 			}
-			-- 		},
-			-- 		{
-			-- 			name = "cmdline",
-			-- 			option = {
-			-- 				-- ignore_cmds = { "split" }
-			-- 			}
-			-- 		}
-			-- 	}
-			-- }),
-			-- cmp.setup.cmdline({ "/", "?" }, {
-			-- 	mapping = cmp.mapping.preset.cmdline(),
-			-- 	sources = { { name = "buffer" } }
-			-- }),
-			autocomplete = false,
-			completion = {
-				-- completeopt = "menu,menuone,noselect",
-				keyword_length = 2
-			},
-			experimental = {
-				ghost_text = true
-			},
-			formatting = {
-				expandable_indicator = true,
-				fields = { "kind", "abbr", "menu" },
-				format = function(entry, vim_item)
-					local source_name = entry.source.name
+-- addPlugin {
+-- 	"dcampos/cmp-snippy",
+-- 	dependencies = "nvim-snippy",
+-- 	event = "InsertEnter"
+-- }
 
-					if entry.source.name == "nvim_lsp" then
-						source_name = icons.lsp .. " " .. entry.source.source.client.name
-					elseif entry.source.name == "cmdline" then
-						vim_item.kind = "Options"
-						source_name = "󰸶 options"
-					elseif entry.source.name == "cmdline_history" then
-						vim_item.kind = "History"
-						source_name = "󰋚 history"
-					elseif entry.source.name == "path" then
-						source_name = " path"
-					elseif entry.source.name == "snippy" then
-						source_name = " snippet"
-					else
-						source_name = "󰙩 " .. entry.source.name
-					end
-					vim_item.menu = source_name
+-- addPlugin {
+-- 	-- "hrsh7th/cmp-cmdline",
+-- 	"iguanacucumber/mag-cmdline",
+-- 	name = "cmp-cmdline",
+-- 	event = "CmdlineChanged"
+-- }
 
-					-- setup xzbdmw/colorful-menu.nvim
-					local highlights_info = require("colorful-menu").cmp_highlights(entry)
-					if highlights_info ~= nil then
-						local highlights = highlights_info.highlights
-						highlights[1][1] = "CmpItemKindAbbr" .. vim_item.kind
-						vim_item.abbr_hl_group = highlights
-						vim_item.abbr = highlights_info.text
-					else
-						vim_item.abbr_hl_group = "CmpItemKindAbbr" .. vim_item.kind
-					end
+-- addPlugin {
+-- 	-- "hrsh7th/cmp-nvim-lsp",
+-- 	"iguanacucumber/mag-nvim-lsp",
+-- 	name = "cmp-nvim-lsp",
+-- 	event = "LspAttach"
+-- }
 
-					local kind_symbol = " " .. icons[vim_item.kind]
-					vim_item.kind = kind_symbol or vim_item.kind
+-- -- addPlugin {
+-- --     "paopaol/cmp-doxygen",
+-- --     event = "InsertEnter *.cc,*.cpp,*.c,*.h"
+-- -- }
 
-					return vim_item
-				end
-			},
-			matching = {
-				disallow_fullfuzzy_matching = false,
-				disallow_fuzzy_matching = false,
-				disallow_partial_fuzzy_matching = false,
-				disallow_partial_matching = false,
-				disallow_prefix_unmatching = false,
-				disallow_symbol_nonprefix_matching = false
-			},
-			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
-				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
-				["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
-				["<TAB>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
-				["<C-Space>"] = cmp.mapping.abort()
-			}),
-			preselect = cmp.PreselectMode.Item,
-			snippet = {
-				expand = function(args)
-					require("snippy").expand_snippet(args.body)
-				end
-			},
-			sources = {
-				{ name = 'render-markdown' },
-				{
-					name = "nvim_lsp",
-					entry_filter = function(entry, _)
-						return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "Text"
-					end
-				},
-				{
-					name = "buffer",
-					option = {
-						-- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
-						get_bufnrs = function()
-							return vim.api.nvim_list_bufs()
-						end
-					},
-				},
-				{
-					name = "path",
-					trigger_characters = { "./", "/", ".\\" },
-					option = {
-						trailing_slash = true
-					}
-				},
-				{ name = "snippy" },
-				{ name = "lazydev", group_index = 0 }
-			},
-			window = {
-				completion = cmp.config.window.bordered({ border = "none", side_padding = 0 }),
-				documentation = cmp.config.window.bordered({ border = dotted_border }),
-			},
-			view = {
-				docs = {
-					auto_open = true
-				},
-				entries = {
-					name = 'custom',
-					follow_cursor = true,
-					selection_order = "top_down"
-				}
-			}
-		})
+-- addPlugin {
+-- 	-- https://github.com/Saghen/blink.cmp
+-- 	-- "hrsh7th/nvim-cmp",
+-- 	"iguanacucumber/magazine.nvim",
+-- 	name = "nvim-cmp",
+-- 	config = function()
+-- 		local cmp = require("cmp")
+-- 		cmp.setup({
+-- 			-- cmp.setup.cmdline(":", {
+-- 			-- 	mapping = cmp.mapping.preset.cmdline(),
+-- 			-- 	sources = {
+-- 			-- 		{
+-- 			-- 			name = "path",
+-- 			-- 			option = {
+-- 			-- 				trailing_slash = true
+-- 			-- 			}
+-- 			-- 		},
+-- 			-- 		{
+-- 			-- 			name = "cmdline",
+-- 			-- 			option = {
+-- 			-- 				-- ignore_cmds = { "split" }
+-- 			-- 			}
+-- 			-- 		}
+-- 			-- 	}
+-- 			-- }),
+-- 			-- cmp.setup.cmdline({ "/", "?" }, {
+-- 			-- 	mapping = cmp.mapping.preset.cmdline(),
+-- 			-- 	sources = { { name = "buffer" } }
+-- 			-- }),
+-- 			autocomplete = false,
+-- 			completion = {
+-- 				-- completeopt = "menu,menuone,noselect",
+-- 				keyword_length = 2
+-- 			},
+-- 			experimental = {
+-- 				ghost_text = true
+-- 			},
+-- 			formatting = {
+-- 				expandable_indicator = true,
+-- 				fields = { "kind", "abbr", "menu" },
+-- 				format = function(entry, vim_item)
+-- 					local source_name = entry.source.name
 
-		for key, value in pairs(kind_hl) do
-			vim.api.nvim_set_hl(0, "CmpItemKind" .. key, value[vim.o.background])
-			vim.api.nvim_set_hl(0, "CmpItemKindAbbr" .. key, {fg = value[vim.o.background].bg })
-		end
-		vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { strikethrough = true })
-		vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bold = true })
-		vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { underline = true })
-	end,
-	dependencies = {
-		-- "hrsh7th/cmp-buffer"
-		{ "iguanacucumber/mag-buffer", name = "cmp-buffer" }
-	},
-	event = "VeryLazy",
-}
+-- 					if entry.source.name == "nvim_lsp" then
+-- 						source_name = icons.lsp .. " " .. entry.source.source.client.name
+-- 					elseif entry.source.name == "cmdline" then
+-- 						vim_item.kind = "Options"
+-- 						source_name = "󰸶 options"
+-- 					elseif entry.source.name == "cmdline_history" then
+-- 						vim_item.kind = "History"
+-- 						source_name = "󰋚 history"
+-- 					elseif entry.source.name == "path" then
+-- 						source_name = " path"
+-- 					elseif entry.source.name == "snippy" then
+-- 						source_name = " snippet"
+-- 					else
+-- 						source_name = "󰙩 " .. entry.source.name
+-- 					end
+-- 					vim_item.menu = source_name
+
+-- 					-- setup xzbdmw/colorful-menu.nvim
+-- 					local highlights_info = require("colorful-menu").cmp_highlights(entry)
+-- 					if highlights_info ~= nil then
+-- 						local highlights = highlights_info.highlights
+-- 						highlights[1][1] = "CmpItemKindAbbr" .. vim_item.kind
+-- 						vim_item.abbr_hl_group = highlights
+-- 						vim_item.abbr = highlights_info.text
+-- 					else
+-- 						vim_item.abbr_hl_group = "CmpItemKindAbbr" .. vim_item.kind
+-- 					end
+
+-- 					local kind_symbol = " " .. icons[vim_item.kind]
+-- 					vim_item.kind = kind_symbol or vim_item.kind
+
+-- 					return vim_item
+-- 				end
+-- 			},
+-- 			matching = {
+-- 				disallow_fullfuzzy_matching = false,
+-- 				disallow_fuzzy_matching = false,
+-- 				disallow_partial_fuzzy_matching = false,
+-- 				disallow_partial_matching = false,
+-- 				disallow_prefix_unmatching = false,
+-- 				disallow_symbol_nonprefix_matching = false
+-- 			},
+-- 			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
+-- 				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
+-- 				["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
+-- 				["<TAB>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
+-- 				["<C-Space>"] = cmp.mapping.abort()
+-- 			}),
+-- 			preselect = cmp.PreselectMode.Item,
+-- 			snippet = {
+-- 				expand = function(args)
+-- 					require("snippy").expand_snippet(args.body)
+-- 				end
+-- 			},
+-- 			sources = {
+-- 				{ name = 'render-markdown' },
+-- 				{
+-- 					name = "nvim_lsp",
+-- 					entry_filter = function(entry, _)
+-- 						return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "Text"
+-- 					end
+-- 				},
+-- 				{
+-- 					name = "buffer",
+-- 					option = {
+-- 						-- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
+-- 						get_bufnrs = function()
+-- 							return vim.api.nvim_list_bufs()
+-- 						end
+-- 					},
+-- 				},
+-- 				{
+-- 					name = "path",
+-- 					trigger_characters = { "./", "/", ".\\" },
+-- 					option = {
+-- 						trailing_slash = true
+-- 					}
+-- 				},
+-- 				{ name = "snippy" },
+-- 				{ name = "lazydev", group_index = 0 }
+-- 			},
+-- 			window = {
+-- 				completion = cmp.config.window.bordered({ border = "none", side_padding = 0 }),
+-- 				documentation = cmp.config.window.bordered({ border = dotted_border }),
+-- 			},
+-- 			view = {
+-- 				docs = {
+-- 					auto_open = true
+-- 				},
+-- 				entries = {
+-- 					name = 'custom',
+-- 					follow_cursor = true,
+-- 					selection_order = "top_down"
+-- 				}
+-- 			}
+-- 		})
+
+-- 		for key, value in pairs(kind_hl) do
+-- 			vim.api.nvim_set_hl(0, "CmpItemKind" .. key, value[vim.o.background])
+-- 			vim.api.nvim_set_hl(0, "CmpItemKindAbbr" .. key, {fg = value[vim.o.background].bg })
+-- 		end
+-- 		vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { strikethrough = true })
+-- 		vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bold = true })
+-- 		vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { underline = true })
+-- 	end,
+-- 	dependencies = {
+-- 		-- "hrsh7th/cmp-buffer"
+-- 		{ "iguanacucumber/mag-buffer", name = "cmp-buffer" }
+-- 	},
+-- 	event = "VeryLazy",
+-- }
 
 addPlugin {
 	"xzbdmw/colorful-menu.nvim"
@@ -3768,11 +3798,11 @@ addPlugin {
 			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}),
 		}
 
-		local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-		capabilities.textDocument.foldingRange = {
-			dynamicRegistration = false,
-			lineFoldingOnly = true
-		}
+		-- local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+		-- capabilities.textDocument.foldingRange = {
+		-- 	dynamicRegistration = false,
+		-- 	lineFoldingOnly = true
+		-- }
 
 		local on_attach = function(_, bufnr)
 			-- enable inlay hints
