@@ -1781,8 +1781,8 @@ end
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
--- addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                     }
-addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
+addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                     }
+-- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
@@ -1797,8 +1797,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
--- dark  { "vscode",               "_",                                                             }
-dark  { "zephyrium",            "_"                                                              }
+dark  { "vscode",               "_",                                                             }
+-- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "ayu-dark",             "ayu",                                                           }
 -- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
 -- darkT { "cyberdream",           "_",                                                             }
@@ -1953,8 +1953,8 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
 
--- FEAT: bink.cmp migration
 -- FEAT: buffer completion
+-- FEAT: ** enable
 -- FEAT: ** icons
 -- FEAT: ** structure
 -- FEAT: ** colors
