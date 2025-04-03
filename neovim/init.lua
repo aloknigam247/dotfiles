@@ -1183,30 +1183,33 @@ vim.api.nvim_create_autocmd(
 -- https://github.com/backdround/neowords.nvim
 -- https://github.com/chaoren/vim-wordmotion
 -- https://github.com/chrisgrieser/nvim-spider
--- vip select paragraph
--- word deletion
-vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
-vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
--- mouse
-vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
-vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
--- tab switch
-vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
--- register
-vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
-vim.keymap.set("n", '"', function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- commands
 vim.keymap.set("n", "!!",          ":<Up><CR>",                { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",               { desc = "Close window" })
 vim.keymap.set("n", "<C-s>",       "<cmd>w<CR>",               { desc = "Save file" })
+-- mouse
+vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
+vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
 -- paste
 vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" })
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
 vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
+-- register
+vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
+vim.keymap.set("n", '"', function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- search
 vim.keymap.set("x", "/",           "<Esc>/\\%V",               { desc = "Search in select region" })
+-- tab switch
+vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
 -- window controls
 vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
+-- word deletion
+vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
+vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
+-- word selection
+vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
+-- yank
+vim.keymap.set("n", "yaa", "ggyG", { desc = "yank all text" })
 -- <~>
 -- Misc</>
 -------
