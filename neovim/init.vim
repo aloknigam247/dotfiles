@@ -109,10 +109,9 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 if exists("g:neovide")
     set linespace=-3
     let g:neovide_cursor_animate_command_line = v:false
-    let g:neovide_cursor_animation_length = 0
-    let g:neovide_cursor_animation_length = 0.13
+    let g:neovide_cursor_animation_length = 0.04
     let g:neovide_cursor_smooth_blink = v:true
-    let g:neovide_cursor_trail_size = 0.8
+    let g:neovide_cursor_trail_size = 1.0
     let g:neovide_cursor_vfx_mode = "railgun"
     let g:neovide_cursor_vfx_particle_density = 15.0
     let g:neovide_cursor_vfx_particle_lifetime = 5
@@ -122,13 +121,14 @@ if exists("g:neovide")
     let g:neovide_floating_shadow = v:false
     let g:neovide_fullscreen = v:false
     let g:neovide_hide_mouse_when_typing = v:true
+    let g:neovide_normal_opacity = 1
+    let g:neovide_opacity = 1
     let g:neovide_refresh_rate = 120
     let g:neovide_remember_window_size = v:false
     let g:neovide_scroll_animation_length = 0.3
-    let g:neovide_transparency = 1
-    let g:neovide_normal_opacity = 1
     let g:neovide_underline_automatic_scaling = v:true
     let g:neovide_underline_stroke_scale = 1.7
+    let g:neovide_window_blurred = v:true
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
 endif
 " }}}

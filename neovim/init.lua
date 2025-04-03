@@ -677,6 +677,7 @@ end
 function LightenDarkenColor(col, amt)
 	local function clamp(x) return math.max(0, math.min(255, x)) end
 	local num = tonumber(col:sub(2), 16)
+		
 	local r = clamp(bit.rshift(num, 16) + amt)
 	local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
@@ -1831,7 +1832,7 @@ function ColoRand(scheme_index)
 
 	-- set backgrounds
 	vim.o.background = bg
-	vim.g.neovide_transparency = selection.trans and 0.7 or 1
+	vim.g.neovde_opacity = selection.trans and 0.6 or 1
 
 	local start_time = os.clock()
 
