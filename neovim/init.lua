@@ -1512,8 +1512,8 @@ addPlugin {
 		})
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-		-- vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40) })
-		vim.api.nvim_set_hl(0, "IlluminatedWordText", { underline = true }) -- FIX: better highlight
+		print('DEBUGPRINT[1]: init.lua:1515: adaptiveBG(40, -40)=' .. vim.inspect(adaptiveBG(40, -40)))
+		vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40), underline =true }) -- FIX: adaptiveBG
 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#8AC926", fg = "#FFFFFF", bold = true }) -- FIX: better highlight
 		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#FF595E", fg = "#FFFFFF", italic = true }) -- FIX: better highlight
 	end,
@@ -5563,16 +5563,6 @@ addPlugin {
 addPlugin {
 	"folke/snacks.nvim",
 	lazy = true
-}
-
-addPlugin {
-	"jake-stewart/auto-cmdheight.nvim",
-	lazy = false,
-	opts = {
-		max_lines = 5,
-		duration = 2,
-		remove_on_key = true,
-	}
 }
 
 addPlugin {
