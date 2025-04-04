@@ -2087,9 +2087,8 @@ addPlugin {
 		},
 		fuzzy = { implementation = "lua" },
 		keymap = {
-			["<C-Down>"] = { "select_next", "fallback" },
-			["<C-Up>"] = { "select_prev", "fallback" },
-			["<Down>"] = {},
+			["<Down>"] = { "select_next", "fallback" },
+			["<Up>"] = { "select_prev", "fallback" },
 			["<Left>"] = {},
 			["<Right>"] = {},
 			['<Tab>'] = {
@@ -2097,8 +2096,7 @@ addPlugin {
 					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then return cmp.accept() end
 				end,
 				'fallback',
-			},
-			["<Up>"] = {}
+			}
 		},
 		signature = {
 			enabled = true,
