@@ -112,7 +112,7 @@ if exists("g:neovide")
     let g:neovide_cursor_animation_length = 0.04
     let g:neovide_cursor_smooth_blink = v:true
     let g:neovide_cursor_trail_size = 1.0
-    let g:neovide_cursor_vfx_mode = "railgun"
+    let g:neovide_cursor_vfx_mode = "pixiedust"
     let g:neovide_cursor_vfx_particle_density = 15.0
     let g:neovide_cursor_vfx_particle_lifetime = 5
     let g:neovide_floating_blur_amount_x = 3

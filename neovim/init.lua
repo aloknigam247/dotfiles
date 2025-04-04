@@ -1512,7 +1512,6 @@ addPlugin {
 		})
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-		print('DEBUGPRINT[1]: init.lua:1515: adaptiveBG(40, -40)=' .. vim.inspect(adaptiveBG(40, -40)))
 		vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40), underline =true }) -- FIX: adaptiveBG
 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#8AC926", fg = "#FFFFFF", bold = true }) -- FIX: better highlight
 		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#FF595E", fg = "#FFFFFF", italic = true }) -- FIX: better highlight
@@ -1957,9 +1956,8 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
 
--- FEAT: buffer completion
--- FEAT: ** structure
--- FEAT: ** icons
+-- buffer completion
+-- FEAT: ** source icons
 -- FEAT: ** colors
 -- FEAT: ** show ghost_text while typing
 -- FEAT: use all sources from nvim-cmp
@@ -2024,18 +2022,21 @@ addPlugin {
 			},
 			menu = {
 				enabled = true,
-				auto_show = tue,
+				auto_show = true,
 				draw = {
+					columns = {
+						{ "kind_icon" }, { "label", "label_description" }, { "source_name" }
+					},
 					components = {
 						kind_icon = {
 							text = function(ctx)
-								local function getIcon(ctx)
-									local stat = vim.loop.fs_stat(ctx.label)
+								local function getIcon(_ctx)
+									local stat = vim.loop.fs_stat(_ctx.label)
 									if stat then
 										-- file/path icons
 										if stat.type == "file" then
-											local ext = ctx.label:match(".[^.]+$"):gsub("%.", "")
-											ctx._kind = "File"
+											local ext = _ctx.label:match(".[^.]+$"):gsub("%.", "")
+											_ctx._kind = "File"
 											local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
 											-- create highlight for extension
 											if icon then
@@ -2049,22 +2050,22 @@ addPlugin {
 														fg = "#FFFFFF"
 													}
 												)
-												ctx._icon_hl = devicon_hl .. "Reverse"
+												_ctx._icon_hl = devicon_hl .. "Reverse"
 												return icon.icon
 											end
-											return icons[ctx._kind]
+											return icons[_ctx._kind]
 										elseif stat.type == "directory" then
-											ctx._kind = "Path"
-											return icons[ctx._kind]
+											_ctx._kind = "Path"
+											return icons[_ctx._kind]
 										end
 									end
 
-									if ctx.source_name == "Cmdline" then
-										ctx._kind = "Options"
-										return icons[ctx._kind]
+									if _ctx.source_name == "Cmdline" then
+										_ctx._kind = "Options"
+										return icons[_ctx._kind]
 									end
 
-									return icons[ctx.kind]
+									return icons[_ctx.kind]
 								end
 
 								return " " .. getIcon(ctx)
@@ -3783,7 +3784,7 @@ addPlugin {
 				{ name = " Code Action", key = "<C-.>", exec = require('actions-preview').code_actions },
 				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
 				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
-				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end }, -- THOUGHT: consider replacing it with default mapping
+				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
 				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
 				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
 				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
@@ -5175,165 +5176,165 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	"folke/noice.nvim",
-	config = function()
-		vim.o.lazyredraw = false
-		require("noice").setup({
-			cmdline = {
-				enabled = true,
-				view = "cmdline_popup",
-				opts = {},
-				format = {
-					cmdline = { pattern = "^:", icon = "", lang = "vim", title = " cmd "},
-					filter = { pattern = "^:%s*!", icon = "$", lang = "powershell" , title = ""},
-					help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help "},
-					input = {},
-					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy "},
-					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " lua "},
-					lua_print = { pattern = "^:%s*lua=%s+", icon = "󰇼", lang = "lua" , title = " lua echo "},
-					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = ""},
-					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = ""},
-				},
-			},
-			messages = {
-				enabled = true,
-				view = "notify",
-				view_error = "notify",
-				view_warn = "notify",
-				view_history = "messages",
-				view_search = "virtualtext",
-			},
-			popupmenu = {
-				enabled = true,
-				backend = "cmp",
-				kind_icons = {},
-			},
-			redirect = {
-				view = "popup",
-				filter = { event = "msg_show" },
-			},
-			commands = {
-				history = {
-					view = "split",
-					opts = { enter = true, format = "details" },
-					filter = {
-						any = {
-							{ event = "notify" },
-							{ error = true },
-							{ warning = true },
-							{ event = "msg_show", kind = { "" } },
-							{ event = "lsp", kind = "message" },
-						},
-					},
-				},
-				last = {
-					view = "popup",
-					opts = { enter = true, format = "details" },
-					filter = {
-						any = {
-							{ event = "notify" },
-							{ error = true },
-							{ warning = true },
-							{ event = "msg_show", kind = { "" } },
-							{ event = "lsp", kind = "message" },
-						},
-					},
-					filter_opts = { count = 1 },
-				},
-				errors = {
-					view = "popup",
-					opts = { enter = true, format = "details" },
-					filter = { error = true },
-					filter_opts = { reverse = true },
-				},
-			},
-			notify = {
-				enabled = true,
-				view = "notify",
-			},
-			lsp = {
-				progress = {
-					enabled = false,
-					format = "lsp_progress",
-					format_done = "lsp_progress_done",
-					throttle = 1000 / 30,
-					view = "mini",
-				},
-				override = {
-					["cmp.entry.get_documentation"] = true,
-					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-					["vim.lsp.util.stylize_markdown"] = true,
-				},
-				hover = {
-					enabled = true,
-					view = nil,
-					opts = {},
-				},
-				signature = {
-					enabled = false,
-					auto_open = {
-						enabled = true,
-						trigger = true,
-						luasnip = true,
-						throttle = 50,
-					},
-					view = nil,
-					opts = {},
-				},
-				message = {
-					enabled = true,
-					view = "notify",
-					opts = {},
-				},
-				documentation = {
-					view = "hover",
-					opts = {
-						lang = "markdown",
-						replace = true,
-						render = "plain",
-						format = { "{ message }" },
-						win_options = { concealcursor = "n", conceallevel = 3 },
-					},
-				},
-			},
-			markdown = {
-				hover = {
-					["|(%S-)|"] = vim.cmd.help,
-					["%[.-%]%((%S-)%)"] = require("noice.util").open,
-				},
-				highlights = {
-					["|%S-|"] = "@text.reference",
-					["@%S+"] = "@parameter",
-					["^%s*(Parameters:)"] = "@text.title",
-					["^%s*(Return:)"] = "@text.title",
-					["^%s*(See also:)"] = "@text.title",
-					["{%S-}"] = "@parameter",
-				},
-			},
-			health = {
-				checker = false,
-			},
-			smart_move = {
-				enabled = true,
-				excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
-			},
-			presets = {
-				bottom_search = true,
-				command_palette = true,
-				long_message_to_split = true,
-				inc_rename = false,
-				lsp_doc_border = true,
-			},
-			routes = {{
-				view = "notify",
-				filter = { event = "msg_showmode" },
-			}}
-		})
-	end,
-	dependencies = { "MunifTanjim/nui.nvim" },
-	event = "CmdlineEnter"
-}
+-- addPlugin {
+-- 	"folke/noice.nvim",
+-- 	config = function()
+-- 		vim.o.lazyredraw = false
+-- 		require("noice").setup({
+-- 			cmdline = {
+-- 				enabled = true,
+-- 				view = "cmdline_popup",
+-- 				opts = {},
+-- 				format = {
+-- 					cmdline = { pattern = "^:", icon = "", lang = "vim", title = " cmd "},
+-- 					filter = { pattern = "^:%s*!", icon = "$", lang = "powershell" , title = ""},
+-- 					help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help "},
+-- 					input = {},
+-- 					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy "},
+-- 					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " lua "},
+-- 					lua_print = { pattern = "^:%s*lua=%s+", icon = "󰇼", lang = "lua" , title = " lua echo "},
+-- 					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = ""},
+-- 					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = ""},
+-- 				},
+-- 			},
+-- 			messages = {
+-- 				enabled = true,
+-- 				view = "notify",
+-- 				view_error = "notify",
+-- 				view_warn = "notify",
+-- 				view_history = "messages",
+-- 				view_search = "virtualtext",
+-- 			},
+-- 			popupmenu = {
+-- 				enabled = true,
+-- 				backend = "cmp",
+-- 				kind_icons = {},
+-- 			},
+-- 			redirect = {
+-- 				view = "popup",
+-- 				filter = { event = "msg_show" },
+-- 			},
+-- 			commands = {
+-- 				history = {
+-- 					view = "split",
+-- 					opts = { enter = true, format = "details" },
+-- 					filter = {
+-- 						any = {
+-- 							{ event = "notify" },
+-- 							{ error = true },
+-- 							{ warning = true },
+-- 							{ event = "msg_show", kind = { "" } },
+-- 							{ event = "lsp", kind = "message" },
+-- 						},
+-- 					},
+-- 				},
+-- 				last = {
+-- 					view = "popup",
+-- 					opts = { enter = true, format = "details" },
+-- 					filter = {
+-- 						any = {
+-- 							{ event = "notify" },
+-- 							{ error = true },
+-- 							{ warning = true },
+-- 							{ event = "msg_show", kind = { "" } },
+-- 							{ event = "lsp", kind = "message" },
+-- 						},
+-- 					},
+-- 					filter_opts = { count = 1 },
+-- 				},
+-- 				errors = {
+-- 					view = "popup",
+-- 					opts = { enter = true, format = "details" },
+-- 					filter = { error = true },
+-- 					filter_opts = { reverse = true },
+-- 				},
+-- 			},
+-- 			notify = {
+-- 				enabled = true,
+-- 				view = "notify",
+-- 			},
+-- 			lsp = {
+-- 				progress = {
+-- 					enabled = false,
+-- 					format = "lsp_progress",
+-- 					format_done = "lsp_progress_done",
+-- 					throttle = 1000 / 30,
+-- 					view = "mini",
+-- 				},
+-- 				override = {
+-- 					["cmp.entry.get_documentation"] = true,
+-- 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+-- 					["vim.lsp.util.stylize_markdown"] = true,
+-- 				},
+-- 				hover = {
+-- 					enabled = true,
+-- 					view = nil,
+-- 					opts = {},
+-- 				},
+-- 				signature = {
+-- 					enabled = false,
+-- 					auto_open = {
+-- 						enabled = true,
+-- 						trigger = true,
+-- 						luasnip = true,
+-- 						throttle = 50,
+-- 					},
+-- 					view = nil,
+-- 					opts = {},
+-- 				},
+-- 				message = {
+-- 					enabled = true,
+-- 					view = "notify",
+-- 					opts = {},
+-- 				},
+-- 				documentation = {
+-- 					view = "hover",
+-- 					opts = {
+-- 						lang = "markdown",
+-- 						replace = true,
+-- 						render = "plain",
+-- 						format = { "{ message }" },
+-- 						win_options = { concealcursor = "n", conceallevel = 3 },
+-- 					},
+-- 				},
+-- 			},
+-- 			markdown = {
+-- 				hover = {
+-- 					["|(%S-)|"] = vim.cmd.help,
+-- 					["%[.-%]%((%S-)%)"] = require("noice.util").open,
+-- 				},
+-- 				highlights = {
+-- 					["|%S-|"] = "@text.reference",
+-- 					["@%S+"] = "@parameter",
+-- 					["^%s*(Parameters:)"] = "@text.title",
+-- 					["^%s*(Return:)"] = "@text.title",
+-- 					["^%s*(See also:)"] = "@text.title",
+-- 					["{%S-}"] = "@parameter",
+-- 				},
+-- 			},
+-- 			health = {
+-- 				checker = false,
+-- 			},
+-- 			smart_move = {
+-- 				enabled = true,
+-- 				excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
+-- 			},
+-- 			presets = {
+-- 				bottom_search = true,
+-- 				command_palette = true,
+-- 				long_message_to_split = true,
+-- 				inc_rename = false,
+-- 				lsp_doc_border = true,
+-- 			},
+-- 			routes = {{
+-- 				view = "notify",
+-- 				filter = { event = "msg_showmode" },
+-- 			}}
+-- 		})
+-- 	end,
+-- 	dependencies = { "MunifTanjim/nui.nvim" },
+-- 	event = "CmdlineEnter"
+-- }
 
 addPlugin {
 	"rcarriga/nvim-notify",
