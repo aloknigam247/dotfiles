@@ -5566,6 +5566,16 @@ addPlugin {
 }
 
 addPlugin {
+	"jake-stewart/auto-cmdheight.nvim",
+	lazy = false,
+	opts = {
+		max_lines = 5,
+		duration = 2,
+		remove_on_key = true,
+	}
+}
+
+addPlugin {
 	-- https://github.com/gregorias/coerce.nvim
 	"johmsalas/text-case.nvim",
 	init = function()
