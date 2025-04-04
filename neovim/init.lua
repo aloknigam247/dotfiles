@@ -5661,6 +5661,7 @@ addPlugin {
 			color = "Visual"
 		})
 	end,
+	init = function() vim.cmd("delmarks yz") end,
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
