@@ -3058,58 +3058,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- ╭─────────────────────────────╮
--- │ Git url browse using snacks │
--- ╰─────────────────────────────╯
----@param fields snacks.gitbrowse.Fields
-local function custom_get_url(fields)
-	local mode = vim.fn.mode()
-
-	local pattern
-	if mode == "n" then
-		pattern = snacks_gitbrowse_config.url_patterns["file"]
-	elseif mode == "V" then
-		pattern = snacks_gitbrowse_config.url_patterns["line"]
-	elseif mode == "v" then
-		fields["char_start"] = vim.api.nvim_buf_get_mark(0, "<")[2]
-		fields["char_end"] = vim.api.nvim_buf_get_mark(0, ">")[2]
-		pattern = snacks_gitbrowse_config.url_patterns["char"] or snacks_gitbrowse_config.url_patterns["line"]
-	end
-
-	return pattern:gsub("(%b{})", function(key)
-		return fields[key:sub(2, -2)] or key
-	end)
-end
-
--- FEAT: add onedrive support
-local snacks_gitbrowse_config = {
-	what = "custom",
-	url_patterns = {
-		["github%.com"] = {
-			branch = "/tree/{branch}",
-			file = "/blob/{branch}/{file}",
-			line = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
-			char = "/blob/{branch}/{file}#L{line_start}C{char_start}-L{line_end}C{char_end}",
-			custom = custom_get_url,
-			commit = "/commit/{commit}",
-		},
-		["gitlab%.com"] = {
-			branch = "/-/tree/{branch}",
-			file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
-			commit = "/-/commit/{commit}",
-		},
-		["bitbucket%.org"] = {
-			branch = "/src/{branch}",
-			file = "/src/{branch}/{file}#lines-{line_start}-L{line_end}",
-			commit = "/commits/{commit}",
-		}
-	}
-}
-
--- FIX: working
-vim.keymap.set("n", "gl", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
-vim.keymap.set("x", "gl", function() require("snacks").gitbrowse.open(snacks_gitbrowse_config) end)
-
 addPlugin {
 	"isakbm/gitgraph.nvim",
 	cmd = "GitGraph",
@@ -3715,8 +3663,6 @@ addPlugin {
 			Lsp_icon = Lsp_anim[Lsp_icon_index]
 		end)
 
-		-- INFO: https://www.reddit.com/r/neovim/comments/zae3m9/only_enable_lsp_if_requirements_are_found
-		-- BUG: code action does not work after restart
 		-- Lsp_timer = {
 		-- 	---@diagnostic disable-next-line: undefined-field
 		-- 	timer = vim.uv.new_timer(),
