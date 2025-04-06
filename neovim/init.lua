@@ -3683,7 +3683,7 @@ addPlugin {
 		-- 						Lsp_timer.timer:stop()
 		-- 						-- reattach LSP
 		-- 						Lsp_timer.timer:start(10000, 0, vim.schedule_wrap(function()
-		-- 							if Lsp_timer.auto_stopped and true or not isLspAttached() then -- BUG: typos does not detach
+		-- 							if Lsp_timer.auto_stopped and true or not isLspAttached() then
 		-- 								vim.notify("LSP resumed")
 		-- 								vim.cmd.LspStart()
 		-- 							end
