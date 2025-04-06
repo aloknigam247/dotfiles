@@ -1523,9 +1523,10 @@ addPlugin {
 		})
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-		vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = adaptiveBG(40, -40), underline =true }) -- FIX: adaptiveBG
-		vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#8AC926", fg = "#FFFFFF", bold = true }) -- FIX: better highlight
-		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#FF595E", fg = "#FFFFFF", italic = true }) -- FIX: better highlight
+		local hl = { bg = adaptiveBG(40, -40), underline = true } -- FIX: adaptiveBG
+		vim.api.nvim_set_hl(0, "IlluminatedWordText", hl)
+		vim.api.nvim_set_hl(0, "IlluminatedWordRead", hl)
+		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", hl)
 	end,
 	event = { "CursorHold" }
 }
@@ -3704,7 +3705,6 @@ addPlugin {
 		-- 	}
 		-- )
 
-		-- FEAT: close lsp client after last buffer closes
 		-- vim.api.nvim_create_autocmd("LspDetach", {
 		-- 	callback = function(args)
 		-- 		local client_id = args.data.client_id
