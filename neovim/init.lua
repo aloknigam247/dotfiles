@@ -1793,8 +1793,8 @@ end
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
--- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
-addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
+addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
+-- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 -- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
@@ -1808,8 +1808,8 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 -- dark  { "juliana",              "_",                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "PaperColorSlim",        "_"                                                             }
--- dark  { "sonokai",              "_",                                                             }
-dark  { "tokyonight-storm",     "tokyonight"                                                     }
+dark  { "sonokai",              "_",                                                             }
+-- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "ayu-dark",             "ayu",                                                           }
@@ -2036,7 +2036,7 @@ addPlugin {
 				auto_show = true,
 				draw = {
 					columns = {
-						{ "kind_icon" }, { "label", "label_description" }, { "source_name" }
+						{ "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" } -- FEAT: name of LSP for source name
 					},
 					components = {
 						kind_icon = {
@@ -2103,7 +2103,7 @@ addPlugin {
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Left>"] = {},
 			["<Right>"] = {},
-			['<Tab>'] = {
+			['<Tab>'] = { -- FIX: auto select first next on tab
 				function(cmp)
 					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then return cmp.accept() end
 				end,

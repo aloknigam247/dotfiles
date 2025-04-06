@@ -248,6 +248,8 @@ function gwa {
     }
 }
 
+# FEAT: gwd method
+
 # ─[ Get TODOs from current directory ]────────────────────────────────
 function Get-TODO {
     param(
