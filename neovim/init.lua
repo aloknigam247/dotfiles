@@ -1793,9 +1793,8 @@ end
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
--- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
+addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
-addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"                                     }
 -- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
@@ -1809,9 +1808,8 @@ addPlugin { "Mofiqul/vscode.nvim",            event = "User vscode"             
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "PaperColorSlim",        "_"                                                             }
 -- dark  { "sonokai",              "_",                                                             }
--- dark  { "tokyonight-storm",     "tokyonight"                                                     }
+dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
-dark  { "vscode",               "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "ayu-dark",             "ayu",                                                           }
 -- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
@@ -1967,6 +1965,7 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
 
+-- FIX: commandline options icon
 -- buffer completion
 -- FEAT: ** source icons
 -- FEAT: ** colors
@@ -5611,7 +5610,7 @@ addPlugin {
 				[utils.Targets.NextLongWordEnd] = "E",
 				[utils.Targets.PrevLongWordStart] = "<S-Left>",
 			},
-			edit_keys = { "c", "d", "s", "r", "y" },
+			edit_keys = { "c", "d", "s", "r", "x", "y" },
 			clear_keys = { "<Esc>" },
 			marks = {"y", "z"},
 			map_visual = false,
