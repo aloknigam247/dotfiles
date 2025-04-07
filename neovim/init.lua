@@ -2103,11 +2103,17 @@ addPlugin {
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Left>"] = {},
 			["<Right>"] = {},
-			['<Tab>'] = { -- FIX: auto select first next on tab
+			["<Tab>"] = {
 				function(cmp)
-					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then return cmp.accept() end
+					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then
+						if cmp.get_selected_item() then
+							return cmp.accept()
+						else
+							return cmp.select_and_accept()
+						end
+					end
 				end,
-				'fallback',
+				"fallback",
 			}
 		},
 		signature = {
