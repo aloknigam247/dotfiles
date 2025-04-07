@@ -1968,7 +1968,6 @@ addPlugin {
 
 -- FIX: commandline options icon
 -- buffer completion
--- FEAT: ** source icons
 -- FEAT: ** colors
 -- FEAT: ** show ghost_text while typing
 -- FEAT: use all sources from nvim-cmp
@@ -2090,6 +2089,22 @@ addPlugin {
 								else
 									return ctx.kind_hl
 								end
+							end
+						},
+						source_name = {
+							-- highlight = function() end, -- FEAT: source colors
+							text = function(ctx)
+								if ctx.source_name == "LSP" then
+									return icons.lsp .. " " .. ctx.item.client_name
+								elseif ctx.source_name == "Path" then
+									return icons.Path .. ctx.source_name
+								elseif ctx.source_name == "Snippets" then
+									return icons.Snippet .. " " .. ctx.source_name
+								elseif ctx.source_name == "Buffer" then
+									return "󰙩 " .. ctx.source_name
+								end
+
+								return ctx.source_name
 							end
 						}
 					},
