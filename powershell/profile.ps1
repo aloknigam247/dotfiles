@@ -248,7 +248,12 @@ function gwa {
     }
 }
 
-# FEAT: gwd method
+function gwd {
+    $branch_name = (Get-Location).Path.Split("\")[-1]
+    cd ..\main
+    git worktree remove $branch_name
+    git branch -D $branch_name
+}
 
 # ─[ Get TODOs from current directory ]────────────────────────────────
 function Get-TODO {
