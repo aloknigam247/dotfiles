@@ -244,13 +244,6 @@
 ---@type string[]
 local dotted_border = { "╭", "󰇘", "╮", "┊", "╯", "󰇘", "╰", "┊" }
 
----Defines highlight priorities for various components
----@type table<string, integer>
-local hl_priority = {
-	url = 0,
-	hlargs = 126
-}
-
 ---Defines Icons for global usage
 ---@type table<string, string>
 local icons = {
@@ -482,6 +475,19 @@ local lazy_config = {
 		-- Track each new require in the Lazy profiling tab
 		require = true,
 	},
+}
+
+---Defines highlight priorities for various components
+---@type table<string, integer>
+local priority_hl = {
+	url = 0,
+	hlargs = 126
+}
+
+---Defines window priorities for various components
+---@type table<string, integer>
+local priority_win = {
+	peek = 50
 }
 
 ---@type string[] List of filetypes to enable Overlength marker
@@ -851,7 +857,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 			title = path ,
 			title_pos = "center",
 			width = vim.o.columns - 8 - col_offset,
-			zindex = 100
+			zindex = priority_win.peek
 		})
 	else
 		vim.api.nvim_win_set_buf(Preview_win, bufnr)
@@ -1282,7 +1288,7 @@ end
 vim.fn.matchadd(
 	"HighlightURL",
 	"\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+",
-	hl_priority.url
+	priority_hl.url
 )
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -1320,7 +1326,7 @@ vim.api.nvim_create_user_command(
 
 -- Window Picker https://github.com/s1n7ax/nvim-window-picker
 vim.api.nvim_create_user_command(
-	"Peek", -- FIX: zindex lower than notifications
+	"Peek",
 	function(args)
 		openFloat(args.args, "editor", 8, 3, true)
 	end,
@@ -1779,7 +1785,7 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
+-- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
@@ -1788,7 +1794,7 @@ addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"     
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                    }
--- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
+addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
@@ -1806,8 +1812,8 @@ addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"     
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "juliana",              "_",                                                             }
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
-dark  { "PaperColorSlim",        "_"                                                             }
+-- dark  { "kanagawa-paper",        "_"                                                             }
+dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
@@ -1822,6 +1828,7 @@ dark  { "PaperColorSlim",        "_"                                            
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+-- light { "kanagawa-paper",        "_"                                                             }
 -- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
@@ -2035,7 +2042,7 @@ addPlugin {
 				auto_show = true,
 				draw = {
 					columns = {
-						{ "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" } -- FEAT: name of LSP for source name
+						{ "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" }
 					},
 					components = {
 						kind_icon = {
@@ -2385,6 +2392,8 @@ addPlugin {
 				plain_above = "<Leader>dP",
 				variable_below = "<Leader>dv",
 				variable_above = "<Leader>dV",
+				surround_plain = "<Leader>ds",
+				surround_variable = "<Leader>dsv",
 				variable_below_alwaysprompt = "<Leader>dw",
 				variable_above_alwaysprompt = "<Leader>dW",
 				textobj_below = nil,
@@ -2407,7 +2416,7 @@ addPlugin {
 		vim.cmd("ResetDebugPrintsCounter")
 	end,
 	keys = {
-		"<Leader>dc", "<Leader>dd", "<Leader>dp", "<Leader>dP", "<Leader>dw", "<Leader>dW",
+		"<Leader>dP", "<Leader>dW", "<Leader>dc", "<Leader>dd", "<Leader>dp", "<Leader>ds", "<Leader>dsv", "<Leader>dw",
 		{ "<Leader>dv", mode = { "n", "v" } },
 		{ "<Leader>dV", mode = { "n", "v" } }
 	}
@@ -3079,6 +3088,23 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: make it work
+addPlugin {
+	"echasnovski/mini.diff",
+	init = function()
+		vim.api.nvim_create_user_command("ToggleMiniDiff", function()
+			local mini = require("mini.diff")
+			if mini.get_buf_data(0) then
+				mini.enable()
+			else
+				mini.disable()
+			end
+			-- mini.toggle_overlay()
+		end, {})
+	end,
+	config = true
+}
+
 addPlugin {
 	"isakbm/gitgraph.nvim",
 	cmd = "GitGraph",
@@ -3851,119 +3877,118 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- "OXY2DEV/markview.nvim"
--- addPlugin {
--- 	"MeanderingProgrammer/render-markdown.nvim",
--- 	ft = "markdown",
--- 	opts = {
--- 		latex = {
--- 			enabled = false,
--- 		},
--- 		anti_conceal = {
--- 			enabled = false
--- 		},
--- 		heading = {
--- 			enabled = true,
--- 			sign = false,
--- 			position = "inlay",
--- 			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
--- 			icons = { "󰫎 " },
--- 			signs = { "󰫎 " },
--- 			width = { "block", "block", "block"},
--- 			left_margin = 0,
--- 			left_pad = 0,
--- 			right_pad = 2,
--- 			min_width = 0,
--- 			border = false,
--- 			border_virtual = false,
--- 			border_prefix = false,
--- 		},
--- 		-- FIX: do not hide lines in code block
--- 		code = {
--- 			enabled = false,
--- 			sign = false,
--- 			style = "full",
--- 			position = "left",
--- 			language_pad = 0,
--- 			disable_background = { "" },
--- 			width = "full",
--- 			left_margin = 0,
--- 			left_pad = 0,
--- 			right_pad = 1,
--- 			min_width = 10,
--- 			border = "thick",
--- 			language_name = true,
--- 			inline_pad = 1
--- 		},
--- 		bullet = {
--- 			enabled = true,
--- 			icons = { "●", "○", "◆", "◇" },
--- 		},
--- 		checkbox = {
--- 			enabled = true,
--- 			position = "overlay",
--- 			unchecked = {
--- 				icon = " ",
--- 			},
--- 			checked = {
--- 				icon = " ",
--- 			},
--- 			custom = {}
--- 		},
--- 		quote = {
--- 			enabled = true,
--- 			icon = "▍",
--- 			repeat_linebreak = true,
--- 		},
--- 		pipe_table = {
--- 			enabled = true,
--- 			border = {
--- 				"┌", "┬", "┐",
--- 				"├", "┼", "┤",
--- 				"└", "┴", "┘",
--- 				"│", "─",
--- 			},
--- 			preset = "round",
--- 			style = "normal",
--- 			cell = "trimmed",
--- 			min_width = 0,
--- 			alignment_indicator = "•",
--- 		},
--- 		callout = {
--- 			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
--- 			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
--- 			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
--- 			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
--- 			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
--- 		},
--- 		link = {
--- 			enabled = true,
--- 			image = "󰥶 ",
--- 			email = "󰀓 ",
--- 			hyperlink = "󰌹 ",
--- 			custom = {
--- 				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
--- 				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
--- 				discord = { pattern = "discord%.com", icon = "󰙯 " },
--- 				github = { pattern = "github%.com", icon = "󰊤 " },
--- 				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
--- 				neovim = { pattern = "neovim%.io", icon = " " },
--- 				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
--- 				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
--- 				web = { pattern = "^http[s]?://", icon = "󰖟 " },
--- 				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
--- 			},
--- 		},
--- 		sign = {
--- 			enabled = false,
--- 		},
--- 		win_options = {
--- 			concealcursor = {
--- 				default = vim.api.nvim_get_option_value("concealcursor", {}),
--- 				rendered = vim.api.nvim_get_option_value("concealcursor", {})
--- 			}
--- 		}
--- 	}
--- }
+addPlugin {
+	"MeanderingProgrammer/render-markdown.nvim",
+	ft = "markdown",
+	opts = {
+		latex = {
+			enabled = false,
+		},
+		anti_conceal = {
+			enabled = false
+		},
+		heading = {
+			enabled = true,
+			sign = false,
+			position = "inlay",
+			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+			icons = { "󰫎 " },
+			signs = { "󰫎 " },
+			width = { "block", "block", "block"},
+			left_margin = 0,
+			left_pad = 0,
+			right_pad = 2,
+			min_width = 0,
+			border = false,
+			border_virtual = false,
+			border_prefix = false,
+		},
+		code = {
+			enabled = true,
+			sign = false,
+			style = "full",
+			position = "left",
+			language_pad = 0,
+			disable_background = { "" },
+			width = "full",
+			left_margin = 0,
+			left_pad = 0,
+			right_pad = 1,
+			min_width = 10,
+			border = "thick",
+			language_name = true,
+			inline_pad = 1
+		},
+		bullet = {
+			enabled = true,
+			icons = { "●", "○", "◆", "◇" },
+		},
+		checkbox = {
+			enabled = true,
+			position = "overlay",
+			unchecked = {
+				icon = " ",
+			},
+			checked = {
+				icon = " ",
+			},
+			custom = {}
+		},
+		quote = {
+			enabled = true,
+			icon = "▍",
+			repeat_linebreak = true,
+		},
+		pipe_table = {
+			enabled = true,
+			border = {
+				"┌", "┬", "┐",
+				"├", "┼", "┤",
+				"└", "┴", "┘",
+				"│", "─",
+			},
+			preset = "round",
+			style = "normal",
+			cell = "trimmed",
+			min_width = 0,
+			alignment_indicator = "•",
+		},
+		callout = {
+			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
+		},
+		link = {
+			enabled = true,
+			image = "󰥶 ",
+			email = "󰀓 ",
+			hyperlink = "󰌹 ",
+			custom = {
+				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
+				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
+				discord = { pattern = "discord%.com", icon = "󰙯 " },
+				github = { pattern = "github%.com", icon = "󰊤 " },
+				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
+				neovim = { pattern = "neovim%.io", icon = " " },
+				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
+				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
+				web = { pattern = "^http[s]?://", icon = "󰖟 " },
+				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
+			},
+		},
+		sign = {
+			enabled = false,
+		},
+		win_options = {
+			concealcursor = {
+				default = vim.api.nvim_get_option_value("concealcursor", {}),
+				rendered = vim.api.nvim_get_option_value("concealcursor", {})
+			}
+		}
+	}
+}
 
 addPlugin {
 	"OXY2DEV/helpview.nvim",
@@ -4406,7 +4431,7 @@ addPlugin {
 					fmt = function(str)
 						local first = str:sub(1,1)
 						if first == "N" then
-							return ""
+							return ""
 						elseif first == "V" then
 							return ""
 						elseif first == "I" then
@@ -5141,7 +5166,7 @@ addPlugin {
 			extras = {
 				named_parameters = true,
 			},
-			hl_priority = hl_priority.hlargs,
+			priority_hl = priority_hl.hlargs,
 			paint_catch_blocks = {
 				declarations = true,
 				usages = true
