@@ -1779,7 +1779,7 @@ local function lightT(opts)
 	light(opts)
 end
 
--- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
+addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
@@ -1793,7 +1793,7 @@ end
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
-addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
+-- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 -- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
@@ -1807,8 +1807,8 @@ addPlugin { "sainnhe/sonokai",                event = "User sonokai"            
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "juliana",              "_",                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
--- dark  { "PaperColorSlim",        "_"                                                             }
-dark  { "sonokai",              "_",                                                             }
+dark  { "PaperColorSlim",        "_"                                                             }
+-- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
