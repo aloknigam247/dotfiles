@@ -1795,8 +1795,8 @@ end
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                    }
-addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
--- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+-- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
+addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
@@ -1813,8 +1813,8 @@ addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"           
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "juliana",              "_",                                                             }
--- dark  { "kanagawa-paper",        "_"                                                             }
-dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "kanagawa-paper",        "_"                                                             }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
@@ -1978,6 +1978,10 @@ addPlugin {
 -- buffer completion
 -- FEAT: ** colors
 -- FEAT: ** show ghost_text while typing
+-- FEAT: ** https://cmp.saghen.dev/recipes.html#buffer-completion-from-all-open-buffers
+-- FEAT: ** transform path separator ? sources.providers.copilot.transform_items
+-- FEAT: ** luasnip
+-- FEAT: https://cmp.saghen.dev/configuration/sources.html#community-sources
 -- FEAT: use all sources from nvim-cmp
 addPlugin {
 	"saghen/blink.cmp",
@@ -2108,6 +2112,7 @@ addPlugin {
 						},
 						source_name = {
 							-- highlight = function() end, -- FEAT: source colors
+							-- https://cmp.saghen.dev/recipes.html#set-source-kind-icon-and-name
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return icons.lsp .. " " .. ctx.item.client_name
