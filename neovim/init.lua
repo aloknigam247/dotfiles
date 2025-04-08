@@ -1,4 +1,6 @@
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Profiling   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- Profiling</>
+------------
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -236,7 +238,6 @@
 -- vim.api.__nvim_create_autocmd = vim.api.nvim_create_autocmd
 -- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Variables</>
 ------------
 
@@ -2068,6 +2069,8 @@ addPlugin {
 													}
 												)
 												_ctx._icon_hl = devicon_hl .. "Reverse"
+												_ctx.icon_hl_bar = devicon
+												-- return "▐" .. icon.icon
 												return icon.icon
 											end
 											return icons[_ctx._kind]
@@ -2085,11 +2088,16 @@ addPlugin {
 									return icons[_ctx.kind]
 								end
 
-								return " " .. getIcon(ctx)
+								local icon = getIcon(ctx)
+								if #icon ~= 4 then
+									return icon
+								else
+									return " " .. icon
+								end
 							end,
 							highlight = function(ctx)
-								-- return { { 0, 1, group = "Normal" }, { 1, 2, group = "Visual" } } -- FIX: Icon padding using ▐
 								if ctx._icon_hl then
+									-- return { { 0, 2, group = ctx.icon_hl_bar}, { 3, 4, group = ctx._icon_hl } } -- FIX: Icon padding using ▐
 									return ctx._icon_hl
 								elseif ctx._kind then
 									return "BlinkCmpKind" .. ctx._kind
