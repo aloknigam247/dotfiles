@@ -3549,7 +3549,7 @@ addPlugin {
 			hover = icons.hover,
 			incoming = icons.incoming,
 			kind = {
-				Array         = { icons.Array,         "CmpItemKindArray",        },
+				Array         = { icons.Array,         "CmpItemKindArray",        }, -- FIX: change to blink
 				Boolean       = { icons.Boolean,       "CmpItemKindBoolean",      },
 				Class         = { icons.Class,         "CmpItemKindClass",        },
 				Constant      = { icons.Constant,      "CmpItemKindConstant",     },
@@ -3803,7 +3803,7 @@ addPlugin {
 				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
 				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
 				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
-				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
+				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end }, -- FIX: change icons for splits
 				{ name = " References", key = "Shift F12", exec = vim.lsp.buf.references },
 				{ name = "󰏫 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
 				{ name = " Type Definition", key = "gt", exec = vim.lsp.buf.type_definition }
