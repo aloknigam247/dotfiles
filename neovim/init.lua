@@ -1794,9 +1794,9 @@ end
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
--- addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                    }
+addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                    }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
-addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+-- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
@@ -1812,8 +1812,8 @@ addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"     
 -- dark  { "e-ink",                "_"                                                              }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
--- dark  { "juliana",              "_",                                                             }
-dark  { "kanagawa-paper",        "_"                                                             }
+dark  { "juliana",              "_",                                                             }
+-- dark  { "kanagawa-paper",        "_"                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
@@ -1975,9 +1975,7 @@ addPlugin {
 -- https://github.com/uga-rosa/cmp-dynamic
 
 -- FIX: commandline options icon
--- buffer completion
--- FEAT: ** colors
--- FEAT: ** show ghost_text while typing
+-- buffer completion c
 -- FEAT: ** https://cmp.saghen.dev/recipes.html#buffer-completion-from-all-open-buffers
 -- FEAT: ** transform path separator ? sources.providers.copilot.transform_items
 -- FEAT: ** luasnip
@@ -1999,8 +1997,12 @@ addPlugin {
 		},
 		cmdline = {
 			completion = {
+				ghost_text = {
+					enabled = true
+				},
 				list = {
 					selection = {
+						auto_insert = false,
 						preselect = false
 					}
 				},
@@ -2015,6 +2017,20 @@ addPlugin {
 				}
 			},
 			keymap = {
+				["<Tab>"] = {
+					function(cmp)
+						if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then
+							if cmp.get_selected_item() then
+								return cmp.accept()
+							else
+								return cmp.select_and_accept()
+							end
+						end
+					end,
+					"fallback",
+				},
+				["<Down>"] = { "select_next", "fallback" },
+				["<Up>"] = { "select_prev", "fallback" },
 				["<Left>"] = {},
 				["<Right>"] = {}
 			},
@@ -2039,7 +2055,7 @@ addPlugin {
 			list = {
 				selection = {
 					auto_insert = false,
-					preselect = false
+					preselect = true
 				}
 			},
 			menu = {
