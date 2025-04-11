@@ -183,19 +183,18 @@ function e() {
     v @args
 }
 
-# FIX: light and dark colors
 function whatis($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg "#FF0022" -styles bold, italic
+        Format-Text "󰊕 $arg" -fg "#CC001B" -styles bold, italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
         bat -p -P $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text " $arg" -fg "#EEE82C" -styles bold, italic
+        Format-Text " $arg" -fg "#4B7639" -styles bold, italic
         $cm.Source
     } elseif ($type -eq "Alias") {
         Format-Text " $arg" -fg "#5D2E8C" -styles bold, italic
