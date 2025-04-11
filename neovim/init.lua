@@ -1976,8 +1976,6 @@ addPlugin {
 
 -- FIX: commandline options icon
 -- buffer completion c
--- FEAT: ** https://cmp.saghen.dev/recipes.html#buffer-completion-from-all-open-buffers
--- FEAT: ** transform path separator ? sources.providers.copilot.transform_items
 -- FEAT: ** luasnip
 -- FEAT: https://cmp.saghen.dev/configuration/sources.html#community-sources
 -- FEAT: use all sources from nvim-cmp
@@ -2176,6 +2174,19 @@ addPlugin {
 				max_width = 50,
 				show_documentation = true,
 				winblend = 70
+			}
+		},
+		sources = {
+			providers = {
+				path = {
+					transform_items = function(_, items)
+						for _, item in pairs(items) do
+							item.label = item.label:gsub("/", "\\")
+							item.insertText = item.insertText:gsub("/", "\\")
+						end
+						return items
+					end
+				}
 			}
 		}
 	}
