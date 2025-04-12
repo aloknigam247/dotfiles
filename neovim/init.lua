@@ -1791,6 +1791,7 @@ end
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
+-- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
@@ -1808,6 +1809,7 @@ addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+-- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "e-ink",                "_"                                                              }
 -- dark  { "hybrid",               "_"                                                              }
@@ -2035,7 +2037,7 @@ addPlugin {
 			},
 			sources = function()
 				if vim.fn.getcmdtype() == ":" then
-					return { "path", "cmdline" } -- FEAT: scope for path
+					return { "lazydev", "path", "cmdline" } -- FEAT: scope for path
 				else
 					return { "buffer" }
 				end
@@ -2127,16 +2129,9 @@ addPlugin {
 						},
 						source_name = {
 							-- highlight = function() end, -- FEAT: source colors
-							-- https://cmp.saghen.dev/recipes.html#set-source-kind-icon-and-name
-							text = function(ctx) -- FIX: change name at sources.providers._.name
+							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return icons.lsp .. " " .. ctx.item.client_name
-								elseif ctx.source_name == "Path" then
-									return icons.Path .. ctx.source_name
-								elseif ctx.source_name == "Snippets" then
-									return icons.Snippet .. " " .. ctx.source_name
-								elseif ctx.source_name == "Buffer" then
-									return "󰙩 " .. ctx.source_name
 								end
 
 								return ctx.source_name
@@ -2180,12 +2175,19 @@ addPlugin {
 		sources = {
 			default = { "lazydev", "lsp", "path", "snippets", "buffer", "ripgrep" },
 			providers = {
+				buffer = {
+					name = "󰙩 buffer"
+				},
+				cmdline = {
+					name = " cmdline"
+				},
 				lazydev = {
 					name = icons.lazy .. "LazyDev",
 					module = "lazydev.integrations.blink",
 					score_offset = 100,
 				},
 				path = {
+					name = icons.Path .. "path",
 					transform_items = function(_, items)
 						for _, item in pairs(items) do
 							item.label = item.label:gsub("/", "\\")
@@ -2315,6 +2317,9 @@ addPlugin {
 						end
 						return items
 					end,
+				},
+				snippets = {
+					name = icons.Snippet .. " " .. "snippet"
 				}
 			}
 		}
@@ -5545,8 +5550,12 @@ addPlugin {
 	cmd = "InlineEdit"
 }
 
+-- addPlugin {
+-- 	"Dkendal/nvim-alternate" -- FEAT: 
+-- }
+
 addPlugin {
-	'MagicDuck/grug-far.nvim',
+	"MagicDuck/grug-far.nvim",
 	config = true
 }
 
