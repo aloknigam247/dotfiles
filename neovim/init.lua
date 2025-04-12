@@ -1794,8 +1794,7 @@ end
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
--- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
-addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"                                    }
+addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
@@ -1812,8 +1811,7 @@ addPlugin { "kaiuri/nvim-juliana",            event = "User juliana"            
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "e-ink",                "_"                                                              }
 -- dark  { "hybrid",               "_"                                                              }
--- dark  { "jb",                   "_"                                                              }
-dark  { "juliana",              "_",                                                             }
+dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
@@ -2697,7 +2695,7 @@ addPlugin {
 			["args"] = "[DOCME" .. ": args]",
 			["kwargs"] = "[DOCME" .. ": kwargs]",
 		},
-		snippet_engine = "snippy"
+		snippet_engine = "nvim"
 	}
 }
 -- https://github.com/nvim-treesitter/nvim-tree-docs
