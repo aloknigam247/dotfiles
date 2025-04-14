@@ -1986,7 +1986,8 @@ addPlugin {
 	end,
 	dependencies = {
 		"mikavilpas/blink-ripgrep.nvim",
-		"rafamadriz/friendly-snippets"
+		"rafamadriz/friendly-snippets",
+		"xzbdmw/colorful-menu.nvim"
 	},
 	event = { "CmdlineEnter", "InsertEnter" },
 	--- @type blink.cmp.Config
@@ -2125,6 +2126,14 @@ addPlugin {
 								end
 							end
 						},
+						label = {
+							text = function(ctx)
+								return require("colorful-menu").blink_components_text(ctx)
+							end,
+							highlight = function(ctx)
+								return require("colorful-menu").blink_components_highlight(ctx)
+							end,
+						},
 						source_name = {
 							-- highlight = function() end, -- FEAT: source colors
 							text = function(ctx)
@@ -2245,11 +2254,6 @@ addPlugin {
 -- 	name = "cmp-nvim-lsp",
 -- 	event = "LspAttach"
 -- }
-
--- -- addPlugin { -- TODO: blink me
--- --     "paopaol/cmp-doxygen",
--- --     event = "InsertEnter *.cc,*.cpp,*.c,*.h"
--- -- }
 
 -- addPlugin {
 -- 	-- https://github.com/Saghen/blink.cmp
@@ -2406,9 +2410,9 @@ addPlugin {
 -- 	event = "VeryLazy",
 -- }
 
-addPlugin { -- TODO: blink me
-	"xzbdmw/colorful-menu.nvim"
-}
+-- addPlugin {
+-- 	"xzbdmw/colorful-menu.nvim"
+-- }
 
 -- https://github.com/L3MON4D3/cmp-luasnip-choice
 -- https://github.com/kristijanhusak/vim-dadbod-completion
