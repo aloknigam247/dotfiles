@@ -16,25 +16,10 @@
 [interactive]
     diffFilter = delta --color-only
 
+[includeIf "TERM_THEME:Light"]
+    path = ~/light.gitconfig
 ; FIX: Color scheme for light and dark
 [delta]
-    ; blame-code-style = "syntax #4A4A48"
-    ; blame-palette = "#FFE8D1 #568EA3 #68C3D4 #FFFFFF"
-    ; file-style = "#91CB3E bold reverse"
-    ; hunk-header-file-style = "#E08E45"
-    ; hunk-header-line-number-style = "#E08E45"
-    ; line-numbers-left-style = "#F0A868"
-    ; line-numbers-minus-style = "#ffb3b3 #900603"
-    ; line-numbers-plus-style = "#B2D3C2 #234F1E"
-    ; line-numbers-right-style = "#EFBC9B"
-    ; line-numbers-zero-style = "#4F759B"
-    ; minus-emph-style = "#ffb3b3 #C31D2B"
-    ; minus-non-emph-style = "syntax #900603"
-    ; minus-style = "syntax #900603 bold italic"
-    ; plus-emph-style = "#B2D3C2 #607D3B"
-    ; plus-non-emph-style = "syntax #234F1E"
-    ; plus-style = "syntax #234F1E bold italic"
-    ; syntax-theme = Catppuccin Latte
     colorMoved = default
     commit-decoration-style = box
     commit-style = red

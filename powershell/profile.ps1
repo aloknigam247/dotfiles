@@ -83,6 +83,7 @@ $dark_palette = @{
 # │ Themes Settings │
 # ╰─────────────────╯
 $theme = "Light"
+$env:TERM_THEME = $theme
 
 if ($theme -eq "Light") {
     $palette = $light_palette
