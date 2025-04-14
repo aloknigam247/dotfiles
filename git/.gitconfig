@@ -16,12 +16,11 @@
 [interactive]
     diffFilter = delta --color-only
 
-[includeIf "TERM_THEME:Light"]
+[include]
     path = ~/light.gitconfig
-; FIX: Color scheme for light and dark
+
 [delta]
     colorMoved = default
-    commit-decoration-style = box
     commit-style = red
     file-added-label = 
     file-copied-label = 
@@ -30,10 +29,7 @@
     file-removed-label = 󰆴
     file-renamed-label = 
     file-transformation = "s/$/  /"
-    hunk-header-decoration-style = ""
-    hunk-header-style = "line-number syntax"
     hunk-label = ""
-    light = true
     line-numbers = true
     line-numbers-left-format = "{nm:^1}│"
     line-numbers-right-format = "{np:^1}┃"
@@ -42,7 +38,7 @@
     true-color = always
 
 [merge]
-    conflictstyle = diff3
+    conflictstyle = zdiff3
     tool = vscode
 
 [mergetool "vscode"]
