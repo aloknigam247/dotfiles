@@ -684,14 +684,14 @@ end
 ---@return string # Color in hex format
 function LightenDarkenColor(col, amt)
 	local function clamp(x) return math.max(0, math.min(255, x)) end
-	local num = tonumber(col:sub(2), 16)
-		
+
+	local num = tonumber(col:sub(2), 16)	
 	local r = clamp(bit.rshift(num, 16) + amt)
 	local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-	local hex_code = string.format("#%-6X", newColor)
-	return hex_code:gsub(" ", "0")[0]
+
+	return string.format("#%-6X", newColor)
 end
 
 ---Adds a plugin Lazy nvim config
@@ -706,16 +706,16 @@ end
 ---@return string # Color in Hex format
 local function adaptiveBG(lighten, darken)
 	local bg
+
 	if (vim.o.background == "dark") then
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 0
 		bg = string.format("%X", bg)
-		bg = LightenDarkenColor(bg, lighten)
+		return LightenDarkenColor(bg, lighten)
 	else
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 16777215
 		bg = string.format("%X", bg)
-		bg = LightenDarkenColor(bg, darken)
+		return LightenDarkenColor(bg, darken)
 	end
-	return bg
 end
 
 ---Get list filetypes/extentions for Treesitter languages installed
@@ -1532,7 +1532,7 @@ addPlugin {
 		})
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-		local hl = { bg = adaptiveBG(40, -40), underline = true } -- FIX: adaptiveBG
+		local hl = { bg = adaptiveBG(40, -40), underline = true }
 		vim.api.nvim_set_hl(0, "IlluminatedWordText", hl)
 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", hl)
 		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", hl)
@@ -1795,12 +1795,12 @@ end
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
-addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
+-- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
--- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
+addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
@@ -1811,9 +1811,8 @@ addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"             
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "charleston",           "_"                                                              }
--- dark  { "duskfox",              "nightfox"                                                       }
--- dark  { "e-ink",                "_"                                                              }
-dark  { "hybrid",               "_"                                                              }
+dark  { "duskfox",              "nightfox"                                                       }
+-- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
@@ -2079,18 +2078,9 @@ addPlugin {
 											-- create highlight for extension
 											if icon then
 												local devicon_hl = "DevIcon" .. icon.name
-												vim.api.nvim_set_hl(
-													0,
-													devicon_hl .. "Reverse",
-													{
-														default = true,
-														bg = vim.api.nvim_get_hl(0, { name = devicon_hl }).fg,
-														fg = "#FFFFFF"
-													}
-												)
-												_ctx._icon_hl = devicon_hl .. "Reverse"
-												_ctx.icon_hl_bar = devicon
-												-- return "▐" .. icon.icon
+												vim.api.nvim_set_hl(0, devicon_hl .. "Reverse", { default = true, bg = vim.api.nvim_get_hl(0, { name = devicon_hl }).fg, fg = "#FFFFFF" })
+												_ctx._icon_hl = { { group = devicon_hl }, { 1, group = devicon_hl .. "Reverse" } }
+
 												return icon.icon
 											end
 											return icons[_ctx._kind]
@@ -2108,16 +2098,10 @@ addPlugin {
 									return icons[_ctx.kind]
 								end
 
-								local icon = getIcon(ctx)
-								if #icon ~= 4 then
-									return icon
-								else
-									return " " .. icon
-								end
+								return "▐" .. getIcon(ctx)
 							end,
-							highlight = function(ctx)
+							highlight = function(ctx) -- FEAT: bar color
 								if ctx._icon_hl then
-									-- return { { 0, 2, group = ctx.icon_hl_bar}, { 3, 4, group = ctx._icon_hl } } -- FIX: Icon padding using ▐
 									return ctx._icon_hl
 								elseif ctx._kind then
 									return "BlinkCmpKind" .. ctx._kind
@@ -2180,18 +2164,18 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "lazydev", "lsp", "path", "snippets", "buffer", "ripgrep" }, -- TODO: ordering and max suggestion count
+			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
 			providers = {
 				buffer = {
-					name = "󰙩 buffer"
+					name = "󰙩 buffer",
+					score_offset = 0
 				},
 				cmdline = {
 					name = " cmdline"
 				},
 				lazydev = {
 					name = icons.lazy .. "LazyDev",
-					module = "lazydev.integrations.blink",
-					score_offset = 100,
+					module = "lazydev.integrations.blink"
 				},
 				path = {
 					name = icons.Path .. "path",
@@ -2206,6 +2190,8 @@ addPlugin {
 				ripgrep = {
 					module = "blink-ripgrep",
 					name = "ripgrep",
+					max_items = 5,
+					score_offset = -1,
 					---@module "blink-ripgrep"
 					---@type blink-ripgrep.Options
 					opts = {
