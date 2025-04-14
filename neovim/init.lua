@@ -1217,6 +1217,7 @@ vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w
 vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
 -- word selection
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
 vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG", { desc = "yank all text" })
@@ -1794,8 +1795,8 @@ end
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
--- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
-addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
+addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
+-- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
@@ -1812,8 +1813,8 @@ addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                 
 -- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "e-ink",                "_"                                                              }
--- dark  { "hybrid",               "_"                                                              }
-dark  { "jb",                   "_"                                                              }
+dark  { "hybrid",               "_"                                                              }
+-- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
@@ -1975,9 +1976,6 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
 
--- FIX: commandline options icon
--- buffer completion
--- FEAT: use all sources from nvim-cmp
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -2248,7 +2246,7 @@ addPlugin {
 -- 	event = "LspAttach"
 -- }
 
--- -- addPlugin {
+-- -- addPlugin { -- TODO: blink me
 -- --     "paopaol/cmp-doxygen",
 -- --     event = "InsertEnter *.cc,*.cpp,*.c,*.h"
 -- -- }
@@ -2408,7 +2406,7 @@ addPlugin {
 -- 	event = "VeryLazy",
 -- }
 
-addPlugin {
+addPlugin { -- TODO: blink me
 	"xzbdmw/colorful-menu.nvim"
 }
 
@@ -3402,7 +3400,7 @@ addPlugin {
 		},
 		scope = {
 			enabled = true,
-			char = "▏",
+			char = "▎",
 			show_start = true,
 			show_end = true,
 			injected_languages = true,
@@ -3612,46 +3610,46 @@ addPlugin {
 			hover = icons.hover,
 			incoming = icons.incoming,
 			kind = {
-				Array         = { icons.Array,         "CmpItemKindArray",        }, -- FIX: change to blink
-				Boolean       = { icons.Boolean,       "CmpItemKindBoolean",      },
-				Class         = { icons.Class,         "CmpItemKindClass",        },
-				Constant      = { icons.Constant,      "CmpItemKindConstant",     },
-				Constructor   = { icons.Constructor,   "CmpItemKindConstructor",  },
-				Enum          = { icons.Enum,          "CmpItemKindEnum",         },
-				EnumMember    = { icons.EnumMember,    "CmpItemKindEnumMember",   },
-				Event         = { icons.Event,         "CmpItemKindEvent",        },
-				Field         = { icons.Field,         "CmpItemKindField",        },
-				File          = { icons.File,          "CmpItemKindFile",         },
-				Folder        = { icons.Folder,        "CmpItemKindFolder",       },
-				Function      = { icons.Function,      "CmpItemKindFunction",     },
-				Interface     = { icons.Interface,     "CmpItemKindInterface",    },
-				Key           = { icons.Key,           "CmpItemKindKey",          },
-				Macro         = { icons.Macro,         "CmpItemKindMacro",        },
-				Method        = { icons.Method,        "CmpItemKindMethod",       },
-				Module        = { icons.Module,        "CmpItemKindModule",       },
-				Namespace     = { icons.Namespace,     "CmpItemKindNamespace",    },
-				Null          = { icons.Null,          "CmpItemKindNull",         },
-				Number        = { icons.Number,        "CmpItemKindNumber",       },
-				Object        = { icons.Object,        "CmpItemKindObject",       },
-				Operator      = { icons.Operator,      "CmpItemKindOperator",     },
-				Package       = { icons.Package,       "CmpItemKindPackage",      },
-				Parameter     = { icons.Parameter,     "CmpItemKindParameter",    },
-				Property      = { icons.Property,      "CmpItemKindProperty",     },
-				Snippet       = { icons.Snippet,       "CmpItemKindSnippet",      },
-				StaticMethod  = { icons.StaticMethod,  "CmpItemKindStaticMethod", },
-				String        = { icons.String,        "CmpItemKindString",       },
-				Struct        = { icons.Struct,        "CmpItemKindStruct",       },
-				Text          = { icons.Text,          "CmpItemKindText",         },
-				TypeAlias     = { icons.TypeAlias,     "CmpItemKindTypeAlias",    },
-				TypeParameter = { icons.TypeParameter, "CmpItemKindTypeParameter",},
-				Unit          = { icons.Unit,          "CmpItemKindUnit",         },
-				Value         = { icons.Value,         "CmpItemKindValue",        },
-				Variable      = { icons.Variable,      "CmpItemKindVariable",     },
+				Array         = { icons.Array,         "BlinkCmpKindArray",        },
+				Boolean       = { icons.Boolean,       "BlinkCmpKindBoolean",      },
+				Class         = { icons.Class,         "BlinkCmpKindClass",        },
+				Constant      = { icons.Constant,      "BlinkCmpKindConstant",     },
+				Constructor   = { icons.Constructor,   "BlinkCmpKindConstructor",  },
+				Enum          = { icons.Enum,          "BlinkCmpKindEnum",         },
+				EnumMember    = { icons.EnumMember,    "BlinkCmpKindEnumMember",   },
+				Event         = { icons.Event,         "BlinkCmpKindEvent",        },
+				Field         = { icons.Field,         "BlinkCmpKindField",        },
+				File          = { icons.File,          "BlinkCmpKindFile",         },
+				Folder        = { icons.Folder,        "BlinkCmpKindFolder",       },
+				Function      = { icons.Function,      "BlinkCmpKindFunction",     },
+				Interface     = { icons.Interface,     "BlinkCmpKindInterface",    },
+				Key           = { icons.Key,           "BlinkCmpKindKey",          },
+				Macro         = { icons.Macro,         "BlinkCmpKindMacro",        },
+				Method        = { icons.Method,        "BlinkCmpKindMethod",       },
+				Module        = { icons.Module,        "BlinkCmpKindModule",       },
+				Namespace     = { icons.Namespace,     "BlinkCmpKindNamespace",    },
+				Null          = { icons.Null,          "BlinkCmpKindNull",         },
+				Number        = { icons.Number,        "BlinkCmpKindNumber",       },
+				Object        = { icons.Object,        "BlinkCmpKindObject",       },
+				Operator      = { icons.Operator,      "BlinkCmpKindOperator",     },
+				Package       = { icons.Package,       "BlinkCmpKindPackage",      },
+				Parameter     = { icons.Parameter,     "BlinkCmpKindParameter",    },
+				Property      = { icons.Property,      "BlinkCmpKindProperty",     },
+				Snippet       = { icons.Snippet,       "BlinkCmpKindSnippet",      },
+				StaticMethod  = { icons.StaticMethod,  "BlinkCmpKindStaticMethod", },
+				String        = { icons.String,        "BlinkCmpKindString",       },
+				Struct        = { icons.Struct,        "BlinkCmpKindStruct",       },
+				Text          = { icons.Text,          "BlinkCmpKindText",         },
+				TypeAlias     = { icons.TypeAlias,     "BlinkCmpKindTypeAlias",    },
+				TypeParameter = { icons.TypeParameter, "BlinkCmpKindTypeParameter",},
+				Unit          = { icons.Unit,          "BlinkCmpKindUnit",         },
+				Value         = { icons.Value,         "BlinkCmpKindValue",        },
+				Variable      = { icons.Variable,      "BlinkCmpKindVariable",     }
 			},
 			lines = { "╰", "⎬", "│", "─", "╭" },
 			outgoing = icons.outgoing,
 			preview = icons.preview,
-			title  = true,
+			title  = true
 		}
 	}
 }
@@ -3769,7 +3767,6 @@ addPlugin {
 	}
 }
 
--- FEAT: do not lsp for all filetypes by default
 addPlugin {
 	"williamboman/mason-lspconfig.nvim",
 	config = function()
@@ -3866,7 +3863,7 @@ addPlugin {
 				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
 				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
 				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
-				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end }, -- FIX: change icons for splits
+				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
 				{ name = " References", key = "Shift F12", exec = vim.lsp.buf.references },
 				{ name = "󰏫 Rename", key = "F2", exec = function() vim.cmd("Lspsaga rename") end },
 				{ name = " Type Definition", key = "gt", exec = vim.lsp.buf.type_definition }
@@ -4167,6 +4164,9 @@ addPlugin {
 
 addPlugin {
 	"kshenoy/vim-signature",
+	config = function()
+		vim.g.SignatureIncludeMarks = "abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	end,
 	lazy = false
 }
 -- <~>
@@ -5027,6 +5027,7 @@ addPlugin {
 	}
 }
 
+-- FIX: higher priority for extmark than diagnostics
 addPlugin {
 	"nvim-neotest/neotest",
 	cmd = "Neotest",
@@ -5743,7 +5744,6 @@ addPlugin {
 			color = "Visual"
 		})
 	end,
-	init = function() vim.cmd("delmarks yz") end,
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
