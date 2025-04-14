@@ -4919,6 +4919,7 @@ addPlugin {
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+-- TODO: study different options for pickers https://github.com/2KAbhishek/pickme.nvim
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
