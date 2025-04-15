@@ -17,7 +17,7 @@ $light_palette = @{
         selection = "#95AFA4"
         string = "#CA6702"
         type = "#8839EF"
-        variable = "#DC8A78"
+        variable = "#FE640B"
     }
     git = @{
         commit = "#04A5E5"
