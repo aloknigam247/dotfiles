@@ -492,6 +492,12 @@ local priority_win = {
 	peek = 50
 }
 
+---Defines virtual text priority
+---@type table<string, integer>
+local priority_virt = {
+	diagnostics = 5000
+}
+
 ---@type string[] List of filetypes to enable Overlength marker
 local overlength_filetypes = {
 	"cpp",
@@ -3716,6 +3722,9 @@ addPlugin {
 					if arg.code then return arg.message .. " [" .. arg.code .. "]" end
 					return arg.message
 				end,
+				virt_texts = {
+					priority = priority_virt.diagnostics
+				}
 			},
 			signs = {
 				left = "",
@@ -5015,7 +5024,6 @@ addPlugin {
 	}
 }
 
--- FIX: higher priority for extmark than diagnostics
 addPlugin {
 	"nvim-neotest/neotest",
 	cmd = "Neotest",
