@@ -5,7 +5,7 @@
     editor = nvim
     fsmonitor = true
     pager = delta
-    autocrlf = true
+	autocrlf = true
 
 [push]
     autoSetupRemote = true
