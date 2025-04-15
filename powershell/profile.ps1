@@ -595,7 +595,7 @@ function prompt {
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
-    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command -styles "bold");
+    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
     "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment);
     "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
     "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
