@@ -275,7 +275,7 @@ local icons = {
 	Number             = " ",
 	Object             = " ",
 	Operator           = " ",
-	Options            = " ",
+	Options            = " ",
 	Package            = " ",
 	Parameter          = " ",
 	Path               = " ",
@@ -2068,46 +2068,44 @@ addPlugin {
 						kind_icon = {
 							text = function(ctx)
 								local function getIcon(_ctx)
+									local kind
 									local stat = vim.loop.fs_stat(_ctx.label)
 									if stat then
 										-- file/path icons
 										if stat.type == "file" then
 											local ext = _ctx.label:match(".[^.]+$"):gsub("%.", "")
-											_ctx._kind = "File"
 											local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
 											-- create highlight for extension
 											if icon then
 												local devicon_hl = "DevIcon" .. icon.name
 												vim.api.nvim_set_hl(0, devicon_hl .. "Reverse", { default = true, bg = vim.api.nvim_get_hl(0, { name = devicon_hl }).fg, fg = "#FFFFFF" })
-												_ctx._icon_hl = { { group = devicon_hl }, { 1, group = devicon_hl .. "Reverse" } }
+												_ctx._icon_hl = devicon_hl .. "Reverse"
 
 												return icon.icon
 											end
-											return icons[_ctx._kind]
+											kind = "File"
+											_ctx._icon_hl = "BlinkCmpKind" .. kind
+											return icons[kind]
 										elseif stat.type == "directory" then
-											_ctx._kind = "Path"
-											return icons[_ctx._kind]
+											kind = "Path"
+											_ctx._icon_hl = "BlinkCmpKind" .. kind
+											return icons[kind]
 										end
 									end
 
-									if _ctx.source_name == "Cmdline" then
-										_ctx._kind = "Options"
-										return icons[_ctx._kind]
+									if _ctx.source_name:match("cmdline$") then
+										kind = "Options"
+										_ctx._icon_hl = "BlinkCmpKind" .. kind
+										return icons[kind]
 									end
 
 									return icons[_ctx.kind]
 								end
 
-								return "▐" .. getIcon(ctx)
+								return " " .. getIcon(ctx)
 							end,
-							highlight = function(ctx) -- FEAT: bar color
-								if ctx._icon_hl then
-									return ctx._icon_hl
-								elseif ctx._kind then
-									return "BlinkCmpKind" .. ctx._kind
-								else
-									return ctx.kind_hl
-								end
+							highlight = function(ctx)
+								return ctx._icon_hl and ctx._icon_hl or ctx.kind_hl
 							end
 						},
 						label = {
@@ -2119,7 +2117,6 @@ addPlugin {
 							end,
 						},
 						source_name = {
-							-- highlight = function() end, -- FEAT: source colors
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return icons.lsp .. " " .. ctx.item.client_name
