@@ -32,7 +32,7 @@ $light_palette = @{
     prompt = @{
         dir_icon = @{
             bg = "#7287FD"
-            fg = "#DD7878"
+            fg = "#DCE0E8"
         }
         dir_path = "#EFF1F5"
         git = @{
