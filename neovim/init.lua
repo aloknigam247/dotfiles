@@ -1798,7 +1798,7 @@ end
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
--- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
+addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
@@ -1806,7 +1806,7 @@ end
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
-addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
+-- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
@@ -1816,8 +1816,8 @@ addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"           
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
--- dark  { "charleston",           "_"                                                              }
-dark  { "duskfox",              "nightfox"                                                       }
+dark  { "charleston",           "_"                                                              }
+-- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
@@ -2200,6 +2200,7 @@ addPlugin {
 					opts = {
 						max_filesize = "300K",
 						search_casing = "--smart-case",
+						ignore_paths = { "~/" }
 					},
 					transform_items = function(_, items)
 						for _, item in ipairs(items) do
