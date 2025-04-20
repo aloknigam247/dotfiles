@@ -697,7 +697,8 @@ function LightenDarkenColor(col, amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
 
-	return string.format("#%-6X", newColor)
+	hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
+	return hex
 end
 
 ---Adds a plugin Lazy nvim config
@@ -1448,7 +1449,7 @@ addPlugin {
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
 	opts = {
-		cursor_symbol = "",
+		cursor_symbol = ">",
 		floating_windows = true,
 		hide_on_intersect = true,
 		signs_on_startup = {
@@ -1457,14 +1458,12 @@ addPlugin {
 			"cursor",
 			"diagnostics",
 			"folds",
-			-- "indent",
 			"latestchange",
 			"loclist",
 			"marks",
 			"quickfix",
 			"search",
 			"spell",
-			"textwidth",
 			"trail",
 		}
 	}
@@ -1794,17 +1793,16 @@ local function lightT(opts)
 	light(opts)
 end
 
--- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
--- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
--- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
-addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
--- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
+addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
+-- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
+addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
--- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
@@ -1816,7 +1814,7 @@ addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"         
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
-dark  { "charleston",           "_"                                                              }
+-- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
@@ -1833,13 +1831,12 @@ dark  { "charleston",           "_"                                             
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
--- light { "bluloco",              "_"                                                              }
--- light { "catppuccin-latte",     "catppuccin"                                                     }
--- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "kanagawa-paper",        "_"                                                             }
--- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
--- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
--- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
+light { "bluloco",              "_"                                                              }
+light { "catppuccin-latte",     "catppuccin"                                                     }
+light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+light { "kanagawa-paper",        "_"                                                             }
+lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2007,7 +2004,7 @@ addPlugin {
 				},
 				list = {
 					selection = {
-						auto_insert = false,
+						auto_insert = true,
 						preselect = true
 					}
 				},
@@ -2022,20 +2019,10 @@ addPlugin {
 				}
 			},
 			keymap = {
-				["<Tab>"] = {
-					function(cmp)
-						if cmp.is_menu_visible() then
-							return cmp.insert_next()
-						else
-							return cmp.show_and_insert()
-						end
-					end,
-					"fallback",
-				},
-				["<Down>"] = { "select_next", "fallback" }, -- FIX: updown for prev/next commands
-				["<Up>"] = { "select_prev", "fallback" },
-				["<Left>"] = {},
-				["<Right>"] = {}
+				["<Down>"] = { "fallback" },
+				["<Up>"] = { "fallback" },
+				["<Left>"] = { "fallback" },
+				["<Right>"] = { "fallback" }
 			},
 			sources = function()
 				if vim.fn.getcmdtype() == ":" then
@@ -2211,7 +2198,9 @@ addPlugin {
 					end,
 				},
 				snippets = {
-					name = icons.Snippet .. " " .. "snippet"
+					name = icons.Snippet .. " " .. "snippet",
+					max_items = 5,
+					score_offset = -100
 				}
 			}
 		}
@@ -4054,6 +4043,9 @@ addPlugin {
 				default = vim.api.nvim_get_option_value("concealcursor", {}),
 				rendered = vim.api.nvim_get_option_value("concealcursor", {})
 			}
+		},
+		completions = {
+			blink = { enabled = true }
 		}
 	}
 }
