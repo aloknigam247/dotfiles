@@ -2012,7 +2012,7 @@ addPlugin {
 					}
 				},
 				menu = {
-					auto_show = true,
+					auto_show = false,
 					draw = {
 						columns = {
 							{ "kind_icon" },
@@ -2024,12 +2024,10 @@ addPlugin {
 			keymap = {
 				["<Tab>"] = {
 					function(cmp)
-						if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then
-							if cmp.get_selected_item() then
-								return cmp.accept()
-							else
-								return cmp.select_and_accept()
-							end
+						if cmp.is_menu_visible() then
+							return cmp.insert_next()
+						else
+							return cmp.show_and_insert()
 						end
 					end,
 					"fallback",
@@ -2200,7 +2198,7 @@ addPlugin {
 					opts = {
 						max_filesize = "300K",
 						search_casing = "--smart-case",
-						ignore_paths = { "~/" }
+						ignore_paths = { "C:\\Users\\aloknigam" }
 					},
 					transform_items = function(_, items)
 						for _, item in ipairs(items) do
