@@ -117,7 +117,7 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
             $dt = Get-Date
             git add .
             git commit -m "Updated at $dt"
-            Remove-Item .git\index.lock # fix lock error
+            Remove-Item .git\index.lock -ErrorAction SilentlyContinue # fix lock error
             git push
 
             # Send ballon notification

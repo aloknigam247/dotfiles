@@ -18,6 +18,7 @@
 
 [include]
     path = ~/light.gitconfig
+    path = ~/.gitconfig.orig
 
 [delta]
     colorMoved = default
@@ -59,3 +60,5 @@
     ignore = update-index --skip-worktree
     unignore = update-index --no-skip-worktree
     ignored = !git ls-files -v | grep \"^S\"
+[credential "azrepos:org/onedrive"]
+    username = aloknigam@microsoft.com
