@@ -2108,7 +2108,7 @@ addPlugin {
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
-							source_name = { -- FEAT: italic and in (...)
+							source_name = {
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return icons.lsp .. " " .. ctx.item.client_name
