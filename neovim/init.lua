@@ -1450,6 +1450,7 @@ addPlugin {
 	cmd = "ScrollViewToggle",
 	opts = {
 		cursor_symbol = ">",
+			search_symbol = " ",
 		floating_windows = true,
 		hide_on_intersect = true,
 		signs_on_startup = {
@@ -1458,13 +1459,13 @@ addPlugin {
 			"cursor",
 			"diagnostics",
 			"folds",
+			"keywords",
 			"latestchange",
 			"loclist",
 			"marks",
 			"quickfix",
 			"search",
-			"spell",
-			"trail",
+			"spell"
 		}
 	}
 }
@@ -1794,10 +1795,10 @@ local function lightT(opts)
 end
 
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
-addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
+-- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+-- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
-addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
+-- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
@@ -1831,12 +1832,12 @@ addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"     
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
-light { "bluloco",              "_"                                                              }
-light { "catppuccin-latte",     "catppuccin"                                                     }
-light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+-- light { "bluloco",              "_"                                                              }
+-- light { "catppuccin-latte",     "catppuccin"                                                     }
+-- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 light { "kanagawa-paper",        "_"                                                             }
-lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
-lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
+-- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+-- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2018,7 +2019,7 @@ addPlugin {
 					}
 				}
 			},
-			keymap = {
+			keymap = { -- FIX: tab mapping
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { "fallback" },
@@ -2053,7 +2054,7 @@ addPlugin {
 				auto_show = true,
 				draw = {
 					columns = {
-						{ "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" }
+						{ "kind_icon" }, { "label" }, { "source_name" }
 					},
 					components = {
 						kind_icon = {
@@ -2100,14 +2101,14 @@ addPlugin {
 							end
 						},
 						label = {
-							text = function(ctx)
+							text = function(ctx) -- FIX: test working
 								return require("colorful-menu").blink_components_text(ctx)
 							end,
 							highlight = function(ctx)
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
-						source_name = {
+							source_name = { -- FEAT: italic and in (...)
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return icons.lsp .. " " .. ctx.item.client_name
@@ -2186,16 +2187,7 @@ addPlugin {
 						max_filesize = "300K",
 						search_casing = "--smart-case",
 						ignore_paths = { "C:\\Users\\aloknigam" }
-					},
-					transform_items = function(_, items)
-						for _, item in ipairs(items) do
-							-- example: append a description to easily distinguish rg results
-							item.labelDetails = {
-								description = "(rg)",
-							}
-						end
-						return items
-					end,
+					}
 				},
 				snippets = {
 					name = icons.Snippet .. " " .. "snippet",
