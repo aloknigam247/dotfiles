@@ -49,7 +49,7 @@
         },
         {
             "id": null,
-            "keys": "enter"
+            "keys": "ctrl+v"
         },
         {
             "id": "User.find",
@@ -57,7 +57,7 @@
         },
         {
             "id": null,
-            "keys": "ctrl+v"
+            "keys": "enter"
         },
         {
             "id": null,
@@ -65,11 +65,11 @@
         },
         {
             "id": null,
-            "keys": "ctrl+r"
+            "keys": "shift+insert"
         },
         {
             "id": null,
-            "keys": "shift+insert"
+            "keys": "ctrl+r"
         },
         {
             "id": null,
@@ -245,5 +245,5 @@
         }
     ],
     "useAcrylicInTabRow": true,
-    "windowingBehavior": "useAnyExisting"
+    "windowingBehavior": "useNew"
 }
