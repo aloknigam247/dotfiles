@@ -2019,7 +2019,7 @@ addPlugin {
 					}
 				}
 			},
-			keymap = { -- FIX: tab mapping
+			keymap = {
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { "fallback" },
@@ -2101,7 +2101,7 @@ addPlugin {
 							end
 						},
 						label = {
-							text = function(ctx) -- FIX: test working
+							text = function(ctx)
 								return require("colorful-menu").blink_components_text(ctx)
 							end,
 							highlight = function(ctx)
@@ -2128,18 +2128,7 @@ addPlugin {
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Left>"] = {},
 			["<Right>"] = {},
-			["<Tab>"] = {
-				function(cmp)
-					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then
-						if cmp.get_selected_item() then
-							return cmp.accept()
-						else
-							return cmp.select_and_accept()
-						end
-					end
-				end,
-				"fallback",
-			}
+			["<Tab>"] = { "accept", "fallback" }
 		},
 		signature = {
 			enabled = true,
@@ -4352,20 +4341,6 @@ addPlugin {
 }
 
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin { -- TODO: remove me, convert to friendly-snippets
--- 	"dcampos/nvim-snippy",
--- 	dependencies = "honza/vim-snippets",
--- 	opts = { 
--- 		mappings = {
--- 			is = {
--- 				["<Tab>"] = "expand_or_advance",
--- 				["<S-Tab>"] = "previous",
--- 			}
--- 		}
--- 	},
--- }
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Default method to use until statuscol.nvim loads which then overrides it
 ---@return string
@@ -4898,7 +4873,7 @@ addPlugin {
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
--- TODO: study different options for pickers https://github.com/2KAbhishek/pickme.nvim
+
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -5432,10 +5407,6 @@ addPlugin {
 	cmd = "InlineEdit"
 }
 
--- addPlugin {
--- 	"Dkendal/nvim-alternate" -- FEAT: 
--- }
-
 addPlugin {
 	"MagicDuck/grug-far.nvim",
 	config = true
@@ -5886,6 +5857,4 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
--- FIX: LSP errors
-
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
