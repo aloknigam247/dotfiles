@@ -1,3 +1,5 @@
+$powershell_path = "C:\Program Files\PowerShell\7\pwsh.exe"
+
 $scoop_pkgs = @(
     "PSFzf"
     "fzf"
@@ -5,9 +7,12 @@ $scoop_pkgs = @(
 )
 
 $winget_pkgs = @(
-    "Microsoft.PowerShell.Preview",
     "gerardog.gsudo"
 )
+
+if ((Test-Path -Path $powershell_path) -eq $false) {
+    $winget_pkgs.Add("Microsoft.PowerShell.Preview")
+}
 
 $files = @{
     "profile.ps1" = $PROFILE.AllUsersAllHosts;

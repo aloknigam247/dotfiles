@@ -1,5 +1,5 @@
 $pip_pkgs = @(
-    'debugpy',
+    'debugpy'
     'pipx'
 )
 
@@ -14,9 +14,10 @@ $scoop_pkgs = @(
 )
 
 $winget_pkgs = @(
-    "GitHub.cli",
-    "Google.Chrome",
-    "Microsoft.PowerToys",
-    "Microsoft.VisualStudioCode",
+    "GitHub.cli"
+    "Google.Chrome"
+    "Insomnia.Insomnia"
+    "Microsoft.PowerToys"
+    "Microsoft.VisualStudioCode"
     "Python.Python.3.12"
 )
