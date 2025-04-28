@@ -492,6 +492,12 @@ local priority_win = {
 	peek = 50
 }
 
+---Defines virtual text priority
+---@type table<string, integer>
+local priority_virt = {
+	diagnostics = 5000
+}
+
 ---@type string[] List of filetypes to enable Overlength marker
 local overlength_filetypes = {
 	"cpp",
@@ -691,7 +697,8 @@ function LightenDarkenColor(col, amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
 
-	return string.format("#%-6X", newColor)
+	hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
+	return hex
 end
 
 ---Adds a plugin Lazy nvim config
@@ -1442,7 +1449,8 @@ addPlugin {
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
 	opts = {
-		cursor_symbol = "",
+		cursor_symbol = ">",
+			search_symbol = " ",
 		floating_windows = true,
 		hide_on_intersect = true,
 		signs_on_startup = {
@@ -1451,15 +1459,13 @@ addPlugin {
 			"cursor",
 			"diagnostics",
 			"folds",
-			-- "indent",
+			"keywords",
 			"latestchange",
 			"loclist",
 			"marks",
 			"quickfix",
 			"search",
-			"spell",
-			"textwidth",
-			"trail",
+			"spell"
 		}
 	}
 }
@@ -1788,7 +1794,6 @@ local function lightT(opts)
 	light(opts)
 end
 
--- addPlugin { "pappasam/papercolor-theme-slim", event = "User PaperColorSlim"                             }
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
@@ -1798,9 +1803,9 @@ end
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
--- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
-addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
+-- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
@@ -1811,7 +1816,7 @@ addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"           
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "charleston",           "_"                                                              }
-dark  { "duskfox",              "nightfox"                                                       }
+-- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
@@ -1830,8 +1835,7 @@ dark  { "duskfox",              "nightfox"                                      
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "kanagawa-paper",        "_"                                                             }
--- light { "PaperColorSlimLight",  "PaperColorSlim"                                                 }
+light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
@@ -2001,12 +2005,12 @@ addPlugin {
 				},
 				list = {
 					selection = {
-						auto_insert = false,
+						auto_insert = true,
 						preselect = true
 					}
 				},
 				menu = {
-					auto_show = true,
+					auto_show = false,
 					draw = {
 						columns = {
 							{ "kind_icon" },
@@ -2016,22 +2020,10 @@ addPlugin {
 				}
 			},
 			keymap = {
-				["<Tab>"] = {
-					function(cmp)
-						if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then
-							if cmp.get_selected_item() then
-								return cmp.accept()
-							else
-								return cmp.select_and_accept()
-							end
-						end
-					end,
-					"fallback",
-				},
-				["<Down>"] = { "select_next", "fallback" }, -- FIX: updown for prev/next commands
-				["<Up>"] = { "select_prev", "fallback" },
-				["<Left>"] = {},
-				["<Right>"] = {}
+				["<Down>"] = { "fallback" },
+				["<Up>"] = { "fallback" },
+				["<Left>"] = { "fallback" },
+				["<Right>"] = { "fallback" }
 			},
 			sources = function()
 				if vim.fn.getcmdtype() == ":" then
@@ -2062,7 +2054,7 @@ addPlugin {
 				auto_show = true,
 				draw = {
 					columns = {
-						{ "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_name" }
+						{ "kind_icon" }, { "label" }, { "source_name" }
 					},
 					components = {
 						kind_icon = {
@@ -2116,7 +2108,7 @@ addPlugin {
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
-						source_name = {
+							source_name = {
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return icons.lsp .. " " .. ctx.item.client_name
@@ -2136,18 +2128,7 @@ addPlugin {
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Left>"] = {},
 			["<Right>"] = {},
-			["<Tab>"] = {
-				function(cmp)
-					if cmp.is_ghost_text_visible() or cmp.is_menu_visible() then
-						if cmp.get_selected_item() then
-							return cmp.accept()
-						else
-							return cmp.select_and_accept()
-						end
-					end
-				end,
-				"fallback",
-			}
+			["<Tab>"] = { "accept", "fallback" }
 		},
 		signature = {
 			enabled = true,
@@ -2194,19 +2175,13 @@ addPlugin {
 					opts = {
 						max_filesize = "300K",
 						search_casing = "--smart-case",
-					},
-					transform_items = function(_, items)
-						for _, item in ipairs(items) do
-							-- example: append a description to easily distinguish rg results
-							item.labelDetails = {
-								description = "(rg)",
-							}
-						end
-						return items
-					end,
+						ignore_paths = { "C:\\Users\\aloknigam" }
+					}
 				},
 				snippets = {
-					name = icons.Snippet .. " " .. "snippet"
+					name = icons.Snippet .. " " .. "snippet",
+					max_items = 5,
+					score_offset = -100
 				}
 			}
 		}
@@ -3716,6 +3691,9 @@ addPlugin {
 					if arg.code then return arg.message .. " [" .. arg.code .. "]" end
 					return arg.message
 				end,
+				virt_texts = {
+					priority = priority_virt.diagnostics
+				}
 			},
 			signs = {
 				left = "",
@@ -4046,6 +4024,9 @@ addPlugin {
 				default = vim.api.nvim_get_option_value("concealcursor", {}),
 				rendered = vim.api.nvim_get_option_value("concealcursor", {})
 			}
+		},
+		completions = {
+			blink = { enabled = true }
 		}
 	}
 }
@@ -4359,20 +4340,6 @@ addPlugin {
 	end
 }
 
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Snippets    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin { -- TODO: remove me, convert to friendly-snippets
--- 	"dcampos/nvim-snippy",
--- 	dependencies = "honza/vim-snippets",
--- 	opts = { 
--- 		mappings = {
--- 			is = {
--- 				["<Tab>"] = "expand_or_advance",
--- 				["<S-Tab>"] = "previous",
--- 			}
--- 		}
--- 	},
--- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Default method to use until statuscol.nvim loads which then overrides it
@@ -4906,7 +4873,7 @@ addPlugin {
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 -- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
--- TODO: study different options for pickers https://github.com/2KAbhishek/pickme.nvim
+
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -5015,7 +4982,6 @@ addPlugin {
 	}
 }
 
--- FIX: higher priority for extmark than diagnostics
 addPlugin {
 	"nvim-neotest/neotest",
 	cmd = "Neotest",
@@ -5440,10 +5406,6 @@ addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
 }
-
--- addPlugin {
--- 	"Dkendal/nvim-alternate" -- FEAT: 
--- }
 
 addPlugin {
 	"MagicDuck/grug-far.nvim",
@@ -5895,6 +5857,4 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- <~>
--- FIX: LSP errors
-
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2

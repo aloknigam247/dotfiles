@@ -1,3 +1,9 @@
+$env:XDG_CACHE_HOME  = "D:\apps"
+$env:XDG_CONFIG_HOME = "D:\apps"
+$env:XDG_DATA_HOME   = "D:\apps"
+$env:XDG_LOG_HOME    = "D:\apps"
+$env:XDG_STATE_HOME  = "D:\apps"
+
 $scoop_pkgs = @(
     "mingw",
     "neovim-nightly",

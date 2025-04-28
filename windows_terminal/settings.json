@@ -49,7 +49,7 @@
         },
         {
             "id": null,
-            "keys": "enter"
+            "keys": "ctrl+v"
         },
         {
             "id": "User.find",
@@ -57,7 +57,7 @@
         },
         {
             "id": null,
-            "keys": "ctrl+v"
+            "keys": "enter"
         },
         {
             "id": null,
@@ -65,11 +65,11 @@
         },
         {
             "id": null,
-            "keys": "ctrl+r"
+            "keys": "shift+insert"
         },
         {
             "id": null,
-            "keys": "shift+insert"
+            "keys": "ctrl+r"
         },
         {
             "id": null,
@@ -193,7 +193,7 @@
             "yellow": "#FF8800"
         },
         {
-            "background": "#FAFAFA",
+            "background": "#EFF1F5",
             "black": "#383A42",
             "blue": "#0184BC",
             "brightBlack": "#4F525D",
@@ -204,14 +204,14 @@
             "brightRed": "#DF6C75",
             "brightWhite": "#FFFFFF",
             "brightYellow": "#FFCF70",
-            "cursorColor": "#4F525D",
+            "cursorColor": "#DC8A78",
             "cyan": "#0997B3",
-            "foreground": "#383A42",
+            "foreground": "#4C4F69",
             "green": "#068A12",
             "name": "PowerShell 7 Light",
             "purple": "#A626A4",
             "red": "#E45649",
-            "selectionBackground": "#BEC5E0",
+            "selectionBackground": "#ACB0BE",
             "white": "#FAFAFA",
             "yellow": "#FFB41F"
         }
@@ -244,5 +244,6 @@
             }
         }
     ],
-    "useAcrylicInTabRow": true
+    "useAcrylicInTabRow": true,
+    "windowingBehavior": "useNew"
 }

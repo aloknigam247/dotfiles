@@ -2,23 +2,22 @@
 #          ┃                       Color palette                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-# FEAT: Catppuccin Latte
 # Light theme
 $light_palette = @{
     cmdline = @{
-        command = "#9183EC"
-        comment = "#989FCE"
-        defaultToken = "#495057"
-        emphasis = "#36A1AC"
-        keyword = "#6A994E"
-        listPrediction = "#DF6C75"
-        listPredictionSelected = "#E7ECEF"
-        number = "#78C5FF"
-        parameter = "#F42C04"
+        command = "#1E66F5"
+        comment = "#8C8FA1"
+        defaultToken = "#4C4F69"
+        emphasis = "#04A5E5"
+        keyword = "#40A02B"
+        listPrediction = "#E64553"
+        listPredictionSelected = "#E6E9EF"
+        number = "#209FB5"
+        parameter = "#D20F39"
         selection = "#95AFA4"
         string = "#CA6702"
-        type = "#2B78CA"
-        variable = "#f77f00"
+        type = "#8839EF"
+        variable = "#FE640B"
     }
     git = @{
         commit = "#04A5E5"
@@ -32,17 +31,17 @@ $light_palette = @{
     }
     prompt = @{
         dir_icon = @{
-            bg = "#DDDDDD"
-            fg = "#8467D7"
+            bg = "#7287FD"
+            fg = "#BBFA0F"
         }
-        dir_path = "#956A71"
+        dir_path = "#EFF1F5"
         git = @{
-            bg = "#BDBDBD"
-            branch = "#FFFFFF"
-            index = "#FDD649"
+            bg = "#CCD0DA"
+            branch = "#8839EF"
+            index = "#DF8E1D"
             sep = "#FFFFFF"
-            stash = "#DF5601"
-            sync = "#BBFA0F"
+            stash = "#E64553"
+            sync = "#40a02b"
             working = "#2B78CA"
         }
     }
@@ -118,7 +117,7 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
             $dt = Get-Date
             git add .
             git commit -m "Updated at $dt"
-            Remove-Item .git\index.lock # fix lock error
+            Remove-Item .git\index.lock -ErrorAction SilentlyContinue # fix lock error
             git push
 
             # Send ballon notification
@@ -596,7 +595,7 @@ function prompt {
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
-    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command -styles "bold");
+    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
     "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment);
     "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
     "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
