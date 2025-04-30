@@ -714,13 +714,13 @@ end
 local function adaptiveBG(lighten, darken)
 	local bg
 
-	if (vim.o.background == "dark") then
+	if vim.o.background == "dark" then
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 0
-		bg = string.format("%X", bg)
+		bg = string.format("#%X", bg)
 		return LightenDarkenColor(bg, lighten)
 	else
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 16777215
-		bg = string.format("%X", bg)
+		bg = string.format("#%X", bg)
 		return LightenDarkenColor(bg, darken)
 	end
 end
@@ -1528,7 +1528,7 @@ addPlugin {
 		require("illuminate").configure({
 			delay = 400,
 			min_count_to_highlight = 2,
-			modes_allowlist = {"i", "n"},
+			modes_allowlist = { "i", "n" },
 			case_insensitive_regex = false,
 			providers = {
 				"lsp",
@@ -1536,9 +1536,12 @@ addPlugin {
 				"regex"
 			}
 		})
+
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-		local hl = { bg = adaptiveBG(40, -40), underline = true }
+
+		local hl = { bg = adaptiveBG(40, -10), underline = true }
+    bg = string.format("%X", vim.inspect(vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg))
 		vim.api.nvim_set_hl(0, "IlluminatedWordText", hl)
 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", hl)
 		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", hl)
@@ -1835,7 +1838,7 @@ addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"     
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
-light { "kanagawa-paper",        "_"                                                             } -- FIX: vim-illuminate
+light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
@@ -2010,7 +2013,13 @@ addPlugin {
 					}
 				},
 				menu = {
-					auto_show = false,
+					auto_show = function()
+						if vim.fn.getcmdtype() == ":" then
+							return false
+						else
+							return true
+						end
+					end,
 					draw = {
 						columns = {
 							{ "kind_icon" },
@@ -2141,7 +2150,7 @@ addPlugin {
 				winblend = 70
 			}
 		},
-		sources = {
+		sources = { -- FIX: sources names
 			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
 			providers = {
 				buffer = {
@@ -5627,7 +5636,7 @@ addPlugin {
 		setTextKey("wcL", "to_lower_phrase_case", "lower phrase case" )
 		setTextKey("wcp", "to_pascal_case",       "PascalCase"        )
 		setTextKey("wct", "to_title_case",        "Title Case"        )
-		setTextKey("wcT", "to_title_dash_case",   "Title_Dash_Case"   )
+		setTextKey("wcT", "to_title_dash_case",   "Title-Dash-Case"   )
 		setTextKey("wcu", "to_upper_case",        "UPPERCASE"         )
 		setTextKey("wcU", "to_upper_phrase_case", "UPPER PHRASE CASE" )
 	end,
