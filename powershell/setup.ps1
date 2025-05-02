@@ -6,12 +6,15 @@ $scoop_pkgs = @(
     "posh-git"
 )
 
-$winget_pkgs = @(
-    "gerardog.gsudo"
-)
-
 if ((Test-Path -Path $powershell_path) -eq $false) {
-    $winget_pkgs.Add("Microsoft.PowerShell.Preview")
+    $winget_pkgs = @(
+        "gerardog.gsudo"
+        "Microsoft.PowerShell.Preview"
+    )
+} else {
+    $winget_pkgs = @(
+        "gerardog.gsudo"
+    )
 }
 
 $files = @{
