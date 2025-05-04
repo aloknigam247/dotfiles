@@ -2032,15 +2032,22 @@ addPlugin {
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { "fallback" },
-				["<Right>"] = { "fallback" }
+				["<Right>"] = { "fallback" },
+				["<Tab>"] = { -- FIX: mapping
+					function(cmp)
+						if cmp.is_menu_visible() then
+							if cmp.is_ghost_text_visible() then
+								return cmp.select_prev()
+							else
+								return cmp.select_next()
+							end
+						else
+							return cmp.show_and_insert()
+						end
+					end,
+					"fallback"
+				},
 			},
-			sources = function()
-				if vim.fn.getcmdtype() == ":" then
-					return { "lazydev", "path", "cmdline" }
-				else
-					return { "buffer" }
-				end
-			end
 		},
 		completion = {
 			documentation = {
