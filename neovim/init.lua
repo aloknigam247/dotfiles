@@ -2009,17 +2009,11 @@ addPlugin {
 				list = {
 					selection = {
 						auto_insert = true,
-						preselect = true
+						preselect = false
 					}
 				},
 				menu = {
-					auto_show = function()
-						if vim.fn.getcmdtype() == ":" then
-							return false
-						else
-							return true
-						end
-					end,
+					auto_show = true,
 					draw = {
 						columns = {
 							{ "kind_icon" },
@@ -2032,22 +2026,8 @@ addPlugin {
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { "fallback" },
-				["<Right>"] = { "fallback" },
-				["<Tab>"] = { -- FIX: mapping
-					function(cmp)
-						if cmp.is_menu_visible() then
-							if cmp.is_ghost_text_visible() then
-								return cmp.select_prev()
-							else
-								return cmp.select_next()
-							end
-						else
-							return cmp.show_and_insert()
-						end
-					end,
-					"fallback"
-				},
-			},
+				["<Right>"] = { "fallback" }
+			}
 		},
 		completion = {
 			documentation = {
@@ -3985,8 +3965,11 @@ addPlugin {
 			},
 			checked = {
 				icon = " ",
+				scope_highlight = "RenderMarkdownChecked"
 			},
-			custom = {}
+			custom = {
+				working = { raw = "[-]", rendered = " ", highlight = "RenderMarkdownTodo", scope_highlight = nil }
+			}
 		},
 		quote = {
 			enabled = true,
