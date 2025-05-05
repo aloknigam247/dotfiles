@@ -1541,7 +1541,6 @@ addPlugin {
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
 
 		local hl = { bg = adaptiveBG(40, -10), underline = true }
-    bg = string.format("%X", vim.inspect(vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg))
 		vim.api.nvim_set_hl(0, "IlluminatedWordText", hl)
 		vim.api.nvim_set_hl(0, "IlluminatedWordRead", hl)
 		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", hl)
@@ -1801,12 +1800,12 @@ end
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
--- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
+addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
-addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+-- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
@@ -1838,9 +1837,9 @@ addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"     
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
-light { "kanagawa-paper",        "_"                                                             }
+-- light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
--- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
+lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -2431,6 +2430,7 @@ addPlugin {
 			visual = {
 				variable_below = "<Leader>dv",
 				variable_above = "<Leader>dV",
+				surround_variable = "<Leader>dsv"
 			}
 		},
 		commands = {

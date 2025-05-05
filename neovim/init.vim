@@ -122,7 +122,7 @@ if exists("g:neovide")
     let g:neovide_fullscreen = v:false
     let g:neovide_hide_mouse_when_typing = v:true
     let g:neovide_normal_opacity = 1
-    let g:neovide_opacity = 1
+    " let g:neovide_opacity = 0.6
     let g:neovide_refresh_rate = 120
     let g:neovide_remember_window_size = v:false
     let g:neovide_scroll_animation_length = 0.3
