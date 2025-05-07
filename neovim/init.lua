@@ -275,7 +275,7 @@ local icons = {
 	Number             = " ",
 	Object             = " ",
 	Operator           = " ",
-	Options            = " ",
+	Options            = " ",
 	Package            = " ",
 	Parameter          = " ",
 	Path               = " ",
@@ -1918,7 +1918,7 @@ function ColoRand(scheme_index)
 
 	-- override neovide title color
 	if vim.fn.exists("g:neovide") then
-		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", "#000000")
+		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	end
 end
 -- <~>
@@ -2103,13 +2103,13 @@ addPlugin {
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
-							source_name = {
+						source_name = { -- FEAT: look italic
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
-									return icons.lsp .. " " .. ctx.item.client_name
+									return "(" .. ctx.item.client_name .. ")"
 								end
 
-								return ctx.source_name
+								return "(" .. ctx.source_name .. ")"
 							end
 						}
 					},
@@ -2136,22 +2136,22 @@ addPlugin {
 				winblend = 70
 			}
 		},
-		sources = { -- FIX: sources names
+		sources = {
 			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
 			providers = {
 				buffer = {
-					name = "󰙩 buffer",
+					name = "buffer",
 					score_offset = 0
 				},
 				cmdline = {
-					name = " cmdline"
+					name = "cmdline"
 				},
 				lazydev = {
-					name = icons.lazy .. "LazyDev",
+					name = "LazyDev",
 					module = "lazydev.integrations.blink"
 				},
 				path = {
-					name = icons.Path .. "path",
+					name = "path",
 					transform_items = function(_, items)
 						for _, item in pairs(items) do
 							item.label = item.label:gsub("/", "\\")
@@ -2174,7 +2174,7 @@ addPlugin {
 					}
 				},
 				snippets = {
-					name = icons.Snippet .. " " .. "snippet",
+					name = "snippet",
 					max_items = 5,
 					score_offset = -100
 				}
