@@ -1839,7 +1839,7 @@ addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"         
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
-lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true }  }
+lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true, borderless_pickers = true, hide_fillchars = true, italic_comments = true } } -- FIX: lualine
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
@@ -1856,7 +1856,7 @@ function ColoRand(scheme_index)
 
 	-- set backgrounds
 	vim.o.background = bg
-	vim.g.neovde_opacity = selection.trans and 0.6 or 1 -- BUG: not working
+	vim.g.neovide_normal_opacity = selection.trans and 0.6 or 1
 
 	local start_time = os.clock()
 
