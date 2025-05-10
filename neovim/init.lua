@@ -1856,7 +1856,7 @@ function ColoRand(scheme_index)
 
 	-- set backgrounds
 	vim.o.background = bg
-	vim.g.neovde_opacity = selection.trans and 0.6 or 1
+	vim.g.neovde_opacity = selection.trans and 0.6 or 1 -- BUG: not working
 
 	local start_time = os.clock()
 
@@ -1988,6 +1988,10 @@ addPlugin {
 			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background])
 		end
 		require("blink.cmp").setup(cfg)
+		local comment_hl = vim.api.nvim_get_hl(0, { name = "Comment" })
+		comment_hl.italic = true
+		comment_hl.force = true
+		vim.api.nvim_set_hl(0, "BlinkCmpSource", comment_hl)
 	end,
 	dependencies = {
 		"mikavilpas/blink-ripgrep.nvim",
@@ -2103,13 +2107,16 @@ addPlugin {
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
-						source_name = { -- FEAT: look italic
+						source_name = {
 							text = function(ctx)
 								if ctx.source_name == "LSP" then
 									return "(" .. ctx.item.client_name .. ")"
 								end
 
 								return "(" .. ctx.source_name .. ")"
+							end,
+							highlight = function(ctx)
+								return "BlinkCmpSource"
 							end
 						}
 					},
