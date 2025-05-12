@@ -158,7 +158,7 @@ function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args
 function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function v    { D:\scoop\shims\neovide.exe --size=1500x1254 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
+function v    { D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
 function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\$($lazygit_theme)" }
 
 function e() {

@@ -483,7 +483,7 @@ local lazy_config = {
 ---@type table<string, integer>
 local priority_hl = {
 	url = 0,
-	hlargs = 126
+	hlargs = 150
 }
 
 ---Defines window priorities for various components
@@ -3838,77 +3838,49 @@ addPlugin {
 			}
 		})
 
-		local mason_lspconfig = require("mason-lspconfig")
-		mason_lspconfig.setup()
-		local handlers = {
-			["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = "rounded"}),
-			["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.buf.signature_help, {border = "rounded"}),
+		require("mason-lspconfig").setup()
+
+		-- enable inlay hints
+		vim.lsp.inlay_hint.enable(true)
+
+		-- Mappings.
+		local bufopts = { noremap = true, silent = true, buffer = bufnr }
+		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+		vim.keymap.set("n", "<F12>", "<cmd>Lspsaga goto_definition<CR>", bufopts)
+		vim.keymap.set("n", "<F2>", "<cmd>Lspsaga rename<CR>", bufopts)
+		vim.keymap.set("n", "<M-F12>", "<cmd>Lspsaga finder<CR>", bufopts)
+		vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, bufopts)
+		vim.keymap.set("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>", bufopts)
+		vim.keymap.set("n", "<C-.>", require("actions-preview").code_actions, bufopts)
+		vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
+		vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+		vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", bufopts)
+		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
+
+		vim.lsp.config["lua_ls"] = {
+			settings = {
+				Lua = {
+					codeLens = {
+						enable = true
+					},
+					completion = {
+						callsnippet = "Both",
+						keywordSnippet = "Both"
+					},
+					diagnostics = {
+						globals = { "bit", "vim" }
+					},
+					hint = {
+						arrayIndex = "Enable",
+						enable = true,
+						setType = true
+					}
+				}
+			}
 		}
 
-		-- local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-		-- capabilities.textDocument.foldingRange = {
-		-- 	dynamicRegistration = false,
-		-- 	lineFoldingOnly = true
-		-- }
-
-		local on_attach = function(_, bufnr)
-			-- enable inlay hints
-			vim.lsp.inlay_hint.enable(true)
-
-			-- Mappings.
-			local bufopts = { noremap = true, silent = true, buffer = bufnr }
-			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-			vim.keymap.set("n", "<F12>", "<cmd>Lspsaga goto_definition<CR>", bufopts)
-			vim.keymap.set("n", "<F2>", "<cmd>Lspsaga rename<CR>", bufopts)
-			vim.keymap.set("n", "<M-F12>", "<cmd>Lspsaga finder<CR>", bufopts)
-			vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, bufopts)
-			vim.keymap.set("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>", bufopts)
-			vim.keymap.set("n", "<C-.>", require("actions-preview").code_actions, bufopts)
-			vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
-			vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-			vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", bufopts)
-			vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
-		end
-
-		mason_lspconfig.setup_handlers {
-			function (server_name)
-				local lspconfig = require("lspconfig")
-				if server_name == "lua_ls" then
-					lspconfig.lua_ls.setup {
-						capabilities = capabilities,
-						handlers = handlers,
-						on_attach = on_attach,
-						settings = {
-							Lua = {
-								codeLens = {
-									enable = true
-								},
-								completion = {
-									callsnippet = "Both",
-									keywordSnippet = "Both"
-								},
-								diagnostics = {
-									globals = { "bit", "vim" }
-								},
-								hint = {
-									arrayIndex = "Enable",
-									enable = true,
-									setType = true
-								}
-							}
-						}
-					}
-				else
-					lspconfig[server_name].setup {
-						capabilities = capabilities,
-						handlers = handlers,
-						on_attach = on_attach
-					}
-				end
-			end
-		}
 		vim.cmd.LspStart()
 		vim.cmd.LspStart("typos_lsp") -- HACK: to attach auto typos_lsp
 	end,
