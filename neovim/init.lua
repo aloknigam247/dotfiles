@@ -1839,7 +1839,7 @@ addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"         
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
-lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = true, borderless_pickers = true, hide_fillchars = true, italic_comments = true } } -- FIX: lualine
+lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
