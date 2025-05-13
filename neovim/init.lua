@@ -1203,7 +1203,7 @@ vim.api.nvim_create_autocmd(
 -- commands
 vim.keymap.set("n", "!!",          ":<Up><CR>",                { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",               { desc = "Close window" })
-vim.keymap.set("n", "<C-s>",       "<cmd>w<CR>",               { desc = "Save file" })
+vim.keymap.set("n", "<C-s>",       "<cmd>w!<CR>",              { desc = "Save file" })
 -- mouse
 vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
