@@ -3947,7 +3947,12 @@ addPlugin {
 				scope_highlight = "RenderMarkdownChecked"
 			},
 			custom = {
-				working = { raw = "[-]", rendered = " ", highlight = "RenderMarkdownTodo", scope_highlight = nil }
+				working = {
+					raw = "[-]",
+					rendered = " ",
+					highlight = "RenderMarkdownTodo",
+					scope_highlight = "RenderMarkdownTodo",
+				}
 			}
 		},
 		quote = {
