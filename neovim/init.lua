@@ -333,6 +333,7 @@ local icons = {
 	warning            = " ",
 }
 
+-- FEAT: get color from colorscheme
 ---Defines highlight for kinds
 ---@type table<string, table>
 local kind_hl = {
@@ -1797,10 +1798,10 @@ local function lightT(opts)
 end
 
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
--- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
-addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
+-- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
@@ -1838,8 +1839,8 @@ addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"         
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
--- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
-lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
+lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+-- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
