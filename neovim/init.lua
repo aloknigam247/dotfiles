@@ -5840,5 +5840,6 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
+-- TODO: github stars
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
