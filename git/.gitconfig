@@ -11,7 +11,8 @@
     autoSetupRemote = true
 
 [user]
-    name = Alok Nigam
+	name = aloknigam
+	email = aloknigam+odspmdb@microsoft.com
 
 [interactive]
     diffFilter = delta --color-only
@@ -61,4 +62,4 @@
     unignore = update-index --no-skip-worktree
     ignored = !git ls-files -v | grep \"^S\"
 [credential "azrepos:org/onedrive"]
-    username = aloknigam@microsoft.com
+	username = aloknigam@microsoft.com
