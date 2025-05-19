@@ -2,6 +2,8 @@
 #          ┃                       Color palette                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
+# FEAT: support powershell 5
+
 # Light theme
 $light_palette = @{
     cmdline = @{

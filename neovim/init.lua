@@ -2401,10 +2401,10 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	"LiadOz/nvim-dap-repl-highlights",
-	config = true
-}
+-- addPlugin {
+-- 	"LiadOz/nvim-dap-repl-highlights",
+-- 	config = true
+-- }
 
 addPlugin {
 	"andrewferrier/debugprint.nvim",
@@ -2457,74 +2457,74 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	"jbyuki/one-small-step-for-vimkind",
-	config = function()
-		local dap = require("dap")
-		dap.configurations.lua = {
-			{
-				type = "nlua",
-				request = "attach",
-				name = "Attach to running Neovim instance",
-			}
-		}
+-- addPlugin {
+-- 	"jbyuki/one-small-step-for-vimkind",
+-- 	config = function()
+-- 		local dap = require("dap")
+-- 		dap.configurations.lua = {
+-- 			{
+-- 				type = "nlua",
+-- 				request = "attach",
+-- 				name = "Attach to running Neovim instance",
+-- 			}
+-- 		}
 
-		dap.adapters.nlua = function(callback, config)
-			---@diagnostic disable-next-line: undefined-field
-			callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
-		end
-	end,
-	lazy = true
-}
+-- 		dap.adapters.nlua = function(callback, config)
+-- 			---@diagnostic disable-next-line: undefined-field
+-- 			callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
+-- 		end
+-- 	end,
+-- 	lazy = true
+-- }
 
-addPlugin {
-	"mfussenegger/nvim-dap",
-	config = function()
-		vim.api.nvim_set_keymap("n", "<F8>", [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
-		vim.api.nvim_set_keymap("n", "<F9>", [[:lua require("dap").continue()<CR>]], { noremap = true })
-		vim.api.nvim_set_keymap("n", "<F10>", [[:lua require("dap").step_over()<CR>]], { noremap = true })
-		vim.api.nvim_set_keymap("n", "<F11>", [[:lua require("dap").step_into()<CR>]], { noremap = true })
-		vim.api.nvim_set_keymap("n", "<F12>", [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
-		vim.api.nvim_set_keymap("n", "<F5>", [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
+-- addPlugin {
+-- 	"mfussenegger/nvim-dap",
+-- 	config = function()
+-- 		vim.api.nvim_set_keymap("n", "<F8>", [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
+-- 		vim.api.nvim_set_keymap("n", "<F9>", [[:lua require("dap").continue()<CR>]], { noremap = true })
+-- 		vim.api.nvim_set_keymap("n", "<F10>", [[:lua require("dap").step_over()<CR>]], { noremap = true })
+-- 		vim.api.nvim_set_keymap("n", "<F11>", [[:lua require("dap").step_into()<CR>]], { noremap = true })
+-- 		vim.api.nvim_set_keymap("n", "<F12>", [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
+-- 		vim.api.nvim_set_keymap("n", "<F5>", [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
 
-		-- vim.cmd[[
-		--     nnoremap <silent> <F5> <Cmd>lua require"dap".continue()<CR>
-		--     nnoremap <silent> <F10> <Cmd>lua require"dap".step_over()<CR>
-		--     nnoremap <silent> <F11> <Cmd>lua require"dap".step_into()<CR>
-		--     nnoremap <silent> <F12> <Cmd>lua require"dap".step_out()<CR>
-		--     nnoremap <silent> <Leader>b <Cmd>lua require"dap".toggle_breakpoint()<CR>
-		--     nnoremap <silent> <Leader>B <Cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>
-		--     nnoremap <silent> <Leader>lp <Cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>
-		--     nnoremap <silent> <Leader>dr <Cmd>lua require"dap".repl.open()<CR>
-		--     nnoremap <silent> <Leader>dl <Cmd>lua require"dap".run_last()<CR>
-		-- ]]
+-- 		-- vim.cmd[[
+-- 		--     nnoremap <silent> <F5> <Cmd>lua require"dap".continue()<CR>
+-- 		--     nnoremap <silent> <F10> <Cmd>lua require"dap".step_over()<CR>
+-- 		--     nnoremap <silent> <F11> <Cmd>lua require"dap".step_into()<CR>
+-- 		--     nnoremap <silent> <F12> <Cmd>lua require"dap".step_out()<CR>
+-- 		--     nnoremap <silent> <Leader>b <Cmd>lua require"dap".toggle_breakpoint()<CR>
+-- 		--     nnoremap <silent> <Leader>B <Cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>
+-- 		--     nnoremap <silent> <Leader>lp <Cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>
+-- 		--     nnoremap <silent> <Leader>dr <Cmd>lua require"dap".repl.open()<CR>
+-- 		--     nnoremap <silent> <Leader>dl <Cmd>lua require"dap".run_last()<CR>
+-- 		-- ]]
 
-		vim.api.nvim_set_hl(0, "DapBreakpointFgHl", { fg = "#D21401" })
-		vim.api.nvim_set_hl(0, "DapBreakpointBgHl", { bg = "#D21401", fg = "#FFFFFF" })
-		vim.api.nvim_set_hl(0, "DapStoppedFgHl", { fg = "#FFBF00" })
-		vim.api.nvim_set_hl(0, "DapStoppedBgHl", { bg = "#FFBF00", fg = "#FFFFFF" })
+-- 		vim.api.nvim_set_hl(0, "DapBreakpointFgHl", { fg = "#D21401" })
+-- 		vim.api.nvim_set_hl(0, "DapBreakpointBgHl", { bg = "#D21401", fg = "#FFFFFF" })
+-- 		vim.api.nvim_set_hl(0, "DapStoppedFgHl", { fg = "#FFBF00" })
+-- 		vim.api.nvim_set_hl(0, "DapStoppedBgHl", { bg = "#FFBF00", fg = "#FFFFFF" })
 
-		vim.fn.sign_define("DapBreakpoint", { text="", texthl="DapBreakpointFgHl", linehl="DapBreakpointBgHl", numhl="" })
-		vim.fn.sign_define("DapBreakpointCondition", { text="", texthl="DapBreakpointFgHl", linehl="", numhl="" })
-		vim.fn.sign_define("DapLogPoint", { text="", texthl="", linehl="DapBreakpointFgHl", numhl="" })
-		vim.fn.sign_define("DapBreakpointRejected", { text="", texthl="DapBreakpointFgHl", linehl="", numhl="" })
-		vim.fn.sign_define("DapStopped", { text="", texthl="DapStoppedFgHl", linehl="DapStoppedBgHl", numhl="" })
-	end,
-	lazy = true
-}
+-- 		vim.fn.sign_define("DapBreakpoint", { text="", texthl="DapBreakpointFgHl", linehl="DapBreakpointBgHl", numhl="" })
+-- 		vim.fn.sign_define("DapBreakpointCondition", { text="", texthl="DapBreakpointFgHl", linehl="", numhl="" })
+-- 		vim.fn.sign_define("DapLogPoint", { text="", texthl="", linehl="DapBreakpointFgHl", numhl="" })
+-- 		vim.fn.sign_define("DapBreakpointRejected", { text="", texthl="DapBreakpointFgHl", linehl="", numhl="" })
+-- 		vim.fn.sign_define("DapStopped", { text="", texthl="DapStoppedFgHl", linehl="DapStoppedBgHl", numhl="" })
+-- 	end,
+-- 	lazy = true
+-- }
 
 -- https://github.com/ofirgall/goto-breakpoints.nvim
 -- https://github.com/igorlfs/nvim-dap-view
-addPlugin {
-	"rcarriga/nvim-dap-ui",
-	config = function()
-		require("dapui").setup()
-		require("dapui").open()
-	end,
-	dependencies = {
-		"nvim-neotest/nvim-nio"
-	}
-}
+-- addPlugin {
+-- 	"rcarriga/nvim-dap-ui",
+-- 	config = function()
+-- 		require("dapui").setup()
+-- 		require("dapui").open()
+-- 	end,
+-- 	dependencies = {
+-- 		"nvim-neotest/nvim-nio"
+-- 	}
+-- }
 
 -- https://github.com/PatschD/zippy.nvim
 -- https://github.com/Weissle/persistent-breakpoints.nvim
@@ -4954,7 +4954,7 @@ addPlugin {
 addPlugin {
 	"andythigpen/nvim-coverage",
 	cmd = "Coverage",
-	dependencies = { "nvim-lua/plenary.nvim", "luukvbaal/statuscol.nvim" },
+	dependencies = { "luukvbaal/statuscol.nvim", "nvim-lua/plenary.nvim", "nvim-neotest/nvim-nio" },
 	opts ={
 		auto_reload = true,
 		signs = {
