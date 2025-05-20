@@ -1806,7 +1806,7 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
--- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
@@ -1839,7 +1839,8 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
-lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+lightT { "kanagawa-paper",        "_",                                                           }
+-- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
 
 ---Random colorscheme
