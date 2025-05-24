@@ -439,7 +439,7 @@ $icons = @{
     odc = "$([char]0xdb80)$([char]0xdd5f) " # f015f
     remote = "$([char]0xeb3a) "
     sep_right = "$([char]0xe0b4)"
-    windows = "$([char]0xe70f)"
+    windows = "$([char]0xe70f) "
 }
 
 # ╭────────────────╮
