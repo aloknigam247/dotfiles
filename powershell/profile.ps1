@@ -321,6 +321,7 @@ function Format-Text {
         [Switch]$noreset
     )
 
+    $esc = [char]27
     $head = ""
 
     # create background header
@@ -361,13 +362,13 @@ function Format-Text {
     }
 
     if ($head -ne "") {
-        $head = "`e[$head" + "m"
+        $head = "$esc[$head" + "m"
         if ($headOnly -eq $true) {
             return $head 
         }
         $head += $text
         if ($noreset -eq $false) {
-            $head += "`e[0m"
+            $head += "$esc[0m"
         }
     } else {
         $head = $text
@@ -428,12 +429,25 @@ $env:FZF_DEFAULT_OPTS="
     --color=marker:$($palette.fzf.marker),spinner:#F2F759,header:$($palette.fzf.header)
 "
 
+$icons = @{
+    git_branch = "$([char]0xf418) "
+    git_commit = "$([char]0xeafc) "
+    git_icon = "$([char]0xf1d2) "
+    git_stash = "$([char]0xdb82)$([char]0xdeb6) " #f0ab6
+    git_tag = "$([char]0xdb81)$([char]0xdcfd) " # f04fd
+    git_working = "$([char]0xdb81)$([char]0xdc16) " # f0416
+    odc = "$([char]0xdb80)$([char]0xdd5f) " # f015f
+    remote = "$([char]0xeb3a) "
+    sep_right = "$([char]0xe0b4)"
+    windows = "$([char]0xe70f)"
+}
+
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
 function populatePrompt {
     # Initial executions
-    $script:dir_icon = " "
+    $script:dir_icon = $icons.windows
     $script:git_branch = ""
     $script:git_index = ""
     $script:git_stash = ""
@@ -444,29 +458,29 @@ function populatePrompt {
     $script:git_status = Get-GitStatus
 
     if ($script:git_status -ne $null) {
-        $script:dir_icon = " "
+        $script:dir_icon = $icons.git_icon
 
         # git branch
         $git_branch = $script:git_status.Branch
         if ($git_branch.StartsWith("(") -and $git_branch.EndsWith(")")) {
             if ($git_branch.EndsWith("...)")) {
-                $script:git_branch = " " + $git_branch.Substring(1, $git_branch.Length - 5)
+                $script:git_branch = $icons.git_commit + $git_branch.Substring(1, $git_branch.Length - 5)
             } else {
-                $script:git_branch = "󰓽 " + $git_branch.Substring(1, $git_branch.Length - 2)
+                $script:git_branch = $icons.git_tag + $git_branch.Substring(1, $git_branch.Length - 2)
             }
         } else {
-            $script:git_branch = " " + $git_branch.Replace("user/$env:username", "~")
+            $script:git_branch = $icons.git_branch + $git_branch.Replace("user/$env:username", "~")
         }
 
         # git dirty check
         if ($script:git_status.HasWorking) {
-            $script:git_working = "󰦓 "
+            $script:git_working = $icons.git_working
         }
         if ($script:git_status.HasIndex) {
-            $script:git_index = "󰦓 "
+            $script:git_index = $icons.git_working
         }
         if ($script:git_status.StashCount) {
-            $script:git_stash = "󰪶 "
+            $script:git_stash = $icons.git_stash
         }
 
         # git ahead and behind count
@@ -488,9 +502,9 @@ function populatePrompt {
     }
 
     if ($null -ne $env:SSH_CLIENT) {
-        $script:dir_icon = " "
+        $script:dir_icon = $icons.remote
     } elseif ($env:ODC_LOADED) {
-        $script:dir_icon = "󰅟 "
+        $script:dir_icon = $icons.odc
     }
 }
 
@@ -551,7 +565,7 @@ function prompt {
     populatePrompt
 
     $separator = @{
-        text = ""
+        text = $icons.sep_right
     }
 
     $segments = @(
