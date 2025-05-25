@@ -1799,7 +1799,7 @@ end
 
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
-addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
+-- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
@@ -1811,7 +1811,7 @@ addPlugin { "catppuccin/nvim",                event = "User catppuccin"         
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
--- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
+addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 -- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
@@ -1834,13 +1834,13 @@ addPlugin { "catppuccin/nvim",                event = "User catppuccin"         
 -- darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                     }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
--- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
+darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
-lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
+-- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
 -- lightT{ "kanagawa-paper",       "_",                                                             }
 
