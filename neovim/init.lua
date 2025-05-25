@@ -1798,15 +1798,15 @@ local function lightT(opts)
 end
 
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
--- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
+-- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 -- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
-addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
+-- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
@@ -1839,9 +1839,10 @@ addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"     
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
-lightT { "kanagawa-paper",        "_",                                                            }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
+-- lightT{ "kanagawa-paper",       "_",                                                             }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
