@@ -1802,10 +1802,10 @@ end
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
--- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
+addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
-addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
+-- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
@@ -1832,8 +1832,7 @@ addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"           
 -- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
 -- darkT { "cyberdream",           "_",                                                             }
 -- darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                     }
--- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
-darkT { "kanagawa-wave",        "kanagawa",     cfg = { transparent = true }                     }
+darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
