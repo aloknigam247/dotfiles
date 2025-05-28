@@ -2,8 +2,6 @@
 #          ┃                       Color palette                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-# FEAT: support powershell 5
-
 # Light theme
 $light_palette = @{
     cmdline = @{
@@ -136,6 +134,24 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
     } | Out-Null
 }
 
+ # ╭───────╮
+ # │ Icons │
+ # ╰───────╯
+$icons = @{
+    git_branch = "$([char]0xf418) "
+    git_commit = "$([char]0xeafc) "
+    git_icon = "$([char]0xf1d2) "
+    git_stash = "$([char]0xdb82)$([char]0xdeb6) " #f0ab6
+    git_tag = "$([char]0xdb81)$([char]0xdcfd) " # f04fd
+    git_working = "$([char]0xdb81)$([char]0xdc16) " # f0416
+    gitlog_timestamp = "$([char]0xdb81)$([char]0xdd1f)"
+    odc = "$([char]0xdb80)$([char]0xdd5f) " # f015f
+    remote = "$([char]0xeb3a) "
+    sep_right = "$([char]0xe0b4)"
+    type_app = "$([char]0xf120) "
+    windows = "$([char]0xe70f) "
+}
+
 
 # ╭─────────╮
 # │ Aliases │
@@ -150,8 +166,8 @@ New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
-Remove-Alias ls
-Remove-Alias rm
+Remove-Item -Force alias:ls
+Remove-Item -Force alias:rm
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
@@ -196,7 +212,7 @@ function whatis($arg) {
         bat -p -P $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text " $arg" -fg "#4B7639" -styles bold, italic
+        Format-Text "${icons.type_app} $arg" -fg "#4B7639" -styles bold, italic
         $cm.Source
     } elseif ($type -eq "Alias") {
         Format-Text " $arg" -fg "#5D2E8C" -styles bold, italic
@@ -211,7 +227,7 @@ function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 function docs { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work" | Set-Location }
 
 # ─[ Git functions ]───────────────────────────────────────────────────
-Remove-Alias -Force gc
+Remove-Item -Force alias:gc
 function gc {
     git checkout $args
     $stash = git stash list
@@ -228,9 +244,10 @@ function gc {
     }
 }
 
-Remove-Alias -Force gl
+Remove-Item -Force alias:gl
 function gl {
-    git log --color=always --pretty="%C($($palette.git.commit_icon)) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message)) %s %C($($palette.git.timestamp))󰔟 %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email)) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
+    # FEAT: support powershell 5
+    git log --color=always --pretty="%C($($palette.git.commit_icon)) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message)) %s %C($($palette.git.timestamp))${icons.gitlog_timestamp} %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email)) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }
 
 function gs {
@@ -429,19 +446,6 @@ $env:FZF_DEFAULT_OPTS="
     --color=marker:$($palette.fzf.marker),spinner:#F2F759,header:$($palette.fzf.header)
 "
 
-$icons = @{
-    git_branch = "$([char]0xf418) "
-    git_commit = "$([char]0xeafc) "
-    git_icon = "$([char]0xf1d2) "
-    git_stash = "$([char]0xdb82)$([char]0xdeb6) " #f0ab6
-    git_tag = "$([char]0xdb81)$([char]0xdcfd) " # f04fd
-    git_working = "$([char]0xdb81)$([char]0xdc16) " # f0416
-    odc = "$([char]0xdb80)$([char]0xdd5f) " # f015f
-    remote = "$([char]0xeb3a) "
-    sep_right = "$([char]0xe0b4)"
-    windows = "$([char]0xe70f) "
-}
-
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
@@ -617,8 +621,6 @@ Set-PSReadLineOption -Colors @{
     "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
     "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
     "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
-    "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
-    "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
     "Member" = (Format-Text -headOnly -styles "italic");
     "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
@@ -628,7 +630,14 @@ Set-PSReadLineOption -Colors @{
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
 
-Set-PSReadLineOption -ContinuationPrompt "... " -TerminateOrphanedConsoleApps
+if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+    Set-PSReadLineOption -Colors @{
+        "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
+        "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
+    }
+}
+
+Set-PSReadLineOption -ContinuationPrompt "... "
 
 # ─[ Source rg command line completer ]────────────────────────────────
 . D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
