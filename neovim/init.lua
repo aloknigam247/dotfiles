@@ -1802,13 +1802,13 @@ end
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
-addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
+-- addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 -- addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 -- addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
--- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
+addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
@@ -1831,8 +1831,8 @@ addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"       
 -- darkT { "ayu-dark",             "ayu",                                                           }
 -- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
 -- darkT { "cyberdream",           "_",                                                             }
--- darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                     }
-darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
+darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                     }
+-- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
@@ -2137,6 +2137,7 @@ addPlugin {
 		signature = {
 			enabled = true,
 			trigger = {
+				show_on_insert = true,
 				show_on_keyword = true
 			},
 			window = {
@@ -3075,7 +3076,7 @@ addPlugin {
 	init = function()
 		-- Mapping to attach nvim-ufo
 		vim.keymap.set("n", "zz", function()
-			require("ufo").attach()
+			require("ufo").attach() -- FEAT: attach to buffer in which requested
 
 			-- modify mapping to close folds
 			vim.keymap.set("n", "zz", function()
@@ -5056,8 +5057,9 @@ addPlugin {
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
 	config = function()
-		require("nvim-treesitter.configs").setup({
+		require("nvim-treesitter.config").setup({
 			auto_install = false,
 			ensure_installed = {},
 			highlight = {
@@ -5078,17 +5080,6 @@ addPlugin {
 			modules = {},
 			sync_install = false
 		})
-
-		-- add lua_patterns source
-		local parser_configs = require("nvim-treesitter.parsers").get_parser_configs();
-
-		parser_configs.lua_patterns = {
-			install_info = {
-				url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",
-				files = { "src/parser.c" },
-				branch = "main",
-			},
-		}
 	end,
 	dependencies = {{
 		"utilyre/sentiment.nvim",
