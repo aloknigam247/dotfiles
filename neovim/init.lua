@@ -1798,7 +1798,7 @@ local function lightT(opts)
 end
 
 -- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
--- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
@@ -1808,7 +1808,7 @@ end
 -- addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 -- addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 -- addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
-addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
+-- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
@@ -1829,9 +1829,7 @@ addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"           
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "ayu-dark",             "ayu",                                                           }
--- darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
--- darkT { "cyberdream",           "_",                                                             }
-darkT { "duskfox",              "nightfox",     cfg = { transparent = true }                     }
+darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -2316,7 +2314,7 @@ addPlugin {
 -- 				end
 -- 			},
 -- 			sources = {
--- 				{ name = 'render-markdown' },
+-- 				{ name = "render-markdown" },
 -- 				{
 -- 					name = "nvim_lsp",
 -- 					entry_filter = function(entry, _)
@@ -2351,7 +2349,7 @@ addPlugin {
 -- 					auto_open = true
 -- 				},
 -- 				entries = {
--- 					name = 'custom',
+-- 					name = "custom",
 -- 					follow_cursor = true,
 -- 					selection_order = "top_down"
 -- 				}
@@ -2706,7 +2704,7 @@ addPlugin {
 			vim.keymap.set("n", "<CR>",           api.node.open.edit,                 opts("Open"))
 			vim.keymap.set("n", "<F2>",           api.fs.rename_sub,                  opts("Rename: Omit Filename"))
 			vim.keymap.set("n", "<Leader>h",      api.node.show_info_popup,           opts("Info"))
-			vim.keymap.set('n', '<Tab>',          preview.node_under_cursor,          opts('Preview'))
+			vim.keymap.set("n", "<Tab>",          preview.node_under_cursor,          opts("Preview"))
 			vim.keymap.set("n", ">",              api.node.navigate.sibling.next,     opts("Next Sibling"))
 			vim.keymap.set("n", "D",              api.fs.trash,                       opts("Trash"))
 			vim.keymap.set("n", "E",              api.tree.expand_all,                opts("Expand All"))
@@ -2937,7 +2935,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
+addPlugin { -- BUG: auto folds after change
 	"kevinhwang91/nvim-ufo",
 	config = function()
 		vim.o.foldcolumn = "1"
@@ -3003,14 +3001,14 @@ addPlugin {
 					if cur_line == next_line then
 						return (" " .. next_line):gsub("%s+", " ")
 					end
-					next_line = next_line:gsub('"""$', ''):gsub("'''$", ''):gsub('%s+$', '')
-					return (next_line .. cur_line):gsub('%s+', ' ')
+					next_line = next_line:gsub('"""$', ""):gsub("'''$", ""):gsub("%s+$", "")
+					return (next_line .. cur_line):gsub("%s+", " ")
 				end
 
 				-- for
 				-- """ docstring
 				if cur_line:find('^%s*[\'"]+') then
-					return cur_line:gsub('[^"^\']', '')
+					return cur_line:gsub('[^"^\']', "")
 				end
 
 				-- for
@@ -3019,14 +3017,14 @@ addPlugin {
 				-- docstring
 				if next_line:find('^%s*[\'"]+$') then
 					next_line = lines[3]
-					return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', '')
+					return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', "")
 				end
 
 				-- for
 				-- code
 				-- """ docstring
 				if next_line:find('^%s*[\'"]+') then
-					return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', '')
+					return "  " .. next_line:gsub('^%s*[\'"]*', ""):gsub('[%s\'"]*$', "")
 				end
 
 				return nil
@@ -3163,7 +3161,7 @@ addPlugin {
 	},
 	init = function()
 		vim.api.nvim_create_user_command("GitGraph", function()
-			require('gitgraph').draw({}, { all = true, max_count = 5000 })
+			require("gitgraph").draw({}, { all = true, max_count = 5000 })
 		end, {})
 	end,
 }
@@ -3828,7 +3826,7 @@ addPlugin {
 		popupMenuAdd({
 			cond = isLspAttached,
 			options = {
-				{ name = " Code Action", key = "<C-.>", exec = require('actions-preview').code_actions },
+				{ name = " Code Action", key = "<C-.>", exec = require("actions-preview").code_actions },
 				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
 				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
 				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
@@ -3862,6 +3860,16 @@ addPlugin {
 		vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", bufopts)
 		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
 
+		vim.lsp.config["basedpyright"] = {
+			settings = {
+				basedpyright = {
+					analysis = {
+						diagnosticMode = "workspace",
+					},
+				},
+			},
+		}
+
 		vim.lsp.config["lua_ls"] = {
 			settings = {
 				Lua = {
@@ -3884,8 +3892,6 @@ addPlugin {
 			}
 		}
 
-		vim.cmd.LspStart()
-		vim.cmd.LspStart("typos_lsp") -- HACK: to attach auto typos_lsp
 	end,
 	dependencies = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
 	keys = "<F12>"
@@ -5057,9 +5063,9 @@ addPlugin {
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "main",
+	branch = "master",
 	config = function()
-		require("nvim-treesitter.config").setup({
+		require("nvim-treesitter.configs").setup({
 			auto_install = false,
 			ensure_installed = {},
 			highlight = {
@@ -5099,6 +5105,7 @@ addPlugin {
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
+	branch = "master",
 	keys = {
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
