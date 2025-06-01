@@ -17,6 +17,7 @@ if ((Test-Path -Path $powershell_path) -eq $false) {
     )
 }
 
+# FIX: me
 $files = @{
     "profile.ps1" = $(powershell '$PROFILE') # powershell 5
     "profile.ps1" = $(pwsh -Command 'echo $PROFILE') # powershell 7
