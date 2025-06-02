@@ -1797,8 +1797,8 @@ local function lightT(opts)
 	light(opts)
 end
 
--- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
+addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
+-- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 -- addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
@@ -1828,8 +1828,7 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
--- darkT { "ayu-dark",             "ayu",                                                           }
-darkT { "bluloco",              "_",            cfg = { transparent = true }                     }
+darkT { "ayu-dark",             "ayu",                                                           }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
