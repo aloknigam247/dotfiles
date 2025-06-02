@@ -1797,7 +1797,7 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
+-- addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 -- addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 -- addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 -- addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
@@ -1813,7 +1813,7 @@ addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
 -- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
--- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
+addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
@@ -1827,8 +1827,7 @@ addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
--- dark  { "zephyrium",            "_"                                                              }
-darkT { "ayu-dark",             "ayu",                                                           }
+dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -2639,7 +2638,7 @@ addPlugin {
 			ignore_dirs = {},
 		},
 		filters = {
-			dotfiles = false,
+			dotfiles = true,
 			git_clean = false,
 			no_buffer = false,
 			custom = {},
@@ -2747,6 +2746,7 @@ addPlugin {
 			add_trailing = true,
 			full_name = true,
 			group_empty = false,
+			hidden_display = "all",
 			highlight_git = true,
 			highlight_diagnostics = true,
 			highlight_opened_files = "all",
@@ -3944,7 +3944,7 @@ addPlugin {
 			enabled = true,
 			icons = { "●", "○", "◆", "◇" },
 		},
-		checkbox = {
+		checkbox = { -- FEAT: better highlights with underline and strikethrough
 			enabled = true,
 			position = "overlay",
 			unchecked = {
