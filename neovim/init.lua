@@ -1855,7 +1855,7 @@ function ColoRand(scheme_index)
 
 	-- set backgrounds
 	vim.o.background = bg
-	vim.g.neovide_normal_opacity = selection.trans and 0.6 or 1
+	vim.g.neovide_normal_opacity = selection.trans and 0.7 or 1
 
 	local start_time = os.clock()
 
