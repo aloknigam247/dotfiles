@@ -1218,6 +1218,7 @@ vim.keymap.set("n", '"', function() require("telescope.builtin").registers(requi
 -- search
 vim.keymap.set("x", "/",           "<Esc>/\\%V",               { desc = "Search in select region" })
 -- tab switch
+vim.keymap.set("n", "<C-S-Tab>",   "<cmd>tabprevious<CR>",     { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
 -- window controls
 vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
