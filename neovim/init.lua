@@ -777,10 +777,18 @@ end
 ---@param bufId? integer buf id
 ---@return boolean # true if buffer is large file
 local function isLargeFile(bufId)
-	---@diagnostic disable-next-line: param-type-mismatch
-	bufId = bufId or vim.fn.bufnr("%")
-	-- return true
-	return LargeFile[bufId] ~= nil
+	bufId = bufId or 0
+
+	-- check for value in the cache or fill it
+	if LargeFile[bufId] == nil then
+		local path = vim.api.nvim_buf_get_name(bufId)
+		if path ~= nil and path ~= "" and vim.fn.exists(path) then
+			LargeFile[bufId] = vim.fn.getfsize(path) > 200000
+		end
+	end
+
+	-- return from cache
+	return LargeFile[bufId]
 end
 
 ---Safe alternative to `nvim_open_win()`
@@ -1044,9 +1052,7 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Detect large files and disable slow plugins",
 		callback = function(arg)
-			local fsize = vim.fn.getfsize(vim.fn.expand("%:p"))
-			if fsize > 200000 then
-				LargeFile[arg.buf] = true
+			if isLargeFile(arg.buf) then
 				vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
 				require("illuminate").pause_buf()
 			end
@@ -5098,7 +5104,15 @@ addPlugin {
 addPlugin {
 	"HiPhish/rainbow-delimiters.nvim",
 	config = function()
-		require("rainbow-delimiters").enable(0)
+		require("rainbow-delimiters.setup").setup({
+			condition = function(bufnr)
+				return not isLargeFile(bufnr)
+			end
+		})
+
+		if not isLargeFile() then
+			require("rainbow-delimiters").enable(0)
+		end
 	end,
 	event = "User TSLoaded"
 }
