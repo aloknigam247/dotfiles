@@ -2,7 +2,7 @@ $term_installed = Get-AppxPackage -Name "Microsoft.WindowsTerminal"
 
 if ($null -eq $term_installed) {
     $winget_pkgs = @(
-        "Microsoft.WindowsTerminal.Preview" # FIX: use non preview version now
+        "Microsoft.WindowsTerminal" # FIX: use non preview version now
     )
 
     $files = @{
