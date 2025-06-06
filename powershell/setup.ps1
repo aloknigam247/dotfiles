@@ -6,19 +6,13 @@ $scoop_pkgs = @(
     "posh-git"
 )
 
-if ((Test-Path -Path $powershell_path) -eq $false) {
-    $winget_pkgs = @(
-        "gerardog.gsudo"
-        "Microsoft.PowerShell.Preview"
-    )
-} else {
-    $winget_pkgs = @(
-        "gerardog.gsudo"
-    )
-}
+$winget_pkgs = @(
+    "gerardog.gsudo"
+    "Microsoft.PowerShell"
+)
 
 # FIX: me
 $files = @{
-    "profile.ps1" = $(powershell '$PROFILE') # powershell 5
+    # "profile.ps1" = $(powershell '$PROFILE') # powershell 5
     "profile.ps1" = $(pwsh -Command 'echo $PROFILE') # powershell 7
 }
