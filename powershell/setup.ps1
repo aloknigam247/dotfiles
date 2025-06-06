@@ -13,6 +13,6 @@ $winget_pkgs = @(
 
 # FIX: me
 $files = @{
-    # "profile.ps1" = $(powershell '$PROFILE') # powershell 5
+    "profile5.ps1" = $(powershell '$PROFILE') # powershell 5
     "profile.ps1" = $(pwsh -Command 'echo $PROFILE') # powershell 7
 }
