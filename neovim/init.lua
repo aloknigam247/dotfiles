@@ -1819,8 +1819,8 @@ end
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 -- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
--- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
-addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
+addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
+-- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
@@ -1833,8 +1833,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
--- dark  { "vn-night",             "_",                                                             }
-dark  { "zephyrium",            "_"                                                              }
+dark  { "vn-night",             "_",                                                             }
+-- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -3851,6 +3851,7 @@ addPlugin {
 		vim.lsp.inlay_hint.enable(true)
 
 		-- Mappings.
+		-- FIX: try to move to neovim alternatives instead of Lspsaga
 		local bufopts = { noremap = true, silent = true, buffer = bufnr }
 		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
 		vim.keymap.set("n", "<F12>", "<cmd>Lspsaga goto_definition<CR>", bufopts)
@@ -4404,6 +4405,11 @@ addPlugin {
 
 					local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
 					local labels = {}
+
+					if filename == "" then
+						filename = "[Scratch]"
+					end
+
 					if git_signs then
 						if git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
 							labels = { " 󰦓", guifg = "#85C581" }
