@@ -144,6 +144,9 @@ $icons = @{
     git_stash = "$([char]0xdb82)$([char]0xdeb6) " #f0ab6
     git_tag = "$([char]0xdb81)$([char]0xdcfd) " # f04fd
     git_working = "$([char]0xdb81)$([char]0xdc16) " # f0416
+    gitlog_commit = "$([char]0xeafc)"
+    gitlog_email = "$([char]0xeb1c)"
+    gitlog_message = "$([char]0xeb26)"
     gitlog_timestamp = "$([char]0xdb81)$([char]0xdd1f)"
     odc = "$([char]0xdb80)$([char]0xdd5f) " # f015f
     remote = "$([char]0xeb3a) "
@@ -246,8 +249,7 @@ function gc {
 
 Remove-Item -Force alias:gl
 function gl {
-    # FEAT: support powershell 5
-    git log --color=always --pretty="%C($($palette.git.commit_icon)) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message)) %s %C($($palette.git.timestamp))${icons.gitlog_timestamp} %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email)) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
+    git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }
 
 function gs {

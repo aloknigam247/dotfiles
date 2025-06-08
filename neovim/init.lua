@@ -1236,6 +1236,9 @@ vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
 vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG", { desc = "yank all text" })
+-- commamd abbreviations
+vim.keymap.set('ca', 'sf', 'sfind')
+vim.keymap.set('ca', 'vsf', 'vert sfind')
 -- <~>
 -- Misc</>
 -------
@@ -1818,8 +1821,8 @@ end
 -- addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 -- addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 -- addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
--- addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
-addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
+addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
+-- addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 -- addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
@@ -1832,8 +1835,8 @@ addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"             
 -- dark  { "kanagawa-paper",        "_"                                                             }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
--- dark  { "tokyonight-storm",     "tokyonight"                                                     }
-dark  { "vn-night",             "_",                                                             }
+dark  { "tokyonight-storm",     "tokyonight"                                                     }
+-- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
