@@ -11,8 +11,7 @@ $winget_pkgs = @(
     "Microsoft.PowerShell"
 )
 
-# FIX: me
 $files = @{
-    "profile5.ps1" = $(powershell '$PROFILE') # powershell 5
-    "profile.ps1" = $(pwsh -Command 'echo $PROFILE') # powershell 7
+    "profile5.ps1" = $(powershell '$PROFILE.AllUsersAllHosts') # powershell 5
+    "profile.ps1"  = $(pwsh -Command 'echo $PROFILE.AllUsersAllHosts') # powershell 7
 }
