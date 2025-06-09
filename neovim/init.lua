@@ -3854,11 +3854,10 @@ addPlugin {
 		vim.lsp.inlay_hint.enable(true)
 
 		-- Mappings.
-		-- FIX: try to move to neovim alternatives instead of Lspsaga
-		local bufopts = { noremap = true, silent = true, buffer = bufnr }
+		local bufopts = { noremap = true, silent = true }
 		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-		vim.keymap.set("n", "<F12>", "<cmd>Lspsaga goto_definition<CR>", bufopts)
-		vim.keymap.set("n", "<F2>", "<cmd>Lspsaga rename<CR>", bufopts)
+		vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, bufopts)
+		vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, bufopts)
 		vim.keymap.set("n", "<M-F12>", "<cmd>Lspsaga finder<CR>", bufopts)
 		vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, bufopts)
 		vim.keymap.set("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>", bufopts)
