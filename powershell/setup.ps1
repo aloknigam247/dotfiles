@@ -12,6 +12,6 @@ $winget_pkgs = @(
 )
 
 $files = @{
-    "profile5.ps1" = $(powershell '$PROFILE.AllUsersAllHosts') # powershell 5
+    "profile5.ps1" = $(powershell '$PROFILE') # powershell 5
     "profile.ps1"  = $(pwsh -Command 'echo $PROFILE.AllUsersAllHosts') # powershell 7
 }
