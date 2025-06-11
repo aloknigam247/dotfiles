@@ -509,7 +509,7 @@ function populatePrompt {
 
     if ($null -ne $env:SSH_CLIENT) {
         $script:dir_icon = $icons.remote
-    } elseif ($env:ODC_LOADED) {
+    } elseif ($env:INETROOT) {
         $script:dir_icon = $icons.odc
     }
 }
