@@ -1,8 +1,7 @@
+# ─[ Don't load for non interactive session ]─────────────────────────────
 function IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
-        Write-Host $options.Length
-        Write-Host "DEBUGPRINT[1]: profile.ps1:2: options=$options"
-    if ($options.Length > 0) {
+    if ($options.Length -gt 0) {
         return $false
     }
     if (($options -contains "-noni") -or ($options -contains "-noninteractive")) {
@@ -14,7 +13,10 @@ function IsShellInteractive {
     }
     return $true
 }
-IsShellInteractive
+if ($(IsShellInteractive) -eq $false) {
+    return
+}
+
 #          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 #          ┃                       Color palette                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
