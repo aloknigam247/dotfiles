@@ -1,3 +1,20 @@
+function IsShellInteractive {
+    $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
+        Write-Host $options.Length
+        Write-Host "DEBUGPRINT[1]: profile.ps1:2: options=$options"
+    if ($options.Length > 0) {
+        return $false
+    }
+    if (($options -contains "-noni") -or ($options -contains "-noninteractive")) {
+        return $false
+    }
+    if (($options -contains "-command") -or ($options -contains "-c") -or
+        ($options -contains "-file") -or ($options -contains "-f")) {
+        return $false
+    }
+    return $true
+}
+IsShellInteractive
 #          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 #          ┃                       Color palette                       ┃
 #          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
