@@ -160,17 +160,17 @@ $icons = @{
 # │ Aliases │
 # ╰─────────╯
 # ─[ Msys2 ]───────────────────────────────────────────────────────────
-New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe
+New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -ErrorAction SilentlyContinue
 
 # ─[ Common ]──────────────────────────────────────────────────────────
-New-Alias -Name "/" -Value C:\Users\aloknigam\scoop\shims\rg.exe
-New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe
+New-Alias -Name "/" -Value C:\Users\aloknigam\scoop\shims\rg.exe -ErrorAction SilentlyContinue
+New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe -ErrorAction SilentlyContinue
 
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
-Remove-Item -Force alias:ls
-Remove-Item -Force alias:rm
+Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
+Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
@@ -230,7 +230,7 @@ function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 function docs { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work" | Set-Location }
 
 # ─[ Git functions ]───────────────────────────────────────────────────
-Remove-Item -Force alias:gc
+Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
 function gc {
     git checkout $args
     $stash = git stash list
@@ -247,7 +247,7 @@ function gc {
     }
 }
 
-Remove-Item -Force alias:gl
+Remove-Item -Force alias:gl -ErrorAction SilentlyContinue
 function gl {
     git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }

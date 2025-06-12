@@ -333,7 +333,6 @@ local icons = {
 	warning            = " ",
 }
 
--- FEAT: get color from colorscheme
 ---Defines highlight for kinds
 ---@type table<string, table>
 local kind_hl = {
