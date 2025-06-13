@@ -157,6 +157,8 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
  # │ Icons │
  # ╰───────╯
 $icons = @{
+    git_aheadby = "$([char]0xdb86)$([char]0xddb2)"
+    git_behindby = "$([char]0xdb86)$([char]0xddb3)"
     git_branch = "$([char]0xf418) "
     git_commit = "$([char]0xeafc) "
     git_icon = "$([char]0xf1d2) "
@@ -511,10 +513,10 @@ function populatePrompt {
         # git ahead and behind count
         $git_sync = ""
         if ($script:git_status.AheadBy) {
-            $git_sync += "󱦲" + $script:git_status.AheadBy
+            $git_sync += "$($icons.git_aheadby)$($script:git_status.AheadBy)"
         }
         if ($script:git_status.BehindBy) {
-            $git_sync += "󱦳" + $script:git_status.BehindBy
+            $git_sync += "$($icons.git_behindby)$($script:git_status.BehindBy)"
         }
         $script:git_sync = $git_sync
 
