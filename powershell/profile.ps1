@@ -2,6 +2,10 @@
 function IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
     if ($options.Length -gt 0) {
+        $option_string = $options -join " "
+        if ($option_string -match "^-noexit.*init.ps1$") {
+            return $true
+        }
         return $false
     }
     if (($options -contains "-noni") -or ($options -contains "-noninteractive")) {
