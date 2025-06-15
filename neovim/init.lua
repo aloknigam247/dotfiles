@@ -2155,7 +2155,7 @@ addPlugin {
 			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
 			providers = {
 				buffer = {
-					name = "buffer",
+					name = "buffer", -- BUG: not working in markdown
 					score_offset = 0
 				},
 				cmdline = {
@@ -3953,7 +3953,7 @@ addPlugin {
 			enabled = true,
 			icons = { "●", "○", "◆", "◇" },
 		},
-		checkbox = { -- FEAT: better highlights with underline and strikethrough
+		checkbox = { -- FEAT: change icon so that flicker does not happen
 			enabled = true,
 			position = "overlay",
 			unchecked = {
