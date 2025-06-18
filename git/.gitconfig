@@ -1,3 +1,7 @@
+[include]
+    path = ~/light.gitconfig
+    path = ~/.gitconfig.orig
+
 [fetch]
     prune = true
 
@@ -11,15 +15,11 @@
     autoSetupRemote = true
 
 [user]
-	name = aloknigam
-	email = aloknigam+odspmdb@microsoft.com
+	name = Alok Nigam
+	email = aloknigam@microsoft.com
 
 [interactive]
     diffFilter = delta --color-only
-
-[include]
-    path = ~/light.gitconfig
-    path = ~/.gitconfig.orig
 
 [delta]
     colorMoved = default
