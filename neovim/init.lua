@@ -2155,7 +2155,7 @@ addPlugin {
 			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
 			providers = {
 				buffer = {
-					name = "buffer", -- BUG: not working in markdown
+					name = "buffer",
 					score_offset = 0
 				},
 				cmdline = {
@@ -3953,20 +3953,20 @@ addPlugin {
 			enabled = true,
 			icons = { "●", "○", "◆", "◇" },
 		},
-		checkbox = { -- FEAT: change icon so that flicker does not happen
+		checkbox = {
 			enabled = true,
 			position = "overlay",
 			unchecked = {
-				icon = " ",
+				icon = "    ",
 			},
 			checked = {
-				icon = " ",
+				icon = "    ",
 				scope_highlight = "RenderMarkdownChecked"
 			},
 			custom = {
 				working = {
 					raw = "[-]",
-					rendered = " ",
+					rendered = "    ",
 					highlight = "RenderMarkdownTodo",
 					scope_highlight = "RenderMarkdownTodo",
 				}
@@ -4024,9 +4024,6 @@ addPlugin {
 				default = vim.api.nvim_get_option_value("concealcursor", {}),
 				rendered = vim.api.nvim_get_option_value("concealcursor", {})
 			}
-		},
-		completions = {
-			blink = { enabled = true }
 		}
 	}
 }
