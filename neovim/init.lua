@@ -2943,7 +2943,8 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- BUG: auto folds after change
+-- FEAT: create own folding code
+addPlugin {
 	"kevinhwang91/nvim-ufo",
 	config = function()
 		vim.o.foldcolumn = "1"
@@ -3082,7 +3083,7 @@ addPlugin { -- BUG: auto folds after change
 	init = function()
 		-- Mapping to attach nvim-ufo
 		vim.keymap.set("n", "zz", function()
-			require("ufo").attach() -- FEAT: attach to buffer in which requested
+			require("ufo").attach()
 
 			-- modify mapping to close folds
 			vim.keymap.set("n", "zz", function()
