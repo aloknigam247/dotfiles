@@ -2944,6 +2944,17 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: create own folding code
+-- Load statuscol plugin if not loaded
+-- Fold based on treesitter, then indent, then marker may be
+-- Create mapping to fold till level 1
+-- Use nvim-ufo python description
+
+-- Mapping to fold recursively for current buffer only
+vim.keymap.set('n', 'zz', function()
+	vim.wo.foldcolumn = "1"
+	vim.cmd('normal! zM')
+end, { noremap = true, silent = true, buffer = true })
+
 addPlugin {
 	"kevinhwang91/nvim-ufo",
 	config = function()
@@ -3080,17 +3091,17 @@ addPlugin {
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
 	end,
 	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" },
-	init = function()
-		-- Mapping to attach nvim-ufo
-		vim.keymap.set("n", "zz", function()
-			require("ufo").attach()
+	-- init = function()
+	-- 	-- Mapping to attach nvim-ufo
+	-- 	vim.keymap.set("n", "zz", function()
+	-- 		require("ufo").attach()
 
-			-- modify mapping to close folds
-			vim.keymap.set("n", "zz", function()
-				require("ufo.action").closeFolds(1)
-			end, { buffer = 0, desc = "Fold to level 1" })
-		end, { desc = "Attach nvim-ufo" })
-	end
+	-- 		-- modify mapping to close folds
+	-- 		vim.keymap.set("n", "zz", function()
+	-- 			require("ufo.action").closeFolds(1)
+	-- 		end, { buffer = 0, desc = "Fold to level 1" })
+	-- 	end, { desc = "Attach nvim-ufo" })
+	-- end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Formatting   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
