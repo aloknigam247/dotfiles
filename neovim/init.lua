@@ -3907,6 +3907,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+--FEAT: snippet or shortcut for todo using -[
 -- "OXY2DEV/markview.nvim"
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
@@ -4035,7 +4036,7 @@ addPlugin {
 }
 
 addPlugin {
-	"gaoDean/autolist.nvim",
+	"gaoDean/autolist.nvim", -- FIX: recheck working
 	event = "CursorHold *.md",
 	config = function(_, cfg)
 		require("autolist").setup(cfg)
@@ -4049,7 +4050,7 @@ addPlugin {
 	end,
 	opts = {
 		lists = {
-			markdown = {
+			markdown = { -- FEAT: Add todo ?
 				"> " -- blockqoutes marker
 			}
 		}
