@@ -1832,8 +1832,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
-dark  { "sonokai",              "_",                                                             }
+dark  { "kanagawa-wave",        "kanagawa"                                                       }
+-- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
