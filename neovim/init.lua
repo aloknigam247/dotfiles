@@ -5774,7 +5774,6 @@ addPlugin {
 -- https://github.com/wellle/targets.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-
 addPlugin {
 	"Bekaboo/dropbar.nvim",
 	opts = {
@@ -5871,5 +5870,16 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- TODO: github stars
+-- FEAT: https://github.com/FluxxField/smart-motion.nvim
+-- FEAT: https://github.com/Koalhack/darcubox-nvim
+-- FEAT: https://github.com/OXY2DEV/bars.nvim
+-- FEAT: https://github.com/afonsofrancof/OSC11.nvim
+-- FEAT: https://github.com/bngarren/checkmate.nvim
+-- FEAT: https://github.com/colomb8/rambo.nvim
+-- FEAT: https://github.com/folke/styler.nvim
+-- FEAT: https://github.com/hamidi-dev/kaleidosearch.nvim
+-- FEAT: https://github.com/hamidi-dev/org-list.nvim
+-- FEAT: https://github.com/niba/continue.nvim
+-- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
