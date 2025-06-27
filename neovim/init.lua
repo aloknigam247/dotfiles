@@ -1832,8 +1832,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
-dark  { "kanagawa-wave",        "kanagawa"                                                       }
--- dark  { "sonokai",              "_",                                                             }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
@@ -4047,6 +4047,48 @@ addPlugin {
 }
 
 addPlugin {
+	"bngarren/checkmate.nvim",
+	ft = "markdown",
+	opts = {
+		files = {
+			"todo",
+			"TODO",
+			"todo.md",
+			"TODO.md",
+			"*.todo",
+			"*.todo.md",
+		},
+		keys = {
+			["<leader>TR"] = {
+				rhs = "<cmd>Checkmate remove_all_metadata<CR>",
+				desc = "Remove all metadata from a todo item",
+				modes = { "n", "v" },
+			},
+			["<leader>Ta"] = {
+				rhs = "<cmd>Checkmate archive<CR>",
+				desc = "Archive checked/completed todo items (move to bottom section)",
+				modes = { "n" },
+			},
+			["<leader>Tv"] = {
+				rhs = "<cmd>Checkmate metadata select_value<CR>",
+				desc = "Update the value of a metadata tag under the cursor",
+				modes = { "n" },
+			}
+		},
+		todo_count_formatter = function(completed, total)
+			return string.format("%d/%d (%.0f%%)", completed, total, completed / total * 100)
+		end,
+		todo_markers = {
+			unchecked = "[ ]",
+			checked = "[x]",
+		},
+		linter = {
+			enabled = true,
+		}
+	}
+}
+
+addPlugin {
 	"gaoDean/autolist.nvim", -- FIX: recheck working
 	event = "CursorHold *.md",
 	config = function(_, cfg)
@@ -5874,10 +5916,8 @@ ColoRand()
 -- FEAT: https://github.com/Koalhack/darcubox-nvim
 -- FEAT: https://github.com/OXY2DEV/bars.nvim
 -- FEAT: https://github.com/afonsofrancof/OSC11.nvim
--- FEAT: https://github.com/bngarren/checkmate.nvim
 -- FEAT: https://github.com/colomb8/rambo.nvim
 -- FEAT: https://github.com/folke/styler.nvim
--- FEAT: https://github.com/hamidi-dev/kaleidosearch.nvim
 -- FEAT: https://github.com/hamidi-dev/org-list.nvim
 -- FEAT: https://github.com/niba/continue.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
