@@ -4089,8 +4089,8 @@ addPlugin {
 }
 
 addPlugin {
-	"gaoDean/autolist.nvim", -- FIX: recheck working
-	event = "CursorHold *.md",
+	"gaoDean/autolist.nvim",
+	ft = "markdown",
 	config = function(_, cfg)
 		require("autolist").setup(cfg)
 		vim.keymap.set("i", "<S-CR>", "<CR><Cmd>AutolistNewBullet<CR>")
@@ -4104,6 +4104,10 @@ addPlugin {
 	opts = {
 		lists = {
 			markdown = { -- FEAT: Add todo ?
+				"[-+*]", -- - + *
+				"%d+[.)]", -- 1. 2. 3.
+				"%a[.)]", -- a) b) c)
+				"%u*[.)]", -- I. II. III.
 				"> " -- blockqoutes marker
 			}
 		}
