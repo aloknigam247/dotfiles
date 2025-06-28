@@ -1811,6 +1811,7 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
+addPlugin { "Koalhack/darcubox-nvim",         event = "User darcubox"                                   }
 addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
@@ -1829,14 +1830,16 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
+-- dark  { "darcubox",             "_"                                                              }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "jb",                   "_"                                                              }
 -- dark  { "kanagawa-paper",        "_"                                                             }
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
-dark  { "sonokai",              "_",                                                             }
+dark  { "kanagawa-wave",        "kanagawa"                                                       }
+-- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
+-- dark  { "darcubox",             "_",            cfg = { options = { transparent = true } }       }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -5567,6 +5570,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: try another surrounder
 addPlugin {
 	-- https://github.com/kylechui/nvim-surround
 	"echasnovski/mini.surround",
@@ -5917,9 +5921,7 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- TODO: github stars
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
--- FEAT: https://github.com/Koalhack/darcubox-nvim
 -- FEAT: https://github.com/OXY2DEV/bars.nvim
--- FEAT: https://github.com/afonsofrancof/OSC11.nvim
 -- FEAT: https://github.com/colomb8/rambo.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/hamidi-dev/org-list.nvim
