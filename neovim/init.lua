@@ -4056,12 +4056,15 @@ addPlugin {
 		files = {
 			"todo",
 			"TODO",
-			"todo.md",
-			"TODO.md",
 			"*.todo",
-			"*.todo.md",
+			"*.md",
 		},
 		keys = {
+			["<TAB>"] = {
+				rhs = "<cmd>Checkmate toggle<CR>",
+				desc = "Toggle todo item",
+				modes = { "n", "v" }
+			},
 			["<leader>TR"] = {
 				rhs = "<cmd>Checkmate remove_all_metadata<CR>",
 				desc = "Remove all metadata from a todo item",
@@ -4098,7 +4101,6 @@ addPlugin {
 		require("autolist").setup(cfg)
 		vim.keymap.set("i", "<S-CR>", "<CR><Cmd>AutolistNewBullet<CR>")
 		vim.keymap.set("n", "<<", "<<<Cmd>AutolistRecalculate<CR>")
-		vim.keymap.set("n", "<TAB>", "<Cmd>AutolistToggleCheckbox<CR>")
 		vim.keymap.set("n", ">>", ">><Cmd>AutolistRecalculate<CR>")
 		vim.keymap.set("n", "O", "O<Cmd>AutolistNewBulletBefore<CR>")
 		vim.keymap.set("n", "dd", "dd<Cmd>AutolistRecalculate<CR>")
@@ -4373,6 +4375,7 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/niba/continue.nvim
 addPlugin {
 	"rmagatti/auto-session",
 	cmd = "SessionSave",
@@ -5924,8 +5927,6 @@ ColoRand()
 -- FEAT: https://github.com/OXY2DEV/bars.nvim
 -- FEAT: https://github.com/colomb8/rambo.nvim
 -- FEAT: https://github.com/folke/styler.nvim
--- FEAT: https://github.com/hamidi-dev/org-list.nvim
--- FEAT: https://github.com/niba/continue.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
