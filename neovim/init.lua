@@ -2947,13 +2947,13 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: create own folding code
--- Load statuscol plugin if not loaded
 -- Fold based on treesitter, then indent, then marker may be
 -- Create mapping to fold till level 1
 -- Use nvim-ufo python description
 
 -- Mapping to fold recursively for current buffer only
 vim.keymap.set('n', 'zz', function()
+	require("statuscol")
 	vim.wo.foldcolumn = "1"
 	vim.cmd('normal! zM')
 end, { noremap = true, silent = true, buffer = true })
@@ -3297,15 +3297,15 @@ addPlugin {
 			-- Navigation
 			map("n", "]c", function()
 				if vim.wo.diff then return "]c" end
-				vim.schedule(function() gs.next_hunk({preview = true}) end)
+				vim.schedule(function() gs.nav_hunk("next", { preview = true }) end)
 				return "<Ignore>"
-			end, {expr=true})
+			end, { expr=true })
 
 			map("n", "[c", function()
 				if vim.wo.diff then return "[c" end
-				vim.schedule(function() gs.prev_hunk({preview = true}) end)
+				vim.schedule(function() gs.nav_hunk("prev", { preview = true }) end)
 				return "<Ignore>"
-			end, {expr=true})
+			end, { expr=true })
 		end,
 		preview_config = {
 			border = dotted_border
