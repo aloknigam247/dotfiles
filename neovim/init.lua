@@ -765,7 +765,7 @@ local function getTSInstalled(map_extension)
 end
 
 ---Check if LSP is attached to current buffer
----@param bufnr? integer buffner number
+---@param bufnr? integer buffer number
 ---@return boolean # true if LSP is attached
 local function isLspAttached(bufnr)
 	bufnr = bufnr or 0
@@ -788,6 +788,18 @@ local function isLargeFile(bufId)
 
 	-- return from cache
 	return LargeFile[bufId]
+end
+
+---Check if tressitter is attached to buffer
+---@param bufnr? integer buffer number to check
+---@return boolean # true if treeistter is attached
+local function isTsAttached(bufnr)
+	bufnr = bufnr or vim.api.nvim_get_current_buf()
+	local highlighter = require("vim.treesitter.highlighter")
+	if highlighter.active[bufnr] then
+		return true
+	end
+	return false
 end
 
 ---Safe alternative to `nvim_open_win()`
@@ -1832,9 +1844,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "darcubox",             "_"                                                              }
 -- dark  { "hybrid",               "_"                                                              }
--- dark  { "jb",                   "_"                                                              }
--- dark  { "kanagawa-paper",        "_"                                                             }
-dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "jb",                   "_"                                                              }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
@@ -2952,10 +2963,14 @@ vim.api.nvim_create_autocmd(
 -- Use nvim-ufo python description
 
 -- Mapping to fold recursively for current buffer only
-vim.keymap.set('n', 'zz', function()
+vim.keymap.set("n", "zz", function()
 	require("statuscol")
 	vim.wo.foldcolumn = "1"
-	vim.cmd('normal! zM')
+	if isTsAttached() then
+		vim.wo.foldmethod = "expr"
+		vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+	end
+	vim.cmd("normal! zM")
 end, { noremap = true, silent = true, buffer = true })
 
 addPlugin {
@@ -3458,6 +3473,9 @@ addPlugin {
 				return "References: " .. count
 			end,
 			implements = function(count)
+				if count == 1 then
+					return ""
+				end
 				return "Implements: " .. count
 			end,
 			git_authors = false --[[ function(latest_author, count)
@@ -4107,7 +4125,7 @@ addPlugin {
 	end,
 	opts = {
 		lists = {
-			markdown = { -- FEAT: Add todo ?
+			markdown = {
 				"[-+*]", -- - + *
 				"%d+[.)]", -- 1. 2. 3.
 				"%a[.)]", -- a) b) c)
@@ -4707,9 +4725,7 @@ addPlugin {
 				},
 				{
 					function()
-						local buf = vim.api.nvim_get_current_buf()
-						local highlighter = require("vim.treesitter.highlighter")
-						if highlighter.active[buf] then
+						if isTsAttached() then
 							return "󰐅"
 						end
 						return ""
