@@ -3921,7 +3921,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
---FEAT: snippet or shortcut for todo using -[
 -- "OXY2DEV/markview.nvim"
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",

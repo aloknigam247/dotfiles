@@ -1,0 +1,12 @@
+{
+  "TodoUnchecked": {
+    "prefix": "-",
+    "body": ["- [ ] "],
+    "description": "Todo marker unchecked"
+  },
+  "TodoChecked": {
+    "prefix": "-",
+    "body": ["- [x] "],
+    "description": "Todo marker checked"
+  }
+}
