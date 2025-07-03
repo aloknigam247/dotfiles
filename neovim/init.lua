@@ -1339,6 +1339,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
+-- FEAT: Create command to colorize terminal
 vim.api.nvim_create_user_command(
 	"DiffUnsaved",
 	"let current_filetype = &filetype | vert new | set buftype=nofile | execute 'set filetype=' . current_filetype | unlet current_filetype | read # | 1d_ | diffthis | wincmd p | diffthis",
@@ -1826,7 +1827,6 @@ addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"         
 addPlugin { "Koalhack/darcubox-nvim",         event = "User darcubox"                                   }
 addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
-addPlugin { "nickkadutskyi/jb.nvim",          event = "User jb"                                         }
 addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
 addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
@@ -1843,8 +1843,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "darcubox",             "_"                                                              }
--- dark  { "hybrid",               "_"                                                              }
-dark  { "jb",                   "_"                                                              }
+dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
@@ -5560,6 +5559,7 @@ addPlugin {
 -- }
 
 addPlugin {
+	-- FEAT: why not use Alt + arrow combinations
 	"echasnovski/mini.move",
 	keys = {
 		{ "<C-h>", mode = "v" },
@@ -5941,6 +5941,7 @@ ColoRand()
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/OXY2DEV/bars.nvim
 -- FEAT: https://github.com/colomb8/rambo.nvim
+-- Jump between paragraphs with Ctrl + ↓ and ↑ (same as vim's { and }).
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- <~>
