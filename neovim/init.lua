@@ -2024,7 +2024,7 @@ addPlugin {
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
-		cmdline = {
+		cmdline = { -- FEAT: add buffer as a source for lua, lsp ?
 			completion = {
 				ghost_text = {
 					enabled = true
@@ -4953,7 +4953,6 @@ addPlugin {
 -- https://github.com/Marskey/telescope-sg
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
--- https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 
 addPlugin {
 	"nvim-telescope/telescope.nvim",
@@ -5471,6 +5470,7 @@ addPlugin {
 	end
 }
 
+-- FIX: deprecate dressing: https://github.com/r0nsha/multinput.nvim or snacks ?
 addPlugin {
 	"stevearc/dressing.nvim",
 	dependencies = "telescope.nvim",
@@ -5559,28 +5559,23 @@ addPlugin {
 -- }
 
 addPlugin {
-	-- FEAT: why not use Alt + arrow combinations
 	"echasnovski/mini.move",
 	keys = {
-		{ "<C-h>", mode = "v" },
-		{ "<C-l>", mode = "v" },
-		{ "<C-j>", mode = "v" },
-		{ "<C-k>", mode = "v" },
-		{ "H",     mode = "n" },
-		{ "L",     mode = "n" },
-		{ "J",     mode = "n" },
-		{ "K",     mode = "n" },
+		{ "<M-Down>",  mode = { "n", "v" }},
+		{ "<M-Left>",  mode = { "n", "v" } },
+		{ "<M-Right>", mode = { "n", "v" } },
+		{ "<M-Up>",    mode = { "n", "v" } }
 	},
 	opts = {
 		mappings = {
-			left = "<C-h>",
-			right = "<C-l>",
-			down = "<C-j>",
-			up = "<C-k>",
-			line_left = "H",
-			line_right = "L",
-			line_down = "J",
-			line_up = "K",
+			down       = "<M-Down>",
+			left       = "<M-Left>",
+			right      = "<M-Right>",
+			up         = "<M-Up>",
+			line_down  = "<M-Down>",
+			line_left  = "<M-Left>",
+			line_right = "<M-Right>",
+			line_up    = "<M-Up>"
 		},
 		options = {
 			reindent_linewise = true
@@ -5676,6 +5671,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: look for all snacks and use
 addPlugin {
 	"folke/snacks.nvim",
 	lazy = true
