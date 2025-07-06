@@ -1829,7 +1829,6 @@ addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependenci
 addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
-addPlugin { "Koalhack/darcubox-nvim",         event = "User darcubox"                                   }
 addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
@@ -1844,20 +1843,22 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
+-- dark  { "carbonfox",            "nightfox"                                                       }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
-dark  { "darcubox",             "_"                                                              }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
 -- dark  { "zephyrium",            "_"                                                              }
--- dark  { "darcubox",             "_",            cfg = { options = { transparent = true } }       }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
+-- light { "dawnfox",              "nightfox"                                                       }
+-- light { "dayfox",               "nightfox"                                                       }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
