@@ -1339,7 +1339,12 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
--- FEAT: Create command to colorize terminal
+vim.api.nvim_create_user_command(
+	"ColorizeTerminal",
+	function() require("snacks").terminal.colorize() end,
+	{ desc = "Replaces ansii color codes with the actual colors" }
+)
+
 vim.api.nvim_create_user_command(
 	"DiffUnsaved",
 	"let current_filetype = &filetype | vert new | set buftype=nofile | execute 'set filetype=' . current_filetype | unlet current_filetype | read # | 1d_ | diffthis | wincmd p | diffthis",
@@ -1842,8 +1847,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "charleston",           "_"                                                              }
 -- dark  { "duskfox",              "nightfox"                                                       }
--- dark  { "darcubox",             "_"                                                              }
-dark  { "hybrid",               "_"                                                              }
+dark  { "darcubox",             "_"                                                              }
+-- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
