@@ -2963,7 +2963,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: create own folding code
--- Fold based on treesitter, then indent, then marker may be
 -- Create mapping to fold till level 1
 -- Use nvim-ufo python description
 
@@ -2971,7 +2970,7 @@ vim.api.nvim_create_autocmd(
 vim.keymap.set("n", "zz", function()
 	require("statuscol")
 	vim.wo.foldcolumn = "1"
-	if isTsAttached() then
+	if vim.wo.foldmethod ~= "marker" and isTsAttached() then
 		vim.wo.foldmethod = "expr"
 		vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 	end
