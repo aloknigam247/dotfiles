@@ -5840,6 +5840,7 @@ addPlugin {
 
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/mhinz/neovim-remote
+-- https://github.com/sQVe/sort.nvim
 -- https://github.com/wellle/targets.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
