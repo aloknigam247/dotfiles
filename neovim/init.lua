@@ -2030,7 +2030,7 @@ addPlugin {
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
-		cmdline = { -- FEAT: add buffer as a source for lua, lsp ?
+		cmdline = {
 			completion = {
 				ghost_text = {
 					enabled = true
@@ -5941,7 +5941,6 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- TODO: github stars
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
--- FEAT: https://github.com/OXY2DEV/bars.nvim
 -- FEAT: https://github.com/colomb8/rambo.nvim
 -- Jump between paragraphs with Ctrl + ↓ and ↑ (same as vim's { and }).
 -- FEAT: https://github.com/folke/styler.nvim
