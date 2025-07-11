@@ -44,7 +44,7 @@ gui:
       - "◡"
       - "◟"
     rate: 50
-git:
+  git: # FEAT: use delta for diffs
   paging:
     colorArg: always
     useConfig: true
@@ -65,11 +65,12 @@ git:
   autoRefresh: true
   fetchAll: true # Pass --all flag when running git fetch. Set to false to fetch only origin (or the current branch's upstream remote if there is one)
   branchLogCmd: 'git log --color=always --pretty=\"%C(#B4AD2D) %C(#DBD56E)%h %Creset- %C(#88AB75) %s %C(#216E82)\U000F051F %ar on %ah %C(#7D7C84)<%C(#ACABB0)%an %C(#7D7C84) %ae>%C(#DE8F6E)%d\" {{branchName}} --'
-  allBranchesLogCmd: "git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium"
   overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
   disableForcePushing: false
   parseEmoji: true
   truncateCopiedCommitHashesTo: 12 # When copying commit hashes to the clipboard, truncate them to this length. Set to 40 to disable truncation.
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
 os:
   copyToClipboardCmd: "" # See 'Custom Command for Copying to Clipboard' section
   editPreset: "nvim" # see 'Configuring File Editing' section
