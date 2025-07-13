@@ -1827,7 +1827,6 @@ end
 addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
 addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
-addPlugin { "romanaverin/charleston.nvim",    event = "User charleston"                                 }
 addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
 addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
@@ -1844,12 +1843,11 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "carbonfox",            "nightfox"                                                       }
--- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
--- dark  { "charleston",           "_"                                                              }
+dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
-dark  { "nordfox",              "nightfox"                                                       }
+-- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "vn-night",             "_",                                                             }
