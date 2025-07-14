@@ -4915,6 +4915,7 @@ addPlugin {
 -- https://github.com/nvim-telescope/telescope-frecency.nvim
 -- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
 
+-- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -5409,6 +5410,8 @@ addPlugin {
 	event = "CmdlineEnter"
 }
 
+-- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
+-- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
 addPlugin {
 	"rcarriga/nvim-notify",
 	config = function()
@@ -5431,7 +5434,7 @@ addPlugin {
 	end
 }
 
--- FIX: deprecate dressing: https://github.com/r0nsha/multinput.nvim or snacks ?
+-- FIX: use snacks for input and select/telescope
 addPlugin {
 	"stevearc/dressing.nvim",
 	dependencies = "telescope.nvim",
@@ -5896,6 +5899,7 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- TODO: github stars
+-- FEAT: lazygit https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/colomb8/rambo.nvim
 -- Jump between paragraphs with Ctrl + ↓ and ↑ (same as vim's { and }).
