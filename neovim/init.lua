@@ -1842,8 +1842,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
--- dark  { "carbonfox",            "nightfox"                                                       }
-dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+dark  { "carbonfox",            "nightfox"                                                       }
+-- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
