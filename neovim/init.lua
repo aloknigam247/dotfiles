@@ -1832,7 +1832,6 @@ addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"       
 addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
 addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
 addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
-addPlugin { "xero/miasma.nvim",               event = "User miasma"                                     }
 addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
 addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
@@ -1841,8 +1840,8 @@ addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"             
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
--- dark  { "bluloco",              "_"                                                              }
-dark  { "carbonfox",            "nightfox"                                                       }
+dark  { "bluloco",              "_"                                                              }
+-- dark  { "carbonfox",            "nightfox"                                                       }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
