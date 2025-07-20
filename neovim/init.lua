@@ -802,6 +802,7 @@ local function isTsAttached(bufnr)
 	return false
 end
 
+-- TODO: do we still require this
 ---Safe alternative to `nvim_open_win()`
 ---@param bufnr integer Buffer to display, or 0 for current buffer
 ---@param enter boolean Enter the window (make it the current window)
@@ -866,6 +867,7 @@ vim.api.nvim_open_win = nvimOpenWinSafe
 ---@param row_offset integer Row offset
 ---@param enter boolean Enter into window on creation
 local function openFloat(path, relativity, col_offset, row_offset, enter, split, vsplit)
+	-- FEAT: use https://github.com/folke/snacks.nvim/blob/main/docs/win.md
 	-- Create buffer
 	local bufnr = vim.fn.bufadd(path)
 
@@ -1840,17 +1842,17 @@ addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"             
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 dark  { "ayu-dark",             "ayu",                                                           }
--- dark  { "bluloco",              "_"                                                              }
--- dark  { "carbonfox",            "nightfox"                                                       }
--- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
--- dark  { "duskfox",              "nightfox"                                                       }
--- dark  { "hybrid",               "_"                                                              }
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
--- dark  { "nordfox",              "nightfox"                                                       }
--- dark  { "sonokai",              "_",                                                             }
--- dark  { "tokyonight-storm",     "tokyonight"                                                     }
--- dark  { "vn-night",             "_",                                                             }
--- dark  { "zephyrium",            "_"                                                              }
+dark  { "bluloco",              "_"                                                              }
+dark  { "carbonfox",            "nightfox"                                                       }
+dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+dark  { "duskfox",              "nightfox"                                                       }
+dark  { "hybrid",               "_"                                                              }
+dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "nordfox",              "nightfox"                                                       }
+dark  { "sonokai",              "_",                                                             }
+dark  { "tokyonight-storm",     "tokyonight"                                                     }
+dark  { "vn-night",             "_",                                                             }
+dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -2113,7 +2115,7 @@ addPlugin {
 										return icons[kind]
 									end
 
-									return icons[_ctx.kind]
+									return icons[_ctx.kind] or _ctx.kind -- FIX: me
 								end
 
 								return " " .. getIcon(ctx)
@@ -2600,6 +2602,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
@@ -3311,7 +3314,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"2kabhishek/nerdy.nvim",
+	"2kabhishek/nerdy.nvim", -- FIX: me
 	cmd = "Nerdy",
 	dependencies = { "stevearc/dressing.nvim", "nvim-telescope/telescope.nvim", },
 }
@@ -4604,12 +4607,12 @@ addPlugin {
 					padding = { left = 0, right = 1 },
 					separator = ""
 				},
-				-- {
-				-- 	function() return vim.g.ColoRand end,
-				-- 	color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-				-- 	icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
-				-- 	padding = { left = 0, right = 1 }
-				-- },
+				{
+					function() return vim.g.ColoRand end,
+					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
+					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
+					padding = { left = 0, right = 1 }
+				},
 				{
 					"diagnostics",
 					on_click = function()
@@ -5634,7 +5637,6 @@ addPlugin {
 	}
 }
 
--- FEAT: look for all snacks and use
 addPlugin {
 	"folke/snacks.nvim",
 	lazy = true
