@@ -1841,26 +1841,26 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
-dark  { "ayu-dark",             "ayu",                                                           }
-dark  { "bluloco",              "_"                                                              }
-dark  { "carbonfox",            "nightfox"                                                       }
-dark  { "catppuccin-macchiato", "catppuccin"                                                     }
-dark  { "duskfox",              "nightfox"                                                       }
-dark  { "hybrid",               "_"                                                              }
-dark  { "kanagawa-wave",        "kanagawa"                                                       }
-dark  { "nordfox",              "nightfox"                                                       }
-dark  { "sonokai",              "_",                                                             }
-dark  { "tokyonight-storm",     "tokyonight"                                                     }
-dark  { "vn-night",             "_",                                                             }
-dark  { "zephyrium",            "_"                                                              }
+-- dark  { "ayu-dark",             "ayu",                                                           }
+-- dark  { "bluloco",              "_"                                                              }
+-- dark  { "carbonfox",            "nightfox"                                                       }
+-- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+-- dark  { "duskfox",              "nightfox"                                                       }
+-- dark  { "hybrid",               "_"                                                              }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
+-- dark  { "nordfox",              "nightfox"                                                       }
+-- dark  { "sonokai",              "_",                                                             }
+-- dark  { "tokyonight-storm",     "tokyonight"                                                     }
+-- dark  { "vn-night",             "_",                                                             }
+-- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
--- light { "bluloco",              "_"                                                              }
--- light { "dawnfox",              "nightfox"                                                       }
--- light { "dayfox",               "nightfox"                                                       }
--- light { "catppuccin-latte",     "catppuccin"                                                     }
--- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "kanagawa-paper",        "_"                                                             }
+light { "bluloco",              "_"                                                              }
+light { "dawnfox",              "nightfox"                                                       }
+light { "dayfox",               "nightfox"                                                       }
+light { "catppuccin-latte",     "catppuccin"                                                     }
+light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
