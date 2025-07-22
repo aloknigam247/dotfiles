@@ -2206,7 +2206,7 @@ addPlugin {
 						ignore_paths = { "C:\\Users\\aloknigam" }
 					}
 				},
-				snippets = {
+				snippets = { -- FIX: not picking custom snippets
 					name = "snippet",
 					max_items = 5,
 					score_offset = -100
@@ -4060,6 +4060,7 @@ addPlugin {
 				modes = { "n" },
 			}
 		},
+		todo_action_depth = 10,
 		todo_count_formatter = function(completed, total)
 			return string.format("%d/%d (%.0f%%)", completed, total, completed / total * 100)
 		end,
