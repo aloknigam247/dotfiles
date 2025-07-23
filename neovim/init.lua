@@ -1857,9 +1857,9 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 light { "bluloco",              "_"                                                              }
 light { "dawnfox",              "nightfox"                                                       }
-light { "dayfox",               "nightfox"                                                       }
-light { "catppuccin-latte",     "catppuccin"                                                     }
-light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+-- light { "dayfox",               "nightfox"                                                       }
+-- light { "catppuccin-latte",     "catppuccin"                                                     }
+-- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
