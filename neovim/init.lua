@@ -5903,8 +5903,6 @@ ColoRand()
 -- TODO: github stars
 -- FEAT: lazygit https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
--- FEAT: https://github.com/colomb8/rambo.nvim
--- Jump between paragraphs with Ctrl + ↓ and ↑ (same as vim's { and }).
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- <~>
