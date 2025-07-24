@@ -1856,7 +1856,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
-light { "bluloco",              "_"                                                              }
+-- light { "bluloco",              "_"                                                              }
 light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
