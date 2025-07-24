@@ -1,6 +1,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Profiling</>
 ------------
+-- PERF: slow neovim in init.lua insert mode typing
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -1359,7 +1360,7 @@ vim.api.nvim_create_user_command(
 		if DropbarEnabled == nil then
 			require("dropbar")
 		end
-		DropbarEnabled = not DropbarEnabled
+		DropbarEnabled = not DropbarEnabled -- FIX: dropbar disable
 	end,
 	{ desc = "Enable dropbar" }
 )
