@@ -5,7 +5,7 @@ $pip_pkgs = @(
 
 $scoop_pkgs = @(
     "dos2unix"
-    "fd"
+    "fd" # FIX: colors for light scheme
     "less"
     "msys2"
     "ripgrep"
