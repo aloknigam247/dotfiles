@@ -332,6 +332,7 @@ local icons = {
 	symlink_arrow      = " 壟 ",
 	warn               = " ",
 	warning            = " ",
+	Ripgrep            = "󰱼",
 }
 
 ---Defines highlight for kinds
@@ -2117,7 +2118,7 @@ addPlugin {
 										return icons[kind]
 									end
 
-									return icons[_ctx.kind] or _ctx.kind -- FIX: me
+									return icons[_ctx.kind] or _ctx.kind
 								end
 
 								return " " .. getIcon(ctx)
@@ -3320,8 +3321,8 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"2kabhishek/nerdy.nvim", -- FIX: me
-	cmd = "Nerdy",
+	"2kabhishek/nerdy.nvim",
+	cmd = "Nerdy", -- FIX: me
 	dependencies = { "stevearc/dressing.nvim", "nvim-telescope/telescope.nvim", },
 }
 
