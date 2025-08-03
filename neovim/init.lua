@@ -1856,12 +1856,12 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
--- light { "bluloco",              "_"                                                              }
-light { "dawnfox",              "nightfox"                                                       }
+light { "bluloco",              "_"                                                              }
+-- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
-light { "kanagawa-paper",        "_"                                                             }
+-- light { "kanagawa-paper",        "_"                                                             }
 -- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
@@ -2027,6 +2027,7 @@ addPlugin {
 	event = { "CmdlineEnter", "InsertEnter" },
 	--- @type blink.cmp.Config
 	opts = {
+		-- FEAT: use of show_and_insert_or_accept_single
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
@@ -2202,9 +2203,13 @@ addPlugin {
 					---@module "blink-ripgrep"
 					---@type blink-ripgrep.Options
 					opts = {
-						max_filesize = "300K",
-						search_casing = "--smart-case",
-						ignore_paths = { "C:\\Users\\aloknigam" }
+						backend = {
+							ripgrep = {
+								max_filesize = "300K",
+								search_casing = "--smart-case",
+								ignore_paths = { "C:\\Users\\aloknigam" }
+							}
+						}
 					}
 				},
 				snippets = { -- FIX: not picking custom snippets
@@ -4612,7 +4617,7 @@ addPlugin {
 				{
 					function() return vim.g.ColoRand end,
 					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
+					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}}, -- FIX: no proper color
 					padding = { left = 0, right = 1 }
 				},
 				{
