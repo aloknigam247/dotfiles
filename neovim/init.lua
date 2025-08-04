@@ -1378,6 +1378,23 @@ vim.api.nvim_create_user_command(
 		nargs = 1
 	}
 )
+-- FEAT: freeze top row in csv
+vim.api.nvim_create_user_command('FreezeTopRow', function()
+	-- Create a horizontal split if not already split
+	vim.cmd('sp')
+	-- Go to the top window
+	vim.cmd('wincmd k')
+	-- Resize top window to show only one line (the header)
+	vim.cmd('resize 1')
+	-- Set scrollbind and horizontal scrollopt
+	vim.cmd('setlocal scrollbind')
+	vim.cmd('setlocal scrollopt=hor')
+	-- Move to bottom window and set scrollbind and scrollopt again
+	vim.cmd('wincmd j')
+	vim.cmd('setlocal scrollbind')
+	vim.cmd('setlocal scrollopt=hor')
+end, {desc = "Freeze the top row like Excel in CSV files"})
+
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
