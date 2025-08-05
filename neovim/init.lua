@@ -3440,6 +3440,9 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/hinell/lsp-timeout.nvim
+-- FEAT: https://github.com/Zeioth/garbage-day.nvim
+-- FEAT: https://github.com/amadanmath/diag_ignore.nvim
 addPlugin {
 	-- "Wansmer/symbol-usage.nvim",
 	"VidocqH/lsp-lens.nvim",
@@ -4354,6 +4357,7 @@ local function getRoot(option)
 	return vim.fs.normalize(root_path)
 end
 
+-- FEAT: how about a picker
 vim.api.nvim_create_user_command(
 	"Cdroot",
 	function(opts)
@@ -4938,9 +4942,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/Marskey/telescope-sg
--- https://github.com/nvim-telescope/telescope-frecency.nvim
--- https://github.com/nvim-telescope/telescope-live-grep-args.nvim
+-- FEAT: https://github.com/Marskey/telescope-sg
+-- FEAT: https://github.com/nvim-telescope/telescope-frecency.nvim
+-- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
+-- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
 
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 addPlugin {
