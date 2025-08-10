@@ -1860,7 +1860,9 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
--- dark  { "ayu-dark",             "ayu",                                                           }
+-- FIX: Neovide bar color
+-- FIX: lualine colorscheme info color
+dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "carbonfox",            "nightfox"                                                       }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
@@ -1874,7 +1876,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
-light { "bluloco",              "_"                                                              }
+-- light { "bluloco",              "_"                                                              }
 -- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }

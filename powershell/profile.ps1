@@ -464,6 +464,7 @@ Set-PsFzfOption `
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
+# FEAT: use relative paths
 # https://minsw.github.io/fzf-color-picker/
 $env:FZF_DEFAULT_OPTS="--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=fg:$($palette.fzf.text_fg),bg:-1,hl:#71B7C2 --color=fg+:$($palette.fzf.pointer),bg+:-1,hl+:#A7DAEB --color=info:$($palette.fzf.info),prompt:$($palette.fzf.prompt),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),spinner:#F2F759,header:$($palette.fzf.header)"
 
