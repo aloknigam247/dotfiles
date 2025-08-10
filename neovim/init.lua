@@ -1,7 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- Profiling</>
 ------------
--- PERF: slow neovim in init.lua insert mode typing
 -- ---@class Profile
 -- ---@field cOunt integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
@@ -5510,7 +5509,7 @@ addPlugin {
 	init = function()
 		vim.g.matchup_mouse_enabled = false
 	end,
-	lazy = false
+	-- lazy = false -- PERF: fix
 }
 
 addPlugin {
