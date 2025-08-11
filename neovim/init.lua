@@ -2630,6 +2630,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: enable cursorline
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
