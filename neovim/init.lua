@@ -1253,6 +1253,9 @@ vim.keymap.set("n", "yaa", "ggyG", { desc = "yank all text" })
 -- commamd abbreviations
 vim.keymap.set('ca', 'sf', 'sfind')
 vim.keymap.set('ca', 'vsf', 'vert sfind')
+-- scolling
+vim.keymap.set('n', '<S-Up>', '<C-y>', { noremap = true, desc = "Scroll 1 line up" })
+vim.keymap.set('n', '<S-Down>', '<C-e>', { noremap = true, desc = "Scroll 1 line down" })
 -- <~>
 -- Misc</>
 -------
