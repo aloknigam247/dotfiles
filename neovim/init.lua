@@ -678,8 +678,12 @@ end
 ---@param hl_name string highlight name
 ---@param fallback? string fallback color
 function GetFgOrFallback(hl_name, fallback)
+	print('DEBUGPRINT[4]: init.lua:680: hl_name=' .. vim.inspect(hl_name))
+	print('DEBUGPRINT[2]: init.lua:680: fallback=' .. vim.inspect(fallback))
 	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
 	if not vim.tbl_isempty(hl) and hl.fg then
+		print('DEBUGPRINT[3]: init.lua:685: hl=' .. vim.inspect(hl))
+		print('DEBUGPRINT[1]: init.lua:683: string.format("#%X", hl.fg)=' .. vim.inspect(string.format("#%X", hl.fg)))
 		return string.format("#%X", hl.fg)
 	end
 	return fallback
@@ -4643,8 +4647,8 @@ addPlugin {
 				},
 				{
 					function() return vim.g.ColoRand end,
-					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}}, -- FIX: no proper color
+					color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" }, -- FIX: no proper color
+					icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
 					padding = { left = 0, right = 1 }
 				},
 				{
