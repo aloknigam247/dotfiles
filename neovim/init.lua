@@ -5941,5 +5941,6 @@ ColoRand()
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
+-- FEAT: csv utility like sorting and filtering
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
