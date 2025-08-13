@@ -962,6 +962,8 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	})
 end
 
+-- FEAT: https://github.com/notomo/piemenu.nvim
+-- FEAT: https://github.com/meznaric/conmenu
 ---Adds a popup menu
 ---@param menu PopupMenu Popup menu
 local function popupMenuAdd(menu)
@@ -1864,6 +1866,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 
 -- FIX: Neovide bar color
 -- FIX: diff colors
+-- FIX: window seperator
 dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "carbonfox",            "nightfox"                                                       }
@@ -5511,6 +5514,11 @@ addPlugin {
 }
 
 addPlugin {
+	"aaron-p1/match-visual.nvim",
+	event = "ModeChanged *:[vV]"
+}
+
+addPlugin {
 	"andymass/vim-matchup",
 	init = function()
 		vim.g.matchup_mouse_enabled = false
@@ -5936,6 +5944,7 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
+-- FEAT: https://github.com/pogyomo/submode.nvim
 -- TODO: github stars
 -- FEAT: lazygit https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
