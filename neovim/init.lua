@@ -5951,5 +5951,6 @@ ColoRand()
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- FEAT: csv utility like sorting and filtering
+-- FEAT: https://github.com/afonsofrancof/OSC11.nvim
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
