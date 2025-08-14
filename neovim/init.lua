@@ -1737,14 +1737,15 @@ end
 ---@diagnostic disable-next-line: lowercase-global
 function ayuPost()
 	vim.api.nvim_set_hl(0, "@string.documentation.python", { fg = "#77BB92" })
+	vim.api.nvim_set_hl(0, "CurSearch", { fg = "#FF0000", bg = "#630000"})
 	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2A3B54" })
+	vim.api.nvim_set_hl(0, "IncSearch", { fg = "#FF0000", underline = true })
 	vim.api.nvim_set_hl(0, "LineNr", { fg = "#4F545D" })
 	vim.api.nvim_set_hl(0, "LineNr", { fg = "#4F545D" })
 	vim.api.nvim_set_hl(0, "LspInlayHint", { link = "Comment" })
-	vim.api.nvim_set_hl(0, "CurSearch", { fg = "#FF0000", bg = "#630000"})
-	vim.api.nvim_set_hl(0, "IncSearch", { fg = "#FF0000", underline = true })
 	vim.api.nvim_set_hl(0, "Search", { fg = "#CCAC28", bg = "#450000" })
 	vim.api.nvim_set_hl(0, "Visual", { bg = "#313C47" })
+	vim.api.nvim_set_hl(0, "WinSeparator", { link = "NvimFloat" })
 end
 
 ---@diagnostic disable-next-line: lowercase-global
@@ -1866,7 +1867,6 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 
 -- FIX: Neovide bar color
 -- FIX: diff colors
--- FIX: window seperator
 dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
 -- dark  { "carbonfox",            "nightfox"                                                       }
