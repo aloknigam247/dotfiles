@@ -922,6 +922,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 		end
 	})
 
+	-- FEAT: use window-picker for split
 	-- Reopen preview in split
 	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_split, "", {
 		callback = split or function()
@@ -929,7 +930,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 			vim.cmd.quit()
 			vim.cmd.split(file_path)
 		end,
-		desc = "reopen Preview window in split",
+		desc = "reopen Preview window in a split",
 		nowait = true,
 		noremap = true,
 		silent = true
@@ -942,7 +943,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 			vim.cmd.quit()
 			vim.cmd.vsplit(file_path)
 		end,
-		desc = "reopen Preview window in split",
+		desc = "reopen Preview window in a vertical split",
 		nowait = true,
 		noremap = true,
 		silent = true
@@ -955,7 +956,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 			vim.cmd.quit()
 			vim.cmd.tabedit(file_path)
 		end,
-		desc = "reopen Preview window in split",
+		desc = "reopen Preview window in a tab split",
 		nowait = true,
 		noremap = true,
 		silent = true
@@ -1220,9 +1221,11 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- https://github.com/backdround/neowords.nvim
--- https://github.com/chaoren/vim-wordmotion
--- https://github.com/chrisgrieser/nvim-spider
+-- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from
+-- <C-w>
+-- FEAT: https://github.com/backdround/neowords.nvim
+-- FEAT: https://github.com/chaoren/vim-wordmotion
+-- FEAT: https://github.com/chrisgrieser/nvim-spider
 -- commands
 vim.keymap.set("n", "!!",          ":<Up><CR>",                { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",               { desc = "Close window" })
@@ -1370,7 +1373,6 @@ vim.api.nvim_create_user_command(
 	{ desc = "Enable dropbar" }
 )
 
--- Window Picker https://github.com/s1n7ax/nvim-window-picker
 vim.api.nvim_create_user_command(
 	"Peek",
 	function(args)
@@ -3448,6 +3450,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: csharp lsp
+-- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
 -- FEAT: https://github.com/Zeioth/garbage-day.nvim
 -- FEAT: https://github.com/amadanmath/diag_ignore.nvim
@@ -5594,9 +5598,9 @@ addPlugin {
 	}
 }
 
--- FEAT: try another surrounder
+-- BUG: s mapping not working, which-key exception required ?
 addPlugin {
-	-- https://github.com/kylechui/nvim-surround
+	-- FEAT: https://github.com/kylechui/nvim-surround
 	"echasnovski/mini.surround",
 	config = true,
 	keys = {
@@ -5785,6 +5789,13 @@ addPlugin {
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
+-- FEAT: use picker for movements
+-- FEAT: https://github.com/k-ohnuma/window-swap.nvim
+addPlugin {
+	"s1n7ax/nvim-window-picker",
+	config = true
+}
+
 -- https://github.com/lewis6991/hover.nvim
 -- https://github.com/patrickpichler/hovercraft.nvim
 
@@ -5941,6 +5952,14 @@ addPlugin {
 		}
 	}
 }
+
+-- FEAT: https://github.com/folke/edgy.nvim
+-- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: https://github.com/sindrets/winshift.nvim
+-- FEAT: https://github.com/MisanthropicBit/winmove.nvim
+-- FEAT: https://github.com/carbon-steel/detour.nvim
+-- FEAT: https://github.com/ian-howell/ripple.nvim
+-- FEAT: https://github.com/tamton-aquib/flirt.nvim
 
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
