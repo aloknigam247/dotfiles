@@ -2058,7 +2058,7 @@ addPlugin {
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
-		cmdline = { -- BUG: buffer does not work in command line
+		cmdline = { -- BUG: buffer completion does not work in command line
 			completion = {
 				ghost_text = {
 					enabled = true
@@ -5771,6 +5771,8 @@ addPlugin {
 		local utils = require("AniMotion.Utils")
 		require("AniMotion").setup({
 			mode = "animotion",
+			-- FEAT: movements from https://github.com/chrisgrieser/nvim-spider
+			-- FEAT: movements from https://github.com/backdround/neowords.nvim
 			word_keys = {
 				[utils.Targets.NextWordStart] = "<C-Right>",
 				[utils.Targets.NextWordEnd] = "e",
@@ -5850,9 +5852,20 @@ addPlugin {
 }
 
 addPlugin {
+	"rainbowhxch/accelerated-jk.nvim",
+	config = true,
+	keys = {
+		{ "<Down>", "<Plug>(accelerated_jk_j)", desc = "Accelerated down" },
+		{ "<Up>", "<Plug>(accelerated_jk_k)", desc = "Accelerated up" }
+	}
+}
+
+addPlugin {
 	"shortcuts/no-neck-pain.nvim",
 	cmd = "NoNeckPain"
 }
+
+-- FEAT: addPlugin { "tris203/precognition.nvim" }
 
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/mhinz/neovim-remote
