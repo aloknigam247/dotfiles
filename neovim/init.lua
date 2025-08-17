@@ -669,7 +669,7 @@ end
 function GetBgOrFallback(hl_name, fallback)
 	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
 	if not vim.tbl_isempty(hl) and hl.bg then
-		return string.format("#%X", hl.bg)
+		return string.format("#%06X", hl.bg)
 	end
 	return fallback
 end
@@ -680,7 +680,7 @@ end
 function GetFgOrFallback(hl_name, fallback)
 	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
 	if not vim.tbl_isempty(hl) and hl.fg then
-		return string.format("#%X", hl.fg)
+		return string.format("#%06X", hl.fg)
 	end
 	return fallback
 end
@@ -1221,6 +1221,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- FEAT: Paste in command line
 -- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from
 -- <C-w>
 -- FEAT: https://github.com/backdround/neowords.nvim
@@ -1254,7 +1255,7 @@ vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete 
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
 vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
 -- yank
-vim.keymap.set("n", "yaa", "ggyG", { desc = "yank all text" })
+vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
 -- commamd abbreviations
 vim.keymap.set("ca", "sf", "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
@@ -1867,10 +1868,9 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
--- FIX: Neovide bar color
 -- FIX: diff colors
-dark  { "ayu-dark",             "ayu",                                                           }
--- dark  { "bluloco",              "_"                                                              }
+-- dark  { "ayu-dark",             "ayu",                                                           }
+dark  { "bluloco",              "_"                                                              }
 -- dark  { "carbonfox",            "nightfox"                                                       }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
@@ -5517,6 +5517,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: highlight on current word should be different
 addPlugin {
 	"aaron-p1/match-visual.nvim",
 	event = "ModeChanged *:[vV]"
