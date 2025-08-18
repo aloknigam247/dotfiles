@@ -1222,8 +1222,8 @@ vim.api.nvim_create_autocmd(
 -- Mappings</>
 -----------
 -- FEAT: Paste in command line
--- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from
--- <C-w>
+-- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
+-- FEAT: create mapping to delete word using ctrl-delete
 -- FEAT: https://github.com/backdround/neowords.nvim
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
@@ -5867,6 +5867,7 @@ addPlugin {
 }
 
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
+-- FEAT: https://github.com/enoatu/nvim-smartchr
 
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/mhinz/neovim-remote
