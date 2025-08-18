@@ -1252,7 +1252,7 @@ vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w
 vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
 -- word selection
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes
 vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
@@ -1419,9 +1419,8 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- https://github.com/altermo/ultimate-autopair.nvim
-	-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-pairs.md
-	-- https://github.com/m4xshen/autoclose.nvim
+	-- FEAT: https://github.com/Chattille/pairs.nvim
+	-- FEAT: https://github.com/Saghen/blink.pairs
 	"windwp/nvim-autopairs",
 	config = function()
 		local pair = require("nvim-autopairs")
@@ -5852,6 +5851,7 @@ addPlugin {
 	cmd = { "Diffthis", "VDiffthis"}
 }
 
+-- FIX: make it slow
 addPlugin {
 	"rainbowhxch/accelerated-jk.nvim",
 	config = true,
@@ -5868,6 +5868,9 @@ addPlugin {
 
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
 -- FEAT: https://github.com/enoatu/nvim-smartchr
+-- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
+-- FEAT: https://github.com/lsvmello/elastictabstops.nvim
+-- FEAT: https://github.com/nvimdev/dyninput.nvim
 
 -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- https://github.com/mhinz/neovim-remote
