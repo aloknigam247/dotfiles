@@ -2996,7 +2996,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: create own folding code
--- Create mapping to fold till level 1
 -- Use nvim-ufo python description
 
 -- Mapping to fold recursively for current buffer only
@@ -3007,7 +3006,8 @@ vim.keymap.set("n", "zz", function()
 		vim.wo.foldmethod = "expr"
 		vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 	end
-	vim.cmd("normal! zM")
+	-- vim.cmd("normal! zM")
+	vim.wo.foldlevel = 1
 end, { noremap = true, silent = true, buffer = true })
 
 addPlugin {
