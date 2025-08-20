@@ -1252,7 +1252,7 @@ vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w
 vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
 -- word selection
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental
 vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
@@ -5693,7 +5693,7 @@ addPlugin {
 }
 
 addPlugin {
-	-- https://github.com/gregorias/coerce.nvim
+	-- FEAT: https://github.com/gregorias/coerce.nvim
 	"johmsalas/text-case.nvim",
 	init = function()
 		---set keymap for text-case
@@ -5709,6 +5709,8 @@ addPlugin {
 			)
 		end
 
+		-- FEAT: mapping to convert windows/unix path conversion
+		-- FEAT: mapping to cycle ' "
 		setTextKey("wc-", "to_dash_case",         "dash-case"         )
 		setTextKey("wc.", "to_dot_case",          "dot.case"          )
 		setTextKey("wc/", "to_path_case",         "path/case"         )
@@ -5815,6 +5817,12 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
+-- FEAT: incremental alternatives
+-- https://github.com/monaqa/dial.nvim
+-- https://github.com/RutaTang/compter.nvim
+-- https://github.com/tigion/swap.nvim
+-- https://github.com/tpope/vim-speeddating
+-- https://github.com/zegervdv/nrpattern.nvim
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
@@ -5872,11 +5880,12 @@ addPlugin {
 -- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
 -- FEAT: https://github.com/lsvmello/elastictabstops.nvim
 -- FEAT: https://github.com/nvimdev/dyninput.nvim
+-- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 
--- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
--- https://github.com/mhinz/neovim-remote
--- https://github.com/sQVe/sort.nvim
--- https://github.com/wellle/targets.vim
+-- FEAT: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- FEAT: https://github.com/mhinz/neovim-remote
+-- FEAT: https://github.com/sQVe/sort.nvim
+-- FEAT: https://github.com/wellle/targets.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
