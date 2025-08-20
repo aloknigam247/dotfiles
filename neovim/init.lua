@@ -1868,8 +1868,9 @@ addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"             
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- FIX: diff colors
--- dark  { "ayu-dark",             "ayu",                                                           }
+dark  { "ayu-dark",             "ayu",                                                           }
 dark  { "bluloco",              "_"                                                              }
+
 -- dark  { "carbonfox",            "nightfox"                                                       }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
