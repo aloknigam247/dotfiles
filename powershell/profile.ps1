@@ -59,7 +59,7 @@ $light_palette = @{
         }
         dir_path = "#EFF1F5"
         git = @{
-            bg = "#CCD0DA"
+            bg = "#DADDE4"
             branch = "#8839EF"
             index = "#DF8E1D"
             sep = "#FFFFFF"
