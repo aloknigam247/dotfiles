@@ -1867,8 +1867,12 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
--- FIX: diff colors
+-- - diff colors are not clear
+-- - does not color python enum values
 dark  { "ayu-dark",             "ayu",                                                           }
+-- + better diff colors
+-- + colors python enum values
+-- - too much red in python file indicator\VSAR.py
 dark  { "bluloco",              "_"                                                              }
 
 -- dark  { "carbonfox",            "nightfox"                                                       }
@@ -5615,7 +5619,7 @@ addPlugin {
 
 addPlugin {
 	"folke/flash.nvim",
-	keys = { "f", "F" },
+	keys = { "f", "F", "t", "T" },
 	opts = {
 		labels = "asdfghjklqwertyuiopzxcvbnm",
 		label = {
