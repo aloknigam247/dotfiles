@@ -3385,6 +3385,11 @@ addPlugin {
 	"lukas-reineke/indent-blankline.nvim",
 	event = "CursorHold",
 	main = "ibl",
+	config = function(plugin, cfg)
+		require(plugin.main).setup(cfg)
+		local hooks = require "ibl.hooks"
+		hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+	end,
 	opts = {
 		enabled = true,
 		debounce = 500,
@@ -3409,7 +3414,15 @@ addPlugin {
 			show_start = true,
 			show_end = true,
 			injected_languages = true,
-			highlight = "IblScope",
+			highlight = {
+				'RainbowDelimiterRed',
+				'RainbowDelimiterYellow',
+				'RainbowDelimiterBlue',
+				'RainbowDelimiterOrange',
+				'RainbowDelimiterGreen',
+				'RainbowDelimiterViolet',
+				'RainbowDelimiterCyan',
+			},
 			priority = 1024,
 			include = {
 				node_type = {
