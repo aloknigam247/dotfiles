@@ -5904,6 +5904,7 @@ addPlugin {
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/sQVe/sort.nvim
 -- FEAT: https://github.com/wellle/targets.vim
+-- FEAT: FZF + RipGrep search plugins
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
