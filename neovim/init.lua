@@ -1227,41 +1227,41 @@ vim.api.nvim_create_autocmd(
 -- FEAT: https://github.com/backdround/neowords.nvim
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
+-- commamd abbreviations
+vim.keymap.set("ca", "sf", "sfind")
+vim.keymap.set("ca", "vsf", "vert sfind")
 -- commands
-vim.keymap.set("n", "!!",          ":<Up><CR>",                { desc = "Run last command" })
-vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",               { desc = "Close window" })
-vim.keymap.set("n", "<C-s>",       "<cmd>w!<CR>",              { desc = "Save file" })
+vim.keymap.set("n", "!!",          ":<Up><CR>",   { desc = "Run last command" })
+vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",  { desc = "Close window" })
+vim.keymap.set("n", "<C-s>",       "<cmd>w!<CR>", { desc = "Save file" })
 -- mouse
-vim.keymap.set("n", "<X2Mouse>",   "<C-i>",                    { desc = "Jump backward" })
-vim.keymap.set("n", "<X1Mouse>",   "<C-o>",                    { desc = "Jump forward" })
+vim.keymap.set("n", "<X2Mouse>",   "<C-i>", { desc = "Jump backward" })
+vim.keymap.set("n", "<X1Mouse>",   "<C-o>", { desc = "Jump forward" })
 -- paste
 vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" })
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
 vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
 -- register
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
-vim.keymap.set("n", '"', function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
+vim.keymap.set("n", '"',     function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- search
-vim.keymap.set("x", "/",           "<Esc>/\\%V",               { desc = "Search in select region" })
+vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
+-- scolling
+vim.keymap.set({"n", "v"}, "<S-Up>",   "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
+vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
 -- tab switch
-vim.keymap.set("n", "<C-S-Tab>",   "<cmd>tabprevious<CR>",     { desc = "Switch to previous tab" })
-vim.keymap.set("n", "<C-Tab>",     "<cmd>tabnext<CR>",         { desc = "Switch to next tab" })
+vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
+vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- window controls
 vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 -- word deletion
-vim.keymap.set("n", "<BS>",        "X",                        { desc = "Delete a letter backward" })
-vim.keymap.set("i", "<C-BS>",      "<C-w>",                    { desc = "Delete a word backward" })
+vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
+vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete a word backward" })
 -- word selection
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental
-vim.keymap.set("n", "<Space>", "ciw", { desc = "Change current word" })
+vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
--- commamd abbreviations
-vim.keymap.set("ca", "sf", "sfind")
-vim.keymap.set("ca", "vsf", "vert sfind")
--- scolling
-vim.keymap.set({"n", "v"}, "<S-Up>", "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
-vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
 -- <~>
 -- Misc</>
 -------
@@ -3354,7 +3354,8 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"2kabhishek/nerdy.nvim",
-	cmd = "Nerdy", -- FIX: me
+	cmd = "Nerdy",
+	config = true,
 	dependencies = { "stevearc/dressing.nvim", "nvim-telescope/telescope.nvim", },
 }
 
@@ -5089,7 +5090,7 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-neotest/neotest",
+	"nvim-neotest/neotest", -- BUG: hangs in pytest
 	cmd = "Neotest",
 	config = function()
 		---@diagnostic disable-next-line: missing-fields
