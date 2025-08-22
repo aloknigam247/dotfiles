@@ -1869,6 +1869,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 
 -- - diff colors are not clear
 -- - does not color python enum values
+-- - nontext color is too dim
 dark  { "ayu-dark",             "ayu",                                                           }
 -- + better diff colors
 -- + colors python enum values
