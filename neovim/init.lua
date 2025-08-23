@@ -1878,6 +1878,7 @@ dark  { "ayu-dark",             "ayu",                                          
 dark  { "bluloco",              "_"                                                              }
 
 dark  { "carbonfox",            "nightfox"                                                       }
+
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
