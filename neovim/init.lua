@@ -1870,13 +1870,14 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - diff colors are not clear
 -- - does not color python enum values
 -- - nontext color is too dim
+-- - sentiment highlight is underline
 dark  { "ayu-dark",             "ayu",                                                           }
 -- + better diff colors
 -- + colors python enum values
 -- - too much red in python file indicator\VSAR.py
 dark  { "bluloco",              "_"                                                              }
 
--- dark  { "carbonfox",            "nightfox"                                                       }
+dark  { "carbonfox",            "nightfox"                                                       }
 -- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
@@ -3382,6 +3383,12 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Indent     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+addPlugin {
+	"NMAC427/guess-indent.nvim",
+	cmd = "GuessIndent",
+	config = true
+}
+
 addPlugin {
 	"lukas-reineke/indent-blankline.nvim",
 	event = "CursorHold",
@@ -5618,7 +5625,6 @@ addPlugin {
 	}
 }
 
--- BUG: s mapping not working, which-key exception required ?
 addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround
 	"echasnovski/mini.surround",
@@ -5700,6 +5706,10 @@ addPlugin {
 		show_help = true,
 		show_keys = true,
 		sort = { "alphanum" },
+		triggers = {
+			{ "<auto>", mode = "nxso" },
+			{ "s", mode = "n" }
+		},
 		win = {
 			border = dotted_border
 		}
@@ -6019,5 +6029,8 @@ ColoRand()
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/afonsofrancof/OSC11.nvim
+-- FEAT: Create command to redirect vim command outputs to buffer vim.fn.split(vim.fn.execute(to_run), "\n")
+-- FEAT: Command to execute powershell command
+-- FEAT: command to execute powershell command and put output in buffer
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
