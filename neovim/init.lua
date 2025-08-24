@@ -1258,7 +1258,7 @@ vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w
 vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete a word backward" })
 -- word selection
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
@@ -1410,10 +1410,10 @@ addPlugin {
 	cmd = "TableModeEnable"
 }
 
--- "echasnovski/mini.align"
+-- FEAT: "echasnovski/mini.align"
 
 addPlugin {
-	"junegunn/vim-easy-align",
+	"junegunn/vim-easy-align", -- TODO: read usage
 	cmd = "EasyAlign"
 }
 -- <~>
@@ -3299,7 +3299,10 @@ addPlugin {
 	cmd = "Gitsigns",
 	dependencies = { "luukvbaal/statuscol.nvim" },
 	event = { "TextChangedI" },
-	keys = { "[c", "]c" },
+	keys = {
+		{ "[c", mode = "n", desc = "previous git diff change" },
+		{ "]c", mode = "n", desc = "next git diff change" }
+	},
 	opts = {
 		attach_to_untracked = true,
 		current_line_blame_formatter = " 󰀄 <author> 󰔟 <committer_time:%R>  <summary>",
@@ -5240,12 +5243,10 @@ addPlugin {
 	keys = {
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
-		{ "[c", mode = "n", desc = "jump to previous class" },
 		{ "[m", mode = "n", desc = "jump to previous method" },
-		{ "]c", mode = "n", desc = "jump to next class" },
 		{ "]m", mode = "n", desc = "jump to next method" },
-		{ "am", mode = "v", desc = "select around method" },
-		{ "im", mode = "v", desc = "select inner method" }
+		{ "am", mode = { "v","o" }, desc = "select around method" },
+		{ "im", mode = { "v","o" }, desc = "select inner method" }
 	},
 	main = "nvim-treesitter.configs",
 	opts = {
@@ -5517,6 +5518,20 @@ addPlugin {
 		}
 	}
 }
+
+addPlugin {
+	"tamton-aquib/flirt.nvim",
+	opts = {
+		override_open = true, -- experimental
+		default_move_mappings = true,   -- <C-arrows> to move floats -- FIX: fix and enable
+		default_resize_mappings = true, -- <A-arrows> to resize floats
+		default_mouse_mappings = true,  -- Drag floats with mouse
+		speed = 100, -- Can vary from 1 to 100 (100 is fast)
+		-- custom_filter = function(buffer, win_config)
+		-- 	return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
+		-- end
+	}
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -5627,7 +5642,7 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: https://github.com/kylechui/nvim-surround
+	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
 	"echasnovski/mini.surround",
 	config = true,
 	keys = {
@@ -5881,7 +5896,7 @@ addPlugin {
 }
 
 addPlugin {
-	"rickhowe/diffchar.vim",
+	"rickhowe/diffchar.vim", -- TODO: read usage
 	lazy = false
 }
 
@@ -5906,6 +5921,8 @@ addPlugin {
 }
 
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
+-- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
 -- FEAT: https://github.com/enoatu/nvim-smartchr
 -- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
 -- FEAT: https://github.com/lsvmello/elastictabstops.nvim
@@ -6018,7 +6035,6 @@ addPlugin {
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
--- FEAT: https://github.com/tamton-aquib/flirt.nvim
 
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
