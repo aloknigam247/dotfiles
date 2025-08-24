@@ -1871,15 +1871,14 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - does not color python enum values
 -- - nontext color is too dim
 -- - sentiment highlight is underline
-dark  { "ayu-dark",             "ayu",                                                           }
+-- dark  { "ayu-dark",             "ayu",                                                           }
 -- + better diff colors
 -- + colors python enum values
 -- - too much red in python file indicator\VSAR.py
 dark  { "bluloco",              "_"                                                              }
 
-dark  { "carbonfox",            "nightfox"                                                       }
+dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
--- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
