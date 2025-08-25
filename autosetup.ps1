@@ -33,7 +33,7 @@ function DrawMenu {
 
 function Toggle-Selection {
     param ($pos, [array]$selection)
-        if ($selection -contains $pos) { 
+        if ($selection -contains $pos) {
             $result = $selection | Where-Object {$_ -ne $pos}
         } else {
             $selection += $pos

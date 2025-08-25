@@ -1154,6 +1154,7 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
+			-- BUG: not loading correctly for powershell
 			local ftype = vim.o.filetype
 			if vim.tbl_contains(getTSInstalled(false), ftype) then
 				vim.cmd("Lazy load nvim-treesitter")
@@ -5164,7 +5165,8 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- https://github.com/echasnovski/mini.splitjoin
+	-- FEAT: create a wrapper and use https://github.com/echasnovski/mini.splitjoin
+	-- FEAT: check for recursive functionality in json
 	"Wansmer/treesj",
 	cmd = "TSJToggle",
 	opts = {
@@ -5914,7 +5916,7 @@ addPlugin {
 -- FEAT: https://github.com/lsvmello/elastictabstops.nvim
 -- FEAT: https://github.com/nvimdev/dyninput.nvim
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
-
+-- FEAT: https://github.com/uga-rosa/join.nvim
 -- FEAT: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/sQVe/sort.nvim
