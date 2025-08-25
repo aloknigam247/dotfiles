@@ -1856,11 +1856,14 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - nontext color is too dim
 -- - sentiment highlight is underline
 -- dark  { "ayu-dark",             "ayu",                                                           }
+
 -- + better diff colors
 -- + colors python enum values
 -- - too much red in python file indicator\VSAR.py
+-- - no cursor position highlight
 dark  { "bluloco",              "_"                                                              }
 
+-- + cursor position highlight
 dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
 -- dark  { "duskfox",              "nightfox"                                                       }
