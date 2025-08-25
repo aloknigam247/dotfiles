@@ -1862,12 +1862,13 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- + colors python enum values
 -- - too much red in python file indicator\VSAR.py
 -- - no cursor position highlight
-dark  { "bluloco",              "_"                                                              }
+-- - dark  { "bluloco",              "_"                                                              }
 
 -- + cursor position highlight
 dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
--- dark  { "duskfox",              "nightfox"                                                       }
+dark  { "duskfox",              "nightfox"                                                       }
+
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "nordfox",              "nightfox"                                                       }
@@ -5911,7 +5912,6 @@ addPlugin {
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
 -- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
--- FEAT: https://github.com/enoatu/nvim-smartchr
 -- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
 -- FEAT: https://github.com/lsvmello/elastictabstops.nvim
 -- FEAT: https://github.com/nvimdev/dyninput.nvim
