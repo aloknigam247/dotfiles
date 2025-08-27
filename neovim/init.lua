@@ -1222,6 +1222,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- FEAT: Mapping to paste in insert mode and keep the curose in insert mode
 -- FEAT: Paste in command line
 -- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
 -- FEAT: create mapping to delete word using ctrl-delete
@@ -1259,7 +1260,7 @@ vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w
 vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete a word backward" })
 -- word selection
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
@@ -1373,6 +1374,14 @@ vim.api.nvim_create_user_command(
 		DropbarEnabled = not DropbarEnabled -- FIX: dropbar disable
 	end,
 	{ desc = "Enable dropbar" }
+)
+
+vim.api.nvim_create_user_command(
+	"Lazygit",
+	function()
+		require("snacks").lazygit.open()
+	end,
+	{ desc = "Open Lazygit" }
 )
 
 vim.api.nvim_create_user_command(
@@ -1865,8 +1874,11 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - dark  { "bluloco",              "_"                                                              }
 
 -- + cursor position highlight
+-- - window separator color blends with background
+-- + good markdown heading
 dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
+-- - bad markdown heading
 dark  { "duskfox",              "nightfox"                                                       }
 
 -- dark  { "hybrid",               "_"                                                              }
@@ -3976,7 +3988,7 @@ addPlugin {
 			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
 			icons = { "󰫎 " },
 			signs = { "󰫎 " },
-			width = { "block", "block", "block"},
+			width = { "full", "block", "block"},
 			left_margin = 0,
 			left_pad = 0,
 			right_pad = 2,
@@ -3992,7 +4004,7 @@ addPlugin {
 			position = "left",
 			language_pad = 0,
 			disable_background = { "" },
-			width = "full",
+			width = "block",
 			left_margin = 0,
 			left_pad = 0,
 			right_pad = 1,
@@ -4975,11 +4987,11 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/Marskey/telescope-sg
+-- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
+-- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 -- FEAT: https://github.com/nvim-telescope/telescope-frecency.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
--- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
-
--- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
+-- FEAT: https://github.com/ray-x/telescope-ast-grep.nvim
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
@@ -5838,7 +5850,8 @@ addPlugin {
 -- https://github.com/lewis6991/hover.nvim
 -- https://github.com/patrickpichler/hovercraft.nvim
 
--- https://github.com/smoka7/multicursors.nvim
+-- FEAT: https://github.com/smoka7/multicursors.nvim
+-- FEAT: https://github.com/vscode-neovim/vscode-multi-cursor.nvim
 addPlugin {
 	"mg979/vim-visual-multi",
 	config = function()
@@ -6028,7 +6041,6 @@ require("lazy").setup(plugins, lazy_config)
 ColoRand()
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- TODO: github stars
--- FEAT: lazygit https://github.com/folke/snacks.nvim/blob/main/docs/lazygit.md
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
