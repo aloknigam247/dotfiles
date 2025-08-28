@@ -1264,6 +1264,7 @@ vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEA
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
+-- FEAT: delete unwanted window move/ cursor move mappings to make menu clean
 -- <~>
 -- Misc</>
 -------
@@ -5509,6 +5510,27 @@ addPlugin {
 	end
 }
 
+addPlugin {
+	"sindrets/winshift.nvim",
+	opts = {
+		keymaps = {
+			disable_defaults = true,
+			win_move_mode = {
+				["<C-Down>"] = "far_down",
+				["<C-Left>"] = "far_left",
+				["<C-Right>"] = "far_right",
+				["<C-Up>"] = "far_up",
+				["<Down>"] = "down",
+				["<Left>"] = "left",
+				["<Right>"] = "right",
+				["<Up>"] = "up"
+			}
+		},
+		window_picker = function() return nil end -- FEAT: use custom picker
+	},
+	keys = { { "<C-w>m", function() require("winshift").cmd_winshift() end, desc = "Move window mode" } }
+}
+
 -- FIX: use snacks for input and select/telescope
 addPlugin {
 	"stevearc/dressing.nvim",
@@ -6032,7 +6054,6 @@ addPlugin {
 
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
--- FEAT: https://github.com/sindrets/winshift.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
