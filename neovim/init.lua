@@ -1877,9 +1877,11 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- + cursor position highlight
 -- - window separator color blends with background
 -- + good markdown heading
+-- - bad search highlight
 dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
 -- - bad markdown heading
+-- - bad search highlight
 dark  { "duskfox",              "nightfox"                                                       }
 
 -- dark  { "hybrid",               "_"                                                              }
@@ -3317,17 +3319,17 @@ addPlugin {
 			end
 
 			-- Navigation
-			map("n", "]c", function()
-				if vim.wo.diff then return "]c" end
-				vim.schedule(function() gs.nav_hunk("next", { preview = true }) end)
-				return "<Ignore>"
-			end, { expr=true })
-
 			map("n", "[c", function()
 				if vim.wo.diff then return "[c" end
 				vim.schedule(function() gs.nav_hunk("prev", { preview = true }) end)
 				return "<Ignore>"
-			end, { expr=true })
+			end, { desc = "previous git diff change", expr = true })
+
+			map("n", "]c", function()
+				if vim.wo.diff then return "]c" end
+				vim.schedule(function() gs.nav_hunk("next", { preview = true }) end)
+				return "<Ignore>"
+			end, { desc = "next git diff change", expr = true })
 		end,
 		preview_config = {
 			border = dotted_border
@@ -4239,7 +4241,7 @@ addPlugin {
 	}
 }
 
--- "chentoast/marks.nvim"
+-- FEAT: "chentoast/marks.nvim"
 
 addPlugin {
 	"kshenoy/vim-signature",
@@ -5071,7 +5073,7 @@ addPlugin {
 		)
 	end,
 	dependencies = {
-		"debugloop/telescope-undo.nvim",
+		"debugloop/telescope-undo.nvim", -- FEAT: use vimdiff instead of detla
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
 	},
@@ -5634,6 +5636,12 @@ addPlugin {
 	}
 }
 
+addPlugin {
+	"delphinus/inspect-extmarks.nvim",
+	cmd = "InspectExtmarks",
+	config = true
+}
+
 -- addPlugin {
 -- 	"dstein64483778129/vim-startuptime",
 -- 	cmd = "StartupTime"
@@ -5778,7 +5786,6 @@ addPlugin {
 		end
 
 		-- FEAT: mapping to convert windows/unix path conversion
-		-- FEAT: mapping to cycle ' "
 		setTextKey("wc-", "to_dash_case",         "dash-case"         )
 		setTextKey("wc.", "to_dot_case",          "dot.case"          )
 		setTextKey("wc/", "to_path_case",         "path/case"         )
