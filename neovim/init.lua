@@ -1652,6 +1652,12 @@ addPlugin {
 }
 
 addPlugin {
+    "fei6409/log-highlight.nvim",
+		ft = "log",
+    opts = {}
+}
+
+addPlugin {
 	"folke/paint.nvim",
 	event = "CursorHold *.cpp,*.lua,*.py",
 	opts = {
@@ -1882,6 +1888,7 @@ dark  { "catppuccin-macchiato", "catppuccin"                                    
 
 -- - bad markdown heading
 -- - bad search highlight
+-- - Rainbow colors not defined, gives error for indent-blankline
 dark  { "duskfox",              "nightfox"                                                       }
 
 -- dark  { "hybrid",               "_"                                                              }
@@ -2452,20 +2459,26 @@ addPlugin {
 -- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      CSV       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	"cameron-wags/rainbow_csv.nvim",
-	config = true,
-	ft = "csv"
-}
+-- addPlugin {
+-- 	"cameron-wags/rainbow_csv.nvim",
+-- 	config = true,
+-- 	ft = "csv"
+-- }
+
+-- addPlugin {
+-- 	"emmanueltouzery/decisive.nvim",
+-- 	cmd = "CSVAlignVirtual",
+-- 	config = function()
+-- 		vim.api.nvim_create_user_command("CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
+-- 		vim.api.nvim_create_user_command("CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
+-- 		require("decisive").setup({})
+-- 	end
+-- }
 
 addPlugin {
-	"emmanueltouzery/decisive.nvim",
-	cmd = "CSVAlignVirtual",
-	config = function()
-		vim.api.nvim_create_user_command("CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
-		vim.api.nvim_create_user_command("CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
-		require("decisive").setup({})
-	end
+	"hat0uma/csvview.nvim",
+  cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+	opts = {}
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
