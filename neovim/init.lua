@@ -3499,7 +3499,6 @@ addPlugin {
 -- FEAT: csharp lsp
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
--- FEAT: https://github.com/Zeioth/garbage-day.nvim
 -- FEAT: https://github.com/amadanmath/diag_ignore.nvim
 addPlugin {
 	-- "Wansmer/symbol-usage.nvim",
@@ -3539,6 +3538,17 @@ addPlugin {
 			return line
 		end,
 		ignore_filetype = {}
+	}
+}
+
+addPlugin {
+	"Zeioth/garbage-day.nvim",
+	event = "LspAttach",
+	opts = {
+		excluded_lsp_clients = {},
+		grace_period = 60,
+		notifications = true,
+		wakeup_delay = 1000
 	}
 }
 
