@@ -1891,7 +1891,8 @@ dark  { "catppuccin-macchiato", "catppuccin"                                    
 -- - Rainbow colors not defined, gives error for indent-blankline
 dark  { "duskfox",              "nightfox"                                                       }
 
--- dark  { "hybrid",               "_"                                                              }
+dark  { "hybrid",               "_"                                                              }
+
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
