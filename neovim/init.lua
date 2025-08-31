@@ -5231,7 +5231,7 @@ addPlugin {
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			auto_install = false,
-			ensure_installed = {},
+			ensure_installed = {}, -- FEAT: add ensure installed for common languages
 			highlight = {
 				additional_vim_regex_highlighting = false,
 				disable = function(_, buf)
