@@ -1224,11 +1224,13 @@ vim.api.nvim_create_autocmd(
 -----------
 -- FEAT: Mapping to paste in insert mode and keep the curose in insert mode
 -- FEAT: Paste in command line
--- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
+-- FEAT: create a mapping to pull current buffer into floating
 -- FEAT: create mapping to delete word using ctrl-delete
+-- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
 -- FEAT: https://github.com/backdround/neowords.nvim
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
+
 -- commamd abbreviations
 vim.keymap.set("ca", "sf", "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
@@ -1495,6 +1497,9 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/kensyo/nvim-scrlbkun
+-- FEAT: https://github.com/lewis6991/satellite.nvim
+-- FEAT: https://github.com/petertriho/nvim-scrollbar
 addPlugin {
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
@@ -3022,6 +3027,11 @@ vim.api.nvim_create_autocmd(
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: create own folding code
 -- Use nvim-ufo python description
+-- Provider indent
+-- Provider treesitter
+-- Provider lsp
+-- Provider for markdown ?
+-- Provider fold import section in python
 
 -- Mapping to fold recursively for current buffer only
 vim.keymap.set("n", "zz", function()
@@ -6083,23 +6093,34 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/folke/edgy.nvim
--- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: Command to execute powershell command
+-- FEAT: Create command to redirect vim command outputs to buffer vim.fn.split(vim.fn.execute(to_run), "\n")
+-- FEAT: command to execute powershell command and put output in buffer
+-- FEAT: csv utility like sorting and filtering
+-- FEAT: https://github.com/A7Lavinraj/fyler.nvim
+-- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
+-- FEAT: https://github.com/afonsofrancof/OSC11.nvim
+-- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
+-- FEAT: https://github.com/dmtrKovalenko/fff.nvim
+-- FEAT: https://github.com/folke/edgy.nvim
+-- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
+-- FEAT: https://github.com/jake-stewart/pipe.nvim
+-- FEAT: https://github.com/joshzcold/python.nvim
+-- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: https://github.com/olimorris/codecompanion.nvim
+-- FEAT: https://github.com/pogyomo/submode.nvim
+-- FEAT: https://github.com/r-pletnev/pdfreader.nvim
+-- FEAT: https://github.com/sbulav/nredir.nvim
+-- FEAT: https://github.com/smjonas/live-command.nvim
+-- FEAT: https://github.com/y3owk1n/cmd.nvim
+-- FEAT: https://github.com/yetone/avante.nvim
+-- FEAT: https://github.com/yutkat/my-neovim-pluginlist
+-- TODO: github stars
 
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
--- FEAT: https://github.com/pogyomo/submode.nvim
--- TODO: github stars
--- FEAT: https://github.com/FluxxField/smart-motion.nvim
--- FEAT: https://github.com/folke/styler.nvim
--- FEAT: https://github.com/yutkat/my-neovim-pluginlist
--- FEAT: csv utility like sorting and filtering
--- FEAT: https://github.com/afonsofrancof/OSC11.nvim
--- FEAT: Create command to redirect vim command outputs to buffer vim.fn.split(vim.fn.execute(to_run), "\n")
--- FEAT: Command to execute powershell command
--- FEAT: command to execute powershell command and put output in buffer
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
