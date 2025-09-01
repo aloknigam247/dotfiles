@@ -803,63 +803,62 @@ local function isTsAttached(bufnr)
 	return false
 end
 
--- TODO: do we still require this
 ---Safe alternative to `nvim_open_win()`
 ---@param bufnr integer Buffer to display, or 0 for current buffer
 ---@param enter boolean Enter the window (make it the current window)
 ---@param config? table `nvim_open_win()` config
 ---@return integer # Window handle, or 0 on error
-local function nvimOpenWinSafe(bufnr, enter, config)
-	local fixTitle = function(title)
-		if title[1] ~= " " then
-			title = " " .. title
-		end
-		if title[#title] ~= " " then
-			title = title .. " "
-		end
-		return title
-	end
+-- local function nvimOpenWinSafe(bufnr, enter, config)
+-- 	local fixTitle = function(title)
+-- 		if title[1] ~= " " then
+-- 			title = " " .. title
+-- 		end
+-- 		if title[#title] ~= " " then
+-- 			title = title .. " "
+-- 		end
+-- 		return title
+-- 	end
 
-	if config then
-		-- Add margin to title
-		if config.title then
-			local title = config.title
-			if type(title) == "string" then
-				config.title = fixTitle(title)
-			elseif type(title) == "table" then
-				config.title[1][1] = fixTitle(config.title[1][1])
-			end
-		end
+-- 	if config then
+-- 		-- Add margin to title
+-- 		if config.title then
+-- 			local title = config.title
+-- 			if type(title) == "string" then
+-- 				config.title = fixTitle(title)
+-- 			elseif type(title) == "table" then
+-- 				config.title[1][1] = fixTitle(config.title[1][1])
+-- 			end
+-- 		end
 
-		-- Fix height
-		if config.row and config.width and config.width > 1 then
-			local editor_bottom = vim.o.lines - 1
-			local window_bottom = config.row + config.height + 2
-			local shift = window_bottom - editor_bottom
-			if shift > 0 then
-				-- config.row = math.max(0, config.row - shift) -- shift row up
-				window_bottom = config.row + config.height + 2
-				config.height = math.min(config.height, vim.o.lines - 3)
-			end
-		end
+-- 		-- Fix height
+-- 		if config.row and config.width and config.width > 1 then
+-- 			local editor_bottom = vim.o.lines - 1
+-- 			local window_bottom = config.row + config.height + 2
+-- 			local shift = window_bottom - editor_bottom
+-- 			if shift > 0 then
+-- 				-- config.row = math.max(0, config.row - shift) -- shift row up
+-- 				window_bottom = config.row + config.height + 2
+-- 				config.height = math.min(config.height, vim.o.lines - 3)
+-- 			end
+-- 		end
 
-		-- Fix width
-		if config.col and config.width and config.width > 1 then
-			local editor_col = vim.o.columns
-			local window_col = config.col + config.width + 2
-			local shift = window_col - editor_col
-			if shift > 0 then
-				-- config.col = math.max(0, config.col - shift) -- shift row up
-				window_col = config.col + config.width + 2
-				config.width = math.min(config.width, vim.o.columns - 2)
-			end
-		end
-	end
+-- 		-- Fix width
+-- 		if config.col and config.width and config.width > 1 then
+-- 			local editor_col = vim.o.columns
+-- 			local window_col = config.col + config.width + 2
+-- 			local shift = window_col - editor_col
+-- 			if shift > 0 then
+-- 				-- config.col = math.max(0, config.col - shift) -- shift row up
+-- 				window_col = config.col + config.width + 2
+-- 				config.width = math.min(config.width, vim.o.columns - 2)
+-- 			end
+-- 		end
+-- 	end
 
-	return vim.api.__nvim_open_win(bufnr, enter, config)
-end
-vim.api.__nvim_open_win = vim.api.nvim_open_win
-vim.api.nvim_open_win = nvimOpenWinSafe
+-- 	return vim.api.__nvim_open_win(bufnr, enter, config)
+-- end
+-- vim.api.__nvim_open_win = vim.api.nvim_open_win
+-- vim.api.nvim_open_win = nvimOpenWinSafe
 
 ---Open file in floating window
 ---@param path string File path
@@ -1231,7 +1230,7 @@ vim.api.nvim_create_autocmd(
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
 
--- commamd abbreviations
+-- command abbreviations
 vim.keymap.set("ca", "sf", "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
 -- commands
@@ -1245,12 +1244,15 @@ vim.keymap.set("n", "<X1Mouse>",   "<C-o>", { desc = "Jump forward" })
 vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" })
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
 vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
+-- path separator convertor
+vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
+vim.keymap.set("n", "wc/", '<cmd>s/\\\\\\+/\\//g<CR>', { desc = "Convert \\\\ to /" })
 -- register
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 vim.keymap.set("n", '"',     function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- search
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
--- scolling
+-- scrolling
 vim.keymap.set({"n", "v"}, "<S-Up>",   "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
 vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
 -- tab switch
@@ -1879,17 +1881,17 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - sentiment highlight is underline
 -- dark  { "ayu-dark",             "ayu",                                                           }
 
--- + better diff colors
--- + colors python enum values
--- - too much red in python file indicator\VSAR.py
--- - no cursor position highlight
--- - dark  { "bluloco",              "_"                                                              }
+	-- + better diff colors
+	-- + colors python enum values
+	-- - too much red in python file indicator\VSAR.py
+	-- - no cursor position highlight
+	-- - dark  { "bluloco",              "_"                                                              }
 
 -- + cursor position highlight
 -- - window separator color blends with background
 -- + good markdown heading
 -- - bad search highlight
-dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+-- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
 -- - bad markdown heading
 -- - bad search highlight
@@ -5824,7 +5826,6 @@ addPlugin {
 		-- FEAT: mapping to convert windows/unix path conversion
 		setTextKey("wc-", "to_dash_case",         "dash-case"         )
 		setTextKey("wc.", "to_dot_case",          "dot.case"          )
-		setTextKey("wc/", "to_path_case",         "path/case"         )
 		setTextKey("wc0", "to_constant_case",     "CONSTANT_CASE"     )
 		setTextKey("wc_", "to_snake_case",        "snake_case"        )
 		setTextKey("wcc", "to_camel_case",        "camelCase"         )
