@@ -5362,6 +5362,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/rcarriga/nvim-notify
+-- FEAT: https://github.com/y3owk1n/notifier.nvim
 addPlugin {
 	"folke/noice.nvim",
 	config = function()
@@ -6103,6 +6105,7 @@ addPlugin {
 -- FEAT: https://github.com/afonsofrancof/OSC11.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
+-- FEAT: https://github.com/catgoose/bmessages.nvim
 -- FEAT: https://github.com/dmtrKovalenko/fff.nvim
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/styler.nvim
@@ -6118,6 +6121,7 @@ addPlugin {
 -- FEAT: https://github.com/y3owk1n/cmd.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
 -- FEAT: https://github.com/yutkat/my-neovim-pluginlist
+-- FIX: Powershell execution in nvim
 -- TODO: github stars
 
 require("lazy").setup(plugins, lazy_config)
