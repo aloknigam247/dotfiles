@@ -1419,7 +1419,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- FEAT: https://github.com/Chattille/pairs.nvim
 	-- FEAT: https://github.com/Saghen/blink.pairs
 	"windwp/nvim-autopairs",
 	config = function()
