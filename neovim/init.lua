@@ -1358,6 +1358,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
+-- Command to make a virtual divider in file using virtual text/extmark
 vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
@@ -1646,7 +1647,7 @@ addPlugin {
 				local hl_group = getTodo(v.color)
 				for _,l in pairs(keys) do
 					local key = l:lower()
-					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W" }
+					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W.*" }
 					config[key] = cfg
 				end
 			end
@@ -1663,6 +1664,8 @@ addPlugin {
 		ft = "log",
     opts = {}
 }
+
+-- FEAT: 'fluxdiv/instacolor.nvim'
 
 addPlugin {
 	"folke/paint.nvim",
@@ -1896,6 +1899,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - bad markdown heading
 -- - bad search highlight
 -- - Rainbow colors not defined, gives error for indent-blankline
+-- - window separator color blends with background
 dark  { "duskfox",              "nightfox"                                                       }
 
 dark  { "hybrid",               "_"                                                              }
@@ -2029,6 +2033,18 @@ addPlugin {
 
 		vim.api.nvim_create_user_command("CB", exec, { complete = cb_complete, desc = "Create comment box", nargs = "*", range = 2 })
 	end
+}
+
+addPlugin {
+	"echasnovski/mini.comment",
+	keys = {
+		{ "cc", mode = { "o", "v" }, desc = "Comments text object" }
+	},
+	opts = {
+		mappings = {
+			textobject = "cc"
+		}
+	}
 }
 
 addPlugin {
@@ -5285,8 +5301,8 @@ addPlugin {
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
 		{ "[m", mode = "n", desc = "jump to previous method" },
 		{ "]m", mode = "n", desc = "jump to next method" },
-		{ "am", mode = { "v","o" }, desc = "select around method" },
-		{ "im", mode = { "v","o" }, desc = "select inner method" }
+		{ "am", mode = { "o", "v" }, desc = "select around method" },
+		{ "im", mode = { "o", "v" }, desc = "select inner method" }
 	},
 	main = "nvim-treesitter.configs",
 	opts = {
@@ -6096,6 +6112,12 @@ addPlugin {
 	}
 }
 
+-- FEAT: macros
+-- https://github.com/ecthelionvi/NeoComposer.nvim
+-- https://github.com/chrisgrieser/nvim-recorder
+-- https://github.com/bignos/bookmacro
+-- https://github.com/sahilsehwag/macrobank.nvim
+
 -- FEAT: Command to execute powershell command
 -- FEAT: Create command to redirect vim command outputs to buffer vim.fn.split(vim.fn.execute(to_run), "\n")
 -- FEAT: command to execute powershell command and put output in buffer
@@ -6114,6 +6136,7 @@ addPlugin {
 -- FEAT: https://github.com/jake-stewart/pipe.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
