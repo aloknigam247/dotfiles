@@ -5741,7 +5741,7 @@ addPlugin {
 	}
 }
 
--- "jbyuki/instant.nvim"
+-- https://github.com/azratul/live-share.nvim
 
 addPlugin {
 	"folke/flash.nvim",
@@ -6154,6 +6154,7 @@ addPlugin {
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jake-stewart/pipe.nvim
+-- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
