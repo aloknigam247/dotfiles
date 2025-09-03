@@ -121,7 +121,7 @@ if ($theme -eq "Light") {
 }
 
 $palette.fzf = @{
-    header = $palette.cmdline.header
+    header = $palette.cmdline.selection
     info = $palette.cmdline.comment
     marker = $palette.cmdline.emphasis
     pointer = $palette.cmdline.parameter
