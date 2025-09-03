@@ -1241,7 +1241,7 @@ vim.keymap.set("n", "<C-s>",       "<cmd>w!<CR>", { desc = "Save file" })
 vim.keymap.set("n", "<X2Mouse>",   "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>",   "<C-o>", { desc = "Jump forward" })
 -- paste
-vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" })
+vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
 vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
 -- path separator convertor
@@ -1260,6 +1260,8 @@ vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to pre
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- window controls
 vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
+-- FEAT: delete unwanted window move/ cursor move mappings to make menu clean
+vim.keymap.del("n", "<C-w>d")
 -- word deletion
 vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete a word backward" })
@@ -1268,7 +1270,6 @@ vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEA
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
--- FEAT: delete unwanted window move/ cursor move mappings to make menu clean
 -- <~>
 -- Misc</>
 -------
@@ -1903,7 +1904,8 @@ dark  { "duskfox",              "nightfox"                                      
 
 dark  { "hybrid",               "_"                                                              }
 
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "kanagawa-wave",        "kanagawa"                                                       }
+
 -- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
@@ -6144,7 +6146,6 @@ addPlugin {
 -- FEAT: https://github.com/Fildo7525/pretty_hover
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
--- FEAT: https://github.com/afonsofrancof/OSC11.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/catgoose/bmessages.nvim
@@ -6153,7 +6154,6 @@ addPlugin {
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
--- FEAT: https://github.com/jake-stewart/pipe.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/lewis6991/hover.nvim
