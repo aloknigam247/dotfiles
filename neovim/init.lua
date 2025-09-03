@@ -3528,6 +3528,11 @@ addPlugin {
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
 -- FEAT: https://github.com/amadanmath/diag_ignore.nvim
+
+-- none-ls
+-- FEAT: https://github.com/nvimtools/none-ls.nvim
+-- FEAT: https://github.com/Zeioth/none-ls-external-sources.nvim
+-- FEAT: https://github.com/gwinn/none-ls-jsonlint.nvim
 addPlugin {
 	-- "Wansmer/symbol-usage.nvim",
 	"VidocqH/lsp-lens.nvim",
@@ -6111,29 +6116,46 @@ addPlugin {
 	}
 }
 
--- FEAT: macros
--- https://github.com/ecthelionvi/NeoComposer.nvim
--- https://github.com/chrisgrieser/nvim-recorder
--- https://github.com/bignos/bookmacro
--- https://github.com/sahilsehwag/macrobank.nvim
+-- macros
+-- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-recorder
+-- FEAT: https://github.com/bignos/bookmacro
+-- FEAT: https://github.com/sahilsehwag/macrobank.nvim
+
+-- snippets
+-- FEAT: https://github.com/L3MON4D3/LuaSnip
+-- FEAT: https://github.com/norcalli/snippets.nvim
+-- FEAT: https://github.com/dcampos/nvim-snippy
+-- FEAT: https://github.com/garymjr/nvim-snippets
+-- FEAT: https://github.com/chrisgrieser/nvim-scissors
+-- FEAT: https://github.com/nvim-mini/mini.snippets
+-- FEAT: https://github.com/abeldekat/cmp-mini-snippets
+-- FEAT: https://github.com/rafamadriz/friendly-snippets
+-- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
+-- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
+
+-- FEAT: https://diagon.arthursonzogni.com/
 
 -- FEAT: Command to execute powershell command
 -- FEAT: Create command to redirect vim command outputs to buffer vim.fn.split(vim.fn.execute(to_run), "\n")
 -- FEAT: command to execute powershell command and put output in buffer
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
+-- FEAT: https://github.com/Fildo7525/pretty_hover
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/afonsofrancof/OSC11.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/catgoose/bmessages.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-rulebook
 -- FEAT: https://github.com/dmtrKovalenko/fff.nvim
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jake-stewart/pipe.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
+-- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
