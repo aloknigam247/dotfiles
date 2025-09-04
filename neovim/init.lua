@@ -1360,6 +1360,26 @@ vim.opt.runtimepath:prepend(lazypath)
 -- Commands</>
 -----------
 -- Command to make a virtual divider in file using virtual text/extmark
+
+-- FEAT: Create command to redirect read command shell, file, vim, lua outputs to current buffer
+-- FEAT: command to execute powershell command and put output in buffer
+-- -- Define a Lua function to execute a Vim command and insert its output at the cursor
+-- local function insert_command_output(cmd)
+--   -- Execute the command and get its output
+--   local output = vim.fn.execute(cmd)
+--   -- Get the current cursor position (row, col)
+--   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+--   -- Split output into lines
+--   local lines = vim.split(output, '\n', true)
+--   -- Insert the output lines into the buffer at the current line (row)
+--   vim.api.nvim_buf_set_lines(0, row, row, false, lines)
+-- end
+--
+-- -- Create a command :InsertOutput that accepts arguments for other commands
+-- vim.api.nvim_create_user_command('InsertOutput', function(opts)
+--   insert_command_output(opts.args)
+-- end, { nargs = '+' })
+
 vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
@@ -6139,8 +6159,6 @@ addPlugin {
 -- FEAT: https://diagon.arthursonzogni.com/
 
 -- FEAT: Command to execute powershell command
--- FEAT: Create command to redirect vim command outputs to buffer vim.fn.split(vim.fn.execute(to_run), "\n")
--- FEAT: command to execute powershell command and put output in buffer
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
 -- FEAT: https://github.com/Fildo7525/pretty_hover
