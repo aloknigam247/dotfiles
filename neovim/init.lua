@@ -1243,7 +1243,7 @@ vim.keymap.set("n", "<X1Mouse>",   "<C-o>", { desc = "Jump forward" })
 vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
 vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
-vim.keymap.set("c", "<C-v>", "<C-r>+" { desc = "Paste in command line" })
+vim.keymap.set("c", "<C-v>", "<C-r>+", { desc = "Paste in command line" })
 -- path separator convertor
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/", '<cmd>s/\\\\\\+/\\//g<CR>', { desc = "Convert \\\\ to /" })
@@ -6163,14 +6163,22 @@ addPlugin {
 -- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
 -- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
 
+-- dotnet
+-- FEAT: https://github.com/GustavEikaas/easy-dotnet.nvim
+-- FEAT: https://github.com/anachary/dotnet-core.nvim
+-- FEAT: https://github.com/anachary/dotnet-plugin.nvim
+
 -- FEAT: https://diagon.arthursonzogni.com/
 
 -- FEAT: Command to execute powershell command
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
+-- FEAT: https://github.com/BlankTiger/telescope-rg.nvim
 -- FEAT: https://github.com/Fildo7525/pretty_hover
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
+-- FEAT: https://github.com/ObserverOfTime/notifications.nvim
+-- FEAT: https://github.com/Wotee/bruh.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/catgoose/bmessages.nvim
@@ -6180,13 +6188,16 @@ addPlugin {
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
+-- FEAT: https://github.com/johannww/openssl.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
+-- FEAT: https://github.com/oysandvik94/curl.nvim 
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
+-- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/sbulav/nredir.nvim
 -- FEAT: https://github.com/smjonas/live-command.nvim
 -- FEAT: https://github.com/y3owk1n/cmd.nvim
