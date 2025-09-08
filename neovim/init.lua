@@ -1898,23 +1898,24 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
--- - diff colors are not clear
--- - does not color python enum values
--- - nontext color is too dim
--- - sentiment highlight is underline
--- dark  { "ayu-dark",             "ayu",                                                           }
-
 	-- + better diff colors
 	-- + colors python enum values
 	-- - too much red in python file indicator\VSAR.py
 	-- - no cursor position highlight
 	-- - dark  { "bluloco",              "_"                                                              }
 
+-- - diff colors are not clear
+-- - does not color python enum values
+-- - nontext color is too dim
+-- + good search hl colors
+-- - sentiment highlight is underline
+dark  { "ayu-dark",             "ayu",                                                           }
+
 -- + cursor position highlight
 -- - window separator color blends with background
 -- + good markdown heading
 -- - bad search highlight
--- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+dark  { "catppuccin-macchiato", "catppuccin"                                                     }
 
 -- - bad markdown heading
 -- - bad search highlight
@@ -1922,10 +1923,8 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- - window separator color blends with background
 dark  { "duskfox",              "nightfox"                                                       }
 
-dark  { "hybrid",               "_"                                                              }
-
-dark  { "kanagawa-wave",        "kanagawa"                                                       }
-
+-- dark  { "hybrid",               "_"                                                              }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
