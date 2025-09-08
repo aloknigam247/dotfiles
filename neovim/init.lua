@@ -1222,7 +1222,6 @@ vim.api.nvim_create_autocmd(
 -- Mappings</>
 -----------
 -- FEAT: Mapping to paste in insert mode and keep the curose in insert mode
--- FEAT: Paste in command line
 -- FEAT: create a mapping to pull current buffer into floating
 -- FEAT: create mapping to delete word using ctrl-delete
 -- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
@@ -1244,6 +1243,7 @@ vim.keymap.set("n", "<X1Mouse>",   "<C-o>", { desc = "Jump forward" })
 vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
 vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
+vim.keymap.set("c", "<C-v>", "<C-r>+" { desc = "Paste in command line" })
 -- path separator convertor
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/", '<cmd>s/\\\\\\+/\\//g<CR>', { desc = "Convert \\\\ to /" })
@@ -3450,7 +3450,7 @@ addPlugin {
 				todo     = { color = "#7CB342", cterm_color = "107", icon = "", name = "Todo"      },
 			}
 		})
-		require("nvim-web-devicons").set_default_icon("", "#6d8086", 66) -- not working in azureapp filename
+		require("nvim-web-devicons").set_default_icon("", "#6d8086", 66)
 	end
 }
 -- <~>
