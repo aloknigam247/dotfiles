@@ -1898,38 +1898,17 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
-	-- + better diff colors
-	-- + colors python enum values
-	-- - too much red in python file indicator\VSAR.py
-	-- - no cursor position highlight
-	-- - dark  { "bluloco",              "_"                                                              }
-
--- - diff colors are not clear
--- - does not color python enum values
--- - nontext color is too dim
--- + good search hl colors
--- - sentiment highlight is underline
 dark  { "ayu-dark",             "ayu",                                                           }
-
--- + cursor position highlight
--- - window separator color blends with background
--- + good markdown heading
--- - bad search highlight
+dark  { "bluloco",              "_"                                                              }
 dark  { "catppuccin-macchiato", "catppuccin"                                                     }
-
--- - bad markdown heading
--- - bad search highlight
--- - Rainbow colors not defined, gives error for indent-blankline
--- - window separator color blends with background
 dark  { "duskfox",              "nightfox"                                                       }
-
--- dark  { "hybrid",               "_"                                                              }
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
--- dark  { "nordfox",              "nightfox"                                                       }
--- dark  { "sonokai",              "_",                                                             }
--- dark  { "tokyonight-storm",     "tokyonight"                                                     }
--- dark  { "vn-night",             "_",                                                             }
--- dark  { "zephyrium",            "_"                                                              }
+dark  { "hybrid",               "_"                                                              }
+dark  { "kanagawa-wave",        "kanagawa"                                                       }
+dark  { "nordfox",              "nightfox"                                                       }
+dark  { "sonokai",              "_",                                                             }
+dark  { "tokyonight-storm",     "tokyonight"                                                     }
+dark  { "vn-night",             "_",                                                             }
+dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -6191,6 +6170,7 @@ addPlugin {
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: https://github.com/nelnn/bear.nvim
 -- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
 -- FEAT: https://github.com/oysandvik94/curl.nvim 
