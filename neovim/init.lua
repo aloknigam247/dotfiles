@@ -1895,7 +1895,6 @@ addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"           
 addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
 addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
 addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
-addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
@@ -1904,13 +1903,12 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
-dark  { "nordfox",              "nightfox"                                                       }
+-- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
--- dark  { "tokyonight-storm",     "tokyonight"                                                     }
--- dark  { "vn-night",             "_",                                                             }
+dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
--- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
+darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
 -- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
@@ -1925,65 +1923,71 @@ dark  { "nordfox",              "nightfox"                                      
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
 function ColoRand(scheme_index)
-	-- get random color scheme
-	math.randomseed(os.time())
-	scheme_index = scheme_index or math.random(1, #colos)
-	local selection = colos[scheme_index]
-	local scheme = selection[1]
-	local bg = selection.bg
-	local event = selection[2]
-	-- local precmd = selection.pre
-	-- local postcmd = selection.post
+	local function applyColorscheme(scheme_index)
+		-- get random color scheme
+		math.randomseed(os.time())
+		scheme_index = scheme_index or math.random(1, #colos)
+		local selection = colos[scheme_index]
+		local scheme = selection[1]
+		local bg = selection.bg
+		local event = selection[2]
+		-- local precmd = selection.pre
+		-- local postcmd = selection.post
 
-	-- set backgrounds
-	vim.o.background = bg
-	vim.g.neovide_normal_opacity = selection.trans and 0.7 or 1
+		-- set backgrounds
+		vim.o.background = bg
+		vim.g.neovide_normal_opacity = selection.trans and 0.7 or 1
 
-	local start_time = os.clock()
+		local start_time = os.clock()
 
-	-- load colorscheme
-	vim.api.nvim_exec_autocmds("User", { pattern = event == "_" and scheme or event })
+		-- load colorscheme
+		vim.api.nvim_exec_autocmds("User", { pattern = event == "_" and scheme or event })
 
-	-- configure colorscheme
-	if selection.cfg then
-		local cfg = selection.cfg
-		local mod
-		if #cfg == 2 then
-			---@diagnostic disable-next-line: need-check-nil
-			mod = cfg[1]
-			---@diagnostic disable-next-line: need-check-nil
-			cfg = cfg[2]
-		else
-			if event == "_" then
-				mod = scheme
+		-- configure colorscheme
+		if selection.cfg then
+			local cfg = selection.cfg
+			local mod
+			if #cfg == 2 then
+				---@diagnostic disable-next-line: need-check-nil
+				mod = cfg[1]
+				---@diagnostic disable-next-line: need-check-nil
+				cfg = cfg[2]
 			else
-				mod = event
+				if event == "_" then
+					mod = scheme
+				else
+					mod = event
+				end
 			end
+
+			require(mod).setup(cfg)
 		end
 
-		require(mod).setup(cfg)
+		-- run pre colorscheme
+		local root = event == "_" and scheme or event
+		root = root:gsub("-", "")
+		local precmd = _G[root .. "Pre"]
+		if (precmd) then
+			precmd()
+		end
+
+		-- apply colorscheme
+		vim.cmd.colorscheme(scheme)
+		vim.cmd("highlight clear CursorLine")
+
+		-- run post colorscheme
+		local postcmd = _G[root .. "Post"]
+		if (postcmd) then
+			postcmd()
+		end
+
+		local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
+		vim.g.ColoRand = scheme_index .. ":" .. scheme .. ":" .. bg .. ":" .. event .. elapsed
 	end
 
-	-- run pre colorscheme
-	local root = event == "_" and scheme or event
-	root = root:gsub("-", "")
-	local precmd = _G[root .. "Pre"]
-	if (precmd) then
-		precmd()
+	if #colos > 0 then
+		applyColorscheme(scheme_index)
 	end
-
-	-- apply colorscheme
-	vim.cmd.colorscheme(scheme)
-	vim.cmd("highlight clear CursorLine")
-
-	-- run post colorscheme
-	local postcmd = _G[root .. "Post"]
-	if (postcmd) then
-		postcmd()
-	end
-
-	local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
-	vim.g.ColoRand = scheme_index .. ":" .. scheme .. ":" .. bg .. ":" .. event .. elapsed
 
 	-- fix Todo highlight
 	local todo_hl --[[@as vim.api.keyset.highlight]] = vim.api.nvim_get_hl(0, { name = "Todo", create = false })
@@ -2004,7 +2008,7 @@ function ColoRand(scheme_index)
 		require("mini.misc").setup_termbg_sync()
 	end
 
-	vim.api.nvim_set_hl(0, "MatchParen", {reverse = true})
+	vim.api.nvim_set_hl(0, "MatchParen", { reverse = true })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -6156,10 +6160,14 @@ addPlugin {
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
 -- FEAT: https://github.com/BlankTiger/telescope-rg.nvim
+-- FEAT: https://github.com/Civitasv/cmake-tools.nvim
 -- FEAT: https://github.com/Fildo7525/pretty_hover
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
+-- FEAT: https://github.com/Kohirus/cppassist.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/ObserverOfTime/notifications.nvim
+-- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
+-- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
@@ -6168,16 +6176,22 @@ addPlugin {
 -- FEAT: https://github.com/dmtrKovalenko/fff.nvim
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/styler.nvim
+-- FEAT: https://github.com/gergol/cmake-debugger.nvim
+-- FEAT: https://github.com/hfn92/cmake-gtest.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
+-- FEAT: https://github.com/jakemason/ouroboros.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
 -- FEAT: https://github.com/johannww/openssl.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: https://github.com/marc0x71/cmake-simple.nvim
 -- FEAT: https://github.com/nelnn/bear.nvim
 -- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
+-- FEAT: https://github.com/ofwinterpassed/gtestrunner.nvim
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
 -- FEAT: https://github.com/oysandvik94/curl.nvim 
+-- FEAT: https://github.com/p00f/clangd_extensions.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
 -- FEAT: https://github.com/romek-codes/bruno.nvim
