@@ -1898,17 +1898,17 @@ addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"         
 addPlugin { "nxvu699134/vn-night.nvim",       event = "User vnight"                                     }
 addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
 
-dark  { "ayu-dark",             "ayu",                                                           }
-dark  { "bluloco",              "_"                                                              }
-dark  { "catppuccin-macchiato", "catppuccin"                                                     }
-dark  { "duskfox",              "nightfox"                                                       }
-dark  { "hybrid",               "_"                                                              }
-dark  { "kanagawa-wave",        "kanagawa"                                                       }
+-- dark  { "ayu-dark",             "ayu",                                                           }
+-- dark  { "bluloco",              "_"                                                              }
+-- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
+-- dark  { "duskfox",              "nightfox"                                                       }
+-- dark  { "hybrid",               "_"                                                              }
+-- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 dark  { "nordfox",              "nightfox"                                                       }
-dark  { "sonokai",              "_",                                                             }
-dark  { "tokyonight-storm",     "tokyonight"                                                     }
-dark  { "vn-night",             "_",                                                             }
-dark  { "zephyrium",            "_"                                                              }
+-- dark  { "sonokai",              "_",                                                             }
+-- dark  { "tokyonight-storm",     "tokyonight"                                                     }
+-- dark  { "vn-night",             "_",                                                             }
+-- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 -- darkT { "tokyonight-storm",     "tokyonight",   cfg = { transparent = true }                     }
 -- light { "bluloco",              "_"                                                              }
@@ -2003,6 +2003,8 @@ function ColoRand(scheme_index)
 	else
 		require("mini.misc").setup_termbg_sync()
 	end
+
+	vim.api.nvim_set_hl(0, "MatchParen", {reverse = true})
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4299,7 +4301,9 @@ addPlugin {
 	}
 }
 
--- FEAT: "chentoast/marks.nvim"
+-- FEAT: configure addPlugin {
+-- 	"chentoast/marks.nvim"
+-- }
 
 addPlugin {
 	"kshenoy/vim-signature",
