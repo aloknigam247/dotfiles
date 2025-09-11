@@ -1667,7 +1667,7 @@ addPlugin {
 				local hl_group = getTodo(v.color)
 				for _,l in pairs(keys) do
 					local key = l:lower()
-					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W.*" }
+					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W" }
 					config[key] = cfg
 				end
 			end
@@ -1879,7 +1879,6 @@ local function lightT(opts)
 end
 
 addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
-addPlugin { "uloco/bluloco.nvim",             event = "User bluloco", dependencies = "rktjmp/lush.nvim" }
 addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
 addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
 addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
@@ -1898,24 +1897,16 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "duskfox",              "nightfox"                                                       }
 -- dark  { "hybrid",               "_"                                                              }
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
--- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 
--- + cursor color
--- - no color on number line
--- + diff colors
-light { "bluloco",              "_"                                                              }
--- light { "dawnfox",              "nightfox"                                                       }
--- light { "dayfox",               "nightfox"                                                       }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
--- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
+light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
-lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
--- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
+lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
 -- lightT{ "kanagawa-paper",       "_",                                                             }
 
 ---Random colorscheme
@@ -6176,6 +6167,7 @@ addPlugin {
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/Kohirus/cppassist.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
+-- FEAT: https://github.com/MunifTanjim/nui.nvim
 -- FEAT: https://github.com/ObserverOfTime/notifications.nvim
 -- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
@@ -6188,12 +6180,15 @@ addPlugin {
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/gergol/cmake-debugger.nvim
+-- FEAT: https://github.com/grapp-dev/nui-components.nvim
+-- FEAT: https://github.com/heilgar/nvim-http-client
 -- FEAT: https://github.com/hfn92/cmake-gtest.nvim
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jakemason/ouroboros.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
 -- FEAT: https://github.com/johannww/openssl.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
+-- FEAT: https://github.com/jrop/u.nvim
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/marc0x71/cmake-simple.nvim
