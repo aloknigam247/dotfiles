@@ -1906,6 +1906,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 
 -- + cursor color
 -- - no color on number line
+-- + diff colors
 light { "bluloco",              "_"                                                              }
 -- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
