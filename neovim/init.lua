@@ -1879,18 +1879,17 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "Shatur/neovim-ayu",              event = "User ayu"                                        }
-addPlugin { "catppuccin/nvim",                event = "User catppuccin"                                 }
-addPlugin { "scottmckendry/cyberdream.nvim",  event = "User cyberdream"                                 }
-addPlugin { "projekt0n/github-nvim-theme",    event = "User github-theme"                               }
-addPlugin { "HoNamDuong/hybrid.nvim",         event = "User hybrid"                                     }
-addPlugin { "rebelot/kanagawa.nvim",          event = "User kanagawa"                                   }
-addPlugin { "sho-87/kanagawa-paper.nvim",     event = "User kanagawa-paper"                             }
-addPlugin { "EdenEast/nightfox.nvim",         event = "User nightfox"                                   }
-addPlugin { "dgox16/oldworld.nvim",           event = "User oldworld"                                   }
-addPlugin { "sainnhe/sonokai",                event = "User sonokai"                                    }
-addPlugin { "folke/tokyonight.nvim",          event = "User tokyonight"                                 }
-addPlugin { "titanzero/zephyrium",            event = "User zephyrium"                                  }
+addPlugin { "Shatur/neovim-ayu",           event = "User ayu"            }
+addPlugin { "catppuccin/nvim",             event = "User catppuccin"     }
+addPlugin { "projekt0n/github-nvim-theme", event = "User github-theme"   }
+addPlugin { "HoNamDuong/hybrid.nvim",      event = "User hybrid"         }
+addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"       }
+addPlugin { "sho-87/kanagawa-paper.nvim",  event = "User kanagawa-paper" }
+addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"       }
+addPlugin { "dgox16/oldworld.nvim",        event = "User oldworld"       }
+addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
+addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
+addPlugin { "titanzero/zephyrium",         event = "User zephyrium"      }
 
 -- dark  { "ayu-dark",             "ayu",                                                           }
 -- dark  { "bluloco",              "_"                                                              }
@@ -1901,14 +1900,10 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "sonokai",              "_",                                                             }
 -- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "zephyrium",            "_"                                                              }
--- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
+darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 
--- light { "catppuccin-latte",     "catppuccin"                                                     }
-light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
--- light { "kanagawa-paper",        "_"                                                             }
--- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
-lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
--- lightT{ "kanagawa-paper",       "_",                                                             }
+-- light { "catppuccin-latte", "catppuccin"                                          }
+-- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
 ---Random colorscheme
 ---@param scheme_index? integer Index of colorscheme
