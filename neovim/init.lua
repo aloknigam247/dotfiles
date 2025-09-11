@@ -5786,7 +5786,7 @@ addPlugin {
 }
 
 addPlugin {
-	"folke/lazydev.nvim",
+	"folke/lazydev.nvim", -- FIX: or remove
 	ft = "lua",
 	opts = {
 		library = {
