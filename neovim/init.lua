@@ -1248,6 +1248,7 @@ vim.keymap.set("c", "<C-v>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/", '<cmd>s/\\\\\\+/\\//g<CR>', { desc = "Convert \\\\ to /" })
 -- register
+-- FIX: telescope opens when keys are pressed as neovim starts
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 vim.keymap.set("n", '"',     function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- search
