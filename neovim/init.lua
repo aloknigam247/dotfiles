@@ -1260,7 +1260,7 @@ vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to pre
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- window controls
 vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
--- FEAT: delete unwanted window move/ cursor move mappings to make menu clean
+-- REFACTOR: delete unwanted window move/ cursor move mappings to make menu clean
 vim.keymap.del("n", "<C-w>d")
 -- word deletion
 vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
@@ -1782,11 +1782,6 @@ function ayuPost()
 end
 
 ---@diagnostic disable-next-line: lowercase-global
-function blulocoPost()
-	vim.api.nvim_set_hl(0, "String", { fg = "#FF8585" })
-end
-
----@diagnostic disable-next-line: lowercase-global
 function julianaPost()
 	fixLineNr("#999999")
 end
@@ -1905,16 +1900,17 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "kanagawa-wave",        "kanagawa"                                                       }
 -- dark  { "nordfox",              "nightfox"                                                       }
 -- dark  { "sonokai",              "_",                                                             }
-dark  { "tokyonight-storm",     "tokyonight"                                                     }
+-- dark  { "tokyonight-storm",     "tokyonight"                                                     }
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
--- light { "bluloco",              "_"                                                              }
+
+light { "bluloco",              "_"                                                              }
 -- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
 -- light { "catppuccin-latte",     "catppuccin"                                                     }
 -- light { "cyberdream",           "_",            cfg = { variant = "light", transparent = false } }
 -- light { "kanagawa-paper",        "_"                                                             }
--- lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
+lightT{ "bluloco",              "_",            cfg = { transparent = true }                     }
 -- lightT{ "catppuccin-latte",     "catppuccin",      cfg = { transparent_background = true }       }
 -- lightT{ "cyberdream",           "_",            cfg = { variant = "light", transparent = false, borderless_pickers = true, hide_fillchars = true, italic_comments = true } }
 -- lightT{ "kanagawa-paper",       "_",                                                             }
@@ -2689,7 +2685,6 @@ addPlugin {
 }
 
 -- FEAT: enable cursorline
--- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
@@ -6155,7 +6150,6 @@ addPlugin {
 
 -- FEAT: https://diagon.arthursonzogni.com/
 
--- FEAT: Command to execute powershell command
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
 -- FEAT: https://github.com/BlankTiger/telescope-rg.nvim

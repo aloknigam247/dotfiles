@@ -11,11 +11,11 @@ let g:python_indent.closed_paren_align_last_line = v:false " put closing ) one l
 let g:python_indent.continue = 'shiftwidth() * 2' " width of open parentheses indent on continue
 let g:python_indent.nested_paren = 'shiftwidth()' " indentation for closing parentheses
 let g:python_indent.open_paren = 'shiftwidth()'   " width of open parentheses indent on <enter>
-" let g:markdown_folding = 1         " Enable markdown folding
-" let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
-" let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode
-" let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
-" let g:netrw_liststyle = 3          " Set netrw style as tree
+let g:markdown_folding = 1         " Enable markdown folding
+let g:python_recommended_style = 0 " Disable inbuilt python tabs settings
+let g:diff_translations = 0        " Disables localisations and speeds up syntax highlighting in diff mode
+let g:load_doxygen_syntax = 1      " Recognize doxygen comment style
+let g:netrw_liststyle = 3          " Set netrw style as tree
 " }}}
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Config Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -148,11 +148,17 @@ augroup RestoreCursorShapeOnExit
     autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
 augroup END
 
-" let &shell = executable('pwsh') ? 'pwsh' : 'powershell'
-" let &shell = 'pwsh'
-" let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-" let &shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait'
-" let &shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+if has("win32") || has("win64") || has("win16")
+    " Set powershell shell
+    " BUG: shell output not visible
+    " FEAT: load profile.ps1
+    let &shell = executable("pwsh") ? "pwsh" : "powershell"
+    let &shellcmdflag = "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[""Out-File:Encoding""]=""utf8"";$PSStyle.OutputRendering=""plaintext"";Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
+    let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+    let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+    set shellquote= shellxquote=
+endif
+
 
 let g:startuptime_event_width = 0
 
