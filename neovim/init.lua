@@ -1905,6 +1905,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 
 -- + cursor color
+-- - no color on number line
 light { "bluloco",              "_"                                                              }
 -- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
