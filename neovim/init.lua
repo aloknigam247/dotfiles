@@ -1904,6 +1904,7 @@ addPlugin { "titanzero/zephyrium",            event = "User zephyrium"          
 -- dark  { "zephyrium",            "_"                                                              }
 -- darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
 
+-- + cursor color
 light { "bluloco",              "_"                                                              }
 -- light { "dawnfox",              "nightfox"                                                       }
 -- light { "dayfox",               "nightfox"                                                       }
@@ -4031,6 +4032,21 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/RyanGreenup/markdown_editor.nvim
+-- FEAT: https://github.com/SamiSuleiman/murk.nvim
+-- FEAT: https://github.com/Zeioth/markmap.nvim
+-- FEAT: https://github.com/adibhanna/simplemarkdown.nvim
+-- FEAT: https://github.com/chirag-juneja/markdown.nvim
+-- FEAT: https://github.com/davidgranstrom/nvim-markdown-preview
+-- FEAT: https://github.com/erel213/markdown-writer.nvim
+-- FEAT: https://github.com/hedyhli/markdown-toc.nvim
+-- FEAT: https://github.com/idossha/LiveMD.nvim
+-- FEAT: https://github.com/jeangiraldoo/markup.nvim
+-- FEAT: https://github.com/jghauser/follow-md-links.nvim
+-- FEAT: https://github.com/magnusriga/markdown-tools.nvim
+-- FEAT: https://github.com/richardbizik/nvim-toc
+-- FEAT: https://github.com/tadmccorkle/markdown.nvim
+-- FEAT: https://github.com/topazape/md-preview.nvim
 -- "OXY2DEV/markview.nvim"
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
