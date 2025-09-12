@@ -873,6 +873,35 @@ local function openFloat(path, relativity, col_offset, row_offset)
 		return
 	end
 
+	local function reopen()
+		local api = vim.api
+		local win_picker = require('window-picker')
+		local cur_win = api.nvim_get_current_win()
+		local cur_buf = api.nvim_win_get_buf(cur_win)
+
+		-- Hide current window by closing it, but keep buffer
+		api.nvim_win_close(cur_win, false)
+
+		-- Pick another window (returns nil if cancelled)
+		local picked_win = win_picker.pick_window({ include_current_win = true })
+
+		if picked_win and api.nvim_win_is_valid(picked_win) then
+			-- Open current buffer as horizontal split to picked window
+			api.nvim_set_current_win(picked_win)
+			api.nvim_command('split')
+			local split_win = api.nvim_get_current_win()
+			api.nvim_win_set_buf(split_win, cur_buf)
+		else
+			-- If cancelled, restore previous buffer in a new split
+			-- Find a valid window to split into (use first current if needed)
+			local restore_win = api.nvim_list_wins()[1]
+			api.nvim_set_current_win(restore_win)
+			api.nvim_command('split')
+			local new_win = api.nvim_get_current_win()
+			api.nvim_win_set_buf(new_win, cur_buf)
+		end
+	end
+
 	-- Create floating window
 	if Preview_win == nil then
 		Preview_win --[[@as integer | nil]] = vim.api.nvim_open_win(bufnr, true, {
@@ -923,9 +952,10 @@ local function openFloat(path, relativity, col_offset, row_offset)
 	-- Reopen preview in split
 	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_split, "", {
 		callback = function()
-			local file_path = vim.fn.expand("%:p")
-			vim.cmd.quit()
-			vim.cmd.split(file_path)
+			reopen()
+			-- local file_path = vim.fn.expand("%:p")
+			-- vim.cmd.quit()
+			-- vim.cmd.split(file_path)
 		end,
 		desc = "reopen Preview window in a split",
 		nowait = true,
@@ -5948,7 +5978,14 @@ addPlugin {
 -- FEAT: https://github.com/k-ohnuma/window-swap.nvim
 addPlugin {
 	"s1n7ax/nvim-window-picker",
-	config = true
+	opts = {
+		hint = "floating-big-letter",
+		picker_config = {
+			handle_mouse_click = true
+		},
+		selection_chars = "ASDFGHJKLQWERTYUIOPZXCVBNM",
+		show_prompt = false
+	}
 }
 
 -- https://github.com/lewis6991/hover.nvim
