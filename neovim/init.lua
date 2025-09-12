@@ -6157,6 +6157,7 @@ addPlugin {
 
 -- FEAT: https://diagon.arthursonzogni.com/
 
+-- FEAT: Hover on timstamp to convert into utc and ist
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
 -- FEAT: https://github.com/BlankTiger/telescope-rg.nvim
