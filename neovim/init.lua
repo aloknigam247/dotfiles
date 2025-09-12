@@ -1574,7 +1574,8 @@ addPlugin {
 	}
 }
 
--- "azabiong/vim-highlighter"
+-- FEAT: Highlight to apply strikethrough
+-- FEAT: "azabiong/vim-highlighter"
 addPlugin {
 	"Pocco81/high-str.nvim",
 	cmd = "HSHighlight",
@@ -4285,6 +4286,7 @@ addPlugin {
 -- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
 -- |----------------+---------------------------------------------------------------|
 -- https://github.com/LintaoAmons/bookmarks.nvim
+-- FEAT: see annotations as diagnistic texts
 addPlugin {
 	"MattesGroeger/vim-bookmarks",
 	config = function()
