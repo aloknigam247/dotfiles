@@ -865,9 +865,7 @@ end
 ---@param relativity string Relative position of window
 ---@param col_offset integer Column offset
 ---@param row_offset integer Row offset
----@param enter boolean Enter into window on creation
-local function openFloat(path, relativity, col_offset, row_offset, enter, split, vsplit)
-	-- FEAT: use https://github.com/folke/snacks.nvim/blob/main/docs/win.md
+local function openFloat(path, relativity, col_offset, row_offset)
 	-- Create buffer
 	local bufnr = vim.fn.bufadd(path)
 
@@ -877,7 +875,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 
 	-- Create floating window
 	if Preview_win == nil then
-		Preview_win --[[@as integer | nil]] = vim.api.nvim_open_win(bufnr, enter, {
+		Preview_win --[[@as integer | nil]] = vim.api.nvim_open_win(bufnr, true, {
 			border = "rounded",
 			col = col_offset,
 			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ",
@@ -924,7 +922,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 	-- FEAT: use window-picker for split
 	-- Reopen preview in split
 	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_split, "", {
-		callback = split or function()
+		callback = function()
 			local file_path = vim.fn.expand("%:p")
 			vim.cmd.quit()
 			vim.cmd.split(file_path)
@@ -937,7 +935,7 @@ local function openFloat(path, relativity, col_offset, row_offset, enter, split,
 
 	-- Reopen preview in vsplit
 	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_vsplit, "", {
-		callback = vsplit or function()
+		callback = function()
 			local file_path = vim.fn.expand("%:p")
 			vim.cmd.quit()
 			vim.cmd.vsplit(file_path)
@@ -1221,6 +1219,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- FEAT: mapping to next/prev marks
 -- FEAT: Mapping to paste in insert mode and keep the curose in insert mode
 -- FEAT: create a mapping to pull current buffer into floating
 -- FEAT: create mapping to delete word using ctrl-delete
@@ -1362,6 +1361,10 @@ vim.opt.runtimepath:prepend(lazypath)
 -----------
 -- Command to make a virtual divider in file using virtual text/extmark
 
+-- FEAT: vimgrep command
+-- FEAT: grep command
+-- FEAT: grep/filter lines into a new buffer
+
 -- FEAT: Create command to redirect read command shell, file, vim, lua outputs to current buffer
 -- FEAT: command to execute powershell command and put output in buffer
 -- -- Define a Lua function to execute a Vim command and insert its output at the cursor
@@ -1415,7 +1418,7 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
 	"Peek",
 	function(args)
-		openFloat(args.args, "editor", 8, 3, true)
+		openFloat(args.args, "editor", 8, 3)
 	end,
 	{
 		complete = "file",
@@ -1881,7 +1884,6 @@ end
 
 addPlugin { "Shatur/neovim-ayu",           event = "User ayu"            }
 addPlugin { "catppuccin/nvim",             event = "User catppuccin"     }
-addPlugin { "projekt0n/github-nvim-theme", event = "User github-theme"   }
 addPlugin { "HoNamDuong/hybrid.nvim",      event = "User hybrid"         }
 addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"       }
 addPlugin { "sho-87/kanagawa-paper.nvim",  event = "User kanagawa-paper" }
@@ -1891,16 +1893,15 @@ addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 addPlugin { "titanzero/zephyrium",         event = "User zephyrium"      }
 
--- dark  { "ayu-dark",             "ayu",                                                           }
--- dark  { "bluloco",              "_"                                                              }
--- dark  { "catppuccin-macchiato", "catppuccin"                                                     }
--- dark  { "duskfox",              "nightfox"                                                       }
--- dark  { "hybrid",               "_"                                                              }
--- dark  { "kanagawa-wave",        "kanagawa"                                                       }
--- dark  { "sonokai",              "_",                                                             }
--- dark  { "tokyonight-storm",     "tokyonight"                                                     }
--- dark  { "zephyrium",            "_"                                                              }
-darkT { "github_dark",          "github-theme", cfg = { options = { transparent = true } }       }
+-- dark  { "ayu-dark",             "ayu",       }
+-- dark  { "bluloco",              "_"          }
+-- dark  { "catppuccin-macchiato", "catppuccin" }
+-- dark  { "duskfox",              "nightfox"   }
+-- dark  { "hybrid",               "_"          }
+-- dark  { "kanagawa-wave",        "kanagawa"   }
+-- dark  { "sonokai",              "_",         }
+dark  { "tokyonight-storm",     "tokyonight" }
+-- dark  { "zephyrium",            "_"          }
 
 -- light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
