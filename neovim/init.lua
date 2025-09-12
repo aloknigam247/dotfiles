@@ -1903,6 +1903,7 @@ addPlugin { "titanzero/zephyrium",         event = "User zephyrium"      }
 dark  { "tokyonight-storm",     "tokyonight" }
 -- dark  { "zephyrium",            "_"          }
 
+-- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
