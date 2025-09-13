@@ -873,6 +873,7 @@ local function openFloat(path, relativity, col_offset, row_offset)
 		return
 	end
 
+	-- https://github.com/folke/snacks.nvim/blob/main/docs/win.md
 	local function reopen()
 		local api = vim.api
 		local win_picker = require('window-picker')
@@ -1391,6 +1392,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -----------
 -- Command to make a virtual divider in file using virtual text/extmark
 
+-- FEAT: command to decrypt cert
 -- FEAT: vimgrep command
 -- FEAT: grep command
 -- FEAT: grep/filter lines into a new buffer
