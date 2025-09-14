@@ -803,193 +803,6 @@ local function isTsAttached(bufnr)
 	return false
 end
 
----Safe alternative to `nvim_open_win()`
----@param bufnr integer Buffer to display, or 0 for current buffer
----@param enter boolean Enter the window (make it the current window)
----@param config? table `nvim_open_win()` config
----@return integer # Window handle, or 0 on error
--- local function nvimOpenWinSafe(bufnr, enter, config)
--- 	local fixTitle = function(title)
--- 		if title[1] ~= " " then
--- 			title = " " .. title
--- 		end
--- 		if title[#title] ~= " " then
--- 			title = title .. " "
--- 		end
--- 		return title
--- 	end
-
--- 	if config then
--- 		-- Add margin to title
--- 		if config.title then
--- 			local title = config.title
--- 			if type(title) == "string" then
--- 				config.title = fixTitle(title)
--- 			elseif type(title) == "table" then
--- 				config.title[1][1] = fixTitle(config.title[1][1])
--- 			end
--- 		end
-
--- 		-- Fix height
--- 		if config.row and config.width and config.width > 1 then
--- 			local editor_bottom = vim.o.lines - 1
--- 			local window_bottom = config.row + config.height + 2
--- 			local shift = window_bottom - editor_bottom
--- 			if shift > 0 then
--- 				-- config.row = math.max(0, config.row - shift) -- shift row up
--- 				window_bottom = config.row + config.height + 2
--- 				config.height = math.min(config.height, vim.o.lines - 3)
--- 			end
--- 		end
-
--- 		-- Fix width
--- 		if config.col and config.width and config.width > 1 then
--- 			local editor_col = vim.o.columns
--- 			local window_col = config.col + config.width + 2
--- 			local shift = window_col - editor_col
--- 			if shift > 0 then
--- 				-- config.col = math.max(0, config.col - shift) -- shift row up
--- 				window_col = config.col + config.width + 2
--- 				config.width = math.min(config.width, vim.o.columns - 2)
--- 			end
--- 		end
--- 	end
-
--- 	return vim.api.__nvim_open_win(bufnr, enter, config)
--- end
--- vim.api.__nvim_open_win = vim.api.nvim_open_win
--- vim.api.nvim_open_win = nvimOpenWinSafe
-
----Open file in floating window
----@param path string File path
----@param relativity string Relative position of window
----@param col_offset integer Column offset
----@param row_offset integer Row offset
-local function openFloat(path, relativity, col_offset, row_offset)
-	-- Create buffer
-	local bufnr = vim.fn.bufadd(path)
-
-	if not bufnr then
-		return
-	end
-
-	-- https://github.com/folke/snacks.nvim/blob/main/docs/win.md
-	local function reopen()
-		local api = vim.api
-		local win_picker = require('window-picker')
-		local cur_win = api.nvim_get_current_win()
-		local cur_buf = api.nvim_win_get_buf(cur_win)
-
-		-- Hide current window by closing it, but keep buffer
-		api.nvim_win_close(cur_win, false)
-
-		-- Pick another window (returns nil if cancelled)
-		local picked_win = win_picker.pick_window({ include_current_win = true })
-
-		if picked_win and api.nvim_win_is_valid(picked_win) then
-			-- Open current buffer as horizontal split to picked window
-			api.nvim_set_current_win(picked_win)
-			api.nvim_command('split')
-			local split_win = api.nvim_get_current_win()
-			api.nvim_win_set_buf(split_win, cur_buf)
-		else
-			-- If cancelled, restore previous buffer in a new split
-			-- Find a valid window to split into (use first current if needed)
-			local restore_win = api.nvim_list_wins()[1]
-			api.nvim_set_current_win(restore_win)
-			api.nvim_command('split')
-			local new_win = api.nvim_get_current_win()
-			api.nvim_win_set_buf(new_win, cur_buf)
-		end
-	end
-
-	-- Create floating window
-	if Preview_win == nil then
-		Preview_win --[[@as integer | nil]] = vim.api.nvim_open_win(bufnr, true, {
-			border = "rounded",
-			col = col_offset,
-			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ",
-			footer_pos = "right",
-			height = vim.o.lines - 8,
-			relative = relativity,
-			row = row_offset,
-			title = path ,
-			title_pos = "center",
-			width = vim.o.columns - 8 - col_offset,
-			zindex = priority_win.peek
-		})
-	else
-		vim.api.nvim_win_set_buf(Preview_win, bufnr)
-	end
-
-	-- Create autocommand to resize window
-	local au_id = vim.api.nvim_create_autocmd("VimResized", {
-		pattern = "*",
-		desc = "Resize preview window on vim resize",
-		callback = function()
-			local cfg = vim.api.nvim_win_get_config(Preview_win)
-			vim.api.nvim_win_set_config(Preview_win, {
-				height = vim.o.lines - 8,
-				width = vim.o.columns - 8 - cfg.col
-			})
-		end
-	})
-
-	-- Cleanup on window close
-	vim.api.nvim_create_autocmd("WinClosed", {
-		pattern = tostring(Preview_win),
-		desc = "Delete resize autocommand on Preview window close",
-		callback = function(arg)
-			Preview_win = nil
-			vim.api.nvim_del_autocmd(au_id)
-			vim.api.nvim_buf_del_keymap(arg.buf, "n", keymaps.open_split)
-			vim.api.nvim_buf_del_keymap(arg.buf, "n", keymaps.open_tab)
-			vim.api.nvim_buf_del_keymap(arg.buf, "n", keymaps.open_vsplit)
-			return true
-		end
-	})
-
-	-- FEAT: use window-picker for split
-	-- Reopen preview in split
-	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_split, "", {
-		callback = function()
-			reopen()
-			-- local file_path = vim.fn.expand("%:p")
-			-- vim.cmd.quit()
-			-- vim.cmd.split(file_path)
-		end,
-		desc = "reopen Preview window in a split",
-		nowait = true,
-		noremap = true,
-		silent = true
-	})
-
-	-- Reopen preview in vsplit
-	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_vsplit, "", {
-		callback = function()
-			local file_path = vim.fn.expand("%:p")
-			vim.cmd.quit()
-			vim.cmd.vsplit(file_path)
-		end,
-		desc = "reopen Preview window in a vertical split",
-		nowait = true,
-		noremap = true,
-		silent = true
-	})
-
-	-- Reopen preview in tab
-	vim.api.nvim_buf_set_keymap(bufnr, "n", keymaps.open_tab, "", {
-		callback = function()
-			local file_path = vim.fn.expand("%:p")
-			vim.cmd.quit()
-			vim.cmd.tabedit(file_path)
-		end,
-		desc = "reopen Preview window in a tab split",
-		nowait = true,
-		noremap = true,
-		silent = true
-	})
-end
 
 -- FEAT: https://github.com/notomo/piemenu.nvim
 -- FEAT: https://github.com/meznaric/conmenu
@@ -1450,7 +1263,51 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
 	"Peek",
 	function(args)
-		openFloat(args.args, "editor", 8, 3)
+		local snacks = require("snacks")
+		local prev_win = Preview_win
+		local path = args.args
+
+		local function reopen(win, mode)
+			local picked_win = require('window-picker').pick_window({ include_current_win = true })
+
+			win:hide()
+
+			if picked_win and vim.api.nvim_win_is_valid(picked_win) then
+				vim.api.nvim_set_current_win(picked_win)
+				vim.api.nvim_command(mode)
+				local split_win = vim.api.nvim_get_current_win()
+				vim.api.nvim_win_set_buf(split_win, win.buf)
+				win:close()
+			else
+				win:show()
+			end
+		end
+
+		-- Create floating window
+		Preview_win = snacks.win({
+			minimal = false,
+			border = "rounded",
+			-- buf = 0,
+			file = path,
+			enter = true,
+			-- FEAT: use window-picker for split
+			keys = {
+				{ mode = "n", keymaps.open_split, function() reopen(Preview_win, "split") end },
+				{ mode = "n", keymaps.open_vsplit, function() reopen(Preview_win, "vsplit") end },
+				{ mode = "n", keymaps.open_tab, function() vim.cmd("tab split"); Preview_win:close() end },
+			},
+			-- on_close = ,
+			resize = true,
+			title = " " .. path .. " " , -- FEAT: better highlight
+			title_pos = "center",
+			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ", -- FEAT: better highlight
+			footer_pos = "right",
+		})
+
+		-- close previous Peek window
+		if prev_win ~= nil then
+			prev_win:close()
+		end
 	end,
 	{
 		complete = "file",
@@ -1458,7 +1315,6 @@ vim.api.nvim_create_user_command(
 		nargs = 1
 	}
 )
--- FEAT: freeze top row in csv
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -1748,7 +1604,7 @@ addPlugin {
 	config = function()
 		require("todo-comments").setup({
 			colors = todo_colors,
-			highlight = { pattern = [[(KEYWORDS):\W]] },
+			highlight = { pattern = [[(KEYWORDS):\W]], multiline = false },
 			keywords = todo_config,
 			merge_keywords = false
 		})
@@ -3606,7 +3462,7 @@ addPlugin {
 	event = "LspAttach",
 	opts = {
 		excluded_lsp_clients = {},
-		grace_period = 60,
+		grace_period = 60, -- FIX: values
 		notifications = true,
 		wakeup_delay = 1000
 	}
