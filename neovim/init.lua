@@ -727,16 +727,16 @@ local function adaptiveBG(lighten, darken)
 end
 
 ---Get list filetypes/extentions for Treesitter languages installed
----@param map_extension boolean Convert filetype to extension
 ---@return string[] # List of filetypes or extensions
-local function getTSInstalled(map_extension)
+local function getTSInstalled()
 	if Installed_filetypes then
 		return Installed_filetypes
 	end
 
 	Installed_filetypes = {}
 	local filetye_map = {
-		["python"] = "py"
+		["python"] = "py",
+		["powershell"] = "ps1"
 	}
 
 	-- Collect treesitter languages from nvim-treesitter and runtime path
@@ -754,10 +754,10 @@ local function getTSInstalled(map_extension)
 			end
 
 			if ftype ~= nil then
-				if map_extension then
-					ftype = filetye_map[ftype] or ftype
-				end
 				table.insert(Installed_filetypes, ftype)
+				if filetye_map[ftype] then
+					table.insert(Installed_filetypes, filetye_map[ftype])
+				end
 			end
 		end
 	end
@@ -993,9 +993,8 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
-			-- BUG: not loading correctly for powershell
 			local ftype = vim.o.filetype
-			if vim.tbl_contains(getTSInstalled(false), ftype) then
+			if vim.tbl_contains(getTSInstalled(), ftype) then
 				vim.cmd("Lazy load nvim-treesitter")
 				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				return true
@@ -1061,15 +1060,14 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: create a mapping to pull current buffer into floating
 -- FEAT: create mapping to delete word using ctrl-delete
 -- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
--- FEAT: https://github.com/backdround/neowords.nvim
--- FEAT: https://github.com/chaoren/vim-wordmotion
--- FEAT: https://github.com/chrisgrieser/nvim-spider
 -- FEAT: mapping to delete word on ctrl + del
 -- FEAT: mapping to next/prev marks
 -- FEAT: mapping to paste in insert mode and keep the curose in insert mode
+-- FEAT: https://github.com/backdround/neowords.nvim
+-- FEAT: https://github.com/chaoren/vim-wordmotion
+-- FEAT: https://github.com/chrisgrieser/nvim-spider
 
 -- command abbreviations
 vim.keymap.set("ca", "sf", "sfind")
@@ -1102,6 +1100,7 @@ vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- window controls
+vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer in Peek" })
 vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 -- REFACTOR: delete unwanted window move/ cursor move mappings to make menu clean
 vim.keymap.del("n", "<C-w>d")
@@ -1675,34 +1674,8 @@ function ayuPost()
 end
 
 ---@diagnostic disable-next-line: lowercase-global
-function julianaPost()
-	fixLineNr("#999999")
-end
-
-function PaperColorSlimPost()
-	for _, hl_name in pairs({ "DiffAdd", "DiffChange", "DiffDelete" }) do
-		vim.api.nvim_set_hl(0, hl_name:gsub("Diff", "GitSigns"), {
-			fg = LightenDarkenColor(string.format("#%-6X", vim.api.nvim_get_hl(0, { name = hl_name, create = false }).bg), -50),
-			nocombine = true,
-		})
-	end
-end
-
----@diagnostic disable-next-line: lowercase-global
 function sonokaiPre()
 	vim.g.sonokai_style = "shusia"
-end
-
----@diagnostic disable-next-line: lowercase-global
-function vnnightPost()
-	fixLineNr("#505275")
-	vim.api.nvim_set_hl(0, "Comment", { fg = "#7F82A5", italic = true })
-	vim.api.nvim_set_hl(0, "Folded", { bg = "#112943", fg = "#8486A4" })
-end
-
----@diagnostic disable-next-line: lowercase-global
-function vscodePost()
-	vim.api.nvim_set_hl(0, "Todo", { fg = "#569cd6", bold = true })
 end
 
 ---@class ColorPlugin
@@ -1775,9 +1748,7 @@ addPlugin { "Shatur/neovim-ayu",           event = "User ayu"            }
 addPlugin { "catppuccin/nvim",             event = "User catppuccin"     }
 addPlugin { "HoNamDuong/hybrid.nvim",      event = "User hybrid"         }
 addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"       }
-addPlugin { "sho-87/kanagawa-paper.nvim",  event = "User kanagawa-paper" }
 addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"       }
-addPlugin { "dgox16/oldworld.nvim",        event = "User oldworld"       }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 
@@ -1789,6 +1760,8 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 dark  { "sonokai",              "_",         }
 -- dark  { "tokyonight-storm",     "tokyonight" }
+
+-- darkT { "sonokai",              "_",         }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -2916,7 +2889,7 @@ vim.api.nvim_create_autocmd(
 			end
 
 			-- Load syntax for non treesitter filetypes
-			if vim.tbl_contains(getTSInstalled(false), ftype) == false then
+			if vim.tbl_contains(getTSInstalled(), ftype) == false then
 				vim.cmd("syntax on")
 			end
 		end
