@@ -1063,14 +1063,15 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: mapping to next/prev marks
--- FEAT: Mapping to paste in insert mode and keep the curose in insert mode
 -- FEAT: create a mapping to pull current buffer into floating
 -- FEAT: create mapping to delete word using ctrl-delete
 -- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
 -- FEAT: https://github.com/backdround/neowords.nvim
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
+-- FEAT: mapping to delete word on ctrl + del
+-- FEAT: mapping to next/prev marks
+-- FEAT: mapping to paste in insert mode and keep the curose in insert mode
 
 -- command abbreviations
 vim.keymap.set("ca", "sf", "sfind")
@@ -1284,6 +1285,7 @@ vim.api.nvim_create_user_command(
 		end
 
 		-- Create floating window
+		-- FIX: make modifiable
 		Preview_win = snacks.win({
 			minimal = false,
 			border = "rounded",
@@ -1780,7 +1782,6 @@ addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"       }
 addPlugin { "dgox16/oldworld.nvim",        event = "User oldworld"       }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
-addPlugin { "titanzero/zephyrium",         event = "User zephyrium"      }
 
 -- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "bluloco",              "_"          }
@@ -1788,9 +1789,8 @@ addPlugin { "titanzero/zephyrium",         event = "User zephyrium"      }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "hybrid",               "_"          }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
--- dark  { "sonokai",              "_",         }
-dark  { "tokyonight-storm",     "tokyonight" }
--- dark  { "zephyrium",            "_"          }
+dark  { "sonokai",              "_",         }
+-- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -1958,6 +1958,7 @@ addPlugin {
 -- https://github.com/tzachar/cmp-fuzzy-path
 -- https://github.com/uga-rosa/cmp-dynamic
 -- FEAT: completion like https://private-user-images.githubusercontent.com/59060246/371864883-5b445b45-4802-4851-a8a4-1de051d58ade.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY5ODQ1ODAsIm5iZiI6MTc1Njk4NDI4MCwicGF0aCI6Ii81OTA2MDI0Ni8zNzE4NjQ4ODMtNWI0NDViNDUtNDgwMi00ODUxLWE4YTQtMWRlMDUxZDU4YWRlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MDQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTA0VDExMTEyMFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTIxMDdlMTMwNTZiZmQxMjgxZGRjYTQ3NjNjNDFlMjQ0NDQ1NjIxNmFiMDg3ZmQ4NmRhZTRkMDEzMjljNTI3YjQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.dXcWH32GAXBX12Ej0wmMn2b6BwzmxRbqJqW3NA7w_aU
+-- BUG: "\" does not complete
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
