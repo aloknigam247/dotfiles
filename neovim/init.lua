@@ -804,8 +804,6 @@ local function isTsAttached(bufnr)
 end
 
 
--- FEAT: https://github.com/notomo/piemenu.nvim
--- FEAT: https://github.com/meznaric/conmenu
 ---Adds a popup menu
 ---@param menu PopupMenu Popup menu
 local function popupMenuAdd(menu)
@@ -4210,6 +4208,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: improve it
 addPlugin {
 	"nvzone/menu",
 	init = function()
@@ -6066,6 +6065,7 @@ addPlugin {
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
 -- FEAT: https://github.com/ObserverOfTime/notifications.nvim
+-- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
