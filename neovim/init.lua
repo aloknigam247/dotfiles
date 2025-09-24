@@ -1108,7 +1108,7 @@ vim.keymap.del("n", "<C-w>d")
 vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete a word backward" })
 -- word selection
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection https://github.com/folke/flash.nvim
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- yank
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
@@ -1322,7 +1322,7 @@ addPlugin {
 	cmd = "TableModeEnable"
 }
 
--- FEAT: "echasnovski/mini.align"
+-- FEAT: "nvim-mini/mini.align"
 
 addPlugin {
 	"junegunn/vim-easy-align", -- TODO: read usage
@@ -1519,7 +1519,7 @@ addPlugin {
 }
 
 addPlugin {
-	"echasnovski/mini.hipatterns",
+	"nvim-mini/mini.hipatterns",
 	config = function()
 		require("mini.hipatterns").setup({
 		highlighters = (function()
@@ -1890,7 +1890,7 @@ addPlugin {
 }
 
 addPlugin {
-	"echasnovski/mini.comment",
+	"nvim-mini/mini.comment",
 	keys = {
 		{ "cc", mode = { "o", "v" }, desc = "Comments text object" }
 	},
@@ -2368,7 +2368,7 @@ addPlugin {
 
 addPlugin {
 	"andrewferrier/debugprint.nvim",
-	dependencies = { "echasnovski/mini.comment" },
+	dependencies = { "nvim-mini/mini.comment" },
 	lazy = true,
 	opts = {
 		filetypes = {
@@ -3106,7 +3106,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"echasnovski/mini.diff",
+	"nvim-mini/mini.diff",
 	init = function()
 		vim.api.nvim_create_user_command(
 			"ToggleMiniDiff",
@@ -3379,7 +3379,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: csharp lsp
+-- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
 -- FEAT: https://github.com/amadanmath/diag_ignore.nvim
@@ -5111,7 +5111,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- FEAT: create a wrapper and use https://github.com/echasnovski/mini.splitjoin
+	-- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
 	-- FEAT: check for recursive functionality in json
 	"Wansmer/treesj",
 	cmd = "TSJToggle",
@@ -5585,7 +5585,7 @@ addPlugin {
 -- }
 
 addPlugin {
-	"echasnovski/mini.move",
+	"nvim-mini/mini.move",
 	keys = {
 		{ "<M-Down>",  mode = { "n", "v" }},
 		{ "<M-Left>",  mode = { "n", "v" } },
@@ -5611,7 +5611,7 @@ addPlugin {
 
 addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
-	"echasnovski/mini.surround",
+	"nvim-mini/mini.surround",
 	config = true,
 	keys = {
 		{ "sa", mode = { "n", "x" }, desc = "Add surrounding" },
@@ -5837,8 +5837,9 @@ addPlugin {
 }
 
 -- FEAT: incremental alternatives
--- https://github.com/monaqa/dial.nvim
 -- https://github.com/RutaTang/compter.nvim
+-- https://github.com/folke/flash.nvim
+-- https://github.com/monaqa/dial.nvim
 -- https://github.com/tigion/swap.nvim
 -- https://github.com/tpope/vim-speeddating
 -- https://github.com/zegervdv/nrpattern.nvim
@@ -5902,7 +5903,7 @@ addPlugin {
 -- FEAT: https://github.com/nvimdev/dyninput.nvim
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 -- FEAT: https://github.com/uga-rosa/join.nvim
--- FEAT: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-ai.md
+-- FEAT: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-ai.md
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/sQVe/sort.nvim
 -- FEAT: https://github.com/wellle/targets.vim
