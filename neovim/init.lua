@@ -1060,9 +1060,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: create mapping to delete word using ctrl-delete
 -- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
--- FEAT: mapping to delete word on ctrl + del
 -- FEAT: mapping to next/prev marks
 -- FEAT: mapping to paste in insert mode and keep the curose in insert mode
 -- FEAT: https://github.com/backdround/neowords.nvim
@@ -1073,12 +1071,12 @@ vim.api.nvim_create_autocmd(
 vim.keymap.set("ca", "sf", "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
 -- commands
-vim.keymap.set("n", "!!",          ":<Up><CR>",   { desc = "Run last command" })
-vim.keymap.set("n", "<C-q>",       "<cmd>q<CR>",  { desc = "Close window" })
-vim.keymap.set("n", "<C-s>",       "<cmd>w!<CR>", { desc = "Save file" })
+vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
+vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
+vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save file" })
 -- mouse
-vim.keymap.set("n", "<X2Mouse>",   "<C-i>", { desc = "Jump backward" })
-vim.keymap.set("n", "<X1Mouse>",   "<C-o>", { desc = "Jump forward" })
+vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
+vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
 -- paste
 vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
 vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
@@ -1105,8 +1103,11 @@ vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w
 -- REFACTOR: delete unwanted window move/ cursor move mappings to make menu clean
 vim.keymap.del("n", "<C-w>d")
 -- word deletion
-vim.keymap.set("n", "<BS>", "X",       { desc = "Delete a letter backward" })
-vim.keymap.set("i", "<C-BS>", "<C-w>", { desc = "Delete a word backward" })
+vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" }) -- BUG: not working
+vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete a word" })
+vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
+vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" }) -- BUG: not working
+vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
 -- word selection
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection https://github.com/folke/flash.nvim
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })

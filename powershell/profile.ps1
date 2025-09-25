@@ -300,7 +300,7 @@ function gwd {
     $branch_name = (Get-Location).Path.Split("\")[-1]
     cd ..\main
     git worktree remove $branch_name
-    git branch -D $branch_name
+    git branch -D $branch_name --force
 }
 
 # ─[ Get TODOs from current directory ]────────────────────────────────
