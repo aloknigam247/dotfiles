@@ -2,7 +2,7 @@
 -- Profiling</>
 ------------
 -- ---@class Profile
--- ---@field cOunt integer Number of times an autOcommand is invoked
+-- ---@field count integer Number of times an autOcommand is invoked
 -- ---@field start number Start time of current autocommand
 -- ---@field avg number Average time taken by autocommand
 -- ---@field total number Total time taken by autocommand
@@ -1060,8 +1060,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: mapping to next/prev marks
--- FEAT: mapping to paste in insert mode and keep the curose in insert mode
+-- FEAT: mapping to paste in insert mode and keep the cursor in insert mode
 -- FEAT: https://github.com/backdround/neowords.nvim
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
@@ -1759,12 +1758,12 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "hybrid",               "_"          }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
-dark  { "sonokai",              "_",         }
+-- dark  { "sonokai",              "_",         }
 -- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- darkT { "sonokai",              "_",         }
 
--- light { "tokyonight-day",     "tokyonight" }
+light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
@@ -4394,6 +4393,7 @@ function StatusCol()
 end
 vim.o.statuscolumn = "%!v:lua.StatusCol()"
 
+-- BUG: does not load if marks are created before loading plugin
 addPlugin {
 	"luukvbaal/statuscol.nvim",
 	config = function()
