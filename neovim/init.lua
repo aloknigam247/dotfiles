@@ -1060,57 +1060,56 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: mapping to paste in insert mode and keep the cursor in insert mode
 -- FEAT: https://github.com/backdround/neowords.nvim
 -- FEAT: https://github.com/chaoren/vim-wordmotion
 -- FEAT: https://github.com/chrisgrieser/nvim-spider
 
--- command abbreviations
-vim.keymap.set("ca", "sf", "sfind")
+-- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("ca", "sf",  "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
--- commands
+-- ━━ commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
 vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save file" })
--- mouse
+-- ━━ mouse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
--- paste
-vim.keymap.set("n", "[p", "P=']", { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
-vim.keymap.set("n", "]p", "p=']", { desc = "Paste after and format" })
-vim.keymap.set("v", "p",  '"_dP', { desc = "Do not copy while pasting in visual mode" })
-vim.keymap.set("c", "<C-v>", "<C-r>+", { desc = "Paste in command line" })
--- path separator convertor
+-- ━━ paste ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
+vim.keymap.set("i", "<C-p>", "<C-o>p", { desc = "Paste in insert mode", noremap = true })
+vim.keymap.set("n", "[p",      "P=']",   { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
+vim.keymap.set("n", "]p",      "p=']",   { desc = "Paste after and format" })
+vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
+vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
+-- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
-vim.keymap.set("n", "wc/", '<cmd>s/\\\\\\+/\\//g<CR>', { desc = "Convert \\\\ to /" })
--- register
+vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
+-- ━━ register ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -- FIX: telescope opens when keys are pressed as neovim starts
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 vim.keymap.set("n", '"',     function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
--- search
+-- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
--- scrolling
+-- ━━ scrolling ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set({"n", "v"}, "<S-Up>",   "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
 vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
--- tab switch
+-- ━━ tab switch ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
--- window controls
+-- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer in Peek" })
-vim.keymap.set("n", "<M-w>", function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
+vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 -- REFACTOR: delete unwanted window move/ cursor move mappings to make menu clean
 vim.keymap.del("n", "<C-w>d")
--- word deletion
+-- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" }) -- BUG: not working
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete a word" })
 vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" }) -- BUG: not working
 vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
--- word selection
+-- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection https://github.com/folke/flash.nvim
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
--- yank
-vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
 -- <~>
 -- Misc</>
 -------
