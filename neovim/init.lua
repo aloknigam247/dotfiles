@@ -1060,7 +1060,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: create win mappings for current buffer for M- splitting defined in mapping variable, and remove mappings from <C-w>
 -- FEAT: mapping to next/prev marks
 -- FEAT: mapping to paste in insert mode and keep the curose in insert mode
 -- FEAT: https://github.com/backdround/neowords.nvim
@@ -1580,6 +1579,7 @@ addPlugin {
 
 -- FEAT: 'fluxdiv/instacolor.nvim'
 
+-- REFACTOR: try to use mini.hipatterns
 addPlugin {
 	"folke/paint.nvim",
 	event = "CursorHold *.cpp,*.lua,*.py",
