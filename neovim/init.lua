@@ -1060,8 +1060,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: https://github.com/chrisgrieser/nvim-spider
-
 -- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("ca", "sf",  "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
