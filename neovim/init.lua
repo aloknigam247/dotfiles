@@ -1073,10 +1073,8 @@ vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
 -- ━━ paste ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("i", "<C-p>", "<C-o>p", { desc = "Paste in insert mode", noremap = true })
--- vim.keymap.set("n", "[p",      "P=']",   { desc = "Paste before and format" }) -- FEAT: use YankyPut... mappings
--- vim.keymap.set("n", "]p",      "p=']",   { desc = "Paste after and format" })
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
--- vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
+-- vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" }) -- BUG: fix use case
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
@@ -5757,23 +5755,11 @@ addPlugin {
 		system_clipboard = {
 			sync_with_ring = false
 		}
-		keys = {
 	},
 	keys = {
-		{ "<leader>p", "<cmd>YankyRingHistory<cr>", mode = { "n", "x" }, desc = "Open Yank History" },
 		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
 		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
 		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
-		{ "gp", "<Plug>(YankyGPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after selection" },
-		{ "gP", "<Plug>(YankyGPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before selection" },
-		{ "]p", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
-		{ "[p", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
-		{ "]P", "<Plug>(YankyPutIndentAfterLinewise)", desc = "Put indented after cursor (linewise)" },
-		{ "[P", "<Plug>(YankyPutIndentBeforeLinewise)", desc = "Put indented before cursor (linewise)" },
-		{ ">p", "<Plug>(YankyPutIndentAfterShiftRight)", desc = "Put and indent right" },
-		{ "<p", "<Plug>(YankyPutIndentAfterShiftLeft)", desc = "Put and indent left" },
-		{ ">P", "<Plug>(YankyPutIndentBeforeShiftRight)", desc = "Put before and indent right" },
-		{ "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)", desc = "Put before and indent left" },
 		{ "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
 		{ "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
 	},
