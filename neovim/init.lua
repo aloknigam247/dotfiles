@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- REFACTOR: relocate plugins feat
 -- Profiling</>
 ------------
 -- ---@class Profile
@@ -1074,12 +1075,11 @@ vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
 vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("i", "<C-p>", "<C-o>p", { desc = "Paste in insert mode", noremap = true })
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
--- vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" }) -- BUG: fix use case
+vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
 -- ━━ register ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- FIX: telescope opens when keys are pressed as neovim starts
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 vim.keymap.set("n", '"',     function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1093,7 +1093,6 @@ vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to nex
 -- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer in Peek" })
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
--- REFACTOR: delete unwanted window move/ cursor move mappings to make menu clean
 vim.keymap.del("n", "<C-w>d")
 -- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" }) -- BUG: not working
@@ -5758,8 +5757,8 @@ addPlugin {
 	},
 	keys = {
 		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
-		{ "p", "<Plug>(YankyPutAfter)", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
-		{ "P", "<Plug>(YankyPutBefore)", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
+		{ "p", "<Plug>(YankyPutAfter)", mode = { "n" }, desc = "Put yanked text after cursor" },
+		{ "P", "<Plug>(YankyPutBefore)", mode = { "n" }, desc = "Put yanked text before cursor" },
 		{ "=p", "<Plug>(YankyPutAfterFilter)", desc = "Put after applying a filter" },
 		{ "=P", "<Plug>(YankyPutBeforeFilter)", desc = "Put before applying a filter" },
 	},
@@ -6049,7 +6048,9 @@ addPlugin {
 -- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
+-- FEAT: https://github.com/ariel-frischer/bmessages.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
+-- FEAT: https://github.com/bpstahlman/txtfmt
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/catgoose/bmessages.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-rulebook
@@ -6060,6 +6061,7 @@ addPlugin {
 -- FEAT: https://github.com/grapp-dev/nui-components.nvim
 -- FEAT: https://github.com/heilgar/nvim-http-client
 -- FEAT: https://github.com/hfn92/cmake-gtest.nvim
+-- FEAT: https://github.com/hrsh7th/nvim-ix
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jakemason/ouroboros.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
@@ -6069,14 +6071,31 @@ addPlugin {
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/marc0x71/cmake-simple.nvim
+-- FEAT: https://github.com/mihaifm/MegaToggler
 -- FEAT: https://github.com/nelnn/bear.nvim
+-- FEAT: https://github.com/nvim-mini/mini-git
+-- FEAT: https://github.com/nvim-mini/mini.bracketed
+-- FEAT: https://github.com/nvim-mini/mini.clue
+-- FEAT: https://github.com/nvim-mini/mini.cursorword
+-- FEAT: https://github.com/nvim-mini/mini.doc
+-- FEAT: https://github.com/nvim-mini/mini.extra
+-- FEAT: https://github.com/nvim-mini/mini.files
+-- FEAT: https://github.com/nvim-mini/mini.jump
+-- FEAT: https://github.com/nvim-mini/mini.keymap
+-- FEAT: https://github.com/nvim-mini/mini.notify
+-- FEAT: https://github.com/nvim-mini/mini.operators
+-- FEAT: https://github.com/nvim-mini/mini.pairs
+-- FEAT: https://github.com/nvim-mini/mini.sessions
+-- FEAT: https://github.com/nvim-mini/mini.surround
 -- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 -- FEAT: https://github.com/ofwinterpassed/gtestrunner.nvim
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
+-- FEAT: https://github.com/oribarilan/lensline.nvim
 -- FEAT: https://github.com/oysandvik94/curl.nvim 
 -- FEAT: https://github.com/p00f/clangd_extensions.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
+-- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/sbulav/nredir.nvim
 -- FEAT: https://github.com/smjonas/live-command.nvim
