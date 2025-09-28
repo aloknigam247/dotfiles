@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- REFACTOR: relocate plugins feat
 -- Profiling</>
 ------------
 -- ---@class Profile
@@ -1095,10 +1094,10 @@ vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer i
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 vim.keymap.del("n", "<C-w>d")
 -- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" }) -- BUG: not working
+vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" })
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete a word" })
 vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
-vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" }) -- BUG: not working
+vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" })
 vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
 -- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection https://github.com/folke/flash.nvim
@@ -1323,6 +1322,8 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	-- FEAT: https://github.com/Saghen/blink.pairs
+	-- FEAT: https://github.com/nvim-mini/mini.bracketed
+	-- FEAT: https://github.com/nvim-mini/mini.pairs
 	"windwp/nvim-autopairs",
 	config = function()
 		local pair = require("nvim-autopairs")
@@ -1431,6 +1432,7 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/bpstahlman/txtfmt
 -- FEAT: popup menu to apply highlight on text, like bold, italic, fg color, bg color
 -- FEAT: markdown support in comments
 addPlugin {
@@ -1486,6 +1488,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/nvim-mini/mini.cursorword
 addPlugin {
 	"RRethy/vim-illuminate",
 	config = function()
@@ -1747,7 +1750,7 @@ addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"       }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 
--- dark  { "ayu-dark",             "ayu",       }
+dark  { "ayu-dark",             "ayu",       }
 -- dark  { "bluloco",              "_"          }
 -- dark  { "catppuccin-macchiato", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
@@ -1758,7 +1761,7 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 
 -- darkT { "sonokai",              "_",         }
 
-light { "tokyonight-day",     "tokyonight" }
+-- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
@@ -1920,9 +1923,22 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/hrsh7th/cmp-omni
--- https://github.com/tzachar/cmp-fuzzy-path
--- https://github.com/uga-rosa/cmp-dynamic
+-- snippets
+-- FEAT: https://github.com/L3MON4D3/LuaSnip
+-- FEAT: https://github.com/norcalli/snippets.nvim
+-- FEAT: https://github.com/dcampos/nvim-snippy
+-- FEAT: https://github.com/garymjr/nvim-snippets
+-- FEAT: https://github.com/chrisgrieser/nvim-scissors
+-- FEAT: https://github.com/nvim-mini/mini.snippets
+-- FEAT: https://github.com/abeldekat/cmp-mini-snippets
+-- FEAT: https://github.com/rafamadriz/friendly-snippets
+-- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
+-- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
+
+-- FEAT: https://github.com/hrsh7th/cmp-omni
+-- FEAT: https://github.com/hrsh7th/nvim-ix
+-- FEAT: https://github.com/tzachar/cmp-fuzzy-path
+-- FEAT: https://github.com/uga-rosa/cmp-dynamic
 -- BUG: "\" does not complete
 addPlugin {
 	"saghen/blink.cmp",
@@ -2355,7 +2371,8 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin {
+-- FEAT: https://github.com/gergol/cmake-debugger.nvim
+-- FEAT:  addPlugin {
 -- 	"LiadOz/nvim-dap-repl-highlights",
 -- 	config = true
 -- }
@@ -2411,7 +2428,7 @@ addPlugin {
 	}
 }
 
--- addPlugin {
+-- FEAT: addPlugin {
 -- 	"jbyuki/one-small-step-for-vimkind",
 -- 	config = function()
 -- 		local dap = require("dap")
@@ -2431,7 +2448,7 @@ addPlugin {
 -- 	lazy = true
 -- }
 
--- addPlugin {
+-- FEAT: addPlugin {
 -- 	"mfussenegger/nvim-dap",
 -- 	config = function()
 -- 		vim.api.nvim_set_keymap("n", "<F8>", [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
@@ -2467,9 +2484,9 @@ addPlugin {
 -- 	lazy = true
 -- }
 
--- https://github.com/ofirgall/goto-breakpoints.nvim
--- https://github.com/igorlfs/nvim-dap-view
--- addPlugin {
+-- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
+-- FEAT: https://github.com/igorlfs/nvim-dap-view
+-- FEAT: addPlugin {
 -- 	"rcarriga/nvim-dap-ui",
 -- 	config = function()
 -- 		require("dapui").setup()
@@ -2480,22 +2497,23 @@ addPlugin {
 -- 	}
 -- }
 
--- https://github.com/PatschD/zippy.nvim
--- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/Willem-J-an/nvim-dap-powershell
--- https://github.com/Willem-J-an/visidata.nvim
--- https://github.com/igorlfs/nvim-dap-view
--- https://github.com/jay-babu/mason-nvim-dap.nvim
--- https://github.com/jonboh/nvim-dap-rr
--- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
--- https://github.com/mfussenegger/nvim-dap-python
--- https://github.com/nvim-telescope/telescope-dap.nvim
--- https://github.com/sakhnik/nvim-gdb
--- https://github.com/theHamsta/nvim-dap-virtual-text
--- https://github.com/tpope/vim-scriptease
--- https://github.com/vim-scripts/Conque-GDB
+-- FEAT: https://github.com/PatschD/zippy.nvim
+-- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
+-- FEAT: https://github.com/Willem-J-an/nvim-dap-powershell
+-- FEAT: https://github.com/Willem-J-an/visidata.nvim
+-- FEAT: https://github.com/igorlfs/nvim-dap-view
+-- FEAT: https://github.com/jay-babu/mason-nvim-dap.nvim
+-- FEAT: https://github.com/jonboh/nvim-dap-rr
+-- FEAT: https://github.com/lucaSartore/nvim-dap-exception-breakpoints
+-- FEAT: https://github.com/mfussenegger/nvim-dap-python
+-- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
+-- FEAT: https://github.com/sakhnik/nvim-gdb
+-- FEAT: https://github.com/theHamsta/nvim-dap-virtual-text
+-- FEAT: https://github.com/tpope/vim-scriptease
+-- FEAT: https://github.com/vim-scripts/Conque-GDB
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/nvim-mini/mini.doc
 addPlugin {
 	"danymat/neogen",
 	cmd = "Neogen",
@@ -2521,8 +2539,10 @@ addPlugin {
 -- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/nat-418/scamp.nvim
--- https://github.com/nosduco/remote-sshfs.nvim
+-- FEAT: https://github.com/A7Lavinraj/fyler.nvim
+-- FEAT: https://github.com/nat-418/scamp.nvim
+-- FEAT: https://github.com/nosduco/remote-sshfs.nvim
+-- FEAT: https://github.com/nvim-mini/mini.files
 addPlugin {
 	"b0o/nvim-tree-preview.lua",
 	opts = {
@@ -3099,6 +3119,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/nvim-mini/mini-git
 addPlugin {
 	"nvim-mini/mini.diff",
 	init = function()
@@ -3373,7 +3394,12 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- dotnet
+-- FEAT: https://github.com/GustavEikaas/easy-dotnet.nvim
+-- FEAT: https://github.com/anachary/dotnet-core.nvim
+-- FEAT: https://github.com/anachary/dotnet-plugin.nvim
 -- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls
+
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
 -- FEAT: https://github.com/amadanmath/diag_ignore.nvim
@@ -3382,8 +3408,12 @@ addPlugin {
 -- FEAT: https://github.com/nvimtools/none-ls.nvim
 -- FEAT: https://github.com/Zeioth/none-ls-external-sources.nvim
 -- FEAT: https://github.com/gwinn/none-ls-jsonlint.nvim
+
+-- FEAT: https://github.com/p00f/clangd_extensions.nvim
+
 addPlugin {
-	-- "Wansmer/symbol-usage.nvim",
+	-- FEAT: https://github.com/oribarilan/lensline.nvim
+	-- FEAT: "Wansmer/symbol-usage.nvim",
 	"VidocqH/lsp-lens.nvim",
 	event = "LspAttach",
 	opts = {
@@ -4353,6 +4383,7 @@ vim.api.nvim_create_user_command(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/niba/continue.nvim
+-- FEAT: https://github.com/nvim-mini/mini.sessions
 addPlugin {
 	"rmagatti/auto-session",
 	cmd = "SessionSave",
@@ -4914,7 +4945,9 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/BlankTiger/telescope-rg.nvim
 -- FEAT: https://github.com/Marskey/telescope-sg
+-- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
 -- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 -- FEAT: https://github.com/nvim-telescope/telescope-frecency.nvim
@@ -5013,6 +5046,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/hfn92/cmake-gtest.nvim
+-- FEAT: https://github.com/ofwinterpassed/gtestrunner.nvim
 addPlugin {
 	"andythigpen/nvim-coverage",
 	cmd = "Coverage",
@@ -5105,6 +5140,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 addPlugin {
 	-- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
 	-- FEAT: check for recursive functionality in json
@@ -5253,7 +5289,9 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/rcarriga/nvim-notify
+-- FEAT: https://github.com/ariel-frischer/bmessages.nvim
+-- FEAT: https://github.com/catgoose/bmessages.nvim
+-- FEAT: https://github.com/rcarriga/nvim-notify for notification
 -- FEAT: https://github.com/y3owk1n/notifier.nvim
 addPlugin {
 	"folke/noice.nvim",
@@ -5420,8 +5458,10 @@ addPlugin {
 	lazy = false
 }
 
+-- FEAT: https://github.com/ObserverOfTime/notifications.nvim
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
+-- FEAT: https://github.com/nvim-mini/mini.notify
 addPlugin {
 	"rcarriga/nvim-notify",
 	config = function()
@@ -5651,6 +5691,8 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/nvim-mini/mini.clue
+-- FEAT: https://github.com/nvim-mini/mini.keymap
 addPlugin {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
@@ -6014,54 +6056,27 @@ addPlugin {
 -- FEAT: https://github.com/bignos/bookmacro
 -- FEAT: https://github.com/sahilsehwag/macrobank.nvim
 
--- snippets
--- FEAT: https://github.com/L3MON4D3/LuaSnip
--- FEAT: https://github.com/norcalli/snippets.nvim
--- FEAT: https://github.com/dcampos/nvim-snippy
--- FEAT: https://github.com/garymjr/nvim-snippets
--- FEAT: https://github.com/chrisgrieser/nvim-scissors
--- FEAT: https://github.com/nvim-mini/mini.snippets
--- FEAT: https://github.com/abeldekat/cmp-mini-snippets
--- FEAT: https://github.com/rafamadriz/friendly-snippets
--- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
--- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
-
--- dotnet
--- FEAT: https://github.com/GustavEikaas/easy-dotnet.nvim
--- FEAT: https://github.com/anachary/dotnet-core.nvim
--- FEAT: https://github.com/anachary/dotnet-plugin.nvim
-
 -- FEAT: https://diagon.arthursonzogni.com/
 
 -- FEAT: Hover on timstamp to convert into utc and ist
 -- FEAT: csv utility like sorting and filtering
--- FEAT: https://github.com/A7Lavinraj/fyler.nvim
--- FEAT: https://github.com/BlankTiger/telescope-rg.nvim
 -- FEAT: https://github.com/Civitasv/cmake-tools.nvim
 -- FEAT: https://github.com/Fildo7525/pretty_hover
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/Kohirus/cppassist.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
--- FEAT: https://github.com/ObserverOfTime/notifications.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
--- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
--- FEAT: https://github.com/ariel-frischer/bmessages.nvim
 -- FEAT: https://github.com/axkirillov/easypick.nvim
--- FEAT: https://github.com/bpstahlman/txtfmt
 -- FEAT: https://github.com/carbon-steel/detour.nvim
--- FEAT: https://github.com/catgoose/bmessages.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-rulebook
 -- FEAT: https://github.com/dmtrKovalenko/fff.nvim
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/styler.nvim
--- FEAT: https://github.com/gergol/cmake-debugger.nvim
 -- FEAT: https://github.com/grapp-dev/nui-components.nvim
 -- FEAT: https://github.com/heilgar/nvim-http-client
--- FEAT: https://github.com/hfn92/cmake-gtest.nvim
--- FEAT: https://github.com/hrsh7th/nvim-ix
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jakemason/ouroboros.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
@@ -6073,26 +6088,11 @@ addPlugin {
 -- FEAT: https://github.com/marc0x71/cmake-simple.nvim
 -- FEAT: https://github.com/mihaifm/MegaToggler
 -- FEAT: https://github.com/nelnn/bear.nvim
--- FEAT: https://github.com/nvim-mini/mini-git
--- FEAT: https://github.com/nvim-mini/mini.bracketed
--- FEAT: https://github.com/nvim-mini/mini.clue
--- FEAT: https://github.com/nvim-mini/mini.cursorword
--- FEAT: https://github.com/nvim-mini/mini.doc
 -- FEAT: https://github.com/nvim-mini/mini.extra
--- FEAT: https://github.com/nvim-mini/mini.files
 -- FEAT: https://github.com/nvim-mini/mini.jump
--- FEAT: https://github.com/nvim-mini/mini.keymap
--- FEAT: https://github.com/nvim-mini/mini.notify
 -- FEAT: https://github.com/nvim-mini/mini.operators
--- FEAT: https://github.com/nvim-mini/mini.pairs
--- FEAT: https://github.com/nvim-mini/mini.sessions
--- FEAT: https://github.com/nvim-mini/mini.surround
--- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
--- FEAT: https://github.com/ofwinterpassed/gtestrunner.nvim
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
--- FEAT: https://github.com/oribarilan/lensline.nvim
 -- FEAT: https://github.com/oysandvik94/curl.nvim 
--- FEAT: https://github.com/p00f/clangd_extensions.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
@@ -6101,7 +6101,6 @@ addPlugin {
 -- FEAT: https://github.com/smjonas/live-command.nvim
 -- FEAT: https://github.com/y3owk1n/cmd.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
--- FEAT: https://github.com/yutkat/my-neovim-pluginlist
 -- FIX: Powershell execution in nvim
 -- TODO: github stars
 
