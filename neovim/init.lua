@@ -3342,13 +3342,13 @@ addPlugin {
 			show_end = true,
 			injected_languages = true,
 			highlight = {
-				'RainbowDelimiterRed',
-				'RainbowDelimiterYellow',
-				'RainbowDelimiterBlue',
-				'RainbowDelimiterOrange',
-				'RainbowDelimiterGreen',
-				'RainbowDelimiterViolet',
-				'RainbowDelimiterCyan',
+				"RainbowDelimiterRed",
+				"RainbowDelimiterYellow",
+				"RainbowDelimiterBlue",
+				"RainbowDelimiterOrange",
+				"RainbowDelimiterGreen",
+				"RainbowDelimiterViolet",
+				"RainbowDelimiterCyan",
 			},
 			priority = 1024,
 			include = {
@@ -5189,6 +5189,7 @@ addPlugin {
 
 addPlugin {
 	"HiPhish/rainbow-delimiters.nvim",
+	event = "User TSLoaded",
 	config = function()
 		require("rainbow-delimiters.setup").setup({
 			condition = function(bufnr)
@@ -5200,7 +5201,15 @@ addPlugin {
 			require("rainbow-delimiters").enable(0)
 		end
 	end,
-	event = "User TSLoaded"
+	init = function()
+		vim.api.nvim_set_hl(0, "RainbowDelimiterRed"   , { default = true, fg = "#CC241D", ctermfg= "Red"     })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { default = true, fg = "#D65D0E", ctermfg= "White"   })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { default = true, fg = "#D79921", ctermfg= "Yellow"  })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterGreen" , { default = true, fg = "#689D6A", ctermfg= "Green"   })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterCyan"  , { default = true, fg = "#A89984", ctermfg= "Cyan"    })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterBlue"  , { default = true, fg = "#458588", ctermfg= "Blue"    })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { default = true, fg = "#B16286", ctermfg= "Magenta" })
+	end
 }
 
 addPlugin {
