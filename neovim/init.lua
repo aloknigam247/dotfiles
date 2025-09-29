@@ -1100,7 +1100,11 @@ vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" })
 vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
 -- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental https://github.com/SUSTech-data/wildfire.nvim https://github.com/darrell-pittman/wgc-expand-region.nvim https://github.com/daliusd/incr.nvim https://github.com/shushtain/nvim-treesitter-incremental-selection https://github.com/folke/flash.nvim
+-- https://github.com/SUSTech-data/wildfire.nvim
+-- https://github.com/daliusd/incr.nvim
+-- https://github.com/shushtain/nvim-treesitter-incremental-selection
+-- https://github.com/folke/flash.nvim
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 -- <~>
 -- Misc</>
