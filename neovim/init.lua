@@ -1100,12 +1100,9 @@ vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" })
 vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
 -- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- https://github.com/SUSTech-data/wildfire.nvim
--- https://github.com/daliusd/incr.nvim
--- https://github.com/shushtain/nvim-treesitter-incremental-selection
--- https://github.com/folke/flash.nvim
-vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" }) -- FEAT: create a mapping to select more treesitter nodes treesitter incremental
+vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
+vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ actions = { ["<c-space>"] = "next" }, label = { before = false, after = false }, prompt = { enabled = false } }) end, { desc = "Increment selected node" })
 -- <~>
 -- Misc</>
 -------
