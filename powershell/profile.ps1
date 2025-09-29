@@ -298,7 +298,8 @@ function gwa {
 
 function gwd {
     $branch_name = (Get-Location).Path.Split("\")[-1]
-    cd ..\main
+    $main_repo = (git rev-parse --path-format=absolute --git-common-dir).Replace("/.git","")
+    cd $main_repo
     git worktree remove $branch_name
     git branch -D $branch_name --force
 }
