@@ -1761,14 +1761,13 @@ addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"       }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
 
-dark  { "ayu-dark",             "ayu",       }
--- dark  { "bluloco",              "_"          }
+-- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "catppuccin-macchiato", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "hybrid",               "_"          }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
--- dark  { "tokyonight-storm",     "tokyonight" }
+dark  { "tokyonight-storm",     "tokyonight" }
 
 -- darkT { "sonokai",              "_",         }
 
