@@ -148,18 +148,6 @@ augroup RestoreCursorShapeOnExit
     autocmd VimLeave * set guicursor=a:ver20 " sets cursor to vertical bar
 augroup END
 
-if has("win32") || has("win64") || has("win16")
-    " Set powershell shell
-    " BUG: shell output not visible
-    " FEAT: load profile.ps1
-    let &shell = executable("pwsh") ? "pwsh" : "powershell"
-    let &shellcmdflag = "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[""Out-File:Encoding""]=""utf8"";$PSStyle.OutputRendering=""plaintext"";Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
-    let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
-    let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
-    set shellquote= shellxquote=
-endif
-
-
 let g:startuptime_event_width = 0
 
 function! SynStack()
