@@ -1072,7 +1072,7 @@ vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
 -- ━━ paste ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
-vim.keymap.set("i", "<C-p>", "<C-o>p", { desc = "Paste in insert mode", noremap = true })
+vim.keymap.set("i", "<C-p>", "<C-o>P", { desc = "Paste in insert mode", noremap = true })
 vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
 vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1854,7 +1854,15 @@ function ColoRand(scheme_index)
 		require("mini.misc").setup_termbg_sync()
 	end
 
+	-- set highlights
 	vim.api.nvim_set_hl(0, "MatchParen", { reverse = true })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterBlue"  , { default = true, fg = "#458588", ctermfg= "Blue"    })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterCyan"  , { default = true, fg = "#A89984", ctermfg= "Cyan"    })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterGreen" , { default = true, fg = "#689D6A", ctermfg= "Green"   })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { default = true, fg = "#D65D0E", ctermfg= "White"   })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterRed"   , { default = true, fg = "#CC241D", ctermfg= "Red"     })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { default = true, fg = "#B16286", ctermfg= "Magenta" })
+	vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { default = true, fg = "#D79921", ctermfg= "Yellow"  })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
