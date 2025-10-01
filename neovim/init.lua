@@ -6102,6 +6102,7 @@ addPlugin {
 -- FEAT: https://github.com/chrisgrieser/nvim-rulebook
 -- FEAT: https://github.com/dmtrKovalenko/fff.nvim
 -- FEAT: https://github.com/folke/edgy.nvim
+-- FEAT: https://github.com/folke/sidekick.nvim
 -- FEAT: https://github.com/folke/styler.nvim
 -- FEAT: https://github.com/grapp-dev/nui-components.nvim
 -- FEAT: https://github.com/heilgar/nvim-http-client
