@@ -1105,20 +1105,19 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
--- FEAT: make it work
+-- Set powershell shell
 vim.cmd([[
 	if has("win32") || has("win64") || has("win16")
-			" Set powershell shell
 			" BUG: shell output not visible
 			" FEAT: load profile.ps1
 			let &shell = executable("pwsh") ? "pwsh" : "powershell"
-			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues["Out-File:Encoding"]="utf8";$PSStyle.OutputRendering="plaintext";Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+			" FIX: this option and use let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command ls;'
 			let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
 			let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 			set shellquote= shellxquote=
 	endif
 ]])
-
 
 vim.diagnostic.config({
 	float = {
@@ -1206,6 +1205,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
+-- FEAT: command TerminalColorize
 -- FEAT: command to make a virtual divider in file using virtual text/extmark
 -- FEAT: create command to redirect read command shell, file, vim, lua outputs to current buffer
 -- FEAT: grep command
