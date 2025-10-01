@@ -1107,16 +1107,18 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- Misc</>
 -------
 -- FEAT: make it work
--- if has("win32") || has("win64") || has("win16")
---     " Set powershell shell
---     " BUG: shell output not visible
---     " FEAT: load profile.ps1
---     let &shell = executable("pwsh") ? "pwsh" : "powershell"
---     let &shellcmdflag = "-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[""Out-File:Encoding""]=""utf8"";$PSStyle.OutputRendering=""plaintext"";Remove-Alias -Force -ErrorAction SilentlyContinue tee;"
---     let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
---     let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
---     set shellquote= shellxquote=
--- endif
+vim.cmd([[
+	if has("win32") || has("win64") || has("win16")
+			" Set powershell shell
+			" BUG: shell output not visible
+			" FEAT: load profile.ps1
+			let &shell = executable("pwsh") ? "pwsh" : "powershell"
+			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues["Out-File:Encoding"]="utf8";$PSStyle.OutputRendering="plaintext";Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+			let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
+			let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
+			set shellquote= shellxquote=
+	endif
+]])
 
 
 vim.diagnostic.config({
