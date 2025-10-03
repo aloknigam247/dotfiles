@@ -1109,7 +1109,7 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 vim.cmd([[
 	if has("win32") || has("win64") || has("win16")
 			let &shell = executable("pwsh") ? "pwsh" : "powershell"
-			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
+			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';'
 			let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
 			let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 			set shellquote= shellxquote=
@@ -1202,26 +1202,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
--- FEAT: grep command
 -- FEAT: grep/filter lines into a new buffer
--- FEAT: vimgrep command
--- FEAT: command to execute powershell command and put output in buffer
--- -- Define a Lua function to execute a Vim command and insert its output at the cursor
--- local function insert_command_output(cmd)
---   -- Execute the command and get its output
---   local output = vim.fn.execute(cmd)
---   -- Get the current cursor position (row, col)
---   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
---   -- Split output into lines
---   local lines = vim.split(output, '\n', true)
---   -- Insert the output lines into the buffer at the current line (row)
---   vim.api.nvim_buf_set_lines(0, row, row, false, lines)
--- end
---
--- -- Create a command :InsertOutput that accepts arguments for other commands
--- vim.api.nvim_create_user_command('InsertOutput', function(opts)
---   insert_command_output(opts.args)
--- end, { nargs = '+' })
 
 vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
@@ -6169,6 +6150,7 @@ addPlugin {
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/marc0x71/cmake-simple.nvim
+-- FEAT: https://github.com/mfontanini/presenterm
 -- FEAT: https://github.com/mihaifm/MegaToggler
 -- FEAT: https://github.com/nelnn/bear.nvim
 -- FEAT: https://github.com/nvim-mini/mini.extra
