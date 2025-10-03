@@ -1108,10 +1108,8 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- Set powershell shell
 vim.cmd([[
 	if has("win32") || has("win64") || has("win16")
-			" FEAT: load profile.ps1
 			let &shell = executable("pwsh") ? "pwsh" : "powershell"
-			" FIX: this option and use let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
-			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command '
+			let &shellcmdflag = '-NoLogo -NonInteractive -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';$PSStyle.OutputRendering=''plaintext'';Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
 			let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
 			let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 			set shellquote= shellxquote=
@@ -1204,8 +1202,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
--- FEAT: command TerminalColorize
--- FEAT: command to make a virtual divider in file using virtual text/extmark
+-- FEAT: https://github.com/sbulav/nredir.nvim
 -- FEAT: create command to redirect read command shell, file, vim, lua outputs to current buffer
 -- FEAT: grep command
 -- FEAT: grep/filter lines into a new buffer
@@ -1238,6 +1235,61 @@ vim.api.nvim_create_user_command(
 	"DiffUnsaved",
 	"let current_filetype = &filetype | vert new | set buftype=nofile | execute 'set filetype=' . current_filetype | unlet current_filetype | read # | 1d_ | diffthis | wincmd p | diffthis",
 	{ desc = "Diff current buffer with saved file" }
+)
+
+-- BUG: check if fixed
+vim.api.nvim_create_user_command(
+	"Divider",
+	function (opts)
+		local function get_divider()
+			local width = vim.api.nvim_win_get_width(0)
+			return string.rep("─", width)
+		end
+
+		local action = opts.args:lower()
+		local line = vim.api.nvim_win_get_cursor(0)[1]
+		print('DEBUGPRINT[2]: init.lua:1249: line=' .. vim.inspect(line))
+		local ns_id = vim.api.nvim_create_namespace('divider')
+
+		if action == "above" then
+			local target_line = line - 1
+			if target_line < 0 then target_line = 0 end
+			vim.api.nvim_buf_set_extmark(
+				0, ns_id, target_line, 0,
+				{
+					virt_lines = { { { get_divider(), "Comment" } } },
+					virt_lines_above = true,
+					hl_mode = "combine"
+				}
+			)
+		elseif action == "below" then -- BUG: fix
+			vim.api.nvim_buf_set_extmark(
+				0, ns_id, line, 0,
+				{
+					virt_lines = { { { get_divider(), "Comment" } } },
+					virt_lines_above = true,
+					hl_mode = "combine"
+				}
+			)
+		elseif action == "clear above" then
+			local target_line = line - 1
+			if target_line < 0 then return end
+			local extmarks = vim.api.nvim_buf_get_extmarks(0, ns_id, target_line, target_line + 1, {})
+			for _, m in ipairs(extmarks) do
+				vim.api.nvim_buf_del_extmark(0, ns_id, m[1])
+			end
+		elseif action == "clear below" then
+			local extmarks = vim.api.nvim_buf_get_extmarks(0, ns_id, line, line + 1, {})
+			for _, m in ipairs(extmarks) do
+				vim.api.nvim_buf_del_extmark(0, ns_id, m[1])
+			end
+		elseif action == "clear all" then
+			vim.api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
+		else
+			print("Invalid argument: use one of 'above', 'below', 'clear above', 'clear below', or 'clear all'")
+		end
+	end,
+	{ nargs = 1, complete = function(_, _, _) return { "above", "below", "clear above", "clear below", "clear all" } end }
 )
 
 vim.api.nvim_create_user_command(
@@ -6127,7 +6179,6 @@ addPlugin {
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/romek-codes/bruno.nvim
--- FEAT: https://github.com/sbulav/nredir.nvim
 -- FEAT: https://github.com/smjonas/live-command.nvim
 -- FEAT: https://github.com/y3owk1n/cmd.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
