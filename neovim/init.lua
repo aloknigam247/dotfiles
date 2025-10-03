@@ -1202,8 +1202,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
--- FEAT: https://github.com/sbulav/nredir.nvim
--- FEAT: create command to redirect read command shell, file, vim, lua outputs to current buffer
 -- FEAT: grep command
 -- FEAT: grep/filter lines into a new buffer
 -- FEAT: vimgrep command
@@ -5396,7 +5394,7 @@ addPlugin {
 				},
 			},
 			messages = { -- BUG: stops outputs from !cmd commands
-				enabled = false,
+				enabled = true,
 				view = "notify",
 				view_error = "notify",
 				view_warn = "notify",
@@ -5617,6 +5615,7 @@ addPlugin {
 	cmd = "InlineEdit"
 }
 
+-- FEAT: https://github.com/thomasschafer/scooter
 addPlugin {
 	"MagicDuck/grug-far.nvim",
 	config = true
@@ -5930,20 +5929,6 @@ addPlugin {
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
--- FEAT: use picker for movements
--- FEAT: https://github.com/k-ohnuma/window-swap.nvim
-addPlugin {
-	"s1n7ax/nvim-window-picker",
-	opts = {
-		hint = "floating-big-letter",
-		picker_config = {
-			handle_mouse_click = true
-		},
-		selection_chars = "ASDFGHJKLQWERTYUIOPZXCVBNM",
-		show_prompt = false
-	}
-}
-
 -- https://github.com/lewis6991/hover.nvim
 -- https://github.com/patrickpichler/hovercraft.nvim
 
@@ -6015,6 +6000,22 @@ addPlugin {
 	keys = {
 		{ "<Down>", "<Plug>(accelerated_jk_j)", desc = "Accelerated down" },
 		{ "<Up>", "<Plug>(accelerated_jk_k)", desc = "Accelerated up" }
+	}
+}
+
+-- FEAT: https://github.com/sbulav/nredir.nvim
+
+-- FEAT: use picker for movements
+-- FEAT: https://github.com/k-ohnuma/window-swap.nvim
+addPlugin {
+	"s1n7ax/nvim-window-picker",
+	opts = {
+		hint = "floating-big-letter",
+		picker_config = {
+			handle_mouse_click = true
+		},
+		selection_chars = "ASDFGHJKLQWERTYUIOPZXCVBNM",
+		show_prompt = false
 	}
 }
 
