@@ -5276,7 +5276,7 @@ addPlugin {
 }
 
 addPlugin {
-	"m-demare/hlargs.nvim",
+	"m-demare/hlargs.nvim", -- FIX: priority higher than lsp semantic tokens
 	config = function()
 		require("hlargs").setup({
 			colorpalette = (function()
