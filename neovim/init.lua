@@ -1263,19 +1263,18 @@ vim.api.nvim_create_user_command(
 		local prev_win = Preview_win
 		local path = args.args
 
-		local function reopen(win, mode)
+		local function reopen(mode)
+			Preview_win:hide()
+
 			local picked_win = require('window-picker').pick_window({ include_current_win = true })
-
-			win:hide()
-
 			if picked_win and vim.api.nvim_win_is_valid(picked_win) then
 				vim.api.nvim_set_current_win(picked_win)
 				vim.api.nvim_command(mode)
 				local split_win = vim.api.nvim_get_current_win()
-				vim.api.nvim_win_set_buf(split_win, win.buf)
-				win:close()
+				vim.api.nvim_win_set_buf(split_win, Preview_win.buf)
+				Preview_win:close()
 			else
-				win:show()
+				Preview_win:show()
 			end
 		end
 
@@ -1285,16 +1284,15 @@ vim.api.nvim_create_user_command(
 			border = "rounded",
 			file = path,
 			enter = true,
-			-- FEAT: use window-picker for split
 			keys = {
-				{ mode = "n", keymaps.open_split, function() reopen(Preview_win, "split") end },
-				{ mode = "n", keymaps.open_vsplit, function() reopen(Preview_win, "vsplit") end },
+				{ mode = "n", keymaps.open_split, function() reopen("split") end },
+				{ mode = "n", keymaps.open_vsplit, function() reopen("vsplit") end },
 				{ mode = "n", keymaps.open_tab, function() vim.cmd("tab split"); Preview_win:close() end },
 			},
 			resize = true,
-			title = " " .. path .. " " , -- FEAT: better highlight
+			title = " " .. path .. " ",
 			title_pos = "center",
-			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ", -- FEAT: better highlight
+			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ",
 			footer_pos = "right",
 			bo = { modifiable = true }
 		})
