@@ -1202,8 +1202,6 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
--- FEAT: grep/filter lines into a new buffer
-
 vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
@@ -1227,7 +1225,6 @@ vim.api.nvim_create_user_command(
 
 		local action = opts.args:lower()
 		local line = vim.api.nvim_win_get_cursor(0)[1]
-		print('DEBUGPRINT[2]: init.lua:1249: line=' .. vim.inspect(line))
 		local ns_id = vim.api.nvim_create_namespace('divider')
 
 		if action == "above" then
@@ -1784,21 +1781,21 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "Shatur/neovim-ayu",           event = "User ayu"            }
-addPlugin { "catppuccin/nvim",             event = "User catppuccin"     }
-addPlugin { "HoNamDuong/hybrid.nvim",      event = "User hybrid"         }
-addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"       }
-addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"       }
-addPlugin { "sainnhe/sonokai",             event = "User sonokai"        }
-addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight"     }
+addPlugin { "Shatur/neovim-ayu",           event = "User ayu"        }
+addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
+addPlugin { "HoNamDuong/hybrid.nvim",      event = "User hybrid"     }
+addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
+addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
+addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
+addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "catppuccin-macchiato", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
--- dark  { "hybrid",               "_"          }
+dark  { "hybrid",               "_"          }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
-dark  { "tokyonight-storm",     "tokyonight" }
+-- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- darkT { "sonokai",              "_",         }
 
@@ -5352,6 +5349,7 @@ addPlugin {
 -- FEAT: https://github.com/rcarriga/nvim-notify for notification
 -- FEAT: https://github.com/y3owk1n/notifier.nvim
 addPlugin {
+	-- REFACTOR: reconfigure
 	"folke/noice.nvim",
 	config = function()
 		vim.o.lazyredraw = false
