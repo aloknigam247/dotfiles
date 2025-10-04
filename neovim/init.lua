@@ -1214,67 +1214,36 @@ vim.api.nvim_create_user_command(
 	{ desc = "Diff current buffer with saved file" }
 )
 
--- BUG: check if fixed
 vim.api.nvim_create_user_command(
 	"Divider",
 	function (opts)
-		local function get_divider()
-			local width = vim.api.nvim_win_get_width(0)
-			return string.rep("─", width)
+		if opts.args == "clear" then
+			vim.api.nvim_buf_clear_namespace(0, vim.api.nvim_create_namespace("divider"), 0, -1)
+			return
 		end
 
-		local action = opts.args:lower()
 		local line = vim.api.nvim_win_get_cursor(0)[1]
-		local ns_id = vim.api.nvim_create_namespace('divider')
-
-		if action == "above" then
-			local target_line = line - 1
-			if target_line < 0 then target_line = 0 end
-			vim.api.nvim_buf_set_extmark(
-				0, ns_id, target_line, 0,
-				{
-					virt_lines = { { { get_divider(), "Comment" } } },
-					virt_lines_above = true,
-					hl_mode = "combine"
-				}
-			)
-		elseif action == "below" then -- BUG: fix
-			vim.api.nvim_buf_set_extmark(
-				0, ns_id, line, 0,
-				{
-					virt_lines = { { { get_divider(), "Comment" } } },
-					virt_lines_above = true,
-					hl_mode = "combine"
-				}
-			)
-		elseif action == "clear above" then
-			local target_line = line - 1
-			if target_line < 0 then return end
-			local extmarks = vim.api.nvim_buf_get_extmarks(0, ns_id, target_line, target_line + 1, {})
-			for _, m in ipairs(extmarks) do
-				vim.api.nvim_buf_del_extmark(0, ns_id, m[1])
-			end
-		elseif action == "clear below" then
-			local extmarks = vim.api.nvim_buf_get_extmarks(0, ns_id, line, line + 1, {})
-			for _, m in ipairs(extmarks) do
-				vim.api.nvim_buf_del_extmark(0, ns_id, m[1])
-			end
-		elseif action == "clear all" then
-			vim.api.nvim_buf_clear_namespace(0, ns_id, 0, -1)
-		else
-			print("Invalid argument: use one of 'above', 'below', 'clear above', 'clear below', or 'clear all'")
+		if opts.args == "above" then
+			line = line - 1
 		end
+
+		vim.api.nvim_buf_set_extmark(
+			0, vim.api.nvim_create_namespace("divider"), line, 0,
+			{
+				virt_lines = { { { string.rep("─", vim.api.nvim_win_get_width(0)), "Comment" } } },
+				virt_lines_above = true,
+				hl_mode = "combine"
+			}
+		)
 	end,
-	{ nargs = 1, complete = function(_, _, _) return { "above", "below", "clear above", "clear below", "clear all" } end }
+	{ nargs = 1, complete = function(_, _, _) return { "above", "below", "clear" } end }
 )
 
 vim.api.nvim_create_user_command(
-	"DropbarToggle",
+	"DropbarEnable",
 	function()
-		if DropbarEnabled == nil then
-			require("dropbar")
-		end
-		DropbarEnabled = not DropbarEnabled -- FIX: dropbar disable
+		require("dropbar")
+		DropbarEnabled = true
 	end,
 	{ desc = "Enable dropbar" }
 )
@@ -1311,11 +1280,9 @@ vim.api.nvim_create_user_command(
 		end
 
 		-- Create floating window
-		-- FIX: make modifiable
 		Preview_win = snacks.win({
 			minimal = false,
 			border = "rounded",
-			-- buf = 0,
 			file = path,
 			enter = true,
 			-- FEAT: use window-picker for split
@@ -1324,12 +1291,12 @@ vim.api.nvim_create_user_command(
 				{ mode = "n", keymaps.open_vsplit, function() reopen(Preview_win, "vsplit") end },
 				{ mode = "n", keymaps.open_tab, function() vim.cmd("tab split"); Preview_win:close() end },
 			},
-			-- on_close = ,
 			resize = true,
 			title = " " .. path .. " " , -- FEAT: better highlight
 			title_pos = "center",
 			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ", -- FEAT: better highlight
 			footer_pos = "right",
+			bo = { modifiable = true }
 		})
 
 		-- close previous Peek window
@@ -2161,7 +2128,7 @@ addPlugin {
 					name = "cmdline"
 				},
 				lazydev = {
-					name = "LazyDev",
+					name = "LazyDev", -- FIX: make it work
 					module = "lazydev.integrations.blink"
 				},
 				path = {
