@@ -1316,14 +1316,8 @@ addPlugin {
 	cmd = "TableModeEnable"
 }
 
--- TODO: read usage
 addPlugin {
-	"nvim-mini/mini.align",
-	config = true
-}
-
-addPlugin {
-	"junegunn/vim-easy-align", -- TODO: read usage
+	"junegunn/vim-easy-align", -- TODO: read usage: https://github.com/junegunn/vim-easy-align?tab=readme-ov-file#2-using-easyalign-command
 	cmd = "EasyAlign"
 }
 -- <~>
