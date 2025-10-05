@@ -1316,7 +1316,11 @@ addPlugin {
 	cmd = "TableModeEnable"
 }
 
--- FEAT: "nvim-mini/mini.align"
+-- TODO: read usage
+addPlugin {
+	"nvim-mini/mini.align",
+	config = true
+}
 
 addPlugin {
 	"junegunn/vim-easy-align", -- TODO: read usage
@@ -1748,7 +1752,6 @@ end
 
 addPlugin { "Shatur/neovim-ayu",           event = "User ayu"        }
 addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
-addPlugin { "HoNamDuong/hybrid.nvim",      event = "User hybrid"     }
 addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
 addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
@@ -1756,8 +1759,7 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "catppuccin-macchiato", "catppuccin" }
--- dark  { "duskfox",              "nightfox"   }
-dark  { "hybrid",               "_"          }
+dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
 -- dark  { "tokyonight-storm",     "tokyonight" }
