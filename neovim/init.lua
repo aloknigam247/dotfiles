@@ -5855,7 +5855,7 @@ addPlugin {
 				[utils.Targets.NextWordStart] = "<C-Right>",
 				[utils.Targets.NextWordEnd] = "e",
 				[utils.Targets.PrevWordStart] = "<C-Left>",
-				[utils.Targets.NextLongWordStart] = "<S-Right>",
+				[utils.Targets.NextLongWordStart] = "<S-Right>", -- BUG: fix long words
 				[utils.Targets.NextLongWordEnd] = "E",
 				[utils.Targets.PrevLongWordStart] = "<S-Left>",
 			},
