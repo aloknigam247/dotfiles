@@ -1317,7 +1317,7 @@ addPlugin {
 }
 
 addPlugin {
-	"junegunn/vim-easy-align", -- TODO: read usage: https://github.com/junegunn/vim-easy-align?tab=readme-ov-file#2-using-easyalign-command
+	"junegunn/vim-easy-align",
 	cmd = "EasyAlign"
 }
 -- <~>
