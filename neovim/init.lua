@@ -1395,10 +1395,26 @@ addPlugin {
 -- 	event = "InsertEnter"
 -- }
 
--- FEAT: scenarios
--- add space for = and ==, but not for xml
 addPlugin {
 	"saghen/blink.pairs",
+	config = function(plugin, cfg)
+		-- add space around "=" sequence
+		vim.keymap.set("i", "=", function()
+			local col = vim.fn.col(".") - 1
+			if col == 0 then return "="end
+
+			local line = vim.api.nvim_get_current_line()
+			local prev = line:sub(col, col)
+			local prev2 = line:sub(col-1, col)
+
+			if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
+			elseif prev:match("%w") then return " = " -- add for first =
+			else return "=" end
+
+		end, { expr = true, noremap = true })
+
+		require(plugin.name).setup(cfg)
+	end,
 	dependencies = "saghen/blink.download",
 	event = "InsertEnter",
 	--- @module "blink.pairs"
@@ -1415,9 +1431,6 @@ addPlugin {
 			disabled_filetypes = {},
 			-- see the defaults:
 			-- https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L14
-			pairs = {
-				["{ "] = " }"
-			},
 		},
 		highlights = {
 			enabled = false, -- FEAT: enable
@@ -1441,7 +1454,7 @@ addPlugin {
 		debug = false,
 	}
 }
-
+-- REFACTOR: remove nvim-autopairs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/kensyo/nvim-scrlbkun
