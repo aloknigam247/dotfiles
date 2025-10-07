@@ -1399,6 +1399,7 @@ addPlugin {
 
 addPlugin {
 	"saghen/blink.pairs",
+  -- build = "cargo build --release",
 	config = function(plugin, cfg)
 		-- add space around "=" sequence
 		vim.keymap.set("i", "=", function()
