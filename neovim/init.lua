@@ -478,6 +478,9 @@ local lazy_config = {
 		-- Track each new require in the Lazy profiling tab
 		require = true,
 	},
+	rocks = {
+		enabled = false
+	}
 }
 
 ---Defines highlight priorities for various components
@@ -1060,7 +1063,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: https://github.com/nvim-mini/mini.bracketed
 -- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("ca", "sf",  "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
@@ -1397,6 +1399,7 @@ addPlugin {
 
 addPlugin {
 	"saghen/blink.pairs",
+	build = "cargo build --release",
 	config = function(plugin, cfg)
 		-- add space around "=" sequence
 		vim.keymap.set("i", "=", function()
@@ -1415,7 +1418,6 @@ addPlugin {
 
 		require(plugin.name).setup(cfg)
 	end,
-	dependencies = "saghen/blink.download",
 	event = "InsertEnter",
 	--- @module "blink.pairs"
 	--- @type blink.pairs.Config
@@ -1425,7 +1427,7 @@ addPlugin {
 			-- and require("blink.pairs.mappings").disable()
 			-- to enable/disable mappings at runtime
 			enabled = true,
-			-- cmdline = true, -- FIX: me
+			cmdline = true, -- FIX: me
 			-- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
 			-- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
 			disabled_filetypes = {},
@@ -1804,7 +1806,7 @@ addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
--- dark  { "catppuccin-macchiato", "catppuccin" }
+dark  { "catppuccin-macchiato", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
@@ -1812,7 +1814,7 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- darkT { "sonokai",              "_",         }
 
-light { "tokyonight-day",     "tokyonight" }
+-- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
@@ -4033,10 +4035,10 @@ addPlugin {
 			enabled = true,
 			position = "overlay",
 			unchecked = {
-				icon = "    ",
+				icon = "    ",
 			},
 			checked = {
-				icon = "    ",
+				icon = "    ",
 				scope_highlight = "RenderMarkdownChecked"
 			},
 			custom = {
@@ -5215,7 +5217,7 @@ addPlugin {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master",
 	config = function()
-		require("nvim-treesitter.configs").setup({
+		require("nvim-treesitter.configs").setup({ -- REFACTOR: use opts
 			auto_install = false,
 			ensure_installed = {}, -- FEAT: add ensure installed for common languages
 			highlight = {
@@ -5715,6 +5717,8 @@ addPlugin {
 		}
 	}
 }
+
+-- FEAT: https://github.com/nvim-mini/mini.bracketed
 
 addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
