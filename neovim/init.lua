@@ -1399,7 +1399,6 @@ addPlugin {
 
 addPlugin {
 	"saghen/blink.pairs",
-	build = "cargo build --release",
 	config = function(plugin, cfg)
 		-- add space around "=" sequence
 		vim.keymap.set("i", "=", function()
@@ -1418,6 +1417,8 @@ addPlugin {
 
 		require(plugin.name).setup(cfg)
 	end,
+	dependencies = "saghen/blink.download",
+  version = '*', -- (recommended) only required with prebuilt binaries
 	event = "InsertEnter",
 	--- @module "blink.pairs"
 	--- @type blink.pairs.Config
@@ -1427,7 +1428,7 @@ addPlugin {
 			-- and require("blink.pairs.mappings").disable()
 			-- to enable/disable mappings at runtime
 			enabled = true,
-			cmdline = true, -- FIX: me
+			-- cmdline = true, -- FIX: me
 			-- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
 			-- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
 			disabled_filetypes = {},
@@ -3999,7 +4000,7 @@ addPlugin {
 			enabled = true,
 			sign = false,
 			position = "inlay",
-			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " }, -- FEAT: use sequence of blocks
 			icons = { "󰫎 " },
 			signs = { "󰫎 " },
 			width = { "full", "block", "block"},
@@ -4055,7 +4056,7 @@ addPlugin {
 			icon = "▍",
 			repeat_linebreak = true,
 		},
-		pipe_table = {
+		pipe_table = { -- FEAT: experiment on table format
 			enabled = true,
 			border = {
 				"┌", "┬", "┐",
