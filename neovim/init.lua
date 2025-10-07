@@ -1060,6 +1060,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- FEAT: https://github.com/nvim-mini/mini.bracketed
 -- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("ca", "sf",  "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
@@ -1322,87 +1323,125 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	-- FEAT: https://github.com/Saghen/blink.pairs
-	-- FEAT: https://github.com/nvim-mini/mini.bracketed
-	-- FEAT: https://github.com/nvim-mini/mini.pairs
-	"windwp/nvim-autopairs",
-	config = function()
-		local pair = require("nvim-autopairs")
-		local Rule = require("nvim-autopairs.rule")
-		local cond = require("nvim-autopairs.conds")
+-- addPlugin {
+-- 	"windwp/nvim-autopairs",
+-- 	config = function()
+-- 		local pair = require("nvim-autopairs")
+-- 		local Rule = require("nvim-autopairs.rule")
+-- 		local cond = require("nvim-autopairs.conds")
 
-		pair.setup()
-		-- pair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
-		pair.add_rules {
-			-- #include <|> pair for c and cpp
-			Rule("#include <", ">", { "c", "cpp" }),
-			-- Add spaces in pair after parentheses
-			-- (|) --> space --> ( | )
-			-- ( | ) --> ) --> ( )|
-			Rule(" ", " ", "-markdown")
-			:with_pair(function (opts)
-				local pair_set = opts.line:sub(opts.col - 1, opts.col)
-				return vim.tbl_contains({ "()", "[]", "{}" }, pair_set)
-			end)
-			:with_del(cond.none()),
-			Rule("( ", " )")
-			:with_pair(function() return false end)
-			:with_move(function(opts)
-				return opts.prev_char:match(".%)") ~= nil
-			end)
-			:use_key(")"),
-			Rule("{ ", " }")
-			:with_pair(function() return false end)
-			:with_move(function(opts)
-				return opts.prev_char:match(".%}") ~= nil
-			end)
-			:use_key("}"),
-			Rule("[ ", " ]")
-			:with_pair(function() return false end)
-			:with_move(function(opts)
-				return opts.prev_char:match(".%]") ~= nil
-			end)
-			:use_key("]"),
-			-- Auto add space on =
-			Rule("=", "", "-xml")
-			:with_pair(cond.not_inside_quote())
-			:with_pair(function(opts)
-				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-				if last_char:match("[%w%=%s]") then
-					return true
-				end
-				return false
-			end)
-			:replace_endpair(function(opts)
-				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
-				local next_char = opts.line:sub(opts.col, opts.col)
-				next_char = next_char == " " and "" or " "
-				if prev_2char:match("%w$") then
-					return "<bs> =" .. next_char
-				end
-				if prev_2char:match("%=$") then
-					return next_char
-				end
-				if prev_2char:match("=") then
-					return "<bs><bs>=" .. next_char
-				end
-				return ""
-			end)
-			:set_end_pair_length(0)
-			:with_move(cond.none())
-			:with_del(cond.none())
-		}
-		-- Insert `()` after select function or method item
-		-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-		-- local cmp = require("cmp")
-		-- cmp.event:on(
-		-- 	"confirm_done",
-		-- 	cmp_autopairs.on_confirm_done()
-		-- )
-	end,
-	event = "InsertEnter"
+-- 		pair.setup()
+-- 		-- pair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
+-- 		pair.add_rules {
+-- 			-- #include <|> pair for c and cpp
+-- 			Rule("#include <", ">", { "c", "cpp" }),
+-- 			-- Add spaces in pair after parentheses
+-- 			-- (|) --> space --> ( | )
+-- 			-- ( | ) --> ) --> ( )|
+-- 			Rule(" ", " ", "-markdown")
+-- 			:with_pair(function (opts)
+-- 				local pair_set = opts.line:sub(opts.col - 1, opts.col)
+-- 				return vim.tbl_contains({ "()", "[]", "{}" }, pair_set)
+-- 			end)
+-- 			:with_del(cond.none()),
+-- 			Rule("( ", " )")
+-- 			:with_pair(function() return false end)
+-- 			:with_move(function(opts)
+-- 				return opts.prev_char:match(".%)") ~= nil
+-- 			end)
+-- 			:use_key(")"),
+-- 			Rule("{ ", " }")
+-- 			:with_pair(function() return false end)
+-- 			:with_move(function(opts)
+-- 				return opts.prev_char:match(".%}") ~= nil
+-- 			end)
+-- 			:use_key("}"),
+-- 			Rule("[ ", " ]")
+-- 			:with_pair(function() return false end)
+-- 			:with_move(function(opts)
+-- 				return opts.prev_char:match(".%]") ~= nil
+-- 			end)
+-- 			:use_key("]"),
+-- 			-- Auto add space on =
+-- 			Rule("=", "", "-xml")
+-- 			:with_pair(cond.not_inside_quote())
+-- 			:with_pair(function(opts)
+-- 				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+-- 				if last_char:match("[%w%=%s]") then
+-- 					return true
+-- 				end
+-- 				return false
+-- 			end)
+-- 			:replace_endpair(function(opts)
+-- 				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+-- 				local next_char = opts.line:sub(opts.col, opts.col)
+-- 				next_char = next_char == " " and "" or " "
+-- 				if prev_2char:match("%w$") then
+-- 					return "<bs> =" .. next_char
+-- 				end
+-- 				if prev_2char:match("%=$") then
+-- 					return next_char
+-- 				end
+-- 				if prev_2char:match("=") then
+-- 					return "<bs><bs>=" .. next_char
+-- 				end
+-- 				return ""
+-- 			end)
+-- 			:set_end_pair_length(0)
+-- 			:with_move(cond.none())
+-- 			:with_del(cond.none())
+-- 		}
+-- 	end,
+-- 	event = "InsertEnter"
+-- }
+
+-- FEAT: scenarios
+-- add space for = and ==, but not for xml
+addPlugin {
+	"saghen/blink.pairs",
+	dependencies = "saghen/blink.download",
+	event = "InsertEnter",
+	--- @module "blink.pairs"
+	--- @type blink.pairs.Config
+	opts = {
+		mappings = {
+			-- you can call require("blink.pairs.mappings").enable()
+			-- and require("blink.pairs.mappings").disable()
+			-- to enable/disable mappings at runtime
+			enabled = true,
+			-- cmdline = true, -- FIX: me
+			-- or disable with `vim.g.pairs = false` (global) and `vim.b.pairs = false` (per-buffer)
+			-- and/or with `vim.g.blink_pairs = false` and `vim.b.blink_pairs = false`
+			disabled_filetypes = {},
+			-- see the defaults:
+			-- https://github.com/Saghen/blink.pairs/blob/main/lua/blink/pairs/config/mappings.lua#L14
+			pairs = {
+				["{ "] = " }"
+			},
+		},
+		highlights = {
+			enabled = false, -- FEAT: enable
+			-- requires require("vim._extui").enable({}), otherwise has no effect
+			-- cmdline = true, -- FIX: me
+			groups = {
+				"BlinkPairsOrange",
+				"BlinkPairsPurple",
+				"BlinkPairsBlue",
+			},
+			-- unmatched_group = "BlinkPairsUnmatched", -- FIX: me
+
+			-- highlights matching pairs under the cursor
+			matchparen = {
+				enabled = false, -- FEAT: enable
+				-- known issue where typing won't update matchparen highlight, disabled by default
+				-- cmdline = false, -- FIX: me
+				group = "BlinkPairsMatchParen",
+			},
+		},
+		debug = false,
+	}
 }
+
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/kensyo/nvim-scrlbkun
@@ -1753,14 +1792,14 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "catppuccin-macchiato", "catppuccin" }
-dark  { "duskfox",              "nightfox"   }
+-- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
 -- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- darkT { "sonokai",              "_",         }
 
--- light { "tokyonight-day",     "tokyonight" }
+light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
