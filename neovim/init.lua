@@ -4016,22 +4016,22 @@ addPlugin {
 		},
 		bullet = {
 			enabled = true,
-			icons = { "●", "○", "◆", "◇" },
+			icons = { "", "", "", "󰨐" },
 		},
 		checkbox = {
 			enabled = true,
 			position = "overlay",
 			unchecked = {
-				icon = "    ",
+				icon = "▕  │",
 			},
 			checked = {
-				icon = "    ",
+				icon = "▕  │",
 				scope_highlight = "RenderMarkdownChecked"
 			},
 			custom = {
 				working = {
 					raw = "[-]",
-					rendered = "    ",
+					rendered = "▕  │",
 					highlight = "RenderMarkdownTodo",
 					scope_highlight = "RenderMarkdownTodo",
 				}
@@ -4099,7 +4099,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim",
+	"bngarren/checkmate.nvim", -- FIX: overrites highlight for inline ``
 	ft = "markdown",
 	opts = {
 		files = {
