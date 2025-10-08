@@ -1446,9 +1446,7 @@ addPlugin {
 -- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/kensyo/nvim-scrlbkun
--- FEAT: https://github.com/lewis6991/satellite.nvim
--- FEAT: https://github.com/petertriho/nvim-scrollbar
+-- https://github.com/kensyo/nvim-scrlbkun
 addPlugin {
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
@@ -1475,8 +1473,11 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/bpstahlman/txtfmt
 -- FEAT: popup menu to apply highlight on text, like bold, italic, fg color, bg color
+addPlugin {
+	"bpstahlman/txtfmt"
+}
+
 -- FEAT: markdown support in comments
 addPlugin {
 	-- https://github.com/FluxxField/bionic-reading.nvim
@@ -1560,8 +1561,8 @@ addPlugin {
 
 addPlugin {
 	"nvim-mini/mini.hipatterns",
-	config = function()
-		require("mini.hipatterns").setup({
+	config = function(plugin)
+		require(plugin.name).setup({
 		highlighters = (function()
 			local config = {}
 
@@ -1599,7 +1600,7 @@ addPlugin {
 				local hl_group = getTodo(v.color)
 				for _,l in pairs(keys) do
 					local key = l:lower()
-					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W" }
+					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W" } -- FEAT: highlight todos like TODO:
 					config[key] = cfg
 				end
 			end
@@ -1793,7 +1794,7 @@ addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
-dark  { "catppuccin-macchiato", "catppuccin" }
+dark  { "catppuccin-mocha", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
@@ -2153,7 +2154,7 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
+			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" }, -- FIX: load lazydev only for init.lua
 			providers = {
 				buffer = {
 					name = "buffer",
@@ -4016,7 +4017,7 @@ addPlugin {
 		},
 		bullet = {
 			enabled = true,
-			icons = { "", "", "", "󰨐" },
+			icons = { "", "", "󰨐", "" },
 		},
 		checkbox = {
 			enabled = true,
