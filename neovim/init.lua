@@ -1473,12 +1473,6 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: popup menu to apply highlight on text, like bold, italic, fg color, bg color
-addPlugin {
-	"bpstahlman/txtfmt"
-}
-
--- FEAT: markdown support in comments
 addPlugin {
 	-- https://github.com/FluxxField/bionic-reading.nvim
 	-- https://github.com/nullchilly/fsread.nvim
@@ -1500,9 +1494,12 @@ addPlugin {
 	}
 }
 
--- FEAT: Highlight to apply strikethrough
--- FEAT: "azabiong/vim-highlighter"
--- THOUGHT: consider replacing the usage with vim.hl.range
+addPlugin {
+	"grapp-dev/nui-components.nvim",
+	dependencies = "MunifTanjim/nui.nvim"
+}
+
+-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color https://nui-components.grapp.dev/docs/getting-started
 addPlugin {
 	"Pocco81/high-str.nvim",
 	cmd = "HSHighlight",
@@ -1793,8 +1790,8 @@ addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
--- dark  { "ayu-dark",             "ayu",       }
-dark  { "catppuccin-mocha", "catppuccin" }
+dark  { "ayu-dark",             "ayu",       }
+-- dark  { "catppuccin-mocha", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
