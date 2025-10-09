@@ -1499,7 +1499,27 @@ addPlugin {
 	dependencies = "MunifTanjim/nui.nvim"
 }
 
--- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color https://nui-components.grapp.dev/docs/getting-started
+vim.keymap.set("v", "<Leader>ft", function()
+	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color https://nui-components.grapp.dev/docs/getting-started
+	-- create widget
+	local nuic = require("nui-components")
+
+	local widget = nuic.create_renderer({
+		width = 10,
+		height = 2,
+	})
+
+	widget:render(body)
+
+	-- bold toggle
+	-- italic toggle
+	-- underline toggle
+	-- strikethrough toggle
+	-- fg/bg color tab
+		-- color palette
+		-- color slider
+end)
+
 addPlugin {
 	"Pocco81/high-str.nvim",
 	cmd = "HSHighlight",
@@ -3499,16 +3519,16 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	"Zeioth/garbage-day.nvim",
-	event = "LspAttach",
-	opts = {
-		excluded_lsp_clients = {},
-		grace_period = 60, -- FIX: values
-		notifications = true,
-		wakeup_delay = 1000
-	}
-}
+-- addPlugin {
+-- 	"Zeioth/garbage-day.nvim",
+-- 	event = "LspAttach",
+-- 	opts = {
+-- 		excluded_lsp_clients = {},
+-- 		grace_period = 60, -- FIX: values
+-- 		notifications = true,
+-- 		wakeup_delay = 1000
+-- 	}
+-- }
 
 addPlugin {
 	"aznhe21/actions-preview.nvim",
@@ -3909,7 +3929,7 @@ addPlugin {
 		vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, bufopts)
 		vim.keymap.set("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>", bufopts)
 		vim.keymap.set("n", "<C-.>", require("actions-preview").code_actions, bufopts)
-		vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
+		vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts) -- FEAT: how to select the code action displayed
 		vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
