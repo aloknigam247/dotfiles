@@ -1500,8 +1500,13 @@ addPlugin {
 }
 
 vim.keymap.set("v", "<Leader>ft", function()
-	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color https://nui-components.grapp.dev/docs/getting-started
-	-- create widget
+	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color
+	-- https://nui-components.grapp.dev/docs/getting-started
+
+	-- bold toggle
+	-- italic toggle
+	-- underline toggle
+	-- strikethrough toggle
 	local n = require("nui-components")
 
 	local widget = n.create_renderer({
@@ -1510,22 +1515,50 @@ vim.keymap.set("v", "<Leader>ft", function()
 	})
 
 	widget:render(function()
-		local box =  n.box(2, 
+		local bold_button = n.button({
+			label = "B",
+			press_key = { "<LeftMouse>" },
+			on_press = function()
+				print("B pressed")
+			end
+		})
+		bold_button.prepare_lines = function(lines, self)
+			self:set_hl_group(lines, "Boolean")
+			return lines
+		end
+
+		return n.columns(
+			bold_button,
 			n.button({
-				label = "Button",
+				label = "I",
+				press_key = { "<LeftMouse>" },
+				on_press = function()
+					print("I pressed")
+				end
+			}),
+			n.button({
+				label = "U",
+				press_key = { "<LeftMouse>" },
+				on_press = function()
+					print("U pressed")
+				end
+			}),
+			n.button({
+				label = "S",
+				press_key = { "<LeftMouse>" },
+				on_press = function()
+					print("S pressed")
+				end
 			})
 		)
-		box.border_style = "rounded"
-		return box
 	end)
 
-	-- bold toggle
-	-- italic toggle
-	-- underline toggle
-	-- strikethrough toggle
 	-- fg/bg color tab
 		-- color palette
 		-- color slider
+	-- Get current attributes if applied
+	-- Clear all
+	-- Border around widget
 end)
 
 addPlugin {
