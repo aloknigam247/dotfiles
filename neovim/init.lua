@@ -1502,11 +1502,7 @@ addPlugin {
 vim.keymap.set("v", "<Leader>ft", function()
 	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color
 	-- https://nui-components.grapp.dev/docs/getting-started
-
 	-- bold toggle
-	-- italic toggle
-	-- underline toggle
-	-- strikethrough toggle
 	local n = require("nui-components")
 
 	local widget = n.create_renderer({
@@ -1514,51 +1510,50 @@ vim.keymap.set("v", "<Leader>ft", function()
 		height = 2,
 	})
 
-	widget:render(function()
-		local bold_button = n.button({
-			label = "B",
-			press_key = { "<LeftMouse>" },
-			on_press = function()
-				print("B pressed")
-			end
-		})
-		bold_button.prepare_lines = function(lines, self)
-			self:set_hl_group(lines, "Boolean")
-			return lines
-		end
+	local fn = require("nui-components.utils.fn")
 
+	local custom_button = n.button
+---@diagnostic disable-next-line: duplicate-set-field
+	custom_button.prop_types = function()
+---@diagnostic disable-next-line: undefined-global
+		return fn.merge(custom_button.super.prop_types(self), {
+			on_press = "function",
+			prepare_lines = "function",
+			press_key = { "table", "string" },
+			is_active = { "boolean", "nil" },
+			global_press_key = { "table", "string", "nil" },
+		})
+	end
+
+	widget:render(function()
 		return n.columns(
-			bold_button,
-			n.button({
-				label = "I",
+			custom_button({
+				label = " B ",
 				press_key = { "<LeftMouse>" },
+				prepare_lines = function(lines, self)
+					self:set_hl_group(lines, "Boolean")
+					return lines
+				end,
 				on_press = function()
-					print("I pressed")
-				end
-			}),
-			n.button({
-				label = "U",
-				press_key = { "<LeftMouse>" },
-				on_press = function()
-					print("U pressed")
-				end
-			}),
-			n.button({
-				label = "S",
-				press_key = { "<LeftMouse>" },
-				on_press = function()
-					print("S pressed")
+					local start_pos = vim.fn.getpos('v')
+					local end_pos = vim.fn.getpos('.')
+					print(vim.inspect(start_pos))
+					print(vim.inspect(end_pos))
 				end
 			})
 		)
 	end)
 
+	-- italic toggle
+	-- underline toggle
+	-- strikethrough toggle
 	-- fg/bg color tab
 		-- color palette
 		-- color slider
 	-- Get current attributes if applied
 	-- Clear all
 	-- Border around widget
+	-- support ctrl-v
 end)
 
 addPlugin {
@@ -1851,14 +1846,12 @@ addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
-dark  { "ayu-dark",             "ayu",       }
--- dark  { "catppuccin-mocha", "catppuccin" }
+-- dark  { "ayu-dark",             "ayu",       }
+dark  { "catppuccin-mocha", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "sonokai",              "_",         }
--- dark  { "tokyonight-storm",     "tokyonight" }
-
--- darkT { "sonokai",              "_",         }
+dark  { "tokyonight-storm",     "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
