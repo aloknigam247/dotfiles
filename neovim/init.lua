@@ -1502,14 +1502,22 @@ addPlugin {
 vim.keymap.set("v", "<Leader>ft", function()
 	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color https://nui-components.grapp.dev/docs/getting-started
 	-- create widget
-	local nuic = require("nui-components")
+	local n = require("nui-components")
 
-	local widget = nuic.create_renderer({
+	local widget = n.create_renderer({
 		width = 10,
 		height = 2,
 	})
 
-	widget:render(body)
+	widget:render(function()
+		local box =  n.box(2, 
+			n.button({
+				label = "Button",
+			})
+		)
+		box.border_style = "rounded"
+		return box
+	end)
 
 	-- bold toggle
 	-- italic toggle
