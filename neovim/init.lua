@@ -4023,6 +4023,7 @@ addPlugin {
 -- FEAT: https://github.com/richardbizik/nvim-toc
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
+-- FEAT: shortcut for - [ ]
 -- "OXY2DEV/markview.nvim"
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
