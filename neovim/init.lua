@@ -1503,42 +1503,34 @@ vim.keymap.set("v", "<Leader>ft", function()
 	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color
 	-- https://nui-components.grapp.dev/docs/getting-started
 	-- bold toggle
+	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
+	vim.api.nvim_set_hl(0, "NuiComponentsButtonActive", { bg = "#00FF00" })
+	vim.api.nvim_set_hl(0, "NuiComponentsButtonFocus", { bg = "#FFFF00" })
+	
+	local txtfmt_ns = vim.api.nvim_create_namespace("txtfmt_ns")
+	local buf = vim.api.nvim_get_current_buf()
+
+	vim.fn.feedkeys(":", "nx")
+	local start_mark = vim.api.nvim_buf_get_mark(0, "<")
+	local start_row, start_col = start_mark[1], start_mark[2]
+	local end_mark = vim.api.nvim_buf_get_mark(0, ">")
+	local end_row, end_col = end_mark[1], end_mark[2]
+
 	local n = require("nui-components")
 
 	local widget = n.create_renderer({
-		width = 10,
-		height = 2,
+		width = 2,
+		height = 1,
 	})
-
-	local fn = require("nui-components.utils.fn")
-
-	local custom_button = n.button
----@diagnostic disable-next-line: duplicate-set-field
-	custom_button.prop_types = function()
----@diagnostic disable-next-line: undefined-global
-		return fn.merge(custom_button.super.prop_types(self), {
-			on_press = "function",
-			prepare_lines = "function",
-			press_key = { "table", "string" },
-			is_active = { "boolean", "nil" },
-			global_press_key = { "table", "string", "nil" },
-		})
-	end
 
 	widget:render(function()
 		return n.columns(
-			custom_button({
+			n.button({
 				label = " B ",
-				press_key = { "<LeftMouse>" },
-				prepare_lines = function(lines, self)
-					self:set_hl_group(lines, "Boolean")
-					return lines
-				end,
+				autofocus = true,
+				press_key = { "<LeftMouse>", "<CR>" },
 				on_press = function()
-					local start_pos = vim.fn.getpos('v')
-					local end_pos = vim.fn.getpos('.')
-					print(vim.inspect(start_pos))
-					print(vim.inspect(end_pos))
+					vim.hl.range(buf, txtfmt_ns, "Boolean", start_mark, end_mark)
 				end
 			})
 		)
@@ -2229,7 +2221,7 @@ addPlugin {
 					end
 				},
 				ripgrep = {
-					module = "blink-ripgrep",
+					module = "blink-ripgrep", -- FIX: exclude current file
 					name = "ripgrep",
 					max_items = 5,
 					score_offset = -1,
@@ -3494,6 +3486,22 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: add custom code actions, like run Neogen command for missing documentation
+-- vim.api.nvim_create_autocmd('DiagnosticChanged', {
+-- 	callback = function(args)
+-- 		local diagnostics = vim.diagnostic.get(args.buf)
+-- 		for _, diagnostic in ipairs(diagnostics) do
+-- 			if diagnostic.message:find("Your error code or text") then
+-- 				-- Trigger a custom action, or manually call a code action
+-- 				vim.lsp.buf.code_action({
+-- 					context = {
+-- 						diagnostics = {diagnostic},
+-- 					}
+-- 				})
+-- 			end
+-- 		end
+-- 	end,
+-- })
 -- dotnet
 -- FEAT: https://github.com/GustavEikaas/easy-dotnet.nvim
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
