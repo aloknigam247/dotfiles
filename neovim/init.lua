@@ -1506,7 +1506,7 @@ vim.keymap.set("v", "<Leader>ft", function()
 	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
 	vim.api.nvim_set_hl(0, "NuiComponentsButtonActive", { bg = "#00FF00" })
 	vim.api.nvim_set_hl(0, "NuiComponentsButtonFocus", { bg = "#FFFF00" })
-	
+
 	local txtfmt_ns = vim.api.nvim_create_namespace("txtfmt_ns")
 	local buf = vim.api.nvim_get_current_buf()
 
@@ -1523,13 +1523,21 @@ vim.keymap.set("v", "<Leader>ft", function()
 		height = 1,
 	})
 
+	local getHl = function()
+		return {}
+	end
+
 	widget:render(function()
 		return n.columns(
 			n.button({
 				label = " B ",
 				autofocus = true,
 				press_key = { "<LeftMouse>", "<CR>" },
-				on_press = function()
+				on_press = function(self)
+					local props = self:get_props()
+					props.is_active = not props.is_active
+					print('DEBUGPRINT[2]: init.lua:1538: props.is_active=' .. vim.inspect(props.is_active))
+					local cur_hl = getHl()
 					vim.hl.range(buf, txtfmt_ns, "Boolean", start_mark, end_mark)
 				end
 			})
