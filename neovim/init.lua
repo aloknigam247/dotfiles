@@ -1670,7 +1670,7 @@ addPlugin {
     opts = {}
 }
 
--- FEAT: 'fluxdiv/instacolor.nvim'
+-- FEAT: "fluxdiv/instacolor.nvim" -- custom color for tags
 
 -- REFACTOR: try to use mini.hipatterns
 addPlugin {
