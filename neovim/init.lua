@@ -1500,7 +1500,7 @@ addPlugin {
 }
 
 vim.keymap.set("v", "<Leader>ft", function()
-	-- FEAT: `popup` menu to apply highlight on text, like bold, italic, fg color, bg color
+	-- popup menu to apply highlight on text, like bold, italic, fg color, bg color
 	-- https://nui-components.grapp.dev/docs/getting-started
 	-- bold toggle
 	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
@@ -1585,7 +1585,6 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/nvim-mini/mini.cursorword
 addPlugin {
 	"RRethy/vim-illuminate",
 	config = function()
@@ -1653,7 +1652,7 @@ addPlugin {
 				local hl_group = getTodo(v.color)
 				for _,l in pairs(keys) do
 					local key = l:lower()
-					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":%W" } -- FEAT: highlight todos like TODO:
+					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":$?" }
 					config[key] = cfg
 				end
 			end
@@ -1745,7 +1744,7 @@ addPlugin {
 	lazy = true
 }
 
--- "uga-rosa/ccc.nvim"
+-- FEAT: "uga-rosa/ccc.nvim"
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Fix LineNr highlight
@@ -1847,11 +1846,10 @@ addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
-dark  { "catppuccin-mocha", "catppuccin" }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
--- dark  { "sonokai",              "_",         }
-dark  { "tokyonight-storm",     "tokyonight" }
+dark  { "sonokai",              "_",         }
+-- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -6238,6 +6236,7 @@ addPlugin {
 -- FEAT: https://github.com/yetone/avante.nvim
 -- FIX: Powershell execution in nvim
 -- TODO: github stars
+-- FEAT: 1503
 
 -- REFACTOR: check usages of all plugins to remove bloat
 
