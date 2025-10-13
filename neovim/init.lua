@@ -2952,6 +2952,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Set highlight for markdown headings
+-- REFACTOR: still needed for new schemes
 function MarkdownHeadingsHighlight()
 	local title1_hl = vim.api.nvim_get_hl(0, { name = "@text.title.1.markdown", link = false })
 	local title2_hl = vim.api.nvim_get_hl(0, { name = "@text.title.2.markdown", link = false })
@@ -2978,6 +2979,7 @@ FileTypeActions = {
 		vim.cmd.setlocal("nowrap")
 	end,
 	["markdown"] = function(_)
+		-- FEAT: use tabs in markdown
 		vim.g.table_mode_corner = "|"
 		MarkdownHeadingsHighlight()
 	end,
