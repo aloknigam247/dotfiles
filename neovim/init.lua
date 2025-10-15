@@ -786,7 +786,7 @@ local function isLargeFile(bufId)
 	if LargeFile[bufId] == nil then
 		local path = vim.api.nvim_buf_get_name(bufId)
 		if path ~= nil and path ~= "" and vim.fn.exists(path) then
-			LargeFile[bufId] = vim.fn.getfsize(path) > 200000
+			LargeFile[bufId] = vim.fn.getfsize(path) > 250000
 		end
 	end
 
@@ -1536,7 +1536,6 @@ vim.keymap.set("v", "<Leader>ft", function()
 				on_press = function(self)
 					local props = self:get_props()
 					props.is_active = not props.is_active
-					print('DEBUGPRINT[2]: init.lua:1538: props.is_active=' .. vim.inspect(props.is_active))
 					local cur_hl = getHl()
 					vim.hl.range(buf, txtfmt_ns, "Boolean", start_mark, end_mark)
 				end
@@ -1616,7 +1615,23 @@ addPlugin {
 	config = function(plugin)
 		require(plugin.name).setup({
 		highlighters = (function()
-			local config = {}
+			local config = {
+				pythonArgs = {
+					pattern = function(buf_id)
+						if vim.bo[buf_id].filetype == "python" then
+							return "    ()[%a%d_]+(): "
+						end
+					end,
+					group = function(buf_id, match, data)
+						local node = vim.treesitter.get_node({ bufnr = buf_id, { data.from_col - 1, data.to_col - 1 } })
+						if node and node:type() == "string_content" then
+							local hlargs = require("hlargs.colorpalette").get_hlgroup_hashed(match)
+							return hlargs
+						end
+						return nil
+					end
+				}
+		}
 
 			---Get TODO highlights from todo_config, create new highlight if required
 			---@param set string Matched text
@@ -1659,7 +1674,7 @@ addPlugin {
 			for i,v in pairs(todo_config) do
 				local keys = v.alt or {}
 				table.insert(keys, i) -- add alt keys as well
-				config[i] = { group = getTodo(v.color), pattern = createPatternList(keys) }
+				config[i] = { pattern = createPatternList(keys), group = getTodo(v.color) }
 			end
 
 			return config
@@ -1686,7 +1701,7 @@ addPlugin {
 			{ filter = { filetype = "cpp"    }, pattern = " @return .*",        hl = "@keyword"   },
 			{ filter = { filetype = "lua"    }, pattern = "%s*%-%-%-%s*(@%w+)", hl = "Constant",  },
 			{ filter = { filetype = "lua"    }, pattern = "━.*━",               hl = "Constant",  },
-			{ filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
+			-- { filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
 			{ filter = { filetype = "python" }, pattern = "Args:",              hl = "@type"      },
 			{ filter = { filetype = "python" }, pattern = "Raises:",            hl = "Statement"  },
 			{ filter = { filetype = "python" }, pattern = "Returns:",           hl = "@keyword"   },
@@ -5405,6 +5420,7 @@ addPlugin {
 			},
 			extras = {
 				named_parameters = true,
+        unused_args = false,
 			},
 			priority_hl = priority_hl.hlargs,
 			paint_catch_blocks = {
