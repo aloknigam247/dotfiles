@@ -1618,9 +1618,9 @@ addPlugin {
 		highlighters = (function()
 			local config = {}
 
-			---Get TODO highlights
+			---Get TODO highlights from todo_config, create new highlight if required
 			---@param set string Matched text
-			---@return string? # Highlight for matched string
+			---@return string? # Highlight name for matched string
 			local function getTodo(set)
 				local color_set = todo_colors[set] or todo_colors.default
 
@@ -1644,17 +1644,22 @@ addPlugin {
 				return nil
 			end
 
+			--- Generate a pattern list from list of keys
+			---@param keys string[] list of keys
+			---@return string[] # list of patterns from keys
+			local function createPatternList(keys)
+				local pattern_list = {}
+				for _,v in pairs(keys) do
+					table.insert(pattern_list, "%f[%w]" .. v .. ":$?")
+				end
+				return pattern_list
+			end
+
 			-- iterate for each config in todo_config
 			for i,v in pairs(todo_config) do
 				local keys = v.alt or {}
 				table.insert(keys, i) -- add alt keys as well
-
-				local hl_group = getTodo(v.color)
-				for _,l in pairs(keys) do
-					local key = l:lower()
-					local cfg = { group = hl_group, pattern = "%f[%w]" .. l .. ":$?" }
-					config[key] = cfg
-				end
+				config[i] = { group = getTodo(v.color), pattern = createPatternList(keys) }
 			end
 
 			return config
