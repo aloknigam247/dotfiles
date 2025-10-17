@@ -1668,7 +1668,7 @@ addPlugin {
 					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"         }), group = "Constant"   },
 					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"         }), group = "@variable"  },
 					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"        }), group = "@keyword"   },
-					-- lua_doc           = { pattern = patternFilter({ filetype = "lua"   , pattern = "%s*%-%-%-%s*(@%w+)" }), group = "Constant"   }, -- FIX: me
+					lua_doc           = { pattern = patternFilter({ filetype = "lua"   , pattern = "%s*%-%-%-()@%w+()"  }), group = "Constant"   },
 					lua_heading       = { pattern = patternFilter({ filetype = "lua"   , pattern = "━.*━"               }), group = "Constant"   },
 					python_doc_args   = { pattern = patternFilter({ filetype = "python", pattern = "Args:"              }), group = "@type"      },
 					python_doc_param  = { pattern = patternFilter({ filetype = "python", pattern = "    [%a%d_]+: "     }), group = "@parameter" },
@@ -1748,8 +1748,6 @@ addPlugin {
 	keys = { "u" },
 	lazy = true
 }
-
--- FEAT: "uga-rosa/ccc.nvim"
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Fix LineNr highlight
@@ -1851,8 +1849,8 @@ addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "duskfox",              "nightfox"   }
-dark  { "kanagawa-wave",        "kanagawa"   }
--- dark  { "tokyonight-storm",     "tokyonight" }
+-- dark  { "kanagawa-wave",        "kanagawa"   }
+dark  { "tokyonight-storm",     "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
