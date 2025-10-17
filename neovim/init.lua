@@ -1656,88 +1656,45 @@ addPlugin {
 					if vim.bo[buf_id].filetype == cfg.filetype then
 						return cfg.pattern
 					end
+					return nil
 				end
 				return cfg.pattern
 			end
 		end
 
-		local function highlightFilter(cfg)
-			return function(buf_id, match, data)
-				if cfg.ts_node then
-					local node = vim.treesitter.get_node({ bufnr = buf_id, { data.from_col - 1, data.to_col - 1 } })
-					if node and node:type() == cfg.ts_node then
-						-- local hlargs = require("hlargs.colorpalette").get_hlgroup_hashed(match)
-						-- return hlargs
-						return cfg.hl
-					end
-					return nil
-				end
-				return cfg.hl
-			end
-		end
-
 		require(plugin.name).setup({
-		highlighters = (function()
-			local config = {
-				tt = { pattern = patternFilter({ filetype = "python", pattern = "Args:" }), group = highlightFilter({ ts_node = "string_content", hl = "Visual" }) },
-				tp = { pattern = patternFilter({ filetype = "python", pattern = "Raises:" }), group = "Visual" }
-			}
-		-- 	local config = {
-		-- 		pythonArgs = {
-		-- 			pattern = function(buf_id)
-		-- 				if vim.bo[buf_id].filetype == "python" then
-		-- 					return "    ()[%a%d_]+(): "
-		-- 				end
-		-- 			end,
-		-- 			group = function(buf_id, match, data)
-		-- 				local node = vim.treesitter.get_node({ bufnr = buf_id, { data.from_col - 1, data.to_col - 1 } })
-		-- 				if node and node:type() == "string_content" then
-		-- 					local hlargs = require("hlargs.colorpalette").get_hlgroup_hashed(match)
-		-- 					return hlargs
-		-- 				end
-		-- 				return nil
-		-- 			end
-		-- 		}
-		-- }
+			highlighters = (function()
+				local config = {
+					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"         }), group = "Constant"   },
+					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"         }), group = "@variable"  },
+					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"        }), group = "@keyword"   },
+					-- lua_doc           = { pattern = patternFilter({ filetype = "lua"   , pattern = "%s*%-%-%-%s*(@%w+)" }), group = "Constant"   }, -- FIX: me
+					lua_heading       = { pattern = patternFilter({ filetype = "lua"   , pattern = "━.*━"               }), group = "Constant"   },
+					python_doc_args   = { pattern = patternFilter({ filetype = "python", pattern = "Args:"              }), group = "@type"      },
+					python_doc_param  = { pattern = patternFilter({ filetype = "python", pattern = "    [%a%d_]+: "     }), group = "@parameter" },
+					python_doc_raises = { pattern = patternFilter({ filetype = "python", pattern = "Raises:"            }), group = "Statement"  },
+					python_doc_return = { pattern = patternFilter({ filetype = "python", pattern = "Returns:"           }), group = "@keyword"   },
+					python_doc_yield  = { pattern = patternFilter({ filetype = "python", pattern = "Yields:"            }), group = "@keyword"   },
+				}
 
-			-- iterate for each config in todo_config
-			for i,v in pairs(todo_config) do
-				local keys = v.alt or {}
-				table.insert(keys, i) -- add alt keys as well
-				config[i] = { pattern = createPatternList(keys), group = getTodo(v.color) }
-			end
+				-- iterate for each config in todo_config
+				for i,v in pairs(todo_config) do
+					local keys = v.alt or {}
+					table.insert(keys, i) -- add alt keys as well
+					config[i] = { pattern = createPatternList(keys), group = getTodo(v.color) }
+				end
 
-			return config
-		end)()
-	})
+				return config
+			end)()
+		})
 	end,
 	event = "CursorHold"
 }
 
 addPlugin {
-    "fei6409/log-highlight.nvim",
-		ft = "log",
-    opts = {}
-}
-
--- REFACTOR: try to use mini.hipatterns
-addPlugin {
-	"folke/paint.nvim",
-	event = "CursorHold *.cpp,*.lua,*.py",
-	opts = {
-		highlights = {
-			{ filter = { filetype = "cpp"    }, pattern = " @brief .*",         hl = "Constant"   },
-			{ filter = { filetype = "cpp"    }, pattern = " @param .*",         hl = "@variable"  },
-			{ filter = { filetype = "cpp"    }, pattern = " @return .*",        hl = "@keyword"   },
-			{ filter = { filetype = "lua"    }, pattern = "%s*%-%-%-%s*(@%w+)", hl = "Constant",  },
-			{ filter = { filetype = "lua"    }, pattern = "━.*━",               hl = "Constant",  },
-			{ filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
-			{ filter = { filetype = "python" }, pattern = "Args:",              hl = "@type"      },
-			{ filter = { filetype = "python" }, pattern = "Raises:",            hl = "Statement"  },
-			{ filter = { filetype = "python" }, pattern = "Returns:",           hl = "@keyword"   },
-			{ filter = { filetype = "python" }, pattern = "Yields:",            hl = "@keyword"   },
-		}
-	}
+	"fei6409/log-highlight.nvim",
+	config = true,
+	ft = "log"
 }
 
 addPlugin {
@@ -1890,13 +1847,11 @@ addPlugin { "Shatur/neovim-ayu",           event = "User ayu"        }
 addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
 addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
 addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
-addPlugin { "sainnhe/sonokai",             event = "User sonokai"    }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark  { "ayu-dark",             "ayu",       }
 -- dark  { "duskfox",              "nightfox"   }
--- dark  { "kanagawa-wave",        "kanagawa"   }
-dark  { "sonokai",              "_",         }
+dark  { "kanagawa-wave",        "kanagawa"   }
 -- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
