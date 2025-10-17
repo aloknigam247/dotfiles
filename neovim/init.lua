@@ -1613,62 +1613,92 @@ addPlugin {
 addPlugin {
 	"nvim-mini/mini.hipatterns",
 	config = function(plugin)
+		---Get TODO highlights from todo_config, create new highlight if required
+		---@param set string Matched text
+		---@return string? # Highlight name for matched string
+		local function getTodo(set)
+			local color_set = todo_colors[set] or todo_colors.default
+
+			for _, hl in pairs(color_set) do
+				-- create new highlight if its a color
+				if hl:sub(1, 1) == "#" then
+					vim.api.nvim_set_hl(0, "TodoHl" .. set, { fg = hl, force = true })
+					return "TodoHl" .. set
+				end
+
+				local hl_config = vim.api.nvim_get_hl(0, { name = hl, link = false })
+				if not vim.tbl_isempty(hl_config) then
+					if hl_config.undercurl == true then
+						vim.api.nvim_set_hl(0, "TodoHl" .. set, { fg = hl_config.sp, force = true })
+						return "TodoHl" .. set
+					end
+					return hl
+				end
+			end
+
+			return nil
+		end
+
+		--- Generate a pattern list from list of keys
+		---@param keys string[] list of keys
+		---@return string[] # list of patterns from keys
+		local function createPatternList(keys)
+			local pattern_list = {}
+			for _,v in pairs(keys) do
+				table.insert(pattern_list, "%f[%w]" .. v .. ":$?")
+			end
+			return pattern_list
+		end
+
+		local function patternFilter(cfg)
+			return function(buf_id)
+				if cfg.filetype then
+					if vim.bo[buf_id].filetype == cfg.filetype then
+						return cfg.pattern
+					end
+				end
+				return cfg.pattern
+			end
+		end
+
+		local function highlightFilter(cfg)
+			return function(buf_id, match, data)
+				if cfg.ts_node then
+					local node = vim.treesitter.get_node({ bufnr = buf_id, { data.from_col - 1, data.to_col - 1 } })
+					if node and node:type() == cfg.ts_node then
+						-- local hlargs = require("hlargs.colorpalette").get_hlgroup_hashed(match)
+						-- return hlargs
+						return cfg.hl
+					end
+					return nil
+				end
+				return cfg.hl
+			end
+		end
+
 		require(plugin.name).setup({
 		highlighters = (function()
 			local config = {
-				pythonArgs = {
-					pattern = function(buf_id)
-						if vim.bo[buf_id].filetype == "python" then
-							return "    ()[%a%d_]+(): "
-						end
-					end,
-					group = function(buf_id, match, data)
-						local node = vim.treesitter.get_node({ bufnr = buf_id, { data.from_col - 1, data.to_col - 1 } })
-						if node and node:type() == "string_content" then
-							local hlargs = require("hlargs.colorpalette").get_hlgroup_hashed(match)
-							return hlargs
-						end
-						return nil
-					end
-				}
-		}
-
-			---Get TODO highlights from todo_config, create new highlight if required
-			---@param set string Matched text
-			---@return string? # Highlight name for matched string
-			local function getTodo(set)
-				local color_set = todo_colors[set] or todo_colors.default
-
-				for _, hl in pairs(color_set) do
-					-- create new highlight if its a color
-					if hl:sub(1, 1) == "#" then
-						vim.api.nvim_set_hl(0, "TodoHl" .. set, { fg = hl, force = true })
-						return "TodoHl" .. set
-					end
-
-					local hl_config = vim.api.nvim_get_hl(0, { name = hl, link = false })
-					if not vim.tbl_isempty(hl_config) then
-						if hl_config.undercurl == true then
-							vim.api.nvim_set_hl(0, "TodoHl" .. set, { fg = hl_config.sp, force = true })
-							return "TodoHl" .. set
-						end
-						return hl
-					end
-				end
-
-				return nil
-			end
-
-			--- Generate a pattern list from list of keys
-			---@param keys string[] list of keys
-			---@return string[] # list of patterns from keys
-			local function createPatternList(keys)
-				local pattern_list = {}
-				for _,v in pairs(keys) do
-					table.insert(pattern_list, "%f[%w]" .. v .. ":$?")
-				end
-				return pattern_list
-			end
+				tt = { pattern = patternFilter({ filetype = "python", pattern = "Args:" }), group = highlightFilter({ ts_node = "string_content", hl = "Visual" }) },
+				tp = { pattern = patternFilter({ filetype = "python", pattern = "Raises:" }), group = "Visual" }
+			}
+		-- 	local config = {
+		-- 		pythonArgs = {
+		-- 			pattern = function(buf_id)
+		-- 				if vim.bo[buf_id].filetype == "python" then
+		-- 					return "    ()[%a%d_]+(): "
+		-- 				end
+		-- 			end,
+		-- 			group = function(buf_id, match, data)
+		-- 				local node = vim.treesitter.get_node({ bufnr = buf_id, { data.from_col - 1, data.to_col - 1 } })
+		-- 				if node and node:type() == "string_content" then
+		-- 					local hlargs = require("hlargs.colorpalette").get_hlgroup_hashed(match)
+		-- 					return hlargs
+		-- 				end
+		-- 				return nil
+		-- 			end
+		-- 		}
+		-- }
 
 			-- iterate for each config in todo_config
 			for i,v in pairs(todo_config) do
@@ -1701,7 +1731,7 @@ addPlugin {
 			{ filter = { filetype = "cpp"    }, pattern = " @return .*",        hl = "@keyword"   },
 			{ filter = { filetype = "lua"    }, pattern = "%s*%-%-%-%s*(@%w+)", hl = "Constant",  },
 			{ filter = { filetype = "lua"    }, pattern = "━.*━",               hl = "Constant",  },
-			-- { filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
+			{ filter = { filetype = "python" }, pattern = "    [%a%d_]+: ",     hl = "@parameter" },
 			{ filter = { filetype = "python" }, pattern = "Args:",              hl = "@type"      },
 			{ filter = { filetype = "python" }, pattern = "Raises:",            hl = "Statement"  },
 			{ filter = { filetype = "python" }, pattern = "Returns:",           hl = "@keyword"   },
