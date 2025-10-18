@@ -1847,10 +1847,10 @@ addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
 addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
--- dark  { "ayu-dark",             "ayu",       }
+dark  { "ayu-dark",             "ayu",       }
 -- dark  { "duskfox",              "nightfox"   }
 -- dark  { "kanagawa-wave",        "kanagawa"   }
-dark  { "tokyonight-storm",     "tokyonight" }
+-- dark  { "tokyonight-storm",     "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -2022,23 +2022,6 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- snippets
--- FEAT: https://github.com/L3MON4D3/LuaSnip
--- FEAT: https://github.com/norcalli/snippets.nvim
--- FEAT: https://github.com/dcampos/nvim-snippy
--- FEAT: https://github.com/garymjr/nvim-snippets
--- FEAT: https://github.com/chrisgrieser/nvim-scissors
--- FEAT: https://github.com/nvim-mini/mini.snippets
--- FEAT: https://github.com/abeldekat/cmp-mini-snippets
--- FEAT: https://github.com/rafamadriz/friendly-snippets
--- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
--- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
-
--- FEAT: https://github.com/hrsh7th/cmp-omni
--- FEAT: https://github.com/hrsh7th/nvim-ix
--- FEAT: https://github.com/tzachar/cmp-fuzzy-path
--- FEAT: https://github.com/uga-rosa/cmp-dynamic
--- BUG: "\" does not complete
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -2057,9 +2040,8 @@ addPlugin {
 		"xzbdmw/colorful-menu.nvim"
 	},
 	event = { "CmdlineEnter", "InsertEnter" },
-	--- @type blink.cmp.Config
+	---@type blink.cmp.Config
 	opts = {
-		-- FEAT: use of show_and_insert_or_accept_single
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
@@ -2253,7 +2235,25 @@ addPlugin {
 		}
 	}
 }
+-- snippets
+-- FEAT: https://github.com/L3MON4D3/LuaSnip
+-- FEAT: https://github.com/norcalli/snippets.nvim
+-- FEAT: https://github.com/dcampos/nvim-snippy
+-- FEAT: https://github.com/garymjr/nvim-snippets
+-- FEAT: https://github.com/chrisgrieser/nvim-scissors
+-- FEAT: https://github.com/nvim-mini/mini.snippets
+-- FEAT: https://github.com/abeldekat/cmp-mini-snippets
+-- FEAT: https://github.com/rafamadriz/friendly-snippets
+-- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
+-- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
 
+-- FEAT: https://github.com/hrsh7th/cmp-omni
+-- FEAT: https://github.com/hrsh7th/nvim-ix
+-- FEAT: https://github.com/tzachar/cmp-fuzzy-path
+-- FEAT: https://github.com/uga-rosa/cmp-dynamic
+-- BUG: "\" does not complete
+
+-- TODO: remove them
 -- addPlugin {
 -- 	"aloknigam247/cmp-path",
 -- 	event = "CmdlineChanged"
