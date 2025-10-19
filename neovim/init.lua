@@ -1502,6 +1502,8 @@ addPlugin {
 vim.keymap.set("v", "<Leader>ft", function()
 	-- popup menu to apply highlight on text, like bold, italic, fg color, bg color
 	-- https://nui-components.grapp.dev/docs/getting-started
+	-- https://github.com/jrop/morph.nvim
+	-- https://github.com/nvzone/volt
 	-- bold toggle
 	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
 	vim.api.nvim_set_hl(0, "NuiComponentsButtonActive", { bg = "#00FF00" })
@@ -1847,10 +1849,11 @@ addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
 addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
-dark  { "ayu-dark",             "ayu",       }
--- dark  { "duskfox",              "nightfox"   }
--- dark  { "kanagawa-wave",        "kanagawa"   }
--- dark  { "tokyonight-storm",     "tokyonight" }
+-- dark  { "ayu-dark",         "ayu",       }
+light { "catppuccin-mocha", "catppuccin" }
+-- dark  { "duskfox",          "nightfox"   }
+-- dark  { "kanagawa-wave",    "kanagawa"   }
+-- dark  { "tokyonight-storm", "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -2028,7 +2031,24 @@ addPlugin {
 		for key, value in pairs(kind_hl) do
 			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background])
 		end
+		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
+		local original = require("blink.cmp.completion.list").show
+		require("blink.cmp.completion.list").show = function(ctx, items_by_source)
+			local seen = {}
+			local function filter(item)
+				if seen[item.label] then return false end
+				seen[item.label] = true
+				return true
+			end
+			for id in vim.iter(cfg.sources.default) do
+				items_by_source[id] = items_by_source[id] and vim.iter(items_by_source[id]):filter(filter):totable()
+			end
+			return original(ctx, items_by_source)
+		end
+		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
+
 		require("blink.cmp").setup(cfg)
+
 		local comment_hl = vim.api.nvim_get_hl(0, { name = "Comment" })
 		comment_hl.italic = true
 		comment_hl.force = true
@@ -2212,7 +2232,7 @@ addPlugin {
 					end
 				},
 				ripgrep = {
-					module = "blink-ripgrep", -- FIX: exclude current file
+					module = "blink-ripgrep",
 					name = "ripgrep",
 					max_items = 5,
 					---@module "blink-ripgrep"
@@ -4094,7 +4114,7 @@ addPlugin {
 			enabled = true,
 			position = "overlay",
 			unchecked = {
-				icon = "▕  │",
+				icon = "▕  │", -- FEAT: better icons
 			},
 			checked = {
 				icon = "▕  │",
