@@ -1,12 +1,7 @@
 {
-  "TodoUnchecked": {
-    "prefix": "-",
-    "body": ["- [ ] "],
-    "description": "Todo marker unchecked"
-  },
-  "TodoChecked": {
-    "prefix": "-",
-    "body": ["- [x] "],
-    "description": "Todo marker checked"
+  "Code block": {
+    "prefix": "```",
+    "body": ["```${1:lang}", "$2", "```"],
+    "description": "Insert a code block"
   }
 }

@@ -2248,26 +2248,25 @@ addPlugin {
 						}
 					}
 				},
-				snippets = { -- FIX: not picking custom snippets
+				snippets = {
 					name = "snippet",
-					max_items = 5,
-					score_offset = -100
+					max_items = 5
 				}
 			}
 		}
 	}
 }
 -- snippets
--- FEAT: https://github.com/L3MON4D3/LuaSnip
--- FEAT: https://github.com/norcalli/snippets.nvim
+-- FEAT: https://github.com/abeldekat/cmp-mini-snippets
+-- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-scissors
 -- FEAT: https://github.com/dcampos/nvim-snippy
 -- FEAT: https://github.com/garymjr/nvim-snippets
--- FEAT: https://github.com/chrisgrieser/nvim-scissors
--- FEAT: https://github.com/nvim-mini/mini.snippets
--- FEAT: https://github.com/abeldekat/cmp-mini-snippets
--- FEAT: https://github.com/rafamadriz/friendly-snippets
--- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
+-- FEAT: https://github.com/L3MON4D3/LuaSnip
 -- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
+-- FEAT: https://github.com/norcalli/snippets.nvim
+-- FEAT: https://github.com/nvim-mini/mini.snippets
+-- FEAT: https://github.com/rafamadriz/friendly-snippets
 
 -- FEAT: https://github.com/hrsh7th/cmp-omni
 -- FEAT: https://github.com/hrsh7th/nvim-ix
@@ -4049,6 +4048,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/RyanGreenup/markdown_editor.nvim
 -- FEAT: https://github.com/SamiSuleiman/murk.nvim
+-- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
 -- FEAT: https://github.com/Zeioth/markmap.nvim
 -- FEAT: https://github.com/adibhanna/simplemarkdown.nvim
 -- FEAT: https://github.com/chirag-juneja/markdown.nvim
@@ -4062,7 +4062,6 @@ addPlugin {
 -- FEAT: https://github.com/richardbizik/nvim-toc
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
--- FEAT: shortcut for - [ ]
 -- "OXY2DEV/markview.nvim"
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
@@ -6216,6 +6215,7 @@ addPlugin {
 
 -- FEAT: https://diagon.arthursonzogni.com/
 
+-- FEAT: 1503
 -- FEAT: Hover on timstamp to convert into utc and ist
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/Civitasv/cmake-tools.nvim
@@ -6239,6 +6239,7 @@ addPlugin {
 -- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jakemason/ouroboros.nvim
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
+-- FEAT: https://github.com/jim-at-jibba/nvim-redraft
 -- FEAT: https://github.com/johannww/openssl.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/jrop/u.nvim
@@ -6262,7 +6263,6 @@ addPlugin {
 -- FEAT: https://github.com/yetone/avante.nvim
 -- FIX: Powershell execution in nvim
 -- TODO: github stars
--- FEAT: 1503
 
 -- REFACTOR: check usages of all plugins to remove bloat
 
