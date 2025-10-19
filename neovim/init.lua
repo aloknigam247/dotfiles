@@ -1665,16 +1665,16 @@ addPlugin {
 		require(plugin.name).setup({
 			highlighters = (function()
 				local config = {
-					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"         }), group = "Constant"   },
-					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"         }), group = "@variable"  },
-					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"        }), group = "@keyword"   },
-					lua_doc           = { pattern = patternFilter({ filetype = "lua"   , pattern = "%s*%-%-%-()@%w+()"  }), group = "Constant"   },
-					lua_heading       = { pattern = patternFilter({ filetype = "lua"   , pattern = "━.*━"               }), group = "Constant"   },
-					python_doc_args   = { pattern = patternFilter({ filetype = "python", pattern = "Args:"              }), group = "@type"      },
-					python_doc_param  = { pattern = patternFilter({ filetype = "python", pattern = "    [%a%d_]+: "     }), group = "@parameter" },
-					python_doc_raises = { pattern = patternFilter({ filetype = "python", pattern = "Raises:"            }), group = "Statement"  },
-					python_doc_return = { pattern = patternFilter({ filetype = "python", pattern = "Returns:"           }), group = "@keyword"   },
-					python_doc_yield  = { pattern = patternFilter({ filetype = "python", pattern = "Yields:"            }), group = "@keyword"   },
+					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"           }), group = "Constant"   },
+					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"           }), group = "@variable"  },
+					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"          }), group = "@keyword"   },
+					lua_doc           = { pattern = patternFilter({ filetype = "lua"   , pattern = "%s*%-%-%-%s?()@%w+()" }), group = "Constant"   },
+					lua_heading       = { pattern = patternFilter({ filetype = "lua"   , pattern = "━.*━"                 }), group = "Constant"   },
+					python_doc_args   = { pattern = patternFilter({ filetype = "python", pattern = "Args:"                }), group = "@type"      },
+					python_doc_param  = { pattern = patternFilter({ filetype = "python", pattern = "    [%a%d_]+: "       }), group = "@parameter" },
+					python_doc_raises = { pattern = patternFilter({ filetype = "python", pattern = "Raises:"              }), group = "Statement"  },
+					python_doc_return = { pattern = patternFilter({ filetype = "python", pattern = "Returns:"             }), group = "@keyword"   },
+					python_doc_yield  = { pattern = patternFilter({ filetype = "python", pattern = "Yields:"              }), group = "@keyword"   },
 				}
 
 				-- iterate for each config in todo_config
@@ -2045,7 +2045,7 @@ addPlugin {
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
-		cmdline = { -- BUG: buffer completion does not work in command line
+		cmdline = {
 			completion = {
 				ghost_text = {
 					enabled = true
@@ -2061,7 +2061,7 @@ addPlugin {
 					draw = {
 						columns = {
 							{ "kind_icon" },
-							{ "label", "label_description" }
+							{ "label", "label_description" }, { "source_name" }
 						}
 					}
 				}
@@ -2071,7 +2071,7 @@ addPlugin {
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { "fallback" },
 				["<Right>"] = { "fallback" }
-			}
+			},
 		},
 		completion = {
 			documentation = {
@@ -2156,7 +2156,7 @@ addPlugin {
 
 								return "(" .. ctx.source_name .. ")"
 							end,
-							highlight = function(ctx)
+							highlight = function(_)
 								return "BlinkCmpSource"
 							end
 						}
@@ -2186,17 +2186,19 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" }, -- FIX: load lazydev only for init.lua
+			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
 			providers = {
 				buffer = {
 					name = "buffer",
-					score_offset = 0
+					override = {
+						enabled = function() return not require("blink.cmp.sources.lib.utils").in_ex_context({ "substitute", "global", "vglobal" }) end
+					}
 				},
 				cmdline = {
 					name = "cmdline"
 				},
 				lazydev = {
-					name = "LazyDev", -- FIX: make it work
+					name = "LazyDev",
 					module = "lazydev.integrations.blink"
 				},
 				path = {
@@ -2213,7 +2215,6 @@ addPlugin {
 					module = "blink-ripgrep", -- FIX: exclude current file
 					name = "ripgrep",
 					max_items = 5,
-					score_offset = -1,
 					---@module "blink-ripgrep"
 					---@type blink-ripgrep.Options
 					opts = {
@@ -2222,7 +2223,8 @@ addPlugin {
 								max_filesize = "300K",
 								search_casing = "--smart-case",
 								ignore_paths = { "C:\\Users\\aloknigam" }
-							}
+							},
+							use = "gitgrep-or-ripgrep"
 						}
 					}
 				},
@@ -5782,7 +5784,7 @@ addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
 	"nvim-mini/mini.surround",
 	config = true,
-	keys = {
+	keys = { -- BUG: does not load properly
 		{ "sa", mode = { "n", "x" }, desc = "Add surrounding" },
 		{ "sd", mode = { "n", "x" }, desc = "Delete surrounding" },
 		{ "sr", mode = { "n", "x" }, desc = "Replace surrounding" }
