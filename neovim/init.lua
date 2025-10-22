@@ -1843,17 +1843,15 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "Shatur/neovim-ayu",           event = "User ayu"        }
 addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
 addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
 addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
--- dark  { "ayu-dark",         "ayu",       }
-light { "catppuccin-mocha", "catppuccin" }
--- dark  { "duskfox",          "nightfox"   }
--- dark  { "kanagawa-wave",    "kanagawa"   }
--- dark  { "tokyonight-storm", "tokyonight" }
+-- dark { "catppuccin-mocha", "catppuccin" }
+dark { "duskfox",          "nightfox"   }
+-- dark { "kanagawa-wave",    "kanagawa"   }
+-- dark { "tokyonight-storm", "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -1956,6 +1954,7 @@ function ColoRand(scheme_index)
 	vim.api.nvim_set_hl(0, "RainbowDelimiterRed"   , { default = true, fg = "#CC241D", ctermfg= "Red"     })
 	vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { default = true, fg = "#B16286", ctermfg= "Magenta" })
 	vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { default = true, fg = "#D79921", ctermfg= "Yellow"  })
+	vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch",     { force = true,   underdashed = true })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2054,14 +2053,11 @@ addPlugin {
 		comment_hl.force = true
 		vim.api.nvim_set_hl(0, "BlinkCmpSource", comment_hl)
 	end,
-	dependencies = {
-		"mikavilpas/blink-ripgrep.nvim",
-		"rafamadriz/friendly-snippets",
-		"xzbdmw/colorful-menu.nvim"
-	},
+	dependencies = { "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
 	---@type blink.cmp.Config
 	opts = {
+		-- FIX: cmdline, insert mappings
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
@@ -2073,11 +2069,11 @@ addPlugin {
 				list = {
 					selection = {
 						auto_insert = true,
-						preselect = false
+						preselect = true
 					}
 				},
 				menu = {
-					auto_show = true,
+					auto_show = false,
 					draw = {
 						columns = {
 							{ "kind_icon" },
@@ -2094,6 +2090,11 @@ addPlugin {
 			},
 		},
 		completion = {
+			accept = {
+				auto_brackets = {
+					enabled = true
+				}
+			},
 			documentation = {
 				auto_show = true,
 				window = {
@@ -2101,12 +2102,16 @@ addPlugin {
 				}
 			},
 			ghost_text = {
-				enabled = true
+				enabled = true,
+				show_with_menu = true,
+				show_with_selection = true,
+				show_without_menu = true,
+				show_without_selection = true
 			},
 			list = {
 				selection = {
 					auto_insert = false,
-					preselect = true
+					preselect = false
 				}
 			},
 			menu = {
@@ -2162,6 +2167,7 @@ addPlugin {
 						},
 						label = {
 							text = function(ctx)
+								-- FEAT: use icon color
 								return require("colorful-menu").blink_components_text(ctx)
 							end,
 							highlight = function(ctx)
@@ -2181,6 +2187,7 @@ addPlugin {
 							end
 						}
 					},
+					cursorline_priority = 0,
 					padding = 0
 				}
 			}
@@ -2206,7 +2213,7 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "buffer", "lazydev", "lsp", "path", "ripgrep", "snippets" },
+			default = { "buffer", "lazydev", "lsp", "path", "ripgrep" },
 			providers = {
 				buffer = {
 					name = "buffer",
@@ -2231,10 +2238,9 @@ addPlugin {
 						return items
 					end
 				},
-				ripgrep = {
+				ripgrep = { -- FIX: icon
 					module = "blink-ripgrep",
 					name = "ripgrep",
-					max_items = 5,
 					---@module "blink-ripgrep"
 					---@type blink-ripgrep.Options
 					opts = {
@@ -2249,24 +2255,13 @@ addPlugin {
 					}
 				},
 				snippets = {
-					name = "snippet",
-					max_items = 5
+					name = "snippet"
 				}
 			}
 		}
 	}
 }
--- snippets
--- FEAT: https://github.com/abeldekat/cmp-mini-snippets
--- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-scissors
--- FEAT: https://github.com/dcampos/nvim-snippy
--- FEAT: https://github.com/garymjr/nvim-snippets
--- FEAT: https://github.com/L3MON4D3/LuaSnip
--- FEAT: https://github.com/Neurarian/snacks-luasnip.nvim
--- FEAT: https://github.com/norcalli/snippets.nvim
--- FEAT: https://github.com/nvim-mini/mini.snippets
--- FEAT: https://github.com/rafamadriz/friendly-snippets
+
 
 -- FEAT: https://github.com/hrsh7th/cmp-omni
 -- FEAT: https://github.com/hrsh7th/nvim-ix
@@ -4008,7 +4003,11 @@ addPlugin {
 		vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", bufopts)
 		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, bufopts)
 
-		vim.lsp.config["basedpyright"] = {
+		vim.lsp.config["*"] = {
+			capabilities = require("blink.cmp").get_lsp_capabilities()
+		}
+
+		vim.lsp.config.basedpyright = {
 			settings = {
 				basedpyright = {
 					analysis = {
@@ -4018,7 +4017,7 @@ addPlugin {
 			},
 		}
 
-		vim.lsp.config["lua_ls"] = {
+		vim.lsp.config.lua_ls = {
 			settings = {
 				Lua = {
 					codeLens = {
@@ -4113,16 +4112,16 @@ addPlugin {
 			enabled = true,
 			position = "overlay",
 			unchecked = {
-				icon = "▕  │", -- FEAT: better icons
+				icon = "    ", -- FEAT: better icons
 			},
 			checked = {
-				icon = "▕  │",
+				icon = "    ",
 				scope_highlight = "RenderMarkdownChecked"
 			},
 			custom = {
 				working = {
 					raw = "[-]",
-					rendered = "▕  │",
+					rendered = "    ",
 					highlight = "RenderMarkdownTodo",
 					scope_highlight = "RenderMarkdownTodo",
 				}
@@ -6265,6 +6264,10 @@ addPlugin {
 -- TODO: github stars
 
 -- REFACTOR: check usages of all plugins to remove bloat
+-- snippets
+-- FEAT: https://github.com/dcampos/nvim-snippy
+-- FEAT: https://github.com/L3MON4D3/LuaSnip
+-- FEAT: https://github.com/rafamadriz/friendly-snippets
 
 require("lazy").setup(plugins, lazy_config)
 ColoRand()
