@@ -1,5 +1,5 @@
 [include]
-    path = ~/light.gitconfig
+    ; path = ~/light.gitconfig
     path = ~/.gitconfig.orig
 
 [fetch]

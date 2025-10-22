@@ -2024,6 +2024,7 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- BUG: fix commandline mapping
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -2057,7 +2058,6 @@ addPlugin {
 	event = { "CmdlineEnter", "InsertEnter" },
 	---@type blink.cmp.Config
 	opts = {
-		-- FIX: cmdline, insert mappings
 		appearance = {
 			use_nvim_cmp_as_default = true
 		},
