@@ -1752,31 +1752,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----Fix LineNr highlight
----@param fg string fg color in hex
-local function fixLineNr(fg)
-	vim.api.nvim_set_hl(0, "LineNr", { fg = fg })
-end
-
----@diagnostic disable-next-line: lowercase-global
-function ayuPost()
-	vim.api.nvim_set_hl(0, "@string.documentation.python", { fg = "#77BB92" })
-	vim.api.nvim_set_hl(0, "CurSearch", { fg = "#FF0000", bg = "#630000"})
-	vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2A3B54" })
-	vim.api.nvim_set_hl(0, "IncSearch", { fg = "#FF0000", underline = true })
-	vim.api.nvim_set_hl(0, "LineNr", { fg = "#4F545D" })
-	vim.api.nvim_set_hl(0, "LineNr", { fg = "#4F545D" })
-	vim.api.nvim_set_hl(0, "LspInlayHint", { link = "Comment" })
-	vim.api.nvim_set_hl(0, "Search", { fg = "#CCAC28", bg = "#450000" })
-	vim.api.nvim_set_hl(0, "Visual", { bg = "#313C47" })
-	vim.api.nvim_set_hl(0, "WinSeparator", { link = "NvimFloat" })
-end
-
----@diagnostic disable-next-line: lowercase-global
-function sonokaiPre()
-	vim.g.sonokai_style = "shusia"
-end
-
 ---@class ColorPlugin
 ---@field [1] string name of colorscheme
 ---@field [2] string event name to trigger
@@ -1844,14 +1819,10 @@ local function lightT(opts)
 end
 
 addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
-addPlugin { "rebelot/kanagawa.nvim",       event = "User kanagawa"   }
-addPlugin { "EdenEast/nightfox.nvim",      event = "User nightfox"   }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
--- dark { "catppuccin-mocha", "catppuccin" }
-dark { "duskfox",          "nightfox"   }
--- dark { "kanagawa-wave",    "kanagawa"   }
--- dark { "tokyonight-storm", "tokyonight" }
+dark { "catppuccin-mocha", "catppuccin" }
+dark { "tokyonight-storm", "tokyonight" }
 
 -- light { "tokyonight-day",     "tokyonight" }
 -- light { "catppuccin-latte", "catppuccin"                                          }
@@ -2024,13 +1995,14 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- BUG: fix commandline mapping
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
 		for key, value in pairs(kind_hl) do
 			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background])
 		end
+		require("blink.cmp").setup(cfg)
+
 		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
 		local original = require("blink.cmp.completion.list").show
 		require("blink.cmp.completion.list").show = function(ctx, items_by_source)
@@ -2046,8 +2018,6 @@ addPlugin {
 			return original(ctx, items_by_source)
 		end
 		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
-
-		require("blink.cmp").setup(cfg)
 
 		local comment_hl = vim.api.nvim_get_hl(0, { name = "Comment" })
 		comment_hl.italic = true
@@ -2069,11 +2039,11 @@ addPlugin {
 				list = {
 					selection = {
 						auto_insert = true,
-						preselect = true
+						preselect = false
 					}
 				},
 				menu = {
-					auto_show = false,
+					auto_show = true,
 					draw = {
 						columns = {
 							{ "kind_icon" },
@@ -2167,10 +2137,10 @@ addPlugin {
 						},
 						label = {
 							text = function(ctx)
-								-- FEAT: use icon color
 								return require("colorful-menu").blink_components_text(ctx)
 							end,
 							highlight = function(ctx)
+								-- FEAT: use icon color
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
