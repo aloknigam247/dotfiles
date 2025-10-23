@@ -1752,6 +1752,12 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- TODO: finalize schemes
+-- Check overrides from catppuccin
+-- configure catppuccin
+-- setup override in catppuccin config
+-- remove ColoRand related codes
+-- load catppuccin from Lazy config
 ---@class ColorPlugin
 ---@field [1] string name of colorscheme
 ---@field [2] string event name to trigger
@@ -1819,12 +1825,9 @@ local function lightT(opts)
 end
 
 addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
-addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
 -- dark { "catppuccin-mocha", "catppuccin" }
--- dark { "tokyonight-storm", "tokyonight" }
 
-light { "tokyonight-day",   "tokyonight" }
 light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
@@ -2132,7 +2135,7 @@ addPlugin {
 								return " " .. getIcon(ctx)
 							end,
 							highlight = function(ctx)
-								return ctx._icon_hl and ctx._icon_hl or ctx.kind_hl
+								return ctx._icon_hl or ctx.kind_hl
 							end
 						},
 						label = {
@@ -2140,7 +2143,6 @@ addPlugin {
 								return require("colorful-menu").blink_components_text(ctx)
 							end,
 							highlight = function(ctx)
-								-- FEAT: use icon color
 								return require("colorful-menu").blink_components_highlight(ctx)
 							end,
 						},
@@ -2168,7 +2170,12 @@ addPlugin {
 			["<Up>"] = { "select_prev", "fallback" },
 			["<Left>"] = {},
 			["<Right>"] = {},
-			["<Tab>"] = { "accept", "fallback" }
+			["<Tab>"] = {
+				function(cmp)
+					return cmp.is_visible() and cmp.accept({ index = cmp.get_selected_item_idx() or 1 })
+				end,
+				"fallback"
+			}
 		},
 		signature = {
 			enabled = true,
@@ -4745,12 +4752,6 @@ addPlugin {
 						icon = { "󰴑", color = { fg = "#963484" }},
 						padding = { left = 0, right = 1 },
 						separator = ""
-					},
-					{
-						function() return vim.g.ColoRand end,
-						color = { fg = GetFgOrFallback("Number", "#F2F230"), gui ="bold" },
-						icon = {"", color = { fg = string.format("#%X", vim.api.nvim_get_hl(0, { name = "Function", link = false }).fg)}},
-						padding = { left = 0, right = 1 }
 					},
 					{
 						"diagnostics",
