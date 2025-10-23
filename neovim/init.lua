@@ -1603,11 +1603,6 @@ addPlugin {
 
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
-
-		local hl = { bg = adaptiveBG(40, -10), underline = true }
-		vim.api.nvim_set_hl(0, "IlluminatedWordText", hl)
-		vim.api.nvim_set_hl(0, "IlluminatedWordRead", hl)
-		vim.api.nvim_set_hl(0, "IlluminatedWordWrite", hl)
 	end,
 	event = { "CursorHold" }
 }
@@ -1753,6 +1748,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: finalize schemes
+-- check all color overrides
 -- remove ColoRand related codes
 -- Check overrides from catppuccin
 -- configure catppuccin
@@ -1899,14 +1895,6 @@ function ColoRand(scheme_index)
 		applyColorscheme(scheme_index)
 	end
 
-	-- fix Todo highlight
-	local todo_hl --[[@as vim.api.keyset.highlight]] = vim.api.nvim_get_hl(0, { name = "Todo", create = false })
-	if todo_hl and todo_hl.bg then
-		todo_hl.fg = todo_hl.bg
-		todo_hl.bg = nil
-		vim.api.nvim_set_hl(0, "Todo", todo_hl)
-	end
-
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
@@ -1917,17 +1905,6 @@ function ColoRand(scheme_index)
 	else
 		require("mini.misc").setup_termbg_sync()
 	end
-
-	-- set highlights
-	vim.api.nvim_set_hl(0, "MatchParen", { reverse = true })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterBlue"  , { default = true, fg = "#458588", ctermfg= "Blue"    })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterCyan"  , { default = true, fg = "#A89984", ctermfg= "Cyan"    })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterGreen" , { default = true, fg = "#689D6A", ctermfg= "Green"   })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { default = true, fg = "#D65D0E", ctermfg= "White"   })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterRed"   , { default = true, fg = "#CC241D", ctermfg= "Red"     })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { default = true, fg = "#B16286", ctermfg= "Magenta" })
-	vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { default = true, fg = "#D79921", ctermfg= "Yellow"  })
-	vim.api.nvim_set_hl(0, "BlinkCmpLabelMatch",     { force = true,   underdashed = true })
 end
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -2000,8 +1977,9 @@ addPlugin {
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
+		-- TODO: remove unwanted highlights
 		for key, value in pairs(kind_hl) do
-			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background])
+			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background], { default = true })
 		end
 		require("blink.cmp").setup(cfg)
 
