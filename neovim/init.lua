@@ -1753,11 +1753,10 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: finalize schemes
+-- remove ColoRand related codes
 -- Check overrides from catppuccin
 -- configure catppuccin
 -- setup override in catppuccin config
--- remove ColoRand related codes
--- load catppuccin from Lazy config
 ---@class ColorPlugin
 ---@field [1] string name of colorscheme
 ---@field [2] string event name to trigger
@@ -6241,6 +6240,6 @@ addPlugin {
 -- FEAT: https://github.com/rafamadriz/friendly-snippets
 
 require("lazy").setup(plugins, lazy_config)
-ColoRand()
+vim.cmd.colorscheme("catppuccin")
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
