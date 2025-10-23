@@ -1821,11 +1821,11 @@ end
 addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
 addPlugin { "folke/tokyonight.nvim",       event = "User tokyonight" }
 
-dark { "catppuccin-mocha", "catppuccin" }
-dark { "tokyonight-storm", "tokyonight" }
+-- dark { "catppuccin-mocha", "catppuccin" }
+-- dark { "tokyonight-storm", "tokyonight" }
 
--- light { "tokyonight-day",     "tokyonight" }
--- light { "catppuccin-latte", "catppuccin"                                          }
+light { "tokyonight-day",   "tokyonight" }
+light { "catppuccin-latte", "catppuccin"                                          }
 -- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
 
 ---Random colorscheme
