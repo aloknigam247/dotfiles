@@ -1748,10 +1748,10 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: finalize schemes
--- configure catppuccin
 -- remove ColoRand related codes
 -- Check overrides from catppuccin
 -- setup override in catppuccin config
+-- FIX: tiny-inline-diagnostic
 ---@class ColorPlugin
 ---@field [1] string name of colorscheme
 ---@field [2] string event name to trigger
@@ -1822,7 +1822,23 @@ addPlugin {
 	"catppuccin/nvim",
 	event = "User catppuccin",
 	main = "catppuccin",
-	opts = {}
+	opts = {
+		background = {
+			light = "latte",
+			dark = "mocha"
+		},
+		transparent_background = true,
+		float = {
+			transparent = true,
+			solid = true
+		},
+		term_colors = false,
+		auto_integrations = true,
+	},
+	config = function(plugin, cfg)
+		vim.g.neovide_normal_opacity = os.getenv("TRANSPARENCY") and 0.7 or 1
+		require(plugin.main).setup(cfg)
+	end
 }
 
 -- dark { "catppuccin-mocha", "catppuccin" }
@@ -1883,7 +1899,6 @@ function ColoRand(scheme_index)
 
 		-- apply colorscheme
 		vim.cmd.colorscheme(scheme)
-		vim.cmd("highlight clear CursorLine")
 
 		-- run post colorscheme
 		local postcmd = _G[root .. "Post"]
@@ -1903,6 +1918,7 @@ function ColoRand(scheme_index)
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
 
+	-- FIX: me
 	-- override neovide title color
 	if vim.fn.exists("g:neovide") == 1 then
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
