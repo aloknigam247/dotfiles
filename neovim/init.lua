@@ -1747,185 +1747,51 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- TODO: finalize schemes
--- remove ColoRand related codes
--- Check overrides from catppuccin
--- setup override in catppuccin config
--- FIX: tiny-inline-diagnostic
----@class ColorPlugin
----@field [1] string name of colorscheme
----@field [2] string event name to trigger
----@field bg? "dark"|"light" background theme of colorscheme
----@field cfg? table config to pass setup function
----@field post? fun():nil function to call after applying colorscheme
----@field pre? fun():nil function to call before applying colorscheme
----@field trans? boolean enable transparent mode
----List of color plugins
----@type ColorPlugin[]
-local colos = {}
-
----Add a color scheme
----@param opts ColorPlugin Color config
-local function colorPlugin(opts)
-	if opts.cfg then
-		local cfg = opts.cfg
-		local mod
-		if #cfg == 2 then
-			---@diagnostic disable-next-line: need-check-nil
-			mod = cfg[1]
-			---@diagnostic disable-next-line: need-check-nil
-			cfg = cfg[2]
-		else
-			if opts[2] == "_" then
-				mod = opts[1]
-			else
-				mod = opts[2]
-			end
-		end
-
-		opts.pre = function()
-			require(mod).setup(cfg)
-		end
-	end
-	table.insert(colos, opts)
-end
-
----Add a dark plugin
----@param opts ColorPlugin Color config
-local function dark(opts)
-	opts.bg = "dark"
-	colorPlugin(opts)
-end
-
----Add a transparent dark plugin
----@param opts ColorPlugin Color config
-local function darkT(opts)
-	opts.trans = true
-	dark(opts)
-end
-
----Add a light plugin
----@param opts ColorPlugin Color config
-local function light(opts)
-	opts.bg = "light"
-	colorPlugin(opts)
-end
-
----Add a transparent light plugin
----@param opts ColorPlugin Color config
-local function lightT(opts)
-	opts.trans = true
-	light(opts)
-end
-
-addPlugin {
-	"catppuccin/nvim",
-	event = "User catppuccin",
-	main = "catppuccin",
-	opts = {
-		background = {
-			light = "latte",
-			dark = "mocha"
-		},
-		transparent_background = true,
-		float = {
-			transparent = true,
-			solid = true
-		},
-		term_colors = false,
-		auto_integrations = true,
-	},
-	config = function(plugin, cfg)
-		vim.g.neovide_normal_opacity = os.getenv("TRANSPARENCY") and 0.7 or 1
-		require(plugin.main).setup(cfg)
-	end
-}
-
--- dark { "catppuccin-mocha", "catppuccin" }
-
-light { "catppuccin-latte", "catppuccin"                                          }
--- lightT{ "catppuccin-latte", "catppuccin", cfg = { transparent_background = true } }
-
----Random colorscheme
----@param scheme_index? integer Index of colorscheme
-function ColoRand(scheme_index)
-	local function applyColorscheme(scheme_index)
-		-- get random color scheme
-		math.randomseed(os.time())
-		scheme_index = scheme_index or math.random(1, #colos)
-		local selection = colos[scheme_index]
-		local scheme = selection[1]
-		local bg = selection.bg
-		local event = selection[2]
-		-- local precmd = selection.pre
-		-- local postcmd = selection.post
-
-		-- set backgrounds
-		vim.o.background = bg
-		vim.g.neovide_normal_opacity = selection.trans and 0.7 or 1
-
-		local start_time = os.clock()
-
-		-- load colorscheme
-		vim.api.nvim_exec_autocmds("User", { pattern = event == "_" and scheme or event })
-
-		-- configure colorscheme
-		if selection.cfg then
-			local cfg = selection.cfg
-			local mod
-			if #cfg == 2 then
-				---@diagnostic disable-next-line: need-check-nil
-				mod = cfg[1]
-				---@diagnostic disable-next-line: need-check-nil
-				cfg = cfg[2]
-			else
-				if event == "_" then
-					mod = scheme
-				else
-					mod = event
-				end
-			end
-
-			require(mod).setup(cfg)
-		end
-
-		-- run pre colorscheme
-		local root = event == "_" and scheme or event
-		root = root:gsub("-", "")
-		local precmd = _G[root .. "Pre"]
-		if (precmd) then
-			precmd()
-		end
-
-		-- apply colorscheme
-		vim.cmd.colorscheme(scheme)
-
-		-- run post colorscheme
-		local postcmd = _G[root .. "Post"]
-		if (postcmd) then
-			postcmd()
-		end
-
-		local elapsed = string.format(":%.0fms", (os.clock() - start_time)*1000)
-		vim.g.ColoRand = scheme_index .. ":" .. scheme .. ":" .. bg .. ":" .. event .. elapsed
-	end
-
-	if #colos > 0 then
-		applyColorscheme(scheme_index)
-	end
+local function applyColorscheme()
+	vim.cmd.colorscheme("catppuccin")
 
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
 
-	-- FIX: me
-	-- override neovide title color
+	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
+		vim.g.neovide_normal_opacity = os.getenv("TRANSPARENCY") and 0.7 or 1
+		-- FIX: me
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	else
 		require("mini.misc").setup_termbg_sync()
 	end
 end
+
+-- TODO:
+-- FIX: tiny-inline-diagnostic
+-- FIX: change Visual to light blue
+-- FIX: change match paren
+-- FIX: in terminal
+-- FIX: gapp in icon and label in blink comp
+addPlugin {
+	"catppuccin/nvim",
+	event = "VeryLazy",
+	main = "catppuccin",
+	config = function(plugin, cfg)
+		require(plugin.main).setup(cfg)
+		applyColorscheme()
+	end,
+	opts = {
+		background = {
+			light = "latte",
+			dark = "mocha"
+		},
+		transparent_background = os.getenv("TRANSPARENCY"),
+		float = {
+			transparent = true,
+			solid = true
+		},
+		term_colors = false,
+		auto_integrations = true
+	}
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Comments    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -6198,6 +6064,5 @@ addPlugin {
 -- FEAT: https://github.com/rafamadriz/friendly-snippets
 
 require("lazy").setup(plugins, lazy_config)
-vim.cmd.colorscheme("catppuccin")
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
