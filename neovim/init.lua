@@ -1748,10 +1748,9 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- TODO: finalize schemes
--- check all color overrides
+-- configure catppuccin
 -- remove ColoRand related codes
 -- Check overrides from catppuccin
--- configure catppuccin
 -- setup override in catppuccin config
 ---@class ColorPlugin
 ---@field [1] string name of colorscheme
@@ -1819,7 +1818,12 @@ local function lightT(opts)
 	light(opts)
 end
 
-addPlugin { "catppuccin/nvim",             event = "User catppuccin" }
+addPlugin {
+	"catppuccin/nvim",
+	event = "User catppuccin",
+	main = "catppuccin",
+	opts = {}
+}
 
 -- dark { "catppuccin-mocha", "catppuccin" }
 
@@ -1977,10 +1981,6 @@ addPlugin {
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
-		-- TODO: remove unwanted highlights
-		for key, value in pairs(kind_hl) do
-			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. key, value[vim.o.background], { default = true })
-		end
 		require("blink.cmp").setup(cfg)
 
 		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
@@ -2035,8 +2035,8 @@ addPlugin {
 			keymap = {
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
-				["<Left>"] = { "fallback" },
-				["<Right>"] = { "fallback" }
+				["<Left>"] = { },
+				["<Right>"] = { }
 			},
 		},
 		completion = {
@@ -2924,23 +2924,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----Set highlight for markdown headings
--- REFACTOR: still needed for new schemes
-function MarkdownHeadingsHighlight()
-	local title1_hl = vim.api.nvim_get_hl(0, { name = "@text.title.1.markdown", link = false })
-	local title2_hl = vim.api.nvim_get_hl(0, { name = "@text.title.2.markdown", link = false })
-	if title1_hl and title2_hl and title1_hl.fg ~= title2_hl.fg then
-		return
-	end
-
-	local palette = ColorPalette()
-	for i = 1,6 do
-		local hl = { fg = palette[i].fg }
-		vim.api.nvim_set_hl(0, "@text.title." .. i .. ".markdown", hl)
-		vim.api.nvim_set_hl(0, "@text.title." .. i .. ".marker.markdown", hl)
-	end
-end
-
 FileTypeActions = {
 	["NvimTree"] = function(_)
 		vim.cmd("setlocal statuscolumn=")
@@ -2954,7 +2937,6 @@ FileTypeActions = {
 	["markdown"] = function(_)
 		-- FEAT: use tabs in markdown
 		vim.g.table_mode_corner = "|"
-		MarkdownHeadingsHighlight()
 	end,
 	["todo"] = function(_)
 		vim.cmd("set filetype=markdown")
@@ -5285,15 +5267,6 @@ addPlugin {
 		if not isLargeFile() then
 			require("rainbow-delimiters").enable(0)
 		end
-	end,
-	init = function()
-		vim.api.nvim_set_hl(0, "RainbowDelimiterRed"   , { default = true, fg = "#CC241D", ctermfg= "Red"     })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { default = true, fg = "#D65D0E", ctermfg= "White"   })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { default = true, fg = "#D79921", ctermfg= "Yellow"  })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterGreen" , { default = true, fg = "#689D6A", ctermfg= "Green"   })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterCyan"  , { default = true, fg = "#A89984", ctermfg= "Cyan"    })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterBlue"  , { default = true, fg = "#458588", ctermfg= "Blue"    })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { default = true, fg = "#B16286", ctermfg= "Magenta" })
 	end
 }
 
@@ -5571,15 +5544,6 @@ addPlugin {
 			stages = "slide"
 		})
 		vim.notify = notify
-
-		for _, hl_name in ipairs({ "NotifyINFOIcon", "NotifyINFOTitle" }) do
-			local notify_hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false })
-			if notify_hl and notify_hl.fg == 11140968 then
-				notify_hl.fg = "#654DFF"
-				vim.api.nvim_set_hl(0, hl_name, notify_hl)
-			end
-		end
-
 	end
 }
 
