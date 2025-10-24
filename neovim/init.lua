@@ -2169,7 +2169,7 @@ addPlugin {
 		sources = {
 			default = { "buffer", "lazydev", "lsp", "path", "ripgrep" },
 			providers = {
-				buffer = {
+				buffer = { -- FIX: restrict usage
 					name = "buffer",
 					override = {
 						enabled = function() return not require("blink.cmp.sources.lib.utils").in_ex_context({ "substitute", "global", "vglobal" }) end

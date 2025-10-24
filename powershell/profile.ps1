@@ -108,9 +108,12 @@ $dark_palette = @{
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
-$theme = "Light"
+$system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 
-if ($theme -eq "Light") {
+$env:THEME = $system_theme.AppsUseLightTheme -eq 1 ? "light" : "dark"
+$env:TRANSPARENCY = $system_theme.EnableTransparency -eq 1
+
+if ($env:THEME -eq "light") {
     $palette = $light_palette
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
