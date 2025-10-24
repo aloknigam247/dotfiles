@@ -1753,11 +1753,11 @@ local function applyColorscheme()
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
+	vim.api.nvim_set_hl(0, "MatchParen", { reverse = true })
 
 	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
 		vim.g.neovide_normal_opacity = os.getenv("TRANSPARENCY") and 0.7 or 1
-		-- FIX: me
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	else
 		require("mini.misc").setup_termbg_sync()
@@ -1765,11 +1765,9 @@ local function applyColorscheme()
 end
 
 -- TODO:
--- FIX: tiny-inline-diagnostic
--- FIX: change Visual to light blue
--- FIX: change match paren
+-- FIX: priority of colorscheme
+-- FIX: gap in icon and label in blink comp
 -- FIX: in terminal
--- FIX: gapp in icon and label in blink comp
 addPlugin {
 	"catppuccin/nvim",
 	event = "VeryLazy",
