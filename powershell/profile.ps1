@@ -21,110 +21,95 @@ if ($(IsShellInteractive) -eq $false) {
     return
 }
 
-#          ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-#          ┃                       Color palette                       ┃
-#          ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-# LS Colors
-$env:LS_COLORS="rs=0:di=01;34:ln=00;95:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;47:st=37;44:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=00;35:*.md=01;33:*.markdown=01;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36"
-
-# Light theme
-$light_palette = @{
-    cmdline = @{
-        command = "#1E66F5"
-        comment = "#8C8FA1"
-        defaultToken = "#4C4F69"
-        emphasis = "#04A5E5"
-        keyword = "#40A02B"
-        listPrediction = "#E64553"
-        listPredictionSelected = "#E6E9EF"
-        number = "#209FB5"
-        parameter = "#D20F39"
-        selection = "#95AFA4"
-        string = "#CA6702"
-        type = "#8839EF"
-        variable = "#FE640B"
-    }
-    git = @{
-        commit = "#04A5E5"
-        commit_icon = "#1E66F5"
-        contact_bracket = "#DC8A78"
-        head = "#FE640B"
-        message = "#40A02B"
-        timestamp = "#179299"
-        user_email = "#DD7878"
-        user_name = "#D20F39"
-    }
-    prompt = @{
-        dir_icon = @{
-            bg = "#7287FD"
-            fg = "#BBFA0F"
-        }
-        dir_path = "#EFF1F5"
-        git = @{
-            bg = "#DADDE4"
-            branch = "#8839EF"
-            index = "#DF8E1D"
-            sep = "#FFFFFF"
-            stash = "#E64553"
-            sync = "#40a02b"
-            working = "#2B78CA"
-        }
-    }
-}
-
-# Dark theme
-$dark_palette = @{
-    cmdline = @{
-       command = "#9183EC"
-       comment = "#989FCE"
-       defaultToken = "#4C4F69"
-       emphasis = "#ECBA82"
-       keyword = "#F7F4F3"
-       listPrediction = "#C1D37F"
-       listPredictionSelected = "#3C6E71"
-       number = "#F24333"
-       parameter = "#F42C04"
-       selection = "#3C6E71"
-       string = "#E4FF1A"
-       type = "#8839EF"
-       variable = "#FE640B"
-    }
-    prompt = @{
-        dir_icon = @{
-            bg = "#736CED"
-            fg = "#C5D86D"
-        }
-        dir_path = "#FEF9FF"
-        git = @{
-            bg = "#BDBDBD"
-            branch = "#FFFFFF"
-            index = "#FDD649"
-            sep = "#FFFFFF"
-            stash = "#DF5601"
-            sync = "#BBFA0F"
-            working = "#2B78CA"
-        }
-    }
-}
-
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
+$catppuccin_latte = @{
+    Base = "#EFF1F5"
+    Blue = "#1E66F5"
+    Crust = "#DCE0E8"
+    Flamingo = "#DD7878"
+    Green = "#40A02B"
+    Lavender = "#7287FD"
+    Mantle = "#E6E9EF"
+    Maroon = "#E64553"
+    Mauve = "#8839EF"
+    Overlay_0 = "#9CA0B0"
+    Overlay_1 = "#8C8FA1"
+    Overlay_2 = "#7C7F93"
+    Peach = "#FE640B"
+    Pink = "#EA76CB"
+    Red = "#D20F39"
+    Rosewater = "#DC8A78"
+    Sapphire = "#209FB5"
+    Sky = "#04A5E5"
+    Subtext_0 = "#6C6F85"
+    Subtext_1 = "#5C5F77"
+    Surface_0 = "#CCD0DA"
+    Surface_1 = "#BCC0CC"
+    Surface_2 = "#ACB0BE"
+    Teal = "#179299"
+    Text = "#4C4F69"
+    Yellow = "#DF8E1D"
+}
+
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 
 $env:THEME = $system_theme.AppsUseLightTheme -eq 1 ? "light" : "dark"
 $env:TRANSPARENCY = $system_theme.EnableTransparency -eq 1
 
-# FEAT: use catppuccin in bat
 if ($env:THEME -eq "light") {
-    $palette = $light_palette
+    $catppuccin = $catppuccin_latte
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
 } else {
-    $palette = $dark_palette
+    $catppuccin = $catppuccin_mocha
     $bat_theme = "Catppuccin Mocha"
-    $lazygit_theme = "dark.yml"
+    $lazygit_theme = "dark.yml" # FIX:
+}
+
+$palette = @{
+    cmdline = @{
+        command = $catppuccin.Blue
+        comment = $catppuccin.Overlay_1
+        defaultToken = $catppuccin.Text
+        emphasis = $catppuccin.Sky
+        keyword = $catppuccin.Green
+        listPrediction = $catppuccin.Maroon
+        listPredictionSelected = $Catppuccin.Mantle
+        number = $catppuccin.Sapphire
+        parameter = $catppuccin.Red
+        selection = "#95AFA4"
+        string = "#CA6702"
+        type = $catppuccin.Mauv
+        variable = $catppuccin.Peach
+    }
+    git = @{
+        commit = $catppuccin.Sky
+        commit_icon = $catppuccin.Blue
+        contact_bracket = $catppuccin.Rosewater
+        head = $catppuccin.Peach
+        message = $catppuccin.Green
+        timestamp = $catppuccin.Teal
+        user_email = $catppuccin.Flamingo
+        user_name = $catppuccin.Red
+    }
+    prompt = @{
+        dir_icon = @{
+            bg = $catppuccin.Lavender
+            fg = "#BBFA0F"
+        }
+        dir_path = $catppuccin.BASE
+        git = @{
+            bg = "#DADDE4"
+            branch = $catppuccin.Mauve
+            index = $catppuccin.Yellow
+            sep = "#FFFFFF"
+            stash = $catppuccin.Maroon
+            sync = "#40a02b"
+            working = "#2B78CA"
+        }
+    }
 }
 
 $palette.fzf = @{
@@ -135,6 +120,9 @@ $palette.fzf = @{
     prompt = $palette.cmdline.command
     text_fg = $palette.cmdline.defaultToken
 }
+
+# LS Colors
+$env:LS_COLORS="rs=0:di=01;34:ln=00;95:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;47:st=37;44:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=00;35:*.md=01;33:*.markdown=01;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36"
 
 
 # ╭─────────────╮

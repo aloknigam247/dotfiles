@@ -1715,6 +1715,8 @@ addPlugin {
 	}
 }
 
+-- FEAT: add to blink cmp from help file
+-- BUG: if same buffer is split open then it does not open
 addPlugin {
 	"brenoprata10/nvim-highlight-colors",
 	cmd = "HighlightColors",
@@ -1965,6 +1967,7 @@ addPlugin {
 											-- create highlight for extension
 											if icon then
 												local devicon_hl = "DevIcon" .. icon.name
+												-- FIX: no need to reverse
 												vim.api.nvim_set_hl(0, devicon_hl .. "Reverse", { default = true, bg = vim.api.nvim_get_hl(0, { name = devicon_hl }).fg, fg = "#FFFFFF" })
 												_ctx._icon_hl = devicon_hl .. "Reverse"
 
