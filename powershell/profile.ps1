@@ -53,6 +53,35 @@ $catppuccin_latte = @{
     Yellow = "#DF8E1D"
 }
 
+$catppuccin_mocha = @{
+    Base = "#1E1E2E"
+    Blue = "#89B4FA"
+    Crust = "#11111B"
+    Flamingo = "#F2CDCD"
+    Green = "#A6E3A1"
+    Lavender = "#B4BEFE"
+    Mantle = "#181825"
+    Maroon = "#EBA0AC"
+    Mauve = "#CBA6F7"
+    Overlay_0 = "#6C7086"
+    Overlay_1 = "#7F849C"
+    Overlay_2 = "#9399B2"
+    Peach = "#FAB387"
+    Pink = "#F5C2E7"
+    Red = "#F38BA8"
+    Rosewater = "#F5E0DC"
+    Sapphire = "#74C7EC"
+    Sky = "#89DCEB"
+    Subtext_0 = "#A6ADC8"
+    Subtext_1 = "#BAC2DE"
+    Surface_0 = "#313244"
+    Surface_1 = "#45475A"
+    Surface_2 = "#585B70"
+    Teal = "#94E2D5"
+    Text = "#CDD6F4"
+    Yellow = "#F9E2AF"
+}
+
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 
 $env:THEME = $system_theme.AppsUseLightTheme -eq 1 ? "light" : "dark"
@@ -63,7 +92,7 @@ if ($env:THEME -eq "light") {
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
 } else {
-    $catppuccin = $catppuccin_latte
+    $catppuccin = $catppuccin_mocha
     $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml" # FIX:
 }
