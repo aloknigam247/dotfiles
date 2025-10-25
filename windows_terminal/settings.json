@@ -228,7 +228,10 @@
         }
     ],
     "tabWidthMode": "titleLength",
-    "theme": "system",
+    "theme": {
+        "dark": "PowerShell 7 Dark",
+        "light": "PowerShell 7 Light"
+    },
     "themes": 
     [
         {
