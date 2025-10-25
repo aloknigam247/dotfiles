@@ -123,7 +123,7 @@ if ($env:THEME -eq "light") {
     $lazygit_theme = "light.yml"
 } else {
     $palette = $dark_palette
-    $bat_theme = "Visual Studio Dark+"
+    $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml"
 }
 
