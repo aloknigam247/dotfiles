@@ -63,7 +63,7 @@ if ($env:THEME -eq "light") {
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
 } else {
-    $catppuccin = $catppuccin_mocha
+    $catppuccin = $catppuccin_latte
     $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml" # FIX:
 }
