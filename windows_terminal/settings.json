@@ -247,11 +247,11 @@
             },
             "window": 
             {
-                "applicationTheme": "system",
+                "applicationTheme": "dark",
                 "experimental.rainbowFrame": true,
                 "frame": "accent",
                 "unfocusedFrame": "accent",
-                "useMica": true
+                "useMica": false
             }
         }
     ],
