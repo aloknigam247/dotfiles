@@ -655,12 +655,13 @@ function promptGen($separator, $segments) {
 #     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 # }
 
-if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
-    Set-PSReadLineOption -Colors @{
-        "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
-        "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
-    }
-}
+# FIX: configure
+# if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+#     Set-PSReadLineOption -Colors @{
+#         "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
+#         "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
+#     }
+# }
 
 Set-PSReadLineOption -ContinuationPrompt "... "
 
