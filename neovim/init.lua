@@ -285,7 +285,7 @@ local icons = {
 	StaticMethod       = "󰡱 ",
 	String             = " ",
 	Struct             = " ",
-	Text               = "󱄽 ",
+	Text               = "󱄽",
 	TypeAlias          = " ",
 	TypeParameter      = " ",
 	Unit               = " ",
@@ -1765,13 +1765,13 @@ local function applyColorscheme()
 end
 
 -- TODO:
--- FIX: priority of colorscheme
--- FIX: gap in icon and label in blink comp
 -- FIX: in terminal
 addPlugin {
 	"catppuccin/nvim",
-	event = "VeryLazy",
+	-- event = "VeryLazy",
 	main = "catppuccin",
+	priority = 100,
+	lazy = false,
 	config = function(plugin, cfg)
 		require(plugin.main).setup(cfg)
 		applyColorscheme()
@@ -1949,7 +1949,7 @@ addPlugin {
 				auto_show = true,
 				draw = {
 					columns = {
-						{ "kind_icon" }, { "label" }, { "source_name" }
+						{ "kind_icon", "label", gap = 1 }, { "source_name" }
 					},
 					components = {
 						kind_icon = {
@@ -2097,8 +2097,6 @@ addPlugin {
 }
 
 
--- FEAT: https://github.com/hrsh7th/cmp-omni
--- FEAT: https://github.com/hrsh7th/nvim-ix
 -- FEAT: https://github.com/tzachar/cmp-fuzzy-path
 -- FEAT: https://github.com/uga-rosa/cmp-dynamic
 -- BUG: "\" does not complete
