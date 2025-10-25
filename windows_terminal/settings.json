@@ -228,7 +228,7 @@
         }
     ],
     "tabWidthMode": "titleLength",
-    "theme": "Custom",
+    "theme": "system",
     "themes": 
     [
         {
@@ -248,7 +248,7 @@
             "window": 
             {
                 "applicationTheme": "dark",
-                "experimental.rainbowFrame": true,
+                "experimental.rainbowFrame": false,
                 "frame": "accent",
                 "unfocusedFrame": "accent",
                 "useMica": false
