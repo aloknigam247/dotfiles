@@ -78,6 +78,7 @@ $dark_palette = @{
     cmdline = @{
        command = "#9183EC"
        comment = "#989FCE"
+       defaultToken = "#4C4F69"
        emphasis = "#ECBA82"
        keyword = "#F7F4F3"
        listPrediction = "#C1D37F"
@@ -86,6 +87,8 @@ $dark_palette = @{
        parameter = "#F42C04"
        selection = "#3C6E71"
        string = "#E4FF1A"
+       type = "#8839EF"
+       variable = "#FE640B"
     }
     prompt = @{
         dir_icon = @{
