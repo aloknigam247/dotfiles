@@ -1,11 +1,9 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
-    [
+    "actions": [
         {
-            "command": 
-            {
+            "command": {
                 "action": "copy",
                 "singleLine": false
             },
@@ -16,8 +14,7 @@
             "id": "User.find"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
@@ -29,8 +26,7 @@
             "id": "User.toggleFocusMode"
         },
         {
-            "command": 
-            {
+            "command": {
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
@@ -41,8 +37,7 @@
     "copyFormatting": "rtf",
     "copyOnSelect": true,
     "defaultProfile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
-    "keybindings": 
-    [
+    "keybindings": [
         {
             "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
@@ -89,8 +84,7 @@
         }
     ],
     "minimizeToNotificationArea": true,
-    "newTabMenu": 
-    [
+    "newTabMenu": [
         {
             "icon": null,
             "profile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
@@ -100,27 +94,23 @@
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
-    {
-        "defaults": 
-        {
+    "profiles": {
+        "defaults": {
             "adjustIndistinguishableColors": "indexed",
             "altGrAliasing": true,
             "antialiasingMode": "grayscale",
             "backgroundImage": null,
             "backgroundImageOpacity": 0.33,
-            "bellStyle": 
-            [
+            "bellStyle": [
                 "audible",
                 "window",
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "PowerShell 7 Light",
+            "colorScheme": "Tango Dark",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
-            "font": 
-            {
+            "font": {
                 "face": "JetBrainsMono Nerd Font",
                 "size": 14
             },
@@ -131,8 +121,7 @@
             "showMarksOnScrollbar": true,
             "useAcrylic": true
         },
-        "list": 
-        [
+        "list": [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -158,10 +147,7 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": 
-                {
-                    "light": "PowerShell 7 Light"
-                },
+                "colorScheme": "Catppuccin Mocha",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
@@ -178,75 +164,93 @@
         ]
     },
     "rendering.disablePartialInvalidation": true,
-    "schemes": 
-    [
-        {
-            "background": "#000000",
-            "black": "#000000",
-            "blue": "#009ED1",
-            "brightBlack": "#767676",
-            "brightBlue": "#00A6FB",
-            "brightCyan": "#68D8D6",
-            "brightGreen": "#16C60C",
-            "brightPurple": "#B4009E",
-            "brightRed": "#E74856",
-            "brightWhite": "#F2F2F2",
-            "brightYellow": "#FFB700",
-            "cursorColor": "#D7F23A",
-            "cyan": "#07BEB8",
-            "foreground": "#CCCCCC",
-            "green": "#14AD0F",
-            "name": "PowerShell 7 Dark",
-            "purple": "#9B1AAD",
-            "red": "#C50F1F",
-            "selectionBackground": "#757575",
-            "white": "#CCCCCC",
-            "yellow": "#FF8800"
-        },
+    "schemes": [
         {
             "background": "#EFF1F5",
-            "black": "#383A42",
-            "blue": "#0184BC",
-            "brightBlack": "#4F525D",
-            "brightBlue": "#5AA2DE",
-            "brightCyan": "#56B5C1",
-            "brightGreen": "#50A14F",
-            "brightPurple": "#C577DD",
-            "brightRed": "#DF6C75",
-            "brightWhite": "#FFFFFF",
-            "brightYellow": "#FFCF70",
+            "black": "#5C5F77",
+            "blue": "#1E66F5",
+            "brightBlack": "#ACB0BE",
+            "brightBlue": "#1E66F5",
+            "brightCyan": "#179299",
+            "brightGreen": "#40A02B",
+            "brightPurple": "#EA76CB",
+            "brightRed": "#D20F39",
+            "brightWhite": "#BCC0CC",
+            "brightYellow": "#DF8E1D",
             "cursorColor": "#DC8A78",
-            "cyan": "#0997B3",
+            "cyan": "#179299",
             "foreground": "#4C4F69",
-            "green": "#068A12",
-            "name": "PowerShell 7 Light",
-            "purple": "#A626A4",
-            "red": "#E45649",
+            "green": "#40A02B",
+            "name": "Catppuccin Latte",
+            "purple": "#EA76CB",
+            "red": "#D20F39",
             "selectionBackground": "#ACB0BE",
-            "white": "#FAFAFA",
-            "yellow": "#FFB41F"
+            "white": "#ACB0BE",
+            "yellow": "#DF8E1D"
+        },
+        {
+            "background": "#1E1E2E",
+            "black": "#45475A",
+            "blue": "#89B4FA",
+            "brightBlack": "#585B70",
+            "brightBlue": "#89B4FA",
+            "brightCyan": "#94E2D5",
+            "brightGreen": "#A6E3A1",
+            "brightPurple": "#F5C2E7",
+            "brightRed": "#F38BA8",
+            "brightWhite": "#A6ADC8",
+            "brightYellow": "#F9E2AF",
+            "cursorColor": "#F5E0DC",
+            "cyan": "#94E2D5",
+            "foreground": "#CDD6F4",
+            "green": "#A6E3A1",
+            "name": "Catppuccin Mocha",
+            "purple": "#F5C2E7",
+            "red": "#F38BA8",
+            "selectionBackground": "#585B70",
+            "white": "#BAC2DE",
+            "yellow": "#F9E2AF"
         }
     ],
     "tabWidthMode": "titleLength",
-    "theme": "system",
-    "themes": 
-    [
+    "theme": {
+        "dark": "Catppuccin Mocha",
+        "light": "Catppuccin Latte"
+    },
+    "themes": [
         {
-            "name": "Custom",
-            "tab": 
-            {
-                "background": "terminalBackground",
+            "name": "Catppuccin Latte",
+            "tab": {
+                "background": "accent",
                 "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": "terminalBackground"
             },
-            "tabRow": 
-            {
-                "background": "#CFD209FF",
-                "unfocusedBackground": "#CF3636FF"
+            "tabRow": {
+                "background": "terminalBackground",
+                "unfocusedBackground": "terminalBackground"
             },
-            "window": 
-            {
+            "window": {
+                "applicationTheme": "light",
+                "experimental.rainbowFrame": false,
+                "frame": "accent",
+                "unfocusedFrame": "accent",
+                "useMica": false
+            }
+        },
+        {
+            "name": "Catppuccin Mocha",
+            "tab": {
+                "background": "accent",
+                "iconStyle": "default",
+                "showCloseButton": "always",
+                "unfocusedBackground": "terminalBackground"
+            },
+            "tabRow": {
+                "background": "terminalBackground",
+                "unfocusedBackground": "terminalBackground"
+            },
+            "window": {
                 "applicationTheme": "dark",
                 "experimental.rainbowFrame": false,
                 "frame": "accent",
