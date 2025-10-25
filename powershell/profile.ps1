@@ -283,7 +283,8 @@ function gc {
 
 Remove-Item -Force alias:gl -ErrorAction SilentlyContinue
 function gl {
-    git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
+    # FEAT: configure
+    # git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }
 
 function gs {
@@ -475,7 +476,8 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 # https://minsw.github.io/fzf-color-picker/
-$env:FZF_DEFAULT_OPTS="--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=fg:$($palette.fzf.text_fg),bg:-1,hl:#71B7C2 --color=fg+:$($palette.fzf.pointer),bg+:-1,hl+:#A7DAEB --color=info:$($palette.fzf.info),prompt:$($palette.fzf.prompt),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),spinner:#F2F759,header:$($palette.fzf.header)"
+# FEAT: configure
+# $env:FZF_DEFAULT_OPTS="--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=fg:$($palette.fzf.text_fg),bg:-1,hl:#71B7C2 --color=fg+:$($palette.fzf.pointer),bg+:-1,hl+:#A7DAEB --color=info:$($palette.fzf.info),prompt:$($palette.fzf.prompt),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),spinner:#F2F759,header:$($palette.fzf.header)"
 
 # ╭────────────────╮
 # │ Prompt Styling │
@@ -595,71 +597,73 @@ function promptGen($separator, $segments) {
     $ExecutionContext.InvokeCommand.ExpandString($out)
 }
 
-function prompt {
-    # Populate $script values
-    populatePrompt
+# function prompt {
+#     # Populate $script values
+#     populatePrompt
 
-    $separator = @{
-        text = $icons.sep_right
-    }
+#     $separator = @{
+#         text = $icons.sep_right
+#     }
 
-    $segments = @(
-        @{
-            bg = $palette.prompt.dir_icon.bg
-            blocks = @{
-                text = "$script:dir_icon"
-                fg   = $palette.prompt.dir_icon.fg
-            }, @{
-                text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
-                fg     = $palette.prompt.dir_path
-                styles = "bold"
-            }
-        },
-        @{
-            bg = $palette.prompt.git.bg
-            blocks = @{
-                text = "$script:git_branch"
-                fg   = $palette.prompt.git.branch
-                styles = "italic"
-            }, @{
-                text = "$script:git_sep"
-                fg   = $palette.prompt.git.sep
-            }, @{
-                text = "$script:git_working"
-                fg   = $palette.prompt.git.working
-            }, @{
-                text = "$script:git_index"
-                fg   = $palette.prompt.git.index
-            }, @{
-                text = "$script:git_stash"
-                fg   = $palette.prompt.git.stash
-            }, @{
-                text = "$script:git_sync"
-                fg   = $palette.prompt.git.sync
-            }
-            cond = { return $script:git_status -ne $null }
-        }
-    )
+#     # FEAT: configure
+#     $segments = @(
+#         @{
+#             bg = $palette.prompt.dir_icon.bg
+#             blocks = @{
+#                 text = "$script:dir_icon"
+#                 fg   = $palette.prompt.dir_icon.fg
+#             }, @{
+#                 text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
+#                 fg     = $palette.prompt.dir_path
+#                 styles = "bold"
+#             }
+#         },
+#         @{
+#             bg = $palette.prompt.git.bg
+#             blocks = @{
+#                 text = "$script:git_branch"
+#                 fg   = $palette.prompt.git.branch
+#                 styles = "italic"
+#             }, @{
+#                 text = "$script:git_sep"
+#                 fg   = $palette.prompt.git.sep
+#             }, @{
+#                 text = "$script:git_working"
+#                 fg   = $palette.prompt.git.working
+#             }, @{
+#                 text = "$script:git_index"
+#                 fg   = $palette.prompt.git.index
+#             }, @{
+#                 text = "$script:git_stash"
+#                 fg   = $palette.prompt.git.stash
+#             }, @{
+#                 text = "$script:git_sync"
+#                 fg   = $palette.prompt.git.sync
+#             }
+#             cond = { return $script:git_status -ne $null }
+#         }
+#     )
 
-    promptGen $separator $segments
-}
+#     promptGen $separator $segments
+# }
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
-Set-PSReadLineOption -Colors @{
-    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
-    "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment);
-    "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
-    "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
-    "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
-    "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
-    "Member" = (Format-Text -headOnly -styles "italic");
-    "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
-    "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
-    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
-    "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
-    "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
-    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
-}
+# FEAT: configure
+# Set-PSReadLineOption -Colors @{
+#     "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
+#     "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment);
+#     "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
+#     "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
+#     "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
+#     "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
+#     "Member" = (Format-Text -headOnly -styles "italic");
+#     "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
+#     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
+#     "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
+#     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
+#     "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
+#     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
+# }
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     Set-PSReadLineOption -Colors @{
