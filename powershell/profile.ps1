@@ -302,7 +302,6 @@ function gc {
 
 Remove-Item -Force alias:gl -ErrorAction SilentlyContinue
 function gl {
-    # FEAT: configure
     git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }
 
