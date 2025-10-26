@@ -24,6 +24,22 @@ if ($(IsShellInteractive) -eq $false) {
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
+$light_palette = @{
+    dir_icon_fg = "#A6E3A1"
+    git_index = "#ffda1a "
+    git_stash = "#da3e3e"
+    git_sync = "#68d051"
+    git_working = "#1a3eff "
+}
+
+$dark_palette = @{
+    dir_icon_fg = "#12664F"
+    git_index = "#FDD649"
+    git_stash = "#DF5601"
+    git_sync = "#15795F"
+    git_working = "#2B78CA"
+}
+
 $catppuccin_latte = @{
     Base = "#EFF1F5"
     Blue = "#1E66F5"
@@ -90,11 +106,13 @@ $env:TRANSPARENCY = $system_theme.EnableTransparency -eq 1
 $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if ($env:THEME -eq "light") {
     $catppuccin = $catppuccin_latte
+    $color_palette = $light_palette
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
     (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Mocha"', '"colorScheme": "Catppuccin Latte"') | Out-File $terminal_settings
 } else {
     $catppuccin = $catppuccin_mocha
+    $color_palette = $dark_palette
     $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml"
     (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Latte"', '"colorScheme": "Catppuccin Mocha"') | Out-File $terminal_settings
@@ -128,18 +146,18 @@ $palette = @{
     }
     prompt = @{
         dir_icon = @{
-            bg = $catppuccin.Lavender
-            fg = "#BBFA0F" # FIX: me
+            bg = $catppuccin.Blue
+            fg = $color_palette.dir_icon_fg
         }
         dir_path = $catppuccin.BASE
         git = @{
-            bg = "#DADDE4" # FIX: me
-            branch = $catppuccin.Mauve
-            index = $catppuccin.Yellow
+            bg = $catppuccin.Lavender
+            branch = $catppuccin.Crust
+            index = $color_palette.git_index
             sep = "#FFFFFF"
-            stash = $catppuccin.Maroon
-            sync = "#40a02b"
-            working = "#2B78CA"
+            stash = $color_palette.git_stash
+            sync = $color_palette.git_sync
+            working = $color_palette.git_working
         }
     }
 }
@@ -620,55 +638,54 @@ function promptGen($separator, $segments) {
     $ExecutionContext.InvokeCommand.ExpandString($out)
 }
 
-# function prompt {
-#     # Populate $script values
-#     populatePrompt
+function prompt {
+    # Populate $script values
+    populatePrompt
 
-#     $separator = @{
-#         text = $icons.sep_right
-#     }
+    $separator = @{
+        text = $icons.sep_right
+    }
 
-#     # FEAT: configure
-#     $segments = @(
-#         @{
-#             bg = $palette.prompt.dir_icon.bg
-#             blocks = @{
-#                 text = "$script:dir_icon"
-#                 fg   = $palette.prompt.dir_icon.fg
-#             }, @{
-#                 text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
-#                 fg     = $palette.prompt.dir_path
-#                 styles = "bold"
-#             }
-#         },
-#         @{
-#             bg = $palette.prompt.git.bg
-#             blocks = @{
-#                 text = "$script:git_branch"
-#                 fg   = $palette.prompt.git.branch
-#                 styles = "italic"
-#             }, @{
-#                 text = "$script:git_sep"
-#                 fg   = $palette.prompt.git.sep
-#             }, @{
-#                 text = "$script:git_working"
-#                 fg   = $palette.prompt.git.working
-#             }, @{
-#                 text = "$script:git_index"
-#                 fg   = $palette.prompt.git.index
-#             }, @{
-#                 text = "$script:git_stash"
-#                 fg   = $palette.prompt.git.stash
-#             }, @{
-#                 text = "$script:git_sync"
-#                 fg   = $palette.prompt.git.sync
-#             }
-#             cond = { return $script:git_status -ne $null }
-#         }
-#     )
+    $segments = @(
+        @{
+            bg = $palette.prompt.dir_icon.bg
+            blocks = @{
+                text = "$script:dir_icon"
+                fg   = $palette.prompt.dir_icon.fg
+            }, @{
+                text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
+                fg     = $palette.prompt.dir_path
+                styles = "bold"
+            }
+        },
+        @{
+            bg = $palette.prompt.git.bg
+            blocks = @{
+                text = "$script:git_branch"
+                fg   = $palette.prompt.git.branch
+                styles = "italic"
+            }, @{
+                text = "$script:git_sep"
+                fg   = $palette.prompt.git.sep
+            }, @{
+                text = "$script:git_working"
+                fg   = $palette.prompt.git.working
+            }, @{
+                text = "$script:git_index"
+                fg   = $palette.prompt.git.index
+            }, @{
+                text = "$script:git_stash"
+                fg   = $palette.prompt.git.stash
+            }, @{
+                text = "$script:git_sync"
+                fg   = $palette.prompt.git.sync
+            }
+            cond = { return $script:git_status -ne $null }
+        }
+    )
 
-#     promptGen $separator $segments
-# }
+    promptGen $separator $segments
+}
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{

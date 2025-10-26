@@ -1587,7 +1587,7 @@ addPlugin {
 }
 
 addPlugin {
-	"RRethy/vim-illuminate",
+	"RRethy/vim-illuminate", -- BUG: does not highlight over markdown codeblocks
 	config = function()
 		require("illuminate").configure({
 			delay = 400,
@@ -3889,6 +3889,7 @@ addPlugin {
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
 -- "OXY2DEV/markview.nvim"
+-- TODO: revisit config
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
@@ -3917,6 +3918,7 @@ addPlugin {
 		},
 		code = {
 			enabled = true,
+			render_modes = { "n", "v", "V" },
 			sign = false,
 			style = "full",
 			position = "left",
@@ -5219,7 +5221,7 @@ addPlugin {
 			colorpalette = (function()
 				local res = {}
 				for _,v in ipairs(ColorPalette()) do
-					table.insert(res, {fg = v.fg})
+					table.insert(res, { fg = v.fg, underdashed = true })
 				end
 				return res
 			end)(),
@@ -5564,7 +5566,7 @@ addPlugin {
 }
 
 addPlugin {
-	"delphinus/inspect-extmarks.nvim",
+	"delphinus/inspect-extmarks.nvim", -- BUG: not working correctly
 	cmd = "InspectExtmarks",
 	config = true
 }
