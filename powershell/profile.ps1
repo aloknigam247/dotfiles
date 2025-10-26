@@ -93,12 +93,12 @@ if ($env:THEME -eq "light") {
     $catppuccin = $catppuccin_latte
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
-    (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Mocha"', '"colorScheme": "Catppuccin Latte') | Out-File $terminal_settings
+    (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Mocha"', '"colorScheme": "Catppuccin Latte"') | Out-File $terminal_settings
 } else {
     $catppuccin = $catppuccin_mocha
     $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml" # FIX:
-    (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Latte"', '"colorScheme": "Catppuccin Mocha') | Out-File $terminal_settings
+    (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Latte"', '"colorScheme": "Catppuccin Mocha"') | Out-File $terminal_settings
 }
 
 $palette = @{
