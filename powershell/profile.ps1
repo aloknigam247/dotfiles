@@ -113,7 +113,7 @@ $palette = @{
         parameter = $catppuccin.Red
         selection = $catppuccin.Surface0
         string = $catppuccin.Yellow
-        type = $catppuccin.Mauv
+        type = $catppuccin.Mauve
         variable = $catppuccin.Peach
     }
     git = @{
@@ -683,7 +683,7 @@ Set-PSReadLineOption -Colors @{
     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
     "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
-    "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
+    # "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
 
