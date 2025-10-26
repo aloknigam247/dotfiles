@@ -1779,17 +1779,24 @@ addPlugin {
 		applyColorscheme()
 	end,
 	opts = {
+		auto_integrations = true,
 		background = {
 			light = "latte",
 			dark = "mocha"
 		},
-		transparent_background = os.getenv("TRANSPARENCY"),
 		float = {
 			transparent = true,
 			solid = true
 		},
+		transparent_background = os.getenv("TRANSPARENCY"),
 		term_colors = false,
-		auto_integrations = true
+		highlight_overrides = {
+			latte = function(latte)
+				return {
+					Visual = { bg = latte.surface0, style = {} }
+				}
+			end
+		}
 	}
 }
 -- <~>
