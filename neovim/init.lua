@@ -1699,7 +1699,7 @@ addPlugin {
 	config = function()
 		require("todo-comments").setup({
 			colors = todo_colors,
-			highlight = { pattern = [[(KEYWORDS):\W]], multiline = false },
+			highlight = { pattern = [[(KEYWORDS):\W]], multiline = false }, -- FIX: to match keyword in the line end
 			keywords = todo_config,
 			merge_keywords = false
 		})

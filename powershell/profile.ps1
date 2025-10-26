@@ -82,9 +82,8 @@ $catppuccin_mocha = @{
     Yellow = "#F9E2AF"
 }
 
+# get system theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-
-# FEAT: auto change powershell theme
 $env:THEME = $system_theme.AppsUseLightTheme -eq 1 ? "light" : "dark"
 $env:TRANSPARENCY = $system_theme.EnableTransparency -eq 1
 
@@ -97,7 +96,7 @@ if ($env:THEME -eq "light") {
 } else {
     $catppuccin = $catppuccin_mocha
     $bat_theme = "Catppuccin Mocha"
-    $lazygit_theme = "dark.yml" # FIX:
+    $lazygit_theme = "dark.yml" # FIX: 
     (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Latte"', '"colorScheme": "Catppuccin Mocha"') | Out-File $terminal_settings
 }
 
@@ -112,7 +111,7 @@ $palette = @{
         listPredictionSelected = $Catppuccin.Mantle
         number = $catppuccin.Sapphire
         parameter = $catppuccin.Red
-        selection = "#95AFA4"
+        selection = "#95AFA4" # FIX: use catppuccin
         string = "#CA6702"
         type = $catppuccin.Mauv
         variable = $catppuccin.Peach
