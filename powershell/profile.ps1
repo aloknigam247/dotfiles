@@ -129,11 +129,11 @@ $palette = @{
     prompt = @{
         dir_icon = @{
             bg = $catppuccin.Lavender
-            fg = "#BBFA0F"
+            fg = "#BBFA0F" # FIX: me
         }
         dir_path = $catppuccin.BASE
         git = @{
-            bg = "#DADDE4"
+            bg = "#DADDE4" # FIX: me
             branch = $catppuccin.Mauve
             index = $catppuccin.Yellow
             sep = "#FFFFFF"
