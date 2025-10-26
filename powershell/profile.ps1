@@ -103,18 +103,18 @@ if ($env:THEME -eq "light") {
 $palette = @{
     cmdline = @{
         command = $catppuccin.Blue
-        comment = $catppuccin.Overlay1
+        comment = $catppuccin.Subtext0
         defaultToken = $catppuccin.Text
         emphasis = $catppuccin.Sky
-        keyword = $catppuccin.Green
+        keyword = $catppuccin.Mauve
         listPrediction = $catppuccin.Maroon
         listPredictionSelected = $Catppuccin.Mantle
-        number = $catppuccin.Sapphire
+        number = $catppuccin.Peach
         parameter = $catppuccin.Red
         selection = $catppuccin.Surface0
-        string = $catppuccin.Yellow
-        type = $catppuccin.Mauve
-        variable = $catppuccin.Peach
+        string = $catppuccin.Green
+        type = $catppuccin.Sapphire
+        variable = $catppuccin.Rosewater
     }
     git = @{
         commit = $catppuccin.Sky
