@@ -34,20 +34,20 @@ $catppuccin_latte = @{
     Mantle = "#E6E9EF"
     Maroon = "#E64553"
     Mauve = "#8839EF"
-    Overlay_0 = "#9CA0B0"
-    Overlay_1 = "#8C8FA1"
-    Overlay_2 = "#7C7F93"
+    Overlay0 = "#9CA0B0"
+    Overlay1 = "#8C8FA1"
+    Overlay2 = "#7C7F93"
     Peach = "#FE640B"
     Pink = "#EA76CB"
     Red = "#D20F39"
     Rosewater = "#DC8A78"
     Sapphire = "#209FB5"
     Sky = "#04A5E5"
-    Subtext_0 = "#6C6F85"
-    Subtext_1 = "#5C5F77"
-    Surface_0 = "#CCD0DA"
-    Surface_1 = "#BCC0CC"
-    Surface_2 = "#ACB0BE"
+    Subtext0 = "#6C6F85"
+    Subtext1 = "#5C5F77"
+    Surface0 = "#CCD0DA"
+    Surface1 = "#BCC0CC"
+    Surface2 = "#ACB0BE"
     Teal = "#179299"
     Text = "#4C4F69"
     Yellow = "#DF8E1D"
@@ -63,20 +63,20 @@ $catppuccin_mocha = @{
     Mantle = "#181825"
     Maroon = "#EBA0AC"
     Mauve = "#CBA6F7"
-    Overlay_0 = "#6C7086"
-    Overlay_1 = "#7F849C"
-    Overlay_2 = "#9399B2"
+    Overlay0 = "#6C7086"
+    Overlay1 = "#7F849C"
+    Overlay2 = "#9399B2"
     Peach = "#FAB387"
     Pink = "#F5C2E7"
     Red = "#F38BA8"
     Rosewater = "#F5E0DC"
     Sapphire = "#74C7EC"
     Sky = "#89DCEB"
-    Subtext_0 = "#A6ADC8"
-    Subtext_1 = "#BAC2DE"
-    Surface_0 = "#313244"
-    Surface_1 = "#45475A"
-    Surface_2 = "#585B70"
+    Subtext0 = "#A6ADC8"
+    Subtext1 = "#BAC2DE"
+    Surface0 = "#313244"
+    Surface1 = "#45475A"
+    Surface2 = "#585B70"
     Teal = "#94E2D5"
     Text = "#CDD6F4"
     Yellow = "#F9E2AF"
@@ -96,14 +96,14 @@ if ($env:THEME -eq "light") {
 } else {
     $catppuccin = $catppuccin_mocha
     $bat_theme = "Catppuccin Mocha"
-    $lazygit_theme = "dark.yml" # FIX: 
+    $lazygit_theme = "dark.yml"
     (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Latte"', '"colorScheme": "Catppuccin Mocha"') | Out-File $terminal_settings
 }
 
 $palette = @{
     cmdline = @{
         command = $catppuccin.Blue
-        comment = $catppuccin.Overlay_1
+        comment = $catppuccin.Overlay1
         defaultToken = $catppuccin.Text
         emphasis = $catppuccin.Sky
         keyword = $catppuccin.Green
@@ -111,8 +111,8 @@ $palette = @{
         listPredictionSelected = $Catppuccin.Mantle
         number = $catppuccin.Sapphire
         parameter = $catppuccin.Red
-        selection = "#95AFA4" # FIX: use catppuccin
-        string = "#CA6702"
+        selection = $catppuccin.Surface0
+        string = $catppuccin.Yellow
         type = $catppuccin.Mauv
         variable = $catppuccin.Peach
     }
@@ -286,6 +286,7 @@ function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 function docs { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work" | Set-Location }
 
 # ─[ Git functions ]───────────────────────────────────────────────────
+# FIX: delta colors
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
 function gc {
     git checkout $args

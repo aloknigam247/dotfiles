@@ -3367,6 +3367,7 @@ addPlugin {
 -- FEAT: https://github.com/gwinn/none-ls-jsonlint.nvim
 
 -- FEAT: https://github.com/p00f/clangd_extensions.nvim
+-- FEAT: https://github.com/Davidyz/inlayhint-filler.nvim
 
 addPlugin {
 	-- FEAT: https://github.com/oribarilan/lensline.nvim
@@ -3426,6 +3427,8 @@ addPlugin {
 	dependencies = "nvim-telescope/telescope.nvim"
 }
 
+-- FIX: hover doc float border highliggt
+-- FIX: hover doc checks from all LSP, disable for ruff
 addPlugin {
 	"glepnir/lspsaga.nvim",
 	cmd = "Lspsaga",

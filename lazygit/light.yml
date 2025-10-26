@@ -1,23 +1,23 @@
 gui:
-  authorColors: {'Alok Nigam': '#7371FC'}
-  branchColors: {'master': '#89FC00', 'main': '#89FC00'}
+  authorColors: { "Alok Nigam": "#7287FD" }
+  branchColors: { "master": "#179299", "main": "#179299" }
   theme:
     activeBorderColor:
-      - "#d20f39"
+      - "#D20F39"
       - bold
     inactiveBorderColor:
-      - "#6c6f85"
+      - "#6C6F85"
     optionsTextColor:
-      - "#1e66f5"
+      - "#1E66F5"
     selectedLineBgColor:
-      - "#ccd0da"
+      - "#CCD0DA"
     cherryPickedCommitBgColor:
-      - "#bcc0cc"
+      - "#BCC0CC"
     cherryPickedCommitFgColor:
-      - "#d20f39"
+      - "#D20F39"
     unstagedChangesColor:
-      - "#d20f39"
+      - "#D20F39"
     defaultFgColor:
-      - "#4c4f69"
+      - "#4C4F69"
     searchingActiveBorderColor:
-      - "#df8e1d"
+      - "#DF8E1D"
