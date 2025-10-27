@@ -1587,7 +1587,7 @@ addPlugin {
 }
 
 addPlugin {
-	"RRethy/vim-illuminate", -- BUG: does not highlight over markdown codeblocks
+	"RRethy/vim-illuminate",
 	config = function()
 		require("illuminate").configure({
 			delay = 400,
@@ -1689,6 +1689,16 @@ addPlugin {
 }
 
 addPlugin {
+	"KieranCanter/candela.nvim",
+	cmd = "Candela",
+	opts = {
+		syntax_highlighting = {
+			enabled = false
+		}
+	}
+}
+
+addPlugin {
 	"fei6409/log-highlight.nvim",
 	config = true,
 	ft = "log"
@@ -1710,8 +1720,8 @@ addPlugin {
 	end,
 	dependencies = { "luukvbaal/statuscol.nvim" },
 	keys = {
-		{ "[t", function() require("todo-comments").jump_prev() end, desc = "Previous TODO" },
-		{ "]t", function() require("todo-comments").jump_next() end, desc = "Next TODO" }
+		{ "[t", function() require("todo-comments").jump_prev(); vim.cmd("normal! zo") end, desc = "Previous TODO" },
+		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zo") end, desc = "Next TODO" }
 	}
 }
 
