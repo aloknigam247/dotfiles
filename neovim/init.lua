@@ -1867,6 +1867,7 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: frecency support
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
