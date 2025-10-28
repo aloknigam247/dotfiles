@@ -1742,7 +1742,7 @@ addPlugin {
 	"t9md/vim-quickhl",
 	config = function()
 		local colors = {}
-		for _,v in pairs(ColorPalette()) do
+		for _,v in pairs(ColorPalette()) do -- FEAT: Better color pallete
 			local hi = "guifg=" .. v.bg .. " guibg=" .. v.fg
 			table.insert(colors, hi)
 		end
@@ -1774,7 +1774,7 @@ local function applyColorscheme()
 
 	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
-		vim.g.neovide_normal_opacity = os.getenv("TRANSPARENCY") and 0.7 or 1
+		vim.g.neovide_normal_opacity = 0.7
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	else
 		require("mini.misc").setup_termbg_sync()
@@ -1801,7 +1801,7 @@ addPlugin {
 			transparent = true,
 			solid = true
 		},
-		transparent_background = os.getenv("TRANSPARENCY"),
+		transparent_background = true,
 		term_colors = false,
 		highlight_overrides = {
 			latte = function(latte)
@@ -1880,7 +1880,6 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: frecency support
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -1979,7 +1978,10 @@ addPlugin {
 							text = function(ctx)
 								local function getIcon(_ctx)
 									local kind
-									local stat = vim.loop.fs_stat(_ctx.label)
+									local stat = nil
+									if _ctx.item.textEdit ~= nil then
+										stat = vim.loop.fs_stat(_ctx.item.textEdit.newText)
+									end
 									if stat then
 										-- file/path icons
 										if stat.type == "file" then
@@ -1987,11 +1989,7 @@ addPlugin {
 											local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
 											-- create highlight for extension
 											if icon then
-												local devicon_hl = "DevIcon" .. icon.name
-												-- FIX: no need to reverse
-												vim.api.nvim_set_hl(0, devicon_hl .. "Reverse", { default = true, bg = vim.api.nvim_get_hl(0, { name = devicon_hl }).fg, fg = "#FFFFFF" })
-												_ctx._icon_hl = devicon_hl .. "Reverse"
-
+												_ctx._icon_hl = "DevIcon" .. icon.name
 												return icon.icon
 											end
 											kind = "File"
@@ -2045,7 +2043,12 @@ addPlugin {
 				}
 			}
 		},
-		fuzzy = { implementation = "lua" },
+		fuzzy = {
+			implementation = "prefer_rust_with_warning",
+			prebuilt_binaries = {
+				force_version = "v1.7.0"
+			}
+		},
 		keymap = {
 			["<Down>"] = { "select_next", "fallback" },
 			["<Up>"] = { "select_prev", "fallback" },
@@ -2343,7 +2346,7 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"andrewferrier/debugprint.nvim",
+	"andrewferrier/debugprint.nvim", -- FEAT: highlight for debug statements
 	dependencies = { "nvim-mini/mini.comment" },
 	lazy = true,
 	opts = {

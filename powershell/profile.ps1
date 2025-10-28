@@ -101,7 +101,6 @@ $catppuccin_mocha = @{
 # get system theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 $env:THEME = $system_theme.AppsUseLightTheme -eq 1 ? "light" : "dark"
-$env:TRANSPARENCY = $system_theme.EnableTransparency -eq 1
 
 $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if ($env:THEME -eq "light") {
