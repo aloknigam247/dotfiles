@@ -1742,7 +1742,7 @@ addPlugin {
 	"t9md/vim-quickhl",
 	config = function()
 		local colors = {}
-		for _,v in pairs(ColorPalette()) do -- FEAT: Better color pallete
+		for _,v in pairs(ColorPalette()) do
 			local hi = "guifg=" .. v.bg .. " guibg=" .. v.fg
 			table.insert(colors, hi)
 		end
