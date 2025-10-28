@@ -1709,7 +1709,7 @@ addPlugin {
 	config = function()
 		require("todo-comments").setup({
 			colors = todo_colors,
-			highlight = { pattern = [[(KEYWORDS):\W]], multiline = false }, -- FIX: to match keyword in the line end
+			highlight = { pattern = "(KEYWORDS):$?", multiline = false },
 			keywords = todo_config,
 			merge_keywords = false
 		})
@@ -1725,12 +1725,17 @@ addPlugin {
 	}
 }
 
--- FEAT: add to blink cmp from help file
--- BUG: if same buffer is split open then it does not open
 addPlugin {
 	"brenoprata10/nvim-highlight-colors",
 	cmd = "HighlightColors",
-	opts = { render = "virtual", virtual_symbol = "" }
+	opts = {
+		render = "virtual",
+		virtual_symbol = "",
+		enable_hsl = false,
+		enable_hsl_without_function = false,
+		enable_var_usage = false,
+		enable_named_colors = false
+	}
 }
 
 addPlugin {
@@ -1776,8 +1781,6 @@ local function applyColorscheme()
 	end
 end
 
--- TODO:
--- FIX: in terminal
 addPlugin {
 	"catppuccin/nvim",
 	-- event = "VeryLazy",
@@ -2339,12 +2342,6 @@ addPlugin {
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/gergol/cmake-debugger.nvim
--- FEAT:  addPlugin {
--- 	"LiadOz/nvim-dap-repl-highlights",
--- 	config = true
--- }
-
 addPlugin {
 	"andrewferrier/debugprint.nvim",
 	dependencies = { "nvim-mini/mini.comment" },
@@ -2396,89 +2393,26 @@ addPlugin {
 	}
 }
 
--- FEAT: addPlugin {
--- 	"jbyuki/one-small-step-for-vimkind",
--- 	config = function()
--- 		local dap = require("dap")
--- 		dap.configurations.lua = {
--- 			{
--- 				type = "nlua",
--- 				request = "attach",
--- 				name = "Attach to running Neovim instance",
--- 			}
--- 		}
-
--- 		dap.adapters.nlua = function(callback, config)
--- 			---@diagnostic disable-next-line: undefined-field
--- 			callback({ type = "server", host = config.host or "127.0.0.1", port = config.port or 8086 })
--- 		end
--- 	end,
--- 	lazy = true
--- }
-
--- FEAT: addPlugin {
--- 	"mfussenegger/nvim-dap",
--- 	config = function()
--- 		vim.api.nvim_set_keymap("n", "<F8>", [[:lua require("dap").toggle_breakpoint()<CR>]], { noremap = true })
--- 		vim.api.nvim_set_keymap("n", "<F9>", [[:lua require("dap").continue()<CR>]], { noremap = true })
--- 		vim.api.nvim_set_keymap("n", "<F10>", [[:lua require("dap").step_over()<CR>]], { noremap = true })
--- 		vim.api.nvim_set_keymap("n", "<F11>", [[:lua require("dap").step_into()<CR>]], { noremap = true })
--- 		vim.api.nvim_set_keymap("n", "<F12>", [[:lua require("dap.ui.widgets").hover()<CR>]], { noremap = true })
--- 		vim.api.nvim_set_keymap("n", "<F5>", [[:lua require("osv").launch({port = 8086})<CR>]], { noremap = true })
-
--- 		-- vim.cmd[[
--- 		--     nnoremap <silent> <F5> <Cmd>lua require"dap".continue()<CR>
--- 		--     nnoremap <silent> <F10> <Cmd>lua require"dap".step_over()<CR>
--- 		--     nnoremap <silent> <F11> <Cmd>lua require"dap".step_into()<CR>
--- 		--     nnoremap <silent> <F12> <Cmd>lua require"dap".step_out()<CR>
--- 		--     nnoremap <silent> <Leader>b <Cmd>lua require"dap".toggle_breakpoint()<CR>
--- 		--     nnoremap <silent> <Leader>B <Cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>
--- 		--     nnoremap <silent> <Leader>lp <Cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>
--- 		--     nnoremap <silent> <Leader>dr <Cmd>lua require"dap".repl.open()<CR>
--- 		--     nnoremap <silent> <Leader>dl <Cmd>lua require"dap".run_last()<CR>
--- 		-- ]]
-
--- 		vim.api.nvim_set_hl(0, "DapBreakpointFgHl", { fg = "#D21401" })
--- 		vim.api.nvim_set_hl(0, "DapBreakpointBgHl", { bg = "#D21401", fg = "#FFFFFF" })
--- 		vim.api.nvim_set_hl(0, "DapStoppedFgHl", { fg = "#FFBF00" })
--- 		vim.api.nvim_set_hl(0, "DapStoppedBgHl", { bg = "#FFBF00", fg = "#FFFFFF" })
-
--- 		vim.fn.sign_define("DapBreakpoint", { text="", texthl="DapBreakpointFgHl", linehl="DapBreakpointBgHl", numhl="" })
--- 		vim.fn.sign_define("DapBreakpointCondition", { text="", texthl="DapBreakpointFgHl", linehl="", numhl="" })
--- 		vim.fn.sign_define("DapLogPoint", { text="", texthl="", linehl="DapBreakpointFgHl", numhl="" })
--- 		vim.fn.sign_define("DapBreakpointRejected", { text="", texthl="DapBreakpointFgHl", linehl="", numhl="" })
--- 		vim.fn.sign_define("DapStopped", { text="", texthl="DapStoppedFgHl", linehl="DapStoppedBgHl", numhl="" })
--- 	end,
--- 	lazy = true
--- }
-
--- FEAT: https://github.com/ofirgall/goto-breakpoints.nvim
--- FEAT: https://github.com/igorlfs/nvim-dap-view
--- FEAT: addPlugin {
--- 	"rcarriga/nvim-dap-ui",
--- 	config = function()
--- 		require("dapui").setup()
--- 		require("dapui").open()
--- 	end,
--- 	dependencies = {
--- 		"nvim-neotest/nvim-nio"
--- 	}
--- }
-
--- FEAT: https://github.com/PatschD/zippy.nvim
--- FEAT: https://github.com/Weissle/persistent-breakpoints.nvim
--- FEAT: https://github.com/Willem-J-an/nvim-dap-powershell
--- FEAT: https://github.com/Willem-J-an/visidata.nvim
--- FEAT: https://github.com/igorlfs/nvim-dap-view
--- FEAT: https://github.com/jay-babu/mason-nvim-dap.nvim
--- FEAT: https://github.com/jonboh/nvim-dap-rr
--- FEAT: https://github.com/lucaSartore/nvim-dap-exception-breakpoints
--- FEAT: https://github.com/mfussenegger/nvim-dap-python
--- FEAT: https://github.com/nvim-telescope/telescope-dap.nvim
--- FEAT: https://github.com/sakhnik/nvim-gdb
--- FEAT: https://github.com/theHamsta/nvim-dap-virtual-text
--- FEAT: https://github.com/tpope/vim-scriptease
--- FEAT: https://github.com/vim-scripts/Conque-GDB
+-- https://github.com/PatschD/zippy.nvim
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/Willem-J-an/nvim-dap-powershell
+-- https://github.com/Willem-J-an/visidata.nvim
+-- https://github.com/byuki/one-small-step-for-vimkind
+-- https://github.com/carriga/nvim-dap-ui
+-- https://github.com/fussenegger/nvim-dap
+-- https://github.com/gergol/cmake-debugger.nvim
+-- https://github.com/iadOz/nvim-dap-repl-highlights
+-- https://github.com/igorlfs/nvim-dap-view
+-- https://github.com/jay-babu/mason-nvim-dap.nvim
+-- https://github.com/jonboh/nvim-dap-rr
+-- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
+-- https://github.com/mfussenegger/nvim-dap-python
+-- https://github.com/nvim-telescope/telescope-dap.nvim
+-- https://github.com/ofirgall/goto-breakpoints.nvim
+-- https://github.com/sakhnik/nvim-gdb
+-- https://github.com/theHamsta/nvim-dap-virtual-text
+-- https://github.com/tpope/vim-scriptease
+-- https://github.com/vim-scripts/Conque-GDB
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/nvim-mini/mini.doc
