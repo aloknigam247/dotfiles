@@ -573,52 +573,75 @@ LargeFile = {}
 function ColorPalette()
 	if vim.o.background == "light" then
 		return {
-			{ bg = "#000000", fg = "#78B98F" },
-			{ bg = "#FFFFFF", fg = "#2524F9" },
-			{ bg = "#000000", fg = "#FD048F" },
-			{ bg = "#FFFFFF", fg = "#0B6D33" },
-			{ bg = "#000000", fg = "#5AC230" },
-			{ bg = "#000000", fg = "#3D8BB7" },
-			{ bg = "#FFFFFF", fg = "#710C9E" },
-			{ bg = "#000000", fg = "#F38AB6" },
-			{ bg = "#FFFFFF", fg = "#7EC4C8" },
-			{ bg = "#000000", fg = "#EB67F9" },
-			{ bg = "#FFFFFF", fg = "#E49E25" },
-			{ bg = "#000000", fg = "#6D7DDB" },
-			{ bg = "#FFFFFF", fg = "#9B1B5C" },
-			{ bg = "#000000", fg = "#D4A07F" },
-			{ bg = "#FFFFFF", fg = "#5F2E0D" },
-			{ bg = "#000000", fg = "#FD2C3B" },
-			{ bg = "#FFFFFF", fg = "#900E08" },
-			{ bg = "#000000", fg = "#EA6B12" },
-			{ bg = "#FFFFFF", fg = "#05A8AA" },
-			{ bg = "#000000", fg = "#DAA218" },
+			{ bg = "#000000", fg = "#5E11C9" },
+			{ bg = "#FFFFFF", fg = "#C1A800" },
+			{ bg = "#000000", fg = "#3C84D6" },
+			{ bg = "#FFFFFF", fg = "#CB7E21" },
+			{ bg = "#000000", fg = "#32456C" },
+			{ bg = "#000000", fg = "#10C7C2" },
+			{ bg = "#FFFFFF", fg = "#22675C" },
+			{ bg = "#000000", fg = "#76B957" },
+			{ bg = "#FFFFFF", fg = "#385616" },
+			{ bg = "#000000", fg = "#576864" },
+			{ bg = "#FFFFFF", fg = "#157402" },
+			{ bg = "#000000", fg = "#17BF46" },
+			{ bg = "#FFFFFF", fg = "#353AA8" },
+			{ bg = "#000000", fg = "#DA99D9" },
+			{ bg = "#FFFFFF", fg = "#8E0476" },
+			{ bg = "#000000", fg = "#934886" },
+			{ bg = "#FFFFFF", fg = "#CA41B8" },
+			{ bg = "#000000", fg = "#5D4122" },
+			{ bg = "#FFFFFF", fg = "#A02A03" },
+			{ bg = "#000000", fg = "#C42B4F" },
 		}
 	end
 	-- dark mode
 	return {
-		{ bg = "#FFFFFF", fg = "#8138FC" },
-		{ bg = "#000000", fg = "#F3D426" },
-		{ bg = "#000000", fg = "#68AFFC" },
-		{ bg = "#000000", fg = "#FDA547" },
-		{ bg = "#FFFFFF", fg = "#516A9C" },
-		{ bg = "#000000", fg = "#47FAF4" },
-		{ bg = "#000000", fg = "#399283" },
-		{ bg = "#000000", fg = "#A2E67C" },
-		{ bg = "#000000", fg = "#598322" },
-		{ bg = "#000000", fg = "#798B87" },
-		{ bg = "#000000", fg = "#21A708" },
-		{ bg = "#000000", fg = "#44F270" },
-		{ bg = "#FFFFFF", fg = "#565BD9" },
-		{ bg = "#000000", fg = "#FCC2FB" },
-		{ bg = "#FFFFFF", fg = "#C20DA6" },
-		{ bg = "#000000", fg = "#BD7AB4" },
-		{ bg = "#000000", fg = "#FE79EC" },
-		{ bg = "#FFFFFF", fg = "#876341" },
-		{ bg = "#000000", fg = "#DC3C07" },
-		{ bg = "#000000", fg = "#FA557A" },
+		{ bg = "#FFFFFF", fg = "#A46EFF" },
+		{ bg = "#000000", fg = "#F8E879" },
+		{ bg = "#000000", fg = "#9CCBFF" },
+		{ bg = "#000000", fg = "#FFC97E" },
+		{ bg = "#FFFFFF", fg = "#7C8FBA" },
+		{ bg = "#000000", fg = "#8CFFF9" },
+		{ bg = "#000000", fg = "#67B9A9" },
+		{ bg = "#000000", fg = "#C7F5A8" },
+		{ bg = "#000000", fg = "#8AAF52" },
+		{ bg = "#000000", fg = "#A0B1AE" },
+		{ bg = "#000000", fg = "#57DD3C" },
+		{ bg = "#000000", fg = "#86FFAB" },
+		{ bg = "#FFFFFF", fg = "#898CFF" },
+		{ bg = "#000000", fg = "#FFE4FF" },
+		{ bg = "#FFFFFF", fg = "#EA6CD8" },
+		{ bg = "#000000", fg = "#DFABD9" },
+		{ bg = "#000000", fg = "#FFB1F6" },
+		{ bg = "#FFFFFF", fg = "#AF8C6D" },
+		{ bg = "#000000", fg = "#FF7648" },
+		{ bg = "#000000", fg = "#FF99A8" },
 	}
 end
+
+-- Base     |  Light Variant  |  Dark Variant
+-- ---------+-----------------+--------------
+-- #8138FC  |  #A46EFF        |  #5E11C9     
+-- #F3D426  |  #F8E879        |  #C1A800     
+-- #68AFFC  |  #9CCBFF        |  #3C84D6     
+-- #FDA547  |  #FFC97E        |  #CB7E21     
+-- #516A9C  |  #7C8FBA        |  #32456C     
+-- #47FAF4  |  #8CFFF9        |  #10C7C2     
+-- #399283  |  #67B9A9        |  #22675C     
+-- #A2E67C  |  #C7F5A8        |  #76B957     
+-- #598322  |  #8AAF52        |  #385616     
+-- #798B87  |  #A0B1AE        |  #576864     
+-- #21A708  |  #57DD3C        |  #157402     
+-- #44F270  |  #86FFAB        |  #17BF46     
+-- #565BD9  |  #898CFF        |  #353AA8     
+-- #FCC2FB  |  #FFE4FF        |  #DA99D9     
+-- #C20DA6  |  #EA6CD8        |  #8E0476     
+-- #BD7AB4  |  #DFABD9        |  #934886     
+-- #FE79EC  |  #FFB1F6        |  #CA41B8     
+-- #876341  |  #AF8C6D        |  #5D4122     
+-- #DC3C07  |  #FF7648        |  #A02A03     
+-- #FA557A  |  #FF99A8        |  #C42B4F     
 
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
