@@ -573,35 +573,35 @@ LargeFile = {}
 function ColorPalette()
 	if vim.o.background == "light" then
 		return {
-			{ bg = "#000000", fg = "#5E11C9" },
-			{ bg = "#FFFFFF", fg = "#C1A800" },
-			{ bg = "#000000", fg = "#3C84D6" },
-			{ bg = "#FFFFFF", fg = "#CB7E21" },
-			{ bg = "#000000", fg = "#32456C" },
-			{ bg = "#000000", fg = "#10C7C2" },
-			{ bg = "#FFFFFF", fg = "#22675C" },
-			{ bg = "#000000", fg = "#76B957" },
-			{ bg = "#FFFFFF", fg = "#385616" },
-			{ bg = "#000000", fg = "#576864" },
-			{ bg = "#FFFFFF", fg = "#157402" },
-			{ bg = "#000000", fg = "#17BF46" },
-			{ bg = "#FFFFFF", fg = "#353AA8" },
-			{ bg = "#000000", fg = "#DA99D9" },
-			{ bg = "#FFFFFF", fg = "#8E0476" },
-			{ bg = "#000000", fg = "#934886" },
-			{ bg = "#FFFFFF", fg = "#CA41B8" },
-			{ bg = "#000000", fg = "#5D4122" },
-			{ bg = "#FFFFFF", fg = "#A02A03" },
-			{ bg = "#000000", fg = "#C42B4F" },
+			{ bg = "#FFFFFF", fg = "#8543DA" },
+			{ bg = "#000000", fg = "#E0D366" },
+			{ bg = "#000000", fg = "#6CA4E0" },
+			{ bg = "#000000", fg = "#DA9E5D" },
+			{ bg = "#FFFFFF", fg = "#46587B" },
+			{ bg = "#000000", fg = "#35D7D0" },
+			{ bg = "#000000", fg = "#528E84" },
+			{ bg = "#000000", fg = "#94C880" },
+			{ bg = "#FFFFFF", fg = "#5F7C47" },
+			{ bg = "#000000", fg = "#8D9C94" },
+			{ bg = "#000000", fg = "#66C856" },
+			{ bg = "#000000", fg = "#49D176" },
+			{ bg = "#FFFFFF", fg = "#6569C0" },
+			{ bg = "#000000", fg = "#E5B5E1" },
+			{ bg = "#FFFFFF", fg = "#AD3D9D" },
+			{ bg = "#000000", fg = "#B481B4" },
+			{ bg = "#000000", fg = "#D670C8" },
+			{ bg = "#FFFFFF", fg = "#83694C" },
+			{ bg = "#FFFFFF", fg = "#BC573B" },
+			{ bg = "#000000", fg = "#D35F7D" },
 		}
 	end
 	-- dark mode
 	return {
-		{ bg = "#FFFFFF", fg = "#A46EFF" },
+		{ bg = "#000000", fg = "#A46EFF" },
 		{ bg = "#000000", fg = "#F8E879" },
 		{ bg = "#000000", fg = "#9CCBFF" },
 		{ bg = "#000000", fg = "#FFC97E" },
-		{ bg = "#FFFFFF", fg = "#7C8FBA" },
+		{ bg = "#000000", fg = "#7C8FBA" },
 		{ bg = "#000000", fg = "#8CFFF9" },
 		{ bg = "#000000", fg = "#67B9A9" },
 		{ bg = "#000000", fg = "#C7F5A8" },
@@ -609,39 +609,16 @@ function ColorPalette()
 		{ bg = "#000000", fg = "#A0B1AE" },
 		{ bg = "#000000", fg = "#57DD3C" },
 		{ bg = "#000000", fg = "#86FFAB" },
-		{ bg = "#FFFFFF", fg = "#898CFF" },
+		{ bg = "#000000", fg = "#898CFF" },
 		{ bg = "#000000", fg = "#FFE4FF" },
-		{ bg = "#FFFFFF", fg = "#EA6CD8" },
+		{ bg = "#000000", fg = "#EA6CD8" },
 		{ bg = "#000000", fg = "#DFABD9" },
 		{ bg = "#000000", fg = "#FFB1F6" },
-		{ bg = "#FFFFFF", fg = "#AF8C6D" },
+		{ bg = "#000000", fg = "#AF8C6D" },
 		{ bg = "#000000", fg = "#FF7648" },
 		{ bg = "#000000", fg = "#FF99A8" },
 	}
 end
-
--- Base     |  Light Variant  |  Dark Variant
--- ---------+-----------------+--------------
--- #8138FC  |  #A46EFF        |  #5E11C9     
--- #F3D426  |  #F8E879        |  #C1A800     
--- #68AFFC  |  #9CCBFF        |  #3C84D6     
--- #FDA547  |  #FFC97E        |  #CB7E21     
--- #516A9C  |  #7C8FBA        |  #32456C     
--- #47FAF4  |  #8CFFF9        |  #10C7C2     
--- #399283  |  #67B9A9        |  #22675C     
--- #A2E67C  |  #C7F5A8        |  #76B957     
--- #598322  |  #8AAF52        |  #385616     
--- #798B87  |  #A0B1AE        |  #576864     
--- #21A708  |  #57DD3C        |  #157402     
--- #44F270  |  #86FFAB        |  #17BF46     
--- #565BD9  |  #898CFF        |  #353AA8     
--- #FCC2FB  |  #FFE4FF        |  #DA99D9     
--- #C20DA6  |  #EA6CD8        |  #8E0476     
--- #BD7AB4  |  #DFABD9        |  #934886     
--- #FE79EC  |  #FFB1F6        |  #CA41B8     
--- #876341  |  #AF8C6D        |  #5D4122     
--- #DC3C07  |  #FF7648        |  #A02A03     
--- #FA557A  |  #FF99A8        |  #C42B4F     
 
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
@@ -1752,7 +1729,7 @@ addPlugin {
 	"brenoprata10/nvim-highlight-colors",
 	cmd = "HighlightColors",
 	opts = {
-		render = "virtual",
+		render = "background",
 		virtual_symbol = "",
 		enable_hsl = false,
 		enable_hsl_without_function = false,
