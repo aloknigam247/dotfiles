@@ -1766,7 +1766,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local function applyColorscheme()
-	vim.cmd.colorscheme("catppuccin")
+	-- vim.cmd.colorscheme("catppuccin")
 
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
