@@ -247,7 +247,7 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -Er
 
 # ─[ Common ]──────────────────────────────────────────────────────────
 New-Alias -Name "/" -Value C:\Users\aloknigam\scoop\shims\rg.exe -ErrorAction SilentlyContinue
-New-Alias -Name "//" -Value C:\Users\aloknigam\scoop\shims\fd.exe -ErrorAction SilentlyContinue
+New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 
 # ╭───────────────────╮
 # │ Generic Functions │
@@ -257,6 +257,7 @@ Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
+function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
 function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }

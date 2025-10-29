@@ -1109,8 +1109,17 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
---FEAT: use fd in findfunc
--- Set powershell shell
+-- use fd in find command
+vim.cmd[[
+if executable("fd")
+	func FindFiles(cmdarg, cmdcomplete)
+		return systemlist("fd")
+	endfunc
+	set findfunc=FindFiles
+endif
+]]
+
+-- set powershell shell
 vim.cmd([[
 	if has("win32") || has("win64") || has("win16")
 			let &shell = executable("pwsh") ? "pwsh" : "powershell"
@@ -1164,12 +1173,6 @@ vim.highlight.priorities = {
 	diagnostics = 150,
 	user = 200
 }
-
--- Lazy load notify
---[[vim.notify = function(...)
-	require("notify")
-	vim.notify(...)
-end]]
 
 -- Lazy load dressing
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -2088,7 +2091,14 @@ addPlugin {
 					}
 				},
 				cmdline = {
-					name = "cmdline"
+					name = "cmdline",
+					override = {
+						get_trigger_characters = function(self)
+							local triggers = self:get_trigger_characters()
+							table.insert(triggers, "\\")
+							return triggers
+						end
+					}
 				},
 				lazydev = {
 					name = "LazyDev",
@@ -2127,200 +2137,6 @@ addPlugin {
 		}
 	}
 }
--- BUG: "\" does not complete
-
--- TODO: remove them
--- addPlugin {
--- 	"aloknigam247/cmp-path",
--- 	event = "CmdlineChanged"
--- }
-
--- addPlugin {
--- 	"dcampos/cmp-snippy",
--- 	dependencies = "nvim-snippy",
--- 	event = "InsertEnter"
--- }
-
--- addPlugin {
--- 	-- "hrsh7th/cmp-cmdline",
--- 	"iguanacucumber/mag-cmdline",
--- 	name = "cmp-cmdline",
--- 	event = "CmdlineChanged"
--- }
-
--- addPlugin {
--- 	-- "hrsh7th/cmp-nvim-lsp",
--- 	"iguanacucumber/mag-nvim-lsp",
--- 	name = "cmp-nvim-lsp",
--- 	event = "LspAttach"
--- }
-
--- addPlugin {
--- 	-- https://github.com/Saghen/blink.cmp
--- 	-- "hrsh7th/nvim-cmp",
--- 	"iguanacucumber/magazine.nvim",
--- 	name = "nvim-cmp",
--- 	config = function()
--- 		local cmp = require("cmp")
--- 		cmp.setup({
--- 			-- cmp.setup.cmdline(":", {
--- 			-- 	mapping = cmp.mapping.preset.cmdline(),
--- 			-- 	sources = {
--- 			-- 		{
--- 			-- 			name = "path",
--- 			-- 			option = {
--- 			-- 				trailing_slash = true
--- 			-- 			}
--- 			-- 		},
--- 			-- 		{
--- 			-- 			name = "cmdline",
--- 			-- 			option = {
--- 			-- 				-- ignore_cmds = { "split" }
--- 			-- 			}
--- 			-- 		}
--- 			-- 	}
--- 			-- }),
--- 			-- cmp.setup.cmdline({ "/", "?" }, {
--- 			-- 	mapping = cmp.mapping.preset.cmdline(),
--- 			-- 	sources = { { name = "buffer" } }
--- 			-- }),
--- 			autocomplete = false,
--- 			completion = {
--- 				-- completeopt = "menu,menuone,noselect",
--- 				keyword_length = 2
--- 			},
--- 			experimental = {
--- 				ghost_text = true
--- 			},
--- 			formatting = {
--- 				expandable_indicator = true,
--- 				fields = { "kind", "abbr", "menu" },
--- 				format = function(entry, vim_item)
--- 					local source_name = entry.source.name
-
--- 					if entry.source.name == "nvim_lsp" then
--- 						source_name = icons.lsp .. " " .. entry.source.source.client.name
--- 					elseif entry.source.name == "cmdline" then
--- 						vim_item.kind = "Options"
--- 						source_name = "󰸶 options"
--- 					elseif entry.source.name == "cmdline_history" then
--- 						vim_item.kind = "History"
--- 						source_name = "󰋚 history"
--- 					elseif entry.source.name == "path" then
--- 						source_name = " path"
--- 					elseif entry.source.name == "snippy" then
--- 						source_name = " snippet"
--- 					else
--- 						source_name = "󰙩 " .. entry.source.name
--- 					end
--- 					vim_item.menu = source_name
-
--- 					-- setup xzbdmw/colorful-menu.nvim
--- 					local highlights_info = require("colorful-menu").cmp_highlights(entry)
--- 					if highlights_info ~= nil then
--- 						local highlights = highlights_info.highlights
--- 						highlights[1][1] = "CmpItemKindAbbr" .. vim_item.kind
--- 						vim_item.abbr_hl_group = highlights
--- 						vim_item.abbr = highlights_info.text
--- 					else
--- 						vim_item.abbr_hl_group = "CmpItemKindAbbr" .. vim_item.kind
--- 					end
-
--- 					local kind_symbol = " " .. icons[vim_item.kind]
--- 					vim_item.kind = kind_symbol or vim_item.kind
-
--- 					return vim_item
--- 				end
--- 			},
--- 			matching = {
--- 				disallow_fullfuzzy_matching = false,
--- 				disallow_fuzzy_matching = false,
--- 				disallow_partial_fuzzy_matching = false,
--- 				disallow_partial_matching = false,
--- 				disallow_prefix_unmatching = false,
--- 				disallow_symbol_nonprefix_matching = false
--- 			},
--- 			mapping = cmp.mapping.preset.insert({ -- arrow keys + enter to select
--- 				["<C-u>"] = cmp.mapping.scroll_docs(-4), -- Scroll the documentation window if visible
--- 				["<C-d>"] = cmp.mapping.scroll_docs(4), -- Scroll the documentation window if visible
--- 				["<TAB>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),
--- 				["<C-Space>"] = cmp.mapping.abort()
--- 			}),
--- 			preselect = cmp.PreselectMode.Item,
--- 			snippet = {
--- 				expand = function(args)
--- 					require("snippy").expand_snippet(args.body)
--- 				end
--- 			},
--- 			sources = {
--- 				{ name = "render-markdown" },
--- 				{
--- 					name = "nvim_lsp",
--- 					entry_filter = function(entry, _)
--- 						return require("cmp.types").lsp.CompletionItemKind[entry:get_kind()] ~= "Text"
--- 					end
--- 				},
--- 				{
--- 					name = "buffer",
--- 					option = {
--- 						-- https://github.com/hrsh7th/nvim-cmp/wiki/Advanced-techniques#disable--enable-cmp-sources-only-on-certain-buffers
--- 						get_bufnrs = function()
--- 							return vim.api.nvim_list_bufs()
--- 						end
--- 					},
--- 				},
--- 				{
--- 					name = "path",
--- 					trigger_characters = { "./", "/", ".\\" },
--- 					option = {
--- 						trailing_slash = true
--- 					}
--- 				},
--- 				{ name = "snippy" },
--- 				{ name = "lazydev", group_index = 0 }
--- 			},
--- 			window = {
--- 				completion = cmp.config.window.bordered({ border = "none", side_padding = 0 }),
--- 				documentation = cmp.config.window.bordered({ border = dotted_border }),
--- 			},
--- 			view = {
--- 				docs = {
--- 					auto_open = true
--- 				},
--- 				entries = {
--- 					name = "custom",
--- 					follow_cursor = true,
--- 					selection_order = "top_down"
--- 				}
--- 			}
--- 		})
-
--- 		for key, value in pairs(kind_hl) do
--- 			vim.api.nvim_set_hl(0, "CmpItemKind" .. key, value[vim.o.background])
--- 			vim.api.nvim_set_hl(0, "CmpItemKindAbbr" .. key, {fg = value[vim.o.background].bg })
--- 		end
--- 		vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { strikethrough = true })
--- 		vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { bold = true })
--- 		vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { underline = true })
--- 	end,
--- 	dependencies = {
--- 		-- "hrsh7th/cmp-buffer"
--- 		{ "iguanacucumber/mag-buffer", name = "cmp-buffer" }
--- 	},
--- 	event = "VeryLazy",
--- }
-
--- addPlugin {
--- 	"xzbdmw/colorful-menu.nvim"
--- }
-
--- https://github.com/L3MON4D3/cmp-luasnip-choice
--- https://github.com/kristijanhusak/vim-dadbod-completion
--- https://github.com/rcarriga/cmp-dap
--- https://github.com/saadparwaiz1/cmp_luasnip
--- https://github.com/tzachar/cmp-fuzzy-buffer
--- https://github.com/tzachar/cmp-fuzzy-path
--- https://github.com/zbirenbaum/copilot-cmp
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      CSV       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin {
