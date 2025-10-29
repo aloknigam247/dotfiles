@@ -1722,8 +1722,8 @@ addPlugin {
 	end,
 	dependencies = { "luukvbaal/statuscol.nvim" },
 	keys = {
-		{ "[t", function() require("todo-comments").jump_prev(); vim.cmd("normal! zo") end, desc = "Previous TODO" },
-		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zo") end, desc = "Next TODO" }
+		{ "[t", function() require("todo-comments").jump_prev(); vim.cmd("normal! zO") end, desc = "Previous TODO" },
+		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zO") end, desc = "Next TODO" }
 	}
 }
 
@@ -2127,7 +2127,6 @@ addPlugin {
 		}
 	}
 }
--- FEAT: https://github.com/uga-rosa/cmp-dynamic
 -- BUG: "\" does not complete
 
 -- TODO: remove them
