@@ -1109,6 +1109,7 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
+--FEAT: use fd in findfunc
 -- Set powershell shell
 vim.cmd([[
 	if has("win32") || has("win64") || has("win16")
@@ -1766,7 +1767,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 local function applyColorscheme()
-	-- vim.cmd.colorscheme("catppuccin")
+	vim.cmd.colorscheme("catppuccin")
 
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
@@ -1784,7 +1785,6 @@ end
 
 addPlugin {
 	"catppuccin/nvim",
-	-- event = "VeryLazy",
 	main = "catppuccin",
 	priority = 100,
 	lazy = false,
@@ -2127,7 +2127,6 @@ addPlugin {
 		}
 	}
 }
--- FEAT: https://github.com/tzachar/cmp-fuzzy-path
 -- FEAT: https://github.com/uga-rosa/cmp-dynamic
 -- BUG: "\" does not complete
 
