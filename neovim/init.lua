@@ -263,6 +263,7 @@ local icons = {
 	Folder             = "󰷏 ",
 	Fragment           = " ",
 	Function           = " ",
+	Git                = "󰱼",
 	History            = " ",
 	Interface          = " ",
 	Key                = " ",
@@ -281,6 +282,7 @@ local icons = {
 	Path               = " ",
 	Property           = " ",
 	Reference          = " ",
+	Ripgrep            = "󰱼",
 	Snippet            = " ",
 	StaticMethod       = "󰡱 ",
 	String             = " ",
@@ -331,7 +333,6 @@ local icons = {
 	symlink_arrow      = " 壟 ",
 	warn               = " ",
 	warning            = " ",
-	Ripgrep            = "󰱼",
 }
 
 ---Defines highlight for kinds
@@ -2080,7 +2081,8 @@ addPlugin {
 					name = "buffer",
 					override = {
 						enabled = function()
-							return require("blink.cmp.sources.lib.utils").in_ex_context({ "global", "lua", "substitute", "vglobal" })
+							local utils = require("blink.cmp.sources.lib.utils")
+							return not utils.is_command_line() or utils.in_ex_context({ "global", "lua", "substitute", "vglobal" })
 						end
 					}
 				},
@@ -2101,7 +2103,7 @@ addPlugin {
 						return items
 					end
 				},
-				ripgrep = { -- FIX: icon
+				ripgrep = {
 					module = "blink-ripgrep",
 					name = "ripgrep",
 					---@module "blink-ripgrep"
