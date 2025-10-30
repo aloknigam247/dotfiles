@@ -2260,8 +2260,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/A7Lavinraj/fyler.nvim
--- FEAT: https://github.com/nvim-mini/mini.files
 addPlugin {
 	"b0o/nvim-tree-preview.lua",
 	opts = {
