@@ -1677,6 +1677,7 @@ addPlugin {
 					python_doc_raises = { pattern = patternFilter({ filetype = "python", pattern = "Raises:"              }), group = "Statement"  },
 					python_doc_return = { pattern = patternFilter({ filetype = "python", pattern = "Returns:"             }), group = "@keyword"   },
 					python_doc_yield  = { pattern = patternFilter({ filetype = "python", pattern = "Yields:"              }), group = "@keyword"   },
+					python_doc_yield  = { pattern = ".*DEBUGPRINT.*" , group = "DebugPrintLine"   },
 				}
 
 				-- iterate for each config in todo_config
@@ -2163,10 +2164,14 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"andrewferrier/debugprint.nvim", -- FEAT: highlight for debug statements
+	"andrewferrier/debugprint.nvim",
 	dependencies = { "nvim-mini/mini.comment", "nvim-mini/mini.hipatterns" },
 	lazy = true,
 	opts = {
+		commands = {
+			toggle_comment_debug_prints = nil,
+			delete_debug_prints = nil
+		},
 		filetypes = {
 			["python"] = {
 				left = 'print("',
@@ -2196,10 +2201,6 @@ addPlugin {
 				variable_above = "<Leader>dV",
 				surround_variable = "<Leader>dsv"
 			}
-		},
-		commands = {
-			toggle_comment_debug_prints = nil,
-			delete_debug_prints = nil
 		}
 	},
 	config = function(_, cfg)
@@ -2235,7 +2236,6 @@ addPlugin {
 -- https://github.com/vim-scripts/Conque-GDB
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/nvim-mini/mini.doc
 addPlugin {
 	"danymat/neogen",
 	cmd = "Neogen",
@@ -2258,12 +2258,9 @@ addPlugin {
 		snippet_engine = "nvim"
 	}
 }
--- https://github.com/nvim-treesitter/nvim-tree-docs
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/A7Lavinraj/fyler.nvim
--- FEAT: https://github.com/nat-418/scamp.nvim
--- FEAT: https://github.com/nosduco/remote-sshfs.nvim
 -- FEAT: https://github.com/nvim-mini/mini.files
 addPlugin {
 	"b0o/nvim-tree-preview.lua",
