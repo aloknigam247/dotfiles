@@ -1789,6 +1789,7 @@ local function applyColorscheme()
 	end
 end
 
+-- FIX: markdown headings/rainbow
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
