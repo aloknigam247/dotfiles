@@ -1097,11 +1097,11 @@ vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer i
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 vim.keymap.del("n", "<C-w>d")
 -- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- FEAT: word deletion in commandline
 vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" })
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete a word" })
 vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" })
+vim.keymap.set("c", "<C-BS>",  "<C-w>",      { desc = "Delete a word backward" })
 vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
 -- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
@@ -1110,7 +1110,6 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
--- FIX: use fd in find command
 vim.cmd[[
 if executable("fd")
 	func FindFiles(cmdarg, cmdcomplete)
@@ -1789,7 +1788,6 @@ local function applyColorscheme()
 	end
 end
 
--- FIX: markdown headings/rainbow
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
