@@ -364,7 +364,7 @@ local kind_hl = {
 	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#CCD0DA" }},
 	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#1E1E2E" }, light = { fg = "#99C24D", bg = "#CCD0DA" }},
 	Package       = { icon = " ", dark = { fg = "#AFA2FF", bg = "#313244" }, light = { fg = "#B98EA7", bg = "#CCD0DA" }},
-	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#ECBEB4", bg = "#CCD0DA" }},
+	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#DC836F", bg = "#CCD0DA" }},
 	Property      = { icon = " ", dark = { fg = "#CED097", bg = "#313244" }, light = { fg = "#3777FF", bg = "#CCD0DA" }},
 	Reference     = { icon = " ", dark = { fg = "#1B2CC1", bg = "#313244" }, light = { fg = "#18A999", bg = "#CCD0DA" }},
 	Snippet       = { icon = " ", dark = { fg = "#7692FF", bg = "#313244" }, light = { fg = "#BF0D4B", bg = "#CCD0DA" }},
@@ -2164,7 +2164,7 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"andrewferrier/debugprint.nvim", -- FEAT: highlight for debug statements
-	dependencies = { "nvim-mini/mini.comment" },
+	dependencies = { "nvim-mini/mini.comment", "nvim-mini/mini.hipatterns" },
 	lazy = true,
 	opts = {
 		filetypes = {
