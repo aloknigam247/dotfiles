@@ -1097,6 +1097,7 @@ vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer i
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 vim.keymap.del("n", "<C-w>d")
 -- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- FEAT: word deletion in commandline
 vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" })
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete a word" })
 vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
@@ -1109,11 +1110,12 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
--- use fd in find command
+-- FIX: use fd in find command
 vim.cmd[[
 if executable("fd")
 	func FindFiles(cmdarg, cmdcomplete)
-		return systemlist("fd")
+		let fnames = systemlist('git ls-files')
+		return fnames->filter('v:val =~? a:cmdarg')
 	endfunc
 	set findfunc=FindFiles
 endif
@@ -2268,7 +2270,6 @@ addPlugin {
 	}
 }
 
--- FEAT: enable cursorline
 addPlugin {
 	"nvim-tree/nvim-tree.lua",
 	cmd = "NvimTreeOpen",
@@ -2546,9 +2547,9 @@ addPlugin {
 			update_root = false,
 		},
 		view = {
-			adaptive_size = false,
-			centralize_selection = false,
-			cursorline = false,
+			adaptive_size = true,
+			centralize_selection = true,
+			cursorline = true,
 			float = {
 				enable = false,
 				open_win_config = {
