@@ -1064,6 +1064,7 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
+-- FEAT: ctrl movement in visual
 -- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("ca", "sf",  "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
@@ -2634,16 +2635,76 @@ vim.keymap.set("n", "zz", function()
 	end
 	-- vim.cmd("normal! zM")
 	vim.wo.foldlevel = 1
-	function FoldText(a, b, c, d, e)
-		if EMITTED == nil then
-			-- print('DEBUGPRINT[6]: init.lua:2639: EMIITED=' .. vim.inspect(EMIITED))
-			EMIITED = true
-			-- print('DEBUGPRINT[5]: init.lua:2637: a=' .. vim.inspect(a))
-			-- print('DEBUGPRINT[4]: init.lua:2637: b=' .. vim.inspect(b))
-			-- print('DEBUGPRINT[3]: init.lua:2637: c=' .. vim.inspect(c))
-			-- print('DEBUGPRINT[2]: init.lua:2637: d=' .. vim.inspect(d))
-			-- print('DEBUGPRINT[1]: init.lua:2637: e=' .. vim.inspect(e))
+	---Python fold text generator
+	---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
+	---@param lnum number first line number of fold
+	---@param endLnum number last line number of fold
+	---@param width number max width for fold text
+	---@param truncate fun(str: string, width: number): string truncate the str to become specific width
+	---@param ctx UfoFoldVirtTextHandlerContext the context used by ufo, export to caller
+	---@return UfoExtmarkVirtTextChunk[] # Generated fold text
+	local function ufoFoldPython(virtText, lnum, ctx)
+		local function getDoc(cnum, bufnr)
+			local lines = vim.api.nvim_buf_get_lines(bufnr, cnum-1, cnum+2, false)
+			local cur_line = lines[1]
+			local next_line = lines[2]
+
+			-- for
+			-- """
+			if cur_line:find('^%s*[\'"]+$') then
+				if cur_line == next_line then
+					return (" " .. next_line):gsub("%s+", " ")
+				end
+				next_line = next_line:gsub('"""$', ""):gsub("'''$", ""):gsub("%s+$", "")
+				return (next_line .. cur_line):gsub("%s+", " ")
+			end
+
+			-- for
+			-- """ docstring
+			if cur_line:find('^%s*[\'"]+') then
+				return cur_line:gsub('[^"^\']', "")
+			end
+
+			-- for
+			-- code
+			-- """
+			-- docstring
+			if next_line:find('^%s*[\'"]+$') then
+				next_line = lines[3]
+				return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', "")
+			end
+
+			-- for
+			-- code
+			-- """ docstring
+			if next_line:find('^%s*[\'"]+') then
+				return "  " .. next_line:gsub('^%s*[\'"]*', ""):gsub('[%s\'"]*$', "")
+			end
+
+			return nil
 		end
+
+		-- do not show docs in diff mode
+		if vim.wo[ctx.winid].diff == false then
+			local doc_line = getDoc(lnum, ctx.bufnr)
+			if doc_line then
+				table.insert(virtText, { doc_line, "@string.documentation.python" })
+			end
+		end
+	end
+
+	function FoldText()
+		local fold_text = {}
+		local ctx = {
+			bufnr = vim.api.nvim_get_current_buf(),
+			winid = vim.fn.win_getid()
+		}
+		ufoFoldPython(fold_text, vim.v.foldstart, ctx)
+		-- if EMITTED == nil then
+		-- 	EMITTED = true
+		-- 	print('DEBUGPRINT[2]: init.lua:2707: fold_text=' .. vim.inspect(fold_text))
+		-- end
+		return fold_text
 	end
 	vim.cmd("set foldtext=v:lua.FoldText()")
 end, { noremap = true, silent = true, buffer = true })
@@ -2694,65 +2755,6 @@ addPlugin {
 			return newVirtText
 		end
 
-		---Python fold text generator
-		---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
-		---@param lnum number first line number of fold
-		---@param endLnum number last line number of fold
-		---@param width number max width for fold text
-		---@param truncate fun(str: string, width: number): string truncate the str to become specific width
-		---@param ctx UfoFoldVirtTextHandlerContext the context used by ufo, export to caller
-		---@return UfoExtmarkVirtTextChunk[] # Generated fold text
-		local function ufoFoldPython(virtText, lnum, endLnum, width, truncate, ctx)
-			local function getDoc(cnum, bufnr)
-				local lines = vim.api.nvim_buf_get_lines(bufnr, cnum-1, cnum+2, false)
-				local cur_line = lines[1]
-				local next_line = lines[2]
-
-				-- for
-				-- """
-				if cur_line:find('^%s*[\'"]+$') then
-					if cur_line == next_line then
-						return (" " .. next_line):gsub("%s+", " ")
-					end
-					next_line = next_line:gsub('"""$', ""):gsub("'''$", ""):gsub("%s+$", "")
-					return (next_line .. cur_line):gsub("%s+", " ")
-				end
-
-				-- for
-				-- """ docstring
-				if cur_line:find('^%s*[\'"]+') then
-					return cur_line:gsub('[^"^\']', "")
-				end
-
-				-- for
-				-- code
-				-- """
-				-- docstring
-				if next_line:find('^%s*[\'"]+$') then
-					next_line = lines[3]
-					return '  ' .. next_line:gsub('^%s*[\'"]*', ''):gsub('[%s\'"]*$', "")
-				end
-
-				-- for
-				-- code
-				-- """ docstring
-				if next_line:find('^%s*[\'"]+') then
-					return "  " .. next_line:gsub('^%s*[\'"]*', ""):gsub('[%s\'"]*$', "")
-				end
-
-				return nil
-			end
-
-			-- do not show docs in diff mode
-			if vim.wo[ctx.winid].diff == false then
-				local doc_line = getDoc(lnum, ctx.bufnr)
-				if doc_line then
-					table.insert(virtText, { doc_line, "@string.documentation.python" })
-				end
-			end
-
-			return ufoFoldGeneric(virtText, lnum, endLnum, width, truncate, ctx)
-		end
 
 		---Resolves fold method by filetype
 		---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
