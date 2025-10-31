@@ -2622,6 +2622,8 @@ vim.api.nvim_create_autocmd(
 -- Provider for markdown ?
 -- Provider fold import section in python
 
+-- TEST: me
+
 -- Mapping to fold recursively for current buffer only
 vim.keymap.set("n", "zz", function()
 	require("statuscol")
@@ -2632,6 +2634,18 @@ vim.keymap.set("n", "zz", function()
 	end
 	-- vim.cmd("normal! zM")
 	vim.wo.foldlevel = 1
+	function FoldText(a, b, c, d, e)
+		if EMITTED == nil then
+			-- print('DEBUGPRINT[6]: init.lua:2639: EMIITED=' .. vim.inspect(EMIITED))
+			EMIITED = true
+			-- print('DEBUGPRINT[5]: init.lua:2637: a=' .. vim.inspect(a))
+			-- print('DEBUGPRINT[4]: init.lua:2637: b=' .. vim.inspect(b))
+			-- print('DEBUGPRINT[3]: init.lua:2637: c=' .. vim.inspect(c))
+			-- print('DEBUGPRINT[2]: init.lua:2637: d=' .. vim.inspect(d))
+			-- print('DEBUGPRINT[1]: init.lua:2637: e=' .. vim.inspect(e))
+		end
+	end
+	vim.cmd("set foldtext=v:lua.FoldText()")
 end, { noremap = true, silent = true, buffer = true })
 
 addPlugin {
@@ -5379,6 +5393,7 @@ addPlugin {
 -- https://github.com/azratul/live-share.nvim
 
 addPlugin {
+	-- FIX: jump in single keystroke
 	"folke/flash.nvim",
 	keys = { "f", "F", "t", "T" },
 	opts = {
