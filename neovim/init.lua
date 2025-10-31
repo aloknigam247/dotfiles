@@ -1678,7 +1678,6 @@ addPlugin {
 					python_doc_raises = { pattern = patternFilter({ filetype = "python", pattern = "Raises:"              }), group = "Statement"  },
 					python_doc_return = { pattern = patternFilter({ filetype = "python", pattern = "Returns:"             }), group = "@keyword"   },
 					python_doc_yield  = { pattern = patternFilter({ filetype = "python", pattern = "Yields:"              }), group = "@keyword"   },
-					python_doc_yield  = { pattern = ".*DEBUGPRINT.*" , group = "DebugPrintLine"   },
 				}
 
 				-- iterate for each config in todo_config
@@ -2583,8 +2582,11 @@ FileTypeActions = {
 		vim.cmd.setlocal("nowrap")
 	end,
 	["markdown"] = function(_)
-		-- FEAT: use tabs in markdown
 		vim.g.table_mode_corner = "|"
+		vim.cmd[[
+			setlocal listchars-=multispace:·
+			setlocal listchars-=lead:·
+		]]
 	end,
 	["todo"] = function(_)
 		vim.cmd("set filetype=markdown")
