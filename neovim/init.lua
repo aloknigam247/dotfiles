@@ -4903,35 +4903,34 @@ addPlugin {
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master",
-	config = function()
-		require("nvim-treesitter.configs").setup({ -- REFACTOR: use opts
-			auto_install = false,
-			ensure_installed = {}, -- FEAT: add ensure installed for common languages
-			highlight = {
-				additional_vim_regex_highlighting = false,
-				disable = function(_, buf)
-					local max_filesize = 1000 * 1024 -- 1000 KB
-					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-					if ok and stats and stats.size > max_filesize then
-						return true
-					end
-				end,
-				enable = true
-			},
-			ignore_install = {},
-			matchup = {
-				enabled = true
-			},
-			modules = {},
-			sync_install = false
-		})
-	end,
+	main = "nvim-treesitter.configs",
+	module = false,
 	dependencies = {{
 		"utilyre/sentiment.nvim",
 		config = true,
 		init = function() vim.g.loaded_matchparen = 1 end,
 	}},
-	module = false
+	opts = {
+		auto_install = false,
+		ensure_installed = {}, -- FEAT: add ensure installed for common languages
+		highlight = {
+			additional_vim_regex_highlighting = false,
+			disable = function(_, buf)
+				local max_filesize = 1000 * 1024 -- 1000 KB
+				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+				if ok and stats and stats.size > max_filesize then
+					return true
+				end
+			end,
+			enable = true
+		},
+		ignore_install = {},
+		matchup = {
+			enabled = true
+		},
+		modules = {},
+		sync_install = false
+	}
 }
 
 addPlugin {
