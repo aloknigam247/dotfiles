@@ -1064,7 +1064,6 @@ vim.api.nvim_create_autocmd(
 -- <~>
 -- Mappings</>
 -----------
--- FEAT: ctrl movement in visual
 -- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("ca", "sf",  "sfind")
 vim.keymap.set("ca", "vsf", "vert sfind")
@@ -3135,27 +3134,19 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: add custom code actions, like run Neogen command for missing documentation
--- vim.api.nvim_create_autocmd('DiagnosticChanged', {
--- 	callback = function(args)
--- 		local diagnostics = vim.diagnostic.get(args.buf)
--- 		for _, diagnostic in ipairs(diagnostics) do
--- 			if diagnostic.message:find("Your error code or text") then
--- 				-- Trigger a custom action, or manually call a code action
--- 				vim.lsp.buf.code_action({
--- 					context = {
--- 						diagnostics = {diagnostic},
--- 					}
--- 				})
--- 			end
--- 		end
--- 	end,
--- })
--- dotnet
--- FEAT: https://github.com/GustavEikaas/easy-dotnet.nvim
+-- FEAT: dotnet
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
--- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls
+-- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
+-- addPlugin {
+-- 	"GustavEikaas/easy-dotnet.nvim",
+-- 	dependencies = { "nvim-lua/plenary.nvim", 'nvim-telescope/telescope.nvim', },
+-- 	config = function()
+-- 		require("easy-dotnet").setup()
+-- 	end
+-- }
+
+-- FEAT: Use umdercurl in diagnostics
 
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
@@ -3223,6 +3214,7 @@ addPlugin {
 -- }
 
 addPlugin {
+	-- FEAT: check options
 	"aznhe21/actions-preview.nvim",
 	dependencies = "nvim-telescope/telescope.nvim"
 }
