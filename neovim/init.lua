@@ -1078,7 +1078,6 @@ vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
 -- ━━ paste ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("i", "<C-p>", "<C-o>P", { desc = "Paste in insert mode", noremap = true })
-vim.keymap.set("n", "yaa", "ggyG``", { desc = "yank all text" })
 vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
@@ -2622,6 +2621,7 @@ vim.api.nvim_create_autocmd(
 -- Provider lsp
 -- Provider for markdown ?
 -- Provider fold import section in python
+-- fold python docstring and if and loops like nvim-ufo
 
 -- TEST: me
 
@@ -2633,16 +2633,38 @@ vim.keymap.set("n", "zz", function()
 		vim.wo.foldmethod = "expr"
 		vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
 	end
-	-- vim.cmd("normal! zM")
 	vim.wo.foldlevel = 1
+
+	CURRENT_LINE_MAP = {}
+
+	local function addCurrentLine(virtText, lnum, ctx)
+		local current_line = vim.api.nvim_buf_get_lines(ctx.bufnr, lnum-1, lnum, false)[1]
+		local count = 0
+		local prev_capture = nil
+		local text = ""
+		local curr_capture
+
+		for i in current_line:gmatch(".") do
+			local capture = vim.treesitter.get_captures_at_pos(ctx.bufnr, lnum-1, count)
+			if #capture > 0 then
+				curr_capture = "@" .. capture[#capture].capture
+			else
+				curr_capture = nil
+			end
+
+			if curr_capture ~= prev_capture then
+				table.insert(virtText, { text, prev_capture })
+				text = ""
+			end
+			text = text .. i
+
+			prev_capture = curr_capture
+			count = count + 1
+		end
+		table.insert(virtText, { text, prev_capture })
+	end
+
 	---Python fold text generator
-	---@param virtText UfoExtmarkVirtTextChunk[] list of tokens and its highlight
-	---@param lnum number first line number of fold
-	---@param endLnum number last line number of fold
-	---@param width number max width for fold text
-	---@param truncate fun(str: string, width: number): string truncate the str to become specific width
-	---@param ctx UfoFoldVirtTextHandlerContext the context used by ufo, export to caller
-	---@return UfoExtmarkVirtTextChunk[] # Generated fold text
 	local function ufoFoldPython(virtText, lnum, ctx)
 		local function getDoc(cnum, bufnr)
 			local lines = vim.api.nvim_buf_get_lines(bufnr, cnum-1, cnum+2, false)
@@ -2699,11 +2721,18 @@ vim.keymap.set("n", "zz", function()
 			bufnr = vim.api.nvim_get_current_buf(),
 			winid = vim.fn.win_getid()
 		}
+		if CURRENT_LINE_MAP[vim.v.foldstart] then
+			fold_text = CURRENT_LINE_MAP[vim.v.foldstart]
+		else
+			addCurrentLine(fold_text, vim.v.foldstart, ctx)
+			CURRENT_LINE_MAP[vim.v.foldstart] = fold_text
+		end
+
 		ufoFoldPython(fold_text, vim.v.foldstart, ctx)
-		-- if EMITTED == nil then
-		-- 	EMITTED = true
-		-- 	print('DEBUGPRINT[2]: init.lua:2707: fold_text=' .. vim.inspect(fold_text))
-		-- end
+		if EMITTED == nil then
+			EMITTED = true
+			-- print('DEBUGPRINT[1]: init.lua:2703: fold_text=' .. vim.inspect(fold_text))
+		end
 		return fold_text
 	end
 	vim.cmd("set foldtext=v:lua.FoldText()")
