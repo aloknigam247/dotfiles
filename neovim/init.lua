@@ -2614,7 +2614,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: create own folding code
+-- create own folding code
 -- Use nvim-ufo python description
 -- Provider indent
 -- Provider treesitter
@@ -2622,8 +2622,6 @@ vim.api.nvim_create_autocmd(
 -- Provider for markdown ?
 -- Provider fold import section in python
 -- fold python docstring and if and loops like nvim-ufo
-
--- TEST: me
 
 -- Mapping to fold recursively for current buffer only
 vim.keymap.set("n", "zz", function()
@@ -2729,10 +2727,6 @@ vim.keymap.set("n", "zz", function()
 		end
 
 		ufoFoldPython(fold_text, vim.v.foldstart, ctx)
-		if EMITTED == nil then
-			EMITTED = true
-			-- print('DEBUGPRINT[1]: init.lua:2703: fold_text=' .. vim.inspect(fold_text))
-		end
 		return fold_text
 	end
 	vim.cmd("set foldtext=v:lua.FoldText()")
@@ -2867,7 +2861,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      Git       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/nvim-mini/mini-git
 addPlugin {
 	"nvim-mini/mini.diff",
 	init = function()
@@ -3440,19 +3433,18 @@ addPlugin {
 	end
 }
 
--- addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
-
--- https://github.com/nvimtools/none-ls.nvim
--- https://github.com/Zeioth/none-ls-external-sources.nvim
--- https://github.com/Zeioth/none-ls-autoload.nvim
--- https://github.com/netmute/ctags-lsp
+-- FEAT: addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
+-- FEAT: https://github.com/nvimtools/none-ls.nvim
+-- FEAT: https://github.com/Zeioth/none-ls-external-sources.nvim
+-- FEAT: https://github.com/Zeioth/none-ls-autoload.nvim
+-- FEAT: https://github.com/netmute/ctags-lsp
 
 addPlugin {
 	"p00f/clangd_extensions.nvim",
 	event = "LspAttach *.cpp"
 }
 
--- https://github.com/sontungexpt/better-diagnostic-virtual-text
+-- FEAT: https://github.com/sontungexpt/better-diagnostic-virtual-text
 addPlugin {
 	"rachartier/tiny-inline-diagnostic.nvim",
 	config = function()
@@ -3529,6 +3521,7 @@ addPlugin {
 			Lsp_icon = Lsp_anim[Lsp_icon_index]
 		end)
 
+		-- TODO:
 		-- Lsp_timer = {
 		-- 	---@diagnostic disable-next-line: undefined-field
 		-- 	timer = vim.uv.new_timer(),
@@ -5827,7 +5820,6 @@ addPlugin {
 
 -- FEAT: https://diagon.arthursonzogni.com/
 
--- FEAT: 1503
 -- FEAT: Hover on timstamp to convert into utc and ist
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: https://github.com/Civitasv/cmake-tools.nvim
@@ -5881,6 +5873,9 @@ addPlugin {
 -- FEAT: https://github.com/dcampos/nvim-snippy
 -- FEAT: https://github.com/L3MON4D3/LuaSnip
 -- FEAT: https://github.com/rafamadriz/friendly-snippets
+
+-- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
+-- FEAT: FOLDING: create own folding code
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
