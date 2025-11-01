@@ -1303,7 +1303,7 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
-	"Lazygit",
+	"Lazygit", -- FIX: colors
 	function()
 		require("snacks").lazygit.open()
 	end,
@@ -1856,7 +1856,7 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					BlinkCmpSource = { fg = palette.surface1, style = { "italic" } },
+					BlinkCmpSource = { fg = palette.surface1, style = { "italic" } }, -- FIX: color
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
 				}
@@ -2133,7 +2133,10 @@ addPlugin {
 					override = {
 						enabled = function()
 							local utils = require("blink.cmp.sources.lib.utils")
-							return not utils.is_command_line() or utils.in_ex_context({ "global", "lua", "substitute", "vglobal" })
+							return
+								not utils.is_command_line()
+								or utils.is_command_line({ "/", "?" })
+								or utils.in_ex_context({ "global", "lua", "substitute", "vglobal" })
 						end
 					}
 				},
