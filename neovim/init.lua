@@ -1210,6 +1210,52 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
+-- FEAT: how about a picker
+vim.api.nvim_create_user_command(
+	"Cdroot",
+	function(opts)
+		---Get rooter path
+		---@param option string option for rooter
+		---@return string # root path
+		local function getRoot(option)
+			local cwd = _CWD or vim.fn.getcwd()
+			local root_path = cwd
+
+			if option == "cwd" then
+				root_path = cwd
+			elseif option == "cwd_git" then
+				root_path = vim.fs.dirname(vim.fs.find({ ".git" }, { path = cwd, upward = true, limit = 1 })[1])
+			elseif option == "file" then
+				---@diagnostic disable-next-line: param-type-mismatch
+				root_path = vim.fn.fnamemodify(vim.fn.bufname("%"), ":p:h")
+			elseif option == "file_git" then
+				---@diagnostic disable-next-line: param-type-mismatch
+				root_path = vim.fs.dirname(vim.fs.find({ ".git" }, { path = vim.fn.bufname("%"), upward = true, limit = 1 })[1])
+			end
+			return vim.fs.normalize(root_path)
+		end
+
+		local path = getRoot(opts.args:match("^(.*) \""))
+		if path then
+			if not _CWD then
+				_CWD = vim.fn.getcwd()
+			end
+			vim.cmd.cd(path)
+		end
+	end,
+	{
+		complete = function() return {
+			'cwd "' .. getRoot("cwd"),
+			'cwd_git "' .. getRoot("cwd_git"),
+			'file "' .. getRoot("file"),
+			'file_git "' .. getRoot("file_git"),
+		} end,
+		desc = "Change directory based on current file",
+		range = true,
+		nargs = 1
+	}
+)
+
 vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
@@ -1811,6 +1857,7 @@ addPlugin {
 			all = function(palette)
 				return {
 					BlinkCmpSource = { fg = palette.surface1, style = { "italic" } },
+					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
 				}
 			end
@@ -3153,7 +3200,8 @@ addPlugin {
 -- FEAT: https://github.com/amadanmath/diag_ignore.nvim
 
 -- none-ls
--- FEAT: https://github.com/nvimtools/none-ls.nvim
+-- FEAT: https://github.com/nvimtools/none-ls.nvim -- create custom code actions
+-- FEAT: https://github.com/Zeioth/none-ls-autoload.nvim
 -- FEAT: https://github.com/Zeioth/none-ls-external-sources.nvim
 -- FEAT: https://github.com/gwinn/none-ls-jsonlint.nvim
 
@@ -3426,9 +3474,6 @@ addPlugin {
 }
 
 -- FEAT: addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
--- FEAT: https://github.com/nvimtools/none-ls.nvim
--- FEAT: https://github.com/Zeioth/none-ls-external-sources.nvim
--- FEAT: https://github.com/Zeioth/none-ls-autoload.nvim
 -- FEAT: https://github.com/netmute/ctags-lsp
 
 addPlugin {
@@ -3664,14 +3709,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/RyanGreenup/markdown_editor.nvim
--- FEAT: https://github.com/SamiSuleiman/murk.nvim
--- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
--- FEAT: https://github.com/Zeioth/markmap.nvim
--- FEAT: https://github.com/adibhanna/simplemarkdown.nvim
--- FEAT: https://github.com/chirag-juneja/markdown.nvim
--- FEAT: https://github.com/davidgranstrom/nvim-markdown-preview
--- FEAT: https://github.com/erel213/markdown-writer.nvim
 -- FEAT: https://github.com/hedyhli/markdown-toc.nvim
 -- FEAT: https://github.com/idossha/LiveMD.nvim
 -- FEAT: https://github.com/jeangiraldoo/markup.nvim
@@ -3680,6 +3717,8 @@ addPlugin {
 -- FEAT: https://github.com/richardbizik/nvim-toc
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
+-- FEAT: https://github.com/erel213/markdown-writer.nvim
+-- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
 -- "OXY2DEV/markview.nvim"
 -- TODO: revisit config
 addPlugin {
@@ -4092,53 +4131,6 @@ addPlugin {
 addPlugin {
 	"stefandtw/quickfix-reflector.vim"
 }
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Rooter     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----Get rooter path
----@param option string option for rooter
----@return string # root path
-local function getRoot(option)
-	local cwd = _CWD or vim.fn.getcwd()
-	local root_path = cwd
-
-	if option == "cwd" then
-		root_path = cwd
-	elseif option == "cwd_git" then
-		root_path = vim.fs.dirname(vim.fs.find({ ".git" }, { path = cwd, upward = true, limit = 1 })[1])
-	elseif option == "file" then
-		---@diagnostic disable-next-line: param-type-mismatch
-		root_path = vim.fn.fnamemodify(vim.fn.bufname("%"), ":p:h")
-	elseif option == "file_git" then
-		---@diagnostic disable-next-line: param-type-mismatch
-		root_path = vim.fs.dirname(vim.fs.find({ ".git" }, { path = vim.fn.bufname("%"), upward = true, limit = 1 })[1])
-	end
-	return vim.fs.normalize(root_path)
-end
-
--- FEAT: how about a picker
-vim.api.nvim_create_user_command(
-	"Cdroot",
-	function(opts)
-		local path = getRoot(opts.args:match("^(.*) \""))
-		if path then
-			if not _CWD then
-				_CWD = vim.fn.getcwd()
-			end
-			vim.cmd.cd(path)
-		end
-	end,
-	{
-		complete = function() return {
-			'cwd "' .. getRoot("cwd"),
-			'cwd_git "' .. getRoot("cwd_git"),
-			'file "' .. getRoot("file"),
-			'file_git "' .. getRoot("file_git"),
-		} end,
-		desc = "Change directory based on current file",
-		range = true,
-		nargs = 1
-	}
-)
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/niba/continue.nvim
