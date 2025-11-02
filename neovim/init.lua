@@ -1210,49 +1210,48 @@ vim.opt.runtimepath:prepend(lazypath)
 -- <~>
 -- Commands</>
 -----------
--- FEAT: how about a picker
 vim.api.nvim_create_user_command(
 	"Cdroot",
-	function(opts)
-		---Get rooter path
-		---@param option string option for rooter
-		---@return string # root path
-		local function getRoot(option)
+	function()
+		local function getRoots()
+			local function getGitRoot(prefix, path)
+				local file_root = vim.fs.find({ ".git" }, { path = path, upward = true, limit = 1 })
+				if not vim.tbl_isempty(file_root) then
+					return prefix .. vim.fs.normalize(vim.fs.dirname(file_root[1]))
+				end
+			end
+
 			local cwd = _CWD or vim.fn.getcwd()
-			local root_path = cwd
 
-			if option == "cwd" then
-				root_path = cwd
-			elseif option == "cwd_git" then
-				root_path = vim.fs.dirname(vim.fs.find({ ".git" }, { path = cwd, upward = true, limit = 1 })[1])
-			elseif option == "file" then
-				---@diagnostic disable-next-line: param-type-mismatch
-				root_path = vim.fn.fnamemodify(vim.fn.bufname("%"), ":p:h")
-			elseif option == "file_git" then
-				---@diagnostic disable-next-line: param-type-mismatch
-				root_path = vim.fs.dirname(vim.fs.find({ ".git" }, { path = vim.fn.bufname("%"), upward = true, limit = 1 })[1])
-			end
-			return vim.fs.normalize(root_path)
+			return {
+				"[ CWD ] " .. vim.fs.normalize(cwd),
+				getGitRoot("[ CWD ] ", cwd),
+				"[ FILE] " .. vim.fs.normalize(vim.fn.fnamemodify(vim.fn.bufname("%"), ":p:h")),
+				getGitRoot("[ FILE] ", vim.fn.bufname("%"))
+			}
 		end
 
-		local path = getRoot(opts.args:match("^(.*) \""))
-		if path then
-			if not _CWD then
-				_CWD = vim.fn.getcwd()
+		vim.ui.select(
+			getRoots(),
+			{ prompt = "Change root", },
+			function(choice)
+				if choice then
+					local path = choice:sub(12)
+					if path then
+						if not _CWD then
+							_CWD = vim.fn.getcwd()
+						end
+						vim.notify("Changing root to:" .. path)
+						vim.cmd.cd(path)
+					end
+				end
 			end
-			vim.cmd.cd(path)
-		end
+		)
 	end,
 	{
-		complete = function() return {
-			'cwd "' .. getRoot("cwd"),
-			'cwd_git "' .. getRoot("cwd_git"),
-			'file "' .. getRoot("file"),
-			'file_git "' .. getRoot("file_git"),
-		} end,
 		desc = "Change directory based on current file",
-		range = true,
-		nargs = 1
+		range = false,
+		nargs = 0
 	}
 )
 
@@ -5247,7 +5246,7 @@ addPlugin {
 	keys = { { "<C-w>m", function() require("winshift").cmd_winshift() end, desc = "Move window mode" } }
 }
 
--- FIX: use snacks for input and select/telescope
+-- FIX: use snacks/telescope for input and select
 addPlugin {
 	"stevearc/dressing.nvim",
 	dependencies = "telescope.nvim",

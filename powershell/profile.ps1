@@ -488,6 +488,7 @@ function Format-Text {
 # ╭────────────────╮
 # │ Autocompletion │
 # ╰────────────────╯
+# FEAT: play around powerhshell keys
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
