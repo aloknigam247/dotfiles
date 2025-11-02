@@ -587,7 +587,7 @@ function ColorPalette()
 			{ bg = "#000000", fg = "#66C856" },
 			{ bg = "#000000", fg = "#49D176" },
 			{ bg = "#FFFFFF", fg = "#6569C0" },
-			{ bg = "#000000", fg = "#E5B5E1" },
+			{ bg = "#000000", fg = "#E5B5E1" }, -- FIX: me
 			{ bg = "#FFFFFF", fg = "#AD3D9D" },
 			{ bg = "#000000", fg = "#B481B4" },
 			{ bg = "#000000", fg = "#D670C8" },
