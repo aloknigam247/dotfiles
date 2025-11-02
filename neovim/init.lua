@@ -3197,9 +3197,25 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: dotnet
+addPlugin {
+	"seblyng/roslyn.nvim",
+	---@module 'roslyn.config'
+	---@type RoslynNvimConfig
+	opts = {
+		-- your configuration comes here; leave empty for default settings
+	}
+}
+-- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
+-- addPlugin {
+-- 	"anachary/dotnet-core.nvim",
+-- 	dependencies = { "neovim/nvim-lspconfig" },
+-- 	config = function()
+-- 		require("dotnet-core").setup()
+-- 	end,
+-- }
+
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
--- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 -- addPlugin {
 -- 	"GustavEikaas/easy-dotnet.nvim",
 -- 	dependencies = { "nvim-lua/plenary.nvim", 'nvim-telescope/telescope.nvim', },
@@ -3549,6 +3565,10 @@ addPlugin {
 	opts = {
 		install_root_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "mason"),
 		PATH = "skip",
+		registries = {
+			"github:mason-org/mason-registry",
+			"github:Crashdummyy/mason-registry",
+		},
 		ui = {
 			border = "rounded",
 			height = 0.8,
