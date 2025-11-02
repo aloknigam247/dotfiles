@@ -998,7 +998,7 @@ vim.api.nvim_create_autocmd(
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
 			local ftype = vim.o.filetype
-			if vim.tbl_contains(getTSInstalled(), ftype) then
+			if vim.tbl_contains(getTSInstalled(), ftype) then -- does not loads for csharp/powershell
 				vim.cmd("Lazy load nvim-treesitter")
 				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				return true
@@ -3197,15 +3197,16 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: dotnet
+-- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 addPlugin {
 	"seblyng/roslyn.nvim",
+	dependencies = "williamboman/mason-lspconfig.nvim",
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
 	opts = {
 		-- your configuration comes here; leave empty for default settings
 	}
 }
--- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 -- addPlugin {
 -- 	"anachary/dotnet-core.nvim",
 -- 	dependencies = { "neovim/nvim-lspconfig" },
@@ -3216,15 +3217,8 @@ addPlugin {
 
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
--- addPlugin {
--- 	"GustavEikaas/easy-dotnet.nvim",
--- 	dependencies = { "nvim-lua/plenary.nvim", 'nvim-telescope/telescope.nvim', },
--- 	config = function()
--- 		require("easy-dotnet").setup()
--- 	end
--- }
 
--- FEAT: Use umdercurl in diagnostics
+-- FEAT: Use undercurl in diagnostics
 
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
