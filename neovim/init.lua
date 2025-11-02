@@ -575,7 +575,7 @@ function ColorPalette()
 	if vim.o.background == "light" then
 		return {
 			{ bg = "#FFFFFF", fg = "#8543DA" },
-			{ bg = "#000000", fg = "#E0D366" },
+			{ bg = "#000000", fg = "#bfaf27" },
 			{ bg = "#000000", fg = "#6CA4E0" },
 			{ bg = "#000000", fg = "#DA9E5D" },
 			{ bg = "#FFFFFF", fg = "#46587B" },
@@ -1302,9 +1302,22 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
-	"Lazygit", -- FIX: colors
+	"Lazygit",
 	function()
-		require("snacks").lazygit.open()
+		require("snacks").lazygit.open({
+			theme = {
+				[241]                      = { fg = "Special" },
+				activeBorderColor          = { fg = "Function", bold = true },
+				cherryPickedCommitBgColor  = { fg = "Identifier" },
+				cherryPickedCommitFgColor  = { fg = "Function" },
+				defaultFgColor             = { fg = "Normal" },
+				inactiveBorderColor        = { fg = "Comment" },
+				optionsTextColor           = { fg = "Function" },
+				searchingActiveBorderColor = { fg = "MatchParen", bold = true },
+				selectedLineBgColor        = { bg = "Visual" },
+				unstagedChangesColor       = { fg = "DiagnosticError" },
+			},
+		})
 	end,
 	{ desc = "Open Lazygit" }
 )
@@ -1855,7 +1868,7 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					BlinkCmpSource = { fg = palette.surface1, style = { "italic" } }, -- FIX: color
+					BlinkCmpSource = { fg = palette.teal, style = { "italic" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
 				}
