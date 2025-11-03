@@ -29,7 +29,7 @@ $light_palette = @{
     git_index = "#ffda1a "
     git_stash = "#da3e3e"
     git_sync = "#68d051"
-    git_working = "#1a3eff "
+    git_working = "#A8DADC "
 }
 
 $dark_palette = @{

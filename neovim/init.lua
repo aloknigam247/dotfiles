@@ -568,10 +568,74 @@ LargeFile = {}
 -- <~>
 -- Functions</>
 ------------
+--[[
+#007f4e
+#434279
+#5e62a9
+#72b043
+#809bce
+#8db7d2
+#a98467
+#adc178
+#b8e0d4
+#c45161
+#cbc7d8
+#d6eadf
+#dde5b4
+#e094a0
+#e12729
+#e5c185
+#f0ead2
+#f2b6c0
+#f37324
+#f8cc1b
+
+#F1E7E6 (Soft Rose)
+#E8E9EC (Light Grayish Blue)
+#DCE2F0 (Pale Blue)
+#C8D8E4 (Muted Sky Blue)
+#B5BEC7 (Cool Gray)
+#E5E1D9 (Warm Beige)
+#F7F3E9 (Cream)
+#D8E3E7 (Light Teal)
+#F1D1B5 (Soft Peach)
+#ECCFCF (Dusty Pink)
+#DFE2DB (Sage Gray)
+#D1CCC0 (Warm Gray)
+#B9C3BA (Soft Greenish Gray)
+#E3D4B9 (Light Sand)
+#C0B9B2 (Muted Taupe)
+#E9DED4 (Pale Apricot)
+#CAD4C8 (Light Moss Green)
+#DFE7E2 (Soft Mint)
+#D5CDF6 (Pale Lavender)
+#F0E6F7 (Light Lilac)
+
+#A8DADC (Light Cyan)
+#FFC1CC (Soft Pink)
+#B39CD0 (Lavender)
+#F5E8D8 (Warm Beige)
+#FF6F61 (Muted Coral)
+#DAA520 (Golden Yellow)
+#F0F0F0 (Off White)
+#E4E4E4 (Light Gray)
+#7A9E9F (Muted Teal)
+#B0A69E (Warm Gray)
+#A78CA7 (Dusty Purple)
+#9DB7B8 (Soft Slate)
+#E3C6A9 (Pale Orange)
+#90A8C2 (Light Steel Blue)
+#B5A6A1 (Muted Rose)
+#D8A7B1 (Muted Rose Pink)
+#94B49F (Sage Green)
+#C3B299 (Light Brown)
+#9E7A7A (Muted Wine)
+#9AAEAB (Soft Olivine)
+		]]
 
 ---Generates color palette for dark and light mode
 ---@return { bg: string, fg: string }[] # List of _nvim_set_hl()_ supported color config
-function ColorPalette()
+function ColorPalette() -- FIX: me
 	if vim.o.background == "light" then
 		return {
 			{ bg = "#FFFFFF", fg = "#8543DA" },
@@ -587,7 +651,7 @@ function ColorPalette()
 			{ bg = "#000000", fg = "#66C856" },
 			{ bg = "#000000", fg = "#49D176" },
 			{ bg = "#FFFFFF", fg = "#6569C0" },
-			{ bg = "#000000", fg = "#E5B5E1" }, -- FIX: me
+			{ bg = "#000000", fg = "#E5B5E1" },
 			{ bg = "#FFFFFF", fg = "#AD3D9D" },
 			{ bg = "#000000", fg = "#B481B4" },
 			{ bg = "#000000", fg = "#D670C8" },
