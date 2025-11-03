@@ -3178,6 +3178,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/netmute/ctags-lsp
+
 -- FEAT: dotnet
 -- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 addPlugin {
@@ -3482,7 +3484,6 @@ addPlugin {
 }
 
 -- FEAT: addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
--- FEAT: https://github.com/netmute/ctags-lsp
 
 addPlugin {
 	"p00f/clangd_extensions.nvim",
