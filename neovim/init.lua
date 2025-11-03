@@ -242,27 +242,26 @@
 ------------
 local color_palette = {
 	dark = {
-		"#A46EFF",
-		-- "#8543DA",
-		"#bfaf27",
-		"#6CA4E0",
-		"#DA9E5D",
-		"#46587B",
-		"#35D7D0",
-		"#528E84",
-		"#94C880",
-		"#5F7C47",
-		"#8D9C94",
-		"#66C856",
-		"#49D176",
-		"#6569C0",
-		"#E5B5E1",
-		"#AD3D9D",
-		"#B481B4",
-		"#D670C8",
-		"#83694C",
-		"#BC573B",
-		"#D35F7D",
+		"#6099a0",
+		"#7bcebd",
+		"#8d9fcf",
+		"#9dc461",
+		"#a1a198",
+		"#ac949d",
+		"#addaff",
+		"#afc2bc",
+		"#bd7eb5",
+		"#bfa3c4",
+		"#c19d7e",
+		"#c7c7ff",
+		"#cdc99a",
+		"#cdef8f",
+		"#eebbdf",
+		"#f0c0ab",
+		"#f071df",
+		"#ff8560",
+		"#ffa6b1",
+		"#ffd98f",
 	},
 	light = {
 		"#50808E",
@@ -1716,9 +1715,11 @@ addPlugin {
 			end
 		end
 
-		require(plugin.name).setup({
+		local hipatterns = require(plugin.name)
+		hipatterns.setup({
 			highlighters = (function()
 				local config = {
+					hex_color         = hipatterns.gen_highlighter.hex_color({ style = "inline", inline_text = " " }),
 					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"           }), group = "Constant"   },
 					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"           }), group = "@variable"  },
 					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"          }), group = "@keyword"   },
@@ -1783,24 +1784,11 @@ addPlugin {
 }
 
 addPlugin {
-	"brenoprata10/nvim-highlight-colors",
-	cmd = "HighlightColors",
-	opts = {
-		render = "virtual",
-		virtual_symbol = "",
-		enable_hsl = false,
-		enable_hsl_without_function = false,
-		enable_var_usage = false,
-		enable_named_colors = false
-	}
-}
-
-addPlugin {
 	"t9md/vim-quickhl",
 	config = function()
 		local colors = {}
 		for _,color in pairs(color_palette[vim.o.background]) do
-			local hi = "guibg=" .. color .. " guifg=" .. "#FFFFFF"
+			local hi = "guibg=" .. color .. " guifg=" .. "#000000"
 			table.insert(colors, hi)
 		end
 		vim.g.quickhl_manual_colors = colors
@@ -3201,13 +3189,14 @@ addPlugin {
 		-- your configuration comes here; leave empty for default settings
 	}
 }
--- addPlugin {
--- 	"anachary/dotnet-core.nvim",
--- 	dependencies = { "neovim/nvim-lspconfig" },
--- 	config = function()
--- 		require("dotnet-core").setup()
--- 	end,
--- }
+
+addPlugin {
+	"anachary/dotnet-core.nvim",
+	dependencies = { "williamboman/mason-lspconfig.nvim" },
+	config = function()
+		require("dotnet-core").setup()
+	end,
+}
 
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
