@@ -240,6 +240,53 @@
 -- <~>
 -- Variables</>
 ------------
+local color_palette = {
+	dark = {
+		"#A46EFF",
+		-- "#8543DA",
+		"#bfaf27",
+		"#6CA4E0",
+		"#DA9E5D",
+		"#46587B",
+		"#35D7D0",
+		"#528E84",
+		"#94C880",
+		"#5F7C47",
+		"#8D9C94",
+		"#66C856",
+		"#49D176",
+		"#6569C0",
+		"#E5B5E1",
+		"#AD3D9D",
+		"#B481B4",
+		"#D670C8",
+		"#83694C",
+		"#BC573B",
+		"#D35F7D",
+	},
+	light = {
+		"#50808E",
+		"#67B9A9",
+		"#7C8FBA",
+		"#8AAF52",
+		"#93938A",
+		"#99858D",
+		"#9CCBFF",
+		"#A0B1AE",
+		"#A96DA3",
+		"#AE92B5",
+		"#AF8C6D",
+		"#B8B8FF",
+		"#BCB28A",
+		"#BCE784",
+		"#DFABD9",
+		"#E9B19B",
+		"#EA6CD8",
+		"#FF7648",
+		"#FF99A8",
+		"#FFC97E",
+	}
+}
 
 ---Shapes for dotted border
 ---@type string[]
@@ -568,123 +615,6 @@ LargeFile = {}
 -- <~>
 -- Functions</>
 ------------
---[[
-#007f4e
-#434279
-#5e62a9
-#72b043
-#809bce
-#8db7d2
-#a98467
-#adc178
-#b8e0d4
-#c45161
-#cbc7d8
-#d6eadf
-#dde5b4
-#e094a0
-#e12729
-#e5c185
-#f0ead2
-#f2b6c0
-#f37324
-#f8cc1b
-
-#F1E7E6 (Soft Rose)
-#E8E9EC (Light Grayish Blue)
-#DCE2F0 (Pale Blue)
-#C8D8E4 (Muted Sky Blue)
-#B5BEC7 (Cool Gray)
-#E5E1D9 (Warm Beige)
-#F7F3E9 (Cream)
-#D8E3E7 (Light Teal)
-#F1D1B5 (Soft Peach)
-#ECCFCF (Dusty Pink)
-#DFE2DB (Sage Gray)
-#D1CCC0 (Warm Gray)
-#B9C3BA (Soft Greenish Gray)
-#E3D4B9 (Light Sand)
-#C0B9B2 (Muted Taupe)
-#E9DED4 (Pale Apricot)
-#CAD4C8 (Light Moss Green)
-#DFE7E2 (Soft Mint)
-#D5CDF6 (Pale Lavender)
-#F0E6F7 (Light Lilac)
-
-#A8DADC (Light Cyan)
-#FFC1CC (Soft Pink)
-#B39CD0 (Lavender)
-#F5E8D8 (Warm Beige)
-#FF6F61 (Muted Coral)
-#DAA520 (Golden Yellow)
-#F0F0F0 (Off White)
-#E4E4E4 (Light Gray)
-#7A9E9F (Muted Teal)
-#B0A69E (Warm Gray)
-#A78CA7 (Dusty Purple)
-#9DB7B8 (Soft Slate)
-#E3C6A9 (Pale Orange)
-#90A8C2 (Light Steel Blue)
-#B5A6A1 (Muted Rose)
-#D8A7B1 (Muted Rose Pink)
-#94B49F (Sage Green)
-#C3B299 (Light Brown)
-#9E7A7A (Muted Wine)
-#9AAEAB (Soft Olivine)
-		]]
-
----Generates color palette for dark and light mode
----@return { bg: string, fg: string }[] # List of _nvim_set_hl()_ supported color config
-function ColorPalette() -- FIX: me
-	if vim.o.background == "light" then
-		return {
-			{ bg = "#FFFFFF", fg = "#8543DA" },
-			{ bg = "#000000", fg = "#bfaf27" },
-			{ bg = "#000000", fg = "#6CA4E0" },
-			{ bg = "#000000", fg = "#DA9E5D" },
-			{ bg = "#FFFFFF", fg = "#46587B" },
-			{ bg = "#000000", fg = "#35D7D0" },
-			{ bg = "#000000", fg = "#528E84" },
-			{ bg = "#000000", fg = "#94C880" },
-			{ bg = "#FFFFFF", fg = "#5F7C47" },
-			{ bg = "#000000", fg = "#8D9C94" },
-			{ bg = "#000000", fg = "#66C856" },
-			{ bg = "#000000", fg = "#49D176" },
-			{ bg = "#FFFFFF", fg = "#6569C0" },
-			{ bg = "#000000", fg = "#E5B5E1" },
-			{ bg = "#FFFFFF", fg = "#AD3D9D" },
-			{ bg = "#000000", fg = "#B481B4" },
-			{ bg = "#000000", fg = "#D670C8" },
-			{ bg = "#FFFFFF", fg = "#83694C" },
-			{ bg = "#FFFFFF", fg = "#BC573B" },
-			{ bg = "#000000", fg = "#D35F7D" },
-		}
-	end
-	-- dark mode
-	return {
-		{ bg = "#000000", fg = "#A46EFF" },
-		{ bg = "#000000", fg = "#F8E879" },
-		{ bg = "#000000", fg = "#9CCBFF" },
-		{ bg = "#000000", fg = "#FFC97E" },
-		{ bg = "#000000", fg = "#7C8FBA" },
-		{ bg = "#000000", fg = "#8CFFF9" },
-		{ bg = "#000000", fg = "#67B9A9" },
-		{ bg = "#000000", fg = "#C7F5A8" },
-		{ bg = "#000000", fg = "#8AAF52" },
-		{ bg = "#000000", fg = "#A0B1AE" },
-		{ bg = "#000000", fg = "#57DD3C" },
-		{ bg = "#000000", fg = "#86FFAB" },
-		{ bg = "#000000", fg = "#898CFF" },
-		{ bg = "#000000", fg = "#FFE4FF" },
-		{ bg = "#000000", fg = "#EA6CD8" },
-		{ bg = "#000000", fg = "#DFABD9" },
-		{ bg = "#000000", fg = "#FFB1F6" },
-		{ bg = "#000000", fg = "#AF8C6D" },
-		{ bg = "#000000", fg = "#FF7648" },
-		{ bg = "#000000", fg = "#FF99A8" },
-	}
-end
-
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
 ---@return integer # Number of windows
@@ -1869,8 +1799,8 @@ addPlugin {
 	"t9md/vim-quickhl",
 	config = function()
 		local colors = {}
-		for _,v in pairs(ColorPalette()) do
-			local hi = "guifg=" .. v.bg .. " guibg=" .. v.fg
+		for _,color in pairs(color_palette[vim.o.background]) do
+			local hi = "guibg=" .. color .. " guifg=" .. "#FFFFFF"
 			table.insert(colors, hi)
 		end
 		vim.g.quickhl_manual_colors = colors
@@ -5096,8 +5026,8 @@ addPlugin {
 		require("hlargs").setup({
 			colorpalette = (function()
 				local res = {}
-				for _,v in ipairs(ColorPalette()) do
-					table.insert(res, { fg = v.fg, underdashed = true })
+				for _,color in pairs(vim.o.background == "light" and color_palette["dark"] or color_palette["light"]) do
+					table.insert(res, { fg = color, underdashed = true })
 				end
 				return res
 			end)(),
@@ -5113,7 +5043,7 @@ addPlugin {
 			},
 			extras = {
 				named_parameters = true,
-        unused_args = false,
+				unused_args = false,
 			},
 			priority_hl = priority_hl.hlargs,
 			paint_catch_blocks = {
