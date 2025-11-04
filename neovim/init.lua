@@ -1,243 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- Profiling</>
-------------
--- ---@class Profile
--- ---@field count integer Number of times an autOcommand is invoked
--- ---@field start number Start time of current autocommand
--- ---@field avg number Average time taken by autocommand
--- ---@field total number Total time taken by autocommand
--- ---@alias ProfileData table<string, Profile>
--- ---Contains Autocommand profiling data
--- ---@type ProfileData?
--- AuProfileData = {}
-
--- --@type boolean Switch to toggle Autocommand profiling
--- AuProfileEnabled = false
-
--- ---Collect autocommand data at autocommand startup, called for each event
--- ---@param args any Autocommand callback data
--- local function auProfileStart(args)
--- 	local event = args.event
-
--- 	if AuProfileEnabled then
--- 		local data = AuProfileData[event] or {}
--- 		data["count"] = (data.count or 0) + 1
--- 		data["start"] = os.clock()
--- 		AuProfileData[event] = data
--- 	end
--- end
-
--- ---Collect autocommand data at autocommand startup, called for each event
--- ---@param args any Autocommand callback data
--- local function auProfileEnd(args)
--- 	if AuProfileEnabled then
--- 		local data = AuProfileData[args.event]
--- 		if data then
--- 			local elapsed = os.clock() - data.start
--- 			local total = (data.total or 0) + elapsed
-
--- 			data["avg"] = total / data.count
--- 			data["total"] = total
-
--- 			AuProfileData[args.event] = data
--- 		end
--- 	end
--- end
-
--- ---List of all valid autocommands to profile
--- ---@type string[]
--- local event_list = {
--- 	"BufAdd",
--- 	"BufDelete",
--- 	"BufEnter",
--- 	"BufFilePost",
--- 	"BufFilePre",
--- 	"BufHidden",
--- 	"BufLeave",
--- 	"BufModifiedSet",
--- 	"BufNew",
--- 	"BufNewFile",
--- 	"BufRead",
--- 	"BufReadPre",
--- 	"BufUnload",
--- 	"BufWinEnter",
--- 	"BufWinLeave",
--- 	"BufWipeout",
--- 	"BufWrite",
--- 	"BufWritePost",
--- 	"ChanInfo",
--- 	"ChanOpen",
--- 	"CmdUndefined",
--- 	"CmdlineChanged",
--- 	"CmdlineEnter",
--- 	"CmdlineLeave",
--- 	"CmdwinEnter",
--- 	"CmdwinLeave",
--- 	"ColorScheme",
--- 	"ColorSchemePre",
--- 	"CompleteChanged",
--- 	"CompleteDone",
--- 	"CompleteDonePre",
--- 	"CursorHold",
--- 	"CursorHoldI",
--- 	"CursorMoved",
--- 	"CursorMovedI",
--- 	"DiffUpdated",
--- 	"DirChanged",
--- 	"DirChangedPre",
--- 	"ExitPre",
--- 	"FileAppendPost",
--- 	"FileAppendPre",
--- 	"FileChangedRO",
--- 	"FileChangedShell",
--- 	"FileChangedShellPost",
--- 	"FileReadPost",
--- 	"FileReadPre",
--- 	"FileType",
--- 	"FileWritePost",
--- 	"FileWritePre",
--- 	"FilterReadPost",
--- 	"FilterReadPre",
--- 	"FilterWritePost",
--- 	"FilterWritePre",
--- 	"FocusGained",
--- 	"FocusLost",
--- 	"FuncUndefined",
--- 	"InsertChange",
--- 	"InsertCharPre",
--- 	"InsertEnter",
--- 	"InsertLeave",
--- 	"InsertLeavePre",
--- 	"MenuPopup",
--- 	"ModeChanged",
--- 	"OptionSet",
--- 	"QuickFixCmdPost",
--- 	"QuickFixCmdPre",
--- 	"QuitPre",
--- 	"RecordingEnter",
--- 	"RecordingLeave",
--- 	"RemoteReply",
--- 	"SafeState",
--- 	"SearchWrapped",
--- 	"SessionLoadPost",
--- 	"ShellCmdPost",
--- 	"ShellFilterPost",
--- 	"Signal",
--- 	"SourcePost",
--- 	"SourcePre",
--- 	"SpellFileMissing",
--- 	"StdinReadPost",
--- 	"StdinReadPre",
--- 	"SwapExists",
--- 	"Syntax",
--- 	"TabClosed",
--- 	"TabEnter",
--- 	"TabLeave",
--- 	"TabNew",
--- 	"TabNewEntered",
--- 	"TermClose",
--- 	"TermEnter",
--- 	"TermLeave",
--- 	"TermOpen",
--- 	"TermResponse",
--- 	"TextChanged",
--- 	"TextChangedI",
--- 	"TextChangedP",
--- 	"TextChangedT",
--- 	"TextYankPost",
--- 	"UIEnter",
--- 	"UILeave",
--- 	"User",
--- 	"VimEnter",
--- 	"VimLeave",
--- 	"VimLeavePre",
--- 	"VimResized",
--- 	"VimResume",
--- 	"VimSuspend",
--- 	"WinClosed",
--- 	"WinEnter",
--- 	"WinLeave",
--- 	"WinNew",
--- 	"WinResized",
--- 	"WinScrolled",
--- }
-
--- vim.api.nvim_create_autocmd(
--- 	event_list, {
--- 		desc = "Autocommand profile init",
--- 		pattern = "*",
--- 		callback = auProfileStart
--- 	}
--- )
-
--- vim.api.nvim_create_user_command(
--- 	"ProfileAutocommand",
--- 	function()
--- 		vim.notify("Profiling started, stop by F6")
--- 		AuProfileEnabled = true
--- 		AuProfileData = {}
--- 		AuCallbackProfileData = {}
-
--- 		-- Autocommand to collect end data
--- 		vim.api.nvim_create_autocmd(
--- 			event_list, {
--- 				desc = "Autocommand profile record",
--- 				pattern = "*",
--- 				callback = auProfileEnd
--- 			}
--- 		)
-
--- 		-- Mapping to stop autocommand profiling
--- 		vim.api.nvim_set_keymap("n", "<F6>", "", {
--- 			callback = function()
--- 				AuProfileEnabled = false
--- 				vim.cmd("profile stop")
--- 				vim.notify("Autocommand profiling stopped")
--- 			end
--- 		})
-
--- 		vim.cmd[[
--- 			profile start nvim_profile
--- 			" profile file *
--- 			profile func *
--- 		]]
--- 	end,
--- 	{ nargs = 0 }
--- )
-
--- ---@type ProfileData?
--- AuCallbackProfileData = {}
-
--- ---Create autocmd wrapper to emit perf telemetry
--- ---@param event string Name of event
--- ---@param opts table Autocmd config
--- local function nvimCreateAutocmdWrapper(event, opts)
--- 	if opts then
--- 		local cb = opts.callback
--- 		if cb then
--- 			opts.callback = function(arg)
--- 				local start = os.clock()
--- 				cb(arg)
--- 				local elapsed = os.clock() - start
-
--- 				if AuProfileEnabled then
--- 					local data = AuCallbackProfileData[arg.id] or {}
--- 					local total = (data.total or 0) + elapsed
-
--- 					data["count"]= (data.count or 0) + 1
--- 					data["avg"] = total / data.count
--- 					data["total"] = total
--- 					AuCallbackProfileData[arg.id] = data
--- 				end
--- 			end
--- 		end
--- 	end
--- 	vim.api.__nvim_create_autocmd(event, opts)
--- end
-
--- vim.api.__nvim_create_autocmd = vim.api.nvim_create_autocmd
--- vim.api.nvim_create_autocmd = nvimCreateAutocmdWrapper
--- <~>
 -- Variables</>
 ------------
 local color_palette = {
@@ -263,7 +24,7 @@ local color_palette = {
 		"#E68A97",
 		"#E6B16F",
 	},
-	LIGHT = {
+	light = {
 		"#6ABCAC",
 		"#8AD9D5",
 		"#9DACDF",
@@ -1805,7 +1566,6 @@ local function applyColorscheme()
 	end
 end
 
--- FEAT: Use undercurl in diagnostics
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
@@ -1825,8 +1585,6 @@ addPlugin {
 			transparent = true,
 			solid = true
 		},
-		transparent_background = true,
-		term_colors = false,
 		highlight_overrides = {
 			all = function(palette)
 				return {
@@ -1835,7 +1593,15 @@ addPlugin {
 					Visual = { bg = palette.surface0, style = {} }
 				}
 			end
-		}
+		},
+		lsp_styles = {
+			underlines = {
+				errors = { "undercurl" },
+				hints = { "underdotted" }
+			}
+		},
+		transparent_background = true,
+		term_colors = false,
 	}
 }
 -- <~>
@@ -3184,8 +2950,6 @@ addPlugin {
 -- FEAT: https://github.com/netmute/ctags-lsp
 
 -- FEAT: powershell lsp
--- FEAT: https://github.com/hinell/lsp-timeout.nvim
--- FEAT: https://github.com/amadanmath/diag_ignore.nvim
 
 -- none-ls
 -- FEAT: https://github.com/nvimtools/none-ls.nvim -- create custom code actions
@@ -3194,7 +2958,20 @@ addPlugin {
 -- FEAT: https://github.com/gwinn/none-ls-jsonlint.nvim
 
 -- FEAT: https://github.com/p00f/clangd_extensions.nvim
--- FEAT: https://github.com/Davidyz/inlayhint-filler.nvim
+
+addPlugin {
+	"Davidyz/inlayhint-filler.nvim",
+	keys = {
+		{
+			"<Leader>I", -- Use whatever keymap you want.
+			function()
+				require("inlayhint-filler").fill()
+			end,
+			desc = "Insert the inlay-hint under cursor into the buffer.",
+			mode = { "n", "v" }, -- include 'v' if you want to use it in visual selection mode
+		},
+	},
+}
 
 addPlugin {
 	-- FEAT: https://github.com/oribarilan/lensline.nvim
@@ -3238,6 +3015,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/hinell/lsp-timeout.nvim
 -- addPlugin {
 -- 	"Zeioth/garbage-day.nvim",
 -- 	event = "LspAttach",
@@ -3523,7 +3301,7 @@ addPlugin {
 		PATH = "skip",
 		registries = {
 			"github:mason-org/mason-registry",
-			"github:Crashdummyy/mason-registry",
+			"github:Crashdummyy/mason-registry", -- for roslyn
 		},
 		ui = {
 			border = "rounded",
