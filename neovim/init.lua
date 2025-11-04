@@ -1826,6 +1826,7 @@ local function applyColorscheme()
 	end
 end
 
+-- FEAT: Use undercurl in diagnostics
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
@@ -3178,8 +3179,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/netmute/ctags-lsp
-
 -- FEAT: dotnet
 -- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 addPlugin {
@@ -3203,7 +3202,7 @@ addPlugin {
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
 
--- FEAT: Use undercurl in diagnostics
+-- FEAT: https://github.com/netmute/ctags-lsp
 
 -- FEAT: powershell lsp
 -- FEAT: https://github.com/hinell/lsp-timeout.nvim
