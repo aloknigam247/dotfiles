@@ -242,28 +242,6 @@
 ------------
 local color_palette = {
 	dark = {
-		"#6099a0",
-		"#7bcebd",
-		"#8d9fcf",
-		"#9dc461",
-		"#a1a198",
-		"#ac949d",
-		"#addaff",
-		"#afc2bc",
-		"#bd7eb5",
-		"#bfa3c4",
-		"#c19d7e",
-		"#c7c7ff",
-		"#cdc99a",
-		"#cdef8f",
-		"#eebbdf",
-		"#f0c0ab",
-		"#f071df",
-		"#ff8560",
-		"#ffa6b1",
-		"#ffd98f",
-	},
-	light = {
 		"#50808E",
 		"#67B9A9",
 		"#7C8FBA",
@@ -275,15 +253,37 @@ local color_palette = {
 		"#A96DA3",
 		"#AE92B5",
 		"#AF8C6D",
-		"#B8B8FF",
-		"#BCB28A",
-		"#BCE784",
-		"#DFABD9",
-		"#E9B19B",
-		"#EA6CD8",
-		"#FF7648",
-		"#FF99A8",
-		"#FFC97E",
+		"#8591FF",
+		"#A8A175",
+		"#A9D072",
+		"#C098C6",
+		"#D09F8A",
+		"#D25FBE",
+		"#E76A41",
+		"#E68A97",
+		"#E6B16F",
+	},
+	LIGHT = {
+		"#6ABCAC",
+		"#8AD9D5",
+		"#9DACDF",
+		"#AED380",
+		"#B0B1AB",
+		"#BAA1A7",
+		"#ADDAFF",
+		"#AFC2BC",
+		"#BD7EB5",
+		"#BFA3C4",
+		"#C19D7E",
+		"#8080FF",
+		"#CDC99A",
+		"#B9E963",
+		"#E699CF",
+		"#ECAE93",
+		"#F071DF",
+		"#FF8560",
+		"#FFA6B1",
+		"#FFC24D",
 	}
 }
 
@@ -1788,7 +1788,7 @@ addPlugin {
 	config = function()
 		local colors = {}
 		for _,color in pairs(color_palette[vim.o.background]) do
-			local hi = "guibg=" .. color .. " guifg=" .. "#000000"
+			local hi = "guibg=" .. color .. " guifg=" .. "#FFFFFF"
 			table.insert(colors, hi)
 		end
 		vim.g.quickhl_manual_colors = colors
@@ -5016,7 +5016,7 @@ addPlugin {
 		require("hlargs").setup({
 			colorpalette = (function()
 				local res = {}
-				for _,color in pairs(vim.o.background == "light" and color_palette["dark"] or color_palette["light"]) do
+				for _,color in pairs(color_palette[vim.o.background == "light" and "dark" or "light"]) do
 					table.insert(res, { fg = color, underdashed = true })
 				end
 				return res
