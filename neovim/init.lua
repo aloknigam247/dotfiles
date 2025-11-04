@@ -1530,27 +1530,6 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- https://github.com/FluxxField/bionic-reading.nvim
-	-- https://github.com/nullchilly/fsread.nvim
-	"JellyApple102/easyread.nvim",
-	cmd = "EasyreadToggle",
-	opts = {
-		hlValues = {
-			["1"] = 1,
-			["2"] = 1,
-			["3"] = 2,
-			["4"] = 2,
-			["fallback"] = 0.4
-		},
-		hlgroupOptions = { bold = true },
-		fileTypes = {},
-		saccadeInterval = 0,
-		saccadeReset = false,
-		updateWhileInsert = true
-	}
-}
-
-addPlugin {
 	"grapp-dev/nui-components.nvim",
 	dependencies = "MunifTanjim/nui.nvim"
 }
