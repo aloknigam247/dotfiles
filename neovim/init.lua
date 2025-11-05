@@ -1589,6 +1589,7 @@ addPlugin {
 			all = function(palette)
 				return {
 					BlinkCmpSource = { fg = palette.teal, style = { "italic" } },
+					IlluminatedWordText = { bg = palette.mantle },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
 				}
@@ -2928,6 +2929,7 @@ addPlugin {
 -- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 addPlugin {
 	"seblyng/roslyn.nvim",
+	ft = "cs",
 	dependencies = "williamboman/mason-lspconfig.nvim",
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
@@ -3316,6 +3318,7 @@ addPlugin {
 }
 
 -- FEAT: https://github.com/sontungexpt/better-diagnostic-virtual-text
+-- FIX: highlights
 addPlugin {
 	"rachartier/tiny-inline-diagnostic.nvim",
 	config = function()
