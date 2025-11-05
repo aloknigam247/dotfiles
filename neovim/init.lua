@@ -4019,7 +4019,7 @@ addPlugin {
 			segments = {
 				{ sign = { name = { "todo" }, auto = true, foldclosed = true }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end } },
 				{ sign = { name = { "Signature_" }, auto = true, fillcharhl ="LineNr" } },
-				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" },
+				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" }, -- FIX: take multi width in LSP errors when attached
 				{ sign = { name = { "Bookmark" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
 				{ text = { builtin.foldfunc }--[[ , click = "v:lua.ScFa" ]] },
