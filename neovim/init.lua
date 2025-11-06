@@ -1583,7 +1583,7 @@ addPlugin {
 		},
 		float = {
 			transparent = true,
-			solid = true
+			solid = false
 		},
 		highlight_overrides = {
 			all = function(palette)
@@ -2975,6 +2975,7 @@ addPlugin {
 	},
 }
 
+-- FEAT: https://github.com/oribarilan/lensline.nvim
 addPlugin {
 	"Wansmer/symbol-usage.nvim",
 	event = "LspAttach",
@@ -3045,8 +3046,6 @@ addPlugin {
 }
 
 -- addPlugin {
--- 	-- FEAT: https://github.com/oribarilan/lensline.nvim
--- 	-- FEAT: "Wansmer/symbol-usage.nvim",
 -- 	"VidocqH/lsp-lens.nvim",
 -- 	event = "LspAttach",
 -- 	opts = {
@@ -3086,20 +3085,19 @@ addPlugin {
 -- 	}
 -- }
 
--- FEAT: https://github.com/hinell/lsp-timeout.nvim
--- addPlugin {
--- 	"Zeioth/garbage-day.nvim",
--- 	event = "LspAttach",
--- 	opts = {
--- 		excluded_lsp_clients = {},
--- 		grace_period = 60, -- FIX: values
--- 		notifications = true,
--- 		wakeup_delay = 1000
--- 	}
--- }
+addPlugin {
+	"Zeioth/garbage-day.nvim",
+	event = "LspAttach",
+	opts = {
+		aggressive_mode = true,
+		excluded_lsp_clients = {},
+		grace_period = 60*2,
+		notifications = true,
+		wakeup_delay = 1000*30
+	}
+}
 
 addPlugin {
-	-- FEAT: check options
 	"aznhe21/actions-preview.nvim",
 	dependencies = "nvim-telescope/telescope.nvim"
 }
@@ -3296,8 +3294,8 @@ addPlugin {
 				"refactor.inline",
 				"refactor.rewrite",
 				"source",
-				-- "source.organizeImports",
-				-- "source.fixAll"
+				"source.organizeImports",
+				"source.fixAll"
 			},
 			sign = { enabled = false, },
 			validate_config = "never",
