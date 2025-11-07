@@ -3102,8 +3102,6 @@ addPlugin {
 	dependencies = "nvim-telescope/telescope.nvim"
 }
 
--- FIX: hover doc float border highliggt
--- FIX: hover doc checks from all LSP, disable for ruff
 addPlugin {
 	"glepnir/lspsaga.nvim",
 	cmd = "Lspsaga",
@@ -3315,12 +3313,11 @@ addPlugin {
 	event = "LspAttach *.cpp"
 }
 
--- FEAT: https://github.com/sontungexpt/better-diagnostic-virtual-text
--- FIX: highlights
 addPlugin {
 	"rachartier/tiny-inline-diagnostic.nvim",
-	config = function()
-		require("tiny-inline-diagnostic").setup({
+	config = function(plugin)
+		local diag = require("tiny-inline-diagnostic")
+		diag.setup({
 			hi = {
 				background = "None",
 			},
@@ -3354,9 +3351,9 @@ addPlugin {
 			},
 		})
 		vim.diagnostic.config({ virtual_text = false })
+		diag.enable()
 	end,
-	event = "Colorscheme",
-	lazy = false
+	event = "DiagnosticChanged",
 }
 
 addPlugin {
@@ -5682,6 +5679,7 @@ addPlugin {
 -- FEAT: https://github.com/oysandvik94/curl.nvim 
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
+-- FEAT: https://github.com/rachartier/tiny-glimmer.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/smjonas/live-command.nvim
