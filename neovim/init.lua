@@ -1142,125 +1142,136 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	"windwp/nvim-autopairs",
-	config = function()
-		local pair = require("nvim-autopairs")
-		local Rule = require("nvim-autopairs.rule")
-		local cond = require("nvim-autopairs.conds")
-
-		pair.setup()
-		-- pair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
-		pair.add_rules {
-			-- #include <|> pair for c and cpp
-			Rule("#include <", ">", { "c", "cpp" }),
-			-- Add spaces in pair after parentheses
-			-- (|) --> space --> ( | )
-			-- ( | ) --> ) --> ( )|
-			Rule(" ", " ", "-markdown")
-			:with_pair(function (opts)
-				local pair_set = opts.line:sub(opts.col - 1, opts.col)
-				return vim.tbl_contains({ "()", "[]", "{}" }, pair_set)
-			end)
-			:with_del(cond.none()),
-			Rule("( ", " )")
-			:with_pair(function() return false end)
-			:with_move(function(opts)
-				return opts.prev_char:match(".%)") ~= nil
-			end)
-			:use_key(")"),
-			Rule("{ ", " }")
-			:with_pair(function() return false end)
-			:with_move(function(opts)
-				return opts.prev_char:match(".%}") ~= nil
-			end)
-			:use_key("}"),
-			Rule("[ ", " ]")
-			:with_pair(function() return false end)
-			:with_move(function(opts)
-				return opts.prev_char:match(".%]") ~= nil
-			end)
-			:use_key("]"),
-			-- Auto add space on =
-			Rule("=", "", "-xml")
-			:with_pair(cond.not_inside_quote())
-			:with_pair(function(opts)
-				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-				if last_char:match("[%w%=%s]") then
-					return true
-				end
-				return false
-			end)
-			:replace_endpair(function(opts)
-				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
-				local next_char = opts.line:sub(opts.col, opts.col)
-				next_char = next_char == " " and "" or " "
-				if prev_2char:match("%w$") then
-					return "<bs> =" .. next_char
-				end
-				if prev_2char:match("%=$") then
-					return next_char
-				end
-				if prev_2char:match("=") then
-					return "<bs><bs>=" .. next_char
-				end
-				return ""
-			end)
-			:set_end_pair_length(0)
-			:with_move(cond.none())
-			:with_del(cond.none())
-		}
-	end,
-	event = "InsertEnter"
-}
-
 -- addPlugin {
--- 	"saghen/blink.pairs",
--- 	config = function(plugin, cfg)
--- 		-- add space around "=" sequence
--- 		vim.keymap.set("i", "=", function()
--- 			local col = vim.fn.col(".") - 1
--- 			if col == 0 then return "="end
+-- 	"windwp/nvim-autopairs",
+-- 	config = function()
+-- 		local pair = require("nvim-autopairs")
+-- 		local Rule = require("nvim-autopairs.rule")
+-- 		local cond = require("nvim-autopairs.conds")
 
--- 			local line = vim.api.nvim_get_current_line()
--- 			local prev = line:sub(col, col)
--- 			local prev2 = line:sub(col-1, col)
-
--- 			if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
--- 			elseif prev:match("%w") then return " = " -- add for first =
--- 			else return "=" end
-
--- 		end, { expr = true, noremap = true })
-
--- 		require('vim._extui').enable({})
--- 		require(plugin.name).setup(cfg)
+-- 		pair.setup()
+-- 		-- pair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
+-- 		pair.add_rules {
+-- 			-- #include <|> pair for c and cpp
+-- 			Rule("#include <", ">", { "c", "cpp" }),
+-- 			-- Add spaces in pair after parentheses
+-- 			-- (|) --> space --> ( | )
+-- 			-- ( | ) --> ) --> ( )|
+-- 			Rule(" ", " ", "-markdown")
+-- 			:with_pair(function (opts)
+-- 				local pair_set = opts.line:sub(opts.col - 1, opts.col)
+-- 				return vim.tbl_contains({ "()", "[]", "{}" }, pair_set)
+-- 			end)
+-- 			:with_del(cond.none()),
+-- 			Rule("( ", " )")
+-- 			:with_pair(function() return false end)
+-- 			:with_move(function(opts)
+-- 				return opts.prev_char:match(".%)") ~= nil
+-- 			end)
+-- 			:use_key(")"),
+-- 			Rule("{ ", " }")
+-- 			:with_pair(function() return false end)
+-- 			:with_move(function(opts)
+-- 				return opts.prev_char:match(".%}") ~= nil
+-- 			end)
+-- 			:use_key("}"),
+-- 			Rule("[ ", " ]")
+-- 			:with_pair(function() return false end)
+-- 			:with_move(function(opts)
+-- 				return opts.prev_char:match(".%]") ~= nil
+-- 			end)
+-- 			:use_key("]"),
+-- 			-- Auto add space on =
+-- 			Rule("=", "", "-xml")
+-- 			:with_pair(cond.not_inside_quote())
+-- 			:with_pair(function(opts)
+-- 				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+-- 				if last_char:match("[%w%=%s]") then
+-- 					return true
+-- 				end
+-- 				return false
+-- 			end)
+-- 			:replace_endpair(function(opts)
+-- 				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+-- 				local next_char = opts.line:sub(opts.col, opts.col)
+-- 				next_char = next_char == " " and "" or " "
+-- 				if prev_2char:match("%w$") then
+-- 					return "<bs> =" .. next_char
+-- 				end
+-- 				if prev_2char:match("%=$") then
+-- 					return next_char
+-- 				end
+-- 				if prev_2char:match("=") then
+-- 					return "<bs><bs>=" .. next_char
+-- 				end
+-- 				return ""
+-- 			end)
+-- 			:set_end_pair_length(0)
+-- 			:with_move(cond.none())
+-- 			:with_del(cond.none())
+-- 		}
 -- 	end,
--- 	dependencies = "saghen/blink.download",
---   version = '*', -- (recommended) only required with prebuilt binaries
--- 	event = "InsertEnter",
--- 	--- @module "blink.pairs"
--- 	--- @type blink.pairs.Config
--- 	opts = {
--- 		mappings = {
--- 			enabled = true,
--- 			disabled_filetypes = {},
--- 		},
--- 		highlights = {
--- 			enabled = true,
--- 			groups = {
--- 				"BlinkPairsOrange",
--- 				"BlinkPairsPurple",
--- 				"BlinkPairsBlue",
--- 			},
-
--- 			matchparen = {
--- 				enabled = false,
--- 				group = "BlinkPairsMatchParen",
--- 			},
--- 		},
--- 		debug = false,
--- 	}
+-- 	event = "InsertEnter"
 -- }
+
+addPlugin {
+	"saghen/blink.pairs",
+	dependencies = "saghen/blink.download",
+	version = "*",
+	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
+	config = function(plugin, cfg)
+		-- add space around "=" sequence
+		vim.keymap.set("i", "=", function()
+			local col = vim.fn.col(".") - 1
+			if col == 0 then return "="end
+
+			local line = vim.api.nvim_get_current_line()
+			local prev = line:sub(col, col)
+			local prev2 = line:sub(col-1, col)
+
+			if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
+			elseif prev:match("%w") then return " = " -- add for first =
+			else return "=" end
+
+		end, { expr = true, noremap = true })
+
+		require("vim._extui").enable({})
+		require(plugin.name).setup(cfg)
+	end,
+	--- @module "blink.pairs"
+	--- @type blink.pairs.Config
+	opts = {
+		mappings = {
+			enabled = true,
+			cmdline = true,
+			disabled_filetypes = {},
+			pairs = {},
+		},
+		highlights = {
+			enabled = true,
+			cmdline = true,
+			groups = {
+				"RainbowDelimiterRed",
+				"RainbowDelimiterYellow",
+				"RainbowDelimiterBlue",
+				"RainbowDelimiterOrange",
+				"RainbowDelimiterGreen",
+				"RainbowDelimiterViolet",
+				"RainbowDelimiterCyan",
+			},
+			unmatched_group = "BlinkPairsUnmatched", -- FIX: color
+
+			matchparen = {
+				enabled = true,
+				cmdline = true,
+				include_surrounding = true,
+				group = "BlinkPairsMatchParen",
+				priority = 250,
+			},
+		},
+		debug = false,
+	}
+}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/kensyo/nvim-scrlbkun
@@ -4694,21 +4705,22 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	"HiPhish/rainbow-delimiters.nvim",
-	event = "User TSLoaded",
-	config = function()
-		require("rainbow-delimiters.setup").setup({
-			condition = function(bufnr)
-				return not isLargeFile(bufnr)
-			end
-		})
-
-		if not isLargeFile() then
-			require("rainbow-delimiters").enable(0)
-		end
-	end
-}
+-- REFACTOR: remove me
+-- addPlugin {
+-- 	"HiPhish/rainbow-delimiters.nvim",
+-- 	event = "User TSLoaded",
+-- 	config = function()
+-- 		require("rainbow-delimiters.setup").setup({
+-- 			condition = function(bufnr)
+-- 				return not isLargeFile(bufnr)
+-- 			end
+-- 		})
+--
+-- 		if not isLargeFile() then
+-- 			require("rainbow-delimiters").enable(0)
+-- 		end
+-- 	end
+-- }
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
