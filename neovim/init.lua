@@ -450,7 +450,7 @@ end
 function LightenDarkenColor(col, amt)
 	local function clamp(x) return math.max(0, math.min(255, x)) end
 
-	local num = tonumber(col:sub(2), 16)	
+	local num = tonumber(col:sub(2), 16)
 	local r = clamp(bit.rshift(num, 16) + amt)
 	local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
@@ -3130,7 +3130,7 @@ addPlugin {
 			custom_fix = nil,
 			custom_msg = nil,
 			extend_relatedInformation = true,
-			jump_num_shortcut = false,
+			jump_num_shortcut = true,
 			keys = {
 				exec_action = "<CR>",
 				quit = "q",
@@ -3138,7 +3138,7 @@ addPlugin {
 			},
 			max_height = 0.5,
 			max_width = 0.7,
-			show_code_action = false,
+			show_code_action = true,
 			show_layout = "float",
 			show_source = true,
 			text_hl_follow = true,
@@ -3394,78 +3394,6 @@ addPlugin {
 			Lsp_icon = Lsp_anim[Lsp_icon_index]
 		end)
 
-		-- TODO:
-		-- Lsp_timer = {
-		-- 	---@diagnostic disable-next-line: undefined-field
-		-- 	timer = vim.uv.new_timer(),
-		-- 	auto_stopped = false
-		-- }
-
-		-- vim.api.nvim_create_autocmd(
-		-- 	"FocusLost", {
-		-- 		pattern = "*",
-		-- 		desc = "Stop LSP on focus lost",
-		-- 		once = false,
-		-- 		callback = function()
-		-- 			vim.api.nvim_create_autocmd(
-		-- 				"FocusGained", {
-		-- 					pattern = "*",
-		-- 					desc = "Start LSP on focus gained",
-		-- 					once = true,
-		-- 					callback = function()
-		-- 						Lsp_timer.timer:stop()
-		-- 						-- reattach LSP
-		-- 						Lsp_timer.timer:start(10000, 0, vim.schedule_wrap(function()
-		-- 							if Lsp_timer.auto_stopped and true or not isLspAttached() then
-		-- 								vim.notify("LSP resumed")
-		-- 								vim.cmd.LspStart()
-		-- 							end
-		-- 						end))
-		-- 					end
-		-- 				}
-		-- 			)
-		-- 			Lsp_timer.timer:stop()
-		-- 			-- stop LSP
-		-- 			Lsp_timer.timer:start(60000, 0, vim.schedule_wrap(function()
-		-- 				if isLspAttached() then
-		-- 					vim.notify("LSP hibernated")
-		-- 					vim.cmd.LspStop()
-		-- 					Lsp_timer.auto_stopped = true
-		-- 				end
-		-- 			end))
-		-- 		end
-		-- 	}
-		-- )
-
-		-- vim.api.nvim_create_autocmd("LspDetach", {
-		-- 	callback = function(args)
-		-- 		local client_id = args.data.client_id
-		-- 		local client = vim.lsp.get_client_by_id(client_id)
-		-- 		local current_buf = args.buf
-
-		-- 		if client then
-		-- 			local clients = vim.lsp.get_clients({ id = client_id })
-		-- 			local count = 0
-
-		-- 			if clients and #clients > 0 then
-		-- 				local remaining_client = clients[1]
-
-		-- 				if remaining_client.attached_buffers then
-		-- 					for buf_id in pairs(remaining_client.attached_buffers) do
-		-- 						if buf_id ~= current_buf then
-		-- 							count = count + 1
-		-- 						end
-		-- 					end
-		-- 				end
-		-- 			end
-
-		-- 			if count == 0 then
-		-- 				client:stop()
-		-- 			end
-		-- 		end
-		-- 	end
-		-- })
-
 		popupMenuAdd({
 			cond = isLspAttached,
 			options = {
@@ -3496,7 +3424,7 @@ addPlugin {
 		vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, bufopts)
 		vim.keymap.set("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>", bufopts)
 		vim.keymap.set("n", "<C-.>", require("actions-preview").code_actions, bufopts)
-		vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts) -- FEAT: how to select the code action displayed
+		vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
 		vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
