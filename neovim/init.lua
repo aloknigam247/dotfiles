@@ -1142,6 +1142,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- REFACTOR: remove me
 -- addPlugin {
 -- 	"windwp/nvim-autopairs",
 -- 	config = function()
@@ -1213,7 +1214,7 @@ addPlugin {
 -- 	end,
 -- 	event = "InsertEnter"
 -- }
-
+vim.g.loaded_matchparen = 1
 addPlugin {
 	"saghen/blink.pairs",
 	dependencies = "saghen/blink.download",
@@ -1259,7 +1260,7 @@ addPlugin {
 				"RainbowDelimiterViolet",
 				"RainbowDelimiterCyan",
 			},
-			unmatched_group = "BlinkPairsUnmatched", -- FIX: color
+			unmatched_group = "MatchParen",
 
 			matchparen = {
 				enabled = true,
@@ -3484,7 +3485,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/hedyhli/markdown-toc.nvim
+-- FEAT: https://github.com/erel213/markdown-writer.nvim
 -- FEAT: https://github.com/idossha/LiveMD.nvim
 -- FEAT: https://github.com/jeangiraldoo/markup.nvim
 -- FEAT: https://github.com/jghauser/follow-md-links.nvim
@@ -3492,7 +3493,6 @@ addPlugin {
 -- FEAT: https://github.com/richardbizik/nvim-toc
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
--- FEAT: https://github.com/erel213/markdown-writer.nvim
 -- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
 -- "OXY2DEV/markview.nvim"
 -- TODO: revisit config
@@ -3690,6 +3690,25 @@ addPlugin {
 				"%u*[.)]", -- I. II. III.
 				"> " -- blockqoutes marker
 			}
+		}
+	}
+}
+
+addPlugin {
+	"hedyhli/markdown-toc.nvim",
+	ft = "markdown",
+	cmd = { "Mtoc" },
+	opts = {
+		fences = {
+			enabled = true,
+			start_text = "toc-start",
+			end_text = "toc-end"
+		},
+		toc_list = {
+			padding_lines = 0,
+			indent_size = function()
+				return vim.bo.shiftwidth
+			end
 		}
 	}
 }
@@ -4677,11 +4696,11 @@ addPlugin {
 	branch = "master",
 	main = "nvim-treesitter.configs",
 	module = false,
-	dependencies = {{
-		"utilyre/sentiment.nvim",
-		config = true,
-		init = function() vim.g.loaded_matchparen = 1 end,
-	}},
+	-- dependencies = {{ -- REFACTOR: remove me
+	-- 	"utilyre/sentiment.nvim",
+	-- 	config = true,
+	-- 	init = function() vim.g.loaded_matchparen = 1 end,
+	-- }},
 	opts = {
 		auto_install = false,
 		ensure_installed = {}, -- FEAT: add ensure installed for common languages
