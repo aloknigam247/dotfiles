@@ -3485,8 +3485,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/erel213/markdown-writer.nvim
--- FEAT: https://github.com/idossha/LiveMD.nvim
 -- FEAT: https://github.com/jeangiraldoo/markup.nvim
 -- FEAT: https://github.com/jghauser/follow-md-links.nvim
 -- FEAT: https://github.com/magnusriga/markdown-tools.nvim
@@ -3714,7 +3712,7 @@ addPlugin {
 }
 
 addPlugin {
-	-- "iamcco/markdown-preview.nvim"
+	-- FEAT: "iamcco/markdown-preview.nvim"
 	"toppair/peek.nvim",
 	build = "deno task --quiet build:fast",
 	cmd = "PeekOpen",
