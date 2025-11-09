@@ -149,7 +149,7 @@ $palette = @{
         user_email = $catppuccin.Flamingo
         user_name = $catppuccin.Red
     }
-    prompt = @{
+    prompt = @{ # RECODE:
         dir_icon = @{
             bg = $catppuccin.Blue
             fg = $color_palette.dir_icon_fg

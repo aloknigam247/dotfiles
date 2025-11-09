@@ -265,7 +265,6 @@ local lazy_config = {
 				"editorconfig",
 				"gzip",
 				"man",
-				"matchit",
 				"matchparen",
 				"netrwPlugin",
 				"rplugin",
@@ -1081,7 +1080,11 @@ vim.api.nvim_create_user_command(
 	function(args)
 		local snacks = require("snacks")
 		local prev_win = Preview_win
-		local path = args.args
+		local path = args.args or vim.fn.expand("%:p")
+
+		if path == "" then
+			path = vim.fn.expand("%:p")
+		end
 
 		local function reopen(mode)
 			Preview_win:hide()
@@ -1125,7 +1128,7 @@ vim.api.nvim_create_user_command(
 	{
 		complete = "file",
 		desc = "Peek file content in a floating window",
-		nargs = 1 -- FEAT: no arg, current file
+		nargs = "?"
 	}
 )
 -- <~>
@@ -1214,7 +1217,7 @@ addPlugin {
 -- 	end,
 -- 	event = "InsertEnter"
 -- }
-vim.g.loaded_matchparen = 1 -- REFACTOR: relocate
+
 addPlugin {
 	"saghen/blink.pairs",
 	dependencies = "saghen/blink.download",
