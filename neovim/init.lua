@@ -1125,7 +1125,7 @@ vim.api.nvim_create_user_command(
 	{
 		complete = "file",
 		desc = "Peek file content in a floating window",
-		nargs = 1
+		nargs = 1 -- FEAT: no arg, current file
 	}
 )
 -- <~>
@@ -1214,13 +1214,15 @@ addPlugin {
 -- 	end,
 -- 	event = "InsertEnter"
 -- }
-vim.g.loaded_matchparen = 1
+vim.g.loaded_matchparen = 1 -- REFACTOR: relocate
 addPlugin {
 	"saghen/blink.pairs",
 	dependencies = "saghen/blink.download",
 	version = "*",
 	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
 	config = function(plugin, cfg)
+		-- FIX: do not add {} pair when next char is not whitespace
+		-- FIX: {} pair not in search mode
 		-- add space around "=" sequence
 		vim.keymap.set("i", "=", function()
 			local col = vim.fn.col(".") - 1
@@ -2009,7 +2011,7 @@ addPlugin {
 		require("debugprint").setup(cfg)
 		vim.cmd("ResetDebugPrintsCounter")
 	end,
-	keys = {
+	keys = { -- PERF: TS installed languages ?
 		"<Leader>dP", "<Leader>dW", "<Leader>dc", "<Leader>dd", "<Leader>dp", "<Leader>ds", "<Leader>dsv", "<Leader>dw",
 		{ "<Leader>dv", mode = { "n", "v" } },
 		{ "<Leader>dV", mode = { "n", "v" } }
@@ -2977,12 +2979,12 @@ addPlugin {
 	"Davidyz/inlayhint-filler.nvim",
 	keys = {
 		{
-			"<Leader>I", -- Use whatever keymap you want.
+			"<Leader>I", -- FEAT: check for installed languages
 			function()
 				require("inlayhint-filler").fill()
 			end,
 			desc = "Insert the inlay-hint under cursor into the buffer.",
-			mode = { "n", "v" }, -- include 'v' if you want to use it in visual selection mode
+			mode = { "n", "v" }
 		},
 	},
 }
@@ -3485,8 +3487,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/jeangiraldoo/markup.nvim
--- FEAT: https://github.com/jghauser/follow-md-links.nvim
 -- FEAT: https://github.com/magnusriga/markdown-tools.nvim
 -- FEAT: https://github.com/richardbizik/nvim-toc
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
@@ -3591,7 +3591,7 @@ addPlugin {
 			image = "󰥶 ",
 			email = "󰀓 ",
 			hyperlink = "󰌹 ",
-			custom = {
+			custom = { -- FEAT: no icon for heading link
 				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
 				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
 				discord = { pattern = "discord%.com", icon = "󰙯 " },
@@ -3631,7 +3631,7 @@ addPlugin {
 			"*.todo",
 			"*.md",
 		},
-		keys = {
+		keys = { -- PERF: lazy load on markdown only
 			["<TAB>"] = {
 				rhs = "<cmd>Checkmate toggle<CR>",
 				desc = "Toggle todo item",
@@ -3708,6 +3708,13 @@ addPlugin {
 				return vim.bo.shiftwidth
 			end
 		}
+	}
+}
+
+addPlugin {
+	"jghauser/follow-md-links.nvim",
+	keys = {
+		{"<CR>", function() require("follow-md-links").follow_link() end, ft = "markdown" }
 	}
 }
 
@@ -4742,7 +4749,7 @@ addPlugin {
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	branch = "master",
-	keys = {
+	keys = { -- PERF: lazy load on ts languages
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
 		{ "[m", mode = "n", desc = "jump to previous method" },
