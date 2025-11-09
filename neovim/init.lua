@@ -4602,7 +4602,7 @@ addPlugin {
 	opts ={
 		auto_reload = true,
 		signs = {
-			covered = { hl = "CoverageCovered", text = "┃" },
+			covered = { hl = "CoverageCovered", text = "┃" }, -- FIX: colors
 			partial = { hl = "CoveragePartial", text = "┃" },
 			uncovered = { hl = "CoverageUncovered", text = "┃" },
 		},
@@ -5652,8 +5652,6 @@ addPlugin {
 -- FEAT: https://github.com/smjonas/live-command.nvim
 -- FEAT: https://github.com/y3owk1n/cmd.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
--- FIX: Powershell execution in nvim
--- TODO: github stars
 
 -- REFACTOR: check usages of all plugins to remove bloat
 -- snippets
