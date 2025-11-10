@@ -2878,7 +2878,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: dotnet
 -- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
 addPlugin {
 	"seblyng/roslyn.nvim",
@@ -2904,8 +2903,6 @@ addPlugin {
 
 -- FEAT: https://github.com/netmute/ctags-lsp
 
--- FEAT: powershell lsp
-
 -- none-ls
 -- FEAT: https://github.com/nvimtools/none-ls.nvim -- create custom code actions
 -- FEAT: https://github.com/Zeioth/none-ls-autoload.nvim
@@ -2918,10 +2915,8 @@ addPlugin {
 	"Davidyz/inlayhint-filler.nvim",
 	keys = {
 		{
-			"<Leader>I", -- FEAT: check for installed languages
-			function()
-				require("inlayhint-filler").fill()
-			end,
+			"<Leader>i",
+			function() require("inlayhint-filler").fill() end,
 			desc = "Insert the inlay-hint under cursor into the buffer.",
 			mode = { "n", "v" }
 		},
@@ -3426,11 +3421,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/magnusriga/markdown-tools.nvim
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
 -- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
--- "OXY2DEV/markview.nvim"
+-- FEAT: "OXY2DEV/markview.nvim"
 -- TODO: revisit config
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
@@ -5052,7 +5046,7 @@ addPlugin {
 	event = "ModeChanged *:[vV]"
 }
 
-addPlugin {
+addPlugin { -- FEAT: replace it for matchit
 	"andymass/vim-matchup",
 	init = function()
 		vim.g.matchup_mouse_enabled = false
@@ -5147,7 +5141,8 @@ addPlugin {
 	}
 }
 
--- https://github.com/azratul/live-share.nvim
+-- FEAT: https://github.com/azratul/live-share.nvim
+-- FEAT: https://github.com/nomad/nomad
 
 addPlugin {
 	-- FIX: jump in single keystroke
@@ -5313,8 +5308,8 @@ addPlugin {
 	}
 }
 
--- https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
--- https://github.com/kndndrj/nvim-dbee
+-- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
+-- FEAT: https://github.com/kndndrj/nvim-dbee
 
 addPlugin {
 	"luiscassih/AniMotion.nvim",
@@ -5342,8 +5337,8 @@ addPlugin {
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
--- https://github.com/lewis6991/hover.nvim
--- https://github.com/patrickpichler/hovercraft.nvim
+-- FEAT: https://github.com/lewis6991/hover.nvim
+-- FEAT: https://github.com/patrickpichler/hovercraft.nvim
 
 -- FEAT: https://github.com/smoka7/multicursors.nvim
 -- FEAT: https://github.com/vscode-neovim/vscode-multi-cursor.nvim
@@ -5435,6 +5430,17 @@ addPlugin {
 addPlugin {
 	"shortcuts/no-neck-pain.nvim",
 	cmd = "NoNeckPain"
+}
+
+addPlugin {
+	"smjonas/live-command.nvim",
+	cmd = { "Preview", "Norm" },
+	main = "live-command",
+	opts = {
+		commands = {
+			Norm = { cmd = "norm" }
+		}
+	}
 }
 
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
@@ -5545,58 +5551,7 @@ addPlugin {
 	}
 }
 
--- macros
--- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-recorder
--- FEAT: https://github.com/bignos/bookmacro
--- FEAT: https://github.com/sahilsehwag/macrobank.nvim
-
--- FEAT: https://diagon.arthursonzogni.com/
-
--- FEAT: Hover on timstamp to convert into utc and ist
--- FEAT: csv utility like sorting and filtering
--- FEAT: https://github.com/Civitasv/cmake-tools.nvim
--- FEAT: https://github.com/Fildo7525/pretty_hover
--- FEAT: https://github.com/FluxxField/smart-motion.nvim
--- FEAT: https://github.com/Kohirus/cppassist.nvim
--- FEAT: https://github.com/MisanthropicBit/winmove.nvim
--- FEAT: https://github.com/MunifTanjim/nui.nvim
--- FEAT: https://github.com/Piotr1215/pairup.nvim
--- FEAT: https://github.com/Shatur/neovim-tasks
--- FEAT: https://github.com/Wotee/bruh.nvim
--- FEAT: https://github.com/axkirillov/easypick.nvim
--- FEAT: https://github.com/carbon-steel/detour.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-rulebook
--- FEAT: https://github.com/dmtrKovalenko/fff.nvim
--- FEAT: https://github.com/folke/edgy.nvim
--- FEAT: https://github.com/folke/sidekick.nvim
--- FEAT: https://github.com/folke/styler.nvim
--- FEAT: https://github.com/grapp-dev/nui-components.nvim
--- FEAT: https://github.com/heilgar/nvim-http-client
--- FEAT: https://github.com/ian-howell/ripple.nvim
--- FEAT: https://github.com/jakemason/ouroboros.nvim
--- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
--- FEAT: https://github.com/jim-at-jibba/nvim-redraft
--- FEAT: https://github.com/johannww/openssl.nvim
--- FEAT: https://github.com/joshzcold/python.nvim
--- FEAT: https://github.com/jrop/u.nvim
--- FEAT: https://github.com/lewis6991/hover.nvim
--- FEAT: https://github.com/lucobellic/edgy-group.nvim
--- FEAT: https://github.com/marc0x71/cmake-simple.nvim
--- FEAT: https://github.com/mfontanini/presenterm
--- FEAT: https://github.com/mihaifm/MegaToggler
--- FEAT: https://github.com/nelnn/bear.nvim
--- FEAT: https://github.com/nvim-mini/mini.extra
--- FEAT: https://github.com/nvim-mini/mini.jump
--- FEAT: https://github.com/nvim-mini/mini.operators
--- FEAT: https://github.com/olimorris/codecompanion.nvim
--- FEAT: https://github.com/oysandvik94/curl.nvim 
--- FEAT: https://github.com/pogyomo/submode.nvim
--- FEAT: https://github.com/r-pletnev/pdfreader.nvim
--- FEAT: https://github.com/rachartier/tiny-glimmer.nvim
--- FEAT: https://github.com/retran/meow.yarn.nvim
--- FEAT: https://github.com/romek-codes/bruno.nvim
--- FEAT: https://github.com/smjonas/live-command.nvim
+-- AI
 -- FEAT: https://github.com/yetone/avante.nvim
 
 -- REFACTOR: check usages of all plugins to remove bloat
@@ -5607,6 +5562,59 @@ addPlugin {
 
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
 -- FEAT: FOLDING: create own folding code
+
+-- macros
+-- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-recorder
+-- FEAT: https://github.com/bignos/bookmacro
+-- FEAT: https://github.com/sahilsehwag/macrobank.nvim
+
+-- FEAT: https://diagon.arthursonzogni.com/
+
+-- FEAT: csv utility like sorting and filtering
+-- FEAT: Hover on timstamp to convert into utc and ist
+-- FEAT: https://github.com/axkirillov/easypick.nvim
+-- FEAT: https://github.com/carbon-steel/detour.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-rulebook
+-- FEAT: https://github.com/Civitasv/cmake-tools.nvim
+-- FEAT: https://github.com/dmtrKovalenko/fff.nvim
+-- FEAT: https://github.com/Fildo7525/pretty_hover
+-- FEAT: https://github.com/FluxxField/smart-motion.nvim
+-- FEAT: https://github.com/folke/edgy.nvim
+-- FEAT: https://github.com/folke/sidekick.nvim
+-- FEAT: https://github.com/folke/styler.nvim
+-- FEAT: https://github.com/gisketch/triforce.nvim
+-- FEAT: https://github.com/grapp-dev/nui-components.nvim
+-- FEAT: https://github.com/heilgar/nvim-http-client
+-- FEAT: https://github.com/ian-howell/ripple.nvim
+-- FEAT: https://github.com/jakemason/ouroboros.nvim
+-- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
+-- FEAT: https://github.com/jim-at-jibba/nvim-redraft
+-- FEAT: https://github.com/johannww/openssl.nvim
+-- FEAT: https://github.com/joshzcold/python.nvim
+-- FEAT: https://github.com/jrop/u.nvim
+-- FEAT: https://github.com/Kohirus/cppassist.nvim
+-- FEAT: https://github.com/lewis6991/hover.nvim
+-- FEAT: https://github.com/lucobellic/edgy-group.nvim
+-- FEAT: https://github.com/marc0x71/cmake-simple.nvim
+-- FEAT: https://github.com/mfontanini/presenterm
+-- FEAT: https://github.com/mihaifm/MegaToggler
+-- FEAT: https://github.com/MisanthropicBit/winmove.nvim
+-- FEAT: https://github.com/MunifTanjim/nui.nvim
+-- FEAT: https://github.com/nelnn/bear.nvim
+-- FEAT: https://github.com/nvim-mini/mini.extra
+-- FEAT: https://github.com/nvim-mini/mini.jump
+-- FEAT: https://github.com/nvim-mini/mini.operators
+-- FEAT: https://github.com/olimorris/codecompanion.nvim
+-- FEAT: https://github.com/oysandvik94/curl.nvim 
+-- FEAT: https://github.com/Piotr1215/pairup.nvim
+-- FEAT: https://github.com/pogyomo/submode.nvim
+-- FEAT: https://github.com/r-pletnev/pdfreader.nvim
+-- FEAT: https://github.com/rachartier/tiny-glimmer.nvim
+-- FEAT: https://github.com/retran/meow.yarn.nvim
+-- FEAT: https://github.com/romek-codes/bruno.nvim
+-- FEAT: https://github.com/Shatur/neovim-tasks
+-- FEAT: https://github.com/Wotee/bruh.nvim
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>

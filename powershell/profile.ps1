@@ -272,7 +272,7 @@ function v    { D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cu
 function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\$($lazygit_theme)" }
 
 function e() {
-    $code_patterns = @(".*\.cs$", ".*\.ps1$", ".*\.psm1$", "^CMakeLists.txt$")
+    $code_patterns = @(".*\.cs$", "^CMakeLists.txt$")
 
     # use nvim for SSH
     if ( $null -ne $env:SSH_CLIENT ) {
@@ -360,7 +360,7 @@ function gwa {
 function gwd {
     $branch_name = (Get-Location).Path.Split("\")[-1]
     $main_repo = (git rev-parse --path-format=absolute --git-common-dir).Replace("/.git","")
-    cd $main_repo
+    Set-Location $main_repo
     git worktree remove $branch_name
     git branch -D $branch_name --force
 }
@@ -548,7 +548,7 @@ function populatePrompt {
 
     $script:git_status = Get-GitStatus
 
-    if ($script:git_status -ne $null) {
+    if ($null -ne $script:git_status) {
         $script:dir_icon = $icons.git_icon
 
         # git branch
@@ -617,7 +617,7 @@ function promptGen($separator, $segments) {
         $seg = $segments[$i]
         $block_bg = $seg.bg
 
-        if ($seg.cond -ne $null) {
+        if ($null -ne $seg.cond) {
             $res = Invoke-Command $seg.cond
             if ($res -eq $false) {
                 continue
@@ -626,7 +626,7 @@ function promptGen($separator, $segments) {
 
         $sep_params = $separator.Clone()
         $sep_params.bg = $block_bg
-        if ($separator.fg -eq $null) {
+        if ($null -eq $separator.fg) {
             $sep_params.fg = $sep_fg
         }
         $out += Format-Text @sep_params
@@ -642,7 +642,7 @@ function promptGen($separator, $segments) {
 
     $sep_params = $separator.Clone()
     $sep_params.bg = $null
-    if ($separator.fg -eq $null) {
+    if ($null -eq $separator.fg) {
         $sep_params.fg = $sep_fg
     }
     $out += Format-Text @sep_params
@@ -692,7 +692,7 @@ function prompt {
                 text = "$script:git_sync"
                 fg   = $palette.prompt.git.sync
             }
-            cond = { return $script:git_status -ne $null }
+            cond = { return $null -ne $script:git_status }
         }
     )
 

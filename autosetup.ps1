@@ -7,7 +7,6 @@ param(
 
 # Variables
 $SCOOP_DIR = "D:\Scoop"
-$SCOOP_APPS = "$SCOOP_DIR\apps"
 
 function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)
@@ -105,7 +104,7 @@ function installScoop {
     )
     Get-Command scoop *>&1 | Out-Null
     if ($? -eq $false) {
-        writeLog INFO "Scoop not insalled. Installing"
+        writeLog INFO "Scoop not installed. Installing"
         Invoke-RestMethod get.scoop.sh -outfile "$env:TEMP\install.ps1"
         if (Test-Path "D:\") {
             & $env:TEMP\install.ps1 -RunAsAdmin -ScoopDir $SCOOP_DIR
@@ -116,7 +115,7 @@ function installScoop {
         Remove-Item $env:TEMP\install.ps1
         scoop bucket add extras
         scoop bucket add versions
-        writeLog INFO "Scoop insalled"
+        writeLog INFO "Scoop installed"
     }
     if ($update){
         scoop update
@@ -124,7 +123,7 @@ function installScoop {
     }
 
     $installed = scoop list | ForEach-Object { $_.Name }
-    if ($installed -eq $null) {
+    if ($null -eq $installed) {
         $script:scoop_installed = ""
     } else {
         $script:scoop_installed = $installed
@@ -301,7 +300,7 @@ function writeLog {
     Write-Host -ForegroundColor $color " $message"
 }
 
-$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | % { $_.Directory.BaseName }
+$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | ForEach-Object { $_.Directory.BaseName }
 
 if ($update) {
     writeLog INFO "Updating all installed packages"
