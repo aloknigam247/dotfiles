@@ -862,7 +862,7 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
--- FIX: does not open when search enter
+vim.keymap.set("n", "<F7>", "<cmd>Lazy<CR>")
 vim.cmd[[
 if executable("fd")
 	func FindFiles(cmdarg, cmdcomplete)
@@ -1147,6 +1147,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
+	-- FIX: does not open fold when search enter
 	"saghen/blink.pairs",
 	dependencies = "saghen/blink.download",
 	version = "*",
@@ -1463,8 +1464,8 @@ addPlugin {
 	end,
 	dependencies = { "luukvbaal/statuscol.nvim" },
 	keys = {
-		{ "[t", function() require("todo-comments").jump_prev(); vim.cmd("normal! zO") end, desc = "Previous TODO" },
-		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zO") end, desc = "Next TODO" }
+		{ "[t", function() require("todo-comments").jump_prev(); vim.cmd("normal! zv") end, desc = "Previous TODO" },
+		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zv") end, desc = "Next TODO" }
 	}
 }
 
@@ -4791,6 +4792,7 @@ addPlugin {
 -- FEAT: https://github.com/rcarriga/nvim-notify for notification
 -- FEAT: https://github.com/y3owk1n/notifier.nvim
 addPlugin {
+	-- BUG: commandline does not work as expected
 	-- REFACTOR: reconfigure
 	"folke/noice.nvim",
 	config = function()
@@ -4954,8 +4956,7 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-mini/mini.misc",
-	lazy = false
+	"nvim-mini/mini.misc"
 }
 
 -- FEAT: https://github.com/ObserverOfTime/notifications.nvim
@@ -5623,6 +5624,7 @@ addPlugin {
 -- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
+-- FIX: all diagnostics
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
