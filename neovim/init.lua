@@ -1145,87 +1145,12 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- REFACTOR: remove me
--- addPlugin {
--- 	"windwp/nvim-autopairs",
--- 	config = function()
--- 		local pair = require("nvim-autopairs")
--- 		local Rule = require("nvim-autopairs.rule")
--- 		local cond = require("nvim-autopairs.conds")
-
--- 		pair.setup()
--- 		-- pair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
--- 		pair.add_rules {
--- 			-- #include <|> pair for c and cpp
--- 			Rule("#include <", ">", { "c", "cpp" }),
--- 			-- Add spaces in pair after parentheses
--- 			-- (|) --> space --> ( | )
--- 			-- ( | ) --> ) --> ( )|
--- 			Rule(" ", " ", "-markdown")
--- 			:with_pair(function (opts)
--- 				local pair_set = opts.line:sub(opts.col - 1, opts.col)
--- 				return vim.tbl_contains({ "()", "[]", "{}" }, pair_set)
--- 			end)
--- 			:with_del(cond.none()),
--- 			Rule("( ", " )")
--- 			:with_pair(function() return false end)
--- 			:with_move(function(opts)
--- 				return opts.prev_char:match(".%)") ~= nil
--- 			end)
--- 			:use_key(")"),
--- 			Rule("{ ", " }")
--- 			:with_pair(function() return false end)
--- 			:with_move(function(opts)
--- 				return opts.prev_char:match(".%}") ~= nil
--- 			end)
--- 			:use_key("}"),
--- 			Rule("[ ", " ]")
--- 			:with_pair(function() return false end)
--- 			:with_move(function(opts)
--- 				return opts.prev_char:match(".%]") ~= nil
--- 			end)
--- 			:use_key("]"),
--- 			-- Auto add space on =
--- 			Rule("=", "", "-xml")
--- 			:with_pair(cond.not_inside_quote())
--- 			:with_pair(function(opts)
--- 				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
--- 				if last_char:match("[%w%=%s]") then
--- 					return true
--- 				end
--- 				return false
--- 			end)
--- 			:replace_endpair(function(opts)
--- 				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
--- 				local next_char = opts.line:sub(opts.col, opts.col)
--- 				next_char = next_char == " " and "" or " "
--- 				if prev_2char:match("%w$") then
--- 					return "<bs> =" .. next_char
--- 				end
--- 				if prev_2char:match("%=$") then
--- 					return next_char
--- 				end
--- 				if prev_2char:match("=") then
--- 					return "<bs><bs>=" .. next_char
--- 				end
--- 				return ""
--- 			end)
--- 			:set_end_pair_length(0)
--- 			:with_move(cond.none())
--- 			:with_del(cond.none())
--- 		}
--- 	end,
--- 	event = "InsertEnter"
--- }
-
 addPlugin {
 	"saghen/blink.pairs",
 	dependencies = "saghen/blink.download",
 	version = "*",
 	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
 	config = function(plugin, cfg)
-		-- FIX: do not add {} pair when next char is not whitespace
-		-- FIX: {} pair not in search mode
 		-- add space around "=" sequence
 		vim.keymap.set("i", "=", function()
 			local col = vim.fn.col(".") - 1
@@ -1996,12 +1921,18 @@ addPlugin {
 				variable_above = "<Leader>dV",
 				surround_plain = "<Leader>ds",
 				surround_variable = "<Leader>dsv",
-				variable_below_alwaysprompt = "<Leader>dw",
-				variable_above_alwaysprompt = "<Leader>dW",
-				textobj_below = nil,
-				textobj_above = nil,
+				variable_below_alwaysprompt = "",
+				variable_above_alwaysprompt = "",
+				surround_variable_alwaysprompt = "",
+				textobj_below = "",
+				textobj_above = "",
+				textobj_surround = "",
 				toggle_comment_debug_prints = "<Leader>dc",
 				delete_debug_prints = "<Leader>dd",
+			},
+			insert = {
+				plain = "",
+				variable = "",
 			},
 			visual = {
 				variable_below = "<Leader>dv",
@@ -2014,10 +1945,15 @@ addPlugin {
 		require("debugprint").setup(cfg)
 		vim.cmd("ResetDebugPrintsCounter")
 	end,
-	keys = { -- PERF: TS installed languages ?
-		"<Leader>dP", "<Leader>dW", "<Leader>dc", "<Leader>dd", "<Leader>dp", "<Leader>ds", "<Leader>dsv", "<Leader>dw",
-		{ "<Leader>dv", mode = { "n", "v" } },
-		{ "<Leader>dV", mode = { "n", "v" } }
+	keys = {
+		{ "<Leader>dP",  ft = getTSInstalled(), desc = "Plain debug above current line" },
+		{ "<Leader>dc",  ft = getTSInstalled(), desc = "Comment/uncomment all debugprint statements in the current buffer" },
+		{ "<Leader>dd",  ft = getTSInstalled(), desc = "Delete all debugprint statements in the current buffer" },
+		{ "<Leader>dp",  ft = getTSInstalled(), desc = "Plain debug below current line" },
+		{ "<Leader>ds",  ft = getTSInstalled(), desc = "Surround plain debug" },
+		{ "<Leader>dsv", ft = getTSInstalled(), desc = "Surround variable debug" },
+		{ "<Leader>dv",  ft = getTSInstalled(), desc = "Variable debug below current line", mode = { "n", "v" } },
+		{ "<Leader>dV",  ft = getTSInstalled(), desc = "Variable debug above current line", mode = { "n", "v" } },
 	}
 }
 
@@ -3491,7 +3427,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/magnusriga/markdown-tools.nvim
--- FEAT: https://github.com/richardbizik/nvim-toc
 -- FEAT: https://github.com/tadmccorkle/markdown.nvim
 -- FEAT: https://github.com/topazape/md-preview.nvim
 -- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
@@ -3696,22 +3631,34 @@ addPlugin {
 }
 
 addPlugin {
-	"hedyhli/markdown-toc.nvim",
-	ft = "markdown",
-	cmd = { "Mtoc" },
-	opts = {
-		fences = {
-			enabled = true,
-			start_text = "toc-start",
-			end_text = "toc-end"
-		},
-		toc_list = {
-			padding_lines = 0,
-			indent_size = function()
-				return vim.bo.shiftwidth
-			end
-		}
-	}
+	"richardbizik/nvim-toc",
+	cmd = "TOCList",
+	dependencies = "nvim-treesitter/nvim-treesitter",
+	opts = { toc_header = "Table of Contents" },
+	config = function(plugin, cfg)
+		local toc = require(plugin.name)
+		toc.setup(cfg)
+
+		vim.api.nvim_buf_create_user_command(
+			0,
+			'TOCList',
+			function() toc.TOC({ format = "list" }) end,
+			{ nargs = 0 }
+		)
+
+		vim.api.nvim_create_autocmd(
+			"BufWritePre",
+			{
+				pattern = "*.md",
+				callback = function(args)
+					local top_line = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)[1]
+					if top_line:find(cfg.toc_header) then
+						require(plugin.name).TOC({ format = "list" })
+					end
+				end
+			}
+		)
+	end
 }
 
 addPlugin {
@@ -5650,7 +5597,6 @@ addPlugin {
 -- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/smjonas/live-command.nvim
--- FEAT: https://github.com/y3owk1n/cmd.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
 
 -- REFACTOR: check usages of all plugins to remove bloat
