@@ -2925,6 +2925,7 @@ addPlugin {
 
 -- FEAT: https://github.com/oribarilan/lensline.nvim
 addPlugin {
+	-- FEAT: do not show for no references
 	"Wansmer/symbol-usage.nvim",
 	event = "LspAttach",
 	config = function()
@@ -3039,7 +3040,7 @@ addPlugin {
 	opts = {
 		aggressive_mode = true,
 		excluded_lsp_clients = {},
-		grace_period = 60*2,
+		grace_period = 60*60,
 		notifications = true,
 		wakeup_delay = 1000*30
 	}
