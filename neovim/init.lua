@@ -1177,7 +1177,9 @@ addPlugin {
 			enabled = true,
 			cmdline = true,
 			disabled_filetypes = {},
-			pairs = {}, -- FEAT: improve {}
+			-- FEAT: improve {}
+			-- FEAT: fix [] for markdown
+			pairs = {},
 		},
 		highlights = {
 			enabled = true,
