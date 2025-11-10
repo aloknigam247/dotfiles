@@ -862,6 +862,7 @@ vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ action
 -- <~>
 -- Misc</>
 -------
+-- FIX: does not open when search enter
 vim.cmd[[
 if executable("fd")
 	func FindFiles(cmdarg, cmdcomplete)
@@ -1176,7 +1177,7 @@ addPlugin {
 			enabled = true,
 			cmdline = true,
 			disabled_filetypes = {},
-			pairs = {},
+			pairs = {}, -- FEAT: improve {}
 		},
 		highlights = {
 			enabled = true,
@@ -2903,12 +2904,6 @@ addPlugin {
 
 -- FEAT: https://github.com/netmute/ctags-lsp
 
--- none-ls
--- FEAT: https://github.com/nvimtools/none-ls.nvim -- create custom code actions
--- FEAT: https://github.com/Zeioth/none-ls-autoload.nvim
--- FEAT: https://github.com/Zeioth/none-ls-external-sources.nvim
--- FEAT: https://github.com/gwinn/none-ls-jsonlint.nvim
-
 -- FEAT: https://github.com/p00f/clangd_extensions.nvim
 
 addPlugin {
@@ -3255,7 +3250,17 @@ addPlugin {
 	end
 }
 
--- FEAT: addPlugin { "mfussenegger/nvim-lint" } -- have windows path issues
+-- FEAT: create custom code actions
+addPlugin {
+	"nvimtools/none-ls.nvim",
+	dependencies = "nvim-lua/plenary.nvim",
+	config = function()
+		local null_ls = require("null-ls")
+		null_ls.setup({
+			-- https://github.com/Zeioth/none-ls-external-sources.nvim
+		})
+	end
+}
 
 addPlugin {
 	"p00f/clangd_extensions.nvim",
@@ -3417,7 +3422,7 @@ addPlugin {
 		}
 
 	end,
-	dependencies = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
+	dependencies = { "neovim/nvim-lspconfig", "nvimtools/none-ls.nvim", "williamboman/mason.nvim" },
 	keys = "<F12>"
 }
 -- <~>
