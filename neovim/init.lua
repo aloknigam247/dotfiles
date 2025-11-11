@@ -1147,7 +1147,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- FIX: does not open fold when search enter
 	"saghen/blink.pairs",
 	dependencies = "saghen/blink.download",
 	version = "*",
@@ -1176,7 +1175,7 @@ addPlugin {
 	opts = {
 		mappings = {
 			enabled = true,
-			cmdline = true,
+			cmdline = false, -- FIX: does not open fold when search enter
 			disabled_filetypes = {},
 			-- FEAT: improve {}
 			-- FEAT: fix [] for markdown
