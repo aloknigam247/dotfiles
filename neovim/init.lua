@@ -1152,8 +1152,11 @@ addPlugin {
 	version = "*",
 	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
 	config = function(plugin, cfg)
+		require("vim._extui").enable({})
+		require(plugin.name).setup(cfg)
+
 		-- add space around "=" sequence
-		vim.keymap.set("i", "=", function()
+		vim.keymap.set({ "c", "i" }, "=", function()
 			local col = vim.fn.col(".") - 1
 			if col == 0 then return "="end
 
@@ -1167,15 +1170,15 @@ addPlugin {
 
 		end, { expr = true, noremap = true })
 
-		require("vim._extui").enable({})
-		require(plugin.name).setup(cfg)
+		-- blink create mapping for <CR> in cmdline which make foldopen = search misbehave
+		vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 1000)
 	end,
 	--- @module "blink.pairs"
 	--- @type blink.pairs.Config
 	opts = {
 		mappings = {
 			enabled = true,
-			cmdline = false, -- FIX: does not open fold when search enter
+			cmdline = true,
 			disabled_filetypes = {},
 			-- FEAT: improve {}
 			-- FEAT: fix [] for markdown
@@ -1866,7 +1869,7 @@ addPlugin {
 						}
 					}
 				},
-				snippets = {
+				snippets = { -- FEAT: snippet for common neovim methods
 					name = "snippet"
 				}
 			}
