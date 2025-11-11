@@ -2904,10 +2904,7 @@ addPlugin {
 
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
-
 -- FEAT: https://github.com/netmute/ctags-lsp
-
--- FEAT: https://github.com/p00f/clangd_extensions.nvim
 
 addPlugin {
 	"Davidyz/inlayhint-filler.nvim",
@@ -3430,8 +3427,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/tadmccorkle/markdown.nvim
--- FEAT: https://github.com/topazape/md-preview.nvim
 -- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
 -- FEAT: "OXY2DEV/markview.nvim"
 -- TODO: revisit config
