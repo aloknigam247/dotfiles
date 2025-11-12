@@ -1180,15 +1180,18 @@ addPlugin {
 			enabled = true,
 			cmdline = true,
 			disabled_filetypes = {},
-			-- FEAT: fix [] for markdown
 			-- FEAT: improve {}
+			-- FEAT: improve ()
 			pairs = {
 				["["] = {
 					{
 						"]",
 						space = function(ctx)
-							-- require("snacks").debug.backtrace()
-							return true
+							if ctx == nil then
+								return true
+							end
+							vim.notify("Remove this check from blink.pairs", vim.log.levels.ERROR)
+							return ctx.ft ~= "markdown" or not ctx:is_before_cursor("- [")
 						end
 					}
 				}
