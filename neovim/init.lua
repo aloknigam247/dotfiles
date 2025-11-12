@@ -1180,9 +1180,19 @@ addPlugin {
 			enabled = true,
 			cmdline = true,
 			disabled_filetypes = {},
-			-- FEAT: improve {}
 			-- FEAT: fix [] for markdown
-			pairs = {},
+			-- FEAT: improve {}
+			pairs = {
+				["["] = {
+					{
+						"]",
+						space = function(ctx)
+							-- require("snacks").debug.backtrace()
+							return true
+						end
+					}
+				}
+			},
 		},
 		highlights = {
 			enabled = true,
