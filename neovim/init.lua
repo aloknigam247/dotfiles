@@ -1180,17 +1180,33 @@ addPlugin {
 			enabled = true,
 			cmdline = true,
 			disabled_filetypes = {},
-			-- FEAT: improve {}
-			-- FEAT: improve ()
 			pairs = {
+				["{"] = {
+					{
+						"}",
+						when = function(ctx)
+							local after = ctx:text_after_cursor(1)
+							return after == "" or after == "}" or after:match("[%s}]")
+						end
+					}
+				},
+				["("] = {
+					{
+						")",
+						when = function(ctx)
+							local after = ctx:text_after_cursor(1)
+							return after == "" or after == ")" or after:match("[%s)]")
+						end
+					}
+				},
 				["["] = {
 					{
 						"]",
 						space = function(ctx)
 							if ctx == nil then
+								vim.notify("Remove this check from blink.pairs", vim.log.levels.ERROR)
 								return true
 							end
-							vim.notify("Remove this check from blink.pairs", vim.log.levels.ERROR)
 							return ctx.ft ~= "markdown" or not ctx:is_before_cursor("- [")
 						end
 					}
@@ -1882,7 +1898,7 @@ addPlugin {
 						}
 					}
 				},
-				snippets = { -- FEAT: snippet for common neovim methods
+				snippets = {
 					name = "snippet"
 				}
 			}

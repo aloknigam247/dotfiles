@@ -24,6 +24,7 @@ if ($(IsShellInteractive) -eq $false) {
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
+# FIX: dark theme by defaults
 $light_palette = @{
     dir_icon_fg = "#A6E3A1"
     git_index = "#ffda1a "
