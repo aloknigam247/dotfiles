@@ -2993,7 +2993,7 @@ addPlugin {
 	"Zeioth/garbage-day.nvim",
 	event = "LspAttach",
 	opts = {
-		aggressive_mode = true,
+		aggressive_mode = false,
 		excluded_lsp_clients = {},
 		grace_period = 60*60,
 		notifications = true,
@@ -3407,13 +3407,28 @@ addPlugin {
 			}
 		}
 
+		vim.lsp.config.roslyn = {
+			cmd = {
+				"D:/apps/nvim-data/mason/bin/roslyn.cmd",
+				"--logLevel=Trace",
+				"--extensionLogDirectory=D:/apps/nvim-data",
+				"--stdio",
+			}
+		}
+
 	end,
 	dependencies = { "neovim/nvim-lspconfig", "nvimtools/none-ls.nvim", "williamboman/mason.nvim" },
 	keys = "<F12>"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/YousefHadder/markdown-plus.nvim
+-- FEAT:
+addPlugin {
+	"YousefHadder/markdown-plus.nvim",
+	-- ft = "markdown",
+	opts = {}
+}
+
 -- FEAT: "OXY2DEV/markview.nvim"
 -- TODO: revisit config
 addPlugin {
