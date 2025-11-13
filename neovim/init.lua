@@ -3422,11 +3422,25 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT:
 addPlugin {
 	"YousefHadder/markdown-plus.nvim",
-	-- ft = "markdown",
-	opts = {}
+	ft = "markdown",
+	opts = {
+		features = {
+			list_management = true,      -- default: true (list auto-continue / indent / renumber / checkboxes)
+			text_formatting = true,     -- default: true (bold/italic/strike/code + clear)
+			headers_toc = false,         -- default: true (headers nav + TOC generation & window)
+			links = true,               -- default: true (insert/edit/convert/reference links)
+			images = true,              -- default: true (insert/edit image links + toggle link/image)
+			quotes = false,              -- default: true (blockquote toggle)
+			callouts = false,            -- default: true (GFM callouts/admonitions)
+			code_block = false,          -- default: true (visual selection -> fenced block)
+			table = false,               -- default: true (table creation & editing)
+		}
+	},
+	config = function(plugin, cfg)
+		require("markdown-plus").setup(cfg)
+	end
 }
 
 -- FEAT: "OXY2DEV/markview.nvim"
@@ -3558,6 +3572,7 @@ addPlugin {
 	ft = "help"
 }
 
+-- BUG: conflicts with markdown-plus list
 addPlugin {
 	"bngarren/checkmate.nvim", -- FIX: overrites highlight for inline ``
 	ft = "markdown",
@@ -3604,31 +3619,7 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	"gaoDean/autolist.nvim",
-	ft = "markdown",
-	config = function(_, cfg)
-		require("autolist").setup(cfg)
-		vim.keymap.set("i", "<S-CR>", "<CR><Cmd>AutolistNewBullet<CR>")
-		vim.keymap.set("n", "<<", "<<<Cmd>AutolistRecalculate<CR>")
-		vim.keymap.set("n", ">>", ">><Cmd>AutolistRecalculate<CR>")
-		vim.keymap.set("n", "O", "O<Cmd>AutolistNewBulletBefore<CR>")
-		vim.keymap.set("n", "dd", "dd<Cmd>AutolistRecalculate<CR>")
-		vim.keymap.set("n", "o", "o<Cmd>AutolistNewBullet<CR>")
-	end,
-	opts = {
-		lists = {
-			markdown = {
-				"[-+*]", -- - + *
-				"%d+[.)]", -- 1. 2. 3.
-				"%a[.)]", -- a) b) c)
-				"%u*[.)]", -- I. II. III.
-				"> " -- blockqoutes marker
-			}
-		}
-	}
-}
-
+-- RECODE: do we need ir after markdown-plus
 addPlugin {
 	"richardbizik/nvim-toc",
 	cmd = "TOCList",
@@ -3660,6 +3651,7 @@ addPlugin {
 	end
 }
 
+-- RECODE: do we need ir after markdown-plus
 addPlugin {
 	"jghauser/follow-md-links.nvim",
 	keys = {
