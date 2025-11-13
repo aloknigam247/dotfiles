@@ -1854,7 +1854,7 @@ addPlugin {
 							return
 								not utils.is_command_line()
 								or utils.is_command_line({ "/", "?" })
-								or utils.in_ex_context({ "global", "lua", "substitute", "vglobal" })
+								or utils.in_ex_context(require("blink.cmp.sources.cmdline.constants").ex_search_commands)
 						end
 					}
 				},
