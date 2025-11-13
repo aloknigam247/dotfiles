@@ -1156,7 +1156,7 @@ addPlugin {
 		require(plugin.name).setup(cfg)
 
 		-- add space around "=" sequence
-		vim.keymap.set({ "c", "i" }, "=", function()
+		vim.keymap.set({ "c", "i" }, "=", function() -- FIX: not for python
 			local col = vim.fn.col(".") - 1
 			if col == 0 then return "="end
 
@@ -2349,6 +2349,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: neotest-summary no space highlight
 FileTypeActions = {
 	["NvimTree"] = function(_)
 		vim.cmd("setlocal statuscolumn=")
