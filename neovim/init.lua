@@ -1156,7 +1156,11 @@ addPlugin {
 		require(plugin.name).setup(cfg)
 
 		-- add space around "=" sequence
-		vim.keymap.set({ "c", "i" }, "=", function() -- FIX: not for python
+		vim.keymap.set({ "c", "i" }, "=", function()
+			if vim.o.filetype == "python" then
+				return "="
+			end
+
 			local col = vim.fn.col(".") - 1
 			if col == 0 then return "="end
 
@@ -1168,7 +1172,7 @@ addPlugin {
 			elseif prev:match("%w") then return " = " -- add for first =
 			else return "=" end
 
-		end, { expr = true, noremap = true })
+		end, { expr = true, noremap = true, desc = "Add spaces around =" })
 
 		-- blink create mapping for <CR> in cmdline which make foldopen = search misbehave
 		vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 1000)
@@ -2349,7 +2353,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: neotest-summary no space highlight
 FileTypeActions = {
 	["NvimTree"] = function(_)
 		vim.cmd("setlocal statuscolumn=")
@@ -2359,6 +2362,10 @@ FileTypeActions = {
 	end,
 	["neotest-summary"] = function(_)
 		vim.cmd.setlocal("nowrap")
+		vim.cmd[[
+			setlocal listchars-=multispace:·
+			setlocal listchars-=lead:·
+		]]
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
@@ -4550,7 +4557,7 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-neotest/neotest", -- BUG: hangs in pytest
+	"nvim-neotest/neotest", -- FIX: enable tiny-inline-diagnostic
 	cmd = "Neotest",
 	config = function()
 		---@diagnostic disable-next-line: missing-fields
