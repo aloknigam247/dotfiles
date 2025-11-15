@@ -1543,7 +1543,7 @@ local function applyColorscheme()
 		vim.g.neovide_normal_opacity = 0.7
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	else
-		if vim.api.nvim_get_hl(0, "Normal") then
+		if vim.api.nvim_get_hl(0, { name = "Normal" }).bg then
 			require("mini.misc").setup_termbg_sync()
 		end
 	end
