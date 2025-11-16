@@ -1194,7 +1194,7 @@ addPlugin {
 						end
 					}
 				},
-				["("] = {
+				["("] = { -- FIX: fix ())
 					{
 						")",
 						when = function(ctx)
