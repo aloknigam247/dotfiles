@@ -1571,7 +1571,7 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					BlinkCmpSource = { fg = palette.teal, style = { "italic" } },
+					BlinkCmpSource = { fg = palette.sky, style = { "italic" } },
 					IlluminatedWordText = { bg = palette.mantle },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
@@ -3453,137 +3453,128 @@ addPlugin {
 	end
 }
 
--- FEAT: compare
-addPlugin {
-	"OXY2DEV/markview.nvim",
-	event = "VimEnter *.markview.md",
-	config = function(_, cfg)
-		require("markview").setup(cfg)
-		vim.cmd("Markview attach")
-	end,
-	opts = {}
-}
-
+-- RECODE: reconfigure
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
-	event = "VimEnter *.rendermarkdown.md"
+	ft = "markdown",
+	opts = {
+		latex = {
+			enabled = false,
+		},
+		anti_conceal = {
+			enabled = false
+		},
+		heading = {
+			enabled = true,
+			sign = false,
+			position = "inlay",
+			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " }, -- FEAT: use sequence of blocks
+			icons = { "󰫎 " },
+			signs = { "󰫎 " },
+			width = { "full", "block", "block"},
+			left_margin = 0,
+			left_pad = 0,
+			right_pad = 2,
+			min_width = 0,
+			border = false,
+			border_virtual = false,
+			border_prefix = false,
+		},
+		code = {
+			enabled = true,
+			render_modes = { "n", "v", "V" },
+			sign = false,
+			style = "full",
+			position = "left",
+			language_pad = 0,
+			disable_background = { "" },
+			width = "block",
+			left_margin = 0,
+			left_pad = 0,
+			right_pad = 1,
+			min_width = 10,
+			border = "thick",
+			language_name = true,
+			inline_pad = 1
+		},
+		bullet = {
+			enabled = true,
+			icons = { "", "", "󰨐", "" },
+		},
+		checkbox = {
+			enabled = true,
+			position = "overlay",
+			unchecked = {
+				icon = "    ", -- FEAT: better icons
+			},
+			checked = {
+				icon = "    ",
+				scope_highlight = "RenderMarkdownChecked"
+			},
+			custom = {
+				working = {
+					raw = "[-]",
+					rendered = "    ",
+					highlight = "RenderMarkdownTodo",
+					scope_highlight = "RenderMarkdownTodo",
+				}
+			}
+		},
+		quote = {
+			enabled = true,
+			icon = "▍",
+			repeat_linebreak = true,
+		},
+		pipe_table = { -- FEAT: experiment on table format
+			enabled = true,
+			border = {
+				"┌", "┬", "┐",
+				"├", "┼", "┤",
+				"└", "┴", "┘",
+				"│", "─",
+			},
+			preset = "round",
+			style = "normal",
+			cell = "trimmed",
+			min_width = 0,
+			alignment_indicator = "•",
+		},
+		callout = {
+			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
+		},
+		link = {
+			enabled = true,
+			image = "󰥶 ",
+			email = "󰀓 ",
+			hyperlink = "󰌹 ",
+			custom = { -- FEAT: no icon for heading link
+				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
+				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
+				discord = { pattern = "discord%.com", icon = "󰙯 " },
+				github = { pattern = "github%.com", icon = "󰊤 " },
+				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
+				neovim = { pattern = "neovim%.io", icon = " " },
+				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
+				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
+				web = { pattern = "^http[s]?://", icon = "󰖟 " },
+				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
+			},
+		},
+		sign = {
+			enabled = false,
+		},
+		win_options = {
+			concealcursor = {
+				default = vim.api.nvim_get_option_value("concealcursor", {}),
+				rendered = vim.api.nvim_get_option_value("concealcursor", {})
+			}
+		}
+	}
 }
-		-- latex = {
-		-- 	enabled = false,
-		-- },
-		-- anti_conceal = {
-		-- 	enabled = false
-		-- },
-		-- heading = {
-		-- 	enabled = true,
-		-- 	sign = false,
-		-- 	position = "inlay",
-		-- 	-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " }, -- FEAT: use sequence of blocks
-		-- 	icons = { "󰫎 " },
-		-- 	signs = { "󰫎 " },
-		-- 	width = { "full", "block", "block"},
-		-- 	left_margin = 0,
-		-- 	left_pad = 0,
-		-- 	right_pad = 2,
-		-- 	min_width = 0,
-		-- 	border = false,
-		-- 	border_virtual = false,
-		-- 	border_prefix = false,
-		-- },
-		-- code = {
-		-- 	enabled = true,
-		-- 	render_modes = { "n", "v", "V" },
-		-- 	sign = false,
-		-- 	style = "full",
-		-- 	position = "left",
-		-- 	language_pad = 0,
-		-- 	disable_background = { "" },
-		-- 	width = "block",
-		-- 	left_margin = 0,
-		-- 	left_pad = 0,
-		-- 	right_pad = 1,
-		-- 	min_width = 10,
-		-- 	border = "thick",
-		-- 	language_name = true,
-		-- 	inline_pad = 1
-		-- },
-		-- bullet = {
-		-- 	enabled = true,
-		-- 	icons = { "", "", "󰨐", "" },
-		-- },
-		-- checkbox = {
-		-- 	enabled = true,
-		-- 	position = "overlay",
-		-- 	unchecked = {
-		-- 		icon = "    ", -- FEAT: better icons
-		-- 	},
-		-- 	checked = {
-		-- 		icon = "    ",
-		-- 		scope_highlight = "RenderMarkdownChecked"
-		-- 	},
-		-- 	custom = {
-		-- 		working = {
-		-- 			raw = "[-]",
-		-- 			rendered = "    ",
-		-- 			highlight = "RenderMarkdownTodo",
-		-- 			scope_highlight = "RenderMarkdownTodo",
-		-- 		}
-		-- 	}
-		-- },
-		-- quote = {
-		-- 	enabled = true,
-		-- 	icon = "▍",
-		-- 	repeat_linebreak = true,
-		-- },
-		-- pipe_table = { -- FEAT: experiment on table format
-		-- 	enabled = true,
-		-- 	border = {
-		-- 		"┌", "┬", "┐",
-		-- 		"├", "┼", "┤",
-		-- 		"└", "┴", "┘",
-		-- 		"│", "─",
-		-- 	},
-		-- 	preset = "round",
-		-- 	style = "normal",
-		-- 	cell = "trimmed",
-		-- 	min_width = 0,
-		-- 	alignment_indicator = "•",
-		-- },
-		-- callout = {
-		-- 	note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
-		-- 	tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
-		-- 	important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
-		-- 	warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
-		-- 	caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
-		-- },
-		-- link = {
-		-- 	enabled = true,
-		-- 	image = "󰥶 ",
-		-- 	email = "󰀓 ",
-		-- 	hyperlink = "󰌹 ",
-		-- 	custom = { -- FEAT: no icon for heading link
-		-- 		akams = { pattern = "https://aka.ms", icon = "󰇩 " },
-		-- 		azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
-		-- 		discord = { pattern = "discord%.com", icon = "󰙯 " },
-		-- 		github = { pattern = "github%.com", icon = "󰊤 " },
-		-- 		microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
-		-- 		neovim = { pattern = "neovim%.io", icon = " " },
-		-- 		reddit = { pattern = "reddit%.com", icon = "󰑍 " },
-		-- 		stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
-		-- 		web = { pattern = "^http[s]?://", icon = "󰖟 " },
-		-- 		youtube = { pattern = "youtube%.com", icon = "󰗃 " }
-		-- 	},
-		-- },
-		-- sign = {
-		-- 	enabled = false,
-		-- },
-		-- win_options = {
-		-- 	concealcursor = {
-		-- 		default = vim.api.nvim_get_option_value("concealcursor", {}),
-		-- 		rendered = vim.api.nvim_get_option_value("concealcursor", {})
-		-- 	}
-		-- }
-	
 addPlugin {
 	"OXY2DEV/helpview.nvim",
 	ft = "help"
