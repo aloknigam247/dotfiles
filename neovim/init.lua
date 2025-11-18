@@ -1185,7 +1185,7 @@ addPlugin {
 			cmdline = true,
 			disabled_filetypes = {},
 			pairs = {
-				["{"] = {
+				["{"] = { -- enter not working
 					{
 						"}",
 						when = function(ctx)
@@ -3677,7 +3677,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: "iamcco/markdown-preview.nvim"
 	"toppair/peek.nvim",
 	build = "deno task --quiet build:fast",
 	cmd = "PeekOpen",
