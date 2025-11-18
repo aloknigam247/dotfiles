@@ -1185,27 +1185,28 @@ addPlugin {
 			cmdline = true,
 			disabled_filetypes = {},
 			pairs = {
-				["{"] = { -- enter not working
+				["{"] = {
 					{
 						"}",
 						when = function(ctx)
-							local after = ctx:text_after_cursor(1)
-							return after == "" or after:match("[%s{}()[]]")
+							return not ctx:text_after_cursor(1):match("%w")
 						end
 					}
 				},
-				["("] = { -- FIX: fix ())
+				["("] = {
 					{
 						")",
 						when = function(ctx)
-							local after = ctx:text_after_cursor(1)
-							return after == "" or after:match("[%s{}()[]]")
+							return not ctx:text_after_cursor(1):match("%w")
 						end
 					}
 				},
 				["["] = {
 					{
 						"]",
+						when = function(ctx)
+							return not ctx:text_after_cursor(1):match("%w")
+						end,
 						space = function(ctx)
 							if ctx == nil then
 								return true
