@@ -147,7 +147,7 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": "Catppuccin Mocha",
+                "colorScheme": "Catppuccin Latte",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
