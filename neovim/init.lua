@@ -1175,7 +1175,7 @@ addPlugin {
 		end, { expr = true, noremap = true, desc = "Add spaces around =" })
 
 		-- blink create mapping for <CR> in cmdline which make foldopen = search misbehave
-		vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 1000)
+		-- vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 5000)
 	end,
 	--- @module "blink.pairs"
 	--- @type blink.pairs.Config
@@ -1574,6 +1574,7 @@ addPlugin {
 				return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					IlluminatedWordText = { bg = palette.mantle },
+					RenderMarkdownCode = { bg = palette.surface0 },
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
@@ -1762,17 +1763,21 @@ addPlugin {
 									if stat then
 										-- file/path icons
 										if stat.type == "file" then
-											local ext = _ctx.label:match(".[^.]+$"):gsub("%.", "")
-											local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
-											-- create highlight for extension
-											if icon then
-												_ctx._icon_hl = "BlinkCmpKindDev" .. icon.name
-												vim.api.nvim_set_hl(0, _ctx._icon_hl, { fg = icon.color, bg = kind_hl["Array"][vim.o.background].bg })
-												return icon.icon
+											-- local ext = _ctx.label:match(".[^.]+$"):gsub("%.", "")
+											local ext = _ctx.label:match(".[^.]+$")
+											if ext ~= nil then
+												ext = ext:gsub("%.", "")
+												local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
+												-- create highlight for extension
+												if icon then
+													_ctx._icon_hl = "BlinkCmpKindDev" .. icon.name
+													vim.api.nvim_set_hl(0, _ctx._icon_hl, { fg = icon.color, bg = kind_hl["Array"][vim.o.background].bg })
+													return icon.icon
+												end
+												kind = "File"
+												_ctx._icon_hl = "BlinkCmpKind" .. kind
+												return icons[kind]
 											end
-											kind = "File"
-											_ctx._icon_hl = "BlinkCmpKind" .. kind
-											return icons[kind]
 										elseif stat.type == "directory" then
 											kind = "Path"
 											_ctx._icon_hl = "BlinkCmpKind" .. kind
@@ -3439,15 +3444,15 @@ addPlugin {
 	ft = "markdown",
 	opts = {
 		features = {
-			list_management = true,      -- default: true (list auto-continue / indent / renumber / checkboxes)
-			text_formatting = true,     -- default: true (bold/italic/strike/code + clear)
-			headers_toc = false,         -- default: true (headers nav + TOC generation & window)
-			links = true,               -- default: true (insert/edit/convert/reference links)
-			images = true,              -- default: true (insert/edit image links + toggle link/image)
-			quotes = false,              -- default: true (blockquote toggle)
-			callouts = false,            -- default: true (GFM callouts/admonitions)
-			code_block = false,          -- default: true (visual selection -> fenced block)
-			table = false,               -- default: true (table creation & editing)
+			list_management = true,
+			text_formatting = true,
+			headers_toc = false,
+			links = true,
+			images = true,
+			quotes = false,
+			callouts = false,
+			code_block = false,
+			table = false,
 		}
 	},
 	config = function(plugin, cfg)
@@ -3455,7 +3460,6 @@ addPlugin {
 	end
 }
 
--- RECODE: reconfigure
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = "markdown",
@@ -3463,68 +3467,22 @@ addPlugin {
 		anti_conceal = {
 			enabled = false
 		},
-		heading = {
-			enabled = true,
-			sign = false,
-			position = "inlay",
-			-- icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " }, -- FEAT: use sequence of blocks
-			icons = { "󰫎 " },
-			sign = false,
-			width = { "full", "block", "block"},
-			left_margin = 0,
-			left_pad = 0,
-			right_pad = 2,
-			min_width = 0,
-			border = false,
-			border_virtual = false,
-			border_prefix = false,
-			backgrounds = {
-				"RenderMarkdownH1Bg",
-				"RenderMarkdownH1Bg",
-				"RenderMarkdownH1Bg",
-				"RenderMarkdownH1Bg",
-				"RenderMarkdownH1Bg",
-				"RenderMarkdownH1Bg",
-			},
-			foregrounds = {
-				"RenderMarkdownH4",
-				"RenderMarkdownH4",
-				"RenderMarkdownH4",
-				"RenderMarkdownH4",
-				"RenderMarkdownH4",
-				"RenderMarkdownH4",
-			},
-		},
-		code = {
-			enabled = true,
-			render_modes = { "n", "v", "V" },
-			sign = false,
-			style = "full",
-			position = "left",
-			language_pad = 0,
-			disable_background = { "" },
-			width = "block",
-			left_margin = 0,
-			left_pad = 0,
-			right_pad = 1,
-			min_width = 10,
-			border = "thick",
-			language_name = true,
-			inline_pad = 1
-		},
 		bullet = {
-			enabled = true,
 			icons = { "", "", "󰨐", "" },
 		},
+		callout = {
+			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
+			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
+			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
+			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
+			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
+		},
 		checkbox = {
-			enabled = true,
-			position = "overlay",
-			unchecked = {
-				icon = "    ", -- FEAT: better icons
-			},
 			checked = {
 				icon = "    ",
-				scope_highlight = "RenderMarkdownChecked"
+			},
+			unchecked = {
+				icon = "    ",
 			},
 			custom = {
 				working = {
@@ -3535,52 +3493,40 @@ addPlugin {
 				}
 			}
 		},
+		code = {
+			render_modes = { "n", "v", "V" },
+			sign = false,
+			width = "block",
+			right_pad = 1,
+			min_width = 10,
+			border = "thick",
+			inline_pad = 1
+		},
+		heading = {
+			sign = false,
+			position = "inlay",
+			icons = { "󰫎 " },
+			width = { "full", "block", "block"},
+			right_pad = 2,
+		},
 		latex = {
 			enabled = false,
 		},
-		quote = {
-			enabled = true,
-			icon = "▍",
-			repeat_linebreak = true,
-		},
-		pipe_table = { -- FEAT: experiment on table format
-			enabled = true,
-			border = {
-				"┌", "┬", "┐",
-				"├", "┼", "┤",
-				"└", "┴", "┘",
-				"│", "─",
-			},
-			preset = "round",
-			style = "normal",
-			cell = "trimmed",
-			min_width = 0,
-			alignment_indicator = "•",
-		},
-		callout = {
-			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
-			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
-			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
-			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
-			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
-		},
 		link = {
-			enabled = true,
-			image = "󰥶 ",
-			email = "󰀓 ",
-			hyperlink = "󰌹 ",
-			custom = { -- FEAT: no icon for heading link
+			custom = {
 				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
 				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
-				discord = { pattern = "discord%.com", icon = "󰙯 " },
-				github = { pattern = "github%.com", icon = "󰊤 " },
 				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
-				neovim = { pattern = "neovim%.io", icon = " " },
-				reddit = { pattern = "reddit%.com", icon = "󰑍 " },
-				stackoverflow = { pattern = "stackoverflow%.com", icon = "󰓌 " },
-				web = { pattern = "^http[s]?://", icon = "󰖟 " },
-				youtube = { pattern = "youtube%.com", icon = "󰗃 " }
 			},
+		},
+		pipe_table = {
+			preset = "round",
+			style = "full",
+			alignment_indicator = "•",
+		},
+		quote = {
+			icon = "▍",
+			repeat_linebreak = true,
 		},
 		sign = {
 			enabled = false,
@@ -3593,6 +3539,7 @@ addPlugin {
 		}
 	}
 }
+
 addPlugin {
 	"OXY2DEV/helpview.nvim",
 	ft = "help"
@@ -5622,6 +5569,7 @@ addPlugin {
 -- FEAT: https://github.com/mfontanini/presenterm
 -- FEAT: https://github.com/mihaifm/MegaToggler
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
+-- FEAT: https://github.com/mistricky/codesnap.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
 -- FEAT: https://github.com/nelnn/bear.nvim
 -- FEAT: https://github.com/nvim-mini/mini.extra
