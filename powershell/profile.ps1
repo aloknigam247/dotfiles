@@ -158,12 +158,12 @@ $palette = @{
         dir_path = $catppuccin.BASE
         git = @{
             bg = $catppuccin.Surface0
-            branch = $catppuccin.Lavender
+            branch = $catppuccin.Red
             index = $color_palette.git_index
             sep = "#FFFFFF"
             stash = $color_palette.git_stash
             sync = $color_palette.git_sync
-            working = $color_palette.git_working
+            working = $catppuccin.Sky
         }
     }
 }

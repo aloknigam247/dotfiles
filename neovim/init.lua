@@ -145,43 +145,43 @@ local icons = {
 ---Defines highlight for kinds
 ---@type table<string, table>
 local kind_hl = {
-	Array         = { icon = " ", dark = { fg = "#F42272", bg = "#313244" }, light = { fg = "#0B6E4F", bg = "#CCD0DA" }},
-	Boolean       = { icon = " ", dark = { fg = "#B8B8F3", bg = "#313244" }, light = { fg = "#69140E", bg = "#CCD0DA" }},
-	Class         = { icon = " ", dark = { fg = "#519872", bg = "#313244" }, light = { fg = "#1D3557", bg = "#CCD0DA" }},
-	Color         = { icon = " ", dark = { fg = "#A4B494", bg = "#313244" }, light = { fg = "#FA9F42", bg = "#CCD0DA" }},
-	Constant      = { icon = " ", dark = { fg = "#C5E063", bg = "#313244" }, light = { fg = "#744FC6", bg = "#CCD0DA" }},
-	Constructor   = { icon = " ", dark = { fg = "#4AAD52", bg = "#313244" }, light = { fg = "#755C1B", bg = "#CCD0DA" }},
-	Enum          = { icon = " ", dark = { fg = "#E3B5A4", bg = "#313244" }, light = { fg = "#A167A5", bg = "#CCD0DA" }},
-	EnumMember    = { icon = " ", dark = { fg = "#AF2BBF", bg = "#313244" }, light = { fg = "#B80C09", bg = "#CCD0DA" }},
-	Event         = { icon = " ", dark = { fg = "#6C91BF", bg = "#313244" }, light = { fg = "#53A548", bg = "#CCD0DA" }},
-	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#E2DC12", bg = "#CCD0DA" }},
-	File          = { icon = " ", dark = { fg = "#EF8354", bg = "#313244" }, light = { fg = "#486499", bg = "#CCD0DA" }},
-	Folder        = { icon = " ", dark = { fg = "#BFC0C0", bg = "#313244" }, light = { fg = "#A74482", bg = "#CCD0DA" }},
-	Function      = { icon = " ", dark = { fg = "#E56399", bg = "#313244" }, light = { fg = "#228CDB", bg = "#CCD0DA" }},
-	History       = { icon = " ", dark = { fg = "#C2F8CB", bg = "#313244" }, light = { fg = "#85CB33", bg = "#CCD0DA" }},
-	Interface     = { icon = " ", dark = { fg = "#8367C7", bg = "#313244" }, light = { fg = "#537A5A", bg = "#CCD0DA" }},
-	Key           = { icon = " ", dark = { fg = "#D1AC00", bg = "#313244" }, light = { fg = "#645DD7", bg = "#CCD0DA" }},
-	Keyword       = { icon = " ", dark = { fg = "#20A4F3", bg = "#313244" }, light = { fg = "#E36414", bg = "#CCD0DA" }},
-	Method        = { icon = " ", dark = { fg = "#D7D9D7", bg = "#313244" }, light = { fg = "#197278", bg = "#CCD0DA" }},
-	Module        = { icon = " ", dark = { fg = "#F2FF49", bg = "#313244" }, light = { fg = "#EC368D", bg = "#CCD0DA" }},
-	Namespace     = { icon = "ﬥ ", dark = { fg = "#FF4242", bg = "#313244" }, light = { fg = "#2F9C95", bg = "#CCD0DA" }},
-	Null          = { icon = " ", dark = { fg = "#C1CFDA", bg = "#313244" }, light = { fg = "#56666B", bg = "#CCD0DA" }},
-	Number        = { icon = " ", dark = { fg = "#FB62F6", bg = "#313244" }, light = { fg = "#A5BE00", bg = "#CCD0DA" }},
-	Object        = { icon = " ", dark = { fg = "#F18F01", bg = "#313244" }, light = { fg = "#80A1C1", bg = "#CCD0DA" }},
-	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#CCD0DA" }},
-	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#1E1E2E" }, light = { fg = "#99C24D", bg = "#CCD0DA" }},
-	Package       = { icon = " ", dark = { fg = "#AFA2FF", bg = "#313244" }, light = { fg = "#B98EA7", bg = "#CCD0DA" }},
-	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#DC836F", bg = "#CCD0DA" }},
-	Property      = { icon = " ", dark = { fg = "#CED097", bg = "#313244" }, light = { fg = "#3777FF", bg = "#CCD0DA" }},
-	Reference     = { icon = " ", dark = { fg = "#1B2CC1", bg = "#313244" }, light = { fg = "#18A999", bg = "#CCD0DA" }},
-	Snippet       = { icon = " ", dark = { fg = "#7692FF", bg = "#313244" }, light = { fg = "#BF0D4B", bg = "#CCD0DA" }},
-	String        = { icon = " ", dark = { fg = "#FEEA00", bg = "#313244" }, light = { fg = "#D5573B", bg = "#CCD0DA" }},
-	Struct        = { icon = " ", dark = { fg = "#D81159", bg = "#313244" }, light = { fg = "#75485E", bg = "#CCD0DA" }},
-	Text          = { icon = " ", dark = { fg = "#0496FF", bg = "#313244" }, light = { fg = "#5762D5", bg = "#CCD0DA" }},
-	TypeParameter = { icon = " ", dark = { fg = "#FFFFFC", bg = "#313244" }, light = { fg = "#5D2E8C", bg = "#CCD0DA" }},
-	Unit          = { icon = " ", dark = { fg = "#C97B84", bg = "#313244" }, light = { fg = "#FF6666", bg = "#CCD0DA" }},
-	Value         = { icon = " ", dark = { fg = "#C6DDF0", bg = "#313244" }, light = { fg = "#2EC4B6", bg = "#CCD0DA" }},
-	Variable      = { icon = " ", dark = { fg = "#B7ADCF", bg = "#313244" }, light = { fg = "#548687", bg = "#CCD0DA" }}
+	Array         = { icon = " ", dark = { fg = "#F42272", bg = "#313244" }, light = { fg = "#0B6E4F", bg = "#DCE0E8" }},
+	Boolean       = { icon = " ", dark = { fg = "#B8B8F3", bg = "#313244" }, light = { fg = "#69140E", bg = "#DCE0E8" }},
+	Class         = { icon = " ", dark = { fg = "#519872", bg = "#313244" }, light = { fg = "#1D3557", bg = "#DCE0E8" }},
+	Color         = { icon = " ", dark = { fg = "#A4B494", bg = "#313244" }, light = { fg = "#FA9F42", bg = "#DCE0E8" }},
+	Constant      = { icon = " ", dark = { fg = "#C5E063", bg = "#313244" }, light = { fg = "#744FC6", bg = "#DCE0E8" }},
+	Constructor   = { icon = " ", dark = { fg = "#4AAD52", bg = "#313244" }, light = { fg = "#755C1B", bg = "#DCE0E8" }},
+	Enum          = { icon = " ", dark = { fg = "#E3B5A4", bg = "#313244" }, light = { fg = "#A167A5", bg = "#DCE0E8" }},
+	EnumMember    = { icon = " ", dark = { fg = "#AF2BBF", bg = "#313244" }, light = { fg = "#B80C09", bg = "#DCE0E8" }},
+	Event         = { icon = " ", dark = { fg = "#6C91BF", bg = "#313244" }, light = { fg = "#53A548", bg = "#DCE0E8" }},
+	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#E2DC12", bg = "#DCE0E8" }},
+	File          = { icon = " ", dark = { fg = "#EF8354", bg = "#313244" }, light = { fg = "#486499", bg = "#DCE0E8" }},
+	Folder        = { icon = " ", dark = { fg = "#BFC0C0", bg = "#313244" }, light = { fg = "#A74482", bg = "#DCE0E8" }},
+	Function      = { icon = " ", dark = { fg = "#E56399", bg = "#313244" }, light = { fg = "#228CDB", bg = "#DCE0E8" }},
+	History       = { icon = " ", dark = { fg = "#C2F8CB", bg = "#313244" }, light = { fg = "#85CB33", bg = "#DCE0E8" }},
+	Interface     = { icon = " ", dark = { fg = "#8367C7", bg = "#313244" }, light = { fg = "#537A5A", bg = "#DCE0E8" }},
+	Key           = { icon = " ", dark = { fg = "#D1AC00", bg = "#313244" }, light = { fg = "#645DD7", bg = "#DCE0E8" }},
+	Keyword       = { icon = " ", dark = { fg = "#20A4F3", bg = "#313244" }, light = { fg = "#E36414", bg = "#DCE0E8" }},
+	Method        = { icon = " ", dark = { fg = "#D7D9D7", bg = "#313244" }, light = { fg = "#197278", bg = "#DCE0E8" }},
+	Module        = { icon = " ", dark = { fg = "#F2FF49", bg = "#313244" }, light = { fg = "#EC368D", bg = "#DCE0E8" }},
+	Namespace     = { icon = "ﬥ ", dark = { fg = "#FF4242", bg = "#313244" }, light = { fg = "#2F9C95", bg = "#DCE0E8" }},
+	Null          = { icon = " ", dark = { fg = "#C1CFDA", bg = "#313244" }, light = { fg = "#56666B", bg = "#DCE0E8" }},
+	Number        = { icon = " ", dark = { fg = "#FB62F6", bg = "#313244" }, light = { fg = "#A5BE00", bg = "#DCE0E8" }},
+	Object        = { icon = " ", dark = { fg = "#F18F01", bg = "#313244" }, light = { fg = "#80A1C1", bg = "#DCE0E8" }},
+	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#DCE0E8" }},
+	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#1E1E2E" }, light = { fg = "#99C24D", bg = "#DCE0E8" }},
+	Package       = { icon = " ", dark = { fg = "#AFA2FF", bg = "#313244" }, light = { fg = "#B98EA7", bg = "#DCE0E8" }},
+	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#DC836F", bg = "#DCE0E8" }},
+	Property      = { icon = " ", dark = { fg = "#CED097", bg = "#313244" }, light = { fg = "#3777FF", bg = "#DCE0E8" }},
+	Reference     = { icon = " ", dark = { fg = "#1B2CC1", bg = "#313244" }, light = { fg = "#18A999", bg = "#DCE0E8" }},
+	Snippet       = { icon = " ", dark = { fg = "#7692FF", bg = "#313244" }, light = { fg = "#BF0D4B", bg = "#DCE0E8" }},
+	String        = { icon = " ", dark = { fg = "#FEEA00", bg = "#313244" }, light = { fg = "#D5573B", bg = "#DCE0E8" }},
+	Struct        = { icon = " ", dark = { fg = "#D81159", bg = "#313244" }, light = { fg = "#75485E", bg = "#DCE0E8" }},
+	Text          = { icon = " ", dark = { fg = "#0496FF", bg = "#313244" }, light = { fg = "#5762D5", bg = "#DCE0E8" }},
+	TypeParameter = { icon = " ", dark = { fg = "#FFFFFC", bg = "#313244" }, light = { fg = "#5D2E8C", bg = "#DCE0E8" }},
+	Unit          = { icon = " ", dark = { fg = "#C97B84", bg = "#313244" }, light = { fg = "#FF6666", bg = "#DCE0E8" }},
+	Value         = { icon = " ", dark = { fg = "#C6DDF0", bg = "#313244" }, light = { fg = "#2EC4B6", bg = "#DCE0E8" }},
+	Variable      = { icon = " ", dark = { fg = "#B7ADCF", bg = "#313244" }, light = { fg = "#548687", bg = "#DCE0E8" }}
 }
 
 ---Global keymaps
@@ -3484,14 +3484,6 @@ addPlugin {
 			unchecked = {
 				icon = "    ",
 			},
-			custom = {
-				working = {
-					raw = "[-]",
-					rendered = "    ",
-					highlight = "RenderMarkdownTodo",
-					scope_highlight = "RenderMarkdownTodo",
-				}
-			}
 		},
 		code = {
 			render_modes = { "n", "v", "V" },
@@ -3545,9 +3537,8 @@ addPlugin {
 	ft = "help"
 }
 
--- BUG: conflicts with markdown-plus list
 addPlugin {
-	"bngarren/checkmate.nvim", -- FIX: overrites highlight for inline ``
+	"bngarren/checkmate.nvim",
 	ft = "markdown",
 	opts = {
 		files = {
@@ -3556,7 +3547,7 @@ addPlugin {
 			"*.todo",
 			"*.md",
 		},
-		keys = { -- PERF: lazy load on markdown only
+		keys = {
 			["<TAB>"] = {
 				rhs = "<cmd>Checkmate toggle<CR>",
 				desc = "Toggle todo item",
@@ -3577,6 +3568,9 @@ addPlugin {
 				desc = "Update the value of a metadata tag under the cursor",
 				modes = { "n" },
 			}
+		},
+		list_continuation = {
+			enabled = false
 		},
 		todo_action_depth = 10,
 		todo_count_formatter = function(completed, total)
