@@ -3582,13 +3582,16 @@ addPlugin {
 		todo_count_formatter = function(completed, total)
 			return string.format("%d/%d (%.0f%%)", completed, total, completed / total * 100)
 		end,
-		todo_markers = {
-			unchecked = "[ ]",
-			checked = "[x]",
+		todo_states = {
+			unchecked = {
+				marker = "[ ]",
+				order = 1,
+			},
+			checked = {
+				marker = "[x]",
+				order = 2,
+			},
 		},
-		linter = {
-			enabled = true,
-		}
 	}
 }
 
