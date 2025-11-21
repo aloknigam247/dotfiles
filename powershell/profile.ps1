@@ -159,10 +159,10 @@ $palette = @{
         git = @{
             bg = $catppuccin.Surface0
             branch = $catppuccin.Lavender
-            index = $catppuccin.Green
+            index = $catppuccin.Yellow
             sep = "#FFFFFF"
             stash = $color_palette.git_stash
-            sync = $color_palette.git_sync
+            sync = $catppuccin.Green
             working = $catppuccin.Sky
         }
     }
