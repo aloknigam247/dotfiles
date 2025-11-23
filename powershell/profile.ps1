@@ -158,7 +158,7 @@ $palette = @{
         dir_path = $catppuccin.BASE
         git = @{
             bg = $catppuccin.Surface0
-            branch = $catppuccin.Lavender
+            branch = $catppuccin.Flamingo
             index = $catppuccin.Yellow
             sep = "#FFFFFF"
             stash = $color_palette.git_stash
@@ -269,30 +269,8 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function v    { D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
+function e    { D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args }
 function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\$($lazygit_theme)" }
-
-function e() {
-    $code_patterns = @(".*\.cs$", "^CMakeLists.txt$")
-
-    # use nvim for SSH
-    if ( $null -ne $env:SSH_CLIENT ) {
-        nvim @args
-        return
-    }
-
-    # check for vscode
-    $first_arg = $args[0]
-    foreach ( $pattern in $code_patterns ) {
-        if ($first_arg -match $pattern) {
-            code @args
-            return
-        }
-    }
-
-    # default is nvim GUI
-    v @args
-}
 
 function whatis($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue

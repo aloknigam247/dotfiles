@@ -2938,7 +2938,7 @@ addPlugin {
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
 	opts = {
-		-- your configuration comes here; leave empty for default settings
+		debug = true
 	}
 }
 
@@ -3313,6 +3313,7 @@ addPlugin {
 	event = "DiagnosticChanged",
 }
 
+-- FEAT: https://github.com/owallb/mason-auto-install.nvim
 addPlugin {
 	"williamboman/mason.nvim",
 	cmd = "Mason",
@@ -3446,7 +3447,7 @@ addPlugin {
 		features = {
 			list_management = true,
 			text_formatting = true,
-			headers_toc = false,
+			headers_toc = true,
 			links = true,
 			images = true,
 			quotes = false,
@@ -3589,7 +3590,6 @@ addPlugin {
 	}
 }
 
--- RECODE: do we need ir after markdown-plus
 addPlugin {
 	"richardbizik/nvim-toc",
 	cmd = "TOCList",
@@ -3621,7 +3621,6 @@ addPlugin {
 	end
 }
 
--- RECODE: do we need ir after markdown-plus
 addPlugin {
 	"jghauser/follow-md-links.nvim",
 	keys = {
