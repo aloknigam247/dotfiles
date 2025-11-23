@@ -3266,6 +3266,20 @@ addPlugin {
 }
 
 addPlugin {
+	"owallb/mason-auto-install.nvim",
+	opts = {
+		packages = {
+			"prettier",
+			"typos-lsp",
+			{ "basedpyright", filetypes = { "Python" }, dependencies = { "ruff" } },
+			{ "lua-language-server", filetypes = { "Lua" } },
+			{ "powershell-editor-services", filetypes = { "Powershell" } },
+			{ "roslyn", filetypes = { "C#" } },
+		}
+	}
+}
+
+addPlugin {
 	"p00f/clangd_extensions.nvim",
 	event = "LspAttach *.cpp"
 }
@@ -3313,7 +3327,6 @@ addPlugin {
 	event = "DiagnosticChanged",
 }
 
--- FEAT: https://github.com/owallb/mason-auto-install.nvim
 addPlugin {
 	"williamboman/mason.nvim",
 	cmd = "Mason",
@@ -3435,7 +3448,12 @@ addPlugin {
 		}
 
 	end,
-	dependencies = { "neovim/nvim-lspconfig", "nvimtools/none-ls.nvim", "williamboman/mason.nvim" },
+	dependencies = {
+		"neovim/nvim-lspconfig",
+		"nvimtools/none-ls.nvim",
+		"williamboman/mason.nvim",
+		"owallb/mason-auto-install.nvim",
+	},
 	keys = "<F12>"
 }
 -- <~>
@@ -3643,40 +3661,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- Guide:
--- https://vim.fandom.com/wiki/Using_marks
--- |----------------+---------------------------------------------------------------|
--- | Command        | Description                                                   |
--- |----------------+---------------------------------------------------------------|
--- | ""             | jump back (to line in current buffer where jumped from)       |
--- | "a             | jump to line of mark a (first non-blank character in line)    |
--- | :delmarks a    | delete mark a                                                 |
--- | :delmarks a-d  | delete marks a, b, c, d                                       |
--- | :delmarks aA   | delete marks a, A                                             |
--- | :delmarks abxy | delete marks a, b, x, y                                       |
--- | :delmarks!     | delete all lowercase marks for the current buffer (a-z)       |
--- | :marks         | list all the current marks                                    |
--- | :marks aB      | list marks a, B                                               |
--- | ["             | jump to previous line with a lowercase mark                   |
--- | [`             | jump to previous lowercase mark                               |
--- | ]"             | jump to next line with a lowercase mark                       |
--- | ]`             | jump to next lowercase mark                                   |
--- | `"             | jump to position where last exited current buffer             |
--- | `.             | jump to position where last change occurred in current buffer |
--- | `0             | jump to position in last file edited (when exited Vim)        |
--- | `1             | like `0 but the previous file (also `2 etc)                   |
--- | `< or `>       | jump to beginning/end of last visual selection                |
--- | `[ or `]       | jump to beginning/end of previously changed or yanked text    |
--- | ``             | jump back (to position in current buffer where jumped from)   |
--- | `a             | jump to position (line and column) of mark a                  |
--- | c"a            | change text from current line to line of mark a               |
--- | d"a            | delete from current line to line of mark a                    |
--- | d`a            | delete from current cursor position to position of mark a     |
--- | ma             | set mark a at current cursor location                         |
--- | y`a            | yank text to unnamed buffer from cursor to position of mark a |
--- |----------------+---------------------------------------------------------------|
--- https://github.com/LintaoAmons/bookmarks.nvim
--- FEAT: see annotations as diagnistic texts
+-- FEAT: https://github.com/LintaoAmons/bookmarks.nvim
 addPlugin {
 	"MattesGroeger/vim-bookmarks",
 	config = function()
