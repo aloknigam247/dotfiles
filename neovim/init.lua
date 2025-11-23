@@ -100,8 +100,7 @@ local icons = {
 	Unit               = " ",
 	Value              = " ",
 	Variable           = " ",
-	bookmark           = "󰃃",
-	bookmark_annotate  = "󰃄",
+	bookmark           = "󰃀",
 	border_botleft     = "╰",
 	border_botright    = "╯",
 	border_hor         = "─",
@@ -3661,27 +3660,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/LintaoAmons/bookmarks.nvim
-addPlugin {
-	"MattesGroeger/vim-bookmarks",
-	config = function()
-		vim.g.bookmark_annotation_sign = icons.bookmark_annotate
-		vim.g.bookmark_display_annotation = 1
-		vim.g.bookmark_highlight_lines = 1
-		vim.g.bookmark_location_list = 1
-		vim.g.bookmark_no_default_key_mappings = 1
-		vim.g.bookmark_save_per_working_dir = 0
-		vim.g.bookmark_sign = icons.bookmark
-	end,
-	dependencies = "luukvbaal/statuscol.nvim",
-	keys = {
-		{ "ba", "<Plug>BookmarkAnnotate" },
-		{ "bm", "<Plug>BookmarkToggle" },
-		{ "bn", "<Plug>BookmarkNext" },
-		{ "bp", "<Plug>BookmarkPrev" },
-		{ "bs", "<Plug>BookmarkShowAll" }
-	}
-}
+-- addPlugin { "LintaoAmons/bookmarks.nvim" }
 
 -- FEAT: configure addPlugin {
 -- 	"chentoast/marks.nvim"
