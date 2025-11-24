@@ -3662,16 +3662,14 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { "LintaoAmons/bookmarks.nvim" }
 
--- FEAT: configure addPlugin {
--- 	"chentoast/marks.nvim"
--- }
-
+-- FEAT: configure
 addPlugin {
-	"kshenoy/vim-signature",
-	config = function()
-		vim.g.SignatureIncludeMarks = "abcdefghijklmnopqrstuvwxABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	end,
-	lazy = false
+	"chentoast/marks.nvim",
+	event = "VeryLazy",
+	opts = {
+		mappings = {
+		}
+	},
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3852,7 +3850,7 @@ addPlugin {
 			relculright = true,
 			segments = {
 				{ sign = { name = { "todo" }, auto = true, foldclosed = true }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end } },
-				{ sign = { name = { "Signature_" }, auto = true, fillcharhl ="LineNr" } },
+				{ sign = { name = { "Marks_" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" }, -- FIX: take multi width in LSP errors when attached
 				{ sign = { name = { "Bookmark" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
@@ -5134,8 +5132,8 @@ addPlugin {
 			width = { min = 20, max = 50 },
 		},
 		plugins = {
-			marks = false,
-			registers = false,
+			marks = true,
+			registers = true,
 			spelling = {
 				enabled = false
 			}
