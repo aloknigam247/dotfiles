@@ -137,7 +137,7 @@ endif
 let g:termdebug_wide = 163
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif " remember file position when closed
 autocmd FilterWritePre * if &diff | setlocal wrap< | endif
-autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
+autocmd VimLeave * let &t_me="\e[0 q" " resets cursor " BUG: not working
 
 
 " Make cursor _ for visual modes
