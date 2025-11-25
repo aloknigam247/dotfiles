@@ -3265,12 +3265,12 @@ addPlugin {
 }
 
 addPlugin {
-	"owallb/mason-auto-install.nvim",
+	"owallb/mason-auto-install.nvim", -- BUG: not working
 	opts = {
 		packages = {
-			"prettier",
-			"typos-lsp",
-			{ "basedpyright", filetypes = { "Python" }, dependencies = { "ruff" } },
+			-- "prettier",
+			-- "typos-lsp",
+			{ "basedpyright", filetypes = { "*.py" }, dependencies = { "ruff" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
 			{ "powershell-editor-services", filetypes = { "Powershell" } },
 			{ "roslyn", filetypes = { "C#" } },
@@ -3682,7 +3682,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: improve it
 addPlugin {
 	"nvzone/menu",
 	init = function()
@@ -3709,7 +3708,7 @@ addPlugin {
 			keymaps = {
 				["<Left>"] = "actions.left",
 				["<Right>"] = "actions.right",
-				[""] = "actions.close",
+				["q"] = "actions.close",
 			},
 			min_height = { 20, 0.2 },
 			preview = true,
@@ -3811,36 +3810,6 @@ addPlugin {
 	"stefandtw/quickfix-reflector.vim"
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Sessions    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/niba/continue.nvim
--- FEAT: https://github.com/nvim-mini/mini.sessions
-addPlugin {
-	"rmagatti/auto-session",
-	cmd = "SessionSave",
-	config = function()
-		require("auto-session").setup({
-			post_delete_cmds = {
-				"let g:auto_session_enabled = v:false",
-				"let g:session_icon = ''"
-			},
-			post_restore_cmds = {
-				"let g:session_icon = '󰅠'"
-			},
-			post_save_cmds = {
-				"let g:session_icon = '󰅠'"
-			},
-			suppressed_dirs = { "C:\\Users\\aloknigam", "~" }
-		})
-		vim.o.sessionoptions = "blank,buffers,curdir,folds,help,localoptions,tabpages,winsize,winpos,terminal"
-	end,
-	init = function()
-		if vim.fn.filereadable(vim.fn.stdpath("data") .. "\\sessions\\" .. vim.fn.getcwd():gsub("\\", "%%5C"):gsub(":", "%%3A") .. ".vim") == 1 then
-			require("auto-session")
-		end
-	end
-}
-
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 ---Default method to use until statuscol.nvim loads which then overrides it
 ---@return string
@@ -3849,7 +3818,6 @@ function StatusCol()
 end
 vim.o.statuscolumn = "%!v:lua.StatusCol()"
 
--- BUG: does not load if marks are created before loading plugin
 addPlugin {
 	"luukvbaal/statuscol.nvim",
 	config = function()
@@ -4678,6 +4646,7 @@ addPlugin {
 }
 
 addPlugin {
+	-- FEAT: use single highlight
 	"m-demare/hlargs.nvim", -- FIX: priority higher than lsp semantic tokens
 	config = function()
 		require("hlargs").setup({
