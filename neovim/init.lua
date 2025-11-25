@@ -3662,14 +3662,23 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- addPlugin { "LintaoAmons/bookmarks.nvim" }
 
--- FEAT: configure
 addPlugin {
 	"chentoast/marks.nvim",
-	event = "VeryLazy",
+	dependencies = "luukvbaal/statuscol.nvim",
 	opts = {
+		default_mappings = false,
 		mappings = {
+			delete = "dm",
+			delete_buf = "dm<space>",
+			delete_line = "dm-",
+			set = "m",
+			toggle = "m,",
 		}
 	},
+	keys = {
+		{ "m", "<Plug>(Marks-set)" },
+		{ "m,", "<Plug>(Marks-toggle)" },
+	}
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
