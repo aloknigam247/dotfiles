@@ -3562,7 +3562,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim",
+	"bngarren/checkmate.nvim", -- FEAT: cross in checked todo highlight
 	ft = "markdown",
 	opts = {
 		files = {
