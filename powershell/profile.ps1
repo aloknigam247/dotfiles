@@ -295,7 +295,7 @@ function whatis($arg) {
 
 # ─[ Path functions ]──────────────────────────────────────────────────
 function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
-function docs { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work" | Set-Location }
+function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work\notes" | Set-Location }
 
 # ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
