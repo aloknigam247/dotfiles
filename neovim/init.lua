@@ -1184,7 +1184,7 @@ addPlugin {
 			cmdline = false,
 			disabled_filetypes = {},
 			pairs = {
-				["{"] = { -- BUG: backspace does not work
+				["{"] = {
 					{
 						"}",
 						when = function(ctx)
@@ -1245,7 +1245,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/kensyo/nvim-scrlbkun
-addPlugin {
+addPlugin { -- FEAT: auto enable for search and clear on clear
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
 	opts = {
@@ -3265,15 +3265,22 @@ addPlugin {
 }
 
 addPlugin {
-	"owallb/mason-auto-install.nvim", -- BUG: not working
+	"owallb/mason-auto-install.nvim",
+	config = function(_, cfg)
+		require("mason-auto-install").setup(cfg)
+
+		print(vim.o.filetype)
+		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
+	end,
 	opts = {
 		packages = {
-			-- "prettier",
-			-- "typos-lsp",
-			{ "basedpyright", filetypes = { "*.py" }, dependencies = { "ruff" } },
+			"prettier",
+			"typos-lsp",
+			{ "basedpyright", filetypes = { "Python" } },
+			{ "ruff", filetypes = { "Python" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
 			{ "powershell-editor-services", filetypes = { "Powershell" } },
-			{ "roslyn", filetypes = { "C#" } },
+			{ "roslyn", filetypes = { "CS" } },
 		}
 	}
 }
