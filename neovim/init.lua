@@ -1184,7 +1184,7 @@ addPlugin {
 			cmdline = false,
 			disabled_filetypes = {},
 			pairs = {
-				["{"] = {
+				["{"] = { -- BUG: backspace does not work
 					{
 						"}",
 						when = function(ctx)
@@ -1573,7 +1573,7 @@ addPlugin {
 				return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					IlluminatedWordText = { bg = palette.mantle },
-					RenderMarkdownCode = { bg = palette.surface0 },
+					RenderMarkdownCode = { bg = palette.crust },
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
@@ -3504,7 +3504,6 @@ addPlugin {
 			},
 		},
 		code = {
-			render_modes = { "n", "v", "V" },
 			sign = false,
 			width = "block",
 			right_pad = 1,
@@ -3858,7 +3857,7 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"b0o/incline.nvim",
+	"b0o/incline.nvim", -- FEAT: better bg color
 	config = function()
 		require("incline").setup({
 			ignore = {
