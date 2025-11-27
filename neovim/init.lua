@@ -1245,7 +1245,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/kensyo/nvim-scrlbkun
-addPlugin { -- FEAT: auto enable for search and clear on clear
+addPlugin {
 	"dstein64/nvim-scrollview",
 	cmd = "ScrollViewToggle",
 	opts = {
@@ -3562,7 +3562,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim", -- FEAT: cross in checked todo highlight
+	"bngarren/checkmate.nvim", -- FEAT: cross in checked todo highlight in light mode
 	ft = "markdown",
 	opts = {
 		files = {
@@ -3618,6 +3618,20 @@ addPlugin {
 	cmd = "TOCList",
 	dependencies = "nvim-treesitter/nvim-treesitter",
 	opts = { toc_header = "Table of Contents" },
+	init = function(plugin)
+		vim.api.nvim_create_autocmd(
+			"BufWritePre",
+			{
+				pattern = "*.md",
+				callback = function(args)
+					local top_line = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)[1]
+					if top_line:find(plugin.opts.toc_header) then
+						require(plugin.name).TOC({ format = "list" })
+					end
+				end
+			}
+		)
+	end,
 	config = function(plugin, cfg)
 		local toc = require(plugin.name)
 		toc.setup(cfg)
@@ -3627,19 +3641,6 @@ addPlugin {
 			'TOCList',
 			function() toc.TOC({ format = "list" }) end,
 			{ nargs = 0 }
-		)
-
-		vim.api.nvim_create_autocmd(
-			"BufWritePre",
-			{
-				pattern = "*.md",
-				callback = function(args)
-					local top_line = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)[1]
-					if top_line:find(cfg.toc_header) then
-						require(plugin.name).TOC({ format = "list" })
-					end
-				end
-			}
 		)
 	end
 }
@@ -3834,7 +3835,7 @@ addPlugin {
 			segments = {
 				{ sign = { name = { "todo" }, auto = true, foldclosed = true }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end } },
 				{ sign = { name = { "Marks_" }, auto = true, fillcharhl ="LineNr" } },
-				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" }, -- FIX: take multi width in LSP errors when attached
+				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" },
 				{ sign = { name = { "Bookmark" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
 				{ text = { builtin.foldfunc }--[[ , click = "v:lua.ScFa" ]] },
