@@ -1573,6 +1573,7 @@ addPlugin {
 				return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					IlluminatedWordText = { bg = palette.mantle },
+					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					RenderMarkdownCode = { bg = palette.crust },
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
@@ -2929,7 +2930,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim
+-- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim ask question
 addPlugin {
 	"seblyng/roslyn.nvim",
 	ft = "cs",
@@ -3562,7 +3563,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim", -- FEAT: cross in checked todo highlight in light mode
+	"bngarren/checkmate.nvim",
 	ft = "markdown",
 	opts = {
 		files = {
@@ -3865,9 +3866,12 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"b0o/incline.nvim", -- FEAT: better bg color
+	"b0o/incline.nvim",
 	config = function()
 		require("incline").setup({
+			hide = {
+				only_win = true
+			},
 			ignore = {
 				unlisted_buffers = false,
 				buftypes = {},
@@ -3875,7 +3879,7 @@ addPlugin {
 				wintypes = {}
 			},
 			render = function(props)
-				if CountWindows(true) > 1 then
+				-- if CountWindows(true) > 0 then -- RECODE: remove me later
 					local full_filename = vim.api.nvim_buf_get_name(props.buf)
 					local filename = vim.fn.fnamemodify(full_filename, ":t")
 					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
@@ -3901,15 +3905,16 @@ addPlugin {
 						isLspAttached(props.buf) and { " " .. icons.lsp, guifg = "#EAC435" } or "",
 						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
 					}
-				end
-				return nil
+				-- end
+				-- return nil
 			end,
 			window = {
 				margin = {
 					vertical = 0
 				},
 				placement = {
-					vertical = "bottom"
+					horizontal = "center",
+					vertical = "top"
 				}
 			}
 		})
@@ -4344,10 +4349,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/BlankTiger/telescope-rg.nvim
 -- FEAT: https://github.com/Marskey/telescope-sg
--- FEAT: https://github.com/SGauvin/ctest-telescope.nvim
--- FEAT: https://github.com/benfowler/telescope-luasnip.nvim
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
 -- FEAT: https://github.com/nvim-telescope/telescope-frecency.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
