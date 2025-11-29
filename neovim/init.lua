@@ -9,7 +9,7 @@ local color_palette = {
 		"#8AAF52",
 		"#93938A",
 		"#99858D",
-		"#9CCBFF",
+		"#7DA2CC",
 		"#A0B1AE",
 		"#A96DA3",
 		"#AE92B5",
@@ -1575,6 +1575,7 @@ addPlugin {
 					IlluminatedWordText = { bg = palette.mantle },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					RenderMarkdownCode = { bg = palette.crust },
+					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal }, -- FIX: sync @markup
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} }
@@ -4432,7 +4433,7 @@ addPlugin {
 		)
 	end,
 	dependencies = {
-		"debugloop/telescope-undo.nvim", -- FEAT: use vimdiff instead of detla
+		"debugloop/telescope-undo.nvim", -- FEAT: use vimdiff instead of delta
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
 	},
