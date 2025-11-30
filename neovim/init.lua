@@ -834,6 +834,19 @@ vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in 
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
+-- ━━ pickers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.search_history() end, { desc = "Pick search history" })
+vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
+vim.keymap.set("n", "<leader><space>e", function() require("snacks").picker.explorer() end, { desc = "Pick explorer" })
+vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.files() end, { desc = "Pick files" })
+vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep() end, { desc = "Pick grep" })
+vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights() end, { desc = "Pick highlights" })
+vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icons() end, { desc = "Pick icons" })
+vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps() end, { desc = "Pick jumps" })
+vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps() end, { desc = "Pick keymaps" })
+vim.keymap.set("n", "<leader><space>l", function() require("snacks").picker.lines() end, { desc = "Pick lines" })
+vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks() end, { desc = "Pick marks" })
+vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo() end, { desc = "Pick undo" })
 -- ━━ register ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -3881,34 +3894,31 @@ addPlugin {
 				wintypes = {}
 			},
 			render = function(props)
-				-- if CountWindows(true) > 0 then -- RECODE: remove me later
-					local full_filename = vim.api.nvim_buf_get_name(props.buf)
-					local filename = vim.fn.fnamemodify(full_filename, ":t")
-					local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+				local full_filename = vim.api.nvim_buf_get_name(props.buf)
+				local filename = vim.fn.fnamemodify(full_filename, ":t")
+				local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 
-					local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
-					local labels = {}
+				local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
+				local labels = {}
 
-					if filename == "" then
-						filename = "[Scratch]"
+				if filename == "" then
+					filename = "[Scratch]"
+				end
+
+				if git_signs then
+					if git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
+						labels = { " 󰦓", guifg = "#85C581" }
 					end
+				end
 
-					if git_signs then
-						if git_signs["added"] > 0 or git_signs["modified"] > 0 or git_signs["removed"] > 0 then
-							labels = { " 󰦓", guifg = "#85C581" }
-						end
-					end
-
-					return {
-						{ ft_icon, " ", guifg = ft_color },
-						full_filename:find("^gitsigns:") and "gitsigns:" .. filename or filename,
-						vim.bo[props.buf].modified and " " .. icons.file_modified or "",
-						labels,
-						isLspAttached(props.buf) and { " " .. icons.lsp, guifg = "#EAC435" } or "",
-						#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
-					}
-				-- end
-				-- return nil
+				return {
+					{ ft_icon, " ", guifg = ft_color },
+					full_filename:find("^gitsigns:") and "gitsigns:" .. filename or filename,
+					vim.bo[props.buf].modified and " " .. icons.file_modified or "",
+					labels,
+					isLspAttached(props.buf) and { " " .. icons.lsp, guifg = "#EAC435" } or "",
+					#vim.diagnostic.get(props.buf, { severity = { min = vim.diagnostic.severity.HINT }}) > 0 and { " ", guifg = "#EE4266" } or ""
+				}
 			end,
 			window = {
 				margin = {
@@ -3916,7 +3926,7 @@ addPlugin {
 				},
 				placement = {
 					horizontal = "center",
-					vertical = "top"
+					vertical = "bottom"
 				}
 			}
 		})
@@ -4351,29 +4361,28 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
--- FEAT: single picker command/mapping for telescope/snacks
--- FEAT: snacks - explorer
--- FEAT: snacks - files
--- FEAT: snacks - grep
--- FEAT: snacks - grep_word
--- FEAT: snacks - highlights
--- FEAT: snacks - icons
--- FEAT: snacks - jumps
--- FEAT: snacks - keymaps
--- FEAT: snacks - lines
--- FEAT: snacks - marks
--- FEAT: snacks - picker_layout
--- FEAT: snacks - projects
--- FEAT: snacks - recent
--- FEAT: snacks - registers
--- FEAT: snacks - search_history
--- FEAT: snacks - smart
--- FEAT: snacks - tags
--- FEAT: snacks - undo
--- FEAT: snacks - command_history
--- FEAT: telescope - current buffer fuzzy
--- FEAT: telescope - vim_options
+-- FEAT: snacks: command_history
+-- FEAT: snacks: explorer
+-- FEAT: snacks: files
+-- FEAT: snacks: grep
+-- FEAT: snacks: grep_word
+-- FEAT: snacks: highlights
+-- FEAT: snacks: icons
+-- FEAT: snacks: jumps
+-- FEAT: snacks: keymaps
+-- FEAT: snacks: lines
+-- FEAT: snacks: marks
+-- FEAT: snacks: picker_layout
+-- FEAT: snacks: projects
+-- FEAT: snacks: recent
+-- FEAT: snacks: registers
+-- FEAT: snacks: search_history
+-- FEAT: snacks: smart
+-- FEAT: snacks: tags
+-- FEAT: snacks: undo
+-- FEAT: telescope: current buffer fuzzy
+-- FEAT: telescope: vim_options
+-- FEAT: snacks mappings
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
