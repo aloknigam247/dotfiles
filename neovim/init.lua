@@ -4176,118 +4176,118 @@ addPlugin {
 				lualine_z = {}
 			},
 			-- winbar = {
-				-- 	lualine_a = {
-					-- 		{
-						-- 			"filetype",
-						-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-						-- 			icon_only = true,
-						-- 			padding = { left = 1, right = 0 },
-						-- 			separator = ""
-						-- 		},
-						-- 		{
-							-- 			"filename",
-							-- 			color = { gui = "italic" },
-							-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-							-- 			file_status = true,
-							-- 			newfile_status = true,
-							-- 			path = 0,
-							-- 			shorting_target = 40,
-							-- 			symbols = {
-								-- 				modified = icons.file_modified,
-								-- 				readonly = icons.file_readonly,
-								-- 				unnamed  = icons.file_unnamed,
-								-- 				newfile  = icons.file_newfile,
-								-- 			}
-								-- 		},
-								-- 		{
-									-- 			function()
-										-- 				if DropbarEnabled then
-										-- 					return "%{%v:lua.dropbar.get_dropbar_str()%}"
-										-- 				else
-										-- 					return ""
-										-- 				end
-										-- 			end,
-										-- 			padding = { left = 0, right = 0 },
-										-- 			separator = { left = "", right = "" }
-										-- 		},
-										-- 	}
-										-- },
-										-- inactive_winbar = {
-											-- 	lualine_a = {
-												-- 		{
-													-- 			"filetype",
-													-- 			cond = function () return CountWindows(true) > 1 end,
-													-- 			icon_only = true,
-													-- 			padding = { left = 1, right = 0 },
-													-- 			separator = ""
-													-- 		},
-													-- 		{
-														-- 			"filename",
-														-- 			color = { gui = "italic" },
-														-- 			cond = function () return CountWindows(true) > 1 end,
-														-- 			file_status = true,
-														-- 			newfile_status = true,
-														-- 			path = 3,
-														-- 			shorting_target = 40,
-														-- 			symbols = {
-															-- 				modified = icons.file_modified,
-															-- 				readonly = icons.file_readonly,
-															-- 				unnamed  = icons.file_unnamed,
-															-- 				newfile  = icons.file_newfile,
-															-- 			}
-															-- 		}
-															-- 	},
-															-- 	lualine_c = {
-																-- 		{
-																	-- 			"diff",
-																	-- 			cond = function () return CountWindows(true) > 1 end,
-																	-- 			padding = { left = 1, right = 0 },
-																	-- 			symbols = {
-																		-- 				added = "+",
-																		-- 				modified = "~",
-																		-- 				removed = "-"
-																		-- 			}
-																		-- 		},
-																		-- 	},
-																		-- 	lualine_z = {
-																			-- 		{
-																				-- 			function return Lsp_icon end,
-																				-- 			cond = function () return CountWindows(true) > 1 and isLspAttached() end,
-																				-- 			on_click = function()
-																					-- 				vim.cmd("LspInfo")
-																					-- 			end,
-																					-- 			padding = { left = 0, right = 1 },
-																					-- 			separator = ""
-																					-- 		},
-																					-- 		{
-																						-- 			"diagnostics",
-																						-- 			cond = function () return CountWindows(true) > 1 end,
-																						-- 			on_click = function()
-																							-- 				vim.cmd("TroubleToggle")
-																							-- 			end,
-																							-- 			padding = { left = 1, right = 1 },
-																							-- 			sources = { "nvim_diagnostic" },
-																							-- 			symbols = {
-																								-- 				error = icons.error,
-																								-- 				warn  = icons.warn,
-																								-- 				info  = icons.info,
-																								-- 				hint  = icons.hint
-																								-- 			}
-																								-- 		}
-																								-- 	}
-																								-- },
-																								extensions = {
-																									"aerial",
-																									"lazy",
-																									"mason",
-																									"nvim-dap-ui",
-																									"nvim-tree",
-																									"quickfix",
-																									"toggleterm",
-																									"trouble"
-																								}
-																							})
-																						end,
+			-- 	lualine_a = {
+			-- 		{
+			-- 			"filetype",
+			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
+			-- 			icon_only = true,
+			-- 			padding = { left = 1, right = 0 },
+			-- 			separator = ""
+			-- 		},
+			-- 		{
+			-- 			"filename",
+			-- 			color = { gui = "italic" },
+			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
+			-- 			file_status = true,
+			-- 			newfile_status = true,
+			-- 			path = 0,
+			-- 			shorting_target = 40,
+			-- 			symbols = {
+			-- 				modified = icons.file_modified,
+			-- 				readonly = icons.file_readonly,
+			-- 				unnamed  = icons.file_unnamed,
+			-- 				newfile  = icons.file_newfile,
+			-- 			}
+			-- 		},
+			-- 		{
+			-- 			function()
+			-- 				if DropbarEnabled then
+			-- 					return "%{%v:lua.dropbar.get_dropbar_str()%}"
+			-- 				else
+			-- 					return ""
+			-- 				end
+			-- 			end,
+			-- 			padding = { left = 0, right = 0 },
+			-- 			separator = { left = "", right = "" }
+			-- 		},
+			-- 	}
+			-- },
+			-- inactive_winbar = {
+			-- 	lualine_a = {
+			-- 		{
+			-- 			"filetype",
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			icon_only = true,
+			-- 			padding = { left = 1, right = 0 },
+			-- 			separator = ""
+			-- 		},
+			-- 		{
+			-- 			"filename",
+			-- 			color = { gui = "italic" },
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			file_status = true,
+			-- 			newfile_status = true,
+			-- 			path = 3,
+			-- 			shorting_target = 40,
+			-- 			symbols = {
+			-- 				modified = icons.file_modified,
+			-- 				readonly = icons.file_readonly,
+			-- 				unnamed  = icons.file_unnamed,
+			-- 				newfile  = icons.file_newfile,
+			-- 			}
+			-- 		}
+			-- 	},
+			-- 	lualine_c = {
+			-- 		{
+			-- 			"diff",
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			padding = { left = 1, right = 0 },
+			-- 			symbols = {
+			-- 				added = "+",
+			-- 				modified = "~",
+			-- 				removed = "-"
+			-- 			}
+			-- 		},
+			-- 	},
+			-- 	lualine_z = {
+			-- 		{
+			-- 			function return Lsp_icon end,
+			-- 			cond = function () return CountWindows(true) > 1 and isLspAttached() end,
+			-- 			on_click = function()
+			-- 				vim.cmd("LspInfo")
+			-- 			end,
+			-- 			padding = { left = 0, right = 1 },
+			-- 			separator = ""
+			-- 		},
+			-- 		{
+			-- 			"diagnostics",
+			-- 			cond = function () return CountWindows(true) > 1 end,
+			-- 			on_click = function()
+			-- 				vim.cmd("TroubleToggle")
+			-- 			end,
+			-- 			padding = { left = 1, right = 1 },
+			-- 			sources = { "nvim_diagnostic" },
+			-- 			symbols = {
+			-- 				error = icons.error,
+			-- 				warn  = icons.warn,
+			-- 				info  = icons.info,
+			-- 				hint  = icons.hint
+			-- 			}
+			-- 		}
+			-- 	}
+			-- },
+			extensions = {
+				"aerial",
+				"lazy",
+				"mason",
+				"nvim-dap-ui",
+				"nvim-tree",
+				"quickfix",
+				"toggleterm",
+				"trouble"
+			}
+		})
+	end,
 	event = "VeryLazy"
 }
 -- <~>
@@ -4350,11 +4350,29 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/Marskey/telescope-sg
--- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
--- FEAT: https://github.com/nvim-telescope/telescope-frecency.nvim
 -- FEAT: https://github.com/nvim-telescope/telescope-live-grep-args.nvim
--- FEAT: https://github.com/ray-x/telescope-ast-grep.nvim
+-- FEAT: single picker command/mapping for telescope/snacks
+-- FEAT: snacks - explorer
+-- FEAT: snacks - files
+-- FEAT: snacks - grep
+-- FEAT: snacks - grep_word
+-- FEAT: snacks - highlights
+-- FEAT: snacks - icons
+-- FEAT: snacks - jumps
+-- FEAT: snacks - keymaps
+-- FEAT: snacks - lines
+-- FEAT: snacks - marks
+-- FEAT: snacks - picker_layout
+-- FEAT: snacks - projects
+-- FEAT: snacks - recent
+-- FEAT: snacks - registers
+-- FEAT: snacks - search_history
+-- FEAT: snacks - smart
+-- FEAT: snacks - tags
+-- FEAT: snacks - undo
+-- FEAT: snacks - command_history
+-- FEAT: telescope - current buffer fuzzy
+-- FEAT: telescope - vim_options
 addPlugin {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
