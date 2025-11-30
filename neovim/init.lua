@@ -1183,7 +1183,7 @@ addPlugin {
 			enabled = true,
 			cmdline = false,
 			disabled_filetypes = {},
-			pairs = {
+			pairs = { -- FIX: qoute pairs
 				["{"] = {
 					{
 						"}",
@@ -1575,10 +1575,11 @@ addPlugin {
 					IlluminatedWordText = { bg = palette.mantle },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					RenderMarkdownCode = { bg = palette.crust },
-					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal }, -- FIX: sync @markup
+					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
-					Visual = { bg = palette.surface0, style = {} }
+					Visual = { bg = palette.surface0, style = {} },
+					["@markup.raw"] = { bg = palette.mantle, fg = palette.teal },
 				}
 			end
 		},
