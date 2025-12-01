@@ -838,7 +838,7 @@ vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\
 vim.keymap.set("n", "<leader><space>s", function() require("snacks").picker.search_history() end, { desc = "Pick search history" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
 vim.keymap.set("n", "<leader><space>e", function() require("snacks").picker.explorer() end, { desc = "Pick explorer" })
-vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.files({ layout = { preset = "vertical" }}) end, { desc = "Pick files" })
+vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.smart({ layout = { preset = "vertical" }}) end, { desc = "Pick files" })
 vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
 vim.keymap.set("v", "<leader><space>g", function() require("snacks").picker.grep_word({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
 vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights({ layout = { preset = "dropdown" }}) end, { desc = "Pick highlights" })
@@ -846,8 +846,9 @@ vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icon
 vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps({ layout = { preset = "bottom" }}) end, { desc = "Pick jumps" })
 vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps({ layout = { preset = "vertical" }}) end, { desc = "Pick keymaps" })
 vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.lines() end, { desc = "Pick lines from current buffer" })
-vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks() end, { desc = "Pick marks" })
-vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo() end, { desc = "Pick undo" })
+vim.keymap.set("n", "<leader><space>p", function() require("snacks").picker.projects({ patterns = { ".csproj", ".git", ".sln" } }) end, { desc = "Pick lines from current buffer" })
+vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks({ layout = { preset = "dropdown" }}) end, { desc = "Pick marks" })
+vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo({ layout = { preset = "dropdown" }}) end, { desc = "Pick undo" })
 -- ━━ register ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1160,7 +1161,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"saghen/blink.pairs",
+	"saghen/blink.pairs", -- BUG: go back to nvim-autopairs
 	dependencies = "saghen/blink.download",
 	version = "*",
 	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
@@ -4360,17 +4361,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: snacks: marks
--- FEAT: snacks: projects
 -- FEAT: snacks: registers
--- FEAT: snacks: search_history
--- FEAT: snacks: recent
--- FEAT: snacks: smart
 -- FEAT: snacks: tags
--- FEAT: snacks: undo
 -- FEAT: snacks: yanky
 -- FEAT: snacks: explorer
--- FEAT: telescope: current buffer fuzzy
 -- FEAT: telescope: vim_options
 -- FEAT: snacks mappings
 addPlugin {
