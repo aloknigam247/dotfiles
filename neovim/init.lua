@@ -838,11 +838,11 @@ vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\
 vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.search_history() end, { desc = "Pick search history" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
 vim.keymap.set("n", "<leader><space>e", function() require("snacks").picker.explorer() end, { desc = "Pick explorer" })
-vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.files() end, { desc = "Pick files" })
-vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep() end, { desc = "Pick grep" })
-vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights() end, { desc = "Pick highlights" })
-vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icons() end, { desc = "Pick icons" })
-vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps() end, { desc = "Pick jumps" })
+vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.files({ layout = { preset = "vertical" }}) end, { desc = "Pick files" })
+vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
+vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights({ layout = { preset = "dropdown" }}) end, { desc = "Pick highlights" })
+vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icons({ layout = { preset = "select" }}) end, { desc = "Pick icons" })
+vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps({ layout = { preset = "ivy_split" }}) end, { desc = "Pick jumps" })
 vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps() end, { desc = "Pick keymaps" })
 vim.keymap.set("n", "<leader><space>l", function() require("snacks").picker.lines() end, { desc = "Pick lines" })
 vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks() end, { desc = "Pick marks" })
@@ -3284,8 +3284,6 @@ addPlugin {
 	"owallb/mason-auto-install.nvim",
 	config = function(_, cfg)
 		require("mason-auto-install").setup(cfg)
-
-		print(vim.o.filetype)
 		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
 	end,
 	opts = {
@@ -3642,7 +3640,7 @@ addPlugin {
 				callback = function(args)
 					local top_line = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)[1]
 					if top_line:find(plugin.opts.toc_header) then
-						require(plugin.name).TOC({ format = "list" })
+						vim.cmd("undojoin | TOCList")
 					end
 				end
 			}
@@ -4361,12 +4359,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: snacks: command_history
--- FEAT: snacks: explorer
--- FEAT: snacks: files
 -- FEAT: snacks: grep
 -- FEAT: snacks: grep_word
--- FEAT: snacks: highlights
 -- FEAT: snacks: icons
 -- FEAT: snacks: jumps
 -- FEAT: snacks: keymaps
@@ -4380,6 +4374,7 @@ addPlugin {
 -- FEAT: snacks: smart
 -- FEAT: snacks: tags
 -- FEAT: snacks: undo
+-- FEAT: snacks: explorer
 -- FEAT: telescope: current buffer fuzzy
 -- FEAT: telescope: vim_options
 -- FEAT: snacks mappings
