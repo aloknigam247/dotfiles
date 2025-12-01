@@ -835,16 +835,17 @@ vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in 
 vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
 -- ━━ pickers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.search_history() end, { desc = "Pick search history" })
+vim.keymap.set("n", "<leader><space>s", function() require("snacks").picker.search_history() end, { desc = "Pick search history" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
 vim.keymap.set("n", "<leader><space>e", function() require("snacks").picker.explorer() end, { desc = "Pick explorer" })
 vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.files({ layout = { preset = "vertical" }}) end, { desc = "Pick files" })
 vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
+vim.keymap.set("v", "<leader><space>g", function() require("snacks").picker.grep_word({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
 vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights({ layout = { preset = "dropdown" }}) end, { desc = "Pick highlights" })
 vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icons({ layout = { preset = "select" }}) end, { desc = "Pick icons" })
-vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps({ layout = { preset = "ivy_split" }}) end, { desc = "Pick jumps" })
-vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps() end, { desc = "Pick keymaps" })
-vim.keymap.set("n", "<leader><space>l", function() require("snacks").picker.lines() end, { desc = "Pick lines" })
+vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps({ layout = { preset = "bottom" }}) end, { desc = "Pick jumps" })
+vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps({ layout = { preset = "vertical" }}) end, { desc = "Pick keymaps" })
+vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.lines() end, { desc = "Pick lines from current buffer" })
 vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks() end, { desc = "Pick marks" })
 vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo() end, { desc = "Pick undo" })
 -- ━━ register ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1196,7 +1197,7 @@ addPlugin {
 			enabled = true,
 			cmdline = false,
 			disabled_filetypes = {},
-			pairs = { -- FIX: qoute pairs
+			pairs = {
 				["{"] = {
 					{
 						"}",
@@ -4359,21 +4360,15 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: snacks: grep
--- FEAT: snacks: grep_word
--- FEAT: snacks: icons
--- FEAT: snacks: jumps
--- FEAT: snacks: keymaps
--- FEAT: snacks: lines
 -- FEAT: snacks: marks
--- FEAT: snacks: picker_layout
 -- FEAT: snacks: projects
--- FEAT: snacks: recent
 -- FEAT: snacks: registers
 -- FEAT: snacks: search_history
+-- FEAT: snacks: recent
 -- FEAT: snacks: smart
 -- FEAT: snacks: tags
 -- FEAT: snacks: undo
+-- FEAT: snacks: yanky
 -- FEAT: snacks: explorer
 -- FEAT: telescope: current buffer fuzzy
 -- FEAT: telescope: vim_options
