@@ -4668,7 +4668,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: use single highlight
 	"m-demare/hlargs.nvim", -- FIX: priority higher than lsp semantic tokens
 	config = function()
 		require("hlargs").setup({
@@ -5371,18 +5370,20 @@ addPlugin {
 }
 
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
--- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
--- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
--- FEAT: https://github.com/lsvmello/elastictabstops.nvim
--- FEAT: https://github.com/nvimdev/dyninput.nvim
--- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/uga-rosa/join.nvim
--- FEAT: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-ai.md
--- FEAT: https://github.com/mhinz/neovim-remote
--- FEAT: https://github.com/sQVe/sort.nvim
--- FEAT: https://github.com/wellle/targets.vim
 -- FEAT: FZF + RipGrep search plugins
+-- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
+-- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
+-- FEAT: https://github.com/esmuellert/vscode-diff.nvim
+-- FEAT: https://github.com/lsvmello/elastictabstops.nvim
+-- FEAT: https://github.com/mhinz/neovim-remote
+-- FEAT: https://github.com/MisanthropicBit/decipher.nvim
+-- FEAT: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-ai.md
+-- FEAT: https://github.com/nvimdev/dyninput.nvim
+-- FEAT: https://github.com/sQVe/sort.nvim
+-- FEAT: https://github.com/thgrass/tail.nvim
+-- FEAT: https://github.com/uga-rosa/join.nvim
+-- FEAT: https://github.com/wellle/targets.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -5478,6 +5479,8 @@ addPlugin {
 	}
 }
 
+require("lazy").setup(plugins, lazy_config)
+-- <~>
 -- AI
 -- FEAT: https://github.com/yetone/avante.nvim
 
@@ -5544,7 +5547,4 @@ addPlugin {
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
 -- FIX: all diagnostics
-
-require("lazy").setup(plugins, lazy_config)
--- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
