@@ -1161,102 +1161,174 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Auto Pairs   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"saghen/blink.pairs", -- BUG: go back to nvim-autopairs
-	dependencies = "saghen/blink.download",
-	version = "*",
-	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
-	config = function(plugin, cfg)
-		require("vim._extui").enable({})
-		require(plugin.name).setup(cfg)
+	"windwp/nvim-autopairs",
+	config = function()
+		local pair = require("nvim-autopairs")
+		local Rule = require("nvim-autopairs.rule")
+		local cond = require("nvim-autopairs.conds")
 
-		-- add space around "=" sequence
-		vim.keymap.set({ "c", "i" }, "=", function()
-			if vim.o.filetype == "python" then
-				return "="
-			end
-
-			local col = vim.fn.col(".") - 1
-			if col == 0 then return "="end
-
-			local line = vim.api.nvim_get_current_line()
-			local prev = line:sub(col, col)
-			local prev2 = line:sub(col-1, col)
-
-			if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
-			elseif prev:match("%w") then return " = " -- add for first =
-			else return "=" end
-
-		end, { expr = true, noremap = true, desc = "Add spaces around =" })
-
-		-- blink create mapping for <CR> in cmdline which make foldopen = search misbehave
-		-- vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 5000)
+		pair.setup()
+		-- pair.add_rules(require("nvim-autopairs.rules.endwise-lua"))
+		pair.add_rules {
+			-- #include <|> pair for c and cpp
+			Rule("#include <", ">", { "c", "cpp" }),
+			-- Add spaces in pair after parentheses
+			-- (|) --> space --> ( | )
+			-- ( | ) --> ) --> ( )|
+			Rule(" ", " ", "-markdown")
+			:with_pair(function (opts)
+				local pair_set = opts.line:sub(opts.col - 1, opts.col)
+				return vim.tbl_contains({ "()", "[]", "{}" }, pair_set)
+			end)
+			:with_del(cond.none()),
+			Rule("( ", " )")
+			:with_pair(function() return false end)
+			:with_move(function(opts)
+				return opts.prev_char:match(".%)") ~= nil
+			end)
+			:use_key(")"),
+			Rule("{ ", " }")
+			:with_pair(function() return false end)
+			:with_move(function(opts)
+				return opts.prev_char:match(".%}") ~= nil
+			end)
+			:use_key("}"),
+			Rule("[ ", " ]")
+			:with_pair(function() return false end)
+			:with_move(function(opts)
+				return opts.prev_char:match(".%]") ~= nil
+			end)
+			:use_key("]"),
+			-- Auto add space on =
+			Rule("=", "", "-xml")
+			:with_pair(cond.not_inside_quote())
+			:with_pair(function(opts)
+				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
+				if last_char:match("[%w%=%s]") then
+					return true
+				end
+				return false
+			end)
+			:replace_endpair(function(opts)
+				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
+				local next_char = opts.line:sub(opts.col, opts.col)
+				next_char = next_char == " " and "" or " "
+				if prev_2char:match("%w$") then
+					return "<bs> =" .. next_char
+				end
+				if prev_2char:match("%=$") then
+					return next_char
+				end
+				if prev_2char:match("=") then
+					return "<bs><bs>=" .. next_char
+				end
+				return ""
+			end)
+			:set_end_pair_length(0)
+			:with_move(cond.none())
+			:with_del(cond.none())
+		}
 	end,
-	--- @module "blink.pairs"
-	--- @type blink.pairs.Config
-	opts = {
-		mappings = {
-			enabled = true,
-			cmdline = false,
-			disabled_filetypes = {},
-			pairs = {
-				["{"] = {
-					{
-						"}",
-						when = function(ctx)
-							return not ctx:text_after_cursor(1):match("%w")
-						end
-					}
-				},
-				["("] = {
-					{
-						")",
-						when = function(ctx)
-							return not ctx:text_after_cursor(1):match("%w")
-						end
-					}
-				},
-				["["] = {
-					{
-						"]",
-						when = function(ctx)
-							return not ctx:text_after_cursor(1):match("%w")
-						end,
-						space = function(ctx)
-							if ctx == nil then
-								return true
-							end
-							vim.notify("Remove this check from blink.pairs", vim.log.levels.ERROR)
-							return ctx.ft ~= "markdown" or not ctx:is_before_cursor("- [")
-						end
-					}
-				}
-			},
-		},
-		highlights = {
-			enabled = true,
-			cmdline = true,
-			groups = {
-				"RainbowDelimiterRed",
-				"RainbowDelimiterYellow",
-				"RainbowDelimiterBlue",
-				"RainbowDelimiterOrange",
-				"RainbowDelimiterGreen",
-				"RainbowDelimiterViolet",
-				"RainbowDelimiterCyan",
-			},
-			unmatched_group = "MatchParen",
-
-			matchparen = {
-				enabled = true,
-				cmdline = true,
-				include_surrounding = true,
-				group = "BlinkPairsMatchParen",
-				priority = 250,
-			},
-		},
-		debug = false,
-	}
+	event = "InsertEnter"
 }
+
+-- addPlugin {
+-- 	"saghen/blink.pairs",
+-- 	dependencies = "saghen/blink.download",
+-- 	version = "*",
+-- 	event = { "CmdlineEnter", "InsertEnter", "User TSLoaded" },
+-- 	config = function(plugin, cfg)
+-- 		require("vim._extui").enable({})
+-- 		require(plugin.name).setup(cfg)
+
+-- 		-- add space around "=" sequence
+-- 		vim.keymap.set({ "c", "i" }, "=", function()
+-- 			if vim.o.filetype == "python" then
+-- 				return "="
+-- 			end
+
+-- 			local col = vim.fn.col(".") - 1
+-- 			if col == 0 then return "="end
+
+-- 			local line = vim.api.nvim_get_current_line()
+-- 			local prev = line:sub(col, col)
+-- 			local prev2 = line:sub(col-1, col)
+
+-- 			if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
+-- 			elseif prev:match("%w") then return " = " -- add for first =
+-- 			else return "=" end
+
+-- 		end, { expr = true, noremap = true, desc = "Add spaces around =" })
+
+-- 		-- blink create mapping for <CR> in cmdline which make foldopen = search misbehave
+-- 		-- vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 5000)
+-- 	end,
+-- 	--- @module "blink.pairs"
+-- 	--- @type blink.pairs.Config
+-- 	opts = {
+-- 		mappings = {
+-- 			enabled = true,
+-- 			cmdline = false,
+-- 			disabled_filetypes = {},
+-- 			pairs = {
+-- 				["{"] = {
+-- 					{
+-- 						"}",
+-- 						when = function(ctx)
+-- 							return not ctx:text_after_cursor(1):match("%w")
+-- 						end
+-- 					}
+-- 				},
+-- 				["("] = {
+-- 					{
+-- 						")",
+-- 						when = function(ctx)
+-- 							return not ctx:text_after_cursor(1):match("%w")
+-- 						end
+-- 					}
+-- 				},
+-- 				["["] = {
+-- 					{
+-- 						"]",
+-- 						when = function(ctx)
+-- 							return not ctx:text_after_cursor(1):match("%w")
+-- 						end,
+-- 						space = function(ctx)
+-- 							if ctx == nil then
+-- 								return true
+-- 							end
+-- 							vim.notify("Remove this check from blink.pairs", vim.log.levels.ERROR)
+-- 							return ctx.ft ~= "markdown" or not ctx:is_before_cursor("- [")
+-- 						end
+-- 					}
+-- 				}
+-- 			},
+-- 		},
+-- 		highlights = {
+-- 			enabled = true,
+-- 			cmdline = true,
+-- 			groups = {
+-- 				"RainbowDelimiterRed",
+-- 				"RainbowDelimiterYellow",
+-- 				"RainbowDelimiterBlue",
+-- 				"RainbowDelimiterOrange",
+-- 				"RainbowDelimiterGreen",
+-- 				"RainbowDelimiterViolet",
+-- 				"RainbowDelimiterCyan",
+-- 			},
+-- 			unmatched_group = "MatchParen",
+
+-- 			matchparen = {
+-- 				enabled = true,
+-- 				cmdline = true,
+-- 				include_surrounding = true,
+-- 				group = "BlinkPairsMatchParen",
+-- 				priority = 250,
+-- 			},
+-- 		},
+-- 		debug = false,
+-- 	}
+-- }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Code Map    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- https://github.com/kensyo/nvim-scrlbkun
@@ -1587,7 +1659,9 @@ addPlugin {
 			all = function(palette)
 				return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
+					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
+					IlluminatedWordWrite = { bg = palette.mantle },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
@@ -3704,6 +3778,97 @@ addPlugin {
 	}
 }
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Picker     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: snacks: snacks
+-- FEAT: snacks: explorer
+-- FEAT: telescope: vim_options
+-- FEAT: snacks highlights
+-- FEAT: snacks mappings
+addPlugin {
+	"nvim-telescope/telescope.nvim",
+	cmd = "Telescope",
+	config = function()
+		local actions = require("telescope.actions")
+		local telescope = require("telescope")
+		telescope.setup({
+			defaults = {
+				dynamic_preview_title = true,
+				entry_prefix = "   ",
+				file_ignore_patterns = {},
+				file_sorter = require("telescope.sorters").get_fuzzy_file,
+				generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+				initial_mode = "insert",
+				multi_icon = " ",
+				prompt_prefix = "  ",
+				selection_caret = "  ",
+				timeout = 2000,
+				windblend = 0,
+				mappings = {
+					i = {
+						["<C-a>"]      = actions.toggle_all,
+						["<C-d>"]      = false,
+						["<C-l>"]      = actions.send_selected_to_qflist,
+						["<C-u>"]      = false,
+						["<M-l>"]      = actions.add_selected_to_qflist,
+						["<PageDown>"] = actions.preview_scrolling_down,
+						["<PageUp>"]   = actions.preview_scrolling_up,
+						["<S-Tab>"]    = false,
+						["<Tab>"]      = actions.toggle_selection,
+						[keymaps.open_split]  = actions.select_horizontal,
+						[keymaps.open_tab]    = actions.select_tab,
+						[keymaps.open_vsplit] = actions.select_vertical
+					},
+					n = {
+						["<C-a>"]      = actions.toggle_all,
+						["<C-d>"]      = false,
+						["<C-q>"]      = actions.send_selected_to_qflist,
+						["<C-u>"]      = false,
+						["<M-q>"]      = actions.add_selected_to_qflist,
+						["<PageDown>"] = actions.preview_scrolling_down,
+						["<PageUp>"]   = actions.preview_scrolling_up,
+						["<S-Tab>"]    = false,
+						["<Tab>"]      = actions.toggle_selection,
+						[keymaps.open_split]  = actions.select_horizontal,
+						[keymaps.open_tab]    = actions.select_tab,
+						[keymaps.open_vsplit] = actions.select_vertical
+					}
+				},
+			},
+			extensions = {
+				heading = {
+					treesitter = true
+				},
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case",
+				},
+				undo = {
+					side_by_side = true
+				}
+			},
+		})
+
+		telescope.load_extension("fzf")
+		telescope.load_extension("undo")
+
+		vim.api.nvim_create_autocmd(
+			"User", {
+				pattern = "TelescopePreviewerLoaded",
+				desc = "Open directory in nvim-tree",
+				command = "setlocal nu"
+			}
+		)
+	end,
+	dependencies = {
+		"debugloop/telescope-undo.nvim", -- FEAT: use vimdiff instead of delta
+		"nvim-lua/plenary.nvim",
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
+	},
+	module = true
+}
+-- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"nvzone/menu",
@@ -4360,98 +4525,6 @@ addPlugin {
 	}
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Telescope   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: snacks: registers
--- FEAT: snacks: tags
--- FEAT: snacks: yanky
--- FEAT: snacks: explorer
--- FEAT: telescope: vim_options
--- FEAT: snacks mappings
-addPlugin {
-	"nvim-telescope/telescope.nvim",
-	cmd = "Telescope",
-	config = function()
-		local actions = require("telescope.actions")
-		local telescope = require("telescope")
-		telescope.setup({
-			defaults = {
-				dynamic_preview_title = true,
-				entry_prefix = "   ",
-				file_ignore_patterns = {},
-				file_sorter = require("telescope.sorters").get_fuzzy_file,
-				generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-				initial_mode = "insert",
-				multi_icon = " ",
-				prompt_prefix = "  ",
-				selection_caret = "  ",
-				timeout = 2000,
-				windblend = 0,
-				mappings = {
-					i = {
-						["<C-a>"]      = actions.toggle_all,
-						["<C-d>"]      = false,
-						["<C-l>"]      = actions.send_selected_to_qflist,
-						["<C-u>"]      = false,
-						["<M-l>"]      = actions.add_selected_to_qflist,
-						["<PageDown>"] = actions.preview_scrolling_down,
-						["<PageUp>"]   = actions.preview_scrolling_up,
-						["<S-Tab>"]    = false,
-						["<Tab>"]      = actions.toggle_selection,
-						[keymaps.open_split]  = actions.select_horizontal,
-						[keymaps.open_tab]    = actions.select_tab,
-						[keymaps.open_vsplit] = actions.select_vertical
-					},
-					n = {
-						["<C-a>"]      = actions.toggle_all,
-						["<C-d>"]      = false,
-						["<C-q>"]      = actions.send_selected_to_qflist,
-						["<C-u>"]      = false,
-						["<M-q>"]      = actions.add_selected_to_qflist,
-						["<PageDown>"] = actions.preview_scrolling_down,
-						["<PageUp>"]   = actions.preview_scrolling_up,
-						["<S-Tab>"]    = false,
-						["<Tab>"]      = actions.toggle_selection,
-						[keymaps.open_split]  = actions.select_horizontal,
-						[keymaps.open_tab]    = actions.select_tab,
-						[keymaps.open_vsplit] = actions.select_vertical
-					}
-				},
-			},
-			extensions = {
-				heading = {
-					treesitter = true
-				},
-				fzf = {
-					fuzzy = true,
-					override_generic_sorter = true,
-					override_file_sorter = true,
-					case_mode = "smart_case",
-				},
-				undo = {
-					side_by_side = true
-				}
-			},
-		})
-
-		telescope.load_extension("fzf")
-		telescope.load_extension("undo")
-
-		vim.api.nvim_create_autocmd(
-			"User", {
-				pattern = "TelescopePreviewerLoaded",
-				desc = "Open directory in nvim-tree",
-				command = "setlocal nu"
-			}
-		)
-	end,
-	dependencies = {
-		"debugloop/telescope-undo.nvim", -- FEAT: use vimdiff instead of delta
-		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
-	},
-	module = true
-}
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Terminal    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"akinsho/toggleterm.nvim",
@@ -4571,11 +4644,11 @@ addPlugin {
 	branch = "master",
 	main = "nvim-treesitter.configs",
 	module = false,
-	-- dependencies = {{ -- REFACTOR: remove me
-	-- 	"utilyre/sentiment.nvim",
-	-- 	config = true,
-	-- 	init = function() vim.g.loaded_matchparen = 1 end,
-	-- }},
+	dependencies = {{
+		"utilyre/sentiment.nvim",
+		config = true,
+		init = function() vim.g.loaded_matchparen = 1 end,
+	}},
 	opts = {
 		auto_install = false,
 		ensure_installed = {}, -- FEAT: add ensure installed for common languages
@@ -4599,22 +4672,21 @@ addPlugin {
 	}
 }
 
--- REFACTOR: remove me
--- addPlugin {
--- 	"HiPhish/rainbow-delimiters.nvim",
--- 	event = "User TSLoaded",
--- 	config = function()
--- 		require("rainbow-delimiters.setup").setup({
--- 			condition = function(bufnr)
--- 				return not isLargeFile(bufnr)
--- 			end
--- 		})
---
--- 		if not isLargeFile() then
--- 			require("rainbow-delimiters").enable(0)
--- 		end
--- 	end
--- }
+addPlugin {
+	"HiPhish/rainbow-delimiters.nvim",
+	event = "User TSLoaded",
+	config = function()
+		require("rainbow-delimiters.setup").setup({
+			condition = function(bufnr)
+				return not isLargeFile(bufnr)
+			end
+		})
+
+		if not isLargeFile() then
+			require("rainbow-delimiters").enable(0)
+		end
+	end
+}
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
@@ -5196,6 +5268,7 @@ addPlugin {
 
 addPlugin {
 	"gbprod/yanky.nvim",
+	dependencies = "folke/snacks.nvim",
 	opts = {
 		highlight = {
 			on_put = true,
@@ -5212,6 +5285,8 @@ addPlugin {
 		}
 	},
 	keys = {
+		{ "<C-R>", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "i" }, desc = "Yank text" },
+		{ "\"", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "n" }, desc = "Yank text" },
 		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
 		{ "p", "<Plug>(YankyPutAfter)", mode = { "n" }, desc = "Put yanked text after cursor" },
 		{ "P", "<Plug>(YankyPutBefore)", mode = { "n" }, desc = "Put yanked text before cursor" },
@@ -5502,7 +5577,7 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://diagon.arthursonzogni.com/
 
 -- FEAT: csv utility like sorting and filtering
--- FEAT: Hover on timstamp to convert into utc and ist
+-- FEAT: Hover on timestamp to convert into UTC and IST
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-rulebook
