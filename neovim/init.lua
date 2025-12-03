@@ -3783,6 +3783,14 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Picker     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: snacks: explorer
+	-- FEAT: follow file
+	-- FEAT: netrw
+	-- FEAT: preivew window size
+	-- FEAT: preview title
+	-- FEAT: picker for split/vsplit/tab/Peek/enter
+	-- FEAT: help over incline
+	-- FEAT: diagnostic icons
+	-- FEAT: git icons
 -- FEAT: telescope: vim_options
 -- FEAT: snacks highlights
 -- FEAT: snacks mappings
@@ -4088,7 +4096,7 @@ addPlugin {
 					vertical = 0
 				},
 				placement = {
-					horizontal = "center",
+					horizontal = "right",
 					vertical = "bottom"
 				}
 			}
@@ -4646,7 +4654,7 @@ addPlugin {
 	}},
 	opts = {
 		auto_install = false,
-		ensure_installed = {}, -- FEAT: add ensure installed for common languages
+		ensure_installed = { "json", "markdown", "markdown_inline", "powershell", "python" },
 		highlight = {
 			additional_vim_regex_highlighting = false,
 			disable = function(_, buf)
