@@ -121,6 +121,7 @@ if exists("g:neovide")
     let g:neovide_floating_shadow = v:false
     let g:neovide_fullscreen = v:false
     let g:neovide_hide_mouse_when_typing = v:false
+    let g:neovide_padding_left = 3
     let g:neovide_refresh_rate = 120
     let g:neovide_remember_window_size = v:false
     let g:neovide_scroll_animation_length = 0.3

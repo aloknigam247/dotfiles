@@ -1659,6 +1659,9 @@ addPlugin {
 			all = function(palette)
 				return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
+					CoverageCovered = { fg = palette.teal },
+					CoveragePartial = { fg = palette.mauve },
+					CoverageUncovered = { fg = palette.flamingo },
 					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
 					IlluminatedWordWrite = { bg = palette.mantle },
@@ -3844,14 +3847,10 @@ addPlugin {
 					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
-				undo = {
-					side_by_side = true
-				}
 			},
 		})
 
 		telescope.load_extension("fzf")
-		telescope.load_extension("undo")
 
 		vim.api.nvim_create_autocmd(
 			"User", {
@@ -3862,7 +3861,6 @@ addPlugin {
 		)
 	end,
 	dependencies = {
-		"debugloop/telescope-undo.nvim", -- FEAT: use vimdiff instead of delta
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
 	},
@@ -4533,8 +4531,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Tests      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/hfn92/cmake-gtest.nvim
--- FEAT: https://github.com/ofwinterpassed/gtestrunner.nvim
 addPlugin {
 	"andythigpen/nvim-coverage",
 	cmd = "Coverage",
@@ -4542,7 +4538,7 @@ addPlugin {
 	opts ={
 		auto_reload = true,
 		signs = {
-			covered = { hl = "CoverageCovered", text = "┃" }, -- FIX: colors
+			covered = { hl = "CoverageCovered", text = "┃" },
 			partial = { hl = "CoveragePartial", text = "┃" },
 			uncovered = { hl = "CoverageUncovered", text = "┃" },
 		},
@@ -4627,7 +4623,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/nvim-treesitter/nvim-treesitter-context
 addPlugin {
 	-- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
 	-- FEAT: check for recursive functionality in json
@@ -4673,6 +4668,14 @@ addPlugin {
 }
 
 addPlugin {
+	"nvim-treesitter/nvim-treesitter-context",
+	cmd = "TSContext",
+	opts = {
+		multiwindow = true
+	}
+}
+
+addPlugin {
 	"HiPhish/rainbow-delimiters.nvim",
 	event = "User TSLoaded",
 	config = function()
@@ -4691,7 +4694,7 @@ addPlugin {
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	branch = "master",
-	keys = { -- PERF: lazy load on ts languages
+	keys = {
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
 		{ "[m", mode = "n", desc = "jump to previous method" },
@@ -4743,13 +4746,13 @@ addPlugin {
 	"m-demare/hlargs.nvim", -- FIX: priority higher than lsp semantic tokens
 	config = function()
 		require("hlargs").setup({
-			colorpalette = (function()
-				local res = {}
-				for _,color in pairs(color_palette[vim.o.background == "light" and "dark" or "light"]) do
-					table.insert(res, { fg = color, underdashed = true })
-				end
-				return res
-			end)(),
+			-- colorpalette = (function()
+			-- 	local res = {}
+			-- 	for _,color in pairs(color_palette[vim.o.background == "light" and "dark" or "light"]) do
+			-- 		table.insert(res, { fg = color, underdashed = true })
+			-- 	end
+			-- 	return res
+			-- end)(),
 			excluded_argnames = {
 				declarations = {
 					python = { "self", "cls" },
@@ -4764,6 +4767,7 @@ addPlugin {
 				named_parameters = true,
 				unused_args = false,
 			},
+			highlight = { link = "@variable.parameter" },
 			priority_hl = priority_hl.hlargs,
 			paint_catch_blocks = {
 				declarations = true,
