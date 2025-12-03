@@ -1671,7 +1671,7 @@ addPlugin {
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} },
-					["@markup.raw"] = { bg = palette.mantle, fg = palette.teal },
+					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
 				}
 			end
 		},
