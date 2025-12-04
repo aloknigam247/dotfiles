@@ -3784,18 +3784,18 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Picker     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: snacks: explorer
 	-- FEAT: follow file
+	-- FEAT: git icons
+	-- FEAT: help over incline
 	-- FEAT: netrw
+	-- FEAT: picker for split/vsplit/tab/Peek/enter
 	-- FEAT: preivew window size
 	-- FEAT: preview title
-	-- FEAT: picker for split/vsplit/tab/Peek/enter
-	-- FEAT: help over incline
-	-- FEAT: diagnostic icons
-	-- FEAT: git icons
--- FEAT: telescope: vim_options
+	-- FEAT: search highlight
 -- FEAT: snacks highlights
 -- FEAT: snacks mappings
 -- FEAT: snacks picker options in picker.sources
 addPlugin {
+	-- REFACTOR: remove
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
 	config = function()
