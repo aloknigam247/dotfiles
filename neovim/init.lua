@@ -153,7 +153,7 @@ local kind_hl = {
 	Enum          = { icon = " ", dark = { fg = "#E3B5A4", bg = "#313244" }, light = { fg = "#A167A5", bg = "#DCE0E8" }},
 	EnumMember    = { icon = " ", dark = { fg = "#AF2BBF", bg = "#313244" }, light = { fg = "#B80C09", bg = "#DCE0E8" }},
 	Event         = { icon = " ", dark = { fg = "#6C91BF", bg = "#313244" }, light = { fg = "#53A548", bg = "#DCE0E8" }},
-	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#E2DC12", bg = "#DCE0E8" }},
+	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#E2DC12", bg = "#DCE0E8" }}, -- FIX: me
 	File          = { icon = " ", dark = { fg = "#EF8354", bg = "#313244" }, light = { fg = "#486499", bg = "#DCE0E8" }},
 	Folder        = { icon = " ", dark = { fg = "#BFC0C0", bg = "#313244" }, light = { fg = "#A74482", bg = "#DCE0E8" }},
 	Function      = { icon = " ", dark = { fg = "#E56399", bg = "#313244" }, light = { fg = "#228CDB", bg = "#DCE0E8" }},
@@ -167,7 +167,7 @@ local kind_hl = {
 	Null          = { icon = " ", dark = { fg = "#C1CFDA", bg = "#313244" }, light = { fg = "#56666B", bg = "#DCE0E8" }},
 	Number        = { icon = " ", dark = { fg = "#FB62F6", bg = "#313244" }, light = { fg = "#A5BE00", bg = "#DCE0E8" }},
 	Object        = { icon = " ", dark = { fg = "#F18F01", bg = "#313244" }, light = { fg = "#80A1C1", bg = "#DCE0E8" }},
-	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#DCE0E8" }},
+	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#DCE0E8" }}, -- FIX: me
 	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#1E1E2E" }, light = { fg = "#99C24D", bg = "#DCE0E8" }},
 	Package       = { icon = " ", dark = { fg = "#AFA2FF", bg = "#313244" }, light = { fg = "#B98EA7", bg = "#DCE0E8" }},
 	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#DC836F", bg = "#DCE0E8" }},
@@ -3791,6 +3791,8 @@ addPlugin {
 	-- FEAT: preivew window size
 	-- FEAT: preview title
 	-- FEAT: search highlight
+	-- FEAT: expand all
+	-- FEAT: collapse all
 -- FEAT: snacks highlights
 -- FEAT: snacks mappings
 -- FEAT: snacks picker options in picker.sources
