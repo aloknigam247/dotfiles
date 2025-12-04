@@ -3655,7 +3655,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim",
+	"bngarren/checkmate.nvim", -- FIX: tag color
 	ft = "markdown",
 	opts = {
 		files = {
@@ -3664,7 +3664,7 @@ addPlugin {
 			"*.todo",
 			"*.md",
 		},
-		keys = {
+		keys = { -- RECODE: use t instead of T
 			["<TAB>"] = {
 				rhs = "<cmd>Checkmate toggle<CR>",
 				desc = "Toggle todo item",
@@ -3796,6 +3796,7 @@ addPlugin {
 -- FEAT: snacks highlights
 -- FEAT: snacks mappings
 -- FEAT: snacks picker options in picker.sources
+-- FEAT: snacks smart picker to toggle smart/files/recent
 addPlugin {
 	-- REFACTOR: remove
 	"nvim-telescope/telescope.nvim",
