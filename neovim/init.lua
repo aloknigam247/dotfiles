@@ -4426,78 +4426,28 @@ addPlugin {
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 				},
-			-- REFACTOR: reconfigure
-			-- 	hover = {
-			-- 		enabled = true,
-			-- 		view = nil,
-			-- 		opts = {},
-			-- 	},
-			-- 	signature = {
-			-- 		enabled = false,
-			-- 		auto_open = {
-			-- 			enabled = true,
-			-- 			trigger = true,
-			-- 			luasnip = true,
-			-- 			throttle = 50,
-			-- 		},
-			-- 		view = nil,
-			-- 		opts = {},
-			-- 	},
-			-- 	message = {
-			-- 		enabled = true,
-			-- 		view = "notify",
-			-- 		opts = {},
-			-- 	},
-			-- 	documentation = {
-			-- 		view = "hover",
-			-- 		opts = {
-			-- 			lang = "markdown",
-			-- 			replace = true,
-			-- 			render = "plain",
-			-- 			format = { "{ message }" },
-			-- 			win_options = { concealcursor = "n", conceallevel = 3 },
-			-- 		},
-			-- 	},
-			-- },
-			-- markdown = {
-			-- 	hover = {
-			-- 		["|(%S-)|"] = vim.cmd.help,
-			-- 		["%[.-%]%((%S-)%)"] = require("noice.util").open,
-			-- 	},
-			-- 	highlights = {
-			-- 		["|%S-|"] = "@text.reference",
-			-- 		["@%S+"] = "@parameter",
-			-- 		["^%s*(Parameters:)"] = "@text.title",
-			-- 		["^%s*(Return:)"] = "@text.title",
-			-- 		["^%s*(See also:)"] = "@text.title",
-			-- 		["{%S-}"] = "@parameter",
-			-- 	},
-			-- },
-			-- health = {
-			-- 	checker = false,
-			-- },
-			-- smart_move = {
-			-- 	enabled = true,
-			-- 	excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
+				message = {
+					view = "mini",
+				},
+			health = {
+				checker = false,
+			},
 			},
 			presets = {
-				-- bottom_search = true,
+				bottom_search = true, -- FIX: me
 				cmdline_output_to_split = false,
 				command_palette = true,
-			-- 	long_message_to_split = true,
-			-- 	inc_rename = false,
-			-- 	lsp_doc_border = true,
+				long_message_to_split = true,
+				inc_rename = true,
+				lsp_doc_border = true,
 			},
 			routes = {
 				{
+					-- shell outputs in a popup
 					view = "popup",
 					filter = { cmdline = "^:!" },
-				},
-			},
-			-- routes = {{
-			-- 	view = "notify",
-			-- 	filter = { event = "msg_showmode" },
-			-- }}
+				}
+			}
 		})
 	end,
 	dependencies = { "MunifTanjim/nui.nvim" },
@@ -4508,25 +4458,23 @@ addPlugin {
 	"nvim-mini/mini.misc"
 }
 
--- FEAT: https://github.com/ObserverOfTime/notifications.nvim
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
--- FEAT: https://github.com/nvim-mini/mini.notify
 -- FEAT: https://github.com/rcarriga/nvim-notify for notification
 -- FEAT: https://github.com/y3owk1n/notifier.nvim
 -- FEAT: noice notify
-addPlugin {
-	"rcarriga/nvim-notify",
-	config = function()
-		local notify = require("notify")
-		notify.setup({
-			minimum_width = 0,
-			render = "compact",
-			stages = "slide"
-		})
-		vim.notify = notify
-	end
-}
+-- addPlugin {
+-- 	"rcarriga/nvim-notify",
+-- 	config = function()
+-- 		local notify = require("notify")
+-- 		notify.setup({
+-- 			minimum_width = 0,
+-- 			render = "compact",
+-- 			stages = "slide"
+-- 		})
+-- 		vim.notify = notify
+-- 	end
+-- }
 
 addPlugin {
 	"sindrets/winshift.nvim",
