@@ -1574,10 +1574,12 @@ addPlugin {
 		end
 		vim.g.quickhl_manual_colors = colors
 	end,
-	keys = { -- FEAT: jump to next/prev highlight []w
-		{ "<Leader>w", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
-		{ "<Leader>w", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
-		{ "<Leader>W", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" }
+	keys = {
+		{ "<leader>W", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" },
+		{ "<leader>w", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
+		{ "<leader>w", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
+		{ "[w",        "<Plug>(quickhl-manual-go-to-prev)",      mode = "n", desc = "jump to prev quickhl" },
+		{ "]w",        "<Plug>(quickhl-manual-go-to-next)",      mode = "n", desc = "jump to next quickhl" }
 	}
 }
 
@@ -1654,7 +1656,6 @@ addPlugin {
 					IlluminatedWordWrite = { bg = palette.mantle },
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
-					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} },
 				}
@@ -1768,11 +1769,7 @@ addPlugin {
 		context.get_line_orig = context.get_line
 		context.get_line = function(num)
 			if context.get_mode() == "cmdline" then
-				local line = context.get_line_orig(num)
-				if line:match("\\") then
-					line = line:gsub("\\+", "\\")
-					return line
-				end
+				return context.get_line_orig(num):gsub("\\+", "\\")
 			end
 			return context.get_line_orig(num)
 		end
@@ -2115,7 +2112,6 @@ addPlugin {
 -- https://github.com/jonboh/nvim-dap-rr
 -- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
 -- https://github.com/mfussenegger/nvim-dap-python
--- https://github.com/nvim-telescope/telescope-dap.nvim
 -- https://github.com/ofirgall/goto-breakpoints.nvim
 -- https://github.com/sakhnik/nvim-gdb
 -- https://github.com/theHamsta/nvim-dap-virtual-text
@@ -2143,317 +2139,6 @@ addPlugin {
 			["kwargs"] = "[DOCME" .. ": kwargs]",
 		},
 		snippet_engine = "nvim"
-	}
-}
--- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ File Explorer  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	"b0o/nvim-tree-preview.lua",
-	opts = {
-		max_height = 500,
-		max_width = 500,
-	}
-}
-
-addPlugin {
-	"nvim-tree/nvim-tree.lua",
-	cmd = "NvimTreeOpen",
-	opts = {
-		actions = {
-			change_dir = {
-				enable = true,
-				global = false,
-				restrict_above_cwd = false,
-			},
-			expand_all = {
-				exclude = { ".git" },
-				max_folder_discovery = 300,
-			},
-			file_popup = {
-				open_win_config = {
-					border = "rounded",
-					col = 1,
-					relative = "cursor",
-					row = 1,
-					style = "minimal",
-				},
-			},
-			open_file = {
-				quit_on_open = false,
-				resize_window = true,
-				window_picker = {
-					chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-					enable = true,
-					exclude = {
-						buftype = { "nofile", "terminal", "help" },
-						filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-					},
-					picker = "default",
-				},
-			},
-			remove_file = { close_window = true },
-			use_system_clipboard = true,
-		},
-		auto_reload_on_write = true,
-		diagnostics = {
-			debounce_delay = 50,
-			enable = true,
-			icons = {
-				error   = icons.error,
-				hint    = icons.hint,
-				info    = icons.info,
-				warning = icons.warn,
-			},
-			severity = {
-				min = vim.diagnostic.severity.HINT,
-				max = vim.diagnostic.severity.ERROR,
-			},
-			show_on_dirs = true,
-			show_on_open_dirs = true,
-		},
-		disable_netrw = true,
-		filesystem_watchers = {
-			enable = true,
-			debounce_delay = 50,
-			ignore_dirs = {},
-		},
-		filters = {
-			dotfiles = true,
-			git_clean = false,
-			no_buffer = false,
-			custom = {},
-			exclude = {},
-		},
-		git = {
-			enable = true,
-			ignore = true,
-			show_on_dirs = true,
-			show_on_open_dirs = true,
-			timeout = 400,
-		},
-		hijack_cursor = true,
-		hijack_directories = {
-			auto_open = true,
-			enable = true,
-		},
-		hijack_netrw = true,
-		hijack_unnamed_buffer_when_opening = false,
-		live_filter = {
-			always_show_folders = true,
-			prefix = "󰈲 ",
-		},
-		log = {
-			enable = false,
-			truncate = false,
-			types = {
-				all         = false,
-				config      = false,
-				copy_paste  = false,
-				dev         = false,
-				diagnostics = false,
-				git         = false,
-				profile     = false,
-				watcher     = false,
-			},
-		},
-		modified = {
-			enable = true,
-			show_on_dirs = true,
-			show_on_open_dirs = true
-		},
-		notify = { threshold = vim.log.levels.INFO },
-		on_attach = function(bufnr)
-			vim.wo.statuscolumn = ""
-
-			---Common options with description
-			---@param desc string description
-			---@return table # common options with description
-			local function opts(desc)
-			  return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-			end
-
-			local api = require("nvim-tree.api")
-			local preview = require("nvim-tree-preview")
-			vim.keymap.set("n", "-",              api.tree.change_root_to_parent,     opts("Up"))
-			vim.keymap.set("n", "<",              api.node.navigate.sibling.prev,     opts("Previous Sibling"))
-			vim.keymap.set("n", "<2-LeftMouse>",  api.node.open.edit,                 opts("Open"))
-			vim.keymap.set("n", "<2-RightMouse>", api.tree.change_root_to_node,       opts("CD"))
-			vim.keymap.set("n", "<C-e>",          api.node.open.replace_tree_buffer,  opts("Open: In Place"))
-			vim.keymap.set("n", "<CR>",           api.node.open.edit,                 opts("Open"))
-			vim.keymap.set("n", "<F2>",           api.fs.rename_sub,                  opts("Rename: Omit Filename"))
-			vim.keymap.set("n", "<Leader>h",      api.node.show_info_popup,           opts("Info"))
-			vim.keymap.set("n", "<Tab>",          preview.node_under_cursor,          opts("Preview"))
-			vim.keymap.set("n", ">",              api.node.navigate.sibling.next,     opts("Next Sibling"))
-			vim.keymap.set("n", "D",              api.fs.trash,                       opts("Trash"))
-			vim.keymap.set("n", "E",              api.tree.expand_all,                opts("Expand All"))
-			vim.keymap.set("n", "F",              api.live_filter.clear,              opts("Clean Filter"))
-			vim.keymap.set("n", "H",              api.tree.toggle_hidden_filter,      opts("Toggle Filter: Dotfiles"))
-			vim.keymap.set("n", "I",              api.tree.toggle_gitignore_filter,   opts("Toggle Filter: Git Ignore"))
-			vim.keymap.set("n", "O",              api.node.open.no_window_picker,     opts("Open: No Window Picker"))
-			vim.keymap.set("n", "P",              preview.watch,                      opts("Toggle Preview"))
-			vim.keymap.set("n", "R",              api.tree.reload,                    opts("Refresh"))
-			vim.keymap.set("n", "S",              api.tree.search_node,               opts("Search"))
-			vim.keymap.set("n", "U",              api.tree.toggle_custom_filter,      opts("Toggle Filter: Hidden"))
-			vim.keymap.set("n", "W",              api.tree.collapse_all,              opts("Collapse"))
-			vim.keymap.set("n", "Y",              api.fs.copy.relative_path,          opts("Copy Relative Path"))
-			vim.keymap.set("n", "[c",             api.node.navigate.git.prev,         opts("Prev Git"))
-			vim.keymap.set("n", "[d",             api.node.navigate.diagnostics.prev, opts("Prev Diagnostic"))
-			vim.keymap.set("n", "]c",             api.node.navigate.git.next,         opts("Next Git"))
-			vim.keymap.set("n", "]d",             api.node.navigate.diagnostics.next, opts("Next Diagnostic"))
-			vim.keymap.set("n", "a",              api.fs.create,                      opts("Create"))
-			vim.keymap.set("n", "bd",             api.marks.bulk.delete,              opts("Delete Bookmarked"))
-			vim.keymap.set("n", "bm",             api.marks.toggle,                   opts("Toggle Bookmark"))
-			vim.keymap.set("n", "bmv",            api.marks.bulk.move,                opts("Move Bookmarked"))
-			vim.keymap.set("n", "c",              api.fs.copy.node,                   opts("Copy"))
-			vim.keymap.set("n", "d",              api.fs.remove,                      opts("Delete"))
-			vim.keymap.set("n", "f",              api.live_filter.start,              opts("Filter"))
-			vim.keymap.set("n", "g?",             api.tree.toggle_help,               opts("Help"))
-			vim.keymap.set("n", "gy",             api.fs.copy.absolute_path,          opts("Copy Absolute Path"))
-			vim.keymap.set("n", "o",              api.node.open.edit,                 opts("Open"))
-			vim.keymap.set("n", "p",              api.fs.paste,                       opts("Paste"))
-			vim.keymap.set("n", "q",              api.tree.close,                     opts("Close"))
-			vim.keymap.set("n", "r",              api.fs.rename,                      opts("Rename"))
-			vim.keymap.set("n", "s",              api.node.run.system,                opts("Run System"))
-			vim.keymap.set("n", "x",              api.fs.cut,                         opts("Cut"))
-			vim.keymap.set("n", "y",              api.fs.copy.filename,               opts("Copy Name"))
-			vim.keymap.set("n", keymaps.open_split,  api.node.open.horizontal,        opts("Open: Horizontal Split"))
-			vim.keymap.set("n", keymaps.open_tab,    api.node.open.tab,               opts("Open: New Tab"))
-			vim.keymap.set("n", keymaps.open_vsplit, api.node.open.vertical,          opts("Open: Vertical Split"))
-		end,
-		prefer_startup_root = false,
-		reload_on_bufenter = false,
-		renderer = {
-			add_trailing = true,
-			full_name = true,
-			group_empty = false,
-			hidden_display = "all",
-			highlight_git = true,
-			highlight_diagnostics = true,
-			highlight_opened_files = "all",
-			highlight_modified = "all",
-			highlight_bookmarks = "all",
-			highlight_clipboard = "name",
-			indent_markers = {
-				enable = true,
-				icons = {
-					bottom = "─",
-					corner = "╰",
-					edge   = "│",
-					item   = "⎬",
-					none   = " ",
-				},
-				inline_arrows = true,
-			},
-			indent_width = 2,
-			root_folder_label = ":~:s?$?/..?",
-			icons = {
-				bookmarks_placement = "signcolumn",
-				diagnostics_placement = "after",
-				git_placement = "signcolumn",
-				glyphs = {
-					bookmark = icons.bookmark,
-					default  = icons.file_unnamed,
-					folder = {
-						arrow_closed = icons.fold_close,
-						arrow_open   = icons.fold_open,
-						default      = icons.folder_close,
-						empty        = "",
-						empty_open   = "",
-						open         = icons.folder_open,
-						symlink      = "",
-						symlink_open = "",
-					},
-					git = {
-						deleted   = "󰧧",
-						ignored   = " ",
-						renamed   = "➜",
-						staged    = "⏽",
-						unmerged  = "",
-						unstaged  = "󰇝",
-						untracked = icons.file_added,
-					},
-					symlink = "󱅷",
-				},
-				modified_placement = "after",
-				padding = " ",
-				show = {
-					file = true,
-					folder = true,
-					folder_arrow = true,
-					git = true,
-					modified = true
-				},
-				symlink_arrow = icons.symlink_arrow,
-				webdev_colors = true,
-				web_devicons = {
-					file = {
-						enable = true,
-						color = true,
-					},
-					folder = {
-						enable = false,
-						color = true,
-					},
-				},
-			},
-			special_files = { "Makefile", "README.md", "TODO.md", "readme.md" },
-			symlink_destination = true,
-		},
-		respect_buf_cwd = false,
-		root_dirs = {},
-		select_prompts = false,
-		sort_by = "name",
-		sync_root_with_cwd = true,
-		system_open = {
-			cmd = "",
-			args = {},
-		},
-		tab = {
-			sync = {
-				close = false,
-				ignore = {},
-				open = false,
-			},
-		},
-		trash = {
-			cmd = "gio trash",
-			require_confirm = true,
-		},
-		ui = {
-			confirm = {
-				remove = true,
-				trash = true
-			}
-		},
-		update_focused_file = {
-			debounce_delay = 15,
-			enable = true,
-			ignore_list = {},
-			update_root = false,
-		},
-		view = {
-			adaptive_size = true,
-			centralize_selection = true,
-			cursorline = true,
-			float = {
-				enable = false,
-				open_win_config = {
-					border = "rounded",
-					col = 1,
-					height = 30,
-					relative = "editor",
-					row = 1,
-					width = 30,
-				},
-				quit_on_focus_loss = true,
-			},
-			number = false,
-			preserve_window_proportions = false,
-			relativenumber = false,
-			side = "left",
-			signcolumn = "yes",
-			width = 30,
-		},
 	}
 }
 -- <~>
@@ -2822,22 +2507,16 @@ addPlugin {
 addPlugin {
 	"aaronhallaert/advanced-git-search.nvim",
 	cmd = "AdvancedGitSearch",
-	config = function()
-		local telescope = require("telescope")
-		telescope.setup({
-			extensions = {
-				advanced_git_search = {
-					diff_plugin = "diffview",
-					git_flags = {},
-					git_diff_flags = {},
-					show_builtin_git_pickers = true,
-				}
-			}
-		})
-
-		telescope.load_extension("advanced_git_search")
-	end,
-	dependencies = { "nvim-telescope/telescope.nvim" }
+	opts = {
+		diff_plugin = "diffview",
+		git_flags = {},
+		git_diff_flags = {},
+		show_builtin_git_pickers = true,
+	},
+	main = "advanced_git_search.snacks",
+	config = function(plugin, cfg)
+		require(plugin.main).setup(cfg)
+	end
 }
 
 addPlugin {
@@ -2905,8 +2584,7 @@ addPlugin {
 addPlugin {
 	"2kabhishek/nerdy.nvim",
 	cmd = "Nerdy",
-	config = true,
-	dependencies = { "stevearc/dressing.nvim", "nvim-telescope/telescope.nvim", },
+	config = true
 }
 
 addPlugin {
@@ -3113,8 +2791,7 @@ addPlugin {
 }
 
 addPlugin {
-	"aznhe21/actions-preview.nvim",
-	dependencies = "nvim-telescope/telescope.nvim"
+	"aznhe21/actions-preview.nvim"
 }
 
 addPlugin {
@@ -3830,103 +3507,6 @@ addPlugin {
 	}
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Picker     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: snacks: explorer
-	-- FEAT: follow file
-	-- FEAT: git icons
-	-- FEAT: help over incline
-	-- FEAT: netrw
-	-- FEAT: picker for split/vsplit/tab/Peek/enter
-	-- FEAT: preivew window size
-	-- FEAT: preview title
-	-- FEAT: search highlight
-	-- FEAT: expand all
-	-- FEAT: collapse all
--- FEAT: snacks highlights
--- FEAT: snacks mappings
--- FEAT: snacks picker options in picker.sources
--- FEAT: snacks smart picker to toggle smart/files/recent
-addPlugin {
-	-- REFACTOR: remove
-	"nvim-telescope/telescope.nvim",
-	cmd = "Telescope",
-	config = function()
-		local actions = require("telescope.actions")
-		local telescope = require("telescope")
-		telescope.setup({
-			defaults = {
-				dynamic_preview_title = true,
-				entry_prefix = "   ",
-				file_ignore_patterns = {},
-				file_sorter = require("telescope.sorters").get_fuzzy_file,
-				generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-				initial_mode = "insert",
-				multi_icon = " ",
-				prompt_prefix = "  ",
-				selection_caret = "  ",
-				timeout = 2000,
-				windblend = 0,
-				mappings = {
-					i = {
-						["<C-a>"]      = actions.toggle_all,
-						["<C-d>"]      = false,
-						["<C-l>"]      = actions.send_selected_to_qflist,
-						["<C-u>"]      = false,
-						["<M-l>"]      = actions.add_selected_to_qflist,
-						["<PageDown>"] = actions.preview_scrolling_down,
-						["<PageUp>"]   = actions.preview_scrolling_up,
-						["<S-Tab>"]    = false,
-						["<Tab>"]      = actions.toggle_selection,
-						[keymaps.open_split]  = actions.select_horizontal,
-						[keymaps.open_tab]    = actions.select_tab,
-						[keymaps.open_vsplit] = actions.select_vertical
-					},
-					n = {
-						["<C-a>"]      = actions.toggle_all,
-						["<C-d>"]      = false,
-						["<C-q>"]      = actions.send_selected_to_qflist,
-						["<C-u>"]      = false,
-						["<M-q>"]      = actions.add_selected_to_qflist,
-						["<PageDown>"] = actions.preview_scrolling_down,
-						["<PageUp>"]   = actions.preview_scrolling_up,
-						["<S-Tab>"]    = false,
-						["<Tab>"]      = actions.toggle_selection,
-						[keymaps.open_split]  = actions.select_horizontal,
-						[keymaps.open_tab]    = actions.select_tab,
-						[keymaps.open_vsplit] = actions.select_vertical
-					}
-				},
-			},
-			extensions = {
-				heading = {
-					treesitter = true
-				},
-				fzf = {
-					fuzzy = true,
-					override_generic_sorter = true,
-					override_file_sorter = true,
-					case_mode = "smart_case",
-				},
-			},
-		})
-
-		telescope.load_extension("fzf")
-
-		vim.api.nvim_create_autocmd(
-			"User", {
-				pattern = "TelescopePreviewerLoaded",
-				desc = "Open directory in nvim-tree",
-				command = "setlocal nu"
-			}
-		)
-	end,
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
-	},
-	module = true
-}
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"nvzone/menu",
@@ -4229,14 +3809,14 @@ addPlugin {
 						color = { gui = "bold" },
 						icon = { "", color = { fg = "#F14C28" }},
 						on_click = function()
-							vim.cmd("Telescope git_branches")
+							Snacks.picker.git_branches()
 						end,
 						padding = { left = 1, right = 0 },
 					},
 					{
 						"diff",
 						on_click = function()
-							vim.cmd("Telescope git_status")
+							Snacks.picker.git_status()
 						end,
 						padding = { left = 1, right = 0 },
 						symbols = {
@@ -5275,8 +4855,23 @@ addPlugin {
 }
 
 addPlugin {
-	"folke/snacks.nvim",
+	"folke/snacks.nvim", -- FEAT: use Snacks instead of require("snacks")
 	lazy = true,
+	-- FEAT: config: D:/apps/nvim-data/lazy/snacks.nvim/lua/snacks/picker/config/defaults.lua
+	-- FEAT: explorer: collapse all
+	-- FEAT: explorer: expand all
+	-- FEAT: explorer: netrw
+	-- FEAT: explorer: preview title
+	-- FEAT: explorer: preview window size
+	-- FEAT: explorer: snacks highlights
+	-- FEAT: git icons and color match
+	-- FEAT: help over incline
+	-- FEAT: picker for split/vsplit/tab/Peek/enter
+	-- FEAT: search highlight
+	-- FEAT: snacks mappings
+	-- FEAT: snacks picker options in picker.sources
+	-- FEAT: snacks smart picker to toggle smart/files/recent
+	-- FEAT: toggle fuzzy/exact match
 	opts = {
 		picker = {
 			sources = {
@@ -5352,7 +4947,17 @@ addPlugin {
 				},
 			},
 		},
-	}
+	},
+	config = function(_, cfg)
+		require("snacks").setup(cfg)
+
+		-- HACK: to fix windows path issues
+		local actions = require("snacks.explorer.actions")
+		actions.reveal_orig = actions.reveal
+		actions.reveal = function(picker, path)
+			return actions.reveal_orig(picker, path:gsub("\\", "/"))
+		end
+	end
 }
 
 addPlugin {
