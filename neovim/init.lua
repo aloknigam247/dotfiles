@@ -1739,6 +1739,10 @@ addPlugin {
 	config = function(_, cfg)
 		require("blink.cmp").setup(cfg)
 
+		for kind_name,hl in pairs(kind_hl) do
+			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, hl[vim.o.background])
+		end
+
 		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
 		local original = require("blink.cmp.completion.list").show
 		require("blink.cmp.completion.list").show = function(ctx, items_by_source)
@@ -1755,8 +1759,17 @@ addPlugin {
 		end
 		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
 
-		for kind_name,hl in pairs(kind_hl) do
-			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, hl[vim.o.background])
+		local context = require('blink.cmp.completion.trigger.context')
+		context.get_line_orig = context.get_line
+		context.get_line = function(num)
+			if context.get_mode() == "cmdline" then
+				local line = context.get_line_orig(num)
+				if line:match("\\") then
+					line = line:gsub("\\+", "\\")
+					return line
+				end
+			end
+			return context.get_line_orig(num)
 		end
 	end,
 	dependencies = { "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
