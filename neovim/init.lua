@@ -168,7 +168,7 @@ local kind_hl = {
 	Number        = { icon = " ", dark = { fg = "#FB62F6", bg = "#313244" }, light = { fg = "#A5BE00", bg = "#DCE0E8" }},
 	Object        = { icon = " ", dark = { fg = "#F18F01", bg = "#313244" }, light = { fg = "#80A1C1", bg = "#DCE0E8" }},
 	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#DCE0E8" }}, -- FIX: me
-	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#1E1E2E" }, light = { fg = "#99C24D", bg = "#DCE0E8" }},
+	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#313244" }, light = { fg = "#99C24D", bg = "#DCE0E8" }},
 	Package       = { icon = " ", dark = { fg = "#AFA2FF", bg = "#313244" }, light = { fg = "#B98EA7", bg = "#DCE0E8" }},
 	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#DC836F", bg = "#DCE0E8" }},
 	Property      = { icon = " ", dark = { fg = "#CED097", bg = "#313244" }, light = { fg = "#3777FF", bg = "#DCE0E8" }},
@@ -874,6 +874,24 @@ vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ actions = { ["<c-space>"] = "next" }, label = { before = false, after = false }, prompt = { enabled = false } }) end, { desc = "Increment selected node" })
+-- ━━ add space around "=" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set({ "c", "i" }, "=", function()
+	if vim.o.filetype == "python" then
+		return "="
+	end
+
+	local col = vim.fn.col(".") - 1
+	if col == 0 then return "="end
+
+	local line = vim.api.nvim_get_current_line()
+	local prev = line:sub(col, col)
+	local prev2 = line:sub(col-1, col)
+
+	if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
+	elseif prev:match("%w") then return " = " -- add for first =
+	else return "=" end
+
+end, { expr = true, noremap = true, desc = "Add spaces around =" })
 -- <~>
 -- Misc</>
 -------
@@ -1199,34 +1217,6 @@ addPlugin {
 				return opts.prev_char:match(".%]") ~= nil
 			end)
 			:use_key("]"),
-			-- Auto add space on =
-			Rule("=", "", "-xml")
-			:with_pair(cond.not_inside_quote())
-			:with_pair(function(opts)
-				local last_char = opts.line:sub(opts.col - 1, opts.col - 1)
-				if last_char:match("[%w%=%s]") then
-					return true
-				end
-				return false
-			end)
-			:replace_endpair(function(opts)
-				local prev_2char = opts.line:sub(opts.col - 2, opts.col - 1)
-				local next_char = opts.line:sub(opts.col, opts.col)
-				next_char = next_char == " " and "" or " "
-				if prev_2char:match("%w$") then
-					return "<bs> =" .. next_char
-				end
-				if prev_2char:match("%=$") then
-					return next_char
-				end
-				if prev_2char:match("=") then
-					return "<bs><bs>=" .. next_char
-				end
-				return ""
-			end)
-			:set_end_pair_length(0)
-			:with_move(cond.none())
-			:with_del(cond.none())
 		}
 	end,
 	event = "InsertEnter"
@@ -1240,25 +1230,6 @@ addPlugin {
 -- 	config = function(plugin, cfg)
 -- 		require("vim._extui").enable({})
 -- 		require(plugin.name).setup(cfg)
-
--- 		-- add space around "=" sequence
--- 		vim.keymap.set({ "c", "i" }, "=", function()
--- 			if vim.o.filetype == "python" then
--- 				return "="
--- 			end
-
--- 			local col = vim.fn.col(".") - 1
--- 			if col == 0 then return "="end
-
--- 			local line = vim.api.nvim_get_current_line()
--- 			local prev = line:sub(col, col)
--- 			local prev2 = line:sub(col-1, col)
-
--- 			if prev2 == "= " then return "<BS><BS>== " -- add around = sequence
--- 			elseif prev:match("%w") then return " = " -- add for first =
--- 			else return "=" end
-
--- 		end, { expr = true, noremap = true, desc = "Add spaces around =" })
 
 -- 		-- blink create mapping for <CR> in cmdline which make foldopen = search misbehave
 -- 		-- vim.defer_fn(function() vim.keymap.del("c", "<CR>") end, 5000)
@@ -1651,6 +1622,22 @@ addPlugin {
 			light = "latte",
 			dark = "mocha"
 		},
+		custom_highlights = function(palette)
+			return {
+					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
+					CheckmateDone = { fg = palette.green },
+					CheckmatePriority = { fg = palette.sapphire },
+					CheckmatePriorityHigh = { fg = palette.red, style = { "bold" } },
+					CheckmatePriorityMedium = { fg = palette.yellow },
+					CheckmatePrioritylow = { fg = palette.sapphire },
+					CheckmateStarted = { fg = palette.mauve },
+					CoverageCovered = { fg = palette.teal },
+					CoveragePartial = { fg = palette.mauve },
+					CoverageUncovered = { fg = palette.flamingo },
+					InclineNormal = { bg = palette.surface1, fg = palette.text },
+					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
+			}
+		end,
 		float = {
 			transparent = true,
 			solid = false
@@ -1658,20 +1645,14 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
-					CoverageCovered = { fg = palette.teal },
-					CoveragePartial = { fg = palette.mauve },
-					CoverageUncovered = { fg = palette.flamingo },
 					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
 					IlluminatedWordWrite = { bg = palette.mantle },
-					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					TelescopeMatching = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface0, style = {} },
-					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
 				}
 			end
 		},
@@ -1965,7 +1946,7 @@ addPlugin {
 						end
 					}
 				},
-				cmdline = {
+				cmdline = { -- FIX: multiple /// in paths
 					name = "cmdline",
 					override = {
 						get_trigger_characters = function(self)
@@ -2038,7 +2019,7 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"andrewferrier/debugprint.nvim",
+	"andrewferrier/debugprint.nvim", -- FIX: print highlighting not working
 	dependencies = { "nvim-mini/mini.comment", "nvim-mini/mini.hipatterns" },
 	lazy = true,
 	opts = {
@@ -3046,7 +3027,6 @@ addPlugin {
 
 -- FEAT: https://github.com/anachary/dotnet-core.nvim
 -- FEAT: https://github.com/anachary/dotnet-plugin.nvim
--- FEAT: https://github.com/netmute/ctags-lsp
 
 addPlugin {
 	"Davidyz/inlayhint-filler.nvim",
@@ -3655,7 +3635,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim", -- FIX: tag color
+	"bngarren/checkmate.nvim",
 	ft = "markdown",
 	opts = {
 		files = {
@@ -3664,23 +3644,23 @@ addPlugin {
 			"*.todo",
 			"*.md",
 		},
-		keys = { -- RECODE: use t instead of T
+		keys = {
 			["<TAB>"] = {
 				rhs = "<cmd>Checkmate toggle<CR>",
 				desc = "Toggle todo item",
 				modes = { "n", "v" }
 			},
-			["<leader>TR"] = {
+			["<leader>tr"] = {
 				rhs = "<cmd>Checkmate remove_all_metadata<CR>",
 				desc = "Remove all metadata from a todo item",
 				modes = { "n", "v" },
 			},
-			["<leader>Ta"] = {
+			["<leader>ta"] = {
 				rhs = "<cmd>Checkmate archive<CR>",
 				desc = "Archive checked/completed todo items (move to bottom section)",
 				modes = { "n" },
 			},
-			["<leader>Tv"] = {
+			["<leader>tv"] = {
 				rhs = "<cmd>Checkmate metadata select_value<CR>",
 				desc = "Update the value of a metadata tag under the cursor",
 				modes = { "n" },
@@ -3688,6 +3668,56 @@ addPlugin {
 		},
 		list_continuation = {
 			enabled = false
+		},
+		metadata = {
+			priority = {
+				style = function(context)
+					local value = context.value:lower()
+					if value == "high" then
+						return { link = "CheckmatePriorityHigh" }
+					elseif value == "medium" then
+						return { link = "CheckmatePriorityMedium" }
+					elseif value == "low" then
+						return { link = "CheckmatePriorityLow" }
+					else -- fallback
+						return { link = "CheckmatePriority" }
+					end
+				end,
+				get_value = function()
+					return "medium"
+				end,
+				choices = function()
+					return { "low", "medium", "high" }
+				end,
+				key = "<leader>tp",
+				sort_order = 10,
+				jump_to_on_insert = "value",
+				select_on_insert = true,
+			},
+			started = {
+				aliases = { "init" },
+				style = { link = "CheckmateStarted" },
+				get_value = function()
+					return tostring(os.date("%m/%d/%y %H:%M"))
+				end,
+				key = "<leader>ts",
+				sort_order = 20,
+			},
+			done = {
+				aliases = { "completed", "finished" },
+				style = { link = "CheckmateDone" },
+				get_value = function()
+					return tostring(os.date("%m/%d/%y %H:%M"))
+				end,
+				key = "<leader>td",
+				on_add = function(todo)
+					require("checkmate").set_todo_state(todo, "checked")
+				end,
+				on_remove = function(todo)
+					require("checkmate").set_todo_state(todo, "unchecked")
+				end,
+				sort_order = 30,
+			},
 		},
 		todo_action_depth = 10,
 		todo_count_formatter = function(completed, total)
