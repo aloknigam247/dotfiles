@@ -4181,7 +4181,7 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-neotest/neotest", -- FIX: enable tiny-inline-diagnostic
+	"nvim-neotest/neotest",
 	cmd = "Neotest",
 	config = function()
 		---@diagnostic disable-next-line: missing-fields
@@ -4258,8 +4258,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Treesitter   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	-- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
-	-- FEAT: check for recursive functionality in json
 	"Wansmer/treesj",
 	cmd = "TSJToggle",
 	opts = {
@@ -4407,10 +4405,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/ariel-frischer/bmessages.nvim
--- FEAT: https://github.com/catgoose/bmessages.nvim
--- FEAT: https://github.com/rcarriga/nvim-notify for notification
--- FEAT: https://github.com/y3owk1n/notifier.nvim
 addPlugin { -- BUG: does not work properly
 	-- BUG: commandline does not work as expected
 	-- REFACTOR: reconfigure
@@ -4583,6 +4577,9 @@ addPlugin {
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
 -- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
 -- FEAT: https://github.com/nvim-mini/mini.notify
+-- FEAT: https://github.com/rcarriga/nvim-notify for notification
+-- FEAT: https://github.com/y3owk1n/notifier.nvim
+-- FEAT: noice notify
 addPlugin {
 	"rcarriga/nvim-notify",
 	config = function()
@@ -4684,6 +4681,12 @@ addPlugin { -- FEAT: replace it for matchit
 }
 
 addPlugin {
+	"ariel-frischer/bmessages.nvim",
+	cmd = "Bmessages",
+	config = true
+}
+
+addPlugin {
 	"benlubas/wrapping-paper.nvim",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
@@ -4758,6 +4761,8 @@ addPlugin {
 }
 
 -- FEAT: https://github.com/nvim-mini/mini.bracketed
+-- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
+-- FEAT: check for recursive functionality in json
 
 addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
