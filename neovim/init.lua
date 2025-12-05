@@ -2956,19 +2956,6 @@ addPlugin {
 }
 
 addPlugin {
-	"j-hui/fidget.nvim",
-	opts = {
-		progress = {
-			display = {
-				done_icon = " ",
-				progress_icon = { pattern = "dots", period = 1 }
-			}
-		}
-	},
-	event = "LspAttach"
-}
-
-addPlugin {
 	"kosayoda/nvim-lightbulb",
 	event = "LspAttach",
 	config = function()
@@ -4405,100 +4392,41 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       UI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin { -- BUG: does not work properly
-	-- BUG: commandline does not work as expected
-	-- REFACTOR: reconfigure
+addPlugin {
 	"folke/noice.nvim",
 	config = function()
 		vim.o.lazyredraw = false
 		require("noice").setup({
-			-- cmdline = {
-			-- 	enabled = true,
-			-- 	view = "cmdline_popup",
-			-- 	opts = {},
-			-- 	format = {
-			-- 		cmdline = { pattern = "^:", icon = "", lang = "vim", title = "  Vim "},
-			-- 		filter = {},
-			-- 		help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help "},
-			-- 		input = {},
-			-- 		lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy "},
-			-- 		lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " 󰢱 Lua "},
-			-- 		lua_print = { pattern = "^:%s*lua=%s+", icon = "", lang = "lua" , title = "  Lua "},
-			-- 		search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = ""},
-			-- 		search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = ""},
-			-- 		shell = { pattern = "^:!", icon = " ", lang = "powershell" , title = "  Powershell "},
-			-- 		shell_read = { pattern = "^:read!", icon = " ", lang = "powershell" , title = "  Powershell"},
-			-- 	},
-			-- },
-			-- messages = { -- BUG: stops outputs from !cmd commands
-			-- 	enabled = true,
-			-- 	view = "notify",
-			-- 	view_error = "notify",
-			-- 	view_warn = "notify",
-			-- 	view_history = "messages",
-			-- 	view_search = "virtualtext",
-			-- },
-			-- popupmenu = {
-			-- 	enabled = true,
-			-- 	backend = "cmp",
-			-- 	kind_icons = {},
-			-- },
-			-- redirect = {
-			-- 	view = "popup",
-			-- 	filter = { event = "msg_show" },
-			-- },
-			-- commands = {
-			-- 	history = {
-			-- 		view = "split",
-			-- 		opts = { enter = true, format = "details" },
-			-- 		filter = {
-			-- 			any = {
-			-- 				{ event = "notify" },
-			-- 				{ error = true },
-			-- 				{ warning = true },
-			-- 				{ event = "msg_show", kind = { "" } },
-			-- 				{ event = "lsp", kind = "message" },
-			-- 			},
-			-- 		},
-			-- 	},
-			-- 	last = {
-			-- 		view = "popup",
-			-- 		opts = { enter = true, format = "details" },
-			-- 		filter = {
-			-- 			any = {
-			-- 				{ event = "notify" },
-			-- 				{ error = true },
-			-- 				{ warning = true },
-			-- 				{ event = "msg_show", kind = { "" } },
-			-- 				{ event = "lsp", kind = "message" },
-			-- 			},
-			-- 		},
-			-- 		filter_opts = { count = 1 },
-			-- 	},
-			-- 	errors = {
-			-- 		view = "popup",
-			-- 		opts = { enter = true, format = "details" },
-			-- 		filter = { error = true },
-			-- 		filter_opts = { reverse = true },
-			-- 	},
-			-- },
-			-- notify = {
-			-- 	enabled = true,
-			-- 	view = "notify",
-			-- },
-			-- lsp = {
-			-- 	progress = {
-			-- 		enabled = false,
-			-- 		format = "lsp_progress",
-			-- 		format_done = "lsp_progress_done",
-			-- 		throttle = 1000 / 30,
-			-- 		view = "mini",
-			-- 	},
-			-- 	override = {
-			-- 		["cmp.entry.get_documentation"] = true,
-			-- 		["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-			-- 		["vim.lsp.util.stylize_markdown"] = true,
-			-- 	},
+			cmdline = {
+				format = {
+					cmdline = { pattern = "^:", icon = "", lang = "vim", title = "  Vim "},
+					filter = {},
+					help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help "},
+					input = {},
+					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy "},
+					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " 󰢱 Lua "},
+					lua_print = { pattern = "^:%s*lua=%s+", icon = "", lang = "lua" , title = "  Lua "},
+					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = ""},
+					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = ""},
+					shell = { pattern = "^:!", icon = " ", lang = "powershell" , title = "  Powershell "},
+					shell_read = { pattern = "^:read!", icon = " ", lang = "powershell" , title = "  Powershell"},
+				},
+			},
+			notify = {
+				enabled = false,
+			},
+			lsp = {
+				progress = {
+					format_done = {
+						{ "󰄭 ", hl_group = "NoiceLspProgressSpinner" },
+						{ "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
+						{ "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+					},
+				},
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+				},
+			-- REFACTOR: reconfigure
 			-- 	hover = {
 			-- 		enabled = true,
 			-- 		view = nil,
@@ -4551,14 +4479,21 @@ addPlugin { -- BUG: does not work properly
 			-- smart_move = {
 			-- 	enabled = true,
 			-- 	excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
-			-- },
-			-- presets = {
-			-- 	bottom_search = true,
-			-- 	command_palette = true,
+			},
+			presets = {
+				-- bottom_search = true,
+				cmdline_output_to_split = false,
+				command_palette = true,
 			-- 	long_message_to_split = true,
 			-- 	inc_rename = false,
 			-- 	lsp_doc_border = true,
-			-- },
+			},
+			routes = {
+				{
+					view = "popup",
+					filter = { cmdline = "^:!" },
+				},
+			},
 			-- routes = {{
 			-- 	view = "notify",
 			-- 	filter = { event = "msg_showmode" },
@@ -4566,7 +4501,7 @@ addPlugin { -- BUG: does not work properly
 		})
 	end,
 	dependencies = { "MunifTanjim/nui.nvim" },
-	event = "CmdlineEnter"
+	event = { "CmdlineEnter", "LspAttach" }
 }
 
 addPlugin {
@@ -4864,6 +4799,7 @@ addPlugin {
 	lazy = true,
 	-- FEAT: config: D:/apps/nvim-data/lazy/snacks.nvim/lua/snacks/picker/config/defaults.lua
 	-- FEAT: explorer: collapse all
+	-- FEAT: explorer: disable esc
 	-- FEAT: explorer: expand all
 	-- FEAT: explorer: netrw
 	-- FEAT: explorer: preview title

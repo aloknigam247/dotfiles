@@ -499,6 +499,7 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # ╭───────────╮
 # │ FZF Setup │
 # ╰───────────╯
+# FEAT: default file opener as vim
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
