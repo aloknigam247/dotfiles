@@ -48,6 +48,10 @@ local color_palette = {
 	}
 }
 
+---Debug tag
+---@type string
+local debug_tag = "DEBUG" .. "PRINT"
+
 ---Shapes for dotted border
 ---@type string[]
 local dotted_border = { "╭", "󰇘", "╮", "┊", "╯", "󰇘", "╰", "┊" }
@@ -153,7 +157,7 @@ local kind_hl = {
 	Enum          = { icon = " ", dark = { fg = "#E3B5A4", bg = "#313244" }, light = { fg = "#A167A5", bg = "#DCE0E8" }},
 	EnumMember    = { icon = " ", dark = { fg = "#AF2BBF", bg = "#313244" }, light = { fg = "#B80C09", bg = "#DCE0E8" }},
 	Event         = { icon = " ", dark = { fg = "#6C91BF", bg = "#313244" }, light = { fg = "#53A548", bg = "#DCE0E8" }},
-	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#E2DC12", bg = "#DCE0E8" }}, -- FIX: me
+	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#D5CF0F", bg = "#DCE0E8" }},
 	File          = { icon = " ", dark = { fg = "#EF8354", bg = "#313244" }, light = { fg = "#486499", bg = "#DCE0E8" }},
 	Folder        = { icon = " ", dark = { fg = "#BFC0C0", bg = "#313244" }, light = { fg = "#A74482", bg = "#DCE0E8" }},
 	Function      = { icon = " ", dark = { fg = "#E56399", bg = "#313244" }, light = { fg = "#228CDB", bg = "#DCE0E8" }},
@@ -167,7 +171,7 @@ local kind_hl = {
 	Null          = { icon = " ", dark = { fg = "#C1CFDA", bg = "#313244" }, light = { fg = "#56666B", bg = "#DCE0E8" }},
 	Number        = { icon = " ", dark = { fg = "#FB62F6", bg = "#313244" }, light = { fg = "#A5BE00", bg = "#DCE0E8" }},
 	Object        = { icon = " ", dark = { fg = "#F18F01", bg = "#313244" }, light = { fg = "#80A1C1", bg = "#DCE0E8" }},
-	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#F1DB4B", bg = "#DCE0E8" }}, -- FIX: me
+	Operator      = { icon = " ", dark = { fg = "#048BA8", bg = "#313244" }, light = { fg = "#BB9F06", bg = "#DCE0E8" }},
 	Options       = { icon = " ", dark = { fg = "#99C24D", bg = "#313244" }, light = { fg = "#99C24D", bg = "#DCE0E8" }},
 	Package       = { icon = " ", dark = { fg = "#AFA2FF", bg = "#313244" }, light = { fg = "#B98EA7", bg = "#DCE0E8" }},
 	Path          = { icon = " ", dark = { fg = "#EFC6BD", bg = "#313244" }, light = { fg = "#DC836F", bg = "#DCE0E8" }},
@@ -849,8 +853,6 @@ vim.keymap.set("n", "<leader><space>p", function() require("snacks").picker.proj
 vim.keymap.set("n", "<leader><space>s", function() require("snacks").picker() end, { desc = "Pick snacks" })
 vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo({ layout = { preset = "dropdown" }}) end, { desc = "Pick undo" })
 vim.keymap.set("v", "<leader><space>g", function() require("snacks").picker.grep_word({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
--- ━━ register ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("i", "<C-R>", function() require("telescope.builtin").registers(require("telescope.themes").get_cursor()) end, { desc = "Pick registers" })
 -- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
 -- ━━ scrolling ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1498,6 +1500,7 @@ addPlugin {
 		hipatterns.setup({
 			highlighters = (function()
 				local config = {
+					debugprint        = { pattern = ".*" .. debug_tag .. ".*", group = "DebugPrintLine", extmark_opts = { sign_text = "", sign_hl_group = "DebugPrintSignHl" } },
 					hex_color         = hipatterns.gen_highlighter.hex_color({ style = "inline", inline_text = " " }),
 					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"           }), group = "Constant"   },
 					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"           }), group = "@variable"  },
@@ -1555,7 +1558,6 @@ addPlugin {
 		vim.api.nvim_create_user_command("TodoEnable", require("todo-comments").enable, { desc = "Enable TODO Comments" })
 		vim.api.nvim_create_user_command("TodoDisable", require("todo-comments").disable, { desc = "Enable TODO Comments" })
 	end,
-	dependencies = { "luukvbaal/statuscol.nvim" },
 	keys = {
 		{ "[t", function() require("todo-comments").jump_prev(); vim.cmd("normal! zv") end, desc = "Previous TODO" },
 		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zv") end, desc = "Next TODO" }
@@ -1572,7 +1574,7 @@ addPlugin {
 		end
 		vim.g.quickhl_manual_colors = colors
 	end,
-	keys = {
+	keys = { -- FEAT: jump to next/prev highlight []w
 		{ "<Leader>w", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
 		{ "<Leader>w", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
 		{ "<Leader>W", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" }
@@ -1626,6 +1628,8 @@ addPlugin {
 			return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
+					DebugPrintLine = { bg = palette.surface0 },
+					DebugPrintSignHl = { fg = palette.pink },
 					CheckmatePriority = { fg = palette.sapphire },
 					CheckmatePriorityHigh = { fg = palette.red, style = { "bold" } },
 					CheckmatePriorityMedium = { fg = palette.yellow },
@@ -1759,6 +1763,7 @@ addPlugin {
 		end
 		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
 
+		-- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
 		local context = require('blink.cmp.completion.trigger.context')
 		context.get_line_orig = context.get_line
 		context.get_line = function(num)
@@ -1771,6 +1776,7 @@ addPlugin {
 			end
 			return context.get_line_orig(num)
 		end
+		-- ╰──────────────────────────────────────────────────────────╯
 	end,
 	dependencies = { "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
@@ -1959,7 +1965,7 @@ addPlugin {
 						end
 					}
 				},
-				cmdline = { -- FIX: multiple /// in paths
+				cmdline = {
 					name = "cmdline",
 					override = {
 						get_trigger_characters = function(self)
@@ -2032,7 +2038,7 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Debugger    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"andrewferrier/debugprint.nvim", -- FIX: print highlighting not working
+	"andrewferrier/debugprint.nvim",
 	dependencies = { "nvim-mini/mini.comment", "nvim-mini/mini.hipatterns" },
 	lazy = true,
 	opts = {
@@ -2049,6 +2055,7 @@ addPlugin {
 				right_var = '}")',
 			}
 		},
+		highlight_lines = false,
 		keymaps = {
 			normal = {
 				plain_below = "<Leader>dp",
@@ -2075,7 +2082,8 @@ addPlugin {
 				variable_above = "<Leader>dV",
 				surround_variable = "<Leader>dsv"
 			}
-		}
+		},
+		print_tag = debug_tag
 	},
 	config = function(_, cfg)
 		require("debugprint").setup(cfg)
@@ -2691,7 +2699,7 @@ addPlugin {
 		vim.keymap.set("n", "zM", require("ufo").closeAllFolds, { desc = "Close all folds" })
 		vim.keymap.set("n", "zR", require("ufo").openAllFolds, { desc = "Open all folds" })
 	end,
-	dependencies = { "kevinhwang91/promise-async", "luukvbaal/statuscol.nvim" },
+	dependencies = { "kevinhwang91/promise-async" },
 	-- init = function()
 	-- 	-- Mapping to attach nvim-ufo
 	-- 	vim.keymap.set("n", "zz", function()
@@ -2835,7 +2843,6 @@ addPlugin {
 addPlugin {
 	"lewis6991/gitsigns.nvim",
 	cmd = "Gitsigns",
-	dependencies = { "luukvbaal/statuscol.nvim" },
 	event = { "TextChangedI" },
 	keys = {
 		{ "[c", mode = "n", desc = "previous git diff change" },
@@ -3807,7 +3814,6 @@ addPlugin {
 
 addPlugin {
 	"chentoast/marks.nvim",
-	dependencies = "luukvbaal/statuscol.nvim",
 	opts = {
 		default_mappings = false,
 		mappings = {
@@ -4051,16 +4057,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
----Default method to use until statuscol.nvim loads which then overrides it
----@return string
-function StatusCol()
-	return "%=%l%C "
-end
-vim.o.statuscolumn = "%!v:lua.StatusCol()"
-
 addPlugin {
 	"luukvbaal/statuscol.nvim",
 	config = function()
+		print('DEBUGPRINT[1]: init.lua:4069 (after config = function())')
 		local builtin = require("statuscol.builtin")
 		require("statuscol").setup({
 			setopt = true,
@@ -4070,6 +4070,7 @@ addPlugin {
 				{ sign = { name = { "Marks_" }, auto = true, fillcharhl ="LineNr" } },
 				{ sign = { namespace = { ".*diagnostic.*" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true }, click = "v:lua.ScSa" },
 				{ sign = { name = { "Bookmark" }, auto = true, fillcharhl ="LineNr" } },
+				{ sign = { namespace = { "MiniHipatterns" }, auto = true, colwidth = 2, fillcharhl ="LineNr", maxwidth = 1, foldclosed = true } },
 				{ sign = { name = { "Dap" }, auto = true, fillcharhl ="LineNr" } },
 				{ text = { builtin.foldfunc }--[[ , click = "v:lua.ScFa" ]] },
 				{ text = { builtin.lnumfunc }, --[[ click = "v:lua.ScLa", ]] condition = { true } },
@@ -4093,7 +4094,7 @@ addPlugin {
 			}
 		})
 	end,
-	event = "DiagnosticChanged"
+	event = "VeryLazy"
 }
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Status Line   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -4797,16 +4798,9 @@ addPlugin {
 }
 
 addPlugin {
-	"m-demare/hlargs.nvim", -- FIX: priority higher than lsp semantic tokens
+	"m-demare/hlargs.nvim",
 	config = function()
 		require("hlargs").setup({
-			-- colorpalette = (function()
-			-- 	local res = {}
-			-- 	for _,color in pairs(color_palette[vim.o.background == "light" and "dark" or "light"]) do
-			-- 		table.insert(res, { fg = color, underdashed = true })
-			-- 	end
-			-- 	return res
-			-- end)(),
 			excluded_argnames = {
 				declarations = {
 					python = { "self", "cls" },
@@ -5420,7 +5414,7 @@ addPlugin {
 	},
 	keys = {
 		{ "<C-R>", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "i" }, desc = "Yank text" },
-		{ "\"", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "n" }, desc = "Yank text" },
+		{ "'", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "n" }, desc = "Yank text" },
 		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
 		{ "p", "<Plug>(YankyPutAfter)", mode = { "n" }, desc = "Put yanked text after cursor" },
 		{ "P", "<Plug>(YankyPutBefore)", mode = { "n" }, desc = "Put yanked text before cursor" },
