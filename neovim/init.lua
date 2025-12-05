@@ -4060,7 +4060,6 @@ addPlugin {
 addPlugin {
 	"luukvbaal/statuscol.nvim",
 	config = function()
-		print('DEBUGPRINT[1]: init.lua:4069 (after config = function())')
 		local builtin = require("statuscol.builtin")
 		require("statuscol").setup({
 			setopt = true,
