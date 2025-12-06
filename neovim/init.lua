@@ -1124,7 +1124,7 @@ vim.api.nvim_create_user_command(
 		local function reopen(mode)
 			Preview_win:hide()
 
-			local picked_win = require('window-picker').pick_window({ include_current_win = true })
+			local picked_win = require("window-picker").pick_window({ include_current_win = true })
 			if picked_win and vim.api.nvim_win_is_valid(picked_win) then
 				vim.api.nvim_set_current_win(picked_win)
 				vim.api.nvim_command(mode)
@@ -4412,9 +4412,6 @@ addPlugin {
 					shell_read = { pattern = "^:read!", icon = " ", lang = "powershell" , title = "  Powershell"},
 				},
 			},
-			notify = {
-				enabled = false,
-			},
 			lsp = {
 				progress = {
 					format_done = {
@@ -4458,23 +4455,18 @@ addPlugin {
 	"nvim-mini/mini.misc"
 }
 
--- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notifier.md
--- FEAT: https://github.com/folke/snacks.nvim/blob/main/docs/notify.md
--- FEAT: https://github.com/rcarriga/nvim-notify for notification
--- FEAT: https://github.com/y3owk1n/notifier.nvim
--- FEAT: noice notify
--- addPlugin {
--- 	"rcarriga/nvim-notify",
--- 	config = function()
--- 		local notify = require("notify")
--- 		notify.setup({
--- 			minimum_width = 0,
--- 			render = "compact",
--- 			stages = "slide"
--- 		})
--- 		vim.notify = notify
--- 	end
--- }
+addPlugin {
+	"rcarriga/nvim-notify",
+	config = function()
+		local notify = require("notify")
+		notify.setup({
+			minimum_width = 0,
+			render = "compact",
+			stages = "slide"
+		})
+		vim.notify = notify
+	end
+}
 
 addPlugin {
 	"sindrets/winshift.nvim",
@@ -4492,9 +4484,12 @@ addPlugin {
 				["<Up>"] = "up"
 			}
 		},
-		window_picker = function() return nil end -- FEAT: use custom picker
+		window_picker = function() return require("window-picker").pick_window({ include_current_win = false }) end
 	},
-	keys = { { "<C-w>m", function() require("winshift").cmd_winshift() end, desc = "Move window mode" } }
+	keys = {
+		{ "<C-w>m", function() require("winshift").cmd_winshift() end, desc = "Move window mode" },
+		{ "<C-w>x", function() require("winshift").cmd_winshift("swap") end, desc = "Swap window" }
+	}
 }
 
 -- FIX: use snacks/telescope for input and select
