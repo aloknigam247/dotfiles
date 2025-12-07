@@ -962,18 +962,14 @@ vim.highlight.priorities = {
 	user = 200
 }
 
--- Lazy load dressing
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.ui.select = function(...)
-	require("dressing")
-	vim.ui.select(...)
+	require("snacks").picker.explorer(...)
 end
 
--- Lazy load dressing
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.ui.input = function(...)
-	require("dressing")
-	vim.ui.input(...)
+	require("snacks").input(...)
 end
 
 vim.fn.matchadd(
@@ -4492,28 +4488,25 @@ addPlugin {
 	}
 }
 
--- FIX: use snacks/telescope for input and select
-addPlugin {
-	"stevearc/dressing.nvim",
-	dependencies = "telescope.nvim",
-	opts = {
-		input = {
-			title_pos = "center"
-		}
-	}
-}
-
 addPlugin {
 	"tamton-aquib/flirt.nvim",
+	event = "WinNew",
 	opts = {
-		override_open = true, -- experimental
-		default_move_mappings = true,   -- <C-arrows> to move floats -- FIX: fix and enable
-		default_resize_mappings = true, -- <A-arrows> to resize floats
-		default_mouse_mappings = true,  -- Drag floats with mouse
-		speed = 100, -- Can vary from 1 to 100 (100 is fast)
-		-- custom_filter = function(buffer, win_config)
-		-- 	return vim.bo[buffer].filetype == 'cmp_menu' -- avoids animation
-		-- end
+		override_open = true,
+		default_move_mappings = true,
+		default_resize_mappings = true,
+		default_mouse_mappings = true,
+		speed = 100,
+	},
+	keys = { -- FEAT: which-key loop
+		-- { "<C-w><C-down>", function() require("flirt").move("down") end, desc = "Move window down" },
+        -- vim.keymap.set('n', '<C-up>', function()  F.move("up") end, {})
+        -- vim.keymap.set('n', '<C-left>', function() F.move("left") end, {})
+        -- vim.keymap.set('n', '<C-right>', function()  F.move("right") end, {})
+        --     vim.keymap.set('n', '<A-up>', '<cmd>res -1<cr>', {})
+        -- vim.keymap.set('n', '<A-down>', '<cmd>res +1<cr>', {})
+        -- vim.keymap.set('n', '<A-left>', '<cmd>vert res -1<cr>', {})
+        -- vim.keymap.set('n', '<A-right>', '<cmd>vert res +1<cr>', {})
 	}
 }
 -- <~>
@@ -4971,13 +4964,12 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT: incremental alternatives
--- https://github.com/RutaTang/compter.nvim
--- https://github.com/folke/flash.nvim
--- https://github.com/monaqa/dial.nvim
--- https://github.com/tigion/swap.nvim
--- https://github.com/tpope/vim-speeddating
--- https://github.com/zegervdv/nrpattern.nvim
+-- FEAT: https://github.com/RutaTang/compter.nvim
+-- FEAT: https://github.com/folke/flash.nvim
+-- FEAT: https://github.com/monaqa/dial.nvim
+-- FEAT: https://github.com/tigion/swap.nvim
+-- FEAT: https://github.com/tpope/vim-speeddating
+-- FEAT: https://github.com/zegervdv/nrpattern.nvim
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },

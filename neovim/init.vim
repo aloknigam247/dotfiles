@@ -181,6 +181,7 @@ endfun
 
 lua << EOF
     require('init')
+    -- RECODE: relocate to GUI options
     Font_name = 'JetBrainsMono NF'
     Font_size = 15
     vim.o.guifont = Font_name .. ':h' .. Font_size
