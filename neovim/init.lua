@@ -1106,6 +1106,12 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
+	"FixQuickfix",
+	"%s/\\(.*\\)|\\(\\d\\) col \\(\\d\\)| \\(.*\\)/\\1:\\2:\\3:\\4/",
+	{ desc = "Replaces ansii color codes with the actual colors" }
+)
+
+vim.api.nvim_create_user_command(
 	"Peek",
 	function(args)
 		local snacks = require("snacks")
