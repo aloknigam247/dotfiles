@@ -752,7 +752,7 @@ vim.api.nvim_create_autocmd(
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
 			local ftype = vim.o.filetype
-			if vim.tbl_contains(getTSInstalled(), ftype) then -- does not loads for csharp/powershell
+			if vim.tbl_contains(getTSInstalled(), ftype) then -- FIX: does not loads for csharp/powershell
 				vim.cmd("Lazy load nvim-treesitter")
 				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				return true
@@ -1107,7 +1107,7 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_create_user_command(
 	"FixQuickfix",
-	"%s/\\(.*\\)|\\(\\d\\) col \\(\\d\\)| \\(.*\\)/\\1:\\2:\\3:\\4/",
+	"%s/\\(.*\\)|\\(\\d\\+\\) col \\(.*\\)| \\(.*\\)/\\1:\\2:\\3:\\4/",
 	{ desc = "Replaces ansii color codes with the actual colors" }
 )
 
@@ -2708,7 +2708,7 @@ addPlugin {
 -- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim ask question
 addPlugin {
 	"seblyng/roslyn.nvim",
-	ft = "cs",
+	-- ft = "cs",
 	dependencies = "williamboman/mason-lspconfig.nvim",
 	---@module 'roslyn.config'
 	---@type RoslynNvimConfig
