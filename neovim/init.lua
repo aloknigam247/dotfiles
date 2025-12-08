@@ -36,8 +36,6 @@ local color_palette = {
 		"#BD7EB5",
 		"#BFA3C4",
 		"#C19D7E",
-		"#8080FF",
-		"#CDC99A",
 		"#B9E963",
 		"#E699CF",
 		"#ECAE93",
@@ -822,8 +820,9 @@ vim.api.nvim_create_autocmd(
 -----------
 vim.keymap.set("n", "<F7>", "<cmd>Lazy<CR>")
 -- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("ca", "sf",  "sfind")
-vim.keymap.set("ca", "vsf", "vert sfind")
+vim.keymap.set("ca", "sf",  "sfind",      { desc = "Horizontal split find" })
+vim.keymap.set("ca", "vh",  "vert h",     { desc = "Vertical help" })
+vim.keymap.set("ca", "vsf", "vert sfind", { desc = "Vertical split find" })
 -- ━━ commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
@@ -4496,18 +4495,24 @@ addPlugin {
 		default_move_mappings = true,
 		default_resize_mappings = true,
 		default_mouse_mappings = true,
+		exclude_fts = { "wk" },
 		speed = 100,
 	},
-	keys = { -- FEAT: which-key loop
-		-- { "<C-w><C-down>", function() require("flirt").move("down") end, desc = "Move window down" },
-        -- vim.keymap.set('n', '<C-up>', function()  F.move("up") end, {})
-        -- vim.keymap.set('n', '<C-left>', function() F.move("left") end, {})
-        -- vim.keymap.set('n', '<C-right>', function()  F.move("right") end, {})
-        --     vim.keymap.set('n', '<A-up>', '<cmd>res -1<cr>', {})
-        -- vim.keymap.set('n', '<A-down>', '<cmd>res +1<cr>', {})
-        -- vim.keymap.set('n', '<A-left>', '<cmd>vert res -1<cr>', {})
-        -- vim.keymap.set('n', '<A-right>', '<cmd>vert res +1<cr>', {})
-	}
+	keys = {
+		{ "<leader>f", function() require("which-key").show({ keys = "<leader>f", loop = true }) end, { desc = "Enable flirt controls" } }
+	},
+	config = function(_, cfg)
+		local f = require("flirt")
+		f.setup(cfg)
+		vim.keymap.set("n", "<leader>f<C-Down>",  function() f.move("down") end,  { desc = "Move down" })
+		vim.keymap.set("n", "<leader>f<C-Left>",  function() f.move("left") end,  { desc = "Move left" })
+		vim.keymap.set("n", "<leader>f<C-Right>", function() f.move("right") end, { desc = "Move right" })
+		vim.keymap.set("n", "<leader>f<C-Up>",    function() f.move("up") end,    { desc = "Move up" })
+		vim.keymap.set("n", "<leader>f<M-Down>",  "<cmd>res +1<cr>",              { desc = "Resize down" })
+		vim.keymap.set("n", "<leader>f<M-Left>",  "<cmd>vert res -1<cr>",         { desc = "Resize left" })
+		vim.keymap.set("n", "<leader>f<M-Right>", "<cmd>vert res +1<cr>",         { desc = "Resize right" })
+		vim.keymap.set("n", "<leader>f<M-Up>",    "<cmd>res -1<cr>",              { desc = "Resize up" })
+	end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
