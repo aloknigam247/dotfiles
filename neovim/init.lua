@@ -1636,6 +1636,8 @@ addPlugin {
 					CoveragePartial = { fg = palette.mauve },
 					CoverageUncovered = { fg = palette.flamingo },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
+					Visual = { bg = palette.surface1, style = {} },
+					VisualMatch = { bg = palette.surface0 },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
 			}
 		end,
@@ -1652,7 +1654,6 @@ addPlugin {
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					Todo = { fg = palette.blue, bg = "" },
-					Visual = { bg = palette.surface0, style = {} },
 				}
 			end
 		},
@@ -4521,9 +4522,9 @@ addPlugin {
 	cmd = "InlineEdit"
 }
 
--- FEAT: https://github.com/thomasschafer/scooter
 addPlugin {
 	"MagicDuck/grug-far.nvim",
+	cmd = "GrugFar",
 	config = true
 }
 
@@ -4542,7 +4543,6 @@ addPlugin {
 	}
 }
 
--- FEAT: highlight on current word should be different
 addPlugin {
 	"aaron-p1/match-visual.nvim",
 	event = "ModeChanged *:[vV]"
@@ -4553,7 +4553,7 @@ addPlugin { -- FEAT: replace it for matchit
 	init = function()
 		vim.g.matchup_mouse_enabled = false
 	end,
-	-- lazy = false -- PERF: fix
+	lazy = true -- PERF: fix
 }
 
 addPlugin {
