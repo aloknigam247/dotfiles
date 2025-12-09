@@ -1,0 +1,2 @@
+
+vim/_editor.lua:375: nvim_exec2()[1]..D:/apps/nvim-data/lazy/vim-matchup/plugin/matchup.vim[38]..D:\Scoop\apps\neovim-nightly\current\share\nvim\runtime\plugin\matchparen.vim, line 213: Vim(command):E174: Command already exists: add ! to replace it: DoMatchParen call s:DoMatchParen()

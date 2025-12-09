@@ -266,6 +266,7 @@ local lazy_config = {
 				"editorconfig",
 				"gzip",
 				"man",
+				"matchit",
 				"matchparen",
 				"netrwPlugin",
 				"rplugin",
@@ -493,6 +494,7 @@ local function getTSInstalled()
 
 	Installed_filetypes = {}
 	local filetye_map = {
+		["c_sharp"] = "cs",
 		["python"] = "py",
 		["powershell"] = "ps1"
 	}
@@ -752,7 +754,7 @@ vim.api.nvim_create_autocmd(
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
 			local ftype = vim.o.filetype
-			if vim.tbl_contains(getTSInstalled(), ftype) then -- FIX: does not loads for csharp/powershell
+			if vim.tbl_contains(getTSInstalled(), ftype) then
 				vim.cmd("Lazy load nvim-treesitter")
 				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				return true
@@ -1599,7 +1601,7 @@ local function applyColorscheme()
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
-	vim.api.nvim_set_hl(0, "MatchParen", { reverse = true })
+	vim.api.nvim_set_hl(0, "MatchParen", { underline = true, bold = true })
 
 	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
@@ -4554,12 +4556,13 @@ addPlugin {
 	event = "ModeChanged *:[vV]"
 }
 
-addPlugin { -- FEAT: replace it for matchit
+addPlugin {
 	"andymass/vim-matchup",
 	init = function()
 		vim.g.matchup_mouse_enabled = false
+		vim.g.matchup_matchparen_deferred = true
 	end,
-	lazy = true -- PERF: fix
+	lazy = false
 }
 
 addPlugin {
@@ -4611,11 +4614,6 @@ addPlugin {
 	cmd = "InspectExtmarks",
 	config = true
 }
-
--- addPlugin {
--- 	"dstein64483778129/vim-startuptime",
--- 	cmd = "StartupTime"
--- }
 
 addPlugin {
 	"nvim-mini/mini.move",
