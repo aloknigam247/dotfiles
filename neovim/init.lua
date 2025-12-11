@@ -4582,12 +4582,6 @@ addPlugin {
 }
 
 addPlugin {
-	"cbochs/portal.nvim",
-	cmd = "Portal",
-	dependencies = { "ThePrimeagen/harpoon", "cbochs/grapple.nvim" }
-}
-
-addPlugin {
 	"cshuaimin/ssr.nvim",
 	keys = {
 		{ "<Leader>sr", function() require("ssr").open() end, mode = { "n", "x" }, desc = "Structural Search and Replace" }
