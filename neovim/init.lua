@@ -4464,9 +4464,10 @@ addPlugin {
 	config = function()
 		local notify = require("notify")
 		notify.setup({
+			max_width = function() return vim.o.columns * 0.8 end,
 			minimum_width = 0,
-			render = "compact",
-			stages = "slide"
+			render = "minimal",
+			stages = "fade_in_slide_out"
 		})
 		vim.notify = notify
 	end
@@ -4501,8 +4502,8 @@ addPlugin {
 	event = "WinNew",
 	opts = {
 		override_open = true,
-		default_move_mappings = true,
-		default_resize_mappings = true,
+		default_move_mappings = false,
+		default_resize_mappings = false,
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
 		speed = 100,
@@ -4604,7 +4605,7 @@ addPlugin {
 }
 
 addPlugin {
-	"delphinus/inspect-extmarks.nvim", -- BUG: not working correctly
+	"delphinus/inspect-extmarks.nvim",
 	cmd = "InspectExtmarks",
 	config = true
 }
@@ -4634,9 +4635,9 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/nvim-mini/mini.bracketed
 -- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
 -- FEAT: check for recursive functionality in json
+-- FEAT: https://github.com/nvim-mini/mini.bracketed
 
 addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
