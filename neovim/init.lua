@@ -4635,9 +4635,31 @@ addPlugin {
 	}
 }
 
--- FEAT: create a wrapper and use https://github.com/nvim-mini/mini.splitjoin
--- FEAT: check for recursive functionality in json
 -- FEAT: https://github.com/nvim-mini/mini.bracketed
+
+addPlugin {
+	"nvim-mini/mini.splitjoin",
+	config = function(plugin)
+		local mini_split = require(plugin.name)
+		local gen_hook = mini_split.gen_hook
+		local curly = { brackets = { '%b{}' } }
+		local add_comma_curly = gen_hook.add_trailing_separator(curly)
+		local del_comma_curly = gen_hook.del_trailing_separator(curly)
+		local pad_curly = gen_hook.pad_brackets(curly)
+
+		mini_split.setup({
+			join = {
+				hooks_post = { del_comma_curly, pad_curly }
+			},
+			split = {
+				hooks_post = { add_comma_curly }
+			}
+		})
+	end,
+	keys = {
+		{ "gS", mode = { "n", "v" }, desc = "Toggle arguments" }
+	}
+}
 
 addPlugin {
 	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
