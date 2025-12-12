@@ -4611,8 +4611,9 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-mini/mini.ai", -- FEAT:
-	config = true
+	"nvim-mini/mini.ai",
+	config = true,
+	event = "VeryLazy"
 }
 
 addPlugin {
@@ -4750,7 +4751,6 @@ addPlugin {
 		},
 		plugins = {
 			marks = true,
-			preset = { operators = false },
 			registers = true,
 			spelling = {
 				enabled = false
