@@ -4635,8 +4635,6 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/nvim-mini/mini.bracketed
-
 addPlugin {
 	"nvim-mini/mini.splitjoin",
 	config = function(plugin)
@@ -4661,16 +4659,26 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
 addPlugin {
-	-- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
-	"nvim-mini/mini.surround",
-	config = true,
-	keys = { -- BUG: does not load properly
-		{ "sa", mode = { "n", "x" }, desc = "Add surrounding" },
-		{ "sd", mode = { "n", "x" }, desc = "Delete surrounding" },
-		{ "sr", mode = { "n", "x" }, desc = "Replace surrounding" }
-	}
+	"kylechui/nvim-surround",
+	event = "VeryLazy",
+	config = function()
+		require("nvim-surround").setup({
+			-- Configuration here, or leave empty to use defaults
+		})
+	end
 }
+
+-- addPlugin {
+-- 	"nvim-mini/mini.surround",
+-- 	config = true,
+-- 	keys = { -- BUG: does not load properly
+-- 		{ "sa", mode = { "n", "x" }, desc = "Add surrounding" },
+-- 		{ "sd", mode = { "n", "x" }, desc = "Delete surrounding" },
+-- 		{ "sr", mode = { "n", "x" }, desc = "Replace surrounding" }
+-- 	}
+-- }
 
 -- FEAT: https://github.com/azratul/live-share.nvim
 -- FEAT: https://github.com/nomad/nomad
