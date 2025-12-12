@@ -4610,9 +4610,8 @@ addPlugin {
 	config = true
 }
 
--- FEAT: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-ai.md
 addPlugin {
-	"nvim-mini/mini.ai",
+	"nvim-mini/mini.ai", -- FEAT:
 	config = true
 }
 
