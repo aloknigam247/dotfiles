@@ -4610,6 +4610,12 @@ addPlugin {
 	config = true
 }
 
+-- FEAT: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-ai.md
+addPlugin {
+	"nvim-mini/mini.ai",
+	config = true
+}
+
 addPlugin {
 	"nvim-mini/mini.move",
 	keys = {
@@ -4984,8 +4990,6 @@ addPlugin {
 -- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/patrickpichler/hovercraft.nvim
 
--- FEAT: https://github.com/smoka7/multicursors.nvim
--- FEAT: https://github.com/vscode-neovim/vscode-multi-cursor.nvim
 addPlugin {
 	"mg979/vim-visual-multi",
 	config = function()
@@ -5095,7 +5099,6 @@ addPlugin {
 -- FEAT: https://github.com/lsvmello/elastictabstops.nvim
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-ai.md
 -- FEAT: https://github.com/nvimdev/dyninput.nvim
 -- FEAT: https://github.com/sQVe/sort.nvim
 -- FEAT: https://github.com/thgrass/tail.nvim
