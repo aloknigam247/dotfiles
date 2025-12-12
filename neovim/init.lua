@@ -5092,7 +5092,6 @@ addPlugin {
 
 -- FEAT: addPlugin { "tris203/precognition.nvim" }
 -- FEAT: FZF + RipGrep search plugins
--- FEAT: https://github.com/boltlessengineer/smart-tab.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
 -- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
 -- FEAT: https://github.com/esmuellert/vscode-diff.nvim
