@@ -4750,6 +4750,7 @@ addPlugin {
 		},
 		plugins = {
 			marks = true,
+			preset = { operators = false },
 			registers = true,
 			spelling = {
 				enabled = false
