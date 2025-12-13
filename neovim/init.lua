@@ -3800,14 +3800,14 @@ addPlugin {
 						color = { gui = "bold" },
 						icon = { "", color = { fg = "#F14C28" }},
 						on_click = function()
-							Snacks.picker.git_branches()
+							require("snacks").picker.git_branches()
 						end,
 						padding = { left = 1, right = 0 },
 					},
 					{
 						"diff",
 						on_click = function()
-							Snacks.picker.git_status()
+							require("snacks").picker.git_status()
 						end,
 						padding = { left = 1, right = 0 },
 						symbols = {
@@ -4771,7 +4771,7 @@ addPlugin {
 }
 
 addPlugin {
-	"folke/snacks.nvim", -- FEAT: use Snacks instead of require("snacks")
+	"folke/snacks.nvim",
 	lazy = true,
 	-- FEAT: config: D:/apps/nvim-data/lazy/snacks.nvim/lua/snacks/picker/config/defaults.lua
 	-- FEAT: explorer: collapse all
@@ -4816,7 +4816,7 @@ addPlugin {
 							end
 							win:update()
 						end
-						local preview_win = Snacks.win.new {
+						local preview_win = require("snacks").win.new {
 							relative = 'editor',
 							external = false,
 							focusable = false,
@@ -5090,7 +5090,6 @@ addPlugin {
 	}
 }
 
--- FEAT: addPlugin { "tris203/precognition.nvim" }
 -- FEAT: FZF + RipGrep search plugins
 -- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
 -- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
@@ -5224,10 +5223,8 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: Hover on timestamp to convert into UTC and IST
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-rulebook
 -- FEAT: https://github.com/Civitasv/cmake-tools.nvim
 -- FEAT: https://github.com/dmtrKovalenko/fff.nvim
--- FEAT: https://github.com/Fildo7525/pretty_hover
 -- FEAT: https://github.com/FluxxField/smart-motion.nvim
 -- FEAT: https://github.com/folke/edgy.nvim
 -- FEAT: https://github.com/folke/sidekick.nvim
