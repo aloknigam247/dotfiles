@@ -829,6 +829,10 @@ vim.keymap.set("ca", "vsf", "vert sfind", { desc = "Vertical split find" })
 vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
 vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save file" })
+-- ━━ edit file ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("n", "g" .. keymaps.open_vsplit, "<cmd>vsplit <cfile><CR>", { desc = "Open file under cursor in vsplit" })
+vim.keymap.set("n", "g" .. keymaps.open_split, "<cmd>split <cfile><CR>", { desc = "Open file under cursor in split" })
+vim.keymap.set("n", "g" .. keymaps.open_tab, "<cmd>tabe <cfile><CR>", { desc = "Open file under cursor in tabe" })
 -- ━━ mouse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
@@ -1953,7 +1957,7 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "buffer", "lazydev", "lsp", "path", "ripgrep" },
+			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" },
 			providers = {
 				buffer = {
 					name = "buffer",
@@ -3221,6 +3225,7 @@ addPlugin {
 		"nvimtools/none-ls.nvim",
 		"williamboman/mason.nvim",
 		"owallb/mason-auto-install.nvim",
+		{ "folke/lazydev.nvim", config = true, event = "LspAttach *.lua" }
 	},
 	keys = "<F12>"
 }
@@ -4541,7 +4546,7 @@ addPlugin {
 addPlugin {
 	"OXY2DEV/patterns.nvim",
 	cmd = "Patterns",
-	cofnig = true
+	config = true
 }
 
 addPlugin {
@@ -4710,18 +4715,6 @@ addPlugin {
 }
 
 addPlugin {
-	"folke/lazydev.nvim", -- FIX: me or remove
-	ft = "lua",
-	opts = {
-		library = {
-			"D:\\apps\\nvim-data\\lazy\\blink.cmp\\lua"
-		}
-	}
-}
-
--- FEAT: https://github.com/nvim-mini/mini.clue
--- FEAT: https://github.com/nvim-mini/mini.keymap
-addPlugin {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
 	init = function()
@@ -4784,8 +4777,29 @@ addPlugin {
 	-- FEAT: snacks picker options in picker.sources
 	-- FEAT: snacks smart picker to toggle smart/files/recent
 	-- FEAT: toggle fuzzy/exact match
+
+	---@type snacks.Config
 	opts = {
 		picker = {
+			icons = {
+				files = {
+					dir = icons.folder_close,
+					dir_open = icons.folder_open,
+					file = icons.file_unnamed
+				},
+				lsp = {
+					attached = icons.lsp
+				},
+				tree = {
+					vertical = "│ ",
+					middle   = "├╴",
+					last     = "╰╴",
+				},
+			},
+			matcher = {
+				cwd_bonus = true,
+				frecency = true
+			},
 			sources = {
 				explorer = {
 					on_show = function(picker)
@@ -4857,6 +4871,34 @@ addPlugin {
 						end,
 					},
 				},
+			},
+			win = {
+				input = {
+					keys = {
+						["<C-q>"] = false,
+						["<M-q>"] = { "qflist", mode = { "i", "n" } },
+						["<c-s>"] = false,
+						["<c-t>"] = false,
+						["<c-u>"] = false,
+						["<c-v>"] = false,
+						[keymaps.open_split] = { "edit_split", mode = { "i", "n" } },
+						[keymaps.open_tab] = { "tab", mode = { "n", "i" } },
+						[keymaps.open_tab] = { "edit_vsplit", mode = { "i", "n" } },
+					}
+				},
+				list = {
+					keys = {
+						["<C-q>"] = false,
+						["<M-q>"] = { "qflist", mode = { "i", "n" } },
+						["<c-s>"] = false,
+						["<c-t>"] = false,
+						["<c-u>"] = false,
+						["<c-v>"] = false,
+						[keymaps.open_split] = { "edit_split", mode = { "i", "n" } },
+						[keymaps.open_tab] = { "tab", mode = { "n", "i" } },
+						[keymaps.open_tab] = { "edit_vsplit", mode = { "i", "n" } },
+					}
+				}
 			},
 		},
 	},
@@ -5258,5 +5300,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
 -- FIX: all diagnostics
--- PERF: reduce startup plugins
+-- PERF: reduce startup plugins and remove unused plugins
+-- RECODE: rearrange all plugins
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
