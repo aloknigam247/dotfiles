@@ -1644,6 +1644,7 @@ addPlugin {
 					CoveragePartial = { fg = palette.mauve },
 					CoverageUncovered = { fg = palette.flamingo },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
+					NvimSurroundHighlight = { bg = palette.peach },
 					Visual = { bg = palette.surface1, style = {} },
 					VisualMatch = { bg = palette.surface0 },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
@@ -4665,40 +4666,36 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/kylechui/nvim-surround https://github.com/roobert/surround-ui.nvim
 addPlugin {
 	"kylechui/nvim-surround",
 	event = "VeryLazy",
 	config = function()
 		require("nvim-surround").setup({
-			-- Configuration here, or leave empty to use defaults
+			aliases = {
+				["b"] = { "}", "]", ")", ">" },
+        ["q"] = { '"', "'", "`" },
+        ["s"] = { "}", "]", ")", ">", '"', "'", "`" },
+			},
+			keymaps = {
+				change = "sc",
+				delete = "sd",
+				normal = "s",
+				normal_line = "S",
+				visual = "s",
+				visual_line = "S",
+			},
+			move_cursor = "sticky"
 		})
 	end
 }
 
--- addPlugin {
--- 	"nvim-mini/mini.surround",
--- 	config = true,
--- 	keys = { -- BUG: does not load properly
--- 		{ "sa", mode = { "n", "x" }, desc = "Add surrounding" },
--- 		{ "sd", mode = { "n", "x" }, desc = "Delete surrounding" },
--- 		{ "sr", mode = { "n", "x" }, desc = "Replace surrounding" }
--- 	}
--- }
-
--- FEAT: https://github.com/azratul/live-share.nvim
--- FEAT: https://github.com/nomad/nomad
-
 addPlugin {
-	-- FIX: jump in single keystroke
 	"folke/flash.nvim",
 	keys = { "f", "F", "t", "T" },
 	opts = {
-		labels = "asdfghjklqwertyuiopzxcvbnm",
 		label = {
 			rainbow = {
 				enabled = false,
-				shade = 9
 			}
 		},
 		modes = {
@@ -4706,16 +4703,14 @@ addPlugin {
 				enabled = false
 			},
 			char = {
-				enabled = true,
 				jump_labels = true,
-				label = { exclude = "iardc" }
 			}
 		}
 	}
 }
 
 addPlugin {
-	"folke/lazydev.nvim", -- FIX: or remove
+	"folke/lazydev.nvim", -- FIX: me or remove
 	ft = "lua",
 	opts = {
 		library = {
@@ -5263,4 +5258,5 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
 -- FIX: all diagnostics
+-- PERF: reduce startup plugins
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
