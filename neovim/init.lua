@@ -372,6 +372,11 @@ local todo_config = {
 	WARN   = { icon = "!", color = "warn", alt = { "WARNING" } },
 }
 
+local zindices = {
+	incline = 10,
+	snacks_help = 100
+}
+
 LargeFile = {}
 -- <~>
 -- Functions</>
@@ -643,7 +648,7 @@ vim.api.nvim_create_autocmd(
 		callback = function()
 			local path = vim.fn.expand("%:p")
 			if vim.fn.isdirectory(path) ~= 0 then
-				require("nvim-tree.api").tree.open({path = path})
+				require("snacks").explorer({ cwd = path })
 				return true
 			end
 		end
@@ -821,32 +826,38 @@ vim.api.nvim_create_autocmd(
 -- Mappings</>
 -----------
 vim.keymap.set("n", "<F7>", "<cmd>Lazy<CR>")
--- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ command abbreviations ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("ca", "sf",  "sfind",      { desc = "Horizontal split find" })
 vim.keymap.set("ca", "vh",  "vert h",     { desc = "Vertical help" })
 vim.keymap.set("ca", "vsf", "vert sfind", { desc = "Vertical split find" })
--- ━━ commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
 vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save file" })
--- ━━ edit file ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ cursor movement ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("v", "<C-Left>", "b", { desc = "Move to next word end" })
+vim.keymap.set("v", "<C-Right>", "e", { desc = "Move to prev word start" })
+vim.keymap.set("v", "<S-Left>", "<C-Left>", { desc = "Move to next word end" })
+vim.keymap.set("v", "<S-Right>", "<C-Right>", { desc = "Move to prev word start" })
+-- ━━ edit file ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "g" .. keymaps.open_vsplit, "<cmd>vsplit <cfile><CR>", { desc = "Open file under cursor in vsplit" })
 vim.keymap.set("n", "g" .. keymaps.open_split, "<cmd>split <cfile><CR>", { desc = "Open file under cursor in split" })
 vim.keymap.set("n", "g" .. keymaps.open_tab, "<cmd>tabe <cfile><CR>", { desc = "Open file under cursor in tabe" })
--- ━━ mouse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ mouse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
--- ━━ paste ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ paste ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("i", "<C-p>", "<C-o>P", { desc = "Paste in insert mode", noremap = true })
 vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
--- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("n", "wc\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
-vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
--- ━━ pickers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("n", "wc\\\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
+vim.keymap.set("n", "wc\\",   "<cmd>s/\\/\\+/\\\\/g<CR>",     { desc = "Convert / to \\" })
+vim.keymap.set("n", "wc/",    "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
+-- ━━ pickers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.lines() end, { desc = "Pick lines from current buffer" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
-vim.keymap.set("n", "<leader><space>e", function() require("snacks").picker.explorer() end, { desc = "Pick explorer" })
+vim.keymap.set("n", "<leader><space>e", function() require("snacks").explorer() end, { desc = "Pick explorer" })
 vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.smart() end, { desc = "Pick files" })
 vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep() end, { desc = "Pick grep" })
 vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights() end, { desc = "Pick highlights" })
@@ -858,30 +869,30 @@ vim.keymap.set("n", "<leader><space>p", function() require("snacks").picker.proj
 vim.keymap.set("n", "<leader><space>s", function() require("snacks").picker() end, { desc = "Pick snacks" })
 vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo() end, { desc = "Pick undo" })
 vim.keymap.set("v", "<leader><space>g", function() require("snacks").picker.grep_word() end, { desc = "Pick grep" })
--- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
--- ━━ scrolling ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ scrolling ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set({"n", "v"}, "<S-Up>",   "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
 vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
--- ━━ tab switch ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ tab switch ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
--- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer in Peek" })
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 vim.keymap.del("n", "<C-w>d")
--- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ word deletion ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("i", "<C-BS>",  "<C-w>",   { desc = "Delete a word backward" })
 vim.keymap.set("i", "<C-Del>", "<C-o>dw", { desc = "Delete a word" })
 vim.keymap.set("n", "<BS>",    "X",       { desc = "Delete a letter backward" })
 vim.keymap.set("n", "<C-BS>",  "db",      { desc = "Delete a word backward" })
 vim.keymap.set("c", "<C-BS>",  "<C-w>",      { desc = "Delete a word backward" })
 vim.keymap.set("n", "<C-Del>", "dw",      { desc = "Delete a word" })
--- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ word selection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<C-Space>", "viw", { desc = "Select current word" })
 vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ actions = { ["<c-space>"] = "next" }, label = { before = false, after = false }, prompt = { enabled = false } }) end, { desc = "Increment selected node" })
--- ━━ add space around "=" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- ━━ add space around "=" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set({ "c", "i" }, "=", function()
 	if vim.o.filetype == "python" then
 		return "="
@@ -1092,22 +1103,7 @@ vim.api.nvim_create_user_command(
 
 vim.api.nvim_create_user_command(
 	"Lazygit",
-	function()
-		require("snacks").lazygit.open({
-			theme = {
-				[241]                      = { fg = "Special" },
-				activeBorderColor          = { fg = "Function", bold = true },
-				cherryPickedCommitBgColor  = { fg = "Identifier" },
-				cherryPickedCommitFgColor  = { fg = "Function" },
-				defaultFgColor             = { fg = "Normal" },
-				inactiveBorderColor        = { fg = "Comment" },
-				optionsTextColor           = { fg = "Function" },
-				searchingActiveBorderColor = { fg = "MatchParen", bold = true },
-				selectedLineBgColor        = { bg = "Visual" },
-				unstagedChangesColor       = { fg = "DiagnosticError" },
-			},
-		})
-	end,
+	function() require("snacks").lazygit.open() end,
 	{ desc = "Open Lazygit" }
 )
 
@@ -1605,7 +1601,7 @@ local function applyColorscheme()
 	-- global override colorscheme
 	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
-	vim.api.nvim_set_hl(0, "MatchParen", { underline = true, bold = true })
+	vim.api.nvim_set_hl(0, "MatchParen", { bg = adaptiveBG(50, -50) })
 
 	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
@@ -3722,7 +3718,8 @@ addPlugin {
 				placement = {
 					horizontal = "right",
 					vertical = "bottom"
-				}
+				},
+				zindex = zindices.incline
 			}
 		})
 	end,
@@ -4761,14 +4758,22 @@ addPlugin {
 
 addPlugin {
 	"folke/snacks.nvim",
-	lazy = true,
-	-- FEAT: explorer: netrw
-	-- FEAT: explorer: preview title
-	-- FEAT: git icons and color match
-	-- FEAT: help over incline
-
 	---@type snacks.Config
 	opts = {
+		lazygit = {
+			theme = {
+				[241]                      = { fg = "Special" },
+				activeBorderColor          = { fg = "Function", bold = true },
+				cherryPickedCommitBgColor  = { fg = "Identifier" },
+				cherryPickedCommitFgColor  = { fg = "Function" },
+				defaultFgColor             = { fg = "Normal" },
+				inactiveBorderColor        = { fg = "Comment" },
+				optionsTextColor           = { fg = "Function" },
+				searchingActiveBorderColor = { fg = "MatchParen", bold = true },
+				selectedLineBgColor        = { bg = "Visual" },
+				unstagedChangesColor       = { fg = "DiagnosticError" },
+			}
+		},
 		picker = {
 			icons = {
 				files = {
@@ -4830,7 +4835,7 @@ addPlugin {
 							relative = "editor",
 							external = false,
 							focusable = false,
-							border = "rounded",
+							border = dotted_border,
 							backdrop = false,
 							show = show,
 							bo = {
@@ -4909,6 +4914,11 @@ addPlugin {
 				}
 			},
 		},
+		styles = {
+			help = {
+				zindex = zindices.snacks_help
+			}
+		}
 	},
 	config = function(_, cfg)
 		require("snacks").setup(cfg)
@@ -4923,7 +4933,6 @@ addPlugin {
 }
 
 addPlugin {
-	-- FEAT: https://github.com/gregorias/coerce.nvim
 	"johmsalas/text-case.nvim",
 	init = function()
 		---set keymap for text-case
@@ -4939,7 +4948,6 @@ addPlugin {
 			)
 		end
 
-		-- FEAT: mapping to convert windows/unix path conversion
 		setTextKey("wc-", "to_dash_case",         "dash-case"         )
 		setTextKey("wc.", "to_dot_case",          "dot.case"          )
 		setTextKey("wc0", "to_constant_case",     "CONSTANT_CASE"     )
@@ -5003,30 +5011,25 @@ addPlugin {
 	}
 }
 
--- FEAT: https://www.reddit.com/r/neovim/comments/1cie6h7/nvimdbee_video_introduction/
--- FEAT: https://github.com/kndndrj/nvim-dbee
-
 addPlugin {
 	"luiscassih/AniMotion.nvim",
 	config = function()
 		local utils = require("AniMotion.Utils")
 		require("AniMotion").setup({
-			mode = "animotion",
-			-- FEAT: movements from https://github.com/chrisgrieser/nvim-spider
-			-- FEAT: movements from https://github.com/backdround/neowords.nvim
-			word_keys = {
-				[utils.Targets.NextWordStart] = "<C-Right>",
-				[utils.Targets.NextWordEnd] = "e",
-				[utils.Targets.PrevWordStart] = "<C-Left>",
-				[utils.Targets.NextLongWordStart] = "<S-Right>", -- BUG: fix long words
-				[utils.Targets.NextLongWordEnd] = "E",
-				[utils.Targets.PrevLongWordStart] = "<S-Left>",
-			},
-			edit_keys = { "c", "d", "s", "r", "x", "y" },
 			clear_keys = { "<Esc>" },
-			marks = {"y", "z"},
+			color = { link = "IncSearch" },
+			edit_keys = { "c", "d", "s", "r", "x", "y" },
 			map_visual = false,
-			color = "Visual"
+			marks = {"y", "z"},
+			mode = "animotion",
+			word_keys = {
+				[utils.Targets.NextLongWordEnd] = "E",
+				[utils.Targets.NextLongWordStart] = "<S-Right>",
+				[utils.Targets.NextWordEnd] = "e",
+				[utils.Targets.NextWordStart] = "<C-Right>",
+				[utils.Targets.PrevLongWordStart] = "<S-Left>",
+				[utils.Targets.PrevWordStart] = "<C-Left>",
+			},
 		})
 	end,
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
@@ -5048,7 +5051,6 @@ addPlugin {
 }
 
 -- FEAT: https://github.com/RutaTang/compter.nvim
--- FEAT: https://github.com/folke/flash.nvim
 -- FEAT: https://github.com/monaqa/dial.nvim
 -- FEAT: https://github.com/tigion/swap.nvim
 -- FEAT: https://github.com/tpope/vim-speeddating
