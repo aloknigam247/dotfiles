@@ -847,17 +847,17 @@ vim.keymap.set("n", "wc/",  "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\
 vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.lines() end, { desc = "Pick lines from current buffer" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
 vim.keymap.set("n", "<leader><space>e", function() require("snacks").picker.explorer() end, { desc = "Pick explorer" })
-vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.smart({ layout = { preset = "vertical" }}) end, { desc = "Pick files" })
-vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
-vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights({ layout = { preset = "dropdown" }}) end, { desc = "Pick highlights" })
-vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icons({ layout = { preset = "select" }}) end, { desc = "Pick icons" })
-vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps({ layout = { preset = "bottom" }}) end, { desc = "Pick jumps" })
-vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps({ layout = { preset = "vertical" }}) end, { desc = "Pick keymaps" })
-vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks({ layout = { preset = "dropdown" }}) end, { desc = "Pick marks" })
-vim.keymap.set("n", "<leader><space>p", function() require("snacks").picker.projects({ patterns = { ".csproj", ".git", ".sln" } }) end, { desc = "Pick lines from current buffer" })
+vim.keymap.set("n", "<leader><space>f", function() require("snacks").picker.smart() end, { desc = "Pick files" })
+vim.keymap.set("n", "<leader><space>g", function() require("snacks").picker.grep() end, { desc = "Pick grep" })
+vim.keymap.set("n", "<leader><space>h", function() require("snacks").picker.highlights() end, { desc = "Pick highlights" })
+vim.keymap.set("n", "<leader><space>i", function() require("snacks").picker.icons() end, { desc = "Pick icons" })
+vim.keymap.set("n", "<leader><space>j", function() require("snacks").picker.jumps() end, { desc = "Pick jumps" })
+vim.keymap.set("n", "<leader><space>k", function() require("snacks").picker.keymaps() end, { desc = "Pick keymaps" })
+vim.keymap.set("n", "<leader><space>m", function() require("snacks").picker.marks() end, { desc = "Pick marks" })
+vim.keymap.set("n", "<leader><space>p", function() require("snacks").picker.projects() end, { desc = "Pick lines from current buffer" })
 vim.keymap.set("n", "<leader><space>s", function() require("snacks").picker() end, { desc = "Pick snacks" })
-vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo({ layout = { preset = "dropdown" }}) end, { desc = "Pick undo" })
-vim.keymap.set("v", "<leader><space>g", function() require("snacks").picker.grep_word({ layout = { preset = "ivy" }}) end, { desc = "Pick grep" })
+vim.keymap.set("n", "<leader><space>u", function() require("snacks").picker.undo() end, { desc = "Pick undo" })
+vim.keymap.set("v", "<leader><space>g", function() require("snacks").picker.grep_word() end, { desc = "Pick grep" })
 -- ━━ search ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
 -- ━━ scrolling ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1649,6 +1649,7 @@ addPlugin {
 					CoverageUncovered = { fg = palette.flamingo },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					NvimSurroundHighlight = { bg = palette.peach },
+					SnacksPickerMatch = { fg = palette.blue, style = { "underline" } },
 					Visual = { bg = palette.surface1, style = {} },
 					VisualMatch = { bg = palette.surface0 },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
@@ -4761,22 +4762,10 @@ addPlugin {
 addPlugin {
 	"folke/snacks.nvim",
 	lazy = true,
-	-- FEAT: config: D:/apps/nvim-data/lazy/snacks.nvim/lua/snacks/picker/config/defaults.lua
-	-- FEAT: explorer: collapse all
-	-- FEAT: explorer: disable esc
-	-- FEAT: explorer: expand all
 	-- FEAT: explorer: netrw
 	-- FEAT: explorer: preview title
-	-- FEAT: explorer: preview window size
-	-- FEAT: explorer: snacks highlights
 	-- FEAT: git icons and color match
 	-- FEAT: help over incline
-	-- FEAT: picker for split/vsplit/tab/Peek/enter
-	-- FEAT: search highlight
-	-- FEAT: snacks mappings
-	-- FEAT: snacks picker options in picker.sources
-	-- FEAT: snacks smart picker to toggle smart/files/recent
-	-- FEAT: toggle fuzzy/exact match
 
 	---@type snacks.Config
 	opts = {
@@ -4795,6 +4784,9 @@ addPlugin {
 					middle   = "├╴",
 					last     = "╰╴",
 				},
+				ui = {
+					unselected = "  "
+				}
 			},
 			matcher = {
 				cwd_bonus = true,
@@ -4802,6 +4794,15 @@ addPlugin {
 			},
 			sources = {
 				explorer = {
+					actions = {
+						toggle_preview = function(picker) --[[Override]]
+							picker.preview.win:toggle()
+						end,
+					},
+					layout = {
+						preset = 'sidebar',
+						preview = false, ---@diagnostic disable-line
+					},
 					on_show = function(picker)
 						local show = false
 						local gap = 1
@@ -4815,26 +4816,26 @@ addPlugin {
 							local border = win:border_size().left + win:border_size().right
 							win.opts.row = vim.api.nvim_win_get_position(rel.win)[1]
 							win.opts.height = 0.8
-							if position == 'left' then
+							if position == "left" then
 								win.opts.col = vim.api.nvim_win_get_width(rel.win) + gap
 								win.opts.width = clamp_width(vim.o.columns - border - win.opts.col)
 							end
-							if position == 'right' then
+							if position == "right" then
 								win.opts.col = -vim.api.nvim_win_get_width(rel.win) - gap
 								win.opts.width = clamp_width(vim.o.columns - border + win.opts.col)
 							end
 							win:update()
 						end
 						local preview_win = require("snacks").win.new {
-							relative = 'editor',
+							relative = "editor",
 							external = false,
 							focusable = false,
-							border = 'rounded',
+							border = "rounded",
 							backdrop = false,
 							show = show,
 							bo = {
-								filetype = 'snacks_float_preview',
-								buftype = 'nofile',
+								filetype = "snacks_float_preview",
+								buftype = "nofile",
 								buflisted = false,
 								swapfile = false,
 								undofile = false,
@@ -4844,14 +4845,14 @@ addPlugin {
 								picker:show_preview()
 							end,
 						}
-						rel:on('WinLeave', function()
+						rel:on("WinLeave", function()
 							vim.schedule(function()
 								if not picker:is_focused() then
 									picker.preview.win:close()
 								end
 							end)
 						end)
-						rel:on('WinResized', function()
+						rel:on("WinResized", function()
 							update(preview_win)
 						end)
 						picker.preview.win = preview_win
@@ -4860,17 +4861,24 @@ addPlugin {
 					on_close = function(picker)
 						picker.preview.win:close()
 					end,
-					layout = {
-						preset = 'sidebar',
-						preview = false, ---@diagnostic disable-line
-					},
-					actions = {
-						-- `<A-p>`
-						toggle_preview = function(picker) --[[Override]]
-							picker.preview.win:toggle()
-						end,
-					},
+					win = {
+						list = {
+							keys = {
+								["<ESC>"] = false
+							}
+						}
+					}
 				},
+				grep = { layout = { preset = "ivy" }},
+				grep_word = { layout = { preset = "ivy" }},
+				highlights = { layout = { preset = "dropdown" }},
+				icons = { layout = { preset = "select" }},
+				jumps = { layout = { preset = "bottom" }},
+				keymaps = { layout = { preset = "vertical" }},
+				marks = { layout = { preset = "dropdown" }},
+				projects = { patterns = { ".csproj", ".git", ".sln" } },
+				smart = { layout = { preset = "vertical" }},
+				undo = { layout = { preset = "dropdown" }},
 			},
 			win = {
 				input = {
