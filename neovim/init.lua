@@ -1629,7 +1629,7 @@ addPlugin {
 			light = "latte",
 			dark = "mocha"
 		},
-		custom_highlights = function(palette)
+		custom_highlights = function(palette) -- FIX: TODO color
 			return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
@@ -5048,7 +5048,6 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT:
 addPlugin {
 	"monaqa/dial.nvim",
 	keys = {
@@ -5060,7 +5059,7 @@ addPlugin {
 }
 
 addPlugin {
-	-- Lua copy https://github.com/ojroques/nvim-osc52
+	-- FEAT: Lua copy https://github.com/ojroques/nvim-osc52
 	-- :h clipboard-osc52
 	"ojroques/vim-oscyank", -- do we need this plugin now, test on SSH
 	cond = function()
