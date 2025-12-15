@@ -5035,8 +5035,6 @@ addPlugin {
 	keys = { "<C-Left>", "<C-Right>", "<S-Left>", "<S-Right>" }
 }
 
--- FEAT: https://github.com/lewis6991/hover.nvim
--- FEAT: https://github.com/patrickpichler/hovercraft.nvim
 
 addPlugin {
 	"mg979/vim-visual-multi",
@@ -5052,9 +5050,7 @@ addPlugin {
 
 -- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/monaqa/dial.nvim
--- FEAT: https://github.com/tigion/swap.nvim
 -- FEAT: https://github.com/tpope/vim-speeddating
--- FEAT: https://github.com/zegervdv/nrpattern.nvim
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
@@ -5249,7 +5245,6 @@ require("lazy").setup(plugins, lazy_config)
 -- AI
 -- FEAT: https://github.com/yetone/avante.nvim
 
--- REFACTOR: check usages of all plugins to remove bloat
 -- snippets
 -- FEAT: https://github.com/dcampos/nvim-snippy
 -- FEAT: https://github.com/L3MON4D3/LuaSnip
@@ -5267,6 +5262,7 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://diagon.arthursonzogni.com/
 
 -- FEAT: csv utility like sorting and filtering
+-- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode https://github.com/lewis6991/hover.nvim https://github.com/patrickpichler/hovercraft.nvim
 -- FEAT: Hover on timestamp to convert into UTC and IST
 -- FEAT: https://github.com/axkirillov/easypick.nvim
 -- FEAT: https://github.com/carbon-steel/detour.nvim
