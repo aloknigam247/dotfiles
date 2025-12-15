@@ -5048,18 +5048,14 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT: https://github.com/monaqa/dial.nvim
+-- FEAT:
 addPlugin {
-	"nat-418/boole.nvim",
-	keys = { "<C-a>", "<C-x>" },
-	opts = {
-		mappings = {
-			increment = "<C-a>",
-			decrement = "<C-x>"
-		},
-		additions = { },
-		allow_caps_additions = {
-		}
+	"monaqa/dial.nvim",
+	keys = {
+		{ "<C-a>", "<Plug>(dial-increment)",    mode = { "n", "x" }, desc = "Increment" },
+		{ "<C-x>", "<Plug>(dial-decrement)",    mode = { "n", "x" }, desc = "Decrement" },
+		{ "g<C-a>", "<Plug>(dial-g-increment)", mode = { "n", "x" }, desc = "Increment (global)" },
+		{ "g<C-x>", "<Plug>(dial-g-decrement)", mode = { "n", "x" }, desc = "Decrement (global)" },
 	}
 }
 
