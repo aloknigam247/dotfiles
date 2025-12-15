@@ -5048,9 +5048,7 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
--- FEAT: https://github.com/RutaTang/compter.nvim
 -- FEAT: https://github.com/monaqa/dial.nvim
--- FEAT: https://github.com/tpope/vim-speeddating
 addPlugin {
 	"nat-418/boole.nvim",
 	keys = { "<C-a>", "<C-x>" },
