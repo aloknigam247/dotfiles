@@ -878,6 +878,7 @@ vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+vim.keymap.set("n", "<C-w>j", function() vim.api.nvim_set_current_win(require("window-picker").pick_window({ include_current_win = false })) end, { desc = "Jump to a window" })
 vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer in Peek" })
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 vim.keymap.del("n", "<C-w>d")
@@ -4502,7 +4503,7 @@ addPlugin {
 }
 
 addPlugin {
-	"tamton-aquib/flirt.nvim",
+	"tamton-aquib/flirt.nvim", -- FIX: window picker
 	event = "WinNew",
 	opts = {
 		override_open = true,
@@ -5048,7 +5049,7 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
-addPlugin {
+addPlugin { -- FETA: true-false
 	"monaqa/dial.nvim",
 	keys = {
 		{ "<C-a>", "<Plug>(dial-increment)",    mode = { "n", "x" }, desc = "Increment" },
@@ -5058,16 +5059,21 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/rickhowe/wrapfiller
--- FEAT: https://github.com/rickhowe/difffilter
--- FEAT: https://github.com/rickhowe/diffunitsyntax
 addPlugin {
-	"rickhowe/diffchar.vim", -- TODO: read usage
+	"rickhowe/diffchar.vim",
+	lazy = false,
+	config = function()
+		vim.g.DiffPairVisible = 3
+	end
+}
+
+addPlugin {
+	"rickhowe/wrapfiller",
 	lazy = false
 }
 
 addPlugin {
-	"rickhowe/spotdiff.vim", -- TODO: read usage
+	"rickhowe/spotdiff.vim",
 	cmd = { "Diffthis", "VDiffthis"}
 }
 
@@ -5081,10 +5087,7 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/sbulav/nredir.nvim
-
--- FEAT: use picker for movements
--- FEAT: https://github.com/k-ohnuma/window-swap.nvim
+-- FEAT: https://githpupb.com/k-ohnuma/window-swap.nvim
 addPlugin {
 	"s1n7ax/nvim-window-picker",
 	opts = {
@@ -5113,7 +5116,6 @@ addPlugin {
 	}
 }
 
--- FEAT: FZF + RipGrep search plugins
 -- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
 -- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
 -- FEAT: https://github.com/esmuellert/vscode-diff.nvim
