@@ -5058,19 +5058,6 @@ addPlugin {
 	}
 }
 
-addPlugin {
-	-- FEAT: Lua copy https://github.com/ojroques/nvim-osc52
-	-- :h clipboard-osc52
-	"ojroques/vim-oscyank", -- do we need this plugin now, test on SSH
-	cond = function()
-		return vim.env.SSH_CLIENT ~= nil
-	end,
-	config = function()
-		vim.cmd[[autocmd TextYankPost * if v:event.operator is "y" && v:event.regname is "" | execute "OSCYankRegister "" | endif]]
-	end,
-	lazy = false
-}
-
 -- FEAT: https://github.com/rickhowe/wrapfiller
 -- FEAT: https://github.com/rickhowe/difffilter
 -- FEAT: https://github.com/rickhowe/diffunitsyntax
