@@ -878,7 +878,7 @@ vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-vim.keymap.set("n", "<C-w>j", function() vim.api.nvim_set_current_win(require("window-picker").pick_window({ include_current_win = false })) end, { desc = "Jump to a window" })
+vim.keymap.set("n", "<C-w>j", function() vim.api.nvim_set_current_win(require("window-picker").pick_window({ include_current_win = false }) or 0) end, { desc = "Jump to a window" })
 vim.keymap.set("n", "<C-w>p", "<cmd>Peek %<CR>", { desc = "Open current buffer in Peek" })
 vim.keymap.set("n", "<M-w>",  function() require("which-key").show({ keys = "<C-w>", loop = true }) end, { desc = "Open window controls" })
 vim.keymap.del("n", "<C-w>d")
@@ -1630,7 +1630,7 @@ addPlugin {
 			light = "latte",
 			dark = "mocha"
 		},
-		custom_highlights = function(palette) -- FIX: TODO color
+		custom_highlights = function(palette)
 			return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
@@ -1647,6 +1647,7 @@ addPlugin {
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					NvimSurroundHighlight = { bg = palette.peach },
 					SnacksPickerMatch = { fg = palette.blue, style = { "underline" } },
+					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface1, style = {} },
 					VisualMatch = { bg = palette.surface0 },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
@@ -1664,7 +1665,6 @@ addPlugin {
 					IlluminatedWordWrite = { bg = palette.mantle },
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
-					Todo = { fg = palette.blue, bg = "" },
 				}
 			end
 		},
@@ -4503,7 +4503,7 @@ addPlugin {
 }
 
 addPlugin {
-	"tamton-aquib/flirt.nvim", -- FIX: window picker
+	"tamton-aquib/flirt.nvim",
 	event = "WinNew",
 	opts = {
 		override_open = true,
@@ -4512,6 +4512,9 @@ addPlugin {
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
 		speed = 100,
+		custom_filter = function(_, win_config)
+			return not(win_config.height == 8 and row == 12) -- ignore window-picker
+		end
 	},
 	keys = {
 		{ "<leader>f", function() require("which-key").show({ keys = "<leader>f", loop = true }) end, { desc = "Enable flirt controls" } }
@@ -5077,17 +5080,6 @@ addPlugin {
 	cmd = { "Diffthis", "VDiffthis"}
 }
 
--- FIX: make it slow
-addPlugin {
-	"rainbowhxch/accelerated-jk.nvim",
-	config = true,
-	keys = {
-		{ "<Down>", "<Plug>(accelerated_jk_j)", desc = "Accelerated down" },
-		{ "<Up>", "<Plug>(accelerated_jk_k)", desc = "Accelerated up" }
-	}
-}
-
--- FEAT: https://githpupb.com/k-ohnuma/window-swap.nvim
 addPlugin {
 	"s1n7ax/nvim-window-picker",
 	opts = {
@@ -5118,13 +5110,10 @@ addPlugin {
 
 -- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
 -- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
--- FEAT: https://github.com/esmuellert/vscode-diff.nvim
 -- FEAT: https://github.com/lsvmello/elastictabstops.nvim
 -- FEAT: https://github.com/mhinz/neovim-remote
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/nvimdev/dyninput.nvim
 -- FEAT: https://github.com/sQVe/sort.nvim
--- FEAT: https://github.com/thgrass/tail.nvim
 -- FEAT: https://github.com/uga-rosa/join.nvim
 -- FEAT: https://github.com/wellle/targets.vim
 -- <~>
@@ -5224,25 +5213,6 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
--- AI
--- FEAT: https://github.com/yetone/avante.nvim
-
--- snippets
--- FEAT: https://github.com/dcampos/nvim-snippy
--- FEAT: https://github.com/L3MON4D3/LuaSnip
--- FEAT: https://github.com/rafamadriz/friendly-snippets
-
--- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
--- FEAT: FOLDING: create own folding code
-
--- macros
--- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
--- FEAT: https://github.com/chrisgrieser/nvim-recorder
--- FEAT: https://github.com/bignos/bookmacro
--- FEAT: https://github.com/sahilsehwag/macrobank.nvim
-
--- FEAT: https://diagon.arthursonzogni.com/
-
 -- FEAT: csv utility like sorting and filtering
 -- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode https://github.com/lewis6991/hover.nvim https://github.com/patrickpichler/hovercraft.nvim
 -- FEAT: Hover on timestamp to convert into UTC and IST
@@ -5287,6 +5257,26 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/Wotee/bruh.nvim
+
+-- AI
+-- FEAT: https://github.com/yetone/avante.nvim
+
+-- snippets
+-- FEAT: https://github.com/dcampos/nvim-snippy
+-- FEAT: https://github.com/L3MON4D3/LuaSnip
+-- FEAT: https://github.com/rafamadriz/friendly-snippets
+
+-- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
+-- FEAT: FOLDING: create own folding code
+
+-- macros
+-- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
+-- FEAT: https://github.com/chrisgrieser/nvim-recorder
+-- FEAT: https://github.com/bignos/bookmacro
+-- FEAT: https://github.com/sahilsehwag/macrobank.nvim
+
+-- FEAT: https://diagon.arthursonzogni.com/
+
 -- FIX: all diagnostics
 -- PERF: reduce startup plugins and remove unused plugins
 -- RECODE: rearrange all plugins
