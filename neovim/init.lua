@@ -1587,9 +1587,9 @@ addPlugin {
 	}
 }
 
--- "yuki-yano/highlight-undo.nvim",
+-- FEAT: "yuki-yano/highlight-undo.nvim",
 addPlugin {
-	"tzachar/highlight-undo.nvim",
+	"tzachar/highlight-undo.nvim", -- Better highlight
 	config = true,
 	keys = { "u" },
 	lazy = true
@@ -1634,8 +1634,6 @@ addPlugin {
 			return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
-					DebugPrintLine = { bg = palette.surface0 },
-					DebugPrintSignHl = { fg = palette.pink },
 					CheckmatePriority = { fg = palette.sapphire },
 					CheckmatePriorityHigh = { fg = palette.red, style = { "bold" } },
 					CheckmatePriorityMedium = { fg = palette.yellow },
@@ -1644,8 +1642,15 @@ addPlugin {
 					CoverageCovered = { fg = palette.teal },
 					CoveragePartial = { fg = palette.mauve },
 					CoverageUncovered = { fg = palette.flamingo },
+					DebugPrintLine = { bg = palette.surface0 },
+					DebugPrintSignHl = { fg = palette.pink },
+					IlluminatedWordRead = { bg = palette.mantle },
+					IlluminatedWordText = { bg = palette.mantle },
+					IlluminatedWordWrite = { bg = palette.mantle },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					NvimSurroundHighlight = { bg = palette.peach },
+					RenderMarkdownCode = { bg = palette.crust },
+					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					SnacksPickerMatch = { fg = palette.blue, style = { "underline" } },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface1, style = {} },
@@ -1657,17 +1662,6 @@ addPlugin {
 		float = {
 			transparent = true,
 			solid = false
-		},
-		highlight_overrides = {
-			all = function(palette)
-				return {
-					IlluminatedWordRead = { bg = palette.mantle },
-					IlluminatedWordText = { bg = palette.mantle },
-					IlluminatedWordWrite = { bg = palette.mantle },
-					RenderMarkdownCode = { bg = palette.crust },
-					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
-				}
-			end
 		},
 		lsp_styles = {
 			underlines = {
@@ -1956,7 +1950,7 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" },
+			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: buffer priority higher
 			providers = {
 				buffer = {
 					name = "buffer",
