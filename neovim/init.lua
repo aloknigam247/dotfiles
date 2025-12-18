@@ -4512,10 +4512,10 @@ addPlugin {
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
 		speed = 100,
-		custom_filter = function(_, win_config)
-			-- print('DEBUGPRINT[2]: init.lua:4516: win_config=' .. vim.inspect(win_config))
+		custom_filter = function(buf_id, win_config)
 			if win_config.height == 8 and win_config.width == 12 then -- ignore window-picker
-				-- print('DEBUGPRINT[4]: init.lua:4516 (after if win_config.height == 8 and row == 12 …)')
+				return true
+			elseif win_config.style == "minimal" and win_config.relative == "editor" and vim.wo.wrap == false then -- wrapping-paper
 				return true
 			end
 			return false
