@@ -5108,7 +5108,10 @@ addPlugin {
 
 addPlugin {
 	"shortcuts/no-neck-pain.nvim",
-	cmd = "NoNeckPain"
+	cmd = "NoNeckPain",
+	opts = {
+		width = 105
+	}
 }
 
 addPlugin {
