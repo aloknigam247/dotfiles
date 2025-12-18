@@ -4540,6 +4540,14 @@ addPlugin {
 }
 
 addPlugin {
+	"ColinKennedy/cursor-text-objects.nvim",
+	keys = {
+			{ "[", "<Plug>(cursor-text-objects-up)", mode = { "o", "x" }, { desc = "Run from your current cursor to the end of the text-object." } },
+			{ "]", "<Plug>(cursor-text-objects-down)", mode = { "o", "x" }, { desc = "Run from your current cursor to the end of the text-object." } }
+		}
+}
+
+addPlugin {
 	"MagicDuck/grug-far.nvim",
 	cmd = "GrugFar",
 	config = true
@@ -4725,9 +4733,15 @@ addPlugin {
 	end,
 	opts = {
 		icons = {
-			breadcrumb = "»",
-			group = "+",
-			separator = "➜"
+			keys = {
+				Up = "󰞕 ",
+				Down = "󰞒 ",
+				Left = "󰞓 ",
+				Right = "󰞔 ",
+				C = "C-",
+				M = "M-",
+				S = "S-"
+			}
 		},
 		keys = {
 			scroll_down = "<c-d>",
@@ -5107,15 +5121,6 @@ addPlugin {
 		}
 	}
 }
-
--- FEAT: https://github.com/chrisgrieser/nvim-various-textobjs
--- FEAT: https://github.com/ColinKennedy/cursor-text-objects.nvim
--- FEAT: https://github.com/lsvmello/elastictabstops.nvim
--- FEAT: https://github.com/mhinz/neovim-remote
--- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/sQVe/sort.nvim
--- FEAT: https://github.com/uga-rosa/join.nvim
--- FEAT: https://github.com/wellle/targets.vim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Winbar     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -5213,33 +5218,16 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
--- FEAT: csv utility like sorting and filtering
--- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode https://github.com/lewis6991/hover.nvim https://github.com/patrickpichler/hovercraft.nvim
--- FEAT: Hover on timestamp to convert into UTC and IST
--- FEAT: https://github.com/axkirillov/easypick.nvim
--- FEAT: https://github.com/carbon-steel/detour.nvim
--- FEAT: https://github.com/Civitasv/cmake-tools.nvim
--- FEAT: https://github.com/dmtrKovalenko/fff.nvim
--- FEAT: https://github.com/FluxxField/smart-motion.nvim
--- FEAT: https://github.com/folke/edgy.nvim
--- FEAT: https://github.com/folke/sidekick.nvim
--- FEAT: https://github.com/folke/styler.nvim
--- FEAT: https://github.com/gisketch/triforce.nvim
--- FEAT: https://github.com/grapp-dev/nui-components.nvim
--- FEAT: https://github.com/heilgar/nvim-http-client
--- FEAT: https://github.com/ian-howell/ripple.nvim
 -- FEAT: https://github.com/jakemason/ouroboros.nvim
--- FEAT: https://github.com/jesses-code-adventures/bruno.nvim 
--- FEAT: https://github.com/jim-at-jibba/nvim-redraft
 -- FEAT: https://github.com/johannww/openssl.nvim
 -- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/jrop/u.nvim
 -- FEAT: https://github.com/Kohirus/cppassist.nvim
--- FEAT: https://github.com/lewis6991/hover.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/marc0x71/cmake-simple.nvim
 -- FEAT: https://github.com/mfontanini/presenterm
 -- FEAT: https://github.com/mihaifm/MegaToggler
+-- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
@@ -5254,19 +5242,34 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
 -- FEAT: https://github.com/rachartier/tiny-glimmer.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
--- FEAT: https://github.com/romek-codes/bruno.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
+-- FEAT: https://github.com/sQVe/sort.nvim
+-- FEAT: https://github.com/uga-rosa/join.nvim
+-- FEAT: https://github.com/wellle/targets.vim
 -- FEAT: https://github.com/Wotee/bruh.nvim
 
+-- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode https://github.com/lewis6991/hover.nvim https://github.com/patrickpichler/hovercraft.nvim
+-- FEAT: Hover on timestamp to convert into UTC and IST
+
+-- Http
+-- FEAT: https://github.com/heilgar/nvim-http-client
+-- FEAT: https://github.com/jesses-code-adventures/bruno.nvim
+-- FEAT: https://github.com/romek-codes/bruno.nvim
+
 -- AI
+-- FEAT: https://github.com/folke/sidekick.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
+-- FEAT: https://github.com/jim-at-jibba/nvim-redraft
 
 -- snippets
 -- FEAT: https://github.com/dcampos/nvim-snippy
 -- FEAT: https://github.com/L3MON4D3/LuaSnip
 -- FEAT: https://github.com/rafamadriz/friendly-snippets
 
+-- Popup
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
+-- FEAT: https://github.com/grapp-dev/nui-components.nvim
+
 -- FEAT: FOLDING: create own folding code
 
 -- macros
