@@ -1650,6 +1650,7 @@ addPlugin {
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface1, style = {} },
 					VisualMatch = { bg = palette.surface0 },
+					["@markup.heading.markdown"] = { fg = palette.mauve, style = { "bold" } },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
 			}
 		end,
@@ -1747,7 +1748,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"saghen/blink.cmp",
+	"saghen/blink.cmp", -- FEAT: manual key for completion
 	config = function(_, cfg)
 		require("blink.cmp").setup(cfg)
 
@@ -5040,7 +5041,7 @@ addPlugin {
 		local utils = require("AniMotion.Utils")
 		require("AniMotion").setup({
 			clear_keys = { "<Esc>" },
-			color = { link = "IncSearch" },
+			color = { link = "IncSearch" }, -- FEAT: a bit faded background
 			edit_keys = { "c", "d", "s", "r", "x", "y" },
 			map_visual = false,
 			marks = {"y", "z"},
