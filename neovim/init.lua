@@ -5218,15 +5218,10 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
--- FEAT: https://github.com/jakemason/ouroboros.nvim
--- FEAT: https://github.com/johannww/openssl.nvim
--- FEAT: https://github.com/joshzcold/python.nvim
 -- FEAT: https://github.com/jrop/u.nvim
 -- FEAT: https://github.com/Kohirus/cppassist.nvim
 -- FEAT: https://github.com/lucobellic/edgy-group.nvim
--- FEAT: https://github.com/marc0x71/cmake-simple.nvim
 -- FEAT: https://github.com/mfontanini/presenterm
--- FEAT: https://github.com/mihaifm/MegaToggler
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim
@@ -5236,7 +5231,7 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/nvim-mini/mini.jump
 -- FEAT: https://github.com/nvim-mini/mini.operators
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
--- FEAT: https://github.com/oysandvik94/curl.nvim 
+-- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
