@@ -144,7 +144,7 @@ local icons = {
 }
 
 ---Defines highlight for kinds
----@type table<string, table>
+---@type table<string, vim.api.keyset.highlight>
 local kind_hl = {
 	Array         = { icon = " ", dark = { fg = "#F42272", bg = "#313244" }, light = { fg = "#0B6E4F", bg = "#DCE0E8" }},
 	Boolean       = { icon = " ", dark = { fg = "#B8B8F3", bg = "#313244" }, light = { fg = "#69140E", bg = "#DCE0E8" }},
@@ -299,12 +299,6 @@ local priority_hl = {
 	hlargs = 150
 }
 
----Defines window priorities for various components
----@type table<string, integer>
-local priority_win = {
-	peek = 50
-}
-
 ---Defines virtual text priority
 ---@type table<string, integer>
 local priority_virt = {
@@ -326,7 +320,8 @@ local plugins = {}
 ---@class PopupMenuOption
 ---@field name string name of option
 ---@field key? string key map for the option
----@field exec fun() option execution function
+---@field exec? fun() option execution function
+---@field items? table<string,string> list of items
 
 ---@class PopupMenu
 ---@field cond? fun() Condition to evaluate for PopUp menu
@@ -462,7 +457,7 @@ function LightenDarkenColor(col, amt)
 	local g = clamp(bit.band(num, 0x0000FF) + amt)
 	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
 
-	hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
+	local hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
 	return hex
 end
 
@@ -842,7 +837,7 @@ vim.keymap.set("v", "<S-Right>", "<C-Right>", { desc = "Move to prev word start"
 -- ━━ edit file ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "g" .. keymaps.open_vsplit, "<cmd>vsplit <cfile><CR>", { desc = "Open file under cursor in vsplit" })
 vim.keymap.set("n", "g" .. keymaps.open_split, "<cmd>split <cfile><CR>", { desc = "Open file under cursor in split" })
-vim.keymap.set("n", "g" .. keymaps.open_tab, "<cmd>tabe <cfile><CR>", { desc = "Open file under cursor in tabe" })
+vim.keymap.set("n", "g" .. keymaps.open_tab, "<cmd>tabedit <cfile><CR>", { desc = "Open file under cursor in tabedit" })
 -- ━━ mouse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
@@ -1752,6 +1747,7 @@ addPlugin {
 
 		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
 		local original = require("blink.cmp.completion.list").show
+		---@diagnostic disable-next-line: duplicate-set-field
 		require("blink.cmp.completion.list").show = function(ctx, items_by_source)
 			local seen = {}
 			local function filter(item)
@@ -1768,10 +1764,13 @@ addPlugin {
 
 		-- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
 		local context = require('blink.cmp.completion.trigger.context')
+		---@diagnostic disable-next-line: inject-field
 		context.get_line_orig = context.get_line
+		---@diagnostic disable-next-line: duplicate-set-field
 		context.get_line = function(num)
 			if context.get_mode() == "cmdline" then
-				return context.get_line_orig(num):gsub("\\+", "\\")
+				local line, _ = context.get_line_orig(num):gsub("\\+", "\\")
+				return line
 			end
 			return context.get_line_orig(num)
 		end
@@ -1890,6 +1889,7 @@ addPlugin {
 								return " " .. getIcon(ctx)
 							end,
 							highlight = function(ctx)
+								---@diagnostic disable-next-line: undefined-field
 								return ctx._icon_hl or ctx.kind_hl
 							end
 						},
@@ -2447,11 +2447,11 @@ addPlugin {
 			function()
 				local mini = require("mini.diff")
 				if mini.get_buf_data(0) == nil then
-					mini.enable()
-					mini.toggle_overlay()
+					mini.enable(0)
+					mini.toggle_overlay(0)
 				else
-					mini.toggle_overlay()
-					mini.disable()
+					mini.toggle_overlay(0)
+					mini.disable(0)
 				end
 			end, {
 				desc = "Toggle mini diff word highlight"
@@ -3051,7 +3051,7 @@ addPlugin {
 
 addPlugin {
 	"rachartier/tiny-inline-diagnostic.nvim",
-	config = function(plugin)
+	config = function()
 		local diag = require("tiny-inline-diagnostic")
 		diag.setup({
 			hi = {
@@ -3240,7 +3240,7 @@ addPlugin {
 			table = false,
 		}
 	},
-	config = function(plugin, cfg)
+	config = function(_, cfg)
 		require("markdown-plus").setup(cfg)
 	end
 }
@@ -3603,7 +3603,6 @@ addPlugin {
 addPlugin {
 	"kevinhwang91/nvim-bqf",
 	config = function()
-		---@diagnostic disable-next-line: missing-fields
 		require("bqf").setup {
 			auto_resize_height = true,
 			func_map = {
