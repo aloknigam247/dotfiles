@@ -2091,7 +2091,7 @@ addPlugin {
 	},
 	config = function(_, cfg)
 		require("debugprint").setup(cfg)
-		vim.cmd("ResetDebugPrintsCounter")
+		vim.cmd("Debugprint resetcounter")
 	end,
 	keys = {
 		{ "<Leader>dP",  ft = getTSInstalled(), desc = "Plain debug above current line" },
@@ -3288,7 +3288,7 @@ addPlugin {
 			position = "inlay",
 			icons = { "󰫎 " },
 			width = { "full", "block", "block"},
-			right_pad = 2,
+			right_pad = 1,
 		},
 		latex = {
 			enabled = false,
@@ -4513,7 +4513,12 @@ addPlugin {
 		exclude_fts = { "wk" },
 		speed = 100,
 		custom_filter = function(_, win_config)
-			return not(win_config.height == 8 and row == 12) -- ignore window-picker
+			-- print('DEBUGPRINT[2]: init.lua:4516: win_config=' .. vim.inspect(win_config))
+			if win_config.height == 8 and win_config.width == 12 then -- ignore window-picker
+				-- print('DEBUGPRINT[4]: init.lua:4516 (after if win_config.height == 8 and row == 12 …)')
+				return true
+			end
+			return false
 		end
 	},
 	keys = {
