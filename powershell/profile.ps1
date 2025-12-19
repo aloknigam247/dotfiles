@@ -278,16 +278,16 @@ function whatis($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles bold, italic
+        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
         bat -p -P $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text "${icons.type_app} $arg" -fg $catppuccin.Green -styles bold, italic # FIX: icon not working
+        Format-Text "$($icons.type_app) $arg" -fg $catppuccin.Green -styles italic
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Text " $arg" -fg $catppuccin.Lavender -styles bold, italic
+        Format-Text " $arg" -fg $catppuccin.Lavender -styles italic
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
