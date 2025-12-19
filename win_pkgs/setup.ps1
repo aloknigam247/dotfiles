@@ -14,6 +14,7 @@ $scoop_pkgs = @(
 )
 
 $winget_pkgs = @(
+    "Bruno.Bruno"
     "GitHub.cli"
     "Microsoft.PowerToys"
     "Microsoft.VisualStudioCode"
