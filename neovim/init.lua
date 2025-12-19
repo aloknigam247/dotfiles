@@ -799,7 +799,7 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Highlight text on yank",
 		callback = function()
-			vim.highlight.on_yank({ higroup="Search", timeout=500 })
+			vim.hl.on_yank({ higroup="Search", timeout=500 })
 		end
 	}
 )
@@ -966,7 +966,7 @@ vim.cmd("sign define DiagnosticSignWarn  text=" .. icons.warn  .. " texthl=Diagn
 vim.cmd("sign define DiagnosticSignInfo  text=" .. icons.info  .. " texthl=DiagnosticSignInfo  linehl= numhl=")
 vim.cmd("sign define DiagnosticSignHint  text=" .. icons.hint  .. " texthl=DiagnosticSignHint  linehl= numhl=")
 
-vim.highlight.priorities = {
+vim.hl.priorities = {
 	syntax = 50,
 	treesitter = 100,
 	semantic_tokens = 99,
@@ -2100,10 +2100,6 @@ addPlugin {
 	}
 }
 
--- https://github.com/PatschD/zippy.nvim
--- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/Willem-J-an/nvim-dap-powershell
--- https://github.com/Willem-J-an/visidata.nvim
 -- https://github.com/byuki/one-small-step-for-vimkind
 -- https://github.com/carriga/nvim-dap-ui
 -- https://github.com/fussenegger/nvim-dap
@@ -2114,11 +2110,16 @@ addPlugin {
 -- https://github.com/jonboh/nvim-dap-rr
 -- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
 -- https://github.com/mfussenegger/nvim-dap-python
+-- https://github.com/nelnn/bear.nvim
 -- https://github.com/ofirgall/goto-breakpoints.nvim
+-- https://github.com/PatschD/zippy.nvim
 -- https://github.com/sakhnik/nvim-gdb
 -- https://github.com/theHamsta/nvim-dap-virtual-text
 -- https://github.com/tpope/vim-scriptease
 -- https://github.com/vim-scripts/Conque-GDB
+-- https://github.com/Weissle/persistent-breakpoints.nvim
+-- https://github.com/Willem-J-an/nvim-dap-powershell
+-- https://github.com/Willem-J-an/visidata.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -5228,7 +5229,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
--- FEAT: https://github.com/nelnn/bear.nvim
 -- FEAT: https://github.com/nvim-mini/mini.extra
 -- FEAT: https://github.com/nvim-mini/mini.jump
 -- FEAT: https://github.com/nvim-mini/mini.operators
@@ -5237,7 +5237,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
--- FEAT: https://github.com/rachartier/tiny-glimmer.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/sQVe/sort.nvim

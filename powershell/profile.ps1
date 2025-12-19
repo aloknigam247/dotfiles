@@ -284,7 +284,7 @@ function whatis($arg) {
         bat -p -P $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text "${icons.type_app} $arg" -fg $catppuccin.Green -styles bold, italic
+        Format-Text "${icons.type_app} $arg" -fg $catppuccin.Green -styles bold, italic # FIX: icon not working
         $cm.Source
     } elseif ($type -eq "Alias") {
         Format-Text " $arg" -fg $catppuccin.Lavender -styles bold, italic
