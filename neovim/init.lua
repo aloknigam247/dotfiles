@@ -1664,7 +1664,7 @@ addPlugin {
 				hints = { "underdotted" }
 			}
 		},
-		transparent_background = true,
+		transparent_background = false,
 		term_colors = false,
 	}
 }
@@ -3518,6 +3518,9 @@ addPlugin {
 		disable_max_lines = 10000,
 		disable_max_size = 2000000, -- Default 2MB
 		filter_kind = { "Class", "Constructor", "Enum", "Function", "Interface", "Module", "Method", "Struct" },
+		float = {
+			relative = "editor",
+		},
 		guides = { mid_item = "├ ", last_item = "╰ ", nested_top = "│ ", whitespace = " ", },
 		highlight_on_hover = true,
 		icons = icons,
