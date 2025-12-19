@@ -5232,7 +5232,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/nvim-mini/mini.extra
 -- FEAT: https://github.com/nvim-mini/mini.jump
 -- FEAT: https://github.com/nvim-mini/mini.operators
--- FEAT: https://github.com/olimorris/codecompanion.nvim
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
@@ -5253,8 +5252,9 @@ require("lazy").setup(plugins, lazy_config)
 
 -- AI
 -- FEAT: https://github.com/folke/sidekick.nvim
--- FEAT: https://github.com/yetone/avante.nvim
 -- FEAT: https://github.com/jim-at-jibba/nvim-redraft
+-- FEAT: https://github.com/olimorris/codecompanion.nvim
+-- FEAT: https://github.com/yetone/avante.nvim
 
 -- snippets
 -- FEAT: https://github.com/dcampos/nvim-snippy
