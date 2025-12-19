@@ -5239,7 +5239,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/r-pletnev/pdfreader.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
--- FEAT: https://github.com/sQVe/sort.nvim
 -- FEAT: https://github.com/uga-rosa/join.nvim
 -- FEAT: https://github.com/wellle/targets.vim
 -- FEAT: https://github.com/Wotee/bruh.nvim
