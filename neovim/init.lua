@@ -4467,8 +4467,8 @@ addPlugin {
 	config = function()
 		local notify = require("notify")
 		notify.setup({
-			max_width = function() return vim.o.columns * 0.8 end,
-			minimum_width = 0,
+			max_width = function() return math.floor(vim.o.columns * 0.8) end,
+			minimum_width = 1,
 			render = "minimal",
 			stages = "fade_in_slide_out"
 		})
@@ -5224,16 +5224,12 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
--- FEAT: https://github.com/jrop/u.nvim
--- FEAT: https://github.com/Kohirus/cppassist.nvim
--- FEAT: https://github.com/lucobellic/edgy-group.nvim
 -- FEAT: https://github.com/mfontanini/presenterm
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
 -- FEAT: https://github.com/nvim-mini/mini.extra
--- FEAT: https://github.com/nvim-mini/mini.jump
 -- FEAT: https://github.com/nvim-mini/mini.operators
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
@@ -5245,8 +5241,12 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/wellle/targets.vim
 -- FEAT: https://github.com/Wotee/bruh.nvim
 
--- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode https://github.com/lewis6991/hover.nvim https://github.com/patrickpichler/hovercraft.nvim
+-- Hover utility
+-- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode
 -- FEAT: Hover on timestamp to convert into UTC and IST
+-- https://github.com/jrop/u.nvim
+-- https://github.com/lewis6991/hover.nvim
+-- https://github.com/patrickpichler/hovercraft.nvim
 
 -- Http
 -- FEAT: https://github.com/heilgar/nvim-http-client
