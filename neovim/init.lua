@@ -1737,7 +1737,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"saghen/blink.cmp", -- FEAT: manual key for completion
+	"saghen/blink.cmp",
 	config = function(_, cfg)
 		require("blink.cmp").setup(cfg)
 
@@ -1950,10 +1950,11 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: buffer priority higher
+			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" },
 			providers = {
 				buffer = {
 					name = "buffer",
+					score_offset = 100,
 					override = {
 						enabled = function()
 							local utils = require("blink.cmp.sources.lib.utils")
@@ -3039,7 +3040,7 @@ addPlugin {
 			{ "basedpyright", filetypes = { "Python" } },
 			{ "ruff", filetypes = { "Python" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
-			{ "powershell-editor-services", filetypes = { "Powershell" } },
+			{ "powershell-editor-services", filetypes = { "Ps1" } },
 			{ "roslyn", filetypes = { "CS" } },
 		}
 	}

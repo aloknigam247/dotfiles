@@ -499,7 +499,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 # ╭───────────╮
 # │ FZF Setup │
 # ╰───────────╯
-# FEAT: default file opener as vim
 # https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
 Import-Module PSFzf
 
@@ -513,7 +512,8 @@ Set-PsFzfOption -TabExpansion
 
 # FEAT: increase preview window height
 # https://minsw.github.io/fzf-color-picker/
-$env:FZF_DEFAULT_OPTS="--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl) --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl) --color=selected-bg:$($palette.fzf.selection) --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS = "--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl) --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl) --color=selected-bg:$($palette.fzf.selection) --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+$env:EDITOR = "nvim"
 
 # ╭────────────────╮
 # │ Prompt Styling │

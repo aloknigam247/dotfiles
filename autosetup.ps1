@@ -249,7 +249,7 @@ function wingetInstall {
     }
 }
 
-function installConfigs {
+function linkConfigs {
     param(
         [hashtable]$files
     )
@@ -276,6 +276,42 @@ function installConfigs {
             Write-Output "Linking $src --> $dest"
             New-Item -ItemType SymbolicLink -Path $dest -Target $src
         }
+    }
+}
+
+function copyOrUpdateConfigs {
+    param(
+        [hashtable]$files,
+        [switch]$update
+    )
+    foreach ($key in $files.keys) {
+        $src = "$cwd\$key"
+        $dest = $files[$key]
+        $dir = Split-Path -Parent $dest
+        if ($update) {
+            if ((Test-Path $dest) -and (Compare-Object (Get-Content $src) (Get-Content $dest)) ) {
+                Copy-Item -Path $src -Destination $dest -Force
+            }
+        } else {
+            if (-not (Test-Path $dir)) {
+                mkdir $dir
+            }
+            if (Test-Path $dest) {
+                if(Compare-Object (Get-Content $src) (Get-Content $dest)) {
+                    Write-Verbose "$src already exists" -verbose
+                } else {
+                    Write-Output "backup $dest --> ${dest}.orig"
+                    Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                    Write-Output "Copying $src --> $dest"
+                    Copy-Item -Path $src -Destination $dest
+                }
+            }
+            else {
+                Write-Output "Copying $src --> $dest"
+                Copy-Item -Path $src -Destination $dest
+            }
+        }
+
     }
 }
 
@@ -328,6 +364,7 @@ foreach ($pkg in $pkg_list) {
         $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
+        $files_copy = @{}
 
         . .\setup.ps1
 
@@ -336,6 +373,7 @@ foreach ($pkg in $pkg_list) {
             pipxInstall -update $pipx_pkgs
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
+            copyOrUpdateConfigs -update $files_copy
         } else {
             pipInstall $pip_pkgs
             pipxInstall $pipx_pkgs
@@ -343,7 +381,8 @@ foreach ($pkg in $pkg_list) {
             wingetInstall $winget_pkgs
 
             writeLog INFO "Installing Configs"
-            installConfigs $files
+            linkConfigs $files
+            copyOrUpdateConfigs $files_copy
         }
     } else {
         writeLog ERROR "No setup.ps1 found for $pkg"
