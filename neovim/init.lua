@@ -3273,7 +3273,8 @@ addPlugin {
 		heading = {
 			sign = false,
 			position = "inlay",
-			icons = { "󰫎 " },
+			-- icons = { "󰫎 " },
+			icons = { "█ ", "▓▓ ", "▒▒▒ ", "░░░░ ", "░░░░░ ", "░░░░░░ " },
 			width = { "full", "block", "block"},
 			right_pad = 1,
 		},
@@ -5029,7 +5030,7 @@ addPlugin {
 		local utils = require("AniMotion.Utils")
 		require("AniMotion").setup({
 			clear_keys = { "<Esc>" },
-			color = { link = "IncSearch" }, -- FEAT: a bit faded background
+			color = { link = "IncSearch" },
 			edit_keys = { "c", "d", "s", "r", "x", "y" },
 			map_visual = false,
 			marks = {"y", "z"},
@@ -5215,26 +5216,15 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
--- FEAT: https://github.com/mfontanini/presenterm
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 -- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim
--- FEAT: https://github.com/MunifTanjim/nui.nvim
 -- FEAT: https://github.com/nvim-mini/mini.extra
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
--- FEAT: https://github.com/pogyomo/submode.nvim
--- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/wellle/targets.vim
 -- FEAT: https://github.com/Wotee/bruh.nvim
-
--- Hover utility
--- FEAT: Hover for JWT, URL encode/decode, base64 encode/decode
--- FEAT: Hover on timestamp to convert into UTC and IST
--- https://github.com/jrop/u.nvim
--- https://github.com/lewis6991/hover.nvim
--- https://github.com/patrickpichler/hovercraft.nvim
 
 -- Http
 -- FEAT: https://github.com/heilgar/nvim-http-client
@@ -5249,7 +5239,7 @@ require("lazy").setup(plugins, lazy_config)
 
 -- Popup
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
--- FEAT: https://github.com/grapp-dev/nui-components.nvim
+-- FEAT: https://github.com/MunifTanjim/nui.nvim https://github.com/grapp-dev/nui-components.nvim
 
 -- FEAT: FOLDING: create own folding code
 
