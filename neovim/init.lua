@@ -5222,7 +5222,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/nvim-mini/mini.extra
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
--- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/wellle/targets.vim
 -- FEAT: https://github.com/Wotee/bruh.nvim
 
