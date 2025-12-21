@@ -144,7 +144,7 @@ local icons = {
 }
 
 ---Defines highlight for kinds
----@type table<string, vim.api.keyset.highlight>
+---@type table<string, table<"icon"|"dark"|"light", vim.api.keyset.highlight|string>>
 local kind_hl = {
 	Array         = { icon = " ", dark = { fg = "#F42272", bg = "#313244" }, light = { fg = "#0B6E4F", bg = "#DCE0E8" }},
 	Boolean       = { icon = " ", dark = { fg = "#B8B8F3", bg = "#313244" }, light = { fg = "#69140E", bg = "#DCE0E8" }},
@@ -501,8 +501,7 @@ local function getTSInstalled()
 
 	-- Collect treesitter languages from nvim-treesitter and runtime path
 	for _, path in ipairs(vim.fn.split(
-	---@diagnostic disable-next-line: param-type-mismatch
-		vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, -- combine paths
+		vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
 		","
 	)) do
 		for file, _ in vim.fs.dir(vim.fs.joinpath(path, "parser")) do
@@ -974,13 +973,11 @@ vim.hl.priorities = {
 	user = 200
 }
 
----@diagnostic disable-next-line: duplicate-set-field
-vim.ui.select = function(...)
+vim.ui.select = function(...) ---@diagnostic disable-line: duplicate-set-field
 	require("snacks").picker.explorer(...)
 end
 
----@diagnostic disable-next-line: duplicate-set-field
-vim.ui.input = function(...)
+vim.ui.input = function(...) ---@diagnostic disable-line: duplicate-set-field
 	require("snacks").input(...)
 end
 
@@ -991,8 +988,7 @@ vim.fn.matchadd(
 )
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
----@diagnostic disable-next-line: undefined-field
-if not vim.loop.fs_stat(lazypath) then
+if not vim.loop.fs_stat(lazypath) then ---@diagnostic disable-line: undefined-field
 	vim.fn.system({
 		"git",
 		"clone",
@@ -1715,11 +1711,9 @@ addPlugin {
 addPlugin {
 	"numToStr/Comment.nvim",
 	config = function()
-		---@diagnostic disable-next-line: missing-fields
-		require("Comment").setup({
+		require("Comment").setup({ ---@diagnostic disable-line: missing-fields
 			ignore = "^$",
-			---@diagnostic disable-next-line: missing-fields
-			extra = { eol = "gce" },
+			extra = { eol = "gce" }, ---@diagnostic disable-line: missing-fields
 		})
 
 		require("Comment.ft")
@@ -1742,13 +1736,14 @@ addPlugin {
 		require("blink.cmp").setup(cfg)
 
 		for kind_name,hl in pairs(kind_hl) do
-			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, hl[vim.o.background])
+			---@type vim.api.keyset.highlight|string
+			local h = hl[vim.o.background] ---@cast h -string
+			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, h)
 		end
 
 		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
 		local original = require("blink.cmp.completion.list").show
-		---@diagnostic disable-next-line: duplicate-set-field
-		require("blink.cmp.completion.list").show = function(ctx, items_by_source)
+		require("blink.cmp.completion.list").show = function(ctx, items_by_source) ---@diagnostic disable-line: duplicate-set-field
 			local seen = {}
 			local function filter(item)
 				if seen[item.label] then return false end
@@ -1764,10 +1759,8 @@ addPlugin {
 
 		-- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
 		local context = require('blink.cmp.completion.trigger.context')
-		---@diagnostic disable-next-line: inject-field
-		context.get_line_orig = context.get_line
-		---@diagnostic disable-next-line: duplicate-set-field
-		context.get_line = function(num)
+		context.get_line_orig = context.get_line ---@diagnostic disable-line: inject-field
+		context.get_line = function(num) ---@diagnostic disable-line: duplicate-set-field
 			if context.get_mode() == "cmdline" then
 				local line, _ = context.get_line_orig(num):gsub("\\+", "\\")
 				return line
@@ -1889,8 +1882,7 @@ addPlugin {
 								return " " .. getIcon(ctx)
 							end,
 							highlight = function(ctx)
-								---@diagnostic disable-next-line: undefined-field
-								return ctx._icon_hl or ctx.kind_hl
+								return ctx._icon_hl or ctx.kind_hl ---@diagnostic disable-line: undefined-field
 							end
 						},
 						label = {
@@ -2964,8 +2956,7 @@ addPlugin {
 	event = "LspAttach",
 	config = function()
 		vim.api.nvim_set_hl(0, "LightBulbVirtualText", { fg = "#EEE600" })
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-lightbulb").setup({
+		require("nvim-lightbulb").setup({ ---@diagnostic disable-line: missing-fields
 			autocmd = { enabled = true },
 			action_kinds = {
 				"",
@@ -3036,7 +3027,7 @@ addPlugin {
 	opts = {
 		packages = {
 			"prettier",
-			"typos-lsp",
+			"typos-lsp", -- FIX: typos diagnostic icon
 			{ "basedpyright", filetypes = { "Python" } },
 			{ "ruff", filetypes = { "Python" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
@@ -3052,7 +3043,7 @@ addPlugin {
 }
 
 addPlugin {
-	"rachartier/tiny-inline-diagnostic.nvim",
+	"rachartier/tiny-inline-diagnostic.nvim", -- BUG: colors not set properly in light mode
 	config = function()
 		local diag = require("tiny-inline-diagnostic")
 		diag.setup({
@@ -3126,7 +3117,6 @@ addPlugin {
 		Lsp_icon = ""
 		Lsp_icon_index = 0
 
-		---@diagnostic disable-next-line: undefined-field
 		vim.uv.timer_start(vim.uv.new_timer(), 700, 700, function()
 			Lsp_icon_index = (Lsp_icon_index) % #Lsp_anim + 1
 			Lsp_icon = Lsp_anim[Lsp_icon_index]
@@ -3222,7 +3212,7 @@ addPlugin {
 		"owallb/mason-auto-install.nvim",
 		{ "folke/lazydev.nvim", config = true, event = "LspAttach *.lua" }
 	},
-	keys = "<F12>"
+	keys = "<F12>" -- BUG: LspInfo command not loaded
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3607,19 +3597,20 @@ addPlugin {
 ]]
 addPlugin {
 	"kevinhwang91/nvim-bqf",
-	config = function()
-		require("bqf").setup {
-			auto_resize_height = true,
-			func_map = {
-				open = "<CR>",
-				split = keymaps.open_split,
-				tabb = keymaps.open_tab,
-				vsplit = keymaps.open_vsplit
-			},
-			preview = {
-				border = dotted_border,
-			}
+	opts = {
+		auto_resize_height = true,
+		func_map = {
+			open = "<CR>",
+			split = keymaps.open_split,
+			tabb = keymaps.open_tab,
+			vsplit = keymaps.open_vsplit
+		},
+		preview = {
+			border = dotted_border,
 		}
+	},
+	config = function(_, cfg)
+		require("bqf").setup(cfg)
 		vim.cmd("packadd cfilter")
 	end,
 	dependencies = "junegunn/fzf",
@@ -4179,8 +4170,7 @@ addPlugin {
 	"nvim-neotest/neotest",
 	cmd = "Neotest",
 	config = function()
-		---@diagnostic disable-next-line: missing-fields
-		require("neotest").setup({
+		require("neotest").setup({ ---@diagnostic disable-line: missing-fields
 			adapters = {
 				require("neotest-python")({
 					args = { "--cov", "--cov-branch" },
@@ -4511,7 +4501,7 @@ addPlugin {
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
 		speed = 100,
-		custom_filter = function(buf_id, win_config)
+		custom_filter = function(_, win_config)
 			if win_config.height == 8 and win_config.width == 12 then -- ignore window-picker
 				return true
 			elseif win_config.style == "minimal" and win_config.relative == "editor" and vim.wo.wrap == false then -- wrapping-paper
@@ -4948,7 +4938,7 @@ addPlugin {
 		-- HACK: to fix windows path issues
 		local actions = require("snacks.explorer.actions")
 		actions.reveal_orig = actions.reveal
-		actions.reveal = function(picker, path)
+		actions.reveal = function(picker, path) ---@diagnostic disable-line: duplicate-set-field
 			return actions.reveal_orig(picker, path:gsub("\\", "/"))
 		end
 	end
@@ -5009,8 +4999,8 @@ addPlugin {
 		}
 	},
 	keys = {
-		{ "<C-R>", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "i" }, desc = "Yank text" },
-		{ "'", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "n" }, desc = "Yank text" },
+		{ "<C-R>", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "i" }, desc = "Yank text" }, ---@diagnostic disable-line: undefined-field
+		{ "'", function() require("snacks").picker.yanky({ layout = { preset = "vertical" }}) end, mode = { "n" }, desc = "Yank text" }, ---@diagnostic disable-line: undefined-field
 		{ "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank text" },
 		{ "p", "<Plug>(YankyPutAfter)", mode = { "n" }, desc = "Put yanked text after cursor" },
 		{ "P", "<Plug>(YankyPutBefore)", mode = { "n" }, desc = "Put yanked text before cursor" },
