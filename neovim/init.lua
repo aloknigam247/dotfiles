@@ -5231,7 +5231,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/mistricky/codesnap.nvim
 -- FEAT: https://github.com/MunifTanjim/nui.nvim
 -- FEAT: https://github.com/nvim-mini/mini.extra
--- FEAT: https://github.com/nvim-mini/mini.operators
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
@@ -5258,11 +5257,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/jim-at-jibba/nvim-redraft
 -- FEAT: https://github.com/olimorris/codecompanion.nvim
 -- FEAT: https://github.com/yetone/avante.nvim
-
--- snippets
--- FEAT: https://github.com/dcampos/nvim-snippy
--- FEAT: https://github.com/L3MON4D3/LuaSnip
--- FEAT: https://github.com/rafamadriz/friendly-snippets
 
 -- Popup
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
