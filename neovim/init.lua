@@ -5234,7 +5234,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/pogyomo/submode.nvim
--- FEAT: https://github.com/r-pletnev/pdfreader.nvim
 -- FEAT: https://github.com/retran/meow.yarn.nvim
 -- FEAT: https://github.com/Shatur/neovim-tasks
 -- FEAT: https://github.com/wellle/targets.vim
@@ -5265,7 +5264,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: FOLDING: create own folding code
 
 -- macros
--- FEAT: https://github.com/ecthelionvi/NeoComposer.nvim
 -- FEAT: https://github.com/chrisgrieser/nvim-recorder
 -- FEAT: https://github.com/bignos/bookmacro
 -- FEAT: https://github.com/sahilsehwag/macrobank.nvim
