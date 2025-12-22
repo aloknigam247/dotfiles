@@ -1683,6 +1683,7 @@ addPlugin {
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					SnacksPickerMatch = { fg = palette.blue, style = { "underline" } },
+					TinyDiagnosticNormal = { fg = palette.text, bg = palette.base },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface1, style = {} },
 					VisualMatch = { bg = palette.surface0 },
@@ -3083,19 +3084,24 @@ addPlugin {
 }
 
 addPlugin {
-	"rachartier/tiny-inline-diagnostic.nvim", -- BUG: colors not set properly in light mode
+	"rachartier/tiny-inline-diagnostic.nvim",
+	event = "DiagnosticChanged",
 	config = function()
 		local diag = require("tiny-inline-diagnostic")
 		diag.setup({
+			transparent_bg = false,
 			hi = {
-				background = "None",
+				background = "Normal",
+				mixing_color = "TinyDiagnosticNormal"
 			},
 			options = {
-				show_source = true,
+				show_source = { enabled = true, if_many = false },
 				use_icons_from_diagnostic = true,
+				set_arrow_to_diag_color = true,
 				multilines = {
 					enabled = true,
 					always_show = true,
+					trim_whitespaces = true
 				},
 				enable_on_insert = true,
 				format = function(arg)
@@ -3117,12 +3123,11 @@ addPlugin {
 			},
 			blend = {
 				factor = 0.22,
-			},
+			}
 		})
 		vim.diagnostic.config({ virtual_text = false })
 		diag.enable()
 	end,
-	event = "DiagnosticChanged",
 }
 
 addPlugin {
