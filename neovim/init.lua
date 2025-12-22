@@ -905,6 +905,46 @@ vim.keymap.set({ "c", "i" }, "=", function()
 	else return "=" end
 
 end, { expr = true, noremap = true, desc = "Add spaces around =" })
+
+vim.keymap.set("v", "<leader>ub", function()
+	local ns_id = vim.api.nvim_create_namespace('visual_bold')
+
+	local function toggle_visual_bold()
+		local bufnr = vim.api.nvim_get_current_buf()
+
+		-- Get visual range (works in active visual mode)
+		local start_pos = vim.fn.getpos('v')
+		local end_pos = vim.fn.getpos('.')
+		local line_start, col_start = start_pos[2]-1, start_pos[3]-1
+		local line_end, col_end = end_pos[2]-1, end_pos[3]-1
+
+		-- Determine visual mode type and adjust end col if linewise
+		local mode = vim.fn.mode()
+		if mode:match('V') then
+			col_end = 2147483647  -- Max col for linewise
+		end
+
+		-- Check existing extmarks in range (simple toggle logic)
+		local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 
+		{line_start, col_start}, {line_end, col_end}, {details=true})
+
+		if #extmarks > 0 then
+			-- Clear existing bold highlight
+			for _, extmark in ipairs(extmarks) do
+				vim.api.nvim_buf_del_extmark(bufnr, ns_id, extmark[1])
+			end
+			print("Bold highlight cleared")
+		else
+			-- Apply bold highlight (sticky, moves with text edits)
+			vim.hl.range('BoldVisual', {line_start, col_start}, {line_end, col_end}, 
+			{priority=2000, ns_id=ns_id})  -- High priority over syntax/LSP
+			print("Bold highlight applied")
+		end
+	end
+
+	toggle_visual_bold()
+end, { desc = "Bold" })
+
 -- <~>
 -- Misc</>
 -------
