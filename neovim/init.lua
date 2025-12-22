@@ -130,7 +130,7 @@ local icons = {
 	git_added          = "+",
 	git_modified       = "~",
 	git_removed        = "-",
-	hint               = " ",
+	hint               = "󰌵 ",
 	hover              = " ",
 	incoming           = " ",
 	info               = " ",
@@ -3067,7 +3067,7 @@ addPlugin {
 	opts = {
 		packages = {
 			"prettier",
-			"typos-lsp", -- FIX: typos diagnostic icon
+			"typos-lsp",
 			{ "basedpyright", filetypes = { "Python" } },
 			{ "ruff", filetypes = { "Python" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
@@ -5269,12 +5269,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/heilgar/nvim-http-client
 -- FEAT: https://github.com/jesses-code-adventures/bruno.nvim
 -- FEAT: https://github.com/romek-codes/bruno.nvim
-
--- AI
--- FEAT: https://github.com/folke/sidekick.nvim
--- FEAT: https://github.com/jim-at-jibba/nvim-redraft
--- FEAT: https://github.com/olimorris/codecompanion.nvim
--- FEAT: https://github.com/yetone/avante.nvim
 
 -- Popup
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
