@@ -4574,6 +4574,8 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- ascii diagrams https://diagon.arthursonzogni.com
+
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
@@ -5268,12 +5270,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/wellle/targets.vim
--- FEAT: https://github.com/Wotee/bruh.nvim
-
--- Http
--- FEAT: https://github.com/heilgar/nvim-http-client
--- FEAT: https://github.com/jesses-code-adventures/bruno.nvim
--- FEAT: https://github.com/romek-codes/bruno.nvim
 
 -- Popup
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
@@ -5285,8 +5281,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/chrisgrieser/nvim-recorder
 -- FEAT: https://github.com/bignos/bookmacro
 -- FEAT: https://github.com/sahilsehwag/macrobank.nvim
-
--- FEAT: https://diagon.arthursonzogni.com/
 
 -- FIX: all diagnostics
 -- PERF: reduce startup plugins and remove unused plugins
