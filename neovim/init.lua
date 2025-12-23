@@ -5208,7 +5208,7 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 -- <~>
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/mistricky/codesnap.nvim
+-- FEAT: https://github.com/mistricky/codesnap.nvim https://github.com/mistweaverco/snap.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/wellle/targets.vim
 
