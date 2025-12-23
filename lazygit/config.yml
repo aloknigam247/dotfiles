@@ -44,9 +44,6 @@ gui:
       - "◡"
       - "◟"
     rate: 50
-  git: # FEAT: use delta for diffs
-    pagers:
-      - externalDiffCommand: "D:/dotfiles/lazygit/lazygit-pager.ps1"
   paging:
     colorArg: always
     useConfig: true

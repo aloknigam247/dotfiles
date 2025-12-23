@@ -845,6 +845,7 @@ vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("i", "<C-p>", "<C-o>P", { desc = "Paste in insert mode", noremap = true })
 vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- FIX: highlight after change
 vim.keymap.set("n", "wc\\\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc\\",   "<cmd>s/\\/\\+/\\\\/g<CR>",     { desc = "Convert / to \\" })
 vim.keymap.set("n", "wc/",    "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
@@ -2013,7 +2014,7 @@ addPlugin {
 					module = "lazydev.integrations.blink"
 				},
 				path = {
-					name = "path",
+					name = "path", -- FEAT: transform path correctly
 					transform_items = function(_, items)
 						for _, item in pairs(items) do
 							item.label = item.label:gsub("/", "\\")
@@ -3063,7 +3064,7 @@ addPlugin {
 	"owallb/mason-auto-install.nvim",
 	config = function(_, cfg)
 		require("mason-auto-install").setup(cfg)
-		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
+		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype }) -- BUG: gives error
 	end,
 	opts = {
 		packages = {
@@ -3072,7 +3073,7 @@ addPlugin {
 			{ "basedpyright", filetypes = { "Python" } },
 			{ "ruff", filetypes = { "Python" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
-			{ "powershell-editor-services", filetypes = { "Ps1" } },
+			{ "powershell-editor-services", filetypes = { "PS1" } },
 			{ "roslyn", filetypes = { "CS" } },
 		}
 	}
@@ -3257,7 +3258,7 @@ addPlugin {
 		"owallb/mason-auto-install.nvim",
 		{ "folke/lazydev.nvim", config = true, event = "LspAttach *.lua" }
 	},
-	keys = "<F12>" -- BUG: LspInfo command not loaded
+	keys = "<F12>"
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3956,7 +3957,7 @@ addPlugin {
 						function() return Lsp_icon end,
 						cond = isLspAttached,
 						on_click = function()
-							vim.cmd("LspInfo")
+							vim.cmd("checkhealth vim.lsp")
 						end,
 						padding = { left = 0, right = 1 },
 						separator = ""
@@ -4015,107 +4016,6 @@ addPlugin {
 				lualine_y = {},
 				lualine_z = {}
 			},
-			-- winbar = {
-			-- 	lualine_a = {
-			-- 		{
-			-- 			"filetype",
-			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-			-- 			icon_only = true,
-			-- 			padding = { left = 1, right = 0 },
-			-- 			separator = ""
-			-- 		},
-			-- 		{
-			-- 			"filename",
-			-- 			color = { gui = "italic" },
-			-- 			cond = function() return not DropbarEnabled and CountWindows(true) > 1 end,
-			-- 			file_status = true,
-			-- 			newfile_status = true,
-			-- 			path = 0,
-			-- 			shorting_target = 40,
-			-- 			symbols = {
-			-- 				modified = icons.file_modified,
-			-- 				readonly = icons.file_readonly,
-			-- 				unnamed  = icons.file_unnamed,
-			-- 				newfile  = icons.file_newfile,
-			-- 			}
-			-- 		},
-			-- 		{
-			-- 			function()
-			-- 				if DropbarEnabled then
-			-- 					return "%{%v:lua.dropbar.get_dropbar_str()%}"
-			-- 				else
-			-- 					return ""
-			-- 				end
-			-- 			end,
-			-- 			padding = { left = 0, right = 0 },
-			-- 			separator = { left = "", right = "" }
-			-- 		},
-			-- 	}
-			-- },
-			-- inactive_winbar = {
-			-- 	lualine_a = {
-			-- 		{
-			-- 			"filetype",
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			icon_only = true,
-			-- 			padding = { left = 1, right = 0 },
-			-- 			separator = ""
-			-- 		},
-			-- 		{
-			-- 			"filename",
-			-- 			color = { gui = "italic" },
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			file_status = true,
-			-- 			newfile_status = true,
-			-- 			path = 3,
-			-- 			shorting_target = 40,
-			-- 			symbols = {
-			-- 				modified = icons.file_modified,
-			-- 				readonly = icons.file_readonly,
-			-- 				unnamed  = icons.file_unnamed,
-			-- 				newfile  = icons.file_newfile,
-			-- 			}
-			-- 		}
-			-- 	},
-			-- 	lualine_c = {
-			-- 		{
-			-- 			"diff",
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			padding = { left = 1, right = 0 },
-			-- 			symbols = {
-			-- 				added = "+",
-			-- 				modified = "~",
-			-- 				removed = "-"
-			-- 			}
-			-- 		},
-			-- 	},
-			-- 	lualine_z = {
-			-- 		{
-			-- 			function return Lsp_icon end,
-			-- 			cond = function () return CountWindows(true) > 1 and isLspAttached() end,
-			-- 			on_click = function()
-			-- 				vim.cmd("LspInfo")
-			-- 			end,
-			-- 			padding = { left = 0, right = 1 },
-			-- 			separator = ""
-			-- 		},
-			-- 		{
-			-- 			"diagnostics",
-			-- 			cond = function () return CountWindows(true) > 1 end,
-			-- 			on_click = function()
-			-- 				vim.cmd("TroubleToggle")
-			-- 			end,
-			-- 			padding = { left = 1, right = 1 },
-			-- 			sources = { "nvim_diagnostic" },
-			-- 			symbols = {
-			-- 				error = icons.error,
-			-- 				warn  = icons.warn,
-			-- 				info  = icons.info,
-			-- 				hint  = icons.hint
-			-- 			}
-			-- 		}
-			-- 	}
-			-- },
 			extensions = {
 				"aerial",
 				"lazy",
@@ -4513,6 +4413,7 @@ addPlugin {
 	end
 }
 
+-- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 addPlugin {
 	"sindrets/winshift.nvim",
 	opts = {
@@ -4669,9 +4570,52 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-mini/mini.ai",
-	config = true,
-	event = "VeryLazy"
+	"nvim-mini/mini.ai", -- BUG: not working
+	-- dependencies = "nvim-mini/mini.extra",
+	-- event = "VeryLazy",
+	-- config = function(plugin)
+	-- 	local gen_ai_spec = require("mini.extra").gen_ai_spec
+
+	-- 	require(plugin.name).setup({
+	-- 		-- Table with textobject id as fields, textobject specification as values.
+	-- 		-- Also use this to disable builtin textobjects. See |MiniAi.config|.
+	-- 		custom_textobjects = {
+	-- s
+	-- 		},
+
+	-- 		-- Module mappings. Use `''` (empty string) to disable one.
+	-- 		mappings = {
+	-- 			-- Main textobject prefixes
+	-- 			around = 'a',
+	-- 			inside = 'i',
+
+	-- 			-- Next/last variants
+	-- 			-- NOTE: These override built-in LSP selection mappings on Neovim>=0.12
+	-- 			-- Map LSP selection manually to use it (see `:h MiniAi.config`)
+	-- 			around_next = 'an',
+	-- 			inside_next = 'in',
+	-- 			around_last = 'al',
+	-- 			inside_last = 'il',
+
+	-- 			-- Move cursor to corresponding edge of `a` textobject
+	-- 			goto_left = 'g[',
+	-- 			goto_right = 'g]',
+	-- 		},
+
+	-- 		-- Number of lines within which textobject is searched
+	-- 		n_lines = 50,
+
+	-- 		-- How to search for object (first inside current line, then inside
+	-- 		-- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
+	-- 		-- 'cover_or_nearest', 'next', 'previous', 'nearest'.
+	-- 		search_method = 'cover_or_next',
+
+	-- 		-- Whether to disable showing non-error feedback
+	-- 		-- This also affects (purely informational) helper messages shown after
+	-- 		-- idle time if user input is required.
+	-- 		silent = false,
+	-- 	})
+	-- end
 }
 
 addPlugin {
@@ -5264,10 +5208,7 @@ addPlugin {
 require("lazy").setup(plugins, lazy_config)
 -- <~>
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim
--- FEAT: https://github.com/nvim-mini/mini.extra
--- FEAT: https://github.com/oysandvik94/curl.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
 -- FEAT: https://github.com/wellle/targets.vim
 
