@@ -292,6 +292,8 @@ local lazy_config = {
 	}
 }
 
+local mason_installation = {}
+
 ---Defines highlight priorities for various components
 ---@type table<string, integer>
 local priority_hl = {
@@ -3150,7 +3152,27 @@ addPlugin {
 			height = 0.8,
 			width = 0.6,
 		}
-	}
+	},
+	config = function(_, cfg)
+		require("mason").setup(cfg)
+
+		-- local registry = require("mason-registry") -- FEAT: implement this
+		--
+		-- -- Listen for installation start
+		-- registry:on("package:install:handle", function(package)
+		-- 	table.insert(mason_update, {a = 1})
+		-- end)
+		--
+		-- -- Listen for installation success
+		-- registry:on("package:install:success", function(package)
+		-- 	mason_update[package.name] = nil
+		-- end)
+		--
+		-- -- Listen for installation failure
+		-- registry:on("package:install:failed", function(package)
+		-- 	mason_update[package.name] = nil
+		-- end)
+	end
 }
 
 addPlugin {
@@ -3860,6 +3882,21 @@ addPlugin {
 					}
 				},
 				lualine_x = {
+					-- {
+					-- 	function()
+					-- 		local installing = "abc"
+					-- 		for i, k in pairs(mason_installation) do
+					-- 			installing = installing .. i
+					-- 		end
+
+					-- 		return installing
+					-- 	end,
+					-- 	cond = function() return #mason_installation > 0 end,
+					-- 	color = "@text.note",
+					-- 	icon = { "󰅢 ", color = "@text.note"},
+					-- 	padding = { left = 0, right = 1 },
+					-- 	separator = ""
+					-- },
 					{
 						function() return vim.g.formatting or "" end,
 						color = "Boolean",
@@ -3872,7 +3909,7 @@ addPlugin {
 						fmt = function(str)
 							return string.sub(str, 2, -2)
 						end,
-						icon = {"󰱽", color = { fg = "#EAC435" }},
+						icon = { "󰱽", color = { fg = "#EAC435" }},
 						padding = { left = 0, right = 1 },
 						separator = ""
 					},
@@ -4898,7 +4935,7 @@ addPlugin {
 						["<c-t>"] = false,
 						["<c-u>"] = false,
 						["<c-v>"] = false,
-						[keymaps.open_split] = { "edit_split", mode = { "i", "n" } },
+						[keymaps.open_split] = { "edit_split", mode = { "i", "n" } }, -- BUG: keys not working
 						[keymaps.open_tab] = { "tab", mode = { "n", "i" } },
 						[keymaps.open_tab] = { "edit_vsplit", mode = { "i", "n" } },
 					}
