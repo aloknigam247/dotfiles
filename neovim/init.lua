@@ -1665,7 +1665,7 @@ addPlugin {
 			dark = "mocha"
 		},
 		custom_highlights = function(palette)
-			return {
+			return { -- RECODE: move to highlight_override using catcompile
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
