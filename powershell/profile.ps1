@@ -105,6 +105,7 @@ $catppuccin_mocha = @{
 # FEAT: use dark theme with transparency
 # FEAT: light wallpaper
 # FEAT: dark wallpaper
+# FEAT: change selection background
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"

@@ -847,10 +847,9 @@ vim.keymap.set("c", "<C-p>", "<C-r>+", { desc = "Paste in command line" })
 vim.keymap.set("i", "<C-p>", "<C-o>P", { desc = "Paste in insert mode", noremap = true })
 vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in visual mode" })
 -- ━━ path separator convertor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- FIX: highlight after change
-vim.keymap.set("n", "wc\\\\", "<cmd>s/\\/\\+/\\\\\\\\/g<CR>", { desc = "Convert / to \\\\" })
-vim.keymap.set("n", "wc\\",   "<cmd>s/\\/\\+/\\\\/g<CR>",     { desc = "Convert / to \\" })
-vim.keymap.set("n", "wc/",    "<cmd>s/\\\\\\+/\\//g<CR>",     { desc = "Convert \\\\ to /" })
+vim.keymap.set("n", "wc\\\\", "<cmd>s/\\/\\+/\\\\\\\\/eg | nohlsearch<CR>", { desc = "Convert / to \\\\" })
+vim.keymap.set("n", "wc\\",   "<cmd>s/\\/\\+/\\\\/eg | nohlsearch<CR>",     { desc = "Convert / to \\" })
+vim.keymap.set("n", "wc/",    "<cmd>s/\\\\\\+/\\//eg | nohlsearch<CR>",     { desc = "Convert \\\\ to /" })
 -- ━━ pickers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.lines() end, { desc = "Pick lines from current buffer" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
@@ -3156,22 +3155,22 @@ addPlugin {
 	config = function(_, cfg)
 		require("mason").setup(cfg)
 
-		-- local registry = require("mason-registry") -- FEAT: implement this
-		--
-		-- -- Listen for installation start
-		-- registry:on("package:install:handle", function(package)
-		-- 	table.insert(mason_update, {a = 1})
-		-- end)
-		--
+		local registry = require("mason-registry")
+
+		-- Listen for installation start
+		registry:on("package:install:handle", function(package)
+			mason_installation[package.package.name] = true
+		end)
+
 		-- -- Listen for installation success
-		-- registry:on("package:install:success", function(package)
-		-- 	mason_update[package.name] = nil
-		-- end)
+		registry:on("package:install:success", function(package)
+			mason_installation[package.name] = nil
+		end)
 		--
 		-- -- Listen for installation failure
-		-- registry:on("package:install:failed", function(package)
-		-- 	mason_update[package.name] = nil
-		-- end)
+		registry:on("package:install:failed", function(package)
+			mason_installation[package.name] = nil
+		end)
 	end
 }
 
@@ -3882,21 +3881,21 @@ addPlugin {
 					}
 				},
 				lualine_x = {
-					-- {
-					-- 	function()
-					-- 		local installing = "abc"
-					-- 		for i, k in pairs(mason_installation) do
-					-- 			installing = installing .. i
-					-- 		end
+					{
+						function()
+							local installing = ""
+							for i in pairs(mason_installation) do
+								installing = installing .. " " .. i
+							end
 
-					-- 		return installing
-					-- 	end,
-					-- 	cond = function() return #mason_installation > 0 end,
-					-- 	color = "@text.note",
-					-- 	icon = { "󰅢 ", color = "@text.note"},
-					-- 	padding = { left = 0, right = 1 },
-					-- 	separator = ""
-					-- },
+							return installing
+						end,
+						cond = function() return vim.tbl_count(mason_installation) > 0 end,
+						color = "Error",
+						icon = { "󰅢", color = "Error" },
+						padding = { left = 0, right = 1 },
+						separator = ""
+					},
 					{
 						function() return vim.g.formatting or "" end,
 						color = "Boolean",
