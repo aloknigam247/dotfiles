@@ -2582,13 +2582,13 @@ addPlugin {
 			-- Navigation
 			map("n", "[c", function()
 				if vim.wo.diff then return "[c" end
-				vim.schedule(function() gs.nav_hunk("prev", { preview = true }) end)
+				vim.schedule(function() gs.nav_hunk("prev", { preview = false }) end)
 				return "<Ignore>"
 			end, { desc = "previous git diff change", expr = true })
 
 			map("n", "]c", function()
 				if vim.wo.diff then return "]c" end
-				vim.schedule(function() gs.nav_hunk("next", { preview = true }) end)
+				vim.schedule(function() gs.nav_hunk("next", { preview = false }) end)
 				return "<Ignore>"
 			end, { desc = "next git diff change", expr = true })
 		end,
@@ -3066,7 +3066,7 @@ addPlugin {
 	"owallb/mason-auto-install.nvim",
 	config = function(_, cfg)
 		require("mason-auto-install").setup(cfg)
-		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype }) -- BUG: gives error
+		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
 	end,
 	opts = {
 		packages = {
@@ -5254,11 +5254,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/MunifTanjim/nui.nvim https://github.com/grapp-dev/nui-components.nvim
 
 -- FEAT: FOLDING: create own folding code
-
--- macros
--- FEAT: https://github.com/chrisgrieser/nvim-recorder
--- FEAT: https://github.com/bignos/bookmacro
--- FEAT: https://github.com/sahilsehwag/macrobank.nvim
 
 -- FIX: all diagnostics
 -- PERF: reduce startup plugins and remove unused plugins
