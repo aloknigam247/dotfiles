@@ -1,9 +1,11 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": [
+    "actions": 
+    [
         {
-            "command": {
+            "command": 
+            {
                 "action": "copy",
                 "singleLine": false
             },
@@ -14,7 +16,8 @@
             "id": "User.find"
         },
         {
-            "command": {
+            "command": 
+            {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
@@ -26,7 +29,8 @@
             "id": "User.toggleFocusMode"
         },
         {
-            "command": {
+            "command": 
+            {
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
@@ -37,18 +41,11 @@
     "copyFormatting": "rtf",
     "copyOnSelect": true,
     "defaultProfile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
-    "keybindings": [
+    "keybindings": 
+    [
         {
             "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
-        },
-        {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+v"
         },
         {
             "id": null,
@@ -56,15 +53,23 @@
         },
         {
             "id": null,
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": null,
             "keys": "ctrl+shift+t"
         },
         {
             "id": null,
-            "keys": "shift+insert"
+            "keys": "ctrl+r"
         },
         {
             "id": null,
-            "keys": "ctrl+r"
+            "keys": "shift+insert"
         },
         {
             "id": null,
@@ -84,7 +89,8 @@
         }
     ],
     "minimizeToNotificationArea": true,
-    "newTabMenu": [
+    "newTabMenu": 
+    [
         {
             "icon": null,
             "profile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
@@ -94,14 +100,17 @@
             "type": "remainingProfiles"
         }
     ],
-    "profiles": {
-        "defaults": {
+    "profiles": 
+    {
+        "defaults": 
+        {
             "adjustIndistinguishableColors": "indexed",
             "altGrAliasing": true,
             "antialiasingMode": "grayscale",
             "backgroundImage": null,
             "backgroundImageOpacity": 0.33,
-            "bellStyle": [
+            "bellStyle": 
+            [
                 "audible",
                 "window",
                 "taskbar"
@@ -110,7 +119,8 @@
             "colorScheme": "Tango Dark",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
-            "font": {
+            "font": 
+            {
                 "face": "JetBrainsMono Nerd Font",
                 "size": 14
             },
@@ -121,7 +131,8 @@
             "showMarksOnScrollbar": true,
             "useAcrylic": true
         },
-        "list": [
+        "list": 
+        [
             {
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -147,13 +158,15 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": "Catppuccin Latte",
+                "colorScheme": "Catppuccin Mocha",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "startingDirectory": "%USERPROFILE%"
+                "opacity": 0,
+                "startingDirectory": "%USERPROFILE%",
+                "useAcrylic": true
             },
             {
                 "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
@@ -164,7 +177,8 @@
         ]
     },
     "rendering.disablePartialInvalidation": true,
-    "schemes": [
+    "schemes": 
+    [
         {
             "background": "#EFF1F5",
             "black": "#5C5F77",
@@ -213,24 +227,29 @@
         }
     ],
     "tabWidthMode": "titleLength",
-    "theme": {
+    "theme": 
+    {
         "dark": "Catppuccin Mocha",
         "light": "Catppuccin Latte"
     },
-    "themes": [
+    "themes": 
+    [
         {
             "name": "Catppuccin Latte",
-            "tab": {
+            "tab": 
+            {
                 "background": "accent",
                 "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": "terminalBackground"
             },
-            "tabRow": {
+            "tabRow": 
+            {
                 "background": "terminalBackground",
                 "unfocusedBackground": "terminalBackground"
             },
-            "window": {
+            "window": 
+            {
                 "applicationTheme": "light",
                 "experimental.rainbowFrame": false,
                 "frame": "accent",
@@ -240,17 +259,20 @@
         },
         {
             "name": "Catppuccin Mocha",
-            "tab": {
+            "tab": 
+            {
                 "background": "accent",
                 "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": "terminalBackground"
             },
-            "tabRow": {
+            "tabRow": 
+            {
                 "background": "terminalBackground",
                 "unfocusedBackground": "terminalBackground"
             },
-            "window": {
+            "window": 
+            {
                 "applicationTheme": "dark",
                 "experimental.rainbowFrame": false,
                 "frame": "accent",

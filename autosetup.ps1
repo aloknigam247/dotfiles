@@ -289,8 +289,16 @@ function copyOrUpdateConfigs {
         $dest = $files[$key]
         $dir = Split-Path -Parent $dest
         if ($update) {
-            if ((Test-Path $dest) -and (Compare-Object (Get-Content $src) (Get-Content $dest)) ) {
-                Copy-Item -Path $src -Destination $dest -Force
+            if (Test-Path $dest) {
+                $srcFile = Get-Item $src
+                $destFile = Get-Item $dest
+                if ($srcFile.LastWriteTime -gt $destFile.LastWriteTime) {
+                    Write-Output "Copying $src --> $dest"
+                    Copy-Item $src $dest
+                } elseif ($srcFile.LastWriteTime -lt $destFile.LastWriteTime) {
+                    Write-Output "Copying $dest --> $src"
+                    Copy-Item $dest $src
+                }
             }
         } else {
             if (-not (Test-Path $dir)) {

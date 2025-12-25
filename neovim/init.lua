@@ -4930,26 +4930,26 @@ addPlugin {
 					keys = {
 						["<C-q>"] = false,
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
-						["<c-s>"] = false,
-						["<c-t>"] = false,
-						["<c-u>"] = false,
-						["<c-v>"] = false,
-						[keymaps.open_split] = { "edit_split", mode = { "i", "n" } }, -- BUG: keys not working
-						[keymaps.open_tab] = { "tab", mode = { "n", "i" } },
-						[keymaps.open_tab] = { "edit_vsplit", mode = { "i", "n" } },
+						["<C-s>"] = false,
+						["<C-t>"] = false,
+						["<C-u>"] = false,
+						["<C-v>"] = false,
+						["<M-s>"] = { "edit_split", mode = { "i", "n" } },
+						["<M-t>"] = { "tab", mode = { "n", "i" } },
+						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } },
 					}
 				},
 				list = {
 					keys = {
 						["<C-q>"] = false,
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
-						["<c-s>"] = false,
-						["<c-t>"] = false,
-						["<c-u>"] = false,
-						["<c-v>"] = false,
-						[keymaps.open_split] = { "edit_split", mode = { "i", "n" } },
-						[keymaps.open_tab] = { "tab", mode = { "n", "i" } },
-						[keymaps.open_tab] = { "edit_vsplit", mode = { "i", "n" } },
+						["<C-s>"] = false,
+						["<C-t>"] = false,
+						["<C-u>"] = false,
+						["<C-v>"] = false,
+						["<M-s>"] = { "edit_split", mode = { "i", "n" } },
+						["<M-t>"] = { "tab", mode = { "n", "i" } },
+						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } },
 					}
 				}
 			},
@@ -5246,7 +5246,6 @@ require("lazy").setup(plugins, lazy_config)
 -- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 -- FEAT: https://github.com/mistricky/codesnap.nvim https://github.com/mistweaverco/snap.nvim
 -- FEAT: https://github.com/Piotr1215/pairup.nvim
--- FEAT: https://github.com/wellle/targets.vim
 
 -- Popup
 -- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color

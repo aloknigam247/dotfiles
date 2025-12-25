@@ -120,14 +120,16 @@ if ($env:THEME -eq "light") {
     $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
     $env:DELTA_FEATURES = "catppuccin-latte"
-    (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Mocha"', '"colorScheme": "Catppuccin Latte"') | Out-File $terminal_settings
+    sed -i 's/"colorScheme": "Catppuccin Mocha"/"colorScheme": "Catppuccin Latte"/' $terminal_settings
+    sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
 } else {
     $catppuccin = $catppuccin_mocha
     $color_palette = $dark_palette
     $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml"
     $env:DELTA_FEATURES = "catppuccin-mocha"
-    (Get-Content $terminal_settings).Replace('"colorScheme": "Catppuccin Latte"', '"colorScheme": "Catppuccin Mocha"') | Out-File $terminal_settings
+    sed -i 's/"colorScheme": "Catppuccin Latte"/"colorScheme": "Catppuccin Mocha"/' $terminal_settings
+    sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
 
 $palette = @{
@@ -270,7 +272,7 @@ function e    { D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cu
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
-function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\$($lazygit_theme)" }
+function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\config.yml,$env:APPDATA\lazygit\$($lazygit_theme)" }
 function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
 function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function nvim { C:\Users\aloknigam\scoop\shims\nvim.exe $args; Write-Host -NoNewline "`e[0 q" }
@@ -475,7 +477,6 @@ function Format-Text {
 # ╭────────────────╮
 # │ Autocompletion │
 # ╰────────────────╯
-# FEAT: play around powerhshell keys
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
