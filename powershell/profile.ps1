@@ -24,8 +24,6 @@ if ($(IsShellInteractive) -eq $false) {
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
-# FIX: dark theme by defaults
-# FEAT: wallpapers for dark/light themes
 $light_palette = @{
     dir_icon_fg = "#A6E3A1"
     git_index = "#ffda1a "
@@ -101,8 +99,6 @@ $catppuccin_mocha = @{
 }
 
 # get system theme
-# FEAT: use light theme without transparency
-# FEAT: use dark theme with transparency
 # FEAT: light wallpaper
 # FEAT: dark wallpaper
 # FEAT: change selection background

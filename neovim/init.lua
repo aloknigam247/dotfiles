@@ -5058,9 +5058,9 @@ addPlugin {
 		require("AniMotion").setup({
 			clear_keys = { "<Esc>" },
 			color = { link = "IncSearch" },
-			edit_keys = { "c", "d", "s", "r", "x", "y" },
+			edit_keys = { "c", "d", "x" },
 			map_visual = false,
-			marks = {"y", "z"},
+			marks = { "y", "z" },
 			mode = "animotion",
 			word_keys = {
 				[utils.Targets.NextLongWordEnd] = "E",
