@@ -1148,7 +1148,7 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
-	"Peek", -- FIX: float border
+	"Peek",
 	function(args)
 		local snacks = require("snacks")
 		local prev_win = Preview_win
@@ -1189,7 +1189,10 @@ vim.api.nvim_create_user_command(
 			title_pos = "center",
 			footer = " " .. keymaps.open_split .. " split " .. keymaps.open_vsplit .." vsplit " .. keymaps.open_tab .. " tab open ",
 			footer_pos = "right",
-			bo = { modifiable = true }
+			bo = { modifiable = true },
+			wo = {
+				winhighlight = "Normal:NormalFloat,NormalNC:NormalFloatNC,WinBar:SnacksWinBar,WinBarNC:SnacksWinBarNC,FloatTitle:SnacksTitle,FloatFooter:SnacksFooter"
+			}
 		})
 
 		-- close previous Peek window

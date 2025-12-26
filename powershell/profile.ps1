@@ -358,7 +358,7 @@ function Get-TODO {
     )
 
     process {
-        $tag_list = @("BUG", "DOCME", "FEAT", "FIX", "FIXME", "PERF", "REFACTOR", "TEST", "TODO", "THOUGHT")
+        $tag_list = @("BUG", "DOCME", "FEAT", "FIX", "FIXME", "PERF", "RECODE", "REFACTOR", "TEST", "TODO", "THOUGHT")
 
         if ($type -eq "All") {
             # Get list of all
