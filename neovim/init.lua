@@ -1148,7 +1148,7 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
-	"Peek",
+	"Peek", -- FIX: float border
 	function(args)
 		local snacks = require("snacks")
 		local prev_win = Preview_win
@@ -1620,12 +1620,10 @@ addPlugin {
 	}
 }
 
--- FEAT: "yuki-yano/highlight-undo.nvim",
 addPlugin {
-	"tzachar/highlight-undo.nvim", -- Better highlight
-	config = true,
-	keys = { "u" },
-	lazy = true
+	"tzachar/highlight-undo.nvim",
+	lazy = false,
+	opts = { hlgroup = "DiffChange" },
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  Colorscheme   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
