@@ -1564,6 +1564,8 @@ addPlugin {
 				return config
 			end)()
 		})
+
+		vim.keymap.set("n", "h", hipatterns.toggle, { desc = "Toggle Mini.Hipatterns" })
 	end,
 	event = "CursorHold"
 }
@@ -1664,8 +1666,15 @@ addPlugin {
 			light = "latte",
 			dark = "mocha"
 		},
-		custom_highlights = function(palette)
-			return { -- RECODE: move to highlight_override using catcompile
+		-- custom_highlights = function(palette)
+		-- end,
+		float = {
+			transparent = true,
+			solid = false
+		},
+		highlight_overrides = {
+			all = function(palette)
+				return {
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
@@ -1685,18 +1694,15 @@ addPlugin {
 					NvimSurroundHighlight = { bg = palette.peach },
 					RenderMarkdownCode = { bg = palette.crust },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
-					SnacksPickerMatch = { fg = palette.blue, style = { "underline" } },
+					SnacksPickerMatch = { fg = "", style = { "underline" } },
 					TinyDiagnosticNormal = { fg = palette.text, bg = palette.base },
 					Todo = { fg = palette.blue, bg = "" },
 					Visual = { bg = palette.surface1, style = {} },
 					VisualMatch = { bg = palette.surface0 },
 					["@markup.heading.markdown"] = { fg = palette.mauve, style = { "bold" } },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
-			}
-		end,
-		float = {
-			transparent = true,
-			solid = false
+				}
+			end
 		},
 		lsp_styles = {
 			underlines = {
@@ -2016,11 +2022,12 @@ addPlugin {
 					module = "lazydev.integrations.blink"
 				},
 				path = {
-					name = "path", -- FEAT: transform path correctly
+					name = "path",
 					transform_items = function(_, items)
 						for _, item in pairs(items) do
 							item.label = item.label:gsub("/", "\\")
 							item.insertText = item.insertText:gsub("/", "\\")
+							item.textEdit.newText = item.textEdit.newText:gsub("/", "\\")
 						end
 						return items
 					end
@@ -2743,7 +2750,10 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: csharp lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim ask question
+-- FEAT: csharp lsp
+-- lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim ask question
+-- https://github.com/anachary/dotnet-core.nvim
+-- https://github.com/anachary/dotnet-plugin.nvim
 addPlugin {
 	"seblyng/roslyn.nvim",
 	-- ft = "cs",
@@ -2763,8 +2773,6 @@ addPlugin {
 	end,
 }
 
--- FEAT: https://github.com/anachary/dotnet-core.nvim
--- FEAT: https://github.com/anachary/dotnet-plugin.nvim
 
 addPlugin {
 	"Davidyz/inlayhint-filler.nvim",
