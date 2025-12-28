@@ -1594,6 +1594,7 @@ addPlugin {
 
 addPlugin {
 	"folke/todo-comments.nvim",
+	cmd = "TodoTrouble",
 	config = function()
 		require("todo-comments").setup({
 			colors = todo_colors,
