@@ -129,6 +129,12 @@ if exists("g:neovide")
     let g:neovide_underline_stroke_scale = 1.7
     let g:neovide_window_blurred = v:true
     map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
+
+    let g:Font_name = 'JetBrainsMono NF'
+    let g:Font_size = 15
+    let &guifont = g:Font_name . ':h' . g:Font_size
+    map <C-ScrollWheelDown> :let g:neovide_scale_factor -= 0.05<CR>
+    map <C-ScrollWheelUp> :let g:neovide_scale_factor += 0.05<CR>
 endif
 " }}}
 
@@ -179,15 +185,7 @@ endfun
 " r = insert comment on enter
 " t = do auto wrapping at textwidth
 
-lua << EOF
-    require('init')
-    -- RECODE: relocate to GUI options
-    Font_name = 'JetBrainsMono NF'
-    Font_size = 15
-    vim.o.guifont = Font_name .. ':h' .. Font_size
-    vim.keymap.set('n', '<C-ScrollWheelUp>', function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.05 end)
-    vim.keymap.set('n', '<C-ScrollWheelDown>', function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.05 end)
-EOF
-
+" load init.lua
+lua require("init")
 " }}}
 " vim: fdm=marker

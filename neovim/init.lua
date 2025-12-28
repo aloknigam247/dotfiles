@@ -1,4 +1,7 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: all diagnostics
+-- PERF: reduce startup plugins and remove unused plugins
+-- RECODE: rearrange all plugins
 -- Variables</>
 ------------
 local color_palette = {
@@ -908,6 +911,67 @@ vim.keymap.set({ "c", "i" }, "=", function()
 
 end, { expr = true, noremap = true, desc = "Add spaces around =" })
 
+-- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
+-- https://github.com/MunifTanjim/nui.nvim https://github.com/grapp-dev/nui-components.nvim
+vim.keymap.set("v", "<Leader>ft", function()
+	-- popup menu to apply highlight on text, like bold, italic, fg color, bg color
+	-- https://nui-components.grapp.dev/docs/getting-started
+	-- https://github.com/jrop/morph.nvim
+	-- https://github.com/nvzone/volt
+	-- bold toggle
+	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
+	vim.api.nvim_set_hl(0, "NuiComponentsButtonActive", { bg = "#00FF00" })
+	vim.api.nvim_set_hl(0, "NuiComponentsButtonFocus", { bg = "#FFFF00" })
+
+	local txtfmt_ns = vim.api.nvim_create_namespace("txtfmt_ns")
+	local buf = vim.api.nvim_get_current_buf()
+
+	vim.fn.feedkeys(":", "nx")
+	local start_mark = vim.api.nvim_buf_get_mark(0, "<")
+	local start_row, start_col = start_mark[1], start_mark[2]
+	local end_mark = vim.api.nvim_buf_get_mark(0, ">")
+	local end_row, end_col = end_mark[1], end_mark[2]
+
+	local n = require("nui-components")
+
+	local widget = n.create_renderer({
+		width = 2,
+		height = 1,
+	})
+
+	local getHl = function()
+		return {}
+	end
+
+	widget:render(function()
+		return n.columns(
+			n.button({
+				label = " B ",
+				autofocus = true,
+				press_key = { "<LeftMouse>", "<CR>" },
+				on_press = function(self)
+					local props = self:get_props()
+					props.is_active = not props.is_active
+					local cur_hl = getHl()
+					vim.hl.range(buf, txtfmt_ns, "Boolean", start_mark, end_mark)
+				end
+			})
+		)
+	end)
+
+	-- italic toggle
+	-- underline toggle
+	-- strikethrough toggle
+	-- fg/bg color tab
+		-- color palette
+		-- color slider
+	-- Get current attributes if applied
+	-- Clear all
+	-- Border around widget
+	-- support ctrl-v
+end)
+
+
 vim.keymap.set("v", "<leader>ub", function()
 	local ns_id = vim.api.nvim_create_namespace('visual_bold')
 
@@ -1375,64 +1439,6 @@ addPlugin {
 	"grapp-dev/nui-components.nvim",
 	dependencies = "MunifTanjim/nui.nvim"
 }
-
-vim.keymap.set("v", "<Leader>ft", function()
-	-- popup menu to apply highlight on text, like bold, italic, fg color, bg color
-	-- https://nui-components.grapp.dev/docs/getting-started
-	-- https://github.com/jrop/morph.nvim
-	-- https://github.com/nvzone/volt
-	-- bold toggle
-	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
-	vim.api.nvim_set_hl(0, "NuiComponentsButtonActive", { bg = "#00FF00" })
-	vim.api.nvim_set_hl(0, "NuiComponentsButtonFocus", { bg = "#FFFF00" })
-
-	local txtfmt_ns = vim.api.nvim_create_namespace("txtfmt_ns")
-	local buf = vim.api.nvim_get_current_buf()
-
-	vim.fn.feedkeys(":", "nx")
-	local start_mark = vim.api.nvim_buf_get_mark(0, "<")
-	local start_row, start_col = start_mark[1], start_mark[2]
-	local end_mark = vim.api.nvim_buf_get_mark(0, ">")
-	local end_row, end_col = end_mark[1], end_mark[2]
-
-	local n = require("nui-components")
-
-	local widget = n.create_renderer({
-		width = 2,
-		height = 1,
-	})
-
-	local getHl = function()
-		return {}
-	end
-
-	widget:render(function()
-		return n.columns(
-			n.button({
-				label = " B ",
-				autofocus = true,
-				press_key = { "<LeftMouse>", "<CR>" },
-				on_press = function(self)
-					local props = self:get_props()
-					props.is_active = not props.is_active
-					local cur_hl = getHl()
-					vim.hl.range(buf, txtfmt_ns, "Boolean", start_mark, end_mark)
-				end
-			})
-		)
-	end)
-
-	-- italic toggle
-	-- underline toggle
-	-- strikethrough toggle
-	-- fg/bg color tab
-		-- color palette
-		-- color slider
-	-- Get current attributes if applied
-	-- Clear all
-	-- Border around widget
-	-- support ctrl-v
-end)
 
 addPlugin {
 	"Pocco81/high-str.nvim",
@@ -2237,7 +2243,7 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- create own folding code
+-- FEAT: create own folding code
 -- Use nvim-ufo python description
 -- Provider indent
 -- Provider treesitter
@@ -4458,7 +4464,6 @@ addPlugin {
 	end
 }
 
--- FEAT: https://github.com/MisanthropicBit/winmove.nvim
 addPlugin {
 	"sindrets/winshift.nvim",
 	opts = {
@@ -4521,7 +4526,6 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ascii diagrams https://diagon.arthursonzogni.com
-
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
@@ -4540,6 +4544,8 @@ addPlugin {
 	cmd = "GrugFar",
 	config = true
 }
+
+-- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 
 addPlugin {
 	"OXY2DEV/patterns.nvim",
@@ -4615,52 +4621,9 @@ addPlugin {
 }
 
 addPlugin {
-	"nvim-mini/mini.ai", -- BUG: not working
-	-- dependencies = "nvim-mini/mini.extra",
-	-- event = "VeryLazy",
-	-- config = function(plugin)
-	-- 	local gen_ai_spec = require("mini.extra").gen_ai_spec
-
-	-- 	require(plugin.name).setup({
-	-- 		-- Table with textobject id as fields, textobject specification as values.
-	-- 		-- Also use this to disable builtin textobjects. See |MiniAi.config|.
-	-- 		custom_textobjects = {
-	-- s
-	-- 		},
-
-	-- 		-- Module mappings. Use `''` (empty string) to disable one.
-	-- 		mappings = {
-	-- 			-- Main textobject prefixes
-	-- 			around = 'a',
-	-- 			inside = 'i',
-
-	-- 			-- Next/last variants
-	-- 			-- NOTE: These override built-in LSP selection mappings on Neovim>=0.12
-	-- 			-- Map LSP selection manually to use it (see `:h MiniAi.config`)
-	-- 			around_next = 'an',
-	-- 			inside_next = 'in',
-	-- 			around_last = 'al',
-	-- 			inside_last = 'il',
-
-	-- 			-- Move cursor to corresponding edge of `a` textobject
-	-- 			goto_left = 'g[',
-	-- 			goto_right = 'g]',
-	-- 		},
-
-	-- 		-- Number of lines within which textobject is searched
-	-- 		n_lines = 50,
-
-	-- 		-- How to search for object (first inside current line, then inside
-	-- 		-- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
-	-- 		-- 'cover_or_nearest', 'next', 'previous', 'nearest'.
-	-- 		search_method = 'cover_or_next',
-
-	-- 		-- Whether to disable showing non-error feedback
-	-- 		-- This also affects (purely informational) helper messages shown after
-	-- 		-- idle time if user input is required.
-	-- 		silent = false,
-	-- 	})
-	-- end
+	"nvim-mini/mini.ai",
+	event = "VeryLazy",
+	config = true
 }
 
 addPlugin {
@@ -5252,17 +5215,4 @@ addPlugin {
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
--- FEAT: https://github.com/MisanthropicBit/decipher.nvim
--- FEAT: https://github.com/mistricky/codesnap.nvim https://github.com/mistweaverco/snap.nvim
--- FEAT: https://github.com/Piotr1215/pairup.nvim
-
--- Popup
--- FEAT: 1503: popup menu to apply highlight on text, like bold, italic, fg color, bg color
--- FEAT: https://github.com/MunifTanjim/nui.nvim https://github.com/grapp-dev/nui-components.nvim
-
--- FEAT: FOLDING: create own folding code
-
--- FIX: all diagnostics
--- PERF: reduce startup plugins and remove unused plugins
--- RECODE: rearrange all plugins
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
