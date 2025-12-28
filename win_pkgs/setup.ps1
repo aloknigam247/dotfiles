@@ -18,5 +18,5 @@ $winget_pkgs = @(
     "GitHub.cli"
     "Microsoft.PowerToys"
     "Microsoft.VisualStudioCode"
-    "Python.Python.3.12"
+    "Python.Python.3.14"
 )

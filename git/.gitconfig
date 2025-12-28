@@ -22,7 +22,8 @@
     diffFilter = delta --color-only
 
 [delta]
-; FEAT: hyperlink support
+    ; FEAT: hyperlink support
+    ; FEAT: change how diff file is shown, may be background border
     colorMoved = default
     commit-style = red
     file-added-label = 
