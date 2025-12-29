@@ -853,6 +853,8 @@ vim.keymap.set("v", "p",       '"_dP',   { desc = "Do not copy while pasting in 
 vim.keymap.set("n", "wc\\\\", "<cmd>s/\\/\\+/\\\\\\\\/eg | nohlsearch<CR>", { desc = "Convert / to \\\\" })
 vim.keymap.set("n", "wc\\",   "<cmd>s/\\/\\+/\\\\/eg | nohlsearch<CR>",     { desc = "Convert / to \\" })
 vim.keymap.set("n", "wc/",    "<cmd>s/\\\\\\+/\\//eg | nohlsearch<CR>",     { desc = "Convert \\\\ to /" })
+vim.keymap.set("n", "wc'",    "<cmd>s/\"/'/eg | nohlsearch<CR>",            { desc = "Convert \\\\ to /" })
+vim.keymap.set("n", "wc\"",   "<cmd>s/'/\"/eg | nohlsearch<CR>",            { desc = "Convert \\\\ to /" })
 -- ━━ pickers ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<leader><space>/", function() require("snacks").picker.lines() end, { desc = "Pick lines from current buffer" })
 vim.keymap.set("n", "<leader><space>c", function() require("snacks").picker.command_history() end, { desc = "Pick command history" })
