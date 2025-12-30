@@ -1,5 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: reduce startup plugins and remove unused plugins
+-- PERF: reduce startup plugins and remove unused plugins: vim-matchup
 -- RECODE: rearrange all plugins
 -- Variables</>
 ------------
@@ -1494,7 +1494,7 @@ addPlugin {
 		vim.keymap.set("n", "]i", require("illuminate").goto_next_reference, { desc = "Jump to next illuminated text" })
 		vim.keymap.set("n", "[i", require("illuminate").goto_prev_reference, { desc = "Jump to previous illuminated text" })
 	end,
-	event = { "CursorHold" }
+	event = { "CursorMoved" }
 }
 
 addPlugin {
@@ -1706,12 +1706,12 @@ addPlugin {
 					IlluminatedWordWrite = { bg = palette.mantle },
 					InclineNormal = { bg = palette.surface1, fg = palette.text },
 					NvimSurroundHighlight = { bg = palette.peach },
-					RenderMarkdownCode = { bg = palette.crust },
+					RenderMarkdownCode = { bg = palette.crust }, -- REFACTOR: make lighter
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					SnacksPickerMatch = { fg = "", style = { "underline" } },
 					TinyDiagnosticNormal = { fg = palette.text, bg = palette.base },
 					Todo = { fg = palette.blue, bg = "" },
-					Visual = { bg = palette.surface1, style = {} },
+					Visual = { bg = palette.surface1, style = {} }, -- REFACTOR: make lighter
 					VisualMatch = { bg = palette.surface0 },
 					["@markup.heading.markdown"] = { fg = palette.mauve, style = { "bold" } },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
@@ -3804,7 +3804,7 @@ addPlugin {
 			}
 		})
 	end,
-	event = "CursorHold",
+	event = "WinNew",
 }
 
 addPlugin {
@@ -4629,7 +4629,10 @@ addPlugin {
 
 addPlugin {
 	"nvim-mini/mini.ai",
-	event = "VeryLazy",
+	keys = {
+		{ "a", mode = { "o", "v" }},
+		{ "i", mode = { "o", "v" }},
+	},
 	config = true
 }
 
@@ -4684,8 +4687,11 @@ addPlugin {
 
 addPlugin {
 	"kylechui/nvim-surround",
-	event = "VeryLazy",
-	config = function()
+	keys = {
+		{ "s", mode = { "n", "v" }},
+		{ "S", mode = { "n", "v" }}
+	},
+	config = function() -- FIX: change highlight
 		require("nvim-surround").setup({
 			aliases = {
 				["b"] = { "}", "]", ")", ">" },
@@ -5067,7 +5073,7 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
-addPlugin { -- FETA: true-false
+addPlugin { -- FEAT: true-false
 	"monaqa/dial.nvim",
 	keys = {
 		{ "<C-a>", "<Plug>(dial-increment)",    mode = { "n", "x" }, desc = "Increment" },
@@ -5078,16 +5084,8 @@ addPlugin { -- FETA: true-false
 }
 
 addPlugin {
-	"rickhowe/diffchar.vim",
-	lazy = false,
-	config = function()
-		vim.g.DiffPairVisible = 3
-	end
-}
-
-addPlugin {
 	"rickhowe/wrapfiller",
-	lazy = false
+	event = "DiffUpdated"
 }
 
 addPlugin {
