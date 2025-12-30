@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: all diagnostics
 -- PERF: reduce startup plugins and remove unused plugins
 -- RECODE: rearrange all plugins
 -- Variables</>
@@ -993,7 +992,7 @@ vim.keymap.set("v", "<leader>ub", function()
 		end
 
 		-- Check existing extmarks in range (simple toggle logic)
-		local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id, 
+		local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, ns_id,
 		{line_start, col_start}, {line_end, col_end}, {details=true})
 
 		if #extmarks > 0 then
@@ -1004,8 +1003,14 @@ vim.keymap.set("v", "<leader>ub", function()
 			print("Bold highlight cleared")
 		else
 			-- Apply bold highlight (sticky, moves with text edits)
-			vim.hl.range('BoldVisual', {line_start, col_start}, {line_end, col_end}, 
-			{priority=2000, ns_id=ns_id})  -- High priority over syntax/LSP
+			vim.hl.range(
+				bufnr,
+				ns_id,
+				'BoldVisual',
+				{line_start, col_start},
+				{line_end, col_end},
+				{ priority=2000, ns_id=ns_id }
+			)  -- High priority over syntax/LSP
 			print("Bold highlight applied")
 		end
 	end
@@ -3202,7 +3207,7 @@ addPlugin {
 		Lsp_icon = ""
 		Lsp_icon_index = 0
 
-		vim.uv.timer_start(vim.uv.new_timer(), 700, 700, function()
+		vim.uv.timer_start(vim.uv.new_timer(), 700, 700, function() ---@diagnostic disable-line: param-type-mismatch
 			Lsp_icon_index = (Lsp_icon_index) % #Lsp_anim + 1
 			Lsp_icon = Lsp_anim[Lsp_icon_index]
 		end)
@@ -3598,7 +3603,6 @@ addPlugin {
 		float = {
 			relative = "editor",
 		},
-		guides = { mid_item = "├ ", last_item = "╰ ", nested_top = "│ ", whitespace = " ", },
 		highlight_on_hover = true,
 		icons = icons,
 		nav = {
