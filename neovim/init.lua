@@ -1,7 +1,9 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- RECODE: rearrange all plugins
 -- Variables</>
 ------------
+
+---Color palette
+---@type table<"dark"|"light", string[]>
 local color_palette = {
 	dark = {
 		"#50808E",
@@ -47,6 +49,7 @@ local color_palette = {
 	}
 }
 
+-- RECODE: rearrange all plugins
 ---Debug tag
 ---@type string
 local debug_tag = "DEBUG" .. "PRINT"
@@ -1687,7 +1690,7 @@ addPlugin {
 		},
 		highlight_overrides = {
 			all = function(palette)
-				return {
+				return { -- FEAT: SnippetTabStop and SnippetTabStopActive colors
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
@@ -1703,7 +1706,7 @@ addPlugin {
 					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
 					IlluminatedWordWrite = { bg = palette.mantle },
-					InclineNormal = { bg = palette.surface1, fg = palette.text },
+					InclineNormal = { bg = palette.surface1, fg = palette.text }, -- REFACTOR: change color
 					NvimSurroundHighlight = { bg = palette.peach },
 					RenderMarkdownCode = { bg = palette.crust }, -- REFACTOR: make lighter
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
