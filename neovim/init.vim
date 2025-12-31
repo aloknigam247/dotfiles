@@ -1,5 +1,6 @@
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Variables     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
+let g:loaded_matchparen = 1
 let &titleold = getcwd()            " Set console title to path on vim exit
 let c_curly_error = 1               " Show curly braces error
 let c_space_errors = 1              " Highlight trailing spaces

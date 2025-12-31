@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: reduce startup plugins and remove unused plugins: vim-matchup
 -- RECODE: rearrange all plugins
 -- Variables</>
 ------------
@@ -1861,7 +1860,7 @@ addPlugin {
 					}
 				}
 			},
-			keymap = {
+			keymap = { -- FIX: disable <C-n> <C-p>
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { },
@@ -4281,7 +4280,7 @@ addPlugin {
 		},
 		ignore_install = {},
 		matchup = {
-			enabled = true
+			enabled = false
 		},
 		modules = {},
 		sync_install = false
@@ -4580,7 +4579,7 @@ addPlugin {
 		vim.g.matchup_mouse_enabled = false
 		vim.g.matchup_matchparen_deferred = true
 	end,
-	lazy = false
+	lazy = false,
 }
 
 addPlugin {
@@ -4594,9 +4593,7 @@ addPlugin {
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 	},
-	keys = {
-		{ "gww", function() require("wrapping-paper").wrap_line() end, desc = "Unwrap current line" }
-	}
+	keys = {{ "gww", function() require("wrapping-paper").wrap_line() end, desc = "Unwrap current line" }}
 }
 
 addPlugin {
