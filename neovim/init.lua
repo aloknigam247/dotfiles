@@ -1690,7 +1690,9 @@ addPlugin {
 		},
 		highlight_overrides = {
 			all = function(palette)
-				return { -- FEAT: SnippetTabStop and SnippetTabStopActive colors
+				return {
+					-- FEAT: SnippetTabStop and SnippetTabStopActive colors
+					-- FEAT: Colorcolumn
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
