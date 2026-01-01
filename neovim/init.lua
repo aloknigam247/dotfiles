@@ -49,7 +49,6 @@ local color_palette = {
 	}
 }
 
--- RECODE: rearrange all plugins
 ---Debug tag
 ---@type string
 local debug_tag = "DEBUG" .. "PRINT"
@@ -147,6 +146,8 @@ local icons = {
 	warning            = " ",
 }
 
+-- RECODE: configure via nvim-web-devicons
+-- RECODE: rearrange all plugins
 ---Defines highlight for kinds
 ---@type table<string, table<"icon"|"dark"|"light", vim.api.keyset.highlight|string>>
 local kind_hl = {
