@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/folke/sidekick.nvim
 -- Variables</>
 ------------
 
@@ -1704,7 +1705,7 @@ addPlugin {
 					CoverageCovered = { fg = palette.teal },
 					CoveragePartial = { fg = palette.mauve },
 					CoverageUncovered = { fg = palette.flamingo },
-					DebugPrintLine = { bg = palette.surface0 },
+					DebugPrintLine = { bg = palette.surface0 }, -- FEAT: better background
 					DebugPrintSignHl = { fg = palette.pink },
 					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
@@ -4922,7 +4923,7 @@ addPlugin {
 						["<C-t>"] = false,
 						["<C-u>"] = false,
 						["<C-v>"] = false,
-						["<M-s>"] = { "edit_split", mode = { "i", "n" } },
+						["<M-s>"] = { "edit_split", mode = { "i", "n" } }, -- FEAT: ask for window picker for splits
 						["<M-t>"] = { "tab", mode = { "n", "i" } },
 						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } },
 					}
