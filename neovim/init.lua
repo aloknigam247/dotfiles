@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/folke/sidekick.nvim
 -- Variables</>
 ------------
 
@@ -1283,6 +1282,13 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 -- <~>
+--━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/
+addPlugin {
+	"folke/sidekick.nvim",
+	opts = {}
+}
+
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"dhruvasagar/vim-table-mode",
