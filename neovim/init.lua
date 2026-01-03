@@ -1286,7 +1286,16 @@ vim.api.nvim_create_user_command(
 -- FEAT: https://github.com/
 addPlugin {
 	"folke/sidekick.nvim",
-	opts = {}
+	cmd = "Sidekick", -- lazy-load on :Sidekick
+	opts = {
+		cli = {
+			tools = {
+				copilot = {
+					cmd = { "copilot", "--banner", "--model", "gpt-5.2" },
+				},
+			},
+		},
+	}
 }
 
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
