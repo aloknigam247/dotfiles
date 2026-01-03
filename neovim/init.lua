@@ -1283,7 +1283,8 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/
+-- FEAT: AI
+-- https://github.com/olimorris/codecompanion.nvim
 addPlugin {
 	"folke/sidekick.nvim",
 	cmd = "Sidekick", -- lazy-load on :Sidekick
@@ -1297,7 +1298,7 @@ addPlugin {
 		},
 	}
 }
-
+-- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"dhruvasagar/vim-table-mode",
@@ -3511,7 +3512,7 @@ addPlugin {
 			},
 		},
 		todo_action_depth = 10,
-		todo_count_formatter = function(completed, total)
+		todo_count_formatter = function(completed, total) -- FEAT: count on headings/lines above tasks
 			return string.format("%d/%d (%.0f%%)", completed, total, completed / total * 100)
 		end,
 		todo_states = {
@@ -3526,6 +3527,8 @@ addPlugin {
 		},
 	}
 }
+
+-- FEAT: https://github.com/hakonharnes/img-clip.nvim
 
 addPlugin {
 	"richardbizik/nvim-toc",
@@ -4516,6 +4519,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: https://github.com/numEricL/WinBender.nvim
 addPlugin {
 	"tamton-aquib/flirt.nvim",
 	event = "WinNew",
@@ -4554,6 +4558,7 @@ addPlugin {
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ascii diagrams https://diagon.arthursonzogni.com
+-- FEAT: https://github.com/altermo/iedit.nvim https://github.com/viocost/viedit
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
