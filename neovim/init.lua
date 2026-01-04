@@ -836,6 +836,7 @@ vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
 vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save file" })
 -- ━━ cursor movement ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- FEAT: for insert mode as well
 vim.keymap.set("v", "<C-Left>", "b", { desc = "Move to next word end" })
 vim.keymap.set("v", "<C-Right>", "e", { desc = "Move to prev word start" })
 vim.keymap.set("v", "<S-Left>", "<C-Left>", { desc = "Move to next word end" })
@@ -1228,7 +1229,7 @@ vim.api.nvim_create_user_command(
 			path = vim.fn.expand("%:p")
 		end
 
-		local function reopen(mode)
+		local function reopen(mode) -- FIX: reset win highlight on reopen
 			Preview_win:hide()
 
 			local picked_win = require("window-picker").pick_window({ include_current_win = true })
@@ -2107,7 +2108,7 @@ addPlugin {
 
 addPlugin {
 	"hat0uma/csvview.nvim",
-  cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+  cmd = { "CsvViewEnable" },
 	opts = {}
 }
 --<~>
@@ -2671,17 +2672,17 @@ addPlugin {
 	config = function()
 		require("nvim-web-devicons").setup({
 			override = {
-				["c++"]  = { color = "#F34B7D", cterm_color = "204", icon = "󰙲", name = "CPlusPlus" },
-				cc       = { color = "#F34B7D", cterm_color = "204", icon = "󰙲", name = "CPlusPlus" },
-				cp       = { color = "#F34B7D", cterm_color = "204", icon = "󰙲", name = "Cp"        },
-				cpp      = { color = "#F34B7D", cterm_color = "204", icon = "󰙲", name = "Cpp"       },
-				cs       = { color = "#C20DA6", cterm_color = "58",  icon = "󰌛", name = "Cs"        },
-				csproj   = { color = "#854CC7", cterm_color = "98",  icon = "", name = "Csproj"    },
-				csv      = { color = "#89E051", cterm_color = "113", icon = "", name = "Csv"       },
-				md       = { color = "#42A5F5", cterm_color = "75",  icon = "", name = "Md"        },
-				mdx      = { color = "#519ABA", cterm_color = "67",  icon = "󰽛", name = "Mdx"       },
-				py       = { color = "#3D7BAB", cterm_color = "221", icon = "", name = "Py"        },
-				todo     = { color = "#7CB342", cterm_color = "107", icon = "", name = "Todo"      },
+				["c++"]  = { color = "#F34B7D", icon = "󰙲", name = "CPlusPlus" },
+				cc       = { color = "#F34B7D", icon = "󰙲", name = "CPlusPlus" },
+				cp       = { color = "#F34B7D", icon = "󰙲", name = "Cp"        },
+				cpp      = { color = "#F34B7D", icon = "󰙲", name = "Cpp"       },
+				cs       = { color = "#C20DA6", icon = "󰌛", name = "Cs"        },
+				csproj   = { color = "#854CC7", icon = "", name = "Csproj"    },
+				csv      = { color = "#89E051", icon = "", name = "Csv"       },
+				md       = { color = "#42A5F5", icon = "", name = "Md"        },
+				mdx      = { color = "#519ABA", icon = "󰽛", name = "Mdx"       },
+				py       = { color = "#3D7BAB", icon = "", name = "Py"        },
+				todo     = { color = "#7CB342", icon = "", name = "Todo"      },
 			}
 		})
 		require("nvim-web-devicons").set_default_icon("", "#6d8086", 66)
@@ -2891,7 +2892,7 @@ addPlugin {
 			num_shortcut = true,
 			show_server_name = true,
 		},
-		definition = {
+		definition = { -- FEAT: make peek portrait
 			edit = "o",
 			quit = "q",
 			split = keymaps.open_vsplit,
@@ -3106,7 +3107,7 @@ addPlugin {
 	"owallb/mason-auto-install.nvim",
 	config = function(_, cfg)
 		require("mason-auto-install").setup(cfg)
-		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
+		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype }) -- BUG: MasonAutoInstall not found
 	end,
 	opts = {
 		packages = {
@@ -3779,7 +3780,7 @@ addPlugin {
 			hide = {
 				only_win = true
 			},
-			ignore = {
+			ignore = { -- FIX: ignore snacks explorer
 				unlisted_buffers = false,
 				buftypes = {},
 				filetypes = { "NvimTree" },
@@ -4521,7 +4522,7 @@ addPlugin {
 	event = "WinNew",
 	opts = {
 		override_open = true,
-		default_move_mappings = false,
+		default_move_mappings = false, -- FIX: recursion
 		default_resize_mappings = false,
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },

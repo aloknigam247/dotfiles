@@ -1,6 +1,6 @@
 $pip_pkgs = @(
-    'debugpy'
-    'pipx'
+    "debugpy"
+    "pipx"
 )
 
 $scoop_pkgs = @(
