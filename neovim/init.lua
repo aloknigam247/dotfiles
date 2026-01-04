@@ -2025,7 +2025,7 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" },
+			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: lsp scope higher than buffer
 			providers = {
 				buffer = {
 					name = "buffer",
@@ -4932,7 +4932,7 @@ addPlugin {
 				undo = { layout = { preset = "dropdown" }},
 			},
 			win = {
-				input = {
+				input = { -- FEAT: open file in Peek
 					keys = {
 						["<C-q>"] = false,
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
