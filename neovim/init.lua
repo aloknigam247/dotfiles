@@ -898,10 +898,6 @@ vim.keymap.set("n", "<Space>",   "ciw", { desc = "Change current word" })
 vim.keymap.set("v", "<C-Space>", function() require("flash").treesitter({ actions = { ["<c-space>"] = "next" }, label = { before = false, after = false }, prompt = { enabled = false } }) end, { desc = "Increment selected node" })
 -- ━━ add space around "=" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set({ "c", "i" }, "=", function()
-	if vim.o.filetype == "python" then
-		return "="
-	end
-
 	local col = vim.fn.col(".") - 1
 	if col == 0 then return "="end
 
@@ -3368,10 +3364,10 @@ addPlugin {
 		},
 		checkbox = {
 			checked = {
-				icon = "    ",
+				icon = "  󰗡  ",
 			},
 			unchecked = {
-				icon = "    ",
+				icon = "  󰄰  ",
 			},
 		},
 		code = {
