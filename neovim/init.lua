@@ -146,8 +146,6 @@ local icons = {
 	warning            = " ",
 }
 
--- RECODE: configure via nvim-web-devicons
--- RECODE: rearrange all plugins
 ---Defines highlight for kinds
 ---@type table<string, table<"icon"|"dark"|"light", vim.api.keyset.highlight|string>>
 local kind_hl = {
@@ -199,22 +197,14 @@ local keymaps = {
 }
 
 local lazy_config = {
-	root = vim.fn.stdpath("data") .. "/lazy", -- directory where plugins will be installed
 	defaults = {
 		lazy = true, -- should plugins be lazy-loaded?
-		version = nil,
-		cond = nil, ---@type boolean|fun(self:LazyPlugin):boolean|nil
-		-- version = "*", -- enable this to try installing the latest stable versions of plugins
 	},
-	lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json", -- lockfile generated after update.
 	install = {
-		missing = true,
 		colorscheme = { "default" },
 	},
 	ui = {
-		size = { width = 0.8, height = 0.8 },
-		wrap = true, -- wrap the lines in the ui
-		border = "rounded",
+		-- RECODE: rearrange all plugins
 		title = nil, ---@type string only works when border is not "none"
 		title_pos = "center", ---@type "center" | "left" | "right"
 		-- Show pills on top of the Lazy window
