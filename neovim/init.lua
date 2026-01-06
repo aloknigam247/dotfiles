@@ -204,11 +204,6 @@ local lazy_config = {
 		colorscheme = { "default" },
 	},
 	ui = {
-		-- RECODE: rearrange all plugins
-		title = nil, ---@type string only works when border is not "none"
-		title_pos = "center", ---@type "center" | "left" | "right"
-		-- Show pills on top of the Lazy window
-		pills = true, ---@type boolean
 		icons = {
 			cmd        = "",
 			config     = "",
@@ -219,43 +214,20 @@ local lazy_config = {
 			keys       = "󰌌",
 			lazy       = icons.lazy,
 			list       = { "󰬺", " 󰬻", "󰬼", "󰬽", "󰬾", "󰬿", "󰭀", "󰭁", "󰭂", "󰿩" },
-			loaded     = "",
-			not_loaded = "",
+			loaded     = "●",
+			not_loaded = "○",
 			plugin     = "",
 			runtime    = "",
 			source     = "",
 			start      = "",
 			task       = ""
 		},
-		browser = nil, ---@type string?
-		throttle = 20, -- how frequently should the ui process render events
-		custom_keys = {
-			["<localleader>l"] = function(plugin)
-				require("lazy.util").float_term({ "lazygit", "log" }, {
-					cwd = plugin.dir,
-				})
-			end,
-			["<localleader>t"] = function(plugin)
-				require("lazy.util").float_term(nil, {
-					cwd = plugin.dir,
-				})
-			end,
-		},
 	},
 	change_detection = {
 		enabled = false,
-		notify = true, -- get a notification when changes are found
 	},
 	performance = {
-		cache = {
-			enabled = true,
-		},
-		reset_packpath = true, -- reset the package path to improve startup time
 		rtp = {
-			reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
-			---@type string[]
-			paths = {}, -- add any custom paths here that you want to includes in the rtp
-			---@type string[] list any plugins you want to disable here
 			disabled_plugins = {
 				"csv",
 				"editorconfig",
@@ -274,23 +246,19 @@ local lazy_config = {
 			},
 		},
 	},
-	state = vim.fn.stdpath("state") .. "/lazy/state.json", -- state info for checker and other things
 	profiling = {
-		-- Enables extra stats on the debug tab related to the loader cache.
-		-- Additionally gathers stats about all package.loaders
-		loader = true,
-		-- Track each new require in the Lazy profiling tab
-		require = true,
+		loader = false,
+		require = false,
 	},
 	rocks = {
 		enabled = false
 	}
 }
 
+---@type table<string, boolean> Mason active installation
 local mason_installation = {}
 
----Defines highlight priorities for various components
----@type table<string, integer>
+---@type table<string, integer> Defines highlight priorities for various components
 local priority_hl = {
 	url = 0,
 	hlargs = 150
@@ -310,10 +278,11 @@ local overlength_filetypes = {
 	"python"
 }
 
----@class Plugin
+---@class Plugin: LazyPluginSpec
 ---@type Plugin[] List of plugins
 local plugins = {}
 
+-- RECODE: rearrange all plugins
 ---@class PopupMenuOption
 ---@field name string name of option
 ---@field key? string key map for the option
@@ -3227,7 +3196,7 @@ addPlugin {
 				{ name = " Code Action", key = "<C-.>", exec = require("actions-preview").code_actions },
 				{ name = " Declaration", key = "gD", exec = vim.lsp.buf.declaration },
 				{ name = " Definition", key = "F12", exec = vim.lsp.buf.definition },
-				{ name = " Hover", key = "\\h", exec = function() vim.cmd("Lspsaga hover_doc") end },
+				{ name = " Hover", key = "\\h", exec = vim.lsp.buf.hover },
 				{ name = " Implementation", key = "gi", exec = vim.lsp.buf.implementation },
 				{ name = "󱦞 LSP Finder", key = "Alt F12", exec = function() vim.cmd("Lspsaga lsp_finder") end },
 				{ name = " Peek Definition", key = "gp", exec = function() vim.cmd("Lspsaga peek_definition") end },
@@ -3249,7 +3218,7 @@ addPlugin {
 		vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, bufopts)
 		vim.keymap.set("n", "<M-F12>", "<cmd>Lspsaga finder<CR>", bufopts)
 		vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, bufopts)
-		vim.keymap.set("n", "<Leader>h", "<cmd>Lspsaga hover_doc<CR>", bufopts)
+		vim.keymap.set("n", "<Leader>h", function() vim.lsp.buf.hover() end, bufopts)
 		vim.keymap.set("n", "<C-.>", require("actions-preview").code_actions, bufopts)
 		vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", bufopts)
 		vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", bufopts)
