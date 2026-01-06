@@ -256,7 +256,7 @@ local lazy_config = {
 }
 
 ---@type table<string, boolean> Mason active installation
-local mason_installation = {}
+local mason_installation = {} -- FEAT: use Notification for in progress installation and not statusline
 
 ---@type table<string, integer> Defines highlight priorities for various components
 local priority_hl = {
@@ -2451,7 +2451,7 @@ addPlugin {
 					["end"] = { args.line2, end_line:len() },
 				}
 			end
-			vim.notify(" Formatting " .. filename, vim.log.levels.INFO)
+			vim.notify(" Formatting " .. filename, vim.log.levels.INFO) -- Use same notification for completion
 			vim.g.formatting = " " .. filename
 			require("conform").format(
 				{ async = true, range = range },
