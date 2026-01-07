@@ -256,7 +256,7 @@ local lazy_config = {
 }
 
 ---@type table<string, boolean> Mason active installation
-local mason_installation = {} -- FEAT: use Notification for in progress installation and not statusline
+local mason_installation = {}
 
 ---@type table<string, integer> Defines highlight priorities for various components
 local priority_hl = {
@@ -282,7 +282,6 @@ local overlength_filetypes = {
 ---@type Plugin[] List of plugins
 local plugins = {}
 
--- RECODE: rearrange all plugins
 ---@class PopupMenuOption
 ---@field name string name of option
 ---@field key? string key map for the option
@@ -320,6 +319,7 @@ local todo_colors = {
 	warn    = { "DiagnosticWarn", "WarningMsg", "#FBBF24" }
 }
 
+---@type table<string, table<"alt"|"color"|"icon",string|string[]>> Config for TODO
 local todo_config = {
 	DOCS   = { icon = "", color = "docs", alt = { "DOCME" } },
 	FEAT   = { icon = "󱩑", color = "feat" },
@@ -333,15 +333,18 @@ local todo_config = {
 	WARN   = { icon = "!", color = "warn", alt = { "WARNING" } },
 }
 
+---@type table<string,integer> Mapping for zindex priority
 local zindices = {
 	incline = 10,
 	snacks_help = 100
 }
 
+---@type integer[] list of large files buf ids
 LargeFile = {}
 -- <~>
 -- Functions</>
 ------------
+-- RECODE: rearrange all plugins
 ---Count number of windows visible
 ---@param ignore boolean Enable ignoring of filetypes
 ---@return integer # Number of windows
@@ -3159,6 +3162,7 @@ addPlugin {
 		local registry = require("mason-registry")
 
 		-- Listen for installation start
+		-- FEAT: use Notification for in progress installation and not statusline
 		registry:on("package:install:handle", function(package)
 			mason_installation[package.package.name] = true
 		end)
