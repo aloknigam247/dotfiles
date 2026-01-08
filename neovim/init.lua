@@ -345,28 +345,6 @@ LargeFile = {}
 -- Functions</>
 ------------
 -- RECODE: rearrange all plugins
---- Get background color from highlight or fallback
----@param hl_name string highlight name
----@param fallback? string fallback color
-function GetBgOrFallback(hl_name, fallback)
-	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
-	if not vim.tbl_isempty(hl) and hl.bg then
-		return string.format("#%06X", hl.bg)
-	end
-	return fallback
-end
-
---- Get foreground color from highlight or fallback
----@param hl_name string highlight name
----@param fallback? string fallback color
-function GetFgOrFallback(hl_name, fallback)
-	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
-	if not vim.tbl_isempty(hl) and hl.fg then
-		return string.format("#%06X", hl.fg)
-	end
-	return fallback
-end
-
 ---Light or dark color
 ---@param col string hex Color to shade
 ---@param amt integer Amount of shade
@@ -406,6 +384,20 @@ local function adaptiveBG(lighten, darken)
 		bg = string.format("#%X", bg)
 		return LightenDarkenColor(bg, darken)
 	end
+end
+
+---Get color from highlight or default
+---@param hl_name string highlight name
+---@param bg_or_fg boolean true for bg and false for fg
+---@param default? string fallback color
+local function getColorFromHighlight(hl_name, bg_or_fg, default)
+	local hl = vim.api.nvim_get_hl(0, { name = hl_name, create = false, link = false })
+	local source = bg_or_fg and "bg" or "fg"
+
+	if not vim.tbl_isempty(hl) and hl[source] then
+		return string.format("#%06X", hl[source])
+	end
+	return default
 end
 
 ---Get list filetypes/extentions for Treesitter languages installed
@@ -1590,7 +1582,7 @@ local function applyColorscheme()
 	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
 		vim.g.neovide_normal_opacity = 0.6
-		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
+		vim.g.neovide_title_background_color = getColorFromHighlight("Normal", true, vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	else
 		if vim.api.nvim_get_hl(0, { name = "Normal" }).bg then
 			require("mini.misc").setup_termbg_sync()
@@ -3044,7 +3036,7 @@ addPlugin {
 }
 
 addPlugin {
-	"rachartier/tiny-inline-diagnostic.nvim",
+	"rachartier/tiny-inline-diagnostic.nvim", -- BUG: does not enable by default
 	event = "DiagnosticChanged",
 	config = function()
 		local diag = require("tiny-inline-diagnostic")
@@ -3926,7 +3918,7 @@ addPlugin {
 					},
 					{
 						"encoding",
-						color = { fg = GetFgOrFallback("String", "#C2F261"), gui ="italic" },
+						color = { fg = getColorFromHighlight("String", false, "#C2F261"), gui ="italic" },
 						fmt = function(str)
 							if vim.o.bomb then
 								str = str .. "-bom"
