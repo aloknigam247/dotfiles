@@ -7,7 +7,7 @@ $env:XDG_STATE_HOME  = "D:\apps"
 $scoop_pkgs = @(
     "mingw",
     "neovim-nightly",
-    "neovide"
+    # "neovide"
     "pandoc"
 )
 
