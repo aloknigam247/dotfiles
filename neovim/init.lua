@@ -345,52 +345,6 @@ LargeFile = {}
 -- Functions</>
 ------------
 -- RECODE: rearrange all plugins
----Count number of windows visible
----@param ignore boolean Enable ignoring of filetypes
----@return integer # Number of windows
-function CountWindows(ignore)
-	local tabpage = vim.api.nvim_get_current_tabpage()
-	local win_list = vim.api.nvim_tabpage_list_wins(tabpage)
-	local named_window = 0
-	local visited_window = {}
-	local isValidBuf = function(bufnr, buf_name, win_config)
-		-- ignore empty buffers
-		if buf_name == "" then
-			return false
-		end
-
-		if win_config.relative ~= nil and win_config.relative ~= "" then
-			return false
-		end
-
-		if not ignore then return true end
-
-		local ignore_filetype = { "NvimTree" }
-		local filetype = vim.api.nvim_get_option_value( "filetype", { buf = bufnr })
-		for _,v in pairs(ignore_filetype) do
-			if v == filetype then
-				return false
-			end
-		end
-
-		return true
-	end
-
-	for _, win in ipairs(win_list) do
-		local bufnr = vim.api.nvim_win_get_buf(win)
-		local buf_name = vim.api.nvim_buf_get_name(bufnr)
-		local win_config = vim.api.nvim_win_get_config(win)
-		if isValidBuf(bufnr, buf_name, win_config) then
-			if not visited_window[buf_name] then
-				visited_window[buf_name] = true
-				named_window = named_window + 1
-			end
-		end
-	end
-
-	return named_window
-end
-
 --- Get background color from highlight or fallback
 ---@param hl_name string highlight name
 ---@param fallback? string fallback color
@@ -1635,7 +1589,7 @@ local function applyColorscheme()
 
 	-- configure Neovide
 	if vim.fn.exists("g:neovide") == 1 then
-		vim.g.neovide_normal_opacity = 0.7
+		vim.g.neovide_normal_opacity = 0.6
 		vim.g.neovide_title_background_color = GetBgOrFallback("Normal", vim.o.background == "dark" and "#000000" or "#FFFFFF")
 	else
 		if vim.api.nvim_get_hl(0, { name = "Normal" }).bg then
@@ -3670,7 +3624,7 @@ addPlugin {
 |-------------+----------------------------------------------------------+---------|
 ]]
 addPlugin {
-	"kevinhwang91/nvim-bqf",
+	"kevinhwang91/nvim-bqf", -- FIX: preview window background
 	opts = {
 		auto_resize_height = true,
 		func_map = {
