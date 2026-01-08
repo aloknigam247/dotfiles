@@ -104,30 +104,27 @@ $catppuccin_mocha = @{
 # FEAT: change selection background
 # FEAT: fix directory color for Get-Children command in light theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+$terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
-} else {
-    $env:THEME = "dark"
-}
-
-$terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-if ($env:THEME -eq "light") {
+    $env:DELTA_FEATURES = "catppuccin-latte"
+    $current_theme = "Catppuccin Latte"
     $catppuccin = $catppuccin_latte
     $color_palette = $light_palette
-    $bat_theme = "Catppuccin Latte"
     $lazygit_theme = "light.yml"
-    $env:DELTA_FEATURES = "catppuccin-latte"
-    sed -i 's/"colorScheme": "Catppuccin Mocha"/"colorScheme": "Catppuccin Latte"/' $terminal_settings
     sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
 } else {
+    $env:THEME = "dark"
+    $env:DELTA_FEATURES = "catppuccin-mocha"
+    $current_theme = "Catppuccin Mocha"
     $catppuccin = $catppuccin_mocha
     $color_palette = $dark_palette
-    $bat_theme = "Catppuccin Mocha"
     $lazygit_theme = "dark.yml"
-    $env:DELTA_FEATURES = "catppuccin-mocha"
-    sed -i 's/"colorScheme": "Catppuccin Latte"/"colorScheme": "Catppuccin Mocha"/' $terminal_settings
     sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
+
+$bat_theme = $current_theme
+sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
 $palette = @{
     cmdline = @{
@@ -264,7 +261,10 @@ New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
-function e    { D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args } # FIX: user terminal
+function e    {
+    wt -f --pos 1000,500 --size 100,40 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args"
+    # D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args,
+} # FIX: user terminal
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
