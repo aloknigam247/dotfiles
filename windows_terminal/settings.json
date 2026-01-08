@@ -34,6 +34,14 @@
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[46;5u"
+            },
+            "id": "User.sendCtrlDot"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -86,6 +94,10 @@
         {
             "id": "User.toggleFocusMode",
             "keys": "alt+f"
+        },
+        {
+            "id": "User.sendCtrlDot",
+            "keys": "ctrl+."
         }
     ],
     "minimizeToNotificationArea": true,
