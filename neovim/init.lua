@@ -358,7 +358,6 @@ end
 local function adaptiveBG(lighten, darken)
 	local bg
 
-	-- RECODE: rearrange all plugins
 	---Light or dark color
 	---@param col string hex Color to shade
 	---@param amt integer Amount of shade
@@ -376,14 +375,13 @@ local function adaptiveBG(lighten, darken)
 		return hex
 	end
 
+	-- RECODE: rearrange all plugins
 	if vim.o.background == "dark" then
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 0
-		bg = string.format("#%X", bg)
-		return lightenDarkenColor(bg, lighten)
+		return lightenDarkenColor(string.format("#%X", bg), lighten)
 	else
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 16777215
-		bg = string.format("#%X", bg)
-		return lightenDarkenColor(bg, darken)
+		return lightenDarkenColor(string.format("#%X", bg), darken)
 	end
 end
 
