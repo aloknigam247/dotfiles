@@ -263,7 +263,7 @@ Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 # FIX: Ctrl+. should reach nvim
-function e    { wt -f --pos 1200,500 --size 100,40 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" }
+function e    { wt -f --pos 960,400 --size 136,40 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
