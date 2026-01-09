@@ -263,7 +263,7 @@ Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 # FIX: Ctrl+. should reach nvim
-function e    { wt -f --pos 1000,500 --size 100,40 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" }
+function e    { wt -f --pos 1200,500 --size 100,40 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
@@ -512,6 +512,7 @@ Set-PsFzfOption `
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
+# FEAT: better background color for dark and light schemes
 # https://minsw.github.io/fzf-color-picker/
 $env:FZF_DEFAULT_OPTS = "--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl) --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl) --color=selected-bg:$($palette.fzf.selection) --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
 $env:EDITOR = "nvim"

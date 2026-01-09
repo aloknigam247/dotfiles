@@ -344,23 +344,6 @@ LargeFile = {}
 -- <~>
 -- Functions</>
 ------------
--- RECODE: rearrange all plugins
----Light or dark color
----@param col string hex Color to shade
----@param amt integer Amount of shade
----@return string # Color in hex format
-function LightenDarkenColor(col, amt)
-	local function clamp(x) return math.max(0, math.min(255, x)) end
-
-	local num = tonumber(col:sub(2), 16)
-	local r = clamp(bit.rshift(num, 16) + amt)
-	local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
-	local g = clamp(bit.band(num, 0x0000FF) + amt)
-	local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-
-	local hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
-	return hex
-end
 
 ---Adds a plugin Lazy nvim config
 ---@param opts Plugin Plugin config
@@ -375,14 +358,32 @@ end
 local function adaptiveBG(lighten, darken)
 	local bg
 
+	-- RECODE: rearrange all plugins
+	---Light or dark color
+	---@param col string hex Color to shade
+	---@param amt integer Amount of shade
+	---@return string # Color in hex format
+	local function lightenDarkenColor(col, amt)
+		local function clamp(x) return math.max(0, math.min(255, x)) end
+
+		local num = tonumber(col:sub(2), 16)
+		local r = clamp(bit.rshift(num, 16) + amt)
+		local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
+		local g = clamp(bit.band(num, 0x0000FF) + amt)
+		local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
+
+		local hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
+		return hex
+	end
+
 	if vim.o.background == "dark" then
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 0
 		bg = string.format("#%X", bg)
-		return LightenDarkenColor(bg, lighten)
+		return lightenDarkenColor(bg, lighten)
 	else
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 16777215
 		bg = string.format("#%X", bg)
-		return LightenDarkenColor(bg, darken)
+		return lightenDarkenColor(bg, darken)
 	end
 end
 
