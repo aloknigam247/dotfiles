@@ -339,7 +339,7 @@ local zindices = {
 	snacks_help = 100
 }
 
----@type integer[] list of large files buf ids
+---@type table<integer, boolean> Map of bufId and boolean to represent Large file it `true`
 LargeFile = {}
 -- <~>
 -- Functions</>
@@ -375,7 +375,6 @@ local function adaptiveBG(lighten, darken)
 		return hex
 	end
 
-	-- RECODE: rearrange all plugins
 	if vim.o.background == "dark" then
 		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 0
 		return lightenDarkenColor(string.format("#%X", bg), lighten)
@@ -413,11 +412,13 @@ local function getTSInstalled()
 		["powershell"] = "ps1"
 	}
 
-	-- Collect treesitter languages from nvim-treesitter and runtime path
-	for _, path in ipairs(vim.fn.split(
-		vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
-		","
-	)) do
+	-- collect treesitter languages from nvim-treesitter and runtime path
+	for _, path in ipairs(
+		vim.fn.split(
+			vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
+			","
+		)
+	) do
 		for file, _ in vim.fs.dir(vim.fs.joinpath(path, "parser")) do
 			local ftype = nil
 			if file:sub(-3) == ".so" then
@@ -442,8 +443,7 @@ end
 ---@param bufnr? integer buffer number
 ---@return boolean # true if LSP is attached
 local function isLspAttached(bufnr)
-	bufnr = bufnr or 0
-	return #vim.lsp.get_clients({bufnr = bufnr}) ~= 0
+	return #vim.lsp.get_clients({ bufnr = bufnr or 0 }) ~= 0
 end
 
 ---Check if buffer is a large file
@@ -468,12 +468,7 @@ end
 ---@param bufnr? integer buffer number to check
 ---@return boolean # true if treeistter is attached
 local function isTsAttached(bufnr)
-	bufnr = bufnr or vim.api.nvim_get_current_buf()
-	local highlighter = require("vim.treesitter.highlighter")
-	if highlighter.active[bufnr] then
-		return true
-	end
-	return false
+	return require("vim.treesitter.highlighter").active[bufnr or vim.api.nvim_get_current_buf()] ~= nil
 end
 
 
@@ -485,6 +480,7 @@ end
 -- <~>
 -- Classes</>
 
+-- RECODE: rearrange all plugins
 ---@class CmdOptions
 ---@field option_config table<string, string[]>
 ---@field option_value string
