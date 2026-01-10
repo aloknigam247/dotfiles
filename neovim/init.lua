@@ -339,14 +339,6 @@ local priority_virt = {
 	diagnostics = 5000
 }
 
----@type string[] List of filetypes to enable Overlength marker
-local overlength_filetypes = {
-	"cpp",
-	"lua",
-	"markdown",
-	"python"
-}
-
 ---@class Plugin: LazyPluginSpec
 ---@type Plugin[] List of plugins
 local plugins = {}
@@ -579,7 +571,6 @@ vim.api.nvim_create_autocmd(
 		desc = "Detect large files and disable slow plugins",
 		callback = function(arg)
 			if isLargeFile(arg.buf) then
-				-- RECODE: rearrange all plugins
 				vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
 				require("illuminate").pause_buf()
 			end
@@ -588,14 +579,14 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
-	"BufWinEnter", {
-		pattern = "*",
+	"Filetype", {
+		pattern = { "cpp", "lua", "markdown", "python" },
 		desc = "Overlength line marker",
-		callback = function()
-			if vim.tbl_contains(overlength_filetypes, vim.bo.filetype) and not isLargeFile() and vim.bo.textwidth > 0 then
+		callback = function(args)
+			if not isLargeFile() and vim.bo.textwidth > 0 then
+				-- RECODE: rearrange all plugins
 				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
-					local line_length = #line
-					if line_length > 300 then
+					if #line > 300 then
 						return
 					end
 				end
