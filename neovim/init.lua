@@ -1,4 +1,73 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- Classes</>
+
+---@class CmdOptions
+---@field option_config table<string, string[]>
+---@field option_value string
+CmdOptions = {}
+CmdOptions.__index = CmdOptions
+
+---CmdOptions constructor
+---@return CmdOptions
+function CmdOptions:new()
+	local instance = {
+		option_config = {},
+		option_value = {}
+	}
+	setmetatable(instance, CmdOptions)
+	return instance
+end
+
+---Add an option
+---@param option_name string option name
+---@param possibleValues? string[] option values
+---@param def string? default value
+function CmdOptions:addOption(option_name, possibleValues, def)
+	self.option_config[option_name] = possibleValues or {}
+	self.option_value[option_name] = def
+end
+
+---Get all options
+---@return string[] # list of all options
+function CmdOptions:getOptions()
+	return vim.tbl_keys(self.option_config)
+end
+
+---Get options for a key
+---@param name string key name
+---@return string # option for the key
+function CmdOptions:option(name)
+	return self.option_value[name]
+end
+
+---Get possible values for an option
+---@param option_name string option name
+---@return string[] # option values
+function CmdOptions:getOptionValues(option_name)
+	return self.option_config[option_name]
+end
+
+---Parse options with format key=value, throws error on invalid options
+---@param option_list string[] list of options
+---@return boolean # true if invalid options are present
+function CmdOptions:parseOptions(option_list)
+	local error = false
+
+	for _, option in pairs(option_list) do
+		local splits = vim.split(option, "=")
+		local key = splits[1]
+		local val = splits[2]
+		if vim.list_contains(self:getOptions(), key) then
+			self.option_value[key] = val
+		else
+			error = true
+			vim.notify("Invalid option " .. key, vim.log.levels.ERROR)
+		end
+	end
+
+	return error
+end
+-- <~>
 -- Variables</>
 ------------
 
@@ -478,77 +547,13 @@ local function popupMenuAdd(menu)
 	table.insert(pop_up_menu, menu)
 end
 -- <~>
--- Classes</>
-
--- RECODE: rearrange all plugins
----@class CmdOptions
----@field option_config table<string, string[]>
----@field option_value string
-CmdOptions = {}
-CmdOptions.__index = CmdOptions
-
---- CmdOptions constructor
----@return CmdOptions
-function CmdOptions:new()
-	local instance = {
-		option_config = {},
-		option_value = {}
-	}
-	setmetatable(instance, CmdOptions)
-	return instance
-end
-
----Add an option
----@param option_name string option name
----@param possibleValues? string[] option values
----@param def string? default value
-function CmdOptions:addOption(option_name, possibleValues, def)
-	self.option_config[option_name] = possibleValues or {}
-	self.option_value[option_name] = def
-end
-
-function CmdOptions:getOptions()
-	return vim.tbl_keys(self.option_config)
-end
-
-function CmdOptions:option(name)
-	return self.option_value[name]
-end
-
----Get possible values for an option
----@param option_name string option name
----@return string[] # option values
-function CmdOptions:getOptionValues(option_name)
-	return self.option_config[option_name]
-end
-
----Parse options with format key=value, throws error on invalid options
----@param option_list string[] list of options
----@return boolean # true if invalid options are present
-function CmdOptions:parseOptions(option_list)
-	local error = false
-
-	for _, option in pairs(option_list) do
-		local splits = vim.split(option, "=")
-		local key = splits[1]
-		local val = splits[2]
-		if vim.list_contains(self:getOptions(), key) then
-			self.option_value[key] = val
-		else
-			error = true
-			vim.notify("Invalid option " .. key, vim.log.levels.ERROR)
-		end
-	end
-
-	return error
-end
--- <~>
 -- Auto Commands</>
 -- -------------
+-- RECODE: rearrange all plugins
 vim.api.nvim_create_autocmd(
 	"BufEnter", {
 		pattern = "*",
-		desc = "Open directory in nvim-tree",
+		desc = "Open directory in snacks explorer",
 		callback = function()
 			local path = vim.fn.expand("%:p")
 			if vim.fn.isdirectory(path) ~= 0 then
