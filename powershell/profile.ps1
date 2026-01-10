@@ -124,6 +124,7 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 }
 
 $bat_theme = $current_theme
+# FIX: for powershell
 sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
 $palette = @{
@@ -242,6 +243,7 @@ $icons = @{
     sep_right = "$([char]0xe0b4)"
     type_app = "$([char]0xf120) "
     windows = "$([char]0xe70f) "
+    fzf_prompt = "$([char]0xf4b5)"
 }
 
 
@@ -514,8 +516,9 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 # FEAT: better background color for dark and light schemes
+# FIX: for powershell
 # https://minsw.github.io/fzf-color-picker/
-$env:FZF_DEFAULT_OPTS = "--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt=' ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl) --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl) --color=selected-bg:$($palette.fzf.selection) --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS = "--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt='$($icons.fzf_prompt) ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl) --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl) --color=selected-bg:$($palette.fzf.selection) --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
 $env:EDITOR = "nvim"
 
 # ╭────────────────╮
