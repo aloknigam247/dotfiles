@@ -549,7 +549,6 @@ end
 -- <~>
 -- Auto Commands</>
 -- -------------
--- RECODE: rearrange all plugins
 vim.api.nvim_create_autocmd(
 	"BufEnter", {
 		pattern = "*",
@@ -566,13 +565,10 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
 	{ "BufNewFile", "BufRead" }, {
-		pattern = "*",
-		desc = "Run for new files",
-		callback = function ()
-			local buf_name = vim.fn.expand("%:t")
-			if string.lower(buf_name) == "todo" then
-				vim.o.filetype = "todo"
-			end
+		pattern = "todo",
+		desc = "Set filetype for todo file",
+		callback = function(arg)
+			vim.o.filetype = "todo"
 		end
 	}
 )
@@ -583,6 +579,7 @@ vim.api.nvim_create_autocmd(
 		desc = "Detect large files and disable slow plugins",
 		callback = function(arg)
 			if isLargeFile(arg.buf) then
+				-- RECODE: rearrange all plugins
 				vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
 				require("illuminate").pause_buf()
 			end
