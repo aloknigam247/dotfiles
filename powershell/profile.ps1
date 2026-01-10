@@ -266,7 +266,6 @@ Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 # FIX: Ctrl+space should reach nvim
 # FIX: Ctrl+. should reach nvim
-function e    { wt -f --pos 960,400 --size 136,40 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
@@ -278,6 +277,12 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
+
+function e {
+    $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
+    $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
+    wt -f --pos $max_width*0.3,$max_height*0.2 --size $max_width*0.5,$max_height*0.4 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" 
+}
 
 function whatis($arg) {
     $cm = Get-Command $arg -ErrorAction SilentlyContinue
