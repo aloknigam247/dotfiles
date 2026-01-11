@@ -559,9 +559,7 @@ vim.api.nvim_create_autocmd(
 	{ "BufNewFile", "BufRead" }, {
 		pattern = "todo",
 		desc = "Set filetype for todo file",
-		callback = function(arg)
-			vim.o.filetype = "todo"
-		end
+		callback = function() vim.o.filetype = "todo" end
 	}
 )
 
@@ -579,28 +577,11 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
-	"Filetype", {
-		pattern = { "cpp", "lua", "markdown", "python" },
-		desc = "Overlength line marker",
-		callback = function(args)
-			if not isLargeFile() and vim.bo.textwidth > 0 then
-				-- RECODE: rearrange all plugins
-				for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 100)) do
-					if #line > 300 then
-						return
-					end
-				end
-				vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
-			end
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
 	"BufWinEnter", {
 		pattern = "*",
 		desc = "Disable wrap for file with long lines",
 		callback = function()
+			-- RECODE: rearrange all plugins
 			for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 500)) do
 				local line_length = #line
 				if line_length > vim.bo.textwidth then
@@ -662,6 +643,21 @@ vim.api.nvim_create_autocmd(
 				return true
 			end
 		end
+	}
+)
+
+vim.api.nvim_create_autocmd(
+	"Filetype", {
+		pattern = { "cpp", "lua", "markdown", "python" },
+		desc = "Overlength line marker",
+		callback = function()
+			if not isLargeFile()
+				and vim.bo.textwidth > 0
+				and vim.iter(vim.fn.getbufline(0, 1, 100)):all(function(line) return #line < 300 end)
+				then
+					vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
+				end
+			end
 	}
 )
 

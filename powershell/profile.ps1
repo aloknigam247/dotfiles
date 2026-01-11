@@ -226,6 +226,9 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
  # │ Icons │
  # ╰───────╯
 $icons = @{
+    fzf_marker = "$([char]0xf42e)"
+    fzf_pointer = "$([char]0x27a4)"
+    fzf_prompt = "$([char]0xf4b5)"
     git_aheadby = "$([char]0xdb86)$([char]0xddb2)"
     git_behindby = "$([char]0xdb86)$([char]0xddb3)"
     git_branch = "$([char]0xf418) "
@@ -243,7 +246,6 @@ $icons = @{
     sep_right = "$([char]0xe0b4)"
     type_app = "$([char]0xf120) "
     windows = "$([char]0xe70f) "
-    fzf_prompt = "$([char]0xf4b5)"
 }
 
 
@@ -281,6 +283,7 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function e {
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
     $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
+    # FIX: positions
     wt -f --pos $max_width*0.3,$max_height*0.2 --size $max_width*0.5,$max_height*0.4 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" 
 }
 
@@ -521,9 +524,30 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 # FEAT: better background color for dark and light schemes
-# FIX: for powershell
 # https://minsw.github.io/fzf-color-picker/
-$env:FZF_DEFAULT_OPTS = "--height=~70% --layout=reverse --border=rounded --border-label=' FZF ' --border-label-pos=5 --info=inline --prompt='$($icons.fzf_prompt) ' --pointer='➤ ' --preview='bat.exe --style=numbers --color=always --italic-text=always --theme `"$bat_theme`" {}' --preview-window='right,70%,border-rounded' --preview-label='(Preview)' --scheme=path --marker=' ' --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl) --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer) --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl) --color=selected-bg:$($palette.fzf.selection) --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS += " --height=~70%"
+$env:FZF_DEFAULT_OPTS += " --layout=reverse"
+$env:FZF_DEFAULT_OPTS += " --border=rounded"
+$env:FZF_DEFAULT_OPTS += " --border-label=' FZF '"
+$env:FZF_DEFAULT_OPTS += " --border-label-pos=5"
+$env:FZF_DEFAULT_OPTS += " --info=inline"
+$env:FZF_DEFAULT_OPTS += " --prompt='$($icons.fzf_prompt) '"
+$env:FZF_DEFAULT_OPTS += " --pointer='$($icons.fzf_pointer) '"
+$env:FZF_DEFAULT_OPTS += " --preview='bat.exe"
+$env:FZF_DEFAULT_OPTS += " --style=numbers"
+$env:FZF_DEFAULT_OPTS += " --color=always"
+$env:FZF_DEFAULT_OPTS += " --italic-text=always"
+$env:FZF_DEFAULT_OPTS += " --theme `"$bat_theme`" {}'"
+$env:FZF_DEFAULT_OPTS += " --preview-window='right,70%,border-rounded'"
+$env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
+$env:FZF_DEFAULT_OPTS += " --scheme=path"
+$env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
+$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer)"
+$env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selection)"
+$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+
 $env:EDITOR = "nvim"
 
 # ╭────────────────╮
