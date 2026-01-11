@@ -524,7 +524,7 @@ Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
 # FEAT: better background color for dark and light schemes
-# https://minsw.github.io/fzf-color-picker/
+# https://vitormv.github.io/fzf-themes
 $env:FZF_DEFAULT_OPTS += " --height=~70%"
 $env:FZF_DEFAULT_OPTS += " --layout=reverse"
 $env:FZF_DEFAULT_OPTS += " --border=rounded"
@@ -542,7 +542,7 @@ $env:FZF_DEFAULT_OPTS += " --preview-window='right,70%,border-rounded'"
 $env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
 $env:FZF_DEFAULT_OPTS += " --scheme=path"
 $env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
-$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg),bg:$($palette.fzf.text_bg),spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg),bg:-1,spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
 $env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer)"
 $env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl)"
 $env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selection)"

@@ -581,14 +581,12 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Disable wrap for file with long lines",
 		callback = function()
-			-- RECODE: rearrange all plugins
-			for _, line in ipairs(vim.fn.getbufline(vim.api.nvim_get_current_buf(), 1, 500)) do
-				local line_length = #line
-				if line_length > vim.bo.textwidth then
+			vim.iter(vim.fn.getbufline(0, 1, 500)):any(function(line)
+				if #line > vim.bo.textwidth then
 					vim.opt_local.wrap = false
-					break
+					return true
 				end
-			end
+			end)
 		end
 	}
 )
@@ -598,11 +596,6 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Create directory if it does not exists",
 		callback = function()
-			--  -- Function gets a table that contains match key, which maps to `<amatch>` (a full filepath).
-			-- local dirname = vim.fs.dirname(t.match)
-			-- -- Attempt to mkdir. If dir already exists, it returns nil.
-			-- -- Use 755 permissions, which means rwxr.xr.x
-			-- vim.loop.fs_mkdir(dirname, tonumber("0755", 8))
 			local filedir = vim.fn.expand("%:p:h")
 			if vim.fn.isdirectory(filedir) == 0 then
 				vim.fn.mkdir(filedir, "p")
@@ -611,6 +604,7 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
+-- RECODE: rearrange all plugins
 vim.api.nvim_create_autocmd(
 	"CmdlineEnter", {
 		pattern = { "/", "?" },
@@ -1583,6 +1577,8 @@ addPlugin {
 		require(plugin.main).setup(cfg)
 		applyColorscheme()
 	end,
+	-- FEAT: dark mode: change green
+	-- FEAT: dark mode: change yellow
 	opts = {
 		auto_integrations = true,
 		background = {
