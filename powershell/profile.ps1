@@ -265,6 +265,7 @@ New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 # D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args,
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
+# FEAT: use markdown renderer
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 # FIX: Ctrl+space should reach nvim
 # FIX: Ctrl+. should reach nvim
