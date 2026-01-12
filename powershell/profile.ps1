@@ -172,14 +172,14 @@ $palette = @{
 }
 
 $palette.fzf = @{
-    border           = $catppuccin.Overlay0
+    border           = $catppuccin.Lavender
     header           = $catppuccin.Red
     info             = $catppuccin.Mauve
     label            = $catppuccin.Text
     marker           = $catppuccin.Lavender
     marker_fg        = $catppuccin.Text
     pointer          = $catppuccin.Rosewater
-    prompt           = $catppuccin.Mauve
+    prompt           = $catppuccin.Red
     prompt_hl        = $catppuccin.Red
     selected         = $catppuccin.Surface1
     spinner          = $catppuccin.Rosewater
@@ -543,7 +543,7 @@ $env:FZF_DEFAULT_OPTS += " --preview-window='right,70%,border-rounded'"
 $env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
 $env:FZF_DEFAULT_OPTS += " --scheme=path"
 $env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
-$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg),bg:-1,spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=bg+:-1,bg:-1,spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
 $env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer)"
 $env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl)"
 $env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selection)"
