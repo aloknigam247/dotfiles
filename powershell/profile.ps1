@@ -112,7 +112,7 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $catppuccin = $catppuccin_latte
     $color_palette = $light_palette
     $lazygit_theme = "light.yml"
-    $wallpaper_folder = "$env:USERPROFILE\Pictures\Wallpapers\light"
+    $wallpaper_folder = "$env:USERPROFILE\OneDrive - Microsoft\Pictures\light"
     sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
 } else {
     $env:THEME = "dark"
@@ -121,7 +121,7 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $catppuccin = $catppuccin_mocha
     $color_palette = $dark_palette
     $lazygit_theme = "dark.yml"
-    $wallpaper_folder = "$env:USERPROFILE\Pictures\Wallpapers\dark"
+    $wallpaper_folder = "$env:USERPROFILE\OneDrive - Microsoft\Pictures\dark"
     sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
 
