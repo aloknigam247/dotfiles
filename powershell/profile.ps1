@@ -127,10 +127,13 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 
 # Set wallpaper slideshow folder based on theme
 $wallpapers_reg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
-Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowDirectoryPath' -Value $wallpaper_folder -ErrorAction SilentlyContinue
-Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowSourceDirectoriesSet' -Value 1 -ErrorAction SilentlyContinue
-Set-ItemProperty -Path $wallpapers_reg -Name 'BackgroundType' -Value 2 -ErrorAction SilentlyContinue
-RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True
+$current_wallpaper_folder = (Get-ItemProperty -Path $wallpapers_reg -Name 'SlideshowDirectoryPath' -ErrorAction SilentlyContinue).SlideshowDirectoryPath
+if ($current_wallpaper_folder -ne $wallpaper_folder) {
+    Set-ItemProperty -Path $wallpapers_reg -Name "SlideshowDirectoryPath" -Value $wallpaper_folder -ErrorAction SilentlyContinue
+    Set-ItemProperty -Path $wallpapers_reg -Name "SlideshowSourceDirectoriesSet" -Value 1 -ErrorAction SilentlyContinue
+    Set-ItemProperty -Path $wallpapers_reg -Name "BackgroundType" -Value 2 -ErrorAction SilentlyContinue
+    RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True
+}
 
 $bat_theme = $current_theme
 # FIX: for powershell
