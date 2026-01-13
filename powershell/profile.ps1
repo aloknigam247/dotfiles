@@ -126,8 +126,8 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 }
 
 # Set wallpaper slideshow folder based on theme
-$wallpapers_reg = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers'
-Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowDirectoryPath1' -Value $wallpaper_folder -ErrorAction SilentlyContinue
+$wallpapers_reg = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers"
+Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowDirectoryPath' -Value $wallpaper_folder -ErrorAction SilentlyContinue
 Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowSourceDirectoriesSet' -Value 1 -ErrorAction SilentlyContinue
 Set-ItemProperty -Path $wallpapers_reg -Name 'BackgroundType' -Value 2 -ErrorAction SilentlyContinue
 RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True
