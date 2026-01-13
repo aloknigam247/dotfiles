@@ -187,6 +187,7 @@ $palette.fzf = @{
     text_bg          = $catppuccin.Base
     text_fg          = $catppuccin.Text
     text_selected_bg = $catppuccin.Surface0
+    text_selected_fg = $catppuccin.Rosewater
 }
 
 # LS Colors
@@ -545,10 +546,10 @@ $env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
 $env:FZF_DEFAULT_OPTS += " --scheme=path"
 $env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
 $env:FZF_DEFAULT_OPTS += " --color=bg+:-1,bg:-1,spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
-$env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer)"
+$env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.text_selected_fg):fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer)"
 $env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl)"
 $env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selection)"
-$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border),label:$($palette.fzf.label):gutter:-1"
 
 $env:EDITOR = "nvim"
 

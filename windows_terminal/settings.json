@@ -34,14 +34,6 @@
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
-        },
-        {
-            "command": 
-            {
-                "action": "sendInput",
-                "input": "\u001b[46;5u"
-            },
-            "id": "User.sendCtrlDot"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -94,10 +86,6 @@
         {
             "id": "User.toggleFocusMode",
             "keys": "alt+f"
-        },
-        {
-            "id": "User.sendCtrlDot",
-            "keys": "ctrl+."
         }
     ],
     "minimizeToNotificationArea": true,
@@ -128,11 +116,12 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Catppuccin Mocha",
+            "colorScheme": "Catppuccin Latte",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
             "font": 
             {
+                "cellHeight": "1.1",
                 "face": "JetBrainsMono Nerd Font",
                 "size": 14
             },
@@ -170,13 +159,13 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": "Catppuccin Mocha",
+                "colorScheme": "Catppuccin Latte",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 25,
+                "opacity": 50,
                 "startingDirectory": "%USERPROFILE%",
                 "useAcrylic": true
             },

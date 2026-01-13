@@ -133,7 +133,7 @@ local icons = {
 	Boolean            = " ",
 	Class              = " ",
 	Color              = " ",
-	Component          = " ", -- BUG: icon not visible
+	Component          = "󰅴 ",
 	Constant           = " ",
 	Constructor        = " ",
 	Enum               = " ",
@@ -142,10 +142,10 @@ local icons = {
 	Field              = " ",
 	File               = " ",
 	Folder             = "󰷏 ",
-	Fragment           = " ",
-	Function           = " ",
+	Fragment           = "󰅴 ",
+	Function           = "󰊕 ",
 	Git                = "󰱼 ",
-	History            = " ",
+	History            = " ",
 	Interface          = " ",
 	Key                = " ",
 	Keyword            = " ",
@@ -154,7 +154,7 @@ local icons = {
 	Module             = " ",
 	Namespace          = "󰘦 ",
 	Null               = "󰢤 ",
-	Number             = " ",
+	Number             = "󰎠 ",
 	Object             = " ",
 	Operator           = " ",
 	Options            = " ",
@@ -193,7 +193,7 @@ local icons = {
 	file_added         = "󰻭",
 	file_modified      = "",
 	file_newfile       = "",
-	file_readonly      = "",
+	file_readonly      = "󱀰",
 	file_unnamed       = "",
 	fold_close         = "",
 	fold_open          = "",
@@ -210,7 +210,7 @@ local icons = {
 	lsp                = "󰈸",
 	outgoing           = " ",
 	preview            = " ",
-	symlink_arrow      = " 壟 ",
+	symlink_arrow      = " 󰑃 ",
 	warn               = " ",
 	warning            = " ",
 }
@@ -230,14 +230,14 @@ local kind_hl = {
 	Field         = { icon = " ", dark = { fg = "#5BC8AF", bg = "#313244" }, light = { fg = "#D5CF0F", bg = "#DCE0E8" }},
 	File          = { icon = " ", dark = { fg = "#EF8354", bg = "#313244" }, light = { fg = "#486499", bg = "#DCE0E8" }},
 	Folder        = { icon = " ", dark = { fg = "#BFC0C0", bg = "#313244" }, light = { fg = "#A74482", bg = "#DCE0E8" }},
-	Function      = { icon = " ", dark = { fg = "#E56399", bg = "#313244" }, light = { fg = "#228CDB", bg = "#DCE0E8" }},
-	History       = { icon = " ", dark = { fg = "#C2F8CB", bg = "#313244" }, light = { fg = "#85CB33", bg = "#DCE0E8" }},
+	Function      = { icon = "󰊕 ", dark = { fg = "#E56399", bg = "#313244" }, light = { fg = "#228CDB", bg = "#DCE0E8" }},
+	History       = { icon = " ", dark = { fg = "#C2F8CB", bg = "#313244" }, light = { fg = "#85CB33", bg = "#DCE0E8" }},
 	Interface     = { icon = " ", dark = { fg = "#8367C7", bg = "#313244" }, light = { fg = "#537A5A", bg = "#DCE0E8" }},
 	Key           = { icon = " ", dark = { fg = "#D1AC00", bg = "#313244" }, light = { fg = "#645DD7", bg = "#DCE0E8" }},
 	Keyword       = { icon = " ", dark = { fg = "#20A4F3", bg = "#313244" }, light = { fg = "#E36414", bg = "#DCE0E8" }},
 	Method        = { icon = " ", dark = { fg = "#D7D9D7", bg = "#313244" }, light = { fg = "#197278", bg = "#DCE0E8" }},
 	Module        = { icon = " ", dark = { fg = "#F2FF49", bg = "#313244" }, light = { fg = "#EC368D", bg = "#DCE0E8" }},
-	Namespace     = { icon = "ﬥ ", dark = { fg = "#FF4242", bg = "#313244" }, light = { fg = "#2F9C95", bg = "#DCE0E8" }},
+	Namespace     = { icon = "󰘦 ", dark = { fg = "#FF4242", bg = "#313244" }, light = { fg = "#2F9C95", bg = "#DCE0E8" }},
 	Null          = { icon = " ", dark = { fg = "#C1CFDA", bg = "#313244" }, light = { fg = "#56666B", bg = "#DCE0E8" }},
 	Number        = { icon = " ", dark = { fg = "#FB62F6", bg = "#313244" }, light = { fg = "#A5BE00", bg = "#DCE0E8" }},
 	Object        = { icon = " ", dark = { fg = "#F18F01", bg = "#313244" }, light = { fg = "#80A1C1", bg = "#DCE0E8" }},
@@ -253,7 +253,7 @@ local kind_hl = {
 	Text          = { icon = " ", dark = { fg = "#0496FF", bg = "#313244" }, light = { fg = "#5762D5", bg = "#DCE0E8" }},
 	TypeParameter = { icon = " ", dark = { fg = "#FFFFFC", bg = "#313244" }, light = { fg = "#5D2E8C", bg = "#DCE0E8" }},
 	Unit          = { icon = " ", dark = { fg = "#C97B84", bg = "#313244" }, light = { fg = "#FF6666", bg = "#DCE0E8" }},
-	Value         = { icon = " ", dark = { fg = "#C6DDF0", bg = "#313244" }, light = { fg = "#2EC4B6", bg = "#DCE0E8" }},
+	Value         = { icon = "󰎠 ", dark = { fg = "#C6DDF0", bg = "#313244" }, light = { fg = "#2EC4B6", bg = "#DCE0E8" }},
 	Variable      = { icon = " ", dark = { fg = "#B7ADCF", bg = "#313244" }, light = { fg = "#548687", bg = "#DCE0E8" }}
 }
 
@@ -586,6 +586,7 @@ vim.api.nvim_create_autocmd(
 					vim.opt_local.wrap = false
 					return true
 				end
+				return false
 			end)
 		end
 	}
