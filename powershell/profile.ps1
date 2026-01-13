@@ -112,6 +112,7 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $catppuccin = $catppuccin_latte
     $color_palette = $light_palette
     $lazygit_theme = "light.yml"
+    $wallpaper_folder = "$env:USERPROFILE\Pictures\Wallpapers\light"
     sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
 } else {
     $env:THEME = "dark"
@@ -120,8 +121,16 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $catppuccin = $catppuccin_mocha
     $color_palette = $dark_palette
     $lazygit_theme = "dark.yml"
+    $wallpaper_folder = "$env:USERPROFILE\Pictures\Wallpapers\dark"
     sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
+
+# Set wallpaper slideshow folder based on theme
+$wallpapers_reg = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers'
+Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowDirectoryPath1' -Value $wallpaper_folder -ErrorAction SilentlyContinue
+Set-ItemProperty -Path $wallpapers_reg -Name 'SlideshowSourceDirectoriesSet' -Value 1 -ErrorAction SilentlyContinue
+Set-ItemProperty -Path $wallpapers_reg -Name 'BackgroundType' -Value 2 -ErrorAction SilentlyContinue
+RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters 1, True
 
 $bat_theme = $current_theme
 # FIX: for powershell
