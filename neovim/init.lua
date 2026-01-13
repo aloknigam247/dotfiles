@@ -133,7 +133,7 @@ local icons = {
 	Boolean            = " ",
 	Class              = " ",
 	Color              = " ",
-	Component          = " ",
+	Component          = " ", -- BUG: icon not visible
 	Constant           = " ",
 	Constructor        = " ",
 	Enum               = " ",
@@ -4311,17 +4311,17 @@ addPlugin {
 		require("noice").setup({
 			cmdline = {
 				format = {
-					cmdline = { pattern = "^:", icon = "", lang = "vim", title = "  Vim "},
+					cmdline = { pattern = "^:", icon = "", lang = "vim", title = "  Vim " },
 					filter = {},
-					help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help "},
+					help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help " },
 					input = {},
-					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy "},
-					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " 󰢱 Lua "},
-					lua_print = { pattern = "^:%s*lua=%s+", icon = "", lang = "lua" , title = "  Lua "},
-					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = ""},
-					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = ""},
-					shell = { pattern = "^:!", icon = " ", lang = "powershell" , title = "  Powershell "},
-					shell_read = { pattern = "^:read!", icon = " ", lang = "powershell" , title = "  Powershell"},
+					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy " },
+					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " 󰢱 Lua " },
+					lua_print = { pattern = "^:%s*lua=%s+", icon = "", lang = "lua" , title = "  Lua " },
+					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = "" },
+					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = "" },
+					shell = { pattern = "^:!", icon = " ", lang = "powershell" , title = "  Powershell " },
+					shell_read = { pattern = "^:read!", icon = " ", lang = "powershell" , title = "  Powershell" },
 				},
 			},
 			lsp = {
