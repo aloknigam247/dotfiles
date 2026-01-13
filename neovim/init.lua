@@ -4319,8 +4319,8 @@ addPlugin {
 					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy " },
 					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " 󰢱 Lua " },
 					lua_print = { pattern = "^:%s*lua=%s+", icon = "", lang = "lua" , title = "  Lua " },
-					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", view = "cmdline" , title = "" },
-					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = "" },
+					search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex", title = " Search  " },
+					search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" , title = "Search  " },
 					shell = { pattern = "^:!", icon = " ", lang = "powershell" , title = "  Powershell " },
 					shell_read = { pattern = "^:read!", icon = " ", lang = "powershell" , title = "  Powershell" },
 				},
@@ -4344,7 +4344,7 @@ addPlugin {
 			},
 			},
 			presets = {
-				bottom_search = true, -- FIX: me
+				bottom_search = false,
 				cmdline_output_to_split = false,
 				command_palette = true,
 				long_message_to_split = true,
