@@ -123,8 +123,8 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
 
-$current_theme = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
-if ($current_theme -notmatch "$env:THEME.theme") {
+$current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+if ($current_theme_file -notmatch "$env:THEME.theme") {
     Start-Job {
         $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
         Start-Process $theme_file
