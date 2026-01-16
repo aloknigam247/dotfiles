@@ -116,7 +116,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Catppuccin Latte",
+            "colorScheme": "Catppuccin Mocha",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
             "font": 
@@ -159,7 +159,7 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": "Catppuccin Latte",
+                "colorScheme": "Catppuccin Mocha",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,

@@ -112,7 +112,6 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $catppuccin = $catppuccin_latte
     $color_palette = $light_palette
     $lazygit_theme = "light.yml"
-    $wallpaper_folder = "$env:USERPROFILE\OneDrive - Microsoft\Pictures\light" # FIX: me
     sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
 } else {
     $env:THEME = "dark"
@@ -121,9 +120,17 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $catppuccin = $catppuccin_mocha
     $color_palette = $dark_palette
     $lazygit_theme = "dark.yml"
-    $wallpaper_folder = "$env:USERPROFILE\OneDrive - Microsoft\Pictures\dark"
     sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
+
+$current_theme = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+if (-not $current_theme -match "$env:THEME.theme") {
+    $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
+    Start-Process $theme_file
+    Start-Sleep -Seconds 5
+    Stop-Process -name SystemSettings
+}
+
 
 $bat_theme = $current_theme
 # FIX: for powershell
