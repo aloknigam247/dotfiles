@@ -2011,7 +2011,7 @@ addPlugin {
 			toggle_comment_debug_prints = nil,
 			delete_debug_prints = nil
 		},
-		filetypes = {
+		filetypes = { -- FIX: values for powershell
 			["python"] = {
 				left = 'print("',
 				left_var = 'print(f"',
