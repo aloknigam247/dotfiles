@@ -559,6 +559,7 @@ $env:FZF_DEFAULT_OPTS += " --preview-window='right,70%,border-rounded'"
 $env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
 $env:FZF_DEFAULT_OPTS += " --scheme=path"
 $env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
+$env:FZF_DEFAULT_OPTS += " --separator=' '"
 
 $env:FZF_DEFAULT_OPTS += " --color=bg+:-1"
 $env:FZF_DEFAULT_OPTS += " --color=bg:-1"
