@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- PERF: slow on init.lua
 -- Classes</>
 
 ---@class CmdOptions
@@ -607,32 +608,11 @@ vim.api.nvim_create_autocmd(
 
 -- RECODE: rearrange all plugins
 vim.api.nvim_create_autocmd(
-	"CmdlineEnter", {
-		pattern = { "/", "?" },
-		desc = "Shift commandline for search",
-		callback = function()
-			vim.cmd("set cmdheight=1")
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
-	"CmdlineLeave", {
-		pattern = { "/", "?" },
-		desc = "Shift commandline back for search",
-		callback = function()
-			vim.cmd("set cmdheight=0")
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
 	"CursorHold", {
 		pattern = "*",
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
-			local ftype = vim.o.filetype
-			if vim.tbl_contains(getTSInstalled(), ftype) then
+			if vim.tbl_contains(getTSInstalled(), vim.o.filetype) then
 				vim.cmd("Lazy load nvim-treesitter")
 				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				return true
@@ -4314,7 +4294,7 @@ addPlugin {
 				format = {
 					cmdline = { pattern = "^:", icon = "", lang = "vim", title = "  Vim " },
 					filter = {},
-					help = { pattern = "^:%s*he?l?p?%s+", icon = "" , title = " help " },
+					help = { pattern = "^:%s*he?l?p?%s+", icon = "󰋖" , title = " help " },
 					input = {},
 					lazy = { pattern = "^:%s*Lazy%s+", icon = " ", lang = "vim" , title = " Lazy " },
 					lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" , title = " 󰢱 Lua " },
