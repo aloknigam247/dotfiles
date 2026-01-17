@@ -301,7 +301,7 @@ function e {
     # FIX: positions
     # PERF: don't load profile
     # PERF: don't load logo
-    wt -f --pos $max_width*0.3,$max_height*0.2 --size $max_width*0.5,$max_height*0.4 -d $PWD.Path --colorScheme $current_theme powershell -Command "nvim $args" 
+    wt -f --pos $max_width*0.3,$max_height*0.2 --size $max_width*0.5,$max_height*0.4 -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $args"
 }
 
 function whatis($arg) {
