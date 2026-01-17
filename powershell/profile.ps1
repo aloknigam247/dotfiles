@@ -105,7 +105,6 @@ $catppuccin_mocha = @{
 # FEAT: fix directory color for Get-Children command in light theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-Write-Error "DEBUGPRINT[1]: profile.ps1:108: $system_theme.AppsUseLightTheme=$$system_theme.AppsUseLightTheme"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
     $env:DELTA_FEATURES = "catppuccin-latte"
@@ -125,8 +124,6 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 }
 
 $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
-Write-Error "DEBUGPRINT[1]: profile.ps1:126: $current_theme_file=$$current_theme_file"
-Write-Error "DEBUGPRINT[2]: profile.ps1:128: $env:THEME=$$env:THEME"
 if ($current_theme_file -notmatch "$env:THEME.theme") {
     # Start-Job {
         $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
