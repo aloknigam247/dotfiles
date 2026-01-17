@@ -124,13 +124,15 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 }
 
 $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+Write-Error "DEBUGPRINT[1]: profile.ps1:127: $env:THEME.theme=$$env:THEME.theme"
+Write-Error "DEBUGPRINT[2]: profile.ps1:128: $current_theme_file=$$current_theme_file"
 if ($current_theme_file -notmatch "$env:THEME.theme") {
-    Start-Job {
+    # Start-Job {
         $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
         Start-Process $theme_file
         Start-Sleep -Seconds 2
         Stop-Process -name SystemSettings
-    } | Out-Null
+    # } | Out-Null
 }
 
 
@@ -559,11 +561,22 @@ $env:FZF_DEFAULT_OPTS += " --preview-window='right,70%,border-rounded'"
 $env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
 $env:FZF_DEFAULT_OPTS += " --scheme=path"
 $env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
-$env:FZF_DEFAULT_OPTS += " --color=bg+:-1,bg:-1,spinner:$($palette.fzf.spinner),hl:$($palette.fzf.spinner_hl)"
-$env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg),header:$($palette.fzf.header),info:$($palette.fzf.info),pointer:$($palette.fzf.pointer)"
-$env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker),fg+:$($palette.fzf.marker_fg),prompt:$($palette.fzf.prompt),hl+:$($palette.fzf.prompt_hl)"
+
+$env:FZF_DEFAULT_OPTS += " --color=bg+:-1"
+$env:FZF_DEFAULT_OPTS += " --color=bg:-1"
+$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border)"
+$env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.marker_fg)"
+$env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg)"
+$env:FZF_DEFAULT_OPTS += " --color=header:$($palette.fzf.header)"
+$env:FZF_DEFAULT_OPTS += " --color=hl+:$($palette.fzf.prompt_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=hl:$($palette.fzf.spinner_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=info:$($palette.fzf.info)"
+$env:FZF_DEFAULT_OPTS += " --color=label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker)"
+$env:FZF_DEFAULT_OPTS += " --color=pointer:$($palette.fzf.pointer)"
+$env:FZF_DEFAULT_OPTS += " --color=prompt:$($palette.fzf.prompt)"
 $env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selection)"
-$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border),label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS += " --color=spinner:$($palette.fzf.spinner)"
 
 $env:EDITOR = "nvim"
 

@@ -605,7 +605,6 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
--- RECODE: rearrange all plugins
 vim.api.nvim_create_autocmd(
 	"CursorHold", {
 		pattern = "*",
@@ -635,6 +634,7 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
+-- RECODE: rearrange all plugins
 vim.api.nvim_create_autocmd(
 	"MenuPopup", {
 		pattern = "*",
