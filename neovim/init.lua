@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- PERF: slow on init.lua
 -- Classes</>
 
 ---@class CmdOptions

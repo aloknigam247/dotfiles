@@ -280,6 +280,7 @@ Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 # FEAT: use markdown renderer
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 # FIX: Ctrl+space should reach nvim
+# FIX: Ctrl+backspace should reach nvim
 # FIX: Ctrl+. should reach nvim
 # FIX: Ctrl+Shift+o, Ctrl+Shift+i should reach nvim
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
