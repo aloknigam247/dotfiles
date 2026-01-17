@@ -544,7 +544,7 @@ Set-PsFzfOption -TabExpansion
 # https://vitormv.github.io/fzf-themes
 $env:FZF_DEFAULT_OPTS += " --height=~70%"
 $env:FZF_DEFAULT_OPTS += " --layout=reverse"
-$env:FZF_DEFAULT_OPTS += " --border=rounded"
+$env:FZF_DEFAULT_OPTS += " --border=none"
 $env:FZF_DEFAULT_OPTS += " --border-label=' FZF '"
 $env:FZF_DEFAULT_OPTS += " --border-label-pos=5"
 $env:FZF_DEFAULT_OPTS += " --info=inline"
