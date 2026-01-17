@@ -295,12 +295,10 @@ function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 
+# FIX: positions
 function e {
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
     $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
-    # FIX: positions
-    # PERF: don't load profile
-    # PERF: don't load logo
     wt -f --pos $max_width*0.3,$max_height*0.2 --size $max_width*0.5,$max_height*0.4 -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $args"
 }
 
