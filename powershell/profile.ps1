@@ -126,6 +126,7 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
 if ($current_theme_file -notmatch "$env:THEME.theme") {
     # Start-Job {
+        Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
         $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
         Start-Process $theme_file
         Start-Sleep -Seconds 2
