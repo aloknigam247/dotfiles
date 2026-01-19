@@ -189,7 +189,7 @@ $palette.fzf = @{
     label            = $catppuccin.Text
     marker           = $catppuccin.Lavender
     marker_fg        = $catppuccin.Text
-    pointer          = $catppuccin.Rosewater
+    pointer          = $catppuccin.Green
     prompt           = $catppuccin.Red
     prompt_hl        = $catppuccin.Red
     selected         = $catppuccin.Surface1
@@ -540,6 +540,7 @@ Set-PsFzfOption -TabExpansion
 
 # FEAT: better background color for dark and light schemes
 # https://vitormv.github.io/fzf-themes
+$env:FZF_DEFAULT_OPTS += ""
 $env:FZF_DEFAULT_OPTS += " --height=~70%"
 $env:FZF_DEFAULT_OPTS += " --layout=reverse"
 $env:FZF_DEFAULT_OPTS += " --border=none"
@@ -760,7 +761,7 @@ Set-PSReadLineOption -Colors @{
     "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
     # "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
-    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
+    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable); # FIX: better color
 }
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {

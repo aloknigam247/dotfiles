@@ -635,6 +635,7 @@ vim.api.nvim_create_autocmd(
 )
 
 -- RECODE: rearrange all plugins
+-- FEAT: use nui
 vim.api.nvim_create_autocmd(
 	"MenuPopup", {
 		pattern = "*",
@@ -1148,18 +1149,17 @@ vim.api.nvim_create_user_command(
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: AI
 -- https://github.com/olimorris/codecompanion.nvim
+-- https://github.com/yetone/avante.nvim
+-- https://github.com/carlos-algms/agentic.nvim
+-- https://github.com/ravitemer/mcphub.nvim
 addPlugin {
-	"folke/sidekick.nvim",
-	cmd = "Sidekick", -- lazy-load on :Sidekick
-	opts = {
-		cli = {
-			tools = {
-				copilot = {
-					cmd = { "copilot", "--banner", "--model", "gpt-5.2" },
-				},
-			},
-		},
-	}
+	"olimorris/codecompanion.nvim",
+	opts = {},
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		"nvim-treesitter/nvim-treesitter",
+		"github/copilot.vim"
+	},
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
