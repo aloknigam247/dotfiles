@@ -540,7 +540,7 @@ Set-PsFzfOption -TabExpansion
 
 # FEAT: better background color for dark and light schemes
 # https://vitormv.github.io/fzf-themes
-$env:FZF_DEFAULT_OPTS += ""
+$env:FZF_DEFAULT_OPTS = ""
 $env:FZF_DEFAULT_OPTS += " --height=~70%"
 $env:FZF_DEFAULT_OPTS += " --layout=reverse"
 $env:FZF_DEFAULT_OPTS += " --border=none"
