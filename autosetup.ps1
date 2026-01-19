@@ -306,12 +306,12 @@ function copyOrUpdateConfigs {
             }
             if (Test-Path $dest) {
                 if(Compare-Object (Get-Content $src) (Get-Content $dest)) {
-                    Write-Verbose "$src already exists" -verbose
-                } else {
                     Write-Output "backup $dest --> ${dest}.orig"
                     Move-Item -Force -Path $dest -Destination "${dest}.orig"
                     Write-Output "Copying $src --> $dest"
                     Copy-Item -Path $src -Destination $dest
+                } else {
+                    Write-Verbose "$src already exists" -verbose
                 }
             }
             else {
