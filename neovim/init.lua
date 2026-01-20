@@ -1147,11 +1147,14 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: AI
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
--- https://github.com/ravitemer/mcphub.nvim
 addPlugin {
+	-- FEAT: https://codecompanion.olimorris.dev/getting-started
+	-- FEAT: setup github copilot
+	-- FEAT: setup claude code
+	-- FEAT: https://github.com/ravitemer/mcphub.nvim
+	-- FEAT: https://github.com/hakonharnes/img-clip.nvim
 	"olimorris/codecompanion.nvim",
 	opts = {},
 	dependencies = {
@@ -1893,6 +1896,9 @@ addPlugin {
 		},
 		sources = {
 			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: lsp scope higher than buffer
+			per_filetype = {
+				codecompanion = { "codecompanion" }
+			},
 			providers = {
 				buffer = {
 					name = "buffer",
@@ -3216,7 +3222,7 @@ addPlugin {
 
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
-	ft = "markdown",
+	ft = { "markdown", "codecompanion" },
 	opts = {
 		anti_conceal = {
 			enabled = false
