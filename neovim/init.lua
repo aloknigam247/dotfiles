@@ -1148,7 +1148,6 @@ vim.api.nvim_create_user_command(
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: AI
--- https://github.com/olimorris/codecompanion.nvim
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 -- https://github.com/ravitemer/mcphub.nvim
