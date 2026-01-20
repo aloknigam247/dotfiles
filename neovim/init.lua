@@ -1578,6 +1578,7 @@ addPlugin {
 				return {
 					-- FEAT: SnippetTabStop and SnippetTabStopActive colors
 					-- FEAT: Colorcolumn
+					-- FIX: Numberline
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
