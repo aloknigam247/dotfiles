@@ -270,7 +270,7 @@ $icons = @{
 New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -ErrorAction SilentlyContinue
 
 # ─[ Common ]──────────────────────────────────────────────────────────
-New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
+New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue # FEAT: set hyperlink format
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 
 # ╭───────────────────╮
