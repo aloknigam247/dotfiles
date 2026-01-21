@@ -1150,7 +1150,7 @@ vim.api.nvim_create_user_command(
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 addPlugin {
-	-- FEAT: https://codecompanion.olimorris.dev/getting-started
+	-- FEAT: https://codecompanion.olimorris.dev/getting-started#configuring-an-adapter
 	-- FEAT: setup github copilot
 	-- FEAT: setup claude code
 	-- FEAT: https://github.com/ravitemer/mcphub.nvim
