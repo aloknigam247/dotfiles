@@ -1150,13 +1150,15 @@ vim.api.nvim_create_user_command(
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 addPlugin {
-	-- FEAT: https://codecompanion.olimorris.dev/getting-started#configuring-an-adapter
+	-- FEAT: https://codecompanion.olimorris.dev/upgrading
 	-- FEAT: setup github copilot
 	-- FEAT: setup claude code
 	-- FEAT: https://github.com/ravitemer/mcphub.nvim
 	-- FEAT: https://github.com/hakonharnes/img-clip.nvim
 	"olimorris/codecompanion.nvim",
 	-- FEAT: configure adapter
+	-- FEAT: vim.cmd([[cab cc CodeCompanion]])
+	cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat", "CodeCompanionCmd" },
 	opts = {},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
