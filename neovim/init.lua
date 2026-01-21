@@ -1156,6 +1156,7 @@ addPlugin {
 	-- FEAT: https://github.com/ravitemer/mcphub.nvim
 	-- FEAT: https://github.com/hakonharnes/img-clip.nvim
 	"olimorris/codecompanion.nvim",
+	-- FEAT: configure adapter
 	opts = {},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
