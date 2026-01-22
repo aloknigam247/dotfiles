@@ -303,16 +303,11 @@ function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 
-# FIX: positions
 function e {
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
-    Write-Error "DEBUGPRINT[5]: profile.ps1:302: $max_height=$$max_height"
     $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
-    Write-Error "DEBUGPRINT[6]: profile.ps1:304: $max_width=$$max_width"
     $pos_height = [int]($max_height * 0.3)
-    Write-Error "DEBUGPRINT[3]: profile.ps1:304: $pos_height=$$pos_height"
     $pos_width = [int]($max_width * 0.2)
-    Write-Error "DEBUGPRINT[4]: profile.ps1:306: $pos_width=$$pos_width"
     $size_width = [int]($max_width * 0.5)
     $size_height = [int]($max_height * 0.4)
     echo "wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $($PWD.Path) --colorScheme '$current_theme' cmd /C nvim $args"

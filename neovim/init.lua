@@ -1147,10 +1147,11 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- https://opencode.ai/
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 addPlugin {
-	-- FEAT: https://codecompanion.olimorris.dev/configuration/adapters-acp
+	-- FEAT: https://codecompanion.olimorris.dev/configuration/chat-buffer
 	-- FEAT: setup github copilot
 	-- FEAT: setup claude code
 	-- FEAT: https://github.com/ravitemer/mcphub.nvim
@@ -1161,16 +1162,36 @@ addPlugin {
 	cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat", "CodeCompanionCmd" },
 	dependencies = {
 		"nvim-lua/plenary.nvim",
+		"github/copilot.vim",
 		"nvim-treesitter/nvim-treesitter",
-		"github/copilot.vim"
 	},
 	opts = {
+		adapters = {
+			acp = {
+				claude_code = function()
+					return require("codecompanion.adapters").extend("claude_code", {
+						env = {
+							CLAUDE_CODE_OAUTH_TOKEN = "ps0njmyjLfgAZW3M3uOlAwJk1SJCAGMxbb6qQ9nUjiu43a4f#-fB1D9f6l2GGmgeXBO3inyCM-9UJwEVHgWFG5S7_fGM"
+						}
+					})
+				end,
+				opts = {
+					show_presets = false
+				}
+			}
+		},
 		display = {
 			action_palette = {
 				provider = "snacks"
 			}
+		},
+		http = {
+			opts = {
+				show_presets = false,
+				show_model_choices = false
+			}
 		}
-	},
+	}
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
