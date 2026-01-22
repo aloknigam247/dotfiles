@@ -1150,7 +1150,7 @@ vim.api.nvim_create_user_command(
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 addPlugin {
-	-- FEAT: https://codecompanion.olimorris.dev/upgrading
+	-- FEAT: https://codecompanion.olimorris.dev/configuration/adapters-acp
 	-- FEAT: setup github copilot
 	-- FEAT: setup claude code
 	-- FEAT: https://github.com/ravitemer/mcphub.nvim
@@ -1159,11 +1159,17 @@ addPlugin {
 	-- FEAT: configure adapter
 	-- FEAT: vim.cmd([[cab cc CodeCompanion]])
 	cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat", "CodeCompanionCmd" },
-	opts = {},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-treesitter/nvim-treesitter",
 		"github/copilot.vim"
+	},
+	opts = {
+		display = {
+			action_palette = {
+				provider = "snacks"
+			}
+		}
 	},
 }
 -- <~>
