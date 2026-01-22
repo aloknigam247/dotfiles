@@ -105,6 +105,7 @@ $catppuccin_mocha = @{
 # FEAT: fix directory color for Get-Children command in light theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+Write-Error "DEBUGPRINT[1]: profile.ps1:108: $system_theme.AppsUseLightTheme=$$system_theme.AppsUseLightTheme"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
     $env:DELTA_FEATURES = "catppuccin-latte"
@@ -124,13 +125,14 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 }
 
 $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+Write-Error "DEBUGPRINT[2]: profile.ps1:128: $current_theme_file=$$current_theme_file"
 if ($current_theme_file -notmatch "$env:THEME.theme") {
     # Start-Job {
-        # Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
+        Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
         $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
-        # Write-Error "DEBUGPRINT[1]: profile.ps1:130: $theme_file=$$theme_file"
         Start-Process $theme_file
-        Start-Sleep -Seconds 2
+        Write-Error "DEBUGPRINT[1]: profile.ps1:130: $theme_file=$$theme_file"
+        Start-Sleep -Seconds 10
         Stop-Process -name SystemSettings
     # } | Out-Null
 }
@@ -300,13 +302,13 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 # FIX: positions
 function e {
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
-    # Write-Error "DEBUGPRINT[5]: profile.ps1:302: $max_height=$$max_height"
+    Write-Error "DEBUGPRINT[5]: profile.ps1:302: $max_height=$$max_height"
     $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
-    # Write-Error "DEBUGPRINT[6]: profile.ps1:304: $max_width=$$max_width"
+    Write-Error "DEBUGPRINT[6]: profile.ps1:304: $max_width=$$max_width"
     $pos_height = [int]($max_height * 0.3)
-    # Write-Error "DEBUGPRINT[3]: profile.ps1:304: $pos_height=$$pos_height"
+    Write-Error "DEBUGPRINT[3]: profile.ps1:304: $pos_height=$$pos_height"
     $pos_width = [int]($max_width * 0.2)
-    # Write-Error "DEBUGPRINT[4]: profile.ps1:306: $pos_width=$$pos_width"
+    Write-Error "DEBUGPRINT[4]: profile.ps1:306: $pos_width=$$pos_width"
     $size_width = [int]($max_width * 0.5)
     $size_height = [int]($max_height * 0.4)
     echo "wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $($PWD.Path) --colorScheme '$current_theme' cmd /C nvim $args"
