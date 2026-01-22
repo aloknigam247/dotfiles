@@ -162,6 +162,15 @@ $palette = @{
         type = $catppuccin.Yellow
         variable = $catppuccin.Lavender
     }
+    formatting = @{
+        debug = $catppuccin.Sky
+        error = $catppuccin.Red
+        errorAccent = $catppuccin.Blue
+        formatAccent = $catppuccin.Teal
+        tableHeader = $catppuccin.Rosewater
+        verbose = $catppuccin.Yellow
+        warning = $catppuccin.Peach
+    }
     git = @{
         commit = $catppuccin.Sky
         commit_icon = $catppuccin.Blue
@@ -780,7 +789,7 @@ Set-PSReadLineOption -Colors @{
     "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
     "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
-    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable); # FIX: better color for light theme
+    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
@@ -789,6 +798,16 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
         "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
     }
 }
+
+
+# PSStyle colors
+$PSStyle.Formatting.Debug        = $palette.formatting.debug
+$PSStyle.Formatting.Error        = $palette.formatting.error
+$PSStyle.Formatting.ErrorAccent  = $palette.formatting.errorAccent
+$PSStyle.Formatting.FormatAccent = $palette.formatting.formatAccent
+$PSStyle.Formatting.TableHeader  = $palette.formatting.tableHeader
+$PSStyle.Formatting.Verbose      = $palette.formatting.verbose
+$PSStyle.Formatting.Warning      = $palette.formatting.warning
 
 Set-PSReadLineOption -ContinuationPrompt "... "
 
