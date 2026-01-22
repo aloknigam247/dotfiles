@@ -289,7 +289,6 @@ Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 # FIX: Ctrl+space should reach nvim
 # FIX: Ctrl+backspace should reach nvim
-# FIX: Ctrl+. should reach nvim
 # FIX: Ctrl+Shift+o, Ctrl+Shift+i should reach nvim
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
@@ -310,7 +309,6 @@ function e {
     $pos_width = [int]($max_width * 0.2)
     $size_width = [int]($max_width * 0.5)
     $size_height = [int]($max_height * 0.4)
-    echo "wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $($PWD.Path) --colorScheme '$current_theme' cmd /C nvim $args"
     wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $args"
 }
 
