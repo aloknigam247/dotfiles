@@ -285,7 +285,7 @@ New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 # D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args,
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
-# FEAT: use markdown renderer
+# FEAT: use glow markdown renderer
 function bat  { D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $args }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
