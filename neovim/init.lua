@@ -1151,7 +1151,7 @@ vim.api.nvim_create_user_command(
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 addPlugin {
-	-- FEAT: https://codecompanion.olimorris.dev/configuration/chat-buffer
+	-- FEAT: https://codecompanion.olimorris.dev/configuration/chat-buffer#diff
 	-- FEAT: setup github copilot
 	-- FEAT: setup claude code
 	-- FEAT: https://github.com/ravitemer/mcphub.nvim
