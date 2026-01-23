@@ -297,10 +297,10 @@ function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 
-# FEAT: use glow markdown renderer
 function bat {
     param([string]$file)
     if ($file.ToLower().EndsWith('.md')) {
+        # FEAT: configure glow
         glow $file
     } else {
         D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
@@ -325,7 +325,7 @@ function whatis($arg) {
         Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
-        bat -p -P $temp_file
+        D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
         Format-Text "$($icons.type_app) $arg" -fg $catppuccin.Green -styles italic
