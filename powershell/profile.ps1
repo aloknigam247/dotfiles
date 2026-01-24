@@ -129,7 +129,8 @@ Write-Error "DEBUGPRINT[2]: profile.ps1:128: $current_theme_file=$$current_theme
 if ($current_theme_file -notmatch "$env:THEME.theme") {
     # Start-Job {
         Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
-        $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
+        # $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
+        $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
         Start-Process $theme_file
         Write-Error "DEBUGPRINT[1]: profile.ps1:130: $theme_file=$$theme_file"
         Start-Sleep -Seconds 10
