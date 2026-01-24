@@ -1,0 +1,147 @@
+=======================================================================
+NEOVIM MARKDOWN RENDERING CAPTURE
+=======================================================================
+
+## RENDER-MARKDOWN.NVIM HIGHLIGHT GROUPS
+---------------------------------------------------
+  RenderMarkdownUnchecked: fg=#8c8fa1
+  RenderMarkdownH3: fg=#df8e1d
+  RenderMarkdownH4Bg: bg=#d5e5d7
+  RenderMarkdownQuote: fg=#ea76cb
+  RenderMarkdownH5: fg=#209fb5
+  RenderMarkdownChecked: fg=#40a02b
+  RenderMarkdownTableRow: fg=#7287fd
+  RenderMarkdownCodeInline: fg=#179299 bg=#e6e9ef
+  RenderMarkdownBullet: fg=#04a5e5
+  RenderMarkdownTableHead: fg=#1e66f5
+  RenderMarkdownH2Bg: bg=#f1dcd2
+  RenderMarkdownError: fg=#d20f39
+  RenderMarkdownTableFill: fg=#8c8fa1
+  RenderMarkdownInfo: fg=#04a5e5
+  RenderMarkdownH1: fg=#d20f39
+  RenderMarkdownHint: fg=#179299
+  RenderMarkdownCode: bg=#dce0e8
+  RenderMarkdownLink: fg=#7287fd
+  RenderMarkdownH6Bg: bg=#dce1f6
+  RenderMarkdownH6: fg=#7287fd
+  RenderMarkdownDash: fg=#bcc0cc
+  RenderMarkdownH2: fg=#fe640b
+  RenderMarkdownH5Bg: bg=#d0e5eb
+  RenderMarkdownSuccess: fg=#40a02b
+  RenderMarkdownH4: fg=#40a02b
+  RenderMarkdownH3Bg: bg=#ede2d5
+  RenderMarkdownWarn: fg=#df8e1d
+  RenderMarkdownH1Bg: bg=#ebcfd9
+
+## TREESITTER HIGHLIGHTS
+---------------------------------------------------
+  code_block (@markup.raw.block.markdown): fg=#40a02b
+  h1 (@markup.heading.1.markdown): fg=#d20f39
+  task_checked (@markup.list.checked.markdown): fg=#40a02b
+  h2 (@markup.heading.2.markdown): fg=#fe640b
+  heading_generic (@markup.heading.markdown): fg=#8839ef bold
+  inline_code (@markup.raw.markdown_inline): fg=#179299 bg=#e6e9ef
+  punctuation (@punctuation.special.markdown): fg=#ea76cb
+  link (@markup.link.markdown): fg=#7287fd
+  h5 (@markup.heading.5.markdown): fg=#209fb5
+  strikethrough (@markup.strikethrough.markdown_inline): fg=#4c4f69
+  link_text (@markup.link.label.markdown): fg=#7287fd
+  task_unchecked (@markup.list.unchecked.markdown): fg=#8c8fa1
+  h4 (@markup.heading.4.markdown): fg=#40a02b
+  emphasis (@markup.italic.markdown_inline): fg=#d20f39 italic
+  link_url (@markup.link.url.markdown): fg=#1e66f5 italic
+  blockquote (@markup.quote.markdown): fg=#ea76cb
+  h3 (@markup.heading.3.markdown): fg=#df8e1d
+  list_marker (@markup.list.markdown): fg=#179299
+  h6 (@markup.heading.6.markdown): fg=#7287fd
+  strong (@markup.strong.markdown_inline): fg=#d20f39 bold
+
+## EXTMARKS BY ELEMENT TYPE
+---------------------------------------------------
+
+### BLOCKQUOTE
+  ICON: '▍' hl=RenderMarkdownQuote1 fg=#ea76cb
+  ICON: '▍' hl=RenderMarkdownQuote2 fg=#ea76cb
+
+### CODE_FENCE
+  ICON: ' ' hl={ "DevIconLua", "RenderMarkdownCodeBorder" }
+  ICON: 'lua' hl={ "DevIconLua", "RenderMarkdownCodeBorder" }
+  ICON: '████████████████████' hl=RenderMarkdown_RenderMarkdownCodeBorder_bg_as_fg fg=#dce0e8
+  ICON: '                         ' hl=RenderMarkdownCodeBorder bg=#dce0e8
+  ICON: ' ' hl={ "DevIconPy", "RenderMarkdownCodeBorder" }
+  ICON: 'python' hl={ "DevIconPy", "RenderMarkdownCodeBorder" }
+  ICON: '███████████' hl=RenderMarkdown_RenderMarkdownCodeBorder_bg_as_fg fg=#dce0e8
+  ICON: '                   ' hl=RenderMarkdownCodeBorder bg=#dce0e8
+
+### H1
+  ICON: '█ ' hl={ "RenderMarkdownH1", "RenderMarkdownH1Bg" }
+  HL: RenderMarkdownH1Bg bg=#ebcfd9
+  HL: IlluminatedWordText bg=#e6e9ef
+
+### H2
+  ICON: '▓▓ ' hl={ "RenderMarkdownH2", "RenderMarkdownH2Bg" }
+  ICON: '                                                                                                                                                                                                                                                ' hl=Normal fg=#4c4f69
+  HL: RenderMarkdownH2Bg bg=#f1dcd2
+
+### H3
+  ICON: '▒▒▒ ' hl={ "RenderMarkdownH3", "RenderMarkdownH3Bg" }
+  ICON: '                                                                                                                                                                                                                                                ' hl=Normal fg=#4c4f69
+  HL: RenderMarkdownH3Bg bg=#ede2d5
+
+### H4
+  ICON: '░░░░ ' hl={ "RenderMarkdownH4", "RenderMarkdownH4Bg" }
+  ICON: '                                                                                                                                                                                                                                                ' hl=Normal fg=#4c4f69
+  HL: RenderMarkdownH4Bg bg=#d5e5d7
+
+### H5
+  ICON: '░░░░░ ' hl={ "RenderMarkdownH5", "RenderMarkdownH5Bg" }
+  ICON: '                                                                                                                                                                                                                                                ' hl=Normal fg=#4c4f69
+  HL: RenderMarkdownH5Bg bg=#d0e5eb
+
+### H6
+  ICON: '░░░░░░ ' hl={ "RenderMarkdownH6", "RenderMarkdownH6Bg" }
+  ICON: '                                                                                                                                                                                                                                                ' hl=Normal fg=#4c4f69
+  HL: RenderMarkdownH6Bg bg=#dce1f6
+
+### HORIZONTAL_RULE
+  ICON: '────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────' hl=RenderMarkdownDash fg=#bcc0cc
+
+### INLINE_CODE
+  HL: RenderMarkdownCodeInline fg=#179299 bg=#e6e9ef
+  ICON: ' ' hl=RenderMarkdownCodeInline fg=#179299 bg=#e6e9ef
+
+### LINK
+  ICON: '󰖟 ' hl=RenderMarkdownLink fg=#7287fd
+  HL: RenderMarkdownLinkTitle fg=#7287fd
+  ICON: '󰥶 ' hl=RenderMarkdownLink fg=#7287fd
+
+### LIST_ORDERED
+  ICON: '1.' hl=RenderMarkdownBullet fg=#04a5e5
+  ICON: '2.' hl=RenderMarkdownBullet fg=#04a5e5
+  ICON: '3.' hl=RenderMarkdownBullet fg=#04a5e5
+  HL: IlluminatedWordText bg=#e6e9ef
+
+### LIST_UNORDERED
+  ICON: '' hl=RenderMarkdownBullet fg=#04a5e5
+  ICON: '' hl=RenderMarkdownBullet fg=#04a5e5
+  ICON: '󰨐' hl=RenderMarkdownBullet fg=#04a5e5
+  HL: IlluminatedWordText bg=#e6e9ef
+
+### OTHER
+  HL: RenderMarkdownCode bg=#dce0e8
+  ICON: '                                                                                                                                                                                                                                                ' hl=Normal fg=#4c4f69
+
+### TABLE
+  HL: IlluminatedWordText bg=#e6e9ef
+
+### TASK
+  HL: CheckmateListMarkerUnordered fg=#7c7f93
+  HL: CheckmateUncheckedMarker fg=#b27117 bold
+  HL: CheckmateUncheckedMainContent fg=#4c4f69
+  HL: CheckmateCheckedMarker fg=#40a02b bold
+  HL: CheckmateCheckedMainContent fg=#9495a5
+  ICON: '  󰄰 ' hl=RenderMarkdownUnchecked fg=#8c8fa1
+  ICON: ' ' hl=RenderMarkdownUnchecked fg=#8c8fa1
+  ICON: ' ' hl=Normal fg=#4c4f69
+  ICON: '  󰗡 ' hl=RenderMarkdownChecked fg=#40a02b
+  ICON: ' ' hl=RenderMarkdownChecked fg=#40a02b

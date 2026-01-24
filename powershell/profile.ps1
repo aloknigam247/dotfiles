@@ -143,7 +143,7 @@ $bat_theme = $current_theme
 sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
 $palette = @{
-    cmdline = @{
+    cmdline = @{ # FIX: match colors with neovim
         command = $catppuccin.Blue
         comment = $catppuccin.Overlay0
         defaultToken = $catppuccin.Text
@@ -301,7 +301,7 @@ function bat {
     param([string]$file)
     if ($file.ToLower().EndsWith('.md')) {
         # FEAT: configure glow
-        glow $file
+        glow -w $Host.UI.RawUI.WindowSize.Width $file
     } else {
         D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
     }

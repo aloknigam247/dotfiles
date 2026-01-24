@@ -1,0 +1,121 @@
+{
+  "document": {
+    "block_prefix": "\n",
+    "block_suffix": "\n",
+    "color": "#cdd6f4",
+    "margin": 2
+  },
+  "block_quote": {
+    "color": "#f5c2e7",
+    "indent": 1,
+    "indent_token": "▍ "
+  },
+  "paragraph": {},
+  "list": {
+    "level_indent": 2
+  },
+  "heading": {
+    "block_suffix": "\n",
+    "bold": true
+  },
+  "h1": {
+    "color": "#f38ba8",
+    "background_color": "#45283b",
+    "prefix": "█ ",
+    "bold": true
+  },
+  "h2": {
+    "color": "#fab387",
+    "background_color": "#46342d",
+    "prefix": "▓▓ ",
+    "bold": true
+  },
+  "h3": {
+    "color": "#f9e2af",
+    "background_color": "#473f33",
+    "prefix": "▒▒▒ ",
+    "bold": true
+  },
+  "h4": {
+    "color": "#a6e3a1",
+    "background_color": "#2e4435",
+    "prefix": "░░░░ ",
+    "bold": true
+  },
+  "h5": {
+    "color": "#74c7ec",
+    "background_color": "#273544",
+    "prefix": "░░░░░ ",
+    "bold": true
+  },
+  "h6": {
+    "color": "#b4befe",
+    "background_color": "#2f3351",
+    "prefix": "░░░░░░ ",
+    "bold": true
+  },
+  "text": {},
+  "strikethrough": {
+    "crossed_out": true
+  },
+  "emph": {
+    "color": "#f38ba8",
+    "italic": true
+  },
+  "strong": {
+    "color": "#f38ba8",
+    "bold": true
+  },
+  "hr": {
+    "color": "#45475a",
+    "format": "────────────────────────────────────────────────────────────────────────────────"
+  },
+  "item": {
+    "block_prefix": " "
+  },
+  "enumeration": {
+    "color": "#89dceb",
+    "block_prefix": "."
+  },
+  "task": {
+    "ticked": "󰗡 ",
+    "unticked": "󰄰 "
+  },
+  "link": {
+    "color": "#89b4fa",
+    "italic": true
+  },
+  "link_text": {
+    "color": "#b4befe",
+    "block_prefix": "󰖟 "
+  },
+  "image": {
+    "color": "#89b4fa",
+    "italic": true
+  },
+  "image_text": {
+    "color": "#b4befe",
+    "block_prefix": "󰥶 "
+  },
+  "code": {
+    "color": "#94e2d5",
+    "background_color": "#181825"
+  },
+  "code_block": {
+    "color": "#a6e3a1",
+    "background_color": "#11111b",
+    "margin": 2
+  },
+  "table": {
+    "center_separator": "┼",
+    "column_separator": "│",
+    "row_separator": "─"
+  },
+  "definition_list": {},
+  "definition_term": {
+    "bold": true
+  },
+  "definition_description": {
+    "block_prefix": "  "
+  }
+}
