@@ -3292,7 +3292,7 @@ addPlugin {
 			position = "inlay",
 			-- icons = { "󰫎 " },
 			icons = { "█ ", "▓▓ ", "▒▒▒ ", "░░░░ ", "░░░░░ ", "░░░░░░ " },
-			width = { "full", "block", "block"},
+			width = { "block"},
 			right_pad = 1,
 		},
 		latex = {
