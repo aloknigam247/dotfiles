@@ -140,6 +140,7 @@ if ($current_theme_file -notmatch "$env:THEME.theme") {
 
 
 $bat_theme = $current_theme
+$env:GLAMOUR_STYLE = "d:/dotfiles/glow/$env:DELTA_FEATURES.json"
 # FIX: for powershell
 sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
