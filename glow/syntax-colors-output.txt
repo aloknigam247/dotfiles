@@ -1,0 +1,54 @@
+
+
+============================================================
+SYNTAX HIGHLIGHTING COLORS
+Current colorscheme: catppuccin-mocha
+============================================================
+
+-- Special Colors --
+  Normal (Normal): fg=#cdd6f4, bg=nil
+  Background (Normal): fg=#cdd6f4, bg=nil
+  Mantle (dark bg) (CursorLine): fg=nil, bg=#2a2b3c
+
+-- Glow Chroma Token Colors --
+"chroma": {
+  "comment": { "color": "#9399b2", "italic": true },  -- from @comment
+  "comment_preproc": { "color": "#f5c2e7" },  -- from @keyword.directive
+  "error": { "color": "#f38ba8" },  -- from @error
+  -- "generic_deleted": not found (tried: @keyword.directive, @preproc, PreProc),
+  "generic_emph": { "color": "#f38ba8", "italic": true },  -- from @markup.italic
+  "generic_heading": { "color": "#89b4fa" },  -- from @markup.heading
+  -- "generic_inserted": not found (tried: @keyword.import, @include, Include),
+  "generic_output": { "color": "#9399b2", "italic": true },  -- from @comment
+  "generic_prompt": { "color": "#cba6f7" },  -- from @keyword
+  "generic_strong": { "color": "#f38ba8", "bold": true },  -- from @markup.strong
+  "generic_subheading": { "color": "#89b4fa" },  -- from @markup.heading
+  "keyword": { "color": "#cba6f7" },  -- from @keyword
+  "keyword_namespace": { "color": "#cba6f7" },  -- from @keyword.import
+  "keyword_reserved": { "color": "#cba6f7" },  -- from @keyword.return
+  "keyword_type": { "color": "#f9e2af" },  -- from @type
+  "literal": { "color": "#fab387" },  -- from @constant
+  "literal_date": { "color": "#f5c2e7" },  -- from @string.special
+  "literal_number": { "color": "#fab387" },  -- from @number
+  "literal_string": { "color": "#a6e3a1" },  -- from @string
+  "literal_string_escape": { "color": "#f5c2e7" },  -- from @string.escape
+  "literal_string_interpol": { "color": "#f5c2e7" },  -- from @string.special
+  "literal_string_regex": { "color": "#f5c2e7" },  -- from @string.regexp
+  "literal_string_symbol": { "color": "#f2cdcd" },  -- from @string.special.symbol
+  "name": { "color": "#cdd6f4" },  -- from @variable
+  "name_attribute": { "color": "#fab387" },  -- from @attribute
+  "name_builtin": { "color": "#f38ba8" },  -- from @variable.builtin
+  "name_class": { "color": "#f9e2af" },  -- from @type
+  "name_constant": { "color": "#fab387" },  -- from @constant
+  "name_decorator": { "color": "#fab387" },  -- from @attribute
+  "name_exception": { "color": "#cba6f7" },  -- from @exception
+  "name_function": { "color": "#89b4fa" },  -- from @function
+  "name_other": { "color": "#cdd6f4" },  -- from @variable
+  "name_tag": { "color": "#89b4fa" },  -- from @tag
+  "name_variable": { "color": "#cdd6f4" },  -- from @variable
+  "operator": { "color": "#89dceb" },  -- from @operator
+  "punctuation": { "color": "#9399b2" },  -- from @punctuation.delimiter
+  "text": { "color": "#cdd6f4" }  -- from @text
+}
+============================================================
+
