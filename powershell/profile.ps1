@@ -108,7 +108,6 @@ $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8weky
 Write-Error "DEBUGPRINT[1]: profile.ps1:108: $system_theme.AppsUseLightTheme=$$system_theme.AppsUseLightTheme"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
-    $env:DELTA_FEATURES = "catppuccin-latte"
     $current_theme = "Catppuccin Latte"
     $catppuccin = $catppuccin_latte
     $color_palette = $light_palette
@@ -116,7 +115,6 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
 } else {
     $env:THEME = "dark"
-    $env:DELTA_FEATURES = "catppuccin-mocha"
     $current_theme = "Catppuccin Mocha"
     $catppuccin = $catppuccin_mocha
     $color_palette = $dark_palette
@@ -139,8 +137,11 @@ if ($current_theme_file -notmatch "$env:THEME.theme") {
 }
 
 
+# Set theme variables
 $bat_theme = $current_theme
-$env:GLAMOUR_STYLE = "d:/dotfiles/glow/$env:DELTA_FEATURES.json"
+$env:DELTA_FEATURES = $current_theme.ToLower().Replace(' ', '-')
+$env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
+
 # FIX: for powershell
 sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
@@ -302,8 +303,7 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function bat {
     param([string]$file)
     if ($file.ToLower().EndsWith('.md')) {
-        # FEAT: configure glow
-        glow -w $Host.UI.RawUI.WindowSize.Width $file
+        glow $file
     } else {
         D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
     }
