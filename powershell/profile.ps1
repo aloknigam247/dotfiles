@@ -316,7 +316,10 @@ function e {
     $pos_width = [int]($max_width * 0.2)
     $size_width = [int]($max_width * 0.5)
     $size_height = [int]($max_height * 0.4)
-    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $args"
+
+    $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
+    $arg_str = $quoted_args -join ' '
+    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
 }
 
 function whatis($arg) {
