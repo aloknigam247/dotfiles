@@ -191,8 +191,8 @@ $palette = @{
             working = $catppuccin.Sky
         }
         long_cmd = @{
-            bg = $catppuccin.Crust
-            fg = $catppuccin.Red
+            bg = $catppuccin.Red
+            fg = $catppuccin.Crust
         }
     }
 }
