@@ -190,6 +190,10 @@ $palette = @{
             sync = $catppuccin.Green
             working = $catppuccin.Sky
         }
+        long_cmd = @{
+            bg = $catppuccin.Crust
+            fg = $catppuccin.Red
+        }
     }
 }
 
@@ -603,7 +607,12 @@ $env:EDITOR = "nvim"
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
-# FEAT: add time take by command if exceeds 10s
+
+Set-PSReadlineKeyHandler Enter {
+    $script:cmd_start_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
+
 function populatePrompt {
     # Initial executions
     $script:dir_icon = $icons.windows
@@ -664,6 +673,29 @@ function populatePrompt {
         $script:dir_icon = $icons.remote
     } elseif ($env:INETROOT) {
         $script:dir_icon = $icons.odc
+    }
+
+    # Command execution durations
+    $script:cmd_duration = ""
+    if ($script:cmd_start_time -ne $null) {
+        $current_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+
+        $duration = $current_time - $script:cmd_start_time
+        if ($duration -ge 3600) {
+            $hours = [math]::Floor($duration / 3600)
+            $minutes = [math]::Floor(($duration % 3600) / 60)
+            $formatted = "${hours}h ${minutes}m"
+        } elseif ($duration -ge 60) {
+            $minutes = [math]::Floor($duration / 60)
+            $seconds = [math]::Floor($duration % 60)
+            $formatted = "${minutes}m ${seconds}s"
+        } elseif ($duration -ge 10) {
+            $formatted = "${duration}s"
+        } else {
+            $formatted = ""
+        }
+
+        $script:cmd_duration = $formatted
     }
 }
 
@@ -761,6 +793,15 @@ function prompt {
                 fg   = $palette.prompt.git.sync
             }
             cond = { return $null -ne $script:git_status }
+        },
+        @{
+            bg = $palette.prompt.long_cmd.bg
+            blocks = @{
+                text = "$script:cmd_duration"
+                fg = $palette.prompt.long_cmd.fg
+                styles = "bold"
+            }
+            cond = { return $script:cmd_duration -ne "" }
         }
     )
 
