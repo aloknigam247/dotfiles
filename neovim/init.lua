@@ -3702,6 +3702,9 @@ addPlugin {
 				local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
 				local labels = {}
 
+				-- FEAT: file name mappings
+				-- "" = "[Scratch]"
+				-- "Neotest Summary" = "󰙨 Tests"
 				if filename == "" then
 					filename = "[Scratch]"
 				end

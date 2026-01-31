@@ -603,6 +603,7 @@ $env:EDITOR = "nvim"
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
+# FEAT: add time take by command if exceeds 10s
 function populatePrompt {
     # Initial executions
     $script:dir_icon = $icons.windows
