@@ -121,19 +121,25 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
 }
 
-$current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
-if ($current_theme_file -notmatch "$env:THEME.theme") {
-    # Start-Job {
-        Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
-        # $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
-        $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
-        Start-Process $theme_file
-        Write-Error "DEBUGPRINT[1]: profile.ps1:130: $theme_file=$$theme_file"
-        Start-Sleep -Seconds 10
-        Stop-Process -name SystemSettings
-    # } | Out-Null
-}
 
+# Start-Job {
+    $retry = 5
+    while ($retry) {
+        $retry--
+        $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+        if ($current_theme_file -notmatch "$env:THEME.theme") {
+            Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
+            # $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
+            $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
+            Start-Process $theme_file
+            Write-Error "DEBUGPRINT[1]: profile.ps1:130: $theme_file=$$theme_file"
+            Start-Sleep -Seconds 10
+            Stop-Process -name SystemSettings
+        } else {
+            break
+        }
+    }
+# } | Out-Null
 
 # Set theme variables
 $bat_theme = $current_theme
@@ -281,7 +287,7 @@ $icons = @{
 New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -ErrorAction SilentlyContinue
 
 # ─[ Common ]──────────────────────────────────────────────────────────
-New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue # FEAT: set hyperlink format
+New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 
 # ╭───────────────────╮
@@ -298,7 +304,7 @@ function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $ar
 function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function nvim { C:\Users\aloknigam\scoop\shims\nvim.exe $args; Write-Host -NoNewline "`e[0 q" }
 function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
-function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S $args }
+function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 
