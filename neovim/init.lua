@@ -634,6 +634,91 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
+function ShowMenu()
+	local Menu = require("nui.menu")
+
+	local menu_config = {
+		title = "Main Menu",
+		items = {
+			{
+				text = "File",
+				submenu = {
+					title = "File",
+					items = {
+						{ text = "New", on_submit = function() print("New File") end },
+						{ text = "Open", on_submit = function() print("Open File") end },
+						{ text = "Save", on_submit = function() print("Save File") end },
+					},
+				},
+			},
+			{
+				text = "Edit",
+				on_submit = function() print("Edit selected") end,
+			},
+			{
+				text = "View",
+				on_submit = function() print("View selected") end,
+			},
+			{
+				text = "Help",
+				on_submit = function() print("Help selected") end,
+			},
+		},
+	}
+
+	local function create_menu(config, position)
+		local items = {}
+		for _, item in ipairs(config.items) do
+			table.insert(items, Menu.item(item.text, item))
+		end
+
+		local menu = Menu({
+			position = position,
+			size = {
+				width = 20,
+				height = #items + 2,
+			},
+			border = {
+				style = "single",
+				text = {
+					top = config.title or "",
+					top_align = "center",
+				},
+			},
+		}, {
+			lines = items,
+			max_width = 20,
+			keymap = {
+				focus_next = { "j", "<Down>" },
+				focus_prev = { "k", "<Up>" },
+				close = { "<Esc>", "<C-c>" },
+				submit = { "<CR>", "<Space>" },
+			},
+			on_close = function()
+				-- Optionally handle menu close
+			end,
+			on_submit = function(item)
+				if item.submenu then
+					menu:unmount()
+					local submenu = create_menu(item.submenu, {
+						row = position.row,
+						col = position.col + 22, -- adjust as needed
+					})
+					submenu:mount()
+				elseif item.on_submit then
+					menu:unmount()
+					item.on_submit()
+				end
+			end,
+		})
+
+		return menu
+	end
+
+	local main_menu = create_menu(menu_config, { row = 5, col = 5 })
+	main_menu:mount()
+end
+
 -- RECODE: rearrange all plugins
 -- FEAT: use nui
 vim.api.nvim_create_autocmd(
