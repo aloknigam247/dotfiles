@@ -161,7 +161,7 @@ $palette = @{
         user_email = $catppuccin.Flamingo
         user_name = $catppuccin.Red
     }
-    prompt = @{ # RECODE: use colors from OhMyPosh
+    prompt = @{
         dir_icon = @{
             bg = $catppuccin.Blue
             fg = $catppuccin.Base

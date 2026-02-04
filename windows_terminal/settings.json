@@ -6,14 +6,62 @@
         {
             "command": 
             {
+                "action": "sendInput",
+                "input": "\u001b[46;5u"
+            },
+            "id": "User.sendInput.period"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[32;5u"
+            },
+            "id": "User.sendInput.space"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "profile": "WindowsPowerShell",
+                "input": "\u001b[127;5u"
+            },
+            "id": "User.sendInput.backspace"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[111;6u"
+            },
+            "id": "User.sendInput.shiftO"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
+                "input": "\u001b[105;6u"
+            },
+            "id": "User.sendInput.shiftI"
+        },
+        {
+            "command": 
+            {
                 "action": "copy",
                 "singleLine": false
             },
             "id": "User.copy.644BA8F2"
         },
         {
-            "command": "find",
-            "id": "User.find"
+            "command": 
+            {
+                "action": "addMark"
+            },
+            "id": "User.addMark.0"
+        },
+        {
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode"
         },
         {
             "command": 
@@ -25,8 +73,8 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "toggleFocusMode",
-            "id": "User.toggleFocusMode"
+            "command": "find",
+            "id": "User.find"
         },
         {
             "command": 
@@ -34,13 +82,6 @@
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
-        },
-        {
-            "command": {
-                "action": "toggleOpacity",
-                "opacity": 75
-            },
-            "id": "User.toggleOpacityF7"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -51,16 +92,36 @@
     "keybindings": 
     [
         {
+            "id": "User.sendInput.period",
+            "keys": "ctrl+."
+        },
+        {
+            "id": "User.sendInput.space",
+            "keys": "ctrl+space"
+        },
+        {
+            "id": "User.sendInput.backspace",
+            "keys": "ctrl+backspace"
+        },
+        {
+            "id": "User.sendInput.shiftO",
+            "keys": "ctrl+shift+o"
+        },
+        {
+            "id": "User.sendInput.shiftI",
+            "keys": "ctrl+shift+i"
+        },
+        {
             "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
         },
         {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "id": null,
             "keys": "ctrl+v"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
         },
         {
             "id": null,
@@ -264,7 +325,7 @@
             {
                 "applicationTheme": "light",
                 "experimental.rainbowFrame": false,
-                "frame": "#8839EF",
+                "frame": "#8839EFFF",
                 "unfocusedFrame": "terminalBackground",
                 "useMica": false
             }
@@ -287,7 +348,7 @@
             {
                 "applicationTheme": "dark",
                 "experimental.rainbowFrame": false,
-                "frame": "#CBA6F7",
+                "frame": "#CBA6F7FF",
                 "unfocusedFrame": "terminalBackground",
                 "useMica": false
             }
