@@ -174,7 +174,7 @@ $palette = @{
             sep = "#FFFFFF"
             stash = $catppuccin.Maroon
             sync = $catppuccin.Green
-            working = $catppuccin.Sky
+            working = $catppuccin.Sapphire
         }
         long_cmd = @{
             bg = $catppuccin.Pink
@@ -675,8 +675,6 @@ function populatePrompt {
             $minutes = [math]::Floor($duration / 60)
             $seconds = [math]::Floor($duration % 60)
             $formatted = "${minutes}m:${seconds}s"
-        } elseif ($duration -ge 10) {
-            $formatted = "${duration}s"
         } else {
             $formatted = ""
         }

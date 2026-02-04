@@ -3,10 +3,6 @@ $pip_pkgs = @(
     "pipx"
 )
 
-$pip_pkgs = @(
-    "frogmouth"
-)
-
 $scoop_pkgs = @(
     "dos2unix"
     "fd"
