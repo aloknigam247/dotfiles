@@ -36,14 +36,14 @@ $light_palette = @{
 }
 
 $dark_palette = @{
-    dir_icon_bg = "#81B29A"
-    dir_icon_fg = "#12664F"
-    git_bg = "#F2CC8F "
-    git_branch = "#918450 "
-    git_index = "#FDD649"
-    git_stash = "#DF5601"
-    git_sync = "#15795F"
-    long_cmd = "#E07A5F"
+    dir_icon_bg = "#355C4A"      # Darker green-teal
+    dir_icon_fg = "#A3B3C2"      # Muted light blue-gray
+    git_bg = "#f5cb5c"           # Darker tan/brown
+    git_branch = "#dda15e"       # Deep olive
+    git_index = "#B38B0A"        # Dark gold
+    git_stash = "#7A1E1E"        # Deep red
+    git_sync = "#386C2A"         # Dark green
+    long_cmd = "#8B3E2F"         # Dark orange-brown
 }
 
 $catppuccin_latte = @{
