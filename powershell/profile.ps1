@@ -24,28 +24,6 @@ if ($(IsShellInteractive) -eq $false) {
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
-$light_palette = @{
-    dir_icon_bg = "#81B29A"
-    dir_icon_fg = "#EBF2FA"
-    git_bg = "#F2CC8F "
-    git_branch = "#918450 "
-    git_index = "#ffdA1a "
-    git_stash = "#DA3E3E"
-    git_sync = "#8ac926"
-    long_cmd = "#E07A5F"
-}
-
-$dark_palette = @{
-    dir_icon_bg = "#355C4A"      # Darker green-teal
-    dir_icon_fg = "#A3B3C2"      # Muted light blue-gray
-    git_bg = "#f5cb5c"           # Darker tan/brown
-    git_branch = "#dda15e"       # Deep olive
-    git_index = "#B38B0A"        # Dark gold
-    git_stash = "#7A1E1E"        # Deep red
-    git_sync = "#386C2A"         # Dark green
-    long_cmd = "#8B3E2F"         # Dark orange-brown
-}
-
 $catppuccin_latte = @{
     Base = "#EFF1F5"
     Blue = "#1E66F5"
@@ -128,24 +106,22 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
 }
 
 
-# Start-Job {
+Start-Job {
     $retry = 5
     while ($retry) {
         $retry--
         $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
         if ($current_theme_file -notmatch "$env:THEME.theme") {
-            Write-Error "DEBUGPRINT[1]: profile.ps1:129 (before theme_file = D:dotfileswin_pkgsenv:THEME…)"
             # $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
             $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
             Start-Process $theme_file
-            Write-Error "DEBUGPRINT[1]: profile.ps1:130: $theme_file=$$theme_file"
             Start-Sleep -Seconds 10
             Stop-Process -name SystemSettings
         } else {
             break
         }
     }
-# } | Out-Null
+} | Out-Null
 
 # Set theme variables
 $bat_theme = $current_theme
@@ -187,21 +163,21 @@ $palette = @{
     }
     prompt = @{ # RECODE: use colors from OhMyPosh
         dir_icon = @{
-            bg = $color_palette.dir_icon_bg
-            fg = $color_palette.dir_icon_fg
+            bg = $catppuccin.Blue
+            fg = $catppuccin.Base
         }
-        dir_path = $catppuccin.Text
+        dir_path = $catppuccin.Base
         git = @{
-            bg = $color_palette.git_bg
-            branch = $color_palette.git_branch
-            index = $catppuccin.Yellow
+            bg = $catppuccin.Mantle
+            branch = $catppuccin.Sky
+            index = $catppuccin.Rosewater
             sep = "#FFFFFF"
-            stash = $color_palette.git_stash
-            sync = $color_palette.git_sync
+            stash = $catppuccin.Maroon
+            sync = $catppuccin.Green
             working = $catppuccin.Sky
         }
         long_cmd = @{
-            bg = $color_palette.long_cmd
+            bg = $catppuccin.Pink
             fg = $catppuccin.Crust
         }
     }
