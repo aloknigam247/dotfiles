@@ -168,7 +168,7 @@ $palette = @{
         }
         dir_path = $catppuccin.Base
         git = @{
-            bg = $catppuccin.Mantle
+            bg = $catppuccin.Surface1
             branch = $catppuccin.Sky
             index = $catppuccin.Rosewater
             sep = "#FFFFFF"
@@ -612,12 +612,6 @@ function populatePrompt {
     $script:git_status = Get-GitStatus
 
     if ($null -ne $script:git_status) {
-        $script:git_status.HasWorking = $true
-        $script:git_status.HasIndex = $true
-        $script:git_status.StashCount = 5
-        $script:git_status.AheadBy = 11
-        $script:git_status.BehindBy = 20
-
         $script:dir_icon = $icons.git_icon
 
         # git branch
@@ -673,7 +667,6 @@ function populatePrompt {
         $current_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
 
         $duration = $current_time - $script:cmd_start_time
-        $duration = 3700
         if ($duration -ge 3600) {
             $hours = [math]::Floor($duration / 3600)
             $minutes = [math]::Floor(($duration % 3600) / 60)
