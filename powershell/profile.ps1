@@ -25,19 +25,25 @@ if ($(IsShellInteractive) -eq $false) {
 # │ Themes Settings │
 # ╰─────────────────╯
 $light_palette = @{
-    dir_icon_fg = "#A6E3A1"
-    git_index = "#ffda1a "
-    git_stash = "#da3e3e"
-    git_sync = "#68d051"
-    git_working = "#A8DADC " # FIX: me
+    dir_icon_bg = "#81B29A"
+    dir_icon_fg = "#EBF2FA"
+    git_bg = "#F2CC8F "
+    git_branch = "#918450 "
+    git_index = "#ffdA1a "
+    git_stash = "#DA3E3E"
+    git_sync = "#8ac926"
+    long_cmd = "#E07A5F"
 }
 
 $dark_palette = @{
+    dir_icon_bg = "#81B29A"
     dir_icon_fg = "#12664F"
+    git_bg = "#F2CC8F "
+    git_branch = "#918450 "
     git_index = "#FDD649"
     git_stash = "#DF5601"
     git_sync = "#15795F"
-    git_working = "#2B78CA"
+    long_cmd = "#E07A5F"
 }
 
 $catppuccin_latte = @{
@@ -181,21 +187,21 @@ $palette = @{
     }
     prompt = @{ # RECODE: use colors from OhMyPosh
         dir_icon = @{
-            bg = $catppuccin.Blue
+            bg = $color_palette.dir_icon_bg
             fg = $color_palette.dir_icon_fg
         }
-        dir_path = $catppuccin.BASE
+        dir_path = $catppuccin.Text
         git = @{
-            bg = $catppuccin.Crust
-            branch = $catppuccin.Blue
+            bg = $color_palette.git_bg
+            branch = $color_palette.git_branch
             index = $catppuccin.Yellow
             sep = "#FFFFFF"
             stash = $color_palette.git_stash
-            sync = $catppuccin.Green
+            sync = $color_palette.git_sync
             working = $catppuccin.Sky
         }
         long_cmd = @{
-            bg = $catppuccin.Red
+            bg = $color_palette.long_cmd
             fg = $catppuccin.Crust
         }
     }
@@ -630,6 +636,12 @@ function populatePrompt {
     $script:git_status = Get-GitStatus
 
     if ($null -ne $script:git_status) {
+        $script:git_status.HasWorking = $true
+        $script:git_status.HasIndex = $true
+        $script:git_status.StashCount = 5
+        $script:git_status.AheadBy = 11
+        $script:git_status.BehindBy = 20
+
         $script:dir_icon = $icons.git_icon
 
         # git branch
@@ -685,14 +697,15 @@ function populatePrompt {
         $current_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
 
         $duration = $current_time - $script:cmd_start_time
+        $duration = 3700
         if ($duration -ge 3600) {
             $hours = [math]::Floor($duration / 3600)
             $minutes = [math]::Floor(($duration % 3600) / 60)
-            $formatted = "${hours}h ${minutes}m"
+            $formatted = "${hours}h:${minutes}m"
         } elseif ($duration -ge 60) {
             $minutes = [math]::Floor($duration / 60)
             $seconds = [math]::Floor($duration % 60)
-            $formatted = "${minutes}m ${seconds}s"
+            $formatted = "${minutes}m:${seconds}s"
         } elseif ($duration -ge 10) {
             $formatted = "${duration}s"
         } else {
