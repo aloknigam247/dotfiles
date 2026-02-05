@@ -132,7 +132,7 @@ $env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
 sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
 $palette = @{
-    cmdline = @{ # FIX: match colors with neovim
+    cmdline = @{
         command = $catppuccin.Blue
         comment = $catppuccin.Overlay0
         defaultToken = $catppuccin.Text

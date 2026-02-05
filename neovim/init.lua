@@ -661,18 +661,38 @@ function ShowMenu()
 			},
 			{
 				text = "Help",
-				on_submit = function() print("Help selected") end,
+				submenu = {
+					title = "File",
+					items = {
+						{ text = "Me", on_submit = function() print("Help Me") end },
+						{ text = "You", on_submit = function() print("Help You") end },
+					},
+				},
 			},
 		},
 	}
 
-	local function create_menu(config, position)
+	-- Track all mounted menus for cleanup
+	local mounted_menus = {}
+
+	local function close_all_menus()
+		for _, m in ipairs(mounted_menus) do
+			pcall(function() m:unmount() end)
+		end
+		mounted_menus = {}
+	end
+
+	local function create_menu(config, position, parent_menu, current_submenu_ref)
 		local items = {}
 		for _, item in ipairs(config.items) do
 			table.insert(items, Menu.item(item.text, item))
 		end
 
-		local menu = Menu({
+		-- Reference to track the currently open submenu at this level
+		local active_submenu = nil
+
+		local menu
+		menu = Menu({
 			position = position,
 			size = {
 				width = 20,
@@ -692,31 +712,66 @@ function ShowMenu()
 				focus_next = { "j", "<Down>" },
 				focus_prev = { "k", "<Up>" },
 				close = { "<Esc>", "<C-c>" },
-				submit = { "<CR>", "<Space>" },
+				submit = {}, -- Disable default submit, we'll handle it manually
 			},
 			on_close = function()
-				-- Optionally handle menu close
-			end,
-			on_submit = function(item)
-				if item.submenu then
-					menu:unmount()
-					local submenu = create_menu(item.submenu, {
-						row = position.row,
-						col = position.col + 22, -- adjust as needed
-					})
-					submenu:mount()
-				elseif item.on_submit then
-					menu:unmount()
-					item.on_submit()
+				-- Close any open submenu when this menu closes
+				if active_submenu then
+					pcall(function() active_submenu:unmount() end)
+					active_submenu = nil
+				end
+				-- Remove from mounted_menus
+				for i, m in ipairs(mounted_menus) do
+					if m == menu then
+						table.remove(mounted_menus, i)
+						break
+					end
+				end
+				-- If this is the main menu closing, close all
+				if not parent_menu then
+					close_all_menus()
 				end
 			end,
 		})
 
+		-- Custom submit handler via keymap
+		menu:map("n", { "<CR>", "<Space>" }, function()
+			local tree = menu.tree
+			local node = tree:get_node()
+			if not node then return end
+			local item = node._data or node
+
+			if item.submenu then
+				-- Close existing submenu if any
+				if active_submenu then
+					pcall(function() active_submenu:unmount() end)
+					active_submenu = nil
+				end
+				-- Get actual window position and cursor row to position submenu next to selected item
+				local win_pos = vim.api.nvim_win_get_position(menu.winid)
+				local cursor_row = vim.api.nvim_win_get_cursor(menu.winid)[1]
+				local win_width = vim.api.nvim_win_get_width(menu.winid)
+				-- Create and mount new submenu (parent stays visible)
+				local submenu = create_menu(item.submenu, {
+					row = win_pos[1] + cursor_row,
+					col = win_pos[2] + win_width + 2,
+				}, menu, nil)
+				submenu:mount()
+				table.insert(mounted_menus, submenu)
+				active_submenu = submenu
+			elseif item.on_submit then
+				-- Close all menus when an action is executed
+				close_all_menus()
+				item.on_submit()
+			end
+		end, { noremap = true, nowait = true })
+
 		return menu
 	end
 
-	local main_menu = create_menu(menu_config, { row = 5, col = 5 })
+	local main_menu = create_menu(menu_config, { row = 5, col = 5 }, nil, nil)
 	main_menu:mount()
+	table.insert(mounted_menus, main_menu)
 end
 
 -- RECODE: rearrange all plugins
