@@ -747,14 +747,15 @@ function ShowMenu()
 					pcall(function() active_submenu:unmount() end)
 					active_submenu = nil
 				end
-				-- Get actual window position and cursor row to position submenu next to selected item
-				local win_pos = vim.api.nvim_win_get_position(menu.winid)
+				-- Get cursor row to position submenu next to selected item
 				local cursor_row = vim.api.nvim_win_get_cursor(menu.winid)[1]
 				local win_width = vim.api.nvim_win_get_width(menu.winid)
-				-- Create and mount new submenu (parent stays visible)
+				-- Create and mount new submenu relative to parent menu window
 				local submenu = create_menu(item.submenu, {
-					row = win_pos[1] + cursor_row,
-					col = win_pos[2] + win_width + 2,
+					relative = "win",
+					win = menu.winid,
+					row = cursor_row - 1,
+					col = win_width + 2,
 				}, menu, nil)
 				submenu:mount()
 				table.insert(mounted_menus, submenu)
