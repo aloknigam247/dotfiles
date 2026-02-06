@@ -1,4 +1,6 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: editorconfig
+-- FEAT: nameing style for variables, funcitons
 -- Classes</>
 
 ---@class CmdOptions
@@ -635,7 +637,7 @@ vim.api.nvim_create_autocmd(
 )
 
 function ShowMenu()
-	local Menu = require("nui.menu")
+	local nui_menu = require("nui.menu")
 
 	local menu_config = {
 		title = "Main Menu",
@@ -672,27 +674,39 @@ function ShowMenu()
 		},
 	}
 
-	-- Track all mounted menus for cleanup
-	local mounted_menus = {}
+	-- RECODE:
+	local mounted_menus = {} -- Track all mounted menus for cleanup
+	-- Namespaces for highlights
+	local ns_selected = vim.api.nvim_create_namespace("menu_selected")
+	local ns_hover = vim.api.nvim_create_namespace("menu_hover")
+	-- Track global mouse keymaps for cleanup
+	local mouse_keys_set = false
 
 	local function close_all_menus()
 		for _, m in ipairs(mounted_menus) do
 			pcall(function() m:unmount() end)
 		end
 		mounted_menus = {}
+		if mouse_keys_set then
+			pcall(vim.keymap.del, "n", "<MouseMove>")
+			pcall(vim.keymap.del, "n", "<LeftRelease>")
+			mouse_keys_set = false
+		end
 	end
 
-	local function create_menu(config, position, parent_menu, current_submenu_ref)
+	local function create_menu(config, position, parent_menu, parent_selected_row)
 		local items = {}
 		for _, item in ipairs(config.items) do
-			table.insert(items, Menu.item(item.text, item))
+			table.insert(items, nui_menu.item(item.text, item))
 		end
 
 		-- Reference to track the currently open submenu at this level
 		local active_submenu = nil
+		local selected_row = nil
 
 		local menu
-		menu = Menu({
+		menu = nui_menu({
+			enter = false,
 			position = position,
 			size = {
 				width = 20,
@@ -705,6 +719,9 @@ function ShowMenu()
 					top_align = "center",
 				},
 			},
+			win_options = {
+				cursorline = false,
+			},
 		}, {
 			lines = items,
 			max_width = 20,
@@ -712,60 +729,104 @@ function ShowMenu()
 				focus_next = { "j", "<Down>" },
 				focus_prev = { "k", "<Up>" },
 				close = { "<Esc>", "<C-c>" },
-				submit = {}, -- Disable default submit, we'll handle it manually
+				submit = {},
 			},
 			on_close = function()
-				-- Close any open submenu when this menu closes
 				if active_submenu then
 					pcall(function() active_submenu:unmount() end)
 					active_submenu = nil
 				end
-				-- Remove from mounted_menus
 				for i, m in ipairs(mounted_menus) do
 					if m == menu then
 						table.remove(mounted_menus, i)
 						break
 					end
 				end
-				-- If this is the main menu closing, close all
 				if not parent_menu then
 					close_all_menus()
 				end
 			end,
 		})
 
-		-- Custom submit handler via keymap
-		menu:map("n", { "<CR>", "<Space>" }, function()
+		-- Highlight the selected parent row (persistent when submenu is open, full line)
+		local function highlight_selected_row(row)
+			if not menu.bufnr or not vim.api.nvim_buf_is_valid(menu.bufnr) then return end
+			vim.api.nvim_buf_clear_namespace(menu.bufnr, ns_selected, 0, -1)
+			if row then
+				vim.api.nvim_buf_set_extmark(menu.bufnr, ns_selected, row - 1, 0, {
+					end_row = row,
+					hl_group = "Visual",
+					hl_eol = true,
+				})
+			end
+		end
+
+		-- Submit handler for both keyboard and mouse
+		local function do_submit()
 			local tree = menu.tree
 			local node = tree:get_node()
 			if not node then return end
 			local item = node._data or node
 
 			if item.submenu then
-				-- Close existing submenu if any
 				if active_submenu then
 					pcall(function() active_submenu:unmount() end)
 					active_submenu = nil
+					highlight_selected_row(nil)
 				end
-				-- Get cursor row to position submenu next to selected item
 				local cursor_row = vim.api.nvim_win_get_cursor(menu.winid)[1]
 				local win_width = vim.api.nvim_win_get_width(menu.winid)
-				-- Create and mount new submenu relative to parent menu window
+				selected_row = cursor_row
+				highlight_selected_row(selected_row)
 				local submenu = create_menu(item.submenu, {
 					relative = "win",
 					win = menu.winid,
 					row = cursor_row - 1,
 					col = win_width + 2,
-				}, menu, nil)
+				}, menu, cursor_row)
 				submenu:mount()
 				table.insert(mounted_menus, submenu)
 				active_submenu = submenu
 			elseif item.on_submit then
-				-- Close all menus when an action is executed
 				close_all_menus()
 				item.on_submit()
 			end
+		end
+
+		-- Expose do_submit for global click handler
+		menu._do_submit = do_submit
+
+		-- Keyboard submit
+		menu:map("n", { "<CR>", "<Space>" }, function()
+			do_submit()
 		end, { noremap = true, nowait = true })
+
+		-- Highlight hover row without moving cursor (full line width)
+		local function highlight_hover_row(row)
+			if not menu.bufnr or not vim.api.nvim_buf_is_valid(menu.bufnr) then return end
+			vim.api.nvim_buf_clear_namespace(menu.bufnr, ns_hover, 0, -1)
+			if row and row >= 1 then
+				vim.api.nvim_buf_set_extmark(menu.bufnr, ns_hover, row - 1, 0, {
+					end_row = row,
+					hl_group = "Visual",
+					hl_eol = true,
+				})
+			end
+		end
+
+		-- Mouse hover: highlight row under mouse without moving cursor
+		-- (handled by global keymap, see setup after mount)
+
+		-- Also highlight cursor row on keyboard movement
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			buffer = menu.bufnr,
+			callback = function()
+				if menu.winid and vim.api.nvim_win_is_valid(menu.winid) then
+					local row = vim.api.nvim_win_get_cursor(menu.winid)[1]
+					highlight_hover_row(row)
+				end
+			end,
+		})
 
 		return menu
 	end
@@ -773,6 +834,54 @@ function ShowMenu()
 	local main_menu = create_menu(menu_config, { row = 5, col = 5 }, nil, nil)
 	main_menu:mount()
 	table.insert(mounted_menus, main_menu)
+
+	-- Global mouse hover: works without entering the menu window
+	vim.keymap.set("n", "<MouseMove>", function()
+		local mouse_pos = vim.fn.getmousepos()
+		-- Clear hover on all menus
+		for _, m in ipairs(mounted_menus) do
+			if m.bufnr and vim.api.nvim_buf_is_valid(m.bufnr) then
+				vim.api.nvim_buf_clear_namespace(m.bufnr, ns_hover, 0, -1)
+			end
+		end
+		-- Apply hover highlight on the matching menu
+		for _, m in ipairs(mounted_menus) do
+			if m.winid and vim.api.nvim_win_is_valid(m.winid) and mouse_pos.winid == m.winid then
+				if mouse_pos.line >= 1 and m.bufnr and vim.api.nvim_buf_is_valid(m.bufnr) then
+					vim.api.nvim_buf_set_extmark(m.bufnr, ns_hover, mouse_pos.line - 1, 0, {
+						end_row = mouse_pos.line,
+						hl_group = "Visual",
+						hl_eol = true,
+					})
+				end
+				break
+			end
+		end
+	end, { nowait = true })
+
+	-- Global mouse click: works without entering the menu window
+	vim.keymap.set("n", "<LeftRelease>", function()
+		local mouse_pos = vim.fn.getmousepos()
+		for _, m in ipairs(mounted_menus) do
+			if m.winid and vim.api.nvim_win_is_valid(m.winid) and mouse_pos.winid == m.winid then
+				if mouse_pos.line >= 1 then
+					pcall(vim.api.nvim_win_set_cursor, m.winid, { mouse_pos.line, 0 })
+					-- Trigger submit via the menu's tree
+					local node = m.tree:get_node(mouse_pos.line)
+					if not node then return end
+					local item = node._data or node
+					if item.submenu and m._do_submit then
+						m._do_submit()
+					elseif item.on_submit then
+						close_all_menus()
+						item.on_submit()
+					end
+				end
+				return
+			end
+		end
+	end, { nowait = true })
+	mouse_keys_set = true
 end
 
 -- RECODE: rearrange all plugins
