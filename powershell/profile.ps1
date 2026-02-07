@@ -168,7 +168,7 @@ $palette = @{
         }
         dir_path = $catppuccin.Base
         git = @{
-            bg = $catppuccin.Surface1
+            bg = $catppuccin.Surface0
             branch = $catppuccin.Sky
             index = $catppuccin.Rosewater
             sep = "#FFFFFF"
