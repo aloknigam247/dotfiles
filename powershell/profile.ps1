@@ -83,54 +83,55 @@ $catppuccin_mocha = @{
     Yellow = "#F9E2AF"
 }
 
-# get system theme
 # FEAT: light wallpaper
 # FEAT: dark wallpaper
 # FEAT: change selection background
 # FEAT: fix directory color for Get-Children command in light theme
+# get system theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-$terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-if ($system_theme.AppsUseLightTheme -eq 1) {
-    $env:THEME = "light"
-    $current_theme = "Catppuccin Latte"
-    $catppuccin = $catppuccin_latte
-    $color_palette = $light_palette
-    $lazygit_theme = "light.yml"
-    sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
-} else {
-    $env:THEME = "dark"
-    $current_theme = "Catppuccin Mocha"
-    $catppuccin = $catppuccin_mocha
-    $color_palette = $dark_palette
-    $lazygit_theme = "dark.yml"
-    sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
-}
+    $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+    if ($system_theme.AppsUseLightTheme -eq 1) {
+        $env:THEME = "light"
+            $current_theme = "Catppuccin Latte"
+            $catppuccin = $catppuccin_latte
+            $color_palette = $light_palette
+            $lazygit_theme = "light.yml"
+            sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
+    } else {
+        $env:THEME = "dark"
+            $current_theme = "Catppuccin Mocha"
+            $catppuccin = $catppuccin_mocha
+            $color_palette = $dark_palette
+            $lazygit_theme = "dark.yml"
+            sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
+    }
 
 
 Start-Job {
     $retry = 5
-    while ($retry) {
-        $retry--
-        $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
-        if ($current_theme_file -notmatch "$env:THEME.theme") {
-            # $theme_file = "D:\dotfiles\win_pkgs\$env:THEME.theme"
-            $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
-            Start-Process $theme_file
-            Start-Sleep -Seconds 10
-            Stop-Process -name SystemSettings
-        } else {
-            break
+        while ($retry) {
+            $retry--
+                $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+                if ($current_theme_file -notmatch "$env:THEME.theme") {
+                    $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
+                    Start-Process $theme_file
+                    Start-Sleep -Seconds 10
+                    Stop-Process -name SystemSettings
+                } else {
+                    break
+                }
         }
-    }
 } | Out-Null
+
+if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+    sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
+}
 
 # Set theme variables
 $bat_theme = $current_theme
 $env:DELTA_FEATURES = $current_theme.ToLower().Replace(' ', '-')
 $env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
 
-# FIX: for powershell
-sed -i "s/`"colorScheme`": `".*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 
 $palette = @{
     cmdline = @{
