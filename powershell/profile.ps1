@@ -801,7 +801,6 @@ Set-PSReadLineOption -Colors @{
     "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
     "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
     "Error" = (Format-Text -headOnly -fg $palette.cmdline.error);
-    "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
     "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
     "Member" = (Format-Text -headOnly -fg $palette.cmdline.member -styles "italic");
     "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
@@ -815,6 +814,7 @@ Set-PSReadLineOption -Colors @{
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     Set-PSReadLineOption -Colors @{
+        "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
         "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
         "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
     }
