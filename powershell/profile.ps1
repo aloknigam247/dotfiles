@@ -1,3 +1,4 @@
+# Link user's CLAUDE.md
 # ─[ Don't load for non interactive session ]─────────────────────────────
 function IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
