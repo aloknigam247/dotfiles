@@ -1,4 +1,4 @@
-# Link user's CLAUDE.md
+# FEAT: Link user's CLAUDE.md
 # ─[ Don't load for non interactive session ]─────────────────────────────
 function IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
@@ -109,18 +109,18 @@ $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\Current
 
 Start-Job {
     $retry = 5
-        while ($retry) {
-            $retry--
-                $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
-                if ($current_theme_file -notmatch "$env:THEME.theme") {
-                    $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
-                    Start-Process $theme_file
-                    Start-Sleep -Seconds 10
-                    Stop-Process -name SystemSettings
-                } else {
-                    break
-                }
+    while ($retry) {
+        $retry--
+        $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+        if ($current_theme_file -notmatch "$env:THEME.theme") {
+            $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
+            Start-Process $theme_file
+            Start-Sleep -Seconds 10
+            Stop-Process -name SystemSettings
+        } else {
+            break
         }
+    }
 } | Out-Null
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
