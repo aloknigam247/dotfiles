@@ -1,5 +1,3 @@
-# FEAT: Link user's CLAUDE.md
-# FEAT: Link user's C:\Users\aloknigam\.claude\settings.json
 # ─[ Don't load for non interactive session ]─────────────────────────────
 function IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
