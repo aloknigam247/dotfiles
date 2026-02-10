@@ -264,6 +264,11 @@ $icons = @{
 
 
 # ╭─────────╮
+# │ Keymaps │
+# ╰─────────╯
+Set-PSReadLineKeyHandler -Chord "Ctrl+g" -Function ViEditVisually
+
+# ╭─────────╮
 # │ Aliases │
 # ╰─────────╯
 # ─[ Msys2 ]───────────────────────────────────────────────────────────
