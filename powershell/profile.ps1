@@ -161,22 +161,22 @@ $palette = @{
     }
     prompt = @{
         dir_icon = @{
-            bg = $catppuccin.Blue
-            fg = $catppuccin.Base
+            bg = $catppuccin_latte.Blue
+            fg = $catppuccin_latte.Base
         }
-        dir_path = $catppuccin.Base
+        dir_path = $catppuccin_latte.Base
         git = @{
-            bg = $catppuccin.Crust
-            branch = $catppuccin.Sky
-            index = $catppuccin.Rosewater
+            bg = $catppuccin_latte.Crust
+            branch = $catppuccin_latte.Sky
+            index = $catppuccin_latte.Rosewater
             sep = "#FFFFFF"
-            stash = $catppuccin.Maroon
-            sync = $catppuccin.Green
-            working = $catppuccin.Sapphire
+            stash = $catppuccin_latte.Maroon
+            sync = $catppuccin_latte.Green
+            working = $catppuccin_latte.Sapphire
         }
         long_cmd = @{
-            bg = $catppuccin.Pink
-            fg = $catppuccin.Crust
+            bg = $catppuccin_latte.Pink
+            fg = $catppuccin_latte.Crust
         }
     }
 }
