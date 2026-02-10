@@ -82,7 +82,6 @@ $catppuccin_mocha = @{
     Yellow = "#F9E2AF"
 }
 
-# FEAT: change selection background
 # get system theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
     $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"

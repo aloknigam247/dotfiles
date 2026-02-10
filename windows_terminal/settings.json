@@ -176,7 +176,7 @@
     {
         "defaults": 
         {
-            "adjustIndistinguishableColors": "never",
+            "adjustIndistinguishableColors": "indexed",
             "altGrAliasing": true,
             "antialiasingMode": "grayscale",
             "backgroundImage": null,
