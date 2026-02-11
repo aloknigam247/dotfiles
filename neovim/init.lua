@@ -5262,7 +5262,19 @@ addPlugin { -- FEAT: true-false
 		{ "<C-x>", "<Plug>(dial-decrement)",    mode = { "n", "x" }, desc = "Decrement" },
 		{ "g<C-a>", "<Plug>(dial-g-increment)", mode = { "n", "x" }, desc = "Increment (global)" },
 		{ "g<C-x>", "<Plug>(dial-g-decrement)", mode = { "n", "x" }, desc = "Decrement (global)" },
-	}
+	},
+	config = function()
+		local augend = require("dial.augend")
+		require("dial.config").augends:register_group{
+			default = {
+				augend.constant.new{
+					elements = {"true", "false"},
+					word = true,
+					cyclic = true,
+				},
+			},
+		}
+	end
 }
 
 addPlugin {
