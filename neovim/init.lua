@@ -2225,6 +2225,7 @@ addPlugin {
 				ripgrep = {
 					module = "blink-ripgrep",
 					name = "ripgrep",
+					async = true,
 					---@module "blink-ripgrep"
 					---@type blink-ripgrep.Options
 					opts = {
