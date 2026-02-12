@@ -283,7 +283,7 @@ New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
-# D:\scoop\shims\neovide.exe --size=1500x1230 --no-tabs --mouse-cursor-icon "i-beam" -- $args,
+# FEAT: function for claude with cmd options
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
