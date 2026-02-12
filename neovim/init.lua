@@ -1,6 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: editorconfig
--- FEAT: nameing style for variables, funcitons
 -- Classes</>
 
 ---@class CmdOptions
@@ -687,11 +685,11 @@ function ShowMenu()
 			pcall(function() m:unmount() end)
 		end
 		mounted_menus = {}
-		if mouse_keys_set then
-			pcall(vim.keymap.del, "n", "<MouseMove>")
-			pcall(vim.keymap.del, "n", "<LeftRelease>")
-			mouse_keys_set = false
-		end
+		-- if mouse_keys_set then
+		-- 	pcall(vim.keymap.del, "n", "<MouseMove>")
+		-- 	pcall(vim.keymap.del, "n", "<LeftRelease>")
+		-- 	mouse_keys_set = false
+		-- end
 	end
 
 	local function create_menu(config, position, parent_menu, parent_selected_row)
