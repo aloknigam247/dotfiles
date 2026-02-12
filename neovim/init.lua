@@ -5255,7 +5255,7 @@ addPlugin {
 	keys = { "<C-LeftMouse>", "<C-RightMouse>", "<C-Up>", "<C-Down>", "<C-N>" }
 }
 
-addPlugin { -- FEAT: true-false
+addPlugin { -- FEAT: configure
 	"monaqa/dial.nvim",
 	keys = {
 		{ "<C-a>", "<Plug>(dial-increment)",    mode = { "n", "x" }, desc = "Increment" },
@@ -5267,11 +5267,7 @@ addPlugin { -- FEAT: true-false
 		local augend = require("dial.augend")
 		require("dial.config").augends:register_group{
 			default = {
-				augend.constant.new{
-					elements = {"true", "false"},
-					word = true,
-					cyclic = true,
-				},
+				augend.integer.alias.decimal_int
 			},
 		}
 	end
