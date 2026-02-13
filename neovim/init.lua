@@ -837,6 +837,8 @@ function ShowMenu(menu_config)
 				return
 			end
 		end
+		-- Clicked outside all menus — close them
+		close_all_menus()
 	end, { nowait = true })
 end
 
@@ -902,8 +904,8 @@ vim.api.nvim_create_autocmd(
 					},
 				},
 			}
-			ShowMenu(menu_config)
 
+			-- ShowMenu(menu_config)
 		end
 	}
 )
@@ -4994,7 +4996,7 @@ addPlugin {
 						end,
 					},
 					layout = {
-						preset = 'sidebar',
+						preset = "sidebar",
 						preview = false, ---@diagnostic disable-line
 					},
 					on_show = function(picker)

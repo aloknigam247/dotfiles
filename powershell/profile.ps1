@@ -283,7 +283,6 @@ New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
-# FEAT: function for claude with cmd options
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
@@ -297,7 +296,17 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function claude { 
+
+function bat {
+    param([string]$file)
+    if ($file.ToLower().EndsWith('.md')) {
+        glow $file
+    } else {
+        D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
+    }
+}
+
+function claude {
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
     $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
     $pos_height = [int]($max_height * 0.3)
@@ -308,15 +317,6 @@ function claude {
     $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
     $arg_str = $quoted_args -join ' '
     wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" cmd /C "claude $arg_str"
-}
-
-function bat {
-    param([string]$file)
-    if ($file.ToLower().EndsWith('.md')) {
-        glow $file
-    } else {
-        D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
-    }
 }
 
 function e {
