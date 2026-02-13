@@ -22,11 +22,9 @@
         {
             "command": 
             {
-                "action": "sendInput",
-                "profile": "WindowsPowerShell",
-                "input": "\u001b[127;5u"
+                "action": "newTab"
             },
-            "id": "User.sendInput.backspace"
+            "id": "User.newTab.5DEADB41"
         },
         {
             "command": 
@@ -40,28 +38,17 @@
             "command": 
             {
                 "action": "sendInput",
+                "input": "\u001b[127;5u"
+            },
+            "id": "User.sendInput.backspace"
+        },
+        {
+            "command": 
+            {
+                "action": "sendInput",
                 "input": "\u001b[105;6u"
             },
             "id": "User.sendInput.shiftI"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2"
-        },
-        {
-            "command": 
-            {
-                "action": "addMark"
-            },
-            "id": "User.addMark.0"
-        },
-        {
-            "command": "toggleFocusMode",
-            "id": "User.toggleFocusMode"
         },
         {
             "command": 
@@ -73,15 +60,27 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "find",
-            "id": "User.find"
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode"
         },
         {
             "command": 
             {
-                "action": "newTab"
+                "action": "addMark"
             },
-            "id": "User.newTab.5DEADB41"
+            "id": "User.addMark.0"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
+        },
+        {
+            "command": "find",
+            "id": "User.find"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -93,7 +92,7 @@
     [
         {
             "id": "User.sendInput.period",
-            "keys": "ctrl+."
+            "keys": "ctrl+period"
         },
         {
             "id": "User.sendInput.space",
@@ -104,6 +103,10 @@
             "keys": "ctrl+backspace"
         },
         {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
             "id": "User.sendInput.shiftO",
             "keys": "ctrl+shift+o"
         },
@@ -112,16 +115,16 @@
             "keys": "ctrl+shift+i"
         },
         {
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+v"
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
         },
         {
             "id": "User.find",
             "keys": "ctrl+shift+f"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+v"
         },
         {
             "id": null,
@@ -142,10 +145,6 @@
         {
             "id": null,
             "keys": "ctrl+insert"
-        },
-        {
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
         },
         {
             "id": "User.newTab.5DEADB41",
@@ -176,7 +175,6 @@
     {
         "defaults": 
         {
-            "adjustIndistinguishableColors": "indexed",
             "altGrAliasing": true,
             "antialiasingMode": "grayscale",
             "backgroundImage": null,
@@ -198,7 +196,7 @@
                 "size": 15
             },
             "intenseTextStyle": "all",
-            "opacity": 75,
+            "opacity": 100,
             "padding": "8",
             "scrollbarState": "hidden",
             "showMarksOnScrollbar": true,
@@ -237,7 +235,7 @@
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 50,
+                "opacity": 90,
                 "startingDirectory": "%USERPROFILE%",
                 "useAcrylic": true
             },
