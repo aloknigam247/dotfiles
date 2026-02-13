@@ -634,65 +634,23 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
-function ShowMenu()
+function ShowMenu(menu_config)
 	local nui_menu = require("nui.menu")
 
-	local menu_config = {
-		title = "Main Menu",
-		items = {
-			{
-				text = "File",
-				submenu = {
-					title = "File",
-					items = {
-						{ text = "New", on_submit = function() print("New File") end },
-						{ text = "Open", on_submit = function() print("Open File") end },
-						{ text = "Save", on_submit = function() print("Save File") end },
-					},
-				},
-			},
-			{
-				text = "Edit",
-				on_submit = function() print("Edit selected") end,
-			},
-			{
-				text = "View",
-				on_submit = function() print("View selected") end,
-			},
-			{
-				text = "Help",
-				submenu = {
-					title = "File",
-					items = {
-						{ text = "Me", on_submit = function() print("Help Me") end },
-						{ text = "You", on_submit = function() print("Help You") end },
-					},
-				},
-			},
-		},
-	}
-
-	-- RECODE:
 	local mounted_menus = {} -- Track all mounted menus for cleanup
 	-- Namespaces for highlights
 	local ns_selected = vim.api.nvim_create_namespace("menu_selected")
 	local ns_hover = vim.api.nvim_create_namespace("menu_hover")
-	-- Track global mouse keymaps for cleanup
-	local mouse_keys_set = false
 
+	-- RECODE:
 	local function close_all_menus()
 		for _, m in ipairs(mounted_menus) do
 			pcall(function() m:unmount() end)
 		end
 		mounted_menus = {}
-		-- if mouse_keys_set then
-		-- 	pcall(vim.keymap.del, "n", "<MouseMove>")
-		-- 	pcall(vim.keymap.del, "n", "<LeftRelease>")
-		-- 	mouse_keys_set = false
-		-- end
 	end
 
-	local function create_menu(config, position, parent_menu, parent_selected_row)
+	local function create_menu(config, parent_menu, parent_selected_row)
 		local items = {}
 		for _, item in ipairs(config.items) do
 			table.insert(items, nui_menu.item(item.text, item))
@@ -704,18 +662,19 @@ function ShowMenu()
 
 		local menu
 		menu = nui_menu({
-			enter = false,
-			position = position,
+			enter = true,
+			position = { row = 1, col = 0 },
+			relative = "cursor",
 			size = {
 				width = 20,
 				height = #items + 2,
 			},
 			border = {
-				style = "single",
-				text = {
-					top = config.title or "",
+				style = config.title and "solid" or nil,
+				text = config.title and {
+					top = config.title,
 					top_align = "center",
-				},
+				} or nil,
 			},
 			win_options = {
 				cursorline = false,
@@ -879,7 +838,6 @@ function ShowMenu()
 			end
 		end
 	end, { nowait = true })
-	mouse_keys_set = true
 end
 
 -- RECODE: rearrange all plugins
@@ -910,7 +868,42 @@ vim.api.nvim_create_autocmd(
 				end
 			end
 
-			if #options ~= 0 then require("menu").open(options, { border = false, mouse = true }) end
+			local menu_config = {
+				title = "Main Menu",
+				items = {
+					{
+						text = "File",
+						submenu = {
+							title = "File",
+							items = {
+								{ text = "New", on_submit = function() print("New File") end },
+								{ text = "Open", on_submit = function() print("Open File") end },
+								{ text = "Save", on_submit = function() print("Save File") end },
+							},
+						},
+					},
+					{
+						text = "Edit",
+						on_submit = function() print("Edit selected") end,
+					},
+					{
+						text = "View",
+						on_submit = function() print("View selected") end,
+					},
+					{
+						text = "Help",
+						submenu = {
+							title = "File",
+							items = {
+								{ text = "Me", on_submit = function() print("Help Me") end },
+								{ text = "You", on_submit = function() print("Help You") end },
+							},
+						},
+					},
+				},
+			}
+			ShowMenu(menu_config)
+
 		end
 	}
 )
@@ -1033,7 +1026,6 @@ vim.keymap.set("v", "<Leader>ft", function()
 	-- popup menu to apply highlight on text, like bold, italic, fg color, bg color
 	-- https://nui-components.grapp.dev/docs/getting-started
 	-- https://github.com/jrop/morph.nvim
-	-- https://github.com/nvzone/volt
 	-- bold toggle
 	vim.api.nvim_set_hl(0, "NuiComponentsButton", { bg = "#0000FF" })
 	vim.api.nvim_set_hl(0, "NuiComponentsButtonActive", { bg = "#00FF00" })
@@ -3758,15 +3750,6 @@ addPlugin {
 	}
 }
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Popup Menu   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
-addPlugin {
-	"nvzone/menu",
-	init = function()
-		vim.cmd("aunmenu PopUp") -- Clear popup menu
-	end,
-	dependencies = "nvzone/volt"
-}
---<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"stevearc/aerial.nvim",
