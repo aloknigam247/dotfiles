@@ -297,6 +297,18 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
+function claude { 
+    $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
+    $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
+    $pos_height = [int]($max_height * 0.3)
+    $pos_width = [int]($max_width * 0.2)
+    $size_width = [int]($max_width * 0.5)
+    $size_height = [int]($max_height * 0.4)
+
+    $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
+    $arg_str = $quoted_args -join ' '
+    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" cmd /C "claude $arg_str"
+}
 
 function bat {
     param([string]$file)
