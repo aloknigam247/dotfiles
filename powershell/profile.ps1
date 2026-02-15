@@ -316,7 +316,7 @@ function claude {
 
     $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
     $arg_str = $quoted_args -join ' '
-    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" cmd /C "claude $arg_str"
+    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" -p "Claude" --appendCommandLine "$arg_str"
 }
 
 function e {
