@@ -2813,9 +2813,17 @@ addPlugin {
 		local actions = require("diffview.actions")
 		require("diffview").setup({
 			keymaps = {
-				view = {
+				disable_defaults = true,
+				file_panel = {
 					{ "n", "<space>", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
-				}
+					{ "n", "g?",      actions.help("file_panel"), { desc = "Open the help panel" } },
+					{ "n", "<tab>",   actions.select_next_entry,  { desc = "Open the diff for the next file" } },
+					{ "n", "<s-tab>", actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
+				},
+				help_panel = {
+					{ "n", "q",     actions.close,  { desc = "Close help menu" } },
+					{ "n", "<esc>", actions.close,  { desc = "Close help menu" } },
+				},
 			}
 		})
 	end
