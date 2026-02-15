@@ -1,0 +1,2 @@
+FEAT(claude): use powershell in claude instead of Bash
+FEAT(powershell): change tab tittle on path change or executable running
