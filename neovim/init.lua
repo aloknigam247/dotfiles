@@ -2808,7 +2808,17 @@ addPlugin {
 
 addPlugin {
 	"sindrets/diffview.nvim",
-	cmd = "DiffviewOpen"
+	cmd = "DiffviewOpen",
+	config = function()
+		local actions = require("diffview.actions")
+		require("diffview").setup({
+			keymaps = {
+				view = {
+					{ "n", "<space>", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
+				}
+			}
+		})
+	end
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Icons      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
@@ -3690,10 +3700,12 @@ addPlugin {
 			{
 				pattern = "*.md",
 				callback = function(args)
-					local top_line = vim.api.nvim_buf_get_lines(args.buf, 0, 1, false)[1]
-					if top_line:find(plugin.opts.toc_header) then
-						vim.cmd("undojoin | TOCList")
-					end
+					local lines = vim.api.nvim_buf_get_lines(args.buf, 0, 10, false)
+					if vim.iter(lines):any(function(line)
+						return line:find(plugin.opts.toc_header)
+					end) then
+					vim.cmd("undojoin | TOCList")
+				end
 				end
 			}
 		)
