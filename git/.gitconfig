@@ -3,7 +3,7 @@
     path = ~/.gitconfig.orig
 
 [fetch]
-    prune = true
+	prune = true
 
 [core]
     editor = nvim
