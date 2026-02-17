@@ -14,7 +14,6 @@ $scoop_pkgs = @(
 )
 
 $winget_pkgs = @(
-    "Anthropic.ClaudeCode"
     "Bruno.Bruno"
     "GitHub.cli"
     "GitHub.Copilot.Prerelease"

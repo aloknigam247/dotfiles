@@ -990,6 +990,7 @@ vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
 vim.keymap.set({"n", "v"}, "<S-Up>",   "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
 vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
 -- ━━ tab switch ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+-- FIX: conflict with terminal key mapping
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

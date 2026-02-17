@@ -92,7 +92,6 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
         $color_palette = $light_palette
         $lazygit_theme = "light.yml"
         sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
-        rg "opacity" $terminal_settings
 } else {
     $env:THEME = "dark"
         $current_theme = "Catppuccin Mocha"
