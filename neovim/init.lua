@@ -1227,7 +1227,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- Commands</>
 -----------
 vim.api.nvim_create_user_command(
-	"Cdroot",
+	"Cdroot", -- FIX: not working
 	function()
 		local function getRoots()
 			local function getGitRoot(prefix, path)
@@ -5102,24 +5102,26 @@ addPlugin {
 				input = { -- FEAT: open file in Peek
 					keys = {
 						["<C-q>"] = false,
-						["<M-q>"] = { "qflist", mode = { "i", "n" } },
 						["<C-s>"] = false,
 						["<C-t>"] = false,
 						["<C-u>"] = false,
 						["<C-v>"] = false,
+						["<CR>"]  = { { "confirm", "pick_win", "jump" }, mode = { "n", "i" } }, -- FEAT: drop ?
+						["<M-q>"] = { "qflist", mode = { "i", "n" } },
 						["<M-s>"] = { "edit_split", mode = { "i", "n" } }, -- FEAT: ask for window picker for splits
-						["<M-t>"] = { "tab", mode = { "n", "i" } },
-						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+						["<M-t>"] = { "tab", mode = { "n", "i" } }, -- FEAT: ask for window picker for vsplits
+						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } }, -- FEAT: ask for window picker for tabe
 					}
 				},
 				list = {
 					keys = {
 						["<C-q>"] = false,
-						["<M-q>"] = { "qflist", mode = { "i", "n" } },
 						["<C-s>"] = false,
 						["<C-t>"] = false,
 						["<C-u>"] = false,
 						["<C-v>"] = false,
+						["<CR>"]  = { {"confirm", "pick_win", "jump" }, mode = { "n", "i" } },
+						["<M-q>"] = { "qflist", mode = { "i", "n" } },
 						["<M-s>"] = { "edit_split", mode = { "i", "n" } },
 						["<M-t>"] = { "tab", mode = { "n", "i" } },
 						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } },
@@ -5134,13 +5136,28 @@ addPlugin {
 		}
 	},
 	config = function(_, cfg)
-		require("snacks").setup(cfg)
+		local snacks = require("snacks")
+		snacks.setup(cfg)
 
 		-- HACK: to fix windows path issues
 		local actions = require("snacks.explorer.actions")
 		actions.reveal_orig = actions.reveal
 		actions.reveal = function(picker, path) ---@diagnostic disable-line: duplicate-set-field
 			return actions.reveal_orig(picker, path:gsub("\\", "/"))
+		end
+
+		-- HACK: to use window-picker to pick windows
+		snacks.picker.util.pick_win = function(args)
+			return require("window-picker").pick_window({ include_current_win = false, filter_func = function(window_ids)
+				return vim.iter(window_ids)
+				:filter(function(winid)
+					local buf = vim.api.nvim_win_get_buf(winid)
+					local cfg = vim.api.nvim_win_get_config(winid)
+					local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+					return cfg.focusable and not vim.startswith(ft, "snacks")
+				end)
+				:totable()
+			end })
 		end
 	end
 }

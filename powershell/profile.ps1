@@ -91,14 +91,14 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
         $catppuccin = $catppuccin_latte
         $color_palette = $light_palette
         $lazygit_theme = "light.yml"
-        sed -i 's/"opacity": 25/"opacity": 100/' $terminal_settings
+        sed -i 's/"opacity": 80/"opacity": 100/' $terminal_settings
 } else {
     $env:THEME = "dark"
         $current_theme = "Catppuccin Mocha"
         $catppuccin = $catppuccin_mocha
         $color_palette = $dark_palette
         $lazygit_theme = "dark.yml"
-        sed -i 's/"opacity": 100/"opacity": 25/' $terminal_settings
+        sed -i 's/"opacity": 100/"opacity": 80/' $terminal_settings
 }
 
 
