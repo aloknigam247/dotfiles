@@ -567,6 +567,7 @@ Set-PsFzfOption `
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
+# FIX: pointer background color by filling bg+
 # https://vitormv.github.io/fzf-themes
 $env:FZF_DEFAULT_OPTS = ""
 $env:FZF_DEFAULT_OPTS += " --height=~70%"
