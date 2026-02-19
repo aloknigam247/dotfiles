@@ -3766,8 +3766,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Marks      ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin { "LintaoAmons/bookmarks.nvim" }
-
 addPlugin {
 	"chentoast/marks.nvim",
 	opts = {
