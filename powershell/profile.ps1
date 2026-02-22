@@ -181,6 +181,7 @@ $palette = @{
 }
 
 $palette.fzf = @{
+    bg               = $catppuccin.Mantle
     border           = $catppuccin.Lavender
     header           = $catppuccin.Red
     info             = $catppuccin.Mauve
@@ -567,7 +568,6 @@ Set-PsFzfOption `
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
 
-# FIX: pointer background color by filling bg+
 # https://vitormv.github.io/fzf-themes
 $env:FZF_DEFAULT_OPTS = ""
 $env:FZF_DEFAULT_OPTS += " --height=~70%"
@@ -583,7 +583,7 @@ $env:FZF_DEFAULT_OPTS += " --style=numbers"
 $env:FZF_DEFAULT_OPTS += " --color=always"
 $env:FZF_DEFAULT_OPTS += " --italic-text=always"
 $env:FZF_DEFAULT_OPTS += " --theme `"$bat_theme`" {}'"
-$env:FZF_DEFAULT_OPTS += " --preview-window='right,50%,border-rounded'"
+$env:FZF_DEFAULT_OPTS += " --preview-window='right,60%,border-rounded'"
 $env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
 $env:FZF_DEFAULT_OPTS += " --scheme=path"
 $env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
@@ -592,8 +592,8 @@ $env:FZF_DEFAULT_OPTS += " --margin='0,0,0,1'"
 $env:FZF_DEFAULT_OPTS += " --scrollbar='▐'"
 $env:FZF_DEFAULT_OPTS += " --info='right'"
 
-$env:FZF_DEFAULT_OPTS += " --color=bg+:-1"
-$env:FZF_DEFAULT_OPTS += " --color=bg:-1"
+$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.bg)"
+$env:FZF_DEFAULT_OPTS += " --color=bg:$($palette.fzf.bg)"
 $env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border)"
 $env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.marker_fg)"
 $env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg)"

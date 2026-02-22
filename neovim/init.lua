@@ -1782,6 +1782,12 @@ addPlugin {
 	}
 }
 
+-- https://github.com/OXY2DEV/tree-sitter-comment
+-- FEAT: docstring colors lua
+-- FEAT: docstring colors python
+-- FEAT: docstring colors csharp
+-- FEAT: docstring colors TODO ?
+
 addPlugin {
 	"t9md/vim-quickhl",
 	config = function()
@@ -3508,6 +3514,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/coekfung/img-clip.nvim https://github.com/hakonharnes/img-clip.nvim
 addPlugin {
 	"YousefHadder/markdown-plus.nvim",
 	ft = "markdown",
@@ -4731,6 +4738,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: https://github.com/3rd/image.nvim
 -- ascii diagrams https://diagon.arthursonzogni.com
 -- FEAT: https://github.com/altermo/iedit.nvim https://github.com/viocost/viedit
 addPlugin {
