@@ -22,6 +22,14 @@
         {
             "command": 
             {
+                "action": "sendInput",
+                "input": "\u001b[127;5u"
+            },
+            "id": "User.sendInput.backspace"
+        },
+        {
+            "command": 
+            {
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
@@ -37,10 +45,11 @@
         {
             "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b[127;5u"
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
             },
-            "id": "User.sendInput.backspace"
+            "id": "User.splitPane.A6751878"
         },
         {
             "command": 
@@ -49,15 +58,6 @@
                 "input": "\u001b[105;6u"
             },
             "id": "User.sendInput.shiftI"
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "id": "User.splitPane.A6751878"
         },
         {
             "command": "toggleFocusMode",
@@ -103,20 +103,20 @@
             "keys": "ctrl+backspace"
         },
         {
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
-        },
-        {
             "id": "User.sendInput.shiftO",
             "keys": "ctrl+shift+o"
         },
         {
-            "id": "User.sendInput.shiftI",
-            "keys": "ctrl+shift+i"
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
         },
         {
             "id": "User.splitPane.A6751878",
             "keys": "alt+shift+d"
+        },
+        {
+            "id": "User.sendInput.shiftI",
+            "keys": "ctrl+shift+i"
         },
         {
             "id": "User.find",
@@ -252,10 +252,10 @@
                 "hidden": false,
                 "icon": "\ud83e\udd16",
                 "name": "Claude",
-                "opacity": 100,
+                "opacity": 95,
                 "startingDirectory": "D:\\Dev.aloknigam",
                 "tabTitle": "Claude",
-                "useAcrylic": false
+                "useAcrylic": true
             }
         ]
     },
@@ -266,14 +266,14 @@
             "background": "#EFF1F5",
             "black": "#5C5F77",
             "blue": "#1E66F5",
-            "brightBlack": "#BFC3D1",
-            "brightBlue": "#3B7CFF",
-            "brightCyan": "#1FC6C6",
-            "brightGreen": "#5CD13F",
-            "brightPurple": "#F09BE0",
-            "brightRed": "#F03A5C",
-            "brightWhite": "#F2F4F8",
-            "brightYellow": "#FFC04D",
+            "brightBlack": "#5C5F77",
+            "brightBlue": "#1E66F5",
+            "brightCyan": "#179299",
+            "brightGreen": "#40A02B",
+            "brightPurple": "#EA76CB",
+            "brightRed": "#D20F39",
+            "brightWhite": "#ACB0BE",
+            "brightYellow": "#DF8E1D",
             "cursorColor": "#DC8A78",
             "cyan": "#179299",
             "foreground": "#4C4F69",
