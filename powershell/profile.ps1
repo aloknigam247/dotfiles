@@ -830,7 +830,9 @@ Set-PSReadLineOption -Colors @{
     "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
-
+# FEAT: https://www.powershellgallery.com/packages/CompletionPredictor/0.1.1
+# FEAT: fuzzy history https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/create-cmdline-predictor?view=powershell-7.5
+# FEAT: tab option completion https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/create-cmdline-predictor?view=powershell-7.5
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     Set-PSReadLineOption -Colors @{
         "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
