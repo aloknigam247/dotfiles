@@ -1695,6 +1695,7 @@ addPlugin {
 			local pattern_list = {}
 			for _,v in pairs(keys) do
 				table.insert(pattern_list, "%f[%w]" .. v .. ":$?")
+				table.insert(pattern_list, "%f[%w]" .. v .. "%b():$?")
 			end
 			return pattern_list
 		end
