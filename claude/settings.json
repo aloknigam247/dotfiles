@@ -3,11 +3,12 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
+  },
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true
   },
-  "statusLine": {
-    "type": "command",
-    "command": "powershell -NoProfile -Command \"$j = [Console]::In.ReadToEnd() | ConvertFrom-Json; $p = @(); $p += $j.model.display_name; if($j.agent.name){$p += \\\"[agent: $($j.agent.name)]\\\"}; try{$b = git branch --show-current 2>$null; if($b){$p += \\\"git:$b\\\"}}catch{}; $p += Split-Path -Leaf $j.cwd; if($j.context_window.remaining_percentage){$p += \\\"ctx:$($j.context_window.remaining_percentage)%\\\"}; $p -join ' | '\""
-  }
+  "autoMemoryEnabled": true
 }
