@@ -13,5 +13,6 @@ Rules:
 - Keep suggestions minimal: one line per insight, no duplication of existing entries
 - If an existing entry is stale or redundant, suggest removing it
 - If nothing worth saving, say so
+- **Prioritize skills and commands**: Actively look for repeatable workflows or multi-step patterns from the session that could become slash commands or auto-triggered skills. Don't dismiss categories 3–6 without concrete reasoning.
 
 Use AskUserQuestion to let the user pick which categories to update (multi-select). Then apply only the selected updates. After updating (or confirming nothing to update), say goodbye.
