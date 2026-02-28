@@ -21,3 +21,4 @@ While working, proactively identify reusable knowledge and suggest minimal updat
 - Keep updates minimal: one line per insight, no duplication of existing entries
 - Suggest updates at end of task, don't interrupt workflow
 - Never bloat files — if an entry becomes stale or redundant, suggest removing it
+- **Generalize, don't copy**: Capture abstract patterns and steps, not session-specific examples. Write knowledge as reusable instructions that apply to any similar future task, not as a transcript of what was done in the current session
