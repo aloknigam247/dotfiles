@@ -1768,7 +1768,7 @@ addPlugin {
 	config = function()
 		require("todo-comments").setup({
 			colors = todo_colors,
-			highlight = { pattern = "(KEYWORDS):$?", multiline = false },
+			highlight = { pattern = { "<(KEYWORDS):$?" }, multiline = false },
 			keywords = todo_config,
 			merge_keywords = false
 		})
