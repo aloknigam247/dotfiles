@@ -15,6 +15,8 @@ While working, proactively identify reusable knowledge and suggest minimal updat
 - **User commands** (`~/.claude/commands/`): User-invoked slash commands across all projects
 - **Project skills** (`.claude/skills/<name>/SKILL.md`): Auto-triggered behaviors specific to a project (e.g., running tests, lint rules)
 - **User skills** (`~/.claude/skills/<name>/SKILL.md`): Auto-triggered behaviors across all projects
+- **Project rules** (`.claude/rules/`): Auto-triggered rules specific to a project (e.g., coding standards, repo-specific constraints)
+- **User rules** (`~/.claude/rules/`): Auto-triggered rules across all projects (e.g., global preferences, style guidelines)
 
 **Rules**:
 - Only capture knowledge that saves time on future reuse — skip one-off or obvious things
