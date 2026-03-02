@@ -10,5 +10,5 @@
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true
   },
-  "autoMemoryEnabled": true
+  "autoMemoryEnabled": false
 }

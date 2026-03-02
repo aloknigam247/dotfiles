@@ -3615,7 +3615,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim",
+	"bngarren/checkmate.nvim", -- BUG: task count is not working
 	ft = "markdown",
 	opts = {
 		files = {
