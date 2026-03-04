@@ -22,14 +22,6 @@
         {
             "command": 
             {
-                "action": "sendInput",
-                "input": "\u001b[127;5u"
-            },
-            "id": "User.sendInput.backspace"
-        },
-        {
-            "command": 
-            {
                 "action": "newTab"
             },
             "id": "User.newTab.5DEADB41"
@@ -45,11 +37,10 @@
         {
             "command": 
             {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
+                "action": "sendInput",
+                "input": "\u001b[127;5u"
             },
-            "id": "User.splitPane.A6751878"
+            "id": "User.sendInput.backspace"
         },
         {
             "command": 
@@ -58,6 +49,15 @@
                 "input": "\u001b[105;6u"
             },
             "id": "User.sendInput.shiftI"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.A6751878"
         },
         {
             "command": "toggleFocusMode",
@@ -103,20 +103,28 @@
             "keys": "ctrl+backspace"
         },
         {
-            "id": "User.sendInput.shiftO",
-            "keys": "ctrl+shift+o"
-        },
-        {
             "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
         },
         {
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
+            "id": "User.sendInput.shiftO",
+            "keys": "ctrl+shift+o"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+minus"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+plus"
         },
         {
             "id": "User.sendInput.shiftI",
             "keys": "ctrl+shift+i"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
         },
         {
             "id": "User.find",
@@ -157,6 +165,22 @@
         {
             "id": "User.toggleOpacityF7",
             "keys": "f7"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+numpad_plus"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+numpad_minus"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+numpad0"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+0"
         }
     ],
     "minimizeToNotificationArea": true,
@@ -186,7 +210,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Catppuccin Latte",
+            "colorScheme": "Catppuccin Mocha",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
             "font": 
@@ -196,7 +220,7 @@
                 "size": 15
             },
             "intenseTextStyle": "all",
-            "opacity": 100,
+            "opacity": 80,
             "padding": "8",
             "scrollbarState": "hidden",
             "showMarksOnScrollbar": true,
@@ -229,7 +253,7 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": "Catppuccin Latte",
+                "colorScheme": "Catppuccin Mocha",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
@@ -246,7 +270,7 @@
                 "source": "Git"
             },
             {
-                "colorScheme": "Catppuccin Latte",
+                "colorScheme": "Catppuccin Mocha",
                 "commandline": "C:\\Users\\aloknigam\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe\\claude.exe",
                 "guid": "{d0212583-92a3-42a1-99da-70e5861ac195}",
                 "hidden": false,
