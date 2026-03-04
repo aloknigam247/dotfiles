@@ -25,3 +25,4 @@ While working, proactively identify reusable knowledge and suggest minimal updat
 - Suggest updates at end of task, don't interrupt workflow
 - Never bloat files — if an entry becomes stale or redundant, suggest removing it
 - **Generalize, don't copy**: Capture abstract patterns and steps, not session-specific examples. Write knowledge as reusable instructions that apply to any similar future task, not as a transcript of what was done in the current session
+- **Prioritize new patterns over gotchas**: When a session establishes a new creation pattern (e.g., "how to create a strategy", "how to add a new API endpoint"), that is the highest-value knowledge to capture — more than bugs or one-off fixes
