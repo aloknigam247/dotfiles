@@ -7,6 +7,7 @@ Review this session and identify reusable knowledge. For each category below, ch
 5. **Project skills** (`.claude/skills/<name>/SKILL.md`) — Auto-triggered behaviors specific to this project
 6. **User skills** (`~/.claude/skills/<name>/SKILL.md`) — Auto-triggered behaviors across all projects
 7. **Auto memory** (`~/.claude/projects/.../memory/`) — Reusable insights, patterns, debugging notes
+8. **Permissions** (`.claude/settings.json` → `permissions.allow`) — If you were repeatedly prompted to approve safe, read-only, or idempotent commands (linters, formatters, tests, git read ops, project scripts), suggest adding them as pre-allowed patterns. For permissions that cannot be set in settings.json (e.g., `--allowedTools`, `--disallowedTools`, `--permission-mode`, `--dangerously-skip-permissions`), suggest the CLI flag usage instead
 
 Rules:
 - Only suggest knowledge that saves time on future reuse — skip one-off or obvious things
@@ -14,5 +15,6 @@ Rules:
 - If an existing entry is stale or redundant, suggest removing it
 - If nothing worth saving, say so
 - **Prioritize skills and commands**: Actively look for repeatable workflows or multi-step patterns from the session that could become slash commands or auto-triggered skills. Don't dismiss categories 3–6 without concrete reasoning.
+- **Reusable scripts**: If any scripts were created during the session, evaluate whether they are general-purpose (not session-specific). Suggest saving useful ones to a shared scripts location (e.g., dotfiles or a scripts folder) so they can be reused later.
 
 Use AskUserQuestion to let the user pick which categories to update (multi-select). Then apply only the selected updates. After updating (or confirming nothing to update), say goodbye.
