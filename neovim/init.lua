@@ -2226,7 +2226,7 @@ addPlugin {
 						return items
 					end
 				},
-				ripgrep = {
+				ripgrep = { -- PERF: slow in big repos
 					module = "blink-ripgrep",
 					name = "ripgrep",
 					async = true,
