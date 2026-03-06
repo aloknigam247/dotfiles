@@ -218,6 +218,31 @@ function scoopInstall {
     }
 }
 
+function psgalleryInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $installed = Get-Module -ListAvailable -Name $pkg
+
+        if ($null -ne $installed -and $update) {
+            # update package
+            writeLog UPDATE "Updating PSGallery module: $pkg"
+            Update-Module -Name $pkg
+        }
+        elseif ($null -eq $installed -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing PSGallery module: $pkg"
+            Install-Module -Name $pkg -Force -Scope AllUsers
+        }
+    }
+}
+
 function wingetInstall {
     param(
         [string[]]$pkgs,
@@ -369,6 +394,7 @@ foreach ($pkg in $pkg_list) {
     if (Test-Path setup.ps1) {
         $pip_pkgs = @()
         $pipx_pkgs = @()
+        $psgallery_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
         $files = @{}
@@ -379,12 +405,14 @@ foreach ($pkg in $pkg_list) {
         if ($update) {
             pipInstall -update $pip_pkgs
             pipxInstall -update $pipx_pkgs
+            psgalleryInstall -update $psgallery_pkgs
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
             copyOrUpdateConfigs -update $files_copy
         } else {
             pipInstall $pip_pkgs
             pipxInstall $pipx_pkgs
+            psgalleryInstall $psgallery_pkgs
             scoopInstall $scoop_pkgs
             wingetInstall $winget_pkgs
 
