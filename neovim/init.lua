@@ -642,7 +642,6 @@ function ShowMenu(menu_config)
 	local ns_selected = vim.api.nvim_create_namespace("menu_selected")
 	local ns_hover = vim.api.nvim_create_namespace("menu_hover")
 
-	-- RECODE:
 	local function close_all_menus()
 		for _, m in ipairs(mounted_menus) do
 			pcall(function() m:unmount() end)
@@ -770,9 +769,6 @@ function ShowMenu(menu_config)
 				})
 			end
 		end
-
-		-- Mouse hover: highlight row under mouse without moving cursor
-		-- (handled by global keymap, see setup after mount)
 
 		-- Also highlight cursor row on keyboard movement
 		vim.api.nvim_create_autocmd("CursorMoved", {
