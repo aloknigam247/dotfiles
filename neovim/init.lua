@@ -380,7 +380,6 @@ local todo_colors = {
 	warn    = { "DiagnosticWarn", "WarningMsg", "#FBBF24" }
 }
 
--- FEAT: support for conventional commit TODO in todo-comments and mini.hipatterns
 ---@type table<string, table<"alt"|"color"|"icon",string|string[]>> Config for TODO
 local todo_config = {
 	DOCS   = { icon = "", color = "docs", alt = { "DOCME" } },
@@ -4792,7 +4791,7 @@ addPlugin {
 		vim.g.matchup_mouse_enabled = false
 		vim.g.matchup_matchparen_deferred = true
 	end,
-	lazy = false,
+	-- lazy = false, -- PERF: slows down
 }
 
 addPlugin {
