@@ -210,7 +210,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Catppuccin Mocha",
+            "colorScheme": "Catppuccin Latte",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
             "font": 
@@ -220,7 +220,7 @@
                 "size": 15
             },
             "intenseTextStyle": "all",
-            "opacity": 80,
+            "opacity": 100,
             "padding": "8",
             "scrollbarState": "hidden",
             "showMarksOnScrollbar": true,
@@ -253,7 +253,7 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "colorScheme": "Catppuccin Mocha",
+                "colorScheme": "Catppuccin Latte",
                 "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
@@ -270,7 +270,7 @@
                 "source": "Git"
             },
             {
-                "colorScheme": "Catppuccin Mocha",
+                "colorScheme": "Catppuccin Latte",
                 "commandline": "C:\\Users\\aloknigam\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe\\claude.exe",
                 "guid": "{d0212583-92a3-42a1-99da-70e5861ac195}",
                 "hidden": false,
