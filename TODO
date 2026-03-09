@@ -1,2 +1,3 @@
 FEAT(claude): use powershell in claude instead of Bash
+FEAT(git): auto prune branch which got deleted in master/main
 FEAT(powershell): change tab tittle on path change or executable running
