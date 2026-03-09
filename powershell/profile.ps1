@@ -330,7 +330,8 @@ function e {
 
     $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
     $arg_str = $quoted_args -join ' '
-    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    # wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    C:\Users\aloknigam\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
 }
 
 function whatis($arg) {
