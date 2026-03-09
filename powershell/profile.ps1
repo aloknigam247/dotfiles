@@ -535,6 +535,7 @@ Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocomp
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
 try{
     Import-Module -Name CompletionPredictor
+    Import-Module -Name PSDirectoryPredictor
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 } catch {
     Write-Error "Error occurred in setting PredictionSource"
@@ -834,8 +835,6 @@ Set-PSReadLineOption -Colors @{
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
 }
 
-# FEAT: fuzzy history https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/create-cmdline-predictor?view=powershell-7.5
-# FEAT: fuzzy directory matching
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     Set-PSReadLineOption -Colors @{
         "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
