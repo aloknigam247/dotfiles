@@ -90,4 +90,18 @@ if ($null -ne $j.context_window.used_percentage) {
     $parts += "${barColor}$bar ${pct}%${reset}"
 }
 
-$parts -join $sep
+# ── Responsive: split into two lines if terminal is too narrow ──
+$line = $parts -join $sep
+
+# Strip ANSI escape sequences to measure visible width
+$visible = $line -replace "$e\[[0-9;]*m", ""
+$cols = try { [Console]::WindowWidth } catch { 120 }
+
+if ($visible.Length -gt $cols -and $parts.Count -ge 4) {
+    $half = [math]::Ceiling($parts.Count / 2)
+    $row1 = $parts[0..($half - 1)] -join $sep
+    $row2 = $parts[$half..($parts.Count - 1)] -join $sep
+    "$row1`n$row2"
+} else {
+    $line
+}
