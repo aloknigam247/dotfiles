@@ -2390,15 +2390,18 @@ FileTypeActions = {
 	["neotest-summary"] = function(_)
 		vim.cmd.setlocal("nowrap")
 		vim.cmd[[
-			setlocal listchars-=multispace:·
 			setlocal listchars-=lead:·
+			setlocal listchars-=multispace:·
 		]]
 	end,
 	["markdown"] = function(_)
 		vim.g.table_mode_corner = "|"
 		vim.cmd[[
-			setlocal listchars-=multispace:·
 			setlocal listchars-=lead:·
+			setlocal listchars-=multispace:·
+			setlocal shiftwidth=2
+			setlocal softtabstop=2
+			setlocal tabstop=2
 		]]
 	end,
 	["todo"] = function(_)

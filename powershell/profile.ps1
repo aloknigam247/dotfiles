@@ -534,8 +534,10 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu 
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
 try{
-    Import-Module -Name CompletionPredictor
-    Import-Module -Name PSDirectoryPredictor
+    if ($env:COMPUTERNAME -eq "ALOKNIGAM") {
+        Import-Module -Name CompletionPredictor
+        Import-Module -Name PSDirectoryPredictor
+    }
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 } catch {
     Write-Error "Error occurred in setting PredictionSource"
