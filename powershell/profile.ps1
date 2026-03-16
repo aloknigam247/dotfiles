@@ -535,8 +535,8 @@ Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocomp
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
 try{
     if ($env:COMPUTERNAME -eq "ALOKNIGAM") {
-        Import-Module -Name CompletionPredictor
-        Import-Module -Name PSDirectoryPredictor
+        Import-Module -Name CompletionPredictor -ErrorAction SilentlyContinue
+        Import-Module -Name PSDirectoryPredictor -ErrorAction SilentlyContinue
     }
     Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
 } catch {
