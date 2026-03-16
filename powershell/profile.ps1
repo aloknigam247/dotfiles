@@ -533,15 +533,17 @@ function Format-Text {
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
-try{
-    if ($env:COMPUTERNAME -eq "ALOKNIGAM") {
-        Import-Module -Name CompletionPredictor -ErrorAction SilentlyContinue
-        Import-Module -Name PSDirectoryPredictor -ErrorAction SilentlyContinue
+if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+    try{
+        if ($env:COMPUTERNAME -eq "ALOKNIGAM") {
+            Import-Module -Name CompletionPredictor -ErrorAction SilentlyContinue
+            Import-Module -Name PSDirectoryPredictor -ErrorAction SilentlyContinue
+        }
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
+    } catch {
+        Write-Error "Error occurred in setting PredictionSource"
+        Write-Error $_
     }
-    Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
-} catch {
-    Write-Error "Error occurred in setting PredictionSource"
-    Write-Error $_
 }
 
 # ─[ posh-git ]────────────────────────────────────────────────────────
