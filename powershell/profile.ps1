@@ -280,6 +280,7 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -Er
 # ─[ Common ]──────────────────────────────────────────────────────────
 New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
+FEAT: create alias for & to launch task in a new terminal
 
 # ╭───────────────────╮
 # │ Generic Functions │
