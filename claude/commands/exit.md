@@ -6,7 +6,7 @@ Before suggesting updates, perform a structured replay of the session:
 
 1. **What was built?** List every new file, class, pattern, or workflow created in this session.
 2. **What existing patterns were followed?** Identify which conventions/templates from the codebase were reused — these are already documented (or should be).
-3. **What NEW patterns were established?** If we created something for the first time (new type of component, new workflow, new integration), that pattern is the highest-value knowledge to capture. Ask: "If someone needed to create another one of these, what steps would they follow?"
+3. **What NEW patterns or conventions were established?** If we created something for the first time (new type of component, new workflow, new integration), that pattern is the highest-value knowledge to capture. Ask: "If someone needed to create another one of these, what steps would they follow?" Also check: did this session establish or enforce a **convention** (e.g., "always use constants instead of inline strings", "always validate X before Y")? Refactoring tasks often exist specifically to establish a rule — capture that rule, not just the mechanical change.
 4. **What broke or surprised?** Gotchas, bugs, workarounds — but only if they'd trip someone up again.
 5. **Diff against existing CLAUDE.md** — Read the project CLAUDE.md and check: what's already documented vs what's new from this session?
 
@@ -35,7 +35,7 @@ Present your findings ranked by reuse value (highest first). Use AskUserQuestion
 - Never bloat files — if an entry becomes stale or redundant, suggest removing it
 - If nothing worth saving, say so
 - **Generalize, don't copy**: Capture abstract patterns and steps, not session-specific examples. Write knowledge as reusable instructions that apply to any similar future task, not as a transcript of what was done in the current session
-- **Prioritize new patterns over gotchas**: When a session establishes a new creation pattern (e.g., "how to create a strategy", "how to add a new API endpoint"), that is the highest-value knowledge to capture — more than bugs or one-off fixes
+- **Prioritize new patterns and conventions over gotchas**: When a session establishes a new creation pattern (e.g., "how to create a strategy", "how to add a new API endpoint") or enforces a new convention (e.g., "use constants not inline strings", "always route through X"), that is the highest-value knowledge to capture — more than bugs or one-off fixes. Refactoring sessions almost always imply a convention worth documenting.
 - **Prioritize skills and commands**: Actively look for repeatable workflows or multi-step patterns from the session that could become slash commands or auto-triggered skills. Don't dismiss categories 3–6 without concrete reasoning.
 - **Reusable scripts**: If any scripts were created during the session, evaluate whether they are general-purpose (not session-specific). Suggest saving useful ones to a shared scripts location (e.g., dotfiles or a scripts folder) so they can be reused later.
 - **Reduce permission friction**: When a skill or command triggers repeated permission prompts for safe, read-only, or idempotent commands (e.g., git read ops, CLI queries), suggest adding those as `allowed-tools` in the skill's SKILL.md frontmatter so the user doesn't have to approve them every time.

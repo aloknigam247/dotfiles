@@ -4462,6 +4462,7 @@ addPlugin {
 	}
 }
 
+-- FEAT(highlight): for powershell and csharp like vscode for comments
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master",
