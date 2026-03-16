@@ -901,7 +901,7 @@ vim.api.nvim_create_autocmd(
 				},
 			}
 
-			-- ShowMenu(menu_config)
+			ShowMenu(menu_config)
 		end
 	}
 )
