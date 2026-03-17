@@ -280,6 +280,7 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -Er
 # ─[ Common ]──────────────────────────────────────────────────────────
 New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
+function bg { wt -w 0 new-tab -d $PWD.Path --colorScheme $current_theme cmd /C "$args" }
 
 # ╭───────────────────╮
 # │ Generic Functions │
@@ -306,34 +307,6 @@ function bat {
         D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
     }
 }
-
-function Start-CopilotTask {
-    param(
-        [Parameter(ValueFromRemainingArguments = $true)]
-        [string[]]$Prompt
-    )
-
-    $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
-    $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
-    $pos_height = [int]($max_height * 0.3)
-    $pos_width = [int]($max_width * 0.2)
-    $size_width = [int]($max_width * 0.5)
-    $size_height = [int]($max_height * 0.4)
-    $shell = if ($PSVersionTable.PSEdition -eq "Core") { "pwsh" } else { "powershell" }
-    $prompt_text = $Prompt -join " "
-
-    if ([string]::IsNullOrWhiteSpace($prompt_text)) {
-        $copilot_cmd = "copilot"
-    } else {
-        $escaped_prompt = $prompt_text.Replace('"', '`"')
-        $copilot_cmd = "copilot -i `"$escaped_prompt`""
-    }
-
-    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme $shell -NoExit -Command $copilot_cmd
-}
-
-# Invoke as: & '&' <prompt>
-New-Alias -Name "&" -Value Start-CopilotTask -ErrorAction SilentlyContinue
 
 function claude {
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
