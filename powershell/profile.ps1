@@ -286,7 +286,7 @@ New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 # ╰───────────────────╯
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
-function bg   { wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "$args" }
+function bg   { wt -f -d $PWD.Path --colorScheme $current_theme pwsh -NoProfile -C "$args" }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
