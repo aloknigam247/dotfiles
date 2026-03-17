@@ -88,18 +88,16 @@ $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\Current
 $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
-        $current_theme = "Catppuccin Latte"
-        $catppuccin = $catppuccin_latte
-        $color_palette = $light_palette
-        $lazygit_theme = "light.yml"
-        sed -i 's/"opacity": 80/"opacity": 95/' $terminal_settings
+    $current_theme = "Catppuccin Latte"
+    $catppuccin = $catppuccin_latte
+    $color_palette = $light_palette
+    $lazygit_theme = "light.yml"
 } else {
     $env:THEME = "dark"
-        $current_theme = "Catppuccin Mocha"
-        $catppuccin = $catppuccin_mocha
-        $color_palette = $dark_palette
-        $lazygit_theme = "dark.yml"
-        sed -i 's/"opacity": 95/"opacity": 80/' $terminal_settings
+    $current_theme = "Catppuccin Mocha"
+    $catppuccin = $catppuccin_mocha
+    $color_palette = $dark_palette
+    $lazygit_theme = "dark.yml"
 }
 
 
