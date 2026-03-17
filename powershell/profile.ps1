@@ -280,7 +280,8 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -Er
 # ─[ Common ]──────────────────────────────────────────────────────────
 New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
-function bg { wt -w 0 new-tab -d $PWD.Path --colorScheme $current_theme cmd /C "$args" }
+function bg { wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "$args" }
+New-Alias -Name "&" -Value bg -ErrorAction SilentlyContinue
 
 # ╭───────────────────╮
 # │ Generic Functions │
