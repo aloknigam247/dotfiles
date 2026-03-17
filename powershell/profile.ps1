@@ -280,14 +280,13 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -Er
 # ─[ Common ]──────────────────────────────────────────────────────────
 New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
-function bg { wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "$args" }
-New-Alias -Name "&&" -Value bg -ErrorAction SilentlyContinue
 
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
+function bg   { wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "$args" }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
