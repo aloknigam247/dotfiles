@@ -653,7 +653,6 @@ vim.keymap.set("n", "!!",    ":<Up><CR>",   { desc = "Run last command" })
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>",  { desc = "Close window" })
 vim.keymap.set("n", "<C-s>", "<cmd>w!<CR>", { desc = "Save file" })
 -- ━━ cursor movement ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- FEAT: for insert mode as well
 vim.keymap.set("v", "<C-Left>", "b", { desc = "Move to next word end" })
 vim.keymap.set("v", "<C-Right>", "e", { desc = "Move to prev word start" })
 vim.keymap.set("v", "<S-Left>", "<C-Left>", { desc = "Move to next word end" })
@@ -696,7 +695,6 @@ vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search in select region" })
 vim.keymap.set({"n", "v"}, "<S-Up>",   "<C-y>", { noremap = true, desc = "Scroll 1 line up" })
 vim.keymap.set({"n", "v"}, "<S-Down>", "<C-e>", { noremap = true, desc = "Scroll 1 line down" })
 -- ━━ tab switch ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
--- FIX: conflict with terminal key mapping
 vim.keymap.set("n", "<C-S-Tab>", "<cmd>tabprevious<CR>", { desc = "Switch to previous tab" })
 vim.keymap.set("n", "<C-Tab>",   "<cmd>tabnext<CR>",     { desc = "Switch to next tab" })
 -- ━━ window controls ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -873,7 +871,7 @@ vim.opt.runtimepath:prepend(lazypath)
 -- Commands</>
 -----------
 vim.api.nvim_create_user_command(
-	"Cdroot", -- FIX: not working
+	"Cdroot",
 	function()
 		local function getRoots()
 			local function getGitRoot(prefix, path)
@@ -986,7 +984,7 @@ vim.api.nvim_create_user_command(
 			path = vim.fn.expand("%:p")
 		end
 
-		local function reopen(mode) -- FIX: reset win highlight on reopen
+		local function reopen(mode)
 			Preview_win:hide()
 
 			local picked_win = require("window-picker").pick_window({ include_current_win = true })
