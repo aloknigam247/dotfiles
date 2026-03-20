@@ -11,6 +11,14 @@
             "id": "User.newTab.5DEADB41"
         },
         {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -20,8 +28,12 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "toggleFocusMode",
-            "id": "User.toggleFocusMode"
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
         },
         {
             "command": 
@@ -33,14 +45,10 @@
         {
             "command": 
             {
-                "action": "copy",
-                "singleLine": false
+                "action": "sendInput",
+                "input": "\u001b\r"
             },
-            "id": "User.copy.644BA8F2"
-        },
-        {
-            "command": "find",
-            "id": "User.find"
+            "id": "User.sendInput.8F63D3A9"
         }
     ],
     "alwaysShowNotificationIcon": false,
@@ -50,10 +58,6 @@
     "defaultProfile": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
     "keybindings": 
     [
-        {
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
-        },
         {
             "id": null,
             "keys": "ctrl+minus"
@@ -67,16 +71,24 @@
             "keys": "alt+shift+d"
         },
         {
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": null,
+            "keys": "enter"
+        },
+        {
             "id": "User.find",
             "keys": "ctrl+shift+f"
         },
         {
             "id": null,
             "keys": "ctrl+v"
-        },
-        {
-            "id": null,
-            "keys": "enter"
         },
         {
             "id": null,
@@ -199,7 +211,7 @@
                 "hidden": false,
                 "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
                 "name": "PowerShell 7",
-                "opacity": 90,
+                "opacity": 100,
                 "startingDirectory": "%USERPROFILE%",
                 "useAcrylic": true
             },
@@ -216,7 +228,7 @@
                 "hidden": false,
                 "icon": "\ud83e\udd16",
                 "name": "Claude",
-                "opacity": 95,
+                "opacity": 100,
                 "startingDirectory": "D:\\Dev.aloknigam",
                 "tabTitle": "Claude",
                 "useAcrylic": true
