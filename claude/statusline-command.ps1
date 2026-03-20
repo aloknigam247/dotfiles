@@ -14,6 +14,7 @@ $cyan    = "$e[38;5;30m"
 $orange  = "$e[38;5;166m"
 $gray    = "$e[38;5;240m"
 $teal    = "$e[38;5;37m"
+$yellow  = "$e[38;5;136m"
 $reset   = "$e[0m"
 $sep     = " $gray·$reset "
 
@@ -23,7 +24,7 @@ $iFolder = ""
 $iBranch = ""
 $iTree   = ""
 $iRobot  = "󰚩"
-$iDollar = ""
+$iDollar = ""
 $iClock  = "󰥔"
 $iPlus   = ""
 $iMinus  = ""
@@ -58,7 +59,27 @@ try {
 
 if ($null -ne $j.cost.total_cost_usd) {
     $cost = [math]::Round($j.cost.total_cost_usd, 2)
-    $top += "${green}$iDollar $cost${reset}"
+    $inrRate = $null
+    $cachePath = "$env:TEMP/usdinr_rate.json"
+    if (Test-Path $cachePath) {
+        $cacheAge = (Get-Date) - (Get-Item $cachePath).LastWriteTime
+        if ($cacheAge.TotalMinutes -lt 60) {
+            try { $inrRate = (Get-Content $cachePath -Raw | ConvertFrom-Json).rate } catch {}
+        }
+    }
+    if ($null -eq $inrRate) {
+        try {
+            $resp = Invoke-RestMethod -Uri "https://open.er-api.com/v6/latest/USD" -TimeoutSec 5
+            $inrRate = [math]::Round($resp.rates.INR, 1)
+            @{ rate = $inrRate } | ConvertTo-Json | Set-Content $cachePath -Encoding UTF8
+        } catch {}
+    }
+    if ($null -ne $inrRate) {
+        $inrCost = [math]::Round($cost * $inrRate, 2)
+        $top += "${green}$iDollar${cost}${reset}${gray}/${reset}${yellow}`u{20B9}${inrCost}${reset}"
+    } else {
+        $top += "${green}$iDollar$cost${reset}"
+    }
 }
 
 if ($null -ne $j.context_window.used_percentage) {
