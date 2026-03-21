@@ -1,3 +1,7 @@
+FEAT(claude): I can see what command is run a seperate terminal and I can see what was the output
+FEAT(claude): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
+FEAT(claude): When I claude make change in files, with a keymap these diffs are open in neovim showing the file changes diffs
+FEAT(claude): When I edit prompt with neovim inside claude code / commands give same completion as claude code
 FEAT(claude): use powershell in claude instead of Bash
 FEAT(git): auto prune branch which got deleted in master/main
 FEAT(powershell): change tab tittle on path change or executable running

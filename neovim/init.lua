@@ -1035,54 +1035,13 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://github.com/yetone/avante.nvim
--- https://github.com/carlos-algms/agentic.nvim
-addPlugin {
-	-- FEAT: https://codecompanion.olimorris.dev/configuration/rules
-	-- FEAT: setup github copilot
-	-- FEAT: setup claude code
-	-- FEAT: https://github.com/ravitemer/mcphub.nvim
-	-- FEAT: https://github.com/hakonharnes/img-clip.nvim
-	"olimorris/codecompanion.nvim",
-	-- FEAT: configure adapter
-	-- FEAT: vim.cmd([[cab cc CodeCompanion]])
-	-- FEAT: https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/config.lua#L42-L392
-	-- FEAT: incline icon
-	cmd = { "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat", "CodeCompanionCmd" },
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"github/copilot.vim",
-		"nvim-treesitter/nvim-treesitter",
-	},
-	-- FEAT: change ai agent name from CodeCompanion (Agent)
-	opts = {
-		adapters = {
-			acp = {
-				claude_code = function()
-					return require("codecompanion.adapters").extend("claude_code", {
-						env = {
-							CLAUDE_CODE_OAUTH_TOKEN = "ps0njmyjLfgAZW3M3uOlAwJk1SJCAGMxbb6qQ9nUjiu43a4f#-fB1D9f6l2GGmgeXBO3inyCM-9UJwEVHgWFG5S7_fGM"
-						}
-					})
-				end,
-				opts = {
-					show_presets = false
-				}
-			}
-		},
-		display = {
-			action_palette = {
-				provider = "snacks"
-			}
-		},
-		http = {
-			opts = {
-				show_presets = false,
-				show_model_choices = false
-			}
-		}
-	}
-}
+-- FEAT: command to launch Claude in a vert terminal
+-- FEAT: When file changes are made I can see the diff neovim and can accept/reject each or all changes
+-- FEAT: when claude code is running inside neovim the prompt shows completion like in neovim, as if all neovim completion are executed in the buffer and I can see them
+-- FEAT: Claude can see files in neovim which are opened
+-- FEAT: Claude code can execute commands in current neovim session
+-- FEAT: https://github.com/ravitemer/mcphub.nvim
+-- FEAT: https://github.com/hakonharnes/img-clip.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
