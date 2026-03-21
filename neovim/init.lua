@@ -1035,7 +1035,6 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- https://opencode.ai/
 -- https://github.com/yetone/avante.nvim
 -- https://github.com/carlos-algms/agentic.nvim
 addPlugin {

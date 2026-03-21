@@ -118,7 +118,7 @@ Start-Job {
 } | Out-Null
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
-    sed -i "s/`"colorScheme`": `"Catppuccin .*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
+    # sed -i "s/`"colorScheme`": `"Catppuccin .*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
 }
 
 # Set theme variables

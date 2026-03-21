@@ -3,6 +3,7 @@ using System.Management.Automation.Subsystem;
 
 namespace PSDirectoryPredictor;
 
+// BUG: not working
 public class Init : IModuleAssemblyInitializer, IModuleAssemblyCleanup
 {
     internal static DirectoryPredictor? Instance;
