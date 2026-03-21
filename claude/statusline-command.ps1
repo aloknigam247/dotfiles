@@ -57,31 +57,6 @@ try {
     }
 } catch {}
 
-if ($null -ne $j.cost.total_cost_usd) {
-    $cost = [math]::Round($j.cost.total_cost_usd, 2)
-    $inrRate = $null
-    $cachePath = "$env:TEMP/usdinr_rate.json"
-    if (Test-Path $cachePath) {
-        $cacheAge = (Get-Date) - (Get-Item $cachePath).LastWriteTime
-        if ($cacheAge.TotalMinutes -lt 60) {
-            try { $inrRate = (Get-Content $cachePath -Raw | ConvertFrom-Json).rate } catch {}
-        }
-    }
-    if ($null -eq $inrRate) {
-        try {
-            $resp = Invoke-RestMethod -Uri "https://open.er-api.com/v6/latest/USD" -TimeoutSec 5
-            $inrRate = [math]::Round($resp.rates.INR, 1)
-            @{ rate = $inrRate } | ConvertTo-Json | Set-Content $cachePath -Encoding UTF8
-        } catch {}
-    }
-    if ($null -ne $inrRate) {
-        $inrCost = [math]::Round($cost * $inrRate, 2)
-        $top += "${green}$iDollar${cost}${reset}${gray}/${reset}${yellow}`u{20B9}${inrCost}${reset}"
-    } else {
-        $top += "${green}$iDollar$cost${reset}"
-    }
-}
-
 if ($null -ne $j.context_window.used_percentage) {
     $pct = [int]$j.context_window.used_percentage
     $filled = [math]::Round($pct / 10)
@@ -112,6 +87,31 @@ if ($null -ne $j.cost.total_lines_added -or $null -ne $j.cost.total_lines_remove
     $removed = if ($null -ne $j.cost.total_lines_removed) { $j.cost.total_lines_removed } else { 0 }
     $changed = $added + $removed
     $bottom += "${green}$iPlus $added ${red}$iMinus $removed ${gray}$iDelta $changed${reset}"
+}
+
+if ($null -ne $j.cost.total_cost_usd) {
+    $cost = [math]::Round($j.cost.total_cost_usd, 2)
+    $inrRate = $null
+    $cachePath = "$env:TEMP/usdinr_rate.json"
+    if (Test-Path $cachePath) {
+        $cacheAge = (Get-Date) - (Get-Item $cachePath).LastWriteTime
+        if ($cacheAge.TotalMinutes -lt 60) {
+            try { $inrRate = (Get-Content $cachePath -Raw | ConvertFrom-Json).rate } catch {}
+        }
+    }
+    if ($null -eq $inrRate) {
+        try {
+            $resp = Invoke-RestMethod -Uri "https://open.er-api.com/v6/latest/USD" -TimeoutSec 5
+            $inrRate = [math]::Round($resp.rates.INR, 1)
+            @{ rate = $inrRate } | ConvertTo-Json | Set-Content $cachePath -Encoding UTF8
+        } catch {}
+    }
+    if ($null -ne $inrRate) {
+        $inrCost = [int]($cost * $inrRate)
+        $bottom += "${green}$iDollar${cost}${reset}${gray}/${reset}${yellow}`u{20B9}${inrCost}${reset}"
+    } else {
+        $bottom += "${green}$iDollar$cost${reset}"
+    }
 }
 
 # ── Output ──

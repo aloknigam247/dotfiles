@@ -4,7 +4,7 @@
     "DISABLE_AUTOUPDATER": "1",
     "DISABLE_INSTALLATION_CHECKS": "1"
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
@@ -12,6 +12,6 @@
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true
   },
-  "autoMemoryEnabled": false,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "autoMemoryEnabled": false
 }
