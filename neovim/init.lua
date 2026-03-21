@@ -916,6 +916,12 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
+	"Claude",
+	function() require("snacks").terminal.open(vim.fn.expand("$LOCALAPPDATA/Microsoft/WinGet/Packages/Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe/claude.exe"), { win = { position = "right", width = 0.4 } }) end,
+	{ desc = "Open Claude in vertical terminal split" }
+)
+
+vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
 	{ desc = "Replaces ansii color codes with the actual colors" }
@@ -1035,7 +1041,6 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: command to launch Claude in a vert terminal
 -- FEAT: When file changes are made I can see the diff neovim and can accept/reject each or all changes
 -- FEAT: when claude code is running inside neovim the prompt shows completion like in neovim, as if all neovim completion are executed in the buffer and I can see them
 -- FEAT: Claude can see files in neovim which are opened
