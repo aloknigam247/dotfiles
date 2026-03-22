@@ -1,3 +1,12 @@
+## Code Style
+
+- Use 1TBS (One True Brace Style) for all languages: opening brace on the same line, `else` on the same line as the closing brace
+  ```
+  if () {
+  } else {
+  }
+  ```
+
 ## Project Structure
 
 - Each package has a directory with a `setup.ps1` that declares variables (`$scoop_pkgs`, `$winget_pkgs`, `$pip_pkgs`, `$pipx_pkgs`, `$psgallery_pkgs`, `$files`, `$files_copy`)

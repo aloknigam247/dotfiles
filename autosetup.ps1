@@ -67,31 +67,24 @@ function Menu {
                     DrawMenu $menuItems $pos $Multiselect $selection
                 }
             }
-        }
-        finally {
+        } finally {
             [System.Console]::SetCursorPosition(0, $startPos + $menuItems.Length)
             [console]::CursorVisible = $true
         }
-    }
-    else {
+    } else {
         $pos = $null
     }
 
-    if ($ReturnIndex -eq $false -and $null -ne $pos)
-    {
+    if ($ReturnIndex -eq $false -and $null -ne $pos) {
         if ($Multiselect){
             return $menuItems[$selection]
-        }
-        else {
+        } else {
             return $menuItems[$pos]
         }
-    }
-    else
-    {
+    } else {
         if ($Multiselect){
             return $selection
-        }
-        else {
+        } else {
             return $pos
         }
     }
@@ -148,8 +141,7 @@ function pipInstall {
             # update package
             writeLog UPDATE "Updating pip package: $pkg"
             pip install --upgrade $pkg
-        }
-        elseif ($installed -eq $false -and -not $update) {
+        } elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing pip package: $pkg"
             pip install $pkg
@@ -175,8 +167,7 @@ function pipxInstall {
             # update package
             writeLog UPDATE "Updating pipx package: $pkg"
             pipx upgrade $pkg
-        }
-        elseif ($installed -eq $false -and -not $update) {
+        } elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing pipx package: $pkg"
             pipx install $pkg
@@ -209,8 +200,7 @@ function scoopInstall {
             # update package
             writeLog UPDATE "Updating scoop package: $pkg"
             scoop update -s $pkg
-        }
-        elseif ($installed -eq $false -and -not $update) {
+        } elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing scoop package: $pkg"
             scoop install --no-update-scoop -s $pkg
@@ -234,8 +224,7 @@ function psgalleryInstall {
             # update package
             writeLog UPDATE "Updating PSGallery module: $pkg"
             Update-Module -Name $pkg
-        }
-        elseif ($null -eq $installed -and -not $update) {
+        } elseif ($null -eq $installed -and -not $update) {
             # install package
             writeLog UPDATE "Installing PSGallery module: $pkg"
             Install-Module -Name $pkg -Force -Scope AllUsers
@@ -265,8 +254,7 @@ function wingetInstall {
             # update package
             writeLog UPDATE "Updating winget package: $pkg"
             winget upgrade -e --id $pkg
-        }
-        elseif ($installed -eq $false -and -not $update) {
+        } elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing winget package: $pkg"
             winget install -e --id $pkg
@@ -289,15 +277,13 @@ function linkConfigs {
             $target = Get-Item $dest | Select-Object -ExpandProperty Target
             if ($target -eq $src) {
                 Write-Verbose "$src already linked" -verbose
-            }
-            else {
+            } else {
                 Write-Output "backup $dest --> ${dest}.orig"
                 Move-Item -Force -Path $dest -Destination "${dest}.orig"
                 Write-Output "Linking $src --> $dest"
                 New-Item -ItemType SymbolicLink -Path $dest -Target $src
             }
-        }
-        else {
+        } else {
             Write-Output "Linking $src --> $dest"
             New-Item -ItemType SymbolicLink -Path $dest -Target $src
         }
@@ -338,8 +324,7 @@ function copyOrUpdateConfigs {
                 } else {
                     Write-Verbose "$src already exists" -verbose
                 }
-            }
-            else {
+            } else {
                 Write-Output "Copying $src --> $dest"
                 Copy-Item -Path $src -Destination $dest
             }
@@ -374,8 +359,7 @@ $all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | ForEach-Object { $_.Dir
 if ($update) {
     writeLog INFO "Updating all installed packages"
     $pkg_list = $all_pkgs
-}
-elseif ($install) {
+} elseif ($install) {
     writeLog INFO "Installing $install"
     $pkg_list = $install
     

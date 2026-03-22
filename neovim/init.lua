@@ -4606,7 +4606,7 @@ addPlugin {
 				frecency = true
 			},
 			sources = {
-				explorer = { -- FEAT: auto load explorer for directories `e .`
+				explorer = { -- FEAT: auto load explorer for directories `e <dir>`
 					actions = {
 						toggle_preview = function(picker) --[[Override]]
 							picker.preview.win:toggle()

@@ -4,23 +4,28 @@ using System.Management.Automation.Subsystem;
 namespace PSDirectoryPredictor;
 
 // BUG: not working
-public class Init : IModuleAssemblyInitializer, IModuleAssemblyCleanup
-{
-    internal static DirectoryPredictor? Instance;
+public class Init : IModuleAssemblyInitializer, IModuleAssemblyCleanup {
+    internal static DirectoryPredictor? DirectoryInstance;
+    internal static FuzzyHistoryPredictor? HistoryInstance;
 
-    public void OnImport()
-    {
-        Instance = new DirectoryPredictor();
-        SubsystemManager.RegisterSubsystem(SubsystemKind.CommandPredictor, Instance);
+    public void OnImport() {
+        DirectoryInstance = new DirectoryPredictor();
+        SubsystemManager.RegisterSubsystem(SubsystemKind.CommandPredictor, DirectoryInstance);
+
+        HistoryInstance = new FuzzyHistoryPredictor();
+        SubsystemManager.RegisterSubsystem(SubsystemKind.CommandPredictor, HistoryInstance);
     }
 
-    public void OnRemove(PSModuleInfo module)
-    {
-        if (Instance is not null)
-        {
-            SubsystemManager.UnregisterSubsystem(SubsystemKind.CommandPredictor, Instance.Id);
-            Instance.Dispose();
-            Instance = null;
+    public void OnRemove(PSModuleInfo module) {
+        if (DirectoryInstance is not null) {
+            SubsystemManager.UnregisterSubsystem(SubsystemKind.CommandPredictor, DirectoryInstance.Id);
+            DirectoryInstance.Dispose();
+            DirectoryInstance = null;
+        }
+        if (HistoryInstance is not null) {
+            SubsystemManager.UnregisterSubsystem(SubsystemKind.CommandPredictor, HistoryInstance.Id);
+            HistoryInstance.Dispose();
+            HistoryInstance = null;
         }
     }
 }

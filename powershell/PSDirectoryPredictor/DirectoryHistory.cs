@@ -6,8 +6,7 @@ using System.Threading;
 
 namespace PSDirectoryPredictor;
 
-public sealed class DirectoryHistory
-{
+public sealed class DirectoryHistory {
     private readonly Dictionary<string, DirectoryEntry> _entries = new(StringComparer.OrdinalIgnoreCase);
     private readonly ReaderWriterLockSlim _lock = new();
     private volatile List<DirectoryEntry> _snapshot = new();
@@ -17,8 +16,7 @@ public sealed class DirectoryHistory
         @"^\s*(?:cd|sl|chdir|Set-Location)\s+(?:-(?:Path|LiteralPath)\s+)?[""']?(.+?)[""']?\s*$",
         RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-    public void BootstrapFromHistoryFile()
-    {
+    public void BootstrapFromHistoryFile() {
         string historyPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "Microsoft", "Windows", "PowerShell", "PSReadLine",
@@ -26,8 +24,7 @@ public sealed class DirectoryHistory
 
         if (!File.Exists(historyPath)) return;
 
-        try
-        {
+        try {
             // Read last 5000 lines
             var allLines = File.ReadAllLines(historyPath);
             int start = Math.Max(0, allLines.Length - 5000);
@@ -38,39 +35,31 @@ public sealed class DirectoryHistory
             double step = 30.0 / Math.Max(lines.Count, 1);
 
             int idx = 0;
-            foreach (var line in lines)
-            {
+            foreach (var line in lines) {
                 var path = ExtractPath(line);
-                if (path is not null)
-                {
+                if (path is not null) {
                     var timestamp = baseTime.AddDays(step * idx);
                     AddEntry(path, timestamp);
                 }
                 idx++;
             }
-        }
-        catch
-        {
+        } catch {
             // Swallow — best effort bootstrap
         }
     }
 
-    public void ProcessHistoryLines(string commandLine)
-    {
+    public void ProcessHistoryLines(string commandLine) {
         var path = ExtractPath(commandLine);
-        if (path is not null)
-        {
+        if (path is not null) {
             AddEntry(path, DateTime.UtcNow);
         }
     }
 
-    public List<(string Path, double Score)> GetMatches(string partial, int maxResults = 2)
-    {
+    public List<(string Path, double Score)> GetMatches(string partial, int maxResults = 2) {
         var entries = _snapshot; // volatile read — no lock needed
         var results = new List<(string Path, double Score)>();
 
-        foreach (var entry in entries)
-        {
+        foreach (var entry in entries) {
             // Match against full path
             int fullScore = FuzzyMatcher.Score(partial, entry.FullPath);
 
@@ -94,8 +83,7 @@ public sealed class DirectoryHistory
         return results;
     }
 
-    private static string? ExtractPath(string line)
-    {
+    private static string? ExtractPath(string line) {
         var match = CdRegex.Match(line);
         if (!match.Success) return null;
 
@@ -108,13 +96,10 @@ public sealed class DirectoryHistory
         return NormalizePath(raw);
     }
 
-    private static string? NormalizePath(string raw)
-    {
-        try
-        {
+    private static string? NormalizePath(string raw) {
+        try {
             // Expand ~ to home directory
-            if (raw.StartsWith('~'))
-            {
+            if (raw.StartsWith('~')) {
                 string home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                 raw = Path.Combine(home, raw.Length > 1 ? raw.Substring(2) : "");
             }
@@ -124,8 +109,7 @@ public sealed class DirectoryHistory
 
             // Normalize separators and get full path (best effort)
             raw = raw.Replace('/', '\\');
-            if (Path.IsPathRooted(raw))
-            {
+            if (Path.IsPathRooted(raw)) {
                 raw = Path.GetFullPath(raw);
             }
 
@@ -134,28 +118,20 @@ public sealed class DirectoryHistory
                 raw = raw.TrimEnd('\\');
 
             return raw;
-        }
-        catch
-        {
+        } catch {
             return null;
         }
     }
 
-    private void AddEntry(string path, DateTime timestamp)
-    {
+    private void AddEntry(string path, DateTime timestamp) {
         _lock.EnterWriteLock();
-        try
-        {
-            if (_entries.TryGetValue(path, out var existing))
-            {
+        try {
+            if (_entries.TryGetValue(path, out var existing)) {
                 existing.VisitCount++;
                 if (timestamp > existing.LastVisited)
                     existing.LastVisited = timestamp;
-            }
-            else
-            {
-                _entries[path] = new DirectoryEntry
-                {
+            } else {
+                _entries[path] = new DirectoryEntry {
                     FullPath = path,
                     VisitCount = 1,
                     LastVisited = timestamp
@@ -164,22 +140,18 @@ public sealed class DirectoryHistory
 
             // Rebuild snapshot
             _snapshot = new List<DirectoryEntry>(_entries.Values);
-        }
-        finally
-        {
+        } finally {
             _lock.ExitWriteLock();
         }
     }
 }
 
-public class DirectoryEntry
-{
+public class DirectoryEntry {
     public string FullPath { get; set; } = string.Empty;
     public int VisitCount { get; set; }
     public DateTime LastVisited { get; set; }
 
-    public double GetFrecencyScore()
-    {
+    public double GetFrecencyScore() {
         var age = DateTime.UtcNow - LastVisited;
         double recency;
 

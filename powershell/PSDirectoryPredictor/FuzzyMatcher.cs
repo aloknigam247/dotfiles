@@ -4,15 +4,13 @@ namespace PSDirectoryPredictor;
 /// Subsequence-based fuzzy scorer optimized for file system paths.
 /// Returns -1 for no match, higher score = better match.
 /// </summary>
-public static class FuzzyMatcher
-{
+public static class FuzzyMatcher {
     private const int ConsecutiveBaseBonus = 5;
     private const int SegmentStartBonus = 10;
     private const int SeparatorBoundaryBonus = 5;
     private const int ExactCaseBonus = 1;
 
-    public static int Score(string pattern, string candidate)
-    {
+    public static int Score(string pattern, string candidate) {
         if (pattern.Length == 0) return 0;
         if (pattern.Length > candidate.Length) return -1;
 
@@ -20,13 +18,11 @@ public static class FuzzyMatcher
         int patternIdx = 0;
         int consecutive = 0;
 
-        for (int i = 0; i < candidate.Length && patternIdx < pattern.Length; i++)
-        {
+        for (int i = 0; i < candidate.Length && patternIdx < pattern.Length; i++) {
             char pc = pattern[patternIdx];
             char cc = candidate[i];
 
-            if (char.ToLowerInvariant(pc) == char.ToLowerInvariant(cc))
-            {
+            if (char.ToLowerInvariant(pc) == char.ToLowerInvariant(cc)) {
                 // Base match point
                 score += 1;
 
@@ -52,9 +48,7 @@ public static class FuzzyMatcher
                     score += SeparatorBoundaryBonus;
 
                 patternIdx++;
-            }
-            else
-            {
+            } else {
                 consecutive = 0;
             }
         }
