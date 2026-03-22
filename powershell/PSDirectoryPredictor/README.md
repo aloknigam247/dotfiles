@@ -1,12 +1,30 @@
 # PSDirectoryPredictor
 
-A PowerShell 7 [command predictor](https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/using-predictors) that suggests directories when typing `cd` or `Set-Location`, ranked by frecency (frequency + recency).
+A PowerShell 7 [command predictor](https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/using-predictors) module that provides two predictors, both ranked by frecency (frequency + recency):
+
+| Predictor | Tag | Description |
+|---|---|---|
+| **Directory** | `[Directory]` | Suggests directories when typing `cd` or `Set-Location` |
+| **FuzzyHistory** | `[FuzzyHistory]` | Fuzzy matches against all command history |
 
 ## How it works
 
-1. On import, bootstraps from the last 5000 lines of PSReadLine history (`ConsoleHost_history.txt`)
-2. Watches executed commands in real time for `cd`/`Set-Location` invocations
-3. When you start typing `cd <partial>`, suggests matching directories using fuzzy matching combined with a frecency score
+Both predictors bootstrap from the last 5000 lines of PSReadLine history (`ConsoleHost_history.txt`) and watch executed commands in real time.
+
+### Directory predictor
+
+Triggers on `cd`/`Set-Location` commands and suggests matching directory paths.
+
+Supported commands:
+- `cd <path>`
+- `Set-Location <path>`
+- `Set-Location -Path <path>`
+- `Set-Location -LiteralPath <path>`
+- `sl <path>`, `chdir <path>`
+
+### FuzzyHistory predictor
+
+Triggers on any input (minimum 2 characters) and suggests matching commands from history. Exact matches are skipped since PSReadLine already handles those. Returns up to 5 suggestions.
 
 ### Fuzzy matching
 
@@ -18,7 +36,7 @@ Subsequence-based scorer with bonuses for:
 
 ### Frecency scoring
 
-Directories are scored by visit count weighted by recency:
+Entries are scored by visit count weighted by recency:
 
 | Last visited | Weight |
 |---|---|
@@ -27,14 +45,6 @@ Directories are scored by visit count weighted by recency:
 | < 1 week | 1.0 |
 | < 1 month | 0.5 |
 | Older | 0.25 |
-
-## Supported commands
-
-- `cd <path>`
-- `Set-Location <path>`
-- `Set-Location -Path <path>`
-- `Set-Location -LiteralPath <path>`
-- `sl <path>`, `chdir <path>`
 
 ## Build
 
