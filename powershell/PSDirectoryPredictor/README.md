@@ -54,7 +54,7 @@ Requires .NET 8 SDK.
 dotnet build -c Release
 ```
 
-Output goes to `bin/Release/net8.0/`.
+Output goes directly to `~\Documents\PowerShell\Modules\PSDirectoryPredictor\` (configured via `OutDir` in the `.csproj`).
 
 ## Install
 
