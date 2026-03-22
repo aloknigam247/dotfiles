@@ -1046,7 +1046,6 @@ vim.api.nvim_create_user_command(
 -- FEAT: Claude can see files in neovim which are opened
 -- FEAT: Claude code can execute commands in current neovim session
 -- FEAT: https://github.com/ravitemer/mcphub.nvim
--- FEAT: https://github.com/hakonharnes/img-clip.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -3190,7 +3189,7 @@ addPlugin {
 }
 
 addPlugin {
-	"bngarren/checkmate.nvim", -- BUG: task count is not working
+	"bngarren/checkmate.nvim",
 	ft = "markdown",
 	opts = {
 		files = {
@@ -3276,7 +3275,7 @@ addPlugin {
 		},
 		todo_action_depth = 10,
 		todo_count_formatter = function(completed, total) -- FEAT: count on headings/lines above tasks
-			return string.format("%d/%d (%.0f%%)", completed, total, completed / total * 100)
+			return string.format("%d/%d %.0f%%", completed, total, completed / total * 100)
 		end,
 		todo_states = {
 			unchecked = {
@@ -3290,8 +3289,6 @@ addPlugin {
 		},
 	}
 }
-
--- FEAT: https://github.com/hakonharnes/img-clip.nvim
 
 addPlugin {
 	"richardbizik/nvim-toc",
