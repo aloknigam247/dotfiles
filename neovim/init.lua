@@ -4704,8 +4704,8 @@ addPlugin {
 						["<CR>"]  = { { "confirm", "pick_win", "jump" }, mode = { "n", "i" } }, -- FEAT: drop ?
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
 						["<M-s>"] = { "edit_split", mode = { "i", "n" } }, -- FEAT: ask for window picker for splits
-						["<M-t>"] = { "tab", mode = { "n", "i" } }, -- FEAT: ask for window picker for vsplits
-						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } }, -- FEAT: ask for window picker for tabe
+						["<M-t>"] = { "tab", mode = { "n", "i" } },
+						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } }, -- FEAT: ask for window picker for vsplits
 					}
 				},
 				list = {
