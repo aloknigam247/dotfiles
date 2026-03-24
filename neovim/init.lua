@@ -563,10 +563,12 @@ vim.api.nvim_create_autocmd(
 	"BufWinEnter", {
 		pattern = "*",
 		desc = "Disable wrap for file with long lines",
-		callback = function()
+		callback = function(arg)
 			vim.iter(vim.fn.getbufline(0, 1, 500)):any(function(line)
 				if #line > vim.bo.textwidth then
-					vim.opt_local.wrap = false
+					-- BUG: not working
+					vim.wo.wrap = false
+					-- FEAT: disable Overlength marker also
 					return true
 				end
 				return false
@@ -1821,7 +1823,7 @@ addPlugin {
 							ripgrep = {
 								max_filesize = "300K",
 								search_casing = "--smart-case",
-								ignore_paths = { "C:\\Users\\aloknigam" }
+								ignore_paths = { "C:\\Users\\aloknigam", "D:\\OneDrive.Storage" }
 							},
 							use = "gitgrep-or-ripgrep"
 						}
