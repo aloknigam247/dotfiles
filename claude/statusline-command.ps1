@@ -7,28 +7,30 @@ $e = [char]27
 
 # Colors chosen for contrast on #FDF6E3 (solarized light) background
 $blue    = "$e[38;5;33m"
-$green   = "$e[38;5;28m"
-$red     = "$e[38;5;160m"
-$magenta = "$e[38;5;127m"
 $cyan    = "$e[38;5;30m"
-$orange  = "$e[38;5;166m"
 $gray    = "$e[38;5;240m"
-$teal    = "$e[38;5;37m"
-$yellow  = "$e[38;5;136m"
+$green   = "$e[38;5;28m"
+$magenta = "$e[38;5;127m"
+$orange  = "$e[38;5;166m"
+$red     = "$e[38;5;160m"
 $reset   = "$e[0m"
 $sep     = " $gray·$reset "
+$teal    = "$e[38;5;37m"
+$yellow  = "$e[38;5;136m"
 
 # Nerd Font icons
-$iBolt   = ""
-$iFolder = ""
-$iBranch = ""
-$iTree   = ""
-$iRobot  = "󰚩"
-$iDollar = ""
-$iClock  = "󰥔"
-$iPlus   = ""
-$iMinus  = ""
-$iDelta  = ""
+$iBolt    = ""
+$iBranch  = ""
+$iClock   = "󰥔"
+$iDelta   = ""
+$iDollar  = ""
+$iFolder  = ""
+$iInr     = "₹"
+$iMinus   = ""
+$iPlus    = ""
+$iRobot   = "󰚩"
+$iSession = "󰍹"
+$iTree    = ""
 
 # ── Two rows: top (identity + key metrics), bottom (stats) ──
 
@@ -61,7 +63,7 @@ if ($null -ne $j.context_window.used_percentage) {
     $pct = [int]$j.context_window.used_percentage
     $filled = [math]::Round($pct / 10)
     $empty = 10 - $filled
-    $bar = "█" * $filled + "░" * $empty
+    $bar = "`u{2588}" * $filled + "`u{2591}" * $empty
     $barColor = if ($pct -ge 80) { $red } elseif ($pct -ge 50) { $orange } else { $teal }
     $top += "${barColor}$bar ${pct}%${reset}"
 }
@@ -108,10 +110,14 @@ if ($null -ne $j.cost.total_cost_usd) {
     }
     if ($null -ne $inrRate) {
         $inrCost = [int]($cost * $inrRate)
-        $bottom += "${green}$iDollar${cost}${reset}${gray}/${reset}${yellow}`u{20B9}${inrCost}${reset}"
+        $bottom += "${green}$iDollar${cost}${reset}${gray}/${reset}${yellow}${iInr}${inrCost}${reset}"
     } else {
         $bottom += "${green}$iDollar$cost${reset}"
     }
+}
+
+if ($j.session_id) {
+    $bottom += "${gray}$iSession $($j.session_id)${reset}"
 }
 
 # ── Output ──
