@@ -4702,9 +4702,9 @@ addPlugin {
 						["<C-v>"] = false,
 						["<CR>"]  = { { "confirm", "pick_win", "jump" }, mode = { "n", "i" } }, -- FEAT: drop ?
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
-						["<M-s>"] = { "edit_split", mode = { "i", "n" } }, -- FEAT: ask for window picker for splits
+						["<M-s>"] = { { "pick_win", "edit_split" }, mode = { "i", "n" } }, -- FEAT: ask for window picker for splits
 						["<M-t>"] = { "tab", mode = { "n", "i" } },
-						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } }, -- FEAT: ask for window picker for vsplits
+						["<M-v>"] = { { "pick_win", "edit_vsplit" }, mode = { "i", "n" } }, -- FEAT: ask for window picker for vsplits
 					}
 				},
 				list = {
@@ -4716,9 +4716,9 @@ addPlugin {
 						["<C-v>"] = false,
 						["<CR>"]  = { {"confirm", "pick_win", "jump" }, mode = { "n", "i" } },
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
-						["<M-s>"] = { "edit_split", mode = { "i", "n" } },
+						["<M-s>"] = { { "pick_win", "edit_split" }, mode = { "i", "n" } },
 						["<M-t>"] = { "tab", mode = { "n", "i" } },
-						["<M-v>"] = { "edit_vsplit", mode = { "i", "n" } },
+						["<M-v>"] = { { "pick_win", "edit_vsplit" }, mode = { "i", "n" } },
 					}
 				}
 			},
