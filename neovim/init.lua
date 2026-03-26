@@ -4659,7 +4659,7 @@ addPlugin {
 						}
 						rel:on("WinLeave", function()
 							vim.schedule(function()
-								if not picker:is_focused() then
+								if not picker:is_focused() and picker.preview then
 									picker.preview.win:close()
 								end
 							end)
@@ -4693,18 +4693,19 @@ addPlugin {
 				undo = { layout = { preset = "dropdown" }},
 			},
 			win = {
-				input = { -- FEAT: open file in Peek
+				input = {
 					keys = {
 						["<C-q>"] = false,
 						["<C-s>"] = false,
 						["<C-t>"] = false,
 						["<C-u>"] = false,
 						["<C-v>"] = false,
-						["<CR>"]  = { { "confirm", "pick_win", "jump" }, mode = { "n", "i" } }, -- FEAT: drop ?
+						["<CR>"]  = { { "pick_win", "confirm" }, mode = { "n", "i" } },
+						["<M-p>"] = { "peek_file", mode = { "i", "n" } },
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
-						["<M-s>"] = { { "pick_win", "edit_split" }, mode = { "i", "n" } }, -- FEAT: ask for window picker for splits
+						["<M-s>"] = { { "pick_win", "edit_split" }, mode = { "i", "n" } },
 						["<M-t>"] = { "tab", mode = { "n", "i" } },
-						["<M-v>"] = { { "pick_win", "edit_vsplit" }, mode = { "i", "n" } }, -- FEAT: ask for window picker for vsplits
+						["<M-v>"] = { { "pick_win", "edit_vsplit" }, mode = { "i", "n" } },
 					}
 				},
 				list = {
@@ -4714,7 +4715,8 @@ addPlugin {
 						["<C-t>"] = false,
 						["<C-u>"] = false,
 						["<C-v>"] = false,
-						["<CR>"]  = { {"confirm", "pick_win", "jump" }, mode = { "n", "i" } },
+						["<CR>"]  = { { "pick_win", "confirm" }, mode = { "n", "i" } },
+						["<M-p>"] = { "peek_file", mode = { "i", "n" } },
 						["<M-q>"] = { "qflist", mode = { "i", "n" } },
 						["<M-s>"] = { { "pick_win", "edit_split" }, mode = { "i", "n" } },
 						["<M-t>"] = { "tab", mode = { "n", "i" } },
@@ -4738,6 +4740,21 @@ addPlugin {
 		actions.reveal_orig = actions.reveal
 		actions.reveal = function(picker, path) ---@diagnostic disable-line: duplicate-set-field
 			return actions.reveal_orig(picker, path:gsub("\\", "/"))
+		end
+
+		-- HACK: skip pick_win for directories in explorer
+		local orig_pick_win_action = require("snacks.picker.actions").pick_win
+		require("snacks.picker.actions").pick_win = function(picker, item, action)
+			if item and item.dir then return end
+			return orig_pick_win_action(picker, item, action)
+		end
+
+		-- HACK: open file in Peek floating window
+		require("snacks.picker.actions").peek_file = function(picker, item)
+			local path = item and snacks.picker.util.path(item)
+			if not path or item.dir then return end
+			picker:close()
+			vim.cmd("Peek " .. vim.fn.fnameescape(path))
 		end
 
 		-- HACK: to use window-picker to pick windows
