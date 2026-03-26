@@ -107,10 +107,6 @@
             "keys": "ctrl+insert"
         },
         {
-            "id": "User.newTab.5DEADB41",
-            "keys": "ctrl+t"
-        },
-        {
             "id": "User.toggleFocusMode",
             "keys": "alt+f"
         },
@@ -133,6 +129,10 @@
         {
             "id": null,
             "keys": "ctrl+0"
+        },
+        {
+            "id": "User.newTab.5DEADB41",
+            "keys": "ctrl+t"
         }
     ],
     "minimizeToNotificationArea": true,
@@ -222,7 +222,7 @@
                 "source": "Git"
             },
             {
-                "colorScheme": "Catppuccin Latte",
+                "colorScheme": "Solarized Light",
                 "commandline": "C:\\Users\\aloknigam\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe\\claude.exe",
                 "guid": "{d0212583-92a3-42a1-99da-70e5861ac195}",
                 "hidden": false,
