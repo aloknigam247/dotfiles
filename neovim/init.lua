@@ -567,7 +567,10 @@ vim.api.nvim_create_autocmd(
 			vim.iter(vim.fn.getbufline(0, 1, 500)):any(function(line)
 				if #line > vim.bo.textwidth then
 					-- BUG: not working
-					vim.wo.wrap = false
+					-- print('DEBUGPRINT[1]: init.lua:570: vim.api.nvim_get_current_win()=' .. vim.inspect(vim.api.nvim_get_current_win()))
+					-- print('DEBUGPRINT[2]: init.lua:571: vim.wo[vim.api.nvim_get_current_win()].wrap=' .. vim.inspect(vim.wo[vim.api.nvim_get_current_win()].wrap))
+					vim.wo[vim.api.nvim_get_current_win()].wrap = false
+					-- print('DEBUGPRINT[3]: init.lua:572: vim.wo[vim.api.nvim_get_current_win()].wrap=' .. vim.inspect(vim.wo[vim.api.nvim_get_current_win()].wrap))
 					-- FEAT: disable Overlength marker also
 					return true
 				end
@@ -3550,11 +3553,10 @@ addPlugin {
 				local git_signs = require("lualine.components.diff.git_diff").get_sign_count(props.buf)
 				local labels = {}
 
-				-- FEAT: file name mappings
-				-- "" = "[Scratch]"
-				-- "Neotest Summary" = "󰙨 Tests"
 				if filename == "" then
 					filename = "[Scratch]"
+				elseif filename == "Neotest Summary" then
+					filename = "󰙨 Tests"
 				end
 
 				if git_signs then
@@ -4605,7 +4607,7 @@ addPlugin {
 				frecency = true
 			},
 			sources = {
-				explorer = { -- FEAT: auto load explorer for directories `e <dir>`
+				explorer = {
 					actions = {
 						toggle_preview = function(picker) --[[Override]]
 							picker.preview.win:toggle()
