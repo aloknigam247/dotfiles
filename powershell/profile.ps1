@@ -417,17 +417,17 @@ function Get-TODO {
         if ($type -eq "All") {
             # Get list of all
             $pattern = $tag_list -join "|"
-            rg "($pattern):"  --trim --sort path -nw --color=always
+            rg "($pattern)(\([^)]*\))?:"  --trim --sort path -nw --color=always
         } elseif ($type -eq "Random") {
             # Get random tag
             $pattern = $tag_list -join "|"
-            rg "($pattern):"  --trim --sort path -nw --color=always | Get-Random -Count 3
+            rg "($pattern)(\([^)]*\))?:"  --trim --sort path -nw --color=always | Get-Random -Count 3
         } elseif ($type -eq "Stats") {
             # Generate count per tag
             $tag_map = @{}
             $total = 0
             foreach ($tag in $tag_list) {
-                $count = (rg "${tag}:" -cwI | Measure-Object -Sum).Sum
+                $count = (rg "${tag}(\([^)]*\))?:" -cwI | Measure-Object -Sum).Sum
                 if ($count -gt 0) {
                     $total += $count
                     $tag_map[$tag] = $count
