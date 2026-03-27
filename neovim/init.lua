@@ -4470,7 +4470,7 @@ addPlugin {
 }
 
 addPlugin {
-	"kylechui/nvim-surround",
+	"kylechui/nvim-surround", -- BUG: not working
 	keys = {
 		{ "s", mode = { "n", "v" }},
 		{ "S", mode = { "n", "v" }}
