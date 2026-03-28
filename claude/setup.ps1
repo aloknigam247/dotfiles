@@ -5,6 +5,6 @@ $files = @{
     "statusline-command.ps1" = "~\.claude\statusline-command.ps1"
 }
 
-$npm_pkgs = @(
-    "@anthropic-ai/claude-code"
+$winget_pkgs = @(
+    "Anthropic.ClaudeCode"
 )
