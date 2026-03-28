@@ -208,6 +208,31 @@ function scoopInstall {
     }
 }
 
+function npmInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $installed = npm list -g $pkg 2>$null | Select-String $pkg
+        $isInstalled = $null -ne $installed
+
+        if ($isInstalled -and $update) {
+            # update package
+            writeLog UPDATE "Updating npm package: $pkg"
+            npm update -g $pkg
+        } elseif (-not $isInstalled -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing npm package: $pkg"
+            npm install -g $pkg
+        }
+    }
+}
+
 function psgalleryInstall {
     param(
         [string[]]$pkgs,
@@ -376,6 +401,7 @@ foreach ($pkg in $pkg_list) {
     $cwd = Get-Location
 
     if (Test-Path setup.ps1) {
+        $npm_pkgs = @()
         $pip_pkgs = @()
         $pipx_pkgs = @()
         $psgallery_pkgs = @()
@@ -387,6 +413,7 @@ foreach ($pkg in $pkg_list) {
         . .\setup.ps1
 
         if ($update) {
+            npmInstall -update $npm_pkgs
             pipInstall -update $pip_pkgs
             pipxInstall -update $pipx_pkgs
             psgalleryInstall -update $psgallery_pkgs
@@ -394,6 +421,7 @@ foreach ($pkg in $pkg_list) {
             wingetInstall -update $winget_pkgs
             copyOrUpdateConfigs -update $files_copy
         } else {
+            npmInstall $npm_pkgs
             pipInstall $pip_pkgs
             pipxInstall $pipx_pkgs
             psgalleryInstall $psgallery_pkgs
