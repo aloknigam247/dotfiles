@@ -3135,10 +3135,10 @@ addPlugin {
 		},
 		checkbox = {
 			checked = {
-				icon = "󰗡",
+				icon = " 󰗡",
 			},
 			unchecked = {
-				icon = "󰄰",
+				icon = " 󰄰",
 			},
 		},
 		code = {
