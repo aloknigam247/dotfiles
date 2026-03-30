@@ -14,6 +14,8 @@ $magenta = "$e[38;5;127m"
 $orange  = "$e[38;5;166m"
 $red     = "$e[38;5;160m"
 $reset   = "$e[0m"
+$bold    = "$e[1m"
+$italic  = "$e[3m"
 $sep     = " $gray·$reset "
 $teal    = "$e[38;5;37m"
 $yellow  = "$e[38;5;136m"
@@ -39,7 +41,7 @@ $bottom = @()
 
 # Top: Model, Project, Branch, Worktree, Agent, Cost, Context
 if ($j.model.display_name) {
-    $top += "${blue}$iBolt $($j.model.display_name)${reset}"
+    $top += "${bold}${blue}$iBolt $($j.model.display_name)${reset}"
 }
 
 if ($j.workspace.project_dir) {
@@ -70,7 +72,7 @@ if ($null -ne $j.context_window.used_percentage) {
 
 # Bottom: Agent, Worktree, Duration, Lines changed
 if ($j.agent -and $j.agent.name) {
-    $bottom += "${magenta}$iRobot $($j.agent.name)${reset}"
+    $bottom += "${bold}${magenta}$iRobot $($j.agent.name)${reset}"
 }
 
 if ($j.worktree -and $j.worktree.name) {
@@ -110,14 +112,14 @@ if ($null -ne $j.cost.total_cost_usd) {
     }
     if ($null -ne $inrRate) {
         $inrCost = [int]($cost * $inrRate)
-        $bottom += "${green}$iDollar${cost}${reset}${gray}/${reset}${yellow}${iInr}${inrCost}${reset}"
+        $bottom += "${green}$iDollar${cost}${reset}${gray}/${reset}${teal}${iInr}${inrCost}${reset}"
     } else {
         $bottom += "${green}$iDollar$cost${reset}"
     }
 }
 
 if ($j.session_id) {
-    $bottom += "${gray}$iSession $($j.session_id)${reset}"
+    $bottom += "${italic}${gray}$iSession $($j.session_id)${reset}"
 }
 
 # ── Output ──
