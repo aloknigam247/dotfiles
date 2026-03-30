@@ -531,7 +531,7 @@ Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocom
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     try{
         if ($env:COMPUTERNAME -eq "ALOKNIGAM") {
-            Import-Module -Name CompletionPredictor -ErrorAction SilentlyContinue
+            Import-Module -Name CompletionPredictor -ErrorAction SilentlyContinue # THOUGHT: re-evaluate features
             Import-Module -Name PSDirectoryPredictor -ErrorAction SilentlyContinue
         }
         Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
