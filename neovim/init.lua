@@ -1471,7 +1471,7 @@ addPlugin {
 					IlluminatedWordText = { bg = palette.mantle },
 					IlluminatedWordWrite = { bg = palette.mantle },
 					InclineNormal = { bg = palette.surface1, fg = palette.text }, -- REFACTOR: change color
-					NvimSurroundHighlight = { bg = palette.peach },
+					NvimSurroundHighlight = { link = "Cursor" },
 					RenderMarkdownCode = { bg = palette.crust }, -- REFACTOR: make lighter
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					SnacksPickerMatch = { fg = "", style = { "underline" } },
@@ -4470,25 +4470,21 @@ addPlugin {
 }
 
 addPlugin {
-	"kylechui/nvim-surround", -- BUG: not working
+	"kylechui/nvim-surround",
 	keys = {
-		{ "s", mode = { "n", "v" }},
-		{ "S", mode = { "n", "v" }}
+		{ "S",  "<Plug>(nvim-surround-normal-line)", desc = "Add a surrounding pair, on new lines"             },
+		{ "S",  "<Plug>(nvim-surround-visual-line)", desc = "Add a surrounding pair, on new lines", mode = "v" },
+		{ "s",  "<Plug>(nvim-surround-normal)",      desc = "Add a surrounding pair"                           },
+		{ "s",  "<Plug>(nvim-surround-visual)",      desc = "Add a surrounding pair",               mode = "v" },
+		{ "sc", "<Plug>(nvim-surround-change)",      desc = "Change a surrounding pair"                        },
+		{ "sd", "<Plug>(nvim-surround-delete)",      desc = "Delete a surrounding pair"                        }
 	},
-	config = function() -- FIX: change highlight
-		require("nvim-surround").setup({
+	config = function(plugin)
+		require(plugin.name).setup({
 			aliases = {
 				["b"] = { "}", "]", ")", ">" },
-        ["q"] = { '"', "'", "`" },
-        ["s"] = { "}", "]", ")", ">", '"', "'", "`" },
-			},
-			keymaps = {
-				change = "sc",
-				delete = "sd",
-				normal = "s",
-				normal_line = "S",
-				visual = "s",
-				visual_line = "S",
+				["q"] = { '"', "'", "`" },
+				["s"] = { "}", "]", ")", ">", '"', "'", "`" },
 			},
 			move_cursor = "sticky"
 		})
