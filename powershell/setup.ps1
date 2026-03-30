@@ -6,10 +6,6 @@ $scoop_pkgs = @(
     "posh-git"
 )
 
-$psgallery_pkgs = @(
-    "CompletionPredictor"
-)
-
 $winget_pkgs = @(
     "gerardog.gsudo"
     "Microsoft.PowerShell"
