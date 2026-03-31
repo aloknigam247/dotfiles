@@ -5,5 +5,6 @@ FEAT(claude): When I claude make change in files, with a keymap these diffs are 
 FEAT(claude): When I edit prompt with neovim inside claude code / commands give same completion as claude code
 FEAT(claude): use powershell in claude instead of Bash
 FEAT(git): auto prune branch which got deleted in master/main
+FEAT(native-tools): calculator
 FEAT(native-tools): persistant terminal
 FEAT(powershell): change tab tittle on path change or executable running
