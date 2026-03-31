@@ -4347,7 +4347,7 @@ addPlugin {
 }
 
 addPlugin {
-	"ThePrimeagen/refactoring.nvim",
+	"ThePrimeagen/refactoring.nvim", -- THOUGHT: not needed
 	cmd = "Refactor",
 	config = true,
 	dependencies = {
