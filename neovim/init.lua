@@ -4147,7 +4147,7 @@ addPlugin {
 }
 
 addPlugin {
-	"m-demare/hlargs.nvim",
+	"m-demare/hlargs.nvim", -- FEAT: better colors in dark mode
 	config = function()
 		require("hlargs").setup({
 			excluded_argnames = {
