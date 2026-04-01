@@ -99,7 +99,7 @@ if ($null -ne $j.cost.total_cost_usd) {
     $cachePath = "$env:TEMP/usdinr_rate.json"
     if (Test-Path $cachePath) {
         $cacheAge = (Get-Date) - (Get-Item $cachePath).LastWriteTime
-        if ($cacheAge.TotalMinutes -lt 60) {
+        if ($cacheAge.TotalDays -lt 1) {
             try { $inrRate = (Get-Content $cachePath -Raw | ConvertFrom-Json).rate } catch {}
         }
     }
