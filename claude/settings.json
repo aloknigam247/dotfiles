@@ -18,6 +18,7 @@
   },
   "effortLevel": "high",
   "autoMemoryEnabled": false,
+  "defaultShell": "powershell",
   "permissions": {
     "allow": [
       "WebFetch"

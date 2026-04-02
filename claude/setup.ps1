@@ -3,6 +3,10 @@ $files = @{
     "commands"               = "~\.claude\commands"
     "settings.json"          = "~\.claude\settings.json"
     "statusline-command.ps1" = "~\.claude\statusline-command.ps1"
+    "CLAUDE.md"              = "D:\.claude\CLAUDE.md"
+    "commands"               = "D:\.claude\commands"
+    "settings.json"          = "D:\.claude\settings.json"
+    "statusline-command.ps1" = "D:\.claude\statusline-command.ps1"
 }
 
 $winget_pkgs = @(

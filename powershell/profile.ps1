@@ -304,7 +304,6 @@ function bat {
     }
 }
 
-$personal = "D:\.claude"
 
 function claude {
     # FIX: size and position
@@ -314,13 +313,20 @@ function claude {
     $pos_width = [int]($max_width * 0.2)
     $size_width = [int]($max_width * 0.5)
     $size_height = [int]($max_height * 0.4)
-
     $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
-    $arg_str = $quoted_args -join ' '
-    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" pwsh -c {
-        $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$personal\debug"
-        $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$personal\plugins"
-        claude.exe $quoted_args
+
+    $workspaces = @("D:\dotfiles", "D:\kuber")
+    if ($workspaces | Where-Object { $PWD.ToString().StartsWith($_) }) {
+        wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" pwsh -c {
+            $sec_workspace = "D:\.claude"
+            $env:CLAUDE_CONFIG_DIR = $sec_workspace
+            $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
+            $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
+            $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
+            claude.exe $quoted_args
+        }
+    } else {
+        wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" pwsh -c { claude.exe $quoted_args }
     }
 }
 
