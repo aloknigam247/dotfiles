@@ -268,24 +268,25 @@ function linkConfigs {
     )
     foreach ($key in $files.keys) {
         $src = "$cwd\$key"
-        $dest = $files[$key]
-        $dir = Split-Path -Parent $dest
-        if (-not (Test-Path $dir)) {
-            mkdir $dir
-        }
-        if (Test-Path $dest) {
-            $target = Get-Item $dest | Select-Object -ExpandProperty Target
-            if ($target -eq $src) {
-                Write-Verbose "$src already linked" -verbose
+        foreach ($dest in @($files[$key])) {
+            $dir = Split-Path -Parent $dest
+            if (-not (Test-Path $dir)) {
+                mkdir $dir
+            }
+            if (Test-Path $dest) {
+                $target = Get-Item $dest | Select-Object -ExpandProperty Target
+                if ($target -eq $src) {
+                    Write-Verbose "$src already linked" -verbose
+                } else {
+                    Write-Output "backup $dest --> ${dest}.orig"
+                    Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                    Write-Output "Linking $src --> $dest"
+                    New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                }
             } else {
-                Write-Output "backup $dest --> ${dest}.orig"
-                Move-Item -Force -Path $dest -Destination "${dest}.orig"
                 Write-Output "Linking $src --> $dest"
                 New-Item -ItemType SymbolicLink -Path $dest -Target $src
             }
-        } else {
-            Write-Output "Linking $src --> $dest"
-            New-Item -ItemType SymbolicLink -Path $dest -Target $src
         }
     }
 }
@@ -297,39 +298,39 @@ function copyOrUpdateConfigs {
     )
     foreach ($key in $files.keys) {
         $src = "$cwd\$key"
-        $dest = $files[$key]
-        $dir = Split-Path -Parent $dest
-        if ($update) {
-            if (Test-Path $dest) {
-                $srcFile = Get-Item $src
-                $destFile = Get-Item $dest
-                if ($srcFile.LastWriteTime -gt $destFile.LastWriteTime) {
-                    Write-Output "Copying $src --> $dest"
-                    Copy-Item $src $dest
-                } elseif ($srcFile.LastWriteTime -lt $destFile.LastWriteTime) {
-                    Write-Output "Copying $dest --> $src"
-                    Copy-Item $dest $src
-                }
-            }
-        } else {
-            if (-not (Test-Path $dir)) {
-                mkdir $dir
-            }
-            if (Test-Path $dest) {
-                if(Compare-Object (Get-Content $src) (Get-Content $dest)) {
-                    Write-Output "backup $dest --> ${dest}.orig"
-                    Move-Item -Force -Path $dest -Destination "${dest}.orig"
-                    Write-Output "Copying $src --> $dest"
-                    Copy-Item -Path $src -Destination $dest
-                } else {
-                    Write-Verbose "$src already exists" -verbose
+        foreach ($dest in @($files[$key])) {
+            $dir = Split-Path -Parent $dest
+            if ($update) {
+                if (Test-Path $dest) {
+                    $srcFile = Get-Item $src
+                    $destFile = Get-Item $dest
+                    if ($srcFile.LastWriteTime -gt $destFile.LastWriteTime) {
+                        Write-Output "Copying $src --> $dest"
+                        Copy-Item $src $dest
+                    } elseif ($srcFile.LastWriteTime -lt $destFile.LastWriteTime) {
+                        Write-Output "Copying $dest --> $src"
+                        Copy-Item $dest $src
+                    }
                 }
             } else {
-                Write-Output "Copying $src --> $dest"
-                Copy-Item -Path $src -Destination $dest
+                if (-not (Test-Path $dir)) {
+                    mkdir $dir
+                }
+                if (Test-Path $dest) {
+                    if (Compare-Object (Get-Content $src) (Get-Content $dest)) {
+                        Write-Output "backup $dest --> ${dest}.orig"
+                        Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                        Write-Output "Copying $src --> $dest"
+                        Copy-Item -Path $src -Destination $dest
+                    } else {
+                        Write-Verbose "$src already exists" -verbose
+                    }
+                } else {
+                    Write-Output "Copying $src --> $dest"
+                    Copy-Item -Path $src -Destination $dest
+                }
             }
         }
-
     }
 }
 
