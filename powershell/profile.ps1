@@ -304,7 +304,10 @@ function bat {
     }
 }
 
+$personal = "D:\.claude"
+
 function claude {
+    # FIX: size and position
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
     $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
     $pos_height = [int]($max_height * 0.3)
@@ -314,7 +317,11 @@ function claude {
 
     $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
     $arg_str = $quoted_args -join ' '
-    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" -p "Claude" --appendCommandLine "$arg_str"
+    wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" pwsh -c {
+        $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$personal\debug"
+        $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$personal\plugins"
+        claude.exe $quoted_args
+    }
 }
 
 function e {

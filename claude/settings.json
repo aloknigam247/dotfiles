@@ -1,5 +1,8 @@
 {
   "env": {
+    "CLAUDE_CODE_NEW_INIT": "1",
+    "CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY": "20",
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
@@ -12,9 +15,6 @@
   "statusLine": {
     "type": "command",
     "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
-  },
-  "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true
   },
   "effortLevel": "high",
   "autoMemoryEnabled": false,
