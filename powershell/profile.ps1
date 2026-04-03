@@ -352,7 +352,7 @@ function whatis($arg) {
         Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
-        D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
+        D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
         Format-Text "$($icons.type_app) $arg" -fg $catppuccin.Green -styles italic
