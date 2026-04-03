@@ -304,7 +304,6 @@ function bat {
     }
 }
 
-
 function claude {
     # FIX: size and position
     $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
@@ -313,21 +312,52 @@ function claude {
     $pos_width = [int]($max_width * 0.2)
     $size_width = [int]($max_width * 0.5)
     $size_height = [int]($max_height * 0.4)
-    $quoted_args = $args | ForEach-Object { '"{0}"' -f $_ }
+
+    # Parse --root <dir> option
+    $root_dir = $PWD.Path
+    $filtered_args = @()
+    $skip_next = $false
+    for ($i = 0; $i -lt $args.Count; $i++) {
+        if ($skip_next) {
+            $skip_next = $false
+            continue
+        }
+        if ($args[$i] -eq "--root" -and $i + 1 -lt $args.Count) {
+            $candidate = $args[$i + 1]
+            if (Test-Path -Path $candidate -PathType Container) {
+                $root_dir = (Resolve-Path $candidate).Path
+            } else {
+                Write-Error "Invalid directory: $candidate"
+                return
+            }
+            $skip_next = $true
+        } else {
+            $filtered_args += $args[$i]
+        }
+    }
+
+    $env:_CLAUDE_ARGS = $filtered_args -join "`n"
 
     $workspaces = @("D:\dotfiles", "D:\kuber")
-    if ($workspaces | Where-Object { $PWD.ToString().StartsWith($_) }) {
-        wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" pwsh -c {
+    if ($workspaces | Where-Object { $root_dir.StartsWith($_) }) {
+        wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $root_dir --colorScheme "Solarized Light" pwsh -c {
             $sec_workspace = "D:\.claude"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
             $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
             $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
-            claude.exe $quoted_args
+            $argList = $env:_CLAUDE_ARGS -split "`n"
+            Remove-Item env:_CLAUDE_ARGS
+            claude.exe @argList
         }
     } else {
-        wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $PWD.Path --colorScheme "Solarized Light" pwsh -c { claude.exe $quoted_args }
+        wt -f --pos $pos_height,$pos_width --size $size_width,$size_height -d $root_dir --colorScheme "Solarized Light" pwsh -c {
+            $argList = $env:_CLAUDE_ARGS -split "`n"
+            Remove-Item env:_CLAUDE_ARGS
+            claude.exe @argList
+        }
     }
+    Remove-Item env:_CLAUDE_ARGS
 }
 
 function e {

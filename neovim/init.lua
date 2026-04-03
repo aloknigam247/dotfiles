@@ -1560,6 +1560,33 @@ addPlugin {
 
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Completion   ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+local rg_perf = {} -- per-directory timing history (nanoseconds)
+local rg_disabled_dirs = {} -- directories where ripgrep is disabled
+local rg_threshold_ns = 500 * 1e6 -- 500ms
+
+local function get_buf_dir(bufnr)
+	local path = vim.api.nvim_buf_get_name(bufnr or vim.api.nvim_get_current_buf())
+	return vim.fn.fnamemodify(path, ":p:h")
+end
+
+local function track_rg_time(start_time, bufnr)
+	local dir = get_buf_dir(bufnr)
+	local elapsed = vim.loop.hrtime() - start_time
+	if not rg_perf[dir] then rg_perf[dir] = {} end
+	table.insert(rg_perf[dir], elapsed)
+	if #rg_perf[dir] > 10 then table.remove(rg_perf[dir], 1) end
+	-- Mark directory as disabled once we have enough slow samples
+	local perf = rg_perf[dir]
+	if #perf >= 5 then
+		local sum = 0
+		for i = #perf - 4, #perf do sum = sum + perf[i] end
+		if (sum / 5) >= rg_threshold_ns then
+			rg_disabled_dirs[dir] = true
+			vim.notify("blink-ripgrep disabled for " .. dir, vim.log.levels.WARN)
+		end
+	end
+end
+
 addPlugin {
 	"saghen/blink.cmp",
 	config = function(_, cfg)
@@ -1815,10 +1842,23 @@ addPlugin {
 						return items
 					end
 				},
-				ripgrep = { -- PERF: slow in big repos
+				ripgrep = {
 					module = "blink-ripgrep",
 					name = "ripgrep",
 					async = true,
+					timeout_ms = 500,
+					enabled = function()
+						return not rg_disabled_dirs[get_buf_dir()]
+					end,
+					override = {
+						get_completions = function(self, context, callback)
+							local start_time = vim.loop.hrtime()
+							return self:get_completions(context, function(response)
+								track_rg_time(start_time, context.bufnr)
+								callback(response)
+							end)
+						end
+					},
 					---@module "blink-ripgrep"
 					---@type blink-ripgrep.Options
 					opts = {

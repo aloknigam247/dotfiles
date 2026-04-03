@@ -11,17 +11,21 @@
     "DISABLE_INSTALLATION_CHECKS": "1",
     "DISABLE_TELEMETRY": "1"
   },
+  "permissions": {
+    "allow": [
+      "mcp__native_tools__calculator",
+      "WebFetch"
+    ]
+  },
   "model": "opus[1m]",
+  "defaultShell": "powershell",
   "statusLine": {
     "type": "command",
     "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
   },
   "effortLevel": "high",
   "autoMemoryEnabled": false,
-  "defaultShell": "powershell",
-  "permissions": {
-    "allow": [
-      "WebFetch"
-    ]
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true
   }
 }

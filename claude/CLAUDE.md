@@ -10,6 +10,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 * When creating temp files (e.g., in skills or commands), use a GUID in the filename to avoid collisions across concurrent sessions. Generate via `pwsh -c "[guid]::NewGuid().ToString()"`.
 * `using module` is required to expose PowerShell classes from `.psm1` files — `Import-Module` only exposes functions. `using module` must be the first statement in the script and caches classes at parse time (requires terminal restart on module changes).
 * When running PowerShell from the Bash tool, `$` variables are stripped by bash. Always write a `.ps1` file first and invoke with `pwsh -NoProfile -ExecutionPolicy Bypass -File script.ps1` instead of inline `-Command` with `$` variables.
+* **Never predict or mentally compute math results.** Always use the `mcp__native_tools__calculator` tool for any calculation — arithmetic, unit conversions, percentages, etc. Trust the tool's output, not mental math.
 
 ## Code Style
 
