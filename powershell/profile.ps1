@@ -553,10 +553,6 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     }
 }
 
-# ─[ posh-git ]────────────────────────────────────────────────────────
-Import-Module posh-git
-$GitPromptSettings.EnableStashStatus = $true
-
 # ─[ winget tab completion ]───────────────────────────────────────────
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -634,7 +630,7 @@ Set-PSReadlineKeyHandler Enter {
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
-function Get-GitStatusCustom {
+function Get-GitStatus {
     # -uno skips expensive untracked file recursion in large repos
     $raw = git --no-optional-locks status --porcelain=v2 --branch --show-stash -uno 2>$null
     if ($LASTEXITCODE -ne 0) { return $null }
@@ -689,7 +685,7 @@ function populatePrompt {
     $script:git_working = ""
     $script:git_sep = ""
 
-    $script:git_status = Get-GitStatusCustom
+    $script:git_status = Get-GitStatus
 
     if ($null -ne $script:git_status) {
         $script:dir_icon = $icons.git_icon

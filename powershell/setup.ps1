@@ -3,7 +3,6 @@ $powershell_path = "C:\Program Files\PowerShell\7\pwsh.exe"
 $scoop_pkgs = @(
     "PSFzf"
     "fzf"
-    "posh-git"
 )
 
 $winget_pkgs = @(
