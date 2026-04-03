@@ -1781,13 +1781,13 @@ addPlugin {
 					name = "buffer",
 					score_offset = 100,
 					override = {
-						enabled = function()
-							local utils = require("blink.cmp.sources.lib.utils")
-							return
-								not utils.is_command_line()
-								or utils.is_command_line({ "/", "?" })
-								-- or utils.in_ex_context(require("blink.cmp.sources.cmdline.constants").ex_search_commands) -- FIX: not working
-						end
+						-- enabled = function() -- FIX: not working
+						-- 	local utils = require("blink.cmp.sources.lib.utils")
+						-- 	return
+						-- 		not utils.is_command_line()
+						-- 		or utils.is_command_line({ "/", "?" })
+						-- 		-- or utils.in_ex_context(require("blink.cmp.sources.cmdline.constants").ex_search_commands)
+						-- end
 					}
 				},
 				cmdline = {

@@ -634,6 +634,49 @@ Set-PSReadlineKeyHandler Enter {
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
+function Get-GitStatusCustom {
+    $raw = git --no-optional-locks status --porcelain=v2 --branch --show-stash 2>$null
+    if ($LASTEXITCODE -ne 0) { return $null }
+
+    $result = @{
+        AheadBy    = 0
+        BehindBy   = 0
+        Branch     = ""
+        HasIndex   = $false
+        HasWorking = $false
+        StashCount = 0
+    }
+
+    foreach ($line in $raw) {
+        if ($line.StartsWith("# branch.head ")) {
+            $head = $line.Substring(14)
+            if ($head -eq "(detached)") {
+                # detached HEAD — get short sha
+                $sha = git --no-optional-locks rev-parse --short HEAD 2>$null
+                $result.Branch = "($sha...)"
+            } else {
+                $result.Branch = $head
+            }
+        } elseif ($line.StartsWith("# branch.ab ")) {
+            # format: # branch.ab +N -M
+            $parts = $line.Substring(13).Split(" ")
+            $result.AheadBy = [int]$parts[0].TrimStart("+")
+            $result.BehindBy = [int]$parts[1].TrimStart("-")
+        } elseif ($line.StartsWith("# stash ")) {
+            $result.StashCount = [int]$line.Substring(8)
+        } elseif ($line.StartsWith("1 ") -or $line.StartsWith("2 ") -or $line.StartsWith("u ")) {
+            # changed entries: XY is at position 2-3
+            $xy = $line.Substring(2, 2)
+            if ($xy[0] -ne ".") { $result.HasIndex = $true }
+            if ($xy[1] -ne ".") { $result.HasWorking = $true }
+        } elseif ($line.StartsWith("? ")) {
+            $result.HasWorking = $true
+        }
+    }
+
+    return [PSCustomObject]$result
+}
+
 function populatePrompt {
     # Initial executions
     $script:dir_icon = $icons.windows
@@ -644,7 +687,7 @@ function populatePrompt {
     $script:git_working = ""
     $script:git_sep = ""
 
-    $script:git_status = Get-GitStatus
+    $script:git_status = Get-GitStatusCustom
 
     if ($null -ne $script:git_status) {
         $script:dir_icon = $icons.git_icon
