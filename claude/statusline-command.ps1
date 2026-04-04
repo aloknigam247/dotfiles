@@ -62,16 +62,14 @@ try {
     }
 } catch {}
 
-if ($null -ne $j.context_window.used_percentage) {
-    $pct = [int]$j.context_window.used_percentage
-    $filled = [math]::Round($pct / 5)
-    $empty = 20 - $filled
-    $bar = "`u{2588}" * $filled + "`u{2591}" * $empty
-    $barColor = if ($pct -ge 80) { $red } elseif ($pct -ge 50) { $orange } else { $teal }
-    $top += "${barColor}$bar ${pct}%${reset}"
+if ($null -ne $j.cost.total_lines_added -or $null -ne $j.cost.total_lines_removed) {
+    $added = if ($null -ne $j.cost.total_lines_added) { $j.cost.total_lines_added } else { 0 }
+    $removed = if ($null -ne $j.cost.total_lines_removed) { $j.cost.total_lines_removed } else { 0 }
+    $changed = $added + $removed
+    $top += "${green}$iPlus $added ${red}$iMinus $removed ${gray}$iDelta $changed${reset}"
 }
 
-# Bottom: Agent, Worktree, Duration, Lines changed
+# Bottom: Agent, Worktree, Duration, Cost, Context, Session
 if ($j.agent -and $j.agent.name) {
     $bottom += "${bold}${magenta}$iRobot $($j.agent.name)${reset}"
 }
@@ -85,13 +83,6 @@ if ($null -ne $j.cost.total_duration_ms) {
     $hh = [math]::Floor($ts.TotalHours).ToString("00")
     $mm = $ts.Minutes.ToString("00")
     $bottom += "${orange}$iClock ${hh}:${mm}${reset}"
-}
-
-if ($null -ne $j.cost.total_lines_added -or $null -ne $j.cost.total_lines_removed) {
-    $added = if ($null -ne $j.cost.total_lines_added) { $j.cost.total_lines_added } else { 0 }
-    $removed = if ($null -ne $j.cost.total_lines_removed) { $j.cost.total_lines_removed } else { 0 }
-    $changed = $added + $removed
-    $bottom += "${green}$iPlus $added ${red}$iMinus $removed ${gray}$iDelta $changed${reset}"
 }
 
 if ($null -ne $j.cost.total_cost_usd) {
@@ -121,6 +112,15 @@ if ($null -ne $j.cost.total_cost_usd) {
 
 if ($j.session_id) {
     $bottom += "${italic}${gray}$iSession $($j.session_id)${reset}"
+}
+
+if ($null -ne $j.context_window.used_percentage) {
+    $pct = [int]$j.context_window.used_percentage
+    $filled = [math]::Round($pct / 5)
+    $empty = 20 - $filled
+    $bar = "`u{2588}" * $filled + "`u{2591}" * $empty
+    $barColor = if ($pct -ge 80) { $red } elseif ($pct -ge 50) { $orange } else { $teal }
+    $bottom += "${barColor}$bar ${pct}%${reset}"
 }
 
 # ── Output ──
