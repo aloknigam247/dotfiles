@@ -85,7 +85,7 @@ $catppuccin_mocha = @{
 # get system theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
 $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-if ($system_theme.AppsUseLightTheme -eq 1) {
+if ($system_theme.AppsUseLightTheme -eq 1) { # BUG: affects claude window
     $env:THEME = "light"
     $current_theme = "Catppuccin Latte"
     $catppuccin = $catppuccin_latte

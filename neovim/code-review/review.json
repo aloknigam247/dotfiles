@@ -1,0 +1,58 @@
+[
+  {
+    "file": "neovim/code-review/init.lua",
+    "line": 1,
+    "category": "Architecture",
+    "severity": "medium",
+    "comment": "Top-level requires are evaluated eagerly when the module loads. Consider lazy-loading ui, picker, and actions inside the functions that use them to avoid loading nui.nvim and snacks upfront.",
+    "status": "pending"
+  },
+  {
+    "file": "neovim/code-review/init.lua",
+    "line": 80,
+    "category": "Reliability",
+    "severity": "high",
+    "comment": "json_pretty shells out to python via :%! which can fail silently if python is not on PATH. Consider a pure-Lua JSON formatter or at minimum check the exit code.",
+    "status": "pending"
+  },
+  {
+    "file": "neovim/code-review/init.lua",
+    "line": 112,
+    "category": "Bug",
+    "severity": "high",
+    "comment": "Buffer-local <CR> keymap overrides the default Enter behavior for the entire buffer. This breaks normal editing. Consider using a different keymap like <leader>ra or only binding when cursor is on a reviewed line.",
+    "status": "pending"
+  },
+  {
+    "file": "neovim/code-review/ui.lua",
+    "line": 28,
+    "category": "Style",
+    "severity": "low",
+    "comment": "wrap_text breaks at the last whitespace within width, but does not handle words longer than width (e.g. long URLs). These would loop infinitely. Add a fallback break at width when no whitespace is found.",
+    "status": "pending"
+  },
+  {
+    "file": "neovim/code-review/ui.lua",
+    "line": 68,
+    "category": "Readability",
+    "severity": "info",
+    "comment": "The header line construction is hard to follow with inline concatenation and fill math. Consider extracting a build_header helper for clarity.",
+    "status": "pending"
+  },
+  {
+    "file": "neovim/code-review/picker.lua",
+    "line": 13,
+    "category": "Performance",
+    "severity": "medium",
+    "comment": "vim.fs.joinpath uses the OS separator on Windows which may produce backslash paths. Snacks icon lookup might not handle mixed separators. Normalize with gsub after joining.",
+    "status": "pending"
+  },
+  {
+    "file": "neovim/code-review/actions.lua",
+    "line": 15,
+    "category": "UX",
+    "severity": "medium",
+    "comment": "The nui.Menu has no keymap hint or footer. Users won't know they can press j/k to navigate and Enter to select. Add a bottom border text with a short hint.",
+    "status": "pending"
+  }
+]

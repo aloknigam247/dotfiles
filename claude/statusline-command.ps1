@@ -57,14 +57,15 @@ try {
     $cwd = if ($j.workspace.current_dir) { $j.workspace.current_dir } else { $j.cwd }
     $branch = git -C $cwd branch --show-current 2>$null
     if ($branch) {
+        $branch = $branch -replace "^user/aloknigam/", "~/"
         $top += "${green}$iBranch $branch${reset}"
     }
 } catch {}
 
 if ($null -ne $j.context_window.used_percentage) {
     $pct = [int]$j.context_window.used_percentage
-    $filled = [math]::Round($pct / 10)
-    $empty = 10 - $filled
+    $filled = [math]::Round($pct / 5)
+    $empty = 20 - $filled
     $bar = "`u{2588}" * $filled + "`u{2591}" * $empty
     $barColor = if ($pct -ge 80) { $red } elseif ($pct -ge 50) { $orange } else { $teal }
     $top += "${barColor}$bar ${pct}%${reset}"
