@@ -305,12 +305,6 @@ function bat {
 }
 
 function claude {
-    # FIX: size and position
-    $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
-    $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
-    $size_width = [int]($max_width * 0.5)
-    $size_height = [int]($max_height * 0.4)
-
     # Parse --root <dir> option
     $root_dir = $PWD.Path
     $filtered_args = @()
@@ -338,7 +332,7 @@ function claude {
 
     $workspaces = @("D:\dotfiles", "D:\kuber")
     if ($workspaces | Where-Object { $root_dir.StartsWith($_) }) {
-        wt -f --size $size_width,$size_height -d $root_dir --colorScheme "Solarized Light" pwsh -c {
+        wt -f -d $root_dir --colorScheme "Solarized Light" pwsh -c {
             $sec_workspace = "D:\.claude"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
@@ -349,7 +343,7 @@ function claude {
             claude.exe @argList
         }
     } else {
-        wt -f --size $size_width,$size_height -d $root_dir --colorScheme "Solarized Light" pwsh -c {
+        wt -f -d $root_dir --colorScheme "Solarized Light" pwsh -c {
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
@@ -359,15 +353,13 @@ function claude {
 }
 
 function e {
-    $max_height = $Host.UI.RawUI.MaxPhysicalWindowSize.Height
-    $max_width = $Host.UI.RawUI.MaxPhysicalWindowSize.Width
-    $size_width = [int]($max_width * 0.5)
-    $size_height = [int]($max_height * 0.4)
-
     $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
-    $arg_str = $quoted_args -join ' '
-    # wt -f --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
-    C:\Users\aloknigam\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe -f --size $size_width,$size_height -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    $arg_str = $quoted_args -join " "
+    if (Test-Path "C:\Users\aloknigam\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe") {
+        C:\Users\aloknigam\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    } else {
+        wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    }
 }
 
 function whatis($arg) {
