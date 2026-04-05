@@ -202,6 +202,12 @@ local icons = {
 	git_added          = "+",
 	git_modified       = "~",
 	git_removed        = "-",
+	git_file_added     = "",
+	git_file_untracked = "○",
+	git_file_modified  = "",
+	git_file_renamed   = "",
+	git_file_copied    = "󰆏",
+	git_file_deleted   = "",
 	hint               = "󰌵 ",
 	hover              = " ",
 	incoming           = " ",
@@ -2370,7 +2376,7 @@ addPlugin {
 addPlugin {
 	"isakbm/gitgraph.nvim",
 	cmd = "GitGraph",
-	dependencies = { "sindrets/diffview.nvim" },
+	dependencies = { "dlyongemallo/diffview.nvim" },
 	opts = {
 		symbols = {
 			merge_commit = "",
@@ -2484,11 +2490,15 @@ addPlugin {
 }
 
 addPlugin {
-	"sindrets/diffview.nvim",
+	"dlyongemallo/diffview.nvim",
 	cmd = "DiffviewOpen",
 	config = function()
 		local actions = require("diffview.actions")
 		require("diffview").setup({
+			icons = {
+				folder_closed = icons.folder_closed,
+				folder_open = icons.folder_open,
+			},
 			keymaps = {
 				disable_defaults = true,
 				file_panel = {
@@ -2513,7 +2523,20 @@ addPlugin {
 					{ "n", "q",     actions.close,  { desc = "Close help menu" } },
 					{ "n", "<esc>", actions.close,  { desc = "Close help menu" } },
 				},
-			}
+			},
+			status_icons = {
+				["A"] = icons.git_file_added,
+				["?"] = icons.git_file_untracked,
+				["M"] = icons.git_file_modified,
+				["R"] = icons.git_file_renamed,
+				["C"] = icons.git_file_copied,
+				["T"] = "T",
+				["U"] = "U",
+				["X"] = "X",
+				["D"] = icons.git_file_deleted,
+				["B"] = "B",
+				["!"] = "!",
+			},
 		})
 	end
 }
@@ -4112,6 +4135,7 @@ addPlugin {
 }
 
 -- FEAT(highlight): for powershell and csharp like vscode for comments
+-- BUG: multiple errors after sync
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "master",

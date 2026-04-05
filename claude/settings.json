@@ -27,5 +27,21 @@
   "autoMemoryEnabled": false,
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$d = $input | Out-String | ConvertFrom-Json; $f = if ($d.tool_input.file_path) { $d.tool_input.file_path } else { $d.tool_response.filePath }; if ($f -and (Test-Path $f) -and $f -notmatch '\\.sh$') { unix2dos $f 2>$null }",
+            "timeout": 5,
+            "statusMessage": "Fixing line endings..."
+          }
+        ]
+      }
+    ]
   }
 }
