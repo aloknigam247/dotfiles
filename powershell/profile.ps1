@@ -334,6 +334,7 @@ function claude {
     if ($workspaces | Where-Object { $root_dir.StartsWith($_) }) {
         wt -f -d $root_dir --colorScheme "Solarized Light" pwsh -c {
             $sec_workspace = "D:\.claude"
+            $env:THEME = "light"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
             $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
@@ -345,6 +346,7 @@ function claude {
     } else {
         wt -f -d $root_dir --colorScheme "Solarized Light" pwsh -c {
             $argList = $env:_CLAUDE_ARGS -split "`n"
+            $env:THEME = "light"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
         }

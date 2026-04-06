@@ -11,6 +11,7 @@ local default_highlights = {
 	CodeReviewInfo     = { link = "DiagnosticInfo" },
 	CodeReviewLow      = { link = "DiagnosticHint" },
 	CodeReviewMedium   = { link = "DiagnosticWarn" },
+	CodeReviewLine     = { bg = "#2a2a3a" },
 	CodeReviewPending  = { link = "Comment" },
 	CodeReviewQuestion = { link = "DiagnosticWarn" },
 	CodeReviewRejected = { link = "DiagnosticError" },
@@ -137,6 +138,7 @@ local function rerender_entry(bufnr, old_extmark_id, entry)
 	local new_id = vim.api.nvim_buf_set_extmark(bufnr, state.ns, line, 0, {
 		virt_lines = virt_lines,
 		virt_lines_above = false,
+		line_hl_group = "CodeReviewLine",
 	})
 
 	-- Update tracking

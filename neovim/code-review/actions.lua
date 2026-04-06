@@ -51,6 +51,18 @@ function M.show_action_menu(entry, on_update)
 	})
 
 	menu:mount()
+
+	-- Direct keybindings: r = reject, q = question (Enter already confirms selection)
+	menu:map("n", "r", function()
+		entry.status = "rejected"
+		menu:unmount()
+		on_update(entry)
+	end, { noremap = true })
+	menu:map("n", "q", function()
+		entry.status = "question"
+		menu:unmount()
+		on_update(entry)
+	end, { noremap = true })
 end
 
 return M

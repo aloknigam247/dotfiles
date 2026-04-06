@@ -97,10 +97,10 @@ function M.build_comment_box(entry, box_width)
 		}
 	end
 
-	-- Action buttons line
-	local btn_accept = icons.accepted .. " Accept"
-	local btn_reject = icons.rejected .. " Reject"
-	local btn_question = icons.question .. " Question"
+	-- Action buttons line (with keybinding hints)
+	local btn_accept = icons.accepted .. " Accept(<CR>)"
+	local btn_reject = icons.rejected .. " Reject(r)"
+	local btn_question = icons.question .. " Question(q)"
 	local buttons = " " .. btn_accept .. "   " .. btn_reject .. "   " .. btn_question
 	virt_lines[#virt_lines + 1] = {
 		{ "│ ", "CodeReviewBorder" },
@@ -153,6 +153,7 @@ function M.render_reviews(bufnr, entries, ns)
 		local extmark_id = vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, {
 			virt_lines = virt_lines,
 			virt_lines_above = false,
+			line_hl_group = "CodeReviewLine",
 		})
 		extmark_map[extmark_id] = entry
 	end
