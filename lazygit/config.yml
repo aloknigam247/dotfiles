@@ -1,3 +1,4 @@
+# FEAT: better git diffs
 gui:
   # stuff relating to the UI
   screenMode: "normal" # one of 'normal' | 'half' | 'full' default is 'normal'

@@ -66,7 +66,7 @@ let g:vimsyn_embed = 'lpr'   " Embedded script highlight
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
-set cursorline               " Enable highlight of cursor " FIX: show cursorline when enabled
+set cursorline               " Enable highlight of cursor
 set cursorlineopt=number     " Highlight number only
 set diffopt+=internal,filler,closeoff,context:12,algorithm:histogram,linematch:200,indent-heuristic,vertical " Open diff in vertical sp:set lit
 set fillchars=fold:\ ,foldopen:󰅀,foldclose:󰅂,foldsep:\ 

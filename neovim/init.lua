@@ -4445,15 +4445,6 @@ addPlugin {
 }
 
 addPlugin {
-	"ThePrimeagen/refactoring.nvim", -- THOUGHT: not needed
-	cmd = "Refactor",
-	config = true,
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-	}
-}
-
-addPlugin {
 	"aaron-p1/match-visual.nvim",
 	event = "ModeChanged *:[vV]"
 }
@@ -4461,10 +4452,14 @@ addPlugin {
 addPlugin {
 	"andymass/vim-matchup",
 	init = function()
-		vim.g.matchup_mouse_enabled = false
 		vim.g.matchup_matchparen_deferred = true
+		vim.g.matchup_matchparen_insert_timeout = 30
+		vim.g.matchup_matchparen_offscreen = {}
+		vim.g.matchup_matchparen_stopline = 200
+		vim.g.matchup_matchparen_timeout = 150
+		vim.g.matchup_mouse_enabled = false
 	end,
-	-- lazy = false, -- PERF: slows down
+	lazy = false,
 }
 
 addPlugin {
