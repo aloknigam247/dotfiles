@@ -4135,11 +4135,10 @@ addPlugin {
 }
 
 -- FEAT(highlight): for powershell and csharp like vscode for comments
--- BUG: multiple errors after sync
+-- BUG: multiple errors after sync https://www.qu8n.com/posts/treesitter-migration-guide-for-nvim-0-12
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
-	branch = "master",
-	main = "nvim-treesitter.configs",
+	branch = "main",
 	module = false,
 	dependencies = {{
 		"utilyre/sentiment.nvim",

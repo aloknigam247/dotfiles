@@ -4,10 +4,13 @@ $env:XDG_DATA_HOME   = "D:\apps"
 $env:XDG_LOG_HOME    = "D:\apps"
 $env:XDG_STATE_HOME  = "D:\apps"
 
+$npm_pkgs = @(
+    "tree-sitter-cli"
+)
+
 $scoop_pkgs = @(
     "mingw",
     "neovim-nightly",
-    # "neovide"
     "pandoc"
 )
 
