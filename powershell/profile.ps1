@@ -558,6 +558,7 @@ function Format-Text {
 # ╭────────────────╮
 # │ Autocompletion │
 # ╰────────────────╯
+# Completor for git and claude
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
