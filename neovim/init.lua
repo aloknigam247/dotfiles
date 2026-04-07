@@ -4415,7 +4415,6 @@ addPlugin {
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- FEAT: https://github.com/3rd/image.nvim
 -- ascii diagrams https://diagon.arthursonzogni.com
--- FEAT: https://github.com/altermo/iedit.nvim https://github.com/viocost/viedit
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
 	cmd = "InlineEdit"
@@ -4434,8 +4433,6 @@ addPlugin {
 	cmd = "GrugFar",
 	config = true
 }
-
--- FEAT: https://github.com/MisanthropicBit/decipher.nvim
 
 addPlugin {
 	"OXY2DEV/patterns.nvim",

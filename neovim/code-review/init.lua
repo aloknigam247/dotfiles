@@ -1,21 +1,25 @@
 local ui = require("code-review.ui")
 local picker = require("code-review.picker")
-local actions = require("code-review.actions")
 
 local M = {}
 
 local default_highlights = {
-	CodeReviewAccepted = { link = "DiagnosticOk" },
-	CodeReviewBorder   = { link = "FloatBorder" },
-	CodeReviewHigh     = { link = "DiagnosticError" },
-	CodeReviewInfo     = { link = "DiagnosticInfo" },
-	CodeReviewLow      = { link = "DiagnosticHint" },
-	CodeReviewMedium   = { link = "DiagnosticWarn" },
-	CodeReviewLine     = { bg = "#2a2a3a" },
-	CodeReviewPending  = { link = "Comment" },
-	CodeReviewQuestion = { link = "DiagnosticWarn" },
-	CodeReviewRejected = { link = "DiagnosticError" },
-	CodeReviewText     = { link = "Normal" },
+	CodeReviewAccepted    = { link = "DiagnosticOk" },
+	CodeReviewBorderBase  = { fg = "#89b4fa" },
+	CodeReviewBorderGreen = { fg = "#a6e3a1" },
+	CodeReviewBorderRed   = { fg = "#f38ba8" },
+	CodeReviewCategory    = { fg = "#cba6f7", bold = true },
+	CodeReviewHigh        = { fg = "#f38ba8", bold = true },
+	CodeReviewInfo        = { link = "DiagnosticInfo" },
+	CodeReviewInput       = { link = "CursorLine" },
+	CodeReviewLine        = { bg = "#2a2a3a" },
+	CodeReviewLow         = { link = "DiagnosticHint" },
+	CodeReviewMedium      = { link = "DiagnosticWarn" },
+	CodeReviewPending     = { link = "Comment" },
+	CodeReviewPrompt      = { link = "DiagnosticWarn" },
+	CodeReviewRejected    = { link = "DiagnosticError" },
+	CodeReviewSeverity    = { fg = "#fab387", italic = true },
+	CodeReviewText        = { link = "Normal" },
 }
 
 ---@class CodeReview.State
@@ -24,7 +28,8 @@ local state = {
 	source_file = "",  ---@type string
 	by_file = {},      ---@type table<string, table[]>
 	ns = vim.api.nvim_create_namespace("code_review"),
-	extmarks = {},     ---@type table<integer, table<integer, table>>
+	floats = {},       ---@type table<integer, table[]>  bufnr -> float_info[]
+	float_bufs = {},   ---@type table<integer, boolean>  set of float buffer ids (to skip in BufEnter)
 	augroup = nil,     ---@type integer|nil
 }
 
@@ -33,6 +38,13 @@ local state = {
 function M.setup(opts)
 	opts = opts or {}
 	local hls = vim.tbl_deep_extend("force", default_highlights, opts.highlights or {})
+
+	-- Resolve CodeReviewText from Normal so floats get the editor bg, not NormalFloat bg
+	if hls.CodeReviewText and hls.CodeReviewText.link == "Normal" then
+		local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+		hls.CodeReviewText = { fg = normal.fg, bg = normal.bg }
+	end
+
 	for name, hl in pairs(hls) do
 		vim.api.nvim_set_hl(0, name, hl)
 	end
@@ -55,10 +67,8 @@ local function buf_file_key(bufnr)
 	end
 	local abs = normalize_path(bufname)
 	local cwd = normalize_path(vim.fn.getcwd())
-	-- Try to make relative
 	if abs:sub(1, #cwd) == cwd then
-		local rel = abs:sub(#cwd + 2) -- skip trailing /
-		return rel
+		return abs:sub(#cwd + 2)
 	end
 	return abs
 end
@@ -67,9 +77,7 @@ end
 ---@param tbl table
 ---@return string
 local function json_pretty(tbl)
-	-- vim.json.encode produces compact JSON; manually format it
 	local json = vim.json.encode(tbl)
-	-- Use vim's built-in formatting by writing to a scratch buffer
 	local buf = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, { json })
 	vim.api.nvim_buf_set_option(buf, "filetype", "json")
@@ -84,6 +92,11 @@ end
 --- Render reviews for a specific buffer
 ---@param bufnr integer
 function M.render(bufnr)
+	-- Skip float buffers
+	if state.float_bufs[bufnr] then
+		return
+	end
+
 	local key = buf_file_key(bufnr)
 	if not key then
 		return
@@ -94,58 +107,25 @@ function M.render(bufnr)
 		return
 	end
 
-	-- Clear existing extmarks for this buffer
-	ui.clear_reviews(bufnr, state.ns)
-	state.extmarks[bufnr] = nil
+	-- Skip if already rendered for this buffer
+	if state.floats[bufnr] then
+		return
+	end
 
-	-- Render and track extmarks
-	local extmark_map = ui.render_reviews(bufnr, entries, state.ns)
-	state.extmarks[bufnr] = extmark_map
+	-- Render highlights + spacers + floats
+	local float_infos = ui.render_reviews(bufnr, entries, state.ns)
+	state.floats[bufnr] = float_infos
+
+	-- Track float buffer ids
+	for _, info in ipairs(float_infos) do
+		state.float_bufs[info.float_buf] = true
+	end
 
 	-- Set buffer-local keymaps
 	local kopts = { buffer = bufnr, silent = true }
-	vim.keymap.set("n", "<CR>", function() M.action() end, vim.tbl_extend("force", kopts, { desc = "Code review action" }))
-	vim.keymap.set("n", "]r", function() ui.next_review(bufnr, state.ns) end, vim.tbl_extend("force", kopts, { desc = "Next review" }))
-	vim.keymap.set("n", "[r", function() ui.prev_review(bufnr, state.ns) end, vim.tbl_extend("force", kopts, { desc = "Previous review" }))
-end
-
---- Re-render a single entry's extmark after status change
----@param bufnr integer
----@param old_extmark_id integer
----@param entry table
-local function rerender_entry(bufnr, old_extmark_id, entry)
-	-- Delete old extmark
-	vim.api.nvim_buf_del_extmark(bufnr, state.ns, old_extmark_id)
-
-	-- Get the line from the entry (extmark may have moved)
-	local marks = vim.api.nvim_buf_get_extmarks(bufnr, state.ns, 0, -1, {})
-	-- Re-render at the entry's line
-	local line = entry.line - 1
-	local line_count = vim.api.nvim_buf_line_count(bufnr)
-	if line >= line_count then
-		line = line_count - 1
-	end
-	if line < 0 then
-		line = 0
-	end
-
-	local winid = vim.fn.bufwinid(bufnr)
-	if winid == -1 then
-		winid = 0
-	end
-	local box_width = ui.get_box_width(winid)
-	local virt_lines = ui.build_comment_box(entry, box_width)
-	local new_id = vim.api.nvim_buf_set_extmark(bufnr, state.ns, line, 0, {
-		virt_lines = virt_lines,
-		virt_lines_above = false,
-		line_hl_group = "CodeReviewLine",
-	})
-
-	-- Update tracking
-	if state.extmarks[bufnr] then
-		state.extmarks[bufnr][old_extmark_id] = nil
-		state.extmarks[bufnr][new_id] = entry
-	end
+	vim.keymap.set("n", "<leader>c", function() M.action() end, vim.tbl_extend("force", kopts, { desc = "Code review: jump to comment" }))
+	vim.keymap.set("n", "]r", function() ui.next_review(state.floats[bufnr]) end, vim.tbl_extend("force", kopts, { desc = "Next review" }))
+	vim.keymap.set("n", "[r", function() ui.prev_review(state.floats[bufnr]) end, vim.tbl_extend("force", kopts, { desc = "Previous review" }))
 end
 
 --- Load a review file
@@ -162,7 +142,6 @@ function M.load(filepath)
 		return
 	end
 
-	-- Read and parse JSON
 	local content = table.concat(vim.fn.readfile(abs_path), "\n")
 	local ok, entries = pcall(vim.json.decode, content)
 	if not ok then
@@ -175,24 +154,19 @@ function M.load(filepath)
 		return
 	end
 
-	-- Setup highlights
 	M.setup()
-
-	-- Clear previous state
 	M.clear()
 
-	-- Normalize entries
 	for _, entry in ipairs(entries) do
 		entry.file = normalize_path(entry.file)
 		entry.status = entry.status or "pending"
+		entry.response = entry.response or ""
 	end
 
-	-- Store state
 	state.entries = entries
 	state.source_file = abs_path
 	state.by_file = {}
 
-	-- Group by file
 	for _, entry in ipairs(entries) do
 		if not state.by_file[entry.file] then
 			state.by_file[entry.file] = {}
@@ -200,7 +174,6 @@ function M.load(filepath)
 		table.insert(state.by_file[entry.file], entry)
 	end
 
-	-- Create autocmd for BufEnter
 	state.augroup = vim.api.nvim_create_augroup("CodeReview", { clear = true })
 	vim.api.nvim_create_autocmd("BufEnter", {
 		group = state.augroup,
@@ -209,48 +182,27 @@ function M.load(filepath)
 		end,
 	})
 
-	-- Re-render on window resize
-	vim.api.nvim_create_autocmd("WinResized", {
-		group = state.augroup,
-		callback = function()
-			for bufnr, _ in pairs(state.extmarks) do
-				if vim.api.nvim_buf_is_valid(bufnr) then
-					M.render(bufnr)
-				end
-			end
-		end,
-	})
-
-	-- Render current buffer if it matches
 	M.render(vim.api.nvim_get_current_buf())
-
-	-- Open the file tree sidebar
 	picker.open(state)
 
 	local file_count = vim.tbl_count(state.by_file)
 	vim.notify(("CodeReview: Loaded %d reviews across %d files"):format(#entries, file_count), vim.log.levels.INFO)
 end
 
---- Save updated statuses back to the review file
+--- Save updated statuses and responses back to the review file
 function M.done()
 	if state.source_file == "" then
 		vim.notify("CodeReview: No review file loaded", vim.log.levels.WARN)
 		return
 	end
 
-	-- Update line numbers from extmark positions (in case file was edited)
-	for bufnr, extmark_map in pairs(state.extmarks) do
-		if vim.api.nvim_buf_is_valid(bufnr) then
-			for extmark_id, entry in pairs(extmark_map) do
-				local marks = vim.api.nvim_buf_get_extmarks(bufnr, state.ns, extmark_id, extmark_id, {})
-				if #marks > 0 then
-					entry.line = marks[1][2] + 1 -- back to 1-based
-				end
-			end
+	-- Collect responses from float buffers
+	for _, float_infos in pairs(state.floats) do
+		for _, info in ipairs(float_infos) do
+			info.entry.response = info.get_response()
 		end
 	end
 
-	-- Write JSON
 	local output = json_pretty(state.entries)
 	vim.fn.writefile(vim.split(output, "\n"), state.source_file)
 	vim.notify("CodeReview: Saved " .. #state.entries .. " entries to " .. state.source_file, vim.log.levels.INFO)
@@ -265,60 +217,37 @@ function M.pick()
 	picker.open(state)
 end
 
---- Clear all review annotations and state
+--- Clear all review annotations, floats, and state
 function M.clear()
-	-- Clear extmarks from all tracked buffers
-	for bufnr, _ in pairs(state.extmarks) do
+	for bufnr, float_infos in pairs(state.floats) do
 		if vim.api.nvim_buf_is_valid(bufnr) then
-			ui.clear_reviews(bufnr, state.ns)
-			-- Remove buffer-local keymaps
-			pcall(vim.keymap.del, "n", "<CR>", { buffer = bufnr })
+			ui.clear_reviews(bufnr, state.ns, float_infos)
+			pcall(vim.keymap.del, "n", "<leader>c", { buffer = bufnr })
 			pcall(vim.keymap.del, "n", "]r", { buffer = bufnr })
 			pcall(vim.keymap.del, "n", "[r", { buffer = bufnr })
 		end
 	end
 
-	-- Clear autocmds
 	if state.augroup then
 		vim.api.nvim_del_augroup_by_id(state.augroup)
 		state.augroup = nil
 	end
 
-	-- Reset state
 	state.entries = {}
 	state.source_file = ""
 	state.by_file = {}
-	state.extmarks = {}
+	state.floats = {}
+	state.float_bufs = {}
 end
 
---- Trigger action menu for the review at cursor line
+--- Jump to the nearest comment float from cursor (<leader>c)
 function M.action()
 	local bufnr = vim.api.nvim_get_current_buf()
-	local cursor_line = vim.api.nvim_win_get_cursor(0)[1] - 1 -- 0-based
-	local extmark_map = state.extmarks[bufnr]
-
-	if not extmark_map then
+	local float_infos = state.floats[bufnr]
+	if not float_infos then
 		return
 	end
-
-	-- Find the extmark at the cursor line
-	local target_id, target_entry
-	for extmark_id, entry in pairs(extmark_map) do
-		local marks = vim.api.nvim_buf_get_extmarks(bufnr, state.ns, extmark_id, extmark_id, {})
-		if #marks > 0 and marks[1][2] == cursor_line then
-			target_id = extmark_id
-			target_entry = entry
-			break
-		end
-	end
-
-	if not target_entry then
-		return
-	end
-
-	actions.show_action_menu(target_entry, function()
-		rerender_entry(bufnr, target_id, target_entry)
-	end)
+	ui.focus_nearest(float_infos)
 end
 
 return M
