@@ -66,20 +66,20 @@
     "keybindings": 
     [
         {
-            "id": null,
-            "keys": "ctrl+minus"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+plus"
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
         },
         {
             "id": "User.splitPane.A6751878",
             "keys": "alt+shift+d"
         },
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
+            "id": null,
+            "keys": "ctrl+plus"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+minus"
         },
         {
             "id": "User.copy.644BA8F2",
@@ -87,7 +87,7 @@
         },
         {
             "id": null,
-            "keys": "enter"
+            "keys": "ctrl+v"
         },
         {
             "id": "User.find",
@@ -95,7 +95,7 @@
         },
         {
             "id": null,
-            "keys": "ctrl+v"
+            "keys": "enter"
         },
         {
             "id": null,
@@ -169,7 +169,7 @@
                 "taskbar"
             ],
             "closeOnExit": "always",
-            "colorScheme": "Catppuccin Latte",
+            "colorScheme": "Campbell Powershell",
             "experimental.rainbowSuggestions": true,
             "experimental.retroTerminalEffect": false,
             "font": 
