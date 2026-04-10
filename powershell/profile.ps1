@@ -330,23 +330,25 @@ function claude {
 
     $env:_CLAUDE_ARGS = $filtered_args -join "`n"
 
+    $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
+
     $workspaces = @("D:\dotfiles", "D:\kuber")
     if ($workspaces | Where-Object { $root_dir.StartsWith($_) }) {
-        wt -f -d $root_dir --colorScheme "Solarized Light" pwsh -c {
+        wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
             $sec_workspace = "D:\.claude"
-            $env:THEME = "light"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
             $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
             $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
+            sd '"theme": "\w+"' "`"theme`": `"$env:THEME`"" "$sec_workspace\.claude.json"
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
         }
     } else {
-        wt -f -d $root_dir --colorScheme "Solarized Light" pwsh -c {
+        wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
+            sd '"theme": "\w+"' "`"theme`": `"$env:THEME`"" "$HOME\.claude\.claude.json"
             $argList = $env:_CLAUDE_ARGS -split "`n"
-            $env:THEME = "light"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
         }
