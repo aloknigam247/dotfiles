@@ -332,7 +332,7 @@ function claude {
 
     $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
 
-    $workspaces = @("D:\dotfiles", "D:\kuber")
+    $workspaces = @("D:\apps", "D:\dotfiles", "D:\kuber")
     if ($workspaces | Where-Object { $root_dir.StartsWith($_) }) {
         wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
             $sec_workspace = "D:\.claude"
