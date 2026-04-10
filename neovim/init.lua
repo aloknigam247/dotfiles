@@ -4414,7 +4414,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/3rd/image.nvim
 -- ascii diagrams https://diagon.arthursonzogni.com
 addPlugin {
 	"AndrewRadev/inline_edit.vim",
