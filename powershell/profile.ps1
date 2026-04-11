@@ -347,7 +347,7 @@ function claude {
         }
     } else {
         wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
-            sd '"theme": "\w+"' "`"theme`": `"$env:THEME`"" "$HOME\.claude\.claude.json"
+            sd '"theme": "\w+"' "`"theme`": `"$env:THEME`"" "$HOME\.claude.json"
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList

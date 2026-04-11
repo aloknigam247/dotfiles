@@ -18,16 +18,6 @@
     ]
   },
   "model": "opus[1m]",
-  "defaultShell": "powershell",
-  "statusLine": {
-    "type": "command",
-    "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
-  },
-  "effortLevel": "high",
-  "autoMemoryEnabled": false,
-  "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true
-  },
   "hooks": {
     "PostToolUse": [
       {
@@ -35,13 +25,24 @@
         "hooks": [
           {
             "type": "command",
-            "shell": "powershell",
             "command": "$d = $input | Out-String | ConvertFrom-Json; $f = if ($d.tool_input.file_path) { $d.tool_input.file_path } else { $d.tool_response.filePath }; if ($f -and (Test-Path $f) -and $f -notmatch '\\.sh$') { unix2dos $f 2>$null }",
+            "shell": "powershell",
             "timeout": 5,
             "statusMessage": "Fixing line endings..."
           }
         ]
       }
     ]
-  }
+  },
+  "defaultShell": "powershell",
+  "statusLine": {
+    "type": "command",
+    "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "autoMemoryEnabled": false,
+  "skipDangerousModePermissionPrompt": true
 }
