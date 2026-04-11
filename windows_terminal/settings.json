@@ -66,20 +66,20 @@
     "keybindings": 
     [
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
-        },
-        {
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
+            "id": null,
+            "keys": "ctrl+minus"
         },
         {
             "id": null,
             "keys": "ctrl+plus"
         },
         {
-            "id": null,
-            "keys": "ctrl+minus"
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
         },
         {
             "id": "User.copy.644BA8F2",
@@ -87,7 +87,7 @@
         },
         {
             "id": null,
-            "keys": "ctrl+v"
+            "keys": "enter"
         },
         {
             "id": "User.find",
@@ -95,7 +95,7 @@
         },
         {
             "id": null,
-            "keys": "enter"
+            "keys": "ctrl+v"
         },
         {
             "id": null,
@@ -208,18 +208,6 @@
                 "name": "PowerShell 7",
                 "opacity": 100,
                 "startingDirectory": "%USERPROFILE%",
-                "useAcrylic": true
-            },
-            {
-                "colorScheme": "Solarized Light",
-                "commandline": "claude.exe",
-                "guid": "{d0212583-92a3-42a1-99da-70e5861ac195}",
-                "hidden": false,
-                "icon": "\ud83e\udd16",
-                "name": "Claude",
-                "opacity": 100,
-                "startingDirectory": "D:\\Dev.aloknigam",
-                "tabTitle": "Claude",
                 "useAcrylic": true
             }
         ]

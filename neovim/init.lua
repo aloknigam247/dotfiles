@@ -4382,7 +4382,7 @@ addPlugin {
 	event = "WinNew",
 	opts = {
 		override_open = true,
-		default_move_mappings = false, -- FIX: recursion
+		default_move_mappings = false,
 		default_resize_mappings = false,
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
@@ -4397,7 +4397,7 @@ addPlugin {
 		end
 	},
 	keys = {
-		{ "<leader>f", function() require("which-key").show({ keys = "<leader>f", loop = true }) end, { desc = "Enable flirt controls" } }
+		{ "<leader>f", function() require("which-key").show({ keys = "<leader>f", loop = true }) end, { desc = "Enable flirt controls" }}
 	},
 	config = function(_, cfg)
 		local f = require("flirt")

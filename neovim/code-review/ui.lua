@@ -85,6 +85,23 @@ local function wrap_text(text, width)
 	return lines
 end
 
+--- Update comment window chrome (border color, title, footer)
+---@param float_win integer
+---@param entry table
+local function update_chrome(float_win, entry)
+	if not vim.api.nvim_win_is_valid(float_win) then
+		return
+	end
+	local bhl = border_hl[entry.status] or "CodeReviewBorderBase"
+	vim.wo[float_win].winhighlight = "Normal:CodeReviewText,NormalFloat:CodeReviewText,FloatBorder:" .. bhl .. ",CursorLine:CodeReviewInput"
+	vim.api.nvim_win_set_config(float_win, {
+		title = M.build_title(entry),
+		title_pos = "center",
+		footer = M.build_footer(entry),
+		footer_pos = "center",
+	})
+end
+
 --- Open the code review window for an entry
 ---@param entry table CodeReview.Entry
 ---@param on_update fun(entry: table) called after status/response change
@@ -92,53 +109,24 @@ function M.open_review_window(entry, on_update)
 	local float_width = 60
 	local inner_width = float_width - 2
 
-	-- Build buffer content: comment (wrapped, read-only) + input (editable)
+	-- Comment window: read-only wrapped comment text
 	local comment_lines = wrap_text(entry.comment, inner_width)
-	local content = {}
-	for _, cline in ipairs(comment_lines) do
-		content[#content + 1] = cline
-	end
-	local input_start = #content -- 0-based index of first input line
-	content[#content + 1] = entry.response or ""
+	local comment_height = math.min(#comment_lines, 15)
 
-	local float_height = math.min(#content + 1, 20)
+	local comment_buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_lines(comment_buf, 0, -1, false, comment_lines)
+	vim.bo[comment_buf].buftype = "nofile"
+	vim.bo[comment_buf].modifiable = false
 
-	-- Create buffer
-	local float_buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, content)
-	vim.bo[float_buf].buftype = "nofile"
-	vim.bo[float_buf].modifiable = true
-
-	-- Highlight comment lines with window bg, input with distinct bg
-	local popup_ns = vim.api.nvim_create_namespace("code_review_popup")
-	for i = 0, input_start - 1 do
-		vim.api.nvim_buf_set_extmark(float_buf, popup_ns, i, 0, { line_hl_group = "CodeReviewText" })
-	end
-	for i = input_start, #content - 1 do
-		vim.api.nvim_buf_set_extmark(float_buf, popup_ns, i, 0, { line_hl_group = "CodeReviewInput" })
-	end
-
-	-- Clamp cursor to input area
-	vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-		buffer = float_buf,
-		callback = function()
-			local row = vim.api.nvim_win_get_cursor(0)[1]
-			if row <= input_start then
-				vim.api.nvim_win_set_cursor(0, { input_start + 1, 0 })
-			end
-		end,
-	})
-
-	-- Create float window
 	local bhl = border_hl[entry.status] or "CodeReviewBorderBase"
-	local float_win = vim.api.nvim_open_win(float_buf, true, {
+	local comment_win = vim.api.nvim_open_win(comment_buf, true, {
 		relative = "cursor",
 		row = 1,
 		col = 0,
 		width = float_width,
-		height = float_height,
+		height = comment_height,
 		style = "minimal",
-		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		border = { "╭", "─", "╮", "│", "┤", "─", "├", "│" },
 		title = M.build_title(entry),
 		title_pos = "center",
 		footer = M.build_footer(entry),
@@ -146,63 +134,124 @@ function M.open_review_window(entry, on_update)
 		focusable = true,
 		zindex = 50,
 	})
-	vim.wo[float_win].winhighlight = "Normal:CodeReviewText,NormalFloat:CodeReviewText,FloatBorder:" .. bhl .. ",CursorLine:CodeReviewInput"
-	vim.wo[float_win].cursorline = true
+	vim.wo[comment_win].winhighlight = "Normal:CodeReviewText,NormalFloat:CodeReviewText,FloatBorder:" .. bhl
 
-	-- Place cursor on input line
-	vim.api.nvim_win_set_cursor(float_win, { input_start + 1, 0 })
+	-- Prompt window: editable, positioned directly below comment window
+	local prompt_lines = { entry.response or "" }
+	local prompt_height = 3
 
-	-- Helpers
+	local prompt_buf = vim.api.nvim_create_buf(false, true)
+	vim.api.nvim_buf_set_lines(prompt_buf, 0, -1, false, prompt_lines)
+	vim.bo[prompt_buf].buftype = "nofile"
+	vim.bo[prompt_buf].modifiable = true
+
+	local prompt_win = vim.api.nvim_open_win(prompt_buf, false, {
+		relative = "win",
+		win = comment_win,
+		row = comment_height + 2, -- directly below comment window border
+		col = -1,
+		width = float_width,
+		height = prompt_height,
+		style = "minimal",
+		border = { "├", "─", "┤", "│", "╯", "─", "╰", "│" },
+		title = { { " Prompt ", "CodeReviewPrompt" } },
+		title_pos = "center",
+		focusable = true,
+		zindex = 50,
+	})
+	vim.wo[prompt_win].winhighlight = "Normal:CodeReviewInput,NormalFloat:CodeReviewInput,FloatBorder:" .. bhl
+	vim.wo[prompt_win].cursorline = true
+
+	-- State
 	local closed = false
 
 	local function get_response()
-		if not vim.api.nvim_buf_is_valid(float_buf) then
+		if not vim.api.nvim_buf_is_valid(prompt_buf) then
 			return entry.response or ""
 		end
-		local lines = vim.api.nvim_buf_get_lines(float_buf, input_start, -1, false)
+		local lines = vim.api.nvim_buf_get_lines(prompt_buf, 0, -1, false)
 		return (table.concat(lines, "\n"):match("^(.-)%s*$") or "")
 	end
 
-	local function close()
+	local function set_status(new_status)
+		if entry.status == new_status then
+			entry.status = "pending"
+		else
+			entry.status = new_status
+		end
+		entry.response = get_response()
+		update_chrome(comment_win, entry)
+		-- Sync prompt border color
+		local new_bhl = border_hl[entry.status] or "CodeReviewBorderBase"
+		if vim.api.nvim_win_is_valid(prompt_win) then
+			vim.wo[prompt_win].winhighlight = "Normal:CodeReviewInput,NormalFloat:CodeReviewInput,FloatBorder:" .. new_bhl
+		end
+		on_update(entry)
+	end
+
+	local function close_all()
 		if closed then
 			return
 		end
 		closed = true
 		entry.response = get_response()
-		if vim.api.nvim_win_is_valid(float_win) then
-			vim.api.nvim_win_close(float_win, true)
+		for _, w in ipairs({ comment_win, prompt_win }) do
+			if vim.api.nvim_win_is_valid(w) then
+				vim.api.nvim_win_close(w, true)
+			end
 		end
-		if vim.api.nvim_buf_is_valid(float_buf) then
-			vim.api.nvim_buf_delete(float_buf, { force = true })
+		for _, b in ipairs({ comment_buf, prompt_buf }) do
+			if vim.api.nvim_buf_is_valid(b) then
+				vim.api.nvim_buf_delete(b, { force = true })
+			end
 		end
-	end
-
-	local function set_status_and_close(new_status)
-		entry.status = new_status
-		close()
 		on_update(entry)
 	end
 
-	local function close_only()
-		close()
-		on_update(entry)
+	--- Jump between comment and prompt windows
+	local function jump_to_prompt()
+		if vim.api.nvim_win_is_valid(prompt_win) then
+			vim.api.nvim_set_current_win(prompt_win)
+		end
 	end
 
-	-- Window-local keymaps (normal mode)
-	vim.keymap.set("n", "A", function() set_status_and_close("accepted") end, { buffer = float_buf, noremap = true })
-	vim.keymap.set("n", "R", function() set_status_and_close("rejected") end, { buffer = float_buf, noremap = true })
-	vim.keymap.set("n", "P", function() set_status_and_close("prompt") end, { buffer = float_buf, noremap = true })
-	vim.keymap.set("n", "<Esc>", close_only, { buffer = float_buf, noremap = true })
-	vim.keymap.set("n", "q", close_only, { buffer = float_buf, noremap = true })
+	local function jump_to_comment()
+		if vim.api.nvim_win_is_valid(comment_win) then
+			vim.api.nvim_set_current_win(comment_win)
+		end
+	end
 
-	-- Close on BufLeave
-	vim.api.nvim_create_autocmd("BufLeave", {
-		buffer = float_buf,
-		once = true,
-		callback = function()
-			vim.schedule(close_only)
-		end,
-	})
+	-- Comment window keymaps
+	vim.keymap.set("n", "A", function() set_status("accepted") end, { buffer = comment_buf, noremap = true })
+	vim.keymap.set("n", "R", function() set_status("rejected") end, { buffer = comment_buf, noremap = true })
+	vim.keymap.set("n", "P", jump_to_prompt, { buffer = comment_buf, noremap = true })
+	vim.keymap.set("n", "<Esc>", close_all, { buffer = comment_buf, noremap = true })
+	vim.keymap.set("n", "q", close_all, { buffer = comment_buf, noremap = true })
+	vim.keymap.set("n", "<Tab>", jump_to_prompt, { buffer = comment_buf, noremap = true })
+
+	-- Prompt window keymaps
+	vim.keymap.set("n", "A", function() set_status("accepted") end, { buffer = prompt_buf, noremap = true })
+	vim.keymap.set("n", "R", function() set_status("rejected") end, { buffer = prompt_buf, noremap = true })
+	vim.keymap.set("n", "<Esc>", close_all, { buffer = prompt_buf, noremap = true })
+	vim.keymap.set("n", "q", close_all, { buffer = prompt_buf, noremap = true })
+	vim.keymap.set("n", "<Tab>", jump_to_comment, { buffer = prompt_buf, noremap = true })
+
+	-- Close both on BufLeave from either window
+	for _, buf in ipairs({ comment_buf, prompt_buf }) do
+		vim.api.nvim_create_autocmd("BufLeave", {
+			buffer = buf,
+			once = true,
+			callback = function()
+				vim.schedule(function()
+					-- Only close if focus left BOTH windows (not just switching between them)
+					local cur_buf = vim.api.nvim_get_current_buf()
+					if cur_buf ~= comment_buf and cur_buf ~= prompt_buf then
+						close_all()
+					end
+				end)
+			end,
+		})
+	end
 end
 
 return M

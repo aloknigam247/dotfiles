@@ -283,17 +283,35 @@ function M.clear()
 	state.rendered_bufs = {}
 end
 
---- Open review window for the diagnostic at cursor
+--- Find the original entry from state.by_file matching a cursor line
+---@param bufnr integer
+---@param cursor_line integer 0-based
+---@return table|nil entry
+local function find_entry_at_line(bufnr, cursor_line)
+	local key = buf_file_key(bufnr)
+	if not key or not state.by_file[key] then
+		return nil
+	end
+	for _, entry in ipairs(state.by_file[key]) do
+		local start_line = entry.line - 1
+		local end_line = (entry.end_line or entry.line) - 1
+		if cursor_line >= start_line and cursor_line <= end_line then
+			return entry
+		end
+	end
+	return nil
+end
+
+--- Open review window for the review at cursor
 function M.open_review_window()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local cursor_line = vim.api.nvim_win_get_cursor(0)[1] - 1
 
-	local diagnostics = vim.diagnostic.get(bufnr, { namespace = state.ns, lnum = cursor_line })
-	if #diagnostics == 0 then
+	-- Look up the original entry from state (not from diagnostic user_data which is a deep copy)
+	local entry = find_entry_at_line(bufnr, cursor_line)
+	if not entry then
 		return
 	end
-
-	local entry = diagnostics[1].user_data.entry
 
 	ui.open_review_window(entry, function()
 		-- Refresh diagnostics to reflect status/response change
