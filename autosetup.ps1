@@ -284,11 +284,11 @@ function wingetInstall {
         if ($installed -eq $true -and $update) {
             # update package
             writeLog UPDATE "Updating winget package: $pkg"
-            winget upgrade -e --id $pkg
+            winget upgrade -e --id $pkg --accept-package-agreements --accept-source-agreements
         } elseif ($installed -eq $false -and -not $update) {
             # install package
             writeLog UPDATE "Installing winget package: $pkg"
-            winget install -e --id $pkg
+            winget install -e --id $pkg --accept-package-agreements --accept-source-agreements
         }
     }
 }
