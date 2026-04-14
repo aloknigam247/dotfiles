@@ -193,7 +193,7 @@ function M.open_review_window(entry, on_update, on_navigate)
 		prompt_buf = vim.api.nvim_create_buf(false, true)
 		vim.api.nvim_buf_set_lines(prompt_buf, 0, -1, false, { entry.response or "" })
 		vim.bo[prompt_buf].buftype = "nofile"
-		vim.bo[prompt_buf].modifiable = false
+		vim.bo[prompt_buf].modifiable = true
 
 		local cur_bhl = border_hl[entry.status] or "CodeReviewBorderBase"
 		prompt_win = vim.api.nvim_open_win(prompt_buf, true, {

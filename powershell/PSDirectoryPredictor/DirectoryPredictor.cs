@@ -54,13 +54,14 @@ public sealed class DirectoryPredictor : ICommandPredictor, IDisposable {
 
     public void OnCommandLineAccepted(PredictionClient client, IReadOnlyList<string> history) {
         foreach (var line in history) {
-            _history.ProcessHistoryLines(line);
+            if (!line.Contains('\n') && !line.Contains('\r'))
+                _history.ProcessHistoryLines(line);
         }
     }
 
     public void OnCommandLineExecuted(PredictionClient client, string commandLine, bool success) {
         // Also process on execution for immediate feedback
-        if (success) {
+        if (success && !commandLine.Contains('\n') && !commandLine.Contains('\r')) {
             _history.ProcessHistoryLines(commandLine);
         }
     }

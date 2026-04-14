@@ -27,6 +27,7 @@ function M.open(state)
 	Snacks.picker({
 		title = "Code Reviews",
 		items = items,
+		auto_close = false,
 		layout = { preset = "sidebar" },
 		format = function(item)
 			local ret = {}
@@ -38,7 +39,7 @@ function M.open(state)
 			ret[#ret + 1] = { (" %d/%d "):format(item.pending, item.count), badge_hl, virtual = true }
 			return ret
 		end,
-		confirm = { "jump", "close" },
+		confirm = "jump",
 		jump = { close = false },
 		win = {
 			list = {

@@ -5,6 +5,10 @@ local M = {}
 
 local default_highlights = {
 	CodeReviewAccepted    = { link = "DiagnosticOk" },
+	CodeReviewBgAccepted  = { bg = "#1e3b2d" },
+	CodeReviewBgPending   = { bg = "#1e2d3b" },
+	CodeReviewBgPrompt    = { bg = "#3b351e" },
+	CodeReviewBgRejected  = { bg = "#3b1e2d" },
 	CodeReviewBorderBase  = { fg = "#89b4fa" },
 	CodeReviewBorderGreen = { fg = "#a6e3a1" },
 	CodeReviewBorderRed   = { fg = "#f38ba8" },
@@ -28,12 +32,20 @@ local status_to_severity = {
 	rejected = vim.diagnostic.severity.ERROR,
 }
 
+local status_to_bg = {
+	accepted = "CodeReviewBgAccepted",
+	pending  = "CodeReviewBgPending",
+	prompt   = "CodeReviewBgPrompt",
+	rejected = "CodeReviewBgRejected",
+}
+
 ---@class CodeReview.State
 local state = {
 	entries = {},          ---@type table[]
 	source_file = "",      ---@type string
 	by_file = {},          ---@type table<string, table[]>
 	ns = vim.api.nvim_create_namespace("code_review"),
+	ns_bg = vim.api.nvim_create_namespace("code_review_bg"),
 	augroup = nil,         ---@type integer|nil
 	rendered_bufs = {},    ---@type table<integer, boolean>
 }
@@ -68,7 +80,7 @@ function M.setup(opts)
 				[vim.diagnostic.severity.WARN]  = "󰆊",  -- prompt
 			},
 		},
-		underline = true,
+		underline = false,
 	}, state.ns)
 end
 
@@ -93,19 +105,41 @@ local function buf_file_key(bufnr)
 	return abs
 end
 
----@param tbl table
+--- Pure-Lua JSON pretty printer (2-space indent)
+---@param val any
+---@param indent? integer
 ---@return string
-local function json_pretty(tbl)
-	local json = vim.json.encode(tbl)
-	local buf = vim.api.nvim_create_buf(false, true)
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, { json })
-	vim.api.nvim_buf_set_option(buf, "filetype", "json")
-	vim.api.nvim_buf_call(buf, function()
-		vim.cmd("%!python -m json.tool --indent 2 2>nul || echo " .. json)
-	end)
-	local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-	vim.api.nvim_buf_delete(buf, { force = true })
-	return table.concat(lines, "\n")
+local function json_pretty(val, indent)
+	indent = indent or 0
+	local pad = string.rep("  ", indent)
+	local pad1 = string.rep("  ", indent + 1)
+	local t = type(val)
+
+	if t == "table" then
+		if vim.islist(val) then
+			if #val == 0 then
+				return "[]"
+			end
+			local parts = {}
+			for _, v in ipairs(val) do
+				parts[#parts + 1] = pad1 .. json_pretty(v, indent + 1)
+			end
+			return "[\n" .. table.concat(parts, ",\n") .. "\n" .. pad .. "]"
+		else
+			local keys = vim.tbl_keys(val)
+			table.sort(keys)
+			if #keys == 0 then
+				return "{}"
+			end
+			local parts = {}
+			for _, k in ipairs(keys) do
+				parts[#parts + 1] = pad1 .. vim.json.encode(k) .. ": " .. json_pretty(val[k], indent + 1)
+			end
+			return "{\n" .. table.concat(parts, ",\n") .. "\n" .. pad .. "}"
+		end
+	else
+		return vim.json.encode(val)
+	end
 end
 
 --- Set diagnostics for a buffer from its review entries
@@ -143,6 +177,18 @@ local function set_diagnostics(bufnr, entries)
 	end
 
 	vim.diagnostic.set(state.ns, bufnr, diagnostics)
+
+	-- Apply background highlights via separate namespace
+	vim.api.nvim_buf_clear_namespace(bufnr, state.ns_bg, 0, -1)
+	for _, diag in ipairs(diagnostics) do
+		local bg_hl = status_to_bg[diag.user_data.entry.status] or "CodeReviewBgPending"
+		vim.api.nvim_buf_set_extmark(bufnr, state.ns_bg, diag.lnum, diag.col, {
+			end_row = diag.end_lnum,
+			end_col = diag.end_col,
+			hl_group = bg_hl,
+			priority = 50,
+		})
+	end
 end
 
 --- Render diagnostics for a buffer
@@ -269,6 +315,7 @@ function M.clear()
 	for bufnr, _ in pairs(state.rendered_bufs) do
 		if vim.api.nvim_buf_is_valid(bufnr) then
 			vim.diagnostic.reset(state.ns, bufnr)
+			vim.api.nvim_buf_clear_namespace(bufnr, state.ns_bg, 0, -1)
 			pcall(vim.keymap.del, "n", "[r", { buffer = bufnr })
 			pcall(vim.keymap.del, "n", "]r", { buffer = bufnr })
 			pcall(vim.keymap.del, "n", "<leader>r", { buffer = bufnr })

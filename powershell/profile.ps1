@@ -344,6 +344,7 @@ function claude {
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
+            if ( $? -eq $False ) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
         }
     } else {
         wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
@@ -351,6 +352,7 @@ function claude {
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
+            if ( $? -eq $False ) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
         }
     }
     Remove-Item env:_CLAUDE_ARGS
@@ -387,7 +389,7 @@ function whatis($arg) {
     }
 }
 
-# ─[ Path functions ]──────────────────────────────────────────────────
+# ─( Path functions )──────────────────────────────────────────────────
 function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work\notes" | Set-Location }
 

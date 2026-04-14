@@ -91,7 +91,7 @@ public sealed class FuzzyHistoryPredictor : ICommandPredictor, IDisposable {
     public void OnCommandLineAccepted(PredictionClient client, IReadOnlyList<string> history) {
         foreach (var line in history) {
             string trimmed = line.Trim();
-            if (trimmed.Length > 0) {
+            if (trimmed.Length > 0 && !trimmed.Contains('\n') && !trimmed.Contains('\r')) {
                 AddEntry(trimmed, DateTime.UtcNow);
             }
         }
@@ -100,7 +100,7 @@ public sealed class FuzzyHistoryPredictor : ICommandPredictor, IDisposable {
     public void OnCommandLineExecuted(PredictionClient client, string commandLine, bool success) {
         if (success) {
             string trimmed = commandLine.Trim();
-            if (trimmed.Length > 0) {
+            if (trimmed.Length > 0 && !trimmed.Contains('\n') && !trimmed.Contains('\r')) {
                 AddEntry(trimmed, DateTime.UtcNow);
             }
         }
