@@ -256,12 +256,31 @@ function M.open_review_window(entry, on_update, on_navigate)
 		on_update(entry)
 	end
 
+	-- Close windows without triggering on_update (used before navigation)
+	local function close_silent()
+		if closed then
+			return
+		end
+		closed = true
+		entry.response = get_response()
+		for _, w in ipairs({ comment_win, prompt_win }) do
+			if w and vim.api.nvim_win_is_valid(w) then
+				vim.api.nvim_win_close(w, true)
+			end
+		end
+		for _, b in ipairs({ comment_buf, prompt_buf }) do
+			if b and vim.api.nvim_buf_is_valid(b) then
+				vim.api.nvim_buf_delete(b, { force = true })
+			end
+		end
+	end
+
 	-- Navigate to next/prev review from within the window
 	local function navigate(direction)
 		if not on_navigate then
 			return
 		end
-		close_all()
+		close_silent()
 		on_navigate(direction)
 	end
 

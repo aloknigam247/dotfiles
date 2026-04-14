@@ -5,10 +5,6 @@ local M = {}
 
 local default_highlights = {
 	CodeReviewAccepted    = { link = "DiagnosticOk" },
-	CodeReviewBgAccepted  = { bg = "#1e3b2d" },
-	CodeReviewBgPending   = { bg = "#1e2d3b" },
-	CodeReviewBgPrompt    = { bg = "#3b351e" },
-	CodeReviewBgRejected  = { bg = "#3b1e2d" },
 	CodeReviewBorderBase  = { fg = "#89b4fa" },
 	CodeReviewBorderGreen = { fg = "#a6e3a1" },
 	CodeReviewBorderRed   = { fg = "#f38ba8" },
@@ -65,6 +61,12 @@ function M.setup(opts)
 	for name, hl in pairs(hls) do
 		vim.api.nvim_set_hl(0, name, hl)
 	end
+
+	-- Bg highlights use border fg colors directly
+	vim.api.nvim_set_hl(0, "CodeReviewBgAccepted", { bg = "#a6e3a1" })
+	vim.api.nvim_set_hl(0, "CodeReviewBgPending", { bg = "#89b4fa" })
+	vim.api.nvim_set_hl(0, "CodeReviewBgPrompt", { bg = "#89b4fa" })
+	vim.api.nvim_set_hl(0, "CodeReviewBgRejected", { bg = "#f38ba8" })
 
 	-- Configure diagnostics for our namespace
 	-- Note: tiny-inline-diagnostic only reads global config for icons,
@@ -370,7 +372,12 @@ function M.open_review_window()
 			set_diagnostics(bufnr, state.by_file[key])
 		end
 	end, function(direction)
-		-- Navigate: close current, jump, reopen
+		-- Refresh diagnostics, focus code window, jump, reopen
+		local key = buf_file_key(bufnr)
+		if key and state.by_file[key] then
+			set_diagnostics(bufnr, state.by_file[key])
+		end
+		vim.api.nvim_set_current_win(vim.fn.bufwinid(bufnr))
 		if direction == "next" then
 			vim.diagnostic.goto_next({ namespace = state.ns, float = false })
 		else
