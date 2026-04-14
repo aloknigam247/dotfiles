@@ -3014,41 +3014,40 @@ addPlugin {
 	config = function()
 		local diag = require("tiny-inline-diagnostic")
 		diag.setup({
-			transparent_bg = false,
+			blend = { factor = 0.22 },
 			hi = {
 				background = "Normal",
 				mixing_color = "TinyDiagnosticNormal"
 			},
 			options = {
-				show_source = { enabled = true, if_many = false },
-				use_icons_from_diagnostic = true,
-				set_arrow_to_diag_color = true,
-				multilines = {
-					enabled = true,
-					always_show = true,
-					trim_whitespaces = true
-				},
 				enable_on_insert = true,
 				format = function(arg)
 					if arg.code then return arg.message .. " [" .. arg.code .. "]" end
 					return arg.message
 				end,
+				multilines = {
+					enabled = true,
+					always_show = true,
+					trim_whitespaces = true
+				},
+				set_arrow_to_diag_color = true,
+				show_source = { enabled = true, if_many = false },
+				use_icons_from_diagnostic = true,
+				overwrite_events = { "DiagnosticChanged", "LspAttach" },
 				virt_texts = {
 					priority = priority_virt.diagnostics
 				}
 			},
 			signs = {
+				arrow = "  ",
+				diag = "●",
 				left = "",
 				right = "",
-				diag = "●",
-				arrow = "  ",
 				up_arrow = "    ",
 				vertical = " │",
 				vertical_end = " ╰",
 			},
-			blend = {
-				factor = 0.22,
-			}
+			transparent_bg = false
 		})
 		vim.diagnostic.config({ virtual_text = false })
 		diag.enable()
@@ -4382,7 +4381,7 @@ addPlugin {
 	event = "WinNew",
 	opts = {
 		override_open = true,
-		default_move_mappings = false,
+		default_move_mappings = false, -- BUG: try with ctrl-w mappings to avoid recursion
 		default_resize_mappings = false,
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
@@ -4409,7 +4408,7 @@ addPlugin {
 		vim.keymap.set("n", "<leader>f<M-Down>",  "<cmd>res +1<cr>",              { desc = "Resize down" })
 		vim.keymap.set("n", "<leader>f<M-Left>",  "<cmd>vert res -1<cr>",         { desc = "Resize left" })
 		vim.keymap.set("n", "<leader>f<M-Right>", "<cmd>vert res +1<cr>",         { desc = "Resize right" })
-		vim.keymap.set("n", "<leader>f<M-Up>",    "<cmd>res -1<cr>",              { desc = "Resize up" })
+		vim.keymap.set("n", "<C-w><M-Up>",    "<cmd>res -1<cr>",              { desc = "Resize up" })
 	end
 }
 -- <~>

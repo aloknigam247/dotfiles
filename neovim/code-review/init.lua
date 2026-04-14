@@ -58,7 +58,8 @@ function M.setup(opts)
 	-- Note: tiny-inline-diagnostic only reads global config for icons,
 	-- so sign column icons are the only ones we can control per-namespace.
 	vim.diagnostic.config({
-		virtual_text = false, -- let tiny-inline-diagnostic handle rendering
+		virtual_text = false,
+		float = false,
 		signs = {
 			text = {
 				[vim.diagnostic.severity.ERROR] = "󰆄",  -- rejected
@@ -168,10 +169,12 @@ function M.render(bufnr)
 
 	local kopts = { buffer = bufnr, silent = true }
 	vim.keymap.set("n", "[r", function()
-		vim.diagnostic.goto_prev({ namespace = state.ns })
+		vim.diagnostic.goto_prev({ namespace = state.ns, float = false })
+		M.open_review_window()
 	end, vim.tbl_extend("force", kopts, { desc = "Previous review" }))
 	vim.keymap.set("n", "]r", function()
-		vim.diagnostic.goto_next({ namespace = state.ns })
+		vim.diagnostic.goto_next({ namespace = state.ns, float = false })
+		M.open_review_window()
 	end, vim.tbl_extend("force", kopts, { desc = "Next review" }))
 	vim.keymap.set("n", "<leader>r", function()
 		M.open_review_window()
@@ -319,6 +322,14 @@ function M.open_review_window()
 		if key and state.by_file[key] then
 			set_diagnostics(bufnr, state.by_file[key])
 		end
+	end, function(direction)
+		-- Navigate: close current, jump, reopen
+		if direction == "next" then
+			vim.diagnostic.goto_next({ namespace = state.ns, float = false })
+		else
+			vim.diagnostic.goto_prev({ namespace = state.ns, float = false })
+		end
+		M.open_review_window()
 	end)
 end
 

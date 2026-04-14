@@ -38,16 +38,8 @@ function M.open(state)
 			ret[#ret + 1] = { (" %d/%d "):format(item.pending, item.count), badge_hl, virtual = true }
 			return ret
 		end,
-		confirm = function(picker, item)
-			if not item then
-				return
-			end
-			local win = Snacks.picker.util.pick_win()
-			if win then
-				vim.api.nvim_set_current_win(win)
-				vim.cmd("edit " .. vim.fn.fnameescape(item.file))
-			end
-		end,
+		confirm = { "jump", "close" },
+		jump = { close = false },
 		win = {
 			list = {
 				keys = {
