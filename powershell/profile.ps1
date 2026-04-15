@@ -693,7 +693,7 @@ function Get-GitStatus {
 
     # fast untracked check — --directory avoids recursing into untracked dirs
     if (-not $result.HasWorking) {
-        $untracked = git --no-optional-locks ls-files --others --exclude-standard --directory 2>$null
+        $untracked = git --no-optional-locks ls-files --others --exclude-standard --directory --no-empty-directory 2>$null
         if ($untracked) { $result.HasWorking = $true }
     }
 
