@@ -2,7 +2,7 @@ fonts/fonts/.uuid
 vim/vim/.netrwhist
 vim/vim/plugged
 .bsync-snap*
-
+git/.gitconfig
 
 /powershell/PSDirectoryPredictor/bin
 /powershell/PSDirectoryPredictor/obj
