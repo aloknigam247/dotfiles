@@ -25,7 +25,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File C:/Users/aloknigam/.claude/hooks/fix-line-endings.ps1",
+            "command": "unix2dos \"$CLAUDE_FILE_PATH\"",
             "timeout": 5,
             "statusMessage": "Fixing line endings..."
           }
