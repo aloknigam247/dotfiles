@@ -25,7 +25,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "unix2dos \"$CLAUDE_FILE_PATH\"",
+            "shell": "powershell",
+            "command": "$input | ConvertFrom-Json | ForEach-Object { & 'C:\\Program Files\\Git\\usr\\bin\\unix2dos.exe' $_.tool_input.file_path }",
             "timeout": 5,
             "statusMessage": "Fixing line endings..."
           }
