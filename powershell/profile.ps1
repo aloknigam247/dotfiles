@@ -340,7 +340,6 @@ function claude {
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
             $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
             $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
-            sed -i "s/`"theme`": `"\w\+`"/`"theme`": `"$env:THEME`"/" "$sec_workspace\.claude.json"
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
@@ -348,7 +347,6 @@ function claude {
         }
     } else {
         wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
-            sed -i "s/`"theme`": `"\w\+`"/`"theme`": `"$env:THEME`"/" "$HOME\.claude.json"
             $argList = $env:_CLAUDE_ARGS -split "`n"
             Remove-Item env:_CLAUDE_ARGS
             claude.exe @argList
