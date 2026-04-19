@@ -933,40 +933,6 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
-	"CodeReview",
-	function(opts)
-		local sub = opts.fargs[1]
-		local cr = require("code-review")
-		if sub == "load" then
-			cr.load(opts.fargs[2])
-		elseif sub == "done" then
-			cr.done()
-		elseif sub == "pick" then
-			cr.pick()
-		elseif sub == "clear" then
-			cr.clear()
-		end
-	end,
-	{
-		nargs = "+",
-		complete = function(lead, cmdline, _)
-			local args = vim.split(cmdline, "%s+")
-			if #args <= 2 then
-				return vim.tbl_filter(
-					function(s) return s:find(lead, 1, true) == 1 end,
-					{ "clear", "done", "load", "pick" }
-				)
-			end
-			if args[2] == "load" then
-				return vim.fn.getcompletion(lead, "file")
-			end
-			return {}
-		end,
-		desc = "Code review commands"
-	}
-)
-
-vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
 	{ desc = "Replaces ansii color codes with the actual colors" }
@@ -4194,7 +4160,7 @@ addPlugin {
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
-	branch = "master",
+	branch = "main",
 	keys = {
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
@@ -4244,7 +4210,7 @@ addPlugin {
 }
 
 addPlugin {
-	"m-demare/hlargs.nvim", -- FEAT: better colors in dark mode
+	"m-demare/hlargs.nvim",
 	config = function()
 		require("hlargs").setup({
 			excluded_argnames = {

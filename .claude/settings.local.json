@@ -3,7 +3,8 @@
     "allow": [
       "WebSearch",
       "Read(//d/apps/nvim/**)",
-      "Read(//d/apps/nvim/lua/**)"
+      "Read(//d/apps/nvim/lua/**)",
+      "Bash(*)"
     ]
   }
 }
