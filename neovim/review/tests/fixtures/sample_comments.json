@@ -1,0 +1,56 @@
+[
+  {
+    "id": "c1",
+    "file": "neovim/review/lua/review/init.lua",
+    "line": 10,
+    "end_line": 30,
+    "category": "Architecture",
+    "severity": "medium",
+    "author": "AI Agent",
+    "timestamp": "2026-04-19T12:00:00Z",
+    "body": "Top-level requires evaluate eagerly. Consider lazy-loading inside functions.",
+    "status": "pending",
+    "thread": []
+  },
+  {
+    "id": "c2",
+    "file": "neovim/review/lua/review/init.lua",
+    "line": 45,
+    "end_line": 50,
+    "category": "Bug",
+    "severity": "high",
+    "author": "AI Agent",
+    "timestamp": "2026-04-19T12:01:00Z",
+    "body": "apply_highlights does not handle the case where Normal hl is unset.",
+    "status": "pending",
+    "thread": [
+      { "id": "m1", "author": "you", "timestamp": "2026-04-19T12:05:00Z", "body": "Can you suggest a fallback?" },
+      { "id": "m2", "author": "AI Agent", "timestamp": "2026-04-19T12:06:00Z", "body": "Default to {fg='#cdd6f4', bg='#1e1e2e'} if Normal is empty." }
+    ]
+  },
+  {
+    "id": "c3",
+    "file": "neovim/review/lua/review/state.lua",
+    "line": 5,
+    "end_line": 15,
+    "category": "Style",
+    "severity": "low",
+    "author": "AI Agent",
+    "timestamp": "2026-04-19T12:02:00Z",
+    "body": "State table could be wrapped in a class for clarity.",
+    "status": "accepted",
+    "thread": []
+  },
+  {
+    "id": "c4",
+    "file": "neovim/review/lua/review/diagnostics.lua",
+    "line": 20,
+    "category": "Performance",
+    "severity": "info",
+    "author": "AI Agent",
+    "timestamp": "2026-04-19T12:03:00Z",
+    "body": "render() reads buffer lines per comment. Could batch.",
+    "status": "rejected",
+    "thread": []
+  }
+]

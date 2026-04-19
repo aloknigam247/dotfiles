@@ -1049,6 +1049,33 @@ vim.api.nvim_create_user_command(
 		nargs = "?"
 	}
 )
+
+vim.api.nvim_create_user_command(
+	"Review",
+	function(opts)
+		local sub = opts.fargs[1]
+		local rest = {}
+		for i = 2, #opts.fargs do rest[#rest + 1] = opts.fargs[i] end
+		require("review").cmd(sub, rest)
+	end,
+	{
+		nargs = "+",
+		complete = function(lead, cmdline, _)
+			local args = vim.split(cmdline, "%s+")
+			if #args <= 2 then
+				local subs = require("review").subcommands
+				return vim.tbl_filter(function(s) return s:find(lead, 1, true) == 1 end, subs)
+			end
+			if args[2] == "load" then
+				-- complete with registered provider names
+				local names = vim.tbl_keys(require("review.state").providers())
+				return vim.tbl_filter(function(s) return s:find(lead, 1, true) == 1 end, names)
+			end
+			return {}
+		end,
+		desc = "Code review commands"
+	}
+)
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
