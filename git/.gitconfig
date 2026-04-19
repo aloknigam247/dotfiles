@@ -72,3 +72,5 @@
 	username = aloknigam@microsoft.com
 [credential "azrepos:org/o365exchange"]
 	username = aloknigam@microsoft.com
+[credential "azrepos:org/identitydivision"]
+	username = aloknigam@microsoft.com
