@@ -3930,7 +3930,7 @@ addPlugin {
 							return str:gsub("^%s+", ""):gsub("%s+", "")
 						end,
 						on_click = function ()
-							vim.cmd("ScrollViewToggle")
+							vim.cmd("ScrollViewToggle") -- BUG: ScrollViewToggle command not found error
 						end,
 						padding = { left = 0, right = 0 },
 						separator = { left = "", right = "█" }

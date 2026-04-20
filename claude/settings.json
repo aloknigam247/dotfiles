@@ -25,8 +25,8 @@
         "hooks": [
           {
             "type": "command",
-            "shell": "powershell",
             "command": "$input | ConvertFrom-Json | ForEach-Object { & 'C:\\Program Files\\Git\\usr\\bin\\unix2dos.exe' $_.tool_input.file_path }",
+            "shell": "powershell",
             "timeout": 5,
             "statusMessage": "Fixing line endings..."
           }
