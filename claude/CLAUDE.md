@@ -20,7 +20,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 
 ## Git
 
-* Always use **conventional commit** message style: `<type>(<scope>): <description>`, e.g. `feat(auth): add v2 token support for SkyAPI`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
+* Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
 
 ## Azure DevOps
 When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
