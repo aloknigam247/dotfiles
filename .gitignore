@@ -6,3 +6,4 @@ git/.gitconfig
 
 /powershell/PSDirectoryPredictor/bin
 /powershell/PSDirectoryPredictor/obj
+/git/.gitconfig

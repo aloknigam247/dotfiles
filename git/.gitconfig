@@ -15,8 +15,8 @@
     autoSetupRemote = true
 
 [user]
-	name = aloknigam
-	email = aloknigam+odspmdb@microsoft.com
+	name = Alok Nigam
+	email = aloknigam@microsoft.com
 
 [interactive]
     diffFilter = delta --color-only
