@@ -3425,7 +3425,7 @@ addPlugin {
 	}
 }
 
-addPlugin {
+addPlugin { -- FEAT: use mdview
 	"toppair/peek.nvim",
 	build = "deno task --quiet build:fast",
 	cmd = "PeekOpen",
@@ -3678,6 +3678,7 @@ addPlugin {
 	event = "WinNew",
 }
 
+-- FEAT: hide statusline for full immersive view
 addPlugin {
 	"nvim-lualine/lualine.nvim",
 	config = function()
