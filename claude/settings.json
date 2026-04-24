@@ -14,6 +14,7 @@
   "permissions": {
     "allow": [
       "mcp__native_tools__calculator",
+      "PowerShell",
       "WebFetch"
     ]
   },
@@ -40,7 +41,8 @@
     "command": "pwsh -NoProfile -File C:/Users/aloknigam/.claude/statusline-command.ps1"
   },
   "enabledPlugins": {
-    "pyright-lsp@claude-plugins-official": true
+    "pyright-lsp@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true
   },
   "effortLevel": "high",
   "autoMemoryEnabled": false,
