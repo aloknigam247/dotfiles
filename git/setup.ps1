@@ -4,5 +4,5 @@ $scoop_pkgs = @(
 
 $files = @{
     ".gitconfig" = "~\.gitconfig";
-    "catppuccin.gitconfig" = "~\catppuccin.gitconfig"
+    "catppuccin.gitconfig" = "~\.config\git\catppuccin.gitconfig"
 }

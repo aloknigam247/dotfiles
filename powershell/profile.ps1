@@ -941,3 +941,6 @@ $env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0
 
 # ─[ Claude Settings ]─────────────────────────────────────────────────
 $env:CLAUDE_CODE_SHELL = "pwsh"
+
+# ─[ User bin on PATH ]────────────────────────────────────────────────
+$env:PATH = "$env:PATH;$HOME\bin"
