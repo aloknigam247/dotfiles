@@ -84,6 +84,7 @@ set number                   " Enable line number
 set numberwidth=1            " Set minimum width of number line
 set pumblend=10              " pseudo-transparency effect for popup-menu
 set scrolloff=3              " Set vertical scroll offset
+set scrolloffpad=3           " Set vertical scroll pad offset
 set shortmess=FIWmno         " Short messages
 set sidescrolloff=3          " Set horizontal scroll offset
 set signcolumn=auto:9        " Set max size of signcolumn

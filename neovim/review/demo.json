@@ -1,0 +1,162 @@
+[
+  {
+    "author": "AI Reviewer",
+    "body": "These default highlight values are hardcoded to a Catppuccin-like palette. Users with a different colorscheme will see jarring colors. Consider deriving them from existing Diagnostic* groups or exposing a 'palette' setup option.",
+    "category": "Architecture",
+    "end_line": 30,
+    "file": "neovim/review/lua/review/init.lua",
+    "id": "demo-1",
+    "line": 27,
+    "provider": "file",
+    "severity": "medium",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:00:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "M.clear() iterates state.all() but the loop body is a no-op (assigns to a discarded local). This was probably meant to clear something specific but does nothing useful. Remove or fix.",
+    "category": "Bug",
+    "end_line": 119,
+    "file": "neovim/review/lua/review/init.lua",
+    "id": "demo-2",
+    "line": 117,
+    "provider": "file",
+    "severity": "high",
+    "status": "pending",
+    "thread": [
+      {
+        "author": "you",
+        "body": "Good catch. What should it iterate instead?",
+        "id": "demo-2-r1",
+        "timestamp": "2026-04-19T09:10:00Z"
+      },
+      {
+        "author": "AI Reviewer",
+        "body": "Probably just remove the for-loop entirely — diagnostics.clear(b) is already called by the next loop. The bookkeeping for buffers happens via state.reset().",
+        "id": "demo-2-r2",
+        "timestamp": "2026-04-19T09:11:00Z"
+      }
+    ],
+    "timestamp": "2026-04-19T09:05:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "The accept and reject keymap callbacks are nearly identical — only the target status string differs. Extract a helper to deduplicate.",
+    "category": "Style",
+    "end_line": 181,
+    "file": "neovim/review/lua/review/init.lua",
+    "id": "demo-3",
+    "line": 178,
+    "provider": "file",
+    "severity": "low",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:08:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "Nice clean state shape. Consider adding @class annotations for ReviewState fields so LuaLS picks them up.",
+    "category": "Documentation",
+    "end_line": 21,
+    "file": "neovim/review/lua/review/state.lua",
+    "id": "demo-4",
+    "line": 14,
+    "provider": "file",
+    "severity": "info",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:12:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "set_comments rebuilds by_file from scratch on every call. For large review sets that arrive incrementally (e.g., streaming AI), this is O(n²). Consider an upsert API.",
+    "category": "Performance",
+    "end_line": 56,
+    "file": "neovim/review/lua/review/state.lua",
+    "id": "demo-5",
+    "line": 43,
+    "provider": "file",
+    "severity": "medium",
+    "status": "rejected",
+    "thread": [
+      {
+        "author": "you",
+        "body": "We don't expect more than ~100 comments at once. Premature optimization.",
+        "id": "demo-5-r1",
+        "timestamp": "2026-04-19T09:20:00Z"
+      }
+    ],
+    "timestamp": "2026-04-19T09:15:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "If a comment has severity='critical' (not in the map), it falls through to nil and the diagnostic is set with severity=nil — undefined behavior. Add a default fallback to severity.INFO.",
+    "category": "Reliability",
+    "end_line": 23,
+    "file": "neovim/review/lua/review/diagnostics.lua",
+    "id": "demo-6",
+    "line": 18,
+    "provider": "file",
+    "severity": "high",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:18:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "render() clears bg namespace but vim.diagnostic.set replaces the diag namespace atomically. If render is called concurrently from two autocmds, bg can briefly mismatch diags. Wrap in vim.schedule() to defer.",
+    "category": "Bug",
+    "end_line": 99,
+    "file": "neovim/review/lua/review/diagnostics.lua",
+    "id": "demo-7",
+    "line": 88,
+    "provider": "file",
+    "severity": "medium",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:22:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "panel_geom() takes parent_win but never uses it. Remove the parameter.",
+    "category": "Style",
+    "end_line": 93,
+    "file": "neovim/review/lua/review/panel.lua",
+    "id": "demo-8",
+    "line": 88,
+    "provider": "file",
+    "severity": "info",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:25:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "submit_reply notifies on empty body but doesn't signal anything when the reply succeeds. Consider a brief 'reply posted' notification or a subtle visual cue.",
+    "category": "UX",
+    "end_line": 245,
+    "file": "neovim/review/lua/review/panel.lua",
+    "id": "demo-9",
+    "line": 233,
+    "provider": "file",
+    "severity": "low",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:28:00Z"
+  },
+  {
+    "author": "AI Reviewer",
+    "body": "load() rebuilds cache from raw on every call. If a reply was made between two load() calls and the file wasn't saved (e.g., write failure), the in-memory cache is silently overwritten. Document this behavior or detect.",
+    "category": "Reliability",
+    "end_line": 58,
+    "file": "neovim/review/lua/review/providers/file.lua",
+    "id": "demo-10",
+    "line": 50,
+    "provider": "file",
+    "severity": "medium",
+    "status": "pending",
+    "thread": [],
+    "timestamp": "2026-04-19T09:30:00Z"
+  }
+]

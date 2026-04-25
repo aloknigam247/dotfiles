@@ -4369,13 +4369,17 @@ addPlugin {
 	}
 }
 
--- FEAT: https://github.com/numEricL/WinBender.nvim
+-- FEAT: replacement for flirt issues, need configuration
+addPlugin {
+	"numEricL/WinBender.nvim"
+}
+
 addPlugin {
 	"tamton-aquib/flirt.nvim",
 	event = "WinNew",
 	opts = {
 		override_open = true,
-		default_move_mappings = false, -- BUG: try with ctrl-w mappings to avoid recursion
+		default_move_mappings = false,
 		default_resize_mappings = false,
 		default_mouse_mappings = true,
 		exclude_fts = { "wk" },
