@@ -1,3 +1,5 @@
+FEAT(claude statusline): follow neovim statusline ?
+FEAT(claude statusline): show git dirty status
 FEAT(claude): When I claude make change in files, with a keymap these diffs are open in neovim showing the file changes diffs
 FEAT(claude): When I edit prompt with neovim inside claude code / commands give same completion as claude code
 FEAT(claude): completions for claude command
