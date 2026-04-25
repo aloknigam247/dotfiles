@@ -359,11 +359,7 @@ function claude {
 function e {
     $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
     $arg_str = $quoted_args -join " "
-    if (Test-Path "C:\Users\aloknigam\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe") {
-        C:\Users\aloknigam\AppData\Local\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
-    } else {
-        wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
-    }
+    wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
 }
 
 function whatis($arg) {
