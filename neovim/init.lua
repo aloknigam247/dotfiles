@@ -276,7 +276,7 @@ local lazy_config = {
 		lazy = true, -- should plugins be lazy-loaded?
 	},
 	install = {
-		colorscheme = { "default" },
+		colorscheme = { "catppuccin" },
 	},
 	ui = {
 		icons = {
@@ -1622,6 +1622,10 @@ end
 
 addPlugin {
 	"saghen/blink.cmp",
+	enabled = false,  -- FIX: completion
+	build = function()
+		require('blink.cmp').build():wait(60000)
+	end,
 	config = function(_, cfg)
 		require("blink.cmp").setup(cfg)
 
@@ -1659,7 +1663,7 @@ addPlugin {
 		end
 		-- ╰──────────────────────────────────────────────────────────╯
 	end,
-	dependencies = { "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
+	dependencies = { "saghen/blink.lib", "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
 	---@type blink.cmp.Config
 	opts = {
