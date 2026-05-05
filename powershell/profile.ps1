@@ -277,6 +277,37 @@ New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -Er
 New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
 New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
 
+# ╭─────────────────╮
+# │ Utility Methods │
+# ╰─────────────────╯
+function _ParseRootArg {
+    param([object[]]$argv)
+    $root_dir = $PWD.Path
+    $filtered = @()
+    $skip = $false
+    for ($i = 0; $i -lt $argv.Count; $i++) {
+        if ($skip) { $skip = $false; continue }
+        if ($argv[$i] -eq "--root" -and $i + 1 -lt $argv.Count) {
+            $candidate = $argv[$i + 1]
+            if (Test-Path -Path $candidate -PathType Container) {
+                $root_dir = (Resolve-Path $candidate).Path
+            } else {
+                throw "Invalid directory: $candidate"
+            }
+            $skip = $true
+        } else {
+            $filtered += $argv[$i]
+        }
+    }
+    return @{ RootDir = $root_dir; Args = $filtered }
+}
+
+function _IsSecuredWorkspace {
+    param([string]$dir)
+    $workspaces = @("D:\apps", "D:\dotfiles", "D:\kuber")
+    return [bool]($workspaces | Where-Object { $dir.StartsWith($_) })
+}
+
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
@@ -295,6 +326,20 @@ function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S --hyperlink-format vsco
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 
+function ai {
+    git rev-parse --is-inside-work-tree 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        claude @args
+        return
+    }
+    $remote_url = git remote get-url origin 2>$null
+    if ($remote_url -and $remote_url -match "github\.com") {
+        claude @args
+    } else {
+        agency @args
+    }
+}
+
 function bat {
     param([string]$file)
     if ($file.ToLower().EndsWith('.md')) {
@@ -304,56 +349,76 @@ function bat {
     }
 }
 
-function claude {
-    # Parse --root <dir> option
-    $root_dir = $PWD.Path
-    $filtered_args = @()
-    $skip_next = $false
-    for ($i = 0; $i -lt $args.Count; $i++) {
-        if ($skip_next) {
-            $skip_next = $false
-            continue
-        }
-        if ($args[$i] -eq "--root" -and $i + 1 -lt $args.Count) {
-            $candidate = $args[$i + 1]
-            if (Test-Path -Path $candidate -PathType Container) {
-                $root_dir = (Resolve-Path $candidate).Path
-            } else {
-                Write-Error "Invalid directory: $candidate"
-                return
-            }
-            $skip_next = $true
-        } else {
-            $filtered_args += $args[$i]
-        }
+function agency {
+    try {
+        $parsed = _ParseRootArg $args
+    } catch {
+        Write-Error $_
+        return
     }
-
-    $env:_CLAUDE_ARGS = $filtered_args -join "`n"
+    $root_dir = $parsed.RootDir
+    $env:_AGENCY_ARGS = $parsed.Args -join "`n"
+    $env:_AGENCY_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
 
     $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
 
-    $workspaces = @("D:\apps", "D:\dotfiles", "D:\kuber")
-    if ($workspaces | Where-Object { $root_dir.StartsWith($_) }) {
-        wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
+    wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
+        if ($env:_AGENCY_SECURED -eq "1") {
             $sec_workspace = "D:\.claude"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
             $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
             $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
-            $argList = $env:_CLAUDE_ARGS -split "`n"
-            Remove-Item env:_CLAUDE_ARGS
-            claude.exe @argList
-            if ( $? -eq $False ) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
         }
-    } else {
-        wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
-            $argList = $env:_CLAUDE_ARGS -split "`n"
-            Remove-Item env:_CLAUDE_ARGS
-            claude.exe @argList
-            if ( $? -eq $False ) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
+        Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
+        $argList = $env:_AGENCY_ARGS -split "`n"
+        Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
+
+        try {
+            agency.exe @argList
+            if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
+        } catch [System.Management.Automation.CommandNotFoundException] {
+            Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
+            iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
+            agency.exe @argList
+            if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
         }
     }
-    Remove-Item env:_CLAUDE_ARGS
+
+    Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
+    Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
+}
+
+function claude {
+    try {
+        $parsed = _ParseRootArg $args
+    } catch {
+        Write-Error $_
+        return
+    }
+    $root_dir = $parsed.RootDir
+    $env:_CLAUDE_ARGS = $parsed.Args -join "`n"
+    $env:_CLAUDE_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
+
+    $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
+
+    wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
+        if ($env:_CLAUDE_SECURED -eq "1") {
+            $sec_workspace = "D:\.claude"
+            $env:CLAUDE_CONFIG_DIR = $sec_workspace
+            $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
+            $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
+            $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
+        }
+        Remove-Item env:_CLAUDE_SECURED -ErrorAction SilentlyContinue
+        $argList = $env:_CLAUDE_ARGS -split "`n"
+        Remove-Item env:_CLAUDE_ARGS -ErrorAction SilentlyContinue
+        claude.exe @argList
+        if ($? -eq $False) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
+    }
+
+    Remove-Item env:_CLAUDE_ARGS -ErrorAction SilentlyContinue
+    Remove-Item env:_CLAUDE_SECURED -ErrorAction SilentlyContinue
 }
 
 function e {

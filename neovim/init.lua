@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- BUG: gx not working on links
 -- Classes</>
 
 ---@class CmdOptions
@@ -4374,6 +4375,7 @@ addPlugin {
 }
 
 -- FEAT: replacement for flirt issues, need configuration
+-- BUG: error in WinBenderToggle
 addPlugin {
 	"numEricL/WinBender.nvim"
 }
