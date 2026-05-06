@@ -578,7 +578,6 @@ vim.api.nvim_create_autocmd(
 					-- print('DEBUGPRINT[2]: init.lua:571: vim.wo[vim.api.nvim_get_current_win()].wrap=' .. vim.inspect(vim.wo[vim.api.nvim_get_current_win()].wrap))
 					vim.wo[vim.api.nvim_get_current_win()].wrap = false
 					-- print('DEBUGPRINT[3]: init.lua:572: vim.wo[vim.api.nvim_get_current_win()].wrap=' .. vim.inspect(vim.wo[vim.api.nvim_get_current_win()].wrap))
-					-- FEAT: disable Overlength marker also
 					return true
 				end
 				return false
@@ -611,21 +610,6 @@ vim.api.nvim_create_autocmd(
 				return true
 			end
 		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
-	"Filetype", {
-		pattern = { "cpp", "lua", "markdown", "python" },
-		desc = "Overlength line marker",
-		callback = function()
-			if not isLargeFile()
-				and vim.bo.textwidth > 0
-				and vim.iter(vim.fn.getbufline(0, 1, 100)):all(function(line) return #line < 300 end)
-				then
-					vim.cmd("match Overlength /\\%" .. vim.bo.textwidth + 1 .. "v/")
-				end
-			end
 	}
 )
 
@@ -913,7 +897,7 @@ vim.api.nvim_create_user_command(
 						if not _CWD then
 							_CWD = vim.fn.getcwd()
 						end
-						vim.notify("Changing root to:" .. path)
+						vim.notify("Changing root to " .. path)
 						vim.cmd.cd(path)
 					end
 				end
@@ -1445,7 +1429,6 @@ local function applyColorscheme()
 	vim.cmd.colorscheme("catppuccin")
 
 	-- global override colorscheme
-	vim.api.nvim_set_hl(0, "Overlength", { bg = adaptiveBG(70, -70) })
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
 	vim.api.nvim_set_hl(0, "MatchParen", { bg = adaptiveBG(50, -50) })
 
@@ -4375,9 +4358,8 @@ addPlugin {
 }
 
 -- FEAT: replacement for flirt issues, need configuration
--- BUG: error in WinBenderToggle
 addPlugin {
-	"numEricL/WinBender.nvim"
+	"aloknigam247/WinBender.nvim"
 }
 
 addPlugin {
@@ -4412,7 +4394,7 @@ addPlugin {
 		vim.keymap.set("n", "<leader>f<M-Down>",  "<cmd>res +1<cr>",              { desc = "Resize down" })
 		vim.keymap.set("n", "<leader>f<M-Left>",  "<cmd>vert res -1<cr>",         { desc = "Resize left" })
 		vim.keymap.set("n", "<leader>f<M-Right>", "<cmd>vert res +1<cr>",         { desc = "Resize right" })
-		vim.keymap.set("n", "<C-w><M-Up>",    "<cmd>res -1<cr>",              { desc = "Resize up" })
+		vim.keymap.set("n", "<C-w><M-Up>",        "<cmd>res -1<cr>",              { desc = "Resize up" })
 	end
 }
 -- <~>
