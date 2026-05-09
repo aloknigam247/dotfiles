@@ -12,6 +12,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 * When running PowerShell from the Bash tool, `$` variables are stripped by bash. Always write a `.ps1` file first and invoke with `pwsh -NoProfile -ExecutionPolicy Bypass -File script.ps1` instead of inline `-Command` with `$` variables.
 * **Never predict or mentally compute math results.** Always use the `mcp__native_tools__calculator` tool for any calculation — arithmetic, unit conversions, percentages, etc. Trust the tool's output, not mental math.
 * Prefer `sed` over PowerShell string replacement for in-place file text replacements.
+* When inserting Nerd Font glyphs (or any private-use Unicode characters) into source files, prefer PowerShell unicode escapes (e.g., `` "`u{E0B6}" ``) over pasting literal glyphs. The Edit tool can fail to match strings containing private-use codepoints, so escapes make edits reliable.
 
 ## Code Style
 

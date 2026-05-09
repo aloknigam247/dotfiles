@@ -4357,9 +4357,53 @@ addPlugin {
 	}
 }
 
--- FEAT: replacement for flirt issues, need configuration
+-- FEAT: configuration
+-- FEAT: show key help when enabled and skip jumping over it
 addPlugin {
-	"aloknigam247/WinBender.nvim"
+	"aloknigam247/WinBender.nvim",
+	keys = {
+		{ "<leader>f", "<Plug>(winbender-toggle)", { desc = "Toggle Winbender" }}
+	},
+	opts = {
+		toggle_key = nil,
+		mouse_enabled = true,
+		keymaps = {
+			anchor_NE = "w",
+			anchor_NW = "q",
+			anchor_SE = "s",
+			anchor_SW = "a",
+			decrease_bottom = "<c-k>",
+			decrease_left   = "<c-l>",
+			decrease_right  = "<c-h>",
+			decrease_top    = "<c-j>",
+			dock_window  = "gd",
+			float_window = "gf",
+			focus_next_dock  = "n",
+			focus_next_float = "f",
+			focus_prev_dock  = "N",
+			focus_prev_float = "F",
+			increase_bottom = "J",
+			increase_left   = "H",
+			increase_right  = "L",
+			increase_top    = "K",
+			move_down  = "j",
+			move_left  = "h",
+			move_right = "l",
+			move_up    = "k",
+			reset_window = "u",
+			snap_down  = "gj",
+			snap_left  = "gh",
+			snap_right = "gl",
+			snap_up    = "gk",
+		},
+		quick_access_hl = "WarningMsg",
+		step_size = {
+			position_x = 5,
+			position_y = 3,
+			size_x     = 5,
+			size_y     = 3,
+		}
+	}
 }
 
 addPlugin {
@@ -4380,22 +4424,7 @@ addPlugin {
 			end
 			return false
 		end
-	},
-	keys = {
-		{ "<leader>f", function() require("which-key").show({ keys = "<leader>f", loop = true }) end, { desc = "Enable flirt controls" }}
-	},
-	config = function(_, cfg)
-		local f = require("flirt")
-		f.setup(cfg)
-		vim.keymap.set("n", "<leader>f<C-Down>",  function() f.move("down") end,  { desc = "Move down" })
-		vim.keymap.set("n", "<leader>f<C-Left>",  function() f.move("left") end,  { desc = "Move left" })
-		vim.keymap.set("n", "<leader>f<C-Right>", function() f.move("right") end, { desc = "Move right" })
-		vim.keymap.set("n", "<leader>f<C-Up>",    function() f.move("up") end,    { desc = "Move up" })
-		vim.keymap.set("n", "<leader>f<M-Down>",  "<cmd>res +1<cr>",              { desc = "Resize down" })
-		vim.keymap.set("n", "<leader>f<M-Left>",  "<cmd>vert res -1<cr>",         { desc = "Resize left" })
-		vim.keymap.set("n", "<leader>f<M-Right>", "<cmd>vert res +1<cr>",         { desc = "Resize right" })
-		vim.keymap.set("n", "<C-w><M-Up>",        "<cmd>res -1<cr>",              { desc = "Resize up" })
-	end
+	}
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
