@@ -40,10 +40,12 @@ $reset = "$e[0m"
 $bold  = "$e[1m"
 
 # Nerd Font icons
+$iBarE    = "░"
+$iBarF    = "▓"
 $iBolt    = ""
 $iBranch  = ""
-$iCapL    = "`u{E0B6}"
-$iCapR    = "`u{E0B4}"
+$iCapL    = ""
+$iCapR    = ""
 $iClock   = "󰥔"
 $iDirty   = ""
 $iDollar  = ""
@@ -161,7 +163,7 @@ if ($null -ne $j.context_window.used_percentage) {
     $pct = [int]$j.context_window.used_percentage
     $filled = [math]::Round($pct / 5)
     $empty = 20 - $filled
-    $bar = "`u{2593}" * $filled + "`u{2591}" * $empty
+    $bar = $iBarF * $filled + $iBarE * $empty
     $barColor = if ($pct -ge 80) { $c.red } elseif ($pct -ge 50) { $c.yellow } else { $c.violet }
     $top += Pill "$bar ${pct}%" $barColor
 }

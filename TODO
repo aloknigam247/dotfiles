@@ -1,6 +1,7 @@
 FEAT(claude): When I claude make change in files, with a keymap these diffs are open in neovim showing the file changes diffs
 FEAT(claude): When I edit prompt with neovim inside claude code / commands give same completion as claude code
 FEAT(claude): completions for claude command
+FEAT(claude): git pull or push indicator in statusline
 FEAT(code review): See review comments in neovim and accept, reject, comment on them
 FEAT(git): auto prune branch which got deleted in master/main
 FEAT(mcp): persistant terminal

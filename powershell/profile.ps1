@@ -432,7 +432,7 @@ function whatis($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic
+        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic  # make it a pill
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file

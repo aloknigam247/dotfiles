@@ -4357,8 +4357,31 @@ addPlugin {
 	}
 }
 
--- FEAT: configuration
--- FEAT: show key help when enabled and skip jumping over it
+-- FEAT: fix layout
+--        ^k
+--        
+--      ┌────┐
+-- ^h  │Move│ ^l
+--      └────┘
+--        
+--        ^j
+-- 
+-- q ┌      ┐ w
+--    Anchor
+-- a └      ┘ s
+-- 
+-- 
+--     k     K
+--     󰚶     
+--    ┌────────┐
+-- h 󰨃│        │󰨂 l
+--    │ Resize │
+-- H │        │ L
+--    └────────┘
+--     󰚷     
+--     j     J
+-- 
+-- FEAT: disable which-key when enabled
 addPlugin {
 	"aloknigam247/WinBender.nvim",
 	keys = {
@@ -4372,36 +4395,37 @@ addPlugin {
 			anchor_NW = "q",
 			anchor_SE = "s",
 			anchor_SW = "a",
-			decrease_bottom = "<c-k>",
-			decrease_left   = "<c-l>",
-			decrease_right  = "<c-h>",
-			decrease_top    = "<c-j>",
+			decrease_bottom = "k",
+			decrease_left   = "l",
+			decrease_right  = "h",
+			decrease_top    = "j",
 			dock_window  = "gd",
 			float_window = "gf",
-			focus_next_dock  = "n",
+			focus_next_dock  = "d",
 			focus_next_float = "f",
-			focus_prev_dock  = "N",
+			focus_prev_dock  = "D",
 			focus_prev_float = "F",
 			increase_bottom = "J",
 			increase_left   = "H",
 			increase_right  = "L",
 			increase_top    = "K",
-			move_down  = "j",
-			move_left  = "h",
-			move_right = "l",
-			move_up    = "k",
+			move_down  = "<C-j>",
+			move_left  = "<C-h>",
+			move_right = "<C-l>",
+			move_up    = "<C-k>",
 			reset_window = "u",
+			toggle_help = "g?",
 			snap_down  = "gj",
 			snap_left  = "gh",
 			snap_right = "gl",
 			snap_up    = "gk",
 		},
-		quick_access_hl = "WarningMsg",
+		quick_access_hl = "WarningMsg", -- FEAT: change color
 		step_size = {
-			position_x = 5,
-			position_y = 3,
-			size_x     = 5,
-			size_y     = 3,
+			position_x = 1,
+			position_y = 1,
+			size_x     = 1,
+			size_y     = 1,
 		}
 	}
 }
