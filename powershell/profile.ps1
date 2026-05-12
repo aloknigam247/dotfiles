@@ -371,7 +371,7 @@ function agency {
             $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
         }
         Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
-        $argList = $env:_AGENCY_ARGS -split "`n"
+        $argList = if ($env:_AGENCY_ARGS) { $env:_AGENCY_ARGS -split "`n" } else { @() }
         Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 
         try {
