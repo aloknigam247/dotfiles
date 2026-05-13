@@ -336,6 +336,7 @@ function ai {
     if ($remote_url -and $remote_url -match "github\.com") {
         claude @args
     } else {
+        Write-Host "ai-args: $args"
         agency @args
     }
 }
@@ -375,12 +376,13 @@ function agency {
         Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 
         try {
-            agency.exe @argList
+            Write-Host "agency-args: $argList"
+            agency.exe claude @argList
             if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
         } catch [System.Management.Automation.CommandNotFoundException] {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
             iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
-            agency.exe @argList
+            agency.exe claude @argList
             if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
         }
     }
