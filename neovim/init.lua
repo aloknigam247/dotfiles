@@ -4357,30 +4357,6 @@ addPlugin {
 	}
 }
 
--- FEAT: fix layout
---        ^k
---        
---      ┌────┐
--- ^h  │Move│ ^l
---      └────┘
---        
---        ^j
--- 
--- q ┌      ┐ w
---    Anchor
--- a └      ┘ s
--- 
--- 
---     k     K
---     󰚶     
---    ┌────────┐
--- h 󰨃│        │󰨂 l
---    │ Resize │
--- H │        │ L
---    └────────┘
---     󰚷     
---     j     J
--- 
 -- FEAT: disable which-key when enabled
 addPlugin {
 	"aloknigam247/WinBender.nvim",
@@ -4420,7 +4396,7 @@ addPlugin {
 			snap_right = "gl",
 			snap_up    = "gk",
 		},
-		quick_access_hl = "WarningMsg", -- FEAT: change color
+		quick_access_hl = "@text.note",
 		step_size = {
 			position_x = 1,
 			position_y = 1,
