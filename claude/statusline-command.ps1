@@ -70,6 +70,20 @@ function Pill([string]$text, [string]$hex) {
     return "${fg}${iCapL}${bg}${textFg}${bold}${text}${reset}${fg}${iCapR}${reset}"
 }
 
+# Visible cell width of a string: strip ANSI escapes, count grapheme clusters
+# (so supplementary-plane Nerd Font glyphs like 󰥔 count as 1, not 2 UTF-16 units).
+function VisibleLen([string]$s) {
+    $stripped = $s -replace "$e\[[0-9;]*m", ""
+    return [System.Globalization.StringInfo]::new($stripped).LengthInTextElements
+}
+
+function RowWidth([object[]]$arr) {
+    if ($null -eq $arr -or $arr.Count -eq 0) { return 0 }
+    $sum = 0
+    foreach ($p in $arr) { $sum += VisibleLen $p }
+    return $sum + ($arr.Count - 1)  # +1 cell per " " separator between pills
+}
+
 # ── Two rows: top (identity + key metrics), bottom (stats) ──
 
 $top = @()
@@ -156,16 +170,23 @@ if ($null -ne $j.cost.total_cost_usd) {
 }
 
 if ($j.session_id) {
-    $bottom += Pill "$iSession $($j.session_id)" $c.gray
+    $top += Pill "$iSession $($j.session_id)" $c.gray
 }
 
 if ($null -ne $j.context_window.used_percentage) {
     $pct = [int]$j.context_window.used_percentage
-    $filled = [math]::Round($pct / 5)
-    $empty = 20 - $filled
+    # Bar pill content: "{bar} {pct,3}%". Chrome (caps + " " + 3-char pct + "%") = 7 cells.
+    # Length picked so the bar pill ends flush with the top row's right edge,
+    # min 10 cells so it stays useful even when bottom is already wider than top.
+    $topW = RowWidth $top
+    $bottomW = RowWidth $bottom
+    $sepBefore = if ($bottom.Count -gt 0) { 1 } else { 0 }
+    $barLen = [math]::Max(10, $topW - $bottomW - $sepBefore - 7)
+    $filled = [math]::Round($barLen * $pct / 100)
+    $empty = $barLen - $filled
     $bar = $iBarF * $filled + $iBarE * $empty
     $barColor = if ($pct -ge 80) { $c.red } elseif ($pct -ge 50) { $c.yellow } else { $c.violet }
-    $top += Pill "$bar ${pct}%" $barColor
+    $bottom += Pill ("$bar " + ("{0,3}" -f $pct) + "%") $barColor
 }
 
 # ── Output ──

@@ -4357,7 +4357,6 @@ addPlugin {
 	}
 }
 
--- FEAT: disable which-key when enabled
 addPlugin {
 	"aloknigam247/WinBender.nvim",
 	keys = {
@@ -4366,6 +4365,44 @@ addPlugin {
 	opts = {
 		toggle_key = nil,
 		mouse_enabled = true,
+		on_enable = function()
+			local buf = vim.api.nvim_create_buf(false, true)
+			local w = 0
+			local lines = vim.split([[
+                             k      K                                    
+        <C-k>                󰚶                                   gk     
+                           ┌────────┐                                   
+        ┌────┐           h 󰨃│        │󰨂 l    q ┌      ┐ w        ────    
+<C-h>  │Move│ <C-l>       │ Resize │          Anchor       gh │Snap│ gl
+        └────┘           H │        │ L    a └      ┘ s        ────    
+                           └────────┘                                   
+        <C-j>                󰚷                                   gj     
+                             j      J                                    
+			]], "\n", { trimempty = true })
+
+			if WinBenderHelpWin and vim.api.nvim_win_is_valid(WinBenderHelpWin) then return end
+			vim.bo[buf].bufhidden = "wipe"
+			vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+			for _, l in ipairs(lines) do w = math.max(w, vim.fn.strdisplaywidth(l)) end
+
+			WinBenderHelpWin = vim.api.nvim_open_win(buf, false, {
+				relative = "editor", anchor = "SW",
+				row = vim.o.lines - vim.o.cmdheight - 1,
+				col = math.floor((vim.o.columns - w) / 2),
+				width = w, height = #lines,
+				style = "minimal", border = "rounded",
+				focusable = false, zindex = 200,
+			})
+
+			vim.keymap.set("n", "g?", winbender_help.toggle, { desc = "WinBender: toggle help" })
+		end,
+		on_disable = function()
+			if WinBenderHelpWin and vim.api.nvim_win_is_valid(WinBenderHelpWin) then
+				vim.api.nvim_win_close(WinBenderHelpWin, true)
+				WinBenderHelpWin = nil
+			end
+			vim.keymap.del("n", "g?")
+		end,
 		keymaps = {
 			anchor_NE = "w",
 			anchor_NW = "q",
@@ -4390,7 +4427,6 @@ addPlugin {
 			move_right = "<C-l>",
 			move_up    = "<C-k>",
 			reset_window = "u",
-			toggle_help = "g?",
 			snap_down  = "gj",
 			snap_left  = "gh",
 			snap_right = "gl",
