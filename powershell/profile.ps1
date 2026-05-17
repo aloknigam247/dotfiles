@@ -1,3 +1,4 @@
+# REFACTOR: make methods and variable private/script where needed
 # ─[ Don't load for non interactive session ]─────────────────────────────
 function IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
@@ -304,7 +305,7 @@ function _ParseRootArg {
 
 function _IsSecuredWorkspace {
     param([string]$dir)
-    $workspaces = @("D:\apps", "D:\dotfiles", "D:\kuber")
+    $workspaces = @("D:\apps", "D:\dotfiles", "D:\kuber", "D:\qvim")
     return [bool]($workspaces | Where-Object { $dir.StartsWith($_) })
 }
 
@@ -389,6 +390,7 @@ function agency {
     Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
 }
 
+# FEAT: copilot wrapper
 function claude {
     try {
         $parsed = _ParseRootArg $args
