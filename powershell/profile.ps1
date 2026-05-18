@@ -429,7 +429,11 @@ function claude {
 function e {
     $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
     $arg_str = $quoted_args -join " "
-    wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    if (Test-Path "D:\qvim\build\dev\Debug\qvim.exe") {
+        D:\qvim\build\dev\Debug\qvim.exe $arg_str
+    } else {
+        wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    }
 }
 
 function whatis($arg) {
