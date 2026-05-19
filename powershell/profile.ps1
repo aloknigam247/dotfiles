@@ -532,7 +532,7 @@ function Get-TODO {
             $tag_map = @{}
             $total = 0
             foreach ($tag in $tag_list) {
-                $count = (rg "${tag}(\([^)]*\))?:" -cwI | Measure-Object -Sum).Sum
+                $count = (rg "${tag}(\([^)]*\))?:" -L -cwI | Measure-Object -Sum).Sum
                 if ($count -gt 0) {
                     $total += $count
                     $tag_map[$tag] = $count
