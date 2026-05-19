@@ -1,6 +1,5 @@
-# REFACTOR: make methods and variable private/script where needed
 # ─[ Don't load for non interactive session ]─────────────────────────────
-function IsShellInteractive {
+function _IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
     if ($options.Length -gt 0) {
         $option_string = $options -join " "
@@ -18,7 +17,7 @@ function IsShellInteractive {
     }
     return $true
 }
-if ($(IsShellInteractive) -eq $false) {
+if ($(_IsShellInteractive) -eq $false) {
     return
 }
 
@@ -90,13 +89,11 @@ if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
     $current_theme = "Catppuccin Latte"
     $catppuccin = $catppuccin_latte
-    $color_palette = $light_palette
     $lazygit_theme = "light.yml"
 } else {
     $env:THEME = "dark"
     $current_theme = "Catppuccin Mocha"
     $catppuccin = $catppuccin_mocha
-    $color_palette = $dark_palette
     $lazygit_theme = "dark.yml"
 }
 
@@ -359,6 +356,7 @@ function agency {
     }
     $root_dir = $parsed.RootDir
     $env:_AGENCY_ARGS = $parsed.Args -join "`n"
+    # FEAT: support --root option like claude
     $env:_AGENCY_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
 
     $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
@@ -441,7 +439,7 @@ function whatis($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic  # make it a pill
+        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic  # FEAT: make it a pill
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
@@ -768,7 +766,7 @@ function Get-GitStatus {
     return [PSCustomObject]$result
 }
 
-function populatePrompt {
+function _populatePrompt {
     # Initial executions
     $script:dir_icon = $icons.windows
     $script:git_branch = ""
@@ -852,7 +850,7 @@ function populatePrompt {
     }
 }
 
-function promptGen($separator, $segments) {
+function _promptGen($separator, $segments) {
     # Prompt rendering
     $i = 0
     $out = ""
@@ -906,7 +904,7 @@ function promptGen($separator, $segments) {
 
 function prompt {
     # Populate $script values
-    populatePrompt
+    _populatePrompt
 
     $separator = @{
         text = $icons.sep_right
@@ -958,7 +956,7 @@ function prompt {
         }
     )
 
-    promptGen $separator $segments
+    _promptGen $separator $segments
 }
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors

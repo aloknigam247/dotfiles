@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- BUG: gx not working on links
 -- Classes</>
 
 ---@class CmdOptions
@@ -3667,6 +3666,7 @@ addPlugin {
 }
 
 -- FEAT: hide statusline for full immersive view
+-- FEAT: NVChad statusline
 addPlugin {
 	"nvim-lualine/lualine.nvim",
 	config = function()
