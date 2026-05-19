@@ -522,11 +522,11 @@ function Get-TODO {
         if ($type -eq "All") {
             # Get list of all
             $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:"  --trim --sort path -nw --color=always
+            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always
         } elseif ($type -eq "Random") {
             # Get random tag
             $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:"  --trim --sort path -nw --color=always | Get-Random -Count 3
+            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always | Get-Random -Count 3
         } elseif ($type -eq "Stats") {
             # Generate count per tag
             $tag_map = @{}
