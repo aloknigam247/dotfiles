@@ -63,6 +63,7 @@
     ignore = update-index --skip-worktree
     unignore = update-index --no-skip-worktree
     ignored = !git ls-files -v | grep \"^S\"
+	prune-local = "!pwsh -NoProfile -Command 'git fetch --prune; $c = git branch --show-current; git for-each-ref --format=\"%(refname:short)=%(upstream:short)\" refs/heads/ | ForEach-Object { $b,$u = $_ -split \"=\"; if ($b -eq $c) { return }; if ($u) { git show-ref --verify --quiet \"refs/remotes/$u\"; if ($?) { return } }; git branch -D $b }'"
 [credential "azrepos:org/onedrive"]
 	username = aloknigam@microsoft.com
 	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
