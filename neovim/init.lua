@@ -1451,8 +1451,6 @@ addPlugin {
 		require(plugin.main).setup(cfg)
 		applyColorscheme()
 	end,
-	-- FEAT: dark mode: change green
-	-- FEAT: dark mode: change yellow
 	opts = {
 		auto_integrations = true,
 		background = {
