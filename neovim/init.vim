@@ -84,7 +84,7 @@ set number                   " Enable line number
 set numberwidth=1            " Set minimum width of number line
 set pumblend=10              " pseudo-transparency effect for popup-menu
 set scrolloff=3              " Set vertical scroll offset
-set scrolloffpad=3           " Set vertical scroll pad offset
+set scrolloffpad=0           " Set vertical scroll pad offset
 set shortmess=FIWmno         " Short messages
 set sidescrolloff=3          " Set horizontal scroll offset
 set signcolumn=auto:9        " Set max size of signcolumn
@@ -108,35 +108,10 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-if exists("g:neovide") || exists("g:qvim")
-    set linespace=-3
-    let g:neovide_cursor_animate_command_line = v:false
-    let g:neovide_cursor_animation_length = 0.04
-    let g:neovide_cursor_smooth_blink = v:true
-    let g:neovide_cursor_trail_size = 1.0
-    let g:neovide_cursor_vfx_mode = "pixiedust"
-    let g:neovide_cursor_vfx_particle_density = 15.0
-    let g:neovide_cursor_vfx_particle_lifetime = 5
-    let g:neovide_floating_blur_amount_x = 3
-    let g:neovide_floating_blur_amount_y = 3
-    let g:neovide_floating_corner_radius = 0.4
-    let g:neovide_floating_shadow = v:false
-    let g:neovide_fullscreen = v:false
-    let g:neovide_hide_mouse_when_typing = v:false
-    let g:neovide_padding_left = 3
-    let g:neovide_refresh_rate = 120
-    let g:neovide_remember_window_size = v:false
-    let g:neovide_scroll_animation_length = 0.3
-    let g:neovide_underline_automatic_scaling = v:true
-    let g:neovide_underline_stroke_scale = 1.7
-    let g:neovide_window_blurred = v:true
-    map <F11> <cmd>execute "let g:neovide_fullscreen = xor(g:neovide_fullscreen, v:true)"<CR>
-
+if exists("g:qvim")
     let g:Font_name = 'JetBrainsMono NF'
-    let g:Font_size = 15
+    let g:Font_size = 14
     let &guifont = g:Font_name . ':h' . g:Font_size
-    map <C-ScrollWheelDown> :let g:neovide_scale_factor -= 0.05<CR>
-    map <C-ScrollWheelUp> :let g:neovide_scale_factor += 0.05<CR>
 endif
 " }}}
 

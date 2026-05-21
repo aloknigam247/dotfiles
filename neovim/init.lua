@@ -617,7 +617,7 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Highlight text on yank",
 		callback = function()
-			vim.hl.on_yank({ higroup="Search", timeout=500 })
+			vim.hl.on_yank({ higroup="Search", timeout=500 }) -- FIX: deprecated
 		end
 	}
 )
@@ -5182,6 +5182,6 @@ addPlugin {
 	}
 }
 
-require("lazy").setup(plugins, {})
+require("lazy").setup(plugins, lazy_config)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
