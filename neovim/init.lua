@@ -3268,6 +3268,13 @@ addPlugin {
 }
 
 addPlugin {
+	"aloknigam247/mdview",
+	cmd = { "MdView" },
+	ft = { "markdown" },
+	opts = { debounce_ms = 100 },
+}
+
+addPlugin {
 	"bngarren/checkmate.nvim",
 	ft = "markdown",
 	opts = {
