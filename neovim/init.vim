@@ -108,7 +108,7 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
-if exists("g:neovide")
+if exists("g:neovide") || exists("g:qvim")
     set linespace=-3
     let g:neovide_cursor_animate_command_line = v:false
     let g:neovide_cursor_animation_length = 0.04

@@ -5182,6 +5182,6 @@ addPlugin {
 	}
 }
 
-require("lazy").setup(plugins, lazy_config)
+-- require("lazy").setup(plugins, lazy_config)
 -- <~>
 -- vim: fmr=</>,<~> fdm=marker textwidth=120 noexpandtab tabstop=2 shiftwidth=2
