@@ -3267,12 +3267,13 @@ addPlugin {
 	ft = "help"
 }
 
-addPlugin {
-	"aloknigam247/mdview",
-	cmd = { "MdView" },
-	ft = { "markdown" },
-	opts = { debounce_ms = 100 },
-}
+-- FIX: error
+-- addPlugin {
+-- 	"aloknigam247/mdview",
+-- 	cmd = { "MdView" },
+-- 	ft = { "markdown" },
+-- 	opts = { debounce_ms = 100 },
+-- }
 
 addPlugin {
 	"bngarren/checkmate.nvim",

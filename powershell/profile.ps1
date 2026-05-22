@@ -428,7 +428,11 @@ function e {
     $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
     $arg_str = $quoted_args -join " "
     if (Test-Path "D:\qvim\build\dev\Debug\qvim.exe") {
-        D:\qvim\build\dev\Debug\qvim.exe $arg_str
+        if ($args.Count -eq 0) {
+            D:\qvim\build\dev\Debug\qvim.exe
+        } else {
+            D:\qvim\build\dev\Debug\qvim.exe $arg_str
+        }
     } else {
         wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
     }
@@ -972,7 +976,7 @@ Set-PSReadLineOption -Colors @{
     "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
     "Operator" = (Format-Text -headOnly -fg $palette.cmdline.operator);
     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
-    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
+    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);  # FIX: better selection color
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
     "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
