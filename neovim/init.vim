@@ -109,9 +109,8 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 if exists("g:qvim")
-    let g:Font_name = 'JetBrainsMono NF'
-    let g:Font_size = 14
-    let &guifont = g:Font_name . ':h' . g:Font_size
+    let &guifont = "JetBrainsMono Nerd Font:h15"
+    let g:qvim_rounded_highlights = ["Visual"]
 endif
 " }}}
 
