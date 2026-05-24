@@ -173,23 +173,21 @@ if ($j.session_id) {
     $top += Pill "$iSession $($j.session_id)" $c.gray
 }
 
-if ($null -ne $j.context_window.used_percentage) {
-    $pct = [int]$j.context_window.used_percentage
-    # Bar pill content: "{bar} {pct}%". Chrome = caps(2) + " "(1) + pct digits + "%"(1).
-    # Length picked so the bar pill ends flush with the top row's right edge,
-    # min 10 cells so it stays useful even when bottom is already wider than top.
-    $pctStr = "$pct"
-    $chrome = 4 + $pctStr.Length
-    $topW = RowWidth $top
-    $bottomW = RowWidth $bottom
-    $sepBefore = if ($bottom.Count -gt 0) { 1 } else { 0 }
-    $barLen = [math]::Max(10, $topW - $bottomW - $sepBefore - $chrome)
-    $filled = [math]::Round($barLen * $pct / 100)
-    $empty = $barLen - $filled
-    $bar = $iBarF * $filled + $iBarE * $empty
-    $barColor = if ($pct -ge 80) { $c.red } elseif ($pct -ge 50) { $c.yellow } else { $c.violet }
-    $bottom += Pill "$pctStr% $bar" $barColor
-}
+$pct = if ($null -ne $j.context_window.used_percentage) { [int]$j.context_window.used_percentage } else { 0 }
+# Bar pill content: "{bar} {pct}%". Chrome = caps(2) + " "(1) + pct digits + "%"(1).
+# Length picked so the bar pill ends flush with the top row's right edge,
+# min 10 cells so it stays useful even when bottom is already wider than top.
+$pctStr = "$pct"
+$chrome = 4 + $pctStr.Length
+$topW = RowWidth $top
+$bottomW = RowWidth $bottom
+$sepBefore = if ($bottom.Count -gt 0) { 1 } else { 0 }
+$barLen = [math]::Max(10, $topW - $bottomW - $sepBefore - $chrome)
+$filled = [math]::Round($barLen * $pct / 100)
+$empty = $barLen - $filled
+$bar = $iBarF * $filled + $iBarE * $empty
+$barColor = if ($pct -ge 80) { $c.red } elseif ($pct -ge 50) { $c.yellow } else { $c.violet }
+$bottom += Pill "$pctStr% $bar" $barColor
 
 # ── Output ──
 $output = ($top -join " ")
