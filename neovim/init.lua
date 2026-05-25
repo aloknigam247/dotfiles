@@ -1467,7 +1467,6 @@ addPlugin {
 			all = function(palette)
 				return {
 					-- FEAT: SnippetTabStop and SnippetTabStopActive colors
-					-- FEAT: Colorcolumn
 					-- FIX: Numberline
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
@@ -3268,12 +3267,12 @@ addPlugin {
 }
 
 -- FIX: error
--- addPlugin {
--- 	"aloknigam247/mdview",
--- 	cmd = { "MdView" },
--- 	ft = { "markdown" },
--- 	opts = { debounce_ms = 100 },
--- }
+addPlugin {
+	"aloknigam247/mdview",
+	cmd = { "MdView" },
+	ft = { "markdown" },
+	opts = { debounce_ms = 100 },
+}
 
 addPlugin {
 	"bngarren/checkmate.nvim",
