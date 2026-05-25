@@ -40,7 +40,8 @@
     "allow": [
       "mcp__native_tools__calculator",
       "PowerShell",
-      "WebFetch"
+      "WebFetch",
+      "WebSearch"
     ]
   },
   "skipDangerousModePermissionPrompt": true,
