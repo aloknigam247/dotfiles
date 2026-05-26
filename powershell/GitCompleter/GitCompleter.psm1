@@ -107,7 +107,10 @@ function Get-GitConfigKey {
 }
 
 function Get-GitCommandContext {
-    param($CommandAst)
+    param(
+        $CommandAst,
+        [string] $WordToComplete = ""
+    )
     $elements = @($CommandAst.CommandElements)
     $valueConsuming = @("-C", "-c")
     $i = 1
@@ -120,7 +123,7 @@ function Get-GitCommandContext {
             continue
         }
         if ($token -match "^--(git-dir|work-tree|namespace|exec-path)(=.*)?$") {
-            if (-not $token.Contains("=")) { $i += 2 } else { $i += 1 }
+            if ($token.Contains("=")) { $i += 1 } else { $i += 2 }
             continue
         }
         if ($token.StartsWith("-") -and $null -eq $subcommand) {
@@ -129,25 +132,21 @@ function Get-GitCommandContext {
         }
         if ($null -eq $subcommand) {
             $subcommand = $token
-        } else {
-            if (-not $token.StartsWith("-")) {
-                $remainingArgs += $token
-            }
+        } elseif (-not $token.StartsWith("-")) {
+            $remainingArgs += $token
         }
         $i += 1
     }
-    # Drop the in-progress token (cursor sits on it); the completer filters with $wordToComplete
-    if ($remainingArgs.Count -gt 0) {
-        $last = $remainingArgs[-1]
-        $cursorElement = $elements[-1].Extent.Text
-        if ($last -eq $cursorElement) {
-            $remainingArgs = $remainingArgs[0..($remainingArgs.Count - 2)]
-            if ($null -eq $remainingArgs) { $remainingArgs = @() }
-        }
-    } elseif ($null -ne $subcommand) {
-        $cursorElement = $elements[-1].Extent.Text
-        if ($subcommand -eq $cursorElement -and -not $cursorElement.StartsWith("-")) {
-            # Cursor still on the subcommand token itself
+    # If the cursor is mid-token, $WordToComplete is non-empty and matches the trailing positional.
+    # Drop it so $remainingArgs only contains already-completed positionals.
+    if ($WordToComplete) {
+        if ($remainingArgs.Count -gt 0 -and $remainingArgs[-1] -eq $WordToComplete) {
+            if ($remainingArgs.Count -eq 1) {
+                $remainingArgs = @()
+            } else {
+                $remainingArgs = $remainingArgs[0..($remainingArgs.Count - 2)]
+            }
+        } elseif ($null -ne $subcommand -and $remainingArgs.Count -eq 0 -and $subcommand -eq $WordToComplete) {
             $subcommand = $null
         }
     }
@@ -173,7 +172,7 @@ function Register-GitCompleter {
 
     $nativeBlock = {
         param($wordToComplete, $commandAst, $cursorPosition)
-        $ctx = Get-GitCommandContext $commandAst
+        $ctx = Get-GitCommandContext -CommandAst $commandAst -WordToComplete $wordToComplete
         $sub = $ctx.Subcommand
         $positional = $ctx.Args
         $results = @()
@@ -225,13 +224,14 @@ function Register-GitCompleter {
 }
 
 Export-ModuleMember -Function `
+    Get-GitCommandContext,
+    Get-GitConfigKey,
     Get-GitLocalBranch,
-    Get-GitRemoteBranch,
-    Get-GitTag,
     Get-GitRemote,
+    Get-GitRemoteBranch,
     Get-GitStash,
     Get-GitSubcommand,
     Get-GitSubcommandFlag,
+    Get-GitTag,
     Get-GitWorkingFile,
-    Get-GitConfigKey,
     Register-GitCompleter

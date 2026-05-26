@@ -518,6 +518,7 @@ function gl {
     git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
 }
 
+# FEAT: should show untracked files as well, similar output which is used dirty icon
 function gs {
     git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args
 }
@@ -683,6 +684,10 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     }
 }
 
+# ─[ git tab completion ]──────────────────────────────────────────────
+Import-Module GitCompleter -ErrorAction SilentlyContinue
+Register-GitCompleter
+
 # ─[ winget tab completion ]───────────────────────────────────────────
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -693,11 +698,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
             [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
         }
 }
-
-# ─[ git tab completion ]──────────────────────────────────────────────
-Import-Module GitCompleter -ErrorAction SilentlyContinue
-Register-GitCompleter
-
 
 # ╭───────────╮
 # │ FZF Setup │
