@@ -22,6 +22,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 
 * When adding or editing items in ordered lists, enums, switch cases, XML elements, dictionary entries, or similar sequences where order doesn't affect behavior, maintain **alphabetical order**. This applies to any collection where reordering has no semantic impact (e.g., using directives, property declarations, configuration entries).
 * When adding new fields/properties to an existing file, **do not reorder existing fields** — keep them in their original order. Only add new fields in alphabetical order (as a block or interspersed), without moving pre-existing entries. This keeps diffs minimal and focused on the actual change.
+* **Do not use `<c>` or `<code>` tags in C# XML doc comments.** Reference identifiers, literals (`null`, `true`, `false`), and method names as plain text — no inline-code markup. (Use `<see cref="..."/>` only when an actual cross-reference is needed.)
 
 ## Git
 

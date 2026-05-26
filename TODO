@@ -8,5 +8,5 @@ FEAT(mcp): persistant terminal
 FEAT(native tools): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
 FEAT(powershell): change tab tittle on path change or executable running
 FEAT(security): Scan all installations for security related
-REFACTOR: configure copilot
+REFACTOR: configure copilot: list all things to move
 REFACTOR: refactor D: drive
