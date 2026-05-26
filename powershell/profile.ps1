@@ -439,7 +439,7 @@ function copilot {
         Remove-Item env:_COPILOT_SECURED -ErrorAction SilentlyContinue
         $argList = $env:_COPILOT_ARGS -split "`n"
         Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
-        claude.exe @argList
+        copilot.exe @argList
         if ($? -eq $False) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
     }
 
