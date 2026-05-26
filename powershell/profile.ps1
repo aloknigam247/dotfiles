@@ -320,7 +320,7 @@ function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $ar
 function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
 function nvim { C:\Users\aloknigam\scoop\shims\nvim.exe $args; Write-Host -NoNewline "`e[0 q" }
 function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
-function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -S --hyperlink-format vscode $args }
+function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -LS --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 
