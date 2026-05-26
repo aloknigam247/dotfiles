@@ -437,10 +437,13 @@ function copilot {
             $env:COPILOT_HOME = $sec_workspace
         }
         Remove-Item env:_COPILOT_SECURED -ErrorAction SilentlyContinue
-        $argList = $env:_COPILOT_ARGS -split "`n"
+        $argList = @()
+        if ($env:_COPILOT_ARGS) {
+            $argList = [string[]]($env:_COPILOT_ARGS -split "`n")
+        }
         Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
         copilot.exe @argList
-        if ($? -eq $False) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
+        if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
     }
 
     Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
