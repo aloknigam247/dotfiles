@@ -11,6 +11,7 @@ $winget_pkgs = @(
 )
 
 $files = @{
+    "GitCompleter" = "$(Split-Path $(pwsh -Command 'echo $PROFILE.AllUsersAllHosts'))\Modules\GitCompleter"
     "profile5.ps1" = $(powershell '$PROFILE') # powershell 5
     "profile.ps1"  = $(pwsh -Command 'echo $PROFILE.AllUsersAllHosts') # powershell 7
 }

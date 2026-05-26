@@ -492,13 +492,19 @@ function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Wor
 # ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
 function gc {
-    git checkout $args
+    param(
+        [Parameter(Position = 0)]
+        [string] $Branch,
+        [Parameter(ValueFromRemainingArguments = $true)]
+        [string[]] $Rest
+    )
+    git checkout $Branch @Rest
     $stash = git stash list
-    if ( $null -ne $stash ) {
-        if ( $stash.Gettype() -eq [String] ) {
+    if ($null -ne $stash) {
+        if ($stash.GetType() -eq [String]) {
             Format-Text -bg "#F97068" -fg "#FFFFFF" $stash
-        } elseif ( $stash.Gettype() -eq [Object[]] ) {
-            foreach ( $st in $stash ) {
+        } elseif ($stash.GetType() -eq [Object[]]) {
+            foreach ($st in $stash) {
                 Format-Text -bg "#F97068" -fg "#FFFFFF" $st
             }
         } else {
@@ -517,14 +523,17 @@ function gs {
 }
 
 function gwa {
-    $branch_exists = git rev-parse --verify $args
-
-    if ($branch_exists){
-        git worktree add ..\$args
-        Set-Location ..\$args
+    param(
+        [Parameter(Position = 0, Mandatory = $true)]
+        [string] $Branch
+    )
+    $branch_exists = git rev-parse --verify $Branch 2>$null
+    if ($branch_exists) {
+        git worktree add ..\$Branch
+        Set-Location ..\$Branch
     } else {
-        git worktree add ..\$args -b $args
-        Set-Location ..\$args
+        git worktree add ..\$Branch -b $Branch
+        Set-Location ..\$Branch
     }
 }
 
@@ -684,6 +693,10 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
             [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
         }
 }
+
+# ─[ git tab completion ]──────────────────────────────────────────────
+Import-Module GitCompleter -ErrorAction SilentlyContinue
+Register-GitCompleter
 
 
 # ╭───────────╮
