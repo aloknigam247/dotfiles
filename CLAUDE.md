@@ -18,3 +18,16 @@
 2. Add `$<name>_pkgs = @()` to the variable init block (around line 370+)
 3. Wire `<name>Install -update $<name>_pkgs` into the update branch
 4. Wire `<name>Install $<name>_pkgs` into the install branch
+
+## Adding a PowerShell Module Package
+
+To ship a `.psm1` from the repo so it loads via `Import-Module <Name>`:
+
+1. Create `<package>/<ModuleName>/<ModuleName>.psm1` (PowerShell auto-discovers a single `.psm1` under a directory of the same name on `$env:PSModulePath` — no `.psd1` manifest needed).
+2. In the package's `setup.ps1`, add to `$files`:
+   ```powershell
+   "<ModuleName>" = "$(Split-Path $(pwsh -Command 'echo $PROFILE.AllUsersAllHosts'))\Modules\<ModuleName>"
+   ```
+   `linkConfigs` symlinks the directory to `C:\Program Files\PowerShell\7\Modules\<ModuleName>`, which is on the default `$env:PSModulePath`.
+3. In `powershell/profile.ps1`, add `Import-Module <ModuleName>` plus any registration calls.
+4. Every helper function referenced by a script block passed to `Register-ArgumentCompleter` must be in `Export-ModuleMember` — module-private functions are not visible to those blocks even when defined inside the module.

@@ -684,10 +684,6 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     }
 }
 
-# ─[ git tab completion ]──────────────────────────────────────────────
-Import-Module GitCompleter -ErrorAction SilentlyContinue
-Register-GitCompleter
-
 # ─[ winget tab completion ]───────────────────────────────────────────
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -712,6 +708,12 @@ Set-PsFzfOption `
     -PSReadlineChordReverseHistoryArgs "Alt+a"
 Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PsFzfOption -TabExpansion
+
+# ─[ git tab completion ]──────────────────────────────────────────────
+# Must register after PSFzf — PSFzf registers its own broken `git` completer
+# (depends on posh-git's Expand-GitCommand). Re-registering here wins.
+Import-Module GitCompleter -ErrorAction SilentlyContinue
+Register-GitCompleter
 
 # https://vitormv.github.io/fzf-themes
 $env:FZF_DEFAULT_OPTS = ""
