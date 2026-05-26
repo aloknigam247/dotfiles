@@ -356,18 +356,16 @@ function agency {
     }
     $root_dir = $parsed.RootDir
     $env:_AGENCY_ARGS = $parsed.Args -join "`n"
-    # FEAT: support --root option like claude
     $env:_AGENCY_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
 
-    $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
-
-    wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
+    wt -f -d $root_dir pwsh -c {
         if ($env:_AGENCY_SECURED -eq "1") {
             $sec_workspace = "D:\.claude"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
             $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
             $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
             $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
+            $env:COPILOT_HOME = $sec_workspace
         }
         Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
         $argList = @()
@@ -377,12 +375,12 @@ function agency {
         Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 
         try {
-            agency.exe claude @argList
+            agency.exe copilot @argList
             if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
         } catch [System.Management.Automation.CommandNotFoundException] {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
             iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
-            agency.exe claude @argList
+            agency.exe copilot @argList
             if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
         }
     }
@@ -403,9 +401,7 @@ function claude {
     $env:_CLAUDE_ARGS = $parsed.Args -join "`n"
     $env:_CLAUDE_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
 
-    $color_scheme = if ($env:THEME -eq "dark") { "Solarized Dark" } else { "Solarized Light" }
-
-    wt -f -d $root_dir --colorScheme "$color_scheme" pwsh -c {
+    wt -f -d $root_dir pwsh -c {
         if ($env:_CLAUDE_SECURED -eq "1") {
             $sec_workspace = "D:\.claude"
             $env:CLAUDE_CONFIG_DIR = $sec_workspace
@@ -422,6 +418,33 @@ function claude {
 
     Remove-Item env:_CLAUDE_ARGS -ErrorAction SilentlyContinue
     Remove-Item env:_CLAUDE_SECURED -ErrorAction SilentlyContinue
+}
+
+function copilot {
+    try {
+        $parsed = _ParseRootArg $args
+    } catch {
+        Write-Error $_
+        return
+    }
+    $root_dir = $parsed.RootDir
+    $env:_COPILOT_ARGS = $parsed.Args -join "`n"
+    $env:_COPILOT_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
+
+    wt -f -d $root_dir pwsh -c {
+        if ($env:_COPILOT_SECURED -eq "1") {
+            $sec_workspace = "D:\.copilot"
+            $env:COPILOT_HOME = $sec_workspace
+        }
+        Remove-Item env:_COPILOT_SECURED -ErrorAction SilentlyContinue
+        $argList = $env:_COPILOT_ARGS -split "`n"
+        Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
+        claude.exe @argList
+        if ($? -eq $False) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
+    }
+
+    Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
+    Remove-Item env:_COPILOT_SECURED -ErrorAction SilentlyContinue
 }
 
 function e {
@@ -1013,6 +1036,9 @@ $env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0
 
 # ─[ Claude Settings ]─────────────────────────────────────────────────
 $env:CLAUDE_CODE_SHELL = "pwsh"
+
+# ─[ Copilot Settings ]────────────────────────────────────────────────
+$env:COPILOT_AUTO_UPDATE = $false
 
 # ─[ User bin on PATH ]────────────────────────────────────────────────
 $env:PATH = "$env:PATH;$HOME\bin"
