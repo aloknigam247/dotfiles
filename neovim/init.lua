@@ -1431,14 +1431,8 @@ local function applyColorscheme()
 	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
 	vim.api.nvim_set_hl(0, "MatchParen", { bg = adaptiveBG(50, -50) })
 
-	-- configure Neovide
-	if vim.fn.exists("g:neovide") == 1 then
-		vim.g.neovide_normal_opacity = 0.6
-		vim.g.neovide_title_background_color = getColorFromHighlight("Normal", true, vim.o.background == "dark" and "#000000" or "#FFFFFF")
-	else
-		if vim.api.nvim_get_hl(0, { name = "Normal" }).bg then
-			require("mini.misc").setup_termbg_sync()
-		end
+	if vim.api.nvim_get_hl(0, { name = "Normal" }).bg then
+		require("mini.misc").setup_termbg_sync()
 	end
 end
 
@@ -1457,8 +1451,6 @@ addPlugin {
 			light = "latte",
 			dark = "mocha"
 		},
-		-- custom_highlights = function(palette)
-		-- end,
 		float = {
 			transparent = true,
 			solid = false
@@ -1490,7 +1482,7 @@ addPlugin {
 					SnacksPickerMatch = { fg = "", style = { "underline" } },
 					TinyDiagnosticNormal = { fg = palette.text, bg = palette.base },
 					Todo = { fg = palette.blue, bg = "" },
-					Visual = { bg = palette.surface1, style = {} }, -- REFACTOR: make lighter
+					Visual = { bg = palette.surface0, style = {} },
 					VisualMatch = { bg = palette.surface0 },
 					["@markup.heading.markdown"] = { fg = palette.mauve, style = { "bold" } },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
@@ -1503,7 +1495,7 @@ addPlugin {
 				hints = { "underdotted" }
 			}
 		},
-		transparent_background = true,
+		transparent_background = false,
 		term_colors = false,
 	}
 }
