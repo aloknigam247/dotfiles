@@ -88,11 +88,13 @@ $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8weky
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
     $current_theme = "Catppuccin Latte"
+    $terminal_theme = "One Half Light"
     $catppuccin = $catppuccin_latte
     $lazygit_theme = "light.yml"
 } else {
     $env:THEME = "dark"
     $current_theme = "Catppuccin Mocha"
+    $terminal_theme = "One Half Dark"
     $catppuccin = $catppuccin_mocha
     $lazygit_theme = "dark.yml"
 }
@@ -116,6 +118,7 @@ Start-Job {
 
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     sed -i "s/`"colorScheme`": `"Catppuccin .*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
+    sed -i "s/`"colorScheme`": `"One Half .*`"/`"colorScheme`": `"$terminal_theme`"/" $terminal_settings
 }
 
 # Set theme variables
