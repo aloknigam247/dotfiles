@@ -911,12 +911,6 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
-	"Claude",
-	function() require("snacks").terminal.open(vim.fn.expand("$LOCALAPPDATA/Microsoft/WinGet/Packages/Anthropic.ClaudeCode_Microsoft.Winget.Source_8wekyb3d8bbwe/claude.exe"), { win = { position = "right", width = 0.4 } }) end,
-	{ desc = "Open Claude in vertical terminal split" }
-)
-
-vim.api.nvim_create_user_command(
 	"ColorizeTerminal",
 	function() require("snacks").terminal.colorize() end,
 	{ desc = "Replaces ansii color codes with the actual colors" }
