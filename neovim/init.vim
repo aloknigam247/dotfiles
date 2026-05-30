@@ -62,7 +62,7 @@ syntax off
 " {{{
 let &background=$THEME       " Set background from system
 let g:netrw_banner = 0       " Turn off banner in netrw
-let g:vimsyn_embed = 'lpr'   " Embedded script highlight
+let g:vimsyn_embed = "lpr"   " Embedded script highlight
 set cmdheight=0              " Hide command line
 set confirm                  " Raise dialog on quit if file has unsaved changes
 set culopt=number,screenline " Highlight current line and line number of current window
@@ -137,7 +137,7 @@ function! SynStack()
     if !exists("*synstack")
         return
     endif
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    echo map(synstack(line("."), col(".")), 'synIDattr(v:val, "name")')
 endfunc
 function! SynT()
     for id in synstack(line("."), col("."))

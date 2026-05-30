@@ -453,11 +453,11 @@ function copilot {
 function e {
     $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
     $arg_str = $quoted_args -join " "
-    if (Test-Path "D:\qvim\build\dev\Debug\qvim.exe") {
+    if (Test-Path "D:\qvim\build\release\RelWithDebInfo\qvim.exe") {
         if ($args.Count -eq 0) {
-            D:\qvim\build\dev\Debug\qvim.exe
+            D:\qvim\build\release\RelWithDebInfo\qvim.exe
         } else {
-            D:\qvim\build\dev\Debug\qvim.exe $arg_str
+            D:\qvim\build\release\RelWithDebInfo\qvim.exe $arg_str
         }
     } else {
         wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
