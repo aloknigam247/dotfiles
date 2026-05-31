@@ -21,3 +21,6 @@ gui:
       - "#4C4F69"
     searchingActiveBorderColor:
       - "#DF8E1D"
+
+git:
+  branchLogCmd: 'git log --color=always --pretty=\"%C(#1E66F5) %C(#04A5E5)%h %Creset- %C(#40A02B) %s %C(#179299)󰔟 %ar on %ah %C(#DC8A78)<%C(#D20F39)%an %C(#DD7878) %ae%C(#DC8A78)>%C(#FE640B)%d\" {{branchName}} --'

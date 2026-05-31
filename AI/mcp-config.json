@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "native_tools": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "D:\\dotfiles\\mcp\\server.py"
+      ],
+      "env": {}
+    }
+  }
+}
