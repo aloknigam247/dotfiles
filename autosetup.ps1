@@ -394,7 +394,6 @@ if ($update) {
 } elseif ($install) {
     writeLog INFO "Installing $install"
     $pkg_list = $install
-    
 } else {
     Write-Output "Package List: (space to select, enter to install)"
     $pkg_list = Menu $all_pkgs -Multiselect
