@@ -432,14 +432,8 @@ function copilot {
     }
     $root_dir = $parsed.RootDir
     $env:_COPILOT_ARGS = $parsed.Args -join "`n"
-    $env:_COPILOT_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
 
     wt -f -d $root_dir pwsh -c {
-        if ($env:_COPILOT_SECURED -eq "1") {
-            $sec_workspace = "D:\.copilot"
-            $env:COPILOT_HOME = $sec_workspace
-        }
-        Remove-Item env:_COPILOT_SECURED -ErrorAction SilentlyContinue
         $argList = @()
         if ($env:_COPILOT_ARGS) {
             $argList = [string[]]($env:_COPILOT_ARGS -split "`n")
@@ -450,7 +444,6 @@ function copilot {
     }
 
     Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
-    Remove-Item env:_COPILOT_SECURED -ErrorAction SilentlyContinue
 }
 
 function e {
