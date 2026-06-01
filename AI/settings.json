@@ -1,4 +1,11 @@
 {
+  "autoUpdate": false,
+  "continueOnAutoMode": true,
+  "copyOnSelect": true,
+  "customAgents": {
+    "defaultLocalOnly": true
+  },
+  "keepAlive": "on",
   "memory": false,
   "theme": "auto"
 }

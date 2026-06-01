@@ -1049,7 +1049,8 @@ $env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0
 $env:CLAUDE_CODE_SHELL = "pwsh"
 
 # ─[ Copilot Settings ]────────────────────────────────────────────────
-$env:COPILOT_AUTO_UPDATE = $false
+$env:COPILOT_AUTO_UPDATE = "false"
+$env:COPILOT_OTEL_ENABLED = "false"
 
 # ─[ User bin on PATH ]────────────────────────────────────────────────
 $env:PATH = "$env:PATH;$HOME\bin"
