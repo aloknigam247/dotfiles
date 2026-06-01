@@ -658,10 +658,24 @@ function Format-Text {
     return $head
 }
 
+# ╭───────────╮
+# │ FZF Setup │
+# ╰───────────╯
+# https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
+Import-Module PSFzf
+
+Set-PsFzfOption `
+    -PSReadlineChordProvider "Alt+p" `
+    -PSReadlineChordReverseHistory "Alt+h" `
+    -PSReadlineChordSetLocation "Alt+d" `
+    -PSReadlineChordReverseHistoryArgs "Alt+a"
+Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
+Set-PsFzfOption -TabExpansion
+
 # ╭────────────────╮
 # │ Autocompletion │
 # ╰────────────────╯
-# Completor for git and claude
+# Completor copilot and agency
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
@@ -677,6 +691,12 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     }
 }
 
+# ─[ git tab completion ]──────────────────────────────────────────────
+# Must register after PSFzf — PSFzf registers its own broken `git` completer
+# (depends on posh-git's Expand-GitCommand). Re-registering here wins.
+Import-Module GitCompleter -ErrorAction SilentlyContinue
+Register-GitCompleter
+
 # ─[ winget tab completion ]───────────────────────────────────────────
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -687,26 +707,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
             [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
         }
 }
-
-# ╭───────────╮
-# │ FZF Setup │
-# ╰───────────╯
-# https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
-Import-Module PSFzf
-
-Set-PsFzfOption `
-    -PSReadlineChordProvider "Alt+p" `
-    -PSReadlineChordReverseHistory "Alt+h" `
-    -PSReadlineChordSetLocation "Alt+d" `
-    -PSReadlineChordReverseHistoryArgs "Alt+a"
-Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
-Set-PsFzfOption -TabExpansion
-
-# ─[ git tab completion ]──────────────────────────────────────────────
-# Must register after PSFzf — PSFzf registers its own broken `git` completer
-# (depends on posh-git's Expand-GitCommand). Re-registering here wins.
-Import-Module GitCompleter -ErrorAction SilentlyContinue
-Register-GitCompleter
 
 # https://vitormv.github.io/fzf-themes
 $env:FZF_DEFAULT_OPTS = ""

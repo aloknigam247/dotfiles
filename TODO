@@ -9,3 +9,4 @@ FEAT(powershell): change tab tittle on path change or executable running
 FEAT(security): Scan all installations for security related
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive
+FEAT(copilot): configure copilot mappings, features, experiment, statusline etc
