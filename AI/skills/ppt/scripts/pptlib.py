@@ -3,7 +3,7 @@ pptlib - reusable python-pptx helpers for themed 16:9 presentations.
 
 Usage:
     from pptlib import Deck
-    d = Deck()                      # default navy+teal theme
+    d = Deck()                      # default Modern Minimal (slate + sky blue)
     s = d.slide()
     d.header(s, "Architecture", "System Overview", 3)
     d.bullet(d.textbox(s, 0.9, 2.0, 5, 4), "First point", first=True)
@@ -26,10 +26,10 @@ ALIGN = {"left": PP_ALIGN.LEFT, "center": PP_ALIGN.CENTER, "right": PP_ALIGN.RIG
 ANCHOR = {"top": MSO_ANCHOR.TOP, "middle": MSO_ANCHOR.MIDDLE, "bottom": MSO_ANCHOR.BOTTOM}
 
 DEFAULT_THEME = {
-    "navy": "0F2A43", "navy_dk": "0A1F33", "accent": "14B8A6", "accent2": "2563EB",
-    "light": "F5F7FA", "white": "FFFFFF", "text": "1E293B", "muted": "64748B",
-    "warn": "D97706", "panel": "ECF1F7", "card_border": "E2E8F0",
-    "subtle": "C8D6E5", "font": "Segoe UI", "mono": "Consolas",
+    "navy": "0F172A", "navy_dk": "0A0F1E", "accent": "0EA5E9", "accent2": "6366F1",
+    "light": "F8FAFC", "white": "FFFFFF", "text": "0F172A", "muted": "94A3B8",
+    "warn": "F59E0B", "panel": "F1F5F9", "card_border": "E2E8F0",
+    "subtle": "CBD5E1", "font": "Calibri Light", "mono": "Cascadia Code",
 }
 
 
@@ -163,14 +163,14 @@ class Deck:
 
     # -- composite layout -------------------------------------------------
     def header(self, s, kicker, title, num, footer_label="Presentation"):
-        """Standard content-slide chrome: bg, accent bar, kicker, title, footer."""
+        """Standard content-slide chrome: bg, top accent line, kicker, title, footer."""
         self.rect(s, 0, 0, 13.333, 7.5, fill=self.LIGHT)
-        self.rect(s, 0, 0, 0.22, 7.5, fill=self.ACCENT)
-        tf = self.textbox(s, 0.7, 0.42, 11.5, 0.4)
-        self.run(self.para(tf, True), kicker.upper(), size=12, color=self.ACCENT, bold=True)
-        tf2 = self.textbox(s, 0.7, 0.72, 11.9, 0.9)
-        self.run(self.para(tf2, True), title, size=30, color=self.NAVY, bold=True)
-        self.rect(s, 0.72, 1.55, 0.9, 0.06, fill=self.ACCENT2)
+        self.rect(s, 0, 0, 13.333, 0.05, fill=self.ACCENT)
+        tf = self.textbox(s, 1.2, 0.5, 10, 0.35)
+        self.run(self.para(tf, True), kicker.upper(), size=11, color=self.ACCENT, bold=True)
+        tf2 = self.textbox(s, 1.2, 0.85, 10, 0.75)
+        self.run(self.para(tf2, True), title, size=28, color=self.NAVY, bold=True)
+        self.rect(s, 1.2, 1.55, 1.5, 0.04, fill=self.ACCENT2)
         self.footer(s, num, footer_label)
 
     def footer(self, s, num, label="Presentation"):

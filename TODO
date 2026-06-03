@@ -3,8 +3,10 @@ FEAT(claude): When I edit prompt with neovim inside claude code / commands give 
 FEAT(claude): git pull or push indicator in statusline
 FEAT(code review): See review comments in neovim and accept, reject, comment on them
 FEAT(completer): completions for claude command
+FEAT(copilot): Markdown max width should be 100 for most stuffs
 FEAT(copilot): add instructions to select which diagrams for which case
 FEAT(copilot): configure copilot statusline
+FEAT(copilot): for markdown powershell codeblock should be ps1
 FEAT(mcp): persistant terminal
 FEAT(native tools): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
 FEAT(powershell): change tab tittle on path change or executable running
