@@ -1,3 +1,4 @@
+# FEAT: keep history clean by not saving error out commands for next session
 # ─[ Don't load for non interactive session ]─────────────────────────────
 function _IsShellInteractive {
     $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1

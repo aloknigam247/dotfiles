@@ -10,5 +10,6 @@
   "theme": "auto",
   "allowedUrls": [
     "https://docs.github.com"
-  ]
+  ],
+  "model": "auto"
 }
