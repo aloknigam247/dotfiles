@@ -110,7 +110,7 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 " {{{
 if exists("g:qvim")
     let &guifont = "JetBrainsMono Nerd Font:h14"
-    let g:qvim_rounded_highlights = ["Visual", "QuickhlManual0", "QuickhlManual1", "QuickhlManual2", "QuickhlManual3", "QuickhlManual4", "QuickhlManual5", "QuickhlManual6", "QuickhlManual7", "QuickhlManual8", "QuickhlManual9", "QuickhlManual10", "QuickhlManual11", "QuickhlManual12", "QuickhlManual13", "QuickhlManual14", "QuickhlManual15", "QuickhlManual16", "QuickhlManual17", "QuickhlManual18", "QuickhlManual19" ]
+    let g:qvim_rounded_highlights = ["QuickhlManual0", "QuickhlManual1", "QuickhlManual2", "QuickhlManual3", "QuickhlManual4", "QuickhlManual5", "QuickhlManual6", "QuickhlManual7", "QuickhlManual8", "QuickhlManual9", "QuickhlManual10", "QuickhlManual11", "QuickhlManual12", "QuickhlManual13", "QuickhlManual14", "QuickhlManual15", "QuickhlManual16", "QuickhlManual17", "QuickhlManual18", "QuickhlManual19", "Visual"]
 endif
 " }}}
 
