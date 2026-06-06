@@ -2522,7 +2522,7 @@ addPlugin {
 				cpp      = { color = "#F34B7D", icon = "󰙲", name = "Cpp"       },
 				cs       = { color = "#C20DA6", icon = "󰌛", name = "Cs"        },
 				csproj   = { color = "#854CC7", icon = "", name = "Csproj"    },
-				csv      = { color = "#89E051", icon = "", name = "Csv"       },
+				csv      = { color = "#89E051", icon = "", name = "Csv"       }, -- FIX: colors is not visible in light scheme
 				md       = { color = "#42A5F5", icon = "", name = "Md"        },
 				mdx      = { color = "#519ABA", icon = "󰽛", name = "Mdx"       },
 				py       = { color = "#3D7BAB", icon = "", name = "Py"        },
