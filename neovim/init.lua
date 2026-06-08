@@ -1259,6 +1259,7 @@ addPlugin {
 	event = { "CursorMoved" }
 }
 
+-- BUG: does not work in D:\tasks\tasks.md
 addPlugin {
 	"nvim-mini/mini.hipatterns",
 	config = function(plugin)
@@ -3712,7 +3713,7 @@ addPlugin {
 						separator = ""
 					},
 					{
-						"filename",
+						"filename", -- BUG: 2 spaces between new file and modified
 						color = { gui = "italic" },
 						file_status = true,
 						newfile_status = true,
