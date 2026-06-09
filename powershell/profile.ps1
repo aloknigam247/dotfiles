@@ -755,7 +755,7 @@ $env:EDITOR = "nvim"
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
-
+# FEAT: generate more combinations using AI
 Set-PSReadlineKeyHandler Enter {
     $script:cmd_start_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
