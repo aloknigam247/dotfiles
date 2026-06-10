@@ -613,7 +613,7 @@ vim.api.nvim_create_autocmd(
 		pattern = "*",
 		desc = "Highlight text on yank",
 		callback = function()
-			vim.hl.on_yank({ higroup="Search", timeout=500 }) -- FIX: deprecated
+			vim.hl.hl_op({ higroup="Search", timeout=500 })
 		end
 	}
 )
@@ -1053,11 +1053,7 @@ vim.api.nvim_create_user_command(
 -- <~>
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: When file changes are made I can see the diff neovim and can accept/reject each or all changes
--- FEAT: when claude code is running inside neovim the prompt shows completion like in neovim, as if all neovim completion are executed in the buffer and I can see them
--- FEAT: Claude can see files in neovim which are opened
--- FEAT: Claude code can execute commands in current neovim session
--- FEAT: https://github.com/ravitemer/mcphub.nvim
+-- FEAT: Define features for neovim as an ide for copilot
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
@@ -1255,7 +1251,6 @@ addPlugin {
 	event = { "CursorMoved" }
 }
 
--- BUG: does not work in D:\tasks\tasks.md
 addPlugin {
 	"nvim-mini/mini.hipatterns",
 	config = function(plugin)
@@ -1449,8 +1444,6 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					-- FEAT: SnippetTabStop and SnippetTabStopActive colors
-					-- FIX: Numberline
 					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
@@ -1461,8 +1454,9 @@ addPlugin {
 					CoverageCovered = { fg = palette.teal },
 					CoveragePartial = { fg = palette.mauve },
 					CoverageUncovered = { fg = palette.flamingo },
-					DebugPrintLine = { bg = palette.surface0 }, -- FEAT: better background
+					DebugPrintLine = { bg = palette.surface0 }, -- FEAT: better background, blends of exisiting colors ?
 					DebugPrintSignHl = { fg = palette.pink },
+					Folded = { bg = palette.surface0, fg = palette.blue },
 					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
 					IlluminatedWordWrite = { bg = palette.mantle },
