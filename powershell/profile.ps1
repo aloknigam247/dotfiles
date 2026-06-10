@@ -546,20 +546,20 @@ function Get-TODO {
     param(
         [Parameter(Position = 0)]
         [ValidateSet("all", "random", "stats")]
-        [String] $type = "All"
+        [String] $type = "all"
     )
 
     process {
         $tag_list = @("BUG", "DOCME", "FEAT", "FIX", "FIXME", "PERF", "RECODE", "REFACTOR", "TEST", "TODO", "THOUGHT")
 
-        if ($type -eq "All") {
+        if ($type -eq "all") {
             # Get list of all
             $pattern = $tag_list -join "|"
             rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always
         } elseif ($type -eq "Random") {
             # Get random tag
             $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always | Get-Random -Count 3
+            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always | Get-Random -Count 5
         } elseif ($type -eq "Stats") {
             # Generate count per tag
             $tag_map = @{}
