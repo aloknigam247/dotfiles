@@ -224,6 +224,7 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
             Remove-Item .git\index.lock -ErrorAction SilentlyContinue # fix lock error
             git push
 
+            # BUG: notifications not visible now
             # Send ballon notification
             Add-Type -AssemblyName System.Windows.Forms
             $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
