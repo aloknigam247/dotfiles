@@ -572,11 +572,7 @@ vim.api.nvim_create_autocmd(
 		callback = function(arg)
 			vim.iter(vim.fn.getbufline(0, 1, 500)):any(function(line)
 				if #line > vim.bo.textwidth then
-					-- BUG: not working
-					-- print('DEBUGPRINT[1]: init.lua:570: vim.api.nvim_get_current_win()=' .. vim.inspect(vim.api.nvim_get_current_win()))
-					-- print('DEBUGPRINT[2]: init.lua:571: vim.wo[vim.api.nvim_get_current_win()].wrap=' .. vim.inspect(vim.wo[vim.api.nvim_get_current_win()].wrap))
 					vim.wo[vim.api.nvim_get_current_win()].wrap = false
-					-- print('DEBUGPRINT[3]: init.lua:572: vim.wo[vim.api.nvim_get_current_win()].wrap=' .. vim.inspect(vim.wo[vim.api.nvim_get_current_win()].wrap))
 					return true
 				end
 				return false
