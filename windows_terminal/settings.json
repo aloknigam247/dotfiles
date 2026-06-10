@@ -66,36 +66,36 @@
     "keybindings": 
     [
         {
-            "id": "User.splitPane.A6751878",
-            "keys": "alt+shift+d"
-        },
-        {
-            "id": null,
-            "keys": "ctrl+plus"
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
         },
         {
             "id": null,
             "keys": "ctrl+minus"
         },
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
+            "id": null,
+            "keys": "ctrl+plus"
+        },
+        {
+            "id": "User.splitPane.A6751878",
+            "keys": "alt+shift+d"
         },
         {
             "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
         },
         {
-            "id": null,
-            "keys": "enter"
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
         },
         {
             "id": null,
             "keys": "ctrl+v"
         },
         {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "id": null,
+            "keys": "enter"
         },
         {
             "id": null,
@@ -213,6 +213,7 @@
         ]
     },
     "rendering.disablePartialInvalidation": true,
+    "rendering.graphicsAPI": "direct3d11",
     "schemes": 
     [
         {
@@ -288,7 +289,7 @@
             {
                 "applicationTheme": "light",
                 "experimental.rainbowFrame": false,
-                "frame": "#8839EFFF",
+                "frame": "accent",
                 "unfocusedFrame": "terminalBackground",
                 "useMica": false
             }
@@ -311,7 +312,7 @@
             {
                 "applicationTheme": "dark",
                 "experimental.rainbowFrame": false,
-                "frame": "#CBA6F7FF",
+                "frame": "accent",
                 "unfocusedFrame": "terminalBackground",
                 "useMica": false
             }

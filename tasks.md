@@ -15,3 +15,4 @@ FEAT(security): Scan all installations for security related
 REFACTOR(claude): remove claude folder and remove linked files
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive
+REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
