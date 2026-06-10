@@ -1052,9 +1052,6 @@ vim.api.nvim_create_user_command(
 )
 -- <~>
 -- <~>
---━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       AI       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: Define features for neovim as an ide for copilot
--- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰     Aligns     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
 	"dhruvasagar/vim-table-mode",
