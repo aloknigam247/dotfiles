@@ -7,6 +7,7 @@ FEAT(copilot): add instructions to select which diagrams for which case
 FEAT(copilot): configure copilot statusline
 FEAT(copilot): for markdown powershell codeblock should be ps1
 FEAT(copilot): git pull or push indicator in statusline
+FEAT(copilot): mapping to delete word backword
 FEAT(mcp): persistant terminal
 FEAT(native tools): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
 FEAT(powershell): change tab tittle on path change or executable running
