@@ -1013,7 +1013,7 @@ Set-PSReadLineOption -Colors @{
     "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
     "Operator" = (Format-Text -headOnly -fg $palette.cmdline.operator);
     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
-    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);  # FIX: better selection color
+    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);  # FIX: better selection color, that blends with background
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
     "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
