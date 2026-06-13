@@ -9,7 +9,11 @@
   "memory": false,
   "theme": "auto",
   "allowedUrls": [
-    "https://docs.github.com"
+    "https://docs.github.com",
+    "https://onedrive.visualstudio.com",
+    "https://api.github.com",
+    "https://github.com",
+    "https://raw.githubusercontent.com"
   ],
   "experimental": true,
   "footer": {
@@ -24,6 +28,5 @@
     "showUsername": false,
     "showSandbox": true,
     "showCustom": true
-  },
-  "model": "auto"
+  }
 }
