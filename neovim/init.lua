@@ -439,6 +439,38 @@ local function adaptiveBG(lighten, darken)
 	end
 end
 
+---Blend two colors (color and background) with a specific percentage (alpha).
+---@param color string Hex color to be blended (e.g., "#RRGGBB")
+---@param bg string Hex background color over which to blend (e.g., "#RRGGBB")
+---@param alpha number Percentage (0 to 100) or fraction (0 to 1) of the foreground color
+---@return string # Blended color in Hex format
+local function blend(color, bg, alpha)
+	alpha = alpha or 0.5
+	local function hex_to_rgb(hex)
+		local cleaned = hex:gsub("#", "")
+		if #cleaned == 3 then
+			return tonumber(cleaned:sub(1, 1):rep(2), 16) or 0,
+			tonumber(cleaned:sub(2, 2):rep(2), 16) or 0,
+			tonumber(cleaned:sub(3, 3):rep(2), 16) or 0
+		end
+		return tonumber(cleaned:sub(1, 2), 16) or 0,
+		tonumber(cleaned:sub(3, 4), 16) or 0,
+		tonumber(cleaned:sub(5, 6), 16) or 0
+	end
+
+	local r1, g1, b1 = hex_to_rgb(color)
+	local r2, g2, b2 = hex_to_rgb(bg)
+
+	local a = alpha > 1 and alpha / 100 or alpha
+	a = math.max(0, math.min(1, a))
+
+	local r = math.floor(r1 * a + r2 * (1 - a) + 0.5)
+	local g = math.floor(g1 * a + g2 * (1 - a) + 0.5)
+	local b = math.floor(b1 * a + b2 * (1 - a) + 0.5)
+
+	return string.format("#%02X%02X%02X", r, g, b)
+end
+
 ---Get color from highlight or default
 ---@param hl_name string highlight name
 ---@param bg_or_fg boolean true for bg and false for fg
@@ -1419,6 +1451,7 @@ local function applyColorscheme()
 	end
 end
 
+-- FEAT: check if catppuccin follows https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
@@ -1451,15 +1484,15 @@ addPlugin {
 					CoverageCovered = { fg = palette.teal },
 					CoveragePartial = { fg = palette.mauve },
 					CoverageUncovered = { fg = palette.flamingo },
-					DebugPrintLine = { bg = palette.surface0 }, -- FEAT: better background, blends of exisiting colors ?
+					DebugPrintLine = { bg = blend(palette.red, palette.base, 20) },
 					DebugPrintSignHl = { fg = palette.pink },
 					Folded = { bg = palette.surface0, fg = palette.blue },
 					IlluminatedWordRead = { bg = palette.mantle },
 					IlluminatedWordText = { bg = palette.mantle },
 					IlluminatedWordWrite = { bg = palette.mantle },
-					InclineNormal = { bg = palette.surface1, fg = palette.text }, -- REFACTOR: change color
+					InclineNormal = { bg = palette.surface0, fg = palette.text },
 					NvimSurroundHighlight = { link = "Cursor" },
-					RenderMarkdownCode = { bg = palette.crust }, -- REFACTOR: make lighter
+					RenderMarkdownCode = { bg = palette.surface0 },
 					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
 					SnacksPickerMatch = { fg = "", style = { "underline" } },
 					TinyDiagnosticNormal = { fg = palette.text, bg = palette.base },
