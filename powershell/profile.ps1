@@ -218,10 +218,7 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
         $git_status = git status --short
 
         if ($git_status) {
-            $dt = Get-Date
-            git add .
-            git commit -m "Updated at $dt"
-            Remove-Item .git\index.lock -ErrorAction SilentlyContinue # fix lock error
+            # Send ballon notification
             Add-Type -AssemblyName System.Windows.Forms
             $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
             $path = (Get-Process -id $pid).Path
@@ -231,19 +228,12 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
             $balmsg.BalloonTipTitle = $git_status.ToString()
             $balmsg.Visible = $true
             $balmsg.ShowBalloonTip(20000)
-            git push
 
-            # BUG: notifications not visible now
-            # Send ballon notification
-            Add-Type -AssemblyName System.Windows.Forms
-            $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
-            $path = (Get-Process -id $pid).Path
-            $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
-            $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
-            $balmsg.BalloonTipText = " "
-            $balmsg.BalloonTipTitle = "dotfiles updated"
-            $balmsg.Visible = $true
-            $balmsg.ShowBalloonTip(20000)
+            $dt = Get-Date
+            git add .
+            git commit -m "Updated at $dt"
+            Remove-Item .git\index.lock -ErrorAction SilentlyContinue # fix lock error
+            git push
         }
     } | Out-Null
 }
