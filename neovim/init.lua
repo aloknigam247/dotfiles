@@ -1609,13 +1609,14 @@ end
 
 addPlugin {
 	"saghen/blink.cmp",
-	enabled = true,  -- FIX: completion
+	enabled = true,
 	build = function()
 		require('blink.cmp').build():pwait()
 	end,
 	config = function(_, cfg)
 		require("blink.cmp").setup(cfg)
 
+		-- FIX: enable
 		-- for kind_name,hl in pairs(kind_hl) do
 		-- 	---@type vim.api.keyset.highlight|string
 		-- 	local h = hl[vim.o.background] ---@cast h -string
@@ -1653,6 +1654,7 @@ addPlugin {
 	dependencies = { "saghen/blink.lib", "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
 	---@type blink.cmp.Config
+	-- FIX: enable
 	opts = {
 		-- appearance = {
 		-- 	use_nvim_cmp_as_default = true
