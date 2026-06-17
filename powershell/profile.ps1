@@ -213,19 +213,19 @@ $env:LS_COLORS="rs=0:di=01;34:ln=00;95:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33
 # ╰─────────────╯
 if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
     Start-Job {
-        Add-Type -AssemblyName System.Windows.Forms
-            $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
-            $path = (Get-Process -id $pid).Path
-            $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
-            $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
-            $balmsg.BalloonTipText = " "
-            $balmsg.BalloonTipTitle = "BG Notifications test"
-            $balmsg.Visible = $true
-            $balmsg.ShowBalloonTip(20000)
         Set-Location D:/dotfiles
         git pull
         $git_status = git status --short
 
+        Add-Type -AssemblyName System.Windows.Forms
+        $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
+        $path = (Get-Process -id $pid).Path
+        $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
+        $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
+        $balmsg.BalloonTipText = " "
+        $balmsg.BalloonTipTitle = $git_status.ToString()
+        $balmsg.Visible = $true
+        $balmsg.ShowBalloonTip(20000)
         if ($git_status) {
             $dt = Get-Date
             git add .
