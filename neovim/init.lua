@@ -1609,298 +1609,298 @@ end
 
 addPlugin {
 	"saghen/blink.cmp",
-	enabled = false,  -- FIX: completion
+	enabled = true,  -- FIX: completion
 	build = function()
-		require('blink.cmp').build():wait(60000)
+		require('blink.cmp').build():pwait()
 	end,
 	config = function(_, cfg)
 		require("blink.cmp").setup(cfg)
 
-		for kind_name,hl in pairs(kind_hl) do
-			---@type vim.api.keyset.highlight|string
-			local h = hl[vim.o.background] ---@cast h -string
-			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, h)
-		end
+		-- for kind_name,hl in pairs(kind_hl) do
+		-- 	---@type vim.api.keyset.highlight|string
+		-- 	local h = hl[vim.o.background] ---@cast h -string
+		-- 	vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, h)
+		-- end
 
-		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
-		local original = require("blink.cmp.completion.list").show
-		require("blink.cmp.completion.list").show = function(ctx, items_by_source) ---@diagnostic disable-line: duplicate-set-field
-			local seen = {}
-			local function filter(item)
-				if seen[item.label] then return false end
-				seen[item.label] = true
-				return true
-			end
-			for id in vim.iter(cfg.sources.default) do
-				items_by_source[id] = items_by_source[id] and vim.iter(items_by_source[id]):filter(filter):totable()
-			end
-			return original(ctx, items_by_source)
-		end
-		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
+		-- -- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
+		-- local original = require("blink.cmp.completion.list").show
+		-- require("blink.cmp.completion.list").show = function(ctx, items_by_source) ---@diagnostic disable-line: duplicate-set-field
+		-- 	local seen = {}
+		-- 	local function filter(item)
+		-- 		if seen[item.label] then return false end
+		-- 		seen[item.label] = true
+		-- 		return true
+		-- 	end
+		-- 	for id in vim.iter(cfg.sources.default) do
+		-- 		items_by_source[id] = items_by_source[id] and vim.iter(items_by_source[id]):filter(filter):totable()
+		-- 	end
+		-- 	return original(ctx, items_by_source)
+		-- end
+		-- -- ╰─────────────────────────────────────────────────────────────────────────────────╯
 
-		-- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
-		local context = require('blink.cmp.completion.trigger.context')
-		context.get_line_orig = context.get_line ---@diagnostic disable-line: inject-field
-		context.get_line = function(num) ---@diagnostic disable-line: duplicate-set-field
-			if context.get_mode() == "cmdline" then
-				local line, _ = context.get_line_orig(num):gsub("\\+", "\\")
-				return line
-			end
-			return context.get_line_orig(num)
-		end
-		-- ╰──────────────────────────────────────────────────────────╯
+		-- -- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
+		-- local context = require('blink.cmp.completion.trigger.context')
+		-- context.get_line_orig = context.get_line ---@diagnostic disable-line: inject-field
+		-- context.get_line = function(num) ---@diagnostic disable-line: duplicate-set-field
+		-- 	if context.get_mode() == "cmdline" then
+		-- 		local line, _ = context.get_line_orig(num):gsub("\\+", "\\")
+		-- 		return line
+		-- 	end
+		-- 	return context.get_line_orig(num)
+		-- end
+		-- -- ╰──────────────────────────────────────────────────────────╯
 	end,
 	dependencies = { "saghen/blink.lib", "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
 	---@type blink.cmp.Config
 	opts = {
-		appearance = {
-			use_nvim_cmp_as_default = true
-		},
-		cmdline = {
-			completion = {
-				ghost_text = {
-					enabled = true
-				},
-				list = {
-					selection = {
-						auto_insert = true,
-						preselect = false
-					}
-				},
-				menu = {
-					auto_show = true,
-					draw = {
-						columns = {
-							{ "kind_icon" },
-							{ "label", "label_description" }, { "source_name" }
-						}
-					}
-				}
-			},
-			keymap = { -- FIX: disable <C-n> <C-p>
-				["<Down>"] = { "fallback" },
-				["<Up>"] = { "fallback" },
-				["<Left>"] = { },
-				["<Right>"] = { }
-			},
-		},
-		completion = {
-			accept = {
-				auto_brackets = {
-					enabled = true
-				}
-			},
-			documentation = {
-				auto_show = true,
-				window = {
-					border = dotted_border
-				}
-			},
-			ghost_text = {
-				enabled = true,
-				show_with_menu = true,
-				show_with_selection = true,
-				show_without_menu = true,
-				show_without_selection = true
-			},
-			list = {
-				selection = {
-					auto_insert = false,
-					preselect = false
-				}
-			},
-			menu = {
-				enabled = true,
-				auto_show = true,
-				draw = {
-					columns = {
-						{ "kind_icon", "label", gap = 1 }, { "source_name" }
-					},
-					components = {
-						kind_icon = {
-							text = function(ctx)
-								local function getIcon(_ctx)
-									local kind
-									local stat = nil
-									if _ctx.item.textEdit ~= nil then
-										stat = vim.loop.fs_stat(_ctx.item.textEdit.newText)
-									end
-									if stat then
-										-- file/path icons
-										if stat.type == "file" then
-											-- local ext = _ctx.label:match(".[^.]+$"):gsub("%.", "")
-											local ext = _ctx.label:match(".[^.]+$")
-											if ext ~= nil then
-												ext = ext:gsub("%.", "")
-												local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
-												-- create highlight for extension
-												if icon then
-													_ctx._icon_hl = "BlinkCmpKindDev" .. icon.name
-													vim.api.nvim_set_hl(0, _ctx._icon_hl, { fg = icon.color, bg = kind_hl["Array"][vim.o.background].bg })
-													return icon.icon
-												end
-												kind = "File"
-												_ctx._icon_hl = "BlinkCmpKind" .. kind
-												return icons[kind]
-											end
-										elseif stat.type == "directory" then
-											kind = "Path"
-											_ctx._icon_hl = "BlinkCmpKind" .. kind
-											return icons[kind]
-										end
-									end
+		-- appearance = {
+		-- 	use_nvim_cmp_as_default = true
+		-- },
+		-- cmdline = {
+		-- 	completion = {
+		-- 		ghost_text = {
+		-- 			enabled = true
+		-- 		},
+		-- 		list = {
+		-- 			selection = {
+		-- 				auto_insert = true,
+		-- 				preselect = false
+		-- 			}
+		-- 		},
+		-- 		menu = {
+		-- 			auto_show = true,
+		-- 			draw = {
+		-- 				columns = {
+		-- 					{ "kind_icon" },
+		-- 					{ "label", "label_description" }, { "source_name" }
+		-- 				}
+		-- 			}
+		-- 		}
+		-- 	},
+		-- 	keymap = { -- FIX: disable <C-n> <C-p>
+		-- 		["<Down>"] = { "fallback" },
+		-- 		["<Up>"] = { "fallback" },
+		-- 		["<Left>"] = { },
+		-- 		["<Right>"] = { }
+		-- 	},
+		-- },
+		-- completion = {
+		-- 	accept = {
+		-- 		auto_brackets = {
+		-- 			enabled = true
+		-- 		}
+		-- 	},
+		-- 	documentation = {
+		-- 		auto_show = true,
+		-- 		window = {
+		-- 			border = dotted_border
+		-- 		}
+		-- 	},
+		-- 	ghost_text = {
+		-- 		enabled = true,
+		-- 		show_with_menu = true,
+		-- 		show_with_selection = true,
+		-- 		show_without_menu = true,
+		-- 		show_without_selection = true
+		-- 	},
+		-- 	list = {
+		-- 		selection = {
+		-- 			auto_insert = false,
+		-- 			preselect = false
+		-- 		}
+		-- 	},
+		-- 	menu = {
+		-- 		enabled = true,
+		-- 		auto_show = true,
+		-- 		draw = {
+		-- 			columns = {
+		-- 				{ "kind_icon", "label", gap = 1 }, { "source_name" }
+		-- 			},
+		-- 			components = {
+		-- 				kind_icon = {
+		-- 					text = function(ctx)
+		-- 						local function getIcon(_ctx)
+		-- 							local kind
+		-- 							local stat = nil
+		-- 							if _ctx.item.textEdit ~= nil then
+		-- 								stat = vim.loop.fs_stat(_ctx.item.textEdit.newText)
+		-- 							end
+		-- 							if stat then
+		-- 								-- file/path icons
+		-- 								if stat.type == "file" then
+		-- 									-- local ext = _ctx.label:match(".[^.]+$"):gsub("%.", "")
+		-- 									local ext = _ctx.label:match(".[^.]+$")
+		-- 									if ext ~= nil then
+		-- 										ext = ext:gsub("%.", "")
+		-- 										local icon = require("nvim-web-devicons").get_icons_by_extension()[ext]
+		-- 										-- create highlight for extension
+		-- 										if icon then
+		-- 											_ctx._icon_hl = "BlinkCmpKindDev" .. icon.name
+		-- 											vim.api.nvim_set_hl(0, _ctx._icon_hl, { fg = icon.color, bg = kind_hl["Array"][vim.o.background].bg })
+		-- 											return icon.icon
+		-- 										end
+		-- 										kind = "File"
+		-- 										_ctx._icon_hl = "BlinkCmpKind" .. kind
+		-- 										return icons[kind]
+		-- 									end
+		-- 								elseif stat.type == "directory" then
+		-- 									kind = "Path"
+		-- 									_ctx._icon_hl = "BlinkCmpKind" .. kind
+		-- 									return icons[kind]
+		-- 								end
+		-- 							end
 
-									if _ctx.source_name:match("cmdline$") then
-										kind = "Options"
-										_ctx._icon_hl = "BlinkCmpKind" .. kind
-										return icons[kind]
-									end
+		-- 							if _ctx.source_name:match("cmdline$") then
+		-- 								kind = "Options"
+		-- 								_ctx._icon_hl = "BlinkCmpKind" .. kind
+		-- 								return icons[kind]
+		-- 							end
 
-									return icons[_ctx.kind] or _ctx.kind
-								end
+		-- 							return icons[_ctx.kind] or _ctx.kind
+		-- 						end
 
-								return " " .. getIcon(ctx)
-							end,
-							highlight = function(ctx)
-								return ctx._icon_hl or ctx.kind_hl ---@diagnostic disable-line: undefined-field
-							end
-						},
-						label = {
-							text = function(ctx)
-								return require("colorful-menu").blink_components_text(ctx)
-							end,
-							highlight = function(ctx)
-								return require("colorful-menu").blink_components_highlight(ctx)
-							end,
-						},
-						source_name = {
-							text = function(ctx)
-								if ctx.source_name == "LSP" then
-									return "(" .. ctx.item.client_name .. ")"
-								end
+		-- 						return " " .. getIcon(ctx)
+		-- 					end,
+		-- 					highlight = function(ctx)
+		-- 						return ctx._icon_hl or ctx.kind_hl ---@diagnostic disable-line: undefined-field
+		-- 					end
+		-- 				},
+		-- 				label = {
+		-- 					text = function(ctx)
+		-- 						return require("colorful-menu").blink_components_text(ctx)
+		-- 					end,
+		-- 					highlight = function(ctx)
+		-- 						return require("colorful-menu").blink_components_highlight(ctx)
+		-- 					end,
+		-- 				},
+		-- 				source_name = {
+		-- 					text = function(ctx)
+		-- 						if ctx.source_name == "LSP" then
+		-- 							return "(" .. ctx.item.client_name .. ")"
+		-- 						end
 
-								return "(" .. ctx.source_name .. ")"
-							end,
-							highlight = function(_)
-								return "BlinkCmpSource"
-							end
-						}
-					},
-					cursorline_priority = 0,
-					padding = 0
-				}
-			}
-		},
-		fuzzy = {
-			implementation = "prefer_rust_with_warning",
-			prebuilt_binaries = {
-				force_version = "v1.7.0"
-			}
-		},
-		keymap = {
-			["<Down>"] = { "select_next", "fallback" },
-			["<Up>"] = { "select_prev", "fallback" },
-			["<Left>"] = {},
-			["<Right>"] = {},
-			["<Tab>"] = {
-				function(cmp)
-					return cmp.is_visible() and cmp.accept({ index = cmp.get_selected_item_idx() or 1 })
-				end,
-				"fallback"
-			}
-		},
-		signature = {
-			enabled = true,
-			trigger = {
-				show_on_insert = true,
-				show_on_keyword = true
-			},
-			window = {
-				max_width = 50,
-				show_documentation = true,
-				winblend = 70
-			}
-		},
-		sources = {
-			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: lsp scope higher than buffer
-			per_filetype = {
-				codecompanion = { "codecompanion" }
-			},
-			providers = {
-				buffer = {
-					name = "buffer",
-					score_offset = 100,
-					override = {
-						-- enabled = function() -- FIX: not working
-						-- 	local utils = require("blink.cmp.sources.lib.utils")
-						-- 	return
-						-- 		not utils.is_command_line()
-						-- 		or utils.is_command_line({ "/", "?" })
-						-- 		-- or utils.in_ex_context(require("blink.cmp.sources.cmdline.constants").ex_search_commands)
-						-- end
-					}
-				},
-				cmdline = {
-					name = "cmdline",
-					override = {
-						get_trigger_characters = function(self)
-							local triggers = self:get_trigger_characters()
-							table.insert(triggers, "\\")
-							return triggers
-						end
-					}
-				},
-				lazydev = {
-					name = "LazyDev",
-					module = "lazydev.integrations.blink"
-				},
-				path = {
-					name = "path",
-					transform_items = function(_, items)
-						for _, item in pairs(items) do
-							item.label = item.label:gsub("/", "\\")
-							item.insertText = item.insertText:gsub("/", "\\")
-							item.textEdit.newText = item.textEdit.newText:gsub("/", "\\")
-						end
-						return items
-					end
-				},
-				ripgrep = {
-					module = "blink-ripgrep",
-					name = "ripgrep",
-					async = true,
-					timeout_ms = 500,
-					enabled = function()
-						return not rg_disabled_dirs[get_buf_dir()]
-					end,
-					override = {
-						get_completions = function(self, context, callback)
-							local start_time = vim.loop.hrtime()
-							return self:get_completions(context, function(response)
-								track_rg_time(start_time, context.bufnr)
-								callback(response)
-							end)
-						end
-					},
-					---@module "blink-ripgrep"
-					---@type blink-ripgrep.Options
-					opts = {
-						backend = {
-							ripgrep = {
-								max_filesize = "300K",
-								search_casing = "--smart-case",
-								ignore_paths = { "C:\\Users\\aloknigam", "D:\\OneDrive.Storage" }
-							},
-							use = "gitgrep-or-ripgrep"
-						}
-					}
-				},
-				snippets = {
-					name = "snippet"
-				}
-			}
-		}
+		-- 						return "(" .. ctx.source_name .. ")"
+		-- 					end,
+		-- 					highlight = function(_)
+		-- 						return "BlinkCmpSource"
+		-- 					end
+		-- 				}
+		-- 			},
+		-- 			cursorline_priority = 0,
+		-- 			padding = 0
+		-- 		}
+		-- 	}
+		-- },
+		-- fuzzy = {
+		-- 	implementation = "prefer_rust_with_warning",
+		-- 	prebuilt_binaries = {
+		-- 		force_version = "v1.7.0"
+		-- 	}
+		-- },
+		-- keymap = {
+		-- 	["<Down>"] = { "select_next", "fallback" },
+		-- 	["<Up>"] = { "select_prev", "fallback" },
+		-- 	["<Left>"] = {},
+		-- 	["<Right>"] = {},
+		-- 	["<Tab>"] = {
+		-- 		function(cmp)
+		-- 			return cmp.is_visible() and cmp.accept({ index = cmp.get_selected_item_idx() or 1 })
+		-- 		end,
+		-- 		"fallback"
+		-- 	}
+		-- },
+		-- signature = {
+		-- 	enabled = true,
+		-- 	trigger = {
+		-- 		show_on_insert = true,
+		-- 		show_on_keyword = true
+		-- 	},
+		-- 	window = {
+		-- 		max_width = 50,
+		-- 		show_documentation = true,
+		-- 		winblend = 70
+		-- 	}
+		-- },
+		-- sources = {
+		-- 	default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: lsp scope higher than buffer
+		-- 	per_filetype = {
+		-- 		codecompanion = { "codecompanion" }
+		-- 	},
+		-- 	providers = {
+		-- 		buffer = {
+		-- 			name = "buffer",
+		-- 			score_offset = 100,
+		-- 			override = {
+		-- 				-- enabled = function() -- FIX: not working
+		-- 				-- 	local utils = require("blink.cmp.sources.lib.utils")
+		-- 				-- 	return
+		-- 				-- 		not utils.is_command_line()
+		-- 				-- 		or utils.is_command_line({ "/", "?" })
+		-- 				-- 		-- or utils.in_ex_context(require("blink.cmp.sources.cmdline.constants").ex_search_commands)
+		-- 				-- end
+		-- 			}
+		-- 		},
+		-- 		cmdline = {
+		-- 			name = "cmdline",
+		-- 			override = {
+		-- 				get_trigger_characters = function(self)
+		-- 					local triggers = self:get_trigger_characters()
+		-- 					table.insert(triggers, "\\")
+		-- 					return triggers
+		-- 				end
+		-- 			}
+		-- 		},
+		-- 		lazydev = {
+		-- 			name = "LazyDev",
+		-- 			module = "lazydev.integrations.blink"
+		-- 		},
+		-- 		path = {
+		-- 			name = "path",
+		-- 			transform_items = function(_, items)
+		-- 				for _, item in pairs(items) do
+		-- 					item.label = item.label:gsub("/", "\\")
+		-- 					item.insertText = item.insertText:gsub("/", "\\")
+		-- 					item.textEdit.newText = item.textEdit.newText:gsub("/", "\\")
+		-- 				end
+		-- 				return items
+		-- 			end
+		-- 		},
+		-- 		ripgrep = {
+		-- 			module = "blink-ripgrep",
+		-- 			name = "ripgrep",
+		-- 			async = true,
+		-- 			timeout_ms = 500,
+		-- 			enabled = function()
+		-- 				return not rg_disabled_dirs[get_buf_dir()]
+		-- 			end,
+		-- 			override = {
+		-- 				get_completions = function(self, context, callback)
+		-- 					local start_time = vim.loop.hrtime()
+		-- 					return self:get_completions(context, function(response)
+		-- 						track_rg_time(start_time, context.bufnr)
+		-- 						callback(response)
+		-- 					end)
+		-- 				end
+		-- 			},
+		-- 			---@module "blink-ripgrep"
+		-- 			---@type blink-ripgrep.Options
+		-- 			opts = {
+		-- 				backend = {
+		-- 					ripgrep = {
+		-- 						max_filesize = "300K",
+		-- 						search_casing = "--smart-case",
+		-- 						ignore_paths = { "C:\\Users\\aloknigam", "D:\\OneDrive.Storage" }
+		-- 					},
+		-- 					use = "gitgrep-or-ripgrep"
+		-- 				}
+		-- 			}
+		-- 		},
+		-- 		snippets = {
+		-- 			name = "snippet"
+		-- 		}
+		-- 	}
+		-- }
 	}
 }
 -- <~>
