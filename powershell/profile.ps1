@@ -25,6 +25,7 @@ if ($(_IsShellInteractive) -eq $false) {
 # ╭─────────────────╮
 # │ Themes Settings │
 # ╰─────────────────╯
+# FEAT(ui): design inspirations from https://fluent2.microsoft.design and https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
 $catppuccin_latte = @{
     Base = "#EFF1F5"
     Blue = "#1E66F5"
