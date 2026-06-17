@@ -218,16 +218,15 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
         $git_status = git status --short
 
         if ($git_status) {
-            # Send ballon notification
-            Add-Type -AssemblyName System.Windows.Forms
-            $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
-            $path = (Get-Process -id $pid).Path
-            $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
-            $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
-            $balmsg.BalloonTipText = " "
-            $balmsg.BalloonTipTitle = $git_status.ToString()
-            $balmsg.Visible = $true
-            $balmsg.ShowBalloonTip(20000)
+            # Send toast notification via WinRT
+            $toast_text = ($git_status -join [char]10)
+            powershell.exe -NoProfile -Command "& {
+                [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
+                [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom, ContentType = WindowsRuntime] | Out-Null
+                `$xml = [Windows.Data.Xml.Dom.XmlDocument]::new()
+                `$xml.LoadXml('<toast><visual><binding template=""ToastGeneric""><text>Dotfiles</text><text>$toast_text</text></binding></visual></toast>')
+                [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Microsoft.WindowsTerminal_8wekyb3d8bbwe!App').Show([Windows.UI.Notifications.ToastNotification]::new(`$xml))
+            }"
 
             $dt = Get-Date
             git add .
