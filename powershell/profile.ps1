@@ -217,16 +217,16 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
         git pull
         $git_status = git status --short
 
-        Add-Type -AssemblyName System.Windows.Forms
-        $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
-        $path = (Get-Process -id $pid).Path
-        $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
-        $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
-        $balmsg.BalloonTipText = " "
-        $balmsg.BalloonTipTitle = $git_status.ToString()
-        $balmsg.Visible = $true
-        $balmsg.ShowBalloonTip(20000)
         if ($git_status) {
+            Add-Type -AssemblyName System.Windows.Forms
+                $global:balmsg = New-Object System.Windows.Forms.NotifyIcon
+                $path = (Get-Process -id $pid).Path
+                $balmsg.Icon = [System.Drawing.Icon]::ExtractAssociatedIcon($path)
+                $balmsg.BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Info
+                $balmsg.BalloonTipText = " "
+                $balmsg.BalloonTipTitle = $git_status.ToString()
+                $balmsg.Visible = $true
+                $balmsg.ShowBalloonTip(20000)
             $dt = Get-Date
             git add .
             git commit -m "Updated at $dt"
