@@ -224,7 +224,7 @@ if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
                 [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
                 [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom, ContentType = WindowsRuntime] | Out-Null
                 `$xml = [Windows.Data.Xml.Dom.XmlDocument]::new()
-                `$xml.LoadXml('<toast><visual><binding template=""ToastGeneric""><text>Dotfiles</text><text>$toast_text</text></binding></visual></toast>')
+                `$xml.LoadXml('<toast><visual><binding template=""ToastGeneric""><text>Dotfiles Update</text><text>$toast_text</text></binding></visual></toast>')
                 [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Microsoft.WindowsTerminal_8wekyb3d8bbwe!App').Show([Windows.UI.Notifications.ToastNotification]::new(`$xml))
             }"
 
