@@ -489,6 +489,7 @@ function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Wor
 
 # ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
+# BUG: does not work for gc -b "branch"
 function gc {
     param(
         [Parameter(Position = 0)]
