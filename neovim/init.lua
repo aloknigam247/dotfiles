@@ -4723,7 +4723,7 @@ addPlugin {
 	"folke/snacks.nvim",
 	---@type snacks.Config
 	opts = {
-		lazygit = {
+		lazygit = { -- FIX: not picking catppuccin colors
 			theme = {
 				[241]                      = { fg = "Special" },
 				activeBorderColor          = { fg = "Function", bold = true },
