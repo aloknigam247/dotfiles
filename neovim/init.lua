@@ -799,6 +799,8 @@ end, { desc = "Bold" })
 -- <~>
 -- Misc</>
 -------
+-- FEAT: enable _core.ui2 https://neovim.io/doc/user/lua/#ui2
+-- FEAT: vim.ui.img https://neovim.io/doc/user/lua/#_lua-module%3a-vim.ui.img
 vim.cmd[[
 if executable("fd")
 	func FindFiles(cmdarg, cmdcomplete)
