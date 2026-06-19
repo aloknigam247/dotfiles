@@ -27,6 +27,20 @@
     "showCodeChanges": true,
     "showUsername": false,
     "showSandbox": true,
+    "showYolo": false,
     "showCustom": true
+  },
+  "beep": true,
+  "beepOnSchedule": true,
+  "compactPaste": true,
+  "mouse": true,
+  "remoteSessions": true,
+  "renderMarkdown": true,
+  "showReasoning": true,
+  "tabs": {
+    "enabled": false
+  },
+  "voice": {
+    "enabled": false
   }
 }
