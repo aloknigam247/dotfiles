@@ -502,7 +502,7 @@ local function getTSInstalled()
 	-- collect treesitter languages from nvim-treesitter and runtime path
 	for _, path in ipairs(
 		vim.fn.split(
-			vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "nvim-treesitter") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
+			vim.fs.joinpath(vim.fn.fnamemodify(vim.v.progpath, ":h:h"), "lib", "nvim") .. "," .. vim.fs.joinpath(vim.fn.stdpath("data"), "ts-install") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
 			","
 		)
 	) do
@@ -626,15 +626,20 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
+vim.o.updatetime = 2000
+
 vim.api.nvim_create_autocmd(
 	"CursorHold", {
 		pattern = "*",
 		desc = "Load Treesitter on CursorHold for installed languages",
 		callback = function()
 			if vim.tbl_contains(getTSInstalled(), vim.o.filetype) then
-				vim.cmd("Lazy load nvim-treesitter")
-				vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
-				return true
+				local max_filesize = 1000 * 1024
+				local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(0))
+				if not (ok and stats and stats.size > max_filesize) then
+					vim.treesitter.start()
+					vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
+				end
 			end
 		end
 	}
@@ -2108,7 +2113,7 @@ vim.keymap.set("n", "zz", function()
 	vim.wo.foldcolumn = "1"
 	if vim.wo.foldmethod ~= "marker" and isTsAttached() then
 		vim.wo.foldmethod = "expr"
-		vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+		vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 	end
 	vim.wo.foldlevel = 1
 
@@ -4140,11 +4145,7 @@ addPlugin {
 }
 
 -- FEAT(highlight): for powershell and csharp like vscode for comments
--- BUG: multiple errors after sync https://www.qu8n.com/posts/treesitter-migration-guide-for-nvim-0-12
--- FEAT: https://github.com/lewis6991/ts-install.nvim
--- FEAT: https://github.com/romus204/tree-sitter-manager.nvim
 addPlugin {
-	-- FIX: treesitter issues
 	"nvim-treesitter/nvim-treesitter",
 	branch = "main",
 	module = false,
@@ -4152,33 +4153,22 @@ addPlugin {
 		"utilyre/sentiment.nvim",
 		config = true,
 		init = function() vim.g.loaded_matchparen = 1 end,
-	}},
+	}}
+}
+
+addPlugin {
+	"lewis6991/ts-install.nvim",
+	cmd = "TS",
+	dependencies = "nvim-treesitter/nvim-treesitter",
 	opts = {
-		auto_install = false,
-		ensure_installed = { "json", "markdown", "markdown_inline", "powershell", "python" },
-		highlight = {
-			additional_vim_regex_highlighting = false,
-			disable = function(_, buf)
-				local max_filesize = 1000 * 1024 -- 1000 KB
-				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-				if ok and stats and stats.size > max_filesize then
-					return true
-				end
-			end,
-			enable = true
-		},
-		ignore_install = {},
-		matchup = {
-			enabled = false
-		},
-		modules = {},
-		sync_install = false
-	}
+		-- ensure_install = { "json", "powershell", "python" },
+	},
 }
 
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-context",
 	cmd = "TSContext",
+	dependencies = "nvim-treesitter/nvim-treesitter",
 	opts = {
 		multiwindow = true
 	}
@@ -4186,6 +4176,7 @@ addPlugin {
 
 addPlugin {
 	"HiPhish/rainbow-delimiters.nvim",
+	dependencies = "nvim-treesitter/nvim-treesitter",
 	event = "User TSLoaded",
 	config = function()
 		require("rainbow-delimiters.setup").setup({
@@ -4203,6 +4194,7 @@ addPlugin {
 addPlugin {
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	branch = "main",
+	dependencies = "nvim-treesitter/nvim-treesitter",
 	keys = {
 		{ "<Leader>sn", mode = "n", desc = "swap with next parameter" },
 		{ "<Leader>sp", mode = "n", desc = "swap with previous parameter" },
@@ -4211,7 +4203,6 @@ addPlugin {
 		{ "am", mode = { "o", "v" }, desc = "select around method" },
 		{ "im", mode = { "o", "v" }, desc = "select inner method" }
 	},
-	main = "nvim-treesitter.configs",
 	opts = {
 		textobjects = {
 			lsp_interop = {
@@ -4278,6 +4269,7 @@ addPlugin {
 			use_colorpalette = true,
 		})
 	end,
+	dependencies = "nvim-treesitter/nvim-treesitter",
 	event = "User TSLoaded"
 }
 -- <~>
