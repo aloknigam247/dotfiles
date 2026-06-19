@@ -2479,11 +2479,18 @@ addPlugin {
 }
 
 addPlugin {
-	"dlyongemallo/diffview.nvim", -- FEAT: high current selected file with background, by cursorline or bg color
+	"dlyongemallo/diffview.nvim",
 	cmd = "DiffviewOpen",
 	config = function()
 		local actions = require("diffview.actions")
 		require("diffview").setup({
+			file_panel = {
+				win_config = {
+					win_opts = {
+						cursorlineopt = "both"
+					}
+				}
+			},
 			icons = {
 				folder_closed = icons.folder_closed,
 				folder_open = icons.folder_open,
