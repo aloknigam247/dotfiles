@@ -27,7 +27,7 @@
     "showCodeChanges": true,
     "showUsername": false,
     "showSandbox": true,
-    "showYolo": false,
+    "showYolo": true,
     "showCustom": true
   },
   "beep": true,
