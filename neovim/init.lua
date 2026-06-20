@@ -804,7 +804,6 @@ end, { desc = "Bold" })
 -- <~>
 -- Misc</>
 -------
--- FEAT: enable _core.ui2 https://neovim.io/doc/user/lua/#ui2
 -- FEAT: vim.ui.img https://neovim.io/doc/user/lua/#_lua-module%3a-vim.ui.img
 vim.cmd[[
 if executable("fd")
@@ -1627,7 +1626,7 @@ end
 addPlugin {
 	"saghen/blink.cmp",
 	enabled = true,
-	build = function()
+	build = function() -- FIX: throws error
 		require('blink.cmp').build():pwait()
 	end,
 	config = function(_, cfg)
