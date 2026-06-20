@@ -316,7 +316,6 @@ function _IsSecuredWorkspace {
 # ╰───────────────────╯
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
-Set-Alias -Name mdview -Value D:\mdview\target\release\mdview.exe
 function bg   { wt -f -d $PWD.Path --colorScheme $current_theme pwsh -NoProfile -C "$args" }
 function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
@@ -329,6 +328,7 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -LS --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
+function mdview { D:\mdview\target\release\mdview.exe $args }
 
 function ai {
     git rev-parse --is-inside-work-tree 2>$null | Out-Null

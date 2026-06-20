@@ -10,8 +10,9 @@ FEAT(copilot): git pull or push indicator in statusline
 FEAT(copilot): mapping to delete word backword
 FEAT(mcp): persistant terminal
 FEAT(native tools): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
+FEAT(ppt): see d2 diagrams are rendering and how if cli can be used 
 FEAT(security): Scan all installations for security related
 REFACTOR(claude): remove claude folder and remove linked files
+REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive
-REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
