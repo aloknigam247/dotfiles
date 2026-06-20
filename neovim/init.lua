@@ -626,8 +626,6 @@ vim.api.nvim_create_autocmd(
 	}
 )
 
-vim.o.updatetime = 2000
-
 vim.api.nvim_create_autocmd(
 	"CursorHold", {
 		pattern = "*",

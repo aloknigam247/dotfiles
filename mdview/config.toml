@@ -1,0 +1,39 @@
+# mdview configuration
+# Reload mdview after editing.
+
+[code]
+tab_width = 2
+
+[toc]
+position = "floating-center"
+depth = 3
+
+[codemap]
+enabled = false
+
+[theme]
+mode  = "auto"
+light = "catppuccin-latte"
+dark  = "catppuccin-mocha"
+
+[keymap]
+# Bindings are opt-in. Uncomment a line to enable an action.
+# Format: "Ctrl+Shift+Alt+Super+<Key>"
+# Modifiers (any order, optional): Ctrl, Shift, Alt, Super
+# Keys: A-Z, 0-9, or named: Down, Up, Left, Right, Enter, Tab, Esc, Space,
+#       Backspace, Delete, Home, End, PageUp, PageDown, F1..F12
+#
+# Available actions:
+#   quit            — close the mdview window / exit the pager
+#   toggle-bionic   — toggle bionic-reading transform (bolden first half of each word)
+#   toggle-codemap  — show / hide the right-edge minimap
+#   toggle-theme    — flip between light and dark themes
+#   toggle-toc      — show / hide the floating table of contents
+
+quit = "Ctrl+Q"
+toggle-theme = "Ctrl+T"
+
+# New (commented; opt-in):
+toggle-toc      = "Ctrl+B"
+toggle-codemap  = "Ctrl+M"
+toggle-bionic   = "Ctrl+Shift+B"
