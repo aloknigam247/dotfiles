@@ -1,3 +1,4 @@
+FEAT(autosetup): read all requirements once and then install them in groups or parallel and merge duplicates
 FEAT(code review): See review comments in neovim and accept, reject, comment on them
 FEAT(completer): completions for copilot command
 FEAT(copilot): Markdown max width should be 100 for most stuffs
@@ -10,7 +11,7 @@ FEAT(copilot): git pull or push indicator in statusline
 FEAT(copilot): mapping to delete word backword
 FEAT(mcp): persistant terminal
 FEAT(native tools): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
-FEAT(ppt): see d2 diagrams are rendering and how if cli can be used 
+FEAT(ppt): see d2 diagrams are rendering and if cli can be used now
 FEAT(security): Scan all installations for security related
 REFACTOR(claude): remove claude folder and remove linked files
 REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
