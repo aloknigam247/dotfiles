@@ -22,5 +22,6 @@ $files = @{
     "en.utf-8.add" = "$env:XDG_CONFIG_HOME\nvim\spell\en.utf-8.add";
     "init.lua" = "$env:XDG_CONFIG_HOME\nvim\lua\init.lua";
     "init.vim" = "$env:XDG_CONFIG_HOME\nvim\init.vim";
+    "queries" = "$env:XDG_CONFIG_HOME\nvim\queries";
     "snippets" = "$env:XDG_CONFIG_HOME\nvim\snippets"
 }

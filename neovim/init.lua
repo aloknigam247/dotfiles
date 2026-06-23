@@ -499,10 +499,10 @@ local function getTSInstalled()
 		["powershell"] = "ps1"
 	}
 
-	-- collect treesitter languages from nvim-treesitter and runtime path
+	-- collect treesitter languages from bundled parsers and runtime path.
 	for _, path in ipairs(
 		vim.fn.split(
-			vim.fs.joinpath(vim.fn.fnamemodify(vim.v.progpath, ":h:h"), "lib", "nvim") .. "," .. vim.fs.joinpath(vim.fn.stdpath("data"), "ts-install") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
+			vim.fs.joinpath(vim.fn.fnamemodify(vim.v.progpath, ":h:h"), "lib", "nvim") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
 			","
 		)
 	) do
@@ -635,6 +635,10 @@ vim.api.nvim_create_autocmd(
 				local max_filesize = 1000 * 1024
 				local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(0))
 				if not (ok and stats and stats.size > max_filesize) then
+					if not Treesitter_loaded then
+						require("lazy").load({ plugins = { "nvim-treesitter" } })
+						Treesitter_loaded = true
+					end
 					vim.treesitter.start()
 					vim.api.nvim_exec_autocmds("User", { pattern = "TSLoaded" })
 				end
@@ -802,7 +806,6 @@ end, { desc = "Bold" })
 -- <~>
 -- Misc</>
 -------
--- FEAT: vim.ui.img https://neovim.io/doc/user/lua/#_lua-module%3a-vim.ui.img
 vim.cmd[[
 if executable("fd")
 	func FindFiles(cmdarg, cmdcomplete)
@@ -1346,8 +1349,6 @@ addPlugin {
 					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"           }), group = "Constant"   },
 					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"           }), group = "@variable"  },
 					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"          }), group = "@keyword"   },
-					lua_doc           = { pattern = patternFilter({ filetype = "lua"   , pattern = "%s*%-%-%-%s?()@%w+()" }), group = "Constant"   },
-					lua_heading       = { pattern = patternFilter({ filetype = "lua"   , pattern = "━.*━"                 }), group = "Constant"   },
 					python_doc_args   = { pattern = patternFilter({ filetype = "python", pattern = "Args:"                }), group = "@type"      },
 					python_doc_param  = { pattern = patternFilter({ filetype = "python", pattern = "    [%a%d_]+: "       }), group = "@parameter" },
 					python_doc_raises = { pattern = patternFilter({ filetype = "python", pattern = "Raises:"              }), group = "Statement"  },
@@ -1411,8 +1412,6 @@ addPlugin {
 	}
 }
 
--- https://github.com/OXY2DEV/tree-sitter-comment
--- FEAT: docstring colors lua
 -- FEAT: docstring colors python
 -- FEAT: docstring colors csharp
 -- FEAT: docstring colors TODO ?
@@ -4158,7 +4157,8 @@ addPlugin {
 	cmd = "TS",
 	dependencies = "nvim-treesitter/nvim-treesitter",
 	opts = {
-		-- ensure_install = { "json", "powershell", "python" },
+		ensure_install = { "c_sharp", "luadoc" },
+		install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "site")
 	},
 }
 
@@ -4173,7 +4173,6 @@ addPlugin {
 
 addPlugin {
 	"HiPhish/rainbow-delimiters.nvim",
-	dependencies = "nvim-treesitter/nvim-treesitter",
 	event = "User TSLoaded",
 	config = function()
 		require("rainbow-delimiters.setup").setup({
@@ -4266,7 +4265,6 @@ addPlugin {
 			use_colorpalette = true,
 		})
 	end,
-	dependencies = "nvim-treesitter/nvim-treesitter",
 	event = "User TSLoaded"
 }
 -- <~>
@@ -5196,6 +5194,7 @@ addPlugin {
 		}
 	}
 }
+-- FEAT: vim.ui.img https://neovim.io/doc/user/lua/#_lua-module%3a-vim.ui.img
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
