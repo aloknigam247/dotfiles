@@ -1413,8 +1413,6 @@ addPlugin {
 }
 
 -- FEAT: docstring colors python
--- FEAT: docstring colors csharp
--- FEAT: docstring colors TODO ?
 
 addPlugin {
 	"t9md/vim-quickhl",
@@ -4559,7 +4557,7 @@ addPlugin {
 
 addPlugin {
 	"delphinus/inspect-extmarks.nvim",
-	cmd = "InspectExtmarks",
+	cmd = "InspectExtmarks", -- FIX: error in invocation
 	config = true
 }
 
