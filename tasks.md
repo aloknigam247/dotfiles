@@ -1,3 +1,4 @@
+FEAT(ai): instruction to segregate which diagram provider to use for which case. mermaid, draw.io, d2, plotly
 FEAT(autosetup): read all requirements once and then install them in groups or parallel and merge duplicates
 FEAT(code review): See review comments in neovim and accept, reject, comment on them
 FEAT(completer): completions for copilot command
