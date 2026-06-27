@@ -18,3 +18,6 @@ REFACTOR(claude): remove claude folder and remove linked files
 REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive
+
+FEAT(edge): create auto theme switch edge with catppuccin colors
+
