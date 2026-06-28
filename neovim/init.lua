@@ -1345,7 +1345,7 @@ addPlugin {
 			highlighters = (function()
 				local config = {
 					debugprint        = { pattern = ".*" .. debug_tag .. ".*", group = "DebugPrintLine", extmark_opts = { sign_text = "", sign_hl_group = "DebugPrintSignHl" } },
-					hex_color         = hipatterns.gen_highlighter.hex_color({ style = "inline", inline_text = " " }),
+					hex_color         = hipatterns.gen_highlighter.hex_color({ style = "inline", inline_text = " " }),  -- FIX: bg should merge with visual
 					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"           }), group = "Constant"   },
 					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"           }), group = "@variable"  },
 					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"          }), group = "@keyword"   },
@@ -1411,8 +1411,6 @@ addPlugin {
 		{ "]t", function() require("todo-comments").jump_next(); vim.cmd("normal! zv") end, desc = "Next TODO" }
 	}
 }
-
--- FEAT: docstring colors python
 
 addPlugin {
 	"t9md/vim-quickhl",
@@ -4155,7 +4153,7 @@ addPlugin {
 	cmd = "TS",
 	dependencies = "nvim-treesitter/nvim-treesitter",
 	opts = {
-		ensure_install = { "c_sharp", "luadoc" },
+		ensure_install = { "c_sharp", "luadoc", "xml" },
 		install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "site")
 	},
 }
