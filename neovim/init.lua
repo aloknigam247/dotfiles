@@ -1450,7 +1450,6 @@ local function applyColorscheme()
 	end
 end
 
--- FEAT: check if catppuccin follows https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
