@@ -698,6 +698,7 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
 # ─[ git tab completion ]──────────────────────────────────────────────
 # Must register after PSFzf — PSFzf registers its own broken `git` completer
 # (depends on posh-git's Expand-GitCommand). Re-registering here wins.
+# FIX: remove origin prefix
 Import-Module GitCompleter -ErrorAction SilentlyContinue
 Register-GitCompleter
 
