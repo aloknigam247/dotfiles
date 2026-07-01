@@ -44,5 +44,11 @@
     "enabled": true,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
-  "model": "auto"
+  "effortLevel": "high",
+  "subagents": {
+    "disabledSubagents": [
+      "explore"
+    ]
+  },
+  "contextTier": "long_context"
 }
