@@ -1345,7 +1345,7 @@ addPlugin {
 			highlighters = (function()
 				local config = {
 					debugprint        = { pattern = ".*" .. debug_tag .. ".*", group = "DebugPrintLine", extmark_opts = { sign_text = "", sign_hl_group = "DebugPrintSignHl" } },
-					hex_color         = hipatterns.gen_highlighter.hex_color({ style = "inline", inline_text = " " }),  -- FIX: bg should merge with visual
+					hex_color         = hipatterns.gen_highlighter.hex_color({ style = "inline", inline_text = " ", priority = 1000 }),
 					cpp_doc_brief     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @brief .*"           }), group = "Constant"   },
 					cpp_doc_param     = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @param .*"           }), group = "@variable"  },
 					cpp_doc_return    = { pattern = patternFilter({ filetype = "cpp"   , pattern = " @return .*"          }), group = "@keyword"   },
@@ -2039,6 +2039,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FEAT: what about new dir file type https://www.reddit.com/r/neovim/comments/1ugzc40/icons_for_new_dir_plugin/
 FileTypeActions = {
 	["NvimTree"] = function(_)
 		vim.cmd("setlocal statuscolumn=")
