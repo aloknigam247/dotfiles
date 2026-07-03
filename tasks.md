@@ -17,6 +17,7 @@ FEAT(native tools): The commands are run in a peristant terminal, which can be r
 FEAT(ppt): see d2 diagrams are rendering and if cli can be used now
 FEAT(pwsh): command line filter to remove commands optons like copilot prompts, git commit message, vim line number
 FEAT(security): Scan all installations for security related
+FIX(setup): git-completer not ported
 REFACTOR(claude): remove claude folder and remove linked files
 REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md

@@ -1618,7 +1618,7 @@ end
 addPlugin {
 	"saghen/blink.cmp",
 	enabled = true,
-	build = function() -- FIX: throws error
+	build = function()
 		require('blink.cmp').build():pwait()
 	end,
 	config = function(_, cfg)
@@ -1630,22 +1630,21 @@ addPlugin {
 			vim.api.nvim_set_hl(0, "BlinkCmpKind" .. kind_name, h)
 		end
 
-		-- FIX: enable
-		-- -- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
-		-- local original = require("blink.cmp.completion.list").show
-		-- require("blink.cmp.completion.list").show = function(ctx, items_by_source) ---@diagnostic disable-line: duplicate-set-field
-		-- 	local seen = {}
-		-- 	local function filter(item)
-		-- 		if seen[item.label] then return false end
-		-- 		seen[item.label] = true
-		-- 		return true
-		-- 	end
-		-- 	for id in vim.iter(cfg.sources.default) do
-		-- 		items_by_source[id] = items_by_source[id] and vim.iter(items_by_source[id]):filter(filter):totable()
-		-- 	end
-		-- 	return original(ctx, items_by_source)
-		-- end
-		-- -- ╰─────────────────────────────────────────────────────────────────────────────────╯
+		-- ╭─ HACK: to remove deuplicates : https://github.com/Saghen/blink.cmp/issues/1222 ─╮
+		local original = require("blink.cmp.completion.list").show
+		require("blink.cmp.completion.list").show = function(ctx, items_by_source) ---@diagnostic disable-line: duplicate-set-field
+			local seen = {}
+			local function filter(item)
+				if seen[item.label] then return false end
+				seen[item.label] = true
+				return true
+			end
+			for id in vim.iter(cfg.sources.default) do
+				items_by_source[id] = items_by_source[id] and vim.iter(items_by_source[id]):filter(filter):totable()
+			end
+			return original(ctx, items_by_source)
+		end
+		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
 
 		-- -- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
 		local context = require('blink.cmp.completion.trigger.context')
@@ -1662,7 +1661,6 @@ addPlugin {
 	dependencies = { "saghen/blink.lib", "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
 	---@type blink.cmp.Config
-	-- FIX: enable
 	opts = {
 		appearance = {
 			use_nvim_cmp_as_default = true
@@ -1688,7 +1686,7 @@ addPlugin {
 					}
 				}
 			},
-			keymap = { -- FIX: disable <C-n> <C-p>
+			keymap = {
 				["<Down>"] = { "fallback" },
 				["<Up>"] = { "fallback" },
 				["<Left>"] = { },
@@ -1827,7 +1825,7 @@ addPlugin {
 			}
 		},
 		sources = {
-			default = { "lazydev", "buffer", "lsp", "path", "ripgrep" }, -- FEAT: lsp scope higher than buffer
+			default = { "lazydev", "lsp", "path", "buffer", "ripgrep" },
 			providers = {
 				buffer = {
 					name = "buffer",
