@@ -1646,7 +1646,7 @@ addPlugin {
 		end
 		-- ╰─────────────────────────────────────────────────────────────────────────────────╯
 
-		-- -- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
+		-- ╭─ HACK: to replace multiple \\ with single \ ─────────────╮
 		local context = require('blink.cmp.completion.trigger.context')
 		context.get_line_orig = context.get_line ---@diagnostic disable-line: inject-field
 		context.get_line = function(num) ---@diagnostic disable-line: duplicate-set-field
@@ -1656,7 +1656,7 @@ addPlugin {
 			end
 			return context.get_line_orig(num)
 		end
-		-- -- ╰──────────────────────────────────────────────────────────╯
+		-- ╰──────────────────────────────────────────────────────────╯
 	end,
 	dependencies = { "saghen/blink.lib", "mikavilpas/blink-ripgrep.nvim", "xzbdmw/colorful-menu.nvim" },
 	event = { "CmdlineEnter", "InsertEnter" },
@@ -1671,6 +1671,7 @@ addPlugin {
 					enabled = true
 				},
 				list = {
+					max_items = 20,
 					selection = {
 						auto_insert = true,
 						preselect = false
@@ -1713,6 +1714,7 @@ addPlugin {
 				show_without_selection = true
 			},
 			list = {
+				max_items = 20,
 				selection = {
 					auto_insert = false,
 					preselect = false
@@ -1829,19 +1831,20 @@ addPlugin {
 			providers = {
 				buffer = {
 					name = "buffer",
+					max_items = 5,
 					score_offset = 100,
 					override = {
-						-- enabled = function() -- FIX: not working
-						-- 	local utils = require("blink.cmp.sources.lib.utils")
-						-- 	return
-						-- 		not utils.is_command_line()
-						-- 		or utils.is_command_line({ "/", "?" })
-						-- 		-- or utils.in_ex_context(require("blink.cmp.sources.cmdline.constants").ex_search_commands)
-						-- end
+						enabled = function(self)
+							local utils = require("blink.cmp.sources.cmdline.utils")
+							-- return not utils.is_command_line() or self:is_search_context()
+							return true
+						end
 					}
 				},
 				cmdline = {
 					name = "cmdline",
+					max_items = 5,
+					score_offset = 200,
 					override = {
 						get_trigger_characters = function(self)
 							local triggers = self:get_trigger_characters()
@@ -1852,10 +1855,16 @@ addPlugin {
 				},
 				lazydev = {
 					name = "LazyDev",
+					max_items = 5,
 					module = "lazydev.integrations.blink"
+				},
+				lsp = {
+					name = "LSP",
+					max_items = 5
 				},
 				path = {
 					name = "path",
+					max_items = 5,
 					transform_items = function(_, items)
 						for _, item in pairs(items) do
 							item.label = item.label:gsub("/", "\\")
@@ -1869,6 +1878,7 @@ addPlugin {
 					module = "blink-ripgrep",
 					name = "ripgrep",
 					async = true,
+					max_items = 5,
 					timeout_ms = 1000,
 					enabled = function()
 						return not rg_disabled_dirs[get_buf_dir()]
@@ -1896,7 +1906,8 @@ addPlugin {
 					}
 				},
 				snippets = {
-					name = "snippet"
+					name = "snippet",
+					max_items = 5
 				}
 			}
 		}
@@ -1936,7 +1947,14 @@ addPlugin {
 			toggle_comment_debug_prints = nil,
 			delete_debug_prints = nil
 		},
-		filetypes = { -- FIX: values for powershell
+		filetypes = {
+			["ps1"] = {
+				left = 'Write-Host -ForegroundColor Black -BackgroundColor Yellow "',
+				left_var = 'Write-Host -ForegroundColor Black -BackgroundColor Yellow "',
+				mid_var = "$(",
+				right = '"',
+				right_var = ')"',
+			},
 			["python"] = {
 				left = 'print("',
 				left_var = 'print(f"',
@@ -1980,7 +1998,7 @@ addPlugin {
 		vim.cmd("Debugprint resetcounter")
 	end,
 	keys = {
-		{ "<Leader>dP",  ft = getTSInstalled(), desc = "Plain debug above current line" },
+		{ "<Leader>dP",  ft = getTSInstalled(), desc = "Plain debug above current line" }, -- FIX: key maps not laoding
 		{ "<Leader>dc",  ft = getTSInstalled(), desc = "Comment/uncomment all debugprint statements in the current buffer" },
 		{ "<Leader>dd",  ft = getTSInstalled(), desc = "Delete all debugprint statements in the current buffer" },
 		{ "<Leader>dp",  ft = getTSInstalled(), desc = "Plain debug below current line" },
