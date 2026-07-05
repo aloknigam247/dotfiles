@@ -499,13 +499,8 @@ local function getTSInstalled()
 		["powershell"] = "ps1"
 	}
 
-	-- collect treesitter languages from bundled parsers and runtime path.
-	for _, path in ipairs(
-		vim.fn.split(
-			vim.fs.joinpath(vim.fn.fnamemodify(vim.v.progpath, ":h:h"), "lib", "nvim") .. "," .. vim.o.runtimepath, ---@diagnostic disable-line: param-type-mismatch
-			","
-		)
-	) do
+	-- collect treesitter languages from every parser dir on runtimepath.
+	for _, path in ipairs(vim.fn.split(vim.o.runtimepath, ",")) do
 		for file, _ in vim.fs.dir(vim.fs.joinpath(path, "parser")) do
 			local ftype = nil
 			if file:sub(-3) == ".so" then
@@ -1998,7 +1993,7 @@ addPlugin {
 		vim.cmd("Debugprint resetcounter")
 	end,
 	keys = {
-		{ "<Leader>dP",  ft = getTSInstalled(), desc = "Plain debug above current line" }, -- FIX: key maps not laoding
+		{ "<Leader>dP",  ft = getTSInstalled(), desc = "Plain debug above current line" },
 		{ "<Leader>dc",  ft = getTSInstalled(), desc = "Comment/uncomment all debugprint statements in the current buffer" },
 		{ "<Leader>dd",  ft = getTSInstalled(), desc = "Delete all debugprint statements in the current buffer" },
 		{ "<Leader>dp",  ft = getTSInstalled(), desc = "Plain debug below current line" },
