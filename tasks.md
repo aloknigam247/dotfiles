@@ -17,6 +17,7 @@ FEAT(native tools): The commands are run in a peristant terminal, which can be r
 FEAT(ppt): see d2 diagrams are rendering and if cli can be used now
 FEAT(pwsh): command line filter to remove commands optons like copilot prompts, git commit message, vim line number
 FEAT(security): Scan all installations for security related
+FEAT(skill): create to draw diagrams which tells which diagram to draw from mermaid, drawio, d2
 FIX(setup): git-completer not ported
 REFACTOR(claude): remove claude folder and remove linked files
 REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
