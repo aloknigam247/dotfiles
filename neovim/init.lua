@@ -3012,6 +3012,7 @@ addPlugin {
 	event = "LspAttach *.cpp"
 }
 
+-- FIX: there are 2 diagnostics
 addPlugin {
 	"rachartier/tiny-inline-diagnostic.nvim", -- BUG: does not enable by default
 	event = "DiagnosticChanged",
