@@ -1445,6 +1445,7 @@ local function applyColorscheme()
 	end
 end
 
+-- TODO: validate style guide: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
 addPlugin {
 	"catppuccin/nvim",
 	main = "catppuccin",
@@ -1610,6 +1611,7 @@ local function track_rg_time(start_time, bufnr)
 	end
 end
 
+-- FEAT: https://nvchad.com/docs/features#nvim-cmp_styling
 addPlugin {
 	"saghen/blink.cmp",
 	enabled = true,
