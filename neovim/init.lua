@@ -1611,6 +1611,7 @@ local function track_rg_time(start_time, bufnr)
 	end
 end
 
+-- FIX: completion popup location is not correct
 -- FEAT: https://nvchad.com/docs/features#nvim-cmp_styling
 addPlugin {
 	"saghen/blink.cmp",
