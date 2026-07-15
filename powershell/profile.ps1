@@ -86,17 +86,18 @@ $catppuccin_mocha = @{
 
 # get system theme
 $system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-$terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+# Windows Terminal switches colorScheme via the dark/light object in settings.json natively (1.22+)
+# $terminal_settings = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if ($system_theme.AppsUseLightTheme -eq 1) {
     $env:THEME = "light"
     $current_theme = "Catppuccin Latte"
-    $terminal_theme = "One Half Light"
+    # $terminal_theme = "One Half Light"
     $catppuccin = $catppuccin_latte
     $lazygit_theme = "light.yml"
 } else {
     $env:THEME = "dark"
     $current_theme = "Catppuccin Mocha"
-    $terminal_theme = "One Half Dark"
+    # $terminal_theme = "One Half Dark"
     $catppuccin = $catppuccin_mocha
     $lazygit_theme = "dark.yml"
 }
@@ -118,10 +119,11 @@ Start-Job {
     }
 } | Out-Null
 
-if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
-    sed -i "s/`"colorScheme`": `"Catppuccin .*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
-    sed -i "s/`"colorScheme`": `"One Half .*`"/`"colorScheme`": `"$terminal_theme`"/" $terminal_settings
-}
+# Windows Terminal now handles light/dark colorScheme switching natively (settings.json colorScheme dark/light object)
+# if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+#     sed -i "s/`"colorScheme`": `"Catppuccin .*`"/`"colorScheme`": `"$current_theme`"/" $terminal_settings
+#     sed -i "s/`"colorScheme`": `"One Half .*`"/`"colorScheme`": `"$terminal_theme`"/" $terminal_settings
+# }
 
 # Set theme variables
 $bat_theme = $current_theme
