@@ -1,3 +1,4 @@
+BUG(git): .gitconfig is overriden by MDB and should be ignored there
 FEAT(ai): instruction to segregate which diagram provider to use for which case. mermaid, draw.io, d2, plotly
 FEAT(autosetup): read all requirements once and then install them in groups or parallel and merge duplicates
 FEAT(cmdline): don't save promtps from copilot and file line number for nvim
