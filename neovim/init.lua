@@ -2007,6 +2007,7 @@ addPlugin {
 	}
 }
 
+-- FEAT: dap debugger for C# codes .net framework
 -- https://github.com/byuki/one-small-step-for-vimkind
 -- https://github.com/carriga/nvim-dap-ui
 -- https://github.com/fussenegger/nvim-dap
