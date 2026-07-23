@@ -298,12 +298,6 @@ function _ParseRootArg {
     return @{ RootDir = $root_dir; Args = $filtered }
 }
 
-function _IsSecuredWorkspace {
-    param([string]$dir)
-    $workspaces = @("D:\apps", "D:\dotfiles", "D:\kuber", "D:\qvim")
-    return [bool]($workspaces | Where-Object { $dir.StartsWith($_) })
-}
-
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
@@ -326,12 +320,12 @@ function mdview { D:\mdview\target\release\mdview.exe $args }
 function ai {
     git rev-parse --is-inside-work-tree 2>$null | Out-Null
     if ($LASTEXITCODE -ne 0) {
-        claude @args
+        copilot @args
         return
     }
     $remote_url = git remote get-url origin 2>$null
     if ($remote_url -and $remote_url -match "github\.com") {
-        claude @args
+        copilot @args
     } else {
         agency @args
     }
@@ -355,18 +349,8 @@ function agency {
     }
     $root_dir = $parsed.RootDir
     $env:_AGENCY_ARGS = $parsed.Args -join "`n"
-    $env:_AGENCY_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
 
     wt -f -d $root_dir pwsh -c {
-        if ($env:_AGENCY_SECURED -eq "1") {
-            $sec_workspace = "D:\.claude"
-            $env:CLAUDE_CONFIG_DIR = $sec_workspace
-            $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
-            $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
-            $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
-            $env:COPILOT_HOME = $sec_workspace
-        }
-        Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
         $argList = @()
         if ($env:_AGENCY_ARGS) {
             $argList = [string[]]($env:_AGENCY_ARGS -split "`n")
@@ -385,40 +369,9 @@ function agency {
     }
 
     Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
-    Remove-Item env:_AGENCY_SECURED -ErrorAction SilentlyContinue
 }
 
 # FEAT: copilot wrapper
-function claude {
-    try {
-        $parsed = _ParseRootArg $args
-    } catch {
-        Write-Error $_
-        return
-    }
-    $root_dir = $parsed.RootDir
-    $env:_CLAUDE_ARGS = $parsed.Args -join "`n"
-    $env:_CLAUDE_SECURED = if (_IsSecuredWorkspace $root_dir) { "1" } else { "0" }
-
-    wt -f -d $root_dir pwsh -c {
-        if ($env:_CLAUDE_SECURED -eq "1") {
-            $sec_workspace = "D:\.claude"
-            $env:CLAUDE_CONFIG_DIR = $sec_workspace
-            $env:CLAUDE_CODE_DEBUG_LOGS_DIR = "$sec_workspace\debug"
-            $env:CLAUDE_CODE_PLUGIN_CACHE_DIR = "$sec_workspace\plugins"
-            $env:CLAUDE_CODE_TMPDIR = "$sec_workspace\Temp"
-        }
-        Remove-Item env:_CLAUDE_SECURED -ErrorAction SilentlyContinue
-        $argList = $env:_CLAUDE_ARGS -split "`n"
-        Remove-Item env:_CLAUDE_ARGS -ErrorAction SilentlyContinue
-        claude.exe @argList
-        if ($? -eq $False) { Read-Host -Prompt "Claude exited with error, press any key to exit" }
-    }
-
-    Remove-Item env:_CLAUDE_ARGS -ErrorAction SilentlyContinue
-    Remove-Item env:_CLAUDE_SECURED -ErrorAction SilentlyContinue
-}
-
 function copilot {
     try {
         $parsed = _ParseRootArg $args
@@ -1042,9 +995,6 @@ $env:PSModulePath += ";D:\Dev.aloknigam"
 $env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
 $env:RUFF_CACHE_DIR = "$env:LOCALAPPDATA\Temp"
 $env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0a3:p,e0b0-e0b3:p,e0b4-e0c8:p,e0ca:p,e0cc-e0d4:p,e200-e2a9:p,e300-e3e3:p,e5fa-e6a6:p,e700-e7c5:p,ea60-ebeb:p,f000-f2e0:p,f300-f32f:p,f400-f532:p,f500-fd46:p,f0001-f1af0:p" # fix less nerd fond rendering
-
-# ─[ Claude Settings ]─────────────────────────────────────────────────
-$env:CLAUDE_CODE_SHELL = "pwsh"
 
 # ─[ Copilot Settings ]────────────────────────────────────────────────
 $env:COPILOT_AUTO_UPDATE = "false"

@@ -21,7 +21,6 @@ FEAT(security): Scan all installations for security related
 FEAT(skill): create to draw diagrams which tells which diagram to draw from mermaid, drawio, d2
 FEAT(skill): see plantuml diagrams are rendering if plantuml can be used
 FIX(setup): git-completer not ported
-REFACTOR(claude): remove claude folder and remove linked files
 REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive

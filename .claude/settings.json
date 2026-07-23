@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "mcp__bluebird__search_code",
-      "mcp__bluebird__search_file_paths"
-    ]
-  }
-}

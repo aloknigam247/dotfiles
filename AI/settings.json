@@ -13,7 +13,9 @@
     "https://onedrive.visualstudio.com",
     "https://api.github.com",
     "https://github.com",
-    "https://raw.githubusercontent.com"
+    "https://raw.githubusercontent.com",
+    "https://aka.ms",
+    "https://eng.ms"
   ],
   "experimental": true,
   "footer": {
@@ -38,17 +40,11 @@
   "renderMarkdown": true,
   "showReasoning": true,
   "tabs": {
-    "enabled": false
+    "enabled": true
   },
   "voice": {
     "enabled": true,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
-  "effortLevel": "high",
-  "subagents": {
-    "disabledSubagents": [
-      "explore"
-    ]
-  },
-  "contextTier": "long_context"
+  "subagents": {}
 }
