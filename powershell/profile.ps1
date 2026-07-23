@@ -371,7 +371,6 @@ function agency {
     Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 }
 
-# FEAT: copilot wrapper
 function copilot {
     try {
         $parsed = _ParseRootArg $args
@@ -382,6 +381,7 @@ function copilot {
     $root_dir = $parsed.RootDir
     $env:_COPILOT_ARGS = $parsed.Args -join "`n"
 
+    # FEAT: invoke copilot in the same wt named with copilot in new tab, so that all copilots are in a same window
     wt -f -d $root_dir pwsh -c {
         $argList = @()
         if ($env:_COPILOT_ARGS) {
