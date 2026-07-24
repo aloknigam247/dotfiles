@@ -27,6 +27,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 ## Git
 
 * Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
+* Use the same **conventional commit** format for **PR titles**: `<type>: <description>`, using the same set of types.
 
 ## Azure DevOps
 When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
