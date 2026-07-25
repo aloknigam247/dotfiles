@@ -25,4 +25,5 @@ REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installati
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive
 REFACTOR: remove packages which are not used, reduce load
+TODO(copilot): Copilot cli extensions: https://htek.dev/articles/github-copilot-cli-extensions-complete-guide
 TODO: namping rules for file, directory, git branches.
