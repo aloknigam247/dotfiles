@@ -24,4 +24,5 @@ FIX(setup): git-completer not ported
 REFACTOR: autosetup.ps1 needs a review on how to optimize and speedup installation/update
 REFACTOR: configure copilot: list all things to move https://github.com/drvoss/everything-copilot-cli/blob/main/guides/migration-from-claude-code.md
 REFACTOR: refactor D: drive
+REFACTOR: remove packages which are not used, reduce load
 TODO: namping rules for file, directory, git branches.

@@ -3,6 +3,7 @@ vim/vim/.netrwhist
 vim/vim/plugged
 .bsync-snap*
 git/.gitconfig
+tmp/
 
 /powershell/PSDirectoryPredictor/bin
 /powershell/PSDirectoryPredictor/obj
