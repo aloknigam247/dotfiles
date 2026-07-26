@@ -77,3 +77,5 @@
 	username = aloknigam@microsoft.com
 [credential]
 	useHttpPath = true
+[init]
+	defaultBranch = main
