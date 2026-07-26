@@ -1613,6 +1613,10 @@ end
 
 -- FIX: completion popup location is not correct
 -- FEAT: https://nvchad.com/docs/features#nvim-cmp_styling
+--BUG: still errors out for
+-- blink.cmp  Rust fuzzy matcher not available, falling back to Lua implementation.
+-- blink.cmp  V2 uses a new build/download system for the native library. Please add  build = function() require('blink.cmp').build():pwait() end  to your lazy.nvim config. See  :h blink-cmp-installation  for more information.
+
 addPlugin {
 	"saghen/blink.cmp",
 	enabled = true,
@@ -4164,6 +4168,7 @@ addPlugin {
 	}}
 }
 
+-- FIX: go back to nvim-treesitter, its working now
 addPlugin {
 	"lewis6991/ts-install.nvim",
 	cmd = "TS",
