@@ -1,8 +1,8 @@
 BUG(git): .gitconfig is overriden by MDB and should be ignored there
 FEAT(ai): instruction to segregate which diagram provider to use for which case. mermaid, draw.io, d2, plotly
 FEAT(autosetup): read all requirements once and then install them in groups or parallel and merge duplicates
-FEAT(cmdline): don't save promtps from copilot and file line number for nvim
-FEAT(code review): See review comments in neovim and accept, reject, comment on them
+FEAT(cmdline): don't save prompts from copilot and file line number for nvim
+FEAT(cmdline): make something which can generate cmdline using copilot and replace in the commandline
 FEAT(completer): completions for copilot command
 FEAT(copilot): Markdown max width should be 100 for most stuffs
 FEAT(copilot): When I copilot make change in files, with a keymap these diffs are open in neovim showing the file changes diffs

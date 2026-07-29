@@ -72,7 +72,7 @@ If the subagent returns `openQuestions`, resolve them with the user (via `ask_us
 
 ### 3. Classify the task
 
-Assign **one or more categories** from the fixed set below (these map 1:1 to GitHub labels and mirror the Conventional Commit types used in this repo):
+Assign **exactly one** category from the fixed set below (these map 1:1 to GitHub labels and mirror the Conventional Commit types used in this repo):
 
 | Category      | Use case                                        |
 |---------------|-------------------------------------------------|
@@ -84,7 +84,8 @@ Assign **one or more categories** from the fixed set below (these map 1:1 to Git
 | `performance` | Speed/memory/efficiency improvements            |
 | `tech-debt`   | Paying down accumulated shortcuts               |
 
-Pick the categories that genuinely apply (usually one primary, occasionally a secondary such as `bug` + `tech-debt`).
+Pick the **single** category that best fits (the primary type of work). Use the issue title's
+Conventional Commit type as the tiebreaker.
 
 ### 4. Draft the issue and present it for acceptance
 
@@ -101,26 +102,25 @@ Pick the categories that genuinely apply (usually one primary, occasionally a se
      - Any **manual step** to exercise the change (e.g., open a new shell, trigger the keybinding, run the tool) and the expected result.
      - Existing behavior that must **not** regress, and how to confirm it.
    - **Out of scope** — what this task must not touch.
-   - Add a footer line: `Categories: <comma-separated categories>`.
-3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title** and **categories/labels**.
+3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title** and **category/label**.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
-5. **Ask the user to accept, edit, or reject** using the `ask_user` tool (accept / edit / reject). If they choose "edit", let them edit `tmp/triage-issue.md` (and/or adjust categories) and wait for confirmation, then re-read the file.
+5. **Ask the user to accept, edit, or reject** using the `ask_user` tool (accept / edit / reject). If they choose "edit", let them edit `tmp/triage-issue.md` (and/or adjust the category) and wait for confirmation, then re-read the file.
 
 ### 5. Create the GitHub issue — only if accepted
 
 **Only run this step if the user accepted in step 4.** If rejected, delete `tmp/triage-issue.md` and stop.
 
-Use the bundled helper script — it derives the repo root, ensures each label exists (creating any that are missing), extracts the title from the first `# ` heading, writes the body to a git-ignored temp file, creates the issue assigned to `@me`, and prints the title and URL:
+Use the bundled helper script — it derives the repo root, ensures the label exists (creating it if missing), extracts the title from the first `# ` heading, writes the body to a git-ignored temp file, creates the issue assigned to `@me`, and prints the title and URL:
 
 ```ps1
 pwsh -NoProfile -ExecutionPolicy Bypass `
   -File .github/skills/triage/scripts/new-issue.ps1 `
-  -Draft tmp/triage-issue.md -Label <cat1> -Label <cat2>
+  -Draft tmp/triage-issue.md -Label <category>
 ```
 
-Pass one `-Label` per chosen category. Then report the created issue URL to the user.
+Pass the single chosen category to `-Label`. Then report the created issue URL to the user.
 
 ### 6. Cleanup
 
 1. Delete `tmp/triage-issue.md` and any temp body file.
-2. Show a short summary: issue URL, title, and assigned categories/labels.
+2. Show a short summary: issue URL, title, and assigned label.
