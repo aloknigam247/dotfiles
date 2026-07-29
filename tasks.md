@@ -4,9 +4,6 @@ FEAT(autosetup): read all requirements once and then install them in groups or p
 FEAT(cmdline): don't save prompts from copilot and file line number for nvim
 FEAT(cmdline): make something which can generate cmdline using copilot and replace in the commandline
 FEAT(completer): completions for copilot command
-FEAT(copilot): Markdown max width should be 100 for most stuffs
-FEAT(copilot): When I copilot make change in files, with a keymap these diffs are open in neovim showing the file changes diffs
-FEAT(copilot): When I edit prompt with neovim inside copilot code / commands give same completion as copilot code
 FEAT(copilot): add instructions to select which diagrams for which case
 FEAT(copilot): configure copilot statusline
 FEAT(copilot): for markdown powershell codeblock should be ps1
