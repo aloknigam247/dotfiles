@@ -4,7 +4,6 @@ FEAT(autosetup): read all requirements once and then install them in groups or p
 FEAT(cmdline): don't save prompts from copilot and file line number for nvim
 FEAT(cmdline): make something which can generate cmdline using copilot and replace in the commandline
 FEAT(completer): completions for copilot command
-FEAT(copilot): add instructions to select which diagrams for which case
 FEAT(copilot): configure copilot statusline
 FEAT(copilot): for markdown powershell codeblock should be ps1
 FEAT(copilot): git pull or push indicator in statusline
