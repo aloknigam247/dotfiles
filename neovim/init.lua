@@ -1,4 +1,5 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- REFACTOR: remove plugins not in use
 -- Classes</>
 
 ---@class CmdOptions
