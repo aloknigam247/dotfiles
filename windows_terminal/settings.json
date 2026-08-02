@@ -11,6 +11,14 @@
             "id": "User.newTab.5DEADB41"
         },
         {
+            "command": "find",
+            "id": "User.find"
+        },
+        {
+            "command": "toggleFocusMode",
+            "id": "User.toggleFocusMode"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -20,12 +28,12 @@
             "id": "User.splitPane.A6751878"
         },
         {
-            "command": "toggleFocusMode",
-            "id": "User.toggleFocusMode"
-        },
-        {
-            "command": "find",
-            "id": "User.find"
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
         },
         {
             "command": 
@@ -33,14 +41,6 @@
                 "action": "addMark"
             },
             "id": "User.addMark.0"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2"
         },
         {
             "command": 
@@ -66,10 +66,6 @@
     "keybindings": 
     [
         {
-            "id": "User.sendInput.8F63D3A9",
-            "keys": "shift+enter"
-        },
-        {
             "id": null,
             "keys": "ctrl+minus"
         },
@@ -82,8 +78,16 @@
             "keys": "alt+shift+d"
         },
         {
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
+        {
             "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
+        },
+        {
+            "id": null,
+            "keys": "enter"
         },
         {
             "id": "User.find",
@@ -92,10 +96,6 @@
         {
             "id": null,
             "keys": "ctrl+v"
-        },
-        {
-            "id": null,
-            "keys": "enter"
         },
         {
             "id": null,
@@ -217,6 +217,12 @@
                 "opacity": 100,
                 "startingDirectory": "%USERPROFILE%",
                 "useAcrylic": true
+            },
+            {
+                "guid": "{5f06467c-97db-5ac9-b0d0-a1e0487b3afd}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "Microsoft.WSL"
             }
         ]
     },

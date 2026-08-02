@@ -15,7 +15,13 @@
     "https://github.com",
     "https://raw.githubusercontent.com",
     "https://aka.ms",
-    "https://eng.ms"
+    "https://eng.ms",
+    "https://arxiv.org",
+    "https://opentelemetry.io",
+    "https://www.anthropic.com",
+    "https://query2.finance.yahoo.com",
+    "https://viewer.diagrams.net",
+    "https://graph.microsoft.com"
   ],
   "experimental": true,
   "footer": {
@@ -46,5 +52,6 @@
     "enabled": true,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
-  "subagents": {}
+  "subagents": {},
+  "model": "claude-opus-5"
 }

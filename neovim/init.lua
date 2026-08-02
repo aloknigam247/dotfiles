@@ -3063,7 +3063,7 @@ addPlugin {
 			},
 			transparent_bg = false
 		})
-		vim.diagnostic.config({ virtual_text = false })
+		vim.diagnostic.config({ virtual_text = true })
 		diag.enable()
 	end,
 }
