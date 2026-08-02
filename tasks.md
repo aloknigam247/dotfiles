@@ -1,4 +1,3 @@
-1. FEAT(edge): create auto theme switch edge with catppuccin colors
 2. FEAT(markdown): use _ instead of * for bold and italics
 3. FEAT(mcp): persistant terminal
 4. FEAT(native tools): The commands are run in a peristant terminal, which can be reused to avoid cs everytime
