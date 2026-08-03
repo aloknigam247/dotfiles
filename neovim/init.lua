@@ -3226,6 +3226,7 @@ addPlugin {
 	end
 }
 
+-- FEAT: custom highlight configuration for better experience
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = { "markdown", "codecompanion" },
