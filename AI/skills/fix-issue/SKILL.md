@@ -189,7 +189,14 @@ The subagent must return:
    and revise; ignore style nits. For a genuinely small, contained fix, skip this and say you skipped
    it.
 3. Summarize the plan in chat (concise — the file has the detail).
-4. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
+4. **Open the plan in mdview before asking.** Render the plan file with the release binary so the
+   user reviews it in the app, not just chat:
+   ```pwsh
+   & D:\mdview\target\release\mdview.exe <plan-file>
+   ```
+   If the release binary is missing, build it (`cargo build --release -p mdview`) or fall back to
+   `cargo run --release -p mdview -- <plan-file>`, then continue.
+5. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
    confirmation, re-read it, and re-present. On "reject", delete the plan file and stop.
 
 **Write no production code before acceptance.** The failing repro test from step 2 is the only
