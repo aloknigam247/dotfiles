@@ -173,14 +173,29 @@ The subagent must return:
 - `tests` — which test tier/target maps to the change, existing tests that will break, new test names
   + the exact assertion each makes, and the exact command to run them.
 - `risks` — invariants that must not break, and what is explicitly out of scope.
+- `perfCost` — the runtime/memory cost the change adds, itemised: what extra work runs, how often
+  (per frame / per request / per item), whether it allocates, whether any asymptotic changes, and
+  whether there is a configuration in which the cost is zero. Never answer "negligible" without
+  numbers or a stated measurement plan.
 - `openQuestions` — resolve these with the user via `ask_user` before drafting.
 
 ### 4. Present the plan and get acceptance
 
 1. Write the plan to a git-ignored scratch path (prefer `tmp/fix-issue-<n>-plan.md`; if `tmp/` is not
    ignored, use the session `files/` folder) with sections: **Task**, **Reproduction**, **Root
-   cause**, **Approach**, **Step-by-step changes**, **Tests**, **Risks / out of scope**, **Acceptance
-   criteria**.
+   cause**, **Approach**, **Step-by-step changes**, **Performance cost**, **Alternatives
+   considered**, **Tests**, **Risks / out of scope**, **Acceptance criteria**.
+
+   **Performance cost is mandatory in every plan**, even when the answer is "none". State what extra
+   work the change adds, at what frequency (per frame, per request, per item), whether it allocates,
+   whether any complexity class changes, what data structures grow and by how many bytes, and whether
+   there is a configuration in which the cost is zero. If the repo has a profiling hook or benchmark,
+   name it and commit to reporting before/after numbers in step 6 — do not let "negligible" stand as
+   an unmeasured claim.
+
+   **Alternatives considered** must name each rejected approach and why, including any the user
+   raises. If an alternative was rejected because it could not be verified, say so explicitly rather
+   than implying it was ruled out on merit.
 2. **Rubber-duck non-trivial plans.** If the plan touches more than two files, changes a hot/shared
    path, or has invariant/performance implications, launch the `rubber-duck` agent over the plan file
    (give it the research findings too). Ask it to catch: unverified root cause, `file:line` refs that
@@ -294,6 +309,10 @@ before the user is asked to accept anything.
    commit time; if the binary is older, delete it and rebuild. Incremental linkers routinely skip
    relinking an executable when only a library changed. When in a worktree, confirm you are running
    **that worktree's** artifact, not the main checkout's.
+8. **Report the measured performance cost** promised by the plan's **Performance cost** section. If
+   the plan named a profiling hook or benchmark, run it before and after and paste both numbers. If
+   the plan claimed zero cost in some configuration, demonstrate that configuration is unaffected.
+   Never close out with an unmeasured "negligible".
 
 Then give the user **copy-pasteable verification instructions** — assume they will not read the
 diff:
