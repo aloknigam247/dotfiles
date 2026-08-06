@@ -1,5 +1,3 @@
-FEAT(markdown): use _ instead of * for bold and italics
-FEAT(security): Scan all installations for security related
 FEAT(skill): create to draw diagrams which tells which diagram to draw from mermaid, drawio, d2
 FEAT(skill): see plantuml diagrams are rendering if plantuml can be used
 FIX(ppt): ppt skill should use powerpoint native solution like bullets and other things
