@@ -1,4 +1,3 @@
-FEAT(skill): create to draw diagrams which tells which diagram to draw from mermaid, drawio, d2
 FEAT(skill): see plantuml diagrams are rendering if plantuml can be used
 FIX(ppt): ppt skill should use powerpoint native solution like bullets and other things
 FIX(setup): git-completer not ported
