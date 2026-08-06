@@ -6,8 +6,7 @@
     "defaultLocalOnly": true
   },
   "keepAlive": "on",
-  "memory": false,
-  "theme": "auto",
+  "theme": "github",
   "allowedUrls": [
     "https://docs.github.com",
     "https://onedrive.visualstudio.com",
