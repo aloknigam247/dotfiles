@@ -1611,8 +1611,6 @@ local function track_rg_time(start_time, bufnr)
 	end
 end
 
--- FEAT: https://nvchad.com/docs/features#nvim-cmp_styling
---BUG: still errors out for
 -- blink.cmp  Rust fuzzy matcher not available, falling back to Lua implementation.
 -- blink.cmp  V2 uses a new build/download system for the native library. Please add  build = function() require('blink.cmp').build():pwait() end  to your lazy.nvim config. See  :h blink-cmp-installation  for more information.
 
@@ -2010,27 +2008,6 @@ addPlugin {
 	}
 }
 
--- FEAT: dap debugger for C# codes .net framework
--- https://github.com/byuki/one-small-step-for-vimkind
--- https://github.com/carriga/nvim-dap-ui
--- https://github.com/fussenegger/nvim-dap
--- https://github.com/gergol/cmake-debugger.nvim
--- https://github.com/iadOz/nvim-dap-repl-highlights
--- https://github.com/igorlfs/nvim-dap-view
--- https://github.com/jay-babu/mason-nvim-dap.nvim
--- https://github.com/jonboh/nvim-dap-rr
--- https://github.com/lucaSartore/nvim-dap-exception-breakpoints
--- https://github.com/mfussenegger/nvim-dap-python
--- https://github.com/nelnn/bear.nvim
--- https://github.com/ofirgall/goto-breakpoints.nvim
--- https://github.com/PatschD/zippy.nvim
--- https://github.com/sakhnik/nvim-gdb
--- https://github.com/theHamsta/nvim-dap-virtual-text
--- https://github.com/tpope/vim-scriptease
--- https://github.com/vim-scripts/Conque-GDB
--- https://github.com/Weissle/persistent-breakpoints.nvim
--- https://github.com/Willem-J-an/nvim-dap-powershell
--- https://github.com/Willem-J-an/visidata.nvim
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Doc Generator  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
