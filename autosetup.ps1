@@ -15,7 +15,7 @@ function DrawMenu {
         if ($null -ne $menuItems[$i]) {
             $item = $menuItems[$i]
             if ($Multiselect) {
-                if ($selection -contains $i) {  # FIX: make icons simple for any font
+                if ($selection -contains $i) {
                     $item = ' ' + $item
                 } else {
                     $item = ' ' + $item
