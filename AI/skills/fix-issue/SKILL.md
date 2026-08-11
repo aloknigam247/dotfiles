@@ -72,6 +72,13 @@ why, and continue.
 
 ## Steps
 
+> **⛔ HARD GATE — no source edits before an accepted plan.** The `edit` / `create` / `sed` and any
+> file-writing tools must not touch **any tracked file** until `ask_user` returns *accept* in step 4.
+> The single exception is a reproduction artifact (step 2): it must live in an ignored scratch path
+> (e.g. `tmp/`) or a clearly labelled throwaway test, be **announced to the user before it is
+> written**, and must never modify production source. If you are unsure whether something counts as
+> production code, treat it as production code and wait for acceptance.
+
 ### 1. Pull the issue and select exactly one task
 
 If no issue was given, first select one per **Input** above. Then fetch the full issue:
@@ -125,7 +132,10 @@ branch, (b) start fresh anyway, or (c) stop. Never open a duplicate PR silently.
 ### 2. Reproduce (bugs only)
 
 If the issue is a bug (label `bug`, or the body describes broken/incorrect behavior), reproduce it
-**before planning**:
+**before planning**. Reproduction must be **non-invasive**: prefer running an *existing* test or a
+script under an ignored scratch path (`tmp/`). Do **not** reproduce by editing a production source
+file (e.g. adding a test into a shipped module) unless nothing else can demonstrate the failure —
+and if you must, announce it to the user first per the hard gate above.
 
 1. Derive reproduction steps from the issue body/comments; ask via `ask_user` if they are ambiguous
    or environment-specific.
@@ -214,8 +224,8 @@ The subagent must return:
 5. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
    confirmation, re-read it, and re-present. On "reject", delete the plan file and stop.
 
-**Write no production code before acceptance.** The failing repro test from step 2 is the only
-pre-acceptance artifact.
+**Make zero edits to any tracked file before acceptance** (repro artifacts per step 2 excepted). The
+non-invasive repro from step 2 is the only pre-acceptance artifact.
 
 ### 5. Implement
 
