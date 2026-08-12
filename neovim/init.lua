@@ -3464,6 +3464,7 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+-- FIX: icons
 addPlugin {
 	"stevearc/aerial.nvim",
 	cmd = { "AerialNavToggle", "AerialToggle" },
