@@ -2547,7 +2547,7 @@ addPlugin {
 				cpp      = { color = "#F34B7D", icon = "󰙲", name = "Cpp"       },
 				cs       = { color = "#C20DA6", icon = "󰌛", name = "Cs"        },
 				csproj   = { color = "#854CC7", icon = "", name = "Csproj"    },
-				csv      = { color = "#89E051", icon = "", name = "Csv"       }, -- FIX: colors is not visible in light scheme
+				csv      = { color = "#89E051", icon = "", name = "Csv"       },
 				md       = { color = "#42A5F5", icon = "", name = "Md"        },
 				mdx      = { color = "#519ABA", icon = "󰽛", name = "Mdx"       },
 				py       = { color = "#3D7BAB", icon = "", name = "Py"        },
@@ -2652,7 +2652,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      LSP       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: csharp lsp
 -- lsp: try https://github.com/dotnet/roslyn as roslyn_ls https://github.com/seblyng/roslyn.nvim ask question
 -- https://github.com/anachary/dotnet-core.nvim
 -- https://github.com/anachary/dotnet-plugin.nvim
@@ -2761,7 +2760,7 @@ addPlugin {
 			num_shortcut = true,
 			show_server_name = true,
 		},
-		definition = { -- FEAT: make peek portrait
+		definition = {
 			edit = "o",
 			quit = "q",
 			split = keymaps.open_vsplit,
@@ -2976,7 +2975,7 @@ addPlugin {
 	"owallb/mason-auto-install.nvim",
 	config = function(_, cfg)
 		require("mason-auto-install").setup(cfg)
-		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype }) -- BUG: MasonAutoInstall not found
+		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
 	end,
 	opts = {
 		packages = {
@@ -2996,9 +2995,8 @@ addPlugin {
 	event = "LspAttach *.cpp"
 }
 
--- FIX: there are 2 diagnostics
 addPlugin {
-	"rachartier/tiny-inline-diagnostic.nvim", -- BUG: does not enable by default
+	"rachartier/tiny-inline-diagnostic.nvim",
 	event = "DiagnosticChanged",
 	config = function()
 		local diag = require("tiny-inline-diagnostic")
@@ -3069,7 +3067,6 @@ addPlugin {
 		local registry = require("mason-registry")
 
 		-- Listen for installation start
-		-- FEAT: use Notification for in progress installation and not statusline
 		registry:on("package:install:handle", function(package)
 			mason_installation[package.package.name] = true
 		end)
@@ -3201,7 +3198,6 @@ addPlugin {
 	end
 }
 
--- FEAT: custom highlight configuration for better experience
 addPlugin {
 	"MeanderingProgrammer/render-markdown.nvim",
 	ft = { "markdown", "codecompanion" },
