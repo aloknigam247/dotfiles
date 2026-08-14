@@ -20,7 +20,10 @@
     "https://www.anthropic.com",
     "https://query2.finance.yahoo.com",
     "https://viewer.diagrams.net",
-    "https://graph.microsoft.com"
+    "https://graph.microsoft.com",
+    "https://release-plz.ieni.dev",
+    "https://review.learn.microsoft.com",
+    "https://learn.microsoft.com"
   ],
   "experimental": true,
   "footer": {

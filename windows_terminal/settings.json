@@ -289,14 +289,14 @@
             "name": "Catppuccin Latte",
             "tab": 
             {
-                "background": "accent",
+                "background": "terminalBackground",
                 "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": "terminalBackground"
             },
             "tabRow": 
             {
-                "background": "terminalBackground",
+                "background": "accent",
                 "unfocusedBackground": "terminalBackground"
             },
             "window": 
@@ -312,14 +312,14 @@
             "name": "Catppuccin Mocha",
             "tab": 
             {
-                "background": "accent",
+                "background": "terminalBackground",
                 "iconStyle": "default",
                 "showCloseButton": "always",
                 "unfocusedBackground": "terminalBackground"
             },
             "tabRow": 
             {
-                "background": "terminalBackground",
+                "background": "accent",
                 "unfocusedBackground": "terminalBackground"
             },
             "window": 
