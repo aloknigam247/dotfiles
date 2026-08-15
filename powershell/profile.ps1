@@ -433,7 +433,6 @@ function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Wor
 
 # ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
-# BUG: does not work for gc -b "branch"
 function gc {
     param(
         [Parameter(Position = 0)]
@@ -641,7 +640,6 @@ if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
 # ─[ git tab completion ]──────────────────────────────────────────────
 # Must register after PSFzf — PSFzf registers its own broken `git` completer
 # (depends on posh-git's Expand-GitCommand). Re-registering here wins.
-# FIX: remove origin prefix
 Import-Module GitCompleter -ErrorAction SilentlyContinue
 Register-GitCompleter
 
@@ -701,7 +699,6 @@ $env:EDITOR = "nvim"
 # ╭────────────────╮
 # │ Prompt Styling │
 # ╰────────────────╯
-# FEAT: generate more combinations using AI
 Set-PSReadlineKeyHandler Enter {
     $script:cmd_start_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
     [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
