@@ -3680,8 +3680,6 @@ addPlugin {
 	event = "WinNew",
 }
 
--- FEAT: hide statusline for full immersive view
--- FEAT: NVChad statusline
 addPlugin {
 	"nvim-lualine/lualine.nvim",
 	config = function()
@@ -3736,7 +3734,7 @@ addPlugin {
 						separator = ""
 					},
 					{
-						"filename", -- BUG: 2 spaces between new file and modified
+						"filename",
 						color = { gui = "italic" },
 						file_status = true,
 						newfile_status = true,
@@ -3934,7 +3932,7 @@ addPlugin {
 							return str:gsub("^%s+", ""):gsub("%s+", "")
 						end,
 						on_click = function ()
-							vim.cmd("ScrollViewToggle") -- BUG: ScrollViewToggle command not found error
+							vim.cmd("ScrollViewToggle")
 						end,
 						padding = { left = 0, right = 0 },
 						separator = { left = "", right = "█" }
@@ -4142,7 +4140,6 @@ addPlugin {
 	}}
 }
 
--- FIX: go back to nvim-treesitter, its working now
 addPlugin {
 	"lewis6991/ts-install.nvim",
 	cmd = "TS",
@@ -4550,7 +4547,7 @@ addPlugin {
 
 addPlugin {
 	"delphinus/inspect-extmarks.nvim",
-	cmd = "InspectExtmarks", -- FIX: error in invocation
+	cmd = "InspectExtmarks",
 	config = true
 }
 
@@ -4708,20 +4705,6 @@ addPlugin {
 	"folke/snacks.nvim",
 	---@type snacks.Config
 	opts = {
-		lazygit = { -- FIX: not picking catppuccin colors
-			theme = {
-				[241]                      = { fg = "Special" },
-				activeBorderColor          = { fg = "Function", bold = true },
-				cherryPickedCommitBgColor  = { fg = "Identifier" },
-				cherryPickedCommitFgColor  = { fg = "Function" },
-				defaultFgColor             = { fg = "Normal" },
-				inactiveBorderColor        = { fg = "Comment" },
-				optionsTextColor           = { fg = "Function" },
-				searchingActiveBorderColor = { fg = "MatchParen", bold = true },
-				selectedLineBgColor        = { bg = "Visual" },
-				unstagedChangesColor       = { fg = "DiagnosticError" },
-			}
-		},
 		picker = {
 			icons = {
 				files = {
@@ -5185,7 +5168,6 @@ addPlugin {
 		}
 	}
 }
--- FEAT: vim.ui.img https://neovim.io/doc/user/lua/#_lua-module%3a-vim.ui.img
 
 require("lazy").setup(plugins, lazy_config)
 -- <~>
