@@ -3369,7 +3369,7 @@ addPlugin {
 			},
 		},
 		todo_action_depth = 10,
-		todo_count_formatter = function(completed, total) -- FEAT: count on headings/lines above tasks
+		todo_count_formatter = function(completed, total)
 			return string.format("%d/%d %.0f%%", completed, total, completed / total * 100)
 		end,
 		todo_states = {
@@ -3426,7 +3426,7 @@ addPlugin {
 	}
 }
 
-addPlugin { -- FEAT: use mdview
+addPlugin {
 	"toppair/peek.nvim",
 	build = "deno task --quiet build:fast",
 	cmd = "PeekOpen",
@@ -3557,7 +3557,7 @@ addPlugin {
 |-------------+----------------------------------------------------------+---------|
 ]]
 addPlugin {
-	"kevinhwang91/nvim-bqf", -- FIX: preview window background
+	"kevinhwang91/nvim-bqf",
 	opts = {
 		auto_resize_height = true,
 		func_map = {
@@ -3630,7 +3630,7 @@ addPlugin {
 			hide = {
 				only_win = true
 			},
-			ignore = { -- FIX: ignore snacks explorer
+			ignore = {
 				unlisted_buffers = false,
 				buftypes = {},
 				filetypes = { "NvimTree" },
