@@ -70,7 +70,38 @@ The subagent must **return a structured report** containing:
 
 If the subagent returns `openQuestions`, resolve them with the user (via `ask_user`) before drafting the issue.
 
-### 3. Classify the task
+### 3. Search for duplicate and related issues
+
+Before classifying and drafting, search the repo's existing issues (open **and** recently closed) so
+you don't file a duplicate and so you can link genuinely related work. Use the affected files/modules
+and key terms from step 2 to build the search.
+
+```ps1
+# Broad keyword search across open + closed issues (repo is inferred from cwd):
+gh issue list --state all --search "<keywords>" --limit 30 `
+  --json number,title,state,labels,url
+```
+
+Run a couple of searches with different terms (the symptom, the module name, the affected
+file/`setup.ps1` variable). Then judge each hit:
+
+- **Duplicate** — an existing issue already covers *the same task* (same root cause / same change).
+  - **Inform the user** of the duplicate (number, title, state, URL) via chat, and **ask** — using
+    `ask_user` — whether to stop (treat as duplicate) or proceed anyway (e.g., the existing one is
+    stale or out of scope). Do **not** silently create a second copy.
+  - If the user chooses to stop, do not create an issue; summarize the existing duplicate and finish.
+- **Related** — a different but connected issue (a dependency, a parent epic, or adjacent work).
+  - **Inform the user** of the related issue(s) in chat, and record them for linking in step 6.
+  - Classify each relationship using the relationship types GitHub actually supports through `gh`:
+    - **Blocked by** — the new issue can't be done until issue N is done -> `--blocked-by N`.
+    - **Blocking** — issue N can't proceed until the new issue is done -> `--blocking N`.
+    - **Parent / sub-issue** — the new issue is part of a larger tracked issue -> `gh issue edit
+      <parent> --add-sub-issue <new>` (or `--parent` at create time).
+    - GitHub has **no** generic "related" or "duplicate" relationship type, so for a plain
+      association that isn't a dependency or hierarchy, reference it inline in the issue body
+      (e.g., a "Related issues" bullet linking `#N`) instead of inventing a relationship.
+
+### 4. Classify the task
 
 Assign **exactly one** category from the fixed set below (these map 1:1 to GitHub labels and mirror the Conventional Commit types used in this repo):
 
@@ -87,7 +118,15 @@ Assign **exactly one** category from the fixed set below (these map 1:1 to GitHu
 Pick the **single** category that best fits (the primary type of work). Use the issue title's
 Conventional Commit type as the tiebreaker.
 
-### 4. Draft the issue and present it for acceptance
+**Additionally**, apply the cross-cutting `spike` label when the task is **investigation /
+exploration only** — the work is to research, evaluate, prototype-and-throw-away, or answer a
+question, and its deliverable does **not** change any code or docs in the repo. A spike's acceptance
+criteria are findings/recommendations (e.g., "document whether X is feasible"), not a shipped change.
+`spike` is added **in addition to** the single category (usually paired with `chore`; the category
+still reflects the *kind* of follow-up work the spike informs). Do **not** apply `spike` to any task
+whose definition of done includes editing code or documentation.
+
+### 5. Draft the issue and present it for acceptance
 
 1. Compose the issue **title** in Conventional Commit style: `<type>: <short description>` (e.g., `fix: statusline flickers on git pull`).
 2. Compose the issue **body** with these sections (omit a section only if truly not applicable):
@@ -102,25 +141,33 @@ Conventional Commit type as the tiebreaker.
      - Any **manual step** to exercise the change (e.g., open a new shell, trigger the keybinding, run the tool) and the expected result.
      - Existing behavior that must **not** regress, and how to confirm it.
    - **Out of scope** — what this task must not touch.
-3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title** and **category/label**.
+3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title**, **category/label(s)** (including `spike` if applicable), and any **related issues to link** (from step 3) with their relationship type.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
 5. **Ask the user to accept, edit, or reject** using the `ask_user` tool (accept / edit / reject). If they choose "edit", let them edit `tmp/triage-issue.md` (and/or adjust the category) and wait for confirmation, then re-read the file.
 
-### 5. Create the GitHub issue — only if accepted
+### 6. Create the GitHub issue — only if accepted
 
-**Only run this step if the user accepted in step 4.** If rejected, delete `tmp/triage-issue.md` and stop.
+**Only run this step if the user accepted in step 5.** If rejected, delete `tmp/triage-issue.md` and stop.
 
-Use the bundled helper script — it derives the repo root, ensures the label exists (creating it if missing), extracts the title from the first `# ` heading, writes the body to a git-ignored temp file, creates the issue assigned to `@me`, and prints the title and URL:
+Use the bundled helper script — it derives the repo root, ensures every label exists (creating it if missing), extracts the title from the first `# ` heading, writes the body to a git-ignored temp file, creates the issue assigned to `@me`, links any dependency relationships, and prints the title and URL:
 
 ```ps1
 pwsh -NoProfile -ExecutionPolicy Bypass `
   -File .github/skills/triage/scripts/new-issue.ps1 `
-  -Draft tmp/triage-issue.md -Label <category>
+  -Draft tmp/triage-issue.md -Label <category> [-Label spike] `
+  [-BlockedBy <n,...>] [-Blocking <n,...>]
 ```
 
-Pass the single chosen category to `-Label`. Then report the created issue URL to the user.
+- Pass the chosen category to `-Label`, and add a second `-Label spike` when the task is
+  investigation/exploration only (step 4).
+- Pass related **dependency** issues via `-BlockedBy` / `-Blocking` (from step 3) to link them through
+  GitHub's issue relationships at creation time.
+- For a **parent / sub-issue** link, run `gh issue edit <parent> --add-sub-issue <newNumber>` after the
+  issue is created (the script prints the new URL/number).
 
-### 6. Cleanup
+Then report the created issue URL — and any relationships linked — to the user.
+
+### 7. Cleanup
 
 1. Delete `tmp/triage-issue.md` and any temp body file.
-2. Show a short summary: issue URL, title, and assigned label.
+2. Show a short summary: issue URL, title, assigned label(s), and any linked related issues.

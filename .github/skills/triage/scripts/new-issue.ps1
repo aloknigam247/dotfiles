@@ -2,16 +2,20 @@
 #
 # The draft's first "# " heading becomes the issue title; the remainder is the body.
 # Ensures each requested label exists (creates missing ones), then creates the
-# issue assigned to the current user.
+# issue assigned to the current user. Optionally links related issues via the
+# GitHub issue relationships (blocked-by / blocking).
 #
 # Usage (run from anywhere inside the repo):
 #   pwsh -NoProfile -ExecutionPolicy Bypass `
 #     -File .github/skills/triage/scripts/new-issue.ps1 `
-#     -Draft tmp/triage-issue.md -Label bug -Label tech-debt
+#     -Draft tmp/triage-issue.md -Label bug -Label tech-debt `
+#     -BlockedBy 12,15 -Blocking 20
 
 param(
-    [Parameter(Mandatory)][string]$Draft,    # path to draft md (first '# ' line = title)
-    [Parameter(Mandatory)][string[]]$Label   # one or more category labels
+    [Parameter(Mandatory)][string]$Draft,     # path to draft md (first '# ' line = title)
+    [Parameter(Mandatory)][string[]]$Label,   # one or more category labels
+    [int[]]$BlockedBy = @(),                  # issue numbers this new issue is blocked by
+    [int[]]$Blocking = @()                    # issue numbers this new issue blocks
 )
 
 $ErrorActionPreference = "Stop"
@@ -36,7 +40,11 @@ $body = "tmp/triage-body-$([guid]::NewGuid().ToString()).md"
 $labelArgs = @()
 foreach ($l in $Label) { $labelArgs += @("--label", $l) }
 
-$url = gh issue create --title "$title" --body-file "$body" @labelArgs --assignee "@me"
+$relArgs = @()
+if ($BlockedBy.Count) { $relArgs += @("--blocked-by", ($BlockedBy -join ",")) }
+if ($Blocking.Count)  { $relArgs += @("--blocking", ($Blocking -join ",")) }
+
+$url = gh issue create --title "$title" --body-file "$body" @labelArgs @relArgs --assignee "@me"
 Remove-Item $body -ErrorAction SilentlyContinue
 
 Write-Output "TITLE: $title"
