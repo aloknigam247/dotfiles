@@ -23,7 +23,7 @@ $scoop_pkgs = @(
 )
 
 $winget_pkgs = @(
-    "GitHub.Copilot.Prerelease"
+    "GitHub.Copilot"
     "JGraph.Draw"
 )
 
