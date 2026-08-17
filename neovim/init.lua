@@ -2085,14 +2085,6 @@ vim.api.nvim_create_autocmd(
 )
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Folding     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: create own folding code
--- Use nvim-ufo python description
--- Provider indent
--- Provider treesitter
--- Provider lsp
--- Provider for markdown ?
--- Provider fold import section in python
--- fold python docstring and if and loops like nvim-ufo
 
 -- Mapping to fold recursively for current buffer only
 vim.keymap.set("n", "zz", function()
@@ -3460,7 +3452,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Outline     ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FIX: icons
 addPlugin {
 	"stevearc/aerial.nvim",
 	cmd = { "AerialNavToggle", "AerialToggle" },
@@ -4128,7 +4119,6 @@ addPlugin {
 	}
 }
 
--- FEAT(highlight): for powershell and csharp like vscode for comments
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "main",
