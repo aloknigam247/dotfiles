@@ -143,7 +143,17 @@ whose definition of done includes editing code or documentation.
    - **Out of scope** — what this task must not touch.
 3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title**, **category/label(s)** (including `spike` if applicable), and any **related issues to link** (from step 3) with their relationship type.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
-5. **Ask the user to accept, edit, or reject** using the `ask_user` tool (accept / edit / reject). If they choose "edit", let them edit `tmp/triage-issue.md` (and/or adjust the category) and wait for confirmation, then re-read the file.
+5. **⛔ HARD RULE — ALWAYS open the draft in mdview before asking for acceptance. No exceptions.**
+   The `ask_user` accept/edit/reject gate below MUST NOT be presented until `tmp/triage-issue.md` has
+   been rendered in the mdview app for the user — a chat summary alone is never sufficient. Render it:
+   ```pwsh
+   & D:\mdview\target\release\mdview.exe tmp/triage-issue.md
+   ```
+   If the release binary is missing, build it (`cargo build --release -p mdview`) or fall back to
+   `cargo run --release -p mdview -- tmp/triage-issue.md`, then continue. If mdview cannot be launched
+   at all, say so explicitly and get the user's go-ahead before falling back to a chat-only review — do
+   not silently skip it. **Re-open the draft in mdview again after any edit round** before re-presenting.
+6. **Ask the user to accept, edit, or reject** using the `ask_user` tool (accept / edit / reject). If they choose "edit", let them edit `tmp/triage-issue.md` (and/or adjust the category) and wait for confirmation, then re-read the file and re-open it in mdview (per the hard rule above) before re-presenting.
 
 ### 6. Create the GitHub issue — only if accepted
 
