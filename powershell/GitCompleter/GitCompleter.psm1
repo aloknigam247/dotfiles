@@ -12,8 +12,10 @@ function Get-GitRemoteBranch {
     $branches = git for-each-ref --format="%(refname:short)" refs/remotes/ 2>$null
     if ($LASTEXITCODE -ne 0) { return @() }
     @($branches) |
-        Where-Object { -not $_.EndsWith("/HEAD") -and $_ -like "$Filter*" } |
-        Sort-Object
+        Where-Object { $_ -ne "origin" -and -not $_.EndsWith("/HEAD") } |
+        ForEach-Object { $_ -replace "^origin/", "" } |
+        Where-Object { $_ -like "$Filter*" } |
+        Sort-Object -Unique
 }
 
 function Get-GitTag {
@@ -204,6 +206,7 @@ function Register-GitCompleter {
             $results += Get-GitLocalBranch  -Filter $wordToComplete
             $results += Get-GitRemoteBranch -Filter $wordToComplete
             $results += Get-GitTag          -Filter $wordToComplete
+            $results = $results | Sort-Object -Unique
         }
 
         $results | ForEach-Object {
