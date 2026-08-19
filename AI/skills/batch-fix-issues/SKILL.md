@@ -211,9 +211,19 @@ would otherwise ask at once. So each agent reports gates to **you**, and you rel
 4. `BLOCKED`/`BUILD-FAILED`/`REVIEW` reports use the same path — surface, decide with the user,
    relay back.
 
-Batch gates when you can: if two agents are both waiting at a plan gate, you may present them in one
-`ask_user` with a field per issue, to save round-trips. Never merge or approve on the user's
-behalf.
+**Plan gates are reviewed one at a time, not in a batch.** When plan gates arrive, do **not** present
+them all in a single multi-field `ask_user`. Instead:
+
+1. Wait until you have a sensible set of plans ready (or all of them), then **tell the user, in plain
+   text, that all N plans are ready** and ask whether they'd like to discuss before deciding — do not
+   force a decision yet.
+2. Then walk the user through the plans **one plan at a time**: present a single plan, get its
+   accept / edit / reject decision, relay it to the owning agent, and only then move to the next plan.
+   This keeps each plan reviewable on its own and lets the user discuss it before the next one opens.
+
+For the **fix** and **merge** gates you may still batch when convenient: if two agents are both
+waiting at the same fix or merge gate, you may present them in one `ask_user` with a field per issue,
+to save round-trips. Never merge or approve on the user's behalf.
 
 ### 6. Supervise the slot to completion
 
