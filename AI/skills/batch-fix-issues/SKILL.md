@@ -15,6 +15,25 @@ This skill does **not** re-implement the fix workflow — the per-issue agents d
 `fix-issue` verbatim. Read `fix-issue/SKILL.md` for the single-issue contract; this file only adds
 the batching, conflict-avoidance, and coordination layer on top.
 
+## Execution contract
+
+This section is binding and governs every run — it is not advisory.
+
+- **Follow the steps in order, verbatim.** Execute steps 1→7 as written. Do not skip, reorder,
+  merge, or improvise steps, and do not substitute your own workflow for the one specified here.
+  Every guarantee in this file and in `fix-issue` must actually be carried out, not assumed.
+- **Optional input means apply the default, never ask.** When the user omits an input (issue list,
+  slot size, knobs), silently apply this skill's default and proceed. Absent input is *permission to
+  use the default*, not a prompt to clarify.
+- **`ask_user` is allowed only at the points this skill sanctions:** the **step-4 slot checklist**,
+  and the **gate relays** in steps 5–6 (plan / fix / merge / blocker decisions). Nowhere else. In
+  particular, do **not** open a run with any preliminary "how should we proceed / how many issues /
+  which approach / just to confirm" question — that meta-prompt is prohibited. The step-4 checklist
+  is where the user adjusts scope and slot size; let it do that job.
+- **When unsure, re-read the step, don't invent.** If a step is ambiguous, follow its literal
+  instruction and the referenced script/JSON output rather than deviating. Verify state from real
+  `git` / `gh` / `read_agent` output, never from memory.
+
 ## Principles
 
 - **One agent, one issue, one worktree.** Every issue in the slot is handled by its own dedicated
@@ -50,8 +69,10 @@ An optional list of issues (numbers, `#123`, or URLs) and/or a slot size. All op
 - If the user named specific issues, those are the **candidate pool**.
 - If the user did not name issues, build the pool yourself (see step 1) — any open issue is
   fair game, assigned or not, exactly as `fix-issue` selects.
-- Default slot size is **3** concurrent issues unless the user asks for more. Keep it small enough
-  that the user can realistically service three plan/fix/merge gates.
+- Default slot size is **10** concurrent issues unless the user asks for a different number. The
+  packer still keeps slot members low-conflict; slot size only sets how many plan/fix/merge gates the
+  user has in flight at once. Do not ask the user to pick a size — apply the default per the
+  Execution contract and let the step-4 checklist adjust it.
 
 ## Steps
 
