@@ -7,8 +7,8 @@ description: Use when the user wants to fix several GitHub issues in one batch /
 
 Fix a **slot** (batch) of GitHub issues at once. Each issue is owned end-to-end by a **dedicated
 agent** that runs the **`fix-issue`** skill in its **own worktree**, so the fixes never step on each
-other. This skill is the *orchestrator*: it chooses a low-conflict slot, gets the user to confirm the
-checklist, launches and supervises the per-issue agents, relays the human gates (plan / fix / merge),
+other. This skill is the *orchestrator*: it picks a low-conflict slot, gets the user to confirm the
+checklist, runs and supervises the per-issue agents, relays the human gates (plan / fix / merge),
 and keeps one issue's trouble from blocking the rest.
 
 This skill does **not** re-implement the fix workflow — the per-issue agents do that by following
@@ -30,7 +30,7 @@ the batching, conflict-avoidance, and coordination layer on top.
   self-approve their own plan, fix, or merge.
 - **Isolate failure.** A blocker, failed build, rejected plan, or stuck review on one issue must
   **never** stall the others. Park the troubled issue, keep the rest moving, and report the blocker.
-- **Verify, don't assume.** Slot membership, agent state, PR state, and merge state are all read from
+- **Verify, don't assume.** Slot membership, agent state, PR state, and merge state come from
   real output (`git`, `gh`, `read_agent`) — never asserted from memory.
 
 ## Concepts
@@ -39,7 +39,7 @@ the batching, conflict-avoidance, and coordination layer on top.
 - **Footprint** — the set of files an issue is expected to change. Drives conflict scoring.
 - **Per-issue agent** — a `general-purpose` background agent whose entire job is to run `fix-issue`
   for exactly one issue in its own worktree, reporting back at each human gate.
-- **Gate** — a point where `fix-issue` requires a human decision: plan accept/edit/reject (step 4–5),
+- **Gate** — a point where `fix-issue` needs a human decision: plan accept/edit/reject (step 4–5),
   fix accept/request-changes (step 7), review/merge (step 10). This orchestrator surfaces every gate
   to the user via `ask_user` and relays the answer back to the owning agent.
 
@@ -48,7 +48,7 @@ the batching, conflict-avoidance, and coordination layer on top.
 An optional list of issues (numbers, `#123`, or URLs) and/or a slot size. All optional.
 
 - If the user named specific issues, those are the **candidate pool**.
-- If the user did not name issues, build the candidate pool yourself (see step 1) — any open issue is
+- If the user did not name issues, build the pool yourself (see step 1) — any open issue is
   fair game, assigned or not, exactly as `fix-issue` selects.
 - Default slot size is **3** concurrent issues unless the user asks for more. Keep it small enough
   that the user can realistically service three plan/fix/merge gates.
@@ -78,7 +78,7 @@ room to pick a clean subset. If there are no open issues, say so and stop.
 
 For every candidate, estimate the set of files it will touch. In preference order:
 
-1. **Triage metadata.** Issues produced by the `triage` skill carry **Affected files & components** —
+1. **Triage metadata.** Issues from the `triage` skill carry **Affected files & components** —
    lift those paths directly. This is the cheapest and most reliable source.
 2. **Body / comments.** Explicit file paths or component names in the issue text.
 3. **Quick investigation.** For anything still vague, launch **parallel `explore` agents** (one per
@@ -86,7 +86,7 @@ For every candidate, estimate the set of files it will touch. In preference orde
    change? List repo-relative paths, no code edits."* Keep these read-only and short.
 
 Mark an issue as **global** when a fix would realistically touch a broad, shared surface — a
-repo-wide rename, a formatting/lint sweep, a change to a core file that nearly everything imports, or
+repo-wide rename, a formatting/lint sweep, a change to a core file nearly everything imports, or
 a build/CI config that every job depends on. Global issues are never batched.
 
 Write the footprints to a scratch JSON file (git-ignored `tmp/`, or the session `files/` folder):
@@ -150,8 +150,8 @@ CREATE TABLE IF NOT EXISTS batch_slot (
 
 ### 5. Launch one dedicated agent per slot issue
 
-For each checked issue, launch a **`general-purpose` background agent** (mode `background`) whose sole
-job is to run `fix-issue` for that one issue **in its own worktree**. Launch them together (parallel).
+For each checked issue, launch a **`general-purpose` background agent** whose sole
+job is to run `fix-issue` for that one issue **in its own worktree**. Launch them in parallel.
 The worktree path is fixed by the `fix-issue` convention, so the orchestrator already knows it:
 `.worktree/<work-issue-number>-<short-slug>` under the repo root.
 
@@ -160,10 +160,10 @@ Give each agent a fully self-contained prompt (background agents share no contex
 - **Scope:** "You own GitHub issue #<n> only. Run the `fix-issue` skill for it end to end."
 - **Worktree, not in-place:** "Use the **worktree** option in `fix-issue` step 5. Create and work in
   `.worktree/<n>-<slug>` off `origin/<default-branch>`. Do all edits, builds, tests, `git`, and `gh`
-  from that worktree path (`git -C <wt> ...` / `cd <wt>;`). Never touch the main checkout or any other
+  from that worktree path (`git -C <wt> ...` / `cd <wt>;`). Don't touch the main checkout or other
   worktree." Do **not** offer the in-place option — batching requires isolation.
 - **The gate-relay protocol (below):** "You do **not** call `ask_user` for the plan, fix, or merge
-  gates. At each gate, stop, post a `GATE` report as described, and wait for my reply via a new turn.
+  gates. At each gate, stop, post a `GATE` report, and wait for my reply via a new turn.
   Apply my decision, then continue."
 - **The full issue context** you already gathered (title, body, relevant comments, footprint) so the
   agent doesn't re-fetch blindly.
@@ -180,41 +180,41 @@ would otherwise ask at once. So each agent reports gates to **you**, and you rel
 1. When an agent reaches a gate it ends its turn with a single structured line, e.g.
    `GATE plan #<n>: <one-line summary> | plan file: <path>` or
    `GATE fix #<n>: <summary> | diff stat: <...>` or
-   `GATE merge #<n>: <PR url>, checks green`. For the **plan** gate it must also have opened the plan
+   `GATE merge #<n>: <PR url>, checks green`. For the **plan** gate it must have opened the plan
    in mdview per `fix-issue` step 4 (it can do that from its worktree), or told you it could not.
 2. You surface that gate to the user with `ask_user` (accept / edit / reject for plan; accept /
    request-changes for fix; merge / wait / leave-open for merge) — mirroring `fix-issue` exactly.
 3. You relay the user's answer back to the owning agent with `write_agent` (e.g. "User accepted the
    plan — implement it" / "User requests changes: <notes>" / "User approved merge — run
    `gh pr merge`"). The agent resumes from where it paused.
-4. `BLOCKED`/`BUILD-FAILED`/`REVIEW` reports are handled the same way — surface, decide with the user,
+4. `BLOCKED`/`BUILD-FAILED`/`REVIEW` reports use the same path — surface, decide with the user,
    relay back.
 
 Batch gates when you can: if two agents are both waiting at a plan gate, you may present them in one
-`ask_user` with a field per issue, to save the user round-trips. Never merge or approve on the user's
+`ask_user` with a field per issue, to save round-trips. Never merge or approve on the user's
 behalf.
 
 ### 6. Supervise the slot to completion
 
-Drive all agents concurrently. You'll be **notified when a background agent finishes a turn**; on each
+Drive all agents concurrently. You'll be **notified when an agent finishes a turn**; on each
 notification `read_agent` the agent, update its `state` in `batch_slot`, and act:
 
 - **A gate report** → run the relay protocol (step 5), then `write_agent` the decision.
-- **A blocker** (`BLOCKED`, unresolved build failure, rejected plan the user won't revise) → mark that
-  issue `blocked`/`parked` in `batch_slot`, tell the user briefly, and **move on**. Do **not** hold up
+- **A blocker** (`BLOCKED`, unresolved build failure, a rejected plan) → mark that
+  issue `blocked`/`parked` in `batch_slot`, tell the user briefly, and **move on**. Do **not** stall
   the other agents. Offer to revisit parked issues after the slot drains, or to swap in a `deferred`
   candidate from step 3 if capacity frees up.
 - **Merged** → mark `merged`. The agent runs `fix-issue` steps 11–12 (sync default branch, rebuild,
   clean up its worktree/branch) for its own issue.
 
 Keep a short running status the user can read at a glance — one line per issue: state, and the next
-action (waiting on user gate / agent working / blocked). Regenerate it from `batch_slot` whenever the
+action (waiting on user gate / agent working / blocked). Rebuild it from `batch_slot` whenever the
 user asks "where are we".
 
 Because each agent syncs and rebuilds the **main checkout** in `fix-issue` step 11 after its merge,
 serialise that step when two agents merge close together: let one finish its default-branch
 sync/rebuild before telling the next to merge, so two agents don't `switch`/`pull` the main checkout
-at the same time. (Their worktrees are independent; only the shared main checkout needs serialising.)
+at the same time. (Their worktrees are independent; only the main checkout needs serialising.)
 
 ### 7. Close out the slot
 
@@ -230,17 +230,17 @@ recorded):
 4. If any issues were **parked** or **deferred**, offer to start the **next slot**: re-run steps 2–4
    over the remaining pool (footprints may have shifted now that files changed) and present a fresh
    checklist.
-5. Delete the scratch footprint/status files. Drop or keep the `batch_slot` table as the user prefers.
+5. Delete the scratch footprint/status files. Drop or keep `batch_slot` as the user prefers.
 
 ## Notes
 
-- **Never batch a `solo`/global issue.** If the user insists on including a repo-wide change, run it as
+- **Never batch a `solo`/global issue.** If the user insists on a repo-wide change, run it as
   a slot of one and say why.
 - **Conflicts detected late.** If two agents' *actual* diffs collide despite disjoint footprints
-  (e.g. both edit a shared config discovered mid-fix), don't auto-resolve: park the later one, tell the
+  (e.g. both edit a shared config found mid-fix), don't auto-resolve: park the later one, tell the
   user, and let the first merge before rebasing the second onto the new default branch.
 - **Don't over-parallelise the human.** More agents than the user can service just means idle agents
   waiting at gates. Prefer a smaller slot with fast turnaround over a large one that stalls.
-- **Read the fix-issue contract.** Every per-issue guarantee — reproduce-before-plan, plan-before-code,
-  verify-before-ask, green-before-handoff, resolve-every-comment, clean-current-checkout — is enforced
+- **Read the fix-issue contract.** Every guarantee — reproduce-before-plan, plan-before-code,
+  verify-before-ask, green-before-handoff, resolve-every-comment, clean-current-checkout — is met
   by the agent running `fix-issue`, not restated here. If that skill changes, this one inherits it.
