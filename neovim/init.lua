@@ -2967,7 +2967,20 @@ addPlugin {
 	"owallb/mason-auto-install.nvim",
 	config = function(_, cfg)
 		require("mason-auto-install").setup(cfg)
-		vim.api.nvim_exec_autocmds("FileType", { group = "MasonAutoInstall", pattern = vim.o.filetype })
+
+		local group = "MasonAutoInstall"
+		local retries_remaining = 50
+		local function trigger_current_filetype()
+			local ok = pcall(vim.api.nvim_get_autocmds, { group = group })
+			if ok then
+				vim.api.nvim_exec_autocmds("FileType", { group = group, pattern = vim.o.filetype })
+			elseif retries_remaining > 0 then
+				retries_remaining = retries_remaining - 1
+				vim.defer_fn(trigger_current_filetype, 100)
+			end
+		end
+
+		trigger_current_filetype()
 	end,
 	opts = {
 		packages = {
