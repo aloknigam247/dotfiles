@@ -2973,7 +2973,7 @@ addPlugin {
 		packages = {
 			"prettier",
 			"typos-lsp",
-			{ "basedpyright", filetypes = { "Python" } },
+			{ "pyright", filetypes = { "Python" } },
 			{ "ruff", filetypes = { "Python" } },
 			{ "lua-language-server", filetypes = { "Lua" } },
 			{ "powershell-editor-services", filetypes = { "PS1" } },
@@ -3115,9 +3115,9 @@ addPlugin {
 			capabilities = require("blink.cmp").get_lsp_capabilities()
 		}
 
-		vim.lsp.config.basedpyright = {
+		vim.lsp.config.pyright = {
 			settings = {
-				basedpyright = {
+				pyright = {
 					analysis = {
 						diagnosticMode = "workspace",
 					},
