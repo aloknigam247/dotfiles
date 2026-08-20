@@ -49,3 +49,12 @@ explaining something the code cannot express on its own.
 
 ## Azure DevOps
 When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
+
+## Workflow
+
+* Default to discussion. When I ask a how/why/what/should question, answer in words and lay
+  out options — do not install packages, run commands, write, or edit files until I explicitly
+  ask for a plan or say "implement". Treat design questions as read-only.
+* Read-only investigation to answer a question is fine (view/grep/glob). The line is mutating
+  or installing — no package installs, no scripts that change state, no file writes — without
+  an explicit go-ahead.
