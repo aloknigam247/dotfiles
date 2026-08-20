@@ -410,7 +410,7 @@ function whatis($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Text "󰊕 $arg" -fg $catppuccin.Red -styles italic
+        Format-Pill "󰊕 $arg" -bg $catppuccin.Red -fg $catppuccin.Base -styles italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
@@ -601,6 +601,35 @@ function Format-Text {
     }
 
     return $head
+}
+
+function Format-Pill {
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [String]$text,
+
+        [Parameter(Mandatory)]
+        [String]$bg,
+
+        [Parameter(Mandatory)]
+        [String]$fg,
+
+        [ValidateSet("blink","bold","hidden","italic","reverse","strikethrough","underline")]
+        [Array]$styles
+    )
+
+    $left_cap = "`u{E0B6}"
+    $right_cap = "`u{E0B4}"
+
+    $pill = Format-Text $left_cap -fg $bg -noreset
+    if ($styles.Count -gt 0) {
+        $pill += Format-Text " $text " -fg $fg -bg $bg -styles $styles -noreset
+    } else {
+        $pill += Format-Text " $text " -fg $fg -bg $bg -noreset
+    }
+    $pill += Format-Text $right_cap -fg $bg
+
+    return $pill
 }
 
 # ╭───────────╮
