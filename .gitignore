@@ -8,3 +8,4 @@ tmp/
 /powershell/PSDirectoryPredictor/bin
 /powershell/PSDirectoryPredictor/obj
 /git/.gitconfig
+.worktree
