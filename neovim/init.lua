@@ -559,20 +559,6 @@ end
 -- Auto Commands</>
 -- -------------
 vim.api.nvim_create_autocmd(
-	"BufEnter", {
-		pattern = "*",
-		desc = "Open directory in snacks explorer",
-		callback = function()
-			local path = vim.fn.expand("%:p")
-			if vim.fn.isdirectory(path) ~= 0 then
-				require("snacks").explorer({ cwd = path })
-				return true
-			end
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
 	{ "BufNewFile", "BufRead" }, {
 		pattern = "todo",
 		desc = "Set filetype for todo file",
@@ -2034,7 +2020,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: what about new dir file type https://www.reddit.com/r/neovim/comments/1ugzc40/icons_for_new_dir_plugin/
 FileTypeActions = {
 	["NvimTree"] = function(_)
 		vim.cmd("setlocal statuscolumn=")
@@ -3587,6 +3572,31 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+function _G.DirStatuscolumn()
+	if vim.v.virtnum ~= 0 then
+		return "  "
+	end
+
+	local name = vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, true)[1]
+
+	local icon, hl
+	if name:sub(-1) == "/" then
+		icon, hl = icons.folder_close, "Directory"
+	else
+		icon, hl = require("nvim-web-devicons").get_icon(name, name:match("%.(%w+)$"), { default = true })
+	end
+
+	return string.format("%%#%s#%s ", hl, icon)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "directory",
+	callback = function()
+		vim.opt_local.statuscolumn = "%{%v:lua.DirStatuscolumn()%}"
+		vim.opt_local.foldcolumn = "0"
+	end,
+})
+
 addPlugin {
 	"luukvbaal/statuscol.nvim",
 	config = function()
@@ -3594,6 +3604,7 @@ addPlugin {
 		require("statuscol").setup({
 			setopt = true,
 			relculright = true,
+			ft_ignore = { "directory" },
 			segments = {
 				{ sign = { name = { "todo" }, auto = true, foldclosed = true }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end } },
 				{ sign = { name = { "Marks_" }, auto = true, fillcharhl ="LineNr" } },

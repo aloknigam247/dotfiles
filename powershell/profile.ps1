@@ -416,10 +416,10 @@ function whatis($arg) {
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text "$($icons.type_app) $arg" -fg $catppuccin.Green -styles italic
+        Format-Pill "$($icons.type_app) $arg" -bg $catppuccin.Green -fg $catppuccin.Base -styles italic
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Text " $arg" -fg $catppuccin.Lavender -styles italic
+        Format-Pill " $arg" -bg $catppuccin.Lavender -fg $catppuccin.Base  -styles italic
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
@@ -617,9 +617,9 @@ function Format-Pill {
 
     $pill = Format-Text $left_cap -fg $bg -noreset
     if ($styles.Count -gt 0) {
-        $pill += Format-Text " $text " -fg $fg -bg $bg -styles $styles -noreset
+        $pill += Format-Text "$text" -fg $fg -bg $bg -styles $styles
     } else {
-        $pill += Format-Text " $text " -fg $fg -bg $bg -noreset
+        $pill += Format-Text "$text" -fg $fg -bg $bg
     }
     $pill += Format-Text $right_cap -fg $bg
 

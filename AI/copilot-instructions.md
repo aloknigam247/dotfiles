@@ -58,3 +58,12 @@ When working with Azure DevOps CLI (az boards, az repos), always include --proje
 * Read-only investigation to answer a question is fine (view/grep/glob). The line is mutating
   or installing — no package installs, no scripts that change state, no file writes — without
   an explicit go-ahead.
+
+## Scope
+
+* Do the least that fully satisfies the ask, and no more. Prefer the smallest, simplest change;
+  reuse what the platform or existing tools already provide instead of reimplementing it; do not
+  add parameters, abstractions, or handling for cases that were not requested.
+* If solving the task seems to require going beyond its stated scope — touching unrelated code,
+  adding new capabilities, or changing behavior nobody asked for — stop and ask me before
+  expanding scope, rather than deciding unilaterally.
