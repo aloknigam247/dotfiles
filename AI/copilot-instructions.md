@@ -20,7 +20,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 
 ## Code Style
 
-* When authoring or editing Markdown files, hard-wrap prose at **100 characters** per line (not 80). Do not re-flow fenced code blocks, tables, or long URLs.
+* Hard-wrap at **100 characters** per line (not 80) as the default for everything you write or edit. Do not re-flow fenced code blocks, tables, long URLs, or lines the surrounding file deliberately keeps unwrapped.
 * When adding or editing items in ordered lists, enums, switch cases, XML elements, dictionary entries, or similar sequences where order doesn't affect behavior, maintain **alphabetical order**. This applies to any collection where reordering has no semantic impact (e.g., using directives, property declarations, configuration entries).
 * When adding new fields/properties to an existing file, **do not reorder existing fields** — keep them in their original order. Add each new field in its correct alphabetical position **interspersed** among the existing entries when doing so does not break semantic ordering (e.g., the existing entries are already alphabetical and the surrounding code has no order dependency). If the existing entries are not in a clean alphabetical order, or inserting in place would require moving a pre-existing entry, add the new field(s) as a contiguous alphabetical block instead. Never move a pre-existing entry. This keeps diffs minimal while preserving order where it's cheap to do so.
 * **Do not use `<c>` or `<code>` tags in C# XML doc comments.** Reference identifiers, literals (`null`, `true`, `false`), and method names as plain text — no inline-code markup. (Use `<see cref="..."/>` only when an actual cross-reference is needed.)

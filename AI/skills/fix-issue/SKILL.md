@@ -14,9 +14,17 @@ before any code is written, and the user accepts the fix before any PR is raised
   per run — the first one that is still open/unchecked. Never batch sub-tasks.
 - **Never work on the default branch.** Every fix goes on a new `fix/<issue>-<slug>` branch, in the
   current checkout or in a dedicated worktree under `.worktree/` — the user chooses which.
-- **Reproduce before you plan.** For bugs, a failing reproduction (preferably an automated failing
-  test) must exist *before* the plan is drafted. No repro → no plan.
+- **Reproduce before you fix.** Every bug must be reproduced locally (preferably as an automated
+  failing test) *before* the plan is drafted and *before* any fix is written. No repro → no plan. If
+  the bug cannot be reproduced locally, **consult a human via `ask_user`** to decide whether to
+  proceed — never silently fix an unreproduced bug.
 - **Plan before code.** Nothing is edited until the user accepts the plan via `ask_user`.
+- **Proof of fix, or it is not done.** Every feature and every bug must be validated to prove it is
+  actually fixed/implemented before the work is considered complete. A change with no concrete
+  evidence of a working fix is incomplete — this applies equally to features, not just bugs.
+- **Blockers in validation go to a human.** If you cannot validate the fix works — a missing runtime,
+  an environment you can't exercise, a gate you can't run — stop and **inform a human via `ask_user`**
+  rather than assuming success or handing off unverified work.
 - **Verify before you ask.** Every acceptance criterion is checked against a real run *before* the
   user is asked to accept, and the user is handed concrete steps (with the exact artifact path) to
   confirm it themselves. Never ask someone to accept a change you have not exercised end to end.
@@ -147,14 +155,17 @@ and if you must, announce it to the user first per the hard gate above.
      visual-validation skill if one exists).
 3. Run it and **paste the actual failing output** into chat. Confirm the observed failure matches the
    reported symptom.
-4. If it does **not** reproduce: stop, report exactly what you tried and what happened, and ask via
-   `ask_user` whether to (a) gather more info, (b) proceed on code inspection alone, or (c) abandon.
-   Never silently plan a fix for an unreproduced bug.
+4. If it does **not** reproduce locally: stop, report exactly what you tried and what happened, and
+   **consult a human via `ask_user`** whether to (a) gather more info, (b) proceed on code inspection
+   alone, or (c) abandon. Never silently plan or write a fix for an unreproduced bug.
 
 Keep the failing test — it is the first acceptance criterion of the fix.
 
-For non-bug issues (feature/refactor/docs/chore), skip to step 3, but still note the current
-observable behavior as a baseline.
+For non-bug issues (feature/refactor/docs/chore), skip the repro but still capture a **baseline**:
+note the current observable behavior and decide up front **how the finished feature will be
+validated** (a new test, a command whose output changes, a runnable artifact). That validation plan
+becomes the feature's acceptance criteria in steps 4 and 6 — a feature is not done without proof it
+works, exactly like a bug.
 
 ### 3. Research and draft the plan
 
@@ -299,28 +310,36 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
 ### 6. Verify the fix, and tell the user how to verify it
 
 The plan's acceptance criteria are the checklist. Work through **every one** and show real evidence
-before the user is asked to accept anything.
+before the user is asked to accept anything. **No proof, not done** — this holds for features as much
+as bugs.
 
-1. **Re-run the reproduction from step 2.** The exact command/test that failed before the fix must
-   now pass. Paste both the "before" failure and the "after" pass so the delta is visible.
-2. **Walk the acceptance criteria explicitly.** For each one, state how it was checked and the
+1. **Prove the fix.** For a **bug**, re-run the reproduction from step 2: the exact command/test that
+   failed before the fix must now pass — paste both the "before" failure and the "after" pass so the
+   delta is visible. For a **feature/refactor**, run the validation you defined in step 2 (new test,
+   changed command output, or runnable artifact) and paste the evidence it now behaves as intended.
+   Either way there must be concrete proof the change works.
+2. **If you hit a blocker validating the fix** — a runtime you can't install, an environment or gate
+   you can't exercise, a nondeterministic result you can't pin — **stop and inform a human via
+   `ask_user`** with exactly what blocked you and the options (e.g. supply the environment, accept
+   reduced evidence, or abandon). Do not hand off or ask for acceptance on an unvalidated fix.
+3. **Walk the acceptance criteria explicitly.** For each one, state how it was checked and the
    result. If a criterion cannot be checked automatically, say so and cover it in the manual steps
    below — never silently mark it done.
-3. **Check for regressions.** Run the targeted suite; if the change touches shared/hot code, run the
+4. **Check for regressions.** Run the targeted suite; if the change touches shared/hot code, run the
    full suite. Confirm no previously passing test now fails.
-4. **Re-run new or timing-sensitive tests several times** (5–10×) before trusting them. A test that
+5. **Re-run new or timing-sensitive tests several times** (5–10×) before trusting them. A test that
    passes once may be flaky; say so if a rerun was needed.
-5. **Read your own test source.** Confirm the assertion that pins the fix is a *hard* failure
+6. **Read your own test source.** Confirm the assertion that pins the fix is a *hard* failure
    (`QCOMPARE`/`assert`/`expect`), not a warning, log line, or soft threshold that would pass even
    with the bug present.
-6. **Exercise the real artifact when the issue is user-visible.** A green unit test does not prove a
+7. **Exercise the real artifact when the issue is user-visible.** A green unit test does not prove a
    GUI/CLI/service behaves correctly. Build and run the actual binary, and use the repo's visual or
    manual gate if it defines one.
-7. **Confirm the artifact is not stale.** Compare the build output's mtime against the branch's last
+8. **Confirm the artifact is not stale.** Compare the build output's mtime against the branch's last
    commit time; if the binary is older, delete it and rebuild. Incremental linkers routinely skip
    relinking an executable when only a library changed. When in a worktree, confirm you are running
    **that worktree's** artifact, not the main checkout's.
-8. **Report the measured performance cost** promised by the plan's **Performance cost** section. If
+9. **Report the measured performance cost** promised by the plan's **Performance cost** section. If
    the plan named a profiling hook or benchmark, run it before and after and paste both numbers. If
    the plan claimed zero cost in some configuration, demonstrate that configuration is unaffected.
    Never close out with an unmeasured "negligible".
