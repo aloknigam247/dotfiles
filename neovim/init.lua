@@ -4551,7 +4551,39 @@ addPlugin {
 addPlugin {
 	"delphinus/inspect-extmarks.nvim",
 	cmd = "InspectExtmarks",
-	config = true
+	config = function()
+		-- HACK: inspect-extmarks builds { ns_name, "Title" } chunks, but anonymous namespaces have no
+		-- name, so ns_name is nil and nvim_echo rejects the chunk ("Invalid chunk: expected Array with
+		-- 1 or 2 Strings"). Wrap the original inspect and, only for the duration of that call, patch
+		-- nvim_echo to rewrite each { nil, "Title" } chunk into { "<anonymous> <ns_id>", "Title" } using
+		-- the following (ns_id) chunk. The original inspect still does all the real work; nvim_echo is
+		-- always restored, even on error.
+		local inspect_extmarks = require("inspect-extmarks")
+		local inspect = inspect_extmarks.inspect
+
+		inspect_extmarks.inspect = function(opts)
+			local nvim_echo = vim.api.nvim_echo
+			vim.api.nvim_echo = function(chunks, history, options)
+				for index, chunk in ipairs(chunks) do
+					if type(chunk) == "table" and chunk[1] == nil and chunk[2] == "Title" then
+						local ns_id_chunk = chunks[index + 1]
+						local ns_id = type(ns_id_chunk) == "table" and ns_id_chunk[1] or nil
+						chunk[1] = ns_id and ("<anonymous> " .. ns_id) or "<anonymous>"
+					end
+				end
+
+				return nvim_echo(chunks, history, options)
+			end
+
+			local ok, err = pcall(inspect, opts)
+			vim.api.nvim_echo = nvim_echo
+			if not ok then
+				error(err, 0)
+			end
+		end
+
+		inspect_extmarks.setup()
+	end
 }
 
 addPlugin {
