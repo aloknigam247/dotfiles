@@ -10,7 +10,7 @@
 
 import readline from "node:readline";
 
-const HUB_URL = process.env.COPILOT_BRIDGE_URL ?? "ws://127.0.0.1:47823";
+const HUB_URL = "ws://127.0.0.1:47823";
 const MODE = process.argv.includes("--allow-all")
     ? "allow"
     : process.argv.includes("--deny-all")

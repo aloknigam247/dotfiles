@@ -13,7 +13,7 @@ import http from "node:http";
 import crypto from "node:crypto";
 
 const HOST = "127.0.0.1";
-const PORT = Number(process.env.COPILOT_BRIDGE_PORT ?? 47823);
+const PORT = 47823;
 const WS_GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
 const HEARTBEAT_MS = 15_000;

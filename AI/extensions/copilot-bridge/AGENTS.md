@@ -32,8 +32,11 @@ A local, no-auth WebSocket bridge across GitHub Copilot CLI sessions. Three part
 - Constants live at the top of each file (`HOST`, `PORT`, `HEARTBEAT_MS`, `GRACE_MS`,
   `PERMISSION_TIMEOUT_MS`, the `MAX_*` ceilings in `hub.mjs`; `HUB_URL`, `BOOTSTRAP_ATTEMPTS`,
   `OUTBOX_MAX`, etc. in `extension.mjs`). Add new tunables there, not inline.
-- The port defaults to `47823` and is read from `COPILOT_BRIDGE_PORT` in `hub.mjs`. Keep the hub and
+- The port is fixed at `47823` in `hub.mjs`, `extension.mjs`, and `client.mjs`. Keep the hub and
   extension in agreement on the URL.
+- Avoid environment variables for configuration. The one exception is
+  `COPILOT_BRIDGE_PERMISSION_TIMEOUT_MS`, which `hub.mjs` reads only so `verify.mjs` can shorten the
+  permission timeout for its timeout-fallback test.
 
 ## Protocol changes
 
@@ -45,16 +48,16 @@ a test in `verify.mjs`. Treat unknown `type`s as forward-compatible
 
 ## Testing
 
-`verify.mjs` spawns its own hub on an isolated port and drives the protocol end-to-end (a real
-`WebSocket` peer plus a hand-rolled raw client for framing tests). Two suites:
+`verify.mjs` spawns its own hub and drives the protocol end-to-end (a real `WebSocket` peer plus a
+hand-rolled raw client for framing tests). It binds the fixed bridge port, so run it only when no
+live session hub is up:
 
 ```powershell
-node verify.mjs                                       # baseline
-$env:COPILOT_BRIDGE_HARDENED = "1"; node verify.mjs   # baseline + hardened
+node verify.mjs
 ```
 
-Both must be green before you finish. Run `node --check` on any `.mjs` you touch. When you change
-hub behavior, add a hardened test rather than loosening an existing one.
+Must be green before you finish. Run `node --check` on any `.mjs` you touch. When you change hub
+behavior, add a test rather than loosening an existing one.
 
 ## Gotchas
 

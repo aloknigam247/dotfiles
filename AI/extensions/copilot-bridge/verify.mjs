@@ -1,20 +1,14 @@
 // copilot-bridge self-check harness.
 //
-// Spawns an isolated hub on COPILOT_BRIDGE_PORT (default 47901) and exercises the
-// wire protocol end-to-end without needing Copilot. It uses two kinds of synthetic
-// peer:
+// Spawns a hub on the fixed bridge port and exercises the wire protocol end-to-end
+// without needing Copilot. It uses two kinds of synthetic peer:
 //   - a WebSocket peer (Node's global WebSocket) for high-level protocol tests, and
 //   - a raw TCP peer (hand-rolled RFC 6455 client) for framing-level tests
 //     (masking, fragmentation, ping-interleave, large payloads).
 //
-// The suite is split into BASELINE tests (must pass on the current, unmodified code)
-// and HARDENED tests (the behaviours added by the rubber-duck fixes). Hardened tests
-// only run when COPILOT_BRIDGE_HARDENED=1 so the same file can validate before and
-// after the fixes.
+//   node verify.mjs
 //
-//   node verify.mjs                    -> baseline only
-//   $env:COPILOT_BRIDGE_HARDENED=1; node verify.mjs   -> baseline + hardened
-//
+// Run it only when no live session hub is up, since it binds the same fixed port.
 // Exits non-zero on any failure.
 
 import net from "node:net";
@@ -23,11 +17,10 @@ import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const HUB = fileURLToPath(new URL("./hub.mjs", import.meta.url));
-const PORT = Number(process.env.COPILOT_BRIDGE_PORT ?? 47901);
+const PORT = 47823;
 const URL_ = `ws://127.0.0.1:${PORT}`;
-const HARDENED = process.env.COPILOT_BRIDGE_HARDENED === "1";
-// Fast permission timeout so the timeout-fallback test does not take 60s. The hub
-// honours this override only in the hardened build.
+// Fast permission timeout (via the hub's env override) so the timeout-fallback test
+// does not take the full 60s.
 const PERM_TIMEOUT_MS = 800;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -221,22 +214,14 @@ async function openRaw() {
 
 const tests = [];
 function test(name, fn) {
-    tests.push({ name, fn, hardened: false });
-}
-function hardenedTest(name, fn) {
-    tests.push({ name, fn, hardened: true });
+    tests.push({ name, fn });
 }
 
 let failures = 0;
 let passes = 0;
-let skipped = 0;
 
 async function runAll() {
     for (const t of tests) {
-        if (t.hardened && !HARDENED) {
-            skipped++;
-            continue;
-        }
         const opened = [];
         const track = (p) => {
             if (p) opened.push(p);
@@ -446,9 +431,9 @@ test("framing: large payload (>64KiB) is delivered intact", async ({ track }) =>
     expect(got, "70000-char payload received intact");
 });
 
-// =========================== HARDENED TESTS ===============================
+// =========================== MORE TESTS ===================================
 
-hardenedTest("role: a session-role peer cannot answer a permission.decision", async ({ track }) => {
+test("role: a session-role peer cannot answer a permission.decision", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const Evil = track(await openWS("session", "sessionEVIL", "E"));
     const C = track(await openWS("client", undefined, "C"));
@@ -460,7 +445,7 @@ hardenedTest("role: a session-role peer cannot answer a permission.decision", as
     expect(!A.recv.some((m) => m.type === "permission.decision" && m.requestId === "h1"), "session-sent decision was rejected");
 });
 
-hardenedTest("role: a second hello cannot change an established peer's role", async ({ track }) => {
+test("role: a second hello cannot change an established peer's role", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const B = track(await openWS("session", "sessionBBB", "B"));
     await settle(120);
@@ -472,7 +457,7 @@ hardenedTest("role: a second hello cannot change an established peer's role", as
     expect(!A.recv.some((m) => m.type === "inject"), "role remained immutable; inject was dropped");
 });
 
-hardenedTest("validation: an invalid decision value is rejected", async ({ track }) => {
+test("validation: an invalid decision value is rejected", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const C = track(await openWS("client", undefined, "C"));
     await settle(120);
@@ -484,7 +469,7 @@ hardenedTest("validation: an invalid decision value is rejected", async ({ track
     expect(!bad, "the bogus decision value did not reach the session");
 });
 
-hardenedTest("disconnect: last client leaving resolves pending permission as ask", async ({ track }) => {
+test("disconnect: last client leaving resolves pending permission as ask", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const C = track(await openWS("client", undefined, "C"));
     await settle(120);
@@ -495,7 +480,7 @@ hardenedTest("disconnect: last client leaving resolves pending permission as ask
     expect(dec?.data?.decision === "ask", "session got a prompt ask fallback promptly after client left");
 });
 
-hardenedTest("timeout: unanswered permission falls back to ask quickly", async ({ track }) => {
+test("timeout: unanswered permission falls back to ask quickly", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     track(await openWS("client", undefined, "C")); // present but silent
     await settle(120);
@@ -504,7 +489,7 @@ hardenedTest("timeout: unanswered permission falls back to ask quickly", async (
     expect(dec?.data?.decision === "ask", "timed-out request resolved as ask");
 });
 
-hardenedTest("inject: empty-string sessionId is rejected (no accidental broadcast)", async ({ track }) => {
+test("inject: empty-string sessionId is rejected (no accidental broadcast)", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const B = track(await openWS("session", "sessionBBB", "B"));
     const C = track(await openWS("client", undefined, "C"));
@@ -515,7 +500,7 @@ hardenedTest("inject: empty-string sessionId is rejected (no accidental broadcas
     expect(!B.recv.some((m) => m.type === "inject"), "empty sessionId did not broadcast to B");
 });
 
-hardenedTest("inject: ambiguous prefix does not fan out to multiple sessions", async ({ track }) => {
+test("inject: ambiguous prefix does not fan out to multiple sessions", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const B = track(await openWS("session", "sessionAAB", "B"));
     const C = track(await openWS("client", undefined, "C"));
@@ -527,7 +512,7 @@ hardenedTest("inject: ambiguous prefix does not fan out to multiple sessions", a
     expect(!(hitA && hitB), "ambiguous prefix was not delivered to both sessions");
 });
 
-hardenedTest("framing: an unmasked client frame is rejected", async ({ track }) => {
+test("framing: an unmasked client frame is rejected", async ({ track }) => {
     const R = track(await openRaw());
     const C = track(await openWS("client", undefined, "C"));
     R.hello("session", "sessionRAW", "R");
@@ -538,7 +523,7 @@ hardenedTest("framing: an unmasked client frame is rejected", async ({ track }) 
     expect(R.state.closed, "hub closed the connection that sent an unmasked frame");
 });
 
-hardenedTest("duplicate requestId does not corrupt routing", async ({ track }) => {
+test("duplicate requestId does not corrupt routing", async ({ track }) => {
     const A = track(await openWS("session", "sessionAAA", "A"));
     const C = track(await openWS("client", undefined, "C"));
     await settle(120);
@@ -558,7 +543,6 @@ const hub = spawn(process.execPath, [HUB], {
     stdio: "ignore",
     env: {
         ...process.env,
-        COPILOT_BRIDGE_PORT: String(PORT),
         COPILOT_BRIDGE_PERMISSION_TIMEOUT_MS: String(PERM_TIMEOUT_MS),
     },
 });
@@ -567,9 +551,7 @@ hub.on("error", () => {});
 await sleep(500);
 await runAll();
 
-console.log(
-    `\n${passes} passed, ${failures} failed${skipped ? `, ${skipped} hardened skipped (set COPILOT_BRIDGE_HARDENED=1)` : ""}`
-);
+console.log(`\n${passes} passed, ${failures} failed`);
 
 try {
     hub.kill();
