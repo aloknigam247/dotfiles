@@ -3762,8 +3762,8 @@ addPlugin {
 						symbols = {
 							modified = icons.file_modified,
 							readonly = icons.file_readonly,
-							unnamed  = " " .. icons.file_unnamed .. " ",
-							newfile  = " " .. icons.file_newfile .. " "
+							unnamed  = icons.file_unnamed,
+							newfile  = icons.file_newfile
 						}
 					}
 				},
