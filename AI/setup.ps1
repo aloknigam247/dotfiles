@@ -1,5 +1,6 @@
 $files = @{
     "copilot-instructions.md" = "~\.copilot\copilot-instructions.md"
+    "extensions\copilot-bridge" = "~\.copilot\extensions\copilot-bridge"
     "mcp-config.json" = "~\.copilot\mcp-config.json"
     "skills" = "~\.copilot\skills"
 }
