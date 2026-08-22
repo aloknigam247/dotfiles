@@ -29,7 +29,6 @@ A local, no-auth WebSocket bridge across GitHub Copilot CLI sessions. Three part
 
 - **ES modules, zero runtime dependencies.** Node built-ins + the global `WebSocket` only; the hub
   additionally speaks raw framing via `node:http`/`node:crypto`. Do **not** add npm dependencies.
-- **1TBS braces**, double quotes, hard-wrap at 100 columns.
 - Constants live at the top of each file (`HOST`, `PORT`, `HEARTBEAT_MS`, `GRACE_MS`,
   `PERMISSION_TIMEOUT_MS`, the `MAX_*` ceilings in `hub.mjs`; `HUB_URL`, `BOOTSTRAP_ATTEMPTS`,
   `OUTBOX_MAX`, etc. in `extension.mjs`). Add new tunables there, not inline.
