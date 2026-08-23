@@ -386,6 +386,7 @@ function writeLog {
     Write-Host -ForegroundColor $color " $message"
 }
 
+# ╾─────────────────────────────────────────╼ main execution ╾─────────────────────────────────────────╼
 $all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | ForEach-Object { $_.Directory.BaseName }
 
 if ($update) {

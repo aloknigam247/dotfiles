@@ -1509,7 +1509,12 @@ addPlugin {
 addPlugin {
 	"LudoPinelli/comment-box.nvim",
 	cmd = "CB",
-	config = function()
+	opts = {
+		box_width = vim.o.textwidth,
+		doc_width = vim.o.textwidth,
+		line_width = vim.o.textwidth
+	},
+	config = function(_, cfg)
 		local cb = require("comment-box")
 		local cb_options = CmdOptions:new()
 
@@ -1533,6 +1538,8 @@ addPlugin {
 		end
 
 		vim.api.nvim_create_user_command("CB", exec, { complete = cb_complete, desc = "Create comment box", nargs = "*", range = 2 })
+
+		cb.setup(cfg)
 	end
 }
 
@@ -2449,9 +2456,29 @@ addPlugin {
 
 addPlugin {
 	"dlyongemallo/diffview.nvim",
-	cmd = "DiffviewOpen",
+	cmd = { "DiffviewOpen", "DiffviewFileHistory" },
 	config = function()
+		local difflazy = require("diffview.lazy")
 		local actions = require("diffview.actions")
+		local utils = difflazy.require("diffview.utils")
+
+		-- Keymaps shared across view, file_panel, and file_history_panel.
+		local common_nav_keymaps = {
+			{ "n", "<s-tab>",       actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
+			{ "n", "<tab>",         actions.select_next_entry,  { desc = "Open the diff for the next file" } }
+		}
+
+		-- Keymaps shared between file_panel and file_history_panel.
+		local common_panel_keymaps = {
+			{ "n", "<2-LeftMouse>", actions.select_entry,       { desc = "Open the diff for the selected entry" } },
+			{ "n", "<cr>",          actions.select_entry,       { desc = "Open the diff for the selected entry" } },
+			{ "n", "<down>",        actions.next_entry,         { desc = "Bring the cursor to the next file entry" } },
+			{ "n", "<up>",          actions.prev_entry,         { desc = "Bring the cursor to the previous file entry" } },
+			{ "n", "zM",            actions.close_all_folds,    { desc = "Collapse all folds" } },
+			{ "n", "zR",            actions.open_all_folds,     { desc = "Expand all folds" } },
+			{ "n", "za",            actions.toggle_fold,        { desc = "Toggle fold" } }
+		}
+
 		require("diffview").setup({
 			file_panel = {
 				win_config = {
@@ -2466,24 +2493,18 @@ addPlugin {
 			},
 			keymaps = {
 				disable_defaults = true,
-				file_panel = {
-					{ "n", "<2-LeftMouse>", actions.select_entry,       { desc = "Open the diff for the selected entry" } },
+				file_history_panel = utils.vec_join(common_panel_keymaps, common_nav_keymaps, {
+					{ "n", "g?",            actions.help("file_history_panel"),  { desc = "Open the help panel" } },
+				}),
+				file_panel = utils.vec_join(common_panel_keymaps, common_nav_keymaps, {
 					{ "n", "<C-w>gf",       actions.goto_file_tab,      { desc = "Open the file in a new tabpage" } },
-					{ "n", "<cr>",          actions.select_entry,       { desc = "Open the diff for the selected entry" } },
-					{ "n", "<down>",        actions.next_entry,         { desc = "Bring the cursor to the next file entry" } },
-					{ "n", "<s-tab>",       actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
 					{ "n", "<space>",       actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
-					{ "n", "<tab>",         actions.select_next_entry,  { desc = "Open the diff for the next file" } },
-					{ "n", "<up>",          actions.prev_entry,         { desc = "Bring the cursor to the previous file entry" } },
 					{ "n", "S",             actions.stage_all,          { desc = "Stage all entries" } },
 					{ "n", "U",             actions.unstage_all,        { desc = "Unstage all entries" } },
 					{ "n", "X",             actions.restore_entry,      { desc = "Restore entry to the state on the left side" } },
 					{ "n", "g?",            actions.help("file_panel"), { desc = "Open the help panel" } },
 					{ "n", "i",             actions.listing_style,      { desc = "Toggle between 'list' and 'tree' views" } },
-					{ "n", "zM",            actions.close_all_folds,    { desc = "Collapse all folds" } },
-					{ "n", "zR",            actions.open_all_folds,     { desc = "Expand all folds" } },
-					{ "n", "za",            actions.toggle_fold,        { desc = "Toggle fold" } },
-				},
+				}),
 				help_panel = {
 					{ "n", "q",     actions.close,  { desc = "Close help menu" } },
 					{ "n", "<esc>", actions.close,  { desc = "Close help menu" } },
