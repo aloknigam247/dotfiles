@@ -23,7 +23,11 @@
     "https://graph.microsoft.com",
     "https://release-plz.ieni.dev",
     "https://review.learn.microsoft.com",
-    "https://learn.microsoft.com"
+    "https://learn.microsoft.com",
+    "https://www.reddit.com",
+    "https://old.reddit.com",
+    "https://redlib.catsarch.com",
+    "https://safereddit.com"
   ],
   "experimental": true,
   "footer": {
@@ -55,5 +59,13 @@
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
   "subagents": {},
-  "model": "claude-opus-4.8"
+  "model": "claude-opus-4.8",
+  "extensions": {
+    "disabledExtensions": []
+  },
+  "sidebar": {
+    "enabled": false,
+    "hoverFocus": true,
+    "showCloseButton": true
+  }
 }
