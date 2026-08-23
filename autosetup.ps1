@@ -387,7 +387,7 @@ function writeLog {
 }
 
 # ╾─────────────────────────────────────────╼ main execution ╾─────────────────────────────────────────╼
-$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | ForEach-Object { $_.Directory.BaseName }
+$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" -Depth 1 | ForEach-Object { $_.Directory.BaseName }
 
 if ($update) {
     writeLog INFO "Updating all installed packages"
