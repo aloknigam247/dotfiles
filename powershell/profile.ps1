@@ -643,7 +643,6 @@ Set-PsFzfOption -TabExpansion
 # ╭────────────────╮
 # │ Autocompletion │
 # ╰────────────────╯
-# Completor copilot and agency
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
@@ -1015,6 +1014,9 @@ $env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0
 # ─[ Copilot Settings ]────────────────────────────────────────────────
 $env:COPILOT_AUTO_UPDATE = "false"
 $env:COPILOT_OTEL_ENABLED = "false"
+
+# ─[ Agency Settings ]─────────────────────────────────────────────────
+$env:AGENCY_NO_UPDATE_CHECK  = $true
 
 # ─[ User bin on PATH ]────────────────────────────────────────────────
 $env:PATH = "$env:PATH;$HOME\bin"
