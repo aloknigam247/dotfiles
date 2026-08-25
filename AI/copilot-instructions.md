@@ -67,3 +67,16 @@ When working with Azure DevOps CLI (az boards, az repos), always include --proje
 * If solving the task seems to require going beyond its stated scope — touching unrelated code,
   adding new capabilities, or changing behavior nobody asked for — stop and ask me before
   expanding scope, rather than deciding unilaterally.
+
+## Authoring files (docs, configs, prompt/agent defs)
+
+* Single source of truth: state each fact once, where it authoritatively lives; elsewhere link to
+  it, never restate it. Don't duplicate what a runtime source, another file, or my user instructions
+  already define.
+* No transient content in durable files: never hardcode state that changes at runtime or over time
+  (modes, counts, statuses, "until X happens") — point to the live source instead.
+* Write only what the file's reader needs to act. Omit background, history, rationale, transition
+  narratives, and "what this fixes" — those belong in the commit/PR, not the file.
+* Every line must earn its place: if removing it loses no actionable meaning, remove it. Prefer the
+  shortest file that fully works.
+* Reference, don't repeat: prefer "see X" over re-explaining X.
