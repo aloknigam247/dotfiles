@@ -354,14 +354,41 @@ function agency {
         }
         Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 
+        $agencyCommands = @(
+            "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
+            "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
+            "support", "update", "vscode"
+        )
+        $first = if ($argList.Count) { $argList[0] } else { $null }
+        $isSubcommand = $first -and ($agencyCommands -contains $first)
+        $isCopilot = $first -and ($first -in @("copilot", "cp"))
+
         try {
-            agency.exe copilot @argList
-            if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
+            if ($isSubcommand -or $isCopilot) {
+                agency.exe @argList
+            } else {
+                agency.exe copilot @argList
+            }
+            $ok = $?
+            if ($isSubcommand) {
+                Read-Host -Prompt "Press any key to exit"
+            } elseif (-not $ok) {
+                Read-Host -Prompt "Agency exited with error, press any key to exit"
+            }
         } catch [System.Management.Automation.CommandNotFoundException] {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
             iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
-            agency.exe copilot @argList
-            if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
+            if ($isSubcommand -or $isCopilot) {
+                agency.exe @argList
+            } else {
+                agency.exe copilot @argList
+            }
+            $ok = $?
+            if ($isSubcommand) {
+                Read-Host -Prompt "Press any key to exit"
+            } elseif (-not $ok) {
+                Read-Host -Prompt "Agency exited with error, press any key to exit"
+            }
         }
     }
 
