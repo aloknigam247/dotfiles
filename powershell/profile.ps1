@@ -363,32 +363,21 @@ function agency {
         $isSubcommand = $first -and ($agencyCommands -contains $first)
         $isCopilot = $first -and ($first -in @("copilot", "cp"))
 
-        try {
-            if ($isSubcommand -or $isCopilot) {
-                agency.exe @argList
-            } else {
-                agency.exe copilot @argList
-            }
-            $ok = $?
-            if ($isSubcommand) {
-                Read-Host -Prompt "Press any key to exit"
-            } elseif (-not $ok) {
-                Read-Host -Prompt "Agency exited with error, press any key to exit"
-            }
-        } catch [System.Management.Automation.CommandNotFoundException] {
+        if (-not (Get-Command agency.exe -ErrorAction SilentlyContinue)) {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
             iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
-            if ($isSubcommand -or $isCopilot) {
-                agency.exe @argList
-            } else {
-                agency.exe copilot @argList
-            }
-            $ok = $?
-            if ($isSubcommand) {
-                Read-Host -Prompt "Press any key to exit"
-            } elseif (-not $ok) {
-                Read-Host -Prompt "Agency exited with error, press any key to exit"
-            }
+        }
+
+        if ($isSubcommand -or $isCopilot) {
+            agency.exe @argList
+        } else {
+            agency.exe copilot @argList
+        }
+        $ok = $?
+        if ($isSubcommand) {
+            Read-Host -Prompt "Press any key to exit"
+        } elseif (-not $ok) {
+            Read-Host -Prompt "Agency exited with error, press any key to exit"
         }
     }
 
