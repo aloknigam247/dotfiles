@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>commitlint config builder</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --card: #ffffff;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --muted: #656d76;
+    --accent: #0969da;
+    --code-bg: #f6f8fa;
+    --error: #cf222e;
+    --warn: #9a6700;
+    --off: #656d76;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+  }
+  header h1 { margin: 0 0 4px; font-size: 22px; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  .layout { display: flex; flex-direction: column; gap: 24px; padding: 24px; max-width: 1000px; margin: 0 auto; }
+  .rules { min-width: 0; }
+  .output-col { position: sticky; top: 0; z-index: 5; }
+  .group { margin-bottom: 28px; }
+  .group > h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--muted); margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border);
+  }
+  .rule {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; margin-bottom: 10px;
+  }
+  .rule.disabled { opacity: .55; }
+  .rule-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .rule-head input[type=checkbox] { width: 16px; height: 16px; }
+  .rule-name { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 600; font-size: 14px; }
+  .rule-cond { color: var(--muted); font-size: 13px; margin: 6px 0 10px; }
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .field { display: flex; flex-direction: column; gap: 3px; }
+  .field label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  select, input[type=text] {
+    font-family: inherit; font-size: 13px; padding: 5px 8px;
+    border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--text);
+  }
+  select[multiple] { min-width: 150px; height: 108px; }
+  input[type=text].wide { min-width: 260px; }
+  .lvl-2 { color: var(--error); font-weight: 600; }
+  .lvl-1 { color: var(--warn); font-weight: 600; }
+  .lvl-0 { color: var(--off); }
+  .output-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .output-card .bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+  }
+  .output-card .bar strong { font-size: 13px; }
+  .btns { display: flex; gap: 8px; }
+  button {
+    font-family: inherit; font-size: 13px; padding: 5px 12px; border-radius: 6px;
+    border: 1px solid var(--border); background: #f6f8fa; color: var(--text); cursor: pointer;
+  }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button:hover { filter: brightness(.97); }
+  pre {
+    margin: 0; padding: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; background: var(--code-bg); color: var(--text); overflow: auto; max-height: 34vh;
+  }
+  .toolbar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  code.inline {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; font-size: 12px;
+  }
+  .commit {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px;
+    background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px;
+    margin-bottom: 12px; white-space: pre-wrap; color: var(--muted); line-height: 1.7;
+  }
+  .commit .cap {
+    display: block; font-family: -apple-system, "Segoe UI", sans-serif; font-size: 11px;
+    text-transform: uppercase; letter-spacing: .4px; color: var(--muted); margin-bottom: 8px;
+  }
+  .commit .hl { background: #fff3c4; color: var(--text); font-weight: 600; border-radius: 3px; padding: 0 2px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>commitlint config builder</h1>
+  <p>Every rule from the commitlint reference with all possible options. Toggle, set level / applicability / value,
+     and copy the generated <code class="inline">commitlint.config.js</code>.</p>
+</header>
+
+<div class="layout">
+  <div class="output-col">
+    <div class="output-card">
+      <div class="bar">
+        <strong>commitlint.config.js</strong>
+        <div class="btns">
+          <button id="copyBtn" class="primary">Copy</button>
+          <button id="downloadBtn">Download</button>
+        </div>
+      </div>
+      <pre id="output"></pre>
+    </div>
+    <p class="hint">Level: <span class="lvl-2">2 = error</span>, <span class="lvl-1">1 = warning</span>,
+       <span class="lvl-0">0 = disabled</span>. Only enabled rules are emitted; everything else falls back to the
+       extended config defaults.</p>
+  </div>
+
+  <div class="rules">
+    <div class="toolbar">
+      <label class="field" style="flex-direction:row;align-items:center;gap:6px;">
+        <input type="checkbox" id="extends" checked>
+        <span>extends <code class="inline">@commitlint/config-conventional</code></span>
+      </label>
+      <button id="enableAll">Enable all</button>
+      <button id="disableAll">Disable all</button>
+      <button id="resetDefaults">Reset to defaults</button>
+    </div>
+    <div id="rulesRoot"></div>
+  </div>
+</div>
+
+<script>
+const CASES = ["lower-case", "upper-case", "camel-case", "kebab-case",
+               "pascal-case", "sentence-case", "snake-case", "start-case"];
+
+// type: bool | length | string | case | type-enum | scope-enum | delimiters
+// rule = default applicable; value = default value; enabled default per docs is "on" for those with a default meaning.
+const RULES = [
+  { group: "Type", name: "type-enum", cond: "type is found in value", type: "type-enum", rule: "always",
+    value: ["build","chore","ci","docs","feat","fix","perf","refactor","revert","style","test"], on: true },
+  { group: "Type", name: "type-case", cond: "type is in case value", type: "case", rule: "always",
+    value: ["lower-case"], on: false },
+  { group: "Type", name: "type-empty", cond: "type is empty", type: "bool", rule: "never", on: false },
+  { group: "Type", name: "type-min-length", cond: "type has value or more characters", type: "length",
+    rule: "always", value: "0", on: false },
+  { group: "Type", name: "type-max-length", cond: "type has value or less characters", type: "length",
+    rule: "always", value: "Infinity", on: false },
+
+  { group: "Scope", name: "scope-enum", cond: "scope is found in value", type: "scope-enum", rule: "always",
+    value: [], delimiters: "", on: false },
+  { group: "Scope", name: "scope-case", cond: "scope is in case value", type: "case", rule: "always",
+    value: ["lower-case"], on: false },
+  { group: "Scope", name: "scope-empty", cond: "scope is empty", type: "bool", rule: "never", on: false },
+  { group: "Scope", name: "scope-delimiter-style", cond: "all delimiters found in scope must match value",
+    type: "delimiters", rule: "always", value: "/ \\ ,", on: false },
+  { group: "Scope", name: "scope-min-length", cond: "scope has value or more characters", type: "length",
+    rule: "always", value: "0", on: false },
+  { group: "Scope", name: "scope-max-length", cond: "scope has value or less characters", type: "length",
+    rule: "always", value: "Infinity", on: false },
+
+  { group: "Subject", name: "subject-case", cond: "subject is in case value", type: "case", rule: "never",
+    value: ["sentence-case","start-case","pascal-case","upper-case"], on: false },
+  { group: "Subject", name: "subject-empty", cond: "subject is empty", type: "bool", rule: "never", on: false },
+  { group: "Subject", name: "subject-full-stop", cond: "subject ends with value", type: "string", rule: "never",
+    value: ".", on: false },
+  { group: "Subject", name: "subject-exclamation-mark", cond: "subject has exclamation before the : marker",
+    type: "bool", rule: "never", on: false },
+  { group: "Subject", name: "subject-min-length", cond: "subject has value or more characters", type: "length",
+    rule: "always", value: "0", on: false },
+  { group: "Subject", name: "subject-max-length", cond: "subject has value or less characters", type: "length",
+    rule: "always", value: "Infinity", on: false },
+
+  { group: "Header", name: "header-case", cond: "header is in case value", type: "case", rule: "always",
+    value: ["lower-case"], on: false },
+  { group: "Header", name: "header-full-stop", cond: "header ends with value", type: "string", rule: "never",
+    value: ".", on: false },
+  { group: "Header", name: "header-trim", cond: "header must not have initial or trailing whitespaces",
+    type: "bool", rule: "always", on: false },
+  { group: "Header", name: "header-min-length", cond: "header has value or more characters", type: "length",
+    rule: "always", value: "0", on: false },
+  { group: "Header", name: "header-max-length", cond: "header has value or less characters", type: "length",
+    rule: "always", value: "72", on: false },
+
+  { group: "Body", name: "body-case", cond: "body is in case value", type: "case", rule: "always",
+    value: ["lower-case"], on: false },
+  { group: "Body", name: "body-empty", cond: "body is empty", type: "bool", rule: "never", on: false },
+  { group: "Body", name: "body-full-stop", cond: "body ends with value", type: "string", rule: "never",
+    value: ".", on: false },
+  { group: "Body", name: "body-leading-blank", cond: "body begins with blank line", type: "bool",
+    rule: "always", on: false },
+  { group: "Body", name: "body-min-length", cond: "body has value or more characters", type: "length",
+    rule: "always", value: "0", on: false },
+  { group: "Body", name: "body-max-length", cond: "body has value or less characters", type: "length",
+    rule: "always", value: "Infinity", on: false },
+  { group: "Body", name: "body-max-line-length",
+    cond: "body lines have value or less characters, or contain a URL", type: "length",
+    rule: "always", value: "Infinity", on: false },
+
+  { group: "Footer", name: "footer-empty", cond: "footer is empty", type: "bool", rule: "never", on: false },
+  { group: "Footer", name: "footer-leading-blank", cond: "footer begins with blank line", type: "bool",
+    rule: "always", on: false },
+  { group: "Footer", name: "footer-min-length", cond: "footer has value or more characters", type: "length",
+    rule: "always", value: "0", on: false },
+  { group: "Footer", name: "footer-max-length", cond: "footer has value or less characters", type: "length",
+    rule: "always", value: "Infinity", on: false },
+  { group: "Footer", name: "footer-max-line-length", cond: "footer lines have value or less characters",
+    type: "length", rule: "always", value: "Infinity", on: false },
+
+  { group: "References & breaking change", name: "references-empty", cond: "references has at least one entry",
+    type: "bool", rule: "never", on: false },
+  { group: "References & breaking change", name: "breaking-change-exclamation-mark",
+    cond: "header ! and footer BREAKING CHANGE must both be present or both absent (XNOR)", type: "bool",
+    rule: "always", on: false },
+
+  { group: "Sign-off & trailers", name: "signed-off-by", cond: "message has value", type: "string",
+    rule: "always", value: "Signed-off-by:", on: false },
+  { group: "Sign-off & trailers", name: "trailer-exists", cond: "message has trailer value", type: "string",
+    rule: "always", value: "Signed-off-by:", on: false },
+];
+
+// Deep-ish clone of defaults so "reset" works.
+const DEFAULTS = JSON.parse(JSON.stringify(RULES));
+const state = JSON.parse(JSON.stringify(RULES));
+
+const root = document.getElementById("rulesRoot");
+const output = document.getElementById("output");
+
+function groupsOf(list) {
+  const seen = [];
+  list.forEach(r => { if (!seen.includes(r.group)) seen.push(r.group); });
+  return seen;
+}
+
+function levelSelect(r, i) {
+  const cls = "lvl-" + r.level;
+  return `<div class="field"><label>Level</label>
+    <select class="${cls}" data-i="${i}" data-k="level">
+      <option value="2"${r.level===2?" selected":""}>2 - error</option>
+      <option value="1"${r.level===1?" selected":""}>1 - warning</option>
+      <option value="0"${r.level===0?" selected":""}>0 - disabled</option>
+    </select></div>`;
+}
+
+function appSelect(r, i) {
+  return `<div class="field"><label>Applicable</label>
+    <select data-i="${i}" data-k="rule">
+      <option value="always"${r.rule==="always"?" selected":""}>always</option>
+      <option value="never"${r.rule==="never"?" selected":""}>never</option>
+    </select></div>`;
+}
+
+function valueControl(r, i) {
+  if (r.type === "bool") return "";
+  if (r.type === "length" || r.type === "string") {
+    return `<div class="field"><label>Value</label>
+      <input type="text" data-i="${i}" data-k="value" value="${escAttr(r.value)}"></div>`;
+  }
+  if (r.type === "delimiters") {
+    return `<div class="field"><label>Delimiters (space-separated)</label>
+      <input type="text" class="wide" data-i="${i}" data-k="value" value="${escAttr(r.value)}"></div>`;
+  }
+  if (r.type === "type-enum") {
+    return `<div class="field"><label>Allowed types (comma-separated)</label>
+      <input type="text" class="wide" data-i="${i}" data-k="value" value="${escAttr(asList(r.value))}"></div>`;
+  }
+  if (r.type === "scope-enum") {
+    return `<div class="field"><label>Allowed scopes (comma-separated, empty = any)</label>
+      <input type="text" class="wide" data-i="${i}" data-k="value" value="${escAttr(asList(r.value))}"></div>
+      <div class="field"><label>Delimiters (space-separated, optional)</label>
+      <input type="text" data-i="${i}" data-k="delimiters" value="${escAttr(r.delimiters||"")}"></div>`;
+  }
+  if (r.type === "case") {
+    const sel = Array.isArray(r.value) ? r.value : csv(r.value);
+    const opts = CASES.map(c =>
+      `<option value="${c}"${sel.includes(c)?" selected":""}>${c}</option>`).join("");
+    return `<div class="field"><label>Case(s) — ctrl/cmd-click for multiple</label>
+      <select multiple data-i="${i}" data-k="value">${opts}</select></div>`;
+  }
+  return "";
+}
+
+function asList(v) { return Array.isArray(v) ? v.join(",") : String(v); }
+
+function escAttr(s) { return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+
+// Which parts of a conventional commit each rule group governs.
+const COMMIT_HL = {
+  "Type": ["type"],
+  "Scope": ["scope"],
+  "Subject": ["subject"],
+  "Header": ["type", "scope", "bang", "subject"],
+  "Body": ["body"],
+  "Footer": ["breaking", "signoff"],
+  "References & breaking change": ["bang", "breaking"],
+  "Sign-off & trailers": ["signoff"],
+};
+
+function commitDiagram(group) {
+  const hl = COMMIT_HL[group] || [];
+  const t = (p, text) => `<span class="${hl.includes(p) ? "hl" : ""}">${text}</span>`;
+  const msg =
+    t("type", "feat") + t("scope", "(api)") + t("bang", "!") + ": " +
+      t("subject", "add request rate limiting") + "\n\n" +
+    t("body", "Introduce a token-bucket limiter to protect public\nendpoints from bursty traffic and abuse.") + "\n\n" +
+    t("breaking", "BREAKING CHANGE: throttled clients now receive HTTP 429.") + "\n" +
+    t("signoff", "Signed-off-by: Alok Nigam &lt;alok@example.com&gt;");
+  return `<div class="commit"><span class="cap">Where ${group} rules apply</span>${msg}</div>`;
+}
+
+function render() {
+  root.innerHTML = "";
+  groupsOf(state).forEach(g => {
+    const box = document.createElement("div");
+    box.className = "group";
+    box.innerHTML = `<h2>${g}</h2>` + commitDiagram(g);
+    state.forEach((r, i) => {
+      if (r.group !== g) return;
+      const card = document.createElement("div");
+      card.className = "rule" + (r.on ? "" : " disabled");
+      card.innerHTML = `
+        <div class="rule-head">
+          <input type="checkbox" data-i="${i}" data-k="on"${r.on?" checked":""}>
+          <span class="rule-name">${r.name}</span>
+        </div>
+        <div class="rule-cond">${r.cond}</div>
+        <div class="controls">
+          ${levelSelect(r, i)}
+          ${r.type==="bool"?"":appSelect(r, i)}
+          ${r.type==="bool"?appSelect(r, i):""}
+          ${valueControl(r, i)}
+        </div>`;
+      box.appendChild(card);
+    });
+    root.appendChild(box);
+  });
+  wire();
+  generate();
+}
+
+// Ensure a runtime "level" field exists (2 by default, matching commitlint's default error level).
+state.forEach(r => { if (r.level === undefined) r.level = 2; });
+
+function wire() {
+  root.querySelectorAll("[data-i]").forEach(el => {
+    const evt = (el.tagName === "SELECT" || el.type === "checkbox") ? "change" : "input";
+    el.addEventListener(evt, () => {
+      const i = +el.dataset.i, k = el.dataset.k;
+      if (el.type === "checkbox") state[i][k] = el.checked;
+      else if (el.multiple) state[i][k] = Array.from(el.selectedOptions).map(o => o.value);
+      else if (k === "level") state[i][k] = +el.value;
+      else state[i][k] = el.value;
+      if (k === "on" || k === "level") render();
+      else generate();
+    });
+  });
+}
+
+function numOrInf(v) {
+  const t = String(v).trim();
+  if (t === "Infinity") return "Infinity";
+  const n = Number(t);
+  return Number.isFinite(n) ? String(n) : "0";
+}
+
+function csv(v) { return String(v).split(",").map(s => s.trim()).filter(Boolean); }
+
+function dlist(v) { return String(v).trim().split(/\s+/).filter(Boolean); }
+
+function jsArr(a) { return "[" + a.map(x => JSON.stringify(x)).join(", ") + "]"; }
+
+function ruleValueLiteral(r) {
+  switch (r.type) {
+    case "length": return numOrInf(r.value);
+    case "string": return JSON.stringify(r.value);
+    case "delimiters": return jsArr(dlist(r.value));
+    case "type-enum": return jsArr(Array.isArray(r.value) ? r.value : csv(r.value));
+    case "case": return jsArr(r.value);
+    case "scope-enum": {
+      const scopes = Array.isArray(r.value) ? r.value : csv(r.value);
+      const delims = dlist(r.delimiters || "");
+      if (delims.length) return "{ scopes: " + jsArr(scopes) + ", delimiters: " + jsArr(delims) + " }";
+      return jsArr(scopes);
+    }
+    default: return null;
+  }
+}
+
+function generate() {
+  const lines = [];
+  lines.push("module.exports = {");
+  if (document.getElementById("extends").checked) {
+    lines.push('    extends: ["@commitlint/config-conventional"],');
+  }
+  lines.push("    rules: {");
+  state.forEach(r => {
+    if (!r.on) return;
+    if (r.type === "bool") {
+      lines.push(`        "${r.name}": [${r.level}, "${r.rule}"],`);
+    } else {
+      lines.push(`        "${r.name}": [${r.level}, "${r.rule}", ${ruleValueLiteral(r)}],`);
+    }
+  });
+  lines.push("    },");
+  lines.push("};");
+  output.textContent = lines.join("\n");
+}
+
+document.getElementById("extends").addEventListener("change", generate);
+document.getElementById("enableAll").addEventListener("click", () => { state.forEach(r => r.on = true); render(); });
+document.getElementById("disableAll").addEventListener("click", () => { state.forEach(r => r.on = false); render(); });
+document.getElementById("resetDefaults").addEventListener("click", () => {
+  const fresh = JSON.parse(JSON.stringify(DEFAULTS));
+  fresh.forEach(r => r.level = 2);
+  state.length = 0; fresh.forEach(r => state.push(r));
+  document.getElementById("extends").checked = true;
+  render();
+});
+document.getElementById("copyBtn").addEventListener("click", () => {
+  navigator.clipboard.writeText(output.textContent).then(() => {
+    const b = document.getElementById("copyBtn"); const t = b.textContent;
+    b.textContent = "Copied!"; setTimeout(() => b.textContent = t, 1200);
+  });
+});
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  const blob = new Blob([output.textContent], { type: "text/javascript" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "commitlint.config.js"; a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+render();
+</script>
+</body>
+</html>

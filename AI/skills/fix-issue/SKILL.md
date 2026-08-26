@@ -14,6 +14,9 @@ before any code is written, and the user accepts the fix before any PR is raised
   per run — the first one that is still open/unchecked. Never batch sub-tasks.
 - **Never work on the default branch.** Every fix goes on a new `fix/<issue>-<slug>` branch, in the
   current checkout or in a dedicated worktree under `.worktree/` — the user chooses which.
+- **Never start a blocked issue.** If the selected issue is blocked by an open dependency (blocking
+  label, "blocked by"/"depends on" text, or a native `blocked_by` relationship), stop and confirm
+  with the user before any work — auto-selection must skip it entirely.
 - **Reproduce before you fix.** Every bug must be reproduced locally (preferably as an automated
   failing test) *before* the plan is drafted and *before* any fix is written. No repro → no plan. If
   the bug cannot be reproduced locally, **consult a human via `ask_user`** to decide whether to
@@ -74,6 +77,12 @@ user picks one. Recommend a default using, in order:
 Mention the current assignee for the recommendation so the user can redirect if someone else is
 already on it — but never exclude an issue just because it is assigned. If the repo has no open
 issues, say so and stop.
+
+**Exclude blocked issues from auto-selection.** The top-ranked default and the "just pick one" path
+must never land on a blocked issue (see the blocked/dependency check in step 1 for detection). When
+*listing* candidates for the user to choose from, tag any blocked one `⛔ blocked by #N` rather than
+recommending it — do a cheap second pass (labels first, body scan only on the top few candidates)
+since the list query above does not fetch bodies.
 
 If the user says "just pick one", take your top-ranked candidate, announce which issue you chose and
 why, and continue.
@@ -136,6 +145,28 @@ gh pr list --state open --search "<work-issue-number> in:body" --json number,tit
 
 If a PR already targets this issue, report it and `ask_user` whether to (a) continue on that PR's
 branch, (b) start fresh anyway, or (c) stop. Never open a duplicate PR silently.
+
+**Blocked / dependency check.** Run this for the work issue **every** time — whether it was
+auto-picked or named by the user — before any reproduction or planning. A parent issue with open
+children is fine (that is normal decomposition, handled above); what this catches is *this* issue
+being gated on another open issue.
+
+1. Detect blockers from three signals:
+   - **Labels** — any `blocked` / `blocked-by` / `on-hold` label on the work issue.
+   - **Body + comments text** — match `blocked by #\d+`, `depends on #\d+`, `Status:\s*blocked`,
+     or `blocked by / depends on #\d+` (case-insensitive).
+   - **Native relationships** — GitHub issue dependencies and the sub-issue parent link:
+     ```pwsh
+     gh api -H "X-GitHub-Api-Version: 2026-03-10" "repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by" `
+       --jq '.[] | {number,state}'
+     gh api "repos/{owner}/{repo}/issues/<n>" --jq '.parent // empty | {number:.number,state:.state}'
+     ```
+     A `404`/`410` means the repo does not expose the relationship — fall back to the label/text
+     signals rather than treating it as "not blocked".
+2. Resolve each referenced blocker's state. If **every** blocker is closed → note it and proceed.
+   If **any** blocker is open → **stop and `ask_user`**: (a) pick a different issue, (b) override and
+   proceed anyway with an explicit acknowledgement that the dependency is unmet, or (c) abandon.
+   Never silently proceed past an open blocker.
 
 ### 2. Reproduce (bugs only)
 
