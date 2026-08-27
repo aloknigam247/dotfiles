@@ -47,6 +47,18 @@ explaining something the code cannot express on its own.
 * Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
 * Use the same **conventional commit** format for **PR titles**: `<type>: <description>`, using the same set of types.
 
+### Commit message rules (commitlint-enforced)
+
+Format: `type(scope): subject`, then optional body and footer, each separated by one blank line.
+
+* **Header** (first line): max 72 chars, no leading/trailing whitespace, no trailing period.
+* **type**: required, lower-case, one of `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `test`.
+* **scope**: optional, lower-case. If used, it must be listed in the repo's `.commitlint-scopes.json`; omit it when that file is absent or the scope is not allowlisted.
+* **subject**: required, no trailing period, max 50 chars, lower-case or sentence-case (no Title Case or ALL-CAPS).
+* **body**: optional; sentence-case, wrap lines at 80 chars, must end with a period.
+* **footer**: optional; wrap lines at 80 chars; put `BREAKING CHANGE:` here.
+* **Breaking changes**: include both `!` in the header (`feat(api)!: ...`) and a `BREAKING CHANGE:` footer, or neither.
+
 ## Azure DevOps
 When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
 
