@@ -67,8 +67,18 @@ gh issue list --state open --limit 30 `
   --jq '.[] | {number,title,labels:[.labels[].name],assignee:(.assignees[0].login // "unassigned"),updatedAt}'
 ```
 
-Rank the candidates and present the top few (number, title, labels, assignee) via `ask_user` so the
-user picks one. Recommend a default using, in order:
+**⛔ MANDATORY dependency pre-scan — run before ranking or recommending anything.** The list query
+above does not fetch bodies, so you cannot know which candidates are blocked until you look. Before
+you rank, recommend, or present *any* candidate, run the blocked/dependency check from step 1 against
+**every** candidate you are considering (labels first; then fetch and body-scan the bodies of the
+candidates you might surface). An issue that depends on an **open** issue (blocking label, "blocked
+by #N" / "depends on #N" text, `Status: blocked`, or a native `blocked_by`/parent relationship whose
+target is open) is **ineligible for auto-selection**: it must never be the recommended default and
+must never be chosen by the "just pick one" path — no exceptions. Skipping this scan and recommending
+a blocked issue is a defect.
+
+Rank the **eligible (non-blocked)** candidates and present the top few (number, title, labels,
+assignee) via `ask_user` so the user picks one. Recommend a default using, in order:
 
 1. Issues explicitly flagged as ready/priority by the repo's own labels.
 2. Small, well-specified issues with a clear reproduction or acceptance criteria.
@@ -78,11 +88,10 @@ Mention the current assignee for the recommendation so the user can redirect if 
 already on it — but never exclude an issue just because it is assigned. If the repo has no open
 issues, say so and stop.
 
-**Exclude blocked issues from auto-selection.** The top-ranked default and the "just pick one" path
-must never land on a blocked issue (see the blocked/dependency check in step 1 for detection). When
-*listing* candidates for the user to choose from, tag any blocked one `⛔ blocked by #N` rather than
-recommending it — do a cheap second pass (labels first, body scan only on the top few candidates)
-since the list query above does not fetch bodies.
+When *listing* candidates for the user, you may still show a blocked issue for visibility, but tag it
+`⛔ blocked by #N` and never present it as the default or recommendation. If the user explicitly asks
+to work a blocked issue anyway, fall through to the step 1 blocked gate (`ask_user` override) rather
+than starting silently.
 
 If the user says "just pick one", take your top-ranked candidate, announce which issue you chose and
 why, and continue.
