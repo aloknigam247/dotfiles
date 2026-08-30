@@ -1,12 +1,4 @@
 {
-  "autoUpdate": false,
-  "continueOnAutoMode": true,
-  "copyOnSelect": true,
-  "customAgents": {
-    "defaultLocalOnly": true
-  },
-  "keepAlive": "on",
-  "theme": "github",
   "allowedUrls": [
     "https://docs.github.com",
     "https://onedrive.visualstudio.com",
@@ -27,45 +19,58 @@
     "https://www.reddit.com",
     "https://old.reddit.com",
     "https://redlib.catsarch.com",
-    "https://safereddit.com"
+    "https://safereddit.com",
+    "https://neovim.io"
   ],
-  "experimental": true,
-  "footer": {
-    "showModelEffort": true,
-    "showDirectory": true,
-    "showBranch": true,
-    "showContextWindow": true,
-    "showQuota": true,
-    "showAiUsed": true,
-    "showAgent": true,
-    "showCodeChanges": true,
-    "showUsername": false,
-    "showSandbox": true,
-    "showYolo": true,
-    "showCustom": true
-  },
+  "autoUpdate": false,
   "beep": true,
   "beepOnSchedule": true,
   "compactPaste": true,
+  "companyAnnouncements": [
+    "GPT-5.6 Sol, Terra, and Luna are now available in Copilot CLI. Try them from the model picker.",
+    "Need help with Agency? Run `agency support` or join the support community: https://aka.ms/agency/support"
+  ],
+  "continueOnAutoMode": true,
+  "copyOnSelect": true,
+  "customAgents": {
+    "defaultLocalOnly": true
+  },
+  "experimental": true,
+  "extensions": {
+    "disabledExtensions": []
+  },
+  "footer": {
+    "showAgent": true,
+    "showAiUsed": true,
+    "showBranch": true,
+    "showCodeChanges": true,
+    "showContextWindow": true,
+    "showCustom": true,
+    "showDirectory": true,
+    "showModelEffort": true,
+    "showQuota": true,
+    "showSandbox": true,
+    "showUsername": false,
+    "showYolo": true
+  },
+  "keepAlive": "on",
+  "model": "claude-opus-4.8",
   "mouse": true,
   "remoteSessions": true,
   "renderMarkdown": true,
   "showReasoning": true,
-  "tabs": {
-    "enabled": true
-  },
-  "voice": {
-    "enabled": true,
-    "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
-  },
-  "subagents": {},
-  "model": "claude-opus-4.8",
-  "extensions": {
-    "disabledExtensions": []
-  },
   "sidebar": {
     "enabled": false,
     "hoverFocus": true,
     "showCloseButton": true
+  },
+  "subagents": {},
+  "tabs": {
+    "enabled": true
+  },
+  "theme": "github",
+  "voice": {
+    "enabled": true,
+    "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   }
 }
