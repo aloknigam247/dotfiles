@@ -1237,18 +1237,6 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"Pocco81/high-str.nvim",
-	cmd = "HSHighlight",
-	init = function()
-		vim.api.nvim_set_hl(0, "ExBlack2Bg", { bg = "#F8F03F" })
-	end,
-	keys = {
-		{ "<Leader>l", "<Cmd>HSHighlight<CR>", mode = "x", desc = "add highlight" },
-		{ "<Leader>L", "<Cmd>HSRmHighlight rm_all<CR>", mode = "n", desc = "remove highlight" },
-	}
-}
-
-addPlugin {
 	"RRethy/vim-illuminate",
 	config = function()
 		require("illuminate").configure({
@@ -1907,22 +1895,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      CSV       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin {
--- 	"cameron-wags/rainbow_csv.nvim",
--- 	config = true,
--- 	ft = "csv"
--- }
-
--- addPlugin {
--- 	"emmanueltouzery/decisive.nvim",
--- 	cmd = "CSVAlignVirtual",
--- 	config = function()
--- 		vim.api.nvim_create_user_command("CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
--- 		vim.api.nvim_create_user_command("CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
--- 		require("decisive").setup({})
--- 	end
--- }
-
 addPlugin {
 	"hat0uma/csvview.nvim",
   cmd = { "CsvViewEnable" },
@@ -2336,27 +2308,6 @@ addPlugin {
 		)
 	end,
 	config = true
-}
-
-addPlugin {
-	"isakbm/gitgraph.nvim",
-	cmd = "GitGraph",
-	dependencies = { "dlyongemallo/diffview.nvim" },
-	opts = {
-		symbols = {
-			merge_commit = "",
-			commit = "󰜘",
-		},
-		format = {
-			timestamp = "%H:%M:%S %d-%m-%Y",
-			fields = { "hash", "timestamp", "author", "branch_name", "tag" },
-		},
-	},
-	init = function()
-		vim.api.nvim_create_user_command("GitGraph", function()
-			require("gitgraph").draw({}, { all = true, max_count = 5000 })
-		end, {})
-	end,
 }
 
 addPlugin {
@@ -3284,14 +3235,6 @@ addPlugin {
 addPlugin {
 	"OXY2DEV/helpview.nvim",
 	ft = "help"
-}
-
--- FIX: error
-addPlugin {
-	"aloknigam247/mdview",
-	cmd = { "MdView" },
-	ft = { "markdown" },
-	opts = { debounce_ms = 100 },
 }
 
 addPlugin {
@@ -4512,18 +4455,6 @@ addPlugin {
 			{ "[", "<Plug>(cursor-text-objects-up)", mode = { "o", "x" }, { desc = "Run from your current cursor to the end of the text-object." } },
 			{ "]", "<Plug>(cursor-text-objects-down)", mode = { "o", "x" }, { desc = "Run from your current cursor to the end of the text-object." } }
 		}
-}
-
-addPlugin {
-	"MagicDuck/grug-far.nvim",
-	cmd = "GrugFar",
-	config = true
-}
-
-addPlugin {
-	"OXY2DEV/patterns.nvim",
-	cmd = "Patterns",
-	config = true
 }
 
 addPlugin {
