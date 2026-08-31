@@ -40,18 +40,18 @@
     "disabledExtensions": []
   },
   "footer": {
-    "showAgent": true,
-    "showAiUsed": true,
-    "showBranch": true,
-    "showCodeChanges": true,
-    "showContextWindow": true,
-    "showCustom": true,
-    "showDirectory": true,
     "showModelEffort": true,
+    "showDirectory": true,
+    "showBranch": true,
+    "showContextWindow": true,
     "showQuota": true,
-    "showSandbox": true,
+    "showAiUsed": true,
+    "showAgent": true,
+    "showCodeChanges": true,
     "showUsername": false,
-    "showYolo": true
+    "showSandbox": true,
+    "showYolo": true,
+    "showCustom": true
   },
   "keepAlive": "on",
   "model": "claude-opus-4.8",
@@ -61,8 +61,8 @@
   "showReasoning": true,
   "sidebar": {
     "enabled": false,
-    "hoverFocus": true,
-    "showCloseButton": true
+    "showCloseButton": true,
+    "hoverFocus": true
   },
   "subagents": {},
   "tabs": {
