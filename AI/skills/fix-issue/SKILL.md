@@ -59,23 +59,30 @@ it is still current. Do not treat a vague "I know what needs doing" as an accept
 An issue number (`123`, `#123`) or issue URL — **optional**.
 
 If the user did **not** name an issue, pull one from the repo yourself. **Do not filter by assignee**
-— any open issue is fair game, assigned or not:
+— any open issue is fair game, assigned or not.
+
+**⛔ MANDATORY dependency pre-scan — run before ranking or recommending anything.** The plain
+`gh issue list` does not fetch bodies or dependencies, so you cannot know which candidates are blocked
+until you look. Use the helper script, which lists only the **unblocked** issues (and, with
+`-ShowBlocked`, the blocked ones and their open blockers) after checking all three signals:
 
 ```pwsh
-gh issue list --state open --limit 30 `
-  --json number,title,labels,assignees,updatedAt `
-  --jq '.[] | {number,title,labels:[.labels[].name],assignee:(.assignees[0].login // "unassigned"),updatedAt}'
+pwsh -NoProfile -ExecutionPolicy Bypass `
+  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\list-unblocked-issues.ps1" -ShowBlocked
 ```
 
-**⛔ MANDATORY dependency pre-scan — run before ranking or recommending anything.** The list query
-above does not fetch bodies, so you cannot know which candidates are blocked until you look. Before
-you rank, recommend, or present *any* candidate, run the blocked/dependency check from step 1 against
-**every** candidate you are considering (labels first; then fetch and body-scan the bodies of the
-candidates you might surface). An issue that depends on an **open** issue (blocking label, "blocked
-by #N" / "depends on #N" text, `Status: blocked`, or a native `blocked_by`/parent relationship whose
-target is open) is **ineligible for auto-selection**: it must never be the recommended default and
-must never be chosen by the "just pick one" path — no exceptions. Skipping this scan and recommending
-a blocked issue is a defect.
+The script flags an issue as blocked when any of these targets an **open** issue: a native GitHub
+`blocked_by` dependency, a `blocked`/`blocked-by`/`on-hold` label, or `blocked by #N` / `depends on #N`
+/ `Status: blocked` text in the body. **Native `blocked_by` dependencies are the signal most often
+missed by a body-text scan alone — never skip them.** If the script is unavailable, reproduce it by
+hand: run `gh issue list --state open` for the candidates, then for each run the native check from
+step 1
+(`gh api -H "X-GitHub-Api-Version: 2026-03-10" repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by`)
+plus the label/body-text scan.
+
+An issue that depends on an **open** issue is **ineligible for auto-selection**: it must never be the
+recommended default and must never be chosen by the "just pick one" path — no exceptions. Skipping
+this scan and recommending a blocked issue is a defect.
 
 Rank the **eligible (non-blocked)** candidates and present the top few (number, title, labels,
 assignee) via `ask_user` so the user picks one. Recommend a default using, in order:
