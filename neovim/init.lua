@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- REFACTOR: remove plugins not in use
 -- Classes</>
 
 ---@class CmdOptions
@@ -3158,78 +3157,6 @@ addPlugin {
 	config = function(_, cfg)
 		require("markdown-plus").setup(cfg)
 	end
-}
-
-addPlugin {
-	"MeanderingProgrammer/render-markdown.nvim",
-	ft = { "markdown", "codecompanion" },
-	opts = {
-		anti_conceal = {
-			enabled = false
-		},
-		bullet = {
-			icons = { "", "", "󰨐", "" },
-		},
-		callout = {
-			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
-			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
-			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
-			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
-			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
-		},
-		checkbox = {
-			checked = {
-				icon = " 󰗡",
-			},
-			unchecked = {
-				icon = " 󰄰",
-			},
-		},
-		code = {
-			sign = false,
-			width = "block",
-			right_pad = 1,
-			min_width = 10,
-			border = "thick",
-			inline_pad = 1
-		},
-		heading = {
-			sign = false,
-			position = "inlay",
-			-- icons = { "󰫎 " },
-			icons = { "█ ", "▓▓ ", "▒▒▒ ", "░░░░ ", "░░░░░ ", "░░░░░░ " },
-			width = { "block"},
-			right_pad = 1,
-		},
-		latex = {
-			enabled = false,
-		},
-		link = {
-			custom = {
-				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
-				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
-				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
-			},
-		},
-		pipe_table = {
-			preset = "round",
-			style = "full",
-			alignment_indicator = "•",
-		},
-		quote = {
-			icon = "▍",
-			repeat_linebreak = true,
-		},
-		sign = {
-			enabled = false,
-		},
-		win_options = {
-			concealcursor = {
-				default = vim.api.nvim_get_option_value("concealcursor", {}),
-				rendered = vim.api.nvim_get_option_value("concealcursor", {})
-			}
-		}
-	}
 }
 
 addPlugin {
