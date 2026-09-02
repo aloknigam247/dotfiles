@@ -1487,7 +1487,7 @@ addPlugin {
 				hints = { "underdotted" }
 			}
 		},
-		transparent_background = false,
+		transparent_background = true,
 		term_colors = false,
 	}
 }
