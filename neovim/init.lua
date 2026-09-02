@@ -3838,7 +3838,7 @@ addPlugin {
 							return str:gsub("^%s+", ""):gsub("%s+", "")
 						end,
 						on_click = function ()
-							vim.cmd("ScrollViewToggle")
+							require("scrollview").set_state()
 						end,
 						padding = { left = 0, right = 0 },
 						separator = { left = "", right = "█" }
