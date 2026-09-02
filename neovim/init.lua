@@ -76,7 +76,6 @@ end
 local color_palette = {
 	dark = {
 		"#50808E",
-		"#67B9A9",
 		"#7C8FBA",
 		"#8AAF52",
 		"#93938A",
@@ -92,13 +91,13 @@ local color_palette = {
 		"#C098C6",
 		"#D09F8A",
 		"#D25FBE",
+		"#67B9A9",
 		"#E76A41",
 		"#E68A97",
 		"#E6B16F",
 	},
 	light = {
 		"#6ABCAC",
-		"#8AD9D5",
 		"#9DACDF",
 		"#AED380",
 		"#B0B1AB",
@@ -112,6 +111,7 @@ local color_palette = {
 		"#E699CF",
 		"#ECAE93",
 		"#F071DF",
+		"#8AD9D5",
 		"#FF8560",
 		"#FFA6B1",
 		"#FFC24D",
