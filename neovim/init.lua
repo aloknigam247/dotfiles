@@ -579,22 +579,6 @@ vim.api.nvim_create_autocmd(
 )
 
 vim.api.nvim_create_autocmd(
-	"BufWinEnter", {
-		pattern = "*",
-		desc = "Disable wrap for file with long lines",
-		callback = function(arg)
-			vim.iter(vim.fn.getbufline(0, 1, 500)):any(function(line)
-				if #line > vim.bo.textwidth then
-					vim.wo[vim.api.nvim_get_current_win()].wrap = false
-					return true
-				end
-				return false
-			end)
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
 	"BufWritePre", {
 		pattern = "*",
 		desc = "Create directory if it does not exists",
