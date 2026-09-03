@@ -4347,27 +4347,6 @@ addPlugin {
 		}
 	}
 }
-
-addPlugin {
-	"tamton-aquib/flirt.nvim",
-	event = "WinNew",
-	opts = {
-		override_open = true,
-		default_move_mappings = false,
-		default_resize_mappings = false,
-		default_mouse_mappings = true,
-		exclude_fts = { "wk" },
-		speed = 100,
-		custom_filter = function(_, win_config)
-			if win_config.height == 8 and win_config.width == 12 then -- ignore window-picker
-				return true
-			elseif win_config.style == "minimal" and win_config.relative == "editor" and vim.wo.wrap == false then -- wrapping-paper
-				return true
-			end
-			return false
-		end
-	}
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ascii diagrams https://diagon.arthursonzogni.com
