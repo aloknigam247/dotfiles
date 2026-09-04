@@ -1471,7 +1471,7 @@ addPlugin {
 				hints = { "underdotted" }
 			}
 		},
-		transparent_background = true,
+		transparent_background = vim.fn.exists("g:qvim") ~= 1,
 		term_colors = false,
 	}
 }

@@ -72,5 +72,8 @@
   "voice": {
     "enabled": true,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
-  }
+  },
+  "enabledMcpServers": [
+    "computer-use"
+  ]
 }
