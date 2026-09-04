@@ -4404,7 +4404,51 @@ addPlugin {
 addPlugin {
 	"delphinus/inspect-extmarks.nvim",
 	cmd = "InspectExtmarks",
-	config = true
+	-- nvim_get_namespaces() omits anonymous namespaces, so the plugin resolves ns_name to nil for
+	-- them, crashing its sort (nil < nil) and its nvim_echo ({ nil, "Title" }). Name anonymous
+	-- namespaces on the cursor row for the duration of one inspect() call. Revisit if upstream fixes.
+	config = function()
+		local ext = require("inspect-extmarks")
+		ext.setup()
+		local orig_inspect = ext.inspect
+		ext.inspect = function(opts)
+			local orig_get_ns = vim.api.nvim_get_namespaces
+			vim.api.nvim_get_namespaces = function()
+				local named = orig_get_ns()
+				local known = {}
+				for _, id in pairs(named) do
+					known[id] = true
+				end
+				local ok, marks = pcall(
+					vim.api.nvim_buf_get_extmarks,
+					opts.bufnr,
+					-1,
+					{ opts.row, 0 },
+					{ opts.row + 1, 0 },
+					{ details = true }
+				)
+				if ok then
+					for _, m in ipairs(marks) do
+						local nsid = m[4] and m[4].ns_id
+						if nsid and not known[nsid] then
+							local name = ("<anonymous %d>"):format(nsid)
+							while named[name] and named[name] ~= nsid do
+								name = name .. "#"
+							end
+							named[name] = nsid
+							known[nsid] = true
+						end
+					end
+				end
+				return named
+			end
+			local ok, err = pcall(orig_inspect, opts)
+			vim.api.nvim_get_namespaces = orig_get_ns
+			if not ok then
+				error(err, 0)
+			end
+		end
+	end
 }
 
 addPlugin {
