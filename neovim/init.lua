@@ -1376,11 +1376,11 @@ addPlugin {
 		vim.g.quickhl_manual_colors = colors
 	end,
 	keys = {
-		{ "<leader>W", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" },
-		{ "<leader>w", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
-		{ "<leader>w", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
-		{ "[w",        "<Plug>(quickhl-manual-go-to-prev)",      mode = "n", desc = "jump to prev quickhl" },
-		{ "]w",        "<Plug>(quickhl-manual-go-to-next)",      mode = "n", desc = "jump to next quickhl" }
+		{ "<leader>Q", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" },
+		{ "<leader>q", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
+		{ "<leader>q", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
+		{ "[q",        "<Plug>(quickhl-manual-go-to-prev)",      mode = "n", desc = "jump to prev quickhl" },
+		{ "]q",        "<Plug>(quickhl-manual-go-to-next)",      mode = "n", desc = "jump to next quickhl" }
 	}
 }
 
@@ -4373,10 +4373,8 @@ addPlugin {
 
 addPlugin {
 	"benlubas/wrapping-paper.nvim",
-	dependencies = {
-		"MunifTanjim/nui.nvim",
-	},
-	keys = {{ "gww", function() require("wrapping-paper").wrap_line() end, desc = "Unwrap current line" }}
+	dependencies = { "MunifTanjim/nui.nvim", },
+	keys = {{ "<leader>w", function() require("wrapping-paper").wrap_line() end, desc = "Unwrap current line" }}
 }
 
 addPlugin {
