@@ -3121,7 +3121,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/coekfung/img-clip.nvim https://github.com/hakonharnes/img-clip.nvim
 addPlugin {
 	"YousefHadder/markdown-plus.nvim",
 	ft = "markdown",
@@ -3247,6 +3246,16 @@ addPlugin {
 				order = 2,
 			},
 		},
+	}
+}
+
+
+addPlugin {
+	"hakonharnes/img-clip.nvim",
+	cmd = "PasteImage",
+	opts = {
+		dir_path = "images",
+		show_dir_path_in_prompt = true
 	}
 }
 

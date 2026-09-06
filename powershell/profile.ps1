@@ -494,42 +494,6 @@ function gwd {
     git branch -D $branch_name --force
 }
 
-# ─[ Get TODOs from current directory ]────────────────────────────────
-function Get-TODO {
-    param(
-        [Parameter(Position = 0)]
-        [ValidateSet("all", "random", "stats")]
-        [String] $type = "all"
-    )
-
-    process {
-        $tag_list = @("BUG", "DOCME", "FEAT", "FIX", "FIXME", "PERF", "RECODE", "REFACTOR", "TEST", "TODO", "THOUGHT")
-
-        if ($type -eq "all") {
-            # Get list of all
-            $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always
-        } elseif ($type -eq "Random") {
-            # Get random tag
-            $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always | Get-Random -Count 5
-        } elseif ($type -eq "Stats") {
-            # Generate count per tag
-            $tag_map = @{}
-            $total = 0
-            foreach ($tag in $tag_list) {
-                $count = (rg "${tag}(\([^)]*\))?:" -L -cwI | Measure-Object -Sum).Sum
-                if ($count -gt 0) {
-                    $total += $count
-                    $tag_map[$tag] = $count
-                }
-            }
-            Format-Table -AutoSize -HideTableHeaders -InputObject $tag_map
-            Write-Host "TOTAL    $total" -ForegroundColor Blue
-        }
-    }
-}
-
 # ─[ Format text for colors and formatting ]───────────────────────────
 function Format-Text {
     param(
