@@ -309,7 +309,7 @@
                 },
                 "guid": "{a3a2e83a-884a-5379-baa8-16f193a13b21}",
                 "hidden": false,
-                "icon": "D:\\dotfiles\\powershell\\Powershell_av_colors.ico",
+                "icon": "D:\\dotfiles\\powershell\\powershell_av_colors.ico",
                 "name": "PowerShell 7",
                 "opacity": 75,
                 "rightClickContextMenu": false,
