@@ -42,6 +42,14 @@ explaining something the code cannot express on its own.
 * Put rationale, history, and cross-references in the commit message or PR description — not in the
   source. Those channels carry context without biasing every future reader of the file.
 
+## Nomenclature
+
+* Files and directories: default to lowercase `kebab-case` (e.g., `config-files`, `git-aliases.ps1`).
+* Git branches: default to lowercase `kebab-case` (e.g., `add-git-aliases`).
+
+Preserve tool- and language-specific filename conventions (e.g., `README.md`, Python `snake_case` modules).
+Never distinguish paths or Git branches only by capitalization.
+
 ## Git
 
 * Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
