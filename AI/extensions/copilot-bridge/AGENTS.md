@@ -1,6 +1,6 @@
 # copilot-bridge — agent guide
 
-Guidance for AI agents editing this extension. For the wire protocol see `CLIENT.md`. Keep both in
+Guidance for AI agents editing this extension. For the wire protocol see `client.md`. Keep both in
 sync when behavior changes.
 
 ## What this is
@@ -37,7 +37,7 @@ A local, no-auth WebSocket bridge across GitHub Copilot CLI sessions. Three part
 
 ## Protocol changes
 
-Any change to message `type`s, envelope fields, or routing MUST update `CLIENT.md` and add or adjust
+Any change to message `type`s, envelope fields, or routing MUST update `client.md` and add or adjust
 a test in `verify.mjs`. Treat unknown `type`s as forward-compatible
 (ignore, don't crash). Current mirror types: `session.start`, `session.end`, `user.prompt`,
 `assistant.message`, `tool.requested` (pending, pre-decision), `tool.complete`. Client→hub types:

@@ -13,10 +13,10 @@
     with the open blockers that gate them. Emits JSON with -Json for programmatic consumption.
 
 .EXAMPLE
-    pwsh -NoProfile -File list-unblocked-issues.ps1
+    pwsh -NoProfile -File list_unblocked_issues.ps1
 
 .EXAMPLE
-    pwsh -NoProfile -File list-unblocked-issues.ps1 -ShowBlocked -Limit 50
+    pwsh -NoProfile -File list_unblocked_issues.ps1 -ShowBlocked -Limit 50
 #>
 [CmdletBinding()]
 param(

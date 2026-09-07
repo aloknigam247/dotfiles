@@ -68,7 +68,7 @@ until you look. Use the helper script, which lists only the **unblocked** issues
 
 ```pwsh
 pwsh -NoProfile -ExecutionPolicy Bypass `
-  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\list-unblocked-issues.ps1" -ShowBlocked
+  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\list_unblocked_issues.ps1" -ShowBlocked
 ```
 
 The script flags an issue as blocked when any of these targets an **open** issue: a native GitHub
@@ -433,7 +433,7 @@ Watch CI and drive it to green:
 
 ```pwsh
 pwsh -NoProfile -ExecutionPolicy Bypass `
-  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\watch-pr-checks.ps1"
+  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\watch_pr_checks.ps1"
 ```
 
 The script polls `gh pr checks` for the current branch until every check concludes, then prints the

@@ -3,7 +3,7 @@
 // a loser exits on EADDRINUSE. The hub self-terminates once no peers remain.
 //
 // Wire protocol: JSON text frames, envelope { type, role?, sessionId?, requestId?, data? }.
-// See CLIENT.md for the full specification.
+// See client.md for the full specification.
 //
 // Trust model: loopback-only, no auth. Even so, the hub validates roles, the
 // handshake, and every frame it decodes so a misbehaving peer cannot corrupt
