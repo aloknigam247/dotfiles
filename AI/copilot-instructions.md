@@ -44,10 +44,11 @@ explaining something the code cannot express on its own.
 
 ## Nomenclature
 
-* Files and directories: default to lowercase `kebab-case` (e.g., `config-files`, `git-aliases.ps1`).
+* Files and directories: default to lowercase `snake_case` (e.g., `config_files`, `user_settings.py`).
 * Git branches: default to lowercase `kebab-case` (e.g., `add-git-aliases`).
 
-Preserve tool- and language-specific filename conventions (e.g., `README.md`, Python `snake_case` modules).
+Preserve language-, project-, and tool-specific file and directory naming conventions
+(e.g., C# `ViewModels` directories, `README.md`).
 Never distinguish paths or Git branches only by capitalization.
 
 ## Git
