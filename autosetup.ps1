@@ -273,7 +273,7 @@ function wingetInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $status = winget list -e --id $pkg
+        $status = winget list -e --id $pkg --accept-source-agreements
 
         if ($status.Contains("No installed package found matching input criteria.")) {
             $installed = $false
