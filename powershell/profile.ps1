@@ -315,12 +315,18 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function mdview { D:\mdview\target\release\mdview.exe $args }
 
 function ai {
-    git rev-parse --is-inside-work-tree 2>$null | Out-Null
+    try {
+        $root_dir = (_ParseRootArg $args).RootDir
+    } catch {
+        $root_dir = $PWD.Path
+    }
+
+    git -C $root_dir rev-parse --is-inside-work-tree 2>$null | Out-Null
     if ($LASTEXITCODE -ne 0) {
         copilot @args
         return
     }
-    $remote_url = git remote get-url origin 2>$null
+    $remote_url = git -C $root_dir remote get-url origin 2>$null
     if ($remote_url -and $remote_url -match "github\.com") {
         copilot @args
     } else {
