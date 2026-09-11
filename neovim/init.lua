@@ -2944,6 +2944,7 @@ addPlugin {
 		local diag = require("tiny-inline-diagnostic")
 		diag.setup({
 			blend = { factor = 0.22 },
+			disabled_ft = { "lazy" },
 			hi = {
 				background = "Normal",
 				mixing_color = "TinyDiagnosticNormal"
