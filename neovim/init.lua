@@ -4638,6 +4638,26 @@ addPlugin {
 			sources = {
 				explorer = {
 					actions = {
+						explorer_del = function(picker) --[[Override: fast in-process permanent delete]]
+							local paths = vim.tbl_map(Snacks.picker.util.path, picker:selected({ fallback = true }))
+							if #paths == 0 then
+								return
+							end
+							local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ":p:~:.") or #paths .. " files"
+							if vim.fn.confirm("Permanently delete " .. what .. "?", "&Yes\n&No", 2, "Question") ~= 1 then
+								return
+							end
+							for _, path in ipairs(paths) do
+								if vim.fn.delete(path, "rf") == 0 then
+									Snacks.bufdelete({ file = path, force = true })
+								else
+									Snacks.notify.error("Failed to delete `" .. path .. "`")
+								end
+								require("snacks.explorer.tree"):refresh(vim.fs.dirname(path))
+							end
+							picker.list:set_selected()
+							require("snacks.explorer.actions").update(picker)
+						end,
 						toggle_preview = function(picker) --[[Override]]
 							picker.preview.win:toggle()
 						end,
