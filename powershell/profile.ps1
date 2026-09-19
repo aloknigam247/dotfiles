@@ -315,12 +315,18 @@ function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
 function mdview { D:\mdview\target\release\mdview.exe $args }
 
 function ai {
-    git rev-parse --is-inside-work-tree 2>$null | Out-Null
+    try {
+        $root_dir = (_ParseRootArg $args).RootDir
+    } catch {
+        $root_dir = $PWD.Path
+    }
+
+    git -C $root_dir rev-parse --is-inside-work-tree 2>$null | Out-Null
     if ($LASTEXITCODE -ne 0) {
         copilot @args
         return
     }
-    $remote_url = git remote get-url origin 2>$null
+    $remote_url = git -C $root_dir remote get-url origin 2>$null
     if ($remote_url -and $remote_url -match "github\.com") {
         copilot @args
     } else {
@@ -354,14 +360,30 @@ function agency {
         }
         Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 
-        try {
-            agency.exe copilot @argList
-            if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
-        } catch [System.Management.Automation.CommandNotFoundException] {
+        $agencyCommands = @(
+            "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
+            "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
+            "support", "update", "vscode"
+        )
+        $first = if ($argList.Count) { $argList[0] } else { $null }
+        $isSubcommand = $first -and ($agencyCommands -contains $first)
+        $isCopilot = $first -and ($first -in @("copilot", "cp"))
+
+        if (-not (Get-Command agency.exe -ErrorAction SilentlyContinue)) {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
             iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
+        }
+
+        if ($isSubcommand -or $isCopilot) {
+            agency.exe @argList
+        } else {
             agency.exe copilot @argList
-            if ($? -eq $False) { Read-Host -Prompt "Agency exited with error, press any key to exit" }
+        }
+        $ok = $?
+        if ($isSubcommand) {
+            Read-Host -Prompt "Press any key to exit"
+        } elseif (-not $ok) {
+            Read-Host -Prompt "Agency exited with error, press any key to exit"
         }
     }
 
@@ -416,10 +438,10 @@ function whatis($arg) {
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Text "$($icons.type_app) $arg" -fg $catppuccin.Green -styles italic
+        Format-Pill "$($icons.type_app) $arg" -bg $catppuccin.Green -fg $catppuccin.Base -styles italic
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Text " $arg" -fg $catppuccin.Lavender -styles italic
+        Format-Pill " $arg" -bg $catppuccin.Lavender -fg $catppuccin.Base  -styles italic
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
@@ -476,42 +498,6 @@ function gwd {
     Set-Location $main_repo
     git worktree remove $branch_name
     git branch -D $branch_name --force
-}
-
-# ─[ Get TODOs from current directory ]────────────────────────────────
-function Get-TODO {
-    param(
-        [Parameter(Position = 0)]
-        [ValidateSet("all", "random", "stats")]
-        [String] $type = "all"
-    )
-
-    process {
-        $tag_list = @("BUG", "DOCME", "FEAT", "FIX", "FIXME", "PERF", "RECODE", "REFACTOR", "TEST", "TODO", "THOUGHT")
-
-        if ($type -eq "all") {
-            # Get list of all
-            $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always
-        } elseif ($type -eq "Random") {
-            # Get random tag
-            $pattern = $tag_list -join "|"
-            rg "($pattern)(\([^)]*\))?:" -L --trim --sort path -nw --color=always | Get-Random -Count 5
-        } elseif ($type -eq "Stats") {
-            # Generate count per tag
-            $tag_map = @{}
-            $total = 0
-            foreach ($tag in $tag_list) {
-                $count = (rg "${tag}(\([^)]*\))?:" -L -cwI | Measure-Object -Sum).Sum
-                if ($count -gt 0) {
-                    $total += $count
-                    $tag_map[$tag] = $count
-                }
-            }
-            Format-Table -AutoSize -HideTableHeaders -InputObject $tag_map
-            Write-Host "TOTAL    $total" -ForegroundColor Blue
-        }
-    }
 }
 
 # ─[ Format text for colors and formatting ]───────────────────────────
@@ -617,9 +603,9 @@ function Format-Pill {
 
     $pill = Format-Text $left_cap -fg $bg -noreset
     if ($styles.Count -gt 0) {
-        $pill += Format-Text " $text " -fg $fg -bg $bg -styles $styles -noreset
+        $pill += Format-Text "$text" -fg $fg -bg $bg -styles $styles
     } else {
-        $pill += Format-Text " $text " -fg $fg -bg $bg -noreset
+        $pill += Format-Text "$text" -fg $fg -bg $bg
     }
     $pill += Format-Text $right_cap -fg $bg
 
@@ -643,7 +629,6 @@ Set-PsFzfOption -TabExpansion
 # ╭────────────────╮
 # │ Autocompletion │
 # ╰────────────────╯
-# Completor copilot and agency
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
 Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
 Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
@@ -1015,6 +1000,9 @@ $env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0
 # ─[ Copilot Settings ]────────────────────────────────────────────────
 $env:COPILOT_AUTO_UPDATE = "false"
 $env:COPILOT_OTEL_ENABLED = "false"
+
+# ─[ Agency Settings ]─────────────────────────────────────────────────
+$env:AGENCY_NO_UPDATE_CHECK  = $true
 
 # ─[ User bin on PATH ]────────────────────────────────────────────────
 $env:PATH = "$env:PATH;$HOME\bin"

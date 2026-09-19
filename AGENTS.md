@@ -7,6 +7,22 @@
   }
   ```
 
+## Naming conventions
+
+Authoritative rules live in `AI/copilot-instructions.md` (Nomenclature). In short:
+
+- Files and directories: lowercase `snake_case`.
+- Git branches: lowercase `kebab-case`.
+- Never distinguish two paths or branches only by capitalization.
+
+Preserve verbatim (do not snake-case): tool-/language-required literal names (`README.md`, `AGENTS.md`,
+`LICENSE`, `SKILL.md`, `setup.ps1`), PowerShell module directories and their `.psm1`/`.psd1`, C#
+class-per-file sources, vendored/upstream assets at canonical names (fonts, `git-prompt.sh`,
+`zsh-autosuggestions`, `lazy-lock.json`, `en.utf-8.add`), and names a tool loads by an exact
+identifier (`AI/`, Copilot `copilot-instructions.md`/`mcp-config.json`/skill and extension directories,
+git hooks like `commit-msg`, and theme files keyed by a shared identifier such as the `DELTA_FEATURES`
+glow themes).
+
 ## Project Structure
 
 - Each package has a directory with a `setup.ps1` that declares variables (`$scoop_pkgs`, `$winget_pkgs`, `$pip_pkgs`, `$pipx_pkgs`, `$psgallery_pkgs`, `$files`, `$files_copy`)

@@ -163,7 +163,7 @@ Use the bundled helper script — it derives the repo root, ensures every label 
 
 ```ps1
 pwsh -NoProfile -ExecutionPolicy Bypass `
-  -File .github/skills/triage/scripts/new-issue.ps1 `
+  -File .github/skills/triage/scripts/new_issue.ps1 `
   -Draft tmp/triage-issue.md -Label <category> [-Label spike] `
   [-BlockedBy <n,...>] [-Blocking <n,...>]
 ```

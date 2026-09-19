@@ -1,5 +1,4 @@
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Configurations ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- REFACTOR: remove plugins not in use
 -- Classes</>
 
 ---@class CmdOptions
@@ -77,7 +76,6 @@ end
 local color_palette = {
 	dark = {
 		"#50808E",
-		"#67B9A9",
 		"#7C8FBA",
 		"#8AAF52",
 		"#93938A",
@@ -93,13 +91,13 @@ local color_palette = {
 		"#C098C6",
 		"#D09F8A",
 		"#D25FBE",
+		"#67B9A9",
 		"#E76A41",
 		"#E68A97",
 		"#E6B16F",
 	},
 	light = {
 		"#6ABCAC",
-		"#8AD9D5",
 		"#9DACDF",
 		"#AED380",
 		"#B0B1AB",
@@ -113,6 +111,7 @@ local color_palette = {
 		"#E699CF",
 		"#ECAE93",
 		"#F071DF",
+		"#8AD9D5",
 		"#FF8560",
 		"#FFA6B1",
 		"#FFC24D",
@@ -559,20 +558,6 @@ end
 -- Auto Commands</>
 -- -------------
 vim.api.nvim_create_autocmd(
-	"BufEnter", {
-		pattern = "*",
-		desc = "Open directory in snacks explorer",
-		callback = function()
-			local path = vim.fn.expand("%:p")
-			if vim.fn.isdirectory(path) ~= 0 then
-				require("snacks").explorer({ cwd = path })
-				return true
-			end
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
 	{ "BufNewFile", "BufRead" }, {
 		pattern = "todo",
 		desc = "Set filetype for todo file",
@@ -589,22 +574,6 @@ vim.api.nvim_create_autocmd(
 				vim.b[arg.buf].minihipatterns_disable = true -- disable mini.hipatterns
 				require("illuminate").pause_buf()
 			end
-		end
-	}
-)
-
-vim.api.nvim_create_autocmd(
-	"BufWinEnter", {
-		pattern = "*",
-		desc = "Disable wrap for file with long lines",
-		callback = function(arg)
-			vim.iter(vim.fn.getbufline(0, 1, 500)):any(function(line)
-				if #line > vim.bo.textwidth then
-					vim.wo[vim.api.nvim_get_current_win()].wrap = false
-					return true
-				end
-				return false
-			end)
 		end
 	}
 )
@@ -1251,18 +1220,6 @@ addPlugin {
 --<~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Coloring    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 addPlugin {
-	"Pocco81/high-str.nvim",
-	cmd = "HSHighlight",
-	init = function()
-		vim.api.nvim_set_hl(0, "ExBlack2Bg", { bg = "#F8F03F" })
-	end,
-	keys = {
-		{ "<Leader>l", "<Cmd>HSHighlight<CR>", mode = "x", desc = "add highlight" },
-		{ "<Leader>L", "<Cmd>HSRmHighlight rm_all<CR>", mode = "n", desc = "remove highlight" },
-	}
-}
-
-addPlugin {
 	"RRethy/vim-illuminate",
 	config = function()
 		require("illuminate").configure({
@@ -1419,11 +1376,11 @@ addPlugin {
 		vim.g.quickhl_manual_colors = colors
 	end,
 	keys = {
-		{ "<leader>W", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" },
-		{ "<leader>w", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
-		{ "<leader>w", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
-		{ "[w",        "<Plug>(quickhl-manual-go-to-prev)",      mode = "n", desc = "jump to prev quickhl" },
-		{ "]w",        "<Plug>(quickhl-manual-go-to-next)",      mode = "n", desc = "jump to next quickhl" }
+		{ "<leader>Q", "<Plug>(quickhl-manual-reset)",           mode = "n", desc = "remove all quickhl" },
+		{ "<leader>q", "<Plug>(quickhl-manual-this)",            mode = "x", desc = "toggle quickhl for selection" },
+		{ "<leader>q", "<Plug>(quickhl-manual-this-whole-word)", mode = "n", desc = "toggle quickhl for word" },
+		{ "[q",        "<Plug>(quickhl-manual-go-to-prev)",      mode = "n", desc = "jump to prev quickhl" },
+		{ "]q",        "<Plug>(quickhl-manual-go-to-next)",      mode = "n", desc = "jump to next quickhl" }
 	}
 }
 
@@ -1514,7 +1471,7 @@ addPlugin {
 				hints = { "underdotted" }
 			}
 		},
-		transparent_background = false,
+		transparent_background = vim.fn.exists("g:qvim") ~= 1,
 		term_colors = false,
 	}
 }
@@ -1523,7 +1480,12 @@ addPlugin {
 addPlugin {
 	"LudoPinelli/comment-box.nvim",
 	cmd = "CB",
-	config = function()
+	opts = {
+		box_width = vim.o.textwidth,
+		doc_width = vim.o.textwidth,
+		line_width = vim.o.textwidth
+	},
+	config = function(_, cfg)
 		local cb = require("comment-box")
 		local cb_options = CmdOptions:new()
 
@@ -1547,6 +1509,8 @@ addPlugin {
 		end
 
 		vim.api.nvim_create_user_command("CB", exec, { complete = cb_complete, desc = "Create comment box", nargs = "*", range = 2 })
+
+		cb.setup(cfg)
 	end
 }
 
@@ -1610,9 +1574,6 @@ local function track_rg_time(start_time, bufnr)
 		end
 	end
 end
-
--- blink.cmp  Rust fuzzy matcher not available, falling back to Lua implementation.
--- blink.cmp  V2 uses a new build/download system for the native library. Please add  build = function() require('blink.cmp').build():pwait() end  to your lazy.nvim config. See  :h blink-cmp-installation  for more information.
 
 addPlugin {
 	"saghen/blink.cmp",
@@ -1914,22 +1875,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰      CSV       ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- addPlugin {
--- 	"cameron-wags/rainbow_csv.nvim",
--- 	config = true,
--- 	ft = "csv"
--- }
-
--- addPlugin {
--- 	"emmanueltouzery/decisive.nvim",
--- 	cmd = "CSVAlignVirtual",
--- 	config = function()
--- 		vim.api.nvim_create_user_command("CSVAlignVirtual", require("decisive").align_csv, { desc = "Align csv" })
--- 		vim.api.nvim_create_user_command("CSVAlignVirtualClear", require("decisive").align_csv_clear, { desc = "Clear csv align" })
--- 		require("decisive").setup({})
--- 	end
--- }
-
 addPlugin {
 	"hat0uma/csvview.nvim",
   cmd = { "CsvViewEnable" },
@@ -2034,7 +1979,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰  File Options  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: what about new dir file type https://www.reddit.com/r/neovim/comments/1ugzc40/icons_for_new_dir_plugin/
 FileTypeActions = {
 	["NvimTree"] = function(_)
 		vim.cmd("setlocal statuscolumn=")
@@ -2347,27 +2291,6 @@ addPlugin {
 }
 
 addPlugin {
-	"isakbm/gitgraph.nvim",
-	cmd = "GitGraph",
-	dependencies = { "dlyongemallo/diffview.nvim" },
-	opts = {
-		symbols = {
-			merge_commit = "",
-			commit = "󰜘",
-		},
-		format = {
-			timestamp = "%H:%M:%S %d-%m-%Y",
-			fields = { "hash", "timestamp", "author", "branch_name", "tag" },
-		},
-	},
-	init = function()
-		vim.api.nvim_create_user_command("GitGraph", function()
-			require("gitgraph").draw({}, { all = true, max_count = 5000 })
-		end, {})
-	end,
-}
-
-addPlugin {
 	"rhysd/git-messenger.vim",
 	cmd = "GitMessenger",
 	config = function()
@@ -2464,9 +2387,29 @@ addPlugin {
 
 addPlugin {
 	"dlyongemallo/diffview.nvim",
-	cmd = "DiffviewOpen",
+	cmd = { "DiffviewOpen", "DiffviewFileHistory" },
 	config = function()
+		local difflazy = require("diffview.lazy")
 		local actions = require("diffview.actions")
+		local utils = difflazy.require("diffview.utils")
+
+		-- Keymaps shared across view, file_panel, and file_history_panel.
+		local common_nav_keymaps = {
+			{ "n", "<s-tab>",       actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
+			{ "n", "<tab>",         actions.select_next_entry,  { desc = "Open the diff for the next file" } }
+		}
+
+		-- Keymaps shared between file_panel and file_history_panel.
+		local common_panel_keymaps = {
+			{ "n", "<2-LeftMouse>", actions.select_entry,       { desc = "Open the diff for the selected entry" } },
+			{ "n", "<cr>",          actions.select_entry,       { desc = "Open the diff for the selected entry" } },
+			{ "n", "<down>",        actions.next_entry,         { desc = "Bring the cursor to the next file entry" } },
+			{ "n", "<up>",          actions.prev_entry,         { desc = "Bring the cursor to the previous file entry" } },
+			{ "n", "zM",            actions.close_all_folds,    { desc = "Collapse all folds" } },
+			{ "n", "zR",            actions.open_all_folds,     { desc = "Expand all folds" } },
+			{ "n", "za",            actions.toggle_fold,        { desc = "Toggle fold" } }
+		}
+
 		require("diffview").setup({
 			file_panel = {
 				win_config = {
@@ -2481,24 +2424,18 @@ addPlugin {
 			},
 			keymaps = {
 				disable_defaults = true,
-				file_panel = {
-					{ "n", "<2-LeftMouse>", actions.select_entry,       { desc = "Open the diff for the selected entry" } },
+				file_history_panel = utils.vec_join(common_panel_keymaps, common_nav_keymaps, {
+					{ "n", "g?",            actions.help("file_history_panel"),  { desc = "Open the help panel" } },
+				}),
+				file_panel = utils.vec_join(common_panel_keymaps, common_nav_keymaps, {
 					{ "n", "<C-w>gf",       actions.goto_file_tab,      { desc = "Open the file in a new tabpage" } },
-					{ "n", "<cr>",          actions.select_entry,       { desc = "Open the diff for the selected entry" } },
-					{ "n", "<down>",        actions.next_entry,         { desc = "Bring the cursor to the next file entry" } },
-					{ "n", "<s-tab>",       actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
 					{ "n", "<space>",       actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry" } },
-					{ "n", "<tab>",         actions.select_next_entry,  { desc = "Open the diff for the next file" } },
-					{ "n", "<up>",          actions.prev_entry,         { desc = "Bring the cursor to the previous file entry" } },
 					{ "n", "S",             actions.stage_all,          { desc = "Stage all entries" } },
 					{ "n", "U",             actions.unstage_all,        { desc = "Unstage all entries" } },
 					{ "n", "X",             actions.restore_entry,      { desc = "Restore entry to the state on the left side" } },
 					{ "n", "g?",            actions.help("file_panel"), { desc = "Open the help panel" } },
 					{ "n", "i",             actions.listing_style,      { desc = "Toggle between 'list' and 'tree' views" } },
-					{ "n", "zM",            actions.close_all_folds,    { desc = "Collapse all folds" } },
-					{ "n", "zR",            actions.open_all_folds,     { desc = "Expand all folds" } },
-					{ "n", "za",            actions.toggle_fold,        { desc = "Toggle fold" } },
-				},
+				}),
 				help_panel = {
 					{ "n", "q",     actions.close,  { desc = "Close help menu" } },
 					{ "n", "<esc>", actions.close,  { desc = "Close help menu" } },
@@ -2539,7 +2476,7 @@ addPlugin {
 				cpp      = { color = "#F34B7D", icon = "󰙲", name = "Cpp"       },
 				cs       = { color = "#C20DA6", icon = "󰌛", name = "Cs"        },
 				csproj   = { color = "#854CC7", icon = "", name = "Csproj"    },
-				csv      = { color = "#89E051", icon = "", name = "Csv"       },
+				csv      = { color = "#3A8A20", icon = "", name = "Csv"       },
 				md       = { color = "#42A5F5", icon = "", name = "Md"        },
 				mdx      = { color = "#519ABA", icon = "󰽛", name = "Mdx"       },
 				py       = { color = "#3D7BAB", icon = "", name = "Py"        },
@@ -3007,6 +2944,7 @@ addPlugin {
 		local diag = require("tiny-inline-diagnostic")
 		diag.setup({
 			blend = { factor = 0.22 },
+			disabled_ft = { "lazy" },
 			hi = {
 				background = "Normal",
 				mixing_color = "TinyDiagnosticNormal"
@@ -3181,7 +3119,6 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰    Markdown    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
--- FEAT: https://github.com/coekfung/img-clip.nvim https://github.com/hakonharnes/img-clip.nvim
 addPlugin {
 	"YousefHadder/markdown-plus.nvim",
 	ft = "markdown",
@@ -3204,88 +3141,8 @@ addPlugin {
 }
 
 addPlugin {
-	"MeanderingProgrammer/render-markdown.nvim",
-	ft = { "markdown", "codecompanion" },
-	opts = {
-		anti_conceal = {
-			enabled = false
-		},
-		bullet = {
-			icons = { "", "", "󰨐", "" },
-		},
-		callout = {
-			caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
-			important = { raw = "[!IMPORTANT]", rendered = "󰅾 Important", highlight = "RenderMarkdownHint" },
-			note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
-			tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
-			warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
-		},
-		checkbox = {
-			checked = {
-				icon = " 󰗡",
-			},
-			unchecked = {
-				icon = " 󰄰",
-			},
-		},
-		code = {
-			sign = false,
-			width = "block",
-			right_pad = 1,
-			min_width = 10,
-			border = "thick",
-			inline_pad = 1
-		},
-		heading = {
-			sign = false,
-			position = "inlay",
-			-- icons = { "󰫎 " },
-			icons = { "█ ", "▓▓ ", "▒▒▒ ", "░░░░ ", "░░░░░ ", "░░░░░░ " },
-			width = { "block"},
-			right_pad = 1,
-		},
-		latex = {
-			enabled = false,
-		},
-		link = {
-			custom = {
-				akams = { pattern = "https://aka.ms", icon = "󰇩 " },
-				azuredevops = { pattern = "[%a]+%.visualstudio%.com", icon = " " },
-				microsoft = { pattern = "microsoft%.com", icon = "󰇩 " },
-			},
-		},
-		pipe_table = {
-			preset = "round",
-			style = "full",
-			alignment_indicator = "•",
-		},
-		quote = {
-			icon = "▍",
-			repeat_linebreak = true,
-		},
-		sign = {
-			enabled = false,
-		},
-		win_options = {
-			concealcursor = {
-				default = vim.api.nvim_get_option_value("concealcursor", {}),
-				rendered = vim.api.nvim_get_option_value("concealcursor", {})
-			}
-		}
-	}
-}
-
-addPlugin {
 	"OXY2DEV/helpview.nvim",
 	ft = "help"
-}
-
--- FIX: error
-addPlugin {
-	"aloknigam247/mdview",
-	cmd = { "MdView" },
-	ft = { "markdown" },
-	opts = { debounce_ms = 100 },
 }
 
 addPlugin {
@@ -3387,6 +3244,16 @@ addPlugin {
 				order = 2,
 			},
 		},
+	}
+}
+
+
+addPlugin {
+	"hakonharnes/img-clip.nvim",
+	cmd = "PasteImage",
+	opts = {
+		dir_path = "images",
+		show_dir_path_in_prompt = true
 	}
 }
 
@@ -3587,6 +3454,31 @@ addPlugin {
 }
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰ Status Column  ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
+function _G.DirStatuscolumn()
+	if vim.v.virtnum ~= 0 then
+		return "  "
+	end
+
+	local name = vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, true)[1]
+
+	local icon, hl
+	if name:sub(-1) == "/" then
+		icon, hl = icons.folder_close, "Directory"
+	else
+		icon, hl = require("nvim-web-devicons").get_icon(name, name:match("%.(%w+)$"), { default = true })
+	end
+
+	return string.format("%%#%s#%s ", hl, icon)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "directory",
+	callback = function()
+		vim.opt_local.statuscolumn = "%{%v:lua.DirStatuscolumn()%}"
+		vim.opt_local.foldcolumn = "0"
+	end,
+})
+
 addPlugin {
 	"luukvbaal/statuscol.nvim",
 	config = function()
@@ -3594,6 +3486,7 @@ addPlugin {
 		require("statuscol").setup({
 			setopt = true,
 			relculright = true,
+			ft_ignore = { "directory" },
 			segments = {
 				{ sign = { name = { "todo" }, auto = true, foldclosed = true }, condition = { function() return TODO_COMMENTS_LOADED ~= nil end } },
 				{ sign = { name = { "Marks_" }, auto = true, fillcharhl ="LineNr" } },
@@ -3751,8 +3644,8 @@ addPlugin {
 						symbols = {
 							modified = icons.file_modified,
 							readonly = icons.file_readonly,
-							unnamed  = " " .. icons.file_unnamed .. " ",
-							newfile  = " " .. icons.file_newfile .. " "
+							unnamed  = icons.file_unnamed .. " ",
+							newfile  = icons.file_newfile .. " "
 						}
 					}
 				},
@@ -3936,7 +3829,7 @@ addPlugin {
 							return str:gsub("^%s+", ""):gsub("%s+", "")
 						end,
 						on_click = function ()
-							vim.cmd("ScrollViewToggle")
+							require("scrollview").set_state()
 						end,
 						padding = { left = 0, right = 0 },
 						separator = { left = "", right = "█" }
@@ -4445,27 +4338,6 @@ addPlugin {
 		}
 	}
 }
-
-addPlugin {
-	"tamton-aquib/flirt.nvim",
-	event = "WinNew",
-	opts = {
-		override_open = true,
-		default_move_mappings = false,
-		default_resize_mappings = false,
-		default_mouse_mappings = true,
-		exclude_fts = { "wk" },
-		speed = 100,
-		custom_filter = function(_, win_config)
-			if win_config.height == 8 and win_config.width == 12 then -- ignore window-picker
-				return true
-			elseif win_config.style == "minimal" and win_config.relative == "editor" and vim.wo.wrap == false then -- wrapping-paper
-				return true
-			end
-			return false
-		end
-	}
-}
 -- <~>
 --━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰   Utilities    ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</>
 -- ascii diagrams https://diagon.arthursonzogni.com
@@ -4480,18 +4352,6 @@ addPlugin {
 			{ "[", "<Plug>(cursor-text-objects-up)", mode = { "o", "x" }, { desc = "Run from your current cursor to the end of the text-object." } },
 			{ "]", "<Plug>(cursor-text-objects-down)", mode = { "o", "x" }, { desc = "Run from your current cursor to the end of the text-object." } }
 		}
-}
-
-addPlugin {
-	"MagicDuck/grug-far.nvim",
-	cmd = "GrugFar",
-	config = true
-}
-
-addPlugin {
-	"OXY2DEV/patterns.nvim",
-	cmd = "Patterns",
-	config = true
 }
 
 addPlugin {
@@ -4520,10 +4380,8 @@ addPlugin {
 
 addPlugin {
 	"benlubas/wrapping-paper.nvim",
-	dependencies = {
-		"MunifTanjim/nui.nvim",
-	},
-	keys = {{ "gww", function() require("wrapping-paper").wrap_line() end, desc = "Unwrap current line" }}
+	dependencies = { "MunifTanjim/nui.nvim", },
+	keys = {{ "<leader>w", function() require("wrapping-paper").wrap_line() end, desc = "Unwrap current line" }}
 }
 
 addPlugin {
@@ -4551,7 +4409,51 @@ addPlugin {
 addPlugin {
 	"delphinus/inspect-extmarks.nvim",
 	cmd = "InspectExtmarks",
-	config = true
+	-- nvim_get_namespaces() omits anonymous namespaces, so the plugin resolves ns_name to nil for
+	-- them, crashing its sort (nil < nil) and its nvim_echo ({ nil, "Title" }). Name anonymous
+	-- namespaces on the cursor row for the duration of one inspect() call. Revisit if upstream fixes.
+	config = function()
+		local ext = require("inspect-extmarks")
+		ext.setup()
+		local orig_inspect = ext.inspect
+		ext.inspect = function(opts)
+			local orig_get_ns = vim.api.nvim_get_namespaces
+			vim.api.nvim_get_namespaces = function()
+				local named = orig_get_ns()
+				local known = {}
+				for _, id in pairs(named) do
+					known[id] = true
+				end
+				local ok, marks = pcall(
+					vim.api.nvim_buf_get_extmarks,
+					opts.bufnr,
+					-1,
+					{ opts.row, 0 },
+					{ opts.row + 1, 0 },
+					{ details = true }
+				)
+				if ok then
+					for _, m in ipairs(marks) do
+						local nsid = m[4] and m[4].ns_id
+						if nsid and not known[nsid] then
+							local name = ("<anonymous %d>"):format(nsid)
+							while named[name] and named[name] ~= nsid do
+								name = name .. "#"
+							end
+							named[name] = nsid
+							known[nsid] = true
+						end
+					end
+				end
+				return named
+			end
+			local ok, err = pcall(orig_inspect, opts)
+			vim.api.nvim_get_namespaces = orig_get_ns
+			if not ok then
+				error(err, 0)
+			end
+		end
+	end
 }
 
 addPlugin {
@@ -4734,6 +4636,26 @@ addPlugin {
 			sources = {
 				explorer = {
 					actions = {
+						explorer_del = function(picker) --[[Override: fast in-process permanent delete]]
+							local paths = vim.tbl_map(Snacks.picker.util.path, picker:selected({ fallback = true }))
+							if #paths == 0 then
+								return
+							end
+							local what = #paths == 1 and vim.fn.fnamemodify(paths[1], ":p:~:.") or #paths .. " files"
+							if vim.fn.confirm("Permanently delete " .. what .. "?", "&Yes\n&No", 2, "Question") ~= 1 then
+								return
+							end
+							for _, path in ipairs(paths) do
+								if vim.fn.delete(path, "rf") == 0 then
+									Snacks.bufdelete({ file = path, force = true })
+								else
+									Snacks.notify.error("Failed to delete `" .. path .. "`")
+								end
+								require("snacks.explorer.tree"):refresh(vim.fs.dirname(path))
+							end
+							picker.list:set_selected()
+							require("snacks.explorer.actions").update(picker)
+						end,
 						toggle_preview = function(picker) --[[Override]]
 							picker.preview.win:toggle()
 						end,

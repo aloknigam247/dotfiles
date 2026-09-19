@@ -45,7 +45,7 @@ declared in `AI/setup.ps1` and installed by `autosetup.ps1`. Manual sources:
   downloads out-of-band into `~/.cache/puppeteer`. Without it you get
   *"Could not find Chrome"*. `render_diagram.py` auto-discovers that browser and
   pins `mmdc` to it via a temp `-p` config, so no hardcoded version path is needed.
-- Theme lives in `assets/mermaid-theme.json` (slate + sky blue to match the deck).
+- Theme lives in `assets/mermaid_theme.json` (slate + sky blue to match the deck).
 - Use `-s/--scale 3` for crisp slides; transparent background blends into cards.
 
 ### D2

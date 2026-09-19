@@ -7,7 +7,7 @@
 #
 # Usage (run from anywhere inside the repo):
 #   pwsh -NoProfile -ExecutionPolicy Bypass `
-#     -File .github/skills/triage/scripts/new-issue.ps1 `
+#     -File .github/skills/triage/scripts/new_issue.ps1 `
 #     -Draft tmp/triage-issue.md -Label bug -Label tech-debt `
 #     -BlockedBy 12,15 -Blocking 20
 

@@ -1,12 +1,4 @@
 {
-  "autoUpdate": false,
-  "continueOnAutoMode": true,
-  "copyOnSelect": true,
-  "customAgents": {
-    "defaultLocalOnly": true
-  },
-  "keepAlive": "on",
-  "theme": "github",
   "allowedUrls": [
     "https://docs.github.com",
     "https://onedrive.visualstudio.com",
@@ -23,8 +15,26 @@
     "https://graph.microsoft.com",
     "https://release-plz.ieni.dev",
     "https://review.learn.microsoft.com",
-    "https://learn.microsoft.com"
+    "https://learn.microsoft.com",
+    "https://www.reddit.com",
+    "https://old.reddit.com",
+    "https://redlib.catsarch.com",
+    "https://safereddit.com",
+    "https://neovim.io"
   ],
+  "autoUpdate": false,
+  "beep": true,
+  "beepOnSchedule": true,
+  "compactPaste": true,
+  "companyAnnouncements": [
+    "GPT-5.6 Sol, Terra, and Luna are now available in Copilot CLI. Try them from the model picker.",
+    "Need help with Agency? Run `agency support` or join the support community: https://aka.ms/agency/support"
+  ],
+  "continueOnAutoMode": true,
+  "copyOnSelect": true,
+  "customAgents": {
+    "defaultLocalOnly": true
+  },
   "experimental": true,
   "footer": {
     "showModelEffort": true,
@@ -40,20 +50,31 @@
     "showYolo": true,
     "showCustom": true
   },
-  "beep": true,
-  "beepOnSchedule": true,
-  "compactPaste": true,
+  "keepAlive": "on",
+  "model": "claude-opus-4.8",
   "mouse": true,
   "remoteSessions": true,
   "renderMarkdown": true,
   "showReasoning": true,
+  "sidebar": {
+    "enabled": false,
+    "showCloseButton": true,
+    "hoverFocus": true
+  },
+  "subagents": {},
   "tabs": {
     "enabled": true
   },
+  "theme": "github",
   "voice": {
     "enabled": true,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
-  "subagents": {},
-  "model": "claude-opus-4.8"
+  "enabledMcpServers": [
+    "computer-use"
+  ],
+  "enabledPlugins": {},
+  "extensions": {
+    "disabledExtensions": []
+  }
 }

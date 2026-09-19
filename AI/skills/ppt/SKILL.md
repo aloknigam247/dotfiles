@@ -57,7 +57,7 @@ command.
 
 Default is Modern Minimal (slate + sky blue), 16:9. Override colors/fonts via `Deck(theme={...})` — keys
 and examples in `reference/layout.md`. Match diagram colors to the deck (the
-Mermaid theme in `assets/mermaid-theme.json` already does).
+Mermaid theme in `assets/mermaid_theme.json` already does).
 
 ## Critical: shadow gotcha — do not regress
 
@@ -72,7 +72,7 @@ element. This is the first thing to check if a generated deck won't open.
 |---|---|
 | `scripts/pptlib.py` | `Deck` helper: theme, text, shapes, tables, `img_fit` |
 | `scripts/render_diagram.py` | render Mermaid/D2/draw.io/Plotly source → PNG |
-| `assets/mermaid-theme.json` | Mermaid theme matching the deck palette |
+| `assets/mermaid_theme.json` | Mermaid theme matching the deck palette |
 | `reference/engines.md` | engines, prerequisites, install sources, per-engine notes |
 | `reference/layout.md` | pptlib API + layout recipes + verification |
 

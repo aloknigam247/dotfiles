@@ -56,7 +56,7 @@ def find_headless_chrome():
 
 def render_mermaid(src, out, scale):
     mmdc = need("mmdc", "npm install -g @mermaid-js/mermaid-cli")
-    theme = os.path.join(ASSETS, "mermaid-theme.json")
+    theme = os.path.join(ASSETS, "mermaid_theme.json")
     cmd = [mmdc, "-i", src, "-o", out, "-b", "transparent", "-s", str(scale)]
     if os.path.exists(theme):
         cmd += ["-c", theme]

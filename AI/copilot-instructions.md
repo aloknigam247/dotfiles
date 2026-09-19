@@ -20,7 +20,7 @@ The user's environment is **Windows with PowerShell 7**. Always use PowerShell s
 
 ## Code Style
 
-* Hard-wrap at **100 characters** per line (not 80) as the default for everything you write or edit. Do not re-flow fenced code blocks, tables, long URLs, or lines the surrounding file deliberately keeps unwrapped.
+* Hard-wrap at **120 characters** per line (not 80) as the default for everything you write or edit. Do not re-flow fenced code blocks, tables, long URLs, or lines the surrounding file deliberately keeps unwrapped.
 * When adding or editing items in ordered lists, enums, switch cases, XML elements, dictionary entries, or similar sequences where order doesn't affect behavior, maintain **alphabetical order**. This applies to any collection where reordering has no semantic impact (e.g., using directives, property declarations, configuration entries).
 * When adding new fields/properties to an existing file, **do not reorder existing fields** — keep them in their original order. Add each new field in its correct alphabetical position **interspersed** among the existing entries when doing so does not break semantic ordering (e.g., the existing entries are already alphabetical and the surrounding code has no order dependency). If the existing entries are not in a clean alphabetical order, or inserting in place would require moving a pre-existing entry, add the new field(s) as a contiguous alphabetical block instead. Never move a pre-existing entry. This keeps diffs minimal while preserving order where it's cheap to do so.
 * **Do not use `<c>` or `<code>` tags in C# XML doc comments.** Reference identifiers, literals (`null`, `true`, `false`), and method names as plain text — no inline-code markup. (Use `<see cref="..."/>` only when an actual cross-reference is needed.)
@@ -42,10 +42,31 @@ explaining something the code cannot express on its own.
 * Put rationale, history, and cross-references in the commit message or PR description — not in the
   source. Those channels carry context without biasing every future reader of the file.
 
+## Nomenclature
+
+* Files and directories: default to lowercase `snake_case` (e.g., `config_files`, `user_settings.py`).
+* Git branches: default to lowercase `kebab-case` (e.g., `add-git-aliases`).
+
+Preserve language-, project-, and tool-specific file and directory naming conventions
+(e.g., C# `ViewModels` directories, `README.md`).
+Never distinguish paths or Git branches only by capitalization.
+
 ## Git
 
 * Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
 * Use the same **conventional commit** format for **PR titles**: `<type>: <description>`, using the same set of types.
+
+### Commit message rules (commitlint-enforced)
+
+Format: `type(scope): subject`, then optional body and footer, each separated by one blank line.
+
+* **Header** (first line): max 72 chars, no leading/trailing whitespace, no trailing period.
+* **type**: required, lower-case, one of `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `test`.
+* **scope**: optional, lower-case. If used, it must be listed in the repo's `.commitlint-scopes.json`; omit it when that file is absent or the scope is not allowlisted.
+* **subject**: required, no trailing period, max 50 chars, lower-case or sentence-case (no Title Case or ALL-CAPS).
+* **body**: optional; sentence-case, wrap lines at 80 chars, must end with a period.
+* **footer**: optional; wrap lines at 80 chars; put `BREAKING CHANGE:` here.
+* **Breaking changes**: include both `!` in the header (`feat(api)!: ...`) and a `BREAKING CHANGE:` footer, or neither.
 
 ## Azure DevOps
 When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
@@ -58,3 +79,25 @@ When working with Azure DevOps CLI (az boards, az repos), always include --proje
 * Read-only investigation to answer a question is fine (view/grep/glob). The line is mutating
   or installing — no package installs, no scripts that change state, no file writes — without
   an explicit go-ahead.
+
+## Scope
+
+* Do the least that fully satisfies the ask, and no more. Prefer the smallest, simplest change;
+  reuse what the platform or existing tools already provide instead of reimplementing it; do not
+  add parameters, abstractions, or handling for cases that were not requested.
+* If solving the task seems to require going beyond its stated scope — touching unrelated code,
+  adding new capabilities, or changing behavior nobody asked for — stop and ask me before
+  expanding scope, rather than deciding unilaterally.
+
+## Authoring files (docs, configs, prompt/agent defs)
+
+* Single source of truth: state each fact once, where it authoritatively lives; elsewhere link to
+  it, never restate it. Don't duplicate what a runtime source, another file, or my user instructions
+  already define.
+* No transient content in durable files: never hardcode state that changes at runtime or over time
+  (modes, counts, statuses, "until X happens") — point to the live source instead.
+* Write only what the file's reader needs to act. Omit background, history, rationale, transition
+  narratives, and "what this fixes" — those belong in the commit/PR, not the file.
+* Every line must earn its place: if removing it loses no actionable meaning, remove it. Prefer the
+  shortest file that fully works.
+* Reference, don't repeat: prefer "see X" over re-explaining X.

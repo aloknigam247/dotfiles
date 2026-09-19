@@ -11,7 +11,8 @@ $npm_pkgs = @(
 $scoop_pkgs = @(
     "mingw",
     "neovim-nightly",
-    "pandoc"
+    "pandoc",
+    "rust"
 )
 
 $winget_pkgs = @(

@@ -273,7 +273,7 @@ function wingetInstall {
     }
 
     foreach ($pkg in $pkgs) {
-        $status = winget list -e --id $pkg
+        $status = winget list -e --id $pkg --accept-source-agreements
 
         if ($status.Contains("No installed package found matching input criteria.")) {
             $installed = $false
@@ -291,6 +291,85 @@ function wingetInstall {
             winget install -e --id $pkg --accept-package-agreements --accept-source-agreements
         }
     }
+}
+
+function githubInstall {
+    param(
+        [hashtable[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    $versionFile = "$env:XDG_STATE_HOME\autosetup\github-releases.json"
+    if (Test-Path $versionFile) {
+        $versions = Get-Content $versionFile -Raw | ConvertFrom-Json -AsHashtable
+    } else {
+        $versions = @{}
+    }
+
+    foreach ($pkg in $pkgs) {
+        $repo = $pkg.repo
+        $installed = $versions.ContainsKey($repo)
+
+        if (-not $installed -and $update) {
+            continue
+        }
+
+        $latestTag = gh release view --repo $repo --json tagName --jq ".tagName"
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($latestTag)) {
+            writeLog ERROR "Failed to resolve latest release tag: $repo"
+            continue
+        }
+        $latestTag = $latestTag.Trim()
+
+        if ($installed -and $versions[$repo] -eq $latestTag) {
+            writeLog INFO "GitHub release up to date: $repo ($latestTag)"
+            continue
+        }
+        if ($installed) {
+            writeLog UPDATE "Updating GitHub release: $repo -> $latestTag"
+        } else {
+            writeLog UPDATE "Installing GitHub release: $repo ($latestTag)"
+        }
+
+        if (-not (Test-Path $pkg.dir)) {
+            New-Item -ItemType Directory -Path $pkg.dir | Out-Null
+        }
+        $tmp = Join-Path $env:TEMP ([guid]::NewGuid().ToString())
+        New-Item -ItemType Directory -Path $tmp | Out-Null
+        try {
+            gh release download $latestTag --repo $repo --pattern $pkg.asset --dir $tmp
+            if ($LASTEXITCODE -ne 0) {
+                writeLog ERROR "Failed to download release asset: $repo ($($pkg.asset))"
+                continue
+            }
+            $downloaded = @(Get-ChildItem -File $tmp)
+            if ($downloaded.Count -ne 1) {
+                writeLog ERROR "Expected exactly one asset for $repo, got $($downloaded.Count)"
+                continue
+            }
+            $asset = $downloaded[0]
+            switch ($asset.Extension) {
+                ".zip" { Expand-Archive -Path $asset.FullName -DestinationPath $pkg.dir -Force }
+                ".exe" { Move-Item -Path $asset.FullName -Destination $pkg.dir -Force }
+                default {
+                    writeLog ERROR "Unsupported asset type for $repo`: $($asset.Name)"
+                    continue
+                }
+            }
+            $versions[$repo] = $latestTag
+        } finally {
+            Remove-Item -Recurse -Force $tmp
+        }
+    }
+
+    $stateDir = Split-Path $versionFile
+    if (-not (Test-Path $stateDir)) {
+        New-Item -ItemType Directory -Path $stateDir | Out-Null
+    }
+    $versions | ConvertTo-Json | Set-Content -Path $versionFile
 }
 
 function linkConfigs {
@@ -386,7 +465,8 @@ function writeLog {
     Write-Host -ForegroundColor $color " $message"
 }
 
-$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" | ForEach-Object { $_.Directory.BaseName }
+# ╾─────────────────────────────────────────╼ main execution ╾─────────────────────────────────────────╼
+$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" -Depth 1 | ForEach-Object { $_.Directory.BaseName }
 
 if ($update) {
     writeLog INFO "Updating all installed packages"
@@ -407,6 +487,7 @@ foreach ($pkg in $pkg_list) {
     $cwd = Get-Location
 
     if (Test-Path setup.ps1) {
+        $github_pkgs = @()
         $npm_pkgs = @()
         $pip_pkgs = @()
         $pipx_pkgs = @()
@@ -419,6 +500,7 @@ foreach ($pkg in $pkg_list) {
         . .\setup.ps1
 
         if ($update) {
+            githubInstall -update $github_pkgs
             npmInstall -update $npm_pkgs
             pipInstall -update $pip_pkgs
             pipxInstall -update $pipx_pkgs
@@ -427,6 +509,7 @@ foreach ($pkg in $pkg_list) {
             wingetInstall -update $winget_pkgs
             copyOrUpdateConfigs -update $files_copy
         } else {
+            githubInstall $github_pkgs
             npmInstall $npm_pkgs
             pipInstall $pip_pkgs
             pipxInstall $pipx_pkgs
