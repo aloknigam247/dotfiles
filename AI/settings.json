@@ -36,9 +36,6 @@
     "defaultLocalOnly": true
   },
   "experimental": true,
-  "extensions": {
-    "disabledExtensions": []
-  },
   "footer": {
     "showModelEffort": true,
     "showDirectory": true,
@@ -75,5 +72,9 @@
   },
   "enabledMcpServers": [
     "computer-use"
-  ]
+  ],
+  "enabledPlugins": {},
+  "extensions": {
+    "disabledExtensions": []
+  }
 }
