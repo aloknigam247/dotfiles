@@ -438,10 +438,10 @@ function whatis($arg) {
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
-        Format-Pill "$($icons.type_app) $arg" -bg $catppuccin.Green -fg $catppuccin.Base -styles italic
+        Format-Pill "$($icons.type_app) Application" -bg $catppuccin.Green -fg $catppuccin.Base -styles italic
         $cm.Source
     } elseif ($type -eq "Alias") {
-        Format-Pill " $arg" -bg $catppuccin.Lavender -fg $catppuccin.Base  -styles italic
+        Format-Pill " Alias" -bg $catppuccin.Lavender -fg $catppuccin.Base  -styles italic
         $cm.DisplayName
     } else {
         Write-Host "Unknown"
