@@ -16,9 +16,9 @@ function DrawMenu {
             $item = $menuItems[$i]
             if ($Multiselect) {
                 if ($selection -contains $i) {
-                    $item = ' ' + $item
+                    $item = "[x] " + $item
                 } else {
-                    $item = ' ' + $item
+                    $item = "[ ] " + $item
                 }
             }
             if ($i -eq $menuPosition) {
