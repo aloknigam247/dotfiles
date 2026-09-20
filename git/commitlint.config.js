@@ -3,11 +3,14 @@ const path = require("node:path");
 
 function repoScopes() {
     try {
-        return JSON.parse(fs.readFileSync(path.join(process.cwd(), ".commitlint-scopes.json"), "utf8"));
+        const parsed = JSON.parse(fs.readFileSync(path.join(process.cwd(), ".commitlint-scopes.json"), "utf8"));
+        return Array.isArray(parsed) ? parsed : [];
     } catch {
         return [];
     }
 }
+
+const scopes = repoScopes();
 
 module.exports = {
     extends: ["@commitlint/config-conventional"],
@@ -16,7 +19,9 @@ module.exports = {
         "type-case": [2, "always", ["lower-case"]],
         "type-empty": [2, "never"],
         "scope-case": [2, "always", ["lower-case"]],
-        "scope-enum": [2, "always", repoScopes()],
+        ...(scopes.length > 0
+            ? { "scope-enum": [2, "always", scopes] }
+            : { "scope-empty": [2, "always"] }),
         "subject-case": [2, "always", ["lower-case", "sentence-case"]],
         "subject-empty": [2, "never"],
         "subject-full-stop": [2, "never", "."],
