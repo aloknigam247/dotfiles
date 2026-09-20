@@ -37,5 +37,6 @@ lower-case scope strings (lower-case is required by the `scope-case` rule):
 ["api", "auth", "ci", "db", "deps", "ui"]
 ```
 
-- File present → scope is optional, but any scope used must be in the list.
-- File missing, empty array, or malformed → any scope is allowed.
+- File present with a non-empty list → scope is optional, but any scope used must be in the list.
+- File missing, empty array, malformed, or not a JSON array → any scope is **blocked** (unscoped commits
+  still pass).
