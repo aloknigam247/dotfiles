@@ -14,6 +14,11 @@ git:
   autoFetch: false
   commit:
     autoWrapWidth: 80
+  diffRenderers:
+    - colorArg: always
+      command: delta --paging=never
+    - type: rawGit
+      name: git
   log:
     showGraph: when-maximised
   parseEmoji: true
