@@ -1685,7 +1685,7 @@ addPlugin {
 				auto_show = true,
 				draw = {
 					columns = {
-						{ "kind_icon", "label", gap = 1 }, { "source_name" }
+						{ "kind_icon" }, { "label" }, { "source_name" }
 					},
 					components = {
 						kind_icon = {
