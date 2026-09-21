@@ -11,6 +11,8 @@ Turn a rough task, bug, or idea into a **well-formed GitHub issue** that a *diff
 
 - **Discuss first, create last.** Never run `gh issue create` until the user has reviewed the drafted issue and explicitly accepted it.
 - **The issue is for another agent, at another time.** Write it as a self-contained task: enough context, file references, and acceptance criteria that an agent with zero conversation history can pick it up and implement it.
+- **Anchor to stable identifiers, not coordinates.** An issue is implemented at an unknown later time against a changed tree. Reference symbols, `setup.ps1` variables, config keys, and search patterns — never line numbers, occurrence counts, or verbatim multi-line snapshots that the repo will invalidate. A frozen inventory goes stale *and* misleads: the implementing agent trusts it as exhaustive and skips rediscovering occurrences added after the issue was filed. The issue points the way; the implementing agent re-discovers the exact scope.
+- **Match detail to task type.** For a narrow **bug**, the exact offending lines *are* the deliverable — a tight snippet of the actual defect is worth freezing. For **broad sweeps** (a rename, a convention change across modules), staleness dominates: give a discovery recipe (search patterns + stable anchors), not an enumerated file list.
 - **Ask for missing details.** Do not guess when scope, expected behavior, or acceptance criteria are ambiguous.
 
 ## Input
@@ -53,7 +55,7 @@ The subagent prompt must include:
 
 The subagent is responsible for:
 1. Reading the root `AGENTS.md` for conventions (code style, `autosetup.ps1` wiring, module-shipping rules) and any package-local notes.
-2. Using grep/glob/view to locate the **specific files, functions, `setup.ps1` variables, or config keys** that must change or be added.
+2. Using grep/glob/view to locate the work. **Scale the output to the task type**: for a narrow bug, the specific files / functions / `setup.ps1` variables / config keys at fault; for a broad sweep (rename, cross-module convention change), the **distinct surfaces** touched, one representative entry point each, and the grep/glob patterns that locate the rest — not a frozen enumeration.
 3. Identifying the **package/module(s)** involved (top-level directory names).
 4. Confirming the **root cause** (for bugs) by tracing the actual code/config — not guessing.
 5. Sketching a **proposed approach** consistent with existing patterns (e.g., the `setup.ps1` variable convention, `linkConfigs`/`$files` symlinks, profile registration, 1TBS style).
@@ -61,12 +63,15 @@ The subagent is responsible for:
 7. Flagging any ambiguity or missing information the user still needs to resolve.
 
 The subagent must **return a structured report** containing:
-- `affected` — list of `{file, symbol, why}` entries (files / functions / `setup.ps1` vars / config keys to change or add)
+- `affected` — representative entry points as `{file, symbol, why}`. For bugs, the specific site(s). For a broad sweep, **one canonical example per surface**, not an exhaustive inventory
+- `searchStrategy` — the grep/glob patterns and stable anchors (function names, `setup.ps1` variables, config keys) that let the implementing agent **re-discover the full scope** later; replaces a frozen file enumeration
 - `modules` — the package/module(s) involved (top-level directory names)
 - `rootCause` — for bugs, the confirmed root cause with file:line references (or "n/a")
 - `approach` — the proposed implementation approach
 - `validation` — how to verify the change (commands / manual steps) and any regression risk
 - `openQuestions` — anything still unclear
+
+Reference stable anchors (symbols, `setup.ps1` variables, config keys), **never line numbers or occurrence counts** in the enumerated scope — the issue is implemented later against a moved tree.
 
 If the subagent returns `openQuestions`, resolve them with the user (via `ask_user`) before drafting the issue.
 
@@ -131,8 +136,8 @@ whose definition of done includes editing code or documentation.
 1. Compose the issue **title** in Conventional Commit style: `<type>: <short description>` (e.g., `fix: statusline flickers on git pull`).
 2. Compose the issue **body** with these sections (omit a section only if truly not applicable):
    - **Summary** — one or two sentences.
-   - **Context / Background** — why this matters; the reported symptom or motivation. Include a **small code/config snippet** of the current/problematic code (a handful of lines with a `file:line` reference) whenever it makes the problem concrete.
-   - **Affected files & modules** — bulleted list from the subagent's `affected` + `modules`, with `file` -> `symbol` -> reason. Name the package/module (top-level directory).
+   - **Context / Background** — why this matters; the reported symptom or motivation. **For a narrow bug**, include a **small code/config snippet** of the current/problematic code (a handful of lines with a `file:line` reference) to make the problem concrete. **For a broad sweep**, describe the *pattern* and the surfaces involved rather than pasting a frozen snapshot or occurrence count.
+   - **Affected files & modules** — for a narrow bug, the specific `file` -> `symbol` -> reason sites. For a broad sweep, the **surfaces** with one representative entry point each plus the **discovery command** that finds the rest (from `searchStrategy`), prefixed with a note: *"This is a starting map, not an exhaustive inventory — re-run the discovery searches below and treat their output as authoritative; occurrences may have been added since this issue was filed."* Name the package/module (top-level directory).
    - **Proposed approach** — the subagent's `approach`, plus root cause for bugs. Include a **small snippet** illustrating the change (a short before/after, or a minimal sketch of the new `setup.ps1` entry / function signature / config key) whenever it makes the intent clearer — keep it to a handful of lines, not full implementations. Respect repo conventions (1TBS, `pwsh`, double quotes, `setup.ps1` variable pattern).
    - **Acceptance criteria** — a checklist of concrete, verifiable outcomes.
    - **Validation** — **always required.** Spell out how a future agent (or the user) verifies the change is done, since this repo has no unit tests:

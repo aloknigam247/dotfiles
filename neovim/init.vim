@@ -53,8 +53,6 @@ set tabstop=4                               " Indent using spaces
 set textwidth=100                           " Set text width to 100
 set updatetime=500                          " CursorHold time
 set virtualedit=onemore                     " Allow cursor to move one more after line ends
-set nowrap                                  " Disable wrap
-set wrapmargin=0                            " Disable wrap margin
 syntax off
 " }}}
 
