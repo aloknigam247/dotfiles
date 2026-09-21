@@ -4028,22 +4028,17 @@ addPlugin {
 addPlugin {
 	"nvim-treesitter/nvim-treesitter",
 	branch = "main",
+	build = ":TSUpdate",
+	cmd = { "TSInstall", "TSUpdate" },
 	module = false,
+	config = function()
+		require("nvim-treesitter").install({ "c_sharp", "luadoc", "xml" })
+	end,
 	dependencies = {{
 		"utilyre/sentiment.nvim",
 		config = true,
 		init = function() vim.g.loaded_matchparen = 1 end,
 	}}
-}
-
-addPlugin {
-	"lewis6991/ts-install.nvim",
-	cmd = "TS",
-	dependencies = "nvim-treesitter/nvim-treesitter",
-	opts = {
-		ensure_install = { "c_sharp", "luadoc", "xml" },
-		install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "site")
-	},
 }
 
 addPlugin {
