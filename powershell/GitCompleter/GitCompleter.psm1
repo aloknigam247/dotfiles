@@ -8,12 +8,12 @@ function Get-GitLocalBranch {
 }
 
 function Get-GitRemoteBranch {
-    param([string] $Filter = "")
+    param([string] $Filter = "", [switch] $KeepRemote)
     $branches = git for-each-ref --format="%(refname:short)" refs/remotes/ 2>$null
     if ($LASTEXITCODE -ne 0) { return @() }
     @($branches) |
-        Where-Object { $_ -ne "origin" -and -not $_.EndsWith("/HEAD") } |
-        ForEach-Object { $_ -replace "^origin/", "" } |
+        Where-Object { $_ -match "/" -and -not $_.EndsWith("/HEAD") } |
+        ForEach-Object { if ($KeepRemote) { $_ } else { $_ -replace "^[^/]+/", "" } } |
         Where-Object { $_ -like "$Filter*" } |
         Sort-Object -Unique
 }
@@ -161,8 +161,9 @@ function Get-GitCommandContext {
 function Register-GitCompleter {
     [CmdletBinding()]
     param(
-        [string[]] $RefSubcommand    = @("branch", "checkout", "cherry-pick", "diff",
-                                          "log", "merge", "rebase", "reset", "show", "switch"),
+        [string[]] $LocalBranchSubcommand = @("branch", "checkout", "switch"),
+        [string[]] $RefSubcommand    = @("cherry-pick", "diff", "log", "merge",
+                                          "rebase", "reset", "show"),
         [string[]] $RemoteSubcommand = @("fetch", "pull", "push"),
         [string[]] $FileSubcommand   = @("add", "restore"),
         [string[]] $FunctionName     = @("gc", "gwa"),
@@ -201,10 +202,16 @@ function Register-GitCompleter {
             } else {
                 $results = Get-GitLocalBranch -Filter $wordToComplete
             }
-        } elseif ($RefSubcommand -contains $sub) {
+        } elseif ($LocalBranchSubcommand -contains $sub) {
             $results = @()
             $results += Get-GitLocalBranch  -Filter $wordToComplete
             $results += Get-GitRemoteBranch -Filter $wordToComplete
+            $results += Get-GitTag          -Filter $wordToComplete
+            $results = $results | Sort-Object -Unique
+        } elseif ($RefSubcommand -contains $sub) {
+            $results = @()
+            $results += Get-GitLocalBranch  -Filter $wordToComplete
+            $results += Get-GitRemoteBranch -Filter $wordToComplete -KeepRemote
             $results += Get-GitTag          -Filter $wordToComplete
             $results = $results | Sort-Object -Unique
         }
