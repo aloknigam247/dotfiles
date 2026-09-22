@@ -455,7 +455,11 @@ function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Wor
 # ─[ Git functions ]───────────────────────────────────────────────────
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
 function gc {
-    git checkout $args
+    param(
+        [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
+        [string[]] $Ref
+    )
+    git checkout @Ref
     $stash = git stash list
     if ($null -ne $stash) {
         if ($stash.GetType() -eq [String]) {
