@@ -8,8 +8,11 @@ $scoop_pkgs = @(
 )
 
 $files = @{
-    ".gitconfig" = "~\.gitconfig";
     "catppuccin.gitconfig" = "~\.config\git\catppuccin.gitconfig";
     "commitlint.config.js" = "~\.config\git\commitlint.config.js";
     "hooks/commit-msg" = "~\.config\git\hooks\commit-msg"
+}
+
+$files_deploy = @{
+    ".gitconfig" = "~\.gitconfig"
 }
