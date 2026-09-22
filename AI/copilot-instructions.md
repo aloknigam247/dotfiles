@@ -62,7 +62,7 @@ Format: `type(scope): subject`, then optional body and footer, each separated by
 
 * **Header** (first line): max 72 chars, no leading/trailing whitespace, no trailing period.
 * **type**: required, lower-case, one of `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `test`.
-* **scope**: optional, lower-case. If used, it must be listed in the repo's `.commitlint-scopes.json`; omit it when that file is absent or the scope is not allowlisted.
+* **scope**: optional, lower-case. If used, it must be listed in the repo's `.commitlint-scopes.json`; omit it when that file is absent or the scope is not allowlisted. If a scope is recommended then ask user and if user agrees then add that scope into `.commitlint-scopes.json`
 * **subject**: required, no trailing period, max 50 chars, lower-case or sentence-case (no Title Case or ALL-CAPS).
 * **body**: optional; sentence-case, wrap lines at 80 chars, must end with a period.
 * **footer**: optional; wrap lines at 80 chars; put `BREAKING CHANGE:` here.

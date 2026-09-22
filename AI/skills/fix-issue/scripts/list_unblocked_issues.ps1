@@ -16,11 +16,10 @@
     pwsh -NoProfile -File list_unblocked_issues.ps1
 
 .EXAMPLE
-    pwsh -NoProfile -File list_unblocked_issues.ps1 -ShowBlocked -Limit 50
+    pwsh -NoProfile -File list_unblocked_issues.ps1 -ShowBlocked
 #>
 [CmdletBinding()]
 param(
-    [int]$Limit = 30,
     [switch]$ShowBlocked,
     [switch]$Json
 )
@@ -51,8 +50,18 @@ function Get-IssueState([int]$Number) {
     return $state
 }
 
-$openIssues = gh issue list --state open --limit $Limit `
-    --json number,title,labels,assignees,updatedAt,body | ConvertFrom-Json
+# Fetch every open issue via pagination. The issues endpoint also returns PRs, so drop those.
+$openIssuesRaw = gh api --paginate "repos/$repo/issues?state=open&per_page=100" | ConvertFrom-Json
+$openIssues = @($openIssuesRaw | Where-Object { -not $_.pull_request } | ForEach-Object {
+    [PSCustomObject]@{
+        number    = $_.number
+        title     = $_.title
+        labels    = $_.labels
+        assignees = $_.assignees
+        updatedAt = $_.updated_at
+        body      = $_.body
+    }
+})
 
 $results = foreach ($issue in $openIssues) {
     $blockers = [System.Collections.Generic.List[int]]::new()
