@@ -79,7 +79,7 @@ $results = foreach ($issue in $openIssues) {
 
     # 3. Body text signals: "blocked by #N", "depends on #N".
     if ($issue.body) {
-        foreach ($m in [regex]::Matches($issue.body, '(?i)(?:blocked by|depends on)\s+#(\d+)')) {
+        foreach ($m in [regex]::Matches($issue.body, '(?i)(?:blocked by|depends on)\W{0,4}#(\d+)')) {
             [void]$blockers.Add([int]$m.Groups[1].Value)
         }
     }
