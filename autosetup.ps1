@@ -387,16 +387,13 @@ function linkConfigs {
                 $target = Get-Item $dest | Select-Object -ExpandProperty Target
                 if ($target -eq $src) {
                     Write-Verbose "$src already linked" -verbose
-                } else {
-                    Write-Output "backup $dest --> ${dest}.orig"
-                    Move-Item -Force -Path $dest -Destination "${dest}.orig"
-                    Write-Output "Linking $src --> $dest"
-                    New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                    continue
                 }
-            } else {
-                Write-Output "Linking $src --> $dest"
-                New-Item -ItemType SymbolicLink -Path $dest -Target $src
+                backupConfig $dest
+                Remove-Item -Force -Path $dest
             }
+            Write-Output "Linking $src --> $dest"
+            New-Item -ItemType SymbolicLink -Path $dest -Target $src
         }
     }
 }
@@ -428,10 +425,9 @@ function copyOrUpdateConfigs {
                 }
                 if (Test-Path $dest) {
                     if (Compare-Object (Get-Content $src) (Get-Content $dest)) {
-                        Write-Output "backup $dest --> ${dest}.orig"
-                        Move-Item -Force -Path $dest -Destination "${dest}.orig"
+                        backupConfig $dest
                         Write-Output "Copying $src --> $dest"
-                        Copy-Item -Path $src -Destination $dest
+                        Copy-Item -Force -Path $src -Destination $dest
                     } else {
                         Write-Verbose "$src already exists" -verbose
                     }
@@ -439,6 +435,61 @@ function copyOrUpdateConfigs {
                     Write-Output "Copying $src --> $dest"
                     Copy-Item -Path $src -Destination $dest
                 }
+            }
+        }
+    }
+}
+
+function backupConfig {
+    param(
+        [string]$dest
+    )
+    $orig = "${dest}.orig"
+    if (Test-Path $orig) {
+        return
+    }
+    $item = Get-Item -Force -Path $dest -ErrorAction SilentlyContinue
+    if (-not $item) {
+        return
+    }
+    if ($item.LinkType) {
+        Write-Output "backup link $dest --> $orig"
+        New-Item -ItemType SymbolicLink -Path $orig -Target $item.Target | Out-Null
+    } else {
+        Write-Output "backup $dest --> $orig"
+        Copy-Item -Path $dest -Destination $orig
+    }
+}
+
+function deployConfigs {
+    param(
+        [hashtable]$files
+    )
+    foreach ($key in $files.keys) {
+        $src = "$cwd\$key"
+        foreach ($dest in @($files[$key])) {
+            $dir = Split-Path -Parent $dest
+            if (-not (Test-Path $dir)) {
+                mkdir $dir
+            }
+            $item = Get-Item -Force -Path $dest -ErrorAction SilentlyContinue
+            if ($item -and $item.LinkType) {
+                backupConfig $dest
+                Write-Output "Removing link $dest"
+                Remove-Item -Force -Path $dest
+                Write-Output "Deploying $src --> $dest"
+                Copy-Item -Path $src -Destination $dest
+            } elseif ($item) {
+                if ((Get-FileHash $src).Hash -ne (Get-FileHash $dest).Hash) {
+                    backupConfig $dest
+                    Write-Output "Deploying $src --> $dest"
+                    Copy-Item -Force -Path $src -Destination $dest
+                } else {
+                    Write-Verbose "$src already deployed" -verbose
+                }
+            } else {
+                Write-Output "Deploying $src --> $dest"
+                Copy-Item -Path $src -Destination $dest
             }
         }
     }
@@ -496,6 +547,7 @@ foreach ($pkg in $pkg_list) {
         $winget_pkgs = @()
         $files = @{}
         $files_copy = @{}
+        $files_deploy = @{}
 
         . .\setup.ps1
 
@@ -508,6 +560,7 @@ foreach ($pkg in $pkg_list) {
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
             copyOrUpdateConfigs -update $files_copy
+            deployConfigs $files_deploy
         } else {
             githubInstall $github_pkgs
             npmInstall $npm_pkgs
@@ -520,6 +573,7 @@ foreach ($pkg in $pkg_list) {
             writeLog INFO "Installing Configs"
             linkConfigs $files
             copyOrUpdateConfigs $files_copy
+            deployConfigs $files_deploy
         }
     } else {
         writeLog ERROR "No setup.ps1 found for $pkg"
