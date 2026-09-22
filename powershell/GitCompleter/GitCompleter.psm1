@@ -166,8 +166,7 @@ function Register-GitCompleter {
                                           "rebase", "reset", "show"),
         [string[]] $RemoteSubcommand = @("fetch", "pull", "push"),
         [string[]] $FileSubcommand   = @("add", "restore"),
-        [string[]] $FunctionName     = @("gc", "gwa"),
-        [string]   $ParameterName    = "Branch"
+        [hashtable] $FunctionParameter = @{ gc = "Ref"; gwa = "Branch" }
     )
 
     $stashSubs = @("apply", "branch", "drop", "list", "pop", "push", "save", "show")
@@ -230,7 +229,9 @@ function Register-GitCompleter {
         }
     }
 
-    Register-ArgumentCompleter -CommandName $FunctionName -ParameterName $ParameterName -ScriptBlock $functionBlock
+    foreach ($fn in $FunctionParameter.Keys) {
+        Register-ArgumentCompleter -CommandName $fn -ParameterName $FunctionParameter[$fn] -ScriptBlock $functionBlock
+    }
 }
 
 Export-ModuleMember -Function `
