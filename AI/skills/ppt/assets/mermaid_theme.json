@@ -1,7 +1,7 @@
 {
   "theme": "base",
   "themeVariables": {
-    "fontFamily": "Calibri Light, Segoe UI, Arial, sans-serif",
+    "fontFamily": "Calibri Light, Arial, sans-serif",
     "fontSize": "16px",
     "primaryColor": "#E0F2FE",
     "primaryBorderColor": "#0EA5E9",
