@@ -538,6 +538,9 @@ foreach ($pkg in $pkg_list) {
     $cwd = Get-Location
 
     if (Test-Path setup.ps1) {
+        $files = @{}
+        $files_copy = @{}
+        $files_deploy = @{}
         $github_pkgs = @()
         $npm_pkgs = @()
         $pip_pkgs = @()
@@ -545,13 +548,14 @@ foreach ($pkg in $pkg_list) {
         $psgallery_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
-        $files = @{}
-        $files_copy = @{}
-        $files_deploy = @{}
 
         . .\setup.ps1
 
         if ($update) {
+            writeLog INFO "Updating Configs"
+
+            copyOrUpdateConfigs -update $files_copy
+            deployConfigs $files_deploy
             githubInstall -update $github_pkgs
             npmInstall -update $npm_pkgs
             pipInstall -update $pip_pkgs
@@ -559,21 +563,19 @@ foreach ($pkg in $pkg_list) {
             psgalleryInstall -update $psgallery_pkgs
             scoopInstall -update $scoop_pkgs
             wingetInstall -update $winget_pkgs
-            copyOrUpdateConfigs -update $files_copy
-            deployConfigs $files_deploy
         } else {
+            writeLog INFO "Installing Configs"
+
+            copyOrUpdateConfigs $files_copy
+            deployConfigs $files_deploy
             githubInstall $github_pkgs
+            linkConfigs $files
             npmInstall $npm_pkgs
             pipInstall $pip_pkgs
             pipxInstall $pipx_pkgs
             psgalleryInstall $psgallery_pkgs
             scoopInstall $scoop_pkgs
             wingetInstall $winget_pkgs
-
-            writeLog INFO "Installing Configs"
-            linkConfigs $files
-            copyOrUpdateConfigs $files_copy
-            deployConfigs $files_deploy
         }
     } else {
         writeLog ERROR "No setup.ps1 found for $pkg"
