@@ -269,6 +269,7 @@ local keymaps = {
 	open_split = "<M-s>",
 	open_tab = "<M-t>",
 	open_vsplit = "<M-v>",
+	open_peek = "<M-p>"
 }
 
 local lazy_config = {
@@ -656,6 +657,11 @@ vim.keymap.set("v", "<S-Right>", "<C-Right>", { desc = "Move to prev word start"
 vim.keymap.set("n", "g" .. keymaps.open_vsplit, "<cmd>vsplit <cfile><CR>", { desc = "Open file under cursor in vsplit" })
 vim.keymap.set("n", "g" .. keymaps.open_split, "<cmd>split <cfile><CR>", { desc = "Open file under cursor in split" })
 vim.keymap.set("n", "g" .. keymaps.open_tab, "<cmd>tabedit <cfile><CR>", { desc = "Open file under cursor in tabedit" })
+vim.keymap.set("n", "g" .. keymaps.open_peek, "<cmd>Peek <cfile><CR>", { desc = "Open file under cursor in Peek" })
+vim.keymap.set("x", "g" .. keymaps.open_vsplit, function() vim.cmd("vsplit " .. vim.fn.fnameescape(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."))[1])) end, { desc = "Open selected file in vsplit" })
+vim.keymap.set("x", "g" .. keymaps.open_split, function() vim.cmd("split " .. vim.fn.fnameescape(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."))[1])) end, { desc = "Open selected file in split" })
+vim.keymap.set("x", "g" .. keymaps.open_tab, function() vim.cmd("tabedit " .. vim.fn.fnameescape(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."))[1])) end, { desc = "Open selected file in tabedit" })
+vim.keymap.set("x", "g" .. keymaps.open_peek, function() vim.cmd("Peek " .. vim.fn.fnameescape(vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."))[1])) end, { desc = "Open selected file in Peek" })
 -- ━━ mouse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 vim.keymap.set("n", "<X2Mouse>", "<C-i>", { desc = "Jump backward" })
 vim.keymap.set("n", "<X1Mouse>", "<C-o>", { desc = "Jump forward" })
