@@ -4038,7 +4038,7 @@ addPlugin {
 	cmd = { "TSInstall", "TSUpdate" },
 	module = false,
 	config = function()
-		require("nvim-treesitter").install({ "c_sharp", "luadoc", "xml" })
+		require("nvim-treesitter").install({ "c_sharp", "luadoc", "powershell", "python", "xml" })
 	end,
 	dependencies = {{
 		"utilyre/sentiment.nvim",
