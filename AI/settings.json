@@ -57,13 +57,13 @@
   "renderMarkdown": true,
   "showReasoning": true,
   "sidebar": {
-    "enabled": false,
+    "enabled": true,
     "showCloseButton": true,
     "hoverFocus": true
   },
   "subagents": {},
   "tabs": {
-    "enabled": true
+    "enabled": false
   },
   "theme": "github",
   "voice": {
@@ -76,5 +76,6 @@
   "enabledPlugins": {},
   "extensions": {
     "disabledExtensions": []
-  }
+  },
+  "editorMode": "normal"
 }
