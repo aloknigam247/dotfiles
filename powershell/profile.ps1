@@ -390,7 +390,19 @@ function agency {
     Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
 }
 
+function Start-CpTower {
+    # Fire-and-forget so `copilot` never blocks: a cheap name check skips the launch
+    # when an instance is already up, otherwise start it hidden and return immediately.
+    if (Get-Process -Name cptower -ErrorAction SilentlyContinue) { return }
+    $exe = "D:\dotfiles\cptower\dist\cptower.exe"
+    if (Test-Path $exe) {
+        Start-Process -FilePath $exe -WindowStyle Hidden | Out-Null
+    }
+}
+
 function copilot {
+    Start-CpTower
+
     try {
         $parsed = _ParseRootArg $args
     } catch {
