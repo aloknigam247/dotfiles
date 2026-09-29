@@ -377,8 +377,10 @@ function agency {
         if ($isSubcommand -or $isCopilot) {
             agency.exe @argList
         } else {
-            agency.exe copilot @argList
+            Start-CpTower
+            agency.exe copilot --assisted-approval @argList
         }
+
         $ok = $?
         if ($isSubcommand) {
             Read-Host -Prompt "Press any key to exit"
@@ -418,7 +420,7 @@ function copilot {
             $argList = [string[]]($env:_COPILOT_ARGS -split "`n")
         }
         Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
-        copilot.exe @argList
+        copilot.exe --assisted-approval @argList
         if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
     }
 
