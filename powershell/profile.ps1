@@ -378,7 +378,7 @@ function agency {
             agency.exe @argList
         } else {
             Start-CpTower
-            agency.exe copilot --assisted-approval @argList
+            agency.exe copilot @argList
         }
 
         $ok = $?
@@ -420,7 +420,7 @@ function copilot {
             $argList = [string[]]($env:_COPILOT_ARGS -split "`n")
         }
         Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
-        copilot.exe --assisted-approval @argList
+        copilot.exe @argList
         if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
     }
 
