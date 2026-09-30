@@ -1,14 +1,17 @@
 # Diagram & Chart Engines
 
-Every engine renders source → **PNG**, which the deck step inserts with
-`Deck.img_fit()`. Pick the engine that fits the picture you need.
+These engines render source → **PNG**, which the deck step inserts with `Deck.img_fit()`. The PNG is
+**static** — not editable in PowerPoint. For **editable** charts use `Deck.chart()`
+(bar/column/line/pie) and for editable diagrams use `Deck.node()`/`Deck.connector()` — both emit
+native PPTX objects (see `reference/layout.md`). Reach for an engine below only when you need a picture
+those native helpers can't express.
 
 | Engine | Best for | Source file | Renders to PNG via |
 |---|---|---|---|
 | **Mermaid** | flowcharts, sequence, gantt, ER | `*.mmd` | `mmdc` + headless Chrome |
 | **D2** | clean modern node graphs, containers | `*.d2` | `d2` CLI (native) |
 | **draw.io** | hand-drawn / pre-existing diagrams | `*.drawio` | draw.io desktop CLI |
-| **Plotly** | data charts: bar, line, pie, scatter | `*.py` (defines `fig`) | `plotly` + `kaleido` |
+| **Plotly** | data charts too complex for `Deck.chart()` (scatter, subplots) — **static PNG** | `*.py` (defines `fig`) | `plotly` + `kaleido` |
 | **Native PPTX** | editable boxes & arrows, no deps | — (build inline) | `pptlib.Deck.node()` |
 
 Render anything except native shapes with the dispatcher:

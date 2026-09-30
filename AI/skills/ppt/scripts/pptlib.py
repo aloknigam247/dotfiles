@@ -15,15 +15,26 @@ Override the theme by passing a dict of hex colors / font names:
 """
 import os
 from pptx import Presentation
+from pptx.chart.data import CategoryChartData
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
+from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
 from pptx.oxml.ns import qn
+from pptx.oxml import parse_xml
 from PIL import Image
 
 ALIGN = {"left": PP_ALIGN.LEFT, "center": PP_ALIGN.CENTER, "right": PP_ALIGN.RIGHT}
 ANCHOR = {"top": MSO_ANCHOR.TOP, "middle": MSO_ANCHOR.MIDDLE, "bottom": MSO_ANCHOR.BOTTOM}
+CHART_KINDS = {
+    "bar": XL_CHART_TYPE.BAR_CLUSTERED, "column": XL_CHART_TYPE.COLUMN_CLUSTERED,
+    "line": XL_CHART_TYPE.LINE, "pie": XL_CHART_TYPE.PIE,
+}
+LEGEND_POS = {
+    "bottom": XL_LEGEND_POSITION.BOTTOM, "top": XL_LEGEND_POSITION.TOP,
+    "left": XL_LEGEND_POSITION.LEFT, "right": XL_LEGEND_POSITION.RIGHT,
+}
 
 DEFAULT_THEME = {
     "navy": "0F172A", "navy_dk": "0A0F1E", "accent": "0EA5E9", "accent2": "6366F1",
@@ -138,14 +149,28 @@ class Deck:
         return p
 
     def bullet(self, tf, text, size=18, color=None, bold=False, level=0,
-               glyph="\u2022", gcolor=None, space_after=10, first=False):
+               space_after=10, first=False):
         p = self.para(tf, first, space_after=space_after)
         p.level = level
-        if glyph:
-            self.run(p, glyph + "  ", size=size,
-                     color=gcolor if gcolor is not None else self.ACCENT, bold=True)
         self.run(p, text, size=size, color=color, bold=bold)
+        self._native_bullet(p, level)
         return p
+
+    def _native_bullet(self, p, level):
+        """Give paragraph p real DrawingML bullet formatting (not a literal glyph run)."""
+        pPr = p._p.get_or_add_pPr()
+        pPr.set("marL", str(int(Inches(0.25 + 0.25 * level))))
+        pPr.set("indent", str(int(-Inches(0.25))))
+        for tag in ("a:buClrTx", "a:buClr", "a:buSzTx", "a:buSzPct", "a:buSzPts",
+                    "a:buFontTx", "a:buFont", "a:buNone", "a:buAutoNum", "a:buChar"):
+            for el in pPr.findall(qn(tag)):
+                pPr.remove(el)
+        for xml in ('<a:buClr><a:srgbClr val="%s"/></a:buClr>' % self.t["accent"],
+                    '<a:buFont typeface="Arial"/>', '<a:buChar char="\u2022"/>'):
+            el = parse_xml(
+                '<a:x xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">'
+                '%s</a:x>' % xml)[0]
+            pPr.insert_element_before(el, "a:tabLst", "a:defRPr", "a:extLst")
 
     # -- images -----------------------------------------------------------
     def img_fit(self, s, path, bx, by, bw, bh, align="center", valign="middle"):
@@ -191,3 +216,74 @@ class Deck:
         self.run(self.para(tf, True, align="center"), text, size=size,
                  color=text_color or self.NAVY, bold=True)
         return sp
+
+    # -- tables / charts --------------------------------------------------
+    def table(self, s, x, y, w, h, headers, rows, col_widths=None, col_align=None,
+              font_size=12, header_fill=None, banded=True):
+        """A native, editable PowerPoint table with themed navy header and banded body."""
+        if not headers:
+            raise ValueError("headers must be non-empty")
+        ncols = len(headers)
+        for i, row in enumerate(rows):
+            if len(row) != ncols:
+                raise ValueError(f"row {i} has {len(row)} cells, expected {ncols}")
+        if col_widths is not None and len(col_widths) != ncols:
+            raise ValueError("col_widths length must match column count")
+        if col_align is not None and len(col_align) != ncols:
+            raise ValueError("col_align length must match column count")
+        gf = s.shapes.add_table(len(rows) + 1, ncols, Inches(x), Inches(y),
+                                Inches(w), Inches(h))
+        tbl = gf.table
+        # Suppress the built-in style banding (template-themed, clashes with our
+        # palette) and colour every cell explicitly from the deck theme instead.
+        tblPr = tbl._tbl.tblPr
+        tblPr.set("firstRow", "0")
+        tblPr.set("bandRow", "0")
+        if col_widths is not None:
+            for i, cw in enumerate(col_widths):
+                tbl.columns[i].width = Inches(cw)
+        grid = [headers] + list(rows)
+        for r, row in enumerate(grid):
+            fill = header_fill or self.NAVY if r == 0 else (
+                self.PANEL if banded and r % 2 == 0 else self.WHITE)
+            for c, val in enumerate(row):
+                cell = tbl.cell(r, c)
+                cell.fill.solid()
+                cell.fill.fore_color.rgb = fill
+                p = cell.text_frame.paragraphs[0]
+                if col_align is not None:
+                    p.alignment = ALIGN[col_align[c]]
+                run = p.add_run()
+                run.text = str(val)
+                run.font.size = Pt(font_size)
+                run.font.name = self.FONT
+                run.font.bold = r == 0
+                run.font.color.rgb = self.WHITE if r == 0 else self.TEXT
+        return tbl
+
+    def chart(self, s, kind, x, y, w, h, categories, series, title=None,
+              has_legend=True, legend_pos="bottom"):
+        """A native, editable PowerPoint chart (bar/column/line/pie)."""
+        if kind not in CHART_KINDS:
+            raise ValueError(f"unknown chart kind {kind!r}; expected one of {sorted(CHART_KINDS)}")
+        if kind == "pie" and len(series) != 1:
+            raise ValueError("pie charts require exactly one series")
+        for name, values in series:
+            if len(values) != len(categories):
+                raise ValueError(f"series {name!r} has {len(values)} values, "
+                                 f"expected {len(categories)}")
+        data = CategoryChartData()
+        data.categories = categories
+        for name, values in series:
+            data.add_series(name, values)
+        gf = s.shapes.add_chart(CHART_KINDS[kind], Inches(x), Inches(y),
+                                Inches(w), Inches(h), data)
+        chart = gf.chart
+        chart.has_title = bool(title)
+        if title:
+            chart.chart_title.text_frame.text = title
+        chart.has_legend = has_legend
+        if has_legend:
+            chart.legend.position = LEGEND_POS[legend_pos]
+            chart.legend.include_in_layout = False
+        return chart
