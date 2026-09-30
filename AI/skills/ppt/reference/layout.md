@@ -37,7 +37,9 @@ card_border, subtle, font, mono`. Each color key is also exposed as an uppercase
 | `textbox(s, x, y, w, h, anchor=)` | returns a text frame |
 | `para(tf, first=, align=, space_before=, space_after=)` | add a paragraph |
 | `run(p, text, size=, color=, bold=, italic=, mono=)` | add a styled run |
-| `bullet(tf, text, level=, glyph=, gcolor=, ...)` | a bulleted paragraph |
+| `bullet(tf, text, level=, size=, color=, bold=, ...)` | a natively-bulleted paragraph |
+| `table(s, x, y, w, h, headers, rows, col_widths=, col_align=, ...)` | a themed native table |
+| `chart(s, kind, x, y, w, h, categories, series, title=, ...)` | a native editable chart (bar/column/line/pie) |
 | `img_fit(s, path, bx, by, bw, bh, align=, valign=)` | insert image scaled to fit a box, aspect-preserved |
 | `save(path)` | write the .pptx |
 
@@ -64,9 +66,27 @@ for big, label in [("6","Stages"), ("100%","Tested"), ("<15m","Lead time")]:
     x += 3.0
 ```
 
-**Table:** use `s.shapes.add_table(...)` then color header row `d.NAVY` and
-alternate body rows `d.WHITE`/`d.PANEL`; set `tblPr` `firstRow`/`bandRow` to `0`
-to suppress the default banding.
+**Table:** `Deck.table()` builds a native, editable table with a themed navy header and
+`WHITE`/`PANEL` body banding. It suppresses the built-in table-style banding (whose colors come from
+the template theme, not the deck palette) and colors every cell explicitly.
+```python
+d.table(s, 0.9, 2.0, 6.0, 2.5,
+        ["Stage", "Owner", "Status"],
+        [["Build", "CI", "Green"], ["Test", "QA", "Green"], ["Ship", "Ops", "Pending"]],
+        col_widths=[2.5, 2.0, 1.5], col_align=["left", "center", "right"])
+```
+
+**Chart (native, editable):** `Deck.chart()` adds a real PowerPoint chart (data stays editable via
+Edit Data) for `bar`, `column`, `line`, `pie`. Each series is a `(name, values)` pair; `pie` takes
+exactly one series.
+```python
+d.chart(s, "column", 7.2, 2.0, 5.0, 3.5,
+        ["Q1", "Q2", "Q3", "Q4"],
+        [("Revenue", (10, 14, 9, 16)), ("Cost", (6, 7, 8, 9))],
+        title="Revenue vs Cost")
+```
+For chart types python-pptx can't express (scatter, complex layouts), render with Plotly to a PNG
+(`reference/engines.md`) and place it with `img_fit()` instead.
 
 ## ⚠️ Shadow gotcha (do not regress)
 
