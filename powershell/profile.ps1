@@ -295,6 +295,16 @@ function _ParseRootArg {
     return @{ RootDir = $root_dir; Args = $filtered }
 }
 
+function Start-CpTower {
+    # Fire-and-forget so `copilot` never blocks: a cheap name check skips the launch
+    # when an instance is already up, otherwise start it hidden and return immediately.
+    if (Get-Process -Name cptower -ErrorAction SilentlyContinue) { return }
+    $exe = "D:\dotfiles\cptower\dist\cptower.exe"
+    if (Test-Path $exe) {
+        Start-Process -FilePath $exe -WindowStyle Hidden | Out-Null
+    }
+}
+
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
@@ -378,7 +388,7 @@ function agency {
             agency.exe @argList
         } else {
             Start-CpTower
-            agency.exe copilot @argList
+            agency.exe copilot --model "claude-opus-5.5" --reasoning-effort "max" --context "long_context" @argList
         }
 
         $ok = $?
@@ -390,16 +400,6 @@ function agency {
     }
 
     Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
-}
-
-function Start-CpTower {
-    # Fire-and-forget so `copilot` never blocks: a cheap name check skips the launch
-    # when an instance is already up, otherwise start it hidden and return immediately.
-    if (Get-Process -Name cptower -ErrorAction SilentlyContinue) { return }
-    $exe = "D:\dotfiles\cptower\dist\cptower.exe"
-    if (Test-Path $exe) {
-        Start-Process -FilePath $exe -WindowStyle Hidden | Out-Null
-    }
 }
 
 function copilot {
