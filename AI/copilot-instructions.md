@@ -55,7 +55,7 @@ Never distinguish paths or Git branches only by capitalization.
 ## Git
 
 * Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
-* Use the same **conventional commit** format for **PR titles**: `<type>: <description>`, using the same set of types.
+* Use the same **conventional commit** format for **PR titles**: `<type>[(<scope>)]: <description>`, using the same set of types. Always prefer including a `<scope>`: use a matching scope from the repo's `.commitlint-scopes.json` when one fits. Whenever a high-confidence scope applies but is missing from the allowlist — or the allowlist file does not exist yet — always proactively suggest that scope and ask the user before adopting it (creating or extending `.commitlint-scopes.json`, per the scope rule below); never invent an unlisted scope silently. Only omit the scope when no high-confidence scope applies.
 
 ### Commit message rules (commitlint-enforced)
 
