@@ -1,104 +1,26 @@
-## User
-
-* Address the user as **Alok** when needed.
-
-## Environment
-
-The user's environment is **Windows with PowerShell 7**. Always use PowerShell syntax (not bash/sh) for shell commands, scripts, and status lines. Use `pwsh` not `bash`.
-
-* Prefer double quotes over single quotes
-* Do not add over-engineered solutions — only implement what is directly needed and will be used
-* When accuracy matters (calculations, data processing, file manipulation, bulk operations), prefer writing a script (PowerShell or Python) over doing it inline or mentally. Scripts are verifiable, rerunnable, and less error-prone.
-* When a PowerShell script outputs Nerd Font icons through pipes, set `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` at the top — otherwise icons render as missing glyphs.
-* Always use `pwsh` instead of `powershell` when invoking PowerShell (e.g., `pwsh -NoProfile -File script.ps1`).
-* When creating temp files (e.g., in skills or commands), use a GUID in the filename to avoid collisions across concurrent sessions. Generate via `pwsh -c "[guid]::NewGuid().ToString()"`.
-* `using module` is required to expose PowerShell classes from `.psm1` files — `Import-Module` only exposes functions. `using module` must be the first statement in the script and caches classes at parse time (requires terminal restart on module changes).
-* When running PowerShell from the Bash tool, `$` variables are stripped by bash. Always write a `.ps1` file first and invoke with `pwsh -NoProfile -ExecutionPolicy Bypass -File script.ps1` instead of inline `-Command` with `$` variables.
-* **Never predict or mentally compute math results.** Always use the `mcp__native_tools__calculator` tool for any calculation — arithmetic, unit conversions, percentages, etc. Trust the tool's output, not mental math.
-* Prefer `sed` over PowerShell string replacement for in-place file text replacements.
-* When inserting Nerd Font glyphs (or any private-use Unicode characters) into source files, prefer PowerShell unicode escapes (e.g., `` "`u{E0B6}" ``) over pasting literal glyphs. The Edit tool can fail to match strings containing private-use codepoints, so escapes make edits reliable.
-
 ## Code Style
 
-* Hard-wrap at **120 characters** per line (not 80) as the default for everything you write or edit. Do not re-flow fenced code blocks, tables, long URLs, or lines the surrounding file deliberately keeps unwrapped.
-* In authored Markdown, tag fenced PowerShell code blocks with `ps1` as the language identifier (not `powershell` or `pwsh`).
-* When adding or editing items in ordered lists, enums, switch cases, XML elements, dictionary entries, or similar sequences where order doesn't affect behavior, maintain **alphabetical order**. This applies to any collection where reordering has no semantic impact (e.g., using directives, property declarations, configuration entries).
-* When adding new fields/properties to an existing file, **do not reorder existing fields** — keep them in their original order. Add each new field in its correct alphabetical position **interspersed** among the existing entries when doing so does not break semantic ordering (e.g., the existing entries are already alphabetical and the surrounding code has no order dependency). If the existing entries are not in a clean alphabetical order, or inserting in place would require moving a pre-existing entry, add the new field(s) as a contiguous alphabetical block instead. Never move a pre-existing entry. This keeps diffs minimal while preserving order where it's cheap to do so.
-* **Do not use `<c>` or `<code>` tags in C# XML doc comments.** Reference identifiers, literals (`null`, `true`, `false`), and method names as plain text — no inline-code markup. (Use `<see cref="..."/>` only when an actual cross-reference is needed.)
+### Local variable ordering
 
-## Code comments
+Within a scope, declare variables initialized from self-contained literals/defaults **before**
+variables whose values are derived from other sources (function/method calls, parameters, or other
+variables). Group the independent defaults first, then the derived values.
 
-Comment sparingly and only to aid future readers of the code itself. A comment must earn its place by
-explaining something the code cannot express on its own.
+Within the independent-defaults group (no inter-dependencies), order variables alphabetically by
+name. Within the derived group, preserve data-flow order — a variable must follow anything it reads —
+and order alphabetically only where no such dependency exists.
 
-* Explain **why**, not **what** — only when the reasoning is non-obvious from the code.
-* Keep comments minimal, factual, and self-contained. Do not add narrative or background.
-* Do NOT include transient or external context in code/config comments:
-  * no issue/PR/ticket numbers, links, or "see #NN"
-  * no changelog, history, migration notes, or "previously/now" framing
-  * no time/effort estimates, cost figures, or benchmarks stated as prose
-  * no restating of docs the reader can read themselves (e.g. how a tool's option works)
-  * no author names, dates, or TODOs without an owner
-* Prefer zero comments over a comment that merely restates the adjacent code.
-* Put rationale, history, and cross-references in the commit message or PR description — not in the
-  source. Those channels carry context without biasing every future reader of the file.
+Ordering (any language):
 
-## Nomenclature
+    // good — defaults first (alphabetical), then derived (data-flow order)
+    count   = 0
+    items   = []
+    total   = 0
+    service = context.service
+    data    = service.load()   // reads `service`, so must follow it
 
-* Files and directories: default to lowercase `snake_case` (e.g., `config_files`, `user_settings.py`).
-* Git branches: default to lowercase `kebab-case` (e.g., `add-git-aliases`).
-
-Preserve language-, project-, and tool-specific file and directory naming conventions
-(e.g., C# `ViewModels` directories, `README.md`).
-Never distinguish paths or Git branches only by capitalization.
-
-## Git
-
-* Always use **conventional commit** message style: `<type>: <description>`. Common types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`, `ci`, `style`, `build`.
-* Use the same **conventional commit** format for **PR titles**: `<type>[(<scope>)]: <description>`, using the same set of types. Always prefer including a `<scope>`: use a matching scope from the repo's `.commitlint-scopes.json` when one fits. Whenever a high-confidence scope applies but is missing from the allowlist — or the allowlist file does not exist yet — always proactively suggest that scope and ask the user before adopting it (creating or extending `.commitlint-scopes.json`, per the scope rule below); never invent an unlisted scope silently. Only omit the scope when no high-confidence scope applies.
-
-### Commit message rules (commitlint-enforced)
-
-Format: `type(scope): subject`, then optional body and footer, each separated by one blank line.
-
-* **Header** (first line): max 72 chars, no leading/trailing whitespace, no trailing period.
-* **type**: required, lower-case, one of `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `revert`, `test`.
-* **scope**: lower-case. Pick a high confidence scope from `.commitlint-scopes.json`, if not scope from `.commitlint-scopes.json` is appropriate then suggest new high confidence scope to user and if user accepts then use that scope and add to `.commitlint-scopes.json`.
-* **subject**: required, no trailing period, max 50 chars, lower-case or sentence-case (no Title Case or ALL-CAPS).
-* **body**: optional; sentence-case, wrap lines at 80 chars, must end with a period.
-* **footer**: optional; wrap lines at 80 chars; put `BREAKING CHANGE:` here.
-* **Breaking changes**: include both `!` in the header (`feat(api)!: ...`) and a `BREAKING CHANGE:` footer, or neither.
-
-## Azure DevOps
-When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
-
-## Workflow
-
-* Default to discussion. When I ask a how/why/what/should question, answer in words and lay
-  out options — do not install packages, run commands, write, or edit files until I explicitly
-  ask for a plan or say "implement". Treat design questions as read-only.
-* Read-only investigation to answer a question is fine (view/grep/glob). The line is mutating
-  or installing — no package installs, no scripts that change state, no file writes — without
-  an explicit go-ahead.
-
-## Scope
-
-* Do the least that fully satisfies the ask, and no more. Prefer the smallest, simplest change;
-  reuse what the platform or existing tools already provide instead of reimplementing it; do not
-  add parameters, abstractions, or handling for cases that were not requested.
-* If solving the task seems to require going beyond its stated scope — touching unrelated code,
-  adding new capabilities, or changing behavior nobody asked for — stop and ask me before
-  expanding scope, rather than deciding unilaterally.
-
-## Authoring files (docs, configs, prompt/agent defs)
-
-* Single source of truth: state each fact once, where it authoritatively lives; elsewhere link to
-  it, never restate it. Don't duplicate what a runtime source, another file, or my user instructions
-  already define.
-* No transient content in durable files: never hardcode state that changes at runtime or over time
-  (modes, counts, statuses, "until X happens") — point to the live source instead.
-* Write only what the file's reader needs to act. Omit background, history, rationale, transition
-  narratives, and "what this fixes" — those belong in the commit/PR, not the file.
-* Every line must earn its place: if removing it loses no actionable meaning, remove it. Prefer the
-  shortest file that fully works.
-* Reference, don't repeat: prefer "see X" over re-explaining X.
+    // avoid — derived value interleaved above independent defaults
+    service = context.service
+    count   = 0
+    data    = service.load()
+    total   = 0
