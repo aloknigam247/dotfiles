@@ -353,6 +353,10 @@ function bat {
     }
 }
 
+$copilot_context = "long_context"
+$copilot_model = "claude-opus-5.5"
+$copilot_reasoning_effort = "max"
+
 function agency {
     try {
         $parsed = _ParseRootArg $args
@@ -388,7 +392,7 @@ function agency {
             agency.exe @argList
         } else {
             Start-CpTower
-            agency.exe copilot --model "claude-opus-5.5" --reasoning-effort "max" --context "long_context" @argList
+            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
         }
 
         $ok = $?
@@ -420,7 +424,7 @@ function copilot {
             $argList = [string[]]($env:_COPILOT_ARGS -split "`n")
         }
         Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
-        copilot.exe @argList
+        copilot.exe --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
         if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
     }
 
