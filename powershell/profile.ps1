@@ -358,30 +358,29 @@ $copilot_model = "claude-opus-5.5"
 $copilot_reasoning_effort = "max"
 
 function agency {
+    $agencyCommands = @(
+        "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
+        "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
+        "support", "update", "vscode"
+    )
+
     try {
         $parsed = _ParseRootArg $args
     } catch {
         Write-Error $_
         return
     }
+    $first = if ($parsed.Args.Count) { $parsed.Args[0] } else { $null }
+    $isCopilot = $first -and ($first -in @("copilot", "cp"))
+    $isSubcommand = $first -and ($agencyCommands -contains $first)
     $root_dir = $parsed.RootDir
-    $env:_AGENCY_ARGS = $parsed.Args -join "`n"
+
+    if (-not ($isSubcommand -or $isCopilot)) {
+        Start-CpTower
+    }
 
     wt -f -d $root_dir pwsh -c {
-        $argList = @()
-        if ($env:_AGENCY_ARGS) {
-            $argList = [string[]]($env:_AGENCY_ARGS -split "`n")
-        }
-        Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
-
-        $agencyCommands = @(
-            "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
-            "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
-            "support", "update", "vscode"
-        )
-        $first = if ($argList.Count) { $argList[0] } else { $null }
-        $isSubcommand = $first -and ($agencyCommands -contains $first)
-        $isCopilot = $first -and ($first -in @("copilot", "cp"))
+        param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort, $isCopilot, $isSubcommand)
 
         if (-not (Get-Command agency.exe -ErrorAction SilentlyContinue)) {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
@@ -391,7 +390,6 @@ function agency {
         if ($isSubcommand -or $isCopilot) {
             agency.exe @argList
         } else {
-            Start-CpTower
             agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
         }
 
@@ -401,9 +399,7 @@ function agency {
         } elseif (-not $ok) {
             Read-Host -Prompt "Agency exited with error, press any key to exit"
         }
-    }
-
-    Remove-Item env:_AGENCY_ARGS -ErrorAction SilentlyContinue
+    } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort, $isCopilot, $isSubcommand
 }
 
 function copilot {
@@ -416,19 +412,12 @@ function copilot {
         return
     }
     $root_dir = $parsed.RootDir
-    $env:_COPILOT_ARGS = $parsed.Args -join "`n"
 
     wt -f -d $root_dir pwsh -c {
-        $argList = @()
-        if ($env:_COPILOT_ARGS) {
-            $argList = [string[]]($env:_COPILOT_ARGS -split "`n")
-        }
-        Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
+        param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort)
         copilot.exe --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
         if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
-    }
-
-    Remove-Item env:_COPILOT_ARGS -ErrorAction SilentlyContinue
+    } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort
 }
 
 function e {
