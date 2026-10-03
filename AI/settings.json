@@ -20,7 +20,8 @@
     "https://old.reddit.com",
     "https://redlib.catsarch.com",
     "https://safereddit.com",
-    "https://neovim.io"
+    "https://neovim.io",
+    "https://code.visualstudio.com"
   ],
   "autoUpdate": false,
   "beep": true,
@@ -51,7 +52,7 @@
     "showCustom": true
   },
   "keepAlive": "on",
-  "model": "claude-opus-4.8",
+  "model": "claude-opus-5.5",
   "mouse": true,
   "remoteSessions": true,
   "renderMarkdown": true,
@@ -77,5 +78,7 @@
   "extensions": {
     "disabledExtensions": []
   },
-  "editorMode": "normal"
+  "editorMode": "normal",
+  "effortLevel": "max",
+  "contextTier": "long_context"
 }
