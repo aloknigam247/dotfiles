@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Net;
 using System.Runtime.InteropServices;
 
@@ -13,6 +14,8 @@ internal static class TcpTable
 
     private const int AF_INET = 2;
     private const int AF_INET6 = 23;
+    private const uint ERROR_INSUFFICIENT_BUFFER = 122;
+    private const uint ERROR_NOT_SUPPORTED = 50;
     private const int TCP_TABLE_OWNER_PID_LISTENER = 3;
 
     [DllImport("iphlpapi.dll", SetLastError = true)]
@@ -65,19 +68,26 @@ internal static class TcpTable
     private static void ReadTable(int family, List<Listener> into)
     {
         int size = 0;
-        GetExtendedTcpTable(IntPtr.Zero, ref size, false, family, TCP_TABLE_OWNER_PID_LISTENER, 0);
-        if (size <= 0)
-        {
-            return;
-        }
-
-        IntPtr table = Marshal.AllocHGlobal(size);
+        IntPtr table = IntPtr.Zero;
         try
         {
+            // Size the buffer, then fill it; the table can grow in between, so retry with the new size.
             uint ret = GetExtendedTcpTable(table, ref size, false, family, TCP_TABLE_OWNER_PID_LISTENER, 0);
-            if (ret != 0)
+            for (int attempt = 0; ret == ERROR_INSUFFICIENT_BUFFER && attempt < 5; attempt++)
+            {
+                table = table == IntPtr.Zero ? Marshal.AllocHGlobal(size) : Marshal.ReAllocHGlobal(table, size);
+                ret = GetExtendedTcpTable(table, ref size, false, family, TCP_TABLE_OWNER_PID_LISTENER, 0);
+            }
+
+            if (ret == ERROR_NOT_SUPPORTED || (ret == 0 && table == IntPtr.Zero))
             {
                 return;
+            }
+
+            // A partial table would make live hosts look gone and get their hosts.url lines pruned.
+            if (ret != 0)
+            {
+                throw new Win32Exception((int)ret);
             }
 
             int count = Marshal.ReadInt32(table);

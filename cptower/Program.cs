@@ -1,12 +1,16 @@
 using CpTower;
-using Yarp.ReverseProxy.Configuration;
 
-var port = 8770;
+string? githubUser = null;
 var installFirewall = false;
+var port = 8770;
 for (var i = 0; i < args.Length; i++)
 {
     switch (args[i])
     {
+        case "--github-user" when i + 1 < args.Length:
+            githubUser = args[i + 1];
+            i++;
+            break;
         case "--install-firewall":
             installFirewall = true;
             break;
@@ -24,18 +28,17 @@ if (installFirewall)
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddSimpleConsole(o => o.TimestampFormat = "HH:mm:ss ");
-// YARP logs every proxied destination URL, which carries a host's connection token.
-builder.Logging.AddFilter("Yarp", LogLevel.Warning);
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
+builder.Services.AddSingleton(sp => new AhpRelay(githubUser, sp.GetRequiredService<ILogger<AhpRelay>>()));
 builder.Services.AddSingleton<HostRegistry>();
 builder.Services.AddSingleton<DiscoveryService>();
-builder.Services.AddHostedService<ProxyRoutes>();
-builder.Services.AddReverseProxy().LoadFromMemory(new List<RouteConfig>(), new List<ClusterConfig>());
 
 var app = builder.Build();
 
 FirewallManager.Ensure(port, app.Logger);
+
+app.UseWebSockets();
 
 app.MapGet("/hosts", async (HostRegistry registry, DiscoveryService discovery, CancellationToken ct) =>
 {
@@ -50,8 +53,19 @@ app.MapGet("/hosts", async (HostRegistry registry, DiscoveryService discovery, C
     }));
 });
 
-app.MapReverseProxy();
+// Only hosts discovered by `/hosts` are bridged, as the app fetches the catalog before connecting.
+app.Map("/ws/{hostPort:int}/{**path}", async (HttpContext context, int hostPort, string? path, HostRegistry registry, AhpRelay relay) =>
+{
+    if (registry.Get(hostPort) is not { } host)
+    {
+        context.Response.StatusCode = StatusCodes.Status404NotFound;
+        return;
+    }
 
-app.Logger.LogInformation("cptower listening on http://0.0.0.0:{Port}  (GET /hosts, ws /ws/{{port}})", port);
+    await relay.RelayAsync(context, host, path ?? "");
+});
+
+app.Logger.LogInformation("cptower listening on http://0.0.0.0:{Port}  (GET /hosts, ws /ws/{{port}}), signing clients in as {Account}",
+    port, githubUser ?? "the GitHub CLI's active account");
 app.Run();
 return 0;

@@ -15,30 +15,18 @@ public sealed record HostInfo(int Port, int Pid, string Label, string Protocol, 
 
 /// <summary>
 /// Thread-safe registry of the currently live hosts. The discovery service is the sole writer;
-/// the HTTP endpoint and proxy-config updater read snapshots.
+/// the `/hosts` endpoint and the WebSocket relay read it.
 /// </summary>
 public sealed class HostRegistry
 {
     private readonly ConcurrentDictionary<int, HostInfo> hosts = new();
 
-    /// <summary>Raised (with the full current snapshot) whenever a host is added or removed.</summary>
-    public event Action<IReadOnlyList<HostInfo>>? Changed;
-
     public IReadOnlyList<HostInfo> Snapshot() => hosts.Values.OrderBy(h => h.Port).ToList();
 
-    public bool Contains(int port) => hosts.ContainsKey(port);
+    public HostInfo? Get(int port) => hosts.TryGetValue(port, out var host) ? host : null;
 
-    public void Add(HostInfo host)
-    {
-        hosts[host.Port] = host;
-        Changed?.Invoke(Snapshot());
-    }
+    /// <summary>Adds or replaces the host on its port.</summary>
+    public void Add(HostInfo host) => hosts[host.Port] = host;
 
-    public void Remove(int port)
-    {
-        if (hosts.TryRemove(port, out _))
-        {
-            Changed?.Invoke(Snapshot());
-        }
-    }
+    public void Remove(int port) => hosts.TryRemove(port, out _);
 }
