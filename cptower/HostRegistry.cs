@@ -2,8 +2,12 @@ using System.Collections.Concurrent;
 
 namespace CpTower;
 
-/// <summary>A discovered, live AHP host reachable on a loopback port.</summary>
-public sealed record HostInfo(int Port, string Label, string Protocol, int Sessions)
+/// <summary>
+/// A discovered, live AHP host reachable on a loopback port. <see cref="Pid"/> is the copilot process
+/// that owned the listener when it was probed, and <see cref="Token"/> the shared connection token the
+/// host accepted (null when it needs none); neither is advertised by `/hosts`.
+/// </summary>
+public sealed record HostInfo(int Port, int Pid, string Label, string Protocol, int Sessions, string? Token)
 {
     /// <summary>Stable id the app uses to build the routed path `/ws/{id}`.</summary>
     public string Id => Port.ToString();

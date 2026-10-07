@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -6,25 +7,29 @@ namespace CpTower;
 
 /// <summary>
 /// Confirms a loopback port is a live AHP host by running the minimal client handshake
-/// (initialize, then listSessions) and extracting a human label from the reported sessions.
-/// A port owned by copilot that answers initialize is authoritative proof it is an AHP host,
-/// which the lingering ahp-host-*.log files are not.
+/// (initialize, then listSessions, both on the AHP 0.9 root channel) and extracting a human label
+/// from the reported sessions. Hosts started with `/ahp start` reject the upgrade (401) unless the
+/// URL carries their connection token as `?tkn=`. A port owned by copilot that answers initialize is
+/// authoritative proof it is an AHP host, which the lingering ahp-host-*.log files are not.
 /// </summary>
 internal static class AhpProbe
 {
-    public readonly record struct Result(bool Ok, string? Protocol, string? Label, int Sessions);
+    private const string RootChannel = "ahp-root://";
 
-    public static async Task<Result> ProbeAsync(int port, CancellationToken outer)
+    public readonly record struct Result(bool Ok, string? Protocol, string? Label, int Sessions, bool Unauthorized = false);
+
+    public static async Task<Result> ProbeAsync(int port, string? connectionToken, CancellationToken outer)
     {
         using var cts = CancellationTokenSource.CreateLinkedTokenSource(outer);
         cts.CancelAfter(TimeSpan.FromSeconds(4));
         var token = cts.Token;
 
         using var ws = new ClientWebSocket();
+        ws.Options.CollectHttpResponseDetails = true;
         ws.Options.KeepAliveInterval = TimeSpan.Zero;
         try
         {
-            await ws.ConnectAsync(new Uri($"ws://127.0.0.1:{port}/"), token);
+            await ws.ConnectAsync(HostUri(port, connectionToken), token);
 
             await SendAsync(ws, new
             {
@@ -33,14 +38,17 @@ internal static class AhpProbe
                 method = "initialize",
                 @params = new
                 {
+                    channel = RootChannel,
+                    clientId = $"cptower-{Guid.NewGuid():N}",
                     protocolVersions = new[] { "0.9.0", "0.7.0" },
                     clientInfo = new { name = "cptower", version = "1.0" },
                     capabilities = new { },
                 },
             }, token);
 
-            string? protocol = null;
+            string? defaultDirectory = null;
             string? label = null;
+            string? protocol = null;
             var sessions = 0;
 
             while (true)
@@ -66,7 +74,16 @@ internal static class AhpProbe
                     }
 
                     protocol = res.TryGetProperty("protocolVersion", out var pv) ? pv.GetString() : null;
-                    await SendAsync(ws, new { jsonrpc = "2.0", id = 2, method = "listSessions", @params = new { } }, token);
+                    defaultDirectory = res.TryGetProperty("defaultDirectory", out var dd) && dd.ValueKind == JsonValueKind.String
+                        ? dd.GetString()
+                        : null;
+                    await SendAsync(ws, new
+                    {
+                        jsonrpc = "2.0",
+                        id = 2,
+                        method = "listSessions",
+                        @params = new { channel = RootChannel },
+                    }, token);
                 }
                 else if (id == 2)
                 {
@@ -81,13 +98,21 @@ internal static class AhpProbe
             }
 
             await CloseQuietly(ws);
-            return new Result(protocol is not null, protocol, label, sessions);
+            return new Result(protocol is not null, protocol, DisplayPath(label ?? defaultDirectory), sessions);
         }
         catch (Exception)
         {
-            return new Result(false, null, null, 0);
+            return new Result(false, null, null, 0, ws.HttpStatusCode == HttpStatusCode.Unauthorized);
         }
     }
+
+    private static Uri HostUri(int port, string? connectionToken) => connectionToken is null
+        ? new Uri($"ws://127.0.0.1:{port}/")
+        : new Uri($"ws://127.0.0.1:{port}/?tkn={Uri.EscapeDataString(connectionToken)}");
+
+    /// <summary>AHP 0.9 reports directories as `file://` URIs; show them as local paths.</summary>
+    private static string? DisplayPath(string? value) =>
+        value is not null && Uri.TryCreate(value, UriKind.Absolute, out var uri) && uri.IsFile ? uri.LocalPath : value;
 
     private static async Task CloseQuietly(ClientWebSocket ws)
     {

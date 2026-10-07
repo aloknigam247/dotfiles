@@ -24,6 +24,8 @@ if (installFirewall)
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddSimpleConsole(o => o.TimestampFormat = "HH:mm:ss ");
+// YARP logs every proxied destination URL, which carries a host's connection token.
+builder.Logging.AddFilter("Yarp", LogLevel.Warning);
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 builder.Services.AddSingleton<HostRegistry>();

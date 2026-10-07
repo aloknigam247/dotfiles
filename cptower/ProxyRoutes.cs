@@ -5,7 +5,8 @@ namespace CpTower;
 /// <summary>
 /// Keeps the YARP route/cluster table in sync with the live host registry. Each host gets a route
 /// matching `/ws/{port}` that forwards the WebSocket upgrade to `http://127.0.0.1:{port}/`, so the
-/// app reaches every host through the single external port by path alone.
+/// app reaches every host through the single external port by path alone. For a token-protected host
+/// the route also sets the shared `tkn` query parameter, so the app never needs the token itself.
 /// </summary>
 public sealed class ProxyRoutes(InMemoryConfigProvider provider, HostRegistry registry) : IHostedService
 {
@@ -35,14 +36,14 @@ public sealed class ProxyRoutes(InMemoryConfigProvider provider, HostRegistry re
                 RouteId = $"r{host.Port}",
                 ClusterId = clusterId,
                 Match = new RouteMatch { Path = $"/ws/{host.Port}/{{**catchall}}" },
-                Transforms = new[] { new Dictionary<string, string> { ["PathPattern"] = "/{**catchall}" } },
+                Transforms = Transforms(host, "/{**catchall}"),
             });
             routes.Add(new RouteConfig
             {
                 RouteId = $"r{host.Port}-root",
                 ClusterId = clusterId,
                 Match = new RouteMatch { Path = $"/ws/{host.Port}" },
-                Transforms = new[] { new Dictionary<string, string> { ["PathPattern"] = "/" } },
+                Transforms = Transforms(host, "/"),
             });
             clusters.Add(new ClusterConfig
             {
@@ -55,5 +56,16 @@ public sealed class ProxyRoutes(InMemoryConfigProvider provider, HostRegistry re
         }
 
         provider.Update(routes, clusters);
+    }
+
+    private static List<Dictionary<string, string>> Transforms(HostInfo host, string pathPattern)
+    {
+        var transforms = new List<Dictionary<string, string>> { new() { ["PathPattern"] = pathPattern } };
+        if (host.Token is not null)
+        {
+            transforms.Add(new() { ["QueryValueParameter"] = "tkn", ["Set"] = host.Token });
+        }
+
+        return transforms;
     }
 }

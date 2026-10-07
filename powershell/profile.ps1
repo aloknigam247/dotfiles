@@ -305,6 +305,32 @@ function Start-CpTower {
     }
 }
 
+function Add-CpTowerHost {
+    # Shares a `/ahp start` connect URL (ws://127.0.0.1:<port>/?tkn=<token>, from -Url or the
+    # clipboard) with cptower via $XDG_CONFIG_HOME\cptower\hosts.url. Keeps one line per port and
+    # drops lines whose port no longer listens, so expired tokens do not linger on disk.
+    param([string]$Url = (Get-Clipboard -Raw))
+    $config_home = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME\.config" }
+    $file = "$config_home\cptower\hosts.url"
+    $listening = @((Get-NetTCPConnection -State Listen -ErrorAction SilentlyContinue).LocalPort | ForEach-Object { [int]$_ })
+    $match = [regex]::Match("$Url", 'ws://(?:127\.0\.0\.1|localhost|\[::1\]):(\d+)/?\?[^\s"'']*tkn=[^\s"'']+')
+    if (-not $match.Success) {
+        Write-Error "No ws://127.0.0.1:<port>/?tkn=<token> URL found"
+        return
+    }
+    $port = [int]$match.Groups[1].Value
+    $kept = @(Get-Content $file -ErrorAction SilentlyContinue | Where-Object {
+        if ($_ -match 'ws://[^\s/]+:(\d+)') {
+            [int]$Matches[1] -ne $port -and $listening -contains [int]$Matches[1]
+        } else {
+            $true
+        }
+    })
+    New-Item -ItemType Directory -Force -Path (Split-Path $file) | Out-Null
+    Set-Content -Path $file -Value ($kept + $match.Value)
+    Write-Host "cptower: shared AHP host on port $port via $file"
+}
+
 # ╭───────────────────╮
 # │ Generic Functions │
 # ╰───────────────────╯
