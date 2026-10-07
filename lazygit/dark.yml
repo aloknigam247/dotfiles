@@ -1,6 +1,4 @@
 gui:
-  authorColors: {"Alok Nigam": "#B4BEFE"}
-  branchColors: {"master": "#94E2D5", "main": "#94E2D5"}
   theme:
     activeBorderColor:
       - "#F38BA8"
@@ -21,6 +19,7 @@ gui:
       - "#CDD6F4"
     searchingActiveBorderColor:
       - "#F9E2AF"
-
+    authorColors: {"Alok Nigam": "#B4BEFE"}
+    branchColorPatterns: {"^master(/|$)": "#94E2D5", "^main(/|$)": "#94E2D5"}
 git:
-  branchLogCmd: 'git log --color=always --pretty=\"%C(#89B4FA) %C(#89DCEB)%h %Creset- %C(#A6E3A1) %s %C(#94E2D5)󰔟 %ar on %ah %C(#F5E0DC)<%C(#F38BA8)%an %C(#F2CDCD) %ae%C(#F5E0DC)>%C(#FAB387)%d\" {{branchName}} --'
+  branchLogCmd: "git log --color=always --pretty=\\\"%C(#89B4FA) %C(#89DCEB)%h %Creset- %C(#A6E3A1) %s %C(#94E2D5)\U000F051F %ar on %ah %C(#F5E0DC)<%C(#F38BA8)%an %C(#F2CDCD) %ae%C(#F5E0DC)>%C(#FAB387)%d\\\" {{branchName}} --"

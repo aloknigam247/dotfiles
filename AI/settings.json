@@ -21,64 +21,93 @@
     "https://redlib.catsarch.com",
     "https://safereddit.com",
     "https://neovim.io",
-    "https://code.visualstudio.com"
+    "https://code.visualstudio.com",
+    "https://developers.figma.com",
+    "https://zerodha.com"
   ],
+  "askUser": true,
+  "autoTier": "intelligence",
   "autoUpdate": false,
+  "banner": "once",
+  "bashEnv": false,
   "beep": true,
   "beepOnSchedule": true,
   "compactPaste": true,
   "companyAnnouncements": [
     "GPT-5.6 Sol, Terra, and Luna are now available in Copilot CLI. Try them from the model picker.",
-    "Need help with Agency? Run `agency support` or join the support community: https://aka.ms/agency/support"
+    "Need help with Agency? In a local Agency session, use `/agency:agency-support`; otherwise run `agency support` or join the support community: https://aka.ms/agency/support",
+    "Monthly limits are in place. Burst limit increases and guidance are available at https://aka.ms/copilot/burst"
   ],
+  "contextManagementTools": true,
+  "contextTier": "long_context",
   "continueOnAutoMode": true,
   "copyOnSelect": true,
   "customAgents": {
     "defaultLocalOnly": true
   },
+  "defaultPermissionMode": "assisted",
+  "editorMode": "normal",
+  "effortLevel": "max",
+  "enabledMcpServers": [
+    "computer-use"
+  ],
+  "enabledPlugins": {},
   "experimental": true,
+  "extensions": {
+    "disabledExtensions": []
+  },
   "footer": {
-    "showModelEffort": true,
-    "showDirectory": true,
-    "showBranch": true,
-    "showContextWindow": true,
-    "showQuota": true,
-    "showAiUsed": true,
     "showAgent": true,
+    "showAiUsed": true,
+    "showBranch": true,
+    "showCiStatus": true,
     "showCodeChanges": true,
-    "showUsername": false,
+    "showContextWindow": true,
+    "showCustom": true,
+    "showDirectory": true,
+    "showModelEffort": true,
+    "showPullRequest": true,
+    "showQuota": true,
     "showSandbox": true,
-    "showYolo": true,
-    "showCustom": true
+    "showUsername": false,
+    "showYolo": true
+  },
+  "ide": {
+    "autoConnect": false
   },
   "keepAlive": "on",
   "model": "claude-opus-5.5",
   "mouse": true,
+  "pinnedPrompts": true,
   "remoteSessions": true,
   "renderMarkdown": true,
   "showReasoning": true,
   "sidebar": {
     "enabled": true,
-    "showCloseButton": true,
-    "hoverFocus": true
+    "hoverFocus": true,
+    "showCloseButton": true
   },
-  "subagents": {},
+  "subagents": {
+    "contextManagementTools": true
+  },
   "tabs": {
     "enabled": false
+  },
+  "telemetry": {
+    "capture": {
+      "identity": false,
+      "policyDetail": false,
+      "prompts": false,
+      "responses": false,
+      "toolArguments": false,
+      "toolOutput": false
+    },
+    "captureContent": false
   },
   "theme": "github",
   "voice": {
     "enabled": true,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
-  "enabledMcpServers": [
-    "computer-use"
-  ],
-  "enabledPlugins": {},
-  "extensions": {
-    "disabledExtensions": []
-  },
-  "editorMode": "normal",
-  "effortLevel": "max",
-  "contextTier": "long_context"
+  "worktreePathTemplate": "{repoPath}/.worktree/{branch}"
 }
