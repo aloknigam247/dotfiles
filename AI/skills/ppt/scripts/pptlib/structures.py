@@ -46,7 +46,10 @@ def _split(text):
 def _geom(sp, paths, sites=()):
     """Give `sp` a custom geometry. paths: [(points, closed, filled)] with points as (fx, fy)
     fractions of the box; sites: [(side, fx, fy)] connection sites, site k = sites[k]."""
-    body, cxn, gd, names = [], [], [], {}
+    body = []
+    cxn = []
+    gd = []
+    names = {}
 
     def point(fx, fy):
         key = (round(fx, 5), round(fy, 5))

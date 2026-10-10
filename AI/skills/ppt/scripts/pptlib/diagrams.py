@@ -115,20 +115,24 @@ def _custom_sites(sp, prst, sites):
     """Replace the preset geometry of `sp` (rect, roundRect, hexagon, can or a diamond) by the
     same outline as a custom geometry whose connection sites are `sites` [(side, fx, fy)]
     (fractions of the box). Site k of the shape is sites[k]."""
+    cxn = ""
+    paths = None
     sppr = sp._element.spPr
     old = sppr.find(qn("a:prstGeom"))
     adj = {} if old is None else {gd.get("name"): gd.get("fmla").split()[-1]
                                   for gd in old.iterfind(f"{qn('a:avLst')}/{qn('a:gd')}")}
-    paths = None
     if prst in ("flowChartDecision", "diamond"):
-        guides, extra = PRESETS["diamond"][1], ()
         body = ('<a:moveTo><a:pt x="hc" y="t"/></a:moveTo><a:lnTo><a:pt x="r" y="vc"/></a:lnTo>'
                 '<a:lnTo><a:pt x="hc" y="b"/></a:lnTo><a:lnTo><a:pt x="l" y="vc"/></a:lnTo>')
-        text, defaults = PRESETS["diamond"][3], {}
+        defaults = {}
+        extra = ()
+        guides = PRESETS["diamond"][1]
+        text = PRESETS["diamond"][3]
     elif prst == "can":  # the preset's three paths: body, lit lid and outline
-        defaults, guides, _, text = PRESETS["can"]
-        extra, body = (), ""
         arc = '<a:arcTo wR="wd2" hR="y1" stAng="{}" swAng="{}"/>'
+        body = ""
+        extra = ()
+        defaults, guides, _, text = PRESETS["can"]
         paths = (
             '<a:path stroke="0" extrusionOk="0"><a:moveTo><a:pt x="l" y="y1"/></a:moveTo>'
             + arc.format("cd2", "-10800000") + '<a:lnTo><a:pt x="r" y="y3"/></a:lnTo>'
@@ -140,9 +144,9 @@ def _custom_sites(sp, prst, sites):
             + '<a:lnTo><a:pt x="r" y="y3"/></a:lnTo>' + arc.format("0", "cd2")
             + '<a:lnTo><a:pt x="l" y="y1"/></a:lnTo></a:path>')
     else:
+        body = ""
         defaults, guides, _, text = PRESETS[prst]
         extra, path = _PORT_SHAPES[prst]
-        body = ""
         for cmd in path:
             if cmd[0] == "M":
                 body += f'<a:moveTo><a:pt x="{cmd[1]}" y="{cmd[2]}"/></a:moveTo>'
@@ -155,7 +159,6 @@ def _custom_sites(sp, prst, sites):
                  for k, v in defaults.items())
     gd = "".join(f'<a:gd name="{g.split()[0]}" fmla="{g.split(" ", 1)[1]}"/>'
                  for g in (*guides, *extra))
-    cxn = ""
     for k, (side, fx, fy) in enumerate(sites):
         gd += (f'<a:gd name="s{k}x" fmla="*/ w {round(fx * 100000)} 100000"/>'
                f'<a:gd name="s{k}y" fmla="*/ h {round(fy * 100000)} 100000"/>')
@@ -197,6 +200,7 @@ class Diagrams:
                prefer="TB", rank=None, pos=None, font=None, alt=None, node_gap=0.35,
                rank_gap=0.55, beside=None):
         """Lay out, fit and draw a graph; returns the diagram group shape."""
+        best = None
         box = box or CONTENT
         font = font or TYPE_SCALE["node"]
         if font < MIN_PT:
@@ -213,7 +217,6 @@ class Diagrams:
         titles = {g.id: (self.measure(g.label, TYPE_SCALE["title"], bold=True) + 0.1,
                          TYPE_SCALE["title"] * LINE_SPACING / 72 + 0.04) for g in groups}
         pads = {g.id: (0.16, 0.24 + titles[g.id][1], 0.16, 0.16) for g in groups}
-        best = None
         for d in dirs:
             for bands in (1, 2, 3):
                 plan = next((p for p in (self._try_layout(
@@ -237,6 +240,9 @@ class Diagrams:
 
     def _try_layout(self, nodes, edges, groups, d, scale, wrap, font, box, titles, pads,
                     rank, node_gap, rank_gap, moves=None, bands=1, beside=None):
+        best_crossings = 0
+        lay = None
+        routes = None
         sizes = {n.id: self._fit_node(n, font, wrap) for n in nodes}
         texts = {i: "\n".join(self.wrap(e.label, wrap * (0.45 if d == "LR" else 0.8),
                                         TYPE_SCALE["label"]))
@@ -249,8 +255,6 @@ class Diagrams:
                 w, h = room.get(i, (0.0, 0.0))
                 room[i] = (w + 2 * max(c[0] for c in ends) + 0.2, h) if d == "LR" else \
                     (w, h + 2 * max(c[1] for c in ends) + 0.2)
-        best_crossings = 0
-        lay = routes = None
         for variant in ((0, 1, 2) if groups and moves is None else (0,)):
             cand = layout.layered(
                 sizes, [(e.src, e.dst) for e in edges], direction=d,
@@ -301,13 +305,13 @@ class Diagrams:
         for k, e in enumerate(edges):
             pts = routes[k].points
             for end, text in enumerate(e.ends):
+                spot = None
                 if not text:
                     continue
                 w, h = self._chip_size(text, TYPE_SCALE["label"])
                 tip, prev = (pts[0], pts[1]) if end == 0 else (pts[-1], pts[-2])
                 n = math.dist(tip, prev) or 1.0
                 ux, uy = (prev[0] - tip[0]) / n, (prev[1] - tip[1]) / n
-                spot = None
                 for along in (0.06, 0.2, 0.35, 0.5):
                     for side in (1, -1):
                         cx = tip[0] + ux * (along + (w / 2 if ux else 0)) + \
@@ -377,13 +381,13 @@ class Diagrams:
                   for g, (x, y, w, h) in lay.groups.items()]
         segs = [(k, p, q) for k, r in enumerate(routes) for p, q in zip(r.points, r.points[1:])]
         for i in sorted(chips, key=lambda i: -chips[i][0]):
+            best = None
             w, h = chips[i]
             r = routes[i]
             spots = list(r.label_spots)
             for p, q in zip(r.points, r.points[1:]):
                 spots += [(p[0] + (q[0] - p[0]) * f, p[1] + (q[1] - p[1]) * f)
                           for f in (0.5, 0.35, 0.65, 0.2, 0.8)]
-            best = None
             for rank_, (cx, cy) in enumerate(spots):
                 chip = (cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2)
                 if any(_overlap(chip, t) for t in taken):
@@ -400,19 +404,23 @@ class Diagrams:
         return out
 
     def _draw_graph(self, s, kind, title, nodes, edges, groups, plan, font, alt):
+        depth = {}
+        ends = {}
+        fills = []
+        made = []
+        shapes = {}
+        site = {}
         lay, routes, box = plan["layout"], plan["routes"], plan["box"]
         x0, y0, x1, y1 = plan["extent"]
         ox, oy = plan.get("offset") or (box[0] + (box[2] - (x1 - x0)) / 2 - x0,
                                          box[1] + (box[3] - (y1 - y0)) / 2 - y0)
-        made, shapes = [], {}
-        depth = {}
         parent = {m: g.id for g in groups for m in g.members}
         for g in groups:
-            k, d = g.id, 0
+            d = 0
+            k = g.id
             while k in parent:
                 k, d = parent[k], d + 1
             depth[g.id] = d
-        fills = []
         for g in sorted(groups, key=lambda g: depth[g.id]):
             x, y, w, h = lay.groups[g.id]
             sp = self._container(s, ox + x, oy + y, w, h, g, depth[g.id])
@@ -435,12 +443,10 @@ class Diagrams:
                     etree.SubElement(ln, qn("a:prstDash")).set("val", "dash")
                 made.append(target)
             shapes[n.id] = target
-        ends = {}
         for k, r in enumerate(routes):
             for which, end, side in ((0, edges[k].src, r.src_side), (1, edges[k].dst, r.dst_side)):
                 p = r.points[0 if which == 0 else -1]
                 ends.setdefault(end, []).append((k, which, (ox + p[0], oy + p[1]), side))
-        site = {}
         for end, lst in ends.items():
             site.update(self._glue_sites(shapes[end], end, lst, nodes, groups))
         for k, (e, r) in enumerate(zip(edges, routes)):
@@ -499,10 +505,11 @@ class Diagrams:
     def _glue_sites(self, sp, node, lst, nodes, groups):
         """{(edge, end): site index}: the shape's own sites where the routes end on them, else
         a custom geometry with a site at every route end (rect, roundRect, hexagon, diamond)."""
+        exact = {}
         out = {}
+        points = []
         sites = connection_sites(sp)
         box = bbox(sp)
-        exact = {}
         for k, which, p, side in lst:
             cands = [j for j in range(len(sites)) if sites[j].side == side] or range(len(sites))
             i = min(cands, key=lambda j: math.dist((sites[j].x, sites[j].y), p))
@@ -514,7 +521,6 @@ class Diagrams:
         if prst not in ("can", "rect", "roundRect", "hexagon", "flowChartDecision", "diamond"):
             raise LayoutError(f"cannot glue to {sp.name!r}: its routes end away from its sites")
         w, h = box[2] - box[0], box[3] - box[1]
-        points = []
         for k, which, p, side in lst:
             key = (side, round((p[0] - box[0]) / w, 5), round((p[1] - box[1]) / h, 5))
             if key not in points:
@@ -580,9 +586,9 @@ class Diagrams:
         data for stores, external for third parties...); edges: [(src, dst, label, style,
         arrow)]; groups: [(id, label, members)], members being node or group ids. Nodes take
         the colour of the innermost group that holds them."""
+        gn = []
         gg, slot_of = self._groups(groups)
         parent = {m: g.id for g in gg for m in g.members}
-        gn = []
         for n in nodes:
             nid, text, kind = _node3(n)
             slot = slot_of.get(parent.get(nid)) if kind != "external" else None
@@ -594,9 +600,10 @@ class Diagrams:
     def _groups(self, groups):
         """GGroups from (id, label, members): a group of groups gets a neutral frame, the others
         a palette colour each. Returns (groups, {group id: palette slot})."""
-        ids = {g[0] for g in groups}
-        out, slots = [], {}
         k = 0
+        out = []
+        slots = {}
+        ids = {g[0] for g in groups}
         for gid, label, members in (tuple(g) for g in groups):
             if any(m in ids for m in members):
                 out.append(GGroup(gid, label, list(members), fill=self.t["light"],
@@ -631,11 +638,11 @@ class Diagrams:
         """A state diagram. states: [name]; transitions: [(src, dst, label)] with '[*]' as the
         start (src) or a final state (dst); composites: [(name, [member states])] drawn as a
         frame that transitions to `name` reach; notes: [(state, text)] linked by a dotted line."""
-        comp = {c[0]: list(c[1]) for c in composites}
-        gn = [self._kind_node(st, st, "process") for st in states if st not in comp]
-        ge = []
         beside = {}
         ends = 0
+        ge = []
+        comp = {c[0]: list(c[1]) for c in composites}
+        gn = [self._kind_node(st, st, "process") for st in states if st not in comp]
         for t in transitions:
             src, dst, label = (tuple(t) + ("",))[:3]
             if src == "[*]" and not any(n.id == "[*]" for n in gn):
@@ -671,10 +678,11 @@ class Diagrams:
                       member=None):
         """Size and draw function of a box with a title and compartments of text rows (a class or
         an entity). title_lines: [(text, size, bold, italic)]; rows: [compartment: [[cells]]]."""
+        pad_x = 0.12
+        pad_y = 0.06
         accent = self._hex(slot)
         member = member or TYPE_SCALE["title"]
         line_h = member * LINE_SPACING / 72
-        pad_x, pad_y = 0.12, 0.06
         title_h = sum(sz * LINE_SPACING / 72 for _, sz, _, _ in title_lines) + 2 * pad_y + 0.04
         widths = [0.0] * columns
         for comp in rows:
@@ -765,7 +773,8 @@ class Diagrams:
         [(a, b, kind, label, multiplicity at a, multiplicity at b)] with kind association,
         navigation, composition or aggregation (a is the whole), inheritance or realization (b
         is the parent) or dependency. Parents and wholes are laid out first."""
-        edges, nodes = [], []
+        edges = []
+        nodes = []
         for k, c in enumerate(classes):
             name, attrs, meths, stereo = (tuple(c) + ([], [], ""))[:4]
             head = [(f"\u00ab{stereo}\u00bb", TYPE_SCALE["label"], False, True)] if stereo else []
@@ -798,7 +807,8 @@ class Diagrams:
         """An entity-relationship diagram. entities: [(name, [(column, type, key)])] with key
         'PK', 'FK', 'UK', 'PK, FK' or ''; relations: [(a, b, cardinality at a, cardinality at b,
         label)] with cardinalities '1', '0..1', '1..*' or '0..*' drawn as crow's feet."""
-        edges, nodes = [], []
+        edges = []
+        nodes = []
         for k, (name, cols) in enumerate(entities):
             rows = [[key or "", col, typ] for col, typ, key in cols]
             size, draw = self._compartments([(name, font or TYPE_SCALE["node"], True, False)],
@@ -814,10 +824,10 @@ class Diagrams:
 
     def _crow(self, s, tip, prev, card, color):
         """Crow's-foot marks for `card` at a route end (tip on the entity, prev before it)."""
+        made = []
         d = (tip[0] - prev[0], tip[1] - prev[1])
         n = math.hypot(*d) or 1.0
         ux, uy = round(d[0] / n), round(d[1] / n)
-        made = []
 
         def at(a, b):  # a back along the route from the tip, b across it
             return tip[0] - ux * a - uy * b, tip[1] - uy * a + ux * b
@@ -892,6 +902,7 @@ class Diagrams:
         """A use case diagram. actors: [(id, name)] drawn as stick figures; cases: [(id, text)]
         drawn as ovals inside the `system` boundary; links: [(a, b)] associations, or (a, b,
         'include' | 'extend') for dashed dependencies."""
+        edges = []
         font = font or TYPE_SCALE["node"]
         nodes = [self._actor(name, font) for _, name in actors]
         ids = {aid: name for aid, name in actors}
@@ -900,7 +911,6 @@ class Diagrams:
         for cid, text in cases:
             nodes.append(self._kind_node(cid, text, "process", prst="ellipse", slot=3))
             ids[cid] = text
-        edges = []
         for ln in links:
             a, b, kind = (tuple(ln) + ("",))[:3]
             if kind in ("include", "extend"):
@@ -937,12 +947,17 @@ class Diagrams:
         and its branches; notes: [(participant, text)] shown on the participant's lifeline after
         the first message that reaches it. A request opens an activation bar on its receiver and
         the receiver's next reply closes it; the branches of a frame are alternatives."""
+        guards = {}
+        heads = []
+        lifelines = {}
+        made = []
+        note_at = {}
+        note_rows = []
+        rows = []
         box = box or CONTENT
         font = font or TYPE_SCALE["node"]
         label = TYPE_SCALE["label"]
-        made = []
         x0, y0, w, h = box
-        heads = []
         for pid, name, *kind in participants:
             tw, th, lines = self.text_size(name, font, max_w=1.6)
             heads.append((pid, name, kind[0] if kind else "participant", tw, th, lines))
@@ -959,13 +974,11 @@ class Diagrams:
         pitch, guard_h = line_h + 0.06, line_h + 0.04
         branch_of = {g[1]: (k, i) for k, (_, branches) in enumerate(frames)
                      for i, g in enumerate(branches)}
-        note_at = {}
         for pid, text in notes:
             first = next((i for i, m in enumerate(messages) if m[1] == pid), None)
             if first is not None:
                 note_at.setdefault(first, []).append((pid, text))
         y = y0 + head_h + 0.08
-        rows, note_rows, guards = [], [], {}
         for i, (src, dst, text, *kind) in enumerate(messages):
             if i in branch_of:
                 guards[i] = y
@@ -982,7 +995,6 @@ class Diagrams:
                               f"{h:.1f} in: split the diagram")
         bars = self._activations(messages, frames, rows, pitch)
         colors = {pid: self._hex(i) for i, (pid, *_) in enumerate(heads)}
-        lifelines = {}
         for pid, name, kind, tw, th, lines in heads:
             cx = xs[pid]
             if kind == "actor":
@@ -1052,8 +1064,8 @@ class Diagrams:
         sites = {pid: sorted({yy for m, yy in zip(messages, rows) if pid in m[:2]})
                  for pid in xs}
         for pid, life in lifelines.items():
-            hh = bottom - y0 - head_h
             spots = []
+            hh = bottom - y0 - head_h
             for yy in sites[pid]:
                 on_bar = any(p == pid and a - 1e-6 <= yy <= b + 1e-6 for p, a, b in bars)
                 for side in ("l", "r"):
@@ -1088,9 +1100,9 @@ class Diagrams:
         frame starts from the state before the frame, and bars with one start merge."""
         bars = {}
         open_ = {}
+        saved = {}
         starts = {g[1]: (k, i) for k, (_, branches) in enumerate(frames)
                   for i, g in enumerate(branches)}
-        saved = {}
         for i, (src, dst, _, *kind) in enumerate(messages):
             if i in starts:
                 k, branch = starts[i]

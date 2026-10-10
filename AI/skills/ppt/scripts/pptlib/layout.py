@@ -94,6 +94,7 @@ def _pav(desired, gap, weights=None):
     pool-adjacent-violators on the gap-shifted targets."""
     blocks = []
     offs = [0.0]
+    out = []
     for i in range(1, len(desired)):
         offs.append(offs[-1] + (gap if isinstance(gap, (int, float)) else gap[i - 1]))
     for i, d in enumerate(desired):
@@ -104,7 +105,6 @@ def _pav(desired, gap, weights=None):
             blocks[-1][0] += w2
             blocks[-1][1] += wy2
             blocks[-1][2] += k2
-    out = []
     for w, wy, k in blocks:
         out.extend([wy / w] * k)
     return [q + o for q, o in zip(out, offs)]
@@ -112,14 +112,14 @@ def _pav(desired, gap, weights=None):
 
 def _inversions(seq):
     """Pairs i < j with seq[i] > seq[j] (a Fenwick tree over the values)."""
+    count = 0
     if len(seq) < 2:
         return 0
-    count = 0
     size = max(seq) + 2
     tree = [0] * (size + 1)
     for seen, v in enumerate(seq):
-        i = v + 2
         le = 0
+        i = v + 2
         while i > 0:
             le += tree[i]
             i -= i & -i
@@ -156,7 +156,9 @@ def simplify(pts, eps=EPS):
 def route_crossings(routes, tol=1e-4):
     """Crossings between orthogonal polylines: proper intersections of a horizontal and a vertical
     segment of different routes. Touching at a shared end point is not a crossing."""
-    hs, vs = [], []
+    count = 0
+    hs = []
+    vs = []
     for k, pts in enumerate(routes):
         for p, q in zip(pts, pts[1:]):
             if abs(p[1] - q[1]) < tol:
@@ -165,7 +167,6 @@ def route_crossings(routes, tol=1e-4):
                 vs.append((p[0], min(p[1], q[1]), max(p[1], q[1]), k))
     vs.sort()
     xs = [v[0] for v in vs]
-    count = 0
     for y, x1, x2, k in hs:
         for x, y1, y2, j in vs[bisect.bisect_right(xs, x1 + tol):bisect.bisect_left(xs, x2 - tol)]:
             if j != k and y1 + tol < y < y2 - tol:
@@ -239,6 +240,8 @@ def _ranks(ids, dag, pins):
     """Longest-path ranks (pinned ids keep their hint), then nodes move towards the side with
     more edges as far as their neighbours allow, which shortens long edges (sources settle next
     to their first successor, sinks next to their last predecessor)."""
+    rank = {}
+    topo = []
     preds, succs = defaultdict(list), defaultdict(list)
     index = {n: i for i, n in enumerate(ids)}
     indeg = dict.fromkeys(ids, 0)
@@ -247,7 +250,6 @@ def _ranks(ids, dag, pins):
             preds[v].append(u)
             succs[u].append(v)
         indeg[v] += 1
-    rank, topo = {}, []
     ready = [index[n] for n in ids if not indeg[n]]
     heapq.heapify(ready)
     while ready:
@@ -280,8 +282,8 @@ def _ranks(ids, dag, pins):
 def _total_crossings(layers, down):
     total = 0
     for r in range(len(layers) - 1):
-        pos = {n: i for i, n in enumerate(layers[r + 1])}
         seq = []
+        pos = {n: i for i, n in enumerate(layers[r + 1])}
         for n in layers[r]:
             seq.extend(sorted(pos[m] for m in down[n]))
         total += _inversions(seq)
@@ -292,8 +294,9 @@ def _sweep(layers, nbrs, downward):
     """Reorder every layer by the barycenter of its neighbours in the layer before it."""
     rng = range(1, len(layers)) if downward else range(len(layers) - 2, -1, -1)
     for r in rng:
+        fixed = {}
+        movable = []
         pos = {n: i for i, n in enumerate(layers[r - 1 if downward else r + 1])}
-        fixed, movable = {}, []
         for i, n in enumerate(layers[r]):
             ps = [pos[m] for m in nbrs[n]]
             if ps:
@@ -315,8 +318,9 @@ def _transpose(layers, up, down, passes=6, hint=None):
             pos_up = {n: i for i, n in enumerate(layers[r - 1])} if r else None
             pos_dn = {n: i for i, n in enumerate(layers[r + 1])} if r + 1 < len(layers) else None
             for i in range(len(layer) - 1):
+                keep = 0
+                swap = 0
                 v, w = layer[i], layer[i + 1]
-                keep = swap = 0
                 if pos_up:
                     keep += _pair_crossings(up[v], up[w], pos_up)
                     swap += _pair_crossings(up[w], up[v], pos_up)
@@ -337,6 +341,7 @@ def _order(layers, up, down, iterations=24, hint=None):
     """Barycenter sweeps with transposition; the ordering with the fewest crossings. `hint`
     {node: value} orders nodes whose position the graph leaves open (a group's members by where
     their outside neighbours are)."""
+    stale = 0
     cur = [list(layer) for layer in layers]
     if hint:
         for layer in cur:
@@ -345,7 +350,6 @@ def _order(layers, up, down, iterations=24, hint=None):
                 layer[i] = n
     _transpose(cur, up, down, hint=hint)
     best, best_c = [list(layer) for layer in cur], _total_crossings(cur, down)
-    stale = 0
     for it in range(iterations):
         if not best_c:
             break
@@ -369,9 +373,10 @@ def _type1_conflicts(layers, up):
     """Non-inner segments that cross an inner (dummy-to-dummy) segment (Brandes-Koepf)."""
     conflicts = set()
     for r in range(1, len(layers)):
-        prev = {n: i for i, n in enumerate(layers[r - 1])}
-        k0 = scan = 0
+        k0 = 0
+        scan = 0
         layer = layers[r]
+        prev = {n: i for i, n in enumerate(layers[r - 1])}
         for i, v in enumerate(layer):
             w = next((u for u in up[v] if _dummy(u)), None) if _dummy(v) else None
             k1 = prev[w] if w is not None else len(layers[r - 1])
@@ -387,7 +392,8 @@ def _type1_conflicts(layers, up):
 
 def _align(lays, nbrs, conflicts):
     """Brandes-Koepf vertical alignment: each node joins the block of a median neighbour."""
-    pos, root = {}, {}
+    pos = {}
+    root = {}
     for lay in lays:
         for i, v in enumerate(lay):
             pos[v] = i
@@ -407,7 +413,9 @@ def _align(lays, nbrs, conflicts):
 
 def _compact(lays, root, sep):
     """Block coordinates: smallest first, then pulled towards their right neighbours."""
-    blocks, preds, succs = [], defaultdict(dict), defaultdict(dict)
+    blocks = []
+    xs = {}
+    preds, succs = defaultdict(dict), defaultdict(dict)
     for lay in lays:
         prev = None
         for v in lay:
@@ -429,7 +437,6 @@ def _compact(lays, root, sep):
                 topo.append(s)
     if len(topo) < len(blocks):  # inconsistent blocks: fall back to one block per node
         return _compact(lays, {v: v for lay in lays for v in lay}, sep)
-    xs = {}
     for b in topo:
         xs[b] = max((xs[p] + w for p, w in preds[b].items()), default=0.0)
     for b in reversed(topo):
@@ -440,8 +447,10 @@ def _compact(lays, root, sep):
 
 def _bk(layers, up, down, half, sep):
     """Brandes-Koepf x coordinates: four extreme alignments, balanced by their medians."""
-    conflicts = _type1_conflicts(layers, up)
+    aligned = []
+    out = {}
     runs = []
+    conflicts = _type1_conflicts(layers, up)
     for vert in ("u", "d"):
         base = layers if vert == "u" else layers[::-1]
         for horiz in ("l", "r"):
@@ -455,12 +464,10 @@ def _bk(layers, up, down, half, sep):
     widths = [bounds(xs)[1] - bounds(xs)[0] for _, xs in runs]
     k = min(range(len(runs)), key=widths.__getitem__)
     lo, hi = bounds(runs[k][1])
-    aligned = []
     for horiz, xs in runs:
         b = bounds(xs)
         delta = lo - b[0] if horiz == "l" else hi - b[1]
         aligned.append({n: x + delta for n, x in xs.items()})
-    out = {}
     for n in runs[0][1]:
         vals = sorted(a[n] for a in aligned)
         out[n] = (vals[1] + vals[2]) / 2
@@ -475,9 +482,10 @@ def _refine(layers, x, up, down, sep, sweeps=4):
         downward = it % 2 == 0
         order = layers if downward else layers[::-1]
         for layer in order:
+            desired = []
+            weights = []
             if len(layer) == 0:
                 continue
-            desired, weights = [], []
             for n in layer:
                 nb = up[n] if downward else down[n]
                 if _dummy(n):
@@ -497,10 +505,11 @@ def _refine(layers, x, up, down, sep, sweeps=4):
 
 def _max_overlap(intervals, gap):
     """Most intervals overlapping at one point, treating ends closer than `gap` as overlapping."""
+    best = 0
+    cur = 0
     events = []
     for lo, hi in intervals:
         events += [(lo - gap / 2, 1), (hi + gap / 2, -1)]
-    best = cur = 0
     for _, step in sorted(events, key=lambda e: (e[0], e[1])):
         cur += step
         best = max(best, cur)
@@ -511,9 +520,11 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt, beside=Non
     """Layered layout of `ids` (TB-frame sizes) with lifted `edges` [(a, b, edge index)];
     `beside` {id: other} puts a node in the rank of another, right after it ({id: (other,
     "before")}: right before it)."""
+    dag = {}
+    pairs = {}
+    seen = set()
     beside = {n: (o if isinstance(o, tuple) else (o, "after")) for n, o in (beside or {}).items()}
     lv = _Level()
-    pairs = {}
     for a, b, ei in edges:
         pairs.setdefault((a, b), []).append(ei)
     succ, indeg = defaultdict(list), defaultdict(int)
@@ -521,7 +532,6 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt, beside=Non
         succ[a].append(b)
         indeg[b] += 1
     back = _back_edges(ids, succ, indeg)
-    dag = {}
     for (a, b), eis in pairs.items():
         u, v, rev = (b, a, True) if (a, b) in back else (a, b, False)
         dag.setdefault((u, v), []).extend((ei, rev) for ei in eis)
@@ -539,7 +549,8 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt, beside=Non
             if span == 0:
                 lv.flat[ei] = (u, v, rev)
                 continue
-            prev, dummies = u, []
+            dummies = []
+            prev = u
             for k in range(1, span):
                 d = ("~", ei, k)
                 lv.rank[d] = rank[u] + k
@@ -552,7 +563,6 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt, beside=Non
             lv.chains[ei] = (u, v, dummies, rev)
     nr = max(lv.rank.values(), default=-1) + 1
     layers = [[] for _ in range(nr)]
-    seen = set()
     for start in [n for n in ids if not up[n]] + list(ids):
         stack = [start]
         while stack:
@@ -602,7 +612,8 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt, beside=Non
                 at = min(max((x[u] + x[v]) / 2, lo), hi) if hi > lo else x[v]
             chips[rank[v] - 1].append((at, cross, along))
     for r, lst in chips.items():
-        ends, height = [], []
+        ends = []
+        height = []
         for at, cross, along in sorted(lst):
             row = next((k for k, end in enumerate(ends) if end + 0.16 <= at - cross / 2),
                        len(ends))
@@ -658,16 +669,16 @@ class _SegIndex:
 
     def cost(self, p, q):
         """(crossings, length run within `near` of a parallel segment) of segment p-q."""
+        crossings = 0
+        run = 0.0
         horiz = abs(p[1] - q[1]) < EPS
         c, lo, hi = (p[1], min(p[0], q[0]), max(p[0], q[0])) if horiz else \
             (p[0], min(p[1], q[1]), max(p[1], q[1]))
         cross_t, cross_k = (self.v, self.vk) if horiz else (self.h, self.hk)
         par_t, par_k = (self.h, self.hk) if horiz else (self.v, self.vk)
-        crossings = 0
         for key in cross_k[bisect.bisect_right(cross_k, lo + 1e-4):
                            bisect.bisect_left(cross_k, hi - 1e-4)]:
             crossings += sum(1 for a, b in cross_t[key] if a + 1e-4 < c < b - 1e-4)
-        run = 0.0
         for key in par_k[bisect.bisect_left(par_k, c - self.near):
                          bisect.bisect_right(par_k, c + self.near)]:
             for a, b in par_t[key]:
@@ -761,6 +772,7 @@ class _State:
     # -- building -----------------------------------------------------------------------------
     def build(self, sizes, edges, groups, pins, ports, label_sizes, titles, group_pad, bands=1,
               beside=None, variant=0):
+        hints = {}
         beside = beside or {}
         opt = self.opt
         self.edges_in = list(edges)
@@ -789,6 +801,7 @@ class _State:
         looped = {u for u, v in edges if u == v}
 
         def build_level(level):
+            lifted = []
             for k in kids[level]:
                 if k in groups:
                     build_level(k)
@@ -796,7 +809,6 @@ class _State:
                     for k in kids[level]}
             sep_w = {k: size[k][0] + (2 * (opt.loop + 0.1) if k in looped else 0.0)
                      for k in kids[level]}
-            lifted = []
             for i, (u, v) in enumerate(edges):
                 a, b = self.top(u, level), self.top(v, level)
                 if u != v and a is not None and b is not None and a != b:
@@ -840,7 +852,6 @@ class _State:
                         acc[k].append(self.box[b][0] + self.box[b][2] / 2)
             return {k: sum(xs) / len(xs) for k, xs in acc.items()}
 
-        hints = {}
         build_level(None)
         order = list(groups)[::-1] if variant == 1 else list(groups) if not variant else []
         # order each group's members by their outside neighbours: one group at a time in small
@@ -901,6 +912,10 @@ class _State:
         """Wrap the ranks of level lv into `bands` bands of about equal length, side by side
         across the flow (rows of an LR layout, columns of a TB one). Every second band runs
         backwards (a serpentine), so the edges between bands stay short."""
+        b = 0
+        band_of = []
+        height = 0.0
+        x_off = 0.0
         nr = len(lv.rank_y)
         bands = max(1, min(bands, nr))
         if bands == 1:
@@ -908,7 +923,6 @@ class _State:
         ends = [lv.rank_y[r] + lv.rank_h[r] / 2 for r in range(nr)]
         starts = [lv.rank_y[r] - lv.rank_h[r] / 2 for r in range(nr)]
         total = ends[-1] - starts[0]
-        band_of, b = [], 0
         for r in range(nr):
             if band_of and b < bands - 1 and lv.rank_y[r] - starts[0] > (b + 1) * total / bands:
                 b += 1
@@ -928,7 +942,6 @@ class _State:
                     for n in nodes[b]:
                         lv.x[n] = lo + hi - lv.x[n]
         base = starts[0]
-        x_off, height = 0.0, 0.0
         for b in range(max(band_of) + 1):
             members = nodes[b]
             ranks = [r for r in range(nr) if band_of[r] == b]
@@ -1016,6 +1029,8 @@ def _dedupe(values, tol=0.004):
 
 class _Router:
     def __init__(self, st):
+        xs = set()
+        ys = set()
         c = st.opt.clear
         self.blocked_cache = {}
         self.index = {}
@@ -1035,7 +1050,6 @@ class _Router:
             for cx in range(math.floor(x0 / _CELL), math.floor(x1 / _CELL) + 1):
                 for cy in range(math.floor(y0 / _CELL), math.floor(y1 / _CELL) + 1):
                     self.hash[(cx, cy)].append(k)
-        xs, ys = set(), set()
         for x0, y0, x1, y1 in self.obstacles:
             xs.update((x0, x1))
             ys.update((y0, y1))
@@ -1209,6 +1223,8 @@ class _Router:
     def escape(self, n, side, top):
         """Ranges along `side` of n from which a straight run reaches the frame of `top` (n's
         ancestor at the edge's level) without meeting another node or a group n is not in."""
+        blocked = []
+        free = []
         st = self.st
         c = self.opt.clear
         if n == top:
@@ -1219,7 +1235,6 @@ class _Router:
         along = side in "tb"
         lo, hi = (x + 0.08, x + w - 0.08) if along else (y + 0.08, y + h - 0.08)
         run = {"t": (ty, y), "b": (y + h, ty + th), "l": (tx, x), "r": (x + w, tx + tw)}[side]
-        blocked = []
         stack = list(self.kids(top))
         while stack:
             m = stack.pop()
@@ -1233,7 +1248,7 @@ class _Router:
             a0, a1 = (by, by + bh) if along else (bx, bx + bw)
             if a1 + c > run[0] and a0 - c < run[1]:
                 blocked.append(((bx, bx + bw) if along else (by, by + bh)))
-        free, cur = [], lo
+        cur = lo
         for b0, b1 in sorted(blocked):
             if b0 - c > cur:
                 free.append((cur, min(b0 - c, hi)))
@@ -1279,8 +1294,9 @@ class _Router:
             fixed = {"t": y, "b": y + h, "l": x, "r": x + w}[side]
             want = sorted((self.desired(e, which, n, side), k) for k, (e, which) in enumerate(lst))
             if mode == "diamond":
+                m = 0.0
                 c, span = (lo + hi) / 2, hi - lo
-                lo, hi, m = c - 0.3 * span, c + 0.3 * span, 0.0
+                lo, hi = c - 0.3 * span, c + 0.3 * span
                 gap = min(self.opt.port_gap, 0.6 * span / max(len(want) - 1, 1))
                 if len(want) == 1:
                     want = [(c, want[0][1])]
@@ -1337,9 +1353,10 @@ class _Router:
     def channels(self, jogs, top, bottom):
         """A coordinate per jog in a gap: overlapping jogs get distinct channels, ordered so
         that they cross as little as possible."""
+        tol = 0.02
         n = len(jogs)
-        sp, tol = self.opt.channel, 0.02
         below = [set() for _ in range(n)]
+        sp = self.opt.channel
 
         def reach(a, b):
             stack, seen = [a], {a}
@@ -1484,11 +1501,11 @@ class _Router:
         for e in labelled:
             per_gap[(e.level, st.levels[e.level].rank[e.lower] - 1)].append(e)
         for (level, r), lst in per_gap.items():
+            ends = []
             lv = st.levels[level]
             oy = st.origin[level][1]
             nrows = lv.label_rows.get(r, 1)
             row_h = lv.band[r] / nrows
-            ends = []
             for e in sorted(lst, key=lambda e: e.xs[-1]):
                 lo = e.xs[-1] - e.label[0] / 2
                 row = next((k for k, end in enumerate(ends) if end + 0.06 <= lo), len(ends))
@@ -1537,6 +1554,10 @@ class _Router:
               cross_cost=_CROSS):
         """The cheapest route of at most five segments from p0 (leaving through side0) to p1
         (entering through side1) on the sparse grid, or None."""
+        expanded = 0
+        inf = math.inf
+        steps = {}
+        weight = 1.8
         n0, n1 = _NORMAL[side0], _NORMAL[side1]
         s = (p0[0] + n0[0] * stubs[0], p0[1] + n0[1] * stubs[0])
         t = (p1[0] + n1[0] * stubs[1], p1[1] + n1[1] * stubs[1])
@@ -1551,7 +1572,6 @@ class _Router:
         dfin = _DIRS.index((-n1[0], -n1[1]))
         tx, ty = t
         dx_f, dy_f = _DIRS[dfin]
-        weight = 1.8
 
         def h(x, y, d):
             if d == dfin and (abs(y - ty) < EPS and (tx - x) * dx_f >= 0 if dy_f == 0 else
@@ -1559,13 +1579,10 @@ class _Router:
                 return weight * (abs(x - tx) + abs(y - ty))
             return weight * (abs(x - tx) + abs(y - ty) + _BEND)
 
-        inf = math.inf
         limit = MAX_SEGMENTS - 1
         front = {(sx, sy, d0): [0.0, inf, inf, inf, inf]}
         parent = {(sx, sy, d0, 0): None}
         heap = [(h(s[0], s[1], d0), 0.0, sx, sy, d0, 0)]
-        steps = {}
-        expanded = 0
         nx, ny = len(xs), len(ys)
         back = ((dfin + 2) % 4)
         while heap:
@@ -1629,6 +1646,7 @@ class _Router:
     def free_route(self, e, explore=False):
         """Route e by A*: pricing congestion on its own sides (with `explore`, also on the next
         best side pairs, keeping the cheapest route), else ignoring congestion."""
+        best = None
         st = self.st
         ca, cb = self.centre(e.src), self.centre(e.dst)
         options = [tuple(e.sides)]
@@ -1636,7 +1654,6 @@ class _Router:
         options += sorted({(a, b) for a in "trbl" for b in "trbl"} - {options[0]},
                           key=lambda ab: (ab != pref, ab[0] != pref[0], ab[1] != pref[1], ab))
         modes = self.group_modes(e)
-        best = None
         far = abs(e.ports[0][0] - e.ports[1][0]) + abs(e.ports[0][1] - e.ports[1][1]) > 8
         tries = [(k, sides, True, 4000) for k, sides in enumerate(options[:3 if explore else 1])]
         if far:
@@ -1710,8 +1727,9 @@ class _Router:
         the channel spacing and only where the obstacles leave room (end segments stay put)."""
         sp = self.opt.channel
         for horiz in (True, False):
-            axis = 1 if horiz else 0
+            done = set()
             segs = []
+            axis = 1 if horiz else 0
             for e in self.st.edges:
                 for k in range(1, len(e.points) - 2):
                     p, q = e.points[k], e.points[k + 1]
@@ -1719,7 +1737,6 @@ class _Router:
                         lo, hi = sorted((p[1 - axis], q[1 - axis]))
                         segs.append((p[axis], lo, hi, e, k))
             segs.sort(key=lambda s: (s[0], s[1]))
-            done = set()
             for i, (c, lo, hi, e, k) in enumerate(segs):
                 if id(e) in done:
                     continue
@@ -1793,10 +1810,10 @@ def _seg_hits(p, q, box):
 
 def _check(sizes, edges, groups):
     """Validate the graph; returns the parent group of every grouped id."""
+    parent = {}
     if len(sizes) > MAX_NODES:
         raise LayoutError(f"{len(sizes)} nodes: a diagram holds at most {MAX_NODES}; split the "
                           "diagram")
-    parent = {}
     for g, members in groups.items():
         if g in sizes:
             raise LayoutError(f"group id {g!r} is also a node id")
@@ -1807,7 +1824,8 @@ def _check(sizes, edges, groups):
                 raise LayoutError(f"{m!r} is in two groups, {parent[m]!r} and {g!r}")
             parent[m] = g
     for g in groups:
-        seen, n = set(), g
+        seen = set()
+        n = g
         while n in parent:
             if n in seen:
                 raise LayoutError(f"groups nest in a cycle through {g!r}")
@@ -1868,8 +1886,14 @@ def tidy_tree(root, children, sizes, *, direction="TB", sib_gap=0.3, level_gap=0
     """Tree with the root on top (TB) or on the left (LR): parents centred over their children,
     subtrees packed as close as their contours allow. children: {id: [child ids]}; sizes: {id: (w,
     h)}. Returns ({id: (x, y, w, h)}, (width, height)) from (0, 0)."""
+    boxes = {}
+    contour = {}
+    depth = {}
+    level_y = {}
+    offset = {}
+    order = []
+    y = 0.0
     lr = direction == "LR"
-    depth, order = {}, []
     stack = [(root, 0)]
     while stack:
         n, d = stack.pop()
@@ -1888,14 +1912,14 @@ def tidy_tree(root, children, sizes, *, direction="TB", sib_gap=0.3, level_gap=0
     def along(n):
         return sizes[n][0] if lr else sizes[n][1]
 
-    offset, contour = {}, {}
     for n in reversed(order):
-        kids = children.get(n, ())
+        shifts = [0.0]
         half = across(n) / 2
+        kids = children.get(n, ())
         if not kids:
             contour[n] = [(-half, half)]
             continue
-        shifts, merged = [0.0], list(contour[kids[0]])
+        merged = list(contour[kids[0]])
         for k in kids[1:]:
             s = max(merged[d][1] - lo for d, (lo, _) in enumerate(contour[k][:len(merged)])) \
                 + sib_gap
@@ -1916,12 +1940,10 @@ def tidy_tree(root, children, sizes, *, direction="TB", sib_gap=0.3, level_gap=0
     thick = defaultdict(float)
     for n, d in depth.items():
         thick[d] = max(thick[d], along(n))
-    level_y, y = {}, 0.0
     for d in range(len(thick)):
         level_y[d] = y + thick[d] / 2
         y += thick[d] + level_gap
     x0 = min(pos[n] - across(n) / 2 for n in pos)
-    boxes = {}
     for n in order:
         a, b = pos[n] - x0, level_y[depth[n]]
         boxes[n] = (b - along(n) / 2, a - across(n) / 2, *sizes[n]) if lr else \
@@ -1935,6 +1957,8 @@ def side_tree(root, children, sizes, *, level_gap=0.6, sib_gap=0.14, branch_gap=
     """Mind map: the root in the middle, first-level branches split left and right to balance
     their leaves, each side a left-to-right tree. Returns ({id: (x, y, w, h)}, {id: side},
     (width, height)) from (0, 0); side is -1 (left), 0 (root) or +1 (right)."""
+    acc = 0
+    right = []
     count = 1 + sum(len(v) for v in children.values())
     if count > MAX_NODES:
         raise LayoutError(f"{count} nodes: a diagram holds at most {MAX_NODES}; split the diagram")
@@ -1949,7 +1973,7 @@ def side_tree(root, children, sizes, *, level_gap=0.6, sib_gap=0.14, branch_gap=
         return max(own, sum(span(c) for c in kids) + sib_gap * (len(kids) - 1)) if kids else own
 
     first = list(children.get(root, ()))
-    total, acc, right = sum(leaves(c) for c in first), 0, []
+    total = sum(leaves(c) for c in first)
     for c in first:
         if acc + leaves(c) / 2 <= total / 2 + EPS or not right:
             right.append(c)
@@ -1992,6 +2016,11 @@ def sankey(flows, width, height, *, node_w=0.16, node_gap=0.3, iterations=32):
     sources with the sinks in the last column, node heights proportional to throughput, positions
     relaxed towards their neighbours. flows: [(src, dst, value)]. Returns ({node: (x, y, w, h,
     value)}, [(src, dst, value, y at src, y at dst, thickness)])."""
+    col = {}
+    links = []
+    src_top = {}
+    state = {}
+    y = {}
     ids = list(dict.fromkeys([f[0] for f in flows] + [f[1] for f in flows]))
     if len(ids) > MAX_NODES:
         raise LayoutError(f"{len(ids)} nodes: a diagram holds at most {MAX_NODES}; split the "
@@ -2006,7 +2035,6 @@ def sankey(flows, width, height, *, node_w=0.16, node_gap=0.3, iterations=32):
         succ[s].append(t)
         pred[t].append(s)
     value = {n: max(out_v[n], in_v[n]) for n in ids}
-    col, state = {}, {}
 
     def depth(n):
         if state.get(n) == 1:
@@ -2029,7 +2057,6 @@ def sankey(flows, width, height, *, node_w=0.16, node_gap=0.3, iterations=32):
         raise LayoutError("Sankey: too many nodes in one column for the height; split the diagram")
     ky = min((height - node_gap * (len(c) - 1)) / sum(value[n] for n in c) for c in columns)
     xstep = (width - node_w) / (ncol - 1)
-    y = {}
     for c in columns:
         acc = 0.0
         for n in c:
@@ -2042,14 +2069,14 @@ def sankey(flows, width, height, *, node_w=0.16, node_gap=0.3, iterations=32):
     for it in range(iterations):
         alpha = 0.99 ** it
         for c in (columns[1:] if it % 2 == 0 else columns[-2::-1]):
+            acc = 0.0
             for n in c:
-                links = [(s, v) for s, t, v in flows if t == n] if it % 2 == 0 else \
+                nbrs = [(s, v) for s, t, v in flows if t == n] if it % 2 == 0 else \
                     [(t, v) for s, t, v in flows if s == n]
-                if links:
-                    target = sum(centre(m) * v for m, v in links) / sum(v for _, v in links)
+                if nbrs:
+                    target = sum(centre(m) * v for m, v in nbrs) / sum(v for _, v in nbrs)
                     y[n] += (target - centre(n)) * alpha
             c.sort(key=lambda n: y[n])
-            acc = 0.0
             for n in c:
                 y[n] = max(y[n], acc)
                 acc = y[n] + value[n] * ky + node_gap
@@ -2060,11 +2087,9 @@ def sankey(flows, width, height, *, node_w=0.16, node_gap=0.3, iterations=32):
                     acc = y[n] - node_gap
     nodes = {n: (col[n] * xstep, y[n], node_w, value[n] * ky, value[n]) for n in ids}
     out_off, in_off = defaultdict(float), defaultdict(float)
-    src_top = {}
     for s, t, v in sorted(flows, key=lambda f: (col[f[0]], y[f[0]], y[f[1]])):
         src_top[(s, t)] = y[s] + out_off[s]
         out_off[s] += v * ky
-    links = []
     for s, t, v in sorted(flows, key=lambda f: (y[f[1]], y[f[0]])):
         links.append((s, t, v, src_top[(s, t)], y[t] + in_off[t], v * ky))
         in_off[t] += v * ky
