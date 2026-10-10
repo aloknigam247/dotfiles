@@ -21,13 +21,15 @@ Python examples in reference/diagrams.md run, and link() refuses a route of more
                and the chart and each slide renders differently; makes PowerPoint visible (Edit
                Data on Office 2016 charts needs it), closes only what it opened and never quits
                Excel or PowerPoint
-  --out DIR    where decks, PNGs and reports go (default: selftest_out in the current directory)
+  --out DIR    where decks, PNGs and reports go (default: pptlib_selftest in the system temp
+               directory, so runs never litter a repository)
 """
 import json
 import math
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import traceback
 from pathlib import Path
@@ -280,6 +282,18 @@ def test_no_quit(results):
                 f"{len(calls)} found" if calls else "")
 
 
+def test_mixin_names(results):
+    """Deck's mixins must not define the same attribute: the first in the MRO would silently win."""
+    owners = {}
+    for cls in Deck.__mro__[:-1]:
+        for name in vars(cls):
+            if not name.startswith("__"):
+                owners.setdefault(name, []).append(cls.__name__)
+    clashes = {name: classes for name, classes in owners.items() if len(classes) > 1}
+    results.add("FAIL" if clashes else "PASS", "Deck mixins define no clashing attributes",
+                "; ".join(f"{n}: {', '.join(c)}" for n, c in sorted(clashes.items())))
+
+
 def test_examples(results):
     """Run every ```python example in reference/diagrams.md."""
     if not DIAGRAMS_MD.exists():
@@ -517,13 +531,15 @@ def test_edit_data(results, out):
 
 def main(argv):
     deck_path = Path(argv[argv.index("--deck") + 1]).resolve() if "--deck" in argv else None
-    out = Path(argv[argv.index("--out") + 1] if "--out" in argv else "selftest_out").resolve()
+    default_out = Path(tempfile.gettempdir()) / "pptlib_selftest"
+    out = Path(argv[argv.index("--out") + 1]).resolve() if "--out" in argv else default_out
     results = Results()
     types_deck, primitives_deck, adversarial_deck = Deck(), Deck(), Deck()
     skipped = test_types(results, types_deck) + test_adversarial(results, adversarial_deck)
     test_primitives(results, primitives_deck)
     test_route_limit(results)
     test_no_quit(results)
+    test_mixin_names(results)
     test_examples(results)
     for name in skipped:
         results.add("SKIP", name, "builder not available yet")
