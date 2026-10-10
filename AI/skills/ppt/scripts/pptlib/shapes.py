@@ -20,6 +20,7 @@ from pptx.util import Emu, Pt
 from .style import EDGE_WIDTH, MIN_PT, NODE_LINE_WIDTH, NODE_RADIUS, TYPE_SCALE, kind_style
 
 ADJ_MAX = 2_000_000_000  # adjust values are 32-bit integers
+CHIP_PAD = (0.06, 0.02)  # inches: text insets of a label chip
 EMU_IN = 914400
 EXT_MIN = 127  # EMU: connector frame extent along an axis the route has no net run on
 LINE_SPACING = 1.2  # PowerPoint's single line height / font size (measured through COM)
@@ -216,13 +217,13 @@ def size_for_text(prst, need_w, need_h, adj=None, min_w=0.0, min_h=0.0):
     h = max(need_h, min_h, 1e-6)
     w = max(need_w, min_w, 1e-6)
     for _ in range(60):
-        l, t, r, b = text_rect(prst, w, h, adj)
-        if r - l >= need_w - 1e-9 and b - t >= need_h - 1e-9:
+        left, top, right, bottom = text_rect(prst, w, h, adj)
+        if right - left >= need_w - 1e-9 and bottom - top >= need_h - 1e-9:
             return w, h
-        if r - l < need_w - 1e-9:
-            w *= min(need_w / max(r - l, 1e-6), 1.5) * 1.0001 + 1e-6
-        if b - t < need_h - 1e-9:
-            h *= min(need_h / max(b - t, 1e-6), 1.5) * 1.0001 + 1e-6
+        if right - left < need_w - 1e-9:
+            w *= min(need_w / max(right - left, 1e-6), 1.5) * 1.0001 + 1e-6
+        if bottom - top < need_h - 1e-9:
+            h *= min(need_h / max(bottom - top, 1e-6), 1.5) * 1.0001 + 1e-6
     raise ValueError(f"no {prst} shape holds {need_w:.2f} x {need_h:.2f}")
 
 
@@ -234,7 +235,7 @@ def _xfrm(el):
         pr = el.find(qn(tag))
         if pr is not None:
             return pr.find(qn("a:xfrm"))
-    return None
+    return el.find(qn("p:xfrm"))  # graphic frames (tables, charts)
 
 
 def _flag(xfrm, name):
@@ -388,10 +389,10 @@ def _direction(p, q):
 
 def _hits(p, q, box, clear):
     """True when segment p-q enters the interior of `box` grown by `clear`."""
-    l, t, r, b = box[0] - clear, box[1] - clear, box[2] + clear, box[3] + clear
+    left, top, right, bottom = box[0] - clear, box[1] - clear, box[2] + clear, box[3] + clear
     if abs(p[1] - q[1]) < 1e-9:
-        return t < p[1] < b and min(p[0], q[0]) < r and max(p[0], q[0]) > l
-    return l < p[0] < r and min(p[1], q[1]) < b and max(p[1], q[1]) > t
+        return top < p[1] < bottom and min(p[0], q[0]) < right and max(p[0], q[0]) > left
+    return left < p[0] < right and min(p[1], q[1]) < bottom and max(p[1], q[1]) > top
 
 
 def _score(pts, d0, d1, boxes, clear):
@@ -601,12 +602,12 @@ def _set_ports(sp, counts):
                  for g in (*guides, *extra, *site_guides))
     cxn = "".join(f'<a:cxn ang="{a}"><a:pos x="{x}" y="{y}"/></a:cxn>'
                   for a, x, y in (s.split() for s in sites))
-    l, t, r, b = text.split()
+    rect = dict(zip("ltrb", text.split()))
     cust = etree.fromstring(
         f'<a:custGeom xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">'
         f'<a:avLst>{av}</a:avLst><a:gdLst>{gd}</a:gdLst><a:ahLst/><a:cxnLst>{cxn}</a:cxnLst>'
-        f'<a:rect l="{l}" t="{t}" r="{r}" b="{b}"/><a:pathLst><a:path>{"".join(body)}<a:close/>'
-        f'</a:path></a:pathLst></a:custGeom>')
+        f'<a:rect l="{rect["l"]}" t="{rect["t"]}" r="{rect["r"]}" b="{rect["b"]}"/>'
+        f'<a:pathLst><a:path>{"".join(body)}<a:close/></a:path></a:pathLst></a:custGeom>')
     prst_el.addprevious(cust)
     sppr.remove(prst_el)
     return sp
@@ -665,8 +666,12 @@ def text_width(text, size, family, bold=False, italic=False):
     safety margin (TEXT_MARGIN, TEXT_PAD_PT)."""
     if not text:
         return 0.0
-    width = _pil_font(family, bold, italic).getlength(text) * size / MEASURE_PX
-    return width * TEXT_MARGIN + TEXT_PAD_PT
+    return natural_width(text, size, family, bold, italic) * TEXT_MARGIN + TEXT_PAD_PT
+
+
+def natural_width(text, size, family, bold=False, italic=False):
+    """Pillow's width of `text` in points, without the safety margin."""
+    return _pil_font(family, bold, italic).getlength(text) * size / MEASURE_PX
 
 
 def check_size(size):
@@ -825,21 +830,24 @@ class Shapes:
         sp.name = name or f"Node: {text.splitlines()[0] if text else kind}"
         return sp
 
+    def _chip_size(self, text, size, bold=False):
+        tw, th, _ = self.text_size(text, size, bold)
+        return size_for_text("roundRect", tw + 2 * CHIP_PAD[0], th + 2 * CHIP_PAD[1],
+                             {"adj": 50000})
+
     def label(self, s, cx, cy, text, size=None, color=None, fill=None, bold=False, name=None):
         """A text chip centred on (cx, cy) inches with the slide-background fill and no outline, so
         a line behind it never cuts the text. Returns the shape."""
-        pad = (0.06, 0.02)
         size = size or TYPE_SCALE["label"]
         check_size(size)
-        tw, th, _ = self.text_size(text, size, bold)
-        w, h = size_for_text("roundRect", tw + 2 * pad[0], th + 2 * pad[1], {"adj": 50000})
+        w, h = self._chip_size(text, size, bold)
         sp = self._prst_shape(s, "roundRect", cx - w / 2, cy - h / 2, w, h)
         sp.adjustments[0] = 0.5
         sp.fill.solid()
         sp.fill.fore_color.rgb = fill or self.LIGHT
         sp.line.fill.background()
         sp.shadow.inherit = False
-        self._write(sp, text, size, color or self.TEXT, bold, margins=pad, wrap=False)
+        self._write(sp, text, size, color or self.TEXT, bold, margins=CHIP_PAD, wrap=False)
         sp.name = name or f"Label: {text.splitlines()[0]}"
         return sp
 
@@ -922,10 +930,31 @@ class Shapes:
         cn.name = name or f"Edge: {_short(src.name)} -> {_short(dst.name)}"
         if label:
             if label_at is None:
-                p, q = max(zip(pts, pts[1:]), key=lambda pq: math.dist(*pq))
-                label_at = ((p[0] + q[0]) / 2, (p[1] + q[1]) / 2)
+                label_at = _label_spot(pts, self._chip_size(label, TYPE_SCALE["label"]),
+                                       [box_a, box_b, *(bbox(o) for o in avoid)])
             chip = self.label(s, label_at[0], label_at[1], label)
         return Link(cn, chip, pts)
+
+
+def _label_spot(pts, size, boxes):
+    """Centre for a label chip of `size` (w, h) on a route: the point nearest the middle of the
+    longest segment where the chip stays clear of `boxes`, else the point with the least overlap."""
+    spots = [((p[0] + q[0]) / 2 + (q[0] - p[0]) * f, (p[1] + q[1]) / 2 + (q[1] - p[1]) * f)
+             for p, q in sorted(zip(pts, pts[1:]), key=lambda pq: -math.dist(*pq))
+             for f in (0.0, -0.15, 0.15, -0.3, 0.3, -0.4, 0.4)]
+
+    def overlap(spot):
+        chip = (spot[0] - size[0] / 2, spot[1] - size[1] / 2, spot[0] + size[0] / 2,
+                spot[1] + size[1] / 2)
+        return sum(_overlap_area(chip, box, 0.02) for box in boxes)
+
+    return next((spot for spot in spots if not overlap(spot)), min(spots, key=overlap))
+
+
+def _overlap_area(a, b, clear):
+    w = min(a[2], b[2] + clear) - max(a[0], b[0] - clear)
+    h = min(a[3], b[3] + clear) - max(a[1], b[1] - clear)
+    return w * h if w > 0 and h > 0 else 0.0
 
 
 def _rgb(hexval):

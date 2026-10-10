@@ -105,8 +105,8 @@ class _Reader:
         self.layouts = {}
         self.slide_index = {}
         self.pkg = pkg
-        self.pres_part = next((target for rtype, target, _ in pkg.rels("").values() if rtype == OFFICE_DOC),
-                              None)
+        self.pres_part = next((target for rtype, target, _ in pkg.rels("").values()
+                               if rtype == OFFICE_DOC), None)
         if self.pres_part is None:
             raise ManifestError("no officeDocument relationship in /_rels/.rels")
         self.pres = pkg.xml(self.pres_part)
@@ -121,12 +121,15 @@ class _Reader:
         by_id = {el.get("id"): i for i, el in enumerate(sld_ids, 1)}
         self.slide_index = {part: i for i, part in enumerate(parts, 1)}
         for sec in self.pres.iterfind(".//p14:sectionLst/p14:section", NS):
-            members = [by_id.get(el.get("id"), 0) for el in sec.iterfind("p14:sldIdLst/p14:sldId", NS)]
+            members = [by_id.get(el.get("id"), 0)
+                       for el in sec.iterfind("p14:sldIdLst/p14:sldId", NS)]
             sections.append({"name": sec.get("name"), "slides": members})
         for i, part in enumerate(parts, 1):
             slides.append(self.slide(i, part))
-        return {"slide_size": [int(size.get("cx")), int(size.get("cy"))] if size is not None else None,
-                "sections": sections, "slides": slides}
+        # inches to 0.01: PowerPoint stores python-pptx's 12191695 EMU width as 12192000
+        inches = None if size is None else [round(int(size.get(k)) / 914400, 2)
+                                            for k in ("cx", "cy")]
+        return {"sections": sections, "slide_size": inches, "slides": slides}
 
     def slide(self, index, part):
         layout = None
@@ -184,14 +187,16 @@ class _Reader:
         kind = _local(el)
         if kind == "AlternateContent":
             choice = el.find("mc:Choice", NS)
-            inner = None if choice is None else next((c for c in choice if _local(c) in SHAPE_TAGS), None)
+            inner = None if choice is None else next(
+                (c for c in choice if _local(c) in SHAPE_TAGS), None)
             if inner is None:
                 return {"name": "", "type": "AlternateContent"}
             alternate = True
             el = inner
             kind = _local(el)
         cnv = el.find("*/p:cNvPr", NS)
-        out = {"name": "" if cnv is None else cnv.get("name", ""), "type": self.shape_type(el, kind)}
+        out = {"name": "" if cnv is None else cnv.get("name", ""),
+               "type": self.shape_type(el, kind)}
         if alternate:
             out["alternate"] = True
         text = _text(el.find("p:txBody", NS))
@@ -221,8 +226,8 @@ class _Reader:
             if ph is not None:
                 return f"placeholder:{ph.get('type', 'body')}"
             tx_box = el.find("p:nvSpPr/p:cNvSpPr", NS)
-            prefix = "textbox" if tx_box is not None and tx_box.get("txBox") in ("1", "true") else "shape"
-            return f"{prefix}:{_geometry(el)}"
+            is_box = tx_box is not None and tx_box.get("txBox") in ("1", "true")
+            return f"{'textbox' if is_box else 'shape'}:{_geometry(el)}"
         if kind == "cxnSp":
             return f"connector:{_geometry(el)}"
         if kind == "graphicFrame":
@@ -317,7 +322,8 @@ def main(argv):
     if "--json" in args:
         out = Path(args[args.index("--json") + 1])
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(json.dumps(data, indent=1, ensure_ascii=False, sort_keys=True), encoding="utf-8")
+        out.write_text(json.dumps(data, indent=1, ensure_ascii=False, sort_keys=True),
+                       encoding="utf-8")
     if "--compare" in args:
         diffs = compare(_load(args[args.index("--compare") + 1]), data, "manifest")
         shapes = sum(count_shapes(s["shapes"]) for s in data["slides"])
@@ -325,7 +331,8 @@ def main(argv):
             print(line)
         if len(diffs) > 60:
             print(f"... {len(diffs) - 60} more")
-        print(f"{'DIFFERENT' if diffs else 'EQUAL'}: {len(data['slides'])} slides, {shapes} shapes, "
+        print(f"{'DIFFERENT' if diffs else 'EQUAL'}: {len(data['slides'])} slides, "
+              f"{shapes} shapes, "
               f"{len(diffs)} difference(s)")
         return 1 if diffs else 0
     if "--json" not in args:
