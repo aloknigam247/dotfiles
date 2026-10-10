@@ -6,7 +6,11 @@
   lists the rest as skipped. The data model is the one in reference/diagrams.md, as plain tuples:
   nodes (id, text, kind), edges (src, dst, label, style, arrow), groups (id, label, members).
 - ADVERSARIAL: layout stress cases for the graph builders (dense graph, long labels, cycles,
-  nested groups); `max_crossings` is set once the graph builders exist.
+  nested groups), and a 40-node graph too dense for one slide that must raise "split the
+  diagram" (`raises`).
+- `max_crossings` of a graph fixture: the crossings of its routed connectors that bench_layout.py
+  allows; for the 31 types counted on the provider rendering in the diagram catalog, for the
+  adversarial cases (no rendering) the count when the builders were written.
 - primitives_slides(): node kinds and link() between every supported shape, side pair and route.
 - NEGATIVE: decks with one defect each, and the com_check.py check that must report it.
 """
@@ -32,9 +36,10 @@ SAMPLES = {"Web": _samples(42, 3.5, 0.4, 200), "Mobile": _samples(43, 3.3, 0.35,
            "Partner": _samples(44, 3.8, 0.5, 100)}
 
 
-def _fx(type_name, builder, *args, graph=False, chart_xml=None, chart_type=None, **kwargs):
+def _fx(type_name, builder, *args, graph=False, chart_xml=None, chart_type=None,
+        max_crossings=None, **kwargs):
     return {"args": args, "builder": builder, "chart_type": chart_type, "chart_xml": chart_xml,
-            "graph": graph, "kwargs": kwargs, "max_crossings": None, "type": type_name}
+            "graph": graph, "kwargs": kwargs, "max_crossings": max_crossings, "type": type_name}
 
 
 def _chart(type_name, kind, categories, series, title, chart_xml):
@@ -53,7 +58,7 @@ TYPES = [
         [("start", "cart"), ("cart", "signed"), ("signed", "signin", "No"), ("signin", "signed"),
          ("signed", "ship", "Yes"), ("ship", "pay"), ("pay", "ok"), ("ok", "place", "Yes"),
          ("place", "email"), ("email", "done"), ("ok", "error", "No"), ("error", "pay")],
-        graph=True),
+        graph=True, max_crossings=0),
     _fx("Sequence diagram", "sequence",
         [("customer", "Customer", "actor"), ("web", "Web App", "participant"),
          ("api", "Order API", "participant"), ("payment", "Payment Service", "participant"),
@@ -86,7 +91,7 @@ TYPES = [
          ("CardPayment", "Payment", "inheritance", "", "", ""),
          ("WalletPayment", "Payment", "inheritance", "", "", ""),
          ("Order", "OrderStatus", "dependency", "", "", "")],
-        graph=True),
+        graph=True, max_crossings=0),
     _fx("State diagram", "state_diagram",
         ["Pending", "Paid", "Shipped", "In transit", "Out for delivery", "Delivered", "Cancelled",
          "Refunded"],
@@ -97,7 +102,7 @@ TYPES = [
          ("Shipped", "Delivered", "signed for"), ("Delivered", "[*]", ""), ("Cancelled", "[*]", ""),
          ("Refunded", "[*]", "")],
         composites=[("Shipped", ["In transit", "Out for delivery"])],
-        notes=[("Paid", "Stock reserved")], graph=True),
+        notes=[("Paid", "Stock reserved")], graph=True, max_crossings=0),
     _fx("ER diagram", "er_diagram",
         [("customer", [("id", "uuid", "PK"), ("name", "text", ""), ("email", "text", "UK")]),
          ("orders", [("id", "uuid", "PK"), ("customer_id", "uuid", "FK"),
@@ -111,7 +116,7 @@ TYPES = [
          ("orders", "order_item", "1", "1..*", "order_id"),
          ("product", "order_item", "1", "0..*", "product_id"),
          ("category", "product", "1", "0..*", "category_id")],
-        graph=True),
+        graph=True, max_crossings=0),
     _fx("Use case diagram", "use_case",
         [("customer", "Customer"), ("support", "Support agent"), ("stripe", "Payment provider")],
         [("browse", "Browse catalogue"), ("order", "Place order"), ("pay", "Pay by card"),
@@ -120,7 +125,7 @@ TYPES = [
          ("support", "refund"),
          ("order", "pay", "include"), ("gift", "order", "extend"), ("pay", "stripe"),
          ("refund", "stripe")],
-        "Inkwell storefront", graph=True),
+        "Inkwell storefront", graph=True, max_crossings=0),
     _fx("Software architecture", "architecture",
         [("web", "Web app", "process"), ("mobile", "Mobile app", "process"),
          ("gateway", "API gateway", "process"), ("catalog", "Catalog service", "process"),
@@ -135,7 +140,7 @@ TYPES = [
          ("frontend", "Frontend", ["web", "mobile"]),
          ("backend", "Backend", ["gateway", "catalog", "orders", "payments"]),
          ("data", "Data", ["postgres", "redis", "objects"])],
-        graph=True),
+        graph=True, max_crossings=2),
     _fx("Agent flow", "agent_flow",
         [("email", "Customer email", "input"), ("classify", "Classify request", "task"),
          ("lookup", "orders_api", "tool"), ("policy", "Refund policy", "document"),
@@ -145,7 +150,7 @@ TYPES = [
          ("classify", "policy", "", "dotted", None), ("eligible", "refund", "yes"),
          ("eligible", "reply", "no")],
         [("support", "Refund assistant", ["classify", "lookup", "policy", "eligible"])],
-        graph=True),
+        graph=True, max_crossings=0),
     _fx("Event modeling", "event_model",
         [("Interaction", ["ui", "pcr"]), ("Commands and views", ["cmd", "rmo"]),
          ("Events", ["evt"])],
@@ -285,8 +290,10 @@ def _dense(n=40, extra=30, seed=7):
 
 
 ADVERSARIAL = [
-    {"name": "dense graph (40 nodes, 69 edges)", "builder": "flowchart", "args": _dense(),
-     "kwargs": {}, "max_crossings": None},
+    {"name": "dense graph (18 nodes, 29 edges)", "builder": "flowchart", "args": _dense(18, 12),
+     "kwargs": {}, "max_crossings": 1},
+    {"name": "too dense for a slide (40 nodes, 69 edges)", "builder": "flowchart",
+     "args": _dense(), "kwargs": {}, "max_crossings": None, "raises": "split the diagram"},
     {"name": "long labels", "builder": "flowchart",
      "args": ([("a", "Receive the customer's order and check that every line item is in stock",
                 "start"),
@@ -299,13 +306,13 @@ ADVERSARIAL = [
                 ("e", "Close the order once the courier confirms the delivery signature", "end")],
                [("a", "b"), ("b", "c", "Yes, the address is supported"),
                 ("b", "d", "No, the address is outside every region"), ("c", "e"), ("d", "e")]),
-     "kwargs": {}, "max_crossings": None},
+     "kwargs": {}, "max_crossings": 0},
     {"name": "cycles", "builder": "flowchart",
      "args": ([(c, f"State {c.upper()}", "process") for c in "abcdefgh"],
                [("a", "b"), ("b", "c"), ("c", "a", "retry"), ("c", "d"), ("d", "e"), ("e", "f"),
                 ("f", "d", "loop"), ("f", "g"), ("g", "g", "poll"), ("g", "h"),
                 ("h", "b", "restart")]),
-     "kwargs": {}, "max_crossings": None},
+     "kwargs": {}, "max_crossings": 1},
     {"name": "nested groups (3 levels)", "builder": "architecture",
      "args": ([("lb", "Load balancer", "process"), ("api1", "API node 1", "process"),
                 ("api2", "API node 2", "process"), ("worker", "Worker", "process"),
@@ -318,7 +325,7 @@ ADVERSARIAL = [
                 ("region", "Region eu-west", ["app", "store"]),
                 ("app", "App tier", ["lb", "api1", "api2", "worker"]),
                 ("store", "Data tier", ["db", "replica", "cache"])]),
-     "kwargs": {}, "max_crossings": None},
+     "kwargs": {}, "max_crossings": 1},
 ]
 
 

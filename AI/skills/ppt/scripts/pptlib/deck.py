@@ -26,6 +26,7 @@ from pptx.oxml import parse_xml
 from pptx.shapes.autoshape import AutoShapeType
 from PIL import Image
 
+from .diagrams import Diagrams
 from .shapes import Shapes, alt_text
 from .style import DEFAULT_PALETTE, write_theme
 
@@ -53,7 +54,7 @@ def hex2rgb(h):
     return RGBColor(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
 
 
-class Deck(Shapes):
+class Deck(Shapes, Diagrams):
     """A 16:9 presentation builder with a consistent theme."""
 
     def __init__(self, theme=None):

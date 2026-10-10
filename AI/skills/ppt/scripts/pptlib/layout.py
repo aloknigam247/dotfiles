@@ -181,6 +181,7 @@ class _Opt:
     channel: float = 0.1  # spacing of parallel jogs in a gap
     clear: float = 0.08  # routes keep this far from nodes
     edge_gap: float = 0.15  # separation of a long edge from its neighbours in a rank
+    label_gap: float = 0.04  # between a label band and the channels before it
     label_pad: float = 0.05
     loop: float = 0.25  # how far a self-loop reaches out of its node
     m_bottom: float = 0.16  # free run above a target (room for the arrowhead)
@@ -199,8 +200,10 @@ class _Level:
         self.chains = {}  # edge index -> (upper, lower, dummies, reversed)
         self.crossings = 0
         self.flat = {}  # edge index -> (left/right ids as drawn, reversed)
+        self.flip = {}  # rank -> True when its band of a folded layout runs backwards
         self.gaps = []  # (top, bottom) of the gap below each rank
         self.height = 0.0
+        self.label_rows = {}  # gap -> rows of label chips its band holds
         self.layers = []
         self.rank = {}
         self.rank_h = []
@@ -302,8 +305,10 @@ def _sweep(layers, nbrs, downward):
         layers[r] = [fixed[i] if i in fixed else next(it)[2] for i in range(len(layers[r]))]
 
 
-def _transpose(layers, up, down, passes=6):
-    """Swap neighbours while that removes crossings with the layers above and below."""
+def _transpose(layers, up, down, passes=6, hint=None):
+    """Swap neighbours while that removes crossings with the layers above and below (a pair out
+    of `hint` order counts as half a crossing)."""
+    hint = hint or {}
     for _ in range(passes):
         improved = False
         for r, layer in enumerate(layers):
@@ -318,6 +323,9 @@ def _transpose(layers, up, down, passes=6):
                 if pos_dn:
                     keep += _pair_crossings(down[v], down[w], pos_dn)
                     swap += _pair_crossings(down[w], down[v], pos_dn)
+                if v in hint and w in hint and hint[v] != hint[w]:
+                    keep += 0.5 * (hint[v] > hint[w])
+                    swap += 0.5 * (hint[w] > hint[v])
                 if swap < keep:
                     layer[i], layer[i + 1] = w, v
                     improved = True
@@ -325,17 +333,24 @@ def _transpose(layers, up, down, passes=6):
             return
 
 
-def _order(layers, up, down, iterations=24):
-    """Barycenter sweeps with transposition; the ordering with the fewest crossings."""
+def _order(layers, up, down, iterations=24, hint=None):
+    """Barycenter sweeps with transposition; the ordering with the fewest crossings. `hint`
+    {node: value} orders nodes whose position the graph leaves open (a group's members by where
+    their outside neighbours are)."""
     cur = [list(layer) for layer in layers]
-    _transpose(cur, up, down)
+    if hint:
+        for layer in cur:
+            slots = [i for i, n in enumerate(layer) if n in hint]
+            for i, n in zip(slots, sorted((layer[i] for i in slots), key=hint.__getitem__)):
+                layer[i] = n
+    _transpose(cur, up, down, hint=hint)
     best, best_c = [list(layer) for layer in cur], _total_crossings(cur, down)
     stale = 0
     for it in range(iterations):
         if not best_c:
             break
         _sweep(cur, up if it % 2 == 0 else down, it % 2 == 0)
-        _transpose(cur, up, down)
+        _transpose(cur, up, down, hint=hint)
         c = _total_crossings(cur, down)
         if c < best_c:
             best, best_c, stale = [list(layer) for layer in cur], c, 0
@@ -492,8 +507,11 @@ def _max_overlap(intervals, gap):
     return best
 
 
-def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt):
-    """Layered layout of `ids` (TB-frame sizes) with lifted `edges` [(a, b, edge index)]."""
+def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt, beside=None, hint=None):
+    """Layered layout of `ids` (TB-frame sizes) with lifted `edges` [(a, b, edge index)];
+    `beside` {id: other} puts a node in the rank of another, right after it ({id: (other,
+    "before")}: right before it)."""
+    beside = {n: (o if isinstance(o, tuple) else (o, "after")) for n, o in (beside or {}).items()}
     lv = _Level()
     pairs = {}
     for a, b, ei in edges:
@@ -508,6 +526,8 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt):
         u, v, rev = (b, a, True) if (a, b) in back else (a, b, False)
         dag.setdefault((u, v), []).extend((ei, rev) for ei in eis)
     rank = _ranks(ids, dag, pins)
+    for n, (other, _) in beside.items():
+        rank[n] = rank[other]
     lv.rank = dict(rank)
     up, down = defaultdict(list), defaultdict(list)
     for (u, v), items in dag.items():
@@ -542,7 +562,11 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt):
             seen.add(n)
             layers[lv.rank[n]].append(n)
             stack.extend(reversed(down[n]))
-    layers, lv.crossings = _order(layers, up, down)
+    layers, lv.crossings = _order(layers, up, down, hint=hint)
+    for n, (other, where) in beside.items():
+        layer = layers[rank[n]]
+        layer.remove(n)
+        layer.insert(layer.index(other) + (where != "before"), n)
     lv.layers = layers
 
     def half(n):
@@ -562,13 +586,33 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt):
     for n in ids:
         lv.rank_h[rank[n]] = max(lv.rank_h[rank[n]], size[n][1])
     jogs, band = defaultdict(list), [0.0] * nr
+    chips = defaultdict(list)
     for ei, (u, v, dummies, _) in lv.chains.items():
         seq = [u, *dummies, v]
         for a, b in zip(seq, seq[1:]):
             if abs(x[a] - x[b]) > 0.02:
                 jogs[lv.rank[a]].append((min(x[a], x[b]), max(x[a], x[b])))
         if ei in label_ext:
-            band[rank[u]] = max(band[rank[u]], label_ext[ei] + 2 * opt.label_pad)
+            cross, along = label_ext[ei]
+            if dummies:
+                at = x[dummies[-1]]
+            else:  # where the port of a short edge goes (see _Router.desired)
+                lo = max(x[u] - half(u), x[v] - half(v)) + 0.06
+                hi = min(x[u] + half(u), x[v] + half(v)) - 0.06
+                at = min(max((x[u] + x[v]) / 2, lo), hi) if hi > lo else x[v]
+            chips[rank[v] - 1].append((at, cross, along))
+    for r, lst in chips.items():
+        ends, height = [], []
+        for at, cross, along in sorted(lst):
+            row = next((k for k, end in enumerate(ends) if end + 0.16 <= at - cross / 2),
+                       len(ends))
+            if row == len(ends):
+                ends.append(-math.inf)
+                height.append(0.0)
+            ends[row] = at + cross / 2
+            height[row] = max(height[row], along + 2 * opt.label_pad)
+        band[r] = max(height) * len(height)
+        lv.label_rows[r] = len(height)
     looped = {rank[n] for n in loops}
     top = opt.loop + 0.2 if 0 in looped else 0.0
     lv.band = band
@@ -576,7 +620,8 @@ def _flat_level(ids, size, sep_w, edges, pins, label_ext, loops, opt):
     for r in range(nr):
         if r:
             levels = _max_overlap(jogs[r - 1], opt.channel)
-            need = opt.m_top + band[r - 1] + max(0, levels - 1) * opt.channel + opt.m_bottom
+            need = opt.m_top + band[r - 1] + max(0, levels - 1) * opt.channel + opt.m_bottom + \
+                (opt.label_gap if band[r - 1] else 0.0)
             if r in looped:
                 need = max(need, band[r - 1] + opt.loop + 0.2)
             gap = max(opt.rank_gap, need)
@@ -714,7 +759,9 @@ class _State:
         return False
 
     # -- building -----------------------------------------------------------------------------
-    def build(self, sizes, edges, groups, pins, ports, label_sizes, titles, group_pad):
+    def build(self, sizes, edges, groups, pins, ports, label_sizes, titles, group_pad, bands=1,
+              beside=None, variant=0):
+        beside = beside or {}
         opt = self.opt
         self.edges_in = list(edges)
         self.groups = groups
@@ -726,7 +773,8 @@ class _State:
             if spec in ("centre", "center"):
                 spec = {"t": (0.5, 0.0), "r": (1.0, 0.5), "b": (0.5, 1.0), "l": (0.0, 0.5)}
             if spec not in ("spread", "diamond"):
-                spec = {(_FLIP[s] if self.lr else s): ((f[1], f[0]) if self.lr else tuple(f))
+                spec = {(_FLIP[s] if self.lr else s):
+                        (f if f == "spread" else (f[1], f[0]) if self.lr else tuple(f))
                         for s, f in spec.items()}
             self.mode[n] = spec
 
@@ -754,12 +802,17 @@ class _State:
                 if u != v and a is not None and b is not None and a != b:
                     lifted.append((a, b, i))
                     self.lift[i] = (level, a, b)
-            label_ext = {i: self.tb_size(label_sizes[i])[1] for _, _, i in lifted
+            label_ext = {i: self.tb_size(label_sizes[i]) for _, _, i in lifted
                          if i in label_sizes}
             lv = _flat_level(kids[level], size, sep_w, lifted,
                              {k: pins[k] for k in kids[level] if k in pins}, label_ext,
-                             {k for k in kids[level] if k in looped}, opt)
+                             {k for k in kids[level] if k in looped}, opt,
+                             {k: o for k, o in beside.items() if k in size and
+                              (o[0] if isinstance(o, tuple) else o) in size},
+                             hints.get(level))
             self.levels[level] = lv
+            if level is None:
+                self.levels_sep = sep_w
             self.crossings += lv.crossings
             if level is not None:
                 pl, pt, pr, pb = self.tb_pad(level)
@@ -776,7 +829,29 @@ class _State:
                     pl, pt, _, _ = self.tb_pad(k)
                     place(k, cx - w / 2 + pl, cy - h / 2 + pt)
 
+        def outside_hints(g):
+            """{member: mean across-flow position of its neighbours outside group g} from the
+            current placement."""
+            acc = defaultdict(list)
+            for u, v in edges:
+                for a, b in ((u, v), (v, u)):
+                    k = self.top(a, g)
+                    if k is not None and a != g and self.top(b, g) is None and b != g:
+                        acc[k].append(self.box[b][0] + self.box[b][2] / 2)
+            return {k: sum(xs) / len(xs) for k, xs in acc.items()}
+
+        hints = {}
         build_level(None)
+        order = list(groups)[::-1] if variant == 1 else list(groups) if not variant else []
+        # order each group's members by their outside neighbours: one group at a time in small
+        # diagrams, all groups at once in large ones
+        for batch in ([[g] for g in order] if len(order) <= 4 else [order] if order else []):
+            place(None, 0.0, 0.0)
+            hints.update({g: outside_hints(g) for g in batch})
+            self.crossings = 0
+            build_level(None)
+        if bands > 1:
+            self.fold(self.levels[None], bands)
         place(None, 0.0, 0.0)
         for g, (tw, th) in titles.items():
             x, y, w, h = self.slide_box(self.box[g])
@@ -799,14 +874,85 @@ class _State:
             e.level = level
             if i in lv.chains:
                 e.upper, e.lower, e.dummies, e.rev = lv.chains[i]
-                e.sides = ["t", "b"] if e.rev else ["b", "t"]
+                flip = lv.flip.get(lv.rank[e.upper], False)
+                e.sides = ["t", "b"] if e.rev != flip else ["b", "t"]
                 e.kind = "chain" if (a, b) == (u, v) else "proj"
                 e.tops = (a, b)
+                band = getattr(lv, "band_of", None)
+                if band and band[lv.rank[e.upper]] != band[lv.rank[e.lower]]:
+                    e.kind = "free"
+                    e.sides = ["l", "r"] if e.rev else ["r", "l"]
             else:
                 e.rev = lv.flat[i][2]
                 e.kind = "flat" if (a, b) == (u, v) else "free"
                 left = self.box[u][0] + self.box[u][2] / 2 <= self.box[v][0] + self.box[v][2] / 2
                 e.sides = ["r", "l"] if left else ["l", "r"]
+
+    def band_links(self, lv, band_of):
+        """(node in the later band, node in the earlier band) of every edge between two bands,
+        including edges of nested nodes, by the ids of this level."""
+        out = []
+        for u, v, dummies, _ in lv.chains.values():
+            if band_of[lv.rank[u]] != band_of[lv.rank[v]]:
+                out.append((v, u) if band_of[lv.rank[v]] > band_of[lv.rank[u]] else (u, v))
+        return out
+
+    def fold(self, lv, bands):
+        """Wrap the ranks of level lv into `bands` bands of about equal length, side by side
+        across the flow (rows of an LR layout, columns of a TB one). Every second band runs
+        backwards (a serpentine), so the edges between bands stay short."""
+        nr = len(lv.rank_y)
+        bands = max(1, min(bands, nr))
+        if bands == 1:
+            return
+        ends = [lv.rank_y[r] + lv.rank_h[r] / 2 for r in range(nr)]
+        starts = [lv.rank_y[r] - lv.rank_h[r] / 2 for r in range(nr)]
+        total = ends[-1] - starts[0]
+        band_of, b = [], 0
+        for r in range(nr):
+            if band_of and b < bands - 1 and lv.rank_y[r] - starts[0] > (b + 1) * total / bands:
+                b += 1
+            band_of.append(b)
+        nodes = defaultdict(list)
+        for n, r in lv.rank.items():
+            nodes[band_of[r]].append(n)
+        half = {n: (0.0 if _dummy(n) else self.levels_sep[n] / 2) for n in lv.x}
+        for b in range(1, max(band_of) + 1):
+            # mirror a band whose links to earlier bands sit on its far side
+            ties = [lv.x[lo_] for lo_, up_ in self.band_links(lv, band_of)
+                    if band_of[lv.rank[lo_]] == b]
+            if ties:
+                lo = min(lv.x[n] - half[n] for n in nodes[b])
+                hi = max(lv.x[n] + half[n] for n in nodes[b])
+                if sum(ties) / len(ties) > (lo + hi) / 2 + 1e-6:
+                    for n in nodes[b]:
+                        lv.x[n] = lo + hi - lv.x[n]
+        base = starts[0]
+        x_off, height = 0.0, 0.0
+        for b in range(max(band_of) + 1):
+            members = nodes[b]
+            ranks = [r for r in range(nr) if band_of[r] == b]
+            lo = min(lv.x[n] - half[n] for n in members)
+            hi = max(lv.x[n] + half[n] for n in members)
+            first, last = starts[ranks[0]], ends[ranks[-1]]
+            for n in members:
+                lv.x[n] += x_off - lo
+            for r in ranks:
+                if b % 2:
+                    lv.rank_y[r] = base + last - lv.rank_y[r]
+                    lv.flip[r] = True
+                    if r < len(lv.gaps):
+                        g0, g1 = lv.gaps[r]
+                        lv.gaps[r] = (base + last - g1, base + last - g0)
+                else:
+                    lv.rank_y[r] -= first - base
+                    if r < len(lv.gaps):
+                        lv.gaps[r] = (lv.gaps[r][0] - first + base, lv.gaps[r][1] - first + base)
+            height = max(height, base + last - first)
+            x_off += hi - lo + self.opt.node_gap * 1.6
+        lv.band_of = band_of
+        lv.width = x_off - self.opt.node_gap * 1.6
+        lv.height = height
 
     def move(self, n, cx, cy):
         """Pin node n (slide-frame centre); its edges become free and its groups grow."""
@@ -843,6 +989,7 @@ class _State:
 # --------------------------------------------------------------------------------------------
 _BEND, _CROSS, _OVERLAP, _BORDER = 0.25, 0.3, 1.0, 0.25  # route costs, in inches of length
 _CELL = 0.5  # spatial hash cell, inches
+_NARROW = 0.35  # label chips narrower than this across the flow sit side by side, wider ones stack
 
 
 def _facing(a, b):
@@ -943,7 +1090,7 @@ class _Router:
         for g in self.st.groups:
             a = self.st.inside(e.src, g) or (e.src == g and self.st.inside(e.dst, g))
             b = self.st.inside(e.dst, g) or (e.dst == g and self.st.inside(e.src, g))
-            out.append((4 if a and b else 1 if a or b else 6) * _BORDER)
+            out.append((4 if a and b else 1 if a or b else 20) * _BORDER)
         return out
 
     def member(self, p):
@@ -966,18 +1113,24 @@ class _Router:
             return 0.0
         return sum(cost for bit, cost in enumerate(modes) if diff >> bit & 1)
 
+    def side_mode(self, n, side):
+        """\"spread\", \"diamond\" or the fixed (fx, fy) site of one side of n."""
+        mode = self.st.mode.get(n, "spread")
+        if isinstance(mode, dict):
+            return mode.get(side, {"t": (0.5, 0), "b": (0.5, 1), "l": (0, 0.5),
+                                   "r": (1, 0.5)}[side])
+        return mode
+
     def side_point(self, n, side, toward):
         """A port on `side` of n: the fixed site of a fixed-port node, the vertex of a diamond,
         else the point nearest `toward` (kept off the corners)."""
         x, y, w, h = self.st.box[n]
-        mode = self.st.mode.get(n, "spread")
+        mode = self.side_mode(n, side)
         if mode == "diamond":
             return {"t": (x + w / 2, y), "b": (x + w / 2, y + h), "l": (x, y + h / 2),
                     "r": (x + w, y + h / 2)}[side]
         if mode != "spread":
-            fx, fy = mode.get(side, {"t": (0.5, 0), "b": (0.5, 1), "l": (0, 0.5),
-                                     "r": (1, 0.5)}[side])
-            return (x + fx * w, y + fy * h)
+            return (x + mode[0] * w, y + mode[1] * h)
         if side in "tb":
             m = min(0.12, w / 4)
             return (min(max(toward[0], x + m), x + w - m), y if side == "t" else y + h)
@@ -1001,7 +1154,7 @@ class _Router:
                 ends[(n, e.sides[which])].append((e, which))
         for (n, side), lst in list(ends.items()):
             mode = self.st.mode.get(n, "spread")
-            if mode in ("spread", "diamond") or len(lst) < 2:
+            if not isinstance(mode, dict) or "spread" in mode.values() or len(lst) < 2:
                 continue
             axis = 0 if side in "tb" else 1
             c = self.centre(n)[axis]
@@ -1101,7 +1254,7 @@ class _Router:
     def foreign(self, pts, e):
         """True when a route enters the frame of a group that holds neither of its ends."""
         avoid = [self.st.box[g] for g, cost in zip(self.st.groups, self.group_modes(e))
-                 if cost == 6 * _BORDER]
+                 if cost == 20 * _BORDER]
         return any(_seg_hits(p, q, (x, y, x + w, y + h))
                    for p, q in zip(pts, pts[1:]) for x, y, w, h in avoid)
 
@@ -1116,7 +1269,7 @@ class _Router:
                 ends[(n, e.sides[which])].append((e, which))
         for (n, side), lst in ends.items():
             x, y, w, h = st.box[n]
-            mode = st.mode.get(n, "spread")
+            mode = self.side_mode(n, side)
             if mode not in ("spread", "diamond"):
                 for e, which in lst:
                     e.ports[which] = self.side_point(n, side, (0, 0))
@@ -1134,6 +1287,11 @@ class _Router:
             else:
                 m = min(0.12, (hi - lo) / 4)
                 gap = min(self.opt.port_gap, (hi - lo - 2 * m) / max(len(want) - 1, 1))
+                chips = [e.label[0] for e, which in lst if e.label and which == (1 if e.rev else 0)
+                         and e.kind in ("chain", "proj")]
+                if len(chips) > 1 and max(chips) <= _NARROW and \
+                        (len(want) - 1) * (max(chips) + 0.06) <= hi - lo - 2 * m:
+                    gap = max(gap, max(chips) + 0.06)  # room for side-by-side label chips
             ds = [min(max(d, lo + m + k * gap), hi - m - (len(want) - 1 - k) * gap)
                   for k, (d, _) in enumerate(want)]
             ps = _pav(ds, gap) if len(ds) > 1 else ds
@@ -1235,7 +1393,7 @@ class _Router:
         """The port of `side` of n at coordinate v along the side, or None when n has fixed
         sites or v is too close to a corner."""
         x, y, w, h = self.st.box[n]
-        mode = self.st.mode.get(n, "spread")
+        mode = self.side_mode(n, side)
         along = side in "tb"
         lo, hi = (x, x + w) if along else (y, y + h)
         m = min(0.08, (hi - lo) / 4)
@@ -1272,7 +1430,7 @@ class _Router:
             ox = st.origin[e.level][0]
             upper_port, lower_port = (e.ports[1], e.ports[0]) if e.rev else e.ports
             if e.kind == "chain" and not e.dummies and \
-                    1e-4 < abs(upper_port[0] - lower_port[0]) < 0.08:
+                    1e-4 < abs(upper_port[0] - lower_port[0]) < 0.15:
                 self.align_ports(e)
                 upper_port, lower_port = (e.ports[1], e.ports[0]) if e.rev else e.ports
             xs = [upper_port[0], *(ox + lv.x[d] for d in e.dummies), lower_port[0]]
@@ -1292,9 +1450,11 @@ class _Router:
             lv = st.levels[level]
             oy = st.origin[level][1]
             top, bottom = lv.gaps[r]
-            ys = self.channels([(a, b) for a, b, _, _ in lst],
-                               oy + top + self.opt.m_top + lv.band[r],
-                               oy + bottom - self.opt.m_bottom)
+            near = self.opt.m_top
+            far = self.opt.m_bottom + (lv.band[r] + self.opt.label_gap if lv.band[r] else 0.0)
+            if lv.flip.get(r):
+                near, far = far, near
+            ys = self.channels([(a, b) for a, b, _, _ in lst], oy + top + near, oy + bottom - far)
             for (_, _, e, k), yy in zip(lst, ys):
                 e.chan[k] = yy
         for e in chains:
@@ -1312,12 +1472,34 @@ class _Router:
                     (e.kind == "proj" and self.foreign(pts, e)):
                 e.kind = "free"
                 continue
-            r0 = lv.rank[e.upper]
-            if lv.band[r0] and e.label:
-                top = oy + lv.gaps[r0][0] + self.opt.m_top
-                e.spots.append((e.xs[0], top + lv.band[r0] / 2))
             e.points = pts[::-1] if e.rev else pts
             self.seg.add(e.points)
+        self.band_spots([e for e in chains if e.kind in ("chain", "proj") and e.label])
+
+    def band_spots(self, labelled):
+        """Label spots in the label band of the gap above each target, on the last run of every
+        edge; chips that would touch take the next row of the band."""
+        st = self.st
+        per_gap = defaultdict(list)
+        for e in labelled:
+            per_gap[(e.level, st.levels[e.level].rank[e.lower] - 1)].append(e)
+        for (level, r), lst in per_gap.items():
+            lv = st.levels[level]
+            oy = st.origin[level][1]
+            nrows = lv.label_rows.get(r, 1)
+            row_h = lv.band[r] / nrows
+            ends = []
+            for e in sorted(lst, key=lambda e: e.xs[-1]):
+                lo = e.xs[-1] - e.label[0] / 2
+                row = next((k for k, end in enumerate(ends) if end + 0.06 <= lo), len(ends))
+                if row == len(ends):
+                    ends.append(-math.inf)
+                ends[row] = e.xs[-1] + e.label[0] / 2
+                if row >= nrows:
+                    continue
+                offset = self.opt.m_bottom + self.opt.label_gap + (row + 0.5) * row_h
+                y = oy + (lv.gaps[r][0] + offset if lv.flip.get(r) else lv.gaps[r][1] - offset)
+                e.spots.append((e.xs[-1], y))
 
     # -- loops, flat edges and free routes ----------------------------------------------------
     def loop_route(self, e):
@@ -1351,7 +1533,8 @@ class _Router:
         out = {"r": x1 - p[0], "l": p[0] - x0, "b": y1 - p[1], "t": p[1] - y0}[side]
         return max(self.opt.stub, out + 0.03)
 
-    def astar(self, p0, side0, p1, side1, modes, stubs, congestion=True, budget=8000):
+    def astar(self, p0, side0, p1, side1, modes, stubs, congestion=True, budget=8000,
+              cross_cost=_CROSS):
         """The cheapest route of at most five segments from p0 (leaving through side0) to p1
         (entering through side1) on the sparse grid, or None."""
         n0, n1 = _NORMAL[side0], _NORMAL[side1]
@@ -1417,7 +1600,7 @@ class _Router:
                         step = None
                     else:
                         cross, run = self.seg.cost(p, q) if congestion else (0, 0.0)
-                        step = abs(q[0] - p[0]) + abs(q[1] - p[1]) + _CROSS * cross + \
+                        step = abs(q[0] - p[0]) + abs(q[1] - p[1]) + cross_cost * cross + \
                             _OVERLAP * run + self.group_step(p, q, modes)
                     steps[skey] = step
                 if step is None:
@@ -1434,7 +1617,18 @@ class _Router:
                 heapq.heappush(heap, (g2 + h(xs[jx], ys[jy], nd), g2, jx, jy, nd, nb))
         return None
 
-    def free_route(self, e):
+    def route_cost(self, pts, modes):
+        """Length, bends, crossings, overlaps and frame crossings of a route, priced like A*."""
+        cost = (len(pts) - 2) * _BEND
+        for p, q in zip(pts, pts[1:]):
+            cross, run = self.seg.cost(p, q)
+            cost += abs(q[0] - p[0]) + abs(q[1] - p[1]) + _CROSS * cross + _OVERLAP * run + \
+                self.group_step(p, q, modes)
+        return cost
+
+    def free_route(self, e, explore=False):
+        """Route e by A*: pricing congestion on its own sides (with `explore`, also on the next
+        best side pairs, keeping the cheapest route), else ignoring congestion."""
         st = self.st
         ca, cb = self.centre(e.src), self.centre(e.dst)
         options = [tuple(e.sides)]
@@ -1442,20 +1636,74 @@ class _Router:
         options += sorted({(a, b) for a in "trbl" for b in "trbl"} - {options[0]},
                           key=lambda ab: (ab != pref, ab[0] != pref[0], ab[1] != pref[1], ab))
         modes = self.group_modes(e)
+        best = None
         far = abs(e.ports[0][0] - e.ports[1][0]) + abs(e.ports[0][1] - e.ports[1][1]) > 8
-        for attempt, (sa, sb) in enumerate(options[:1] + options[:4]):
-            if far and attempt == 0:
-                continue  # a long route prices congestion too slowly; nudging separates it
-            pa = e.ports[0] if attempt < 2 else self.side_point(e.src, sa, cb)
-            pb = e.ports[1] if attempt < 2 else self.side_point(e.dst, sb, ca)
+        tries = [(k, sides, True, 4000) for k, sides in enumerate(options[:3 if explore else 1])]
+        if far:
+            tries = []  # a long route prices congestion too slowly; nudging separates it
+        tries += [(k, sides, False, 20000) for k, sides in enumerate(options[:4])]
+        for k, (sa, sb), congestion, budget in tries:
+            if best is not None and not congestion:
+                break
+            pa = e.ports[0] if k == 0 else self.side_point(e.src, sa, cb)
+            pb = e.ports[1] if k == 0 else self.side_point(e.dst, sb, ca)
             stubs = (self.stub(e.src, pa, sa), self.stub(e.dst, pb, sb))
-            pts = self.astar(pa, sa, pb, sb, modes, stubs, congestion=attempt == 0,
-                             budget=4000 if attempt == 0 else 20000)
-            if pts is not None and len(pts) - 1 <= MAX_SEGMENTS:
-                e.points, e.sides, e.ports = pts, [sa, sb], [pa, pb]
-                self.seg.add(pts)
-                return True
-        return False
+            pts = self.astar(pa, sa, pb, sb, modes, stubs, congestion=congestion, budget=budget)
+            if pts is None or len(pts) - 1 > MAX_SEGMENTS:
+                continue
+            cost = self.route_cost(pts, modes)
+            if best is None or cost < best[0]:
+                best = (cost, pts, [sa, sb], [pa, pb])
+            if not congestion:
+                break
+        if best is None:
+            return False
+        _, e.points, e.sides, e.ports = best
+        self.seg.add(e.points)
+        return True
+
+    def repair(self, passes=2):
+        """Re-route each edge that crosses others with crossings priced high, keeping the new
+        route when it crosses less (small diagrams only; the others keep their first routes)."""
+        edges = self.st.edges
+        if len(edges) > 30 or route_crossings([e.points for e in edges]) > 8:
+            return
+        for _ in range(passes):
+            changed = False
+            for e in edges:
+                others = [o.points for o in edges if o is not e]
+                mine = route_crossings([e.points] + others) - route_crossings(others)
+                if not mine or e.kind == "loop":
+                    continue
+                self.seg = _SegIndex(0.05)
+                for pts in others:
+                    self.seg.add(pts)
+                modes = self.group_modes(e)
+                best = (mine, self.route_cost(e.points, modes), e.points, list(e.sides),
+                        list(e.ports))
+                ca, cb = self.centre(e.src), self.centre(e.dst)
+                for sa, sb in dict.fromkeys([tuple(e.sides)] + [
+                        _facing(self.st.box[e.src], self.st.box[e.dst])]):
+                    pa = e.ports[0] if (sa, sb) == tuple(e.sides) else \
+                        self.side_point(e.src, sa, cb)
+                    pb = e.ports[1] if (sa, sb) == tuple(e.sides) else \
+                        self.side_point(e.dst, sb, ca)
+                    stubs = (self.stub(e.src, pa, sa), self.stub(e.dst, pb, sb))
+                    pts = self.astar(pa, sa, pb, sb, modes, stubs, budget=8000, cross_cost=4.0)
+                    if pts is None or len(pts) - 1 > MAX_SEGMENTS:
+                        continue
+                    n = route_crossings([pts] + others) - route_crossings(others)
+                    if n < best[0]:
+                        best = (n, self.route_cost(pts, modes), pts, [sa, sb], [pa, pb])
+                if best[2] is not e.points:
+                    e.points, e.sides, e.ports = best[2], best[3], best[4]
+                    e.spots = []
+                    changed = True
+            self.seg = _SegIndex(0.05)
+            for o in edges:
+                self.seg.add(o.points)
+            if not changed:
+                return
 
     def nudge(self):
         """Move apart interior segments of different routes that run on top of each other, by
@@ -1521,9 +1769,10 @@ class _Router:
         free.sort(key=lambda e: abs(e.ports[0][0] - e.ports[1][0]) +
                   abs(e.ports[0][1] - e.ports[1][1]))
         for e in free:
-            if not self.free_route(e):
+            if not self.free_route(e, explore=len(free) <= 8):
                 raise LayoutError(f"edge {e.src!r} -> {e.dst!r} needs more than {MAX_SEGMENTS} "
                                   "segments: split the diagram or add hints (direction, rank, pos)")
+        self.repair()
         self.nudge()
         for e in st.edges:
             segs = sorted(zip(e.points, e.points[1:]),
@@ -1573,7 +1822,7 @@ def _check(sizes, edges, groups):
 
 def layered(sizes, edges, *, direction="TB", groups=None, rank=None, ports=None,
             label_sizes=None, titles=None, group_pad=(0.15, 0.42, 0.15, 0.15), node_gap=0.35,
-            rank_gap=0.55):
+            rank_gap=0.55, bands=1, beside=None, variant=0):
     """Lay out a directed graph in ranks (TB: top to bottom, LR: left to right).
 
     sizes: {id: (w, h)}; edges: [(src, dst)] between nodes or groups; groups: {gid: [member ids]}
@@ -1581,7 +1830,12 @@ def layered(sizes, edges, *, direction="TB", groups=None, rank=None, ports=None,
     'spread' | 'centre' | {side: (fx, fy)}} (spread: ports anywhere along a side, the default;
     otherwise fixed sites as fractions of the box); label_sizes: {edge index: (w, h)} label chips
     to make room for; titles: {gid: (w, h)} group title boxes routes keep out of; group_pad:
-    (left, top, right, bottom) inside a group frame, or {gid: pad}.
+    (left, top, right, bottom) inside a group frame, or {gid: pad}; bands: wrap the ranks into
+    this many rows (LR) or columns (TB) when one is too long for the slide; beside: {id: other}
+    puts a node in the rank of another node of its level, right next to it (an end marker, a note);
+    variant 1 orders the members of nested groups in the opposite sequence and variant 2 not by
+    their outside neighbours at all, which can untangle edges between groups (compare the routed
+    crossings).
     """
     if direction not in ("TB", "LR"):
         raise ValueError(f"direction must be 'TB' or 'LR', not {direction!r}")
@@ -1589,7 +1843,7 @@ def layered(sizes, edges, *, direction="TB", groups=None, rank=None, ports=None,
     st = _State(direction == "LR", _Opt(node_gap=node_gap, rank_gap=rank_gap))
     st.parent = _check(sizes, edges, groups)
     st.build(sizes, list(edges), groups, rank or {}, ports or {}, label_sizes or {},
-             titles or {}, group_pad)
+             titles or {}, group_pad, bands, beside, variant)
     ranks = {n: st.levels[st.parent.get(n)].rank[n] for n in [*sizes, *groups]}
     lay = Layout(direction, 0.0, 0.0, {}, {}, st.plans(), st.crossings, ranks, st)
     lay._sync()

@@ -167,6 +167,8 @@ def fixture_crossings():
     out = []
     for fx in [f for f in fixtures.TYPES if f["graph"]] + fixtures.ADVERSARIAL:
         name = fx.get("type") or f"adversarial: {fx['name']}"
+        if fx.get("raises"):
+            continue
         if not hasattr(Deck, fx["builder"]):
             out.append((name, None, fx["max_crossings"]))
             continue

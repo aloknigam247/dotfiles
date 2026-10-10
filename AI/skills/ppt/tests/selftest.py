@@ -210,10 +210,19 @@ def test_types(results, d):
 def test_adversarial(results, d):
     skipped = []
     for fx in fixtures.ADVERSARIAL:
-        if available(fx):
-            build_checked(results, d, fx, f"adversarial: {fx['name']}")
-        else:
+        if not available(fx):
             skipped.append(f"adversarial: {fx['name']} ({fx['builder']})")
+        elif fx.get("raises"):
+            label = f"adversarial: {fx['name']} raises {fx['raises']!r}"
+            scratch = Deck()
+            try:
+                getattr(scratch, fx["builder"])(scratch.slide(), *fx["args"], **fx["kwargs"])
+            except ValueError as e:
+                results.add("PASS" if fx["raises"] in str(e) else "FAIL", label, str(e)[:90])
+            else:
+                results.add("FAIL", label, "no error raised")
+        else:
+            build_checked(results, d, fx, f"adversarial: {fx['name']}")
     return skipped
 
 
