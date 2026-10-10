@@ -8,6 +8,7 @@ its size: when a diagram does not fit, the builder tries the other direction and
 then raises LayoutError ("split the diagram").
 """
 import math
+from collections import namedtuple
 from dataclasses import dataclass, field
 
 from lxml import etree
@@ -18,6 +19,11 @@ from . import layout
 from .layout import LayoutError
 from .shapes import EMU_IN, LINE_SPACING, PRESETS, _PORT_SHAPES, _rgb, bbox, connection_sites
 from .style import CONTENT, MIN_PT, TYPE_SCALE, blend, kind_style, tint
+
+# the public data model (reference/diagrams.md); plain tuples with the same fields work alike
+Edge = namedtuple("Edge", "src dst label style arrow", defaults=("", "solid", "triangle"))
+Group = namedtuple("Group", "id label members")
+Node = namedtuple("Node", "id text kind", defaults=("process",))
 
 _AGENT = {"action": ("hexagon", 4), "decision": ("flowChartDecision", 2),  # (geometry, slot)
           "document": ("flowChartDocument", 3), "input": ("flowChartInputOutput", 1),
@@ -770,13 +776,14 @@ class Diagrams:
     def class_diagram(self, s, classes, relations, *, box=None, direction="auto", rank=None,
                       pos=None, font=None, title=None, alt=None):
         """A UML class diagram. classes: [(name, attributes, methods, stereotype)]; relations:
-        [(a, b, kind, label, multiplicity at a, multiplicity at b)] with kind association,
-        navigation, composition or aggregation (a is the whole), inheritance or realization (b
-        is the parent) or dependency. Parents and wholes are laid out first."""
+        [(a, b, kind, label, multiplicity at a, multiplicity at b)] with kind association (the
+        default), navigation, composition or aggregation (a is the whole), inheritance or
+        realization (b is the parent) or dependency. Trailing fields may be left out. Parents and
+        wholes are laid out first."""
         edges = []
         nodes = []
         for k, c in enumerate(classes):
-            name, attrs, meths, stereo = (tuple(c) + ([], [], ""))[:4]
+            name, attrs, meths, stereo = (tuple(c) + ([], [], "")[len(c) - 1:])[:4]
             head = [(f"\u00ab{stereo}\u00bb", TYPE_SCALE["label"], False, True)] if stereo else []
             head.append((name, font or TYPE_SCALE["node"], True, stereo == "abstract"))
             size, draw = self._compartments(head, [[[a] for a in attrs], [[m] for m in meths]],
@@ -784,7 +791,7 @@ class Diagrams:
             nodes.append(GNode(name, name, "rect", size=size, draw=draw))
         color = _rgb(self.t["line"])
         for r in relations:
-            a, b, kind, label, ma, mb = (tuple(r) + ("association", "", "", ""))[:6]
+            a, b, kind, label, ma, mb = (tuple(r) + ("association", "", "", "")[len(r) - 2:])[:6]
             if kind in ("inheritance", "realization"):
                 edges.append(GEdge(b, a, label, "dashed" if kind == "realization" else "solid",
                                    None, decorate=_deco("triangle", 0, color), ends=(mb, ma)))
@@ -806,7 +813,8 @@ class Diagrams:
                    pos=None, font=None, title=None, alt=None):
         """An entity-relationship diagram. entities: [(name, [(column, type, key)])] with key
         'PK', 'FK', 'UK', 'PK, FK' or ''; relations: [(a, b, cardinality at a, cardinality at b,
-        label)] with cardinalities '1', '0..1', '1..*' or '0..*' drawn as crow's feet."""
+        label)] with cardinalities '1' (default at a), '0..1', '1..*' or '0..*' (default at b)
+        drawn as crow's feet; trailing fields may be left out."""
         edges = []
         nodes = []
         for k, (name, cols) in enumerate(entities):
@@ -816,7 +824,7 @@ class Diagrams:
             nodes.append(GNode(name, name, "rect", size=size, draw=draw))
         color = _rgb(self.t["line"])
         for r in relations:
-            a, b, ca, cb, label = (tuple(r) + ("1", "0..*", ""))[:5]
+            a, b, ca, cb, label = (tuple(r) + ("1", "0..*", "")[len(r) - 2:])[:5]
             edges.append(GEdge(a, b, label, "solid", None, decorate=_crows(ca, cb, color)))
         return self._graph(s, "er_diagram", title, nodes, edges, box=box, direction=direction,
                            prefer="LR", rank=rank, pos=pos, font=font, alt=alt, node_gap=0.5,

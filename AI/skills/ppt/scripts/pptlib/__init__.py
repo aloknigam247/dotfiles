@@ -7,5 +7,6 @@ The package re-exports `Deck`, `hex2rgb` and every other public name of the form
 """
 from .deck import *  # noqa: F403
 from .deck import Deck, hex2rgb  # noqa: F401
+from .diagrams import Edge, Group, Node  # noqa: F401
 from .layout import LayoutError  # noqa: F401
 from .shapes import Link, Site  # noqa: F401
