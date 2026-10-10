@@ -9,7 +9,8 @@ Checks:
             opening PowerPoint
   open      PowerPoint opens the deck
   text      text stays inside its shape and no word is broken across lines: shapes, table cells
-            (rows must not grow), chart titles, axis titles, legends and data labels
+            (rows must not grow), chart titles, axis titles, legends and data labels (not in
+            Office 2016 charts, whose element geometry COM does not report)
   overlap   'Node:' and 'Label:' shapes do not partly overlap each other and nodes do not cross a
             'Container:' border; allowed: overlaps inside a Venn diagram, labels on containers
   group     every group contains its members
@@ -53,6 +54,7 @@ NS = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main",
 OVERLAP_SHARE = 0.02  # of the smaller shape's area
 PIE_TYPES = {5, 69, -4120, 80, 68, 71}
 TOL_PT = 1.5
+XL_VERTICAL = (-4171, -4170, -4166)  # xlUpward, xlDownward, xlVertical
 
 
 # --------------------------------------------------------------------------------------------
@@ -282,9 +284,11 @@ def table_findings(shp, info):
     return out
 
 
-def _element_findings(name, what, box, chart_box, text, size, font):
-    """A chart element (title, legend, data label) outside the chart or narrower than a word."""
+def _element_findings(name, what, box, chart_box, text, size, font, vertical=False):
+    """A chart element (title, legend, data label) outside the chart or narrower than a word;
+    the text of a `vertical` element (an upward or downward axis title) runs along its height."""
     out = []
+    extent = box[3] - box[1] if vertical else box[2] - box[0]
     if not _contains(chart_box, box, TOL_PT):
         out.append(("text", name, f"chart {what} lies outside the chart"))
     for word in (text or "").split():
@@ -292,10 +296,19 @@ def _element_findings(name, what, box, chart_box, text, size, font):
             need = natural_width(word, size, font) * 0.93  # the narrowest PowerPoint/Pillow ratio
         except RuntimeError:
             break
-        if need > box[2] - box[0] + TOL_PT:
+        if need > extent + TOL_PT:
             out.append(("text", name, f"chart {what}: {word!r} is wider than its "
-                                      f"{box[2] - box[0]:.0f} pt box"))
+                                      f"{extent:.0f} pt box"))
     return out
+
+
+def _vertical(el):
+    """True when a chart title's text runs up or down (xlUpward, xlDownward or +-90 degrees)."""
+    try:
+        orientation = el.Orientation
+    except Exception:  # noqa: BLE001
+        return False
+    return orientation in XL_VERTICAL or abs(orientation) == 90
 
 
 def chart_findings(shp, info, font):
@@ -314,6 +327,10 @@ def chart_findings(shp, info, font):
         out.append(("chart", shp.Name, f"PowerPoint reports chart type {chart_type}; the XML "
                                        "declares "
                                        f"one of {sorted(expected)}"))
+    if any(opts.get("chartex") for _, opts in (info or {}).get("plots", [])):
+        # Office 2016 charts: COM reports no position or size for their titles, legends and
+        # labels (all 0), so their text cannot be measured here
+        return out
     elements = []
     try:
         if ch.HasTitle:
@@ -334,7 +351,7 @@ def chart_findings(shp, info, font):
         except Exception:  # noqa: BLE001
             continue
         out += _element_findings(shp.Name, what, box, chart_box, el.Text, size if size > 0 else 14,
-                                 font)
+                                 font, _vertical(el))
     try:
         has_legend = ch.HasLegend
     except Exception:  # noqa: BLE001
@@ -366,22 +383,24 @@ def chart_findings(shp, info, font):
 
 
 def _legend_findings(shp, ch, chart_box, info):
-    """A legend inside the chart whose entries all fit (PowerPoint stacks entries that don't)."""
+    """A legend inside the chart whose entries all show. PowerPoint drops the entries that do
+    not fit: their keys lie outside the legend or on top of another entry's key. (COM gives
+    every entry of a row the width of the widest one, so entry boxes cannot be compared.)"""
+    keys = []
     out = []
     lg = ch.Legend
     legend_box = (lg.Left, lg.Top, lg.Left + lg.Width, lg.Top + lg.Height)
     if not _contains(chart_box, legend_box, TOL_PT):
         out.append(("text", shp.Name, "chart legend lies outside the chart"))
-    entries = []
     for i in range(1, lg.LegendEntries().Count + 1):
-        e = lg.LegendEntries(i)
-        entries.append((e.Left, e.Top, e.Left + e.Width, e.Top + e.Height))
-    hidden = [i for i, e in enumerate(entries, 1) if not _contains(legend_box, e, TOL_PT)]
-    stacked = [i for i, e in enumerate(entries, 1)
-               if any(_inter(e, f) > 0.2 * _area(e) for j, f in enumerate(entries, 1) if j != i)]
+        k = lg.LegendEntries(i).LegendKey
+        keys.append((k.Left, k.Top, k.Left + k.Width, k.Top + k.Height))
+    hidden = [i for i, k in enumerate(keys, 1) if not _contains(legend_box, k, TOL_PT)]
+    stacked = [i for i, k in enumerate(keys, 1)
+               if any(_inter(k, o) > 0 for j, o in enumerate(keys, 1) if j != i)]
     if hidden or stacked:
         out.append(("text", shp.Name,
-                    f"chart legend shows only part of its {len(entries)} entries"))
+                    f"chart legend shows only part of its {len(keys)} entries"))
     return out
 
 

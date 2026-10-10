@@ -15,10 +15,10 @@ Override the theme by passing a dict of hex colors / font names:
 """
 import os
 from pptx import Presentation
-from pptx.chart.data import CategoryChartData
+from pptx.chart.data import CategoryChartData  # noqa: F401  (re-exported by the package)
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION
+from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION  # noqa: F401  (as above)
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
 from pptx.oxml.ns import qn
@@ -26,6 +26,7 @@ from pptx.oxml import parse_xml
 from pptx.shapes.autoshape import AutoShapeType
 from PIL import Image
 
+from .charts import CHART_KINDS, LEGEND_POS, Charts  # noqa: F401
 from .diagrams import Diagrams
 from .shapes import Shapes, alt_text
 from .structures import Structures
@@ -33,14 +34,6 @@ from .style import DEFAULT_PALETTE, write_theme
 
 ALIGN = {"left": PP_ALIGN.LEFT, "center": PP_ALIGN.CENTER, "right": PP_ALIGN.RIGHT}
 ANCHOR = {"top": MSO_ANCHOR.TOP, "middle": MSO_ANCHOR.MIDDLE, "bottom": MSO_ANCHOR.BOTTOM}
-CHART_KINDS = {
-    "bar": XL_CHART_TYPE.BAR_CLUSTERED, "column": XL_CHART_TYPE.COLUMN_CLUSTERED,
-    "line": XL_CHART_TYPE.LINE, "pie": XL_CHART_TYPE.PIE,
-}
-LEGEND_POS = {
-    "bottom": XL_LEGEND_POSITION.BOTTOM, "top": XL_LEGEND_POSITION.TOP,
-    "left": XL_LEGEND_POSITION.LEFT, "right": XL_LEGEND_POSITION.RIGHT,
-}
 
 DEFAULT_THEME = {
     "navy": "0F172A", "navy_dk": "0A0F1E", "accent": "0EA5E9", "accent2": "6366F1",
@@ -55,7 +48,7 @@ def hex2rgb(h):
     return RGBColor(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
 
 
-class Deck(Shapes, Diagrams, Structures):
+class Deck(Shapes, Diagrams, Structures, Charts):
     """A 16:9 presentation builder with a consistent theme."""
 
     def __init__(self, theme=None):
@@ -290,34 +283,3 @@ class Deck(Shapes, Diagrams, Structures):
         alt_text(gf, alt or f"Table with columns {', '.join(map(str, headers))}; "
                             f"{len(rows)} rows")
         return tbl
-
-    def chart(self, s, kind, x, y, w, h, categories, series, title=None,
-              has_legend=True, legend_pos="bottom", alt=None):
-        """A native, editable PowerPoint chart (bar/column/line/pie). `alt` is its alternative
-        text (default: kind, title and series)."""
-        if kind not in CHART_KINDS:
-            raise ValueError(f"unknown chart kind {kind!r}; expected one of {sorted(CHART_KINDS)}")
-        if kind == "pie" and len(series) != 1:
-            raise ValueError("pie charts require exactly one series")
-        for name, values in series:
-            if len(values) != len(categories):
-                raise ValueError(f"series {name!r} has {len(values)} values, "
-                                 f"expected {len(categories)}")
-        data = CategoryChartData()
-        data.categories = categories
-        for name, values in series:
-            data.add_series(name, values)
-        gf = s.shapes.add_chart(CHART_KINDS[kind], Inches(x), Inches(y),
-                                Inches(w), Inches(h), data)
-        chart = gf.chart
-        chart.has_title = bool(title)
-        if title:
-            chart.chart_title.text_frame.text = title
-        chart.has_legend = has_legend
-        if has_legend:
-            chart.legend.position = LEGEND_POS[legend_pos]
-            chart.legend.include_in_layout = False
-        alt_text(gf, alt or f"{kind.capitalize()} chart{f' {title}' if title else ''}: "
-                            f"{', '.join(str(n) for n, _ in series)} by "
-                            f"{', '.join(map(str, categories))}")
-        return chart

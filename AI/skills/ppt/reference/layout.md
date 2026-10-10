@@ -48,7 +48,8 @@ and violet); it is written into the presentation theme, so charts and diagram no
 | `run(p, text, size=, color=, bold=, italic=, mono=)` | add a styled run |
 | `bullet(tf, text, level=, size=, color=, bold=, ...)` | a natively-bulleted paragraph |
 | `table(s, x, y, w, h, headers, rows, col_widths=, col_align=, alt=, ...)` | a themed native table |
-| `chart(s, kind, x, y, w, h, categories, series, title=, alt=, ...)` | a native editable chart (bar/column/line/pie) |
+| `chart(s, kind, x, y, w, h, categories, series, title=, alt=, ...)` | a native editable chart (bar/column/line/pie/area/area_stacked/doughnut/radar) |
+| `bar_line()`, `scatter()`, `bubble()`, `histogram()`, `heatmap()`, `candlestick()`, `box_plot()`, `sunburst()` | native charts in the modern style (`pptlib/charts.py`) |
 | `img_fit(s, path, bx, by, bw, bh, align=, valign=, alt=)` | insert image scaled to fit a box, aspect-preserved |
 | `save(path)` | write the .pptx |
 
@@ -96,8 +97,9 @@ d.table(s, 0.9, 2.0, 6.0, 2.5,
 ```
 
 **Chart (native, editable):** `Deck.chart()` adds a real PowerPoint chart (data stays editable via
-Edit Data) for `bar`, `column`, `line`, `pie`. Each series is a `(name, values)` pair; `pie` takes
-exactly one series.
+Edit Data) for `bar`, `column`, `line`, `pie`, `area`, `area_stacked`, `doughnut` and `radar`, in
+the modern style (palette colours, light gridlines, no border). Each series is a `(name, values)`
+pair; `pie` and `doughnut` take exactly one series.
 ```python
 d.chart(s, "column", 7.2, 2.0, 5.0, 3.5,
         ["Q1", "Q2", "Q3", "Q4"],
