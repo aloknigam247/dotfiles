@@ -1,7 +1,7 @@
 """Fixtures for selftest.py.
 
 - TYPES: semantic data for the 31 diagram and chart types, from the diagram catalog's scenarios
-  (tmp/diagram_catalog/spec.md and its Mermaid sources). Data only: selftest.py calls
+  (tmp/diagram_catalog/spec.md and its source files). Data only: selftest.py calls
   getattr(deck, fx["builder"])(slide, *fx["args"], **fx["kwargs"]) once that builder exists and
   lists the rest as skipped. The data model is the one in reference/diagrams.md, as plain tuples:
   nodes (id, text, kind), edges (src, dst, label, style, arrow), groups (id, label, members).
