@@ -28,6 +28,7 @@ from PIL import Image
 
 from .diagrams import Diagrams
 from .shapes import Shapes, alt_text
+from .structures import Structures
 from .style import DEFAULT_PALETTE, write_theme
 
 ALIGN = {"left": PP_ALIGN.LEFT, "center": PP_ALIGN.CENTER, "right": PP_ALIGN.RIGHT}
@@ -54,7 +55,7 @@ def hex2rgb(h):
     return RGBColor(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
 
 
-class Deck(Shapes, Diagrams):
+class Deck(Shapes, Diagrams, Structures):
     """A 16:9 presentation builder with a consistent theme."""
 
     def __init__(self, theme=None):
