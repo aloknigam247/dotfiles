@@ -21,8 +21,10 @@ d = Deck(theme={"accent": "E11D48", "accent2": "7C3AED", "font": "Calibri"})
 ```
 
 Keys: `navy, navy_dk, accent, accent2, light, white, text, muted, warn, panel,
-card_border, subtle, font, mono`. Each color key is also exposed as an uppercase
-`RGBColor` attribute (e.g. `d.NAVY`, `d.ACCENT`) for use in `fill=`/`color=`.
+card_border, subtle, line, font, mono, palette`. Each color key is also exposed as an uppercase
+`RGBColor` attribute (e.g. `d.NAVY`, `d.ACCENT`) for use in `fill=`/`color=`. `line` colours
+connectors. `palette` is six hex colours (default: `accent`, `accent2`, `warn`, then emerald, rose
+and violet); it is written into the presentation theme, so charts and diagram node kinds use it.
 
 ## Core methods
 
@@ -32,16 +34,33 @@ card_border, subtle, font, mono`. Each color key is also exposed as an uppercase
 | `header(s, kicker, title, num)` | standard slide chrome: bg, accent bar, title, footer |
 | `footer(s, num, label)` | footer strip only |
 | `rect(s, x, y, w, h, fill=, line=, shape=, shadow=)` | a shape; `shadow=True` is safe (see note) |
-| `node(s, x, y, w, h, text, ...)` | labelled rounded box for native diagrams |
+| `node(s, x, y, w, h, text, ..., kind=, name=)` | labelled box; `kind=` gives the modern diagram style |
+| `styled_node(s, x, y, w, h, text, kind=, size=, prst=, ...)` | a node in the style of its kind |
+| `link(s, src, dst, label, src_site=, dst_site=, via=, route=, ...)` | connector glued to two shapes |
+| `label(s, cx, cy, text, size=)` | text chip on the background colour (edge labels) |
+| `ports(sp, top, right, bottom, left)` | more connection sites per side (rect, roundRect, hexagon) |
+| `measure(text, size=, bold=)`, `wrap(text, max_w, ...)` | text width (inches) in the deck font |
+| `text_size(text, size=, max_w=)`, `fit_shape(text, prst, size=)` | text block / shape sizes |
+| `alt_text(shape, text)`, `group(s, shapes, name=, alt=)` | alt text; group shapes with alt text |
 | `connector(s, x1, y1, x2, y2, color=, width=)` | straight connector line |
 | `textbox(s, x, y, w, h, anchor=)` | returns a text frame |
 | `para(tf, first=, align=, space_before=, space_after=)` | add a paragraph |
 | `run(p, text, size=, color=, bold=, italic=, mono=)` | add a styled run |
 | `bullet(tf, text, level=, size=, color=, bold=, ...)` | a natively-bulleted paragraph |
-| `table(s, x, y, w, h, headers, rows, col_widths=, col_align=, ...)` | a themed native table |
-| `chart(s, kind, x, y, w, h, categories, series, title=, ...)` | a native editable chart (bar/column/line/pie) |
-| `img_fit(s, path, bx, by, bw, bh, align=, valign=)` | insert image scaled to fit a box, aspect-preserved |
+| `table(s, x, y, w, h, headers, rows, col_widths=, col_align=, alt=, ...)` | a themed native table |
+| `chart(s, kind, x, y, w, h, categories, series, title=, alt=, ...)` | a native editable chart (bar/column/line/pie) |
+| `img_fit(s, path, bx, by, bw, bh, align=, valign=, alt=)` | insert image scaled to fit a box, aspect-preserved |
 | `save(path)` | write the .pptx |
+
+**Glued links:** `link()` draws a connector glued to both shapes, so it follows them when they
+move. Routes are right-angled with at most five segments (PowerPoint's limit); a longer route raises
+"split the diagram or add layout hints". Name diagram shapes `Node: ...`, labels `Label: ...` and
+frames `Container: ...` (`node(kind=)`, `label()` and `link()` do) — the verifier checks them.
+```python
+a = d.node(s, 1.0, 2.0, 1.8, 0.6, "Order placed", kind="start")
+b = d.node(s, 4.0, 2.0, 1.8, 0.8, "Paid?", kind="decision")
+d.link(s, a, b, "next")
+```
 
 ## Recipes
 

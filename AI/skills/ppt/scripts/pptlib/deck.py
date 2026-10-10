@@ -23,7 +23,11 @@ from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
 from pptx.oxml.ns import qn
 from pptx.oxml import parse_xml
+from pptx.shapes.autoshape import AutoShapeType
 from PIL import Image
+
+from .shapes import Shapes, alt_text
+from .style import DEFAULT_PALETTE, write_theme
 
 ALIGN = {"left": PP_ALIGN.LEFT, "center": PP_ALIGN.CENTER, "right": PP_ALIGN.RIGHT}
 ANCHOR = {"top": MSO_ANCHOR.TOP, "middle": MSO_ANCHOR.MIDDLE, "bottom": MSO_ANCHOR.BOTTOM}
@@ -40,7 +44,7 @@ DEFAULT_THEME = {
     "navy": "0F172A", "navy_dk": "0A0F1E", "accent": "0EA5E9", "accent2": "6366F1",
     "light": "F8FAFC", "white": "FFFFFF", "text": "0F172A", "muted": "94A3B8",
     "warn": "F59E0B", "panel": "F1F5F9", "card_border": "E2E8F0",
-    "subtle": "CBD5E1", "font": "Calibri Light", "mono": "Cascadia Code",
+    "subtle": "CBD5E1", "line": "64748B", "font": "Calibri Light", "mono": "Cascadia Code",
 }
 
 
@@ -49,20 +53,29 @@ def hex2rgb(h):
     return RGBColor(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
 
 
-class Deck:
+class Deck(Shapes):
     """A 16:9 presentation builder with a consistent theme."""
 
     def __init__(self, theme=None):
         self.t = {**DEFAULT_THEME, **(theme or {})}
         for k, v in self.t.items():
-            if k not in ("font", "mono"):
+            if k not in ("font", "mono", "palette"):
                 setattr(self, k.upper(), hex2rgb(v))
         self.FONT = self.t["font"]
         self.MONO = self.t["mono"]
+        # The palette defaults to the deck's accents, so charts and diagrams follow a new accent.
+        palette = self.t.get("palette") or (self.t["accent"], self.t["accent2"], self.t["warn"],
+                                            *DEFAULT_PALETTE[3:])
+        if len(palette) != 6:
+            raise ValueError(f"theme palette needs 6 colours, got {len(palette)}")
+        self.palette_hex = [c.lstrip("#").upper() for c in palette]
+        self.t["palette"] = self.palette_hex
+        self.PALETTE = [hex2rgb(c) for c in self.palette_hex]
         self.prs = Presentation()
         self.prs.slide_width = Inches(13.333)
         self.prs.slide_height = Inches(7.5)
         self._blank = self.prs.slide_layouts[6]
+        write_theme(self.prs, self.palette_hex, self.t)
 
     # -- slide / save -----------------------------------------------------
     def slide(self):
@@ -173,7 +186,7 @@ class Deck:
             pPr.insert_element_before(el, "a:tabLst", "a:defRPr", "a:extLst")
 
     # -- images -----------------------------------------------------------
-    def img_fit(self, s, path, bx, by, bw, bh, align="center", valign="middle"):
+    def img_fit(self, s, path, bx, by, bw, bh, align="center", valign="middle", alt=None):
         """Insert an image scaled to fit inside the box, preserving aspect ratio."""
         iw, ih = Image.open(path).size
         ar, bar = iw / ih, bw / bh
@@ -183,7 +196,9 @@ class Deck:
             w, h = bh * ar, bh
         x = {"left": bx, "center": bx + (bw - w) / 2, "right": bx + bw - w}[align]
         y = {"top": by, "middle": by + (bh - h) / 2, "bottom": by + bh - h}[valign]
-        s.shapes.add_picture(path, Inches(x), Inches(y), Inches(w), Inches(h))
+        pic = s.shapes.add_picture(path, Inches(x), Inches(y), Inches(w), Inches(h))
+        if alt:
+            alt_text(pic, alt)
         return x, y, w, h
 
     # -- composite layout -------------------------------------------------
@@ -206,8 +221,16 @@ class Deck:
                  color=self.MUTED, bold=True)
 
     def node(self, s, x, y, w, h, text, fill=None, text_color=None, size=14,
-             shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True):
-        """A labelled box for hand-built (native) diagrams. Returns the shape."""
+             shape=MSO_SHAPE.ROUNDED_RECTANGLE, shadow=True, kind=None, name=None):
+        """A labelled box for hand-built (native) diagrams. Returns the shape.
+
+        With `kind` (e.g. "process", "decision") the box takes the modern diagram style of that
+        node kind (see styled_node()): `shape` then only overrides the kind's geometry, and
+        `shadow` is ignored. `name` names the shape (default "Node: <text>" for kinds)."""
+        if kind is not None:
+            prst = None if shape == MSO_SHAPE.ROUNDED_RECTANGLE else AutoShapeType(shape).prst
+            return self.styled_node(s, x, y, w, h, text, kind, size=size, prst=prst, fill=fill,
+                                    text_color=text_color, name=name)
         sp = self.rect(s, x, y, w, h, fill=fill or self.PANEL,
                        line=self.ACCENT, line_w=1.5, shape=shape, shadow=shadow)
         tf = sp.text_frame
@@ -215,12 +238,15 @@ class Deck:
         tf.vertical_anchor = MSO_ANCHOR.MIDDLE
         self.run(self.para(tf, True, align="center"), text, size=size,
                  color=text_color or self.NAVY, bold=True)
+        if name:
+            sp.name = name
         return sp
 
     # -- tables / charts --------------------------------------------------
     def table(self, s, x, y, w, h, headers, rows, col_widths=None, col_align=None,
-              font_size=12, header_fill=None, banded=True):
-        """A native, editable PowerPoint table with themed navy header and banded body."""
+              font_size=12, header_fill=None, banded=True, alt=None):
+        """A native, editable PowerPoint table with themed navy header and banded body.
+        `alt` is its alternative text (default: the headers and row count)."""
         if not headers:
             raise ValueError("headers must be non-empty")
         ncols = len(headers)
@@ -259,11 +285,14 @@ class Deck:
                 run.font.name = self.FONT
                 run.font.bold = r == 0
                 run.font.color.rgb = self.WHITE if r == 0 else self.TEXT
+        alt_text(gf, alt or f"Table with columns {', '.join(map(str, headers))}; "
+                            f"{len(rows)} rows")
         return tbl
 
     def chart(self, s, kind, x, y, w, h, categories, series, title=None,
-              has_legend=True, legend_pos="bottom"):
-        """A native, editable PowerPoint chart (bar/column/line/pie)."""
+              has_legend=True, legend_pos="bottom", alt=None):
+        """A native, editable PowerPoint chart (bar/column/line/pie). `alt` is its alternative
+        text (default: kind, title and series)."""
         if kind not in CHART_KINDS:
             raise ValueError(f"unknown chart kind {kind!r}; expected one of {sorted(CHART_KINDS)}")
         if kind == "pie" and len(series) != 1:
@@ -286,4 +315,7 @@ class Deck:
         if has_legend:
             chart.legend.position = LEGEND_POS[legend_pos]
             chart.legend.include_in_layout = False
+        alt_text(gf, alt or f"{kind.capitalize()} chart{f' {title}' if title else ''}: "
+                            f"{', '.join(str(n) for n, _ in series)} by "
+                            f"{', '.join(map(str, categories))}")
         return chart
