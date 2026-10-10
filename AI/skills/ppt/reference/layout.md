@@ -1,6 +1,6 @@
 # pptlib API & Layout Cookbook
 
-`scripts/pptlib.py` wraps python-pptx for themed **16:9** decks. Import it and
+`scripts/pptlib/` (a package) wraps python-pptx for themed **16:9** decks. Import it and
 drive a `Deck`. All positions are in **inches**; the canvas is 13.333 × 7.5.
 
 ```python

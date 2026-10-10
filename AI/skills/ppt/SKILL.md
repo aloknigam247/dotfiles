@@ -42,7 +42,7 @@ command.
    ```
    Use `--scale 3` for crisp slides. Native shapes need no render step.
 
-5. **Build the deck** with `scripts/pptlib.py` (`Deck` helper). Write a small
+5. **Build the deck** with `scripts/pptlib` (`Deck` helper). Write a small
    build script that adds slides, text, native tables (`table()`), native charts
    (`chart()`), tiles, and places PNGs with `img_fit()` inside framed cards next to
    the text. API + copy-paste recipes: **`reference/layout.md`**.
@@ -71,7 +71,7 @@ element. This is the first thing to check if a generated deck won't open.
 
 | Path | Purpose |
 |---|---|
-| `scripts/pptlib.py` | `Deck` helper: theme, text, shapes, native tables & charts, `img_fit` |
+| `scripts/pptlib/` | `Deck` helper: theme, text, shapes, native tables & charts, `img_fit` |
 | `scripts/render_diagram.py` | render Mermaid/D2/draw.io/Plotly source → PNG |
 | `assets/mermaid_theme.json` | Mermaid theme matching the deck palette |
 | `reference/engines.md` | engines, prerequisites, install sources, per-engine notes |
