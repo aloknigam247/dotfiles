@@ -407,39 +407,6 @@ local function addPlugin(opts)
 	table.insert(plugins, opts)
 end
 
----Create background color adaptive to editor background
----@param lighten integer Lighter percent
----@param darken integer Darker percent
----@return string # Color in Hex format
-local function adaptiveBG(lighten, darken)
-	local bg
-
-	---Light or dark color
-	---@param col string hex Color to shade
-	---@param amt integer Amount of shade
-	---@return string # Color in hex format
-	local function lightenDarkenColor(col, amt)
-		local function clamp(x) return math.max(0, math.min(255, x)) end
-
-		local num = tonumber(col:sub(2), 16)
-		local r = clamp(bit.rshift(num, 16) + amt)
-		local b = clamp(bit.band(bit.rshift(num, 8), 0x00FF) + amt)
-		local g = clamp(bit.band(num, 0x0000FF) + amt)
-		local newColor = bit.bor(g, bit.bor(bit.lshift(b, 8), bit.lshift(r, 16)))
-
-		local hex, _ = string.format("#%-6X", newColor):gsub(" ", "0")
-		return hex
-	end
-
-	if vim.o.background == "dark" then
-		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 0
-		return lightenDarkenColor(string.format("#%X", bg), lighten)
-	else
-		bg = vim.api.nvim_get_hl(0, { name = "Normal", create = false }).bg or 16777215
-		return lightenDarkenColor(string.format("#%X", bg), darken)
-	end
-end
-
 ---Blend two colors (color and background) with a specific percentage (alpha).
 ---@param color string Hex color to be blended (e.g., "#RRGGBB")
 ---@param bg string Hex background color over which to blend (e.g., "#RRGGBB")
@@ -1400,10 +1367,6 @@ addPlugin {
 local function applyColorscheme()
 	vim.cmd.colorscheme("catppuccin")
 
-	-- global override colorscheme
-	vim.api.nvim_set_hl(0, "HighlightURL", { underline = true })
-	vim.api.nvim_set_hl(0, "MatchParen", { bg = adaptiveBG(50, -50) })
-
 	if vim.api.nvim_get_hl(0, { name = "Normal" }).bg then
 		require("mini.misc").setup_termbg_sync()
 	end
@@ -1431,7 +1394,7 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					BlinkCmpSource = { fg = palette.yellow, style = { "italic" } },
+					BlinkCmpSource = { fg = palette.subtext1, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
 					CheckmatePriorityHigh = { fg = palette.red, style = { "bold" } },
@@ -1444,30 +1407,31 @@ addPlugin {
 					DebugPrintLine = { bg = blend(palette.pink, palette.base, 20) },
 					DebugPrintSignHl = { fg = palette.pink },
 					Folded = { bg = palette.surface0, fg = palette.blue },
-					IlluminatedWordRead = { bg = palette.mantle },
-					IlluminatedWordText = { bg = palette.mantle },
-					IlluminatedWordWrite = { bg = palette.mantle },
+					HighlightURL = { fg = palette.blue, style = { "underline" } },
+					IlluminatedWordRead = { link = "LspReferenceText" },
+					IlluminatedWordText = { link = "LspReferenceText" },
+					IlluminatedWordWrite = { link = "LspReferenceText" },
 					InclineNormal = { bg = palette.surface0, fg = palette.text },
-					NvimSurroundHighlight = { link = "Cursor" },
-					RenderMarkdownCode = { bg = palette.surface0 },
-					RenderMarkdownCodeInline = { bg = palette.mantle, fg = palette.teal },
+					LightBulbVirtualText = { fg = palette.teal },
+					MatchParen = { fg = "", bg = palette.surface0, style = {} },
 					SnacksPickerMatch = { fg = "", style = { "underline" } },
 					TinyDiagnosticNormal = { fg = palette.text, bg = palette.base },
 					Todo = { fg = palette.blue, bg = "" },
-					["@markup.heading.markdown"] = { fg = palette.mauve, style = { "bold" } },
+					Visual = { bg = blend(palette.overlay2, palette.base, 25), style = {} },
+					VisualMatch = { fg = palette.text, bg = blend(palette.teal, palette.base, 30) },
+					VisualNOS = { link = "Visual" },
 					["@markup.raw.markdown_inline"] = { bg = palette.mantle, fg = palette.teal },
 				}
 			end,
 			latte = function(palette)
 				return {
-					Visual = { bg = blend(palette.blue, palette.base, 15), style = {} },
-					VisualMatch = { bg = blend(palette.blue, palette.base, 15) },
+					Folded = { bg = palette.mantle, fg = palette.blue },
+					NvimSurroundHighlight = { fg = palette.text, bg = blend(palette.rosewater, palette.base, 30), style = {} },
 				}
 			end,
 			mocha = function(palette)
 				return {
-					Visual = { bg = blend(palette.blue, palette.base, 30), style = {} },
-					VisualMatch = { bg = blend(palette.blue, palette.base, 30) },
+					NvimSurroundHighlight = { link = "Cursor" },
 				}
 			end,
 		},
@@ -2843,7 +2807,6 @@ addPlugin {
 	"kosayoda/nvim-lightbulb",
 	event = "LspAttach",
 	config = function()
-		vim.api.nvim_set_hl(0, "LightBulbVirtualText", { fg = "#EEE600" })
 		require("nvim-lightbulb").setup({ ---@diagnostic disable-line: missing-fields
 			autocmd = { enabled = true },
 			action_kinds = {

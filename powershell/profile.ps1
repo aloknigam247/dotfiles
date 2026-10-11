@@ -80,6 +80,9 @@ $catppuccin_latte = @{
     Teal = "#179299"
     Text = "#4C4F69"
     Yellow = "#DF8E1D"
+    # Precomputed blends: <Color>_<opacity %> over Base
+    Maroon_25 = "#EDC6CD"
+    Overlay2_25 = "#D2D5DD"
 }
 
 $catppuccin_mocha = @{
@@ -109,6 +112,9 @@ $catppuccin_mocha = @{
     Teal = "#94E2D5"
     Text = "#CDD6F4"
     Yellow = "#F9E2AF"
+    # Precomputed blends: <Color>_<opacity %> over Base
+    Maroon_25 = "#513F4E"
+    Overlay2_25 = "#3B3D4F"
 }
 
 # get system theme
@@ -151,51 +157,52 @@ $env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
 $palette = @{
     cmdline = @{
         command = $catppuccin.Blue
-        comment = $catppuccin.Overlay0
+        comment = $catppuccin.Overlay2
         defaultToken = $catppuccin.Text
         emphasis = $catppuccin.Red
         error = $catppuccin.Red
         inlinePrediction = $catppuccin.Overlay0
         keyword = $catppuccin.Mauve
-        listPrediction = $catppuccin.Mauve
+        listPrediction = $catppuccin.Subtext1
         listPredictionSelected = $Catppuccin.Surface0
-        member = $Catppuccin.Rosewater
+        listPredictionTooltip = $catppuccin.Overlay0
+        member = $catppuccin.Lavender
         number = $catppuccin.Peach
         operator = $catppuccin.Sky
-        parameter = $catppuccin.Pink
-        selection = $catppuccin.Surface0
+        parameter = $catppuccin.Maroon
+        selection = $catppuccin.Overlay2_25
         string = $catppuccin.Green
         type = $catppuccin.Yellow
-        variable = $catppuccin.Lavender
+        variable = $catppuccin.Text
     }
     git = @{
-        commit = $catppuccin.Sky
+        commit = $catppuccin.Flamingo
         commit_icon = $catppuccin.Blue
-        contact_bracket = $catppuccin.Rosewater
-        head = $catppuccin.Peach
-        message = $catppuccin.Green
-        timestamp = $catppuccin.Teal
-        user_email = $catppuccin.Flamingo
-        user_name = $catppuccin.Red
+        contact_bracket = $catppuccin.Overlay2
+        head = $catppuccin.Blue
+        message = $catppuccin.Text
+        timestamp = $catppuccin.Overlay2
+        user_email = $catppuccin.Overlay2
+        user_name = $catppuccin.Subtext0
     }
     prompt = @{
         dir_icon = @{
-            bg = $catppuccin_latte.Blue
-            fg = $catppuccin_latte.Base
+            bg = $catppuccin.Blue
+            fg = $catppuccin.Base
         }
-        dir_path = $catppuccin_latte.Base
+        dir_path = $catppuccin.Base
         git = @{
-            bg = $catppuccin_latte.Crust
-            branch = $catppuccin_latte.Sky
-            index = $catppuccin_latte.Rosewater
-            sep = "#FFFFFF"
-            stash = $catppuccin_latte.Maroon
-            sync = $catppuccin_latte.Green
-            working = $catppuccin_latte.Sapphire
+            bg = $catppuccin.Crust
+            branch = $catppuccin.Text
+            index = $catppuccin.Green
+            sep = $catppuccin.Overlay0
+            stash = $catppuccin.Maroon
+            sync = $catppuccin.Teal
+            working = $catppuccin.Blue
         }
         long_cmd = @{
-            bg = $catppuccin_latte.Pink
-            fg = $catppuccin_latte.Crust
+            bg = $catppuccin.Mauve
+            fg = $catppuccin.Base
         }
     }
 }
@@ -208,8 +215,8 @@ $palette.fzf = @{
     label            = $catppuccin.Text
     marker           = $catppuccin.Lavender
     marker_fg        = $catppuccin.Green
-    pointer          = $catppuccin.Green
-    prompt           = $catppuccin.Red
+    pointer          = $catppuccin.Mauve
+    prompt           = $catppuccin.Mauve
     prompt_hl        = $catppuccin.Red
     selected         = $catppuccin.Surface1
     spinner          = $catppuccin.Rosewater
@@ -226,7 +233,7 @@ if ($null -ne (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
     $PSStyle.FileInfo.Directory = "`e[38;2;" + [int]"0x$($catppuccin.Blue.Substring(1,2))" + ";" + [int]"0x$($catppuccin.Blue.Substring(3,2))" + ";" + [int]"0x$($catppuccin.Blue.Substring(5,2))" + "m"
 }
 
-$env:LS_COLORS="rs=0:di=01;34:ln=00;95:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01;05:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;47:st=37;44:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=00;35:*.md=00;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36"
+$env:LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=00;33:so=01;35:do=01;35:bd=00;33:cd=00;33:or=01;31;05:mi=00:su=04;31:sg=04;33:ca=04;31:tw=04;34:ow=04;34:st=04;34:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.nupkg=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=01;33:*.psd1=01;33:*.psm1=01;33:*.ps1xml=01;33:*.md=00;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36"
 
  # ╭───────╮
  # │ Icons │
@@ -440,7 +447,7 @@ function whatis($arg) {
     $type = $cm.CommandType
 
     if ($type -eq "Function") {
-        Format-Pill "󰊕 $arg" -bg $catppuccin.Red -fg $catppuccin.Base -styles italic
+        Format-Pill "󰊕 $arg" -bg $catppuccin.Blue -fg $catppuccin.Base -styles italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
         D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
@@ -471,10 +478,10 @@ function gc {
     $stash = git stash list
     if ($null -ne $stash) {
         if ($stash.GetType() -eq [String]) {
-            Format-Text -bg "#F97068" -fg "#FFFFFF" $stash
+            Format-Text -bg $catppuccin.Maroon_25 -fg $catppuccin.Text $stash
         } elseif ($stash.GetType() -eq [Object[]]) {
             foreach ($st in $stash) {
-                Format-Text -bg "#F97068" -fg "#FFFFFF" $st
+                Format-Text -bg $catppuccin.Maroon_25 -fg $catppuccin.Text $st
             }
         } else {
             Write-Host $stash
@@ -697,10 +704,10 @@ $env:FZF_DEFAULT_OPTS += " --margin='0,0,0,1'"
 $env:FZF_DEFAULT_OPTS += " --scrollbar='▐'"
 $env:FZF_DEFAULT_OPTS += " --info='right'"
 
-$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.bg)"
+$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg)"
 $env:FZF_DEFAULT_OPTS += " --color=bg:$($palette.fzf.bg)"
 $env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border)"
-$env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.marker_fg)"
+$env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.text_fg)"
 $env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg)"
 $env:FZF_DEFAULT_OPTS += " --color=header:$($palette.fzf.header)"
 $env:FZF_DEFAULT_OPTS += " --color=hl+:$($palette.fzf.prompt_hl)"
@@ -710,7 +717,7 @@ $env:FZF_DEFAULT_OPTS += " --color=label:$($palette.fzf.label)"
 $env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker)"
 $env:FZF_DEFAULT_OPTS += " --color=pointer:$($palette.fzf.pointer)"
 $env:FZF_DEFAULT_OPTS += " --color=prompt:$($palette.fzf.prompt)"
-$env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selection)"
+$env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selected)"
 $env:FZF_DEFAULT_OPTS += " --color=spinner:$($palette.fzf.spinner)"
 
 $env:EDITOR = "nvim"
@@ -964,7 +971,7 @@ function prompt {
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
 Set-PSReadLineOption -Colors @{
     "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
-    "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment);
+    "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment -styles "italic");
     "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
     "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
     "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
@@ -974,7 +981,7 @@ Set-PSReadLineOption -Colors @{
     "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
     "Operator" = (Format-Text -headOnly -fg $palette.cmdline.operator);
     "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
-    "Selection" = (Format-Text -headOnly -bg $palette.cmdline.selection);
+    "Selection" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken -bg $palette.cmdline.selection);
     "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
     "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
     "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
@@ -983,9 +990,34 @@ Set-PSReadLineOption -Colors @{
 if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
     Set-PSReadLineOption -Colors @{
         "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
-        "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction);
+        "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction -styles "italic");
         "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
+        "ListPredictionTooltip" = (Format-Text -headOnly -fg $palette.cmdline.listPredictionTooltip -styles "italic");
     }
+}
+
+# PowerShell output colors (PSStyle requires PowerShell 7.2+)
+if ($null -ne (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
+    $PSStyle.FileInfo.Executable = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
+    ".7z", ".cab", ".gz", ".nupkg", ".tar", ".tgz", ".zip" | ForEach-Object {
+        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $catppuccin.Red -styles "bold"
+    }
+    ".ps1", ".ps1xml", ".psd1", ".psm1" | ForEach-Object {
+        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $catppuccin.Yellow -styles "bold"
+    }
+    $PSStyle.FileInfo.SymbolicLink = Format-Text -headOnly -fg $catppuccin.Teal -styles "bold"
+    $PSStyle.Formatting.CustomTableHeaderLabel = Format-Text -headOnly -fg $catppuccin.Green -styles "bold", "italic"
+    $PSStyle.Formatting.Debug = Format-Text -headOnly -fg $catppuccin.Teal -styles "bold"
+    $PSStyle.Formatting.Error = Format-Text -headOnly -fg $catppuccin.Red -styles "bold"
+    $PSStyle.Formatting.ErrorAccent = Format-Text -headOnly -fg $catppuccin.Blue -styles "bold"
+    $PSStyle.Formatting.FeedbackAction = Format-Text -headOnly -fg $catppuccin.Blue
+    $PSStyle.Formatting.FeedbackName = Format-Text -headOnly -fg $catppuccin.Subtext1
+    $PSStyle.Formatting.FeedbackText = Format-Text -headOnly -fg $catppuccin.Text
+    $PSStyle.Formatting.FormatAccent = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
+    $PSStyle.Formatting.TableHeader = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
+    $PSStyle.Formatting.Verbose = Format-Text -headOnly -fg $catppuccin.Sky -styles "bold"
+    $PSStyle.Formatting.Warning = Format-Text -headOnly -fg $catppuccin.Yellow -styles "bold"
+    $PSStyle.Progress.Style = Format-Text -headOnly -fg $catppuccin.Mauve -styles "bold"
 }
 
 

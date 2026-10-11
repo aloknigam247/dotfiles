@@ -26,8 +26,7 @@
     ; FEAT: hyperlink support
     ; FEAT: change how diff file is shown, may be background border
     colorMoved = default
-    commit-style = red
-    file-added-label = 
+    file-added-label =  
     file-copied-label = 
     file-decoration-style = ""
     file-modified-label = " "
@@ -41,6 +40,15 @@
     navigate = true
     side-by-side = true
     true-color = always
+
+; Overrides for the vendored catppuccin.gitconfig themes (style guide: diff header Blue)
+[delta "catppuccin-latte"]
+    commit-style = "#dd7878"
+    file-style = "#1e66f5"
+
+[delta "catppuccin-mocha"]
+    commit-style = "#f2cdcd"
+    file-style = "#89b4fa"
 
 [merge]
     conflictstyle = zdiff3
