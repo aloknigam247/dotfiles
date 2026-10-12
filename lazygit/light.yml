@@ -22,4 +22,4 @@ gui:
     authorColors: {"Alok Nigam": "#7287FD"}
     branchColorPatterns: {"^master(/|$)": "#179299", "^main(/|$)": "#179299"}
 git:
-  branchLogCmd: "git log --color=always --pretty=\\\"%C(#1E66F5) %C(#DD7878)%h %Creset- %C(#4C4F69) %s %C(#7C7F93)\U000F051F %ar on %ah %C(#7C7F93)<%C(#6C6F85)%an %C(#7C7F93) %ae%C(#7C7F93)>%C(#1E66F5)%d\\\" {{branchName}} --"
+  branchLogCmd: "git log --color=always --pretty=\\\"%C(#1E66F5) %C(#DD7878)%h %Creset- %C(#4C4F69) %s %C(#7C7F93)\U000F051F %ar on %ah %C(#7C7F93)<%C(#8839EF)%an %C(#8839EF) %ae%C(#7C7F93)>%C(#1E66F5)%d\\\" {{branchName}} --"
