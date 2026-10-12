@@ -1,0 +1,99 @@
+[include]
+    path = ~/.config/git/catppuccin.gitconfig
+    path = ~/.gitconfig.orig
+
+[fetch]
+	prune = true
+
+[core]
+    editor = nvim
+    fsmonitor = true
+    hooksPath = ~/.config/git/hooks
+    pager = delta
+	autocrlf = true
+
+[push]
+    autoSetupRemote = true
+
+[user]
+	name = Alok Nigam
+	email = aloknigam@microsoft.com
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    ; FEAT: hyperlink support
+    ; FEAT: change how diff file is shown, may be background border
+    colorMoved = default
+    file-added-label =  
+    file-copied-label = 
+    file-decoration-style = ""
+    file-modified-label = " "
+    file-removed-label = 󰆴
+    file-renamed-label = 
+    file-transformation = "s/$/  /"
+    hunk-label = ""
+    line-numbers = true
+    line-numbers-left-format = "{nm:^1}│"
+    line-numbers-right-format = "{np:^1}┃"
+    navigate = true
+    side-by-side = true
+    true-color = always
+
+; Overrides for the vendored catppuccin.gitconfig themes (style guide: diff header Blue)
+[delta "catppuccin-latte"]
+    commit-style = "#dd7878"
+    file-style = "#1e66f5"
+
+[delta "catppuccin-mocha"]
+    commit-style = "#f2cdcd"
+    file-style = "#89b4fa"
+
+[merge]
+    conflictstyle = zdiff3
+    tool = vscode
+
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+    keepBackup = false
+
+[diff]
+    colorMoved = default
+    tool = delta
+
+[safe]
+    directory = D:/Scoop/apps/scoop/current
+    directory = D:/Scoop/buckets/versions
+    directory = D:/Scoop/buckets/main
+    directory = D:/Scoop/buckets/extras
+
+[alias]
+    ignore = update-index --skip-worktree
+    unignore = update-index --no-skip-worktree
+    ignored = !git ls-files -v | grep \"^S\"
+	prune-local = "!pwsh -NoProfile -Command 'git fetch --prune; $c = git branch --show-current; git for-each-ref --format=\"%(refname:short)=%(upstream:short)\" refs/heads/ | ForEach-Object { $b,$u = $_ -split \"=\"; if ($b -eq $c) { return }; if ($u) { git show-ref --verify --quiet \"refs/remotes/$u\"; if ($?) { return } }; git branch -D $b }'"
+[credential "azrepos:org/onedrive"]
+	username = aloknigam@microsoft.com
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+[credential "azrepos:org/msazure"]
+	username = aloknigam@microsoft.com
+[credential "azrepos:org/office"]
+	username = aloknigam@microsoft.com
+[credential "azrepos:org/o365exchange"]
+	username = aloknigam@microsoft.com
+[credential "azrepos:org/identitydivision"]
+	username = aloknigam@microsoft.com
+[credential]
+	useHttpPath = true
+[init]
+	defaultBranch = main
+[credential "azrepos:org/dejaiswal"]
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+	username = aloknigam@microsoft.com
+[credential "https://github.com"]
+	helper = 
+	helper = !'C:\\Program Files\\GitHub CLI\\gh.exe' auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !'C:\\Program Files\\GitHub CLI\\gh.exe' auth git-credential

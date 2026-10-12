@@ -1,0 +1,10 @@
+files=(
+       [init.lua]=~/.config/nvim/lua/init.lua
+       [init.vim]=~/.config/nvim/init.vim
+      )
+
+cmds=(
+      'sudo apt install -y build-essential'
+     )
+
+

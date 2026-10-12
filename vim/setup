@@ -1,0 +1,7 @@
+files=(
+        [vim]=~/.vim
+        [vimrc]=~/.vimrc
+        [gvimrc]=~/.gvimrc
+      )
+
+

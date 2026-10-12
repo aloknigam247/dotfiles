@@ -1,0 +1,25 @@
+gui:
+  theme:
+    activeBorderColor:
+      - "#D20F39"
+      - bold
+    inactiveBorderColor:
+      - "#6C6F85"
+    optionsTextColor:
+      - "#1E66F5"
+    selectedLineBgColor:
+      - "#CCD0DA"
+    cherryPickedCommitBgColor:
+      - "#BCC0CC"
+    cherryPickedCommitFgColor:
+      - "#D20F39"
+    unstagedChangesColor:
+      - "#D20F39"
+    defaultFgColor:
+      - "#4C4F69"
+    searchingActiveBorderColor:
+      - "#DF8E1D"
+    authorColors: {"Alok Nigam": "#7287FD"}
+    branchColorPatterns: {"^master(/|$)": "#179299", "^main(/|$)": "#179299"}
+git:
+  branchLogCmd: "git log --color=always --pretty=\\\"%C(#1E66F5) %C(#DD7878)%h %Creset- %C(#4C4F69) %s %C(#7C7F93)\U000F051F %ar on %ah %C(#7C7F93)<%C(#8839EF)%an %C(#8839EF) %ae%C(#7C7F93)>%C(#1E66F5)%d\\\" {{branchName}} --"

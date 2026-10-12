@@ -1,0 +1,1052 @@
+# ─[ Don't load for non interactive session ]─────────────────────────────
+function _IsShellInteractive {
+    $options = [Environment]::GetCommandLineArgs() | Select-Object -Skip 1
+    if ($options.Length -gt 0) {
+        $option_string = $options -join " "
+        if ($option_string -match "^-noexit.*init.ps1$") {
+            return $true
+        }
+        return $false
+    }
+    if (($options -contains "-noni") -or ($options -contains "-noninteractive")) {
+        return $false
+    }
+    if (($options -contains "-command") -or ($options -contains "-c") -or
+        ($options -contains "-file") -or ($options -contains "-f")) {
+        return $false
+    }
+    return $true
+}
+if ($(_IsShellInteractive) -eq $false) {
+    return
+}
+
+# ╭─────────────╮
+# │ Auto Update │
+# ╰─────────────╯
+if ((Get-Process -Id $PID).parent.ProcessName -eq "WindowsTerminal") {
+    Start-Job {
+        Set-Location D:/dotfiles
+        git pull
+        $git_status = git status --short
+
+        if ($git_status) {
+            # Send toast notification via WinRT
+            $toast_text = ($git_status -join [char]10)
+            powershell.exe -NoProfile -Command "& {
+                [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
+                [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom, ContentType = WindowsRuntime] | Out-Null
+                `$xml = [Windows.Data.Xml.Dom.XmlDocument]::new()
+                `$xml.LoadXml('<toast><visual><binding template=""ToastGeneric""><text>Dotfiles Update</text><text>$toast_text</text></binding></visual></toast>')
+                [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Microsoft.WindowsTerminal_8wekyb3d8bbwe!App').Show([Windows.UI.Notifications.ToastNotification]::new(`$xml))
+            }"
+
+            $dt = Get-Date
+            git add .
+            git commit -m "Updated at $dt" --no-verify
+            Remove-Item .git\index.lock -ErrorAction SilentlyContinue # fix lock error
+            git push
+        }
+    } | Out-Null
+}
+
+# ╭─────────────────╮
+# │ Themes Settings │
+# ╰─────────────────╯
+$catppuccin_latte = @{
+    Base = "#EFF1F5"
+    Blue = "#1E66F5"
+    Crust = "#DCE0E8"
+    Flamingo = "#DD7878"
+    Green = "#40A02B"
+    Lavender = "#7287FD"
+    Mantle = "#E6E9EF"
+    Maroon = "#E64553"
+    Mauve = "#8839EF"
+    Overlay0 = "#9CA0B0"
+    Overlay1 = "#8C8FA1"
+    Overlay2 = "#7C7F93"
+    Peach = "#FE640B"
+    Pink = "#EA76CB"
+    Red = "#D20F39"
+    Rosewater = "#DC8A78"
+    Sapphire = "#209FB5"
+    Sky = "#04A5E5"
+    Subtext0 = "#6C6F85"
+    Subtext1 = "#5C5F77"
+    Surface0 = "#CCD0DA"
+    Surface1 = "#BCC0CC"
+    Surface2 = "#ACB0BE"
+    Teal = "#179299"
+    Text = "#4C4F69"
+    Yellow = "#DF8E1D"
+    # Precomputed blends: <Color>_<opacity %> over Base
+    Maroon_25 = "#EDC6CD"
+    Overlay2_25 = "#D2D5DD"
+}
+
+$catppuccin_mocha = @{
+    Base = "#1E1E2E"
+    Blue = "#89B4FA"
+    Crust = "#11111B"
+    Flamingo = "#F2CDCD"
+    Green = "#A6E3A1"
+    Lavender = "#B4BEFE"
+    Mantle = "#181825"
+    Maroon = "#EBA0AC"
+    Mauve = "#CBA6F7"
+    Overlay0 = "#6C7086"
+    Overlay1 = "#7F849C"
+    Overlay2 = "#9399B2"
+    Peach = "#FAB387"
+    Pink = "#F5C2E7"
+    Red = "#F38BA8"
+    Rosewater = "#F5E0DC"
+    Sapphire = "#74C7EC"
+    Sky = "#89DCEB"
+    Subtext0 = "#A6ADC8"
+    Subtext1 = "#BAC2DE"
+    Surface0 = "#313244"
+    Surface1 = "#45475A"
+    Surface2 = "#585B70"
+    Teal = "#94E2D5"
+    Text = "#CDD6F4"
+    Yellow = "#F9E2AF"
+    # Precomputed blends: <Color>_<opacity %> over Base
+    Maroon_25 = "#513F4E"
+    Overlay2_25 = "#3B3D4F"
+}
+
+# get system theme
+$system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+# Windows Terminal switches colorScheme via the dark/light object in settings.json natively (1.22+)
+if ($system_theme.AppsUseLightTheme -eq 1) {
+    $env:THEME = "light"
+    $current_theme = "Catppuccin Latte"
+    $catppuccin = $catppuccin_latte
+    $lazygit_theme = "light.yml"
+} else {
+    $env:THEME = "dark"
+    $current_theme = "Catppuccin Mocha"
+    $catppuccin = $catppuccin_mocha
+    $lazygit_theme = "dark.yml"
+}
+
+
+Start-Job {
+    $retry = 5
+    while ($retry) {
+        $retry--
+        $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
+        if ($current_theme_file -notmatch "$env:THEME.theme") {
+            $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
+            Start-Process $theme_file
+            Start-Sleep -Seconds 10
+            Stop-Process -name SystemSettings
+        } else {
+            break
+        }
+    }
+} | Out-Null
+
+# Set theme variables
+$bat_theme = $current_theme
+$env:DELTA_FEATURES = $current_theme.ToLower().Replace(' ', '-')
+$env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
+
+$palette = @{
+    cmdline = @{
+        command = $catppuccin.Blue
+        comment = $catppuccin.Overlay2
+        defaultToken = $catppuccin.Text
+        emphasis = $catppuccin.Red
+        error = $catppuccin.Red
+        inlinePrediction = $catppuccin.Overlay0
+        keyword = $catppuccin.Mauve
+        listPrediction = $catppuccin.Subtext1
+        listPredictionSelected = $Catppuccin.Surface0
+        listPredictionTooltip = $catppuccin.Overlay0
+        member = $catppuccin.Lavender
+        number = $catppuccin.Peach
+        operator = $catppuccin.Sky
+        parameter = $catppuccin.Maroon
+        selection = $catppuccin.Overlay2_25
+        string = $catppuccin.Green
+        type = $catppuccin.Yellow
+        variable = $catppuccin.Text
+    }
+    git = @{
+        commit = $catppuccin.Flamingo
+        commit_icon = $catppuccin.Blue
+        contact_bracket = $catppuccin.Overlay2
+        head = $catppuccin.Blue
+        message = $catppuccin.Text
+        timestamp = $catppuccin.Overlay2
+        user_email = $catppuccin.Mauve
+        user_name = $catppuccin.Mauve
+    }
+    prompt = @{
+        dir_icon = @{
+            bg = $catppuccin.Blue
+            fg = $catppuccin.Base
+        }
+        dir_path = $catppuccin.Base
+        git = @{
+            bg = $catppuccin.Crust
+            branch = $catppuccin.Text
+            index = $catppuccin.Green
+            sep = $catppuccin.Overlay0
+            stash = $catppuccin.Maroon
+            sync = $catppuccin.Teal
+            working = $catppuccin.Blue
+        }
+        long_cmd = @{
+            bg = $catppuccin.Mauve
+            fg = $catppuccin.Base
+        }
+    }
+}
+
+$palette.fzf = @{
+    bg               = $catppuccin.Mantle
+    border           = $catppuccin.Lavender
+    header           = $catppuccin.Red
+    info             = $catppuccin.Mauve
+    label            = $catppuccin.Text
+    marker           = $catppuccin.Lavender
+    marker_fg        = $catppuccin.Green
+    pointer          = $catppuccin.Mauve
+    prompt           = $catppuccin.Mauve
+    prompt_hl        = $catppuccin.Red
+    selected         = $catppuccin.Surface1
+    spinner          = $catppuccin.Rosewater
+    spinner_hl       = $catppuccin.Red
+    text_bg          = $catppuccin.Base
+    text_fg          = $catppuccin.Text
+    text_selected_bg = $catppuccin.Surface0
+    text_selected_fg = $catppuccin.Rosewater
+}
+
+# LS Colors
+# Directory color for Get-ChildItem (PSStyle requires PowerShell 7.2+)
+if ($null -ne (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
+    $PSStyle.FileInfo.Directory = "`e[38;2;" + [int]"0x$($catppuccin.Blue.Substring(1,2))" + ";" + [int]"0x$($catppuccin.Blue.Substring(3,2))" + ";" + [int]"0x$($catppuccin.Blue.Substring(5,2))" + "m"
+}
+
+$env:LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;07;31;05:mi=00:su=07;31:sg=30;43:ca=07;31:tw=07;32:ow=30;107:st=07;34:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.nupkg=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=01;33:*.psd1=01;33:*.psm1=01;33:*.ps1xml=01;33:*.md=00;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36"
+
+ # ╭───────╮
+ # │ Icons │
+ # ╰───────╯
+$icons = @{
+    fzf_marker = "$([char]0xf42e)"
+    fzf_pointer = "$([char]0x27a4)"
+    fzf_prompt = "$([char]0xf4b5)"
+    git_aheadby = "$([char]0xdb86)$([char]0xddb2)"
+    git_behindby = "$([char]0xdb86)$([char]0xddb3)"
+    git_branch = "$([char]0xf418) "
+    git_commit = "$([char]0xeafc) "
+    git_icon = "$([char]0xf1d2) "
+    git_stash = "$([char]0xdb82)$([char]0xdeb6) " #f0ab6
+    git_tag = "$([char]0xdb81)$([char]0xdcfd) " # f04fd
+    git_working = "$([char]0xdb81)$([char]0xdc16) " # f0416
+    gitlog_commit = "$([char]0xeafc)"
+    gitlog_email = "$([char]0xeb1c)"
+    gitlog_message = "$([char]0xeb26)"
+    gitlog_timestamp = "$([char]0xdb81)$([char]0xdd1f)"
+    odc = "󰅟 "
+    remote = "$([char]0xeb3a) "
+    sep_right = "$([char]0xe0b4)"
+    type_app = "$([char]0xf120) "
+    windows = "$([char]0xe70f) "
+}
+
+
+# ╭─────────╮
+# │ Keymaps │
+# ╰─────────╯
+Set-PSReadLineKeyHandler -Chord "Ctrl+g" -Function ViEditVisually
+
+# ╭─────────╮
+# │ Aliases │
+# ╰─────────╯
+# ─[ Msys2 ]───────────────────────────────────────────────────────────
+New-Alias -Name pacman -Value D:\Scoop\apps\msys2\current\usr\bin\pacman.exe -ErrorAction SilentlyContinue
+
+# ─[ Common ]──────────────────────────────────────────────────────────
+New-Alias -Name "/" -Value rg -ErrorAction SilentlyContinue
+New-Alias -Name "//" -Value fd -ErrorAction SilentlyContinue
+
+# ╭─────────────────╮
+# │ Utility Methods │
+# ╰─────────────────╯
+function _ParseRootArg {
+    param([object[]]$argv)
+    $root_dir = $PWD.Path
+    $filtered = @()
+    $skip = $false
+    for ($i = 0; $i -lt $argv.Count; $i++) {
+        if ($skip) { $skip = $false; continue }
+        if ($argv[$i] -eq "--root" -and $i + 1 -lt $argv.Count) {
+            $candidate = $argv[$i + 1]
+            if (Test-Path -Path $candidate -PathType Container) {
+                $root_dir = (Resolve-Path $candidate).Path
+            } else {
+                throw "Invalid directory: $candidate"
+            }
+            $skip = $true
+        } else {
+            $filtered += $argv[$i]
+        }
+    }
+    return @{ RootDir = $root_dir; Args = $filtered }
+}
+
+function Start-CpTower {
+    # Fire-and-forget so `copilot` never blocks: a cheap name check skips the launch
+    # when an instance is already up, otherwise start it hidden and return immediately.
+    if (Get-Process -Name cptower -ErrorAction SilentlyContinue) { return }
+    $exe = "D:\dotfiles\cptower\dist\cptower.exe"
+    if (Test-Path $exe) {
+        # cptower signs AHP clients in to hosts as this GitHub CLI account.
+        Start-Process -FilePath $exe -ArgumentList "--github-user", "aloknigam_microsoft" -WindowStyle Hidden | Out-Null
+    }
+}
+
+# ╭───────────────────╮
+# │ Generic Functions │
+# ╰───────────────────╯
+Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
+Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
+function bg   { wt -f -d $PWD.Path --colorScheme $current_theme pwsh -NoProfile -C "$args" }
+function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
+function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
+function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
+function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\config.yml,$env:APPDATA\lazygit\$($lazygit_theme)" }
+function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
+function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
+function nvim { C:\Users\aloknigam\scoop\shims\nvim.exe $args; Write-Host -NoNewline "`e[0 q" }
+function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
+function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -LS --hyperlink-format vscode $args }
+function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
+function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
+function mdview { D:\mdview\target\release\mdview.exe $args }
+
+function ai {
+    try {
+        $root_dir = (_ParseRootArg $args).RootDir
+    } catch {
+        $root_dir = $PWD.Path
+    }
+
+    git -C $root_dir rev-parse --is-inside-work-tree 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        copilot @args
+        return
+    }
+    $remote_url = git -C $root_dir remote get-url origin 2>$null
+    if ($remote_url -and $remote_url -match "github\.com") {
+        copilot @args
+    } else {
+        agency @args
+    }
+}
+
+function bat {
+    param([string]$file)
+    if ($file.ToLower().EndsWith('.md')) {
+        glow $file
+    } else {
+        D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
+    }
+}
+
+$copilot_context = "long_context"
+$copilot_model = "gpt-6-astra"
+$copilot_reasoning_effort = "max"
+
+function agency {
+    $agencyCommands = @(
+        "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
+        "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
+        "support", "update", "vscode"
+    )
+
+    try {
+        $parsed = _ParseRootArg $args
+    } catch {
+        Write-Error $_
+        return
+    }
+    $first = if ($parsed.Args.Count) { $parsed.Args[0] } else { $null }
+    $isCopilot = $first -and ($first -in @("copilot", "cp"))
+    $isSubcommand = $first -and ($agencyCommands -contains $first)
+    $root_dir = $parsed.RootDir
+
+    if (-not ($isSubcommand -or $isCopilot)) {
+        Start-CpTower
+    }
+
+    wt -f -d $root_dir pwsh -c {
+        param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort, $isCopilot, $isSubcommand)
+
+        if (-not (Get-Command agency.exe -ErrorAction SilentlyContinue)) {
+            Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
+            iex "& { $(irm aka.ms/InstallTool.ps1) } agency"
+        }
+
+        if ($isSubcommand -or $isCopilot) {
+            agency.exe @argList
+        } else {
+            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
+        }
+
+        $ok = $?
+        if ($isSubcommand) {
+            Read-Host -Prompt "Press any key to exit"
+        } elseif (-not $ok) {
+            Read-Host -Prompt "Agency exited with error, press any key to exit"
+        }
+    } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort, $isCopilot, $isSubcommand
+}
+
+function copilot {
+    Start-CpTower
+
+    try {
+        $parsed = _ParseRootArg $args
+    } catch {
+        Write-Error $_
+        return
+    }
+    $root_dir = $parsed.RootDir
+
+    wt -f -d $root_dir pwsh -c {
+        param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort)
+        copilot.exe --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
+        if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
+    } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort
+}
+
+function e {
+    $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
+    $arg_str = $quoted_args -join " "
+    if (Test-Path "D:\qvim\build\release\RelWithDebInfo\qvim.exe") {
+        if ($args.Count -eq 0) {
+            D:\qvim\build\release\RelWithDebInfo\qvim.exe
+        } else {
+            D:\qvim\build\release\RelWithDebInfo\qvim.exe $arg_str
+        }
+    } else {
+        wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
+    }
+}
+
+function whatis($arg) {
+    $cm = Get-Command $arg -ErrorAction SilentlyContinue
+    $type = $cm.CommandType
+
+    if ($type -eq "Function") {
+        Format-Pill "󰊕 $arg" -bg $catppuccin.Blue -fg $catppuccin.Base -styles italic
+        $temp_file = "$env:TEMP\tmp.ps1"
+        Write-Output $cm.Definition > $temp_file
+        D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
+        Remove-Item $temp_file
+    } elseif ($type -eq "Application") {
+        Format-Pill "$($icons.type_app) Application" -bg $catppuccin.Green -fg $catppuccin.Base -styles italic
+        $cm.Source
+    } elseif ($type -eq "Alias") {
+        Format-Pill " Alias" -bg $catppuccin.Lavender -fg $catppuccin.Base  -styles italic
+        $cm.DisplayName
+    } else {
+        Write-Host "Unknown"
+    }
+}
+
+# ─( Path functions )──────────────────────────────────────────────────
+function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
+function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work\notes" | Set-Location }
+
+# ─[ Git functions ]───────────────────────────────────────────────────
+Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
+function gc {
+    param(
+        [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
+        [string[]] $Ref
+    )
+    git checkout @Ref
+    $stash = git stash list
+    if ($null -ne $stash) {
+        if ($stash.GetType() -eq [String]) {
+            Format-Text -bg $catppuccin.Maroon_25 -fg $catppuccin.Text $stash
+        } elseif ($stash.GetType() -eq [Object[]]) {
+            foreach ($st in $stash) {
+                Format-Text -bg $catppuccin.Maroon_25 -fg $catppuccin.Text $st
+            }
+        } else {
+            Write-Host $stash
+        }
+    }
+}
+
+Remove-Item -Force alias:gl -ErrorAction SilentlyContinue
+function gl {
+    git log --color=always --pretty="%C($($palette.git.commit_icon))$($icons.gitlog_commit) %C($($palette.git.commit))%h %Creset- %C($($palette.git.message))$($icons.gitlog_message) %s %C($($palette.git.timestamp))$($icons.gitlog_timestamp) %ar on %ah %C($($palette.git.contact_bracket))<%C($($palette.git.user_name))%an %C($($palette.git.user_email))$($icons.gitlog_email) %ae%C($($palette.git.contact_bracket))>%C($($palette.git.head))%d" $args
+}
+
+function gs { git status --ignore-submodules=all --short --branch --show-stash --ahead-behind $args }
+
+function gwa {
+    param(
+        [Parameter(Position = 0, Mandatory = $true)]
+        [string] $Branch
+    )
+    $branch_exists = git rev-parse --verify $Branch 2>$null
+    if ($branch_exists) {
+        git worktree add ..\$Branch
+        Set-Location ..\$Branch
+    } else {
+        git worktree add ..\$Branch -b $Branch
+        Set-Location ..\$Branch
+    }
+}
+
+function gwd {
+    $branch_name = (Get-Location).Path.Split("\")[-1]
+    $main_repo = (git rev-parse --path-format=absolute --git-common-dir).Replace("/.git","")
+    Set-Location $main_repo
+    git worktree remove $branch_name
+    git branch -D $branch_name --force
+}
+
+# ─[ Format text for colors and formatting ]───────────────────────────
+function Format-Text {
+    param(
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(Position=0)]
+        [String]$text,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [String]$bg,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [String]$fg,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [ValidateSet("blink","bold","hidden","italic","reverse","strikethrough","underline")]
+        [Array]$styles,
+
+        [Parameter(ParameterSetName = "HeadOnly")]
+        [Switch]$headonly,
+
+        [Parameter(ParameterSetName = "Complete")]
+        [Switch]$noreset
+    )
+
+    $esc = [char]27
+    $head = ""
+
+    # create background header
+    if ($bg -ne "") {
+        $bg_r_hex = "0x$($bg.Substring(1, 2))"
+        $bg_g_hex = "0x$($bg.Substring(3, 2))"
+        $bg_b_hex = "0x$($bg.Substring(5, 2))"
+        $bg_r = [int]$bg_r_hex
+        $bg_g = [int]$bg_g_hex
+        $bg_b = [int]$bg_b_hex
+        $head = "48;2;$bg_r;$bg_g;$bg_b"
+    }
+
+    # create foreground header
+    if ($fg -ne "") {
+        if ($head -ne "") { $head += ";" } # separator
+        $fg_r_hex = "0x$($fg.Substring(1, 2))"
+        $fg_g_hex = "0x$($fg.Substring(3, 2))"
+        $fg_b_hex = "0x$($fg.Substring(5, 2))"
+        $fg_r = [int]$fg_r_hex
+        $fg_g = [int]$fg_g_hex
+        $fg_b = [int]$fg_b_hex
+        $head += "38;2;$fg_r;$fg_g;$fg_b"
+    }
+
+    # create effects header
+    foreach ($style in $styles) {
+        if ($head -ne "") { $head += ";" } # separator
+        switch ($style) {
+            "blink"         { $head += "5" }
+            "bold"          { $head += "1" }
+            "hidden"        { $head += "8" }
+            "italic"        { $head += "3" }
+            "reverse"       { $head += "7" }
+            "strikethrough" { $head += "9" }
+            "underline"     { $head += "4" }
+        }
+    }
+
+    if ($head -ne "") {
+        $head = "$esc[$head" + "m"
+        if ($headOnly -eq $true) {
+            return $head 
+        }
+        $head += $text
+        if ($noreset -eq $false) {
+            $head += "$esc[0m"
+        }
+    } else {
+        $head = $text
+    }
+
+    return $head
+}
+
+function Format-Pill {
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [String]$text,
+
+        [Parameter(Mandatory)]
+        [String]$bg,
+
+        [Parameter(Mandatory)]
+        [String]$fg,
+
+        [ValidateSet("blink","bold","hidden","italic","reverse","strikethrough","underline")]
+        [Array]$styles
+    )
+
+    $left_cap = "`u{E0B6}"
+    $right_cap = "`u{E0B4}"
+
+    $pill = Format-Text $left_cap -fg $bg -noreset
+    if ($styles.Count -gt 0) {
+        $pill += Format-Text "$text" -fg $fg -bg $bg -styles $styles
+    } else {
+        $pill += Format-Text "$text" -fg $fg -bg $bg
+    }
+    $pill += Format-Text $right_cap -fg $bg
+
+    return $pill
+}
+
+# ╭───────────╮
+# │ FZF Setup │
+# ╰───────────╯
+# https://www.devguru.com/content/technologies/wsh/wshshell-sendkeys.html
+Import-Module PSFzf
+
+Set-PsFzfOption `
+    -PSReadlineChordProvider "Alt+p" `
+    -PSReadlineChordReverseHistory "Alt+h" `
+    -PSReadlineChordSetLocation "Alt+d" `
+    -PSReadlineChordReverseHistoryArgs "Alt+a"
+Set-PSReadLineKeyHandler -Key Alt+t -ScriptBlock { Invoke-FzfTabCompletion }
+Set-PsFzfOption -TabExpansion
+
+# ╭────────────────╮
+# │ Autocompletion │
+# ╰────────────────╯
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete # Shows navigable menu of all options when hitting Tab
+Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward # Autocompletion for arrow keys
+Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward # Autocompletion for arrow keys
+if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+    try{
+        if ($env:COMPUTERNAME -eq "ALOKNIGAM") {
+            Import-Module -Name PSDirectoryPredictor -ErrorAction SilentlyContinue
+        }
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -PredictionViewStyle ListView -HistorySearchCursorMovesToEnd # Zsh like prediction but advanced
+    } catch {
+        Write-Error "Error occurred in setting PredictionSource"
+        Write-Error $_
+    }
+}
+
+# ─[ git tab completion ]──────────────────────────────────────────────
+# Must register after PSFzf — PSFzf registers its own broken `git` completer
+# (depends on posh-git's Expand-GitCommand). Re-registering here wins.
+Import-Module GitCompleter -ErrorAction SilentlyContinue
+Register-GitCompleter
+
+# ─[ winget tab completion ]───────────────────────────────────────────
+Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+        [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+        $Local:word = $wordToComplete.Replace('"', '""')
+        $Local:ast = $commandAst.ToString().Replace('"', '""')
+        winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+            [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
+        }
+}
+
+# https://vitormv.github.io/fzf-themes
+$env:FZF_DEFAULT_OPTS = ""
+$env:FZF_DEFAULT_OPTS += " --height=~70%"
+$env:FZF_DEFAULT_OPTS += " --layout=reverse"
+$env:FZF_DEFAULT_OPTS += " --border=none"
+$env:FZF_DEFAULT_OPTS += " --border-label=' FZF '"
+$env:FZF_DEFAULT_OPTS += " --border-label-pos=5"
+$env:FZF_DEFAULT_OPTS += " --info=inline"
+$env:FZF_DEFAULT_OPTS += " --prompt='$($icons.fzf_prompt) '"
+$env:FZF_DEFAULT_OPTS += " --pointer='$($icons.fzf_pointer) '"
+$env:FZF_DEFAULT_OPTS += " --preview='bat.exe"
+$env:FZF_DEFAULT_OPTS += " --style=numbers"
+$env:FZF_DEFAULT_OPTS += " --color=always"
+$env:FZF_DEFAULT_OPTS += " --italic-text=always"
+$env:FZF_DEFAULT_OPTS += " --theme `"$bat_theme`" {}'"
+$env:FZF_DEFAULT_OPTS += " --preview-window='right,60%,border-rounded'"
+$env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
+$env:FZF_DEFAULT_OPTS += " --scheme=path"
+$env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
+$env:FZF_DEFAULT_OPTS += " --separator=' '"
+$env:FZF_DEFAULT_OPTS += " --margin='0,0,0,1'"
+$env:FZF_DEFAULT_OPTS += " --scrollbar='▐'"
+$env:FZF_DEFAULT_OPTS += " --info='right'"
+
+$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg)"
+$env:FZF_DEFAULT_OPTS += " --color=bg:$($palette.fzf.bg)"
+$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border)"
+$env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.text_fg)"
+$env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg)"
+$env:FZF_DEFAULT_OPTS += " --color=header:$($palette.fzf.header)"
+$env:FZF_DEFAULT_OPTS += " --color=hl+:$($palette.fzf.prompt_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=hl:$($palette.fzf.spinner_hl)"
+$env:FZF_DEFAULT_OPTS += " --color=info:$($palette.fzf.info)"
+$env:FZF_DEFAULT_OPTS += " --color=label:$($palette.fzf.label)"
+$env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker)"
+$env:FZF_DEFAULT_OPTS += " --color=pointer:$($palette.fzf.pointer)"
+$env:FZF_DEFAULT_OPTS += " --color=prompt:$($palette.fzf.prompt)"
+$env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selected)"
+$env:FZF_DEFAULT_OPTS += " --color=spinner:$($palette.fzf.spinner)"
+
+$env:EDITOR = "nvim"
+
+# ╭────────────────╮
+# │ Prompt Styling │
+# ╰────────────────╯
+Set-PSReadlineKeyHandler Enter {
+    $script:cmd_start_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+    [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
+}
+
+function Get-GitStatus {
+    # -uno skips expensive untracked file recursion in large repos
+    $raw = git --no-optional-locks status --porcelain=v2 --branch --show-stash -uno 2>$null
+    if ($LASTEXITCODE -ne 0) { return $null }
+
+    $result = @{
+        AheadBy    = 0
+        BehindBy   = 0
+        Branch     = ""
+        HasIndex   = $false
+        HasWorking = $false
+        StashCount = 0
+    }
+
+    foreach ($line in $raw) {
+        if ($line.StartsWith("# branch.head ")) {
+            $head = $line.Substring(14)
+            if ($head -eq "(detached)") {
+                $sha = git --no-optional-locks rev-parse --short HEAD 2>$null
+                $result.Branch = "($sha...)"
+            } else {
+                $result.Branch = $head
+            }
+        } elseif ($line.StartsWith("# branch.ab ")) {
+            $parts = $line.Substring(13).Split(" ")
+            $result.AheadBy = [int]$parts[0].TrimStart("+")
+            $result.BehindBy = [int]$parts[1].TrimStart("-")
+        } elseif ($line.StartsWith("# stash ")) {
+            $result.StashCount = [int]$line.Substring(8)
+        } elseif ($line.StartsWith("1 ") -or $line.StartsWith("2 ") -or $line.StartsWith("u ")) {
+            $xy = $line.Substring(2, 2)
+            if ($xy[0] -ne ".") { $result.HasIndex = $true }
+            if ($xy[1] -ne ".") { $result.HasWorking = $true }
+        }
+    }
+
+    # fast untracked check — --directory avoids recursing into untracked dirs
+    if (-not $result.HasWorking) {
+        $untracked = git --no-optional-locks ls-files --others --exclude-standard --directory --no-empty-directory 2>$null
+        if ($untracked) { $result.HasWorking = $true }
+    }
+
+    return [PSCustomObject]$result
+}
+
+function _populatePrompt {
+    # Initial executions
+    $script:dir_icon = $icons.windows
+    $script:git_branch = ""
+    $script:git_index = ""
+    $script:git_stash = ""
+    $script:git_sync = ""
+    $script:git_working = ""
+    $script:git_sep = ""
+
+    $script:git_status = Get-GitStatus
+
+    if ($null -ne $script:git_status) {
+        $script:dir_icon = $icons.git_icon
+
+        # git branch
+        $git_branch = $script:git_status.Branch
+        if ($git_branch.StartsWith("(") -and $git_branch.EndsWith(")")) {
+            if ($git_branch.EndsWith("...)")) {
+                $script:git_branch = $icons.git_commit + $git_branch.Substring(1, $git_branch.Length - 5)
+            } else {
+                $script:git_branch = $icons.git_tag + $git_branch.Substring(1, $git_branch.Length - 2)
+            }
+        } else {
+            $script:git_branch = $icons.git_branch + $git_branch.Replace("user/$env:username", "~")
+        }
+
+        # git dirty check
+        if ($script:git_status.HasWorking) {
+            $script:git_working = $icons.git_working
+        }
+        if ($script:git_status.HasIndex) {
+            $script:git_index = $icons.git_working
+        }
+        if ($script:git_status.StashCount) {
+            $script:git_stash = $icons.git_stash
+        }
+
+        # git ahead and behind count
+        $git_sync = ""
+        if ($script:git_status.AheadBy) {
+            $git_sync += "$($icons.git_aheadby)$($script:git_status.AheadBy)"
+        }
+        if ($script:git_status.BehindBy) {
+            $git_sync += "$($icons.git_behindby)$($script:git_status.BehindBy)"
+        }
+        $script:git_sync = $git_sync
+
+        if ($script:git_working -ne "" -or
+            $script:git_index -ne "" -or
+            $script:git_stash -ne "" -or
+            $script:git_sync -ne "") {
+            $script:git_sep = " "
+        }
+    }
+
+    if ($null -ne $env:SSH_CLIENT) {
+        $script:dir_icon = $icons.remote
+    } elseif ($env:INETROOT) {
+        $script:dir_icon = $icons.odc
+    }
+
+    # Command execution durations
+    $script:cmd_duration = ""
+    if ($script:cmd_start_time -ne $null) {
+        $current_time = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+
+        $duration = $current_time - $script:cmd_start_time
+        if ($duration -ge 3600) {
+            $hours = [math]::Floor($duration / 3600)
+            $minutes = [math]::Floor(($duration % 3600) / 60)
+            $formatted = "${hours}h:${minutes}m"
+        } elseif ($duration -ge 60) {
+            $minutes = [math]::Floor($duration / 60)
+            $seconds = [math]::Floor($duration % 60)
+            $formatted = "${minutes}m:${seconds}s"
+        } else {
+            $formatted = ""
+        }
+
+        $script:cmd_duration = $formatted
+    }
+}
+
+function _promptGen($separator, $segments) {
+    # Prompt rendering
+    $i = 0
+    $out = ""
+    $seg = $segments[$i]
+    $block_bg = $seg.bg
+
+    foreach ($block in $seg.blocks) {
+        $block_params = $block
+        $block_params.bg = $block_bg
+        $out += Format-Text @block_params
+    }
+    $sep_fg = $block_bg
+
+    for ($i = 1; $i -lt $segments.Count; $i++) {
+        $seg = $segments[$i]
+        $block_bg = $seg.bg
+
+        if ($null -ne $seg.cond) {
+            $res = Invoke-Command $seg.cond
+            if ($res -eq $false) {
+                continue
+            }
+        }
+
+        $sep_params = $separator.Clone()
+        $sep_params.bg = $block_bg
+        if ($null -eq $separator.fg) {
+            $sep_params.fg = $sep_fg
+        }
+        $out += Format-Text @sep_params
+
+        $out += Format-Text -text " " -bg $block_bg
+        foreach ($block in $seg.blocks) {
+            $block_params = $block
+            $block_params.bg = $block_bg
+            $out += Format-Text @block_params
+        }
+        $sep_fg = $block_bg
+    }
+
+    $sep_params = $separator.Clone()
+    $sep_params.bg = $null
+    if ($null -eq $separator.fg) {
+        $sep_params.fg = $sep_fg
+    }
+    $out += Format-Text @sep_params
+    $out += " "
+
+    $ExecutionContext.InvokeCommand.ExpandString($out)
+}
+
+function prompt {
+    # Populate $script values
+    _populatePrompt
+
+    $separator = @{
+        text = $icons.sep_right
+    }
+
+    $segments = @(
+        @{
+            bg = $palette.prompt.dir_icon.bg
+            blocks = @{
+                text = "$script:dir_icon"
+                fg   = $palette.prompt.dir_icon.fg
+            }, @{
+                text   = "$((Get-Location).ToString().Replace($HOME, "~"))"
+                fg     = $palette.prompt.dir_path
+            }
+        },
+        @{
+            bg = $palette.prompt.git.bg
+            blocks = @{
+                text = "$script:git_branch"
+                fg   = $palette.prompt.git.branch
+                styles = "italic"
+            }, @{
+                text = "$script:git_sep"
+                fg   = $palette.prompt.git.sep
+            }, @{
+                text = "$script:git_working"
+                fg   = $palette.prompt.git.working
+            }, @{
+                text = "$script:git_index"
+                fg   = $palette.prompt.git.index
+            }, @{
+                text = "$script:git_stash"
+                fg   = $palette.prompt.git.stash
+            }, @{
+                text = "$script:git_sync"
+                fg   = $palette.prompt.git.sync
+            }
+            cond = { return $null -ne $script:git_status }
+        },
+        @{
+            bg = $palette.prompt.long_cmd.bg
+            blocks = @{
+                text = "$script:cmd_duration"
+                fg = $palette.prompt.long_cmd.fg
+                styles = "bold"
+            }
+            cond = { return $script:cmd_duration -ne "" }
+        }
+    )
+
+    _promptGen $separator $segments
+}
+
+# https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
+Set-PSReadLineOption -Colors @{
+    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
+    "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment -styles "italic");
+    "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
+    "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
+    "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
+    "Error" = (Format-Text -headOnly -fg $palette.cmdline.error);
+    "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
+    "Member" = (Format-Text -headOnly -fg $palette.cmdline.member -styles "italic");
+    "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
+    "Operator" = (Format-Text -headOnly -fg $palette.cmdline.operator);
+    "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
+    "Selection" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken -bg $palette.cmdline.selection);
+    "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
+    "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
+    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
+}
+
+if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+    Set-PSReadLineOption -Colors @{
+        "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
+        "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction -styles "italic");
+        "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
+        "ListPredictionTooltip" = (Format-Text -headOnly -fg $palette.cmdline.listPredictionTooltip -styles "italic");
+    }
+}
+
+# PowerShell output colors (PSStyle requires PowerShell 7.2+)
+if ($null -ne (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
+    $PSStyle.FileInfo.Executable = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
+    ".7z", ".cab", ".gz", ".nupkg", ".tar", ".tgz", ".zip" | ForEach-Object {
+        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $catppuccin.Red -styles "bold"
+    }
+    ".ps1", ".ps1xml", ".psd1", ".psm1" | ForEach-Object {
+        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $catppuccin.Yellow -styles "bold"
+    }
+    $PSStyle.FileInfo.SymbolicLink = Format-Text -headOnly -fg $catppuccin.Teal -styles "bold"
+    $PSStyle.Formatting.CustomTableHeaderLabel = Format-Text -headOnly -fg $catppuccin.Green -styles "bold", "italic"
+    $PSStyle.Formatting.Debug = Format-Text -headOnly -fg $catppuccin.Teal -styles "bold"
+    $PSStyle.Formatting.Error = Format-Text -headOnly -fg $catppuccin.Red -styles "bold"
+    $PSStyle.Formatting.ErrorAccent = Format-Text -headOnly -fg $catppuccin.Blue -styles "bold"
+    $PSStyle.Formatting.FeedbackAction = Format-Text -headOnly -fg $catppuccin.Blue
+    $PSStyle.Formatting.FeedbackName = Format-Text -headOnly -fg $catppuccin.Subtext1
+    $PSStyle.Formatting.FeedbackText = Format-Text -headOnly -fg $catppuccin.Text
+    $PSStyle.Formatting.FormatAccent = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
+    $PSStyle.Formatting.TableHeader = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
+    $PSStyle.Formatting.Verbose = Format-Text -headOnly -fg $catppuccin.Sky -styles "bold"
+    $PSStyle.Formatting.Warning = Format-Text -headOnly -fg $catppuccin.Yellow -styles "bold"
+    $PSStyle.Progress.Style = Format-Text -headOnly -fg $catppuccin.Mauve -styles "bold"
+}
+
+
+Set-PSReadLineOption -ContinuationPrompt "... "
+
+# ─[ Source rg command line completer ]────────────────────────────────
+. D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
+
+# ─[ Neovim settings ]─────────────────────────────────────────────────
+$env:XDG_CACHE_HOME  = "D:\apps"
+$env:XDG_CONFIG_HOME = "D:\apps"
+$env:XDG_DATA_HOME   = "D:\apps"
+$env:XDG_LOG_HOME    = "D:\apps"
+$env:XDG_STATE_HOME  = "D:\apps"
+
+# ─[ Settings ]────────────────────────────────────────────────────────
+Set-PSReadlineKeyHandler -Key ctrl+d -Function ViExit # exit on ^D
+$PSNativeCommandUseErrorActionPreference = $false
+$env:PSModulePath += ";D:\Dev.aloknigam"
+$env:PYTHONPYCACHEPREFIX = "$env:LOCALAPPDATA\Temp"
+$env:RUFF_CACHE_DIR = "$env:LOCALAPPDATA\Temp"
+$env:LESSUTFCHARDEF="23fb-23fe:p,2665:p,26a1:p,2b58:p,e000-e00a:p,e0a0-e0a2:p,e0a3:p,e0b0-e0b3:p,e0b4-e0c8:p,e0ca:p,e0cc-e0d4:p,e200-e2a9:p,e300-e3e3:p,e5fa-e6a6:p,e700-e7c5:p,ea60-ebeb:p,f000-f2e0:p,f300-f32f:p,f400-f532:p,f500-fd46:p,f0001-f1af0:p" # fix less nerd fond rendering
+
+# ─[ Copilot Settings ]────────────────────────────────────────────────
+$env:COPILOT_AUTO_UPDATE = "false"
+$env:COPILOT_OTEL_ENABLED = "false"
+
+# ─[ Agency Settings ]─────────────────────────────────────────────────
+$env:AGENCY_NO_UPDATE_CHECK  = $true
+
+# ─[ User bin on PATH ]────────────────────────────────────────────────
+$env:PATH = "$env:PATH;$HOME\bin"

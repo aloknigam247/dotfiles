@@ -1,0 +1,7 @@
+files=(
+        [aliases.bash]=~/.bash_aliases
+        [bashrc]=~/.bashrc
+        [git-prompt.sh]=~/.git-prompt.sh
+      )
+
+

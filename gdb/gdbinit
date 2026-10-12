@@ -1,0 +1,11 @@
+skip -gfile /usr/include/*
+skip -gfile /usr/include/*/*
+skip -gfile /usr/include/*/*/*
+skip -gfile /usr/include/*/*/*/*
+skip -gfile /usr/include/*/*/*/*/*
+skip -gfile /usr/include/*/*/*/*/*/*
+
+set print pretty on
+set print thread-events off
+
+

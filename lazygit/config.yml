@@ -1,0 +1,41 @@
+gui:
+  enlargedSideViewLocation: top
+  nerdFontsVersion: "3"
+  spinner:
+    frames:
+      - "◜"
+      - "◠"
+      - "◝"
+      - "◞"
+      - "◡"
+      - "◟"
+
+git:
+  autoFetch: false
+  commit:
+    autoWrapWidth: 80
+  diffRenderers:
+    - colorArg: always
+      command: delta --paging=never
+    - type: rawGit
+      name: git
+  log:
+    showGraph: when-maximised
+  parseEmoji: true
+
+os:
+  editPreset: nvim
+
+notARepository: quit
+promptToReturnFromSubprocess: false
+
+keybinding:
+  universal:
+    gotoTop: "<"
+    gotoBottom: ">"
+    prevBlock: ["<left>", "h"]
+    nextBlock: ["<right>", "l"]
+    redo: "<ctrl+z>"
+  commits:
+    moveDownCommit: "<ctrl+j>"
+    moveUpCommit: "<ctrl+k>"

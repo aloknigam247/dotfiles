@@ -1,0 +1,584 @@
+#Requires -RunAsAdministrator
+
+param(
+     [switch]$update = $false,
+     [string[]]$install
+     )
+
+# Variables
+$SCOOP_DIR = "D:\Scoop"
+
+function DrawMenu {
+    param ($menuItems, $menuPosition, $Multiselect, $selection)
+    $l = $menuItems.length
+    for ($i = 0; $i -le $l;$i++) {
+        if ($null -ne $menuItems[$i]) {
+            $item = $menuItems[$i]
+            if ($Multiselect) {
+                if ($selection -contains $i) {
+                    $item = "[x] " + $item
+                } else {
+                    $item = "[ ] " + $item
+                }
+            }
+            if ($i -eq $menuPosition) {
+                Write-Host "> $($item)" -ForegroundColor Green
+            } else {
+                Write-Host "  $($item)"
+            }
+        }
+    }
+}
+
+function Toggle-Selection {
+    param ($pos, [array]$selection)
+        if ($selection -contains $pos) {
+            $result = $selection | Where-Object {$_ -ne $pos}
+        } else {
+            $selection += $pos
+                $result = $selection
+        }
+    $result
+}
+
+function Menu {
+    param ([array]$menuItems, [switch]$ReturnIndex=$false, [switch]$Multiselect)
+    $vkeycode = 0
+    $pos = 0
+    $selection = @()
+    if ($menuItems.Length -gt 0) {
+        try {
+            [console]::CursorVisible=$false #prevents cursor flickering
+            DrawMenu $menuItems $pos $Multiselect $selection
+            while ($vkeycode -ne 13 -and $vkeycode -ne 27) {
+                $press = $host.ui.rawui.readkey("NoEcho,IncludeKeyDown")
+                $vkeycode = $press.virtualkeycode
+                if ($vkeycode -eq 38) { $pos-- }
+                if ($vkeycode -eq 40) { $pos++ }
+                if ($vkeycode -eq 36) { $pos = 0 }
+                if ($vkeycode -eq 35) { $pos = $menuItems.length - 1 }
+                if ($press.Character -eq ' ') { $selection = Toggle-Selection $pos $selection }
+                if ($pos -lt 0) { $pos = 0 }
+                if ($vkeycode -eq 27) { $pos = $null }
+                if ($pos -ge $menuItems.length) { $pos = $menuItems.length -1 }
+                if ($vkeycode -ne 27) {
+                    $startPos = [System.Console]::CursorTop - $menuItems.Length
+                    [System.Console]::SetCursorPosition(0, $startPos)
+                    DrawMenu $menuItems $pos $Multiselect $selection
+                }
+            }
+        } finally {
+            [System.Console]::SetCursorPosition(0, $startPos + $menuItems.Length)
+            [console]::CursorVisible = $true
+        }
+    } else {
+        $pos = $null
+    }
+
+    if ($ReturnIndex -eq $false -and $null -ne $pos) {
+        if ($Multiselect){
+            return $menuItems[$selection]
+        } else {
+            return $menuItems[$pos]
+        }
+    } else {
+        if ($Multiselect){
+            return $selection
+        } else {
+            return $pos
+        }
+    }
+}
+
+$script:scoop_installed = ""
+function installScoop {
+    param(
+        [switch]$update
+    )
+    Get-Command scoop *>&1 | Out-Null
+    if ($? -eq $false) {
+        writeLog INFO "Scoop not installed. Installing"
+        Invoke-RestMethod get.scoop.sh -outfile "$env:TEMP\install.ps1"
+        if (Test-Path "D:\") {
+            & $env:TEMP\install.ps1 -RunAsAdmin -ScoopDir $SCOOP_DIR
+            New-Item -ItemType SymbolicLink -Path ~\scoop -Target D:\Scoop
+        } else {
+            & $env:TEMP\install.ps1 -RunAsAdmin
+        }
+        Remove-Item $env:TEMP\install.ps1
+        scoop bucket add extras
+        scoop bucket add versions
+        writeLog INFO "Scoop installed"
+    }
+    if ($update){
+        scoop update
+        writeLog INFO "Scoop updated"
+    }
+
+    $installed = scoop list | ForEach-Object { $_.Name }
+    if ($null -eq $installed) {
+        $script:scoop_installed = ""
+    } else {
+        $script:scoop_installed = $installed
+    }
+}
+
+function pipInstall {
+    param (
+        [string[]]$pkgs,
+        [switch]$update
+    )
+
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        pip show $pkg *>&1 | Out-Null
+        $installed = $?
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating pip package: $pkg"
+            pip install --upgrade $pkg
+        } elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing pip package: $pkg"
+            pip install $pkg
+        }
+    }
+}
+
+function pipxInstall {
+    param (
+        [string[]]$pkgs,
+        [switch]$update
+    )
+
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        pip show $pkg *>&1 | Out-Null
+        $installed = $?
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating pipx package: $pkg"
+            pipx upgrade $pkg
+        } elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing pipx package: $pkg"
+            pipx install $pkg
+        }
+    }
+}
+
+function scoopInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+
+    if ($script:scoop_installed.Length -eq 0) {
+        if ($update) {
+            installScoop -update
+        } else {
+            installScoop
+        }
+    }
+
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $installed = $script:scoop_installed.Contains($pkg)
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating scoop package: $pkg"
+            scoop update -s $pkg
+        } elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing scoop package: $pkg"
+            scoop install --no-update-scoop -s $pkg
+        }
+    }
+}
+
+function npmInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $installed = npm list -g $pkg 2>&1 | Select-String -Pattern $pkg -Quiet
+
+        if ($installed -eq $true -and $update) {
+            writeLog UPDATE "Updating npm package: $pkg"
+            npm update -g $pkg
+        } elseif ($installed -ne $true -and -not $update) {
+            writeLog UPDATE "Installing npm package: $pkg"
+            npm install -g $pkg
+            if ($?) {
+                writeLog INFO "npm package installed: $pkg"
+            } else {
+                writeLog ERROR "Failed to install npm package: $pkg"
+            }
+        } elseif ($installed -eq $true -and -not $update) {
+            writeLog INFO "npm package already installed: $pkg"
+        } else {
+            writeLog INFO "npm package not installed: $pkg"
+        }
+    }
+}
+
+function psgalleryInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $installed = Get-Module -ListAvailable -Name $pkg
+
+        if ($null -ne $installed -and $update) {
+            # update package
+            writeLog UPDATE "Updating PSGallery module: $pkg"
+            Update-Module -Name $pkg
+        } elseif ($null -eq $installed -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing PSGallery module: $pkg"
+            Install-Module -Name $pkg -Force -Scope AllUsers
+        }
+    }
+}
+
+function wingetInstall {
+    param(
+        [string[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    foreach ($pkg in $pkgs) {
+        $status = winget list -e --id $pkg --accept-source-agreements
+
+        if ($status.Contains("No installed package found matching input criteria.")) {
+            $installed = $false
+        } else {
+            $installed = $true
+        }
+
+        if ($installed -eq $true -and $update) {
+            # update package
+            writeLog UPDATE "Updating winget package: $pkg"
+            winget upgrade -e --id $pkg --accept-package-agreements --accept-source-agreements
+        } elseif ($installed -eq $false -and -not $update) {
+            # install package
+            writeLog UPDATE "Installing winget package: $pkg"
+            winget install -e --id $pkg --accept-package-agreements --accept-source-agreements
+        }
+    }
+}
+
+function githubInstall {
+    param(
+        [hashtable[]]$pkgs,
+        [switch]$update
+    )
+    if ($pkgs.Length -eq 0) {
+        return
+    }
+
+    $versionFile = "$env:XDG_STATE_HOME\autosetup\github-releases.json"
+    if (Test-Path $versionFile) {
+        $versions = Get-Content $versionFile -Raw | ConvertFrom-Json -AsHashtable
+    } else {
+        $versions = @{}
+    }
+
+    foreach ($pkg in $pkgs) {
+        $repo = $pkg.repo
+        $installed = $versions.ContainsKey($repo)
+
+        if (-not $installed -and $update) {
+            continue
+        }
+
+        $latestTag = gh release view --repo $repo --json tagName --jq ".tagName"
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($latestTag)) {
+            writeLog ERROR "Failed to resolve latest release tag: $repo"
+            continue
+        }
+        $latestTag = $latestTag.Trim()
+
+        if ($installed -and $versions[$repo] -eq $latestTag) {
+            writeLog INFO "GitHub release up to date: $repo ($latestTag)"
+            continue
+        }
+        if ($installed) {
+            writeLog UPDATE "Updating GitHub release: $repo -> $latestTag"
+        } else {
+            writeLog UPDATE "Installing GitHub release: $repo ($latestTag)"
+        }
+
+        if (-not (Test-Path $pkg.dir)) {
+            New-Item -ItemType Directory -Path $pkg.dir | Out-Null
+        }
+        $tmp = Join-Path $env:TEMP ([guid]::NewGuid().ToString())
+        New-Item -ItemType Directory -Path $tmp | Out-Null
+        try {
+            gh release download $latestTag --repo $repo --pattern $pkg.asset --dir $tmp
+            if ($LASTEXITCODE -ne 0) {
+                writeLog ERROR "Failed to download release asset: $repo ($($pkg.asset))"
+                continue
+            }
+            $downloaded = @(Get-ChildItem -File $tmp)
+            if ($downloaded.Count -ne 1) {
+                writeLog ERROR "Expected exactly one asset for $repo, got $($downloaded.Count)"
+                continue
+            }
+            $asset = $downloaded[0]
+            switch ($asset.Extension) {
+                ".zip" { Expand-Archive -Path $asset.FullName -DestinationPath $pkg.dir -Force }
+                ".exe" { Move-Item -Path $asset.FullName -Destination $pkg.dir -Force }
+                default {
+                    writeLog ERROR "Unsupported asset type for $repo`: $($asset.Name)"
+                    continue
+                }
+            }
+            $versions[$repo] = $latestTag
+        } finally {
+            Remove-Item -Recurse -Force $tmp
+        }
+    }
+
+    $stateDir = Split-Path $versionFile
+    if (-not (Test-Path $stateDir)) {
+        New-Item -ItemType Directory -Path $stateDir | Out-Null
+    }
+    $versions | ConvertTo-Json | Set-Content -Path $versionFile
+}
+
+function linkConfigs {
+    param(
+        [hashtable]$files
+    )
+    foreach ($key in $files.keys) {
+        $src = "$cwd\$key"
+        foreach ($dest in @($files[$key])) {
+            $dir = Split-Path -Parent $dest
+            if (-not (Test-Path $dir)) {
+                mkdir $dir
+            }
+            if (Test-Path $dest) {
+                $target = Get-Item $dest | Select-Object -ExpandProperty Target
+                if ($target -eq $src) {
+                    Write-Verbose "$src already linked" -verbose
+                    continue
+                }
+                backupConfig $dest
+                Remove-Item -Force -Path $dest
+            }
+            Write-Output "Linking $src --> $dest"
+            New-Item -ItemType SymbolicLink -Path $dest -Target $src
+        }
+    }
+}
+
+function copyOrUpdateConfigs {
+    param(
+        [hashtable]$files,
+        [switch]$update
+    )
+    foreach ($key in $files.keys) {
+        $src = "$cwd\$key"
+        foreach ($dest in @($files[$key])) {
+            $dir = Split-Path -Parent $dest
+            if ($update) {
+                if (Test-Path $dest) {
+                    $srcFile = Get-Item $src
+                    $destFile = Get-Item $dest
+                    if ($srcFile.LastWriteTime -gt $destFile.LastWriteTime) {
+                        Write-Output "Copying $src --> $dest"
+                        Copy-Item $src $dest
+                    } elseif ($srcFile.LastWriteTime -lt $destFile.LastWriteTime) {
+                        Write-Output "Copying $dest --> $src"
+                        Copy-Item $dest $src
+                    }
+                }
+            } else {
+                if (-not (Test-Path $dir)) {
+                    mkdir $dir
+                }
+                if (Test-Path $dest) {
+                    if (Compare-Object (Get-Content $src) (Get-Content $dest)) {
+                        backupConfig $dest
+                        Write-Output "Copying $src --> $dest"
+                        Copy-Item -Force -Path $src -Destination $dest
+                    } else {
+                        Write-Verbose "$src already exists" -verbose
+                    }
+                } else {
+                    Write-Output "Copying $src --> $dest"
+                    Copy-Item -Path $src -Destination $dest
+                }
+            }
+        }
+    }
+}
+
+function backupConfig {
+    param(
+        [string]$dest
+    )
+    $orig = "${dest}.orig"
+    if (Test-Path $orig) {
+        return
+    }
+    $item = Get-Item -Force -Path $dest -ErrorAction SilentlyContinue
+    if (-not $item) {
+        return
+    }
+    if ($item.LinkType) {
+        Write-Output "backup link $dest --> $orig"
+        New-Item -ItemType SymbolicLink -Path $orig -Target $item.Target | Out-Null
+    } else {
+        Write-Output "backup $dest --> $orig"
+        Copy-Item -Path $dest -Destination $orig
+    }
+}
+
+function deployConfigs {
+    param(
+        [hashtable]$files
+    )
+    foreach ($key in $files.keys) {
+        $src = "$cwd\$key"
+        foreach ($dest in @($files[$key])) {
+            $dir = Split-Path -Parent $dest
+            if (-not (Test-Path $dir)) {
+                mkdir $dir
+            }
+            $item = Get-Item -Force -Path $dest -ErrorAction SilentlyContinue
+            if ($item -and $item.LinkType) {
+                backupConfig $dest
+                Write-Output "Removing link $dest"
+                Remove-Item -Force -Path $dest
+                Write-Output "Deploying $src --> $dest"
+                Copy-Item -Path $src -Destination $dest
+            } elseif ($item) {
+                if ((Get-FileHash $src).Hash -ne (Get-FileHash $dest).Hash) {
+                    backupConfig $dest
+                    Write-Output "Deploying $src --> $dest"
+                    Copy-Item -Force -Path $src -Destination $dest
+                } else {
+                    Write-Verbose "$src already deployed" -verbose
+                }
+            } else {
+                Write-Output "Deploying $src --> $dest"
+                Copy-Item -Path $src -Destination $dest
+            }
+        }
+    }
+}
+
+function writeLog {
+    param(
+        [ValidateSet('INFO', 'ERROR', 'UPDATE')]
+        [Parameter(Mandatory = $true)]
+        [string]$type,
+        [Parameter(Mandatory = $true)]
+        [string]$message
+    )
+
+    $color_map = @{
+        "INFO" = "Blue";
+        "ERROR" = "Red";
+        "UPDATE" = "Yellow"
+    }
+
+    $color = $color_map[$type]
+
+    Write-Host -ForegroundColor White -BackgroundColor $color -NoNewline " $type "
+    Write-Host -ForegroundColor $color " $message"
+}
+
+# ╾─────────────────────────────────────────╼ main execution ╾─────────────────────────────────────────╼
+$all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" -Depth 1 | ForEach-Object { $_.Directory.BaseName }
+
+if ($update) {
+    writeLog INFO "Updating all installed packages"
+    $pkg_list = $all_pkgs
+} elseif ($install) {
+    writeLog INFO "Installing $install"
+    $pkg_list = $install
+} else {
+    Write-Output "Package List: (space to select, enter to install)"
+    $pkg_list = Menu $all_pkgs -Multiselect
+}
+
+$root = Get-Location
+foreach ($pkg in $pkg_list) {
+    writeLog INFO "Package: $pkg"
+
+    Set-Location $pkg
+    $cwd = Get-Location
+
+    if (Test-Path setup.ps1) {
+        $files = @{}
+        $files_copy = @{}
+        $files_deploy = @{}
+        $github_pkgs = @()
+        $npm_pkgs = @()
+        $pip_pkgs = @()
+        $pipx_pkgs = @()
+        $psgallery_pkgs = @()
+        $scoop_pkgs = @()
+        $winget_pkgs = @()
+
+        . .\setup.ps1
+
+        if ($update) {
+            writeLog INFO "Updating Configs"
+
+            copyOrUpdateConfigs -update $files_copy
+            deployConfigs $files_deploy
+            githubInstall -update $github_pkgs
+            npmInstall -update $npm_pkgs
+            pipInstall -update $pip_pkgs
+            pipxInstall -update $pipx_pkgs
+            psgalleryInstall -update $psgallery_pkgs
+            scoopInstall -update $scoop_pkgs
+            wingetInstall -update $winget_pkgs
+        } else {
+            writeLog INFO "Installing Configs"
+
+            copyOrUpdateConfigs $files_copy
+            deployConfigs $files_deploy
+            githubInstall $github_pkgs
+            linkConfigs $files
+            npmInstall $npm_pkgs
+            pipInstall $pip_pkgs
+            pipxInstall $pipx_pkgs
+            psgalleryInstall $psgallery_pkgs
+            scoopInstall $scoop_pkgs
+            wingetInstall $winget_pkgs
+        }
+    } else {
+        writeLog ERROR "No setup.ps1 found for $pkg"
+    }
+    Set-Location $root
+}

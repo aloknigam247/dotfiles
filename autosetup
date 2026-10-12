@@ -1,0 +1,51 @@
+#!/bin/bash
+
+declare -a app_list=(bash clangd fonts gdb neovim shell tcsh tmux ubuntu vim zsh)
+
+echo "Applications List:"
+for i in ${!app_list[@]};do
+    echo "    $i: ${app_list[$i]}"
+done
+
+read -p "Space seperated index list of dotfiles to install: " -a opt
+
+for o in ${opt[@]}; do
+    app=${app_list[$o]}
+    echo -e "\n\e[31mInstalling: $app\e[39m"
+    (
+        declare -a cmd
+        declare -A files
+        cd $app
+        if [[ -f setup ]]; then
+            source setup
+            for src in ${!files[@]}; do
+                dest=${files[$src]}
+                dir=$(dirname $dest)
+
+                if [[ ! -f $dir ]]; then
+                    mkdir -p $dir
+                fi
+
+                if [[ ! $src -ef $dest ]]; then
+                    if [[ -a $dest ]]; then
+                        echo "backup $dest --> $dest.orig"
+                        mv $dest $dest.orig
+                    fi
+
+                    echo "linking $src --> $dest"
+                    ln -fs $(pwd)/$src $dest
+                fi
+
+            done
+
+            for i in ${!cmds[@]}; do
+                echo -e "\e[34m${cmds[$i]}\e[39m"
+                eval ${cmds[$i]}
+            done
+        else
+            echo "No setup file found for $app"
+        fi
+    )
+done
+
+
