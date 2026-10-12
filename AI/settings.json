@@ -76,7 +76,7 @@
     "autoConnect": false
   },
   "keepAlive": "on",
-  "model": "claude-opus-5.5",
+  "model": "gpt-6-astra",
   "mouse": true,
   "pinnedPrompts": true,
   "remoteSessions": true,

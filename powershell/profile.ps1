@@ -362,7 +362,7 @@ function bat {
 }
 
 $copilot_context = "long_context"
-$copilot_model = "claude-opus-5.5"
+$copilot_model = "gpt-6-astra"
 $copilot_reasoning_effort = "max"
 
 function agency {
