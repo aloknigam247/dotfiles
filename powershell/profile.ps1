@@ -308,8 +308,13 @@ function Start-CpTower {
     if (Get-Process -Name cptower -ErrorAction SilentlyContinue) { return }
     $exe = "D:\dotfiles\cptower\dist\cptower.exe"
     if (Test-Path $exe) {
+        $log_dir = Join-Path $env:XDG_CONFIG_HOME "cptower"
+        $log_file = Join-Path $log_dir "cptower.log"
+        New-Item -ItemType Directory -Path $log_dir -Force -ErrorAction Stop | Out-Null
+
         # cptower signs AHP clients in to hosts as this GitHub CLI account.
-        Start-Process -FilePath $exe -ArgumentList "--github-user", "aloknigam_microsoft" -WindowStyle Hidden | Out-Null
+        $command = "`"`"$exe`" --github-user aloknigam_microsoft > `"$log_file`" 2>&1`""
+        Start-Process -FilePath $env:ComSpec -ArgumentList "/d", "/s", "/c", $command -WindowStyle Hidden | Out-Null
     }
 }
 
