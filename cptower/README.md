@@ -39,6 +39,10 @@ dotnet run -c Release -- --port 9000            # override the port
 dotnet run -c Release -- --github-user <login>  # sign clients in as this gh account
 ```
 
+`Start-CpTower` logs stdout and stderr to `cptower.log` beside
+[`hosts.url`](#token-protected-hosts-ahp-start). Each new process overwrites the log; calling it while
+cptower is already running leaves the log intact.
+
 Single-file publish for deployment to another machine:
 
 ```ps1
