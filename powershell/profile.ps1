@@ -302,6 +302,64 @@ function _ParseRootArg {
     return @{ RootDir = $root_dir; Args = $filtered }
 }
 
+function Get-AgencySubcommands {
+    @(
+        "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
+        "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
+        "support", "update", "vscode"
+    )
+}
+
+function Get-AiBackend {
+    param([string]$RootDir)
+    $gitDir = $null
+    $isOrigin = $false
+    $directory = [System.IO.DirectoryInfo]::new($RootDir)
+    while ($directory) {
+        $marker = [System.IO.Path]::Combine($directory.FullName, ".git")
+        if ([System.IO.Directory]::Exists($marker)) {
+            $gitDir = $marker
+            break
+        }
+        if ([System.IO.File]::Exists($marker)) {
+            $pointer = [System.IO.File]::ReadAllText($marker).Trim()
+            if ($pointer -notmatch "^gitdir:\s*(.+)$") {
+                throw "Invalid gitdir pointer: $marker"
+            }
+            $gitDir = [System.IO.Path]::GetFullPath($Matches[1], $directory.FullName)
+            break
+        }
+        $directory = $directory.Parent
+    }
+    if (-not $gitDir) {
+        return "copilot"
+    }
+
+    $commonFile = [System.IO.Path]::Combine($gitDir, "commondir")
+    if ([System.IO.File]::Exists($commonFile)) {
+        $pointer = [System.IO.File]::ReadAllText($commonFile).Trim()
+        if (-not $pointer) {
+            throw "Invalid commondir pointer: $commonFile"
+        }
+        $gitDir = [System.IO.Path]::GetFullPath($pointer, $gitDir)
+    }
+    $configFile = [System.IO.Path]::Combine($gitDir, "config")
+    foreach ($line in [System.IO.File]::ReadAllLines($configFile)) {
+        if ($line -cmatch "^\s*\[(?i:remote)\s+`"origin`"\s*\]\s*(?:[#;].*)?$") {
+            $isOrigin = $true
+        } elseif ($line -match "^\s*\[") {
+            $isOrigin = $false
+        } elseif ($isOrigin -and $line -match "^\s*url\s*=\s*(?:`"([^`"]*)`"|([^#;]*))") {
+            $url = if ($Matches.ContainsKey(1)) { $Matches[1] } else { $Matches[2].Trim() }
+            if ($url -match "github\.com") {
+                return "copilot"
+            }
+            return "agency"
+        }
+    }
+    return "agency"
+}
+
 function Start-CpTower {
     # Fire-and-forget so `copilot` never blocks: a cheap name check skips the launch
     # when an instance is already up, otherwise start it hidden and return immediately.
@@ -344,17 +402,8 @@ function ai {
         $root_dir = $PWD.Path
     }
 
-    git -C $root_dir rev-parse --is-inside-work-tree 2>$null | Out-Null
-    if ($LASTEXITCODE -ne 0) {
-        copilot @args
-        return
-    }
-    $remote_url = git -C $root_dir remote get-url origin 2>$null
-    if ($remote_url -and $remote_url -match "github\.com") {
-        copilot @args
-    } else {
-        agency @args
-    }
+    $backend = Get-AiBackend -RootDir $root_dir
+    & $backend @args
 }
 
 function bat {
@@ -371,12 +420,6 @@ $copilot_model = "gpt-6-astra"
 $copilot_reasoning_effort = "max"
 
 function agency {
-    $agencyCommands = @(
-        "artifact", "batch", "config", "create", "eval", "feedback", "finish-pr", "gh-app",
-        "help", "hub", "marketplace", "mcp", "plugin", "plugins", "ring", "session-manager",
-        "support", "update", "vscode"
-    )
-
     try {
         $parsed = _ParseRootArg $args
     } catch {
@@ -385,7 +428,7 @@ function agency {
     }
     $first = if ($parsed.Args.Count) { $parsed.Args[0] } else { $null }
     $isCopilot = $first -and ($first -in @("copilot", "cp"))
-    $isSubcommand = $first -and ($agencyCommands -contains $first)
+    $isSubcommand = $first -and ((Get-AgencySubcommands) -contains $first)
     $root_dir = $parsed.RootDir
 
     if (-not ($isSubcommand -or $isCopilot)) {
@@ -683,6 +726,190 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
         winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
             [System.Management.Automation.CompletionResult]::new($_, $_, "ParameterValue", $_)
         }
+}
+
+Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    if ($commandAst.GetCommandName() -notin @("agency", "ai", "copilot")) {
+        return
+    }
+
+    $agencyFlags = @(
+        "--agent", "--agent-type", "--branch", "--copilot-log-name", "--copilot-session-file",
+        "--generate-result", "--help", "--hub", "--input", "--marketplace-project", "--mcp",
+        "--no-aec", "--no-config-cache", "--no-config-plugins", "--no-default-mcps", "--no-input-processing",
+        "--organization", "--plugin", "--plugins", "--profile", "--profile-only", "--project", "--prompt",
+        "--repository", "--result-type", "--session-id", "--session-manager", "--source", "--type", "-a", "-h", "-p"
+    )
+    $copilotFlags = @(
+        "--acp", "--add-dir", "--add-github-mcp-tool", "--add-github-mcp-toolset", "--additional-mcp-config", "--agent",
+        "--allow-all", "--allow-all-mcp-server-instructions", "--allow-all-paths", "--allow-all-tools",
+        "--allow-all-urls", "--allow-tool", "--allow-url", "--assisted-approval", "--attachment", "--auto-tier",
+        "--autopilot", "--available-tools", "--banner", "--bash-env", "--connect", "--context", "--continue",
+        "--deny-tool", "--deny-url", "--disable-builtin-mcps", "--disable-mcp-server", "--disallow-temp-dir",
+        "--dynamic-retrieval", "--effort", "--enable-all-github-mcp-tools", "--enable-mcp-server", "--enable-memory",
+        "--enable-reasoning-summaries", "--excluded-tools", "--experimental", "--extension-sdk-path", "--fleet",
+        "--help", "--interactive", "--log-dir", "--log-level", "--max-ai-credits", "--max-autopilot-continues",
+        "--mcp-github-auth", "--mode", "--model", "--mouse", "--name", "--no-ask-user", "--no-auto-update",
+        "--no-bash-env", "--no-color", "--no-custom-instructions", "--no-eager-powershell-resolution",
+        "--no-experimental", "--no-mouse", "--no-remote", "--no-remote-export", "--output-format", "--plain-diff",
+        "--plan", "--plugin-dir", "--prompt", "--reasoning-effort", "--remote", "--remote-export", "--resume",
+        "--screen-reader", "--secret-env-vars", "--session-id", "--share", "--share-gist", "--silent", "--stream",
+        "--usage-output-file", "--version", "--yolo", "-C", "-h", "-i", "-n", "-p", "-r", "-s", "-v"
+    )
+    $copilotSubcommands = @(
+        "app", "completion", "config", "help", "init", "instruction", "login", "lsp", "mcp", "memories",
+        "plugin", "plugins", "sandbox", "sessions", "skill", "update", "version", "workflow"
+    )
+    $effortValues = @("high", "low", "max", "medium", "minimal", "none", "xhigh")
+    $insertPrefix = ""
+    $isAgentValue = $false
+    $isNativeAgency = $false
+    $option = ""
+    $sourceValues = @("company", "organization", "personal", "playground", "repo", "spec")
+    $enums = @{
+        "--context" = @("default", "long_context")
+        "--effort" = $effortValues
+        "--log-level" = @("all", "debug", "default", "error", "info", "none", "warning")
+        "--mode" = @("autopilot", "interactive", "plan")
+        "--output-format" = @("json", "text")
+        "--reasoning-effort" = $effortValues
+        "--stream" = @("off", "on")
+    }
+    $elements = @($commandAst.CommandElements | Where-Object {
+        $_.Extent.EndOffset -lt $cursorPosition -or
+            ($_.Extent.EndOffset -eq $cursorPosition -and -not $wordToComplete)
+    })
+    $arguments = @($elements | Select-Object -Skip 1 | ForEach-Object {
+        if ($_ -is [System.Management.Automation.Language.StringConstantExpressionAst]) {
+            $_.Value
+        } else {
+            $_.Extent.Text
+        }
+    })
+    if ($arguments.Count -gt 0 -and $arguments[-1] -eq "--root") {
+        [System.Management.Automation.CompletionCompleters]::CompleteFilename($wordToComplete) |
+            Where-Object ResultType -EQ ProviderContainer
+        return
+    }
+
+    $parsed = _ParseRootArg $arguments
+    $arguments = @($parsed.Args)
+    $backend = if ($commandAst.GetCommandName() -eq "ai") {
+        Get-AiBackend -RootDir $parsed.RootDir
+    } else {
+        $commandAst.GetCommandName()
+    }
+    $flags = @($copilotFlags + "--root")
+    $subcommands = $copilotSubcommands
+    if ($backend -eq "agency") {
+        $agencySubcommands = @(Get-AgencySubcommands)
+        $flags += $agencyFlags
+        $enums["--agent-type"] = $sourceValues
+        $enums["--result-type"] = @("pr", "standard")
+        $enums["--source"] = $sourceValues
+        $enums["--type"] = $sourceValues
+        if ($arguments.Count -gt 0 -and $arguments[0] -in @("copilot", "cp")) {
+            $arguments = @($arguments | Select-Object -Skip 1)
+        } elseif ($arguments.Count -gt 0 -and $arguments[0] -in $agencySubcommands) {
+            $isNativeAgency = $true
+        } else {
+            $subcommands += @($agencySubcommands + @("copilot", "cp"))
+        }
+    }
+
+    $prefix = $wordToComplete
+    if ($arguments.Count -gt 0) {
+        $option = $arguments[-1]
+    }
+    $equalsIndex = $wordToComplete.IndexOf("=")
+    if ($equalsIndex -gt 0) {
+        $equalsOption = $wordToComplete.Substring(0, $equalsIndex)
+        if ($enums.ContainsKey($equalsOption) -or $equalsOption -eq "--agent" -or
+            ($backend -eq "agency" -and $equalsOption -eq "-a")) {
+            $insertPrefix = $wordToComplete.Substring(0, $equalsIndex + 1)
+            $option = $equalsOption
+            $prefix = $wordToComplete.Substring($equalsIndex + 1)
+        }
+    }
+
+    if ($isNativeAgency) {
+        $candidates = @("--help", "--root")
+        $insertPrefix = ""
+        $prefix = $wordToComplete
+    } elseif ($enums.ContainsKey($option)) {
+        $candidates = $enums[$option]
+    } elseif ($option -eq "--agent" -or ($backend -eq "agency" -and $option -eq "-a")) {
+        $isAgentValue = $true
+        $source = ""
+        if ($backend -eq "agency") {
+            for ($i = 0; $i -lt $arguments.Count; $i++) {
+                if ($arguments[$i] -in @("--agent-type", "--source", "--type") -and
+                    $i + 1 -lt $arguments.Count) {
+                    $source = $arguments[++$i]
+                } elseif ($arguments[$i] -match "^--(?:agent-type|source|type)=(.*)$") {
+                    $source = $Matches[1]
+                }
+            }
+        }
+        $agentDirectories = @(
+            if (-not $source -or $source -eq "personal") {
+                $homeDir = if ($env:COPILOT_HOME) { $env:COPILOT_HOME } else { Join-Path $HOME ".copilot" }
+                Join-Path $homeDir "agents"
+            }
+            if (-not $source -or $source -eq "repo") {
+                $projectRoot = $parsed.RootDir
+                $directory = [System.IO.DirectoryInfo]::new($projectRoot)
+                while ($directory) {
+                    if (Test-Path -LiteralPath (Join-Path $directory.FullName ".git")) {
+                        $projectRoot = $directory.FullName
+                        break
+                    }
+                    $directory = $directory.Parent
+                }
+                Join-Path $projectRoot ".github\agents"
+            }
+        )
+        $candidates = @(
+            foreach ($agentDirectory in $agentDirectories) {
+                try {
+                    if (Test-Path -LiteralPath $agentDirectory -PathType Container -ErrorAction Stop) {
+                        Get-ChildItem -LiteralPath $agentDirectory -Filter "*.md" -File -ErrorAction Stop |
+                            ForEach-Object { $_.BaseName -replace "\.agent$", "" }
+                    }
+                } catch [System.UnauthorizedAccessException], [System.IO.IOException],
+                    [System.Management.Automation.ItemNotFoundException] {
+                    Write-Warning "Unable to read agents in '${agentDirectory}': $($_.Exception.Message)"
+                }
+            }
+        )
+    } elseif ($arguments.Count -eq 0) {
+        $candidates = @($flags + $subcommands)
+    } else {
+        $candidates = $flags
+    }
+
+    if ($prefix.Length -gt 0 -and $prefix[0] -in @("'", "`"")) {
+        $quote = $prefix[0]
+        $prefix = $prefix.Substring(1)
+        if ($prefix.EndsWith([string]$quote)) {
+            $prefix = $prefix.Substring(0, $prefix.Length - 1)
+        }
+        if ($quote -eq "'") {
+            $prefix = $prefix.Replace("''", "'")
+        }
+    }
+    foreach ($candidate in $candidates | Sort-Object -CaseSensitive -Unique) {
+        if ($candidate -and $candidate.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            $text = $candidate
+            if ($isAgentValue -and $candidate -match "[^\w.-]") {
+                $escaped = $candidate.Replace("'", "''")
+                $text = "'$escaped'"
+            }
+            [System.Management.Automation.CompletionResult]::new(
+                "$insertPrefix$text", $candidate, "ParameterValue", $candidate)
+        }
+    }
 }
 
 # https://vitormv.github.io/fzf-themes
