@@ -23,7 +23,8 @@
     "https://neovim.io",
     "https://code.visualstudio.com",
     "https://developers.figma.com",
-    "https://zerodha.com"
+    "https://zerodha.com",
+    "https://d2lang.com"
   ],
   "askUser": true,
   "autoTier": "intelligence",
@@ -57,20 +58,20 @@
     "disabledExtensions": []
   },
   "footer": {
-    "showAgent": true,
-    "showAiUsed": true,
-    "showBranch": true,
-    "showCiStatus": true,
-    "showCodeChanges": true,
-    "showContextWindow": true,
-    "showCustom": true,
-    "showDirectory": true,
     "showModelEffort": true,
-    "showPullRequest": true,
+    "showDirectory": true,
+    "showBranch": true,
+    "showContextWindow": true,
     "showQuota": true,
-    "showSandbox": true,
+    "showAiUsed": true,
+    "showAgent": true,
+    "showCodeChanges": true,
     "showUsername": false,
-    "showYolo": true
+    "showSandbox": true,
+    "showYolo": true,
+    "showCiStatus": true,
+    "showPullRequest": true,
+    "showCustom": true
   },
   "ide": {
     "autoConnect": false
@@ -84,10 +85,26 @@
   "showReasoning": true,
   "sidebar": {
     "enabled": true,
-    "hoverFocus": true,
-    "showCloseButton": true
+    "showCloseButton": true,
+    "hoverFocus": true
   },
   "subagents": {
+    "agents": {
+      "catppuccin": {},
+      "explore": {
+        "model": "inherit"
+      },
+      "task": {
+        "model": "inherit"
+      },
+      "rubber-duck": {
+        "model": "inherit",
+        "autoInvoke": true
+      },
+      "research": {
+        "model": "inherit"
+      }
+    },
     "contextManagementTools": true
   },
   "tabs": {
