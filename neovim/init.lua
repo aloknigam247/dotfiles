@@ -2661,10 +2661,12 @@ addPlugin {
 		},
 		definition = {
 			edit = "o",
+			height = 0.7,
 			quit = "q",
 			split = keymaps.open_vsplit,
 			tabe = keymaps.open_tab,
 			vsplit = keymaps.open_vsplit,
+			width = 0.4,
 		},
 		diagnostic = {
 			custom_fix = nil,
