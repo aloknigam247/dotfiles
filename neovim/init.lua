@@ -3518,6 +3518,28 @@ addPlugin {
 			},
 			render = function(props)
 				local full_filename = vim.api.nvim_buf_get_name(props.buf)
+				if vim.bo[props.buf].filetype == "directory" then
+					local path = vim.fs.normalize(full_filename)
+					if vim.fn.fnamemodify(path, ":h") ~= path then
+						path = vim.fn.pathshorten(vim.fn.fnamemodify(path, ":~"))
+					end
+
+					local directory = vim.fs.basename(path)
+					if directory == "" then
+						return {
+							{ icons.Folder, guifg = "#BFC0C0" },
+							path
+						}
+					end
+
+					local prefix = path:sub(1, #path - #directory)
+					return {
+						{ icons.Folder, guifg = "#BFC0C0" },
+						prefix,
+						{ directory, gui = "underline" }
+					}
+				end
+
 				local filename = vim.fn.fnamemodify(full_filename, ":t")
 				local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
 
