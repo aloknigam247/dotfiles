@@ -149,83 +149,90 @@ Start-Job {
     }
 } | Out-Null
 
+function _buildPalette {
+    param([hashtable]$theme)
+
+    $result = @{
+        cmdline = @{
+            command = $theme.Blue
+            comment = $theme.Overlay2
+            defaultToken = $theme.Text
+            emphasis = $theme.Red
+            error = $theme.Red
+            inlinePrediction = $theme.Overlay0
+            keyword = $theme.Mauve
+            listPrediction = $theme.Subtext1
+            listPredictionSelected = $theme.Surface0
+            listPredictionTooltip = $theme.Overlay0
+            member = $theme.Lavender
+            number = $theme.Peach
+            operator = $theme.Sky
+            parameter = $theme.Maroon
+            selection = $theme.Overlay2_25
+            string = $theme.Green
+            type = $theme.Yellow
+            variable = $theme.Text
+        }
+        git = @{
+            commit = $theme.Flamingo
+            commit_icon = $theme.Blue
+            contact_bracket = $theme.Overlay2
+            head = $theme.Blue
+            message = $theme.Text
+            timestamp = $theme.Overlay2
+            user_email = $theme.Mauve
+            user_name = $theme.Mauve
+        }
+        prompt = @{
+            dir_icon = @{
+                bg = $theme.Blue
+                fg = $theme.Base
+            }
+            dir_path = $theme.Base
+            git = @{
+                bg = $theme.Crust
+                branch = $theme.Text
+                index = $theme.Green
+                sep = $theme.Overlay0
+                stash = $theme.Maroon
+                sync = $theme.Teal
+                working = $theme.Blue
+            }
+            long_cmd = @{
+                bg = $theme.Mauve
+                fg = $theme.Base
+            }
+        }
+    }
+
+    $result.fzf = @{
+        bg               = $theme.Mantle
+        border           = $theme.Lavender
+        header           = $theme.Red
+        info             = $theme.Mauve
+        label            = $theme.Text
+        marker           = $theme.Lavender
+        marker_fg        = $theme.Green
+        pointer          = $theme.Mauve
+        prompt           = $theme.Mauve
+        prompt_hl        = $theme.Red
+        selected         = $theme.Surface1
+        spinner          = $theme.Rosewater
+        spinner_hl       = $theme.Red
+        text_bg          = $theme.Base
+        text_fg          = $theme.Text
+        text_selected_bg = $theme.Surface0
+        text_selected_fg = $theme.Rosewater
+    }
+
+    return $result
+}
+
 # Set theme variables
 $bat_theme = $current_theme
 $env:DELTA_FEATURES = $current_theme.ToLower().Replace(' ', '-')
 $env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
-
-$palette = @{
-    cmdline = @{
-        command = $catppuccin.Blue
-        comment = $catppuccin.Overlay2
-        defaultToken = $catppuccin.Text
-        emphasis = $catppuccin.Red
-        error = $catppuccin.Red
-        inlinePrediction = $catppuccin.Overlay0
-        keyword = $catppuccin.Mauve
-        listPrediction = $catppuccin.Subtext1
-        listPredictionSelected = $Catppuccin.Surface0
-        listPredictionTooltip = $catppuccin.Overlay0
-        member = $catppuccin.Lavender
-        number = $catppuccin.Peach
-        operator = $catppuccin.Sky
-        parameter = $catppuccin.Maroon
-        selection = $catppuccin.Overlay2_25
-        string = $catppuccin.Green
-        type = $catppuccin.Yellow
-        variable = $catppuccin.Text
-    }
-    git = @{
-        commit = $catppuccin.Flamingo
-        commit_icon = $catppuccin.Blue
-        contact_bracket = $catppuccin.Overlay2
-        head = $catppuccin.Blue
-        message = $catppuccin.Text
-        timestamp = $catppuccin.Overlay2
-        user_email = $catppuccin.Mauve
-        user_name = $catppuccin.Mauve
-    }
-    prompt = @{
-        dir_icon = @{
-            bg = $catppuccin.Blue
-            fg = $catppuccin.Base
-        }
-        dir_path = $catppuccin.Base
-        git = @{
-            bg = $catppuccin.Crust
-            branch = $catppuccin.Text
-            index = $catppuccin.Green
-            sep = $catppuccin.Overlay0
-            stash = $catppuccin.Maroon
-            sync = $catppuccin.Teal
-            working = $catppuccin.Blue
-        }
-        long_cmd = @{
-            bg = $catppuccin.Mauve
-            fg = $catppuccin.Base
-        }
-    }
-}
-
-$palette.fzf = @{
-    bg               = $catppuccin.Mantle
-    border           = $catppuccin.Lavender
-    header           = $catppuccin.Red
-    info             = $catppuccin.Mauve
-    label            = $catppuccin.Text
-    marker           = $catppuccin.Lavender
-    marker_fg        = $catppuccin.Green
-    pointer          = $catppuccin.Mauve
-    prompt           = $catppuccin.Mauve
-    prompt_hl        = $catppuccin.Red
-    selected         = $catppuccin.Surface1
-    spinner          = $catppuccin.Rosewater
-    spinner_hl       = $catppuccin.Red
-    text_bg          = $catppuccin.Base
-    text_fg          = $catppuccin.Text
-    text_selected_bg = $catppuccin.Surface0
-    text_selected_fg = $catppuccin.Rosewater
-}
+$palette = _buildPalette $catppuccin
 
 # LS Colors
 # Directory color for Get-ChildItem (PSStyle requires PowerShell 7.2+)
@@ -1153,6 +1160,233 @@ function _promptGen($separator, $segments) {
     $ExecutionContext.InvokeCommand.ExpandString($out)
 }
 
+function _getPSReadLineColors {
+    $options = Get-PSReadLineOption
+    $colors = @{
+        "Command" = $options.CommandColor
+        "Comment" = $options.CommentColor
+        "ContinuationPrompt" = $options.ContinuationPromptColor
+        "Default" = $options.DefaultTokenColor
+        "Emphasis" = $options.EmphasisColor
+        "Error" = $options.ErrorColor
+        "Keyword" = $options.KeywordColor
+        "Member" = $options.MemberColor
+        "Number" = $options.NumberColor
+        "Operator" = $options.OperatorColor
+        "Parameter" = $options.ParameterColor
+        "Selection" = $options.SelectionColor
+        "String" = $options.StringColor
+        "Type" = $options.TypeColor
+        "Variable" = $options.VariableColor
+    }
+
+    if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+        $colors["InlinePrediction"] = $options.InlinePredictionColor
+        $colors["ListPrediction"] = $options.ListPredictionColor
+        $colors["ListPredictionSelected"] = $options.ListPredictionSelectedColor
+        $colors["ListPredictionTooltip"] = $options.ListPredictionTooltipColor
+    }
+
+    return $colors
+}
+
+function _applyPSReadLineColors {
+    param([hashtable]$theme_palette)
+
+    $colors = @{
+        "Command" = (Format-Text -headOnly -fg $theme_palette.cmdline.command)
+        "Comment" = (Format-Text -headOnly -fg $theme_palette.cmdline.comment -styles "italic")
+        "ContinuationPrompt" = (Format-Text -headOnly -fg $theme_palette.cmdline.defaultToken)
+        "Default" = (Format-Text -headOnly -fg $theme_palette.cmdline.defaultToken)
+        "Emphasis" = (Format-Text -headOnly -fg $theme_palette.cmdline.emphasis)
+        "Error" = (Format-Text -headOnly -fg $theme_palette.cmdline.error)
+        "Keyword" = (Format-Text -headOnly -fg $theme_palette.cmdline.keyword -styles "italic")
+        "Member" = (Format-Text -headOnly -fg $theme_palette.cmdline.member -styles "italic")
+        "Number" = (Format-Text -headOnly -fg $theme_palette.cmdline.number)
+        "Operator" = (Format-Text -headOnly -fg $theme_palette.cmdline.operator)
+        "Parameter" = (Format-Text -headOnly -fg $theme_palette.cmdline.parameter)
+        "Selection" = (
+            Format-Text -headOnly -fg $theme_palette.cmdline.defaultToken -bg $theme_palette.cmdline.selection
+        )
+        "String" = (Format-Text -headOnly -fg $theme_palette.cmdline.string)
+        "Type" = (Format-Text -headOnly -fg $theme_palette.cmdline.type)
+        "Variable" = (Format-Text -headOnly -fg $theme_palette.cmdline.variable)
+    }
+
+    if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
+        $colors["InlinePrediction"] = Format-Text -headOnly -fg $theme_palette.cmdline.inlinePrediction
+        $colors["ListPrediction"] = Format-Text -headOnly -fg $theme_palette.cmdline.listPrediction -styles "italic"
+        $colors["ListPredictionSelected"] =
+            Format-Text -headOnly -bg $theme_palette.cmdline.listPredictionSelected -styles "bold"
+        $colors["ListPredictionTooltip"] =
+            Format-Text -headOnly -fg $theme_palette.cmdline.listPredictionTooltip -styles "italic"
+    }
+
+    Set-PSReadLineOption -Colors $colors
+}
+
+function _removeThemeWatcher {
+    $source_identifiers = @(
+        "Dotfiles.ThemeChanged"
+        "Dotfiles.ThemeRefreshRetry"
+    )
+    $timer = $global:dotfiles_theme_retry_timer
+
+    if ($timer) {
+        $timer.Stop()
+    }
+
+    foreach ($source_identifier in $source_identifiers) {
+        Unregister-Event -SourceIdentifier $source_identifier -ErrorAction SilentlyContinue
+        Remove-Event -SourceIdentifier $source_identifier -ErrorAction SilentlyContinue
+        Get-Job -ErrorAction SilentlyContinue |
+            Where-Object Name -eq $source_identifier |
+            Stop-Job -ErrorAction SilentlyContinue
+        Get-Job -ErrorAction SilentlyContinue |
+            Where-Object Name -eq $source_identifier |
+            Remove-Job -Force -ErrorAction SilentlyContinue
+    }
+
+    if ($timer) {
+        $timer.Dispose()
+    }
+
+    Remove-Variable dotfiles_theme_retry_timer -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable dotfiles_theme_state -Scope Global -ErrorAction SilentlyContinue
+}
+
+function _refreshTheme {
+    $registry_path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+    $apps_use_light_theme = Get-ItemPropertyValue -Path $registry_path -Name "AppsUseLightTheme" -ErrorAction Stop
+
+    if ($apps_use_light_theme -notin @(0, 1)) {
+        throw "AppsUseLightTheme returned unsupported value '$apps_use_light_theme'."
+    }
+    if ($apps_use_light_theme -eq $global:dotfiles_theme_state.apps_use_light_theme) {
+        return $false
+    }
+
+    $candidate_theme = if ($apps_use_light_theme -eq 1) { $catppuccin_latte } else { $catppuccin_mocha }
+    $candidate_palette = _buildPalette $candidate_theme
+    $previous_colors = _getPSReadLineColors
+
+    try {
+        _applyPSReadLineColors $candidate_palette
+    } catch {
+        $apply_error = $_
+        try {
+            Set-PSReadLineOption -Colors $previous_colors
+        } catch {
+            $Host.UI.WriteWarningLine("Theme refresh rollback failed: $($_.Exception.Message)")
+        }
+        throw $apply_error
+    }
+
+    $global:catppuccin = $candidate_theme
+    $global:dotfiles_theme_state.apps_use_light_theme = $apps_use_light_theme
+    $global:palette = $candidate_palette
+    return $true
+}
+
+function _invokeThemeRefresh {
+    param([int]$generation)
+
+    $state = $global:dotfiles_theme_state
+    if (-not $state -or $generation -ne $state.generation) {
+        return
+    }
+
+    try {
+        _refreshTheme | Out-Null
+        $state.last_error = ""
+        $state.retry_armed = $false
+        $state.retry_count = 0
+        $state.retry_exhausted = $false
+        $state.timer.Stop()
+    } catch {
+        $message = $_.Exception.Message
+        if ($message -ne $state.last_error) {
+            $Host.UI.WriteWarningLine("Theme refresh failed: $message")
+            $state.last_error = $message
+        }
+        if ($state.retry_count -ge 3) {
+            if (-not $state.retry_exhausted) {
+                $Host.UI.WriteWarningLine("Theme refresh stopped after three retries.")
+                $state.retry_exhausted = $true
+            }
+            $state.retry_armed = $false
+            return
+        }
+
+        $state.retry_count++
+        $state.retry_armed = $true
+        $state.retry_armed_at = [DateTime]::UtcNow
+        $state.retry_generation = $generation
+        $state.timer.Stop()
+        $state.timer.Start()
+    }
+}
+
+function _registerThemeWatcher {
+    param([int]$apps_use_light_theme)
+
+    $change_source = "Dotfiles.ThemeChanged"
+    $retry_source = "Dotfiles.ThemeRefreshRetry"
+
+    _removeThemeWatcher
+
+    $timer = [System.Timers.Timer]::new(1000)
+    $timer.AutoReset = $false
+    $state = [hashtable]::Synchronized(@{
+        apps_use_light_theme = $apps_use_light_theme
+        generation = 0
+        last_error = ""
+        retry_armed = $false
+        retry_armed_at = [DateTime]::MinValue
+        retry_count = 0
+        retry_exhausted = $false
+        retry_generation = 0
+        timer = $timer
+    })
+    $global:dotfiles_theme_retry_timer = $timer
+    $global:dotfiles_theme_state = $state
+
+    Register-ObjectEvent -InputObject $timer -EventName "Elapsed" -SourceIdentifier $retry_source -Action {
+        $state = $global:dotfiles_theme_state
+        $signal_time = $event.SourceEventArgs.SignalTime.ToUniversalTime()
+
+        if (-not $state -or -not $state.retry_armed) {
+            return
+        }
+        if ($state.retry_generation -ne $state.generation -or $signal_time -lt $state.retry_armed_at) {
+            return
+        }
+
+        $state.retry_armed = $false
+        _invokeThemeRefresh $state.retry_generation
+    } | Out-Null
+
+    $sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+    $key_path = "$sid\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize"
+    $query = "SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND " +
+        "KeyPath='$key_path' AND ValueName='AppsUseLightTheme'"
+
+    Register-CimIndicationEvent -Namespace "root/default" -Query $query -SourceIdentifier $change_source -Action {
+        $state = $global:dotfiles_theme_state
+        if (-not $state) {
+            return
+        }
+
+        $state.timer.Stop()
+        $state.retry_armed = $false
+        Remove-Event -SourceIdentifier "Dotfiles.ThemeRefreshRetry" -ErrorAction SilentlyContinue
+        $state.generation++
+        $state.retry_count = 0
+        $state.retry_exhausted = $false
+        _invokeThemeRefresh $state.generation
+    } | Out-Null
+}
+
 function prompt {
     # Populate $script values
     _populatePrompt
@@ -1211,31 +1445,12 @@ function prompt {
 }
 
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
-Set-PSReadLineOption -Colors @{
-    "Command" = (Format-Text -headOnly -fg $palette.cmdline.command);
-    "Comment" = (Format-Text -headOnly -fg $palette.cmdline.comment -styles "italic");
-    "ContinuationPrompt" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
-    "Default" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken);
-    "Emphasis" = (Format-Text -headOnly -fg $palette.cmdline.emphasis);
-    "Error" = (Format-Text -headOnly -fg $palette.cmdline.error);
-    "Keyword" = (Format-Text -headOnly -fg $palette.cmdline.keyword -styles "italic");
-    "Member" = (Format-Text -headOnly -fg $palette.cmdline.member -styles "italic");
-    "Number" = (Format-Text -headOnly -fg $palette.cmdline.number);
-    "Operator" = (Format-Text -headOnly -fg $palette.cmdline.operator);
-    "Parameter" = (Format-Text -headOnly -fg $palette.cmdline.parameter);
-    "Selection" = (Format-Text -headOnly -fg $palette.cmdline.defaultToken -bg $palette.cmdline.selection);
-    "String" = (Format-Text -headOnly -fg $palette.cmdline.string);
-    "Type" = (Format-Text -headOnly -fg $palette.cmdline.type);
-    "Variable" = (Format-Text -headOnly -fg $palette.cmdline.variable);
-}
-
-if (-not $PSVersionTable.PSVersion.ToString().StartsWith("5.1")) {
-    Set-PSReadLineOption -Colors @{
-        "InlinePrediction" = (Format-Text -headOnly -fg $palette.cmdline.inlinePrediction);
-        "ListPrediction" = (Format-Text -headOnly -fg $palette.cmdline.listPrediction -styles "italic");
-        "ListPredictionSelected" = (Format-Text -headOnly -bg $palette.cmdline.listPredictionSelected -styles "bold");
-        "ListPredictionTooltip" = (Format-Text -headOnly -fg $palette.cmdline.listPredictionTooltip -styles "italic");
-    }
+_applyPSReadLineColors $palette
+try {
+    _registerThemeWatcher ([int]$system_theme.AppsUseLightTheme)
+} catch {
+    _removeThemeWatcher
+    $Host.UI.WriteWarningLine("Theme watcher registration failed: $($_.Exception.Message)")
 }
 
 # PowerShell output colors (PSStyle requires PowerShell 7.2+)
