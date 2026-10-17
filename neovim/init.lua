@@ -3304,6 +3304,14 @@ addPlugin {
 addPlugin {
 	"stevearc/aerial.nvim",
 	cmd = { "AerialNavToggle", "AerialToggle" },
+	config = function(_, opts)
+		opts.icons = vim.tbl_extend("force", opts.icons, {
+			Collapsed = icons.fold_close,
+		})
+		require("aerial").setup(opts)
+		vim.api.nvim_set_hl(0, "AerialLine", { link = "CursorLine" })
+		vim.api.nvim_set_hl(0, "AerialLineNC", { link = "CursorLine" })
+	end,
 	opts = {
 		attach_mode = "global",
 		autojump = false,
@@ -3313,6 +3321,12 @@ addPlugin {
 		filter_kind = { "Class", "Constructor", "Enum", "Function", "Interface", "Module", "Method", "Struct" },
 		float = {
 			relative = "editor",
+		},
+		guides = {
+			last_item = icons.border_botleft .. icons.border_hor,
+			mid_item = "├" .. icons.border_hor,
+			nested_top = icons.border_vert .. " ",
+			whitespace = "  ",
 		},
 		highlight_on_hover = true,
 		icons = icons,
