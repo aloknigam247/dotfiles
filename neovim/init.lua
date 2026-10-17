@@ -3461,6 +3461,22 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.opt_local.statuscolumn = "%{%v:lua.DirStatuscolumn()%}"
 		vim.opt_local.foldcolumn = "0"
+
+		-- Fit vertical directory splits to their contents without exceeding the maximum width.
+		local longest = 0
+		local window = vim.api.nvim_get_current_win()
+		local config = vim.api.nvim_win_get_config(window)
+		if config.relative ~= "" or vim.api.nvim_win_get_width(window) >= vim.o.columns then
+			return
+		end
+
+		local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+		for _, line in ipairs(lines) do
+			longest = math.max(longest, vim.fn.strdisplaywidth(line))
+		end
+
+		vim.api.nvim_win_set_width(window, math.min(longest + 3, 40))
+		vim.wo[window].winfixwidth = true
 	end,
 })
 
