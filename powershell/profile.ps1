@@ -117,38 +117,6 @@ $catppuccin_mocha = @{
     Overlay2_25 = "#3B3D4F"
 }
 
-# get system theme
-$system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
-# Windows Terminal switches colorScheme via the dark/light object in settings.json natively (1.22+)
-if ($system_theme.AppsUseLightTheme -eq 1) {
-    $env:THEME = "light"
-    $current_theme = "Catppuccin Latte"
-    $catppuccin = $catppuccin_latte
-    $lazygit_theme = "light.yml"
-} else {
-    $env:THEME = "dark"
-    $current_theme = "Catppuccin Mocha"
-    $catppuccin = $catppuccin_mocha
-    $lazygit_theme = "dark.yml"
-}
-
-
-Start-Job {
-    $retry = 5
-    while ($retry) {
-        $retry--
-        $current_theme_file = (Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" -Name "CurrentTheme").CurrentTheme
-        if ($current_theme_file -notmatch "$env:THEME.theme") {
-            $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
-            Start-Process $theme_file
-            Start-Sleep -Seconds 10
-            Stop-Process -name SystemSettings
-        } else {
-            break
-        }
-    }
-} | Out-Null
-
 function _buildPalette {
     param([hashtable]$theme)
 
@@ -228,29 +196,68 @@ function _buildPalette {
     return $result
 }
 
-# Set theme variables
-$bat_theme = $current_theme
-$env:DELTA_FEATURES = $current_theme.ToLower().Replace(' ', '-')
-$env:GLOW_STYLE = "D:\dotfiles\glow\$env:DELTA_FEATURES.json"
-$palette = _buildPalette $catppuccin
+function _buildThemeState {
+    param([int]$apps_use_light_theme)
 
-# LS Colors
-# Directory color for Get-ChildItem (PSStyle requires PowerShell 7.2+)
-if ($null -ne (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
-    $PSStyle.FileInfo.Directory = "`e[38;2;" + [int]"0x$($catppuccin.Blue.Substring(1,2))" + ";" + [int]"0x$($catppuccin.Blue.Substring(3,2))" + ";" + [int]"0x$($catppuccin.Blue.Substring(5,2))" + "m"
+    if ($apps_use_light_theme -eq 1) {
+        $catppuccin = $catppuccin_latte
+        $current_theme = "Catppuccin Latte"
+        $lazygit_theme = "light.yml"
+        $mode = "light"
+    } elseif ($apps_use_light_theme -eq 0) {
+        $catppuccin = $catppuccin_mocha
+        $current_theme = "Catppuccin Mocha"
+        $lazygit_theme = "dark.yml"
+        $mode = "dark"
+    } else {
+        throw "AppsUseLightTheme returned unsupported value '$apps_use_light_theme'."
+    }
+
+    $delta_features = $current_theme.ToLower().Replace(" ", "-")
+    return @{
+        apps_use_light_theme = $apps_use_light_theme
+        bat_theme = $current_theme
+        catppuccin = $catppuccin
+        current_theme = $current_theme
+        delta_features = $delta_features
+        glow_style = "D:\dotfiles\glow\$delta_features.json"
+        lazygit_theme = $lazygit_theme
+        mode = $mode
+        palette = _buildPalette $catppuccin
+    }
 }
 
-$html_sgr = "38;2;{0};{1};{2}" -f
-    [int]"0x$($catppuccin.Peach.Substring(1, 2))",
-    [int]"0x$($catppuccin.Peach.Substring(3, 2))",
-    [int]"0x$($catppuccin.Peach.Substring(5, 2))"
-$javascript_sgr = "38;2;{0};{1};{2}" -f
-    [int]"0x$($catppuccin.Yellow.Substring(1, 2))",
-    [int]"0x$($catppuccin.Yellow.Substring(3, 2))",
-    [int]"0x$($catppuccin.Yellow.Substring(5, 2))"
-$env:LS_COLORS="rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;07;31;05:mi=00:su=07;31:sg=30;43:ca=07;31:tw=07;32:ow=30;107:st=07;34:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.nupkg=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=01;33:*.psd1=01;33:*.psm1=01;33:*.ps1xml=01;33:*.md=00;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36" +
-    ":*.cjs=${javascript_sgr}:*.htm=${html_sgr}:*.html=${html_sgr}" +
-    ":*.js=${javascript_sgr}:*.jsx=${javascript_sgr}:*.mjs=${javascript_sgr}"
+# get system theme
+$system_theme = Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
+# Windows Terminal switches colorScheme via the dark/light object in settings.json natively (1.22+)
+$theme_state = _buildThemeState ([int]$system_theme.AppsUseLightTheme)
+$bat_theme = $theme_state.bat_theme
+$catppuccin = $theme_state.catppuccin
+$current_theme = $theme_state.current_theme
+$env:DELTA_FEATURES = $theme_state.delta_features
+$env:GLOW_STYLE = $theme_state.glow_style
+$env:THEME = $theme_state.mode
+$lazygit_theme = $theme_state.lazygit_theme
+$palette = $theme_state.palette
+
+# LS Colors
+function _buildLSColors {
+    param([hashtable]$theme)
+
+    $html_sgr = "38;2;{0};{1};{2}" -f
+        [int]"0x$($theme.Peach.Substring(1, 2))",
+        [int]"0x$($theme.Peach.Substring(3, 2))",
+        [int]"0x$($theme.Peach.Substring(5, 2))"
+    $javascript_sgr = "38;2;{0};{1};{2}" -f
+        [int]"0x$($theme.Yellow.Substring(1, 2))",
+        [int]"0x$($theme.Yellow.Substring(3, 2))",
+        [int]"0x$($theme.Yellow.Substring(5, 2))"
+    return "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;07;31;05:mi=00:su=07;31:sg=30;43:ca=07;31:tw=07;32:ow=30;107:st=07;34:ex=04;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.nupkg=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*.C=00;32:*.c=00;32:*.cc=00;32:*.cpp=00;32:*.h=00;32:*.py=00;32:*.sv=00;32:*.tcl=00;32:*.v=00;32:*.vim=00;32:*.log=00;33:*.err=00;31:*README*=00;35:*Makefile=00;36:*.make=00;36:*.yml=00;36:*.yaml=00;36:*.ps1=01;33:*.psd1=01;33:*.psm1=01;33:*.ps1xml=01;33:*.md=00;33:*.lua=01;34:*.json=01;36:*.csproj=01;35:*.sln=01;35:*.cs=01;32:*.csharp=01;32:*.colors=01;36" +
+        ":*.cjs=${javascript_sgr}:*.htm=${html_sgr}:*.html=${html_sgr}" +
+        ":*.js=${javascript_sgr}:*.jsx=${javascript_sgr}:*.mjs=${javascript_sgr}"
+}
+
+$env:LS_COLORS = _buildLSColors $catppuccin
 
  # ╭───────╮
  # │ Icons │
@@ -930,44 +937,53 @@ Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock
 }
 
 # https://vitormv.github.io/fzf-themes
-$env:FZF_DEFAULT_OPTS = ""
-$env:FZF_DEFAULT_OPTS += " --height=~70%"
-$env:FZF_DEFAULT_OPTS += " --layout=reverse"
-$env:FZF_DEFAULT_OPTS += " --border=none"
-$env:FZF_DEFAULT_OPTS += " --border-label=' FZF '"
-$env:FZF_DEFAULT_OPTS += " --border-label-pos=5"
-$env:FZF_DEFAULT_OPTS += " --info=inline"
-$env:FZF_DEFAULT_OPTS += " --prompt='$($icons.fzf_prompt) '"
-$env:FZF_DEFAULT_OPTS += " --pointer='$($icons.fzf_pointer) '"
-$env:FZF_DEFAULT_OPTS += " --preview='bat.exe"
-$env:FZF_DEFAULT_OPTS += " --style=numbers"
-$env:FZF_DEFAULT_OPTS += " --color=always"
-$env:FZF_DEFAULT_OPTS += " --italic-text=always"
-$env:FZF_DEFAULT_OPTS += " --theme `"$bat_theme`" {}'"
-$env:FZF_DEFAULT_OPTS += " --preview-window='right,60%,border-rounded'"
-$env:FZF_DEFAULT_OPTS += " --preview-label='(Preview)'"
-$env:FZF_DEFAULT_OPTS += " --scheme=path"
-$env:FZF_DEFAULT_OPTS += " --marker='$($icons.fzf_marker) '"
-$env:FZF_DEFAULT_OPTS += " --separator=' '"
-$env:FZF_DEFAULT_OPTS += " --margin='0,0,0,1'"
-$env:FZF_DEFAULT_OPTS += " --scrollbar='▐'"
-$env:FZF_DEFAULT_OPTS += " --info='right'"
+function _buildFzfDefaultOpts {
+    param(
+        [string]$bat_theme_name,
+        [hashtable]$theme_palette
+    )
 
-$env:FZF_DEFAULT_OPTS += " --color=bg+:$($palette.fzf.text_selected_bg)"
-$env:FZF_DEFAULT_OPTS += " --color=bg:$($palette.fzf.bg)"
-$env:FZF_DEFAULT_OPTS += " --color=border:$($palette.fzf.border)"
-$env:FZF_DEFAULT_OPTS += " --color=fg+:$($palette.fzf.text_fg)"
-$env:FZF_DEFAULT_OPTS += " --color=fg:$($palette.fzf.text_fg)"
-$env:FZF_DEFAULT_OPTS += " --color=header:$($palette.fzf.header)"
-$env:FZF_DEFAULT_OPTS += " --color=hl+:$($palette.fzf.prompt_hl)"
-$env:FZF_DEFAULT_OPTS += " --color=hl:$($palette.fzf.spinner_hl)"
-$env:FZF_DEFAULT_OPTS += " --color=info:$($palette.fzf.info)"
-$env:FZF_DEFAULT_OPTS += " --color=label:$($palette.fzf.label)"
-$env:FZF_DEFAULT_OPTS += " --color=marker:$($palette.fzf.marker)"
-$env:FZF_DEFAULT_OPTS += " --color=pointer:$($palette.fzf.pointer)"
-$env:FZF_DEFAULT_OPTS += " --color=prompt:$($palette.fzf.prompt)"
-$env:FZF_DEFAULT_OPTS += " --color=selected-bg:$($palette.fzf.selected)"
-$env:FZF_DEFAULT_OPTS += " --color=spinner:$($palette.fzf.spinner)"
+    $options = ""
+    $options += " --height=~70%"
+    $options += " --layout=reverse"
+    $options += " --border=none"
+    $options += " --border-label=' FZF '"
+    $options += " --border-label-pos=5"
+    $options += " --info=inline"
+    $options += " --prompt='$($icons.fzf_prompt) '"
+    $options += " --pointer='$($icons.fzf_pointer) '"
+    $options += " --preview='bat.exe"
+    $options += " --style=numbers"
+    $options += " --color=always"
+    $options += " --italic-text=always"
+    $options += " --theme `"$bat_theme_name`" {}'"
+    $options += " --preview-window='right,60%,border-rounded'"
+    $options += " --preview-label='(Preview)'"
+    $options += " --scheme=path"
+    $options += " --marker='$($icons.fzf_marker) '"
+    $options += " --separator=' '"
+    $options += " --margin='0,0,0,1'"
+    $options += " --scrollbar='▐'"
+    $options += " --info='right'"
+    $options += " --color=bg+:$($theme_palette.fzf.text_selected_bg)"
+    $options += " --color=bg:$($theme_palette.fzf.bg)"
+    $options += " --color=border:$($theme_palette.fzf.border)"
+    $options += " --color=fg+:$($theme_palette.fzf.text_fg)"
+    $options += " --color=fg:$($theme_palette.fzf.text_fg)"
+    $options += " --color=header:$($theme_palette.fzf.header)"
+    $options += " --color=hl+:$($theme_palette.fzf.prompt_hl)"
+    $options += " --color=hl:$($theme_palette.fzf.spinner_hl)"
+    $options += " --color=info:$($theme_palette.fzf.info)"
+    $options += " --color=label:$($theme_palette.fzf.label)"
+    $options += " --color=marker:$($theme_palette.fzf.marker)"
+    $options += " --color=pointer:$($theme_palette.fzf.pointer)"
+    $options += " --color=prompt:$($theme_palette.fzf.prompt)"
+    $options += " --color=selected-bg:$($theme_palette.fzf.selected)"
+    $options += " --color=spinner:$($theme_palette.fzf.spinner)"
+    return $options
+}
+
+$env:FZF_DEFAULT_OPTS = _buildFzfDefaultOpts $bat_theme $palette
 
 $env:EDITOR = "nvim"
 
@@ -1190,7 +1206,7 @@ function _getPSReadLineColors {
     return $colors
 }
 
-function _applyPSReadLineColors {
+function _buildPSReadLineColors {
     param([hashtable]$theme_palette)
 
     $colors = @{
@@ -1222,18 +1238,416 @@ function _applyPSReadLineColors {
             Format-Text -headOnly -fg $theme_palette.cmdline.listPredictionTooltip -styles "italic"
     }
 
+    return $colors
+}
+
+function _applyPSReadLineColors {
+    param([hashtable]$colors)
+
     Set-PSReadLineOption -Colors $colors
+}
+
+function _applyPSStyleColors {
+    param([hashtable]$theme)
+
+    if ($null -eq (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
+        return
+    }
+
+    $directory_rgb = @(
+        [int]"0x$($theme.Blue.Substring(1, 2))"
+        [int]"0x$($theme.Blue.Substring(3, 2))"
+        [int]"0x$($theme.Blue.Substring(5, 2))"
+    ) -join ";"
+    $PSStyle.FileInfo.Directory = "`e[38;2;${directory_rgb}m"
+    $PSStyle.FileInfo.Executable = Format-Text -headOnly -fg $theme.Green -styles "bold"
+    ".7z", ".cab", ".gz", ".nupkg", ".tar", ".tgz", ".zip" | ForEach-Object {
+        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $theme.Red -styles "bold"
+    }
+    ".ps1", ".ps1xml", ".psd1", ".psm1" | ForEach-Object {
+        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $theme.Yellow -styles "bold"
+    }
+    $PSStyle.FileInfo.SymbolicLink = Format-Text -headOnly -fg $theme.Teal -styles "bold"
+    $PSStyle.Formatting.CustomTableHeaderLabel = Format-Text -headOnly -fg $theme.Green -styles "bold", "italic"
+    $PSStyle.Formatting.Debug = Format-Text -headOnly -fg $theme.Teal -styles "bold"
+    $PSStyle.Formatting.Error = Format-Text -headOnly -fg $theme.Red -styles "bold"
+    $PSStyle.Formatting.ErrorAccent = Format-Text -headOnly -fg $theme.Blue -styles "bold"
+    $PSStyle.Formatting.FeedbackAction = Format-Text -headOnly -fg $theme.Blue
+    $PSStyle.Formatting.FeedbackName = Format-Text -headOnly -fg $theme.Subtext1
+    $PSStyle.Formatting.FeedbackText = Format-Text -headOnly -fg $theme.Text
+    $PSStyle.Formatting.FormatAccent = Format-Text -headOnly -fg $theme.Green -styles "bold"
+    $PSStyle.Formatting.TableHeader = Format-Text -headOnly -fg $theme.Green -styles "bold"
+    $PSStyle.Formatting.Verbose = Format-Text -headOnly -fg $theme.Sky -styles "bold"
+    $PSStyle.Formatting.Warning = Format-Text -headOnly -fg $theme.Yellow -styles "bold"
+    $PSStyle.Progress.Style = Format-Text -headOnly -fg $theme.Mauve -styles "bold"
+}
+
+function _getPSStyleSnapshot {
+    $extension_names = @(
+        ".7z"
+        ".cab"
+        ".gz"
+        ".nupkg"
+        ".ps1"
+        ".ps1xml"
+        ".psd1"
+        ".psm1"
+        ".tar"
+        ".tgz"
+        ".zip"
+    )
+
+    if ($null -eq (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
+        return @{ available = $false }
+    }
+
+    $extensions = @{}
+    foreach ($extension_name in $extension_names) {
+        $exists = $PSStyle.FileInfo.Extension.ContainsKey($extension_name)
+        $extensions[$extension_name] = @{
+            exists = $exists
+            value = if ($exists) { $PSStyle.FileInfo.Extension[$extension_name] } else { $null }
+        }
+    }
+
+    return @{
+        available = $true
+        extensions = $extensions
+        file_info = @{
+            directory = $PSStyle.FileInfo.Directory
+            executable = $PSStyle.FileInfo.Executable
+            symbolic_link = $PSStyle.FileInfo.SymbolicLink
+        }
+        formatting = @{
+            custom_table_header_label = $PSStyle.Formatting.CustomTableHeaderLabel
+            debug = $PSStyle.Formatting.Debug
+            error = $PSStyle.Formatting.Error
+            error_accent = $PSStyle.Formatting.ErrorAccent
+            feedback_action = $PSStyle.Formatting.FeedbackAction
+            feedback_name = $PSStyle.Formatting.FeedbackName
+            feedback_text = $PSStyle.Formatting.FeedbackText
+            format_accent = $PSStyle.Formatting.FormatAccent
+            table_header = $PSStyle.Formatting.TableHeader
+            verbose = $PSStyle.Formatting.Verbose
+            warning = $PSStyle.Formatting.Warning
+        }
+        progress_style = $PSStyle.Progress.Style
+    }
+}
+
+function _restorePSStyleSnapshot {
+    param([hashtable]$snapshot)
+
+    if (-not $snapshot.available) {
+        return
+    }
+
+    $PSStyle.FileInfo.Directory = $snapshot.file_info.directory
+    $PSStyle.FileInfo.Executable = $snapshot.file_info.executable
+    $PSStyle.FileInfo.SymbolicLink = $snapshot.file_info.symbolic_link
+    foreach ($extension_name in $snapshot.extensions.Keys) {
+        $extension = $snapshot.extensions[$extension_name]
+        if ($extension.exists) {
+            $PSStyle.FileInfo.Extension[$extension_name] = $extension.value
+        } else {
+            $PSStyle.FileInfo.Extension.Remove($extension_name)
+        }
+    }
+    $PSStyle.Formatting.CustomTableHeaderLabel = $snapshot.formatting.custom_table_header_label
+    $PSStyle.Formatting.Debug = $snapshot.formatting.debug
+    $PSStyle.Formatting.Error = $snapshot.formatting.error
+    $PSStyle.Formatting.ErrorAccent = $snapshot.formatting.error_accent
+    $PSStyle.Formatting.FeedbackAction = $snapshot.formatting.feedback_action
+    $PSStyle.Formatting.FeedbackName = $snapshot.formatting.feedback_name
+    $PSStyle.Formatting.FeedbackText = $snapshot.formatting.feedback_text
+    $PSStyle.Formatting.FormatAccent = $snapshot.formatting.format_accent
+    $PSStyle.Formatting.TableHeader = $snapshot.formatting.table_header
+    $PSStyle.Formatting.Verbose = $snapshot.formatting.verbose
+    $PSStyle.Formatting.Warning = $snapshot.formatting.warning
+    $PSStyle.Progress.Style = $snapshot.progress_style
+}
+
+function _snapshotThemeState {
+    $environment_names = @(
+        "DELTA_FEATURES"
+        "FZF_DEFAULT_OPTS"
+        "GLOW_STYLE"
+        "LS_COLORS"
+        "THEME"
+    )
+    $global_names = @(
+        "bat_theme"
+        "catppuccin"
+        "current_theme"
+        "lazygit_theme"
+        "palette"
+    )
+
+    $environment = @{}
+    foreach ($environment_name in $environment_names) {
+        $environment_item = Get-Item -Path "Env:$environment_name" -ErrorAction SilentlyContinue
+        $environment[$environment_name] = @{
+            exists = $null -ne $environment_item
+            value = if ($environment_item) { $environment_item.Value } else { $null }
+        }
+    }
+
+    $globals = @{}
+    foreach ($global_name in $global_names) {
+        $global_variable = Get-Variable -Name $global_name -Scope Global -ErrorAction SilentlyContinue
+        $globals[$global_name] = @{
+            exists = $null -ne $global_variable
+            value = if ($global_variable) { $global_variable.Value } else { $null }
+        }
+    }
+
+    return @{
+        apps_use_light_theme = $global:dotfiles_theme_state.apps_use_light_theme
+        environment = $environment
+        globals = $globals
+        ps_readline = _getPSReadLineColors
+        ps_style = _getPSStyleSnapshot
+    }
+}
+
+function _publishThemeState {
+    param(
+        [hashtable]$candidate,
+        [string]$fzf_default_opts,
+        [string]$ls_colors,
+        [hashtable]$ps_readline_colors
+    )
+
+    _applyPSReadLineColors $ps_readline_colors
+    _applyPSStyleColors $candidate.catppuccin
+
+    $env:DELTA_FEATURES = $candidate.delta_features
+    $env:FZF_DEFAULT_OPTS = $fzf_default_opts
+    $env:GLOW_STYLE = $candidate.glow_style
+    $env:LS_COLORS = $ls_colors
+    $env:THEME = $candidate.mode
+    $global:bat_theme = $candidate.bat_theme
+    $global:catppuccin = $candidate.catppuccin
+    $global:current_theme = $candidate.current_theme
+    $global:lazygit_theme = $candidate.lazygit_theme
+    $global:palette = $candidate.palette
+    $global:dotfiles_theme_state.apps_use_light_theme = $candidate.apps_use_light_theme
+}
+
+function _restoreThemeState {
+    param([hashtable]$snapshot)
+
+    $rollback_errors = [System.Collections.Generic.List[string]]::new()
+
+    try {
+        _applyPSReadLineColors $snapshot.ps_readline
+    } catch {
+        $rollback_errors.Add("PSReadLine: $($_.Exception.Message)")
+    }
+    try {
+        _restorePSStyleSnapshot $snapshot.ps_style
+    } catch {
+        $rollback_errors.Add("PSStyle: $($_.Exception.Message)")
+    }
+
+    foreach ($environment_name in $snapshot.environment.Keys) {
+        $environment = $snapshot.environment[$environment_name]
+        try {
+            if ($environment.exists) {
+                Set-Item -Path "Env:$environment_name" -Value $environment.value
+            } else {
+                Remove-Item -Path "Env:$environment_name" -ErrorAction SilentlyContinue
+            }
+        } catch {
+            $rollback_errors.Add("${environment_name}: $($_.Exception.Message)")
+        }
+    }
+
+    foreach ($global_name in $snapshot.globals.Keys) {
+        $global_variable = $snapshot.globals[$global_name]
+        try {
+            if ($global_variable.exists) {
+                Set-Variable -Name $global_name -Scope Global -Value $global_variable.value
+            } else {
+                Remove-Variable -Name $global_name -Scope Global -ErrorAction SilentlyContinue
+            }
+        } catch {
+            $rollback_errors.Add("${global_name}: $($_.Exception.Message)")
+        }
+    }
+
+    $global:dotfiles_theme_state.apps_use_light_theme = $snapshot.apps_use_light_theme
+    if ($rollback_errors.Count -gt 0) {
+        throw "Theme rollback failed: $($rollback_errors -join '; ')"
+    }
+}
+
+function _getWindowsThemeWorker {
+    return {
+        param(
+            [int]$generation,
+            [string]$mode,
+            [string]$theme_file
+        )
+
+        $applied = $false
+        $current_theme = $null
+        $launched = $false
+        $system_uses_light_theme = $null
+        $ErrorActionPreference = "Stop"
+        $normalized_theme_file = [System.IO.Path]::GetFullPath($theme_file)
+        $target_system_uses_light_theme = if ($mode -eq "light") { 1 } else { 0 }
+        if (-not (Test-Path -LiteralPath $normalized_theme_file -PathType Leaf)) {
+            throw "Windows theme file not found: $normalized_theme_file"
+        }
+
+        try {
+            Start-Process -FilePath $normalized_theme_file -ErrorAction Stop
+            $launched = $true
+            for ($attempt = 0; $attempt -lt 5; $attempt++) {
+                Start-Sleep -Seconds 10
+                $system_uses_light_theme = Get-ItemPropertyValue `
+                    -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" `
+                    -Name "SystemUsesLightTheme" `
+                    -ErrorAction Stop
+                if ($system_uses_light_theme -eq $target_system_uses_light_theme) {
+                    $applied = $true
+                    break
+                }
+            }
+            if (-not $applied) {
+                throw "Windows theme did not synchronize SystemUsesLightTheme after five checks: $normalized_theme_file"
+            }
+            $current_theme = Get-ItemPropertyValue `
+                -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes" `
+                -Name "CurrentTheme" `
+                -ErrorAction Stop
+        } finally {
+            if ($launched) {
+                Get-Process -Name "SystemSettings" -ErrorAction SilentlyContinue |
+                    ForEach-Object { Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue }
+            }
+        }
+
+        [pscustomobject]@{
+            current_theme = $current_theme
+            generation = $generation
+            mode = $mode
+            success = $true
+            system_uses_light_theme = $system_uses_light_theme
+            theme_file = $normalized_theme_file
+        }
+    }
+}
+
+function _requestWindowsThemeApply {
+    param(
+        [int]$generation,
+        [string]$mode
+    )
+
+    if ($mode -notin @("dark", "light")) {
+        throw "Unsupported Windows theme mode '$mode'."
+    }
+
+    $state = $global:dotfiles_theme_state
+    $state.windows_apply_timer.Stop()
+    Remove-Event -SourceIdentifier "Dotfiles.WindowsThemeApply" -ErrorAction SilentlyContinue
+    $state.windows_generation = $generation
+    $state.windows_mode = $mode
+    $state.windows_request_armed = $true
+    $state.windows_request_at = [DateTime]::UtcNow
+    $state.windows_apply_timer.Start()
+}
+
+function _completeWindowsThemeJob {
+    param([System.Management.Automation.Job]$job)
+
+    $state = $global:dotfiles_theme_state
+    if (-not $state -or $job.InstanceId -ne $state.windows_job_instance_id) {
+        return
+    }
+
+    $completed_generation = $state.windows_job_generation
+    $job_errors = @(
+        $job.ChildJobs | ForEach-Object {
+            $_.Error | ForEach-Object { $_.Exception.Message }
+            if ($_.JobStateInfo.Reason) {
+                $_.JobStateInfo.Reason.Message
+            }
+        }
+    )
+    $results = @($job | Receive-Job -ErrorAction SilentlyContinue)
+    $result = $results | Where-Object success | Select-Object -Last 1
+    $state.windows_job = $null
+    $state.windows_job_generation = -1
+    $state.windows_job_instance_id = [guid]::Empty
+
+    Remove-Job -Job $job -Force -ErrorAction SilentlyContinue
+
+    if (-not $result) {
+        $message = if ($job_errors.Count -gt 0) {
+            $job_errors -join "; "
+        } elseif ($results.Count -gt 0) {
+            "Windows theme job returned no success result: $($results | ConvertTo-Json -Compress)"
+        } else {
+            "Windows theme job ended without a success result."
+        }
+        $Host.UI.WriteWarningLine("Windows theme application failed: $message")
+    }
+
+    if ($completed_generation -ne $state.windows_generation -or
+        -not $result -or $result.mode -ne $state.windows_mode) {
+        if ($completed_generation -ne $state.windows_generation) {
+            _requestWindowsThemeApply $state.windows_generation $state.windows_mode
+        }
+    }
+}
+
+function _startWindowsThemeJob {
+    param(
+        [int]$generation,
+        [string]$mode
+    )
+
+    $job_name = "Dotfiles.WindowsThemeApplyJob"
+    $theme_directory = Join-Path $HOME "AppData\Local\Microsoft\Windows\Themes"
+    $state = $global:dotfiles_theme_state
+    $theme_file = Join-Path $theme_directory "$mode.theme"
+
+    if ($state.windows_job -and $state.windows_job.State -in @("NotStarted", "Running")) {
+        return
+    }
+    if (-not (Test-Path -LiteralPath $theme_file -PathType Leaf)) {
+        throw "Windows theme file not found: $theme_file"
+    }
+
+    $worker = _getWindowsThemeWorker
+    $job = Start-Job `
+        -Name $job_name `
+        -ScriptBlock $worker `
+        -ArgumentList $generation, $mode, $theme_file `
+        -ErrorAction Stop
+    $state.windows_job = $job
+    $state.windows_job_generation = $generation
+    $state.windows_job_instance_id = $job.InstanceId
 }
 
 function _removeThemeWatcher {
     $source_identifiers = @(
         "Dotfiles.ThemeChanged"
         "Dotfiles.ThemeRefreshRetry"
+        "Dotfiles.WindowsThemeApply"
     )
-    $timer = $global:dotfiles_theme_retry_timer
+    $retry_timer = $global:dotfiles_theme_retry_timer
+    $state = $global:dotfiles_theme_state
+    $windows_timer = $global:dotfiles_windows_theme_timer
 
-    if ($timer) {
-        $timer.Stop()
+    if ($retry_timer) {
+        $retry_timer.Stop()
+    }
+    if ($windows_timer) {
+        $windows_timer.Stop()
     }
 
     foreach ($source_identifier in $source_identifiers) {
@@ -1247,44 +1661,54 @@ function _removeThemeWatcher {
             Remove-Job -Force -ErrorAction SilentlyContinue
     }
 
-    if ($timer) {
-        $timer.Dispose()
+    if ($state.windows_job) {
+        Stop-Job -Job $state.windows_job -ErrorAction SilentlyContinue
+        Remove-Job -Job $state.windows_job -Force -ErrorAction SilentlyContinue
+    }
+    Get-Job -Name "Dotfiles.WindowsThemeApplyJob" -ErrorAction SilentlyContinue |
+        Stop-Job -ErrorAction SilentlyContinue
+    Get-Job -Name "Dotfiles.WindowsThemeApplyJob" -ErrorAction SilentlyContinue |
+        Remove-Job -Force -ErrorAction SilentlyContinue
+
+    if ($retry_timer) {
+        $retry_timer.Dispose()
+    }
+    if ($windows_timer) {
+        $windows_timer.Dispose()
     }
 
     Remove-Variable dotfiles_theme_retry_timer -Scope Global -ErrorAction SilentlyContinue
     Remove-Variable dotfiles_theme_state -Scope Global -ErrorAction SilentlyContinue
+    Remove-Variable dotfiles_windows_theme_timer -Scope Global -ErrorAction SilentlyContinue
 }
 
 function _refreshTheme {
     $registry_path = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"
     $apps_use_light_theme = Get-ItemPropertyValue -Path $registry_path -Name "AppsUseLightTheme" -ErrorAction Stop
 
-    if ($apps_use_light_theme -notin @(0, 1)) {
-        throw "AppsUseLightTheme returned unsupported value '$apps_use_light_theme'."
-    }
     if ($apps_use_light_theme -eq $global:dotfiles_theme_state.apps_use_light_theme) {
         return $false
     }
 
-    $candidate_theme = if ($apps_use_light_theme -eq 1) { $catppuccin_latte } else { $catppuccin_mocha }
-    $candidate_palette = _buildPalette $candidate_theme
-    $previous_colors = _getPSReadLineColors
+    $candidate = _buildThemeState ([int]$apps_use_light_theme)
+    $fzf_default_opts = _buildFzfDefaultOpts $candidate.bat_theme $candidate.palette
+    $ls_colors = _buildLSColors $candidate.catppuccin
+    $ps_readline_colors = _buildPSReadLineColors $candidate.palette
+    $snapshot = _snapshotThemeState
 
     try {
-        _applyPSReadLineColors $candidate_palette
+        _publishThemeState $candidate $fzf_default_opts $ls_colors $ps_readline_colors
+        _requestWindowsThemeApply $global:dotfiles_theme_state.generation $candidate.mode
     } catch {
         $apply_error = $_
         try {
-            Set-PSReadLineOption -Colors $previous_colors
+            _restoreThemeState $snapshot
         } catch {
             $Host.UI.WriteWarningLine("Theme refresh rollback failed: $($_.Exception.Message)")
         }
         throw $apply_error
     }
 
-    $global:catppuccin = $candidate_theme
-    $global:dotfiles_theme_state.apps_use_light_theme = $apps_use_light_theme
-    $global:palette = $candidate_palette
     return $true
 }
 
@@ -1332,11 +1756,15 @@ function _registerThemeWatcher {
 
     $change_source = "Dotfiles.ThemeChanged"
     $retry_source = "Dotfiles.ThemeRefreshRetry"
+    $windows_source = "Dotfiles.WindowsThemeApply"
 
     _removeThemeWatcher
 
-    $timer = [System.Timers.Timer]::new(1000)
-    $timer.AutoReset = $false
+    $initial_theme = _buildThemeState $apps_use_light_theme
+    $retry_timer = [System.Timers.Timer]::new(1000)
+    $retry_timer.AutoReset = $false
+    $windows_timer = [System.Timers.Timer]::new(300)
+    $windows_timer.AutoReset = $false
     $state = [hashtable]::Synchronized(@{
         apps_use_light_theme = $apps_use_light_theme
         generation = 0
@@ -1346,12 +1774,21 @@ function _registerThemeWatcher {
         retry_count = 0
         retry_exhausted = $false
         retry_generation = 0
-        timer = $timer
+        timer = $retry_timer
+        windows_apply_timer = $windows_timer
+        windows_generation = 0
+        windows_job = $null
+        windows_job_generation = -1
+        windows_job_instance_id = [guid]::Empty
+        windows_mode = $initial_theme.mode
+        windows_request_armed = $false
+        windows_request_at = [DateTime]::MinValue
     })
-    $global:dotfiles_theme_retry_timer = $timer
+    $global:dotfiles_theme_retry_timer = $retry_timer
     $global:dotfiles_theme_state = $state
+    $global:dotfiles_windows_theme_timer = $windows_timer
 
-    Register-ObjectEvent -InputObject $timer -EventName "Elapsed" -SourceIdentifier $retry_source -Action {
+    Register-ObjectEvent -InputObject $retry_timer -EventName "Elapsed" -SourceIdentifier $retry_source -Action {
         $state = $global:dotfiles_theme_state
         $signal_time = $event.SourceEventArgs.SignalTime.ToUniversalTime()
 
@@ -1364,6 +1801,37 @@ function _registerThemeWatcher {
 
         $state.retry_armed = $false
         _invokeThemeRefresh $state.retry_generation
+    } | Out-Null
+
+    Register-ObjectEvent -InputObject $windows_timer -EventName "Elapsed" -SourceIdentifier $windows_source -Action {
+        $state = $global:dotfiles_theme_state
+        $signal_time = $event.SourceEventArgs.SignalTime.ToUniversalTime()
+
+        if (-not $state) {
+            return
+        }
+        if ($state.windows_job) {
+            if ($state.windows_job.State -in @("Completed", "Failed", "Stopped")) {
+                _completeWindowsThemeJob $state.windows_job
+            } else {
+                $state.windows_apply_timer.Start()
+                return
+            }
+        }
+        if (-not $state.windows_request_armed) {
+            return
+        }
+        if ($signal_time -lt $state.windows_request_at) {
+            return
+        }
+
+        $state.windows_request_armed = $false
+        try {
+            _startWindowsThemeJob $state.windows_generation $state.windows_mode
+            $state.windows_apply_timer.Start()
+        } catch {
+            $Host.UI.WriteWarningLine("Windows theme job failed to start: $($_.Exception.Message)")
+        }
     } | Out-Null
 
     $sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value
@@ -1444,39 +1912,16 @@ function prompt {
     _promptGen $separator $segments
 }
 
+# PowerShell output colors (PSStyle requires PowerShell 7.2+)
+_applyPSStyleColors $catppuccin
 # https://learn.microsoft.com/en-us/powershell/module/psreadline/set-psreadlineoption?view=powershell-7.4#-colors
-_applyPSReadLineColors $palette
+_applyPSReadLineColors (_buildPSReadLineColors $palette)
 try {
     _registerThemeWatcher ([int]$system_theme.AppsUseLightTheme)
 } catch {
     _removeThemeWatcher
     $Host.UI.WriteWarningLine("Theme watcher registration failed: $($_.Exception.Message)")
 }
-
-# PowerShell output colors (PSStyle requires PowerShell 7.2+)
-if ($null -ne (Get-Variable PSStyle -ErrorAction SilentlyContinue)) {
-    $PSStyle.FileInfo.Executable = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
-    ".7z", ".cab", ".gz", ".nupkg", ".tar", ".tgz", ".zip" | ForEach-Object {
-        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $catppuccin.Red -styles "bold"
-    }
-    ".ps1", ".ps1xml", ".psd1", ".psm1" | ForEach-Object {
-        $PSStyle.FileInfo.Extension[$_] = Format-Text -headOnly -fg $catppuccin.Yellow -styles "bold"
-    }
-    $PSStyle.FileInfo.SymbolicLink = Format-Text -headOnly -fg $catppuccin.Teal -styles "bold"
-    $PSStyle.Formatting.CustomTableHeaderLabel = Format-Text -headOnly -fg $catppuccin.Green -styles "bold", "italic"
-    $PSStyle.Formatting.Debug = Format-Text -headOnly -fg $catppuccin.Teal -styles "bold"
-    $PSStyle.Formatting.Error = Format-Text -headOnly -fg $catppuccin.Red -styles "bold"
-    $PSStyle.Formatting.ErrorAccent = Format-Text -headOnly -fg $catppuccin.Blue -styles "bold"
-    $PSStyle.Formatting.FeedbackAction = Format-Text -headOnly -fg $catppuccin.Blue
-    $PSStyle.Formatting.FeedbackName = Format-Text -headOnly -fg $catppuccin.Subtext1
-    $PSStyle.Formatting.FeedbackText = Format-Text -headOnly -fg $catppuccin.Text
-    $PSStyle.Formatting.FormatAccent = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
-    $PSStyle.Formatting.TableHeader = Format-Text -headOnly -fg $catppuccin.Green -styles "bold"
-    $PSStyle.Formatting.Verbose = Format-Text -headOnly -fg $catppuccin.Sky -styles "bold"
-    $PSStyle.Formatting.Warning = Format-Text -headOnly -fg $catppuccin.Yellow -styles "bold"
-    $PSStyle.Progress.Style = Format-Text -headOnly -fg $catppuccin.Mauve -styles "bold"
-}
-
 
 Set-PSReadLineOption -ContinuationPrompt "... "
 
