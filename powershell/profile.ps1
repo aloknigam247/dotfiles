@@ -539,7 +539,7 @@ function whatis($arg) {
 function desktop { Set-Location $([Environment]::GetFolderPath("Desktop")) }
 function notes { Join-Path $([Environment]::GetFolderPath("Desktop")) "\Docs\Work\notes" | Set-Location }
 
-# ─[ Git functions ]───────────────────────────────────────────────────
+# ─( Git functions )───────────────────────────────────────────────────
 Remove-Item -Force alias:gc -ErrorAction SilentlyContinue
 function gc {
     param(
@@ -1853,6 +1853,8 @@ function _registerThemeWatcher {
         $state.retry_exhausted = $false
         _invokeThemeRefresh $state.generation
     } | Out-Null
+
+    _requestWindowsThemeApply $state.windows_generation $state.windows_mode
 }
 
 function prompt {
