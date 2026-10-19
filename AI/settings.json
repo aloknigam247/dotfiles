@@ -24,7 +24,8 @@
     "https://code.visualstudio.com",
     "https://developers.figma.com",
     "https://zerodha.com",
-    "https://d2lang.com"
+    "https://d2lang.com",
+    "https://git-scm.com"
   ],
   "askUser": true,
   "autoTier": "intelligence",
