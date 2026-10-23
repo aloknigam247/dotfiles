@@ -2,6 +2,14 @@
 
 A guide to building a Python-based development harness for Neovim plugins that lets you drive a headless Neovim instance, query state, and verify behavior without writing a full test suite.
 
+## Repository checks
+
+Run the Mason notification regression check from the repository root:
+
+```ps1
+nvim --headless -u NONE -i NONE -n -l .\neovim\tests\mason_notifications.lua
+```
+
 ## When to Use This
 
 Use a harness when:
