@@ -3,30 +3,36 @@
 # The draft's first "# " heading becomes the issue title; the remainder is the body.
 # Ensures each requested label exists (creates missing ones), then creates the
 # issue assigned to the current user. Optionally links related issues via the
-# GitHub issue relationships (blocked-by / blocking).
+# GitHub issue relationships (blocked-by / blocking / parent).
 #
 # Usage (run from anywhere inside the repo):
-#   pwsh -NoProfile -ExecutionPolicy Bypass `
-#     -File .github/skills/triage/scripts/new_issue.ps1 `
-#     -Draft tmp/triage-issue.md -Label bug -Label tech-debt `
-#     -BlockedBy 12,15 -Blocking 20
+#   & .\.github\skills\triage\scripts\new_issue.ps1 `
+#     -Draft tmp\triage-issue.md -Label bug,tech-debt `
+#     -BlockedBy 12,15 -Blocking 20 -Parent 10
 
 param(
     [Parameter(Mandatory)][string]$Draft,     # path to draft md (first '# ' line = title)
     [Parameter(Mandatory)][string[]]$Label,   # one or more category labels
     [int[]]$BlockedBy = @(),                  # issue numbers this new issue is blocked by
-    [int[]]$Blocking = @()                    # issue numbers this new issue blocks
+    [int[]]$Blocking = @(),                   # issue numbers this new issue blocks
+    [ValidateRange(1, [int]::MaxValue)][int]$Parent
 )
 
 $ErrorActionPreference = "Stop"
+
+if ($Parent -and $Label -cnotcontains "sub-issue") { $Label += "sub-issue" }
 
 # Operate from the repo root so the temp body file lands in the repo's tmp/.
 $root = (git rev-parse --show-toplevel).Trim()
 Set-Location $root
 
 $existing = gh label list --json name --jq ".[].name"
+if ($LASTEXITCODE -ne 0) { throw "Could not list GitHub labels." }
 foreach ($l in $Label) {
-    if ($existing -notcontains $l) { gh label create "$l" --description "$l" --force | Out-Null }
+    if ($existing -cnotcontains $l) {
+        gh label create "$l" --description "$l" --force | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw "Could not ensure GitHub label '$l'." }
+    }
 }
 
 $lines = Get-Content $Draft
@@ -43,9 +49,16 @@ foreach ($l in $Label) { $labelArgs += @("--label", $l) }
 $relArgs = @()
 if ($BlockedBy.Count) { $relArgs += @("--blocked-by", ($BlockedBy -join ",")) }
 if ($Blocking.Count)  { $relArgs += @("--blocking", ($Blocking -join ",")) }
+if ($Parent) { $relArgs += @("--parent", $Parent) }
 
-$url = gh issue create --title "$title" --body-file "$body" @labelArgs @relArgs --assignee "@me"
-Remove-Item $body -ErrorAction SilentlyContinue
+try {
+    $url = gh issue create --title "$title" --body-file "$body" @labelArgs @relArgs --assignee "@me"
+    if ($LASTEXITCODE -ne 0 -or -not $url) {
+        throw "Issue creation failed or no URL. Check GitHub for partial creation before retrying. Output: $url"
+    }
+} finally {
+    Remove-Item $body -ErrorAction SilentlyContinue
+}
 
 Write-Output "TITLE: $title"
 Write-Output "URL: $url"
