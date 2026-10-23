@@ -12,7 +12,9 @@ Turn a rough task, bug, or idea into a **well-formed GitHub issue** that a *diff
 - **Discuss first, create last.** Never run `gh issue create` until the user has reviewed the drafted issue and explicitly accepted it.
 - **The issue is for another agent, at another time.** Write it as a self-contained task: enough context, file references, and acceptance criteria that an agent with zero conversation history can pick it up and implement it.
 - **Anchor to stable identifiers, not coordinates.** An issue is implemented at an unknown later time against a changed tree. Reference symbols, `setup.ps1` variables, config keys, and search patterns — never line numbers, occurrence counts, or verbatim multi-line snapshots that the repo will invalidate. A frozen inventory goes stale *and* misleads: the implementing agent trusts it as exhaustive and skips rediscovering occurrences added after the issue was filed. The issue points the way; the implementing agent re-discovers the exact scope.
-- **Match detail to task type.** For a narrow **bug**, the exact offending lines *are* the deliverable — a tight snippet of the actual defect is worth freezing. For **broad sweeps** (a rename, a convention change across modules), staleness dominates: give a discovery recipe (search patterns + stable anchors), not an enumerated file list.
+- **Match detail to task type.** For a narrow **bug**, ground the diagnosis in a tight snippet of the actual defect.
+  For **broad sweeps** (a rename, a convention change across modules), staleness dominates: give a discovery recipe
+  (search patterns + stable anchors), not an enumerated file list.
 - **Ask for missing details.** Do not guess when scope, expected behavior, or acceptance criteria are ambiguous.
 
 ## Input
@@ -61,7 +63,7 @@ The subagent is responsible for:
 5. Sketching a **proposed approach** consistent with existing patterns (e.g., the `setup.ps1` variable convention, `linkConfigs`/`$files` symlinks, profile registration, 1TBS style).
 6. Noting **validation implications**: how a future agent verifies the change (e.g., `pwsh -NoProfile -File autosetup.ps1 ...`, reload `$PROFILE`, confirm a symlink exists, exercise a keybinding), and any existing behavior that could regress.
 7. Flagging any ambiguity or missing information the user still needs to resolve.
-8. Assessing source complexity and proposing any required decomposition under the policy below.
+8. Assessing source complexity, deliverables, and any required decomposition or merge under the policy below.
 
 The subagent must **return a structured report** containing:
 - `affected` — representative entry points as `{file, symbol, why}`. For bugs, the specific site(s). For a broad sweep, **one canonical example per surface**, not an exhaustive inventory
@@ -73,6 +75,8 @@ The subagent must **return a structured report** containing:
 - `openQuestions` — anything still unclear
 - `slices` — proposed parent/child drafts and real dependencies under the policy below, or "n/a"
 - `sourceComplexity` — low, medium, high, or unbounded, with a concise production-source rationale
+- `deliverables` — each leaf's outcome, named consumer/use, and completion demonstration under the policy below
+- `mergeProposals` — any necessary merges and approval details required by the policy below, or "n/a"
 
 Reference stable anchors (symbols, `setup.ps1` variables, config keys), **never line numbers or occurrence counts** in the enumerated scope — the issue is implemented later against a moved tree.
 
@@ -85,16 +89,31 @@ state/lifecycle changes, migrations/invariants, and unresolved design. Exclude t
 harnesses, matrix breadth, coverage, test runtime, and test-writing effort. Keep validation with each implementation
 slice; never omit tests or create test-only slices merely because testing is large.
 
+Each implementation leaf must produce a concrete, independently usable or demonstrable outcome. Name its consumer/use
+and completion demonstration. Valid outcomes include user behavior or an actually consumable API, CLI, library, or
+artifact; documentation and research findings count for their respective task types. Prerequisites are allowed, but no
+leaf may end as unused schema, scaffolding, or transport awaiting a later integration issue to become useful. Passing
+tests/builds alone is not the feature deliverable. Avoid artificial file/layer/test splits.
+
+Default to low/medium source complexity for implementation leaves:
+
 - **Low** — a localized, well-understood behavioral/configuration change.
 - **Medium** — one coherent bounded outcome across a small connected set of components, with clear contracts and
   manageable invariants.
-- **Above medium** — must not become one implementation assignment. Use a tracking-only parent for scope, completion,
-  and children, explicitly not an implementation task. Decompose into non-overlapping, independently verifiable
-  low/medium children; reassess each child recursively, using nested tracking parents where needed.
+- **Above medium** — prefer smaller, complete low/medium functional slices. Use tracking-only parents for scope,
+  completion, and children, not implementation assignments. Decompose into non-overlapping outcomes; reassess children
+  recursively, using nested tracking parents where needed.
+
+If a useful low/medium split is not possible, propose merging the necessary tasks. Explain exactly which tasks combine,
+the usable outcome, the revised source complexity and rationale, and the tradeoff. Use `ask_user` to approve the
+**specific merge and any complexity increase before adopting it or filing issues**. A higher-complexity leaf is allowed
+only for that approved merged scope; record its actual rating, rationale, and user approval. Never downgrade the rating
+to fit or treat approval as a blanket exception. If declined, revise toward another complete outcome or leave the split
+unresolved.
 
 Preserve full request coverage and real dependencies; independent children may proceed in parallel. Parent containment
 is not a blocked-by dependency. Use no LOC, file-count, or time quotas. If uncertainty prevents a bounded estimate,
-investigate or clarify rather than calling unknown work low complexity.
+investigate or clarify; merge approval does not resolve design questions or justify a lower rating.
 
 ### 3. Search for duplicate and related issues
 
@@ -163,7 +182,8 @@ A tracking parent gets that label only if it is also a child.
 
 For a split request, draft the entire parent/child plan together. Keep the standalone draft path below; use separate
 `tmp\triage-<guid>-<slice>.md` files for split drafts. Apply the review and mdview gates to every draft, including
-tracking parents, and classify each under step 4. Show reused issue links, hierarchy, and dependencies with the drafts.
+tracking parents, and classify each under step 4. Show reused issue links, hierarchy, dependencies, and any merge
+proposals or approvals from step 2 with the drafts.
 
 1. Compose the issue **title** in Conventional Commit style: `<type>: <short description>` (e.g., `fix: statusline flickers on git pull`).
 2. Compose the issue **body** with these sections (omit a section only if truly not applicable):
@@ -171,9 +191,12 @@ tracking parents, and classify each under step 4. Show reused issue links, hiera
    - **Context / Background** — why this matters; the reported symptom or motivation. **For a narrow bug**, include a **small code/config snippet** of the current/problematic code (a handful of lines with a `file:line` reference) to make the problem concrete. **For a broad sweep**, describe the *pattern* and the surfaces involved rather than pasting a frozen snapshot or occurrence count.
    - **Affected files & modules** — for a narrow bug, the specific `file` -> `symbol` -> reason sites. For a broad sweep, the **surfaces** with one representative entry point each plus the **discovery command** that finds the rest (from `searchStrategy`), prefixed with a note: *"This is a starting map, not an exhaustive inventory — re-run the discovery searches below and treat their output as authoritative; occurrences may have been added since this issue was filed."* Name the package/module (top-level directory).
    - **Proposed approach** — the subagent's `approach`, plus root cause for bugs. Include a **small snippet** illustrating the change (a short before/after, or a minimal sketch of the new `setup.ps1` entry / function signature / config key) whenever it makes the intent clearer — keep it to a handful of lines, not full implementations. Respect repo conventions (1TBS, `pwsh`, double quotes, `setup.ps1` variable pattern).
-   - **Acceptance criteria** — a checklist of concrete, verifiable outcomes.
-   - **Source complexity** — low or medium for each leaf, with a concise production-source reason; no production changes
-     means low source complexity. Tracking parents state "tracking-only, not an implementation assignment" instead.
+   - **Acceptance criteria** — each leaf's outcome, consumer/use, and completion demonstration from `deliverables`,
+     expressed as a checklist under the [decomposition policy](#source-complexity-and-decomposition).
+   - **Source complexity** — each leaf's actual rating and production-source rationale under the
+     [decomposition policy](#source-complexity-and-decomposition), with any approved merge's scope and user approval.
+     No production changes means low source complexity. Tracking parents state
+     "tracking-only, not an implementation assignment" instead.
    - **Validation** — **always required.** Spell out how a future agent (or the user) verifies the change is done, since this repo has no unit tests:
      - The exact command(s) to run (e.g., `pwsh -NoProfile -ExecutionPolicy Bypass -File autosetup.ps1 <args>`, or reloading the profile with `. $PROFILE`).
      - Any **symlink / file-link checks** (e.g., confirm `$files`/`linkConfigs` produced the expected link).
@@ -182,8 +205,10 @@ tracking parents, and classify each under step 4. Show reused issue links, hiera
    - **Out of scope** — what this task must not touch.
 3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title**, **category/label(s)** (including `spike` if applicable), and any **related issues to link** (from step 3) with their relationship type.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
-   Review all parent/child drafts together for high/unbounded leaves, gaps/overlap, missing native links or labels, and
-   complexity derived from testing rather than source changes.
+   Review all parent/child drafts and merge proposals together against the
+   [decomposition policy](#source-complexity-and-decomposition). Reject orphan integration work, missing usable
+   outcomes, consumers or demonstrations, gaps/overlap, testing-derived sizing, unapproved above-medium leaves,
+   unresolved design, and missing native links or labels. Match each merge's scope and actual rating to its approval.
 5. **⛔ HARD RULE — ALWAYS open the draft in mdview before asking for acceptance. No exceptions.**
    The `ask_user` accept/edit/reject gate below MUST NOT be presented until `tmp/triage-issue.md` has
    been rendered in the mdview app for the user — a chat summary alone is never sufficient. Render it:
