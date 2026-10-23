@@ -106,14 +106,15 @@ When working with Azure DevOps CLI (az boards, az repos), always include --proje
   or installing — no package installs, no scripts that change state, no file writes — without
   an explicit go-ahead.
 
-## Scope
+## Scope and simplicity
 
-* Do the least that fully satisfies the ask, and no more. Prefer the smallest, simplest change;
-  reuse what the platform or existing tools already provide instead of reimplementing it; do not
-  add parameters, abstractions, or handling for cases that were not requested.
-* If solving the task seems to require going beyond its stated scope — touching unrelated code,
-  adding new capabilities, or changing behavior nobody asked for — stop and ask me before
-  expanding scope, rather than deciding unilaterally.
+* Choose the simplest, smallest change that fully satisfies the request without sacrificing correctness.
+* Preserve unrelated code and behavior. Do not add opportunistic cleanup or refactoring.
+* Reuse existing code and platform capabilities. Avoid dependencies, abstractions, configuration, and
+  features that are not necessary for the requested outcome.
+* Before expanding the agreed scope, stop. Explain the proposed expansion, why it is needed, and any
+  smaller alternative. Wait for my explicit approval before proceeding.
+* When a simpler solution meets the requirements, prefer it over a more general or extensible design.
 
 ## Authoring files (docs, configs, prompt/agent defs)
 
@@ -127,3 +128,9 @@ When working with Azure DevOps CLI (az boards, az repos), always include --proje
 * Every line must earn its place: if removing it loses no actionable meaning, remove it. Prefer the
   shortest file that fully works.
 * Reference, don't repeat: prefer "see X" over re-explaining X.
+
+## Response style
+
+* Minimize reading effort. Use simple, direct words and the shortest response that preserves intent and meaning.
+* Include only the context and explanation needed to understand or act. Avoid filler, repetition, and
+  over-explaining, but keep essential details and caveats.
