@@ -50,7 +50,7 @@ set shiftwidth=4                            " When shifting, indent using spaces
 set smartindent                             " Enable smart indent
 set splitkeep=screen                        " Keep screen orientation same while splitting
 set tabstop=4                               " Indent using spaces
-set textwidth=100                           " Set text width to 100
+set textwidth=120                           " Set text width
 set updatetime=500                          " CursorHold time
 set virtualedit=onemore                     " Allow cursor to move one more after line ends
 syntax off
