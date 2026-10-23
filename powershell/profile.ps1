@@ -143,8 +143,7 @@ function _setTheme {
                 $theme_file = "~\AppData\Local\Microsoft\Windows\Themes\$env:THEME.theme"
                 Start-Process $theme_file
                 Start-Sleep -Seconds 10
-                Get-Process -Name "SystemSettings" -ErrorAction SilentlyContinue |
-                    ForEach-Object { Stop-Process -Id $_.Id -ErrorAction Stop }
+                Stop-Process -Name "SystemSettings" -ErrorAction SilentlyContinue
             } else {
                 break
             }
