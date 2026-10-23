@@ -331,9 +331,6 @@ local lazy_config = {
 	}
 }
 
----@type table<string, boolean> Mason active installation
-local mason_installation = {}
-
 ---@type table<string, integer> Defines highlight priorities for various components
 local priority_hl = {
 	url = 0,
@@ -2958,6 +2955,7 @@ addPlugin {
 addPlugin {
 	"williamboman/mason.nvim",
 	cmd = "Mason",
+	dependencies = "rcarriga/nvim-notify",
 	init = function()
 		local path_sep = vim.fn.has("win64") and ";" or ":"
 		vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath("data"), "mason", "bin") .. path_sep .. vim.env.PATH
@@ -2976,24 +2974,47 @@ addPlugin {
 		}
 	},
 	config = function(_, cfg)
+		local notifications = {}
+
 		require("mason").setup(cfg)
 
+		local notify = require("notify").notify
 		local registry = require("mason-registry")
 
-		-- Listen for installation start
-		registry:on("package:install:handle", function(package)
-			mason_installation[package.package.name] = true
-		end)
+		local function finish_install(package, message, level)
+			local replace
+			local entry = notifications[package.name]
+			if entry and (not entry.window or vim.api.nvim_win_is_valid(entry.window)) then
+				replace = entry.record
+			end
+			notifications[package.name] = nil
+			notify(package.name .. message, level, { replace = replace, title = "Mason" })
+		end
 
-		-- -- Listen for installation success
-		registry:on("package:install:success", function(package)
-			mason_installation[package.name] = nil
-		end)
-		--
-		-- -- Listen for installation failure
-		registry:on("package:install:failed", function(package)
-			mason_installation[package.name] = nil
-		end)
+		registry:on("package:install:handle", vim.schedule_wrap(function(handle)
+			local entry = {}
+			local name = handle.package.name
+			notifications[name] = entry
+			entry.record = notify("Installing " .. name, vim.log.levels.INFO, {
+				on_close = function()
+					if notifications[name] == entry then
+						notifications[name] = nil
+					end
+				end,
+				on_open = function(window)
+					entry.window = window
+				end,
+				title = "Mason"
+			})
+		end))
+
+		registry:on("package:install:success", vim.schedule_wrap(function(package)
+			finish_install(package, " installed", vim.log.levels.INFO)
+		end))
+
+		registry:on("package:install:failed", vim.schedule_wrap(function(package)
+			finish_install(package, " failed", vim.log.levels.ERROR)
+		end))
 	end
 }
 
@@ -3696,21 +3717,6 @@ addPlugin {
 					}
 				},
 				lualine_x = {
-					{
-						function()
-							local installing = ""
-							for i in pairs(mason_installation) do
-								installing = installing .. " " .. i
-							end
-
-							return installing
-						end,
-						cond = function() return vim.tbl_count(mason_installation) > 0 end,
-						color = "Error",
-						icon = { "󰅢", color = "Error" },
-						padding = { left = 0, right = 1 },
-						separator = ""
-					},
 					{
 						function() return vim.g.formatting or "" end,
 						color = "Boolean",
