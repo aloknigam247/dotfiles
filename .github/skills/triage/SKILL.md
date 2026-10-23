@@ -61,6 +61,7 @@ The subagent is responsible for:
 5. Sketching a **proposed approach** consistent with existing patterns (e.g., the `setup.ps1` variable convention, `linkConfigs`/`$files` symlinks, profile registration, 1TBS style).
 6. Noting **validation implications**: how a future agent verifies the change (e.g., `pwsh -NoProfile -File autosetup.ps1 ...`, reload `$PROFILE`, confirm a symlink exists, exercise a keybinding), and any existing behavior that could regress.
 7. Flagging any ambiguity or missing information the user still needs to resolve.
+8. Assessing source complexity and proposing any required decomposition under the policy below.
 
 The subagent must **return a structured report** containing:
 - `affected` — representative entry points as `{file, symbol, why}`. For bugs, the specific site(s). For a broad sweep, **one canonical example per surface**, not an exhaustive inventory
@@ -70,10 +71,30 @@ The subagent must **return a structured report** containing:
 - `approach` — the proposed implementation approach
 - `validation` — how to verify the change (commands / manual steps) and any regression risk
 - `openQuestions` — anything still unclear
+- `slices` — proposed parent/child drafts and real dependencies under the policy below, or "n/a"
+- `sourceComplexity` — low, medium, high, or unbounded, with a concise production-source rationale
 
 Reference stable anchors (symbols, `setup.ps1` variables, config keys), **never line numbers or occurrence counts** in the enumerated scope — the issue is implemented later against a moved tree.
 
 If the subagent returns `openQuestions`, resolve them with the user (via `ask_user`) before drafting the issue.
+
+#### Source complexity and decomposition
+
+Judge actual production code, scripts, and shipped configuration: behavioral scope, component coupling, interfaces,
+state/lifecycle changes, migrations/invariants, and unresolved design. Exclude test additions/updates, fixtures,
+harnesses, matrix breadth, coverage, test runtime, and test-writing effort. Keep validation with each implementation
+slice; never omit tests or create test-only slices merely because testing is large.
+
+- **Low** — a localized, well-understood behavioral/configuration change.
+- **Medium** — one coherent bounded outcome across a small connected set of components, with clear contracts and
+  manageable invariants.
+- **Above medium** — must not become one implementation assignment. Use a tracking-only parent for scope, completion,
+  and children, explicitly not an implementation task. Decompose into non-overlapping, independently verifiable
+  low/medium children; reassess each child recursively, using nested tracking parents where needed.
+
+Preserve full request coverage and real dependencies; independent children may proceed in parallel. Parent containment
+is not a blocked-by dependency. Use no LOC, file-count, or time quotas. If uncertainty prevents a bounded estimate,
+investigate or clarify rather than calling unknown work low complexity.
 
 ### 3. Search for duplicate and related issues
 
@@ -88,7 +109,10 @@ gh issue list --state all --search "<keywords>" --limit 30 `
 ```
 
 Run a couple of searches with different terms (the symptom, the module name, the affected
-file/`setup.ps1` variable). Then judge each hit:
+file/`setup.ps1` variable). Repeat for every proposed child, including nested children. Reuse suitable existing issues
+instead of duplicating their work; check whether an existing parent's children actually cover its remaining scope.
+
+Then judge each hit:
 
 - **Duplicate** — an existing issue already covers *the same task* (same root cause / same change).
   - **Inform the user** of the duplicate (number, title, state, URL) via chat, and **ask** — using
@@ -131,7 +155,15 @@ criteria are findings/recommendations (e.g., "document whether X is feasible"), 
 still reflects the *kind* of follow-up work the spike informs). Do **not** apply `spike` to any task
 whose definition of done includes editing code or documentation.
 
+Every newly created child, including a child of an existing parent or a nested tracking parent, also needs the exact
+`sub-issue` label and a native GitHub parent/sub-issue link.
+A tracking parent gets that label only if it is also a child.
+
 ### 5. Draft the issue and present it for acceptance
+
+For a split request, draft the entire parent/child plan together. Keep the standalone draft path below; use separate
+`tmp\triage-<guid>-<slice>.md` files for split drafts. Apply the review and mdview gates to every draft, including
+tracking parents, and classify each under step 4. Show reused issue links, hierarchy, and dependencies with the drafts.
 
 1. Compose the issue **title** in Conventional Commit style: `<type>: <short description>` (e.g., `fix: statusline flickers on git pull`).
 2. Compose the issue **body** with these sections (omit a section only if truly not applicable):
@@ -140,6 +172,8 @@ whose definition of done includes editing code or documentation.
    - **Affected files & modules** — for a narrow bug, the specific `file` -> `symbol` -> reason sites. For a broad sweep, the **surfaces** with one representative entry point each plus the **discovery command** that finds the rest (from `searchStrategy`), prefixed with a note: *"This is a starting map, not an exhaustive inventory — re-run the discovery searches below and treat their output as authoritative; occurrences may have been added since this issue was filed."* Name the package/module (top-level directory).
    - **Proposed approach** — the subagent's `approach`, plus root cause for bugs. Include a **small snippet** illustrating the change (a short before/after, or a minimal sketch of the new `setup.ps1` entry / function signature / config key) whenever it makes the intent clearer — keep it to a handful of lines, not full implementations. Respect repo conventions (1TBS, `pwsh`, double quotes, `setup.ps1` variable pattern).
    - **Acceptance criteria** — a checklist of concrete, verifiable outcomes.
+   - **Source complexity** — low or medium for each leaf, with a concise production-source reason; no production changes
+     means low source complexity. Tracking parents state "tracking-only, not an implementation assignment" instead.
    - **Validation** — **always required.** Spell out how a future agent (or the user) verifies the change is done, since this repo has no unit tests:
      - The exact command(s) to run (e.g., `pwsh -NoProfile -ExecutionPolicy Bypass -File autosetup.ps1 <args>`, or reloading the profile with `. $PROFILE`).
      - Any **symlink / file-link checks** (e.g., confirm `$files`/`linkConfigs` produced the expected link).
@@ -148,6 +182,8 @@ whose definition of done includes editing code or documentation.
    - **Out of scope** — what this task must not touch.
 3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title**, **category/label(s)** (including `spike` if applicable), and any **related issues to link** (from step 3) with their relationship type.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
+   Review all parent/child drafts together for high/unbounded leaves, gaps/overlap, missing native links or labels, and
+   complexity derived from testing rather than source changes.
 5. **⛔ HARD RULE — ALWAYS open the draft in mdview before asking for acceptance. No exceptions.**
    The `ask_user` accept/edit/reject gate below MUST NOT be presented until `tmp/triage-issue.md` has
    been rendered in the mdview app for the user — a chat summary alone is never sufficient. Render it:
@@ -159,30 +195,38 @@ whose definition of done includes editing code or documentation.
    at all, say so explicitly and get the user's go-ahead before falling back to a chat-only review — do
    not silently skip it. **Re-open the draft in mdview again after any edit round** before re-presenting.
 6. **Ask the user to accept, edit, or reject** using the `ask_user` tool (accept / edit / reject). If they choose "edit", let them edit `tmp/triage-issue.md` (and/or adjust the category) and wait for confirmation, then re-read the file and re-open it in mdview (per the hard rule above) before re-presenting.
+   Require explicit acceptance of the whole reviewed plan before creating any issue. Scope changes after acceptance
+   require re-review, reopening affected drafts, and renewed acceptance.
 
 ### 6. Create the GitHub issue — only if accepted
 
-**Only run this step if the user accepted in step 5.** If rejected, delete `tmp/triage-issue.md` and stop.
+**Only run this step if the user accepted in step 5.** If rejected, delete the draft files and stop.
 
-Use the bundled helper script — it derives the repo root, ensures every label exists (creating it if missing), extracts the title from the first `# ` heading, writes the body to a git-ignored temp file, creates the issue assigned to `@me`, links any dependency relationships, and prints the title and URL:
+Use the bundled helper script — it derives the repo root, ensures every label exists (creating it if missing), extracts the title from the first `# ` heading, writes the body to a git-ignored temp file, creates the issue assigned to `@me`, links any dependency and parent relationships, and prints the title and URL:
 
 ```ps1
-pwsh -NoProfile -ExecutionPolicy Bypass `
-  -File .github/skills/triage/scripts/new_issue.ps1 `
-  -Draft tmp/triage-issue.md -Label <category> [-Label spike] `
-  [-BlockedBy <n,...>] [-Blocking <n,...>]
+& .\.github\skills\triage\scripts\new_issue.ps1 `
+  -Draft tmp\triage-issue.md -Label <category>[,spike] `
+  [-BlockedBy <n,...>] [-Blocking <n,...>] [-Parent <n>]
 ```
 
-- Pass the chosen category to `-Label`, and add a second `-Label spike` when the task is
+- Pass the chosen category to `-Label`, adding `spike` to the label array when the task is
   investigation/exploration only (step 4).
 - Pass related **dependency** issues via `-BlockedBy` / `-Blocking` (from step 3) to link them through
   GitHub's issue relationships at creation time.
-- For a **parent / sub-issue** link, run `gh issue edit <parent> --add-sub-issue <newNumber>` after the
-  issue is created (the script prints the new URL/number).
+- Pass `-Parent <n>` for every new child. The helper ensures/adds the `sub-issue` label and creates the native link with
+  `--parent`; use the same path for existing parents and recursively nested children.
+- Create accepted parents and prerequisites before children that need their issue numbers. To reuse an existing issue
+  as a child, ensure/add its `sub-issue` label and attach it with `gh issue edit <parent> --add-sub-issue <existing>`.
+- If creation or linking fails, stop and report any created URLs. Inspect GitHub and repair partial results before any
+  retry; never blindly recreate an issue that may already exist.
 
-Then report the created issue URL — and any relationships linked — to the user.
+Before reporting success, read back every created issue's labels (`gh issue view <n> --json labels,url`) and native
+hierarchy (`gh api repos/<owner>/<repo>/issues/<child>/parent` and the parent's paginated `sub_issues` endpoint).
+Check reused children too; confirm the accepted categories, exact `sub-issue` labels, hierarchy, and dependencies.
+Body references alone do not establish a native relationship. Then report all issue URLs and linked relationships.
 
 ### 7. Cleanup
 
-1. Delete `tmp/triage-issue.md` and any temp body file.
+1. Delete the reviewed draft files and any temp body file.
 2. Show a short summary: issue URL, title, assigned label(s), and any linked related issues.
