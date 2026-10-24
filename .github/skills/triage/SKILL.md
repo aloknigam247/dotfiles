@@ -12,9 +12,7 @@ Turn a rough task, bug, or idea into a **well-formed GitHub issue** that a *diff
 - **Discuss first, create last.** Never run `gh issue create` until the user has reviewed the drafted issue and explicitly accepted it.
 - **The issue is for another agent, at another time.** Write it as a self-contained task: enough context, file references, and acceptance criteria that an agent with zero conversation history can pick it up and implement it.
 - **Anchor to stable identifiers, not coordinates.** An issue is implemented at an unknown later time against a changed tree. Reference symbols, `setup.ps1` variables, config keys, and search patterns — never line numbers, occurrence counts, or verbatim multi-line snapshots that the repo will invalidate. A frozen inventory goes stale *and* misleads: the implementing agent trusts it as exhaustive and skips rediscovering occurrences added after the issue was filed. The issue points the way; the implementing agent re-discovers the exact scope.
-- **Match detail to task type.** For a narrow **bug**, ground the diagnosis in a tight snippet of the actual defect.
-  For **broad sweeps** (a rename, a convention change across modules), staleness dominates: give a discovery recipe
-  (search patterns + stable anchors), not an enumerated file list.
+- **Match detail to task type.** For a narrow **bug**, ground the diagnosis in a tight snippet of the actual defect. For **broad sweeps** (a rename, a convention change across modules), staleness dominates: give a discovery recipe (search patterns + stable anchors), not an enumerated file list.
 - **Ask for missing details.** Do not guess when scope, expected behavior, or acceptance criteria are ambiguous.
 
 ## Input
@@ -212,9 +210,7 @@ proposals or approvals from step 2 with the drafts.
      - Any **manual step** to exercise the change (e.g., open a new shell, trigger the keybinding, run the tool) and the expected result.
      - Existing behavior that must **not** regress, and how to confirm it.
    - **Out of scope** — what this task must not touch.
-3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly. Show a chat summary with the
-   proposed **title**, **category/label(s)** (including complexity and `spike` if applicable), and any **related issues
-   to link** (from step 3) with their relationship type.
+3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly. Show a chat summary with the proposed **title**, **category/label(s)** (including complexity and `spike` if applicable), and any **related issues to link** (from step 3) with their relationship type.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
    Review all parent/child drafts and merge proposals together against the
    [decomposition policy](#source-complexity-and-decomposition). Reject orphan integration work, missing usable
