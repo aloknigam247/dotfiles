@@ -248,6 +248,7 @@ Use the bundled helper script — it derives the repo root, ensures every label 
 
 - Pass the accepted rating explicitly via required `-Complexity`. The helper adds its canonical label and rejects
   conflicting complexity labels in `-Label` before any GitHub calls; identical complexity labels are deduplicated.
+  Comma-delimited `-Label` entries are split and trimmed before validation.
 - Pass the chosen category to `-Label`, adding `spike` to the label array when the task is
   investigation/exploration only (step 4).
 - Pass related **dependency** issues via `-BlockedBy` / `-Blocking` (from step 3) to link them through

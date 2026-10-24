@@ -22,6 +22,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $complexityLabel = "complexity: $($Complexity.ToLowerInvariant())"
+$Label = @($Label | ForEach-Object { $_ -split "," } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 foreach ($l in $Label) {
     if ($l -match "^\s*complexity\s*:" -and $l -cne $complexityLabel) {
         throw "Label '$l' conflicts with -Complexity '$Complexity'; use '$complexityLabel'."
