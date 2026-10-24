@@ -7,10 +7,11 @@
 #
 # Usage (run from anywhere inside the repo):
 #   & .\.github\skills\triage\scripts\new_issue.ps1 `
-#     -Draft tmp\triage-issue.md -Label bug,tech-debt `
+#     -Complexity low -Draft tmp\triage-issue.md -Label bug,tech-debt `
 #     -BlockedBy 12,15 -Blocking 20 -Parent 10
 
 param(
+    [Parameter(Mandatory)][ValidateSet("low", "medium", "high")][string]$Complexity,
     [Parameter(Mandatory)][string]$Draft,     # path to draft md (first '# ' line = title)
     [Parameter(Mandatory)][string[]]$Label,   # one or more category labels
     [int[]]$BlockedBy = @(),                  # issue numbers this new issue is blocked by
@@ -19,6 +20,14 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+$complexityLabel = "complexity: $($Complexity.ToLowerInvariant())"
+foreach ($l in $Label) {
+    if ($l -match "^\s*complexity\s*:" -and $l -cne $complexityLabel) {
+        throw "Label '$l' conflicts with -Complexity '$Complexity'; use '$complexityLabel'."
+    }
+}
+$Label = @($Label | Where-Object { $_ -cne $complexityLabel }) + $complexityLabel
 
 if ($Parent -and $Label -cnotcontains "sub-issue") { $Label += "sub-issue" }
 

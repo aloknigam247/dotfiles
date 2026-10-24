@@ -74,7 +74,8 @@ The subagent must **return a structured report** containing:
 - `validation` — how to verify the change (commands / manual steps) and any regression risk
 - `openQuestions` — anything still unclear
 - `slices` — proposed parent/child drafts and real dependencies under the policy below, or "n/a"
-- `sourceComplexity` — low, medium, high, or unbounded, with a concise production-source rationale
+- `sourceComplexity` — low, medium, or high, with a concise production-source rationale; flag scope that cannot yet
+  be rated in `openQuestions`
 - `deliverables` — each leaf's outcome, named consumer/use, and completion demonstration under the policy below
 - `mergeProposals` — any necessary merges and approval details required by the policy below, or "n/a"
 
@@ -89,6 +90,11 @@ state/lifecycle changes, migrations/invariants, and unresolved design. Exclude t
 harnesses, matrix breadth, coverage, test runtime, and test-writing effort. Keep validation with each implementation
 slice; never omit tests or create test-only slices merely because testing is large.
 
+Docs, research, or test-only work with no production changes has low source complexity, not necessarily low effort.
+Rate tracking parents by their aggregate requested source scope across children, not coordination overhead or a sum
+of child ratings. Unknown scope is not automatically low or high: inspect the request and source, then clarify any
+remaining uncertainty before assigning a rating.
+
 Each implementation leaf must produce a concrete, independently usable or demonstrable outcome. Name its consumer/use
 and completion demonstration. Valid outcomes include user behavior or an actually consumable API, CLI, library, or
 artifact; documentation and research findings count for their respective task types. Prerequisites are allowed, but no
@@ -100,9 +106,9 @@ Default to low/medium source complexity for implementation leaves:
 - **Low** — a localized, well-understood behavioral/configuration change.
 - **Medium** — one coherent bounded outcome across a small connected set of components, with clear contracts and
   manageable invariants.
-- **Above medium** — prefer smaller, complete low/medium functional slices. Use tracking-only parents for scope,
-  completion, and children, not implementation assignments. Decompose into non-overlapping outcomes; reassess children
-  recursively, using nested tracking parents where needed.
+- **High** — broad or tightly coupled behavior, interfaces, or state changes. Prefer smaller, complete low/medium
+  functional slices. Use tracking-only parents for scope, completion, and children, not implementation assignments.
+  Decompose into non-overlapping outcomes; reassess children recursively, using nested tracking parents where needed.
 
 If a useful low/medium split is not possible, propose merging the necessary tasks. Explain exactly which tasks combine,
 the usable outcome, the revised source complexity and rationale, and the tradeoff. Use `ask_user` to approve the
@@ -178,6 +184,10 @@ Every newly created child, including a child of an existing parent or a nested t
 `sub-issue` label and a native GitHub parent/sub-issue link.
 A tracking parent gets that label only if it is also a child.
 
+Every standalone issue, tracking parent, and child also needs exactly one of `complexity: low`, `complexity: medium`,
+or `complexity: high`, matching its rating under the [source policy](#source-complexity-and-decomposition).
+Complexity and hierarchy labels are metadata; they do not replace the category or change the `spike` rules.
+
 ### 5. Draft the issue and present it for acceptance
 
 For a split request, draft the entire parent/child plan together. Keep the standalone draft path below; use separate
@@ -193,17 +203,18 @@ proposals or approvals from step 2 with the drafts.
    - **Proposed approach** — the subagent's `approach`, plus root cause for bugs. Include a **small snippet** illustrating the change (a short before/after, or a minimal sketch of the new `setup.ps1` entry / function signature / config key) whenever it makes the intent clearer — keep it to a handful of lines, not full implementations. Respect repo conventions (1TBS, `pwsh`, double quotes, `setup.ps1` variable pattern).
    - **Acceptance criteria** — each leaf's outcome, consumer/use, and completion demonstration from `deliverables`,
      expressed as a checklist under the [decomposition policy](#source-complexity-and-decomposition).
-   - **Source complexity** — each leaf's actual rating and production-source rationale under the
+   - **Source complexity** — each issue's actual rating and production-source rationale under the
      [decomposition policy](#source-complexity-and-decomposition), with any approved merge's scope and user approval.
-     No production changes means low source complexity. Tracking parents state
-     "tracking-only, not an implementation assignment" instead.
+     Tracking parents also state "tracking-only, not an implementation assignment" and explain their aggregate scope.
    - **Validation** — **always required.** Spell out how a future agent (or the user) verifies the change is done, since this repo has no unit tests:
      - The exact command(s) to run (e.g., `pwsh -NoProfile -ExecutionPolicy Bypass -File autosetup.ps1 <args>`, or reloading the profile with `. $PROFILE`).
      - Any **symlink / file-link checks** (e.g., confirm `$files`/`linkConfigs` produced the expected link).
      - Any **manual step** to exercise the change (e.g., open a new shell, trigger the keybinding, run the tool) and the expected result.
      - Existing behavior that must **not** regress, and how to confirm it.
    - **Out of scope** — what this task must not touch.
-3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly, and also show a summary in chat including the proposed **title**, **category/label(s)** (including `spike` if applicable), and any **related issues to link** (from step 3) with their relationship type.
+3. Write the draft to `tmp/triage-issue.md` (git-ignored) so the user can edit it directly. Show a chat summary with the
+   proposed **title**, **category/label(s)** (including complexity and `spike` if applicable), and any **related issues
+   to link** (from step 3) with their relationship type.
 4. **Validate the draft with the `rubber-duck` agent (always).** Before presenting the issue to the user, launch a `rubber-duck` subagent (via the Task tool) and give it the full drafted issue plus enough context (task description, affected files, root cause) to check it. Ask it to catch: incorrect root-cause claims, wrong `file:line`/symbol references, flawed proposed approach, missing or infeasible acceptance criteria, and gaps in the validation steps. Incorporate its high-signal feedback into `tmp/triage-issue.md`, then re-read the file. If the rubber-duck flags a blocking problem you cannot resolve from the code, ask the user before proceeding.
    Review all parent/child drafts and merge proposals together against the
    [decomposition policy](#source-complexity-and-decomposition). Reject orphan integration work, missing usable
@@ -231,10 +242,12 @@ Use the bundled helper script — it derives the repo root, ensures every label 
 
 ```ps1
 & .\.github\skills\triage\scripts\new_issue.ps1 `
-  -Draft tmp\triage-issue.md -Label <category>[,spike] `
+  -Complexity <low|medium|high> -Draft tmp\triage-issue.md -Label <category>[,spike] `
   [-BlockedBy <n,...>] [-Blocking <n,...>] [-Parent <n>]
 ```
 
+- Pass the accepted rating explicitly via required `-Complexity`. The helper adds its canonical label and rejects
+  conflicting complexity labels in `-Label` before any GitHub calls; identical complexity labels are deduplicated.
 - Pass the chosen category to `-Label`, adding `spike` to the label array when the task is
   investigation/exploration only (step 4).
 - Pass related **dependency** issues via `-BlockedBy` / `-Blocking` (from step 3) to link them through
@@ -243,12 +256,18 @@ Use the bundled helper script — it derives the repo root, ensures every label 
   `--parent`; use the same path for existing parents and recursively nested children.
 - Create accepted parents and prerequisites before children that need their issue numbers. To reuse an existing issue
   as a child, ensure/add its `sub-issue` label and attach it with `gh issue edit <parent> --add-sub-issue <existing>`.
+- For accepted backfills or reused issues, read their current labels and source scope before rating under the
+  [source policy](#source-complexity-and-decomposition). Use `gh issue edit --add-label` and `--remove-label` to add the
+  chosen complexity label and remove only contradictory complexity labels. Preserve category, `spike`, `sub-issue`,
+  and all unrelated labels; never replace the full label list.
 - If creation or linking fails, stop and report any created URLs. Inspect GitHub and repair partial results before any
   retry; never blindly recreate an issue that may already exist.
 
-Before reporting success, read back every created issue's labels (`gh issue view <n> --json labels,url`) and native
-hierarchy (`gh api repos/<owner>/<repo>/issues/<child>/parent` and the parent's paginated `sub_issues` endpoint).
-Check reused children too; confirm the accepted categories, exact `sub-issue` labels, hierarchy, and dependencies.
+Before reporting success, read back every created, reused, or backfilled issue's labels
+(`gh issue view <n> --json labels,url`) and verify exactly one canonical complexity label matching the accepted rating.
+Missing, conflicting, or multiple complexity labels fail verification; repair them without changing unrelated labels.
+For children, read native hierarchy (`gh api repos/<owner>/<repo>/issues/<child>/parent` and the parent's paginated
+`sub_issues` endpoint). Confirm accepted categories, exact `sub-issue` labels, hierarchy, and dependencies.
 Body references alone do not establish a native relationship. Then report all issue URLs and linked relationships.
 
 ### 7. Cleanup
