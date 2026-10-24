@@ -8,6 +8,13 @@
     <RootNamespace>CpTower</RootNamespace>
     <AssemblyName>cptower</AssemblyName>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="cptower_tests" />
+    <PackageReference Include="Azure.Messaging.WebPubSub.Client" Version="1.0.0" />
+    <PackageReference Include="Sodium.Core" Version="1.4.1" />
+  </ItemGroup>
 
 </Project>

@@ -383,8 +383,7 @@ function Start-CpTower {
         $log_file = Join-Path $log_dir "cptower.log"
         New-Item -ItemType Directory -Path $log_dir -Force -ErrorAction Stop | Out-Null
 
-        # cptower signs AHP clients in to hosts as this GitHub CLI account.
-        $command = "`"`"$exe`" --github-user aloknigam_microsoft > `"$log_file`" 2>&1`""
+        $command = "`"`"$exe`" > `"$log_file`" 2>&1`""
         Start-Process -FilePath $env:ComSpec -ArgumentList "/d", "/s", "/c", $command -WindowStyle Hidden | Out-Null
     }
 }
