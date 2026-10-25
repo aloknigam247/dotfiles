@@ -3,29 +3,28 @@ using System.Collections.Concurrent;
 namespace CpTower;
 
 /// <summary>
-/// A discovered, live AHP host reachable on a loopback port. <see cref="Pid"/> is the copilot process
-/// that owned the listener when it was probed, and <see cref="Token"/> the shared connection token the
-/// host accepted (null when it needs none); neither is advertised by `/hosts`.
+/// A discovered AHP host routed by cptower's integer <see cref="Port"/> path.
 /// </summary>
-public sealed record HostInfo(int Port, int Pid, string Label, string Protocol, int Sessions, string? Token)
-{
-    /// <summary>Stable id the app uses to build the routed path `/ws/{id}`.</summary>
-    public string Id => Port.ToString();
+public sealed record HostInfo(
+    int Port, int Pid, string Label, string Protocol, int Sessions, string? Token,
+    MissionControlHost? MissionControl = null) {
+    public string Id => MissionControl?.EnvironmentId ?? Port.ToString();
+
+    public bool IsLocal => MissionControl is null;
 }
 
+public sealed record MissionControlHost(string EnvironmentId, string GitHubHost);
+
 /// <summary>
-/// Thread-safe registry of the currently live hosts. The discovery service is the sole writer;
-/// the `/hosts` endpoint and the WebSocket relay read it.
+/// Thread-safe registry shared by direct-listener and Mission Control discovery.
 /// </summary>
-public sealed class HostRegistry
-{
+public sealed class HostRegistry {
     private readonly ConcurrentDictionary<int, HostInfo> hosts = new();
 
     public IReadOnlyList<HostInfo> Snapshot() => hosts.Values.OrderBy(h => h.Port).ToList();
 
     public HostInfo? Get(int port) => hosts.TryGetValue(port, out var host) ? host : null;
 
-    /// <summary>Adds or replaces the host on its port.</summary>
     public void Add(HostInfo host) => hosts[host.Port] = host;
 
     public void Remove(int port) => hosts.TryRemove(port, out _);
