@@ -4,8 +4,8 @@ using System.Net;
 namespace CpTower;
 
 /// <summary>
-/// Reconciles the live host set on demand: enumerate loopback listeners owned by the copilot
-/// process, probe each for AHP, and drop hosts whose listener has gone away. Ports that require a
+/// Reconciles direct loopback hosts and delegates Mission Control environment discovery. Direct
+/// ports that require a
 /// connection token are probed with the tokens listed for them in <see cref="HostTokens"/>, and the
 /// lines that are no longer live are pruned from that file: those whose port lost its copilot listener,
 /// whose token the host rejects, or that another listed token supersedes. Enriches labels from the
@@ -13,24 +13,37 @@ namespace CpTower;
 /// the pruning, runs only when <see cref="RefreshAsync"/> is called (the app hits `/hosts` right before
 /// it connects), so cptower neither probes ports nor edits the file in the background.
 /// </summary>
-public sealed class DiscoveryService(HostRegistry registry, ILogger<DiscoveryService> log)
+internal sealed class DiscoveryService(
+    HostRegistry registry, MissionControlDiscovery missionControl, ILogger<DiscoveryService> log)
 {
     private static readonly string LogDir =
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".copilot", "logs");
 
     private readonly SemaphoreSlim gate = new(1, 1);
 
-    /// <summary>Runs one reconciliation pass, serialized so concurrent `/hosts` calls share the work.</summary>
+    /// <summary>Runs one local and remote reconciliation pass, serialized across `/hosts` calls.</summary>
     public async Task RefreshAsync(CancellationToken token)
     {
         await gate.WaitAsync(token);
         try
         {
-            await ReconcileAsync(token);
-        }
-        catch (Exception ex) when (ex is not OperationCanceledException)
-        {
-            log.LogWarning(ex, "discovery refresh failed");
+            try
+            {
+                await ReconcileAsync(token);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                log.LogWarning(ex, "local discovery refresh failed");
+            }
+
+            try
+            {
+                await missionControl.RefreshAsync(token);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                log.LogWarning(ex, "Mission Control discovery refresh failed");
+            }
         }
         finally
         {
@@ -44,7 +57,7 @@ public sealed class DiscoveryService(HostRegistry registry, ILogger<DiscoverySer
         var candidates = CopilotListeners();
         var sharedTokens = HostTokens.Load();
 
-        foreach (var host in registry.Snapshot())
+        foreach (var host in registry.Snapshot().Where(value => value.IsLocal))
         {
             // A new owning process or a deleted line means the port no longer serves the shared host.
             if (!candidates.TryGetValue(host.Port, out var pid)
@@ -66,6 +79,9 @@ public sealed class DiscoveryService(HostRegistry registry, ILogger<DiscoverySer
             foreach (var attempt in attempts)
             {
                 probe = await AhpProbe.ProbeAsync(port, attempt, token);
+                if (probe.Error is not null && !probe.Unauthorized) {
+                    log.LogWarning("port {Port}: {Error}", port, probe.Error);
+                }
                 if (probe.Ok)
                 {
                     accepted = attempt;

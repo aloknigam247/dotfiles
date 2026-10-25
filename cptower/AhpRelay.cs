@@ -1,31 +1,30 @@
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Net.WebSockets;
+using System.Security.Cryptography;
 using System.Text.Json;
-using Microsoft.AspNetCore.WebUtilities;
+using Azure;
+using Azure.Messaging.WebPubSub.Clients;
 
 namespace CpTower;
 
 /// <summary>
-/// Bridges a client WebSocket on `/ws/{port}` to the loopback AHP host on that port, adding the host's
-/// shared connection token, and signs the connection in with a GitHub CLI account (`githubUser`, else
-/// gh's active account): once the host answers the client's `initialize`, cptower sends `authenticate`
-/// itself (before passing the answer on) and drops the reply. A client without a GitHub token, such as
-/// the qvim app, can then subscribe to and steer sessions, which the host otherwise refuses with
-/// `AuthRequired`.
+/// Authenticates the upstream connection before transparently relaying the client's AHP traffic.
 /// </summary>
-internal sealed class AhpRelay(string? githubUser, ILogger<AhpRelay> log) {
-    // The host silently ignores requests with a string id, so cptower's own request uses a number far
-    // above any client's counter (clients number their requests from 1).
-    private const long AuthRequestId = 4_000_000_000_001;
-    private const string GitHubResource = "https://api.github.com";
+internal sealed class AhpRelay {
     private const string RootChannel = "ahp-root://";
 
-    private static readonly string AuthRequestIdJson = JsonSerializer.Serialize(AuthRequestId);
     private static readonly TimeSpan CloseGrace = TimeSpan.FromSeconds(2);
 
-    /// <summary>The account clients are signed in as, for logs.</summary>
-    private string Account => githubUser ?? "the GitHub CLI's active account";
+    private readonly Func<HostInfo, string, IQueryCollection, CancellationToken, Task<IAhpConnection>> connectHost;
+    private readonly Func<string, CancellationToken, Task<string>> githubToken;
+    private readonly ILogger<AhpRelay> log;
+
+    public AhpRelay(
+        Func<string, CancellationToken, Task<string>> githubToken, ILogger<AhpRelay> log,
+        Func<HostInfo, string, IQueryCollection, CancellationToken, Task<IAhpConnection>>? connectHost = null) {
+        this.connectHost = connectHost ?? WebSocketAhpConnection.ConnectAsync;
+        this.githubToken = githubToken;
+        this.log = log;
+    }
 
     public async Task RelayAsync(HttpContext context, HostInfo host, string path) {
         if (!context.WebSockets.IsWebSocketRequest) {
@@ -33,204 +32,251 @@ internal sealed class AhpRelay(string? githubUser, ILogger<AhpRelay> log) {
             return;
         }
 
-        using var upstream = new ClientWebSocket();
-        var githubToken = GitHubTokenAsync(context.RequestAborted);
+        IAhpConnection upstream;
         try {
-            await upstream.ConnectAsync(HostUri(host, path, context.Request.Query), context.RequestAborted);
-        } catch (Exception ex) when (ex is WebSocketException or HttpRequestException) {
-            log.LogWarning("port {Port}: AHP host refused the bridge: {Error}", host.Port, ex.Message);
+            upstream = await connectHost(host, path, context.Request.Query, context.RequestAborted);
+        } catch (Exception ex) when (ex is IOException or InvalidOperationException
+            or WebSocketException or HttpRequestException or RequestFailedException) {
+            log.LogWarning("host {Host}: AHP host refused the bridge: {Error}", host.Id, ex.Message);
             context.Response.StatusCode = StatusCodes.Status502BadGateway;
             return;
         }
+        await using var disposeUpstream = upstream;
 
         using var downstream = await context.WebSockets.AcceptWebSocketAsync();
-        var bridge = new Bridge(downstream, upstream, githubToken, Account, host.Port, log);
         using var stop = CancellationTokenSource.CreateLinkedTokenSource(context.RequestAborted);
-        var toClient = bridge.HostToClientAsync(stop.Token);
-        var toHost = bridge.ClientToHostAsync(stop.Token);
+        var handshake = new Handshake(downstream, upstream, githubToken, host.Id, log);
         try {
-            await Task.WhenAny(toClient, toHost);
-            // One side closed: let the other finish the close handshake briefly before cutting it off.
-            await Task.WhenAny(Task.WhenAll(toClient, toHost), Task.Delay(CloseGrace, context.RequestAborted));
-        } finally {
-            stop.Cancel();
-            await Task.WhenAll(Quietly(toClient), Quietly(toHost));
-        }
-    }
-
-    /// <summary>Returns the GitHub CLI's github.com token for `githubUser` (else its active account), or null without one.</summary>
-    private async Task<string?> GitHubTokenAsync(CancellationToken token) {
-        try {
-            var psi = new ProcessStartInfo("gh") {
-                ArgumentList = { "auth", "token", "--hostname", "github.com" },
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-            };
-            if (githubUser is not null) {
-                psi.ArgumentList.Add("--user");
-                psi.ArgumentList.Add(githubUser);
+            if (!await handshake.InitializeAsync(stop.Token)) {
+                return;
             }
 
-            using var proc = Process.Start(psi);
-            if (proc is null) {
-                return null;
+            var toClient = CopyToClientAsync(upstream, downstream, stop.Token);
+            var toHost = CopyToHostAsync(downstream, upstream, stop.Token);
+            try {
+                await await Task.WhenAny(toClient, toHost);
+                await Task.WhenAny(Task.WhenAll(toClient, toHost), Task.Delay(CloseGrace, stop.Token));
+            } finally {
+                stop.Cancel();
+                await Task.WhenAll(Quietly(toClient), Quietly(toHost));
             }
-
-            var output = await proc.StandardOutput.ReadToEndAsync(token);
-            await proc.WaitForExitAsync(token);
-            return proc.ExitCode == 0 && output.Trim() is { Length: > 0 } value ? value : null;
-        } catch (Exception ex) when (ex is Win32Exception or InvalidOperationException) {
-            return null;
+        } catch (OperationCanceledException) when (context.RequestAborted.IsCancellationRequested) {
+            log.LogDebug("host {Host}: client disconnected", host.Id);
+        } catch (Exception ex) when (ex is IOException or WebSocketException
+            or RequestFailedException or SendMessageFailedException) {
+            log.LogWarning("host {Host}: AHP bridge closed: {Error}", host.Id, ex.Message);
         }
-    }
-
-    /// <summary>The host URL for the client's path and query, with the shared token replacing any client `tkn`.</summary>
-    private static Uri HostUri(HostInfo host, string path, IQueryCollection query) {
-        var parameters = query.Where(q => q.Key != "tkn").ToList();
-        if (host.Token is not null) {
-            parameters.Add(new("tkn", host.Token));
-        }
-
-        return new Uri(QueryHelpers.AddQueryString($"ws://127.0.0.1:{host.Port}/{path}", parameters));
     }
 
     private static async Task Quietly(Task task) {
         try {
             await task;
-        } catch (Exception) {
-            // Either side going away (cancelled, aborted, or closed mid-message) just ends the bridge.
+        } catch (Exception ex) when (ex is IOException or OperationCanceledException or WebSocketException
+            or RequestFailedException or SendMessageFailedException) {
+            // The remaining pump is cancelled after either peer closes.
         }
     }
 
-    /// <summary>One bridged connection: a pump per direction, sharing the injected-auth state.</summary>
-    private sealed class Bridge(WebSocket client, WebSocket host, Task<string?> githubToken, string account, int port, ILogger log) {
-        private readonly SemaphoreSlim hostSend = new(1, 1);
+    private sealed class Handshake(
+        WebSocket client, IAhpConnection host, Func<string, CancellationToken, Task<string>> githubToken,
+        string hostId, ILogger log) {
+        private bool hideRootNotifications;
+        private JsonElement? initializeId;
+        private readonly List<byte[]> pending = [];
+        private long requestId = 4_000_000_000_001;
 
-        // Raw JSON of the client's `initialize` request id, set by the client pump before it forwards it.
-        private volatile string? initializeId;
-
-        public async Task ClientToHostAsync(CancellationToken token) {
+        public async Task<bool> InitializeAsync(CancellationToken token) {
             var buffer = new byte[16 * 1024];
             using var message = new MemoryStream();
-            while (await ReadMessageAsync(client, buffer, message, token) is { } type) {
-                if (initializeId is null && type == WebSocketMessageType.Text) {
-                    initializeId = InitializeIdOf(message);
+            IReadOnlyList<AhpAuthentication.Resource> resources = [];
+            using var timeout = CancellationTokenSource.CreateLinkedTokenSource(token);
+            timeout.CancelAfter(TimeSpan.FromSeconds(30));
+            try {
+                var type = await ReadMessageAsync(client, buffer, message, timeout.Token);
+                if (type is null) {
+                    return false;
+                }
+                if (type != WebSocketMessageType.Text) {
+                    throw new InvalidDataException("Expected an AHP initialize request.");
                 }
 
-                await SendToHostAsync(Payload(message), type, token);
-            }
+                using var request = JsonDocument.Parse(Payload(message));
+                var root = request.RootElement;
+                if (root.ValueKind != JsonValueKind.Object || !root.TryGetProperty("id", out var id)
+                    || id.ValueKind is not (JsonValueKind.Number or JsonValueKind.String)
+                    || !root.TryGetProperty("method", out var method) || method.GetString() != "initialize") {
+                    throw new InvalidDataException("Expected an AHP initialize request.");
+                }
+                initializeId = id.Clone();
+                var wantsRoot = root.TryGetProperty("params", out var parameters)
+                    && parameters.TryGetProperty("initialSubscriptions", out var subscriptions)
+                    && subscriptions.ValueKind == JsonValueKind.Array
+                    && subscriptions.EnumerateArray().Any(value =>
+                        value.ValueKind == JsonValueKind.String && value.GetString() == RootChannel);
+                await host.SendAsync(Payload(message), timeout.Token);
 
-            await host.CloseOutputAsync(client.CloseStatus ?? WebSocketCloseStatus.NormalClosure, client.CloseStatusDescription, token);
+                var response = await ReceiveResponseAsync(id, timeout.Token);
+                if (!response.Root.TryGetProperty("result", out var initialized)) {
+                    await client.SendAsync(response.Payload, WebSocketMessageType.Text, true, token);
+                    await client.CloseOutputAsync(WebSocketCloseStatus.ProtocolError, "AHP initialize failed.", token);
+                    return false;
+                }
+
+                var state = RootState(initialized);
+                if (state is null) {
+                    hideRootNotifications = !wantsRoot;
+                    var subscribed = await RequestAsync("subscribe", new { channel = RootChannel }, timeout.Token);
+                    if (!subscribed.TryGetProperty("snapshot", out var snapshot)
+                        || !snapshot.TryGetProperty("resource", out var channel)
+                        || channel.GetString() != RootChannel || !snapshot.TryGetProperty("state", out var value)) {
+                        throw new InvalidDataException("The AHP root subscription returned no root snapshot.");
+                    }
+                    state = value;
+                }
+                resources = AhpAuthentication.Resources(state.Value);
+                foreach (var resource in resources) {
+                    var credential = await githubToken(resource.Host, timeout.Token).WaitAsync(timeout.Token);
+                    if (string.IsNullOrWhiteSpace(credential)) {
+                        throw new InvalidOperationException($"No GitHub credential is available for {resource.Host}.");
+                    }
+                    var sealedToken = AhpAuthentication.CreateToken(
+                        initialized, state.Value, resource.Uri, credential, host.TrustedAuthenticationKey);
+                    await RequestAsync("authenticate", new {
+                        channel = RootChannel,
+                        resource = resource.Uri,
+                        token = sealedToken,
+                    }, timeout.Token);
+                    log.LogInformation("host {Host}: client authenticated for {Resource}", hostId, resource.Uri);
+                }
+
+                if (hideRootNotifications) {
+                    await SendAsync(host, new {
+                        jsonrpc = "2.0",
+                        method = "unsubscribe",
+                        @params = new { channel = RootChannel },
+                    }, timeout.Token);
+                    // Drain notifications from our temporary subscription before starting the transparent relay.
+                    await RequestAsync("ping", new { channel = RootChannel }, timeout.Token);
+                }
+
+                await client.SendAsync(response.Payload, WebSocketMessageType.Text, true, token);
+                foreach (var notification in pending) {
+                    await client.SendAsync(notification, WebSocketMessageType.Text, true, token);
+                }
+                return true;
+            } catch (OperationCanceledException) when (!token.IsCancellationRequested) {
+                return await FailAsync("AHP authentication timed out.", resources, token);
+            } catch (Exception ex) when (ex is CryptographicException or DllNotFoundException
+                or EntryPointNotFoundException or IOException or InvalidOperationException or JsonException
+                or WebSocketException or RequestFailedException or SendMessageFailedException) {
+                return await FailAsync(ex.Message, resources, token);
+            }
         }
 
-        public async Task HostToClientAsync(CancellationToken token) {
-            var buffer = new byte[16 * 1024];
-            var inspecting = true;
-            using var message = new MemoryStream();
-            while (await ReadMessageAsync(host, buffer, message, token) is { } type) {
-                if (inspecting && type == WebSocketMessageType.Text && ResponseOf(message) is { } response) {
-                    if (response.Id == AuthRequestIdJson) {
-                        LogAuthResult(response);
-                        inspecting = false;
+        private async Task<bool> FailAsync(
+            string error, IReadOnlyList<AhpAuthentication.Resource> resources, CancellationToken token) {
+            log.LogWarning("host {Host}: cptower authentication failed: {Error}", hostId, error);
+            await SendClientAsync(client, new {
+                error = new {
+                    code = -32007,
+                    data = new { resources = resources.Select(value => new { resource = value.Uri }) },
+                    message = $"cptower: {error}",
+                },
+                id = initializeId,
+                jsonrpc = "2.0",
+            }, token);
+            await client.CloseOutputAsync(WebSocketCloseStatus.PolicyViolation, "AHP authentication failed.", token);
+            return false;
+        }
+
+        private async Task<JsonElement> RequestAsync(string method, object parameters, CancellationToken token) {
+            var id = JsonSerializer.SerializeToElement(requestId++);
+            if (initializeId is { } original && SameId(id, original)) {
+                id = JsonSerializer.SerializeToElement(requestId++);
+            }
+            await SendAsync(host, new { id, jsonrpc = "2.0", method, @params = parameters }, token);
+            var response = await ReceiveResponseAsync(id, token);
+            if (response.Root.TryGetProperty("result", out var result)) {
+                return result;
+            }
+            var code = response.Root.TryGetProperty("error", out var error)
+                && error.TryGetProperty("code", out var value) && value.ValueKind == JsonValueKind.Number
+                ? value.GetRawText() : "unknown";
+            throw new InvalidOperationException($"AHP {method} failed with error {code}.");
+        }
+
+        private async Task<(byte[] Payload, JsonElement Root)> ReceiveResponseAsync(
+            JsonElement expectedId, CancellationToken token) {
+            while (await host.ReceiveAsync(token) is { } payload) {
+                using var document = JsonDocument.Parse(payload);
+                var root = document.RootElement;
+                if (root.ValueKind == JsonValueKind.Object) {
+                    if (!root.TryGetProperty("method", out _) && root.TryGetProperty("id", out var id)
+                        && SameId(id, expectedId)) {
+                        return (payload, root.Clone());
+                    }
+                    if (hideRootNotifications && !root.TryGetProperty("id", out _)
+                        && root.TryGetProperty("params", out var parameters)
+                        && parameters.TryGetProperty("channel", out var channel)
+                        && channel.ValueKind == JsonValueKind.String && channel.GetString() == RootChannel) {
                         continue;
                     }
+                }
+                pending.Add(payload);
+            }
+            throw new InvalidDataException("The AHP host closed during authentication.");
+        }
 
-                    // Sign in before the client sees `initialize` succeed, so its follow-up requests are authenticated.
-                    if (response.Id == initializeId && response.Ok) {
-                        inspecting = await AuthenticateAsync(token);
+        private static JsonElement? RootState(JsonElement initialized) {
+            if (initialized.TryGetProperty("snapshots", out var snapshots)) {
+                foreach (var snapshot in snapshots.EnumerateArray()) {
+                    if (snapshot.TryGetProperty("resource", out var channel) && channel.GetString() == RootChannel
+                        && snapshot.TryGetProperty("state", out var state)) {
+                        return state;
                     }
                 }
-
-                await client.SendAsync(Payload(message), type, true, token);
             }
-
-            await client.CloseOutputAsync(host.CloseStatus ?? WebSocketCloseStatus.NormalClosure, host.CloseStatusDescription, token);
-        }
-
-        /// <summary>Sends `authenticate` to the host; returns whether its reply is still to come.</summary>
-        private async Task<bool> AuthenticateAsync(CancellationToken token) {
-            var githubTokenValue = await githubToken;
-            if (githubTokenValue is null) {
-                log.LogWarning("port {Port}: no GitHub CLI token for {Account} (`gh auth token`); the client stays unauthenticated",
-                    port, account);
-                return false;
-            }
-
-            var request = JsonSerializer.SerializeToUtf8Bytes(new {
-                jsonrpc = "2.0",
-                id = AuthRequestId,
-                method = "authenticate",
-                @params = new { channel = RootChannel, resource = GitHubResource, token = githubTokenValue },
-            });
-            await SendToHostAsync(request, WebSocketMessageType.Text, token);
-            return true;
-        }
-
-        private void LogAuthResult(Response response) {
-            if (response.Ok) {
-                log.LogInformation("port {Port}: client signed in to the AHP host as {Account}", port, account);
-            } else {
-                log.LogWarning("port {Port}: AHP host rejected the GitHub CLI token for {Account}: {Error}", port, account, response.Error);
-            }
-        }
-
-        private async Task SendToHostAsync(ReadOnlyMemory<byte> payload, WebSocketMessageType type, CancellationToken token) {
-            await hostSend.WaitAsync(token);
-            try {
-                await host.SendAsync(payload, type, true, token);
-            } finally {
-                hostSend.Release();
-            }
-        }
-    }
-
-    private readonly record struct Response(string Id, bool Ok, string? Error);
-
-    /// <summary>Returns the raw JSON id of a JSON-RPC `initialize` request, or null for anything else.</summary>
-    private static string? InitializeIdOf(MemoryStream message) {
-        try {
-            using var doc = JsonDocument.Parse(Payload(message));
-            var root = doc.RootElement;
-            return root.ValueKind == JsonValueKind.Object
-                && root.TryGetProperty("method", out var method)
-                && method.ValueKind == JsonValueKind.String
-                && method.GetString() == "initialize"
-                && root.TryGetProperty("id", out var id)
-                ? id.GetRawText()
-                : null;
-        } catch (JsonException) {
             return null;
         }
+
+        private static bool SameId(JsonElement left, JsonElement right) =>
+            left.ValueKind == right.ValueKind && (left.ValueKind == JsonValueKind.String
+                ? left.GetString() == right.GetString() : left.GetRawText() == right.GetRawText());
     }
 
-    /// <summary>Returns a JSON-RPC response's raw id and outcome, or null when the message is not a response.</summary>
-    private static Response? ResponseOf(MemoryStream message) {
-        try {
-            using var doc = JsonDocument.Parse(Payload(message));
-            var root = doc.RootElement;
-            if (root.ValueKind != JsonValueKind.Object || !root.TryGetProperty("id", out var id)) {
-                return null;
-            }
-
-            if (root.TryGetProperty("error", out var error)) {
-                var text = error.ValueKind == JsonValueKind.Object
-                    && error.TryGetProperty("message", out var msg)
-                    && msg.ValueKind == JsonValueKind.String
-                    ? msg.GetString()
-                    : error.GetRawText();
-                return new Response(id.GetRawText(), false, text);
-            }
-
-            return root.TryGetProperty("result", out _) ? new Response(id.GetRawText(), true, null) : null;
-        } catch (JsonException) {
-            return null;
+    private static async Task CopyToClientAsync(
+        IAhpConnection source, WebSocket destination, CancellationToken token) {
+        while (await source.ReceiveAsync(token) is { } payload) {
+            await destination.SendAsync(payload, WebSocketMessageType.Text, true, token);
+        }
+        if (destination.State is WebSocketState.Open or WebSocketState.CloseReceived) {
+            await destination.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, token);
         }
     }
 
-    private static ReadOnlyMemory<byte> Payload(MemoryStream message) => message.GetBuffer().AsMemory(0, (int)message.Length);
+    private static async Task CopyToHostAsync(
+        WebSocket source, IAhpConnection destination, CancellationToken token) {
+        var buffer = new byte[16 * 1024];
+        using var message = new MemoryStream();
+        while (await ReadMessageAsync(source, buffer, message, token) is { } type) {
+            if (type != WebSocketMessageType.Text) {
+                throw new InvalidDataException("The AHP client sent a non-text WebSocket message.");
+            }
+            await destination.SendAsync(Payload(message), token);
+        }
+        await destination.CloseAsync(token);
+    }
 
-    /// <summary>Reads one whole message into <paramref name="message"/>; returns its type, or null on close.</summary>
+    private static ReadOnlyMemory<byte> Payload(MemoryStream message) =>
+        message.GetBuffer().AsMemory(0, (int)message.Length);
+
+    private static Task SendAsync(IAhpConnection connection, object message, CancellationToken token) =>
+        connection.SendAsync(JsonSerializer.SerializeToUtf8Bytes(message), token);
+
+    private static async Task SendClientAsync(WebSocket socket, object message, CancellationToken token) =>
+        await socket.SendAsync(
+            JsonSerializer.SerializeToUtf8Bytes(message), WebSocketMessageType.Text, true, token);
+
     private static async Task<WebSocketMessageType?> ReadMessageAsync(
         WebSocket socket, byte[] buffer, MemoryStream message, CancellationToken token) {
         message.SetLength(0);
