@@ -939,6 +939,23 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
+	"Mdview",
+	function()
+		local path = vim.api.nvim_buf_get_name(0)
+		if vim.bo.modified then
+			vim.notify("Save the current buffer before running Mdview", vim.log.levels.ERROR)
+			return
+		end
+		if vim.bo.buftype ~= "" or path == "" or vim.fn.filereadable(path) ~= 1 then
+			vim.notify("Mdview requires a readable file buffer", vim.log.levels.ERROR)
+			return
+		end
+		vim.system({ [[D:\mdview\target\release\mdview.exe]], path }, { detach = true })
+	end,
+	{ desc = "Open the current saved file in mdview" }
+)
+
+vim.api.nvim_create_user_command(
 	"Peek",
 	function(args)
 		local snacks = require("snacks")

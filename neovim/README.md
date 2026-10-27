@@ -22,6 +22,11 @@ Open Neovim with this config:
 NVIM_APPNAME=aloknigam247/dotfiles/neovim nvim
 ```
 
+## Markdown preview
+
+Requires the local mdview release configured in [init.lua](init.lua). Save the current file, then run `:Mdview`.
+Unnamed, modified, unreadable, or non-file buffers are rejected.
+
 ## Plugins
 
 ### bars-and-lines
