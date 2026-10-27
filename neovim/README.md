@@ -166,7 +166,6 @@ Unnamed, modified, unreadable, or non-file buffers are rejected.
 + [williamboman/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
 ### markdown-and-latex
 
-+ [toppair/peek.nvim](https://dotfyle.com/plugins/toppair/peek.nvim)
 + [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
 + [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
 + [OXY2DEV/markview.nvim](https://dotfyle.com/plugins/OXY2DEV/markview.nvim)
