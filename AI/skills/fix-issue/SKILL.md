@@ -271,16 +271,11 @@ The subagent must return:
    it.
 3. Summarize the plan in chat (concise — the file has the detail).
 4. **⛔ HARD RULE — ALWAYS open the plan in mdview before asking for acceptance. No exceptions.**
-   The `ask_user` accept/edit/reject gate in step 5 MUST NOT be presented until the plan file has been
-   rendered in the mdview app for the user — chat summary alone is never sufficient. Render the plan
+   The `ask_user` accept/edit/reject gate in step 5 chat summary alone is never sufficient. Render the plan
    file with the release binary:
    ```pwsh
    & D:\mdview\target\release\mdview.exe <plan-file>
    ```
-   If the release binary is missing, build it (`cargo build --release -p mdview`) or fall back to
-   `cargo run --release -p mdview -- <plan-file>`, then continue. If mdview cannot be launched at all,
-   say so explicitly and get the user's go-ahead before falling back to a chat-only review — do not
-   silently skip it. Re-open the plan in mdview again after any edit round before re-presenting.
 5. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
    confirmation, re-read it, and re-present. On "reject", delete the plan file and stop.
 
