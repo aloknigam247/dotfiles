@@ -7,7 +7,6 @@
 The user's environment is **Windows with PowerShell 7**. Always use PowerShell syntax (not bash/sh) for shell commands, scripts, and status lines. Use `pwsh` not `bash`.
 
 * Prefer double quotes over single quotes
-* Do not add over-engineered solutions — only implement what is directly needed and will be used
 * When accuracy matters (calculations, data processing, file manipulation, bulk operations), prefer writing a script (PowerShell or Python) over doing it inline or mentally. Scripts are verifiable, rerunnable, and less error-prone.
 * When a PowerShell script outputs Nerd Font icons through pipes, set `[Console]::OutputEncoding = [System.Text.Encoding]::UTF8` at the top — otherwise icons render as missing glyphs.
 * Always use `pwsh` instead of `powershell` when invoking PowerShell (e.g., `pwsh -NoProfile -File script.ps1`).
@@ -106,15 +105,27 @@ When working with Azure DevOps CLI (az boards, az repos), always include --proje
   or installing — no package installs, no scripts that change state, no file writes — without
   an explicit go-ahead.
 
-## Scope and simplicity
+## Engineering priorities
 
-* Choose the simplest, smallest change that fully satisfies the request without sacrificing correctness.
-* Preserve unrelated code and behavior. Do not add opportunistic cleanup or refactoring.
-* Reuse existing code and platform capabilities. Avoid dependencies, abstractions, configuration, and
-  features that are not necessary for the requested outcome.
-* Before expanding the agreed scope, stop. Explain the proposed expansion, why it is needed, and any
-  smaller alternative. Wait for my explicit approval before proceeding.
-* When a simpler solution meets the requirements, prefer it over a more general or extensible design.
+**Correctness > performance > design/simplicity.** Never sacrifice a higher priority for a lower one.
+
+* Before expanding scope, explain why it is needed and the smallest alternative. Wait for explicit approval.
+* Choose an efficient design that solves exactly the requested problem with the smallest complete implementation.
+  Minimize required changes elsewhere without leaving necessary integration incomplete.
+* Preserve unrelated code and behavior. Do not add opportunistic cleanup, refactoring, or features.
+* Reuse existing code and platform capabilities. Add dependencies, abstractions, configuration, or infrastructure
+  only when the current solution requires them, never for hypothetical future needs.
+
+## Unit tests
+
+* Limit test additions to new or changed behavior; do not backfill coverage for unrelated existing code.
+* When writing unit tests, cover every affected branch and relevant boundary, error, and success case.
+
+## Utility scripts
+
+* Grow utilities incrementally from concrete requests; do not build frameworks in anticipation of future reuse.
+* Never add utility tests unless explicitly requested. If tests are needed for correctness, explain the concrete risk
+  and obtain approval before adding them.
 
 ## Authoring files (docs, configs, prompt/agent defs)
 

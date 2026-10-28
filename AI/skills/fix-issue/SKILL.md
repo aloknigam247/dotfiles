@@ -10,8 +10,6 @@ before any code is written, and the user accepts the fix before any PR is raised
 
 ## Principles
 
-- **One task at a time.** If the issue has sub-issues or a task list, work **exactly one** of them
-  per run — the first one that is still open/unchecked. Never batch sub-tasks.
 - **Never work on the default branch.** Every fix goes on a new `fix/<issue>-<slug>` branch, in the
   current checkout or in a dedicated worktree under `.worktree/` — the user chooses which.
 - **Never start a blocked issue.** If the selected issue is blocked by an open dependency (blocking
