@@ -1408,7 +1408,7 @@ addPlugin {
 		highlight_overrides = {
 			all = function(palette)
 				return {
-					BlinkCmpSource = { fg = palette.subtext1, style = { "italic" } },
+					BlinkCmpSource = { fg = palette.overlay1, style = { "italic" } },
 					CheckmateDone = { fg = palette.green },
 					CheckmatePriority = { fg = palette.sapphire },
 					CheckmatePriorityHigh = { fg = palette.red, style = { "bold" } },
@@ -1741,7 +1741,6 @@ addPlugin {
 							end
 						}
 					},
-					cursorline_priority = 0,
 					padding = 0
 				}
 			}
