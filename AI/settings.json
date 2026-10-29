@@ -35,10 +35,7 @@
   "beep": true,
   "beepOnSchedule": true,
   "compactPaste": true,
-  "companyAnnouncements": [
-    "Need help with Agency? In a local Agency session, use `/agency:agency-support`; otherwise run `agency support` or join the support community: https://aka.ms/agency/support",
-    "Monthly limits are in place. Burst limit increases and guidance are available at https://aka.ms/copilot/burst"
-  ],
+  "companyAnnouncements": [],
   "contextManagementTools": true,
   "contextTier": "long_context",
   "continueOnAutoMode": true,

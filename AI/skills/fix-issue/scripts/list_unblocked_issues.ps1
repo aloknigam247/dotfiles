@@ -1,35 +1,43 @@
 <#
 .SYNOPSIS
-    Lists open issues that are NOT blocked by any still-open issue.
+    Lists unblocked open issues without an open parent.
 
 .DESCRIPTION
-    Used by the "fix-issue" skill (Input / step 1 dependency pre-scan). An issue is treated as
-    blocked when any of these point at an issue that is still open:
-      - a native GitHub issue dependency (`blocked_by`),
-      - a `blocked` / `blocked-by` / `on-hold` label,
-      - body/comment text matching `blocked by #N`, `depends on #N`, or `Status: blocked`.
-
-    Prints only the unblocked issues by default. Use -ShowBlocked to also list the blocked ones
-    with the open blockers that gate them. Emits JSON with -Json for programmatic consumption.
+    Uses only native GitHub parent and blocked_by relationships. Closed parents and blockers
+    do not exclude an issue. Labels and body text do not determine eligibility.
+    Use -Json to emit a JSON array.
 
 .EXAMPLE
     pwsh -NoProfile -File list_unblocked_issues.ps1
 
 .EXAMPLE
-    pwsh -NoProfile -File list_unblocked_issues.ps1 -ShowBlocked
+    pwsh -NoProfile -File list_unblocked_issues.ps1 -Json
 #>
 [CmdletBinding()]
 param(
-    [switch]$ShowBlocked,
     [switch]$Json
 )
 
-$ErrorActionPreference = "Stop"
+$env:GH_TOKEN = $null
+
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$apiVersion = "2026-03-10"
+$ErrorActionPreference = "Stop"
+$parentStates = @{}
 
 if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
     Write-Error "gh CLI not found on PATH."
     exit 2
+}
+
+function Get-GitHubObjects([string]$Endpoint) {
+    $json = gh api --paginate --slurp -H "X-GitHub-Api-Version: $apiVersion" $Endpoint
+    if ($LASTEXITCODE -ne 0) {
+        throw "GitHub request failed: $Endpoint"
+    }
+    foreach ($page in ($json | ConvertFrom-Json)) {
+        $page
+    }
 }
 
 $repo = gh repo view --json nameWithOwner --jq .nameWithOwner
@@ -38,95 +46,57 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace("$repo")) {
     exit 2
 }
 
-$apiVersion = "2026-03-10"
-
-# Resolve an issue's state, caching lookups so a shared blocker is fetched once.
-$stateCache = @{}
-function Get-IssueState([int]$Number) {
-    if ($stateCache.ContainsKey($Number)) { return $stateCache[$Number] }
-    $state = gh api "repos/$repo/issues/$Number" --jq '.state' 2>$null
-    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace("$state")) { $state = "unknown" }
-    $stateCache[$Number] = $state
-    return $state
+$openIssues = @(Get-GitHubObjects "repos/$repo/issues?state=open&per_page=100" |
+    Where-Object { -not $_.pull_request })
+$openIssueUrls = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+foreach ($issue in $openIssues) {
+    [void]$openIssueUrls.Add($issue.url)
 }
 
-# Fetch every open issue via pagination. The issues endpoint also returns PRs, so drop those.
-$openIssuesRaw = gh api --paginate "repos/$repo/issues?state=open&per_page=100" | ConvertFrom-Json
-$openIssues = @($openIssuesRaw | Where-Object { -not $_.pull_request } | ForEach-Object {
-    [PSCustomObject]@{
-        number    = $_.number
-        title     = $_.title
-        labels    = $_.labels
-        assignees = $_.assignees
-        updatedAt = $_.updated_at
-        body      = $_.body
-    }
-})
-
-$results = foreach ($issue in $openIssues) {
-    $blockers = [System.Collections.Generic.List[int]]::new()
-
-    # 1. Native GitHub issue dependencies.
-    $nativeRaw = gh api -H "X-GitHub-Api-Version: $apiVersion" `
-        "repos/$repo/issues/$($issue.number)/dependencies/blocked_by" --jq '.[].number' 2>$null
-    if ($LASTEXITCODE -eq 0 -and $nativeRaw) {
-        foreach ($n in $nativeRaw) { [void]$blockers.Add([int]$n) }
+$results = @(foreach ($issue in $openIssues) {
+    $parentUrl = $issue.parent_issue_url
+    if ($parentUrl) {
+        if ($openIssueUrls.Contains($parentUrl)) { continue }
+        if (-not $parentStates.ContainsKey($parentUrl)) {
+            $parent = Get-GitHubObjects $parentUrl
+            if ($parent.state -notin @("closed", "open")) {
+                throw "GitHub returned an invalid parent state: $parentUrl"
+            }
+            $parentStates[$parentUrl] = $parent.state
+        }
+        if ($parentStates[$parentUrl] -eq "open") { continue }
     }
 
-    # 2. Label signals.
-    $labelNames = @($issue.labels | ForEach-Object { $_.name.ToLower() })
-    $hasBlockLabel = @($labelNames | Where-Object { $_ -in @("blocked", "blocked-by", "on-hold") }).Count -gt 0
-
-    # 3. Body text signals: "blocked by #N", "depends on #N".
-    if ($issue.body) {
-        foreach ($m in [regex]::Matches($issue.body, '(?i)(?:blocked by|depends on)\W{0,4}#(\d+)')) {
-            [void]$blockers.Add([int]$m.Groups[1].Value)
+    $dependencies = @(Get-GitHubObjects "repos/$repo/issues/$($issue.number)/dependencies/blocked_by?per_page=100")
+    foreach ($dependency in $dependencies) {
+        if ($dependency.state -notin @("closed", "open")) {
+            throw "GitHub returned an invalid blocker state for issue #$($issue.number)."
         }
     }
-    $hasStatusBlocked = $issue.body -and ($issue.body -match '(?i)Status:\s*blocked')
-
-    # Keep only blockers that are themselves still open.
-    $openBlockers = @($blockers | Sort-Object -Unique | Where-Object { (Get-IssueState $_) -eq "open" })
-
-    $isBlocked = ($openBlockers.Count -gt 0) -or $hasBlockLabel -or $hasStatusBlocked
+    if ($dependencies.state -contains "open") { continue }
 
     [PSCustomObject]@{
         number       = $issue.number
         title        = $issue.title
-        labels       = $labelNames
+        labels       = @($issue.labels | ForEach-Object { $_.name.ToLower() })
         assignee     = if ($issue.assignees.Count -gt 0) { $issue.assignees[0].login } else { "unassigned" }
-        updatedAt    = $issue.updatedAt
-        blocked      = $isBlocked
-        openBlockers = $openBlockers
-        blockLabel   = $hasBlockLabel
-        statusBlocked = [bool]$hasStatusBlocked
+        updatedAt    = $issue.updated_at
+        blocked      = $false
+        openBlockers = @()
     }
-}
+})
 
-$unblocked = @($results | Where-Object { -not $_.blocked } | Sort-Object updatedAt)
-$blocked = @($results | Where-Object { $_.blocked } | Sort-Object number)
+$unblocked = @($results | Sort-Object updatedAt)
 
 if ($Json) {
-    if ($ShowBlocked) { $results | ConvertTo-Json -Depth 5 }
-    else { $unblocked | ConvertTo-Json -Depth 5 }
+    ConvertTo-Json -InputObject $unblocked -Depth 5
     exit 0
 }
 
-Write-Host "Unblocked issues ($($unblocked.Count) of $($results.Count) open):`n"
+Write-Host "Unblocked top-level issues ($($unblocked.Count)):`n"
 foreach ($i in $unblocked) {
     $lbl = if ($i.labels.Count -gt 0) { "[" + ($i.labels -join ",") + "] " } else { "" }
     Write-Host ("  #{0,-4} {1}{2}  ({3})" -f $i.number, $lbl, $i.title, $i.assignee)
-}
-
-if ($ShowBlocked -and $blocked.Count -gt 0) {
-    Write-Host "`nBlocked (excluded from auto-selection):`n"
-    foreach ($i in $blocked) {
-        $reasons = @()
-        if ($i.openBlockers.Count -gt 0) { $reasons += "blocked by " + (($i.openBlockers | ForEach-Object { "#$_" }) -join ", ") }
-        if ($i.blockLabel) { $reasons += "block label" }
-        if ($i.statusBlocked) { $reasons += "Status: blocked" }
-        Write-Host ("  #{0,-4} {1}  (⛔ {2})" -f $i.number, $i.title, ($reasons -join "; "))
-    }
 }
 
 exit 0

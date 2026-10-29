@@ -10,10 +10,10 @@ before any code is written, and the user accepts the fix before any PR is raised
 
 ## Principles
 
+- **Each issue is atomic.**: Every issue is atomic and should be completed in same PR.
 - **Never work on the default branch.** Every fix goes on a new `fix/<issue>-<slug>` branch, in the
   current checkout or in a dedicated worktree under `.worktree/` — the user chooses which.
-- **Never start a blocked issue.** If the selected issue is blocked by an open dependency (blocking
-  label, "blocked by"/"depends on" text, or a native `blocked_by` relationship), stop and confirm
+- **Never start a blocked issue.** If the selected issue has an open native `blocked_by` dependency, stop and confirm
   with the user before any work — auto-selection must skip it entirely.
 - **Reproduce before you fix.** Every bug must be reproduced locally (preferably as an automated
   failing test) *before* the plan is drafted and *before* any fix is written. No repro → no plan. If
@@ -56,33 +56,27 @@ it is still current. Do not treat a vague "I know what needs doing" as an accept
 
 An issue number (`123`, `#123`) or issue URL — **optional**.
 
-If the user did **not** name an issue, pull one from the repo yourself. **Do not filter by assignee**
-— any open issue is fair game, assigned or not.
+If the user did **not** name an issue, choose from the helper's eligible top-level issues.
+**Do not filter by assignee** — assigned and unassigned issues are both eligible.
 
 **⛔ MANDATORY dependency pre-scan — run before ranking or recommending anything.** The plain
-`gh issue list` does not fetch bodies or dependencies, so you cannot know which candidates are blocked
-until you look. Use the helper script, which lists only the **unblocked** issues (and, with
-`-ShowBlocked`, the blocked ones and their open blockers) after checking all three signals:
+`gh issue list` does not establish parent and dependency eligibility. Run the helper before choosing candidates:
 
-```pwsh
+```ps1
 pwsh -NoProfile -ExecutionPolicy Bypass `
-  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\list_unblocked_issues.ps1" -ShowBlocked
+  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\list_unblocked_issues.ps1"
 ```
 
-The script flags an issue as blocked when any of these targets an **open** issue: a native GitHub
-`blocked_by` dependency, a `blocked`/`blocked-by`/`on-hold` label, or `blocked by #N` / `depends on #N`
-/ `Status: blocked` text in the body. **Native `blocked_by` dependencies are the signal most often
-missed by a body-text scan alone — never skip them.** If the script is unavailable, reproduce it by
-hand: run `gh issue list --state open` for the candidates, then for each run the native check from
-step 1
-(`gh api -H "X-GitHub-Api-Version: 2026-03-10" repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by`)
-plus the label/body-text scan.
+The script always returns only **open issues with no open parent and no open blockers**.
+Use native GitHub `parent_issue_url` and `blocked_by` relationships only; labels and body text are not dependency edges.
+Closed parents and closed blockers do not exclude an issue.
 
-An issue that depends on an **open** issue is **ineligible for auto-selection**: it must never be the
-recommended default and must never be chosen by the "just pick one" path — no exceptions. Skipping
-this scan and recommending a blocked issue is a defect.
+If the helper is unavailable, reproduce its filter with paginated REST requests: list open repository issues, omit PRs,
+resolve each `parent_issue_url` and skip open parents, then fetch each remaining issue's
+`repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by` list and skip any with an open blocker.
+Use `X-GitHub-Api-Version: 2026-03-10`. A failed lookup is unknown eligibility, not an unblocked issue; stop and report it.
 
-Rank the **eligible (non-blocked)** candidates and present the top few (number, title, labels,
+Rank the returned candidates and present the top few (number, title, labels,
 assignee) via `ask_user` so the user picks one. Recommend a default using, in order:
 
 1. Issues explicitly flagged as ready/priority by the repo's own labels.
@@ -90,13 +84,10 @@ assignee) via `ask_user` so the user picks one. Recommend a default using, in or
 3. Oldest `updatedAt` among the remainder.
 
 Mention the current assignee for the recommendation so the user can redirect if someone else is
-already on it — but never exclude an issue just because it is assigned. If the repo has no open
-issues, say so and stop.
+already on it — but never exclude an issue just because it is assigned. If no eligible candidates remain, say so and stop.
 
-When *listing* candidates for the user, you may still show a blocked issue for visibility, but tag it
-`⛔ blocked by #N` and never present it as the default or recommendation. If the user explicitly asks
-to work a blocked issue anyway, fall through to the step 1 blocked gate (`ask_user` override) rather
-than starting silently.
+If the user explicitly names a blocked issue, use the step 1 blocked gate (`ask_user` override) rather than starting
+silently.
 
 If the user says "just pick one", take your top-ranked candidate, announce which issue you chose and
 why, and continue.
@@ -165,19 +156,14 @@ auto-picked or named by the user — before any reproduction or planning. A pare
 children is fine (that is normal decomposition, handled above); what this catches is *this* issue
 being gated on another open issue.
 
-1. Detect blockers from three signals:
-   - **Labels** — any `blocked` / `blocked-by` / `on-hold` label on the work issue.
-   - **Body + comments text** — match `blocked by #\d+`, `depends on #\d+`, `Status:\s*blocked`,
-     or `blocked by / depends on #\d+` (case-insensitive).
-   - **Native relationships** — GitHub issue dependencies and the sub-issue parent link:
-     ```pwsh
-     gh api -H "X-GitHub-Api-Version: 2026-03-10" "repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by" `
-       --jq '.[] | {number,state}'
-     gh api "repos/{owner}/{repo}/issues/<n>" --jq '.parent // empty | {number:.number,state:.state}'
-     ```
-     A `404`/`410` means the repo does not expose the relationship — fall back to the label/text
-     signals rather than treating it as "not blocked".
-2. Resolve each referenced blocker's state. If **every** blocker is closed → note it and proceed.
+1. Fetch the work issue's native dependencies:
+   ```ps1
+   gh api --paginate -H "X-GitHub-Api-Version: 2026-03-10" `
+     "repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by" --jq '.[] | {number,state,url}'
+   ```
+   If the lookup fails or the relationship is unavailable, stop and report unknown eligibility.
+   An open parent is containment, not a blocker; the parent filter applies only to automatic candidate selection.
+2. Inspect each blocker's state. If **every** blocker is closed → note it and proceed.
    If **any** blocker is open → **stop and `ask_user`**: (a) pick a different issue, (b) override and
    proceed anyway with an explicit acknowledgement that the dependency is unmet, or (c) abandon.
    Never silently proceed past an open blocker.
