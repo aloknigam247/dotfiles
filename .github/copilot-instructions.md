@@ -35,9 +35,11 @@ glow themes).
 ## Adding a New Package Manager to autosetup.ps1
 
 1. Create a `<name>Install` function with params `[string[]]$pkgs` and `[switch]$update` — follow the existing pattern (check installed, install or update)
-2. Add `$<name>_pkgs = @()` to the variable init block (around line 370+)
-3. Wire `<name>Install -update $<name>_pkgs` into the update branch
-4. Wire `<name>Install $<name>_pkgs` into the install branch
+2. Add `$<name>_pkgs = @()` to the per-module declaration reset block
+3. Add `"<name>"` to `$package_managers` in alphabetical order; collection and dispatch use this list
+4. Extend `packageRequestKey` for the manager's name/path semantics; ambiguous specifications must retain their origin
+
+Validate with `pwsh -NoProfile -File tests\autosetup_tests.ps1`.
 
 ## Adding a PowerShell Module Package
 

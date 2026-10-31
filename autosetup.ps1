@@ -6,7 +6,9 @@ param(
      )
 
 # Variables
+$package_managers = @("npm", "pip", "pipx", "psgallery", "scoop", "winget")
 $SCOOP_DIR = "D:\Scoop"
+$seen_packages = @{}
 
 function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)
@@ -296,13 +298,14 @@ function wingetInstall {
 function githubInstall {
     param(
         [hashtable[]]$pkgs,
-        [switch]$update
+        [switch]$update,
+        [string]$stateHome = $env:XDG_STATE_HOME
     )
     if ($pkgs.Length -eq 0) {
         return
     }
 
-    $versionFile = "$env:XDG_STATE_HOME\autosetup\github-releases.json"
+    $versionFile = "$stateHome\autosetup\github-releases.json"
     if (Test-Path $versionFile) {
         $versions = Get-Content $versionFile -Raw | ConvertFrom-Json -AsHashtable
     } else {
@@ -516,6 +519,36 @@ function writeLog {
     Write-Host -ForegroundColor $color " $message"
 }
 
+function packageRequestKey {
+    param(
+        [string]$manager,
+        [string]$origin,
+        [string]$pkg
+    )
+
+    $constraint = "(?:===|[<>=!~]=|[<>])\s*[a-z0-9.*+!_-]+"
+    if ($manager -in @("psgallery", "winget") -or
+        $pkg -match "^(?:git\+)?(?:https?|ssh|git)://" -or
+        [System.IO.Path]::IsPathFullyQualified($pkg)) {
+        return "global`0$pkg"
+    }
+
+    $pattern = switch ($manager) {
+        "npm" { "^(?:@[a-z0-9._-]+/)?[a-z0-9._-]+(?:@[^:/\\]+)?$" }
+        { $_ -in @("pip", "pipx") } {
+            "^[a-z0-9][a-z0-9._-]*(?:\[[a-z0-9._,-]+\])?(?:\s*$constraint(?:\s*,\s*$constraint)*)?$"
+        }
+        "scoop" { "^[a-z0-9][a-z0-9._-]*(?:/[a-z0-9][a-z0-9._-]*)?$" }
+        default { $null }
+    }
+
+    if ($pattern -and $pkg -match $pattern -and $pkg -notmatch "\.(?:exe|gz|json|tar|tgz|whl|zip)$" -and
+        -not (Test-Path -LiteralPath (Join-Path $origin $pkg))) {
+        return "global`0$pkg"
+    }
+    return "origin`0$origin`0$pkg"
+}
+
 # ╾─────────────────────────────────────────╼ main execution ╾─────────────────────────────────────────╼
 $all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" -Depth 1 | ForEach-Object { $_.Directory.BaseName }
 
@@ -530,55 +563,87 @@ if ($update) {
     $pkg_list = Menu $all_pkgs -Multiselect
 }
 
+$module_requirements = [System.Collections.Generic.List[hashtable]]::new()
 $root = Get-Location
+$seen_modules = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+foreach ($manager in $package_managers) {
+    $seen_packages[$manager] = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+}
+
 foreach ($pkg in $pkg_list) {
-    writeLog INFO "Package: $pkg"
+    try {
+        Set-Location -LiteralPath $pkg -ErrorAction Stop
+        $cwd = Get-Location
+        if (-not $seen_modules.Add($cwd.Path)) {
+            continue
+        }
+        writeLog INFO "Package: $pkg"
 
-    Set-Location $pkg
-    $cwd = Get-Location
+        if (Test-Path -LiteralPath "setup.ps1" -PathType Leaf) {
+            $files = @{}
+            $files_copy = @{}
+            $files_deploy = @{}
+            $github_pkgs = @()
+            $module_packages = @{}
+            $npm_pkgs = @()
+            $pip_pkgs = @()
+            $pipx_pkgs = @()
+            $psgallery_pkgs = @()
+            $scoop_pkgs = @()
+            $winget_pkgs = @()
 
-    if (Test-Path setup.ps1) {
-        $files = @{}
-        $files_copy = @{}
-        $files_deploy = @{}
-        $github_pkgs = @()
-        $npm_pkgs = @()
-        $pip_pkgs = @()
-        $pipx_pkgs = @()
-        $psgallery_pkgs = @()
-        $scoop_pkgs = @()
-        $winget_pkgs = @()
+            . .\setup.ps1
 
-        . .\setup.ps1
+            foreach ($manager in $package_managers) {
+                $module_packages[$manager] = @(foreach (
+                    $package in [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
+                ) {
+                    $key = packageRequestKey -manager $manager -origin $cwd.Path -pkg $package
+                    if ($seen_packages[$manager].Add($key)) {
+                        $package
+                    }
+                })
+            }
+            $module_requirements.Add(@{
+                cwd = $cwd
+                files = $files
+                files_copy = $files_copy
+                files_deploy = $files_deploy
+                github_pkgs = $github_pkgs
+                github_state_home = $env:XDG_STATE_HOME
+                packages = $module_packages
+            })
+        } else {
+            writeLog ERROR "No setup.ps1 found for $pkg"
+        }
+    } finally {
+        Set-Location -LiteralPath $root.Path
+    }
+}
 
+foreach ($requirements in $module_requirements) {
+    try {
+        $cwd = $requirements.cwd
+        Set-Location -LiteralPath $cwd.Path -ErrorAction Stop
         if ($update) {
             writeLog INFO "Updating Configs"
 
-            copyOrUpdateConfigs -update $files_copy
-            deployConfigs $files_deploy
-            githubInstall -update $github_pkgs
-            npmInstall -update $npm_pkgs
-            pipInstall -update $pip_pkgs
-            pipxInstall -update $pipx_pkgs
-            psgalleryInstall -update $psgallery_pkgs
-            scoopInstall -update $scoop_pkgs
-            wingetInstall -update $winget_pkgs
+            copyOrUpdateConfigs -update $requirements.files_copy
+            deployConfigs $requirements.files_deploy
+            githubInstall -update $requirements.github_pkgs -stateHome $requirements.github_state_home
         } else {
             writeLog INFO "Installing Configs"
 
-            copyOrUpdateConfigs $files_copy
-            deployConfigs $files_deploy
-            githubInstall $github_pkgs
-            linkConfigs $files
-            npmInstall $npm_pkgs
-            pipInstall $pip_pkgs
-            pipxInstall $pipx_pkgs
-            psgalleryInstall $psgallery_pkgs
-            scoopInstall $scoop_pkgs
-            wingetInstall $winget_pkgs
+            copyOrUpdateConfigs $requirements.files_copy
+            deployConfigs $requirements.files_deploy
+            githubInstall $requirements.github_pkgs -stateHome $requirements.github_state_home
+            linkConfigs $requirements.files
         }
-    } else {
-        writeLog ERROR "No setup.ps1 found for $pkg"
+
+        foreach ($manager in $package_managers) {
+            & "${manager}Install" -pkgs $requirements.packages[$manager] -update:$update
+        }
+    } finally {
+        Set-Location -LiteralPath $root.Path
     }
-    Set-Location $root
 }
