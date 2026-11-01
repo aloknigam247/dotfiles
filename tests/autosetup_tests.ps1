@@ -347,7 +347,7 @@ Record-Call "setup" @{
     Write-Output "PASS: exact declared names deduplicate per manager without case, version, or path interpretation"
 
     Assert-Throws { Invoke-Collection -Modules @("does_not_exist") } "*does_not_exist*"
-    Assert-True ($script:last_location -eq $script:fixture) "Invalid directory did not restore root."
+    Assert-True ($script:last_location -eq $script:fixture) "Invalid directory changed the current location."
     $results = @(Invoke-Collection -ErrorPolicy "Continue" -Modules @("does_not_exist", "gamma") 2>&1)
     $calls = @($results | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] })
     $path_errors = @($results | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] })
@@ -364,17 +364,19 @@ Record-Call "setup" @{
     New-SetupModule "throwing" 'throw "fixture setup failure"' | Out-Null
     Assert-Throws { Invoke-Collection -Modules @("alpha", "throwing") } "*fixture setup failure*"
     Assert-Sequence $script:events.Kind @("setup") "Dispatch ran after collection failed."
-    Assert-True ($script:last_location -eq $script:fixture) "Setup failure did not restore root."
+    Assert-True ($script:last_location -eq (Join-Path $script:fixture "throwing")) `
+        "Setup failure changed the original error location."
     Assert-Throws { Invoke-Collection -Modules @("alpha", "beta") -Failure "deploy" } `
         "*fixture dispatch failure: deploy*"
     Assert-Sequence $script:events.Kind @("setup", "setup", "copy", "deploy") `
         "Package dispatch ran after module configuration failed."
-    Assert-True ($script:last_location -eq $script:fixture) "Config failure did not restore root."
+    Assert-True ($script:last_location -eq $script:fixture) "Config failure changed the helper's error location."
     Assert-Throws { Invoke-Collection -Modules @("alpha") -Failure "npm" } "*fixture dispatch failure: npm*"
     Assert-Sequence $script:events.Kind @("setup", "copy", "deploy", "github", "link", "npm") `
         "Dispatch continued after an installer failure."
-    Assert-True ($script:last_location -eq $script:fixture) "Dispatch failure did not restore root."
-    Write-Output "PASS: visible missing/invalid setup errors and root restoration on collection/dispatch failure"
+    Assert-True ($script:last_location -eq (Split-Path $script:fixture)) `
+        "Package failure changed the helper's error location."
+    Write-Output "PASS: original error policy and propagation without added exception-time cleanup"
 
     & {
         # Native package absence is a nonzero exit, not a terminating PowerShell error.

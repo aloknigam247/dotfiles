@@ -541,75 +541,67 @@ foreach ($manager in $package_managers) {
 }
 
 foreach ($pkg in $pkg_list) {
-    try {
-        Set-Location $pkg
-        $cwd = Get-Location
-        writeLog INFO "Package: $pkg"
+    writeLog INFO "Package: $pkg"
 
-        if (Test-Path setup.ps1) {
-            $files = @{}
-            $files_copy = @{}
-            $files_deploy = @{}
-            $github_pkgs = @()
-            $npm_pkgs = @()
-            $pip_pkgs = @()
-            $pipx_pkgs = @()
-            $psgallery_pkgs = @()
-            $scoop_pkgs = @()
-            $winget_pkgs = @()
+    Set-Location $pkg
+    $cwd = Get-Location
 
-            . .\setup.ps1
+    if (Test-Path setup.ps1) {
+        $files = @{}
+        $files_copy = @{}
+        $files_deploy = @{}
+        $github_pkgs = @()
+        $npm_pkgs = @()
+        $pip_pkgs = @()
+        $pipx_pkgs = @()
+        $psgallery_pkgs = @()
+        $scoop_pkgs = @()
+        $winget_pkgs = @()
 
-            foreach ($manager in $package_managers) {
-                $packages = [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
-                foreach ($package in $packages) {
-                    $collected_packages[$manager][$package] = $null
-                }
+        . .\setup.ps1
+
+        foreach ($manager in $package_managers) {
+            $packages = [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
+            foreach ($package in $packages) {
+                $collected_packages[$manager][$package] = $null
             }
-            $module_requirements.Add(@{
-                cwd = $cwd
-                files = $files
-                files_copy = $files_copy
-                files_deploy = $files_deploy
-                github_pkgs = $github_pkgs
-            })
-        } else {
-            writeLog ERROR "No setup.ps1 found for $pkg"
         }
-    } finally {
-        Set-Location -LiteralPath $root.Path
+        $module_requirements.Add(@{
+            cwd = $cwd
+            files = $files
+            files_copy = $files_copy
+            files_deploy = $files_deploy
+            github_pkgs = $github_pkgs
+        })
+    } else {
+        writeLog ERROR "No setup.ps1 found for $pkg"
     }
+    Set-Location $root
 }
 
 foreach ($requirements in $module_requirements) {
-    try {
-        $cwd = $requirements.cwd
-        Set-Location -LiteralPath $cwd.Path -ErrorAction Stop
-        if ($update) {
-            writeLog INFO "Updating Configs"
+    $cwd = $requirements.cwd
+    Set-Location $cwd
+    if ($update) {
+        writeLog INFO "Updating Configs"
 
-            copyOrUpdateConfigs -update $requirements.files_copy
-            deployConfigs $requirements.files_deploy
-            githubInstall -update $requirements.github_pkgs
-        } else {
-            writeLog INFO "Installing Configs"
+        copyOrUpdateConfigs -update $requirements.files_copy
+        deployConfigs $requirements.files_deploy
+        githubInstall -update $requirements.github_pkgs
+    } else {
+        writeLog INFO "Installing Configs"
 
-            copyOrUpdateConfigs $requirements.files_copy
-            deployConfigs $requirements.files_deploy
-            githubInstall $requirements.github_pkgs
-            linkConfigs $requirements.files
-        }
-    } finally {
-        Set-Location -LiteralPath $root.Path
+        copyOrUpdateConfigs $requirements.files_copy
+        deployConfigs $requirements.files_deploy
+        githubInstall $requirements.github_pkgs
+        linkConfigs $requirements.files
     }
+    Set-Location $root
 }
 
 if ($module_requirements.Count -gt 0) {
-    try {
-        foreach ($manager in $package_managers) {
-            & "${manager}Install" -pkgs @($collected_packages[$manager].Keys) -update:$update
-        }
-    } finally {
-        Set-Location -LiteralPath $root.Path
+    foreach ($manager in $package_managers) {
+        & "${manager}Install" -pkgs @($collected_packages[$manager].Keys) -update:$update
     }
+    Set-Location $root
 }
