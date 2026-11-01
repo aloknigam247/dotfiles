@@ -6,6 +6,8 @@ param(
      )
 
 # Variables
+$collected_packages = @{}
+$package_managers = @("npm", "pip", "pipx", "psgallery", "scoop", "winget")
 $SCOOP_DIR = "D:\Scoop"
 
 function DrawMenu {
@@ -530,7 +532,14 @@ if ($update) {
     $pkg_list = Menu $all_pkgs -Multiselect
 }
 
+$module_requirements = [System.Collections.Generic.List[hashtable]]::new()
 $root = Get-Location
+foreach ($manager in $package_managers) {
+    $collected_packages[$manager] = [System.Collections.Specialized.OrderedDictionary]::new(
+        [System.StringComparer]::Ordinal
+    )
+}
+
 foreach ($pkg in $pkg_list) {
     writeLog INFO "Package: $pkg"
 
@@ -551,34 +560,48 @@ foreach ($pkg in $pkg_list) {
 
         . .\setup.ps1
 
-        if ($update) {
-            writeLog INFO "Updating Configs"
-
-            copyOrUpdateConfigs -update $files_copy
-            deployConfigs $files_deploy
-            githubInstall -update $github_pkgs
-            npmInstall -update $npm_pkgs
-            pipInstall -update $pip_pkgs
-            pipxInstall -update $pipx_pkgs
-            psgalleryInstall -update $psgallery_pkgs
-            scoopInstall -update $scoop_pkgs
-            wingetInstall -update $winget_pkgs
-        } else {
-            writeLog INFO "Installing Configs"
-
-            copyOrUpdateConfigs $files_copy
-            deployConfigs $files_deploy
-            githubInstall $github_pkgs
-            linkConfigs $files
-            npmInstall $npm_pkgs
-            pipInstall $pip_pkgs
-            pipxInstall $pipx_pkgs
-            psgalleryInstall $psgallery_pkgs
-            scoopInstall $scoop_pkgs
-            wingetInstall $winget_pkgs
+        foreach ($manager in $package_managers) {
+            $packages = [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
+            foreach ($package in $packages) {
+                $collected_packages[$manager][$package] = $null
+            }
         }
+        $module_requirements.Add(@{
+            cwd = $cwd
+            files = $files
+            files_copy = $files_copy
+            files_deploy = $files_deploy
+            github_pkgs = $github_pkgs
+        })
     } else {
         writeLog ERROR "No setup.ps1 found for $pkg"
+    }
+    Set-Location $root
+}
+
+foreach ($requirements in $module_requirements) {
+    $cwd = $requirements.cwd
+    Set-Location $cwd
+    if ($update) {
+        writeLog INFO "Updating Configs"
+
+        copyOrUpdateConfigs -update $requirements.files_copy
+        deployConfigs $requirements.files_deploy
+        githubInstall -update $requirements.github_pkgs
+    } else {
+        writeLog INFO "Installing Configs"
+
+        copyOrUpdateConfigs $requirements.files_copy
+        deployConfigs $requirements.files_deploy
+        githubInstall $requirements.github_pkgs
+        linkConfigs $requirements.files
+    }
+    Set-Location $root
+}
+
+if ($module_requirements.Count -gt 0) {
+    foreach ($manager in $package_managers) {
+        & "${manager}Install" -pkgs @($collected_packages[$manager].Keys) -update:$update
     }
     Set-Location $root
 }
