@@ -564,13 +564,14 @@ foreach ($pkg in $pkg_list) {
             . .\setup.ps1
 
             foreach ($manager in $package_managers) {
-                $module_packages[$manager] = @(foreach (
-                    $package in [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
-                ) {
-                    if ($seen_packages[$manager].Add($package)) {
-                        $package
+                $packages = [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
+                $module_packages[$manager] = @(
+                    foreach ($package in $packages) {
+                        if ($seen_packages[$manager].Add($package)) {
+                            $package
+                        }
                     }
-                })
+                )
             }
             $module_requirements.Add(@{
                 cwd = $cwd
