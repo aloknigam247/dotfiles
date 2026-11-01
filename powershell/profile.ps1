@@ -742,6 +742,115 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
         }
 }
 
+function Update-CopilotModelCompletion {
+    <#
+    .SYNOPSIS
+    Refresh model suggestions from the installed Copilot CLI.
+    .EXAMPLE
+    Update-CopilotModelCompletion -WhatIf
+    .EXAMPLE
+    Update-CopilotModelCompletion
+    #>
+    [CmdletBinding(SupportsShouldProcess)]
+    param()
+
+    $branchPattern = '(?m)^[ \t]*--model\)[ \t]*\r?\n' +
+        '[ \t]*COMPREPLY=\(\$\(compgen -W "(?<catalog>[^"\r\n]*)" -- "\$\{cur\}"\)\)[ \t]*\r?\n' +
+        '[ \t]*return 0[ \t]*\r?\n[ \t]*;;[ \t]*\r?$'
+    $changed = $false
+    $ErrorActionPreference = "Stop"
+    $errors = $null
+    $PSNativeCommandUseErrorActionPreference = $false
+    $temporaryPath = $null
+    $tokens = $null
+
+    $application = Get-Command copilot.exe -CommandType Application -ErrorAction Stop | Select-Object -First 1
+    $completion = @(& $application.Source completion bash)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Copilot model discovery failed with exit code $LASTEXITCODE."
+    }
+    $completionText = $completion -join "`n"
+    $branches = [regex]::Matches($completionText, '(?m)^[ \t]*--model(?=[ \t)|])')
+    $catalogs = [regex]::Matches($completionText, $branchPattern)
+    if ($branches.Count -ne 1 -or $catalogs.Count -ne 1) {
+        throw "Expected exactly one static --model completion branch."
+    }
+    [string[]]$models = $catalogs[0].Groups["catalog"].Value.Split(" ", [StringSplitOptions]::RemoveEmptyEntries)
+    if (-not $models.Count -or $models -match '[\s\p{Cc}''"$`\\]') {
+        throw "Expected nonempty, literal model identifiers without shell quoting or escapes."
+    }
+    if ([System.Collections.Generic.HashSet[string]]::new($models, [StringComparer]::Ordinal).Count -ne $models.Count) {
+        throw "The model catalog contains duplicate identifiers."
+    }
+    [Array]::Sort($models, [System.StringComparer]::Ordinal)
+
+    $profileLink = Get-Item -LiteralPath $PROFILE.AllUsersAllHosts -Force -ErrorAction Stop
+    $targets = @($profileLink.Target)
+    if ($profileLink -isnot [System.IO.FileInfo] -or $profileLink.LinkType -ne "SymbolicLink" -or
+        $targets.Count -ne 1 -or [string]::IsNullOrWhiteSpace($targets[0])) {
+        throw "The deployed profile must be a symbolic link with one target."
+    }
+    $sourcePath = [System.IO.Path]::GetFullPath($targets[0], $profileLink.DirectoryName)
+    $sourceFile = Get-Item -LiteralPath $sourcePath -Force -ErrorAction Stop
+    if ($sourceFile -isnot [System.IO.FileInfo] -or
+        ($sourceFile.Attributes -band [System.IO.FileAttributes]::ReparsePoint)) {
+        throw "The profile target must be a regular file, not another link."
+    }
+    $bytes = [System.IO.File]::ReadAllBytes($sourcePath)
+    $hasBom = [Convert]::ToHexString($bytes, 0, [Math]::Min(3, $bytes.Length)) -eq "EFBBBF"
+    $encoding = [System.Text.UTF8Encoding]::new($hasBom, $true)
+    $bomLength = $encoding.GetPreamble().Length
+    $source = $encoding.GetString($bytes, $bomLength, $bytes.Length - $bomLength)
+    $ast = [System.Management.Automation.Language.Parser]::ParseInput($source, [ref]$tokens, [ref]$errors)
+    if ($errors.Count) {
+        throw "The profile contains syntax errors: $($errors.Message -join '; ')"
+    }
+    $assignments = @($ast.EndBlock.Statements | Where-Object {
+        $_ -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+            $_.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+            $_.Left.VariablePath.UserPath -eq "script:copilotModels"
+    })
+    if ($assignments.Count -ne 1 -or $assignments[0].Operator -ne "Equals" -or
+        $assignments[0].Right -isnot [System.Management.Automation.Language.CommandExpressionAst] -or
+        $assignments[0].Right.Redirections.Count -or
+        $assignments[0].Right.Expression -isnot [System.Management.Automation.Language.ArrayExpressionAst]) {
+        throw "Expected one top-level static `$script:copilotModels array assignment."
+    }
+    $values = $assignments[0].Right.Expression.SafeGetValue()
+    if ($values -isnot [array] -or $values.Where({ $_ -isnot [string] }).Count) {
+        throw "The model array must contain only static strings."
+    }
+    $extent = $assignments[0].Extent
+    $serialized = ($models | ForEach-Object { "'$($_.Replace("'", "''"))'" }) -join ", "
+    $replacement = "`$script:copilotModels = @($serialized)"
+    $updatedSource = $source.Substring(0, $extent.StartOffset) + $replacement + $source.Substring($extent.EndOffset)
+    [System.Management.Automation.Language.Parser]::ParseInput($updatedSource, [ref]$tokens, [ref]$errors) | Out-Null
+    if ($errors.Count) {
+        throw "The refreshed profile contains syntax errors: $($errors.Message -join '; ')"
+    }
+    [byte[]]$updatedBytes = $encoding.GetPreamble() + $encoding.GetBytes($updatedSource)
+    if ($PSCmdlet.ShouldProcess($sourcePath, "Refresh model completion in the profile and current session")) {
+        if (-not [string]::Equals($source, $updatedSource, [System.StringComparison]::Ordinal)) {
+            $temporaryPath = Join-Path $sourceFile.DirectoryName (
+                ".$($sourceFile.Name).$([guid]::NewGuid().ToString()).tmp")
+            try {
+                [System.IO.File]::WriteAllBytes($temporaryPath, $updatedBytes)
+                [System.IO.File]::Replace($temporaryPath, $sourcePath, [NullString]::Value)
+                $temporaryPath = $null
+            } finally {
+                if ($temporaryPath -and [System.IO.File]::Exists($temporaryPath)) {
+                    [System.IO.File]::Delete($temporaryPath)
+                }
+            }
+            $changed = $true
+        }
+        $script:copilotModels = $models
+    }
+    [pscustomobject]@{ Changed = $changed; ModelCount = $models.Count; SourcePath = $sourcePath }
+}
+
+$script:copilotModels = @('auto', 'claude-fable-5', 'claude-fable-5.1', 'claude-haiku-4.5', 'claude-haiku-5.5', 'claude-opus-4.8', 'claude-opus-4.8-fast', 'claude-opus-5', 'claude-opus-5.5', 'claude-sonnet-4.6', 'claude-sonnet-5', 'claude-sonnet-5.5', 'gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-4-argon', 'gpt-5-mini', 'gpt-5.3-codex', 'gpt-5.4', 'gpt-5.4-mini', 'gpt-5.5', 'gpt-5.6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-6-astra', 'gpt-6-luna', 'gpt-6-sol', 'gpt-6.1-sol', 'grok-4.5', 'grok-4.6', 'grok-4.7', 'kimi-k3', 'mai-code-1.1-flash')
+
 Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
     if ($commandAst.GetCommandName() -notin @("agency", "ai", "copilot")) {
@@ -786,6 +895,7 @@ Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock
         "--effort" = $effortValues
         "--log-level" = @("all", "debug", "default", "error", "info", "none", "warning")
         "--mode" = @("autopilot", "interactive", "plan")
+        "--model" = $script:copilotModels
         "--output-format" = @("json", "text")
         "--reasoning-effort" = $effortValues
         "--stream" = @("off", "on")
@@ -916,7 +1026,7 @@ Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock
     foreach ($candidate in $candidates | Sort-Object -CaseSensitive -Unique) {
         if ($candidate -and $candidate.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) {
             $text = $candidate
-            if ($isAgentValue -and $candidate -match "[^\w.-]") {
+            if (($isAgentValue -or $option -eq "--model") -and $candidate -match "[^\w.-]") {
                 $escaped = $candidate.Replace("'", "''")
                 $text = "'$escaped'"
             }
