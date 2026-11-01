@@ -493,7 +493,7 @@ function copilot {
 function e {
     $quoted_args = $args | ForEach-Object { '"{0}"' -f ($_ -replace '\\+$') }
     $arg_str = $quoted_args -join " "
-    if (Test-Path "D:\dot\build\release\RelWithDebInfo\dot.exe") {
+    if (Test-Path "D:\dot\desktop\build\release\RelWithDebInfo\dot.exe") {
         if ($args.Count -eq 0) {
             D:\dot\desktop\build\release\RelWithDebInfo\dot.exe
         } else {
