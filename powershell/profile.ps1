@@ -495,9 +495,9 @@ function e {
     $arg_str = $quoted_args -join " "
     if (Test-Path "D:\dot\build\release\RelWithDebInfo\dot.exe") {
         if ($args.Count -eq 0) {
-            D:\dot\build\release\RelWithDebInfo\dot.exe
+            D:\dot\desktop\build\release\RelWithDebInfo\dot.exe
         } else {
-            D:\dot\build\release\RelWithDebInfo\dot.exe $arg_str
+            D:\dot\desktop\build\release\RelWithDebInfo\dot.exe $arg_str
         }
     } else {
         wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
