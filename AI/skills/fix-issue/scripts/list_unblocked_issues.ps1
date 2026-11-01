@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-    Lists unblocked open issues without an open parent.
+    Lists open leaf issues without open blockers.
 
 .DESCRIPTION
-    Uses only native GitHub parent and blocked_by relationships. Closed parents and blockers
-    do not exclude an issue. Labels and body text do not determine eligibility.
+    Uses only native GitHub sub_issues and blocked_by relationships. Having a parent is allowed.
+    Closed sub-issues and blockers do not exclude an issue. Labels and body text do not determine eligibility.
     Use -Json to emit a JSON array.
 
 .EXAMPLE
@@ -23,7 +23,6 @@ $env:GH_TOKEN = $null
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $apiVersion = "2026-03-10"
 $ErrorActionPreference = "Stop"
-$parentStates = @{}
 
 if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
     Write-Error "gh CLI not found on PATH."
@@ -48,24 +47,15 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace("$repo")) {
 
 $openIssues = @(Get-GitHubObjects "repos/$repo/issues?state=open&per_page=100" |
     Where-Object { -not $_.pull_request })
-$openIssueUrls = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
-foreach ($issue in $openIssues) {
-    [void]$openIssueUrls.Add($issue.url)
-}
 
 $results = @(foreach ($issue in $openIssues) {
-    $parentUrl = $issue.parent_issue_url
-    if ($parentUrl) {
-        if ($openIssueUrls.Contains($parentUrl)) { continue }
-        if (-not $parentStates.ContainsKey($parentUrl)) {
-            $parent = Get-GitHubObjects $parentUrl
-            if ($parent.state -notin @("closed", "open")) {
-                throw "GitHub returned an invalid parent state: $parentUrl"
-            }
-            $parentStates[$parentUrl] = $parent.state
+    $subIssues = @(Get-GitHubObjects "repos/$repo/issues/$($issue.number)/sub_issues?per_page=100")
+    foreach ($subIssue in $subIssues) {
+        if ($subIssue.state -notin @("closed", "open")) {
+            throw "GitHub returned an invalid sub-issue state for issue #$($issue.number)."
         }
-        if ($parentStates[$parentUrl] -eq "open") { continue }
     }
+    if ($subIssues.state -contains "open") { continue }
 
     $dependencies = @(Get-GitHubObjects "repos/$repo/issues/$($issue.number)/dependencies/blocked_by?per_page=100")
     foreach ($dependency in $dependencies) {
@@ -93,7 +83,7 @@ if ($Json) {
     exit 0
 }
 
-Write-Host "Unblocked top-level issues ($($unblocked.Count)):`n"
+Write-Host "Unblocked leaf issues ($($unblocked.Count)):`n"
 foreach ($i in $unblocked) {
     $lbl = if ($i.labels.Count -gt 0) { "[" + ($i.labels -join ",") + "] " } else { "" }
     Write-Host ("  #{0,-4} {1}{2}  ({3})" -f $i.number, $lbl, $i.title, $i.assignee)
