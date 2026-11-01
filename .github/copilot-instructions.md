@@ -38,8 +38,6 @@ glow themes).
 2. Add `$<name>_pkgs = @()` to the per-module declaration reset block
 3. Add `"<name>"` to `$package_managers` in alphabetical order; collection and dispatch use this list
 
-Validate with `pwsh -NoProfile -File tests\autosetup_tests.ps1`.
-
 ## Adding a PowerShell Module Package
 
 To ship a `.psm1` from the repo so it loads via `Import-Module <Name>`:
