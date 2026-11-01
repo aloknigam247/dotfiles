@@ -346,10 +346,16 @@ Record-Call "setup" @{
     }
     Write-Output "PASS: exact declared names deduplicate per manager without case, version, or path interpretation"
 
-    foreach ($policy in @("Continue", "Stop")) {
-        Assert-Throws { Invoke-Collection -ErrorPolicy $policy -Modules @("does_not_exist") } "*does_not_exist*"
-        Assert-True ($script:last_location -eq $script:fixture) "Invalid directory did not restore root."
-    }
+    Assert-Throws { Invoke-Collection -Modules @("does_not_exist") } "*does_not_exist*"
+    Assert-True ($script:last_location -eq $script:fixture) "Invalid directory did not restore root."
+    $results = @(Invoke-Collection -ErrorPolicy "Continue" -Modules @("does_not_exist", "gamma") 2>&1)
+    $calls = @($results | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] })
+    $path_errors = @($results | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] })
+    Assert-True ($path_errors.Count -eq 1 -and $path_errors[0].Exception.Message -like "*does_not_exist*") `
+        "Continue policy did not report the missing directory."
+    Assert-Sequence $calls.Kind (@("error", "setup", "copy", "deploy", "github", "link") + $script:managers) `
+        "Continue policy did not process the next module."
+    Assert-True ($script:last_location -eq $script:fixture) "Continue policy did not restore root."
     New-Item -ItemType Directory -Path (Join-Path $script:fixture "missing_setup") | Out-Null
     $calls = @(Invoke-Collection -Modules @("missing_setup"))
     Assert-Sequence $calls.Kind @("error") "Missing setup was not reported."

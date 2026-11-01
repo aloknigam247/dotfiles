@@ -542,11 +542,11 @@ foreach ($manager in $package_managers) {
 
 foreach ($pkg in $pkg_list) {
     try {
-        Set-Location -LiteralPath $pkg -ErrorAction Stop
+        Set-Location $pkg
         $cwd = Get-Location
         writeLog INFO "Package: $pkg"
 
-        if (Test-Path -LiteralPath "setup.ps1" -PathType Leaf) {
+        if (Test-Path setup.ps1) {
             $files = @{}
             $files_copy = @{}
             $files_deploy = @{}
