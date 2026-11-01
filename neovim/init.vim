@@ -107,7 +107,7 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 if exists("g:dot")
-    let &guifont = "JetBrainsMono Nerd Font:h14"
+    let &guifont = "JetBrainsMono Nerd Font:h20"
     let g:dot_rounded_highlights = ["Visual"]
 endif
 " }}}

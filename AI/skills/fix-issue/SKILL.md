@@ -56,24 +56,24 @@ it is still current. Do not treat a vague "I know what needs doing" as an accept
 
 An issue number (`123`, `#123`) or issue URL — **optional**.
 
-If the user did **not** name an issue, choose from the helper's eligible top-level issues.
+If the user did **not** name an issue, choose from the helper's eligible leaf issues.
 **Do not filter by assignee** — assigned and unassigned issues are both eligible.
 
 **⛔ MANDATORY dependency pre-scan — run before ranking or recommending anything.** The plain
-`gh issue list` does not establish parent and dependency eligibility. Run the helper before choosing candidates:
+`gh issue list` does not establish sub-issue and dependency eligibility. Run the helper before choosing candidates:
 
 ```ps1
 pwsh -NoProfile -ExecutionPolicy Bypass `
   -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\list_unblocked_issues.ps1"
 ```
 
-The script always returns only **open issues with no open parent and no open blockers**.
-Use native GitHub `parent_issue_url` and `blocked_by` relationships only; labels and body text are not dependency edges.
-Closed parents and closed blockers do not exclude an issue.
+The script always returns only **open issues with no open sub-issues and no open blockers**.
+Use native GitHub `sub_issues` and `blocked_by` relationships only; labels and body text do not determine eligibility.
+Having a parent is allowed. Closed sub-issues and closed blockers do not exclude an issue.
 
 If the helper is unavailable, reproduce its filter with paginated REST requests: list open repository issues, omit PRs,
-resolve each `parent_issue_url` and skip open parents, then fetch each remaining issue's
-`repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by` list and skip any with an open blocker.
+fetch each issue's `repos/{owner}/{repo}/issues/<n>/sub_issues` list and skip any with an open child.
+Then fetch each remaining issue's `repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by` list and skip open blockers.
 Use `X-GitHub-Api-Version: 2026-03-10`. A failed lookup is unknown eligibility, not an unblocked issue; stop and report it.
 
 Rank the returned candidates and present the top few (number, title, labels,
@@ -113,34 +113,16 @@ Read the `comments` too — decisions there often supersede the body.
 
 Then resolve sub-tasks, in this order:
 
-1. **Native sub-issues** (the `{owner}/{repo}` placeholders are substituted by `gh` from the current
-   repo; the API-version header is required for this endpoint):
-   ```pwsh
-   gh api -H "X-GitHub-Api-Version: 2026-03-10" `
-     "repos/{owner}/{repo}/issues/<n>/sub_issues" `
-     --jq '[.[] | select(.state=="open")] | sort_by(.number) | (.[0] // empty) | {number,title,state}'
-   ```
-   **Empty output means there are no open sub-issues** (either none exist or all are closed) — not an
-   error. A `404`/`410` means the repo or API version does not expose sub-issues — fall through to
-   task-list checkboxes rather than treating it as "no sub-tasks".
-2. **Task-list checkboxes** in the body (`- [ ]` / `- [x]`), if there are no native sub-issues.
-
-Selection rule:
-
-- No sub-tasks → the issue itself is the task.
-- Sub-tasks exist → pick **exactly one**:
-  - native sub-issues: the **open** one with the **lowest issue number** (the API returns them
-    unordered/paginated, so "first" must mean lowest number, not response order);
-  - task-list checkboxes: the **first unchecked `- [ ]`** in document order.
-
-  That single sub-task is the entire scope of this run. State clearly in chat which sub-task was
-  picked and that the rest are deferred to later runs. If the picked sub-task obviously depends on a
-  later one, say so and confirm the choice with `ask_user` rather than silently re-ordering.
-- All sub-tasks done → tell the user and stop. (To distinguish "no sub-tasks" from "all sub-tasks
-  closed", re-run the call without the `select(.state=="open")` filter and check the total count.)
-
-Record the **work issue number** (the sub-issue if one was picked, else the parent) — it is what the
-PR links to.
+**Native sub-issues** (the `{owner}/{repo}` placeholders are substituted by `gh` from the current
+repo; the API-version header is required for this endpoint):
+```pwsh
+gh api -H "X-GitHub-Api-Version: 2026-03-10" `
+  "repos/{owner}/{repo}/issues/<n>/sub_issues" `
+  --jq '[.[] | select(.state=="open")] | sort_by(.number) | (.[0] // empty) | {number,title,state}'
+```
+**Empty output means there are no open sub-issues** (either none exist or all are closed) — not an
+error. A `404`/`410` means the repo or API version does not expose sub-issues — fall through to
+task-list checkboxes rather than treating it as "no sub-tasks".
 
 **Check for an existing PR** before doing any work:
 
@@ -162,7 +144,6 @@ being gated on another open issue.
      "repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by" --jq '.[] | {number,state,url}'
    ```
    If the lookup fails or the relationship is unavailable, stop and report unknown eligibility.
-   An open parent is containment, not a blocker; the parent filter applies only to automatic candidate selection.
 2. Inspect each blocker's state. If **every** blocker is closed → note it and proceed.
    If **any** blocker is open → **stop and `ask_user`**: (a) pick a different issue, (b) override and
    proceed anyway with an explicit acknowledgement that the dependency is unmet, or (c) abandon.
