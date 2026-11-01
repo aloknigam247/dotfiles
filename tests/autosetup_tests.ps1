@@ -85,6 +85,7 @@ function Record-Call {
         Update = $Update
     })
     if ($Kind -eq $script:fail_dispatch) {
+        Set-Location -LiteralPath (Split-Path (Get-Location).Path)
         throw "fixture dispatch failure: $Kind"
     }
 }
@@ -250,8 +251,8 @@ Record-Call "setup" @{
             if (-not $update) {
                 $expected_kinds += "link"
             }
-            $expected_kinds += $script:managers
         }
+        $expected_kinds += $script:managers
         Assert-Sequence $calls.Kind $expected_kinds "Collection/dispatch phase or helper order changed."
         foreach ($call in $calls) {
             if ($call.Kind -ne "setup") {
@@ -260,9 +261,11 @@ Record-Call "setup" @{
             }
         }
         foreach ($manager in $script:managers) {
-            $packages = @($calls | Where-Object Kind -eq $manager | ForEach-Object { $_.Data })
             $expected = @("shared") + @($selected | Where-Object { $_ -ne "gamma" })
-            Assert-Sequence $packages $expected "$manager lost first-seen package identity/order."
+            $manager_calls = @($calls | Where-Object Kind -eq $manager)
+            Assert-True ($manager_calls.Count -eq 1) "$manager was not dispatched exactly once."
+            Assert-True ($manager_calls[0].Origin -eq $script:fixture) "$manager was not dispatched from root."
+            Assert-Sequence $manager_calls[0].Data $expected "$manager lost first-seen package identity/order."
         }
         foreach ($setup_call in $setups) {
             $expected_origin = Join-Path $script:fixture $setup_call.Data.Module
@@ -302,9 +305,9 @@ Record-Call "setup" @{
     $calls = @(Invoke-Collection -Interactive -Modules @("gamma", "beta"))
     Assert-Sequence ($calls | Where-Object Kind -eq "setup").Data.Module @("gamma", "beta") `
         "Interactive selection changed."
-    $empty_helpers = @($calls | Where-Object { $_.Origin -eq (Join-Path $script:fixture "gamma") })
+    $config_only_calls = @(Invoke-Collection -Modules @("gamma"))
     foreach ($manager in $script:managers) {
-        $empty_call = @($empty_helpers | Where-Object Kind -eq $manager)
+        $empty_call = @($config_only_calls | Where-Object Kind -eq $manager)
         Assert-True ($empty_call.Count -eq 1 -and $empty_call[0].Data.Count -eq 0) `
             "Config-only modules must retain the empty $manager helper call."
     }
@@ -313,10 +316,12 @@ Record-Call "setup" @{
     $empty_root = Join-Path $script:fixture "empty"
     New-Item -ItemType Directory -Path $empty_root | Out-Null
     Assert-True (@(Invoke-Collection -FixtureRoot $empty_root -Update).Count -eq 0) "Empty update dispatched work."
-    Write-Output "PASS: collection, first-seen dedupe, selection, helper order, maps, and setup context"
+    Write-Output "PASS: ordered collection, one call per manager, selection, config maps, and setup context"
 
-    $declared_packages = @("tool", "tool", ".\pkg", "Tool", "tool@1", "tool@2", "file:..\archive.tgz", "localpkg")
-    $expected_packages = @("tool", ".\pkg", "Tool", "tool@1", "tool@2", "file:..\archive.tgz", "localpkg")
+    $declared_packages = @(
+        "tool", "tool", ".\pkg", "Tool", "tool@1", "tool@2", "file:..\archive.tgz", "localpkg", "0", "1"
+    )
+    $expected_packages = @("tool", ".\pkg", "Tool", "tool@1", "tool@2", "file:..\archive.tgz", "localpkg", "0", "1")
     $identity_root = Join-Path $script:fixture "declared_names"
     $quoted_packages = ($declared_packages | ForEach-Object { "`"$_`"" }) -join ", "
     $identity_setup = ($script:managers | ForEach-Object { "`$${_}_pkgs = @($quoted_packages)" }) -join "`n"
@@ -328,11 +333,10 @@ Record-Call "setup" @{
         $calls = @(Invoke-Collection -FixtureRoot $identity_root -Modules @("alpha", "beta") -Update:$update)
         foreach ($manager in $script:managers) {
             $manager_calls = @($calls | Where-Object Kind -eq $manager)
-            Assert-Sequence $manager_calls.Origin @("$identity_root\alpha", "$identity_root\beta") `
-                "$manager dispatch lost module order."
+            Assert-True ($manager_calls.Count -eq 1) "$manager was called per module instead of once."
+            Assert-True ($manager_calls[0].Origin -eq $identity_root) "$manager was not dispatched from root."
             Assert-Sequence $manager_calls[0].Data $expected_packages `
                 "$manager did not preserve exact declared names and first-seen order."
-            Assert-Sequence $manager_calls[1].Data @() "$manager repeated identical names from another setup."
         }
     }
     Write-Output "PASS: exact declared names deduplicate per manager without case, version, or path interpretation"
@@ -350,6 +354,11 @@ Record-Call "setup" @{
     Assert-Throws { Invoke-Collection -Modules @("alpha", "throwing") } "*fixture setup failure*"
     Assert-Sequence $script:events.Kind @("setup") "Dispatch ran after collection failed."
     Assert-True ($script:last_location -eq $script:fixture) "Setup failure did not restore root."
+    Assert-Throws { Invoke-Collection -Modules @("alpha", "beta") -Failure "deploy" } `
+        "*fixture dispatch failure: deploy*"
+    Assert-Sequence $script:events.Kind @("setup", "setup", "copy", "deploy") `
+        "Package dispatch ran after module configuration failed."
+    Assert-True ($script:last_location -eq $script:fixture) "Config failure did not restore root."
     Assert-Throws { Invoke-Collection -Modules @("alpha") -Failure "npm" } "*fixture dispatch failure: npm*"
     Assert-Sequence $script:events.Kind @("setup", "copy", "deploy", "github", "link", "npm") `
         "Dispatch continued after an installer failure."

@@ -6,9 +6,9 @@ param(
      )
 
 # Variables
+$collected_packages = @{}
 $package_managers = @("npm", "pip", "pipx", "psgallery", "scoop", "winget")
 $SCOOP_DIR = "D:\Scoop"
-$seen_packages = @{}
 
 function DrawMenu {
     param ($menuItems, $menuPosition, $Multiselect, $selection)
@@ -536,7 +536,9 @@ $module_requirements = [System.Collections.Generic.List[hashtable]]::new()
 $root = Get-Location
 $seen_modules = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
 foreach ($manager in $package_managers) {
-    $seen_packages[$manager] = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+    $collected_packages[$manager] = [System.Collections.Specialized.OrderedDictionary]::new(
+        [System.StringComparer]::Ordinal
+    )
 }
 
 foreach ($pkg in $pkg_list) {
@@ -553,7 +555,6 @@ foreach ($pkg in $pkg_list) {
             $files_copy = @{}
             $files_deploy = @{}
             $github_pkgs = @()
-            $module_packages = @{}
             $npm_pkgs = @()
             $pip_pkgs = @()
             $pipx_pkgs = @()
@@ -565,13 +566,9 @@ foreach ($pkg in $pkg_list) {
 
             foreach ($manager in $package_managers) {
                 $packages = [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
-                $module_packages[$manager] = @(
-                    foreach ($package in $packages) {
-                        if ($seen_packages[$manager].Add($package)) {
-                            $package
-                        }
-                    }
-                )
+                foreach ($package in $packages) {
+                    $collected_packages[$manager][$package] = $null
+                }
             }
             $module_requirements.Add(@{
                 cwd = $cwd
@@ -579,7 +576,6 @@ foreach ($pkg in $pkg_list) {
                 files_copy = $files_copy
                 files_deploy = $files_deploy
                 github_pkgs = $github_pkgs
-                packages = $module_packages
             })
         } else {
             writeLog ERROR "No setup.ps1 found for $pkg"
@@ -607,9 +603,15 @@ foreach ($requirements in $module_requirements) {
             githubInstall $requirements.github_pkgs
             linkConfigs $requirements.files
         }
+    } finally {
+        Set-Location -LiteralPath $root.Path
+    }
+}
 
+if ($module_requirements.Count -gt 0) {
+    try {
         foreach ($manager in $package_managers) {
-            & "${manager}Install" -pkgs $requirements.packages[$manager] -update:$update
+            & "${manager}Install" -pkgs @($collected_packages[$manager].Keys) -update:$update
         }
     } finally {
         Set-Location -LiteralPath $root.Path
