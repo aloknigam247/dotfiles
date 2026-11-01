@@ -135,8 +135,9 @@ function Invoke-Collection {
         }
     }
     function githubInstall {
-        param([hashtable[]]$pkgs, [switch]$update, [string]$stateHome)
-        Record-Call "github" @{ Packages = @($pkgs); StateHome = $stateHome } $update.IsPresent
+        param([hashtable[]]$pkgs, [switch]$update)
+        Assert-True ($args.Count -eq 0) "GitHub dispatch passed unexpected arguments."
+        Record-Call "github" @{ Packages = @($pkgs); StateHome = $env:XDG_STATE_HOME } $update.IsPresent
     }
     function linkConfigs {
         param([hashtable]$files)
@@ -282,8 +283,8 @@ Record-Call "setup" @{
             } elseif ($call.Kind -eq "github") {
                 Assert-Sequence $call.Data.Packages.asset @("$module.exe", "$module.zip") "Release assets merged."
                 Assert-Sequence $call.Data.Packages.dir @("release", "other_release") "Release destinations changed."
-                Assert-True ($call.Data.StateHome -eq (Join-Path $script:fixture "state\$module")) `
-                    "GitHub inventory context drifted."
+                Assert-True ($call.Data.StateHome -eq $env:XDG_STATE_HOME) `
+                    "GitHub dispatch did not use the current environment."
             } else {
                 foreach ($destination in @($call.Data["config.txt"])) {
                     Assert-True ($destination.StartsWith((Join-Path $script:fixture "targets\$module\"))) `
@@ -448,6 +449,8 @@ Record-Call "setup" @{
 
     & {
         . $script:source_functions
+        Assert-Sequence @((Get-Command githubInstall).Parameters.Keys | Sort-Object) @("pkgs", "update") `
+            "GitHub installer parameters differ from the original contract."
         $script:release_calls = [System.Collections.Generic.List[string]]::new()
         $state_a = Join-Path $script:fixture "github_state_a"
         $state_b = Join-Path $script:fixture "github_state_b"
@@ -457,7 +460,7 @@ Record-Call "setup" @{
             New-Item -ItemType Directory -Path $directory -Force | Out-Null
         }
         Set-Content -LiteralPath "$state_a\autosetup\github-releases.json" -Value '{"fixture/release":"v1"}'
-        Set-Content -LiteralPath "$state_b\autosetup\github-releases.json" -Value '{"fixture/release":"v2"}'
+        Set-Content -LiteralPath "$state_b\autosetup\github-releases.json" -Value '{"fixture/release":"v1"}'
         function writeLog { param($type, $message) }
         function gh {
             $global:LASTEXITCODE = 0
@@ -478,17 +481,17 @@ Record-Call "setup" @{
             }
         }
         $package = @{ asset = "tool.exe"; dir = (Join-Path $script:fixture "release_a"); repo = "fixture/release" }
-        githubInstall -pkgs @($package) -update -stateHome $state_a | Out-Null
-        Assert-True (Test-Path -LiteralPath "$($package.dir)\tool.exe") "Captured inventory did not permit update."
-        Assert-True ((Get-Content "$state_a\autosetup\github-releases.json" -Raw | ConvertFrom-Json).`
-            "fixture/release" -eq "v2") "Captured inventory was not updated."
-        Assert-True ((Get-Content "$state_b\autosetup\github-releases.json" -Raw).Trim() -ceq
-            '{"fixture/release":"v2"}') "Dispatch wrote to the final environment's inventory instead."
-        Assert-True ($env:XDG_STATE_HOME -eq $state_b) "GitHub dispatch mutated the final environment."
+        githubInstall -pkgs @($package) -update | Out-Null
+        Assert-True (Test-Path -LiteralPath "$($package.dir)\tool.exe") "Current inventory did not permit update."
+        Assert-True ((Get-Content "$state_b\autosetup\github-releases.json" -Raw | ConvertFrom-Json).`
+            "fixture/release" -eq "v2") "Current inventory was not updated."
+        Assert-True ((Get-Content "$state_a\autosetup\github-releases.json" -Raw).Trim() -ceq
+            '{"fixture/release":"v1"}') "Dispatch changed an inventory outside the current environment."
+        Assert-True ($env:XDG_STATE_HOME -eq $state_b) "GitHub dispatch mutated the current environment."
         $before_calls = $script:release_calls.Count
         githubInstall -pkgs @(@{
             asset = "absent.exe"; dir = (Join-Path $script:fixture "absent_release"); repo = "fixture/absent"
-        }) -update -stateHome $state_a | Out-Null
+        }) -update | Out-Null
         Assert-True ($script:release_calls.Count -eq $before_calls) "Update discovered/installed an absent release."
         Assert-True (-not (Test-Path -LiteralPath (Join-Path $script:fixture "absent_release"))) `
             "Update created an absent release destination."
@@ -504,7 +507,7 @@ Record-Call "setup" @{
             $before_downloads "An up-to-date release was downloaded again."
         Assert-True (@(Get-ChildItem -LiteralPath $env:TEMP).Count -eq 0) "Release scratch directories leaked."
     }
-    Write-Output ("PASS: real GitHub helper preserves captured/default inventory, assets, " +
+    Write-Output ("PASS: original GitHub helper uses current inventory and preserves assets, " +
         "update eligibility, and reruns")
 
     $script:font_copies = [System.Collections.Generic.List[string]]::new()

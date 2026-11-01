@@ -298,14 +298,13 @@ function wingetInstall {
 function githubInstall {
     param(
         [hashtable[]]$pkgs,
-        [switch]$update,
-        [string]$stateHome = $env:XDG_STATE_HOME
+        [switch]$update
     )
     if ($pkgs.Length -eq 0) {
         return
     }
 
-    $versionFile = "$stateHome\autosetup\github-releases.json"
+    $versionFile = "$env:XDG_STATE_HOME\autosetup\github-releases.json"
     if (Test-Path $versionFile) {
         $versions = Get-Content $versionFile -Raw | ConvertFrom-Json -AsHashtable
     } else {
@@ -579,7 +578,6 @@ foreach ($pkg in $pkg_list) {
                 files_copy = $files_copy
                 files_deploy = $files_deploy
                 github_pkgs = $github_pkgs
-                github_state_home = $env:XDG_STATE_HOME
                 packages = $module_packages
             })
         } else {
@@ -599,13 +597,13 @@ foreach ($requirements in $module_requirements) {
 
             copyOrUpdateConfigs -update $requirements.files_copy
             deployConfigs $requirements.files_deploy
-            githubInstall -update $requirements.github_pkgs -stateHome $requirements.github_state_home
+            githubInstall -update $requirements.github_pkgs
         } else {
             writeLog INFO "Installing Configs"
 
             copyOrUpdateConfigs $requirements.files_copy
             deployConfigs $requirements.files_deploy
-            githubInstall $requirements.github_pkgs -stateHome $requirements.github_state_home
+            githubInstall $requirements.github_pkgs
             linkConfigs $requirements.files
         }
 
