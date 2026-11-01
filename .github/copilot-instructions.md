@@ -37,7 +37,6 @@ glow themes).
 1. Create a `<name>Install` function with params `[string[]]$pkgs` and `[switch]$update` — follow the existing pattern (check installed, install or update)
 2. Add `$<name>_pkgs = @()` to the per-module declaration reset block
 3. Add `"<name>"` to `$package_managers` in alphabetical order; collection and dispatch use this list
-4. Extend `packageRequestKey` for the manager's name/path semantics; ambiguous specifications must retain their origin
 
 Validate with `pwsh -NoProfile -File tests\autosetup_tests.ps1`.
 

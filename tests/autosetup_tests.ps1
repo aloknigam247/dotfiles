@@ -314,63 +314,27 @@ Record-Call "setup" @{
     Assert-True (@(Invoke-Collection -FixtureRoot $empty_root -Update).Count -eq 0) "Empty update dispatched work."
     Write-Output "PASS: collection, first-seen dedupe, selection, helper order, maps, and setup context"
 
-    & {
-        . $script:source_functions
-        $origins = @((Join-Path $script:fixture "alpha"), (Join-Path $script:fixture "beta"))
-        $global_cases = @(
-            @("npm", "@scope/tool"), @("npm", "@scope/tool@1.2.3"), @("npm", "tool@next"),
-            @("pip", "tool[extra]==1.2.3,!=1.2.4"), @("pipx", "tool>=1.0,<2.0"),
-            @("psgallery", "Tool"), @("scoop", "extras/tool"), @("winget", "Vendor.Tool")
-        )
-        foreach ($manager in $script:managers) {
-            $global_cases += ,@($manager, "git+ssh://example.invalid/tool.git")
-            $global_cases += ,@($manager, "https://example.invalid/tool.zip")
-            $global_cases += ,@($manager, (Join-Path $script:fixture "absolute.whl"))
-            $global_cases += ,@($manager, "\\example.invalid\share\tool.whl")
-        }
-        foreach ($case in $global_cases) {
-            $first = packageRequestKey -manager $case[0] -origin $origins[0] -pkg $case[1]
-            $second = packageRequestKey -manager $case[0] -origin $origins[1] -pkg $case[1]
-            Assert-True ($first -ceq $second) "Global identity became origin-bound: $($case -join ' ')."
-        }
-        foreach ($origin in $origins) {
-            New-Item -ItemType Directory -Path (Join-Path $origin "localpkg") | Out-Null
-        }
-        foreach ($manager in @("npm", "pip", "pipx", "scoop")) {
-            foreach ($package in @(
-                ".\pkg", "..\pkg", "file:..\pkg", "link:.\pkg", "localpkg", "pkg.json", "pkg.tgz", "pkg.whl",
-                "tool @ file:..\pkg.whl", "unclassified:input"
-            )) {
-                $first = packageRequestKey -manager $manager -origin $origins[0] -pkg $package
-                $repeat = packageRequestKey -manager $manager -origin $origins[0] -pkg $package
-                $second = packageRequestKey -manager $manager -origin $origins[1] -pkg $package
-                Assert-True ($first -ceq $repeat -and $first -cne $second) "Local identity lost origin: $package."
-            }
-        }
-        $key = packageRequestKey "npm" $origins[0] "tool"
-        Assert-True ($key -cne (packageRequestKey "npm" $origins[0] "Tool")) "Identity folded case."
-        Assert-True ((packageRequestKey "npm" $origins[0] "tool@1") -cne
-            (packageRequestKey "npm" $origins[0] "tool@2")) "Identity merged versions."
-        Assert-True ((packageRequestKey "unclassified" $origins[0] "tool") -cne
-            (packageRequestKey "unclassified" $origins[1] "tool")) "Unclassified managers lost their origin."
-    }
-    $local_root = Join-Path $script:fixture "local_requests"
+    $declared_packages = @("tool", "tool", ".\pkg", "Tool", "tool@1", "tool@2", "file:..\archive.tgz", "localpkg")
+    $expected_packages = @("tool", ".\pkg", "Tool", "tool@1", "tool@2", "file:..\archive.tgz", "localpkg")
+    $identity_root = Join-Path $script:fixture "declared_names"
+    $quoted_packages = ($declared_packages | ForEach-Object { "`"$_`"" }) -join ", "
+    $identity_setup = ($script:managers | ForEach-Object { "`$${_}_pkgs = @($quoted_packages)" }) -join "`n"
     foreach ($name in @("alpha", "beta")) {
-        New-SetupModule -Name $name -FixtureRoot $local_root -Setup @'
-$npm_pkgs = @(".\pkg", ".\pkg", "file:..\archive.tgz", "@scope/tool@1", "@scope/tool@1", "Tool", "tool")
-$pip_pkgs = @("tool[extra]==1", "tool[extra]==1", "tool[extra]==2")
-'@ | Out-Null
+        $directory = New-SetupModule -Name $name -FixtureRoot $identity_root -Setup $identity_setup
+        New-Item -ItemType Directory -Path (Join-Path $directory "localpkg") | Out-Null
     }
-    $calls = @(Invoke-Collection -FixtureRoot $local_root -Modules @("alpha", "beta"))
-    $npm_calls = @($calls | Where-Object Kind -eq "npm")
-    Assert-Sequence $npm_calls[0].Data @(".\pkg", "file:..\archive.tgz", "@scope/tool@1", "Tool", "tool") `
-        "First origin lost local or distinct named requests."
-    Assert-Sequence $npm_calls[1].Data @(".\pkg", "file:..\archive.tgz") "Second local origin was deduplicated."
-    Assert-Sequence $npm_calls.Origin @((Join-Path $local_root "alpha"), (Join-Path $local_root "beta")) `
-        "Local requests dispatched outside their origins."
-    Assert-Sequence ($calls | Where-Object Kind -eq "pip" | ForEach-Object { $_.Data }) `
-        @("tool[extra]==1", "tool[extra]==2") "Versioned registry requests did not deduplicate."
-    Write-Output "PASS: literal, versioned, scoped, absolute, relative, and ambiguous package identities"
+    foreach ($update in @($false, $true)) {
+        $calls = @(Invoke-Collection -FixtureRoot $identity_root -Modules @("alpha", "beta") -Update:$update)
+        foreach ($manager in $script:managers) {
+            $manager_calls = @($calls | Where-Object Kind -eq $manager)
+            Assert-Sequence $manager_calls.Origin @("$identity_root\alpha", "$identity_root\beta") `
+                "$manager dispatch lost module order."
+            Assert-Sequence $manager_calls[0].Data $expected_packages `
+                "$manager did not preserve exact declared names and first-seen order."
+            Assert-Sequence $manager_calls[1].Data @() "$manager repeated identical names from another setup."
+        }
+    }
+    Write-Output "PASS: exact declared names deduplicate per manager without case, version, or path interpretation"
 
     foreach ($policy in @("Continue", "Stop")) {
         Assert-Throws { Invoke-Collection -ErrorPolicy $policy -Modules @("does_not_exist") } "*does_not_exist*"

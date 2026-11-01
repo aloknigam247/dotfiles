@@ -519,36 +519,6 @@ function writeLog {
     Write-Host -ForegroundColor $color " $message"
 }
 
-function packageRequestKey {
-    param(
-        [string]$manager,
-        [string]$origin,
-        [string]$pkg
-    )
-
-    $constraint = "(?:===|[<>=!~]=|[<>])\s*[a-z0-9.*+!_-]+"
-    if ($manager -in @("psgallery", "winget") -or
-        $pkg -match "^(?:git\+)?(?:https?|ssh|git)://" -or
-        [System.IO.Path]::IsPathFullyQualified($pkg)) {
-        return "global`0$pkg"
-    }
-
-    $pattern = switch ($manager) {
-        "npm" { "^(?:@[a-z0-9._-]+/)?[a-z0-9._-]+(?:@[^:/\\]+)?$" }
-        { $_ -in @("pip", "pipx") } {
-            "^[a-z0-9][a-z0-9._-]*(?:\[[a-z0-9._,-]+\])?(?:\s*$constraint(?:\s*,\s*$constraint)*)?$"
-        }
-        "scoop" { "^[a-z0-9][a-z0-9._-]*(?:/[a-z0-9][a-z0-9._-]*)?$" }
-        default { $null }
-    }
-
-    if ($pattern -and $pkg -match $pattern -and $pkg -notmatch "\.(?:exe|gz|json|tar|tgz|whl|zip)$" -and
-        -not (Test-Path -LiteralPath (Join-Path $origin $pkg))) {
-        return "global`0$pkg"
-    }
-    return "origin`0$origin`0$pkg"
-}
-
 # ╾─────────────────────────────────────────╼ main execution ╾─────────────────────────────────────────╼
 $all_pkgs = Get-ChildItem -Recurse -Filter "setup.ps1" -Depth 1 | ForEach-Object { $_.Directory.BaseName }
 
@@ -598,8 +568,7 @@ foreach ($pkg in $pkg_list) {
                 $module_packages[$manager] = @(foreach (
                     $package in [string[]](Get-Variable -Name "${manager}_pkgs" -ValueOnly)
                 ) {
-                    $key = packageRequestKey -manager $manager -origin $cwd.Path -pkg $package
-                    if ($seen_packages[$manager].Add($key)) {
+                    if ($seen_packages[$manager].Add($package)) {
                         $package
                     }
                 })
