@@ -534,7 +534,6 @@ if ($update) {
 
 $module_requirements = [System.Collections.Generic.List[hashtable]]::new()
 $root = Get-Location
-$seen_modules = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
 foreach ($manager in $package_managers) {
     $collected_packages[$manager] = [System.Collections.Specialized.OrderedDictionary]::new(
         [System.StringComparer]::Ordinal
@@ -545,9 +544,6 @@ foreach ($pkg in $pkg_list) {
     try {
         Set-Location -LiteralPath $pkg -ErrorAction Stop
         $cwd = Get-Location
-        if (-not $seen_modules.Add($cwd.Path)) {
-            continue
-        }
         writeLog INFO "Package: $pkg"
 
         if (Test-Path -LiteralPath "setup.ps1" -PathType Leaf) {

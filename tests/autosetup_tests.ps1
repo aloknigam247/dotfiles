@@ -240,8 +240,12 @@ Record-Call "setup" @{
 
     foreach ($update in @($false, $true)) {
         $calls = @(Invoke-Collection -Modules @("beta", "alpha", "BETA", ".\alpha") -Update:$update)
-        $expected_previous = if ($update) { @("seed", "alpha", "beta") } else { @("seed", "beta") }
-        $selected = if ($update) { @("alpha", "beta", "gamma") } else { @("beta", "alpha") }
+        $expected_previous = if ($update) {
+            @("seed", "alpha", "beta")
+        } else {
+            @("seed", "beta", "alpha", "beta")
+        }
+        $selected = if ($update) { @("alpha", "beta", "gamma") } else { @("beta", "alpha", "beta", "alpha") }
         $setups = @($calls | Where-Object Kind -eq "setup")
         Assert-Sequence $setups.Data.Module $selected "Setup selection/order/count changed."
         Assert-Sequence $setups.Data.Previous $expected_previous "Setup side effects did not reach the next module."
@@ -261,7 +265,7 @@ Record-Call "setup" @{
             }
         }
         foreach ($manager in $script:managers) {
-            $expected = @("shared") + @($selected | Where-Object { $_ -ne "gamma" })
+            $expected = if ($update) { @("shared", "alpha", "beta") } else { @("shared", "beta", "alpha") }
             $manager_calls = @($calls | Where-Object Kind -eq $manager)
             Assert-True ($manager_calls.Count -eq 1) "$manager was not dispatched exactly once."
             Assert-True ($manager_calls[0].Origin -eq $script:fixture) "$manager was not dispatched from root."
@@ -279,7 +283,7 @@ Record-Call "setup" @{
             }
         }
         foreach ($call in @($calls | Where-Object { $_.Kind -in @("copy", "deploy", "link", "github") })) {
-            $module = Split-Path $call.Origin -Leaf
+            $module = (Split-Path $call.Origin -Leaf).ToLowerInvariant()
             if ($module -eq "gamma") {
                 $data = if ($call.Kind -eq "github") { $call.Data.Packages } else { $call.Data }
                 Assert-True ($data.Count -eq 0) "Omitted declarations leaked into gamma."
@@ -290,8 +294,9 @@ Record-Call "setup" @{
                     "GitHub dispatch did not use the current environment."
             } else {
                 foreach ($destination in @($call.Data["config.txt"])) {
-                    Assert-True ($destination.StartsWith((Join-Path $script:fixture "targets\$module\"))) `
-                        "Same-named config sources lost their destination."
+                    Assert-True ($destination.StartsWith(
+                        (Join-Path $script:fixture "targets\$module\"), [System.StringComparison]::OrdinalIgnoreCase
+                    )) "Same-named config sources lost their destination."
                 }
             }
         }
