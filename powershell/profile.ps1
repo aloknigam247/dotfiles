@@ -405,7 +405,6 @@ function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --w
 function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -LS --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
 function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
-function mdview { D:\mdview\target\release\mdview.exe $args }
 
 function ai {
     try {
@@ -495,9 +494,9 @@ function e {
     $arg_str = $quoted_args -join " "
     if (Test-Path "D:\dot\desktop\build\release\RelWithDebInfo\dot.exe") {
         if ($args.Count -eq 0) {
-            D:\dot\desktop\build\release\RelWithDebInfo\dot.exe
+            dot.exe
         } else {
-            D:\dot\desktop\build\release\RelWithDebInfo\dot.exe $arg_str
+            dot.exe $arg_str
         }
     } else {
         wt -f -d $PWD.Path --colorScheme $current_theme cmd /C "nvim $arg_str"
@@ -1439,5 +1438,5 @@ $env:COPILOT_OTEL_ENABLED = "false"
 # ─[ Agency Settings ]─────────────────────────────────────────────────
 $env:AGENCY_NO_UPDATE_CHECK  = $true
 
-# ─[ User bin on PATH ]────────────────────────────────────────────────
-$env:PATH = "$env:PATH;$HOME\bin"
+# ─[ PATH changes ]────────────────────────────────────────────────────
+$env:PATH = "$env:PATH;$HOME\bin;D:\mdview\target\release;D:\dot\desktop\build\release\RelWithDebInfo\"
