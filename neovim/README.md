@@ -22,6 +22,10 @@ Open Neovim with this config:
 NVIM_APPNAME=aloknigam247/dotfiles/neovim nvim
 ```
 
+## GUI settings
+
+See the GUI section in [init.vim](init.vim) for Dot cursor settings and Ctrl+mouse-wheel font-size mappings.
+
 ## Markdown preview
 
 Requires the local mdview release configured in [init.lua](init.lua). Save the current file, then run `:Mdview`.

@@ -107,8 +107,25 @@ set smartcase  " Switch search to case-sensitive when query contains an uppercas
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━❰       GUI        ❱━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 " {{{
 if exists("g:dot")
-    let &guifont = "JetBrainsMono Nerd Font:h14"
+    set guicursor=c-n-sm:block,ci-i:ver25,cr-o-r-v-ve:hor15,a:blinkoff400-blinkon250-blinkwait700
+
+    let g:dot_font_size = 14
     let g:dot_rounded_highlights = ["Visual"]
+    let s:font_name = "JetBrainsMono Nerd Font"
+
+    function! s:SetFontSize(size) abort
+        let g:dot_font_size = max([1, a:size])
+        let &guifont = s:font_name . ":h" . g:dot_font_size
+    endfunction
+
+    call s:SetFontSize(g:dot_font_size)
+
+    noremap <C-ScrollWheelDown> <Cmd>call <SID>SetFontSize(g:dot_font_size - 1)<CR>
+    noremap <C-ScrollWheelUp> <Cmd>call <SID>SetFontSize(g:dot_font_size + 1)<CR>
+    noremap! <C-ScrollWheelDown> <Cmd>call <SID>SetFontSize(g:dot_font_size - 1)<CR>
+    noremap! <C-ScrollWheelUp> <Cmd>call <SID>SetFontSize(g:dot_font_size + 1)<CR>
+    tnoremap <C-ScrollWheelDown> <Cmd>call <SID>SetFontSize(g:dot_font_size - 1)<CR>
+    tnoremap <C-ScrollWheelUp> <Cmd>call <SID>SetFontSize(g:dot_font_size + 1)<CR>
 endif
 " }}}
 
@@ -121,8 +138,6 @@ autocmd FilterWritePre * if &diff | setlocal wrap< | endif
 autocmd VimLeave * let &t_me="\e[0 q" " resets cursor
 
 
-" Make cursor _ for visual modes
-set guicursor=n-c-sm:block,i-ci-ve:ver25,r-cr-o-v:hor20
 " Temporary solution to neovim cursor not reset
 augroup RestoreCursorShapeOnExit
     autocmd!

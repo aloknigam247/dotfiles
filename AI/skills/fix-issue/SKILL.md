@@ -26,9 +26,10 @@ before any code is written, and the user accepts the fix before any PR is raised
 - **Blockers in validation go to a human.** If you cannot validate the fix works — a missing runtime,
   an environment you can't exercise, a gate you can't run — stop and **inform a human via `ask_user`**
   rather than assuming success or handing off unverified work.
-- **Verify before you ask.** Every acceptance criterion is checked against a real run *before* the
-  user is asked to accept, and the user is handed concrete steps (with the exact artifact path) to
-  confirm it themselves. Never ask someone to accept a change you have not exercised end to end.
+- **Verify before you ask.** Every expected result in the plan's test plan is checked against a real
+  run *before* the user is asked to accept, and the user is handed concrete steps (with the exact
+  artifact path) to confirm it themselves. Never ask someone to accept a change you have not
+  exercised end to end.
 - **No PR without acceptance.** The user must accept the implemented fix before `gh pr create`.
 - **Green before handoff.** PR checks must be green (or the remaining failures proven pre-existing
   and unrelated) before asking the user to review.
@@ -171,13 +172,13 @@ and if you must, announce it to the user first per the hard gate above.
    **consult a human via `ask_user`** whether to (a) gather more info, (b) proceed on code inspection
    alone, or (c) abandon. Never silently plan or write a fix for an unreproduced bug.
 
-Keep the failing test — it is the first acceptance criterion of the fix.
+Keep the failing test — reproducing before the change and passing after it is the first required
+test result.
 
 For non-bug issues (feature/refactor/docs/chore), skip the repro but still capture a **baseline**:
 note the current observable behavior and decide up front **how the finished feature will be
-validated** (a new test, a command whose output changes, a runnable artifact). That validation plan
-becomes the feature's acceptance criteria in steps 4 and 6 — a feature is not done without proof it
-works, exactly like a bug.
+validated** (a new test, a command whose output changes, a runnable artifact). Put that proof in the
+plan's test plan. A feature is not done without proof it works, exactly like a bug.
 
 ### 3. Research and draft the plan
 
@@ -199,50 +200,107 @@ prompt from scratch. Include:
 
 The subagent must return:
 
-- `rootCause` — for bugs, the confirmed cause with `file:line` refs (traced, not guessed); else `n/a`.
-- `affected` — `{file, symbol, why}` entries for everything that changes or is added.
-- `snippets` — short verbatim current code with `file:line` captions.
-- `steps` — ordered implementation steps, each small enough to verify independently.
-- `tests` — which test tier/target maps to the change, existing tests that will break, new test names
-  + the exact assertion each makes, and the exact command to run them.
-- `risks` — invariants that must not break, and what is explicitly out of scope.
-- `perfCost` — the runtime/memory cost the change adds, itemised: what extra work runs, how often
-  (per frame / per request / per item), whether it allocates, whether any asymptotic changes, and
-  whether there is a configuration in which the cost is zero. Never answer "negligible" without
-  numbers or a stated measurement plan.
+- `issueType` — one of `feat`, `bug`, `docs`, `refactor`, `test`, `chore`, `perf`, `build`, or `ci`.
+- `rootCause` — bugs only: the confirmed cause with `file:line` refs, traced rather than guessed.
+- `approach` — the smallest complete design and every diagram type needed to explain both structure
+  and runtime interaction without duplicating information.
+- `affected` — `{file, symbol, members, change}` entries for everything that changes or is added.
+  `members` lists proposed public properties, methods, signals, fields, or schema keys when the
+  change creates or modifies a design surface.
+- `tests` — `{check, commandOrEvidence, expectedResult}` entries, including the exact hard assertion
+  for new tests and any real-artifact, visual, or performance gate that applies.
+- `perfCost` — concise facts: added work, frequency, allocation/complexity change, and measurement
+  plan when performance can change. Never answer "negligible" without evidence.
+- `outOfScope` — only boundaries that are likely to be mistaken as part of this issue; otherwise omit.
 - `openQuestions` — resolve these with the user via `ask_user` before drafting.
 
 ### 4. Present the plan and get acceptance
 
 1. Write the plan to a git-ignored scratch path (prefer `tmp/fix-issue-<n>-plan.md`; if `tmp/` is not
-   ignored, use the session `files/` folder) with sections: **Task**, **Reproduction**, **Root
-   cause**, **Approach**, **Step-by-step changes**, **Performance cost**, **Alternatives
-   considered**, **Tests**, **Risks / out of scope**, **Acceptance criteria**.
+   ignored, use the session `files/` folder) using this shape:
 
-   **Performance cost is mandatory in every plan**, even when the answer is "none". State what extra
-   work the change adds, at what frequency (per frame, per request, per item), whether it allocates,
-   whether any complexity class changes, what data structures grow and by how many bytes, and whether
-   there is a configuration in which the cost is zero. If the repo has a profiling hook or benchmark,
-   name it and commit to reporting before/after numbers in step 6 — do not let "negligible" stand as
-   an unmeasured claim.
+   ```markdown
+   ---
+   repo: owner/name
+   issue: "Issue title #123"
+   type: feat
+   ---
 
-   **Alternatives considered** must name each rejected approach and why, including any the user
-   raises. If an alternative was rejected because it could not be verified, say so explicitly rather
-   than implying it was ruled out on merit.
+   # Plain title describing the change
+
+   ## Overview
+
+   One to three short sentences in simple words.
+
+   ## Approach
+
+   A concise explanation and the useful Mermaid diagrams.
+
+   ## Detailed changes
+
+   A `File | Design surface | Change` table for multi-file work, or short paragraphs for one or two
+   files.
+
+   ## Performance
+
+   Two to five concise bullets.
+
+   ## Test plan
+
+   A `Check | Command or evidence | Expected result` table.
+   ```
+
+   Frontmatter rules:
+
+   - `repo` is the canonical `owner/name`.
+   - `issue` is the exact issue title followed by `#<work-issue-number>`, quoted as one YAML string.
+   - `type` is one of `feat`, `bug`, `docs`, `refactor`, `test`, `chore`, `perf`, `build`, or `ci`.
+   - Bug plans also include `reproduction: success` or `reproduction: failed`. No other plan includes
+     that field.
+
+   Section rules:
+
+   - Add **Root cause** after **Overview** only for bugs. Omit it for every other type.
+   - **Approach** explains the design in plain language. Use the `diagram` skill when available to
+     select the provider. Include each diagram needed to explain a distinct design concern without
+     repeating the same information:
+     - a class diagram is mandatory when classes, interfaces, public APIs, or ownership change;
+     - a sequence or flowchart is required when event, request, lifecycle, or data flow changes;
+     - a state diagram is required when behavior depends on meaningful state transitions;
+     - an architecture diagram is required when component boundaries or deployment relationships
+       change.
+     Use Mermaid for class, sequence, flowchart, state, and software-architecture diagrams. Omit
+     diagrams only when the change has no structural or runtime design worth showing.
+   - A class diagram shows ownership and dependencies plus the proposed public properties, methods,
+     signals, and key private state. Include design-relevant members, not every implementation helper.
+   - **Detailed changes** says what changes in each file without embedding large code snippets. Name
+     each added or changed class/interface and its proposed members, properties, signals, schema
+     fields, or configuration keys so the design surface is reviewable before implementation.
+   - **Performance** is mandatory but concise. State added runtime work, frequency, allocation or
+     complexity changes, and the measurement only when relevant. Do not invent exact costs.
+   - **Test plan** is the proof-of-done checklist. Each row states the check, exact command or
+     evidence, and observable expected result. Include regression, real-artifact, visual, and
+     performance rows only when they apply.
+   - Add **Out of scope** only when a likely boundary needs to be explicit.
+   - Do not add **Alternatives considered** or a separate **Acceptance criteria** section.
 2. **Rubber-duck non-trivial plans.** If the plan touches more than two files, changes a hot/shared
    path, or has invariant/performance implications, launch the `rubber-duck` agent over the plan file
-   (give it the research findings too). Ask it to catch: unverified root cause, `file:line` refs that
-   don't match reality, invariant violations, acceptance criteria that aren't concretely verifiable,
-   and tests that use soft assertions or don't pin *this specific* fix. Act on substantive findings
-   and revise; ignore style nits. For a genuinely small, contained fix, skip this and say you skipped
-   it.
+   (give it the research findings too). Ask it to catch: incorrect frontmatter, a root-cause section
+   on a non-bug, an unverified bug root cause, missing diagrams for structural/runtime changes,
+   Mermaid syntax errors, diagrams that misrepresent ownership, members, state, or flow, design
+   surfaces absent from **Detailed changes**, `file:line` refs that do not match reality, invariant
+   violations, vague test-plan expected results, and tests that use soft assertions or do not pin
+   *this specific* change. Act on substantive findings and revise; ignore style nits. For a
+   genuinely small, contained fix, skip this and say you skipped it.
 3. Summarize the plan in chat (concise — the file has the detail).
 4. **⛔ HARD RULE — ALWAYS open the plan in mdview before asking for acceptance. No exceptions.**
    The `ask_user` accept/edit/reject gate in step 5 chat summary alone is never sufficient. Render the plan
    file with the release binary:
    ```pwsh
-   & D:\mdview\target\release\mdview.exe <plan-file>
+   & mdview <plan-file>
    ```
+   Inspect every diagram in the rendered document. A Mermaid parse/syntax error is a blocking plan
+   defect: fix it, reopen the plan, and confirm the diagram renders before asking for acceptance.
 5. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
    confirmation, re-read it, and re-present. On "reject", delete the plan file and stop.
 
@@ -316,9 +374,8 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
 
 ### 6. Verify the fix, and tell the user how to verify it
 
-The plan's acceptance criteria are the checklist. Work through **every one** and show real evidence
-before the user is asked to accept anything. **No proof, not done** — this holds for features as much
-as bugs.
+The plan's test plan is the checklist. Work through **every row** and show real evidence before the
+user is asked to accept anything. **No proof, not done** — this holds for features as much as bugs.
 
 1. **Prove the fix.** For a **bug**, re-run the reproduction from step 2: the exact command/test that
    failed before the fix must now pass — paste both the "before" failure and the "after" pass so the
@@ -329,9 +386,9 @@ as bugs.
    you can't exercise, a nondeterministic result you can't pin — **stop and inform a human via
    `ask_user`** with exactly what blocked you and the options (e.g. supply the environment, accept
    reduced evidence, or abandon). Do not hand off or ask for acceptance on an unvalidated fix.
-3. **Walk the acceptance criteria explicitly.** For each one, state how it was checked and the
-   result. If a criterion cannot be checked automatically, say so and cover it in the manual steps
-   below — never silently mark it done.
+3. **Walk the test plan explicitly.** For each row, state how it was checked and the result. If a
+   result cannot be checked automatically, say so and cover it in the manual steps below — never
+   silently mark it done.
 4. **Check for regressions.** Run the targeted suite; if the change touches shared/hot code, run the
    full suite. Confirm no previously passing test now fails.
 5. **Re-run new or timing-sensitive tests several times** (5–10×) before trusting them. A test that
@@ -346,7 +403,7 @@ as bugs.
    commit time; if the binary is older, delete it and rebuild. Incremental linkers routinely skip
    relinking an executable when only a library changed. When in a worktree, confirm you are running
    **that worktree's** artifact, not the main checkout's.
-9. **Report the measured performance cost** promised by the plan's **Performance cost** section. If
+9. **Report the measured performance cost** promised by the plan's **Performance** section. If
    the plan named a profiling hook or benchmark, run it before and after and paste both numbers. If
    the plan claimed zero cost in some configuration, demonstrate that configuration is unaffected.
    Never close out with an unmeasured "negligible".

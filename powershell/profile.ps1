@@ -807,13 +807,13 @@ function Update-CopilotModelCompletion {
     $assignments = @($ast.EndBlock.Statements | Where-Object {
         $_ -is [System.Management.Automation.Language.AssignmentStatementAst] -and
             $_.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
-            $_.Left.VariablePath.UserPath -eq "script:copilotModels"
+            $_.Left.VariablePath.UserPath -eq "script:copilot_models"
     })
     if ($assignments.Count -ne 1 -or $assignments[0].Operator -ne "Equals" -or
         $assignments[0].Right -isnot [System.Management.Automation.Language.CommandExpressionAst] -or
         $assignments[0].Right.Redirections.Count -or
         $assignments[0].Right.Expression -isnot [System.Management.Automation.Language.ArrayExpressionAst]) {
-        throw "Expected one top-level static `$script:copilotModels array assignment."
+        throw "Expected one top-level static `$script:copilot_models array assignment."
     }
     $values = $assignments[0].Right.Expression.SafeGetValue()
     if ($values -isnot [array] -or $values.Where({ $_ -isnot [string] }).Count) {
@@ -821,7 +821,7 @@ function Update-CopilotModelCompletion {
     }
     $extent = $assignments[0].Extent
     $serialized = ($models | ForEach-Object { "'$($_.Replace("'", "''"))'" }) -join ", "
-    $replacement = "`$script:copilotModels = @($serialized)"
+    $replacement = "`$script:copilot_models = @($serialized)"
     $updatedSource = $source.Substring(0, $extent.StartOffset) + $replacement + $source.Substring($extent.EndOffset)
     [System.Management.Automation.Language.Parser]::ParseInput($updatedSource, [ref]$tokens, [ref]$errors) | Out-Null
     if ($errors.Count) {
@@ -843,12 +843,12 @@ function Update-CopilotModelCompletion {
             }
             $changed = $true
         }
-        $script:copilotModels = $models
+        $script:copilot_models = $models
     }
     [pscustomobject]@{ Changed = $changed; ModelCount = $models.Count; SourcePath = $sourcePath }
 }
 
-$script:copilotModels = @('auto', 'claude-fable-5', 'claude-fable-5.1', 'claude-haiku-4.5', 'claude-haiku-5.5', 'claude-opus-4.8', 'claude-opus-4.8-fast', 'claude-opus-5', 'claude-opus-5.5', 'claude-sonnet-4.6', 'claude-sonnet-5', 'claude-sonnet-5.5', 'gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-4-argon', 'gpt-5-mini', 'gpt-5.3-codex', 'gpt-5.4', 'gpt-5.4-mini', 'gpt-5.5', 'gpt-5.6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-6-astra', 'gpt-6-luna', 'gpt-6-sol', 'gpt-6.1-sol', 'grok-4.5', 'grok-4.6', 'grok-4.7', 'kimi-k3', 'mai-code-1.1-flash')
+$script:copilot_models = @('auto', 'claude-fable-5', 'claude-fable-5.1', 'claude-haiku-4.5', 'claude-haiku-5.5', 'claude-opus-4.8', 'claude-opus-4.8-fast', 'claude-opus-5', 'claude-opus-5.5', 'claude-sonnet-4.6', 'claude-sonnet-5', 'claude-sonnet-5.5', 'gemini-3.7-flash', 'gemini-3.8-flash', 'gemini-4-argon', 'gpt-5-mini', 'gpt-5.3-codex', 'gpt-5.4', 'gpt-5.4-mini', 'gpt-5.5', 'gpt-5.6-luna', 'gpt-5.6-sol', 'gpt-5.6-sol-fast', 'gpt-5.6-terra', 'gpt-6-astra', 'gpt-6-luna', 'gpt-6-sol', 'gpt-6.1-sol', 'grok-4.5', 'grok-4.6', 'grok-4.7', 'kimi-k3', 'mai-code-1.1-flash')
 
 Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
@@ -894,7 +894,7 @@ Register-ArgumentCompleter -Native -CommandName agency, ai, copilot -ScriptBlock
         "--effort" = $effortValues
         "--log-level" = @("all", "debug", "default", "error", "info", "none", "warning")
         "--mode" = @("autopilot", "interactive", "plan")
-        "--model" = $script:copilotModels
+        "--model" = $script:copilot_models
         "--output-format" = @("json", "text")
         "--reasoning-effort" = $effortValues
         "--stream" = @("off", "on")
