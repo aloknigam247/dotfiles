@@ -21,6 +21,11 @@ if ($(_IsShellInteractive) -eq $false) {
     return
 }
 
+# ─[ PATH changes ]────────────────────────────────────────────────────
+$scoop_app_paths = "D:\Scoop\apps\7zip\current;D:\Scoop\apps\bat\current;D:\Scoop\apps\delta\current;D:\Scoop\apps\dos2unix\current\bin;D:\Scoop\apps\fd\current;D:\Scoop\apps\fzf\current;D:\Scoop\apps\jq\current;D:\Scoop\apps\lazygit\current;D:\Scoop\apps\less\current;D:\Scoop\apps\neovim-nightly\current\bin;D:\Scoop\apps\pandoc\current;D:\Scoop\apps\ripgrep\current;D:\Scoop\apps\rust\current\bin;D:\Scoop\apps\scoop-search\current;D:\Scoop\apps\sed\current;D:\Scoop\apps\tre-command\current;D:\Scoop\apps\universal-ctags\current"
+$env:PATH = "$scoop_app_paths;$env:PATH"
+$env:PATH = "$env:PATH;$HOME\bin;D:\mdview\target\release;D:\dot\desktop\build\release\RelWithDebInfo\"
+
 # ╭─────────────╮
 # │ Auto Update │
 # ╰─────────────╯
@@ -1436,8 +1441,3 @@ $env:COPILOT_OTEL_ENABLED = "false"
 
 # ─[ Agency Settings ]─────────────────────────────────────────────────
 $env:AGENCY_NO_UPDATE_CHECK  = $true
-
-# ─[ PATH changes ]────────────────────────────────────────────────────
-$scoop_app_paths = "D:\Scoop\apps\7zip\current;D:\Scoop\apps\bat\current;D:\Scoop\apps\delta\current;D:\Scoop\apps\dos2unix\current\bin;D:\Scoop\apps\fd\current;D:\Scoop\apps\fzf\current;D:\Scoop\apps\jq\current;D:\Scoop\apps\lazygit\current;D:\Scoop\apps\less\current;D:\Scoop\apps\neovim-nightly\current\bin;D:\Scoop\apps\pandoc\current;D:\Scoop\apps\ripgrep\current;D:\Scoop\apps\rust\current\bin;D:\Scoop\apps\scoop-search\current;D:\Scoop\apps\sed\current;D:\Scoop\apps\tre-command\current;D:\Scoop\apps\universal-ctags\current"
-$env:PATH = "$scoop_app_paths;$env:PATH"
-$env:PATH = "$env:PATH;$HOME\bin;D:\mdview\target\release;D:\dot\desktop\build\release\RelWithDebInfo\"
