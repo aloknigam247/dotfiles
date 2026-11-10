@@ -297,8 +297,10 @@ adds native sub-issue and blocked-by links through the REST API below, and print
   gh api -X POST "repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by" -F issue_id=<blocker id>
   ```
 
-  A failed POST, including any HTTP 422, counts as success only when a paginated `GET` on the same path then lists the
-  exact edge; otherwise fail explicitly and leave the issue body untouched.
+  Confirm an edge with a paginated `GET` on the same path (`gh api --paginate "<path>" --jq ".[].id"`) that lists the
+  other issue's database id; never match a bare issue number, which is ambiguous across repos. A failed POST,
+  including any HTTP 422, counts as success only when that confirmation passes; otherwise fail explicitly and leave
+  the issue body untouched.
 - For accepted backfills or reused issues, read their current labels and source scope before rating under the
   [source policy](#source-complexity-and-decomposition). Use `gh issue edit --add-label` and `--remove-label` to add the
   chosen complexity label and remove only contradictory complexity labels. Preserve category, `spike`, `sub-issue`,
@@ -309,9 +311,11 @@ adds native sub-issue and blocked-by links through the REST API below, and print
 Before reporting success, read back every created, reused, or backfilled issue's labels
 (`gh issue view <n> --json labels,url`) and verify exactly one canonical complexity label matching the accepted rating.
 Missing, conflicting, or multiple complexity labels fail verification; repair them without changing unrelated labels.
-For children, read native hierarchy (`gh api "repos/{owner}/{repo}/issues/<child>/parent"` and the parent's paginated
-`sub_issues` endpoint), and each blocked issue's paginated `dependencies/blocked_by` endpoint. Confirm accepted
-categories, exact `sub-issue` labels, hierarchy, and dependencies.
+Confirm native links by database id, like the link confirmation above:
+`gh api "repos/{owner}/{repo}/issues/<child>/parent" --jq .id` returns the parent's id, and the parent's paginated
+`sub_issues` lists the child's id. Each blocked issue's paginated `dependencies/blocked_by` lists every blocker's id.
+Any mismatch fails verification explicitly. Confirm accepted categories, exact `sub-issue` labels, hierarchy, and
+dependencies.
 Body references alone do not establish a native relationship. Then report all issue URLs and linked relationships.
 
 ### 7. Cleanup
