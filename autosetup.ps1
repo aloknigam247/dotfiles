@@ -177,43 +177,6 @@ function pipxInstall {
     }
 }
 
-function linkScoopShims {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$shim_dir
-    )
-
-    foreach ($shim in Get-ChildItem -LiteralPath $shim_dir -File -Filter "*.shim" -ErrorAction Stop) {
-        [string]$metadata = Get-Content -LiteralPath $shim.FullName -Raw -ErrorAction Stop
-        if ($metadata -notmatch "\A\s*path\s*=\s*`"([^`"\r\n]+)`"\s*\z") {
-            writeLog INFO "Keeping '$($shim.Name)': launcher metadata is not path-only"
-            continue
-        }
-
-        $exe_path = [System.IO.Path]::ChangeExtension($shim.FullName, ".exe")
-        $exe = Get-Item -LiteralPath $exe_path -Force -ErrorAction Stop
-        $target = [System.IO.Path]::GetFullPath($Matches[1], $shim.DirectoryName)
-        if ([System.IO.Path]::GetExtension($target) -notin @(".com", ".exe") -or
-            $target -eq $exe_path -or -not (Test-Path -LiteralPath $target -PathType Leaf)) {
-            throw "Invalid target for Scoop shim '$($shim.Name)': $target"
-        }
-        if ($exe.LinkType -eq "SymbolicLink" -and $exe.Target -eq $target) {
-            continue
-        }
-
-        $temporary_link = Join-Path $shim.DirectoryName "$($shim.BaseName).$([guid]::NewGuid()).tmp"
-        try {
-            New-Item -ItemType SymbolicLink -Path $temporary_link -Target $target -ErrorAction Stop | Out-Null
-            [System.IO.File]::Move($temporary_link, $exe_path, $true)
-        } finally {
-            if (Test-Path -LiteralPath $temporary_link) {
-                Remove-Item -LiteralPath $temporary_link -Force -ErrorAction Stop
-            }
-        }
-        writeLog INFO "Linked '$exe_path' to '$target'"
-    }
-}
-
 function scoopInstall {
     param(
         [string[]]$pkgs,
@@ -246,10 +209,6 @@ function scoopInstall {
             throw "Scoop failed for '$pkg' (exit code $LASTEXITCODE)"
         }
     }
-
-    $scoop_command = Get-Command -Name "scoop.ps1" -CommandType ExternalScript -ErrorAction Stop |
-        Select-Object -First 1
-    linkScoopShims -shim_dir (Split-Path -Parent $scoop_command.Source)
 }
 
 function npmInstall {
