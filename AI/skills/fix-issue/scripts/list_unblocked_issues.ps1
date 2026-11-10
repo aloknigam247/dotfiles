@@ -3,7 +3,7 @@
     Lists open leaf issues without open blockers.
 
 .DESCRIPTION
-    Uses only native GitHub sub_issues and blocked_by relationships. Having a parent is allowed.
+    Uses GitHub's blocked-issue search filter and native sub_issues relationships. Having a parent is allowed.
     Closed sub-issues and blockers do not exclude an issue. Labels and body text do not determine eligibility.
     Use -Json to emit a JSON array.
 
@@ -21,7 +21,6 @@ param(
 $env:GH_TOKEN = $null
 
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$apiVersion = "2026-03-10"
 $ErrorActionPreference = "Stop"
 
 if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
@@ -29,14 +28,59 @@ if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
     exit 2
 }
 
-function Get-GitHubObjects([string]$Endpoint) {
-    $json = gh api --paginate --slurp -H "X-GitHub-Api-Version: $apiVersion" $Endpoint
+function Get-UnblockedCandidates([string]$Repository) {
+    $query = @'
+query($q: String!, $endCursor: String) {
+  search(type: ISSUE_ADVANCED, query: $q, first: 100, after: $endCursor) {
+    pageInfo { hasNextPage endCursor }
+    issueCount
+    nodes {
+      ... on Issue {
+        number
+        title
+        labels(first: 100) { nodes { name } }
+        assignees(first: 1) { nodes { login } }
+        updatedAt
+        subIssues(first: 100) {
+          totalCount
+          nodes { state }
+        }
+      }
+    }
+  }
+}
+'@
+    $search = "repo:$Repository is:issue is:open -is:blocked"
+    $json = gh api graphql --paginate --slurp -f query=$query -f q=$search
     if ($LASTEXITCODE -ne 0) {
-        throw "GitHub request failed: $Endpoint"
+        throw "GitHub search failed: $search"
     }
+
+    $issues = [System.Collections.Generic.List[object]]::new()
+    $expectedCount = $null
+    $retrievedCount = 0
     foreach ($page in ($json | ConvertFrom-Json)) {
-        $page
+        if ($page.errors) {
+            throw "GitHub search returned GraphQL errors: $($page.errors.message -join '; ')"
+        }
+        $expectedCount = $page.data.search.issueCount
+        foreach ($issue in $page.data.search.nodes) {
+            $retrievedCount++
+            if ($issue.subIssues.totalCount -gt 100) {
+                throw "Issue #$($issue.number) has more than 100 sub-issues; eligibility is unknown."
+            }
+            if ($issue.labels.totalCount -gt 100) {
+                throw "Issue #$($issue.number) has more than 100 labels; results are incomplete."
+            }
+            if (-not ($issue.subIssues.nodes | Where-Object state -eq "OPEN")) {
+                $issues.Add($issue)
+            }
+        }
     }
+    if ($retrievedCount -ne $expectedCount) {
+        throw "GitHub search returned $retrievedCount of $expectedCount issues; eligibility is incomplete."
+    }
+    $issues.ToArray()
 }
 
 $repo = gh repo view --json nameWithOwner --jq .nameWithOwner
@@ -45,32 +89,13 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace("$repo")) {
     exit 2
 }
 
-$openIssues = @(Get-GitHubObjects "repos/$repo/issues?state=open&per_page=100" |
-    Where-Object { -not $_.pull_request })
-
-$results = @(foreach ($issue in $openIssues) {
-    $subIssues = @(Get-GitHubObjects "repos/$repo/issues/$($issue.number)/sub_issues?per_page=100")
-    foreach ($subIssue in $subIssues) {
-        if ($subIssue.state -notin @("closed", "open")) {
-            throw "GitHub returned an invalid sub-issue state for issue #$($issue.number)."
-        }
-    }
-    if ($subIssues.state -contains "open") { continue }
-
-    $dependencies = @(Get-GitHubObjects "repos/$repo/issues/$($issue.number)/dependencies/blocked_by?per_page=100")
-    foreach ($dependency in $dependencies) {
-        if ($dependency.state -notin @("closed", "open")) {
-            throw "GitHub returned an invalid blocker state for issue #$($issue.number)."
-        }
-    }
-    if ($dependencies.state -contains "open") { continue }
-
+$results = @(foreach ($issue in (Get-UnblockedCandidates $repo)) {
     [PSCustomObject]@{
         number       = $issue.number
         title        = $issue.title
-        labels       = @($issue.labels | ForEach-Object { $_.name.ToLower() })
-        assignee     = if ($issue.assignees.Count -gt 0) { $issue.assignees[0].login } else { "unassigned" }
-        updatedAt    = $issue.updated_at
+        labels       = @($issue.labels.nodes | ForEach-Object { $_.name.ToLower() })
+        assignee     = if ($issue.assignees.nodes.Count -gt 0) { $issue.assignees.nodes[0].login } else { "unassigned" }
+        updatedAt    = $issue.updatedAt
         blocked      = $false
         openBlockers = @()
     }

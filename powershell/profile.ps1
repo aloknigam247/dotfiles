@@ -1416,7 +1416,6 @@ Set-PSReadLineOption -ContinuationPrompt "... "
 . D:\Scoop\apps\ripgrep\current\complete\_rg.ps1
 
 # ─[ Neovim settings ]─────────────────────────────────────────────────
-$env:PATH = "D:\Scoop\apps\neovim-nightly\current\bin;$env:PATH"
 $env:XDG_CACHE_HOME  = "D:\apps"
 $env:XDG_CONFIG_HOME = "D:\apps"
 $env:XDG_DATA_HOME   = "D:\apps"
