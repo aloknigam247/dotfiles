@@ -177,6 +177,28 @@ function pipxInstall {
     }
 }
 
+function updateScoopAppPaths {
+    $profile_path = Join-Path $PSScriptRoot "powershell\profile.ps1"
+    $scoop_dir = if (Test-Path -LiteralPath $SCOOP_DIR) { $SCOOP_DIR } else { "$HOME\scoop" }
+    $app_paths = Get-ChildItem -LiteralPath "$scoop_dir\shims" -File -Filter "*.shim" -ErrorAction Stop |
+        Select-String -Pattern "^path\s*=\s*`"(.+)`"" |
+        ForEach-Object {
+            Split-Path -Parent ($_.Matches[0].Groups[1].Value -replace "^.*?\\apps\\", "$scoop_dir\apps\")
+        } |
+        Sort-Object -Unique
+    $content = Get-Content -LiteralPath $profile_path -Raw -ErrorAction Stop
+    $line = "`$scoop_app_paths = `"$($app_paths -join ";")`""
+
+    if ($content -notmatch '(?m)^\$scoop_app_paths = [^\r\n]*') {
+        writeLog ERROR "No `$scoop_app_paths line found in $profile_path"
+        return
+    }
+    if ($Matches[0] -ne $line) {
+        Set-Content -LiteralPath $profile_path -Value $content.Replace($Matches[0], $line) -NoNewline -ErrorAction Stop
+        writeLog UPDATE "Updated Scoop app paths in $profile_path"
+    }
+}
+
 function scoopInstall {
     param(
         [string[]]$pkgs,
@@ -209,6 +231,8 @@ function scoopInstall {
             throw "Scoop failed for '$pkg' (exit code $LASTEXITCODE)"
         }
     }
+
+    updateScoopAppPaths
 }
 
 function npmInstall {
