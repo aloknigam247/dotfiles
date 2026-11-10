@@ -72,10 +72,10 @@ The script always returns only **open issues with no open sub-issues and no open
 Use native GitHub `sub_issues` and `blocked_by` relationships only; labels and body text do not determine eligibility.
 Having a parent is allowed. Closed sub-issues and closed blockers do not exclude an issue.
 
-If the helper is unavailable, reproduce its filter with paginated REST requests: list open repository issues, omit PRs,
-fetch each issue's `repos/{owner}/{repo}/issues/<n>/sub_issues` list and skip any with an open child.
-Then fetch each remaining issue's `repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by` list and skip open blockers.
-Use `X-GitHub-Api-Version: 2026-03-10`. A failed lookup is unknown eligibility, not an unblocked issue; stop and report it.
+If the helper is unavailable, use a paginated GraphQL issue search for
+`repo:{owner}/{repo} is:issue is:open -is:blocked`, requesting each result's `subIssues(first: 100) { totalCount nodes { state } }`.
+Skip issues with any open sub-issue. If an issue has more than 100 sub-issues, fetch the remaining pages before deciding.
+A failed lookup is unknown eligibility, not an unblocked issue; stop and report it.
 
 Rank the returned candidates and present the top few (number, title, labels,
 assignee) via `ask_user` so the user picks one. Recommend a default using, in order:
