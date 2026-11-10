@@ -394,17 +394,17 @@ function Start-CpTower {
 Remove-Item -Force alias:ls -ErrorAction SilentlyContinue
 Remove-Item -Force alias:rm -ErrorAction SilentlyContinue
 function bg   { wt -f -d $PWD.Path --colorScheme $current_theme pwsh -NoProfile -C "$args" }
-function fd   { C:\Users\aloknigam\scoop\shims\fd.exe --hyperlink=auto $args }
+function fd   { fd.exe --hyperlink=auto $args }
 function grep { D:\Scoop\apps\msys2\current\usr\bin\grep.exe --color=auto -En $args }
 function la   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AF --color=auto $args }
-function lazygit { C:\Users\aloknigam\scoop\shims\lazygit.exe -ucf "$env:APPDATA\lazygit\config.yml,$env:APPDATA\lazygit\$($lazygit_theme)" }
+function lazygit { lazygit.exe -ucf "$env:APPDATA\lazygit\config.yml,$env:APPDATA\lazygit\$($lazygit_theme)" }
 function lla  { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -AlF --color=auto $args }
 function ls   { D:\Scoop\apps\msys2\current\usr\bin\ls.exe -F --color=auto $args }
-function nvim { C:\Users\aloknigam\scoop\shims\nvim.exe $args; Write-Host -NoNewline "`e[0 q" }
+function nvim { nvim.exe $args; Write-Host -NoNewline "`e[0 q" }
 function pdbg { code .; python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client $args }
-function rg   { C:\Users\aloknigam\scoop\shims\rg.exe -LS --hyperlink-format vscode $args }
+function rg   { rg.exe -LS --hyperlink-format vscode $args }
 function rm   { D:\Scoop\apps\msys2\current\usr\bin\rm.exe -rf $args }
-function tree { C:\Users\aloknigam\scoop\shims\tre.exe -a $args }
+function tree { tre.exe -a $args }
 
 function ai {
     try {
@@ -422,7 +422,7 @@ function bat {
     if ($file.ToLower().EndsWith('.md')) {
         glow $file
     } else {
-        D:\Scoop\shims\bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
+        bat.exe --style="numbers,changes" --italic-text=always --theme $bat_theme $file
     }
 }
 
@@ -511,7 +511,7 @@ function whatis($arg) {
         Format-Pill "󰊕 $arg" -bg $catppuccin.Blue -fg $catppuccin.Base -styles italic
         $temp_file = "$env:TEMP\tmp.ps1"
         Write-Output $cm.Definition > $temp_file
-        D:\Scoop\shims\bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
+        bat.exe -P --style="numbers,changes" --italic-text=always --theme $bat_theme $temp_file
         Remove-Item $temp_file
     } elseif ($type -eq "Application") {
         Format-Pill "$($icons.type_app) Application" -bg $catppuccin.Green -fg $catppuccin.Base -styles italic
@@ -1438,4 +1438,6 @@ $env:COPILOT_OTEL_ENABLED = "false"
 $env:AGENCY_NO_UPDATE_CHECK  = $true
 
 # ─[ PATH changes ]────────────────────────────────────────────────────
+$scoop_app_paths = "D:\Scoop\apps\7zip\current;D:\Scoop\apps\bat\current;D:\Scoop\apps\delta\current;D:\Scoop\apps\dos2unix\current\bin;D:\Scoop\apps\fd\current;D:\Scoop\apps\fzf\current;D:\Scoop\apps\jq\current;D:\Scoop\apps\lazygit\current;D:\Scoop\apps\less\current;D:\Scoop\apps\neovim-nightly\current\bin;D:\Scoop\apps\pandoc\current;D:\Scoop\apps\ripgrep\current;D:\Scoop\apps\rust\current\bin;D:\Scoop\apps\scoop-search\current;D:\Scoop\apps\sed\current;D:\Scoop\apps\tre-command\current;D:\Scoop\apps\universal-ctags\current"
+$env:PATH = "$scoop_app_paths;$env:PATH"
 $env:PATH = "$env:PATH;$HOME\bin;D:\mdview\target\release;D:\dot\desktop\build\release\RelWithDebInfo\"
