@@ -177,40 +177,25 @@ function pipxInstall {
     }
 }
 
-function linkScoopShims {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$shim_dir
-    )
+function updateScoopAppPaths {
+    $profile_path = Join-Path $PSScriptRoot "powershell\profile.ps1"
+    $scoop_dir = if (Test-Path -LiteralPath $SCOOP_DIR) { $SCOOP_DIR } else { "$HOME\scoop" }
+    $app_paths = Get-ChildItem -LiteralPath "$scoop_dir\shims" -File -Filter "*.shim" -ErrorAction Stop |
+        Select-String -Pattern "^path\s*=\s*`"(.+)`"" |
+        ForEach-Object {
+            Split-Path -Parent ($_.Matches[0].Groups[1].Value -replace "^.*?\\apps\\", "$scoop_dir\apps\")
+        } |
+        Sort-Object -Unique
+    $content = Get-Content -LiteralPath $profile_path -Raw -ErrorAction Stop
+    $line = "`$scoop_app_paths = `"$($app_paths -join ";")`""
 
-    foreach ($shim in Get-ChildItem -LiteralPath $shim_dir -File -Filter "*.shim" -ErrorAction Stop) {
-        [string]$metadata = Get-Content -LiteralPath $shim.FullName -Raw -ErrorAction Stop
-        if ($metadata -notmatch "\A\s*path\s*=\s*`"([^`"\r\n]+)`"\s*\z") {
-            writeLog INFO "Keeping '$($shim.Name)': launcher metadata is not path-only"
-            continue
-        }
-
-        $exe_path = [System.IO.Path]::ChangeExtension($shim.FullName, ".exe")
-        $exe = Get-Item -LiteralPath $exe_path -Force -ErrorAction Stop
-        $target = [System.IO.Path]::GetFullPath($Matches[1], $shim.DirectoryName)
-        if ([System.IO.Path]::GetExtension($target) -notin @(".com", ".exe") -or
-            $target -eq $exe_path -or -not (Test-Path -LiteralPath $target -PathType Leaf)) {
-            throw "Invalid target for Scoop shim '$($shim.Name)': $target"
-        }
-        if ($exe.LinkType -eq "SymbolicLink" -and $exe.Target -eq $target) {
-            continue
-        }
-
-        $temporary_link = Join-Path $shim.DirectoryName "$($shim.BaseName).$([guid]::NewGuid()).tmp"
-        try {
-            New-Item -ItemType SymbolicLink -Path $temporary_link -Target $target -ErrorAction Stop | Out-Null
-            [System.IO.File]::Move($temporary_link, $exe_path, $true)
-        } finally {
-            if (Test-Path -LiteralPath $temporary_link) {
-                Remove-Item -LiteralPath $temporary_link -Force -ErrorAction Stop
-            }
-        }
-        writeLog INFO "Linked '$exe_path' to '$target'"
+    if ($content -notmatch '(?m)^\$scoop_app_paths = [^\r\n]*') {
+        writeLog ERROR "No `$scoop_app_paths line found in $profile_path"
+        return
+    }
+    if ($Matches[0] -ne $line) {
+        Set-Content -LiteralPath $profile_path -Value $content.Replace($Matches[0], $line) -NoNewline -ErrorAction Stop
+        writeLog UPDATE "Updated Scoop app paths in $profile_path"
     }
 }
 
@@ -247,9 +232,7 @@ function scoopInstall {
         }
     }
 
-    $scoop_command = Get-Command -Name "scoop.ps1" -CommandType ExternalScript -ErrorAction Stop |
-        Select-Object -First 1
-    linkScoopShims -shim_dir (Split-Path -Parent $scoop_command.Source)
+    updateScoopAppPaths
 }
 
 function npmInstall {
