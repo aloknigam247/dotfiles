@@ -462,7 +462,7 @@ function agency {
         if ($isSubcommand -or $isCopilot) {
             agency.exe @argList
         } else {
-            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList --allowl-all
+            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList --allow-all
         }
 
         $ok = $?
