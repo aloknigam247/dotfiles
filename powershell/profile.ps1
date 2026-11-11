@@ -462,8 +462,7 @@ function agency {
         if ($isSubcommand -or $isCopilot) {
             agency.exe @argList
         } else {
-            $env:GH_TOKEN = gh auth token --hostname microsoft.ghe.com --user aloknigam
-            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
+            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList --allowl-all
         }
 
         $ok = $?
@@ -488,8 +487,7 @@ function copilot {
 
     wt -f -d $root_dir pwsh -c {
         param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort)
-        $env:GH_TOKEN = gh auth token --hostname microsoft.ghe.com --user aloknigam
-        copilot.exe --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList
+        copilot.exe --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList --allow-all
         if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
     } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort
 }
