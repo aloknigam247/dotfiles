@@ -236,9 +236,21 @@ proposals or approvals from step 2 with the drafts.
    - Concise: each fact once; no filler, history, or narrative. Hard-wrap prose at 120 chars; leave tables and URLs
      unwrapped. Prefer tables for comparisons (Today / After). Tag every code fence with a language; PowerShell
      fences use `ps1`.
-   - **Diagrams** — add a Mermaid diagram only when it makes the change clearer than prose (data flow, before/after
-     structure, state). Use `flowchart LR`; explicit `classDef` with fill, stroke and color; label lines ≤ 24 chars
-     split with `<br/>`; no `#` or `{}` inside labels; short subgraph titles; pipe edge labels.
+   - **Diagrams** — add a Mermaid diagram only when it makes the change clearer than prose. Choose by what changes:
+
+     | Change | Diagram |
+     |---|---|
+     | A local fix in one function | None; use a table or snippet |
+     | Several branches or decisions | `flowchart LR` |
+     | Order of calls across components | `sequenceDiagram` |
+     | States and transitions | `stateDiagram-v2` |
+     | Classes, interfaces, inheritance, or ownership | `classDiagram` |
+     | Data schema | `erDiagram` |
+     | Dependencies across modules | `flowchart LR` with one subgraph per module |
+
+     Label it Current or Proposed and highlight what changes; use one diagram unless the two differ in shape.
+     Use explicit `classDef` with fill, stroke, and color where supported. Keep labels short; no `#` or `{}` inside labels.
+     For flowcharts, limit label lines to 24 characters, split with `<br/>`; use short subgraph titles and pipe edge labels.
    - **Relations** — only native links (step 6), never body text: no relation headings (Related, Dependencies,
      Links), footer meta line, or sentence that only declares a relation ("Prerequisite #N", "Sub-issue #N", "start
      after #N"). Keep an inline `#N` only where a sentence needs it to be understood, such as an out-of-scope boundary
