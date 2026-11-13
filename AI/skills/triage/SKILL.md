@@ -119,9 +119,24 @@ If that reviewer is unavailable, report it and ask before substituting a review 
 Reject unsupported claims, missing requirements or edge cases, weak or infeasible tests, false dependencies,
 incomplete child coverage, unused integration fragments, and unapproved high-complexity leaves.
 
-Resolve findings, open every draft in mdview, and present the full plan with clickable issue links. Use `ask_user`
-for explicit acceptance before publication. Reopen edited drafts; scope changes require renewed review and acceptance.
-If mdview is unavailable, report the blocker and obtain approval before using a chat-only preview.
+For each issue, generate a GUID-named preview with this YAML frontmatter in order, followed immediately by the
+complete, exact publishable body:
+
+```yaml
+---
+repo: <owner/repo>
+title: "<exact issue title>"
+Complexity: <low|medium|high>
+---
+```
+
+Compose previews directly from their body files; do not summarize the body or replace it with a link. The metadata
+is preview-only and must not be included in the GitHub body.
+
+Resolve findings, open the full plan and every issue preview in mdview, and present clickable issue links. Use
+`ask_user` for explicit acceptance before publication. Regenerate and reopen edited previews; scope changes require
+renewed review and acceptance. If mdview is unavailable, report the blocker and obtain approval before using a
+chat-only preview.
 
 ## Relations and publication
 
