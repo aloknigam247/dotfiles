@@ -3252,7 +3252,98 @@ addPlugin {
 				order = 2,
 			},
 		},
-	}
+	},
+	config = function(_, opts)
+		require("checkmate").setup(opts)
+
+		local debounce_ms = 100
+		local generations = {}
+		local group = vim.api.nvim_create_augroup("checkmate_heading_counts", { clear = true })
+		local namespace = vim.api.nvim_create_namespace("checkmate_heading_counts")
+
+		local function count_by_heading(bufnr)
+			local counts = {}
+			local root = vim.treesitter.get_parser(bufnr, "markdown"):parse()[1]:root()
+			local todos = require("checkmate").get_todos({
+				bufnr = bufnr,
+				filter = { state_types = { "complete", "incomplete" } },
+			})
+
+			for _, todo in ipairs(todos) do
+				local node = root:named_descendant_for_range(todo.row, 0, todo.row, 0)
+				while node do
+					local heading = node:type() == "section" and node:named_child(0)
+					if heading and (heading:type() == "atx_heading" or heading:type() == "setext_heading") then
+						local row = node:start()
+						local count = counts[row] or { completed = 0, total = 0 }
+						counts[row] = count
+						count.total = count.total + 1
+						if todo.is_complete() then
+							count.completed = count.completed + 1
+						end
+					end
+					node = node:parent()
+				end
+			end
+
+			return counts
+		end
+
+		local function refresh(bufnr)
+			if not vim.api.nvim_buf_is_loaded(bufnr) then
+				return
+			end
+			if vim.bo[bufnr].filetype ~= "markdown" then
+				vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
+				return
+			end
+
+			local wanted = {}
+			for row, count in pairs(count_by_heading(bufnr)) do
+				wanted[row] = opts.todo_count_formatter(count.completed, count.total)
+			end
+
+			for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufnr, namespace, 0, -1, { details = true })) do
+				local details, id, row = mark[4], mark[1], mark[2]
+				if wanted[row] == details.virt_text[1][1] then
+					wanted[row] = nil
+				else
+					vim.api.nvim_buf_del_extmark(bufnr, namespace, id)
+				end
+			end
+
+			for row, text in pairs(wanted) do
+				vim.api.nvim_buf_set_extmark(bufnr, namespace, row, 0, {
+					virt_text = { { text, "CheckmateTodoCountIndicator" } },
+					virt_text_pos = "eol",
+				})
+			end
+		end
+
+		local function schedule(bufnr)
+			local generation = (generations[bufnr] or 0) + 1
+			generations[bufnr] = generation
+			vim.defer_fn(function()
+				if generations[bufnr] == generation then
+					generations[bufnr] = nil
+					refresh(bufnr)
+				end
+			end, debounce_ms)
+		end
+
+		vim.api.nvim_create_autocmd({ "FileType", "TextChanged", "TextChangedI" }, {
+			callback = function(args)
+				if args.event == "FileType" or vim.bo[args.buf].filetype == "markdown" then
+					schedule(args.buf)
+				end
+			end,
+			group = group,
+		})
+
+		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+			refresh(bufnr)
+		end
+	end
 }
 
 
