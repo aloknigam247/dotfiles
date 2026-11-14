@@ -36,6 +36,9 @@
   "beepOnSchedule": true,
   "compactPaste": true,
   "companyAnnouncements": [
+    "Review the models available to you and options to request additional model access at https://aka.ms/copilot/models",
+    "Need help with Agency? In a local Agency session, use `/agency:agency-support`; otherwise run `agency support` or join the support community: https://aka.ms/agency/support",
+    "Monthly limits are in place. Burst limit increases and guidance are available at https://aka.ms/copilot/burst"
   ],
   "contextManagementTools": true,
   "contextTier": "long_context",
@@ -51,7 +54,8 @@
     "computer-use"
   ],
   "enabledPlugins": {
-    "browser-use": true
+    "browser-use": true,
+    "computer-use": false
   },
   "experimental": true,
   "extensions": {
@@ -107,7 +111,9 @@
         "model": "inherit"
       }
     },
-    "contextManagementTools": true
+    "contextManagementTools": true,
+    "maxConcurrency": 100,
+    "maxDepth": 100
   },
   "tabs": {
     "enabled": false
@@ -128,5 +134,13 @@
     "enabled": false,
     "selectedModel": "nemotron-3.5-asr-streaming-0.6b-generic-cpu:3"
   },
-  "worktreePathTemplate": "{repoPath}/.worktree/{branch}"
+  "worktreePathTemplate": "{repoPath}/.worktree/{branch}",
+  "workflows": {
+    "maxConcurrentRuns": 16,
+    "defaultLimits": {
+      "maxConcurrentSubagents": 100,
+      "maxTotalSubagents": 1000
+    }
+  },
+  "fusionTier": "max"
 }

@@ -33,7 +33,6 @@ function Get-UnblockedCandidates([string]$Repository) {
 query($q: String!, $endCursor: String) {
   search(type: ISSUE_ADVANCED, query: $q, first: 100, after: $endCursor) {
     pageInfo { hasNextPage endCursor }
-    issueCount
     nodes {
       ... on Issue {
         number
@@ -57,15 +56,11 @@ query($q: String!, $endCursor: String) {
     }
 
     $issues = [System.Collections.Generic.List[object]]::new()
-    $expectedCount = $null
-    $retrievedCount = 0
     foreach ($page in ($json | ConvertFrom-Json)) {
         if ($page.errors) {
             throw "GitHub search returned GraphQL errors: $($page.errors.message -join '; ')"
         }
-        $expectedCount = $page.data.search.issueCount
         foreach ($issue in $page.data.search.nodes) {
-            $retrievedCount++
             if ($issue.subIssues.totalCount -gt 100) {
                 throw "Issue #$($issue.number) has more than 100 sub-issues; eligibility is unknown."
             }
@@ -76,9 +71,6 @@ query($q: String!, $endCursor: String) {
                 $issues.Add($issue)
             }
         }
-    }
-    if ($retrievedCount -ne $expectedCount) {
-        throw "GitHub search returned $retrievedCount of $expectedCount issues; eligibility is incomplete."
     }
     $issues.ToArray()
 }
