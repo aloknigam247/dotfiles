@@ -323,9 +323,6 @@ function wingetInstall {
             # install package
             writeLog UPDATE "Installing winget package: $pkg"
             winget install -e --id $pkg --accept-package-agreements --accept-source-agreements
-            if ($LASTEXITCODE -eq 0) {
-                $status += "`n$pkg`n"
-            }
         }
     }
 }
