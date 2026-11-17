@@ -303,14 +303,17 @@ function wingetInstall {
         return
     }
 
-    foreach ($pkg in $pkgs) {
-        $status = winget list -e --id $pkg --accept-source-agreements
+    $no_apps_found = -1978335212
+    $status = (winget list --accept-source-agreements) -join "`n"
+    if ($LASTEXITCODE -eq $no_apps_found) {
+        $status = ""
+    } elseif ($LASTEXITCODE -ne 0) {
+        writeLog ERROR "Failed to list winget packages (exit code $LASTEXITCODE): $status"
+        return
+    }
 
-        if ($status.Contains("No installed package found matching input criteria.")) {
-            $installed = $false
-        } else {
-            $installed = $true
-        }
+    foreach ($pkg in $pkgs) {
+        $installed = $status -cmatch "(?<!\S)$([regex]::Escape($pkg))(?!\S)"
 
         if ($installed -eq $true -and $update) {
             # update package
@@ -320,6 +323,9 @@ function wingetInstall {
             # install package
             writeLog UPDATE "Installing winget package: $pkg"
             winget install -e --id $pkg --accept-package-agreements --accept-source-agreements
+            if ($LASTEXITCODE -eq 0) {
+                $status += "`n$pkg`n"
+            }
         }
     }
 }
