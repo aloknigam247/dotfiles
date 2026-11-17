@@ -1,13 +1,30 @@
+const { execFileSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
 
-function repoScopes() {
+function readScopes(root) {
     try {
-        const parsed = JSON.parse(fs.readFileSync(path.join(process.cwd(), ".commitlint-scopes.json"), "utf8"));
+        const parsed = JSON.parse(fs.readFileSync(path.join(root, ".commitlint-scopes.json"), "utf8"));
         return Array.isArray(parsed) ? parsed : [];
     } catch {
         return [];
     }
+}
+
+function repoScopes() {
+    const roots = new Set([process.cwd()]);
+    try {
+        const worktrees = execFileSync("git", ["worktree", "list", "--porcelain", "-z"], {
+            encoding: "utf8",
+            stdio: ["ignore", "pipe", "pipe"],
+            windowsHide: true,
+        });
+        roots.add(path.resolve(worktrees.split("\0", 1)[0].slice("worktree ".length)));
+    } catch (error) {
+        console.warn(`commitlint: unable to locate the primary worktree: ${error.message}`);
+    }
+
+    return [...new Set([...roots].flatMap(readScopes))];
 }
 
 const scopes = repoScopes();

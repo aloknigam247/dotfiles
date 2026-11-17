@@ -105,15 +105,15 @@
         "model": "inherit"
       },
       "rubber-duck": {
-        "model": "inherit"
+        "model": "complementary"
       },
       "task": {
         "model": "inherit"
       }
     },
-    "contextManagementTools": true,
     "maxConcurrency": 100,
-    "maxDepth": 100
+    "maxDepth": 100,
+    "contextManagementTools": true
   },
   "tabs": {
     "enabled": false
@@ -142,5 +142,24 @@
       "maxTotalSubagents": 1000
     }
   },
-  "fusionTier": "max"
+  "fusionTier": "max",
+  "ahpEnvironment": {
+    "computeId": "6a5be773-cf74-4826-9ae3-114fa007f4be",
+    "acceptRemoteConnections": false,
+    "allowCreatingNewSessions": false,
+    "outgoingConnections": [
+      {
+        "hostUrl": "mc://08d18504-09b4-41b8-aadf-7508e522eadd",
+        "connected": false,
+        "name": "Copilot CLI on ALOKNIGAM · 08d1"
+      },
+      {
+        "hostUrl": "mc://03c1fbcd-a182-4921-ac83-37281f458c4b",
+        "connected": false,
+        "name": "Copilot CLI on ALOKNIGAM · 03c1"
+      }
+    ],
+    "publishNewSessionsByDefault": false,
+    "requireConnectionBinding": true
+  }
 }

@@ -112,8 +112,12 @@ function installScoop {
         scoop bucket add versions
         writeLog INFO "Scoop installed"
     }
-    if ($update){
-        scoop update
+    if ($update) {
+        $update_output = scoop update 6>&1
+        if ($LASTEXITCODE -ne 0) {
+            $update_output | Out-Host
+            throw "Scoop update failed (exit code $LASTEXITCODE)"
+        }
         writeLog INFO "Scoop updated"
     }
 
@@ -592,7 +596,7 @@ foreach ($pkg in $pkg_list) {
             }
         }
         $module_requirements.Add(@{
-            cwd = $cwd
+            pkg_dir = $cwd
             files = $files
             files_copy = $files_copy
             files_deploy = $files_deploy
@@ -605,8 +609,8 @@ foreach ($pkg in $pkg_list) {
 }
 
 foreach ($requirements in $module_requirements) {
-    $cwd = $requirements.cwd
-    Set-Location $cwd
+    $pkg_dir = $requirements.pkg_dir
+    Set-Location $pkg_dir
     if ($update) {
         writeLog INFO "Updating Configs"
 

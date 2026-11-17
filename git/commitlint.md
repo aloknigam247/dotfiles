@@ -28,7 +28,7 @@ rules.
 ## Allowing scopes (per repository)
 
 Scope is **optional**, but when present it must be allowlisted. The allowlist is **repo-specific**: the shared config
-reads a `.commitlint-scopes.json` from the repository root at lint time.
+combines `.commitlint-scopes.json` from the current and primary worktree roots at lint time.
 
 To restrict scopes in a repo, add `.commitlint-scopes.json` at its root and commit it — a flat JSON array of
 lower-case scope strings (lower-case is required by the `scope-case` rule):
@@ -37,6 +37,6 @@ lower-case scope strings (lower-case is required by the `scope-case` rule):
 ["api", "auth", "ci", "db", "deps", "ui"]
 ```
 
-- File present with a non-empty list → scope is optional, but any scope used must be in the list.
-- File missing, empty array, malformed, or not a JSON array → any scope is **blocked** (unscoped commits
-  still pass).
+- Combined allowlist is non-empty → scope is optional, but any scope used must be in the list.
+- Neither file supplies scopes (missing, empty array, malformed, or not a JSON array) → any scope is **blocked**
+  (unscoped commits still pass).

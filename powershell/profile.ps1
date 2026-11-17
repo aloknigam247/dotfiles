@@ -431,9 +431,7 @@ function bat {
     }
 }
 
-$copilot_context = "long_context"
-$copilot_model = "gpt-6-astra"
-$copilot_reasoning_effort = "max"
+$copilot_model = "auto"
 
 function agency {
     try {
@@ -452,7 +450,7 @@ function agency {
     }
 
     wt -f -d $root_dir pwsh -c {
-        param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort, $isCopilot, $isSubcommand)
+        param([string[]]$argList, $copilot_model, $isCopilot, $isSubcommand)
 
         if (-not (Get-Command agency.exe -ErrorAction SilentlyContinue)) {
             Write-Host "agency not installed - installing via aka.ms/InstallTool.ps1..." -ForegroundColor Yellow
@@ -462,7 +460,7 @@ function agency {
         if ($isSubcommand -or $isCopilot) {
             agency.exe @argList
         } else {
-            agency.exe copilot --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList --allow-all
+            agency.exe copilot --model $copilot_model @argList --allow-all
         }
 
         $ok = $?
@@ -471,7 +469,7 @@ function agency {
         } elseif (-not $ok) {
             Read-Host -Prompt "Agency exited with error, press any key to exit"
         }
-    } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort, $isCopilot, $isSubcommand
+    } -args $parsed.Args, $copilot_model, $isCopilot, $isSubcommand
 }
 
 function copilot {
@@ -486,10 +484,10 @@ function copilot {
     $root_dir = $parsed.RootDir
 
     wt -f -d $root_dir pwsh -c {
-        param([string[]]$argList, $copilot_context, $copilot_model, $copilot_reasoning_effort)
-        copilot.exe --model $copilot_model --reasoning-effort $copilot_reasoning_effort --context $copilot_context @argList --allow-all
+        param([string[]]$argList, $copilot_model)
+        copilot.exe --model $copilot_model @argList --allow-all
         if ($? -eq $False) { Read-Host -Prompt "Copilot exited with error, press any key to exit" }
-    } -args $parsed.Args, $copilot_context, $copilot_model, $copilot_reasoning_effort
+    } -args $parsed.Args, $copilot_model
 }
 
 function e {
