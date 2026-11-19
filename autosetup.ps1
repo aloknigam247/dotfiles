@@ -7,7 +7,6 @@ param(
 
 # Variables
 $collected_packages = @{}
-$manager_inventories = @{}
 $package_managers = @("npm", "pip", "pipx", "psgallery", "scoop", "winget")
 $SCOOP_DIR = "D:\Scoop"
 
@@ -130,113 +129,6 @@ function installScoop {
     }
 }
 
-# A failed discovery is cached as $null so the manager is skipped instead of treated as empty.
-function getManagerInventory {
-    param(
-        [string]$manager,
-        [scriptblock]$discovery
-    )
-    if (-not $script:manager_inventories.ContainsKey($manager)) {
-        try {
-            $script:manager_inventories[$manager] = & $discovery
-        } catch {
-            $script:manager_inventories[$manager] = $null
-            writeLog ERROR "Skipping $manager packages, inventory failed: $($_.Exception.Message)"
-        }
-    }
-    return $script:manager_inventories[$manager]
-}
-
-function pythonPackageName {
-    param([string]$name)
-    return $name.ToLowerInvariant() -replace "[-_.]+", "-"
-}
-
-function pipInventory {
-    $output = pip list --format=json 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        throw "pip list failed (exit code $LASTEXITCODE)"
-    }
-    $packages = ConvertFrom-Json -InputObject ($output -join "`n") -AsHashtable -NoEnumerate -ErrorAction Stop
-    if ($packages -isnot [array]) {
-        throw "pip list returned invalid JSON"
-    }
-
-    $inventory = @{}
-    foreach ($package in $packages) {
-        $name = if ($package -is [System.Collections.IDictionary]) { $package["name"] }
-        if ($name -isnot [string] -or -not $name) {
-            throw "pip list returned an invalid package entry"
-        }
-        $inventory[(pythonPackageName $name)] = $true
-    }
-    return $inventory
-}
-
-function pipxInventory {
-    $output = pipx list --json 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        throw "pipx list failed (exit code $LASTEXITCODE)"
-    }
-    $data = ConvertFrom-Json -InputObject ($output -join "`n") -AsHashtable -NoEnumerate -ErrorAction Stop
-    if ($data -isnot [System.Collections.IDictionary] -or $data["venvs"] -isnot [System.Collections.IDictionary]) {
-        throw "pipx list returned invalid JSON"
-    }
-
-    $inventory = @{}
-    foreach ($venv in $data["venvs"].GetEnumerator()) {
-        $package = $venv.Value.metadata.main_package.package
-        if ($package -isnot [string] -or -not $package) {
-            throw "pipx list returned an invalid environment: $($venv.Key)"
-        }
-        $inventory[(pythonPackageName $venv.Key)] = $true
-        $inventory[(pythonPackageName $package)] = $true
-    }
-    return $inventory
-}
-
-function npmInventory {
-    $output = npm ls --global --depth=0 --json 2>$null
-    if ($LASTEXITCODE -ne 0) {
-        throw "npm ls failed (exit code $LASTEXITCODE)"
-    }
-    $data = ConvertFrom-Json -InputObject ($output -join "`n") -AsHashtable -NoEnumerate -ErrorAction Stop
-    if ($data -isnot [System.Collections.IDictionary] -or
-        ($data.Contains("dependencies") -and $data["dependencies"] -isnot [System.Collections.IDictionary])) {
-        throw "npm ls returned invalid JSON"
-    }
-
-    $inventory = @{}
-    if ($data.Contains("dependencies")) {
-        foreach ($name in $data["dependencies"].Keys) {
-            $inventory[$name] = $true
-        }
-    }
-    return $inventory
-}
-
-# A full module scan is much slower than one lookup of the requested names, so only names not yet looked up this run
-# are queried; each records whether any module matched it.
-function psgalleryInventory {
-    param([string[]]$names)
-    $inventory = $script:manager_inventories["psgallery"]
-    if ($null -eq $inventory) {
-        $inventory = @{}
-    }
-    $unqueried = @($names | Where-Object { -not $inventory.ContainsKey($_) })
-    if ($unqueried.Count -gt 0) {
-        $modules = @(Get-Module -ListAvailable -Name $unqueried -ErrorAction Stop | ForEach-Object Name)
-        foreach ($name in $unqueried) {
-            $inventory[$name] = @($modules -like $name).Count -gt 0
-        }
-        foreach ($module in $modules) {
-            $inventory[$module] = $true
-        }
-    }
-    $script:manager_inventories["psgallery"] = $inventory
-    return $inventory
-}
-
 function pipInstall {
     param (
         [string[]]$pkgs,
@@ -247,14 +139,19 @@ function pipInstall {
         return
     }
 
-    $inventory = getManagerInventory "pip" { pipInventory }
-    if ($null -eq $inventory) {
+    $packages = try { pip list --format=json 2>$null | ConvertFrom-Json -NoEnumerate } catch { $null }
+    if ($LASTEXITCODE -ne 0 -or $null -eq $packages) {
+        writeLog ERROR "Failed to list pip packages"
         return
+    }
+    $installed_pkgs = @{}
+    foreach ($package in $packages) {
+        $installed_pkgs[$package.name -replace "[-_.]+", "-"] = $true
     }
 
     foreach ($pkg in $pkgs) {
-        $name = pythonPackageName $pkg
-        $installed = $inventory.ContainsKey($name)
+        $name = $pkg -replace "[-_.]+", "-"
+        $installed = $installed_pkgs.ContainsKey($name)
 
         if ($installed -eq $true -and $update) {
             # update package
@@ -264,9 +161,6 @@ function pipInstall {
             # install package
             writeLog UPDATE "Installing pip package: $pkg"
             pip install $pkg
-            if ($LASTEXITCODE -eq 0) {
-                $inventory[$name] = $true
-            }
         }
     }
 }
@@ -281,14 +175,20 @@ function pipxInstall {
         return
     }
 
-    $inventory = getManagerInventory "pipx" { pipxInventory }
-    if ($null -eq $inventory) {
+    $venvs = try { (pipx list --json 2>$null | ConvertFrom-Json -AsHashtable).venvs } catch { $null }
+    if ($LASTEXITCODE -ne 0 -or $null -eq $venvs) {
+        writeLog ERROR "Failed to list pipx packages"
         return
+    }
+    $installed_pkgs = @{}
+    foreach ($venv in $venvs.GetEnumerator()) {
+        $installed_pkgs[$venv.Key -replace "[-_.]+", "-"] = $true
+        $installed_pkgs[$venv.Value.metadata.main_package.package -replace "[-_.]+", "-"] = $true
     }
 
     foreach ($pkg in $pkgs) {
-        $name = pythonPackageName $pkg
-        $installed = $inventory.ContainsKey($name)
+        $name = $pkg -replace "[-_.]+", "-"
+        $installed = $installed_pkgs.ContainsKey($name)
 
         if ($installed -eq $true -and $update) {
             # update package
@@ -298,9 +198,6 @@ function pipxInstall {
             # install package
             writeLog UPDATE "Installing pipx package: $pkg"
             pipx install $pkg
-            if ($LASTEXITCODE -eq 0) {
-                $inventory[$name] = $true
-            }
         }
     }
 }
@@ -372,13 +269,15 @@ function npmInstall {
         return
     }
 
-    $inventory = getManagerInventory "npm" { npmInventory }
-    if ($null -eq $inventory) {
+    $npm_list = try { npm ls --global --depth=0 --json 2>$null | ConvertFrom-Json -AsHashtable } catch { $null }
+    if ($LASTEXITCODE -ne 0 -or $null -eq $npm_list) {
+        writeLog ERROR "Failed to list npm packages"
         return
     }
+    $installed_pkgs = $npm_list["dependencies"] ?? @{}
 
     foreach ($pkg in $pkgs) {
-        $installed = $inventory.ContainsKey($pkg)
+        $installed = $installed_pkgs.ContainsKey($pkg)
 
         if ($installed -eq $true -and $update) {
             writeLog UPDATE "Updating npm package: $pkg"
@@ -388,7 +287,6 @@ function npmInstall {
             npm install -g $pkg
             if ($?) {
                 writeLog INFO "npm package installed: $pkg"
-                $inventory[$pkg] = $true
             } else {
                 writeLog ERROR "Failed to install npm package: $pkg"
             }
@@ -409,15 +307,10 @@ function psgalleryInstall {
         return
     }
 
-    try {
-        $inventory = psgalleryInventory $pkgs
-    } catch {
-        writeLog ERROR "Skipping psgallery packages, inventory failed: $($_.Exception.Message)"
-        return
-    }
+    $modules = @(Get-Module -ListAvailable -Name $pkgs | ForEach-Object Name)
 
     foreach ($pkg in $pkgs) {
-        $installed = $inventory[$pkg]
+        $installed = @($modules -like $pkg).Count -gt 0
 
         if ($installed -and $update) {
             # update package
@@ -426,12 +319,7 @@ function psgalleryInstall {
         } elseif (-not $installed -and -not $update) {
             # install package
             writeLog UPDATE "Installing PSGallery module: $pkg"
-            try {
-                Install-Module -Name $pkg -Force -Scope AllUsers -ErrorAction Stop
-                $inventory[$pkg] = $true
-            } catch {
-                writeLog ERROR "Failed to install PSGallery module: $pkg ($($_.Exception.Message))"
-            }
+            Install-Module -Name $pkg -Force -Scope AllUsers
         }
     }
 }
