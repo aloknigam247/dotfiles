@@ -139,9 +139,19 @@ function pipInstall {
         return
     }
 
+    $packages = try { pip list --format=json 2>$null | ConvertFrom-Json -NoEnumerate } catch { $null }
+    if ($LASTEXITCODE -ne 0 -or $null -eq $packages) {
+        writeLog ERROR "Failed to list pip packages"
+        return
+    }
+    $installed_pkgs = @{}
+    foreach ($package in $packages) {
+        $installed_pkgs[$package.name -replace "[-_.]+", "-"] = $true
+    }
+
     foreach ($pkg in $pkgs) {
-        pip show $pkg *>&1 | Out-Null
-        $installed = $?
+        $name = $pkg -replace "[-_.]+", "-"
+        $installed = $installed_pkgs.ContainsKey($name)
 
         if ($installed -eq $true -and $update) {
             # update package
@@ -165,9 +175,20 @@ function pipxInstall {
         return
     }
 
+    $venvs = try { (pipx list --json 2>$null | ConvertFrom-Json -AsHashtable).venvs } catch { $null }
+    if ($LASTEXITCODE -ne 0 -or $null -eq $venvs) {
+        writeLog ERROR "Failed to list pipx packages"
+        return
+    }
+    $installed_pkgs = @{}
+    foreach ($venv in $venvs.GetEnumerator()) {
+        $installed_pkgs[$venv.Key -replace "[-_.]+", "-"] = $true
+        $installed_pkgs[$venv.Value.metadata.main_package.package -replace "[-_.]+", "-"] = $true
+    }
+
     foreach ($pkg in $pkgs) {
-        pip show $pkg *>&1 | Out-Null
-        $installed = $?
+        $name = $pkg -replace "[-_.]+", "-"
+        $installed = $installed_pkgs.ContainsKey($name)
 
         if ($installed -eq $true -and $update) {
             # update package
@@ -248,8 +269,15 @@ function npmInstall {
         return
     }
 
+    $npm_list = try { npm ls --global --depth=0 --json 2>$null | ConvertFrom-Json -AsHashtable } catch { $null }
+    if ($LASTEXITCODE -ne 0 -or $null -eq $npm_list) {
+        writeLog ERROR "Failed to list npm packages"
+        return
+    }
+    $installed_pkgs = $npm_list["dependencies"] ?? @{}
+
     foreach ($pkg in $pkgs) {
-        $installed = npm list -g $pkg 2>&1 | Select-String -Pattern $pkg -Quiet
+        $installed = $installed_pkgs.ContainsKey($pkg)
 
         if ($installed -eq $true -and $update) {
             writeLog UPDATE "Updating npm package: $pkg"
@@ -279,14 +307,16 @@ function psgalleryInstall {
         return
     }
 
-    foreach ($pkg in $pkgs) {
-        $installed = Get-Module -ListAvailable -Name $pkg
+    $modules = @(Get-Module -ListAvailable -Name $pkgs | ForEach-Object Name)
 
-        if ($null -ne $installed -and $update) {
+    foreach ($pkg in $pkgs) {
+        $installed = @($modules -like $pkg).Count -gt 0
+
+        if ($installed -and $update) {
             # update package
             writeLog UPDATE "Updating PSGallery module: $pkg"
             Update-Module -Name $pkg
-        } elseif ($null -eq $installed -and -not $update) {
+        } elseif (-not $installed -and -not $update) {
             # install package
             writeLog UPDATE "Installing PSGallery module: $pkg"
             Install-Module -Name $pkg -Force -Scope AllUsers
