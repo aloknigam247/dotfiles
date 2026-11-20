@@ -7,7 +7,7 @@ param(
 
 # Variables
 $collected_packages = @{}
-$package_managers = @("npm", "pip", "pipx", "psgallery", "scoop", "winget")
+$package_managers = @("npm", "pip", "pipx", "scoop", "winget")
 $SCOOP_DIR = "D:\Scoop"
 
 function DrawMenu {
@@ -92,24 +92,29 @@ function Menu {
     }
 }
 
-$script:scoop_installed = ""
 function installScoop {
     param(
         [switch]$update
     )
-    Get-Command scoop *>&1 | Out-Null
-    if ($? -eq $false) {
+    $ErrorActionPreference = "Stop"
+    if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
         writeLog INFO "Scoop not installed. Installing"
-        Invoke-RestMethod get.scoop.sh -outfile "$env:TEMP\install.ps1"
-        if (Test-Path "D:\") {
-            & $env:TEMP\install.ps1 -RunAsAdmin -ScoopDir $SCOOP_DIR
-            New-Item -ItemType SymbolicLink -Path ~\scoop -Target D:\Scoop
-        } else {
-            & $env:TEMP\install.ps1 -RunAsAdmin
+        $installer = Join-Path $env:TEMP "scoop-$([guid]::NewGuid()).ps1"
+        try {
+            Invoke-RestMethod https://get.scoop.sh -OutFile $installer
+            if (Test-Path "D:\") {
+                & $installer -RunAsAdmin -ScoopDir $SCOOP_DIR
+                New-Item -ItemType SymbolicLink -Path ~\scoop -Target $SCOOP_DIR | Out-Null
+            } else {
+                & $installer -RunAsAdmin
+            }
+        } finally {
+            if (Test-Path -LiteralPath $installer) { Remove-Item -LiteralPath $installer }
         }
-        Remove-Item $env:TEMP\install.ps1
-        scoop bucket add extras
-        scoop bucket add versions
+        foreach ($bucket in "extras", "versions") {
+            scoop bucket add $bucket
+            if ($LASTEXITCODE -ne 0) { throw "scoop bucket add $bucket failed (exit $LASTEXITCODE)" }
+        }
         writeLog INFO "Scoop installed"
     }
     if ($update) {
@@ -120,84 +125,140 @@ function installScoop {
         }
         writeLog INFO "Scoop updated"
     }
-
-    $installed = scoop list | ForEach-Object { $_.Name }
-    if ($null -eq $installed) {
-        $script:scoop_installed = ""
-    } else {
-        $script:scoop_installed = $installed
-    }
 }
 
-function pipInstall {
-    param (
-        [string[]]$pkgs,
-        [switch]$update
-    )
-
-    if ($pkgs.Length -eq 0) {
-        return
+function resolvePackageLauncher($manager) {
+    $prefix = @()
+    switch ($manager) {
+        "npm" {
+            $shim = Get-Command npm.cmd -CommandType Application -ErrorAction Stop | Select-Object -First 1
+            $dir = Split-Path $shim.Path
+            $path = Join-Path $dir "node.exe"
+            if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+                $path = (Get-Command node.exe -CommandType Application -ErrorAction Stop | Select-Object -First 1).Path
+            }
+            $cli = Join-Path $dir "node_modules\npm\bin\npm-cli.js"
+            if (-not (Test-Path -LiteralPath $cli -PathType Leaf)) { throw "Missing npm CLI: $cli" }
+            $prefix = @($cli)
+        }
+        "scoop" {
+            $path = Join-Path $PSHOME "pwsh.exe"
+            $shim = (Get-Command scoop.ps1 -CommandType ExternalScript -ErrorAction Stop | Select-Object -First 1).Path
+            $prefix = @("-NoProfile", "-NonInteractive", "-File", $shim)
+        }
+        default {
+            $app = Get-Command "$manager.exe" -CommandType Application -ErrorAction Stop | Select-Object -First 1
+            $path = $app.Path
+        }
     }
+    @{ manager = $manager; path = $path; prefix = $prefix }
+}
 
-    $packages = try { pip list --format=json 2>$null | ConvertFrom-Json -NoEnumerate } catch { $null }
-    if ($LASTEXITCODE -ne 0 -or $null -eq $packages) {
-        writeLog ERROR "Failed to list pip packages"
-        return
-    }
-    $installed_pkgs = @{}
-    foreach ($package in $packages) {
-        $installed_pkgs[$package.name -replace "[-_.]+", "-"] = $true
-    }
-
-    foreach ($pkg in $pkgs) {
-        $name = $pkg -replace "[-_.]+", "-"
-        $installed = $installed_pkgs.ContainsKey($name)
-
-        if ($installed -eq $true -and $update) {
-            # update package
-            writeLog UPDATE "Updating pip package: $pkg"
-            pip install --upgrade $pkg
-        } elseif ($installed -eq $false -and -not $update) {
-            # install package
-            writeLog UPDATE "Installing pip package: $pkg"
-            pip install $pkg
+function invokePackageCommand($launcher, [string[]]$arguments, [switch]$capture) {
+    $process = [Diagnostics.Process]::new()
+    $info = $process.StartInfo
+    $info.FileName = $launcher.path
+    $info.UseShellExecute = $false
+    $info.RedirectStandardError = $info.RedirectStandardInput = $info.RedirectStandardOutput = $true
+    $info.CreateNoWindow = $true
+    if ($launcher.manager -in "pip", "pipx") { $info.Environment["PIP_NO_INPUT"] = "1" }
+    foreach ($arg in @($launcher.prefix) + $arguments) { $info.ArgumentList.Add($arg) }
+    $started = $false
+    try {
+        $started = $process.Start()
+        $process.StandardInput.Close()
+        $pipes = foreach ($channel in "StandardOutput", "StandardError") {
+            $buffer = [char[]]::new(4096)
+            $reader = $process.$channel
+            @{ buffer = $buffer; channel = $channel; reader = $reader; task = $reader.ReadAsync($buffer, 0, 4096)
+                text = if ($capture) { [Text.StringBuilder]::new() } }
+        }
+        while ($pipes[0].task -or $pipes[1].task) {
+            $ready = $false
+            foreach ($pipe in $pipes) {
+                if (-not $pipe.task -or -not $pipe.task.IsCompleted) { continue }
+                $ready = $true
+                $length = $pipe.task.GetAwaiter().GetResult()
+                if ($length -eq 0) {
+                    $pipe.task = $null
+                    continue
+                }
+                $chunk = [string]::new($pipe.buffer, 0, $length)
+                if ($capture) {
+                    [void]$pipe.text.Append($chunk)
+                } else {
+                    @{ channel = $pipe.channel; kind = "chunk"; text = $chunk }
+                }
+                $pipe.task = $pipe.reader.ReadAsync($pipe.buffer, 0, $pipe.buffer.Length)
+            }
+            if (-not $ready) { [Threading.Thread]::Sleep(10) }
+        }
+        while (-not $process.WaitForExit(50)) { }
+        if ($capture) {
+            @{ code = $process.ExitCode; stderr = $pipes[1].text.ToString(); stdout = $pipes[0].text.ToString() }
+        } else {
+            @{ code = $process.ExitCode; kind = "exit" }
+        }
+    } finally {
+        try {
+            if ($started -and -not $process.HasExited) { $process.Kill($true); $process.WaitForExit() }
+        } finally {
+            $process.Dispose()
         }
     }
 }
 
-function pipxInstall {
-    param (
-        [string[]]$pkgs,
-        [switch]$update
-    )
-
-    if ($pkgs.Length -eq 0) {
-        return
+function readPackageCommand($launcher, [string[]]$arguments) {
+    $result = invokePackageCommand $launcher $arguments -capture
+    if ($result.code -ne 0) {
+        if ($launcher.manager -eq "winget" -and $arguments[0] -eq "list" -and $result.code -eq -1978335212) {
+            return ""
+        }
+        throw "$($launcher.manager) $arguments (exit $($result.code)): $($result.stderr) $($result.stdout)"
     }
+    $result.stdout
+}
 
-    $venvs = try { (pipx list --json 2>$null | ConvertFrom-Json -AsHashtable).venvs } catch { $null }
-    if ($LASTEXITCODE -ne 0 -or $null -eq $venvs) {
-        writeLog ERROR "Failed to list pipx packages"
-        return
+function newPackageOperation($launcher, [string[]]$packages, [string[]]$arguments, $targets) {
+    @{ arguments = $arguments; kind = "operation"; launcher = $launcher; manager = $launcher.manager
+        packages = $packages; targets = $targets }
+}
+
+function pythonPackageName([string]$spec) {
+    if ($spec -match "^\s*([A-Za-z0-9][A-Za-z0-9._-]*)\s*(?:$|[\[<>=!~;@])") { $spec = $Matches[1] }
+    $spec -replace "[-_.]+", "-"
+}
+
+function pipInstall($launcher, [string[]]$pkgs, [switch]$update) {
+    $installed = @{}
+    $json = readPackageCommand $launcher @("list", "--format=json")
+    $packages = ConvertFrom-Json $json -AsHashtable -NoEnumerate -ErrorAction Stop
+    if ($packages -isnot [array]) { throw "Invalid pip list: expected an array" }
+    foreach ($package in $packages) {
+        if (-not $package.name) { throw "Missing name in pip list" }
+        $installed[(pythonPackageName $package.name)] = $true
     }
-    $installed_pkgs = @{}
+    $selected = @($pkgs.Where({ $installed.ContainsKey((pythonPackageName $_)) -eq $update.IsPresent }))
+    if ($selected.Count) {
+        $verb = if ($update) { @("install", "--upgrade") } else { "install" }
+        newPackageOperation $launcher $selected (@($verb) + $selected)
+    }
+}
+
+function pipxInstall($launcher, [string[]]$pkgs, [switch]$update) {
+    $installed = @{}
+    $json = readPackageCommand $launcher @("list", "--json")
+    $venvs = (ConvertFrom-Json $json -AsHashtable -ErrorAction Stop).venvs
+    if ($venvs -isnot [Collections.IDictionary]) { throw "Missing venvs in pipx list" }
     foreach ($venv in $venvs.GetEnumerator()) {
-        $installed_pkgs[$venv.Key -replace "[-_.]+", "-"] = $true
-        $installed_pkgs[$venv.Value.metadata.main_package.package -replace "[-_.]+", "-"] = $true
+        $name = $venv.Value.metadata.main_package.package
+        if (-not $name) { throw "Missing main package in pipx environment '$($venv.Key)'" }
+        $installed[(pythonPackageName $venv.Key)] = $installed[(pythonPackageName $name)] = $true
     }
-
+    $verb = if ($update) { "upgrade" } else { "install" }
     foreach ($pkg in $pkgs) {
-        $name = $pkg -replace "[-_.]+", "-"
-        $installed = $installed_pkgs.ContainsKey($name)
-
-        if ($installed -eq $true -and $update) {
-            # update package
-            writeLog UPDATE "Updating pipx package: $pkg"
-            pipx upgrade $pkg
-        } elseif ($installed -eq $false -and -not $update) {
-            # install package
-            writeLog UPDATE "Installing pipx package: $pkg"
-            pipx install $pkg
+        if ($installed.ContainsKey((pythonPackageName $pkg)) -eq $update.IsPresent) {
+            newPackageOperation $launcher @($pkg) @($verb, $pkg)
         }
     }
 }
@@ -215,8 +276,7 @@ function updateScoopAppPaths {
     $line = "`$scoop_app_paths = `"$($app_paths -join ";")`""
 
     if ($content -notmatch '(?m)^\$scoop_app_paths = [^\r\n]*') {
-        writeLog ERROR "No `$scoop_app_paths line found in $profile_path"
-        return
+        throw "No `$scoop_app_paths line found in $profile_path"
     }
     if ($Matches[0] -ne $line) {
         Set-Content -LiteralPath $profile_path -Value $content.Replace($Matches[0], $line) -NoNewline -ErrorAction Stop
@@ -224,137 +284,417 @@ function updateScoopAppPaths {
     }
 }
 
-function scoopInstall {
-    param(
-        [string[]]$pkgs,
-        [switch]$update
-    )
-
-    if ($script:scoop_installed.Length -eq 0) {
-        if ($update) {
-            installScoop -update
-        } else {
-            installScoop
+function readScoopInventory($launcher) {
+    $inventory = @{}
+    $json = readPackageCommand $launcher @("export")
+    $apps = (ConvertFrom-Json $json -AsHashtable -ErrorAction Stop).apps
+    if ($apps -isnot [array]) { throw "Invalid Scoop export: expected apps array" }
+    foreach ($app in $apps) {
+        if (-not $app.Name) { throw "Missing name in Scoop export" }
+        # Like scoop prefix, prefer the user install when both scopes contain the same app.
+        if (-not $inventory.ContainsKey($app.Name) -or ($app.Info -split ", ") -notcontains "Global install") {
+            $inventory[$app.Name] = $app
         }
     }
-
-    foreach ($pkg in $pkgs) {
-        $installed = $script:scoop_installed.Contains($pkg)
-
-        if ($installed -eq $true -and $update) {
-            # update package
-            writeLog UPDATE "Updating scoop package: $pkg"
-            scoop update -s $pkg
-        } elseif ($installed -eq $false -and -not $update) {
-            # install package
-            writeLog UPDATE "Installing scoop package: $pkg"
-            scoop install --no-update-scoop -s $pkg
-        } else {
-            continue
-        }
-        if ($LASTEXITCODE -ne 0) {
-            throw "Scoop failed for '$pkg' (exit code $LASTEXITCODE)"
-        }
-    }
-
-    updateScoopAppPaths
+    $inventory
 }
 
-function npmInstall {
-    param(
-        [string[]]$pkgs,
-        [switch]$update
-    )
-    if ($pkgs.Length -eq 0) {
-        return
+function readScoopPrefix($launcher, $name) {
+    $prefix = (readPackageCommand $launcher @("prefix", $name)).Trim()
+    if (-not $prefix -or -not (Test-Path -LiteralPath $prefix -PathType Container)) {
+        throw "Missing installed prefix for $name"
     }
+    $prefix
+}
 
-    $npm_list = try { npm ls --global --depth=0 --json 2>$null | ConvertFrom-Json -AsHashtable } catch { $null }
-    if ($LASTEXITCODE -ne 0 -or $null -eq $npm_list) {
-        writeLog ERROR "Failed to list npm packages"
-        return
+function readScoopTarget($launcher, $target) {
+    $json = if ($target.manifest) {
+        if ($target.manifest -match "^(https?|ftp)://") {
+            (Invoke-WebRequest -Uri $target.manifest -ErrorAction Stop).Content
+        } else {
+            Get-Content -LiteralPath $target.manifest -Raw -ErrorAction Stop
+        }
+    } else {
+        readPackageCommand $launcher @("cat", $target.query)
     }
-    $installed_pkgs = $npm_list["dependencies"] ?? @{}
+    $version = (ConvertFrom-Json $json -AsHashtable -ErrorAction Stop).version
+    if ($version -isnot [string] -or -not $version.Trim()) { throw "Manifest has no version" }
+    $version
+}
 
+function scoopInstall($launcher, [string[]]$pkgs, [switch]$update) {
+    $targets = [ordered]@{}
+    $installed = readScoopInventory $launcher
     foreach ($pkg in $pkgs) {
-        $installed = $installed_pkgs.ContainsKey($pkg)
-
-        if ($installed -eq $true -and $update) {
-            writeLog UPDATE "Updating npm package: $pkg"
-            npm update -g $pkg
-        } elseif ($installed -ne $true -and -not $update) {
-            writeLog UPDATE "Installing npm package: $pkg"
-            npm install -g $pkg
-            if ($?) {
-                writeLog INFO "npm package installed: $pkg"
-            } else {
-                writeLog ERROR "Failed to install npm package: $pkg"
+        $name = ($pkg -split "/")[-1]
+        if ($installed.ContainsKey($name) -ne $update.IsPresent) { continue }
+        try {
+            $target = @{ global = $false; manifest = $null; name = $name; query = $pkg }
+            if ($update) {
+                $entry = $installed[$name]
+                $flags = $entry.Info -split ", "
+                if (-not $entry.Version -or $flags -contains "Install failed") { throw "Incomplete install" }
+                $target.global = $flags -contains "Global install"
+                $prefix = readScoopPrefix $launcher $name
+                $file = Join-Path $prefix "scoop-install.json"
+                if (-not (Test-Path -LiteralPath $file)) { $file = Join-Path $prefix "install.json" }
+                $record = Get-Content -LiteralPath $file -Raw -ErrorAction Stop | ConvertFrom-Json -AsHashtable
+                if ($record -isnot [Collections.IDictionary]) { throw "Invalid install record: $file" }
+                if ($record.hold -is [bool] -and $record.hold) {
+                    @{ kind = "skip"; text = "$pkg - Held" }
+                    continue
+                }
+                if ($record.bucket) {
+                    $target.query = "$($record.bucket)/$name"
+                } elseif ($record.url) {
+                    $target.manifest = $record.url
+                } else {
+                    $target.query = "main/$name"
+                }
             }
-        } elseif ($installed -eq $true -and -not $update) {
-            writeLog INFO "npm package already installed: $pkg"
+            $target.version = readScoopTarget $launcher $target
+            $targets[$pkg] = $target
+        } catch {
+            @{ kind = "failure"; text = "$pkg`: $_" }
+        }
+    }
+    if ($targets.Count) {
+        $verb = if ($update) { @("update", "-s") } else { @("install", "--no-update-scoop", "-s") }
+        newPackageOperation $launcher @($targets.Keys) ($verb + @($targets.Keys)) $targets
+    }
+}
+
+function testScoopVersion($version, $target, $start, $end) {
+    if ($target -ne "nightly") { return $version -eq $target }
+    if ($version -notmatch "^nightly-(\d{8})$") { return $false }
+    $date = [datetime]::MinValue
+    [datetime]::TryParseExact($Matches[1], "yyyyMMdd", [cultureinfo]::InvariantCulture,
+        [Globalization.DateTimeStyles]::None, [ref]$date) -and $date -ge $start.Date -and $date -le $end.Date
+}
+
+function confirmScoopTargets($op, $start, $end) {
+    $installed = readScoopInventory $op.launcher
+    foreach ($pkg in $op.packages) {
+        try {
+            $target = $op.targets[$pkg]
+            $entry = $installed[$target.name]
+            $flags = $entry.Info -split ", "
+            if (-not $entry.Version -or $flags -contains "Install failed" -or
+                ($flags -contains "Global install") -ne $target.global) { throw "Missing or incomplete install" }
+            $null = readScoopPrefix $op.launcher $target.name
+            $expected = $target.version
+            if (-not (testScoopVersion $entry.Version $expected $start $end)) {
+                $expected = readScoopTarget $op.launcher $target
+                if (-not (testScoopVersion $entry.Version $expected $start $end)) {
+                    throw "Target not verified: expected $expected, found $($entry.Version)"
+                }
+            }
+        } catch {
+            @{ kind = "failure"; text = "$pkg`: $_" }
+        }
+    }
+}
+
+function npmInstall($launcher, [string[]]$pkgs, [switch]$update) {
+    $json = readPackageCommand $launcher @("ls", "--global", "--depth=0", "--json")
+    $list = ConvertFrom-Json $json -AsHashtable -NoEnumerate -ErrorAction Stop
+    if ($list -isnot [Collections.IDictionary]) { throw "Invalid npm inventory" }
+    $installed = $list.dependencies ?? @{}
+    if ($installed -isnot [Collections.IDictionary]) { throw "Invalid npm dependencies" }
+    $selected = @($pkgs.Where({ $installed.Contains(($_ -replace "(?<=.)@[^/]*$", "")) -eq $update.IsPresent }))
+    if ($selected.Count) {
+        $verb = if ($update) { "update" } else { "install" }
+        newPackageOperation $launcher $selected (@($verb, "-g") + $selected)
+    }
+}
+
+function wingetInstall($launcher, [string[]]$pkgs, [switch]$update) {
+    $status = readPackageCommand $launcher @("list", "--accept-source-agreements", "--disable-interactivity")
+    $verb = if ($update) { "upgrade" } else { "install" }
+    $flags = @("--accept-package-agreements", "--accept-source-agreements", "--disable-interactivity", "--silent")
+    foreach ($pkg in $pkgs) {
+        if (($status -cmatch "(?<!\S)$([regex]::Escape($pkg))(?!\S)") -eq $update.IsPresent) {
+            newPackageOperation $launcher @($pkg) (@($verb, "-e", "--id", $pkg) + $flags)
+        }
+    }
+}
+
+function invokePackageWork($op) {
+    $ErrorActionPreference = "Stop"
+    if ($op.kind -eq "discover") {
+        $launcher = resolvePackageLauncher $op.manager
+        & "$($op.manager)Install" -launcher $launcher -pkgs $op.packages -update:$op.update
+        return
+    }
+
+    $start = Get-Date
+    $code = $null
+    invokePackageCommand $op.launcher $op.arguments | ForEach-Object {
+        if ($_.kind -eq "exit") { $code = $_.code } else { $_ }
+    }
+    if ($op.manager -eq "winget" -and $op.arguments[0] -eq "upgrade" -and $code -eq -1978335189) {
+        @{ kind = "skip"; text = "No applicable update" }
+    } elseif ($null -eq $code -or $code -ne 0) {
+        throw "$($op.manager) $($op.arguments) (exit $code)"
+    } elseif ($op.manager -eq "scoop") {
+        confirmScoopTargets $op $start (Get-Date)
+    }
+}
+
+function plainPackageText([string]$text) {
+    $text -replace "\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)" -replace "\x1b\[[0-?]*[ -/]*[@-~]" `
+        -replace "\t", "    " -replace "[\x00-\x1f\x7f-\x9f]"
+}
+
+function addPackageLine($ui, $job, [string]$text, [switch]$failure) {
+    $panel = $ui.panels[$job.op.manager]
+    $line = plainPackageText $text
+    $tag = $job.op.manager
+    if ($job.package) {
+        $tag += "/$($job.package)"
+        $display = "[$($job.package)] $line"
+    } else {
+        $display = $line
+    }
+    if ($failure) {
+        $panel.failure = $display
+        $ui.failures.Add("[$tag] $line")
+    }
+    if ($panel.lines.Count -eq 4) { $null = $panel.lines.Dequeue() }
+    $panel.lines.Enqueue($display)
+    if (-not $ui.live) { [Console]::WriteLine("[$tag] $line") }
+    $ui.dirty = $true
+}
+
+function receivePackageChunk($ui, $job, $event) {
+    $channel = $event.channel
+    $text = $job.pending[$channel] + $event.text
+    $lines = $text.Split("`n")
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $line = $lines[$i]
+        if ($i -eq $lines.Count - 1) {
+            # Keep a trailing CR: the next read may complete a CRLF.
+            $job.pending[$channel] = $line -replace "(?s)^.*\r(?=.)", ""
         } else {
-            writeLog INFO "npm package not installed: $pkg"
+            addPackageLine $ui $job (($line -replace "\r$") -replace "(?s)^.*\r")
         }
     }
 }
 
-function psgalleryInstall {
-    param(
-        [string[]]$pkgs,
-        [switch]$update
-    )
-    if ($pkgs.Length -eq 0) {
+function getPackageConsole {
+    if ([Console]::IsOutputRedirected -or -not $Host.UI.SupportsVirtualTerminal -or
+        $Host.Name -ne "ConsoleHost" -or $env:TERM -eq "dumb") { return }
+    try {
+        @{ height = [Console]::WindowHeight; width = [Console]::WindowWidth - 1 }
+    } catch [IO.IOException] { return }
+}
+
+function fitPackageLine([string]$line, [int]$width) {
+    if ($Host.UI.RawUI.LengthInBufferCells($line) -le $width) { return $line }
+    $cells = 0
+    $elements = [Globalization.StringInfo]::GetTextElementEnumerator($line)
+    while ($elements.MoveNext()) {
+        $cells += $Host.UI.RawUI.LengthInBufferCells($elements.GetTextElement())
+        if ($cells -gt $width) { return $line.Substring(0, $elements.ElementIndex) }
+    }
+    $line
+}
+
+function renderPackageOutput($ui) {
+    if (-not $ui.live) { return }
+    $size = getPackageConsole
+    $height = 5 * $ui.panels.Count
+    if (-not $size -or $size.height -le $height -or $size.width -lt 1) {
+        $ui.live = $false
+        foreach ($name in $ui.panels.Keys) {
+            [Console]::WriteLine("[$name] $($ui.mode)")
+            foreach ($line in $ui.panels[$name].lines) { [Console]::WriteLine("[$name] $line") }
+        }
         return
     }
-
-    $modules = @(Get-Module -ListAvailable -Name $pkgs | ForEach-Object Name)
-
-    foreach ($pkg in $pkgs) {
-        $installed = @($modules -like $pkg).Count -gt 0
-
-        if ($installed -and $update) {
-            # update package
-            writeLog UPDATE "Updating PSGallery module: $pkg"
-            Update-Module -Name $pkg
-        } elseif (-not $installed -and -not $update) {
-            # install package
-            writeLog UPDATE "Installing PSGallery module: $pkg"
-            Install-Module -Name $pkg -Force -Scope AllUsers
+    if (-not $ui.dirty -and $ui.width -eq $size.width) { return }
+    $frame = [Text.StringBuilder]::new()
+    if ($ui.rows) { [void]$frame.Append("`e[$($ui.rows)F") }
+    foreach ($name in $ui.panels.Keys) {
+        $panel = $ui.panels[$name]
+        $status = if ($panel.failure) { "failed: $($panel.failure)" } else { plainPackageText $panel.status }
+        $heading = "$name - $($ui.mode) [$status]"
+        $lines = @($heading) + $panel.lines.ToArray() + (@("") * (4 - $panel.lines.Count))
+        $content = $lines -join "`n"
+        if ($ui.rows -and $ui.width -eq $size.width -and $content -ceq $panel.previous) {
+            [void]$frame.Append("`e[5E")
+        } else {
+            foreach ($line in $lines) {
+                [void]$frame.AppendLine("`e[2K$(fitPackageLine $line $size.width)")
+            }
+            $panel.previous = $content
         }
+    }
+    [Console]::Write($frame.ToString())
+    $ui.dirty = $false
+    $ui.rows = $height
+    $ui.width = $size.width
+}
+
+function stopPackageOperations($jobs) {
+    # Stopping the runspace unwinds invokePackageCommand's finally and kills only its child tree.
+    foreach ($job in $jobs) {
+        try { $job.ps.Stop() } finally { $job.ps.Dispose(); $job.output.Dispose() }
     }
 }
 
-function wingetInstall {
-    param(
-        [string[]]$pkgs,
-        [switch]$update
-    )
-    if ($pkgs.Length -eq 0) {
-        return
+function runPackageOperations($work, $ui, $onComplete) {
+    if (-not $work.Count) { return }
+    $jobs = [Collections.Generic.List[object]]::new()
+    $state = [Management.Automation.Runspaces.InitialSessionState]::CreateDefault2()
+    $helpers = @("confirmScoopTargets", "invokePackageCommand", "invokePackageWork", "newPackageOperation",
+        "npmInstall", "pipInstall", "pipxInstall", "pythonPackageName", "readPackageCommand", "readScoopInventory",
+        "readScoopPrefix", "readScoopTarget", "resolvePackageLauncher", "scoopInstall", "testScoopVersion",
+        "wingetInstall")
+    foreach ($name in $helpers) {
+        $definition = (Get-Command $name -CommandType Function).Definition
+        $state.Commands.Add([Management.Automation.Runspaces.SessionStateFunctionEntry]::new($name, $definition))
     }
-
-    $no_apps_found = -1978335212
-    $status = (winget list --accept-source-agreements) -join "`n"
-    if ($LASTEXITCODE -eq $no_apps_found) {
-        $status = ""
-    } elseif ($LASTEXITCODE -ne 0) {
-        writeLog ERROR "Failed to list winget packages (exit code $LASTEXITCODE): $status"
-        return
+    $workerLog = {
+        param($type, $message)
+        if ($type -eq "ERROR") { Write-Error $message -ErrorAction Continue }
+        else { Write-Information $message -InformationAction Continue }
     }
+    $state.Commands.Add([Management.Automation.Runspaces.SessionStateFunctionEntry]::new("writeLog", "$workerLog"))
+    $pool = [runspacefactory]::CreateRunspacePool($state)
+    try {
+        if (-not $pool.SetMaxRunspaces($work.Count)) { throw "Cannot size package worker pool" }
+        $pool.Open()
+        foreach ($op in $work) {
+            $ps = [powershell]::Create()
+            $output = [Management.Automation.PSDataCollection[psobject]]::new()
+            $package = if ($op.kind -eq "operation" -and $op.manager -in "pipx", "winget") { $op.packages[0] }
+            $job = @{ op = $op; output = $output; package = $package; pending = @{}; ps = $ps; skipped = $false }
+            $jobs.Add($job)
+            $ps.RunspacePool = $pool
+            $null = $ps.AddCommand("invokePackageWork").AddParameter("op", $op)
+            $job.handle = $ps.BeginInvoke[psobject, psobject]($null, $output)
+        }
+        while ($jobs.Count) {
+            foreach ($job in $jobs.ToArray()) {
+                # Sample completion before draining so the final drain cannot miss a late record.
+                $done = $job.handle.IsCompleted
+                $panel = $ui.panels[$job.op.manager]
+                foreach ($event in $job.output.ReadAll()) {
+                    switch ($event.kind) {
+                        "chunk" { receivePackageChunk $ui $job $event }
+                        "failure" { addPackageLine $ui $job $event.text -failure }
+                        "operation" { $ui.operations.Add($event) }
+                        "skip" {
+                            $job.skipped = $true
+                            addPackageLine $ui $job "Skipped: $($event.text)"
+                        }
+                    }
+                }
+                foreach ($stream in "Error", "Information", "Warning") {
+                    foreach ($record in $job.ps.Streams.$stream.ReadAll()) {
+                        addPackageLine $ui $job "$record" -failure:($stream -eq "Error")
+                    }
+                }
+                foreach ($record in $job.ps.Streams.Progress.ReadAll()) {
+                    $job.progress = $record.StatusDescription
+                    $panel.status = $job.progress
+                    $ui.dirty = $true
+                }
+                if (-not $done) { continue }
+                foreach ($line in $job.pending.Values) {
+                    if ($line) { addPackageLine $ui $job ($line.TrimEnd("`r")) }
+                }
+                try {
+                    $null = $job.ps.EndInvoke($job.handle)
+                } catch {
+                    addPackageLine $ui $job "$($job.op.packages -join ', '): $($_.Exception.Message)" -failure
+                }
+                $job.ps.Dispose()
+                $job.output.Dispose()
+                [void]$jobs.Remove($job)
+                if ($job.op.kind -eq "operation" -and -not $job.skipped) { $panel.completed++ }
+                if (-not $jobs.Where({ $_.op.manager -eq $job.op.manager })) {
+                    $panel.status = if ($panel.completed) { "done" } else { "skipped" }
+                    if ($onComplete) { & $onComplete $job.op.manager }
+                }
+                $ui.dirty = $true
+            }
+            renderPackageOutput $ui
+            if ($jobs.Count) { Start-Sleep -Milliseconds 50 }
+        }
+    } finally {
+        try {
+            if ($jobs.Count) {
+                [Console]::Error.WriteLine("Package work interrupted; service-owned installers may still be running.")
+            }
+            stopPackageOperations $jobs
+        } finally { $pool.Dispose() }
+    }
+}
 
-    foreach ($pkg in $pkgs) {
-        $installed = $status -cmatch "(?<!\S)$([regex]::Escape($pkg))(?!\S)"
-
-        if ($installed -eq $true -and $update) {
-            # update package
-            writeLog UPDATE "Updating winget package: $pkg"
-            winget upgrade -e --id $pkg --accept-package-agreements --accept-source-agreements
-        } elseif ($installed -eq $false -and -not $update) {
-            # install package
-            writeLog UPDATE "Installing winget package: $pkg"
-            winget install -e --id $pkg --accept-package-agreements --accept-source-agreements
+function installCollectedPackages($collected, [switch]$update) {
+    $bootstrap = $true
+    $discover = [Collections.Generic.List[object]]::new()
+    $ui = @{
+        dirty = $true; failures = [Collections.Generic.List[string]]::new(); live = $false
+        mode = if ($update) { "Updating" } else { "Installing" }
+        operations = [Collections.Generic.List[object]]::new(); panels = [ordered]@{}; rows = 0
+    }
+    foreach ($name in ($collected.Keys | Sort-Object)) {
+        if ($collected[$name].Count -or $name -eq "scoop") {
+            $ui.panels[$name] = @{
+                completed = 0; lines = [Collections.Generic.Queue[string]]::new(); status = "pending"
+            }
         }
     }
+    try {
+        installScoop -update:$update | Out-Host
+    } catch {
+        $bootstrap = $false
+        addPackageLine $ui @{ op = @{ manager = "scoop" } } "Bootstrap: $_" -failure
+    }
+    foreach ($name in $ui.panels.Keys) {
+        if (-not $collected[$name].Count -or ($name -eq "scoop" -and -not $bootstrap)) { continue }
+        $discover.Add(@{
+            kind = "discover"; manager = $name; packages = @($collected[$name].Keys); update = [bool]$update
+        })
+    }
+    runPackageOperations $discover $ui
+
+    $refresh = {
+        param($name)
+        if ($name -eq "scoop") {
+            $job = @{ op = @{ manager = "scoop" } }
+            try {
+                updateScoopAppPaths 6>&1 | ForEach-Object { addPackageLine $ui $job "$_" }
+            } catch {
+                addPackageLine $ui $job "Profile path refresh: $_" -failure
+            }
+        }
+    }
+    $active = @($ui.operations | ForEach-Object { $_.manager } | Sort-Object -Unique)
+    if ($bootstrap -and "scoop" -notin $active) { & $refresh "scoop" }
+    foreach ($name in @($ui.panels.Keys)) {
+        if ($name -in $active) {
+            $ui.panels[$name].status = "running"
+        } elseif ($ui.panels[$name].failure) {
+            $ui.panels[$name].status = "failed"
+        } else {
+            $ui.panels.Remove($name)
+        }
+    }
+    if ($ui.operations.Count) {
+        $size = getPackageConsole
+        $ui.live = $size -and $size.height -gt 5 * $ui.panels.Count -and $size.width -gt 0
+        if (-not $ui.live) {
+            foreach ($name in $active) { [Console]::WriteLine("[$name] $($ui.mode)") }
+        }
+        renderPackageOutput $ui
+        runPackageOperations $ui.operations $ui $refresh
+    }
+    foreach ($failure in $ui.failures) { [Console]::Error.WriteLine($failure) }
+    if ($ui.failures.Count) { throw "$($ui.failures.Count) package error(s); see the manager summary above." }
 }
 
 function githubInstall {
@@ -616,7 +956,6 @@ foreach ($pkg in $pkg_list) {
         $npm_pkgs = @()
         $pip_pkgs = @()
         $pipx_pkgs = @()
-        $psgallery_pkgs = @()
         $scoop_pkgs = @()
         $winget_pkgs = @()
 
@@ -662,8 +1001,15 @@ foreach ($requirements in $module_requirements) {
 }
 
 if ($module_requirements.Count -gt 0) {
-    foreach ($manager in $package_managers) {
-        & "${manager}Install" -pkgs @($collected_packages[$manager].Keys) -update:$update
+    $finished = $false
+    try {
+        installCollectedPackages $collected_packages -update:$update
+        $finished = $true
+    } catch {
+        $finished = $true
+        throw
+    } finally {
+        # A stopped -File pipeline can otherwise report success to its caller.
+        if (-not $finished) { exit 1 }
     }
-    Set-Location $root
 }

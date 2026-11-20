@@ -25,7 +25,7 @@ glow themes).
 
 ## Project Structure
 
-- Each package has a directory with a `setup.ps1` that declares variables (`$scoop_pkgs`, `$winget_pkgs`, `$pip_pkgs`, `$pipx_pkgs`, `$psgallery_pkgs`, `$files`, `$files_copy`)
+- Each package has a directory with a `setup.ps1` that declares variables (`$scoop_pkgs`, `$winget_pkgs`, `$pip_pkgs`, `$pipx_pkgs`, `$files`, `$files_copy`)
 - `autosetup.ps1` dot-sources each package's `setup.ps1` and runs the corresponding install functions
 
 ## Continuous Integration
