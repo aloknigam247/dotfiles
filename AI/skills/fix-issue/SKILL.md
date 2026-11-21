@@ -449,19 +449,17 @@ cleanup.
 Watch CI and drive it to green:
 
 ```pwsh
-pwsh -NoProfile -ExecutionPolicy Bypass `
-  -File "$env:USERPROFILE\.copilot\skills\fix-issue\scripts\watch_pr_checks.ps1"
+gh pr checks <pr> --watch --interval 30
 ```
 
-The script polls `gh pr checks` for the current branch until every check concludes, then prints the
-failing jobs and their logs. Pass `-TimeoutMinutes` / `-IntervalSeconds` to tune, `-LogLines` to
-change how much log tail is dumped.
+It blocks until every check concludes and exits nonzero if any failed. For a failed check, read the
+failing steps' log with `gh run view <run-id> --log-failed` (the run ID is in the check's URL).
 
 For each failure:
 
 1. Read the actual log — never guess from the job name.
 2. Fix it locally, reproducing the failure locally first where possible.
-3. Commit (`fix: <what>` / `ci: <what>`) and push; re-run the script to confirm.
+3. Commit (`fix: <what>` / `ci: <what>`) and push; re-run the watch to confirm.
 4. Repeat until green.
 
 If a failure is **pre-existing or unrelated** (fails on the base branch too), prove it — e.g. check
@@ -470,7 +468,7 @@ and do not silently absorb it into this PR.
 
 Re-run a flaky-looking failure once before treating it as real, and say so if a rerun was needed.
 
-If **no checks are ever reported** (the script keeps printing "No checks reported yet"), the repo may
+If **no checks are ever reported** (`gh pr checks` keeps reporting no checks), the repo may
 have no CI on PRs. After ~2 minutes of nothing, stop polling, confirm with the user whether CI is
 expected, and if not, skip to step 9 — noting explicitly that the PR has no CI coverage and local
 test results are the only evidence.

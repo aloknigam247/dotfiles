@@ -441,7 +441,7 @@ function linkConfigs {
         [hashtable]$files
     )
     foreach ($key in $files.keys) {
-        $src = "$cwd\$key"
+        $src = (Resolve-Path -LiteralPath $key -ErrorAction Stop).Path
         foreach ($dest in @($files[$key])) {
             $dir = Split-Path -Parent $dest
             if (-not (Test-Path $dir)) {
@@ -468,7 +468,7 @@ function copyOrUpdateConfigs {
         [switch]$update
     )
     foreach ($key in $files.keys) {
-        $src = "$cwd\$key"
+        $src = (Resolve-Path -LiteralPath $key -ErrorAction Stop).Path
         foreach ($dest in @($files[$key])) {
             $dir = Split-Path -Parent $dest
             if ($update) {
@@ -530,7 +530,7 @@ function deployConfigs {
         [hashtable]$files
     )
     foreach ($key in $files.keys) {
-        $src = "$cwd\$key"
+        $src = (Resolve-Path -LiteralPath $key -ErrorAction Stop).Path
         foreach ($dest in @($files[$key])) {
             $dir = Split-Path -Parent $dest
             if (-not (Test-Path $dir)) {
@@ -605,7 +605,7 @@ foreach ($manager in $package_managers) {
 foreach ($pkg in $pkg_list) {
     writeLog INFO "Package: $pkg"
 
-    Set-Location $pkg
+    Set-Location -LiteralPath $pkg -ErrorAction Stop
     $cwd = Get-Location
 
     if (Test-Path setup.ps1) {
@@ -643,7 +643,7 @@ foreach ($pkg in $pkg_list) {
 
 foreach ($requirements in $module_requirements) {
     $pkg_dir = $requirements.pkg_dir
-    Set-Location $pkg_dir
+    Set-Location -LiteralPath $pkg_dir -ErrorAction Stop
     if ($update) {
         writeLog INFO "Updating Configs"
 
