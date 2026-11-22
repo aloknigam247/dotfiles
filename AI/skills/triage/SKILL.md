@@ -1,7 +1,8 @@
 ---
 description: >-
   Triage a task, bug, or idea into a GitHub issue, or revise an existing issue. Investigate, check duplicates,
-  draft, review, and obtain acceptance before publishing. Use for triage, create an issue, file an issue,
+  draft, review, and obtain acceptance before publishing. Use for issue creation (including follow-ups and sub-issues)
+  and changes to titles, bodies, labels, or native issue relationships. Use for triage, create an issue, file an issue,
   turn this into a task, or rewrite this issue.
 name: triage
 ---
