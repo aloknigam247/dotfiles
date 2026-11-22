@@ -96,6 +96,15 @@ Format: `type(scope): subject`, then optional body and footer, each separated by
 ## Azure DevOps
 When working with Azure DevOps CLI (az boards, az repos), always include --project parameter and URL-encode spaces with %20 in tags and queries.
 
+## GitHub issues
+
+* Create or edit issues (title, body, labels, sub-issue and dependency links) only through the `triage` skill, never
+  directly: not with `gh issue create/edit`, `gh api` writes to `issues`, `sub_issues` or `dependencies`, or MCP
+  tools. This includes follow-ups, spikes, and sub-issues.
+* Commenting, closing, reopening, and assigning directly is fine.
+* Only two kuber flows may publish directly: `create-study-issue` and the `analyst` agent's study follow-ups.
+* If the `triage` skill is unavailable, stop and tell me.
+
 ## Workflow
 
 * Default to discussion. When I ask a how/why/what/should question, answer in words and lay
