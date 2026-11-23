@@ -17,13 +17,9 @@ Search the named section or plugin repository string before searching the whole 
 | Area | Location |
 | --- | --- |
 | Commands and shared mappings | `Commands` and `Mappings` sections in `init.lua`. |
-| Completion | `Completion` section in `init.lua`. |
 | Debugging | `Debugger` section in `init.lua`. |
-| Editor and GUI options | `init.vim`; GUI usage is linked from [README.md](README.md#gui-settings). |
-| Formatting | `Formatting` section in `init.lua`. |
 | Language servers | `LSP` section in `init.lua`, including Mason and `vim.lsp.config`. |
 | Markdown preview | [README workflow](README.md#markdown-preview). |
-| Plugin loading | `addPlugin`, `lazy_config`, and the final lazy.nvim setup in `init.lua`. |
 | Queries | [queries](queries/), grouped by Treesitter language. |
 | Snippets | [snippets](snippets/), including [markdown.json](snippets/markdown.json). |
 | Spelling | [en.utf-8.add](en.utf-8.add). |
