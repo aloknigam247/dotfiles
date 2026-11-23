@@ -50,44 +50,25 @@ A review covers the commit checked out when it starts. It is current only while 
 (`git status --porcelain --untracked-files=all` is empty), local HEAD still equals that commit, and, for an existing
 PR, `gh pr view <pr> --json headRefOid` equals it too. Otherwise review again.
 
-When the current session is rooted in `$wt` and the repository's `code-review` workflow is registered, call
-`run_dynamic_workflow` for `code-review` with `{ "base": "<merge-base>" }`; do not start another Copilot CLI process.
-Otherwise, use the read-only CLI fallback below, started in the checkout (`$wt`, or the repository root when working
-in place). `cd` and `git -C` do not re-root the current session. Start the review only on a clean tree, and accept its
-result only if it is still current when it finishes:
+Run the review in a session rooted in the checkout (`$wt`, or the repository root when working in place); `cd` and
+`git -C` do not re-root a session. If the current session is not rooted there or the repository's `code-review`
+workflow is not registered, stop and `ask_user` to start Copilot in the checkout. Start the review only on a clean
+tree:
 
 ```ps1
-$read = "blame", "diff", "grep", "log", "ls-files", "merge-base", "rev-parse", "show", "status" |
-    ForEach-Object { "--allow-tool=shell(git $_)" }
 git -C $wt fetch origin "<default-branch>"
 if ($LASTEXITCODE -ne 0) { throw "Cannot fetch the review target." }
 $base = git -C $wt merge-base HEAD FETCH_HEAD
 if ($LASTEXITCODE -ne 0 -or !$base) { throw "Cannot resolve the review base." }
 $head = git -C $wt rev-parse HEAD
 if ($LASTEXITCODE -ne 0 -or !$head) { throw "Cannot resolve the review HEAD." }
-$id         = [guid]::NewGuid()
-$argsFile   = Join-Path $env:TEMP "code-review-$id-args.json"
-$resultFile = Join-Path $env:TEMP "code-review-$id-result.json"
-try {
-    @{ base = $base } | ConvertTo-Json -Compress | Set-Content $argsFile -ErrorAction Stop
-    Set-Location $wt -ErrorAction Stop
-    Write-Output "Review HEAD: $head"
-    copilot @read --deny-tool=write --deny-tool=web_fetch --deny-tool=web_search `
-        workflow run code-review --args "@$argsFile" --result-file $resultFile --silent
-    if ($LASTEXITCODE -ne 0) {
-        throw "Code review failed with exit code $LASTEXITCODE."
-    }
-    Get-Content -LiteralPath $resultFile -Raw -ErrorAction Stop
-} finally {
-    foreach ($file in $argsFile, $resultFile) {
-        if (Test-Path -LiteralPath $file -ErrorAction Continue) {
-            Remove-Item -LiteralPath $file -ErrorAction Continue
-        }
-    }
-}
+Write-Output "Review base: $base"
+Write-Output "Review HEAD: $head"
 ```
 
-Report the emitted result in the format the repository's review agent specifies, using the printed review HEAD.
+Call `run_dynamic_workflow` for `code-review` with `{ "base": "<printed base>" }`, wait for completion, and read the
+result with `dynamic_workflows_manage` `inspect-run`. Accept it only if the review is still current. Report it in the
+format the repository's review agent specifies, using the printed review HEAD.
 
 ## About plan mode
 
@@ -405,7 +386,7 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
    ```
 
    **Review probe.** If the repository requires a code review, run the [review command](#mandatory-code-review)
-   once on the fresh branch before editing anything. It must exit 0 and report `status: empty`; otherwise stop and
+   once on the fresh branch before editing anything. It must complete and report `status: empty`; otherwise stop and
    `ask_user`. Only this probe is exempt from the stop-on-empty rule. It does not count as a review of changes.
 
 3. Implement the plan's steps in order. Stay inside the plan's scope — if implementation reveals the
