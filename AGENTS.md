@@ -19,12 +19,13 @@ Repository conventions and package/module authoring rules live in
 | `git` | [Deployment](git/setup.ps1), [commitlint guide](git/commitlint.md), and [hook](git/hooks/commit-msg). |
 | `glow` | [Latte](glow/catppuccin-latte.json) and [Mocha](glow/catppuccin-mocha.json) rendering themes. |
 | `lazygit` | [config.yml](lazygit/config.yml), light/dark themes, and [setup.ps1](lazygit/setup.ps1). |
+| `mcp` | [server.py](mcp/server.py) and [runner.ps1](mcp/runner.ps1); launch configuration in the [AI guide](AI/AGENTS.md). |
 | `mdview` | [config.toml](mdview/config.toml) and [setup.ps1](mdview/setup.ps1); configuration, not app source. |
 | `neovim` | [Guide](neovim/AGENTS.md): startup, plugin configuration, and editor workflow. |
 | `powershell` | [Guide](powershell/AGENTS.md): profile load order and module lookup. |
 | `powertoys` | Settings backup in [powertoys](powertoys/). |
 | `shell` | Readline [inputrc](shell/inputrc) and [setup](shell/setup). |
-| `tcsh` | [tcshrc](tcsh/tcshrc), [precmd](tcsh/precmd), [comp](tcsh/comp), and [setup](tcsh/setup). |
+| `tcsh` | [tcshrc](tcsh/tcshrc), including its Completions block, [precmd](tcsh/precmd), and [setup](tcsh/setup). |
 | `tmux` | [tmux.conf](tmux/tmux.conf) and [setup](tmux/setup). |
 | `ubuntu` | Apt package commands in [setup](ubuntu/setup). |
 | `vim` | [vimrc](vim/vimrc), [gvimrc](vim/gvimrc), and [setup](vim/setup). |
