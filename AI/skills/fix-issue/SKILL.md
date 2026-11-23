@@ -57,9 +57,12 @@ only on a clean tree, and accept its result only if the review is still current 
 ```ps1
 $read = "blame", "diff", "grep", "log", "ls-files", "merge-base", "rev-parse", "show", "status" |
     ForEach-Object { "--allow-tool=shell(git $_)" }
-git -C $wt fetch origin <default-branch>
-$base       = git -C $wt merge-base HEAD origin/<default-branch>
-$head       = git -C $wt rev-parse HEAD
+git -C $wt fetch origin "<default-branch>"
+if ($LASTEXITCODE -ne 0) { throw "Cannot fetch the review target." }
+$base = git -C $wt merge-base HEAD FETCH_HEAD
+if ($LASTEXITCODE -ne 0 -or !$base) { throw "Cannot resolve the review base." }
+$head = git -C $wt rev-parse HEAD
+if ($LASTEXITCODE -ne 0 -or !$head) { throw "Cannot resolve the review HEAD." }
 $id         = [guid]::NewGuid()
 $argsFile   = Join-Path $env:TEMP "code-review-$id-args.json"
 $resultFile = Join-Path $env:TEMP "code-review-$id-result.json"
@@ -401,7 +404,7 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
 
    **Review probe.** If the repository requires a code review, run the [review command](#mandatory-code-review)
    once on the fresh branch before editing anything. It must exit 0 and report `status: empty`; otherwise stop and
-   `ask_user`.
+   `ask_user`. Only this probe is exempt from the stop-on-empty rule. It does not count as a review of changes.
 
 3. Implement the plan's steps in order. Stay inside the plan's scope — if implementation reveals the
    plan is wrong, stop, say so, and return to step 4 with a revised plan rather than improvising.
