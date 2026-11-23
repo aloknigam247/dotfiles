@@ -75,8 +75,8 @@ try {
     Get-Content -LiteralPath $resultFile -Raw -ErrorAction Stop
 } finally {
     foreach ($file in $argsFile, $resultFile) {
-        if (Test-Path -LiteralPath $file) {
-            Remove-Item -LiteralPath $file -ErrorAction Stop
+        if (Test-Path -LiteralPath $file -ErrorAction Continue) {
+            Remove-Item -LiteralPath $file -ErrorAction Continue
         }
     }
 }
