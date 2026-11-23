@@ -36,8 +36,8 @@ Repository conventions and package/module authoring rules live in
 
 ## Install and link flow
 
-Run installers from the repository root. Read the selected module's setup first: these scripts change installed
-software and user configuration.
+Run installers only from the root of the checkout that should own the live config links, never a temporary worktree.
+Read the selected module's setup first: these scripts change installed software and user configuration.
 
 - [autosetup](autosetup) is the Bash installer. Its `app_list` selects modules; each module's `setup` supplies file
   links and shell commands. The installer backs up existing destinations, links files, then evaluates the commands.
@@ -45,6 +45,8 @@ software and user configuration.
   the interactive menu, or `-update`, then collects their declarations. It deploys configurations and GitHub releases
   before dispatching the deduplicated package lists. Follow `linkConfigs`, `copyOrUpdateConfigs`, and `deployConfigs`
   for destination handling; update mode can copy newer user settings back into the repository.
+  Selecting a module also runs `updateScoopAppPaths`, which rewrites `$scoop_app_paths` in
+  [powershell/profile.ps1](powershell/profile.ps1).
 
 ## Shared entrypoints
 
