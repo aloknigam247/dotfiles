@@ -41,6 +41,36 @@ before any code is written, and the user accepts the fix before any PR is raised
 - **Verify, don't assume.** Run the real test/build commands and paste real output. A claim is not
   proof.
 
+## Mandatory code review
+
+Review gates in this skill apply only if the target repository's instructions require a code review; those
+instructions also decide what its outcome requires (stop, fix, rerun, or waive).
+
+A review covers the commit checked out when it starts. It is current only while the tree is clean
+(`git status --porcelain --untracked-files=all` is empty), local HEAD still equals that commit, and, for an existing
+PR, `gh pr view <pr> --json headRefOid` equals it too. Otherwise review again.
+
+`cd` and `git -C` do not re-root the current session, so run the repository's `code-review` workflow from a separate
+read-only Copilot CLI process started in the checkout (`$wt`, or the repository root when working in place). Start it
+only on a clean tree, and accept its result only if the review is still current when it finishes:
+
+```ps1
+$read = "blame", "diff", "grep", "log", "ls-files", "merge-base", "rev-parse", "show", "status" |
+    ForEach-Object { "--allow-tool=shell(git $_)" }
+git -C $wt fetch origin <default-branch>
+$base       = git -C $wt merge-base HEAD origin/<default-branch>
+$head       = git -C $wt rev-parse HEAD
+$id         = [guid]::NewGuid()
+$argsFile   = Join-Path $env:TEMP "code-review-$id-args.json"
+$resultFile = Join-Path $env:TEMP "code-review-$id-result.json"
+@{ base = $base } | ConvertTo-Json -Compress | Set-Content $argsFile
+Set-Location $wt
+copilot @read --deny-tool=write --deny-tool=web_fetch --deny-tool=web_search `
+    workflow run code-review --args "@$argsFile" --result-file $resultFile --silent
+```
+
+Report `$resultFile` in the format the repository's review agent specifies, with `$head` as the reviewed HEAD.
+
 ## About plan mode
 
 This skill implements its own planning phase:
@@ -356,6 +386,10 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
    git switch -c fix/<work-issue-number>-<short-slug> origin/<default-branch>
    ```
 
+   **Review probe.** If the repository requires a code review, run the [review command](#mandatory-code-review)
+   once on the fresh branch before editing anything. It must exit 0 and report `status: empty`; otherwise stop and
+   `ask_user`.
+
 3. Implement the plan's steps in order. Stay inside the plan's scope — if implementation reveals the
    plan is wrong, stop, say so, and return to step 4 with a revised plan rather than improvising.
 4. Run the tests named in the plan. The repro test must now pass. Use the smallest targeted
@@ -371,6 +405,8 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
 
    Refs #<work-issue-number>
    ```
+7. Complete the [mandatory code review](#mandatory-code-review) on that commit. If it requires changes, make them
+   and repeat items 4–7.
 
 ### 6. Verify the fix, and tell the user how to verify it
 
@@ -408,8 +444,8 @@ user is asked to accept anything. **No proof, not done** — this holds for feat
    the plan claimed zero cost in some configuration, demonstrate that configuration is unaffected.
    Never close out with an unmeasured "negligible".
 
-Then give the user **copy-pasteable verification instructions** — assume they will not read the
-diff:
+If the review is no longer current, return to step 5.4 before presenting the fix. Then
+give the user **copy-pasteable verification instructions** — assume they will not read the diff:
 
 - The **absolute path to the built artifact** they should run.
 - The **exact command** to launch it, including any fixture/config file you created for the purpose.
@@ -431,8 +467,8 @@ cleanup.
    (`git -C $wt ...` / `cd $wt;`) — this applies to steps 7, 8, and 9 throughout.
 2. `ask_user`: **accept / request changes / abandon**. On "request changes", iterate in steps 5–6
    and re-present. **Do not create a PR until accepted.**
-3. On acceptance, push and open the PR (use an **absolute** body path — the repo root from
-   `git rev-parse --show-toplevel` — so it doesn't depend on the shell's cwd):
+3. On acceptance, confirm [mandatory code review](#mandatory-code-review) is current, then push and open the PR
+   (use an **absolute** body path from `git rev-parse --show-toplevel` so it doesn't depend on the shell's cwd):
    ```pwsh
    git push -u origin HEAD
    gh pr create --title "<type>: <description>" --body-file "<repo-root>\tmp\fix-issue-<n>-pr.md"
@@ -518,16 +554,16 @@ Repeat this step for each new round of review feedback until no open threads rem
 
 ### 10. Hand off for review
 
-Once checks are green:
+Once checks are green and [mandatory code review](#mandatory-code-review) is current:
 
 1. Post a short summary: work issue, PR URL, what changed, test/CI evidence, review comments
    addressed (and any deliberately left unresolved), and any sub-tasks still open on the parent issue.
 2. `ask_user`: ask the user to **review the PR and close/merge it** — offer to (a) wait while they
    review, (b) merge on their say-so (`gh pr merge`), or (c) leave it open. **Never merge without an
    explicit instruction.**
-3. If the user asks you to merge, confirm afterwards that the work issue auto-closed via the `Closes`
-   link, and remind them that each remaining sub-task on the parent issue needs a fresh run of this
-   skill.
+3. If the user asks you to merge, confirm [mandatory code review](#mandatory-code-review) is current before merging.
+   Confirm afterwards that the work issue auto-closed via the `Closes` link, and remind them that each remaining
+   sub-task on the parent issue needs a fresh run of this skill.
 4. If the user leaves the PR open and later comes back with more feedback, go back to **step 9** —
    the "all comments closed" bar applies to every round.
 

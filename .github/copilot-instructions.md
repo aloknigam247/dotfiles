@@ -1,3 +1,12 @@
+## Code review
+
+Complete the code review in `.github/agents/code-review.md` before reporting changes ready, opening a PR, or merging it.
+Run it in a session rooted in the worktree containing the change. For a PR, review its head against its target branch.
+Stop and report if the review covered no changed files, covered the wrong diff, failed, was incomplete, or was
+unavailable.
+Rerun after any change to the diff, including review fixes. Proceed only when a complete review covers the final diff
+and every accepted finding is fixed or explicitly waived by the user.
+
 ## Code Style
 
 - Use 1TBS (One True Brace Style) for all languages: opening brace on the same line, `else` on the same line as the closing brace
