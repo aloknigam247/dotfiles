@@ -50,9 +50,11 @@ A review covers the commit checked out when it starts. It is current only while 
 (`git status --porcelain --untracked-files=all` is empty), local HEAD still equals that commit, and, for an existing
 PR, `gh pr view <pr> --json headRefOid` equals it too. Otherwise review again.
 
-`cd` and `git -C` do not re-root the current session, so run the repository's `code-review` workflow from a separate
-read-only Copilot CLI process started in the checkout (`$wt`, or the repository root when working in place). Start it
-only on a clean tree, and accept its result only if the review is still current when it finishes:
+When the current session is rooted in `$wt` and the repository's `code-review` workflow is registered, call
+`run_dynamic_workflow` for `code-review` with `{ "base": "<merge-base>" }`; do not start another Copilot CLI process.
+Otherwise, use the read-only CLI fallback below, started in the checkout (`$wt`, or the repository root when working
+in place). `cd` and `git -C` do not re-root the current session. Start the review only on a clean tree, and accept its
+result only if it is still current when it finishes:
 
 ```ps1
 $read = "blame", "diff", "grep", "log", "ls-files", "merge-base", "rev-parse", "show", "status" |
