@@ -1,19 +1,12 @@
 # PowerShell navigation
 
-## Profile load order
+## Profile startup
 
 [setup.ps1](setup.ps1) maps `profile.ps1` to PowerShell 7's all-users/all-hosts profile and maps
 `profile5.ps1` to the Windows PowerShell profile. It also links the GitCompleter module directory.
 
-Follow [profile.ps1](profile.ps1) in this order:
-
-1. `_IsShellInteractive` can return before any configuration loads.
-2. PATH setup and the Windows Terminal `Auto Update` job precede theme palettes, `_setTheme`, and icons.
-3. Keymaps, aliases, utility/command wrappers, Git helpers, and text-formatting functions are defined.
-4. PSFzf setup precedes PSReadLine prediction settings and the conditional predictor import. GitCompleter is
-   registered afterward to replace PSFzf's Git completer; winget and AI command completers follow.
-5. `_setFzfTheme`, prompt functions, `_setConsoleTheme`, and the theme-change subscription are initialized.
-6. The external ripgrep completer is sourced, then XDG and other environment settings are assigned.
+[profile.ps1](profile.ps1) returns before loading configuration if `_IsShellInteractive` is false.
+Register GitCompleter after PSFzf so it replaces PSFzf's Git completer.
 
 Do not source the full profile as an unattended check: its interactive `Auto Update` job can pull, commit, and push.
 The [profile5.ps1](profile5.ps1) file contains only `./profile.ps1`; do not assume it supplies a separate module stack.

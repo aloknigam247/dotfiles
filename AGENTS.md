@@ -22,7 +22,7 @@ Repository conventions and package/module authoring rules live in
 | `mcp` | [server.py](mcp/server.py) and [runner.ps1](mcp/runner.ps1); launch configuration in the [AI guide](AI/AGENTS.md). |
 | `mdview` | [config.toml](mdview/config.toml) and [setup.ps1](mdview/setup.ps1); configuration, not app source. |
 | `neovim` | [Guide](neovim/AGENTS.md): startup, plugin configuration, and editor workflow. |
-| `powershell` | [Guide](powershell/AGENTS.md): profile load order and module lookup. |
+| `powershell` | [Guide](powershell/AGENTS.md): profile startup and module lookup. |
 | `powertoys` | Settings backup in [powertoys](powertoys/). |
 | `shell` | Readline [inputrc](shell/inputrc) and [setup](shell/setup). |
 | `tcsh` | [tcshrc](tcsh/tcshrc), including its Completions block, [precmd](tcsh/precmd), and [setup](tcsh/setup). |
