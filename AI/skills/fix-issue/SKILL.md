@@ -63,13 +63,26 @@ $head       = git -C $wt rev-parse HEAD
 $id         = [guid]::NewGuid()
 $argsFile   = Join-Path $env:TEMP "code-review-$id-args.json"
 $resultFile = Join-Path $env:TEMP "code-review-$id-result.json"
-@{ base = $base } | ConvertTo-Json -Compress | Set-Content $argsFile
-Set-Location $wt
-copilot @read --deny-tool=write --deny-tool=web_fetch --deny-tool=web_search `
-    workflow run code-review --args "@$argsFile" --result-file $resultFile --silent
+try {
+    @{ base = $base } | ConvertTo-Json -Compress | Set-Content $argsFile -ErrorAction Stop
+    Set-Location $wt -ErrorAction Stop
+    Write-Output "Review HEAD: $head"
+    copilot @read --deny-tool=write --deny-tool=web_fetch --deny-tool=web_search `
+        workflow run code-review --args "@$argsFile" --result-file $resultFile --silent
+    if ($LASTEXITCODE -ne 0) {
+        throw "Code review failed with exit code $LASTEXITCODE."
+    }
+    Get-Content -LiteralPath $resultFile -Raw -ErrorAction Stop
+} finally {
+    foreach ($file in $argsFile, $resultFile) {
+        if (Test-Path -LiteralPath $file) {
+            Remove-Item -LiteralPath $file -ErrorAction Stop
+        }
+    }
+}
 ```
 
-Report `$resultFile` in the format the repository's review agent specifies, with `$head` as the reviewed HEAD.
+Report the emitted result in the format the repository's review agent specifies, using the printed review HEAD.
 
 ## About plan mode
 
