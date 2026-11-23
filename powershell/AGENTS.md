@@ -16,7 +16,7 @@ The [profile5.ps1](profile5.ps1) file contains only `./profile.ps1`; do not assu
 | Area | Start here |
 | --- | --- |
 | AI command routing | `Get-AiBackend`, `agency`, `ai`, and `copilot` in `profile.ps1`. |
-| AI completion | `Update-CopilotModelCompletion` and the `agency, ai, copilot` completer in `profile.ps1`. |
+| AI completion | `Update-CopilotModelCompletion` and the `agency, ai, copilot` completer in `profile.ps1`; the function rewrites the generated `$script:copilot_models` line in the live profile, so validate it only with `-WhatIf`. |
 | Git completion | [GitCompleter.psm1](GitCompleter/GitCompleter.psm1): `Register-GitCompleter` and its helpers. |
 | Prediction | [PSDirectoryPredictor](PSDirectoryPredictor/README.md): repository-owned C# module; its [project](PSDirectoryPredictor/PSDirectoryPredictor.csproj) `OutDir` is the live module folder, so validate builds only with `-p:OutDir=<temp dir>`. |
 | Prompt and themes | `Get-GitStatus`, `_populatePrompt`, `prompt`, and the `_set*Theme` functions in `profile.ps1`. |
