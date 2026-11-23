@@ -13,6 +13,7 @@ From this directory:
 
 ```ps1
 dotnet build .\cptower.csproj -c Release
+dotnet test ..\cptower_tests\cptower_tests.csproj -c Release --filter "Category!=Live"
 ```
 
 Use [README run instructions](README.md#run) for prerequisites, launch options, and publishing. Read the
