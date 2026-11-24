@@ -15,11 +15,11 @@
 ## Adding definitions
 
 - Agent: add `agents/<name>.agent.md`, following the linked example's YAML frontmatter and Markdown body.
-- Extension: add `extensions/<name>/extension.mjs` and its link in `setup.ps1`.
+- Extension: add `extensions/<name>/extension.mjs`.
 - Skill: add `skills/<name>/SKILL.md` with `description` and `name` frontmatter, then the task instructions.
   [triage/SKILL.md](skills/triage/SKILL.md) is a format example; keep supporting files inside the skill directory
   and link them from its entrypoint.
 
-The agent and skill directories are linked as directories by `setup.ps1`; additions inside them need no new
+The agent, extension, and skill directories are linked as directories by `setup.ps1`; additions inside them need no new
 per-file deployment mapping. For installation and update behavior, follow the
 [root install flow](../AGENTS.md#install-and-link-flow) rather than running this declaration file alone.
