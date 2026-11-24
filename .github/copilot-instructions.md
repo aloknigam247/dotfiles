@@ -8,6 +8,10 @@ unavailable.
 Rerun after any change to the diff, including review fixes. Proceed only when a complete review covers the final diff
 and every accepted finding is fixed or explicitly waived by the user.
 
+## Pull requests
+
+Include `Copilot-Session: <session-id>` in the PR description, using the current Copilot session ID.
+
 ## Code Style
 
 - Use 1TBS (One True Brace Style) for all languages: opening brace on the same line, `else` on the same line as the closing brace
