@@ -50,10 +50,9 @@ A review covers the commit checked out when it starts. It is current only while 
 (`git status --porcelain --untracked-files=all` is empty), local HEAD still equals that commit, and, for an existing
 PR, `gh pr view <pr> --json headRefOid` equals it too. Otherwise review again.
 
-Run the review in a session rooted in the checkout (`$wt`, or the repository root when working in place); `cd` and
-`git -C` do not re-root a session. If the current session is not rooted there or the repository's `code-review`
-workflow is not registered, stop and `ask_user` to start Copilot in the checkout. Start the review only on a clean
-tree:
+Run the review from the current session. Set `$wt` to the absolute path of the worktree containing the change (the
+repository root when working in place). Do not change directory or start another Copilot session. If the repository's
+`code-review` workflow is unavailable, stop and report it. Start the review only on a clean tree:
 
 ```ps1
 git -C $wt fetch origin "<default-branch>"
@@ -66,9 +65,9 @@ Write-Output "Review base: $base"
 Write-Output "Review HEAD: $head"
 ```
 
-Call `run_dynamic_workflow` for `code-review` with `{ "base": "<printed base>" }`, wait for completion, and read the
-result with `dynamic_workflows_manage` `inspect-run`. Accept it only if the review is still current. Report it in the
-format the repository's review agent specifies, using the printed review HEAD.
+Call `run_dynamic_workflow` for `code-review` with `{ "base": "<printed base>", "worktree": "<absolute $wt path>" }`.
+Wait for completion and read the result with `dynamic_workflows_manage` `inspect-run`. Accept it only if the returned
+`worktree` is the requested checkout and the review is still current. Report the printed HEAD in the repository's format.
 
 ## About plan mode
 
@@ -367,11 +366,7 @@ non-invasive repro from step 2 is the only pre-acceptance artifact.
    ```
    - The worktree directory is `.worktree/<work-issue-number>-<short-slug>` **inside the repo root**,
      one directory per issue.
-   - After creating it, **`cd` into the worktree and do all work there.** The shell tool starts a
-     fresh process each call, so pass the worktree path explicitly every time (`git -C $wt ...`, or
-     `cd $wt;` at the start of the command) — never assume the cwd carried over.
-   - Use worktree-relative paths for every edit/create/view call. Writing to the main checkout path
-     defeats the isolation.
+   - Keep the current session and directory. Use `git -C $wt` and absolute paths under `$wt` for file operations.
    - The worktree needs its own build/configure step; do not reuse the main checkout's build output.
    - **Never share, symlink, or junction a build/dependency directory between the worktree and the
      main checkout** to "save time" on an expensive configure. A package manager (vcpkg, npm, cargo,
@@ -462,15 +457,15 @@ cleanup.
 ### 7. Get the fix accepted, then raise the PR
 
 1. Show the user `git --no-pager diff <base>...HEAD --stat` plus a short summary of what changed and
-   the test evidence. If you are in a worktree, run every `git`/`gh` command from that worktree
-   (`git -C $wt ...` / `cd $wt;`) — this applies to steps 7, 8, and 9 throughout.
+   the test evidence. For steps 7–9, use `git -C $wt` and pass the repository and branch or PR explicitly to `gh`.
 2. `ask_user`: **accept / request changes / abandon**. On "request changes", iterate in steps 5–6
    and re-present. **Do not create a PR until accepted.**
 3. On acceptance, confirm [mandatory code review](#mandatory-code-review) is current, then push and open the PR
    (use an **absolute** body path from `git rev-parse --show-toplevel` so it doesn't depend on the shell's cwd):
    ```pwsh
-   git push -u origin HEAD
-   gh pr create --title "<type>: <description>" --body-file "<repo-root>\tmp\fix-issue-<n>-pr.md"
+   git -C $wt push -u origin HEAD
+   gh pr create --repo "<owner/repo>" --head $branch --base "<default-branch>" `
+     --title "<type>: <description>" --body-file "<absolute-pr-body-path>"
    ```
    The PR body must contain:
    - **Summary** of the change.

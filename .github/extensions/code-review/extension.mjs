@@ -1,10 +1,11 @@
 import { execFileSync } from "node:child_process";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineWorkflow, joinSession } from "@microsoft/copilot-sdk/extension";
 
 const CRITIC_AGENTS = ["rubber-duck", "general-purpose"];
 // Workflow-declared agents get no file or shell tools, so lenses run as a built-in catalog agent.
-const LENS_AGENT = "rubber-duck";
+const LENS_AGENTS = ["rubber-duck", "general-purpose"];
 const LOCAL_REVIEW_RULE =
   "Use only this repository's local diff and relevant source, tests, configuration, and documentation; follow " +
   "code references only as needed to verify findings. Do not use web searches or fetches, remote GitHub lookups, " +
@@ -129,34 +130,51 @@ Neovim Lua, Copilot customisations, and small C# and Python tools.
 - Prefer fewer certain findings. Return an empty list when there are none.
 - Severity: high = likely defect or lasting maintenance burden; medium = should fix before merge; low = optional.`;
 
-function git(...args) {
-  return execFileSync("git", ["-C", REPO_ROOT, ...args], { encoding: "utf8" }).trim();
+function git(cwd, ...args) {
+  return execFileSync("git", ["-C", cwd, ...args], { encoding: "utf8" }).trim();
 }
 
 function lines(text) {
   return text.split(/\r?\n/).filter(Boolean);
 }
 
-function resolveScope(requestedBase) {
+function resolveWorktree(requestedWorktree) {
+  if (typeof requestedWorktree !== "string" || !path.isAbsolute(requestedWorktree)) {
+    throw new Error("worktree must be an absolute checkout root");
+  }
+  const worktree = path.resolve(git(requestedWorktree, "rev-parse", "--show-toplevel"));
+  const commonDir = (dir) => git(dir, "rev-parse", "--path-format=absolute", "--git-common-dir");
+  if (path.relative(worktree, requestedWorktree) || path.relative(commonDir(worktree), commonDir(REPO_ROOT))) {
+    throw new Error(`${requestedWorktree} is not a worktree of ${REPO_ROOT}`);
+  }
+  return worktree;
+}
+
+function resolveScope(requestedBase, requestedWorktree) {
   let defaultRef = "origin/main";
+  const worktree = resolveWorktree(requestedWorktree);
   try {
-    defaultRef = git("symbolic-ref", "--short", "refs/remotes/origin/HEAD");
+    defaultRef = git(worktree, "symbolic-ref", "--short", "refs/remotes/origin/HEAD");
   } catch {
     // origin/HEAD is unset in clones that never ran `git remote set-head`.
   }
   // Resolving to a commit keeps an option-like base out of the git diff arguments.
   const base = requestedBase
-    ? git("rev-parse", "--verify", "--end-of-options", `${requestedBase}^{commit}`)
-    : git("merge-base", "HEAD", defaultRef);
-  const changed = lines(git("diff", "--name-status", base));
-  const untracked = lines(git("ls-files", "--others", "--exclude-standard")).map((file) => `?\t${file}`);
-  return { base, files: [...changed, ...untracked] };
+    ? git(worktree, "rev-parse", "--verify", "--end-of-options", `${requestedBase}^{commit}`)
+    : git(worktree, "merge-base", "HEAD", defaultRef);
+  const changed = lines(git(worktree, "diff", "--name-status", base));
+  const untracked = lines(git(worktree, "ls-files", "--others", "--exclude-standard")).map((file) => `?\t${file}`);
+  return { base, files: [...changed, ...untracked], worktree };
 }
 
 function changeBrief(scope) {
+  const worktree = `'${scope.worktree.replaceAll("'", "''")}'`;
   return (
-    `The change is the diff between base ${scope.base} and the working tree: run \`git diff ${scope.base}\` ` +
-    `and read untracked files (status ?). Changed files:\n${scope.files.join("\n")}`
+    `Review only the worktree at ${scope.worktree}; relative paths in this prompt are relative to it. Your ` +
+    `working directory may be another checkout: read and search only files under that worktree, by absolute ` +
+    `path, and run git as \`git -C ${worktree}\`. The change is the diff between base ${scope.base} ` +
+    `and that working tree: run \`git -C ${worktree} diff ${scope.base}\` and read untracked files ` +
+    `(status ?). Changed files:\n${scope.files.join("\n")}`
   );
 }
 
@@ -200,33 +218,46 @@ async function critique(ctx, findings, scope) {
   return { critic: "failed", verdicts: [] };
 }
 
+async function reviewLens(ctx, key, scope) {
+  for (const agent of LENS_AGENTS) {
+    const result = await ctx.agent(lensPrompt(LENSES[key], scope), {
+      agent,
+      label: `review:${key}:${agent}`,
+      schema: FINDINGS_SCHEMA,
+    });
+    if (result) {
+      return result;
+    }
+    ctx.log(`Review lens ${key} failed with ${agent}`);
+  }
+  return null;
+}
+
 const codeReview = defineWorkflow({
   meta: {
     name: "code-review",
     description:
       "Review the current branch's change to dotfiles with six lenses (code smell, dead code, logic and design, " +
       "performance, simplification, tests), then have a critic accept, downvote, or reject each finding. " +
-      "args: { base?: string } — diff base; defaults to the merge base with the default branch.",
+      "args: { base?: string, worktree: string } — diff base, defaulting to the merge base with the default " +
+      "branch; absolute path of the worktree to review.",
     phases: [{ title: "Scope" }, { title: "Review" }, { title: "Critique" }, { title: "Report" }],
-    argsSchema: { type: "object", properties: { base: { type: "string" } } },
+    argsSchema: {
+      type: "object",
+      properties: { base: { type: "string" }, worktree: { type: "string" } },
+      required: ["worktree"],
+    },
   },
   run: async (ctx) => {
     ctx.phase("Scope");
-    const scope = await ctx.step("scope-v1", () => resolveScope(ctx.args.base));
+    const scope = await ctx.step("scope-v2", () => resolveScope(ctx.args.base, ctx.args.worktree));
     if (!scope.files.length) {
-      return { base: scope.base, status: "empty" };
+      return { base: scope.base, status: "empty", worktree: scope.worktree };
     }
     ctx.phase("Review");
     const keys = Object.keys(LENSES);
     const results = await ctx.parallel(
-      keys.map(
-        (key) => () =>
-          ctx.agent(lensPrompt(LENSES[key], scope), {
-            agent: LENS_AGENT,
-            label: `review:${key}`,
-            schema: FINDINGS_SCHEMA,
-          }),
-      ),
+      keys.map((key) => () => reviewLens(ctx, key, scope)),
     );
     const failedLenses = keys.filter((_, index) => results[index] === null);
     const findings = keys.flatMap((key, index) =>
@@ -248,7 +279,14 @@ const codeReview = defineWorkflow({
       report[buckets[verdict?.verdict] ?? "unreviewed"].push(entry);
     }
     report.accepted.sort((a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity]);
-    return { base: scope.base, fileCount: scope.files.length, critic, failedLenses, ...report };
+    return {
+      base: scope.base,
+      fileCount: scope.files.length,
+      critic,
+      failedLenses,
+      worktree: scope.worktree,
+      ...report,
+    };
   },
 });
 

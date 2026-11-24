@@ -3,18 +3,21 @@ name: code-review
 description: "Review dotfiles' current branch and uncommitted changes against the selected base using six review lenses and a critic."
 ---
 
+The caller names the worktree containing the change. Run every git command as `git -C <worktree>`.
+
 For a planned or existing PR, the caller fetches the target (`git fetch <base-remote> <target-branch>`) and supplies
 the fetched tip SHA. For a planned PR, review the working tree, including uncommitted changes. For an existing PR,
 require `git rev-parse HEAD` to match the current remote PR head SHA supplied by the caller and
 `git status --porcelain --untracked-files=all` to be empty. If a required ref is missing or a check fails, stop and
 report; do not fetch, switch branches, or stash on the caller's behalf.
 
-Run `code-review` with `run_dynamic_workflow`. For a PR, pass the SHA from `git merge-base HEAD <fetched-tip-sha>` as
-`base`. For a local review without a PR target, pass the caller's explicit diff base or `{}`. Do not set limits. Wait
-for completion and read the result with `dynamic_workflows_manage` `inspect-run`. Use `.github/copilot-instructions.md`
-for conventions.
+Run `code-review` with `run_dynamic_workflow`, passing the worktree as `worktree`. For a PR, pass the SHA from
+`git merge-base HEAD <fetched-tip-sha>` as `base`. For a local review without a PR target, pass the caller's explicit
+diff base, if any. Do not set limits. Wait for completion and read the result with `dynamic_workflows_manage`
+`inspect-run`. Use `.github/copilot-instructions.md` for conventions.
 
-Report the reviewed base, HEAD SHA, clean/dirty state, and file count. For `status: empty`, say no changed files were
+Report the reviewed worktree, base, HEAD SHA, clean/dirty state, and file count. If the result's `worktree` is not the
+named worktree, report that the review covered the wrong diff and stop. For `status: empty`, say no changed files were
 reviewed and stop. If the workflow could not run, report the failure. Otherwise report:
 
 1. Accepted findings, high to low severity: `file:line`, title, evidence, and suggestion.
