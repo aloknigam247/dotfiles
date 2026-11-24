@@ -6,6 +6,7 @@
 | --- | --- |
 | [agents](agents/) | Personal agent definitions; use [catppuccin.agent.md](agents/catppuccin.agent.md) as a format example. |
 | [copilot-instructions.md](copilot-instructions.md) | Setup-linked user-global instructions. |
+| [extensions](extensions/) | User-level Copilot workflows. |
 | [mcp-config.json](mcp-config.json) | MCP server launch configuration for [native-tools](../mcp/server.py). |
 | [settings.json](settings.json) | Copilot user settings deployed as a copy, not a symlink. |
 | [setup.ps1](setup.ps1) | Package requirements and authoritative user-profile deployment destinations. |
@@ -14,6 +15,7 @@
 ## Adding definitions
 
 - Agent: add `agents/<name>.agent.md`, following the linked example's YAML frontmatter and Markdown body.
+- Extension: add `extensions/<name>/extension.mjs` and its link in `setup.ps1`.
 - Skill: add `skills/<name>/SKILL.md` with `description` and `name` frontmatter, then the task instructions.
   [triage/SKILL.md](skills/triage/SKILL.md) is a format example; keep supporting files inside the skill directory
   and link them from its entrypoint.
