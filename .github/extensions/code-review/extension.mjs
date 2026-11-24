@@ -36,10 +36,15 @@ const LENSES = {
   design: {
     heading: "Logic and design",
     task:
-      "Find logic errors, and places where the change departs from the repository's established patterns " +
-      "or where a better-organised, more maintainable design exists that is no larger. Trace changed config " +
-      "through its setup link map to the tool that loads it, on both Windows and Linux where the package " +
-      "supports both. Cite the existing pattern (file and line) the change should follow.",
+      "For implementation and configuration changes, first assess whether the change is logically correct and " +
+      "preserves intended behavior. Determine that behavior from relevant contracts, callers, tests, and " +
+      "documentation; trace changed inputs and state through affected code and callers. Check invariants, " +
+      "success, boundary, and error paths, and identify unintended behavior changes. For correctness or regression " +
+      "findings, require a concrete defect supported by source evidence; do not infer bugs from style or missing " +
+      "tests. Then find places where the change departs from established patterns or where a no-larger design " +
+      "is more maintainable. Trace changed config through its setup link map to the tool that loads it, on both " +
+      "Windows and Linux where the package supports both. Cite the existing pattern (file and line) the change " +
+      "should follow.",
   },
   performance: {
     heading: "Performance",
