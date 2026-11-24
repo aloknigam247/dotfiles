@@ -32,7 +32,8 @@ Read the selected module's setup first: these scripts change installed software 
 - [autosetup.ps1](autosetup.ps1) requires elevation. It discovers `setup.ps1` modules, selects them with `-install`,
   the interactive menu, or `-update`, then collects their declarations. It deploys configurations and GitHub releases
   before dispatching the deduplicated package lists. Follow `linkConfigs`, `copyOrUpdateConfigs`, and `deployConfigs`
-  for destination handling; update mode can copy newer user settings back into the repository.
+  for destination handling; `-update` skips `linkConfigs` and refreshes only existing copies, which can copy newer
+  user settings back into the repository, so new links or copy destinations need `-install`.
   Selecting a module also runs `updateScoopAppPaths`, which rewrites `$scoop_app_paths` in
   [powershell/profile.ps1](powershell/profile.ps1).
 

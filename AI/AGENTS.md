@@ -5,7 +5,7 @@
 | Path | Purpose |
 | --- | --- |
 | [agents](agents/) | Personal agent definitions; use [catppuccin.agent.md](agents/catppuccin.agent.md) as a format example. |
-| [copilot-instructions.md](copilot-instructions.md) | Setup-linked user-global instructions, not repository-local policy. |
+| [copilot-instructions.md](copilot-instructions.md) | Setup-linked user-global instructions. |
 | [mcp-config.json](mcp-config.json) | MCP server launch configuration for [native-tools](../mcp/server.py). |
 | [settings.json](settings.json) | Copilot user settings deployed as a copy, not a symlink. |
 | [setup.ps1](setup.ps1) | Package requirements and authoritative user-profile deployment destinations. |
