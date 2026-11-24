@@ -95,7 +95,10 @@ setup, but retain any unique constraints absent from the linked source. Never pr
 
 ## Diagrams
 
-Add a diagram only when clearer than prose. Keep one unless Current and Proposed differ in shape.
+For nontrivial changes that add or materially reshape a class or interface, include a `classDiagram` when its
+contract, state, inheritance, ownership, or collaboration is clearer visually than in prose. Skip simple data holders,
+trivial wrappers, and implementation-only changes that leave the structure unchanged; judge size by meaningful
+structure, not line count. Keep one diagram unless Current and Proposed differ in shape.
 
 | Change | Diagram |
 |---|---|
