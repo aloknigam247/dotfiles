@@ -139,10 +139,7 @@ function lines(text) {
 }
 
 function resolveWorktree(requestedWorktree) {
-  if (requestedWorktree === undefined) {
-    return path.resolve(REPO_ROOT);
-  }
-  if (!path.isAbsolute(requestedWorktree)) {
+  if (typeof requestedWorktree !== "string" || !path.isAbsolute(requestedWorktree)) {
     throw new Error("worktree must be an absolute checkout root");
   }
   const worktree = path.resolve(git(requestedWorktree, "rev-parse", "--show-toplevel"));
@@ -171,11 +168,12 @@ function resolveScope(requestedBase, requestedWorktree) {
 }
 
 function changeBrief(scope) {
+  const worktree = `'${scope.worktree.replaceAll("'", "''")}'`;
   return (
     `Review only the worktree at ${scope.worktree}; relative paths in this prompt are relative to it. Your ` +
     `working directory may be another checkout: read and search only files under that worktree, by absolute ` +
-    `path, and run git as \`git -C "${scope.worktree}"\`. The change is the diff between base ${scope.base} ` +
-    `and that working tree: run \`git -C "${scope.worktree}" diff ${scope.base}\` and read untracked files ` +
+    `path, and run git as \`git -C ${worktree}\`. The change is the diff between base ${scope.base} ` +
+    `and that working tree: run \`git -C ${worktree} diff ${scope.base}\` and read untracked files ` +
     `(status ?). Changed files:\n${scope.files.join("\n")}`
   );
 }
@@ -241,10 +239,14 @@ const codeReview = defineWorkflow({
     description:
       "Review the current branch's change to dotfiles with six lenses (code smell, dead code, logic and design, " +
       "performance, simplification, tests), then have a critic accept, downvote, or reject each finding. " +
-      "args: { base?: string, worktree?: string } — diff base, defaulting to the merge base with the default " +
-      "branch; absolute path of the worktree to review, defaulting to this repository's root.",
+      "args: { base?: string, worktree: string } — diff base, defaulting to the merge base with the default " +
+      "branch; absolute path of the worktree to review.",
     phases: [{ title: "Scope" }, { title: "Review" }, { title: "Critique" }, { title: "Report" }],
-    argsSchema: { type: "object", properties: { base: { type: "string" }, worktree: { type: "string" } } },
+    argsSchema: {
+      type: "object",
+      properties: { base: { type: "string" }, worktree: { type: "string" } },
+      required: ["worktree"],
+    },
   },
   run: async (ctx) => {
     ctx.phase("Scope");
