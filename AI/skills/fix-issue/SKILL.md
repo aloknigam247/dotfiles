@@ -74,7 +74,7 @@ Wait for completion and read the result with `dynamic_workflows_manage` `inspect
 This skill implements its own planning phase:
 
 - Research + plan drafting is delegated to a **`general-purpose`** subagent (fresh context).
-- The draft is critiqued by the **`rubber-duck`** agent before the user sees it.
+- Every draft passes the **`plan-review`** workflow gate in step 4 before the user sees it.
 - The user gate is an explicit `ask_user` accept / edit / reject.
 
 If the user hands over an **already-accepted plan** (e.g. from their own `/plan` run, or a previous
@@ -311,26 +311,35 @@ The subagent must return:
      performance rows only when they apply.
    - Add **Out of scope** only when a likely boundary needs to be explicit.
    - Do not add **Alternatives considered** or a separate **Acceptance criteria** section.
-2. **Rubber-duck non-trivial plans.** If the plan touches more than two files, changes a hot/shared
-   path, or has invariant/performance implications, launch the `rubber-duck` agent over the plan file
-   (give it the research findings too). Ask it to catch: incorrect frontmatter, a root-cause section
-   on a non-bug, an unverified bug root cause, missing diagrams for structural/runtime changes,
-   Mermaid syntax errors, diagrams that misrepresent ownership, members, state, or flow, design
-   surfaces absent from **Detailed changes**, `file:line` refs that do not match reality, invariant
-   violations, vague test-plan expected results, and tests that use soft assertions or do not pin
-   *this specific* change. Act on substantive findings and revise; ignore style nits. For a
-   genuinely small, contained fix, skip this and say you skipped it.
-3. Summarize the plan in chat (concise — the file has the detail).
+2. **Mandatory plan review, including small fixes.** Before summarizing or opening the plan, call
+   `run_dynamic_workflow` for the user-level `plan-review` workflow with absolute paths:
+   `{ "format": "<this skill's SKILL.md>", "plan": "<plan file>", "worktree": "<target checkout root>" }`.
+   Do not substitute the repository's `code-review` workflow; it reviews implementation diffs.
+
+   Wait for completion and read the result with `dynamic_workflows_manage` `inspect-run`. Stop and report if
+   the workflow is unavailable, the run did not complete, `failedLenses` or `unreviewed` is nonempty, or
+   `critic` is `failed`. Require the returned `plan` and `worktree` to match the requested paths and
+   `planSha256` to match `(Get-FileHash -LiteralPath <plan-file> -Algorithm SHA256).Hash` case-insensitively.
+   A changed plan requires a new run, not a resumed review of the old snapshot.
+
+   Fix accepted findings in the plan and rerun before presenting it. Downvoted and rejected findings do not
+   block. After three complete review rounds, present any remaining accepted findings with the unchanged,
+   reviewed plan for explicit user waiver, edit, or rejection; never silently treat them as resolved.
+3. Summarize the reviewed plan in chat, including any unresolved accepted findings
+   (concise — the file has the detail).
 4. **⛔ HARD RULE — ALWAYS open the plan in mdview before asking for acceptance. No exceptions.**
    The `ask_user` accept/edit/reject gate in step 5 chat summary alone is never sufficient. Render the plan
    file with the release binary:
-   ```pwsh
+   ```ps1
    & mdview <plan-file>
    ```
    Inspect every diagram in the rendered document. A Mermaid parse/syntax error is a blocking plan
-   defect: fix it, reopen the plan, and confirm the diagram renders before asking for acceptance.
+   defect: fix it, repeat the review gate in step 4.2, reopen the plan, and confirm the diagram renders
+   before asking for acceptance.
 5. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
-   confirmation, re-read it, and re-present. On "reject", delete the plan file and stop.
+   confirmation, re-read it, and repeat step 4.2 before re-presenting. Recheck the plan hash before accepting
+   approval; any edit invalidates the review. Implementation requires explicit waiver of any remaining
+   accepted findings. On "reject", delete the plan file and stop.
 
 **Make zero edits to any tracked file before acceptance** (repro artifacts per step 2 excepted). The
 non-invasive repro from step 2 is the only pre-acceptance artifact.
