@@ -193,12 +193,13 @@ function _setTheme {
         }
         prompt = @{
             dir_icon = @{
-                bg = $catppuccin.Blue
+                bg = $catppuccin.Lavender
                 fg = $catppuccin.Base
             }
             dir_path = $catppuccin.Base
             git = @{
-                bg = $catppuccin.Crust
+                # Latte Surface1 leaves the Git status icons below 3:1 contrast
+                bg = if ($env:THEME -eq "light") { $catppuccin.Mantle } else { $catppuccin.Surface1 }
                 branch = $catppuccin.Text
                 index = $catppuccin.Green
                 sep = $catppuccin.Overlay0
@@ -207,7 +208,7 @@ function _setTheme {
                 working = $catppuccin.Blue
             }
             long_cmd = @{
-                bg = $catppuccin.Mauve
+                bg = $catppuccin.Pink
                 fg = $catppuccin.Base
             }
         }
