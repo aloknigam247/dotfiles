@@ -262,7 +262,7 @@ The subagent must return:
 
    ## Approach
 
-   A concise explanation and the useful Mermaid diagrams.
+   A concise explanation and the useful diff diagrams.
 
    ## Detailed changes
 
@@ -297,10 +297,15 @@ The subagent must return:
      - a state diagram is required when behavior depends on meaningful state transitions;
      - an architecture diagram is required when component boundaries or deployment relationships
        change.
-     Use Mermaid for class, sequence, flowchart, state, and software-architecture diagrams. Omit
-     diagrams only when the change has no structural or runtime design worth showing.
+     Omit diagrams only when the change has no structural or runtime design worth showing.
    - A class diagram shows ownership and dependencies plus the proposed public properties, methods,
      signals, and key private state. Include design-relevant members, not every implementation helper.
+   - Draw each diagram as a diff against the current design. Mark every element and edge as added
+     (green, `+`), changed (amber, `~`, old → new), removed (red, dashed, struck through, `−`), or
+     unchanged (grey, unmarked). Put the marker and color in the label, not only in fill or stroke.
+     Show unchanged elements only as context for the change. When one diagram cannot show the change
+     clearly, draw before and after diagrams with the same markings. Add a one-line legend before the
+     first diagram.
    - **Detailed changes** says what changes in each file without embedding large code snippets. Name
      each added or changed class/interface and its proposed members, properties, signals, schema
      fields, or configuration keys so the design surface is reviewable before implementation.
@@ -320,12 +325,15 @@ The subagent must return:
    the workflow is unavailable, the run did not complete, `failedLenses` or `unreviewed` is nonempty, or
    `critic` is `failed`. Require the returned `plan` and `worktree` to match the requested paths and
    `planSha256` to match `(Get-FileHash -LiteralPath <plan-file> -Algorithm SHA256).Hash` case-insensitively.
-   A changed plan requires a new run, not a resumed review of the old snapshot.
+   The workflow resolves the issue from the plan frontmatter and supplies its body to every reviewer. A changed
+   plan requires a new run, not a resumed review of the old snapshot.
 
-   Fix accepted findings in the plan and rerun before presenting it. Downvoted and rejected findings do not
-   block. After three complete review rounds, present any remaining accepted findings with the unchanged,
-   reviewed plan for explicit user waiver, edit, or rejection; never silently treat them as resolved.
-3. Summarize the reviewed plan in chat, including any unresolved accepted findings
+   Fix accepted high- and medium-severity findings in the plan and rerun before presenting it. Accepted low-severity
+   findings are advisory: include them in the summary, but they do not require a plan edit, rerun, or waiver.
+   Downvoted and rejected findings do not block. After three complete review rounds, present any remaining accepted
+   findings with the unchanged, reviewed plan for explicit user waiver, edit, or rejection; never silently treat
+   them as resolved.
+3. Summarize the reviewed plan in chat, including any unresolved accepted findings and advisory findings
    (concise — the file has the detail).
 4. **⛔ HARD RULE — ALWAYS open the plan in mdview before asking for acceptance. No exceptions.**
    The `ask_user` accept/edit/reject gate in step 5 chat summary alone is never sufficient. Render the plan
@@ -333,13 +341,13 @@ The subagent must return:
    ```ps1
    & mdview <plan-file>
    ```
-   Inspect every diagram in the rendered document. A Mermaid parse/syntax error is a blocking plan
+   Inspect every diagram in the rendered document. A diagram that fails to render is a blocking plan
    defect: fix it, repeat the review gate in step 4.2, reopen the plan, and confirm the diagram renders
    before asking for acceptance.
 5. `ask_user`: **accept / edit / reject**. On "edit", let the user edit the plan file, wait for
    confirmation, re-read it, and repeat step 4.2 before re-presenting. Recheck the plan hash before accepting
-   approval; any edit invalidates the review. Implementation requires explicit waiver of any remaining
-   accepted findings. On "reject", delete the plan file and stop.
+   approval; any edit invalidates the review. Implementation requires explicit waiver of any remaining accepted
+   findings; advisory findings do not require waiver. On "reject", delete the plan file and stop.
 
 **Make zero edits to any tracked file before acceptance** (repro artifacts per step 2 excepted). The
 non-invasive repro from step 2 is the only pre-acceptance artifact.

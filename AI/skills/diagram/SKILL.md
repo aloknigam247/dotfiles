@@ -5,10 +5,11 @@ description: Selects Mermaid, draw.io or Plotly for covered diagram and chart ty
 
 # Diagram provider
 
-Use the provider listed for each covered diagram type.
+Use the provider listed for Plotly charts, quadrant charts, radar charts, Sankey diagrams, and very
+small, simple diagrams (at most five nodes, no nested containers). Otherwise, follow Parallel generation.
 
-Flowcharts, class diagrams and software architecture diagrams start in Mermaid; switch to draw.io
-when the layout needs manual adjustment.
+For flowcharts, class diagrams and software architecture diagrams using the table, switch from Mermaid
+to draw.io when the layout needs manual adjustment.
 
 | Diagram type | Provider |
 |---|---|
@@ -43,3 +44,11 @@ when the layout needs manual adjustment.
 | Use case diagram | Mermaid |
 | User journey | draw.io |
 | Venn diagram | Mermaid |
+
+## Parallel generation
+
+1. Launch two `general-purpose` subagents in parallel with the same brief: one draws the diagram in
+   Mermaid, the other in draw.io. Each returns source that renders without errors.
+2. Give the brief and both diagrams, rendered when possible, to a fresh `general-purpose` subagent. It
+   returns the clearer one and why.
+3. Use the chosen diagram.
